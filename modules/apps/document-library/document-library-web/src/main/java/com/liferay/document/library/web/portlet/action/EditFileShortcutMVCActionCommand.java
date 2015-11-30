@@ -148,6 +148,6 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private DLAppService _dlAppService;
+	private volatile DLAppService _dlAppService;
 
 }

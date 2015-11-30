@@ -27,4 +27,9 @@ public class DDLFormWebConfigurationValues {
 	public static String[] DISPLAY_VIEWS = DDLFormWebConfigurationUtil.getArray(
 		"display.views");
 
+	public static final String EMAIL_FORM_ENTRY_NOTIFICATION_BODY =
+		GetterUtil.getString(
+			DDLFormWebConfigurationUtil.get(
+				"email.form.entry.notification.body"));
+
 }

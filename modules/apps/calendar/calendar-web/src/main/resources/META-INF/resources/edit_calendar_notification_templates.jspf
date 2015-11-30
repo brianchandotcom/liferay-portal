@@ -40,18 +40,39 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	cssClass="container-fluid-1280"
 	title="<%= calendarName %>"
 />
 
-<liferay-ui:tabs
-	names="invite-email,reminder-email"
-	param="tabs3"
-	url="<%= portletURL %>"
-/>
+<aui:nav-bar cssClass="container-fluid-1280" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		navigationURL.setParameter("tabs3", "invite-email");
+		%>
+
+		<aui:nav-item
+			href="<%= navigationURL.toString() %>"
+			label="invite-email"
+			selected='<%= tabs3.equals("invite-email") %>'
+		/>
+
+		<%
+		navigationURL.setParameter("tabs3", "reminder-email");
+		%>
+
+		<aui:nav-item
+			href="<%= navigationURL.toString() %>"
+			label="reminder-email"
+			selected='<%= tabs3.equals("reminder-email") %>'
+		/>
+
+	</aui:nav>
+</aui:nav-bar>
 
 <liferay-portlet:actionURL name="updateCalendarNotificationTemplate" var="updateCalendarNotificationTemplateURL" />
 
-<aui:form action="<%= updateCalendarNotificationTemplateURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCalendarNotificationTemplate();" %>'>
+<aui:form action="<%= updateCalendarNotificationTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCalendarNotificationTemplate();" %>'>
 	<aui:input name="mvcPath" type="hidden" value="/edit_calendar.jsp" />
 	<aui:input name="calendarNotificationTemplateId" type="hidden" value="<%= calendarNotificationTemplateId %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />

@@ -253,6 +253,11 @@ public class JournalArticleResourceLocalServiceWrapper
 		return _journalArticleResourceLocalService.getArticleResources(groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _journalArticleResourceLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the journal article resource with the primary key.
 	*

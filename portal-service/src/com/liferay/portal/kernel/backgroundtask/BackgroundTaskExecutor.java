@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+
 /**
  * @author Michael C. Han
  */
@@ -23,6 +25,9 @@ public interface BackgroundTaskExecutor {
 
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception;
+
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		BackgroundTask backgroundTask);
 
 	public BackgroundTaskStatusMessageTranslator
 		getBackgroundTaskStatusMessageTranslator();

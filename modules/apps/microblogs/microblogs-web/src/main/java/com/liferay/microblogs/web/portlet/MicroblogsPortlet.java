@@ -159,8 +159,8 @@ public class MicroblogsPortlet extends MVCPortlet {
 		_microblogsEntryService = microblogsEntryService;
 	}
 
-	private AssetEntryLocalService _assetEntryLocalService;
-	private MicroblogsEntryLocalService _microblogsEntryLocalService;
-	private MicroblogsEntryService _microblogsEntryService;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile MicroblogsEntryLocalService _microblogsEntryLocalService;
+	private volatile MicroblogsEntryService _microblogsEntryService;
 
 }

@@ -100,7 +100,7 @@ public class UserStagedModelDataHandler
 		_userLocalService = userLocalService;
 	}
 
-	private GroupLocalService _groupLocalService;
-	private UserLocalService _userLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

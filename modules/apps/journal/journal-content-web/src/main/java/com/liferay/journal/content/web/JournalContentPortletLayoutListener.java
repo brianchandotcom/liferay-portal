@@ -313,11 +313,12 @@ public class JournalContentPortletLayoutListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortletLayoutListener.class);
 
-	private DDMTemplateLocalService _ddmTemplateLocalService;
-	private GroupLocalService _groupLocalService;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
-	private LayoutLocalService _layoutLocalService;
-	private PortletLocalService _portletLocalService;
+	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private volatile JournalContentSearchLocalService
+		_journalContentSearchLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile PortletLocalService _portletLocalService;
 
 }

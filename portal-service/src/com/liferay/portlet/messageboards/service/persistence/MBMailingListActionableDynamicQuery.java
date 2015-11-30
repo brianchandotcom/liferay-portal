@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.messageboards.model.MBMailingList;
@@ -27,12 +27,13 @@ import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
  */
 @Deprecated
 public abstract class MBMailingListActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public MBMailingListActionableDynamicQuery() {
 		setBaseLocalService(MBMailingListLocalServiceUtil.getService());
-		setClass(MBMailingList.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(MBMailingList.class);
 
 		setPrimaryKeyPropertyName("mailingListId");
 	}

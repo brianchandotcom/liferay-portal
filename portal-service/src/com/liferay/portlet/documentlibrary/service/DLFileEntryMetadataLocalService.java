@@ -267,6 +267,9 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 	public long getFileVersionFileEntryMetadatasCount(long fileVersionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getMismatchedCompanyIdFileEntryMetadatas();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -367,10 +367,10 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		return page;
 	}
 
-	private TrashEntryLocalService _trashEntryLocalService;
-	private TrashEntryService _trashEntryService;
-	private WikiPageLocalService _wikiPageLocalService;
-	private WikiPageResourceLocalService _wikiPageResourceLocalService;
-	private WikiPageService _wikiPageService;
+	private volatile TrashEntryLocalService _trashEntryLocalService;
+	private volatile TrashEntryService _trashEntryService;
+	private volatile WikiPageLocalService _wikiPageLocalService;
+	private volatile WikiPageResourceLocalService _wikiPageResourceLocalService;
+	private volatile WikiPageService _wikiPageService;
 
 }

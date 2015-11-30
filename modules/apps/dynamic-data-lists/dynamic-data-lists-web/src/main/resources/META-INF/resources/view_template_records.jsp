@@ -33,7 +33,7 @@ if (DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGro
 DDLDisplayTemplateTransformer ddlDisplayTemplateTransformer = new DDLDisplayTemplateTransformer(displayDDMTemplateId, recordSet, themeDisplay, renderRequest);
 %>
 
-<portlet:actionURL name="addRecord" var="addRecordURL">
+<portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="addRecord" var="addRecordURL">
 	<portlet:param name="mvcPath" value="/edit_record.jsp" />
 </portlet:actionURL>
 
@@ -41,7 +41,7 @@ DDLDisplayTemplateTransformer ddlDisplayTemplateTransformer = new DDLDisplayTemp
 	<c:if test="<%= showAddRecordButton %>">
 		<aui:nav-bar>
 			<aui:nav>
-				<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_record.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />

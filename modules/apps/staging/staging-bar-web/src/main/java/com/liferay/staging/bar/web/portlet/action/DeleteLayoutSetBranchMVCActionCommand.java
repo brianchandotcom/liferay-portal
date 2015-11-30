@@ -83,6 +83,6 @@ public class DeleteLayoutSetBranchMVCActionCommand
 		_layoutSetBranchService = layoutSetBranchService;
 	}
 
-	private LayoutSetBranchService _layoutSetBranchService;
+	private volatile LayoutSetBranchService _layoutSetBranchService;
 
 }

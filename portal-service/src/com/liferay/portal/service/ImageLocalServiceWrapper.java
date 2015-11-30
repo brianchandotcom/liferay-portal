@@ -243,6 +243,11 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 		return _imageLocalService.getImagesCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _imageLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

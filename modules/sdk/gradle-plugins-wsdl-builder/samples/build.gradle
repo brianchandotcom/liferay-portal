@@ -1,14 +1,14 @@
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.wsdl.builder", version: "latest.release"
+	}
+
 	repositories {
 		mavenLocal()
 
 		maven {
 			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
-	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.wsdl.builder", version: "latest.release"
 	}
 }
 

@@ -1,0 +1,21 @@
+<definition>
+	<command name="viewPlatformSettingCP">
+		<var name="key_assetEntry" value="${configurationName}" />
+
+		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
+
+		<if>
+			<isset var="status" />
+			<then>
+				<var name="key_status" value="${status}" />
+
+				<execute function="AssertElementPresent" locator1="Checkbox#STATUS" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No configurations were found." />
+			</else>
+		</if>
+	</command>
+</definition>

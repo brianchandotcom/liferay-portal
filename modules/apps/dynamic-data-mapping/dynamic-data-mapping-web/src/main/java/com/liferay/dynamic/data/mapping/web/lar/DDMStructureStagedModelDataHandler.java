@@ -510,10 +510,12 @@ public class DDMStructureStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureStagedModelDataHandler.class);
 
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
-	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private UserLocalService _userLocalService;
+	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private volatile DDMFormLayoutJSONDeserializer
+		_ddmFormLayoutJSONDeserializer;
+	private volatile DDMStructureLayoutLocalService
+		_ddmStructureLayoutLocalService;
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

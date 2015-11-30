@@ -41,7 +41,7 @@ public class ConfigurationFactoryUtil {
 	}
 
 	private static final ServiceTrackerList<ConfigurationFactory>
-		_configurationFactories = ServiceTrackerCollections.list(
+		_configurationFactories = ServiceTrackerCollections.openList(
 			ConfigurationFactory.class);
 
 }

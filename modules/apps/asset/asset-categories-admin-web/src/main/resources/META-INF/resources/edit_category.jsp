@@ -111,7 +111,7 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 			<aui:input name="description" />
 		</aui:fieldset>
 
-		<aui:fieldset id="categoryPropertiesId" label="properties">
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="categoryPropertiesId" label="properties">
 			<p class="text-muted">
 				<liferay-ui:message key="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" />
 			</p>
@@ -141,7 +141,7 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 		</aui:fieldset>
 
 		<c:if test="<%= category == null %>">
-			<aui:fieldset label="permissions">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 				<liferay-ui:input-permissions
 					modelName="<%= AssetCategory.class.getName() %>"
 				/>

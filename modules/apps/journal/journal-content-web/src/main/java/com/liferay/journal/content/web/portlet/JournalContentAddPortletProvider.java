@@ -111,7 +111,8 @@ public class JournalContentAddPortletProvider
 		_journalContentSearchLocal = null;
 	}
 
-	private AssetEntryLocalService _assetEntryLocalService;
-	private JournalContentSearchLocalService _journalContentSearchLocal;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile JournalContentSearchLocalService
+		_journalContentSearchLocal;
 
 }

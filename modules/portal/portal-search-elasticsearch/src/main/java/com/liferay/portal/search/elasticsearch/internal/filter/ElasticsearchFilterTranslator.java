@@ -222,18 +222,21 @@ public class ElasticsearchFilterTranslator
 		_termsFilterTranslator = termsFilterTranslator;
 	}
 
-	private BooleanFilterTranslator _booleanQueryTranslator;
-	private DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;
-	private ExistsFilterTranslator _existsFilterTranslator;
-	private GeoBoundingBoxFilterTranslator _geoBoundingBoxFilterTranslator;
-	private GeoDistanceFilterTranslator _geoDistanceFilterTranslator;
-	private GeoDistanceRangeFilterTranslator _geoDistanceRangeFilterTranslator;
-	private GeoPolygonFilterTranslator _geoPolygonFilterTranslator;
-	private MissingFilterTranslator _missingFilterTranslator;
-	private PrefixFilterTranslator _prefixFilterTranslator;
-	private QueryFilterTranslator _queryFilterTranslator;
-	private RangeTermFilterTranslator _rangeTermFilterTranslator;
-	private TermFilterTranslator _termFilterTranslator;
-	private TermsFilterTranslator _termsFilterTranslator;
+	private volatile BooleanFilterTranslator _booleanQueryTranslator;
+	private volatile DateRangeTermFilterTranslator
+		_dateRangeTermFilterTranslator;
+	private volatile ExistsFilterTranslator _existsFilterTranslator;
+	private volatile GeoBoundingBoxFilterTranslator
+		_geoBoundingBoxFilterTranslator;
+	private volatile GeoDistanceFilterTranslator _geoDistanceFilterTranslator;
+	private volatile GeoDistanceRangeFilterTranslator
+		_geoDistanceRangeFilterTranslator;
+	private volatile GeoPolygonFilterTranslator _geoPolygonFilterTranslator;
+	private volatile MissingFilterTranslator _missingFilterTranslator;
+	private volatile PrefixFilterTranslator _prefixFilterTranslator;
+	private volatile QueryFilterTranslator _queryFilterTranslator;
+	private volatile RangeTermFilterTranslator _rangeTermFilterTranslator;
+	private volatile TermFilterTranslator _termFilterTranslator;
+	private volatile TermsFilterTranslator _termsFilterTranslator;
 
 }

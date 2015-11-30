@@ -133,11 +133,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		Properties contactExpandoMappings =
 			_ldapSettings.getContactExpandoMappings(ldapServerId, companyId);
 
-		LDAPImportConfiguration ldapImportConfiguration =
-			_ldapImportConfigurationProvider.getConfiguration(companyId);
+		LDAPServerConfiguration ldapServerConfiguration =
+			_ldapServerConfigurationProvider.getConfiguration(
+				companyId, ldapServerId);
 
 		String[] userIgnoreAttributes =
-			ldapImportConfiguration.userIgnoreAttributes();
+			ldapServerConfiguration.userIgnoreAttributes();
 
 		Set<String> ldapUserIgnoreAttributes = new HashSet<>(
 			Arrays.asList(userIgnoreAttributes));
@@ -423,8 +424,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
+		LDAPServerConfiguration ldapServerConfiguration =
+			_ldapServerConfigurationProvider.getConfiguration(
+				companyId, ldapServerId);
+
 		String[] userIgnoreAttributes =
-			ldapImportConfiguration.userIgnoreAttributes();
+			ldapServerConfiguration.userIgnoreAttributes();
 
 		Set<String> ldapUserIgnoreAttributes = new HashSet<>(
 			Arrays.asList(userIgnoreAttributes));
@@ -866,15 +871,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		Set<Long> newUserGroupIds = new LinkedHashSet<>();
 
-		LDAPImportConfiguration ldapImportConfiguration =
-			_ldapImportConfigurationProvider.getConfiguration(companyId);
+		LDAPServerConfiguration ldapServerConfiguration =
+			_ldapServerConfigurationProvider.getConfiguration(
+				companyId, ldapServerId);
 
 		if (Validator.isNotNull(groupMappingsUser) &&
-			ldapImportConfiguration.importGroupSearchFilterEnabled()) {
-
-			LDAPServerConfiguration ldapServerConfiguration =
-				_ldapServerConfigurationProvider.getConfiguration(
-					companyId, ldapServerId);
+			ldapServerConfiguration.groupSearchFilterEnabled()) {
 
 			String baseDN = ldapServerConfiguration.baseDN();
 
@@ -1011,8 +1013,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				attributes, "modifyTimestamp");
 
 			user = updateUser(
-				companyId, ldapUser, user, userMappings, contactMappings,
-				password, modifyTimestamp, isNew);
+				companyId, ldapServerId, ldapUser, user, userMappings,
+				contactMappings, password, modifyTimestamp, isNew);
 
 			updateExpandoAttributes(
 				user, ldapUser, userExpandoMappings, contactExpandoMappings,
@@ -1353,7 +1355,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	protected User updateUser(
-			long companyId, LDAPUser ldapUser, User user,
+			long companyId, long ldapServerId, LDAPUser ldapUser, User user,
 			Properties userMappings, Properties contactMappings,
 			String password, String modifyTimestamp, boolean isNew)
 		throws Exception {
@@ -1413,14 +1415,18 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		LDAPImportConfiguration ldapImportConfiguration =
-			_ldapImportConfigurationProvider.getConfiguration(companyId);
+		LDAPServerConfiguration ldapServerConfiguration =
+			_ldapServerConfigurationProvider.getConfiguration(
+				companyId, ldapServerId);
 
 		String[] userIgnoreAttributes =
-			ldapImportConfiguration.userIgnoreAttributes();
+			ldapServerConfiguration.userIgnoreAttributes();
 
 		Set<String> ldapUserIgnoreAttributes = new HashSet<>(
 			Arrays.asList(userIgnoreAttributes));
+
+		LDAPImportConfiguration ldapImportConfiguration =
+			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
 		if (!ldapImportConfiguration.importUserPasswordEnabled()) {
 			password = ldapImportConfiguration.importUserPasswordDefault();
@@ -1509,24 +1515,24 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPUserImporterImpl.class);
 
-	private AttributesTransformer _attributesTransformer;
+	private volatile AttributesTransformer _attributesTransformer;
 	private boolean _authPipelineEnableLiferayCheck;
-	private CompanyLocalService _companyLocalService;
+	private volatile CompanyLocalService _companyLocalService;
 	private String _companySecurityAuthType;
-	private ExpandoValueLocalService _expandoValueLocalService;
-	private GroupLocalService _groupLocalService;
+	private volatile ExpandoValueLocalService _expandoValueLocalService;
+	private volatile GroupLocalService _groupLocalService;
 	private long _lastImportTime;
-	private ConfigurationProvider<LDAPImportConfiguration>
+	private volatile ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
-	private ConfigurationProvider<LDAPServerConfiguration>
+	private volatile ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-	private LDAPSettings _ldapSettings;
-	private LDAPToPortalConverter _ldapToPortalConverter;
-	private LockManager _lockManager;
+	private volatile LDAPSettings _ldapSettings;
+	private volatile LDAPToPortalConverter _ldapToPortalConverter;
+	private volatile LockManager _lockManager;
 	private PortalCache<String, Long> _portalCache;
-	private PortalLDAP _portalLDAP;
-	private RoleLocalService _roleLocalService;
-	private UserGroupLocalService _userGroupLocalService;
-	private UserLocalService _userLocalService;
+	private volatile PortalLDAP _portalLDAP;
+	private volatile RoleLocalService _roleLocalService;
+	private volatile UserGroupLocalService _userGroupLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

@@ -292,6 +292,10 @@ public final class XMLLoggerHandler {
 					loggerElement.addChildLoggerElement(
 						_getIfLoggerElement(childElement));
 				}
+				else if (childElementName.equals("return")) {
+					loggerElement.addChildLoggerElement(
+						_getReturnLoggerElement(childElement));
+				}
 				else if (childElementName.equals("var")) {
 					loggerElement.addChildLoggerElement(
 						_getVarLoggerElement(childElement));
@@ -628,6 +632,10 @@ public final class XMLLoggerHandler {
 		}
 
 		return loggerElement;
+	}
+
+	private static LoggerElement _getReturnLoggerElement(Element element) {
+		return _getLineGroupLoggerElement("return", element);
 	}
 
 	private static LoggerElement _getTestCaseCommandLoggerElement(

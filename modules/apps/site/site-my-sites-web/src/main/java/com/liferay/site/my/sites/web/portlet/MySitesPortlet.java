@@ -175,8 +175,8 @@ public class MySitesPortlet extends MVCPortlet {
 		_userService = userService;
 	}
 
-	private MembershipRequestService _membershipRequestService;
-	private UserLocalService _userLocalService;
-	private UserService _userService;
+	private volatile MembershipRequestService _membershipRequestService;
+	private volatile UserLocalService _userLocalService;
+	private volatile UserService _userService;
 
 }

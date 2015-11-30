@@ -112,6 +112,6 @@ public class SortFactoryImpl implements SortFactory {
 		new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true)
 	};
 
-	private IndexerRegistry _indexerRegistry;
+	private volatile IndexerRegistry _indexerRegistry;
 
 }

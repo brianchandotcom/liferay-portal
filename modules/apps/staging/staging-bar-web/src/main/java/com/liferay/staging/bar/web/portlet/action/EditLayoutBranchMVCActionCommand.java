@@ -97,6 +97,6 @@ public class EditLayoutBranchMVCActionCommand extends BaseMVCActionCommand {
 		_layoutBranchService = layoutBranchService;
 	}
 
-	private LayoutBranchService _layoutBranchService;
+	private volatile LayoutBranchService _layoutBranchService;
 
 }

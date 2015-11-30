@@ -51,6 +51,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		<%
 		PortletURL redirectURL = renderResponse.createRenderURL();
 
+		redirectURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
 		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
 		redirectURL.setParameter("redirect", currentURL);
 		redirectURL.setWindowState(LiferayWindowState.POP_UP);

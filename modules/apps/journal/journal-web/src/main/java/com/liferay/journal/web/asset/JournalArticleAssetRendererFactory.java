@@ -111,11 +111,9 @@ public class JournalArticleAssetRendererFactory
 		}
 
 		JournalArticleAssetRenderer journalArticleAssetRenderer =
-			new JournalArticleAssetRenderer(article);
+			getJournalArticleAssetRenderer(article);
 
 		journalArticleAssetRenderer.setAssetRendererType(type);
-		journalArticleAssetRenderer.setJournalContent(_journalContent);
-		journalArticleAssetRenderer.setJournalConverter(_journalConverter);
 		journalArticleAssetRenderer.setServletContext(_servletContext);
 
 		return journalArticleAssetRenderer;
@@ -130,7 +128,7 @@ public class JournalArticleAssetRendererFactory
 			_journalArticleService.getDisplayArticleByUrlTitle(
 				groupId, urlTitle);
 
-		return new JournalArticleAssetRenderer(article);
+		return getJournalArticleAssetRenderer(article);
 	}
 
 	@Override
@@ -265,6 +263,18 @@ public class JournalArticleAssetRendererFactory
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
+	protected JournalArticleAssetRenderer getJournalArticleAssetRenderer(
+		JournalArticle article) {
+
+		JournalArticleAssetRenderer journalArticleAssetRenderer =
+			new JournalArticleAssetRenderer(article);
+
+		journalArticleAssetRenderer.setJournalContent(_journalContent);
+		journalArticleAssetRenderer.setJournalConverter(_journalConverter);
+
+		return journalArticleAssetRenderer;
+	}
+
 	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
@@ -304,13 +314,13 @@ public class JournalArticleAssetRendererFactory
 		_journalConverter = journalConverter;
 	}
 
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalArticleResourceLocalService
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private volatile JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private JournalArticleService _journalArticleService;
-	private JournalContent _journalContent;
-	private JournalConverter _journalConverter;
-	private ServletContext _servletContext;
+	private volatile JournalArticleService _journalArticleService;
+	private volatile JournalContent _journalContent;
+	private volatile JournalConverter _journalConverter;
+	private volatile ServletContext _servletContext;
 
 }

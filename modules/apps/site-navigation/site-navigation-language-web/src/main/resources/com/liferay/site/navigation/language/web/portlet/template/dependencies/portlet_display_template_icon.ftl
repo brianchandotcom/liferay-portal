@@ -6,12 +6,14 @@
 			<#assign cssClass = "current-language" />
 		</#if>
 
-		<@liferay_ui["icon"]
-			cssClass=cssClass
-			image="../language/" + entry.getLanguageId()
-			lang=entry.getW3cLanguageId()
-			message=entry.getLongDisplayName()
-			url=entry.getURL()
-		/>
+		<#if !entry.isDisabled()>
+			<@liferay_ui["icon"]
+				cssClass=cssClass
+				image="../language/" + entry.getLanguageId()
+				lang=entry.getW3cLanguageId()
+				message=entry.getLongDisplayName()
+				url=entry.getURL()
+			/>
+		</#if>
 	</#list>
 </#if>

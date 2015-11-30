@@ -10,9 +10,9 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
 			<then>
-				<execute function="AssertClick" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
 			</then>
 		</if>
 
@@ -36,7 +36,7 @@
 		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="false" />
 			<then>
-				<execute function="Uncheck" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+				<execute function="Uncheck#uncheckToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
 			</then>
 		</if>
 
@@ -68,7 +68,15 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
-		<execute function="Select" locator1="CategoriesEditVocabulary#VIEWABLE_BY_SELECT" value1="${viewableBy}" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#PERMISSIONS_BAR_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="CategoriesEditVocabulary#PERMISSIONS_BAR" />
+			</then>
+		</if>
+
+		<execute function="Select" locator1="CategoriesEditVocabulary#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -91,9 +99,9 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
 			<then>
-				<execute function="AssertClick" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
 			</then>
 		</if>
 
@@ -125,9 +133,9 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
 			<then>
-				<execute function="AssertClick" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
 			</then>
 		</if>
 
@@ -183,12 +191,12 @@
 		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="false" />
 			<then>
-				<execute function="Uncheck" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+				<execute function="Uncheck#uncheckToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
 			</then>
 			<elseif>
 				<equals arg1="${allowMultipleCategories}" arg2="true" />
 				<then>
-					<execute function="Check" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+					<execute function="Check#checkToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
 				</then>
 			</elseif>
 		</if>
@@ -212,8 +220,10 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
 		</execute>
 
 		<if>
@@ -238,7 +248,7 @@
 
 				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-				<execute function="AssertNotChecked" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+				<execute function="AssertNotChecked#assertNotCheckedToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
 			</then>
 		</if>
 	</command>
@@ -319,9 +329,9 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
 			<then>
-				<execute function="AssertClick" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
 			</then>
 		</if>
 

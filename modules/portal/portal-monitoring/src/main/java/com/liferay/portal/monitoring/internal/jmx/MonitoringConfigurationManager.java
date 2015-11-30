@@ -242,9 +242,9 @@ public class MonitoringConfigurationManager
 	}
 
 	private volatile MonitoringConfiguration _monitoringConfiguration;
-	private MonitoringControl _monitoringControl;
-	private PortalMonitoringControl _portalMonitoringControl;
-	private PortletMonitoringControl _portletMonitoringControl;
-	private ServiceMonitoringControl _serviceMonitoringControl;
+	private volatile MonitoringControl _monitoringControl;
+	private volatile PortalMonitoringControl _portalMonitoringControl;
+	private volatile PortletMonitoringControl _portletMonitoringControl;
+	private volatile ServiceMonitoringControl _serviceMonitoringControl;
 
 }

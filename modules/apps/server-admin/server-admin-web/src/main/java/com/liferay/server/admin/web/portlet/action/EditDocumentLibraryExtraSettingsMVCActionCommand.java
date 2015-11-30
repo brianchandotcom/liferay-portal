@@ -112,6 +112,6 @@ public class EditDocumentLibraryExtraSettingsMVCActionCommand
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
-	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

@@ -182,8 +182,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 			deleteGroupIds = new long[] {groupId};
 		}
 		else {
-			deleteGroupIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteGroupIds"), 0L);
+			deleteGroupIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 		}
 
 		for (long deleteGroupId : deleteGroupIds) {
@@ -906,8 +905,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 		TransactionAttribute.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
-	private PanelAppRegistry _panelAppRegistry;
-	private PanelCategoryRegistry _panelCategoryRegistry;
+	private volatile PanelAppRegistry _panelAppRegistry;
+	private volatile PanelCategoryRegistry _panelCategoryRegistry;
 
 	private class GroupCallable implements Callable<Group> {
 

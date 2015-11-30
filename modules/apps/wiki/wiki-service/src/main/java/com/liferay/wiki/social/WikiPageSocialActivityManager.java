@@ -50,6 +50,6 @@ public class WikiPageSocialActivityManager
 		_socialActivityLocalService = socialActivityLocalService;
 	}
 
-	private SocialActivityLocalService _socialActivityLocalService;
+	private volatile SocialActivityLocalService _socialActivityLocalService;
 
 }

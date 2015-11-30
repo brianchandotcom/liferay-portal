@@ -2,19 +2,38 @@
 	<property name="testray.main.component.name" value="User Groups" />
 
 	<set-up>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="SignIn#signInPortalInstanceSetUp" />
+			</then>
+		</if>
+
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="UserGroup#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#tearDownCP" />
 
-		<execute macro="Role#tearDownCP" />
+				<execute macro="UserGroup#tearDownCP" />
 
-		<execute macro="Site#tearDownCP" />
+				<execute macro="Role#tearDownCP" />
 
-		<execute macro="Organization#tearDownCP" />
+				<execute macro="Site#tearDownCP" />
+
+				<execute macro="Organization#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="ExportUserGroupMembers" priority="3">
@@ -87,8 +106,8 @@
 		</execute>
 
 		<execute macro="UserGroup#addPageCP">
+			<var name="page" value="Private Pages" />
 			<var name="sitePageName" value="Test User Group Page 1" />
-			<var name="sitePagePrivacy" value="Private" />
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
@@ -304,9 +323,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page Name" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">

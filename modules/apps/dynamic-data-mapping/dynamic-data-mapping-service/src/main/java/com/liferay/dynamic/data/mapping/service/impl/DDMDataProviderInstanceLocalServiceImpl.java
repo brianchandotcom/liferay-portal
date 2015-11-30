@@ -90,6 +90,14 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	@Override
+	public DDMDataProviderInstance fetchDataProviderInstance(
+		long dataProviderInstanceId) {
+
+		return ddmDataProviderInstancePersistence.fetchByPrimaryKey(
+			dataProviderInstanceId);
+	}
+
+	@Override
 	public DDMDataProviderInstance getDataProviderInstance(
 			long dataProviderInstanceId)
 		throws PortalException {
@@ -164,10 +172,13 @@ public class DDMDataProviderInstanceLocalServiceImpl
 			Map<Locale, String> nameMap, DDMFormValues ddmFormValues)
 		throws PortalException {
 
-		String name = nameMap.get(LocaleUtil.getSiteDefault());
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		String name = nameMap.get(locale);
 
 		if (Validator.isNull(name)) {
-			throw new DataProviderInstanceNameException();
+			throw new DataProviderInstanceNameException(
+				"Name is null for locale " + locale.getDisplayName());
 		}
 
 		ddmFormValuesValidator.validate(ddmFormValues);

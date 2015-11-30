@@ -39,6 +39,6 @@ public class QueryFilterTranslatorImpl implements QueryFilterTranslator {
 		_luceneQueryConverter = luceneQueryConverter;
 	}
 
-	private LuceneQueryConverter _luceneQueryConverter;
+	private volatile LuceneQueryConverter _luceneQueryConverter;
 
 }

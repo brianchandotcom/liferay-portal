@@ -43,6 +43,9 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			"generic-1", "1609", "test-portal-acceptance-pullrequest(master)",
 			"test-1-1");
 		downloadSample(
+			"jspc-1", "1672", "test-portal-acceptance-pullrequest(master)",
+			"test-1-5");
+		downloadSample(
 			"rebase-1", "58", "test-portal-acceptance-pullrequest(ee-6.2.x)",
 			"test-1-19");
 	}
@@ -157,7 +160,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		Project project = getProject(
 			new File(sampleDir, "sample.properties"), "", sampleDir.getPath());
 
-		GitHubMessageUtil.getGithubMessage(project);
+		GitHubMessageUtil.getGitHubMessage(project);
 
 		return project.getProperty("github.post.comment.body");
 	}
@@ -229,6 +232,6 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		".+://(?<hostName>[^.]+).liferay.com/job/(?<jobName>[^/]+).*/" +
 			"(?<buildNumber>\\d+)/");
 	private static final Pattern _progressiveTextPattern = Pattern.compile(
-		"\\[echo\\] \\'.*\\' completed at (?<url>.+).");
+		"\\[echo\\] \\'.*\\' completed at (?<url>.+)\\.");
 
 }

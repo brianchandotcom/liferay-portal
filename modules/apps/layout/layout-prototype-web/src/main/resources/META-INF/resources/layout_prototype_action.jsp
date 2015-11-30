@@ -102,7 +102,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 	<c:if test="<%= LayoutPrototypePermissionUtil.contains(permissionChecker, layoutPrototype.getLayoutPrototypeId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteLayoutPrototypes" var="deleteLayoutPrototypesURL">
 			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="layoutPrototypeIds" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
+			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

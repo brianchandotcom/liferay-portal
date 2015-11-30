@@ -56,6 +56,6 @@ public class CalendarBookingPermissionUpdateHandler
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
-	private CalendarBookingLocalService _calendarBookingLocalService;
+	private volatile CalendarBookingLocalService _calendarBookingLocalService;
 
 }

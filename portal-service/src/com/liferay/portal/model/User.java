@@ -278,6 +278,8 @@ public interface User extends UserModel, PersistedModel {
 
 	public java.util.List<com.liferay.portal.model.Group> getGroups();
 
+	public java.lang.String getInitials();
+
 	public java.util.Locale getLocale();
 
 	public java.lang.String getLogin()

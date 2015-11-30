@@ -14,7 +14,9 @@
 
 package com.liferay.shopping.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -22,15 +24,12 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.model.ShoppingCategoryConstants;
-import com.liferay.shopping.service.ShoppingCategoryLocalServiceUtil;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.shopping.service.ShoppingCategoryLocalService;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
+@OSGiBeanProperties(
 	property = {"model.class.name=com.liferay.shopping.model.ShoppingCategory"},
 	service = ShoppingCategoryPermission.class
 )
@@ -73,7 +72,7 @@ public class ShoppingCategoryPermission implements BaseModelPermissionChecker {
 		}
 		else {
 			ShoppingCategory category =
-				ShoppingCategoryLocalServiceUtil.getCategory(categoryId);
+				_shoppingCategoryLocalService.getCategory(categoryId);
 
 			return contains(permissionChecker, category, actionId);
 		}
@@ -96,7 +95,7 @@ public class ShoppingCategoryPermission implements BaseModelPermissionChecker {
 			while (categoryId !=
 						ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-				category = ShoppingCategoryLocalServiceUtil.getCategory(
+				category = _shoppingCategoryLocalService.getCategory(
 					categoryId);
 
 				if (!_hasPermission(permissionChecker, category, actionId)) {
@@ -138,5 +137,8 @@ public class ShoppingCategoryPermission implements BaseModelPermissionChecker {
 
 		return false;
 	}
+
+	@BeanReference(type = ShoppingCategoryLocalService.class)
+	private static ShoppingCategoryLocalService _shoppingCategoryLocalService;
 
 }

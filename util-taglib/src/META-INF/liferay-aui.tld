@@ -1481,6 +1481,18 @@
 		<tag-class>com.liferay.taglib.aui.FieldsetTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>collapsed</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>collapsible</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[Whether to display the field set as a column instead of a row]]></description>
 			<name>column</name>
 			<required>false</required>
@@ -1522,6 +1534,12 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
+		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
@@ -1529,6 +1547,12 @@
 		<name>fieldset-group</name>
 		<tag-class>com.liferay.taglib.aui.FieldsetGroupTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>

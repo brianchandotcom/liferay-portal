@@ -33,6 +33,14 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 		return super.doStartTag();
 	}
 
+	public boolean getCollapsed() {
+		return _collapsed;
+	}
+
+	public boolean getCollapsible() {
+		return _collapsible;
+	}
+
 	public boolean getColumn() {
 		return _column;
 	}
@@ -55,6 +63,22 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 
 	public boolean getLocalizeLabel() {
 		return _localizeLabel;
+	}
+
+	public java.lang.String getMarkupView() {
+		return _markupView;
+	}
+
+	public void setCollapsed(boolean collapsed) {
+		_collapsed = collapsed;
+
+		setScopedAttribute("collapsed", collapsed);
+	}
+
+	public void setCollapsible(boolean collapsible) {
+		_collapsible = collapsible;
+
+		setScopedAttribute("collapsible", collapsible);
 	}
 
 	public void setColumn(boolean column) {
@@ -93,16 +117,30 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 		setScopedAttribute("localizeLabel", localizeLabel);
 	}
 
+	public void setMarkupView(java.lang.String markupView) {
+		_markupView = markupView;
+
+		setScopedAttribute("markupView", markupView);
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_collapsed = false;
+		_collapsible = false;
 		_column = false;
 		_cssClass = null;
 		_helpMessage = null;
 		_id = null;
 		_label = null;
 		_localizeLabel = true;
+		_markupView = null;
+	}
+
+	@Override
+	protected String getEndPage() {
+		return _END_PAGE;
 	}
 
 	@Override
@@ -112,24 +150,33 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		setNamespacedAttribute(request, "collapsed", _collapsed);
+		setNamespacedAttribute(request, "collapsible", _collapsible);
 		setNamespacedAttribute(request, "column", _column);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
+		setNamespacedAttribute(request, "markupView", _markupView);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:fieldset:";
 
+	private static final String _END_PAGE =
+		"/html/taglib/aui/fieldset/end.jsp";
+
 	private static final String _START_PAGE =
 		"/html/taglib/aui/fieldset/start.jsp";
 
+	private boolean _collapsed = false;
+	private boolean _collapsible = false;
 	private boolean _column = false;
 	private java.lang.String _cssClass = null;
 	private java.lang.String _helpMessage = null;
 	private java.lang.String _id = null;
 	private java.lang.String _label = null;
 	private boolean _localizeLabel = true;
+	private java.lang.String _markupView = null;
 
 }

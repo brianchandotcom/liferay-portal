@@ -210,9 +210,9 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private StagedModelRepository<BookmarksEntry>
+	private volatile StagedModelRepository<BookmarksEntry>
 		_bookmarksEntryStagedModelRepository;
-	private StagedModelRepository<BookmarksFolder>
+	private volatile StagedModelRepository<BookmarksFolder>
 		_bookmarksFolderStagedModelRepository;
 
 }

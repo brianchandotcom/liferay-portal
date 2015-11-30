@@ -138,6 +138,6 @@ public class GetPageAttachmentAction extends BaseStrutsAction {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetPageAttachmentAction.class);
 
-	private WikiPageService _wikiPageService;
+	private volatile WikiPageService _wikiPageService;
 
 }

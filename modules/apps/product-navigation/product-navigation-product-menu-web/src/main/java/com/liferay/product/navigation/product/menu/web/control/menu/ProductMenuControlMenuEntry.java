@@ -105,6 +105,6 @@ public class ProductMenuControlMenuEntry extends BaseJSPControlMenuEntry {
 		_panelCategoryRegistry = null;
 	}
 
-	private PanelCategoryRegistry _panelCategoryRegistry;
+	private volatile PanelCategoryRegistry _panelCategoryRegistry;
 
 }

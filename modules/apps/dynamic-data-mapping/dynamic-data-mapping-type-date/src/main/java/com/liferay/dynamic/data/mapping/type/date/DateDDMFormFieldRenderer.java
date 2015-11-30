@@ -82,7 +82,8 @@ public class DateDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		_dateDDMFormFieldValueRenderer = dateDDMFormFieldValueRenderer;
 	}
 
-	private DateDDMFormFieldValueRenderer _dateDDMFormFieldValueRenderer;
+	private volatile DateDDMFormFieldValueRenderer
+		_dateDDMFormFieldValueRenderer;
 	private TemplateResource _templateResource;
 
 }

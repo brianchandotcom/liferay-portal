@@ -74,28 +74,9 @@
 		<var name="key_orgName" value="${orgName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="${parentOrgName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="viewSelectOrganizationNoPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="AssertTextPresent" locator1="Portlet#TITLE" value1="Blogs Aggregator" />
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<execute function="AssertClick" locator1="Configuration#NAVIGATION_SETUP" value1="Setup" />
-
-		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="SelectFrame" locator1="UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
-		<execute function="AssertElementPresent" locator1="Message#INFO_1" />
 	</command>
 
 	<command name="viewSubOrganizationPG">

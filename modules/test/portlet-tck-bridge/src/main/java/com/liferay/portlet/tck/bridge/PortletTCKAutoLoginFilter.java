@@ -98,6 +98,6 @@ public class PortletTCKAutoLoginFilter extends BasePortalFilter {
 
 	private static final String _TCK_SKIP_LOGIN = "TCK_SKIP_LOGIN";
 
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

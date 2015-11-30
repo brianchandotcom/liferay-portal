@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADD_PAGE</td>
+	<td>//button[contains(.,'Add Page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_PAGE_FORMAT_DROPDOWN</td>
 	<td>//select[contains(@id,'format')]</td>
 	<td></td>

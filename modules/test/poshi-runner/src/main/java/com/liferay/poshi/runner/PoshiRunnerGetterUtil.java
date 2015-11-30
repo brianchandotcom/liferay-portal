@@ -47,6 +47,31 @@ import org.dom4j.io.SAXReader;
  */
 public class PoshiRunnerGetterUtil {
 
+	public static List<Element> getAllChildElements(
+		Element element, String elementName) {
+
+		List<Element> allChildElements = new ArrayList<>();
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.isEmpty()) {
+			return allChildElements;
+		}
+
+		for (Element childElement : childElements) {
+			String childElementName = childElement.getName();
+
+			if (childElementName.equals(elementName)) {
+				allChildElements.add(childElement);
+			}
+
+			allChildElements.addAll(
+				getAllChildElements(childElement, elementName));
+		}
+
+		return allChildElements;
+	}
+
 	public static String getCanonicalPath(String dir) {
 		try {
 			File file = new File(dir);
@@ -58,6 +83,18 @@ public class PoshiRunnerGetterUtil {
 		}
 
 		return dir;
+	}
+
+	public static String getClassCommandName(
+		String className, String commandName) {
+
+		StringBuilder sb = new StringBuilder(3);
+
+		sb.append(className);
+		sb.append("#");
+		sb.append(commandName);
+
+		return sb.toString();
 	}
 
 	public static String getClassNameFromClassCommandName(
@@ -390,9 +427,9 @@ public class PoshiRunnerGetterUtil {
 			"and", "body", "case", "command", "condition", "contains",
 			"default", "definition", "description", "echo", "else", "elseif",
 			"equals", "execute", "fail", "for", "if", "head", "html", "isset",
-			"not", "or", "property", "set-up", "table", "take-screenshot",
-			"task", "tbody", "td", "tear-down", "thead", "then", "title", "tr",
-			"var", "while"
+			"not", "or", "property", "return", "set-up", "table",
+			"take-screenshot", "task", "tbody", "td", "tear-down", "thead",
+			"then", "title", "tr", "var", "while"
 		});
 	private static final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
 

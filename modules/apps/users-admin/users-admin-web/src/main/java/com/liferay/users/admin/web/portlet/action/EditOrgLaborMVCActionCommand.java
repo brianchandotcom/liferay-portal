@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.OrgLaborService;
-import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -139,6 +139,6 @@ public class EditOrgLaborMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private OrgLaborService _orgLaborService;
+	private volatile OrgLaborService _orgLaborService;
 
 }

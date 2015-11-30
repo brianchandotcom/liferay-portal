@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.sites.search;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
@@ -27,7 +27,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Brett Swaim
  */
-public class UserGroupGroupRoleRoleChecker extends RowChecker {
+public class UserGroupGroupRoleRoleChecker extends EmptyOnClickRowChecker {
 
 	public UserGroupGroupRoleRoleChecker(
 		RenderResponse renderResponse, UserGroup userGroup, Group group) {

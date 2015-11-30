@@ -22,8 +22,10 @@
 	</command>
 
 	<command name="configureGeneralCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
@@ -67,8 +69,10 @@
 	</command>
 
 	<command name="configureMessageAddedEmailCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
@@ -92,8 +96,10 @@
 	</command>
 
 	<command name="configureMessageEmailFromCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
@@ -121,8 +127,10 @@
 	</command>
 
 	<command name="configureMessageUpdatedEmailCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
@@ -205,8 +213,10 @@
 	</command>
 
 	<command name="tearDownConfigurationEmailCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
@@ -226,8 +236,10 @@
 	</command>
 
 	<command name="tearDownConfigurationGeneralCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
@@ -299,8 +311,10 @@
 	</command>
 
 	<command name="viewDefaultEmailFromCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />

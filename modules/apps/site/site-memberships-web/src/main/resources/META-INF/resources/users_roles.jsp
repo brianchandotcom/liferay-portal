@@ -17,104 +17,124 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = (String)request.getAttribute("edit_site_assignments.jsp-tabs1");
-String tabs2 = (String)request.getAttribute("edit_site_assignments.jsp-tabs2");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUsersRoles");
 
-String redirect = (String)request.getAttribute("edit_site_assignments.jsp-redirect");
+PortletURL portletURL = renderResponse.createRenderURL();
 
-int cur = (Integer)request.getAttribute("edit_site_assignments.jsp-cur");
+portletURL.setParameter("mvcPath", "/users_roles.jsp");
+portletURL.setParameter("p_u_i_d", String.valueOf(siteMembershipsDisplayContext.getUserId()));
 
-Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
-User selUser = (User)request.getAttribute("edit_site_assignments.jsp-selUser");
+RoleSearch roleSearch = new RoleSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.jsp-portletURL");
+RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearch.getSearchTerms();
 
-portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
+List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, roleSearch.getOrderByComparator());
+
+roles = UsersAdminUtil.filterGroupRoles(permissionChecker, siteMembershipsDisplayContext.getGroupId(), roles);
+
+int rolesCount = roles.size();
+
+roleSearch.setTotal(rolesCount);
+
+roles = ListUtil.subList(roles, roleSearch.getStart(), roleSearch.getEnd());
+
+roleSearch.setResults(roles);
 %>
 
-<aui:input name="p_u_i_d" type="hidden" value="<%= selUser.getUserId() %>" />
-<aui:input name="addRoleIds" type="hidden" />
-<aui:input name="removeRoleIds" type="hidden" />
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<c:if test="<%= rolesCount > 0 %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	escapeXml="<%= false %>"
-	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.get(request, "edit-site-roles-for-user") + ": " + HtmlUtil.escape(selUser.getFullName()) %>'
-/>
-
-<liferay-ui:membership-policy-error />
-
-<liferay-ui:search-container
-	rowChecker="<%= new UserGroupRoleRoleChecker(renderResponse, selUser, group) %>"
-	searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
->
-	<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="col-xs-12 form-search" placeholder="keywords" />
-
-	<liferay-ui:search-container-results>
-
-		<%
-		RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
-
-		List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
-
-		roles = UsersAdminUtil.filterGroupRoles(permissionChecker, group.getGroupId(), roles);
-
-		total = roles.size();
-
-		searchContainer.setTotal(total);
-
-		results = ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd());
-
-		searchContainer.setResults(results);
-		%>
-
-	</liferay-ui:search-container-results>
-
-	<%
-	PortletURL updateRoleAssignmentsURL = renderResponse.createRenderURL();
-
-	updateRoleAssignmentsURL.setParameter("tabs1", tabs1);
-	updateRoleAssignmentsURL.setParameter("tabs2", tabs2);
-	updateRoleAssignmentsURL.setParameter("cur", String.valueOf(cur));
-	updateRoleAssignmentsURL.setParameter("redirect", redirect);
-	updateRoleAssignmentsURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
-	updateRoleAssignmentsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-	%>
-
-	<div class="separator"><!-- --></div>
-
-	<%
-	String taglibOnClick = renderResponse.getNamespace() + "updateUserGroupRole('" + updateRoleAssignmentsURL.toString() + "');";
-	%>
-
-	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Role"
-		keyProperty="roleId"
-		modelVar="role"
+<c:if test="<%= rolesCount > 0 %>">
+	<liferay-frontend:management-bar
+		includeCheckBox="<%= true %>"
+		searchContainerId="userGroupRoleRole"
 	>
-		<liferay-ui:search-container-column-text
-			name="title"
-		>
-			<liferay-ui:icon
-				iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
-				label="<%= true %>"
-				message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			/>
-		</liferay-ui:search-container-column-text>
+		</liferay-frontend:management-bar-filters>
 
-		<liferay-ui:search-container-column-text
-			name="type"
-			value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
-		/>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+</c:if>
 
-		<liferay-ui:search-container-column-text
-			name="description"
-			value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
-		/>
-	</liferay-ui:search-container-row>
+<aui:form cssClass="container-fluid-1280" name="fm">
+	<liferay-ui:membership-policy-error />
 
-	<liferay-ui:search-iterator/>
-</liferay-ui:search-container>
+	<liferay-ui:search-container
+		id="userGroupRoleRole"
+		rowChecker="<%= new UserGroupRoleRoleChecker(renderResponse, siteMembershipsDisplayContext.getSelUser(), siteMembershipsDisplayContext.getGroup()) %>"
+		searchContainer="<%= roleSearch %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.model.Role"
+			keyProperty="roleId"
+			modelVar="role"
+		>
+			<liferay-ui:search-container-column-text
+				name="title"
+			>
+				<liferay-ui:icon
+					iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+					label="<%= true %>"
+					message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+				/>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				name="type"
+				value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="description"
+				value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+	</liferay-ui:search-container>
+</aui:form>
+
+<aui:script>
+	$('input[name="<portlet:namespace />rowIds"]').on(
+		'change',
+		function(event) {
+			<portlet:namespace />updateUserGroupRole();
+		}
+	);
+
+	function <portlet:namespace />updateUserGroupRole() {
+		var Util = Liferay.Util;
+
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		var values = {
+			data: {
+				addRoleIds: Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'),
+				removeRoleIds: Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'),
+				selUserId: <%= siteMembershipsDisplayContext.getUserId() %>
+			}
+		};
+
+		Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', values);
+	}
+
+	<portlet:namespace />updateUserGroupRole();
+</aui:script>

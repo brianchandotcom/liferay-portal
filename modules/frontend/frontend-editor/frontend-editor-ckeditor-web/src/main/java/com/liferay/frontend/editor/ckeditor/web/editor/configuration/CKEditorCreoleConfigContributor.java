@@ -66,7 +66,7 @@ public class CKEditorCreoleConfigContributor
 		jsonObject.put("disableObjectResizing", Boolean.TRUE);
 		jsonObject.put(
 			"extraPlugins",
-			"a11yhelpbtn,creole,imageselector,lfrpopup,wikilink");
+			"a11yhelpbtn,creole,itemselector,lfrpopup,wikilink");
 		jsonObject.put(
 			"filebrowserWindowFeatures",
 			"title=" + LanguageUtil.get(themeDisplay.getLocale(), "browse"));

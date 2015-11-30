@@ -282,6 +282,13 @@ public class PortletFileRepositoryUtil {
 			groupId, portletId);
 	}
 
+	public static String getUniqueFileName(
+		long groupId, long folderId, String fileName) {
+
+		return getPortletFileRepository().getUniqueFileName(
+			groupId, folderId, fileName);
+	}
+
 	public static FileEntry movePortletFileEntryToTrash(
 			long userId, long fileEntryId)
 		throws PortalException {

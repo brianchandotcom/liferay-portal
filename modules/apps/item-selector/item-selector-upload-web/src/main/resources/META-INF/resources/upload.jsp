@@ -38,8 +38,8 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 	<liferay-ui:drop-here-info message="drop-files-here" />
 </div>
 
-<aui:script use="liferay-item-selector-browser">
-	new Liferay.ItemSelectorBrowser(
+<aui:script use="liferay-item-selector-repository-entry-browser">
+	new Liferay.ItemSelectorRepositoryEntryBrowser(
 		{
 			closeCaption: '<%= itemSelectorUploadViewDisplayContext.getTitle(locale) %>',
 			on: {

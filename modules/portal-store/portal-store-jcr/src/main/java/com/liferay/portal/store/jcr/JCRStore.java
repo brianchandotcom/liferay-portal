@@ -651,6 +651,11 @@ public class JCRStore extends BaseStore {
 			String fileName)
 		throws DuplicateFileException, NoSuchFileException {
 
+		if (repositoryId == newRepositoryId) {
+			throw new DuplicateFileException(
+				companyId, newRepositoryId, fileName);
+		}
+
 		Session session = null;
 
 		try {
@@ -711,6 +716,11 @@ public class JCRStore extends BaseStore {
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
 		throws DuplicateFileException, NoSuchFileException {
+
+		if (fileName.equals(newFileName)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, newFileName);
+		}
 
 		Session session = null;
 

@@ -239,6 +239,6 @@ public class BlogsEntryAtomCollectionAdapter
 
 	private static final String _COLLECTION_NAME = "blogs";
 
-	private BlogsEntryService _blogsEntryService;
+	private volatile BlogsEntryService _blogsEntryService;
 
 }

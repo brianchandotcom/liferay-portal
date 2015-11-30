@@ -20,6 +20,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.ldap.configuration.BaseConfigurationProvider;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.ldap.constants.LDAPConstants;
@@ -51,6 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationProvider.class
 )
 public class LDAPServerConfigurationProviderImpl
+	extends BaseConfigurationProvider<LDAPServerConfiguration>
 	implements ConfigurationProvider<LDAPServerConfiguration> {
 
 	@Override
@@ -276,8 +281,18 @@ public class LDAPServerConfigurationProviderImpl
 	public void registerConfiguration(Configuration configuration) {
 		Dictionary<String, Object> properties = configuration.getProperties();
 
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
+
+		Tuple tuple = new Tuple(
+			ldapServerConfiguration.companyId(),
+			ldapServerConfiguration.ldapServerId());
+
+		_tuples.put(configuration.getPid(), tuple);
 
 		synchronized (_configurations) {
 			Map<Long, Configuration> ldapServerConfigurations =
@@ -298,17 +313,22 @@ public class LDAPServerConfigurationProviderImpl
 
 	@Override
 	public void unregisterConfiguration(Configuration configuration) {
-		Dictionary<String, Object> properties = configuration.getProperties();
+		Tuple tuple = _tuples.get(configuration.getPid());
 
-		LDAPServerConfiguration ldapServerConfiguration =
-			Configurable.createConfigurable(getMetatype(), properties);
+		if (tuple == null) {
+			return;
+		}
+
+		long companyId = (Long)tuple.getObject(0);
+
+		Map<Long, Configuration> configurations = _configurations.get(
+			companyId);
 
 		synchronized (_configurations) {
-			Map<Long, Configuration> configurations = _configurations.get(
-				ldapServerConfiguration.companyId());
-
 			if (!MapUtil.isEmpty(configurations)) {
-				configurations.remove(ldapServerConfiguration.ldapServerId());
+				long ldapServerId = (Long)tuple.getObject(1);
+
+				configurations.remove(ldapServerId);
 			}
 		}
 	}
@@ -325,6 +345,10 @@ public class LDAPServerConfigurationProviderImpl
 		long companyId, long ldapServerId,
 		Dictionary<String, Object> properties) {
 
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
 		Map<Long, Configuration> configurations = _configurations.get(
 			companyId);
 
@@ -334,25 +358,16 @@ public class LDAPServerConfigurationProviderImpl
 			_configurations.put(companyId, configurations);
 		}
 
-		Map<Long, Configuration> defaultConfigurations = _configurations.get(
-			0L);
-
-		if (defaultConfigurations == null) {
-			Class<?> metatype = getMetatype();
-
-			throw new IllegalArgumentException(
-				"No default configuration for " + metatype.getName());
-		}
-
 		try {
 			Configuration configuration = configurations.get(ldapServerId);
 
 			if (configuration == null) {
-				Configuration defaultConfiguration = defaultConfigurations.get(
-					0L);
+				if (Validator.isNull(factoryPid)) {
+					factoryPid = getMetatypeId();
+				}
 
-				configuration = _configurationAdmin.createFactoryConfiguration(
-					defaultConfiguration.getFactoryPid());
+				configuration = configurationAdmin.createFactoryConfiguration(
+					factoryPid, StringPool.QUESTION);
 			}
 
 			properties.put(LDAPConstants.COMPANY_ID, companyId);
@@ -369,11 +384,11 @@ public class LDAPServerConfigurationProviderImpl
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {
 
-		_configurationAdmin = configurationAdmin;
+		super.configurationAdmin = configurationAdmin;
 	}
 
-	private ConfigurationAdmin _configurationAdmin;
 	private final Map<Long, Map<Long, Configuration>>
 		_configurations = new ConcurrentHashMap<>();
+	private final Map<String, Tuple> _tuples = new HashMap<>();
 
 }

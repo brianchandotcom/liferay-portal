@@ -382,11 +382,7 @@ public class UpdateLayoutAction extends JSONAction {
 	}
 
 	private static final ServiceTrackerMap<String, AddPortletProvider>
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			AddPortletProvider.class, "model.class.name");
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 }

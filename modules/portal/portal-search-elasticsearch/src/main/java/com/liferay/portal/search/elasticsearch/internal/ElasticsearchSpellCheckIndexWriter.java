@@ -176,8 +176,9 @@ public class ElasticsearchSpellCheckIndexWriter
 		_searchHitsProcessor = null;
 	}
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private ElasticsearchUpdateDocumentCommand
+	private volatile ElasticsearchConnectionManager
+		_elasticsearchConnectionManager;
+	private volatile ElasticsearchUpdateDocumentCommand
 		_elasticsearchUpdateDocumentCommand;
 	private volatile SearchHitsProcessor _searchHitsProcessor;
 

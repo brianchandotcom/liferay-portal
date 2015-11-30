@@ -26,11 +26,12 @@ public class LanguageEntry {
 
 	public LanguageEntry(
 		Set<String> duplicateLanguages, Locale currentLocale, Locale locale,
-		String url) {
+		String url, boolean disabled) {
 
 		_duplicateLanguages = duplicateLanguages;
 		_locale = locale;
 		_url = url;
+		_disabled = disabled;
 
 		_languageId = LocaleUtil.toLanguageId(locale);
 
@@ -66,10 +67,15 @@ public class LanguageEntry {
 		return LocaleUtil.toW3cLanguageId(_languageId);
 	}
 
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
 	public boolean isSelected() {
 		return _selected;
 	}
 
+	private final boolean _disabled;
 	private final Set<String> _duplicateLanguages;
 	private final String _languageId;
 	private final Locale _locale;

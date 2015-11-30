@@ -16,6 +16,7 @@ package com.liferay.blogs.search;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -153,10 +154,10 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 	}
 
 	protected void reindexEntries(long companyId) throws PortalException {
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_blogsEntryLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_blogsEntryLocalService.getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -178,8 +179,8 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 				}
 
 			});
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<BlogsEntry>() {
 
 				@Override
@@ -187,7 +188,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 					try {
 						Document document = getDocument(entry);
 
-						actionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocument(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
@@ -200,9 +201,9 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 				}
 
 			});
-		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Reference(unbind = "-")
@@ -215,6 +216,6 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryIndexer.class);
 
-	private BlogsEntryLocalService _blogsEntryLocalService;
+	private volatile BlogsEntryLocalService _blogsEntryLocalService;
 
 }

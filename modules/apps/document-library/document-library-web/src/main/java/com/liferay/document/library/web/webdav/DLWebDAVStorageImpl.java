@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -367,7 +368,16 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				if ((folder.getParentFolderId() != parentFolderId) ||
 					(webDAVRequest.getGroupId() != folder.getRepositoryId())) {
 
-					throw new NoSuchFolderException();
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("No DLFolder exists with the key ");
+					sb.append("{parendFolderId=");
+					sb.append(parentFolderId);
+					sb.append(", repositoryId=");
+					sb.append(webDAVRequest.getGroupId());
+					sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+					throw new NoSuchFolderException(sb.toString());
 				}
 
 				return toResource(webDAVRequest, folder, false);
@@ -987,7 +997,14 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				if (!hasLock(fileEntry, lockUuid) &&
 					(fileEntry.getLock() != null)) {
 
-					throw new LockException();
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("Inconsistent file lock state for file entry ");
+					sb.append(fileEntry.getPrimaryKey());
+					sb.append(" and lock UUID ");
+					sb.append(lockUuid);
+
+					throw new LockException(sb.toString());
 				}
 
 				_dlAppService.deleteFileEntryByTitle(
@@ -1240,10 +1257,10 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLWebDAVStorageImpl.class);
 
-	private AssetCategoryLocalService _assetCategoryLocalService;
-	private AssetEntryLocalService _assetEntryLocalService;
-	private AssetLinkLocalService _assetLinkLocalService;
-	private AssetTagLocalService _assetTagLocalService;
-	private DLAppService _dlAppService;
+	private volatile AssetCategoryLocalService _assetCategoryLocalService;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile AssetLinkLocalService _assetLinkLocalService;
+	private volatile AssetTagLocalService _assetTagLocalService;
+	private volatile DLAppService _dlAppService;
 
 }

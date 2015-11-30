@@ -20,21 +20,18 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Organization organization = (Organization)row.getObject();
-
-Group group = (Group)row.getParameter("group");
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
-		<portlet:actionURL name="editGroupOrganizations" var="removeURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			<portlet:param name="removeOrganizationIds" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
-		</portlet:actionURL>
+<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
+	<portlet:actionURL name="deleteGroupOrganizations" var="deleteGroupOrganizationsURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
+		<portlet:param name="removeOrganizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
+	</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="remove-membership"
-			url="<%= removeURL %>"
-		/>
-	</c:if>
-</liferay-ui:icon-menu>
+	<liferay-ui:icon
+		iconCssClass="icon-trash"
+		message="remove-membership"
+		url="<%= deleteGroupOrganizationsURL %>"
+	/>
+</c:if>

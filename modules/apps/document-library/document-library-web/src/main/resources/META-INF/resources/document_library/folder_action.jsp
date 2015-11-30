@@ -172,8 +172,8 @@ String iconMenuId = null;
 						<portlet:renderURL var="moveURL">
 							<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="folderIds" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+							<portlet:param name="rowIdsFolder" value="<%= String.valueOf(folderId) %>" />
 						</portlet:renderURL>
 
 						<liferay-ui:icon

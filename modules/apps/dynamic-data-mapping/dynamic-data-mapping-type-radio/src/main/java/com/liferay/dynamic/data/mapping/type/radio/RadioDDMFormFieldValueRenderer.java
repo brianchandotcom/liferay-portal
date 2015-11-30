@@ -66,6 +66,7 @@ public class RadioDDMFormFieldValueRenderer
 		_radioDDMFormFieldValueAccessor = radioDDMFormFieldValueAccessor;
 	}
 
-	private RadioDDMFormFieldValueAccessor _radioDDMFormFieldValueAccessor;
+	private volatile RadioDDMFormFieldValueAccessor
+		_radioDDMFormFieldValueAccessor;
 
 }

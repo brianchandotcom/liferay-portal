@@ -55,12 +55,14 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.translator.MediaWikiToCreoleTranslator;
+import com.liferay.wiki.util.WikiUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -82,6 +84,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = WikiImporter.class
 )
 public class MediaWikiImporter implements WikiImporter {
+
+	public static final String FORMAT_CREOLE = "creole";
+
+	public static final String FORMAT_MEDIAWIKI = "mediawiki";
 
 	public static final String SHARED_IMAGES_CONTENT = "See attachments";
 
@@ -148,6 +154,11 @@ public class MediaWikiImporter implements WikiImporter {
 			_wikiGroupServiceConfiguration.pageTitlesRemoveRegexp());
 	}
 
+	protected String getCreoleRedirectContent(String redirectTitle) {
+		return StringPool.DOUBLE_OPEN_BRACKET + redirectTitle +
+			StringPool.DOUBLE_CLOSE_BRACKET;
+	}
+
 	protected long getUserId(
 		long userId, WikiNode node, String author,
 		Map<String, String> usersMap) {
@@ -180,8 +191,29 @@ public class MediaWikiImporter implements WikiImporter {
 
 		try {
 			long authorUserId = getUserId(userId, node, author, usersMap);
+
 			String parentTitle = readParentTitle(content);
 			String redirectTitle = readRedirectTitle(content);
+
+			String format = FORMAT_MEDIAWIKI;
+
+			Collection<String> supportedFormats = WikiUtil.getFormats();
+
+			if (Validator.isNotNull(redirectTitle)) {
+				content = getCreoleRedirectContent(redirectTitle);
+				format = FORMAT_CREOLE;
+			}
+			else if (supportedFormats.contains(FORMAT_MEDIAWIKI) &&
+					 Validator.equals(
+						 _wikiGroupServiceConfiguration.defaultFormat(),
+						 FORMAT_MEDIAWIKI)) {
+
+				content = translateMediaWikiImagePaths(content);
+			}
+			else {
+				content = translateMediaWikiToCreole(content, strictImportMode);
+				format = FORMAT_CREOLE;
+			}
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -189,17 +221,6 @@ public class MediaWikiImporter implements WikiImporter {
 			serviceContext.setAddGuestPermissions(true);
 			serviceContext.setAssetTagNames(
 				readAssetTagNames(userId, node, content));
-
-			if (Validator.isNull(redirectTitle)) {
-				_translator.setStrictImportMode(strictImportMode);
-
-				content = _translator.translate(content);
-			}
-			else {
-				content =
-					StringPool.DOUBLE_OPEN_BRACKET + redirectTitle +
-						StringPool.DOUBLE_CLOSE_BRACKET;
-			}
 
 			WikiPage page = null;
 
@@ -214,7 +235,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 			_wikiPageLocalService.updatePage(
 				authorUserId, node.getNodeId(), title, page.getVersion(),
-				content, summary, true, "creole", parentTitle, redirectTitle,
+				content, summary, true, format, parentTitle, redirectTitle,
 				serviceContext);
 		}
 		catch (Exception e) {
@@ -701,6 +722,20 @@ public class MediaWikiImporter implements WikiImporter {
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
+	protected String translateMediaWikiImagePaths(String content) {
+		return content.replaceAll(
+			_imagesPattern.pattern(),
+			"$1$2" + SHARED_IMAGES_TITLE + StringPool.SLASH + "$3$4");
+	}
+
+	protected String translateMediaWikiToCreole(
+		String content, boolean strictImportMode) {
+
+		_translator.setStrictImportMode(strictImportMode);
+
+		return _translator.translate(content);
+	}
+
 	private static final String _WORK_IN_PROGRESS = "{{Work in progress}}";
 
 	private static final String _WORK_IN_PROGRESS_TAG = "work in progress";
@@ -710,6 +745,8 @@ public class MediaWikiImporter implements WikiImporter {
 
 	private static final Pattern _categoriesPattern = Pattern.compile(
 		"\\[\\[[Cc]ategory:([^\\]]*)\\]\\][\\n]*");
+	private static final Pattern _imagesPattern = Pattern.compile(
+		"(\\[\\[Image|File)(:)([^\\]]*)(\\]\\])", Pattern.DOTALL);
 	private static final Pattern _parentPattern = Pattern.compile(
 		"\\{{2}OtherTopics\\|([^\\}]*)\\}{2}");
 	private static final Pattern _redirectPattern = Pattern.compile(
@@ -717,12 +754,13 @@ public class MediaWikiImporter implements WikiImporter {
 	private static final Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
 		new String[] {"archive", "temp", "thumb"});
 
-	private AssetTagLocalService _assetTagLocalService;
+	private volatile AssetTagLocalService _assetTagLocalService;
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
-	private UserLocalService _userLocalService;
-	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
-	private WikiPageLocalService _wikiPageLocalService;
+	private volatile UserLocalService _userLocalService;
+	private volatile WikiGroupServiceConfiguration
+		_wikiGroupServiceConfiguration;
+	private volatile WikiPageLocalService _wikiPageLocalService;
 	private Pattern _wikiPageTitlesRemovePattern;
 
 }

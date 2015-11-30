@@ -176,7 +176,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		_dlAppService = dlAppService;
 	}
 
-	private DLAppLocalService _dlAppLocalService;
-	private DLAppService _dlAppService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile DLAppService _dlAppService;
 
 }

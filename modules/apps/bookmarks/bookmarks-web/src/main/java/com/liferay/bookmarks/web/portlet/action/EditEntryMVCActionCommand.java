@@ -153,7 +153,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 							entry.getEntryId());
 					}
 
-					actionResponse.sendRedirect(redirect);
+					actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 				}
 			}
 		}
@@ -259,7 +259,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		return entry;
 	}
 
-	private BookmarksEntryService _bookmarksEntryService;
-	private TrashEntryService _trashEntryService;
+	private volatile BookmarksEntryService _bookmarksEntryService;
+	private volatile TrashEntryService _trashEntryService;
 
 }

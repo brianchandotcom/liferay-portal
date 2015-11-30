@@ -128,6 +128,6 @@ public class MBCategoryAssetRendererFactory
 		_mbCategoryLocalService = mbCategoryLocalService;
 	}
 
-	private MBCategoryLocalService _mbCategoryLocalService;
+	private volatile MBCategoryLocalService _mbCategoryLocalService;
 
 }

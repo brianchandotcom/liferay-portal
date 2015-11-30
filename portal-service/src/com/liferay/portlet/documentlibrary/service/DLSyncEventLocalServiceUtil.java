@@ -235,6 +235,10 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().getDLSyncEventsCount();
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getLatestDLSyncEvents() {
 		return getService().getLatestDLSyncEvents();
 	}

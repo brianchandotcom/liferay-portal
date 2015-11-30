@@ -56,6 +56,6 @@ public class PollsQuestionPermissionUpdateHandler
 		_pollsQuestionLocalService = pollsQuestionLocalService;
 	}
 
-	private PollsQuestionLocalService _pollsQuestionLocalService;
+	private volatile PollsQuestionLocalService _pollsQuestionLocalService;
 
 }

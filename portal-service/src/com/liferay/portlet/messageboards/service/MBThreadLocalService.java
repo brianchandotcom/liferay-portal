@@ -321,6 +321,9 @@ public interface MBThreadLocalService extends BaseLocalService,
 		boolean subscribed,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBThread> queryDefinition);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* Returns the message boards thread with the primary key.
 	*
@@ -479,7 +482,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread splitThread(
-		long messageId, java.lang.String subject,
+		long userId, long messageId, java.lang.String subject,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

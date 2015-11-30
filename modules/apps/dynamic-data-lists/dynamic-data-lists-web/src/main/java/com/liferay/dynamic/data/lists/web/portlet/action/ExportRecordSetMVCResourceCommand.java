@@ -105,7 +105,7 @@ public class ExportRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	private DDLExporterFactory _ddlExporterFactory;
-	private DDLRecordSetService _ddlRecordSetService;
+	private volatile DDLExporterFactory _ddlExporterFactory;
+	private volatile DDLRecordSetService _ddlRecordSetService;
 
 }

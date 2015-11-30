@@ -466,11 +466,11 @@ public class DDMTemplateStagedModelDataHandler
 		_userLocalService = userLocalService;
 	}
 
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DDMTemplateExportImportContentProcessor
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile DDMTemplateExportImportContentProcessor
 		_ddmTemplateExportImportContentProcessor;
-	private DDMTemplateLocalService _ddmTemplateLocalService;
-	private ImageLocalService _imageLocalService;
-	private UserLocalService _userLocalService;
+	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
+	private volatile ImageLocalService _imageLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

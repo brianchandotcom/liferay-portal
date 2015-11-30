@@ -99,7 +99,7 @@ public class HotDeployMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		HotDeployMessageListener.class);
 
-	private MessageBus _messageBus;
-	private PluginStatisticsManager _pluginStatisticsManager;
+	private volatile MessageBus _messageBus;
+	private volatile PluginStatisticsManager _pluginStatisticsManager;
 
 }

@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_RESOURCE_NOT_FOUND</td>
-	<td>xpath=(//div[@class='portlet-content'])[3]</td>
+	<td>//div[@class='portlet-content']</td>
 	<td></td>
 </tr>
 <tr>

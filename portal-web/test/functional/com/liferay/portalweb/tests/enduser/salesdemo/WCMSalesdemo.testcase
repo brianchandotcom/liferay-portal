@@ -2,19 +2,38 @@
 	<property name="testray.main.component.name" value="Web Content Display" />
 
 	<set-up>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="SignIn#signInPortalInstanceSetUp" />
+			</then>
+		</if>
+
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Site#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="Site#tearDownCP" />
 
-		<execute macro="Portlet#tearDownPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+				<execute macro="Page#tearDownPG" />
+
+				<execute macro="Portlet#tearDownPG">
+					<var name="portletName" value="Web Content Display" />
+				</execute>
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="IFrameDemo" priority="4">
@@ -52,8 +71,10 @@
 	</command>
 
 	<command name="SalesDemo" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />

@@ -1,0 +1,54 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<ul class="lfr-tree list-unstyled">
+	<li class="tree-item">
+		<aui:input checked="<%= true %>" id="publishingEventNow" label="now" name="schedule" type="radio" value="<%= false %>" />
+
+		<aui:input id="publishingEventSchedule" label="schedule" name="schedule" type="radio" value="<%= true %>" />
+
+		<ul class="hide options portlet-list select-options" id="<portlet:namespace />selectSchedule">
+			<li>
+				<aui:input name="jobName" type="hidden" />
+
+				<aui:input label="title" name="description" type="text" />
+
+				<liferay-ui:input-scheduler />
+			</li>
+		</ul>
+	</li>
+</ul>
+
+<aui:script>
+	function <portlet:namespace />schedulePublishEvent() {
+		var form = AUI.$(document.<portlet:namespace />exportPagesFm);
+
+		form.fm('<%= Constants.CMD %>').val('<%= scheduleCMD %>');
+
+		submitForm(form);
+	}
+
+	function <portlet:namespace />unschedulePublishEvent(jobName) {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-scheduled-event") %>')) {
+			var form = AUI.$(document.<portlet:namespace />exportPagesFm);
+
+			form.fm('<%= Constants.CMD %>').val('<%= unscheduleCMD %>');
+			form.fm('jobName').val(jobName);
+
+			submitForm(form);
+		}
+	}
+</aui:script>

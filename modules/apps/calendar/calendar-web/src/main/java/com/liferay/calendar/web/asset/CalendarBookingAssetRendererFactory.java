@@ -191,7 +191,7 @@ public class CalendarBookingAssetRendererFactory
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
-	private CalendarBookingLocalService _calendarBookingLocalService;
-	private ServletContext _servletContext;
+	private volatile CalendarBookingLocalService _calendarBookingLocalService;
+	private volatile ServletContext _servletContext;
 
 }

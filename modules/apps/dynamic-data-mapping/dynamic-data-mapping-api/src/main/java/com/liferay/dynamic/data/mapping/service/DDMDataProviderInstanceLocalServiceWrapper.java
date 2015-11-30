@@ -227,6 +227,12 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDataProviderInstance(
+		long dataProviderInstanceId) {
+		return _ddmDataProviderInstanceLocalService.fetchDataProviderInstance(dataProviderInstanceId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _ddmDataProviderInstanceLocalService.getActionableDynamicQuery();
 	}
@@ -332,6 +338,11 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _ddmDataProviderInstanceLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _ddmDataProviderInstanceLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**

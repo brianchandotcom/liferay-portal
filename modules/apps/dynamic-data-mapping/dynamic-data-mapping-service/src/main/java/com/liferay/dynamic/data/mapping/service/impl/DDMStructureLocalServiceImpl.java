@@ -456,6 +456,14 @@ public class DDMStructureLocalServiceImpl
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteStructure(DDMStructure structure) throws PortalException {
 		if (!GroupThreadLocal.isDeleteInProcess()) {
+			if (ddmStructureLinkPersistence.countByStructureId(
+					structure.getStructureId()) > 0) {
+
+				throw new RequiredStructureException.
+					MustNotDeleteStructureReferencedByStructureLinks(
+						structure.getStructureId());
+			}
+
 			if (ddmStructurePersistence.countByParentStructureId(
 					structure.getStructureId()) > 0) {
 
@@ -1647,7 +1655,9 @@ public class DDMStructureLocalServiceImpl
 			getDDMFormFieldsNames(ddmForm));
 
 		if (!commonDDMFormFieldNames.isEmpty()) {
-			throw new StructureDuplicateElementException();
+			throw new StructureDuplicateElementException(
+				"Duplicate DDM form field names: " +
+					StringUtil.merge(commonDDMFormFieldNames));
 		}
 	}
 
@@ -1704,7 +1714,7 @@ public class DDMStructureLocalServiceImpl
 			throw sde;
 		}
 		catch (Exception e) {
-			throw new StructureDefinitionException();
+			throw new StructureDefinitionException(e);
 		}
 	}
 
@@ -1715,7 +1725,9 @@ public class DDMStructureLocalServiceImpl
 		String name = nameMap.get(contentDefaultLocale);
 
 		if (Validator.isNull(name)) {
-			throw new StructureNameException();
+			throw new StructureNameException(
+				"Name is null for locale " +
+					contentDefaultLocale.getDisplayName());
 		}
 
 		if (!LanguageUtil.isAvailableLocale(contentDefaultLocale)) {

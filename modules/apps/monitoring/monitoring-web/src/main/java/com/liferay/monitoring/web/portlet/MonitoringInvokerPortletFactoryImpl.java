@@ -80,6 +80,6 @@ public class MonitoringInvokerPortletFactoryImpl
 		_portletMonitoringControl = portletMonitoringControl;
 	}
 
-	private PortletMonitoringControl _portletMonitoringControl;
+	private volatile PortletMonitoringControl _portletMonitoringControl;
 
 }

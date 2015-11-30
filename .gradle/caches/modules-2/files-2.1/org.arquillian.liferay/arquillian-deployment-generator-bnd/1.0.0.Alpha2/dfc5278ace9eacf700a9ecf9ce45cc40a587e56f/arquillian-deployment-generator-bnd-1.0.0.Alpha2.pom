@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<artifactId>arquillian-extension-liferay</artifactId>
+		<groupId>org.arquillian.liferay</groupId>
+		<version>1.0.0.Alpha2</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>arquillian-deployment-generator-bnd</artifactId>
+	<groupId>org.arquillian.liferay</groupId>
+	<modelVersion>4.0.0</modelVersion>
+	<version>1.0.0.Alpha2</version>
+	<name>Arquillian Liferay Deployment Scenario Generator</name>
+	<description>Arquillian Deployment Scenario Generator for BND liferay plugins</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-container-test-spi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.shrinkwrap.osgi</groupId>
+			<artifactId>shrinkwrap-osgi</artifactId>
+			<version>1.0.0-alpha-1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-container-test-impl-base</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>osgi</artifactId>
+			<version>3.9.1-v20130814-1242</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>

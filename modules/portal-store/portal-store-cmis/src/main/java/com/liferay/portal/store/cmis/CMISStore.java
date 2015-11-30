@@ -120,6 +120,11 @@ public class CMISStore extends BaseStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws DuplicateFileException, NoSuchFileException {
 
+		if (fromVersionLabel.equals(toVersionLabel)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, toVersionLabel);
+		}
+
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
 
@@ -329,6 +334,11 @@ public class CMISStore extends BaseStore {
 			String fileName)
 		throws DuplicateFileException, NoSuchFileException {
 
+		if (repositoryId == newRepositoryId) {
+			throw new DuplicateFileException(
+				companyId, newRepositoryId, fileName);
+		}
+
 		Folder oldVersioningFolderEntry = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
 
@@ -365,6 +375,11 @@ public class CMISStore extends BaseStore {
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
 		throws DuplicateFileException, NoSuchFileException {
+
+		if (fileName.equals(newFileName)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, newFileName);
+		}
 
 		Folder oldVersioningFolderEntry = getVersioningFolder(
 			companyId, repositoryId, fileName, false);

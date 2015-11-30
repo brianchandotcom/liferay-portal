@@ -28,7 +28,7 @@ import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.service.OrganizationLocalService;
 import com.liferay.portal.service.UserGroupService;
 import com.liferay.portal.service.UserService;
-import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -141,8 +141,8 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		_userService.unsetOrganizationUsers(organizationId, removeUserIds);
 	}
 
-	private OrganizationLocalService _organizationLocalService;
-	private UserGroupService _userGroupService;
-	private UserService _userService;
+	private volatile OrganizationLocalService _organizationLocalService;
+	private volatile UserGroupService _userGroupService;
+	private volatile UserService _userService;
 
 }

@@ -17,7 +17,11 @@ package com.liferay.exportimport.lifecycle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lifecycle.BaseExportImportLifecycleListener;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEvent;
@@ -52,6 +56,28 @@ public class LoggerExportImportLifecycleListener
 		}
 
 		super.onExportImportLifecycleEvent(exportImportLifecycleEvent);
+	}
+
+	protected String getStagedModelLogFragment(StagedModel stagedModel) {
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(StringPool.OPEN_CURLY_BRACE);
+		sb.append("class: ");
+		sb.append(ExportImportClassedModelUtil.getClassName(stagedModel));
+
+		if (stagedModel instanceof StagedGroupedModel) {
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)stagedModel;
+
+			sb.append(", groupId: ");
+			sb.append(stagedGroupedModel.getGroupId());
+		}
+
+		sb.append(", uuid: ");
+		sb.append(stagedModel.getUuid());
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+		return sb.toString();
 	}
 
 	@Override
@@ -372,7 +398,7 @@ public class LoggerExportImportLifecycleListener
 		}
 
 		_log.debug(
-			"Staged model " + stagedModel.getStagedModelType() +
+			"Staged model " + getStagedModelLogFragment(stagedModel) +
 				" export failed",
 			throwable);
 	}
@@ -387,7 +413,7 @@ public class LoggerExportImportLifecycleListener
 		}
 
 		_log.debug(
-			"Staged model " + stagedModel.getStagedModelType() +
+			"Staged model " + getStagedModelLogFragment(stagedModel) +
 				" export started");
 	}
 
@@ -401,7 +427,7 @@ public class LoggerExportImportLifecycleListener
 		}
 
 		_log.debug(
-			"Staged model " + stagedModel.getStagedModelType() +
+			"Staged model " + getStagedModelLogFragment(stagedModel) +
 				" export succeeded");
 	}
 
@@ -416,7 +442,7 @@ public class LoggerExportImportLifecycleListener
 		}
 
 		_log.debug(
-			"Staged model " + stagedModel.getStagedModelType() +
+			"Staged model " + getStagedModelLogFragment(stagedModel) +
 				" import failed",
 			throwable);
 	}
@@ -431,7 +457,7 @@ public class LoggerExportImportLifecycleListener
 		}
 
 		_log.debug(
-			"Staged model " + stagedModel.getStagedModelType() +
+			"Staged model " + getStagedModelLogFragment(stagedModel) +
 				" import started");
 	}
 
@@ -445,7 +471,7 @@ public class LoggerExportImportLifecycleListener
 		}
 
 		_log.debug(
-			"Staged model " + stagedModel.getStagedModelType() +
+			"Staged model " + getStagedModelLogFragment(stagedModel) +
 				" import succeeded");
 	}
 

@@ -17,6 +17,8 @@ package com.liferay.document.library.web.display.context;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.document.library.web.configuration.DLConfiguration;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -27,22 +29,16 @@ import com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDispla
 import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 
-import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera
@@ -57,15 +53,12 @@ public class DLDisplayContextProvider {
 		HttpServletRequest request, HttpServletResponse response,
 		DLFileEntryType dlFileEntryType) {
 
-		Collection<DLDisplayContextFactory> dlDisplayContextFactories =
-			_dlDisplayContextFactories.values();
-
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
 				request, response, dlFileEntryType);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
-				dlDisplayContextFactories) {
+				_dlDisplayContextFactories) {
 
 			dlEditFileEntryDisplayContext =
 				dlDisplayContextFactory.getDLEditFileEntryDisplayContext(
@@ -80,15 +73,12 @@ public class DLDisplayContextProvider {
 		HttpServletRequest request, HttpServletResponse response,
 		FileEntry fileEntry) {
 
-		Collection<DLDisplayContextFactory> dlDisplayContextFactories =
-			_dlDisplayContextFactories.values();
-
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
 				request, response, fileEntry);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
-				dlDisplayContextFactories) {
+				_dlDisplayContextFactories) {
 
 			dlEditFileEntryDisplayContext =
 				dlDisplayContextFactory.getDLEditFileEntryDisplayContext(
@@ -105,9 +95,6 @@ public class DLDisplayContextProvider {
 			FileShortcut fileShortcut) {
 
 		try {
-			Collection<DLDisplayContextFactory> dlDisplayContextFactories =
-				_dlDisplayContextFactories.values();
-
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
 					request, response, fileShortcut, _dlConfiguration);
@@ -117,7 +104,7 @@ public class DLDisplayContextProvider {
 			}
 
 			for (DLDisplayContextFactory dlDisplayContextFactory :
-					dlDisplayContextFactories) {
+					_dlDisplayContextFactories) {
 
 				dlViewFileVersionDisplayContext =
 					dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
@@ -145,11 +132,8 @@ public class DLDisplayContextProvider {
 			return dlViewFileVersionDisplayContext;
 		}
 
-		Collection<DLDisplayContextFactory> dlDisplayContextFactories =
-			_dlDisplayContextFactories.values();
-
 		for (DLDisplayContextFactory dlDisplayContextFactory :
-				dlDisplayContextFactories) {
+				_dlDisplayContextFactories) {
 
 			dlViewFileVersionDisplayContext =
 				dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
@@ -162,30 +146,14 @@ public class DLDisplayContextProvider {
 
 	@Activate
 	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		_bundleContext = bundleContext;
+			BundleContext bundleContext, Map<String, Object> properties)
+		throws InvalidSyntaxException {
 
 		_dlConfiguration = Configurable.createConfigurable(
 			DLConfiguration.class, properties);
 
-		for (Map.Entry<ServiceReference<DLDisplayContextFactory>,
-				DLDisplayContextFactory> entry :
-					_dlDisplayContextFactories.entrySet()) {
-
-			if (entry.getValue() != null) {
-				continue;
-			}
-
-			ServiceReference<DLDisplayContextFactory> serviceReference =
-				entry.getKey();
-
-			DLDisplayContextFactory dlDisplayContextFactory =
-				_bundleContext.getService(serviceReference);
-
-			_dlDisplayContextFactories.put(
-				serviceReference, dlDisplayContextFactory);
-		}
+		_dlDisplayContextFactories = ServiceTrackerListFactory.open(
+			bundleContext, DLDisplayContextFactory.class);
 	}
 
 	@Modified
@@ -194,36 +162,8 @@ public class DLDisplayContextProvider {
 			DLConfiguration.class, properties);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.RELUCTANT,
-		service = DLDisplayContextFactory.class
-	)
-	protected void setDLDisplayContextFactory(
-		ServiceReference<DLDisplayContextFactory> serviceReference) {
-
-		DLDisplayContextFactory dlDisplayContextFactory = null;
-
-		if (_bundleContext != null) {
-			dlDisplayContextFactory = _bundleContext.getService(
-				serviceReference);
-		}
-
-		_dlDisplayContextFactories.put(
-			serviceReference, dlDisplayContextFactory);
-	}
-
-	protected void unsetDLDisplayContextFactory(
-		ServiceReference<DLDisplayContextFactory> serviceReference) {
-
-		_dlDisplayContextFactories.remove(serviceReference);
-	}
-
-	private BundleContext _bundleContext;
 	private volatile DLConfiguration _dlConfiguration;
-	private final Map<ServiceReference<DLDisplayContextFactory>,
-		DLDisplayContextFactory> _dlDisplayContextFactories =
-			new ConcurrentSkipListMap<>();
+	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
+		_dlDisplayContextFactories;
 
 }

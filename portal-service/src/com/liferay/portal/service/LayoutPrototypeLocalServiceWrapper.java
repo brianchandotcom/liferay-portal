@@ -259,6 +259,11 @@ public class LayoutPrototypeLocalServiceWrapper
 		return _layoutPrototypeLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _layoutPrototypeLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the layout prototype with the primary key.
 	*

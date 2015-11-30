@@ -17,6 +17,7 @@
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectRegularRole");
+String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventName", liferayPortletResponse.getNamespace() + "syncRegularRoles");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -128,7 +129,7 @@ portletURL.setParameter("eventName", eventName);
 	var openingLiferay = Util.getOpener().Liferay;
 
 	openingLiferay.fire(
-		'<portlet:namespace />enableRemovedRegularRoles',
+		'<%= HtmlUtil.escape(syncEntitiesEventName) %>',
 		{
 			selectors: A.all('.selector-button:disabled')
 		}

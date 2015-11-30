@@ -44,32 +44,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_SUMMARY</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Summary')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_USERS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Users')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_ORGANIZATIONS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Organizations')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_USER_GROUPS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'User Groups')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_LABEL</td>

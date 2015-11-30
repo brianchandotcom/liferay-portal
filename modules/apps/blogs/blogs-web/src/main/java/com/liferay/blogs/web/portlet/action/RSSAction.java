@@ -142,7 +142,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 		_configurationFactory = configurationFactory;
 	}
 
-	private BlogsEntryService _blogsEntryService;
-	private ConfigurationFactory _configurationFactory;
+	private volatile BlogsEntryService _blogsEntryService;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

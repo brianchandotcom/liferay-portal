@@ -219,8 +219,8 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		_layoutLocalService = layoutLocalService;
 	}
 
-	private AssetTagLocalService _assetTagLocalService;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private LayoutLocalService _layoutLocalService;
+	private volatile AssetTagLocalService _assetTagLocalService;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
 
 }

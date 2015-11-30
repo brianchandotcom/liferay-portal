@@ -89,6 +89,6 @@ public class CMISWebServicesRepositoryDefiner
 	}
 
 	private final RepositoryConfiguration _repositoryConfiguration;
-	private RepositoryFactory _repositoryFactory;
+	private volatile RepositoryFactory _repositoryFactory;
 
 }

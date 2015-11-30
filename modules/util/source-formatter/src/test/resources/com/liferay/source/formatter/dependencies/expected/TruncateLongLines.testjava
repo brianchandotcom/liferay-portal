@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Hugo Huijser
@@ -162,6 +163,9 @@ public class TruncateLongLines
 			return;
 		}
 	}
+
+	protected ConcurrentMap<String, String>
+		concurrentMapWithARidiculouslyLongName;
 
 	private class SubClass
 		implements ThisIsAnotherClassWithYetAnotherSuperLongName {

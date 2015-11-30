@@ -283,10 +283,10 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
 		new ConcurrentHashMap<>();
-	private GroupLocalService _groupLocalService;
-	private PortletItemLocalService _portletItemLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile PortletItemLocalService _portletItemLocalService;
 	private final Map<String, SettingsDescriptor> _settingsDescriptors =
 		new ConcurrentHashMap<>();
-	private SettingsLocatorHelper _settingsLocatorHelper;
+	private volatile SettingsLocatorHelper _settingsLocatorHelper;
 
 }

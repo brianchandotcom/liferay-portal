@@ -29,18 +29,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_BLOGS_ENTRY_BUTTON</td>
-	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Blogs Entry']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_BASIC_WEB_CONTENT_BUTTON</td>
-	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Basic Web Content']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RSS_LINK</td>
 	<td>//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_ITEMS-->
+<tr>
+	<td>ADD_BLOGS_ENTRY_MENU_ITEM</td>
+	<td>//li[contains(.,'Add New in ${key_siteScope}')]//a[@title='Blogs Entry']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BASIC_WEB_CONTENT_MENU_ITEM</td>
+	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Basic Web Content']</td>
 	<td></td>
 </tr>
 <tr>

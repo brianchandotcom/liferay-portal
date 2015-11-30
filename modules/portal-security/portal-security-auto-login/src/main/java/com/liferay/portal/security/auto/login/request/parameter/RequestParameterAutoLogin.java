@@ -181,6 +181,6 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		RequestParameterAutoLogin.class);
 
 	private volatile ConfigurationFactory _configurationFactory;
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

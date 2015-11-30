@@ -431,6 +431,11 @@ public class ExpandoColumnLocalServiceWrapper
 		return _expandoColumnLocalService.getExpandoColumnsCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _expandoColumnLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

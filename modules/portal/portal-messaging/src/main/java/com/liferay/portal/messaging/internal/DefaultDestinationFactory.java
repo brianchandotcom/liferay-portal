@@ -18,21 +18,15 @@ import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.messaging.DestinationPrototype;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -46,18 +40,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(immediate = true, service = DestinationFactory.class)
 public class DefaultDestinationFactory implements DestinationFactory {
-
-	public DefaultDestinationFactory() {
-		_destinationPrototypes.put(
-			DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-			new ParallelDestinationPrototype());
-		_destinationPrototypes.put(
-			DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-			new SerialDestinationPrototype());
-		_destinationPrototypes.put(
-			DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
-			new SynchronousDestinationPrototype());
-	}
 
 	@Override
 	public Destination createDestination(
@@ -83,114 +65,45 @@ public class DefaultDestinationFactory implements DestinationFactory {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
-		synchronized (_serviceRegistrations) {
-			_bundleContext = bundleContext;
-
-			for (DestinationConfiguration destinationConfiguration :
-					_queuedDestinationConfigurations) {
-
-				addDestinationConfiguration(destinationConfiguration);
-			}
-
-			_queuedDestinationConfigurations.clear();
-		}
+	protected void activate() {
+		_destinationPrototypes.put(
+			DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+			new ParallelDestinationPrototype());
+		_destinationPrototypes.put(
+			DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+			new SerialDestinationPrototype());
+		_destinationPrototypes.put(
+			DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
+			new SynchronousDestinationPrototype());
 	}
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDestinationConfiguration(
-		DestinationConfiguration destinationConfiguration) {
-
-		synchronized (_serviceRegistrations) {
-			if (_bundleContext == null) {
-				_queuedDestinationConfigurations.add(destinationConfiguration);
-
-				return;
-			}
-
-			Destination destination = createDestination(
-				destinationConfiguration);
-
-			Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-
-			dictionary.put("destination.name", destination.getName());
-
-			ServiceRegistration<Destination> serviceRegistration =
-				_bundleContext.registerService(
-					Destination.class, destination, dictionary);
-
-			_serviceRegistrations.put(
-				destination.getName(), serviceRegistration);
-		}
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeDestinationPrototype"
 	)
 	protected void addDestinationPrototype(
 		DestinationPrototype destinationPrototype,
 		Map<String, Object> properties) {
 
-		synchronized (_destinationPrototypes) {
-			String destinationType = MapUtil.getString(
-				properties, "destination.type");
-
-			_destinationPrototypes.put(destinationType, destinationPrototype);
-		}
+		_destinationPrototypes.put(
+			MapUtil.getString(properties, "destination.type"),
+			destinationPrototype);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		synchronized(_serviceRegistrations) {
-			for (ServiceRegistration<Destination>
-				destinationServiceRegistration :
-				_serviceRegistrations.values()) {
-
-				destinationServiceRegistration.unregister();
-			}
-
-			_serviceRegistrations.clear();
-		}
-
-		synchronized (_destinationPrototypes) {
-			_destinationPrototypes.clear();
-		}
-
-		_bundleContext = null;
-	}
-
-	protected void removeDestinationConfiguration(
-		DestinationConfiguration destinationConfiguration) {
-
-		synchronized (_serviceRegistrations) {
-			if (_serviceRegistrations.containsKey(
-					destinationConfiguration.getDestinationName())) {
-
-				ServiceRegistration<Destination> serviceRegistration =
-					_serviceRegistrations.remove(
-						destinationConfiguration.getDestinationName());
-
-				serviceRegistration.unregister();
-			}
-		}
+		_destinationPrototypes.clear();
 	}
 
 	protected void removeDestinationPrototype(
 		DestinationPrototype destinationPrototype,
 		Map<String, Object> properties) {
 
-		synchronized (_destinationPrototypes) {
-			String destinationType = MapUtil.getString(
-				properties, "destination.type");
-
-			_destinationPrototypes.remove(destinationType);
-		}
+		_destinationPrototypes.remove(
+			MapUtil.getString(properties, "destination.type"),
+			destinationPrototype);
 	}
 
 	@Reference(unbind = "-")
@@ -198,12 +111,7 @@ public class DefaultDestinationFactory implements DestinationFactory {
 		PortalExecutorManager portalExecutorManager) {
 	}
 
-	private BundleContext _bundleContext;
-	private final Map<String, DestinationPrototype> _destinationPrototypes =
-		new ConcurrentHashMap<>();
-	private final Set<DestinationConfiguration>
-		_queuedDestinationConfigurations = new HashSet<>();
-	private final Map<String, ServiceRegistration<Destination>>
-		_serviceRegistrations = new HashMap<>();
+	private final ConcurrentMap<String, DestinationPrototype>
+		_destinationPrototypes = new ConcurrentHashMap<>();
 
 }

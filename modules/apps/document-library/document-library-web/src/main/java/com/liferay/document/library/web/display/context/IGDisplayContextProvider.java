@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.display.context;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -21,20 +23,13 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextFactory;
 import com.liferay.portlet.imagegallerydisplay.display.context.IGViewFileVersionDisplayContext;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera
@@ -57,7 +52,7 @@ public class IGDisplayContextProvider {
 			}
 
 			for (IGDisplayContextFactory igDisplayContextFactory :
-					_igDisplayContextFactories.values()) {
+					_igDisplayContextFactories) {
 
 				igViewFileVersionDisplayContext =
 					igDisplayContextFactory.getIGViewFileVersionDisplayContext(
@@ -87,7 +82,7 @@ public class IGDisplayContextProvider {
 			}
 
 			for (IGDisplayContextFactory igDisplayContextFactory :
-					_igDisplayContextFactories.values()) {
+					_igDisplayContextFactories) {
 
 				igViewFileVersionDisplayContext =
 					igDisplayContextFactory.getIGViewFileVersionDisplayContext(
@@ -103,57 +98,14 @@ public class IGDisplayContextProvider {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
 
-		for (Map.Entry<ServiceReference<IGDisplayContextFactory>,
-				IGDisplayContextFactory> entry :
-					_igDisplayContextFactories.entrySet()) {
-
-			if (entry.getValue() != null) {
-				continue;
-			}
-
-			ServiceReference<IGDisplayContextFactory> serviceReference =
-				entry.getKey();
-
-			IGDisplayContextFactory igDisplayContextFactory =
-				_bundleContext.getService(serviceReference);
-
-			_igDisplayContextFactories.put(
-				serviceReference, igDisplayContextFactory);
-		}
+		_igDisplayContextFactories = ServiceTrackerListFactory.open(
+			bundleContext, IGDisplayContextFactory.class);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.RELUCTANT,
-		service = IGDisplayContextFactory.class
-	)
-	protected void setIGDisplayContextFactory(
-		ServiceReference<IGDisplayContextFactory> serviceReference) {
-
-		IGDisplayContextFactory igDisplayContextFactory = null;
-
-		if (_bundleContext != null) {
-			igDisplayContextFactory = _bundleContext.getService(
-				serviceReference);
-		}
-
-		_igDisplayContextFactories.put(
-			serviceReference, igDisplayContextFactory);
-	}
-
-	protected void unsetIGDisplayContextFactory(
-		ServiceReference<IGDisplayContextFactory> serviceReference) {
-
-		_igDisplayContextFactories.remove(serviceReference);
-	}
-
-	private BundleContext _bundleContext;
-	private final Map<ServiceReference<IGDisplayContextFactory>,
-		IGDisplayContextFactory> _igDisplayContextFactories =
-			new ConcurrentSkipListMap<>();
+	private ServiceTrackerList<IGDisplayContextFactory, IGDisplayContextFactory>
+		_igDisplayContextFactories;
 
 }

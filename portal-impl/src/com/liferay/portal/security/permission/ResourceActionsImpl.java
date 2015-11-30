@@ -80,10 +80,8 @@ import org.apache.struts.util.RequestUtils;
 public class ResourceActionsImpl implements ResourceActions {
 
 	public ResourceActionsImpl() {
-		_resourceBundles = ServiceTrackerCollections.multiValueMap(
+		_resourceBundles = ServiceTrackerCollections.openMultiValueMap(
 			ResourceBundle.class, "language.id");
-
-		_resourceBundles.open();
 	}
 
 	public void afterPropertiesSet() {

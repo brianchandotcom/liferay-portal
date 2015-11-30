@@ -798,12 +798,13 @@ public class FileEntryStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryStagedModelDataHandler.class);
 
-	private DLAppLocalService _dlAppLocalService;
-	private DLAppService _dlAppService;
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private DLFileVersionLocalService _dlFileVersionLocalService;
-	private RepositoryLocalService _repositoryLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile DLAppService _dlAppService;
+	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
+	private volatile DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
+	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
+	private volatile RepositoryLocalService _repositoryLocalService;
 
 }

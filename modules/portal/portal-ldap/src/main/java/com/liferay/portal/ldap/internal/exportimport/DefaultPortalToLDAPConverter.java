@@ -613,14 +613,14 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalToLDAPConverter.class);
 
-	private ImageLocalService _imageLocalService;
-	private ConfigurationProvider<LDAPAuthConfiguration>
+	private volatile ImageLocalService _imageLocalService;
+	private volatile ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
-	private ConfigurationProvider<LDAPServerConfiguration>
+	private volatile ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-	private LDAPSettings _ldapSettings;
-	private PasswordEncryptor _passwordEncryptor;
-	private PortalLDAP _portalLDAP;
+	private volatile LDAPSettings _ldapSettings;
+	private volatile PasswordEncryptor _passwordEncryptor;
+	private volatile PortalLDAP _portalLDAP;
 	private final Map<String, String> _reservedContactFieldNames =
 		new HashMap<>();
 	private final Map<String, String> _reservedUserFieldNames = new HashMap<>();

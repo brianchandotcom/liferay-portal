@@ -120,7 +120,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		_searchResultContributors = new HashMap<>();
 
 	private final ServiceTrackerMap<String, SearchResultManager>
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			SearchResultManager.class, "(model.class.name=*)",
 			new ServiceReferenceMapper<String, SearchResultManager>() {
 
@@ -137,6 +137,6 @@ public class SearchResultManagerImpl implements SearchResultManager {
 
 			});
 
-	private SummaryFactory _summaryFactory;
+	private volatile SummaryFactory _summaryFactory;
 
 }

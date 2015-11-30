@@ -159,53 +159,72 @@
 	</command>
 
 	<command name="addMemberCP">
-		<var name="key_userScreenName" value="${userScreenName}" />
+		<var name="key_cardText" value="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
-		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
+		<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
 
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<if>
 			<isset var="userMiddleName" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SiteMembershipsAddMembers#USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SiteMembershipsAddMembers#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userLastName}" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="SiteMembershipsAddMembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="Check" locator1="SiteMembershipsAddMembers#USER_TABLE_CHECKBOX" />
-		<execute function="Click" locator1="Button#SAVE" />
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
+
+		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="Click" locator1="Button#ADD" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addMemberOrganizationCP">
-		<var name="key_orgName" value="${orgName}" />
+		<var name="key_cardText" value="${orgName}" />
 
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
-		<execute function="AssertClick" locator1="MenuItem#ORGANIZATION" value1="Organization" />
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="AssertClick" locator1="Search#SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="SiteMembershipsAddMembers#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute function="Check" locator1="SiteMembershipsAddMembers#ORGANIZATION_TABLE_CHECKBOX" />
-		<execute function="Click" locator1="Button#SAVE" />
+		<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${orgName}" />
+
+		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="Click" locator1="Button#ADD" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addMemberUserGroupCP">
-		<var name="key_userGroupName" value="${userGroupName}" />
+		<var name="key_cardText" value="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
-		<execute function="AssertClick" locator1="MenuItem#USER_GROUP" value1="User Group" />
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userGroupName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-		<execute function="AssertTextEquals" locator1="SiteMembershipsAddMembers#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-		<execute function="Check" locator1="SiteMembershipsAddMembers#USER_GROUP_TABLE_CHECKBOX" />
-		<execute function="Click" locator1="Button#SAVE" />
+		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}" />
+
+		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="Click" locator1="Button#ADD" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -250,11 +269,17 @@
 
 		<execute function="AssertTextEquals" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
 		<execute function="AssertTextEquals" locator1="SiteMemberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
-		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#REPLY" value1="Reply" />
+
+		<execute function="Click" locator1="SiteMembershipsViewMembershipRequests#REPLY" />
 
 		<execute function="Select" locator1="SiteMembershipsViewMembershipRequests#STATUS" value1="Approve" />
 		<execute function="Type" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS_AREA" value1="You may join the Restricted Site." />
@@ -306,8 +331,9 @@
 	</command>
 
 	<command name="assignRoleCP">
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_SITE_ROLES_TO" value1="Add Site Roles to" />
-		<execute function="AssertClick" locator1="MenuItem#USERS" value1="Users" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_SITE_ROLES_TO_USERS" value1="Add Site Roles to Users" />
 
 		<var name="key_roleName" value="${roleName}" />
 
@@ -348,7 +374,7 @@
 	<command name="assignSiteRolesSiteOwnerUserGroupsCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_USER_GROUPS" value1="User Groups" />
+		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
 		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userGroupName}" />
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
@@ -363,8 +389,9 @@
 	</command>
 
 	<command name="assignSiteRolesUserGroupsCP">
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_SITE_ROLES_TO" value1="Add Site Roles to" />
-		<execute function="AssertClick" locator1="MenuItem#USER_GROUPS" value1="User Groups" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_SITE_ROLES_TO_USER_GROUPS" value1="Add Site Roles to User Groups" />
 
 		<var name="key_roleName" value="${roleName}" />
 
@@ -699,23 +726,27 @@
 	</command>
 
 	<command name="removeMemberCP">
-		<var name="key_userScreenName" value="${userScreenName}" />
+		<var name="key_cardText" value="${userScreenName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<if>
 			<isset var="userMiddleName" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userLastName}" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="Click" locator1="SiteMemberships#USER_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
+
+		<var name="cardEntry" value="${key_cardText}" />
+
+		<execute function="Click" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#REMOVE_MEMBERSHIP" value1="Remove Membership" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -724,7 +755,7 @@
 	<command name="removeSiteRolesSiteOwnerUserGroupsCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_USER_GROUPS" value1="User Groups" />
+		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userGroupName}" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
@@ -799,8 +830,6 @@
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
-
-		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_SUMMARY" value1="Summary" />
 	</command>
 
 	<command name="selectPageType">
@@ -1025,11 +1054,14 @@
 	</command>
 
 	<command name="viewMemberCP">
-		<var name="key_userScreenName" value="${userScreenName}" />
+		<var name="key_cardText" value="${userScreenName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
-		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="AssertVisible" locator1="SiteMemberships#USER_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userLastName}" />
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
+
+		<var name="cardEntry" value="${key_cardText}" />
+
+		<execute function="AssertVisible" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
 	</command>
 
 	<command name="viewMemberListCP">
@@ -1045,15 +1077,17 @@
 	</command>
 
 	<command name="viewMemberOrganizationCP">
-		<var name="key_orgName" value="${orgName}" />
+		<var name="key_cardText" value="${orgName}" />
 
-		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_ORGANIZATIONS" value1="Organizations" />
+		<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${orgName}" />
 		<if>
 			<equals arg1="${toolTip}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#ORGANIZATION_TABLE_TOOLTIP" value1="This site belongs to ${orgName} which is an organization" />
+				<execute function="MouseOver" locator1="Icon#TOOLTIP" />
+
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#TOOLTIP" value1="Users are not allowed to request membership. Only site administrators can add new members." />
 			</then>
 		</if>
 	</command>

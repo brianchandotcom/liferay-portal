@@ -1055,11 +1055,11 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private int _jobNameMaxLength;
 	private volatile JSONFactory _jsonFactory;
 	private Scheduler _memoryScheduler;
-	private MessageBus _messageBus;
+	private volatile MessageBus _messageBus;
 	private Scheduler _persistedScheduler;
 	private volatile PortletLocalService _portletLocalService;
 	private Props _props;
-	private QuartzTriggerFactory _quartzTriggerFactory;
+	private volatile QuartzTriggerFactory _quartzTriggerFactory;
 	private volatile SchedulerEngineHelper _schedulerEngineHelper;
 
 }

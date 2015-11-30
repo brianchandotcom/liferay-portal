@@ -28,6 +28,40 @@ import java.util.Arrays;
  */
 public class ReflectionTestUtil {
 
+	public static <T> T getAndSetFieldValue(
+		Class<?> clazz, String fieldName, T newValue) {
+
+		Field field = getField(clazz, fieldName);
+
+		try {
+			T t = (T)field.get(null);
+
+			field.set(null, newValue);
+
+			return t;
+		}
+		catch (Exception e) {
+			return ReflectionUtil.throwException(e);
+		}
+	}
+
+	public static <T> T getAndSetFieldValue(
+		Object instance, String fieldName, T newValue) {
+
+		Field field = getField(instance.getClass(), fieldName);
+
+		try {
+			T t = (T)field.get(instance);
+
+			field.set(instance, newValue);
+
+			return t;
+		}
+		catch (Exception e) {
+			return ReflectionUtil.throwException(e);
+		}
+	}
+
 	public static Method getBridgeMethod(
 		Class<?> clazz, String methodName, Class<?>... parameterTypes) {
 

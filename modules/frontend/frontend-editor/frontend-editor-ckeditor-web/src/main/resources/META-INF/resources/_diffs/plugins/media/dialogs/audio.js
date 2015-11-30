@@ -11,8 +11,6 @@ CKEDITOR.dialog.add(
 			var id = instance.id;
 			var value = instance.getValue();
 
-			var scriptNode = audioNode.getChild(1);
-
 			var scriptTPL = null;
 			var textScript = null;
 
@@ -83,7 +81,7 @@ CKEDITOR.dialog.add(
 									{
 										action: 'Browse',
 										target: 'info:url',
-										url: editor.config.filebrowserBrowseUrl + '&Type=Audio'
+										url: editor.config.filebrowserAudioBrowseUrl
 									},
 									hidden: 'true',
 									id: 'browse',
@@ -93,7 +91,7 @@ CKEDITOR.dialog.add(
 								}
 							],
 							type: 'hbox',
-							widths: [ '', '100px']
+							widths: ['', '100px']
 						}
 					],
 					id: 'info'
@@ -102,16 +100,16 @@ CKEDITOR.dialog.add(
 
 			title: Liferay.Language.get('audio-properties'),
 
-			onShow: function() {
-				var instance = this;
-
-				editor.plugins.media.onShowCallback(instance, editor, 'audio');
-			},
-
 			onOk: function() {
 				var instance = this;
 
 				editor.plugins.media.onOkCallback(instance, editor, 'audio');
+			},
+
+			onShow: function() {
+				var instance = this;
+
+				editor.plugins.media.onShowCallback(instance, editor, 'audio');
 			}
 		};
 	}

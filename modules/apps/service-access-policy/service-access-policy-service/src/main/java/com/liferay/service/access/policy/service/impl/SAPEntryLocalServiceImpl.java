@@ -178,7 +178,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			throw new RequiredSAPEntryException();
 		}
 
-		sapEntry = sapEntryPersistence.remove(sapEntry);
+		sapEntry = super.deleteSAPEntry(sapEntry);
 
 		resourceLocalService.deleteResource(
 			sapEntry.getCompanyId(), SAPEntry.class.getName(),

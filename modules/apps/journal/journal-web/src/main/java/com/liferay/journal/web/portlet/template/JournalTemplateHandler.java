@@ -166,7 +166,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 				"/template.vm");
 	}
 
-	private JournalContent _journalContent;
+	private volatile JournalContent _journalContent;
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
 			JournalTemplateHandler.class.getClassLoader(),

@@ -231,7 +231,7 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 		_serverSummaryStatistics = serverSummaryStatistics;
 	}
 
-	private ServerStatistics _serverStatistics;
-	private ServerSummaryStatistics _serverSummaryStatistics;
+	private volatile ServerStatistics _serverStatistics;
+	private volatile ServerSummaryStatistics _serverSummaryStatistics;
 
 }

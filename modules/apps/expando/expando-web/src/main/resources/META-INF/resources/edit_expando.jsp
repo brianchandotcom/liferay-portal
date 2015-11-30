@@ -59,19 +59,18 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/view_attributes.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("modelResource", modelResource);
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title='<%= modelResourceName + ": " + ((column == null) ? LanguageUtil.get(request, "new-custom-field") : column.getName()) %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageUtil.get(request, "new-custom-field") : column.getName()));
+%>
 
 <portlet:actionURL name='<%= (column == null) ? "addExpando" : "updateExpando" %>' var="editExpandoURL">
 	<portlet:param name="mvcPath" value="/edit_expando.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editExpandoURL %>" method="post" name="fm">
+<aui:form action="<%= editExpandoURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="columnId" type="hidden" value="<%= columnId %>" />
 	<aui:input name="modelResource" type="hidden" value="<%= modelResource %>" />
@@ -81,209 +80,211 @@ portletURL.setParameter("modelResource", modelResource);
 	<liferay-ui:error exception="<%= DuplicateColumnNameException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= ValueDataException.class %>" message="please-enter-a-valid-value" />
 
-	<aui:fieldset>
-		<c:choose>
-			<c:when test="<%= column != null %>">
-				<aui:input name="name" type="hidden" value="<%= column.getName() %>" />
+	<aui:fieldset-group>
+		<aui:fieldset>
+			<c:choose>
+				<c:when test="<%= column != null %>">
+					<aui:input name="name" type="hidden" value="<%= column.getName() %>" />
 
-				<aui:input helpMessage="custom-field-key-help" name="key" type="resource" value="<%= column.getName() %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="custom-field-key-help" label="key" name="name" />
-			</c:otherwise>
-		</c:choose>
+					<aui:input helpMessage="custom-field-key-help" name="key" type="resource" value="<%= column.getName() %>" />
+				</c:when>
+				<c:otherwise>
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="custom-field-key-help" label="key" name="name" />
+				</c:otherwise>
+			</c:choose>
 
-		<c:choose>
-			<c:when test="<%= column != null %>">
-				<aui:input name="type" type="hidden" value="<%= type %>" />
+			<c:choose>
+				<c:when test="<%= column != null %>">
+					<aui:input name="type" type="hidden" value="<%= type %>" />
 
-				<aui:input name="type" type="resource" value="<%= LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(type)) %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:select helpMessage="custom-field-type-help" name="type">
-					<optgroup label="<liferay-ui:message key="presets" />">
-						<aui:option label="selection-of-integer-values" value="PresetSelectionIntegerArray()" />
-						<aui:option label="selection-of-decimal-values" value="PresetSelectionDoubleArray()" />
-						<aui:option label="selection-of-text-values" value="PresetSelectionStringArray()" />
-						<aui:option label="text-box" value="PresetTextBox()" />
-						<aui:option label="text-box-indexed" value="PresetTextBoxIndexed()" />
-						<aui:option label="text-field-secret" value="PresetTextFieldSecret()" />
-						<aui:option label="text-field-indexed" selected="<%= true %>" value="PresetTextFieldIndexed()" />
-					</optgroup>
-					<optgroup label="<liferay-ui:message key="primitives" />">
+					<aui:input name="type" type="resource" value="<%= LanguageUtil.get(request, ExpandoColumnConstants.getTypeLabel(type)) %>" />
+				</c:when>
+				<c:otherwise>
+					<aui:select helpMessage="custom-field-type-help" name="type">
+						<optgroup label="<liferay-ui:message key="presets" />">
+							<aui:option label="selection-of-integer-values" value="PresetSelectionIntegerArray()" />
+							<aui:option label="selection-of-decimal-values" value="PresetSelectionDoubleArray()" />
+							<aui:option label="selection-of-text-values" value="PresetSelectionStringArray()" />
+							<aui:option label="text-box" value="PresetTextBox()" />
+							<aui:option label="text-box-indexed" value="PresetTextBoxIndexed()" />
+							<aui:option label="text-field-secret" value="PresetTextFieldSecret()" />
+							<aui:option label="text-field-indexed" selected="<%= true %>" value="PresetTextFieldIndexed()" />
+						</optgroup>
+						<optgroup label="<liferay-ui:message key="primitives" />">
+
+							<%
+							for (int curType : ExpandoColumnConstants.TYPES) {
+								if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY) || (curType == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED)) {
+									continue;
+								}
+							%>
+
+								<aui:option label="<%= ExpandoColumnConstants.getTypeLabel(curType) %>" value="<%= curType %>" />
+
+							<%
+							}
+							%>
+
+						</optgroup>
+					</aui:select>
+				</c:otherwise>
+			</c:choose>
+
+			<c:if test="<%= column != null %>">
+				<c:choose>
+					<c:when test="<%= type == ExpandoColumnConstants.BOOLEAN %>">
 
 						<%
-						for (int curType : ExpandoColumnConstants.TYPES) {
-							if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY) || (curType == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED)) {
-								continue;
-							}
+						boolean curValue = ((Boolean)defaultValue).booleanValue();
 						%>
 
-							<aui:option label="<%= ExpandoColumnConstants.getTypeLabel(curType) %>" value="<%= curType %>" />
+						<aui:select name="defaultValue">
+							<aui:option label="<%= true %>" selected="<%= curValue %>" value="true" />
+							<aui:option label="<%= false %>" selected="<%= !curValue %>" value="false" />
+						</aui:select>
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.BOOLEAN_ARRAY %>">
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.DATE %>">
 
 						<%
+						Calendar defaultValueDate = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+						if (defaultValue != null) {
+							defaultValueDate.setTime((Date)defaultValue);
 						}
 						%>
 
-					</optgroup>
-				</aui:select>
-			</c:otherwise>
-		</c:choose>
+						<aui:field-wrapper label="default-value">
+							<liferay-ui:input-date
+								dayParam="defaultValueDay"
+								dayValue="<%= defaultValueDate.get(Calendar.DATE) %>"
+								disabled="<%= false %>"
+								firstDayOfWeek="<%= defaultValueDate.getFirstDayOfWeek() - 1 %>"
+								monthParam="defaultValueMonth"
+								monthValue="<%= defaultValueDate.get(Calendar.MONTH) %>"
+								yearParam="defaultValueYear"
+								yearValue="<%= defaultValueDate.get(Calendar.YEAR) %>"
+							/>
 
-		<c:if test="<%= column != null %>">
-			<c:choose>
-				<c:when test="<%= type == ExpandoColumnConstants.BOOLEAN %>">
+							<liferay-ui:input-time
+								amPmParam="defaultValueAmPm"
+								amPmValue="<%= defaultValueDate.get(Calendar.AM_PM) %>"
+								disabled="<%= false %>"
+								hourParam="defaultValueHour"
+								hourValue="<%= defaultValueDate.get(Calendar.HOUR) %>"
+								minuteParam="defaultValueMinute"
+								minuteValue="<%= defaultValueDate.get(Calendar.MINUTE) %>"
+							/>
+						</aui:field-wrapper>
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.DATE_ARRAY %>">
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.DOUBLE_ARRAY %>">
+						<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((double[])defaultValue, StringPool.NEW_LINE) %>" />
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.FLOAT_ARRAY %>">
+						<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((float[])defaultValue, StringPool.NEW_LINE) %>" />
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.INTEGER_ARRAY %>">
+						<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((int[])defaultValue, StringPool.NEW_LINE) %>" />
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.LONG_ARRAY %>">
+						<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((long[])defaultValue, StringPool.NEW_LINE) %>" />
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.NUMBER_ARRAY %>">
+						<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((Number[])defaultValue, StringPool.NEW_LINE) %>" />
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.SHORT_ARRAY %>">
+						<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((short[])defaultValue, StringPool.NEW_LINE) %>" />
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.STRING_ARRAY %>">
+						<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((String[])defaultValue, StringPool.NEW_LINE) %>" />
+					</c:when>
+					<c:when test="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>">
 
-					<%
-					boolean curValue = ((Boolean)defaultValue).booleanValue();
-					%>
+						<%
+						String xml = StringPool.BLANK;
 
-					<aui:select name="defaultValue">
-						<aui:option label="<%= true %>" selected="<%= curValue %>" value="true" />
-						<aui:option label="<%= false %>" selected="<%= !curValue %>" value="false" />
-					</aui:select>
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.BOOLEAN_ARRAY %>">
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.DATE %>">
+						if (defaultValue != null) {
+							xml = LocalizationUtil.updateLocalization((Map<Locale, String>)defaultValue, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
+						}
+						%>
 
-					<%
-					Calendar defaultValueDate = CalendarFactoryUtil.getCalendar(timeZone, locale);
-
-					if (defaultValue != null) {
-						defaultValueDate.setTime((Date)defaultValue);
-					}
-					%>
-
-					<aui:field-wrapper label="default-value">
-						<liferay-ui:input-date
-							dayParam="defaultValueDay"
-							dayValue="<%= defaultValueDate.get(Calendar.DATE) %>"
-							disabled="<%= false %>"
-							firstDayOfWeek="<%= defaultValueDate.getFirstDayOfWeek() - 1 %>"
-							monthParam="defaultValueMonth"
-							monthValue="<%= defaultValueDate.get(Calendar.MONTH) %>"
-							yearParam="defaultValueYear"
-							yearValue="<%= defaultValueDate.get(Calendar.YEAR) %>"
-						/>
-
-						<liferay-ui:input-time
-							amPmParam="defaultValueAmPm"
-							amPmValue="<%= defaultValueDate.get(Calendar.AM_PM) %>"
-							disabled="<%= false %>"
-							hourParam="defaultValueHour"
-							hourValue="<%= defaultValueDate.get(Calendar.HOUR) %>"
-							minuteParam="defaultValueMinute"
-							minuteValue="<%= defaultValueDate.get(Calendar.MINUTE) %>"
-						/>
-					</aui:field-wrapper>
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.DATE_ARRAY %>">
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.DOUBLE_ARRAY %>">
-					<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((double[])defaultValue, StringPool.NEW_LINE) %>" />
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.FLOAT_ARRAY %>">
-					<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((float[])defaultValue, StringPool.NEW_LINE) %>" />
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.INTEGER_ARRAY %>">
-					<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((int[])defaultValue, StringPool.NEW_LINE) %>" />
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.LONG_ARRAY %>">
-					<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((long[])defaultValue, StringPool.NEW_LINE) %>" />
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.NUMBER_ARRAY %>">
-					<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((Number[])defaultValue, StringPool.NEW_LINE) %>" />
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.SHORT_ARRAY %>">
-					<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((short[])defaultValue, StringPool.NEW_LINE) %>" />
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.STRING_ARRAY %>">
-					<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((String[])defaultValue, StringPool.NEW_LINE) %>" />
-				</c:when>
-				<c:when test="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>">
-
-					<%
-					String xml = StringPool.BLANK;
-
-					if (defaultValue != null) {
-						xml = LocalizationUtil.updateLocalization((Map<Locale, String>)defaultValue, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
-					}
-					%>
-
-					<aui:field-wrapper label="default-value">
-						<liferay-ui:input-localized cssClass="lfr-input-text-container" name="defaultValue" xml="<%= xml %>" />
-					</aui:field-wrapper>
-				</c:when>
-				<c:otherwise>
-					<aui:input cssClass="lfr-input-text-container" name="defaultValue" type="text" value="<%= String.valueOf(defaultValue) %>" />
-				</c:otherwise>
-			</c:choose>
-		</c:if>
-	</aui:fieldset>
-
-	<c:if test="<%= column != null %>">
-		<aui:fieldset label="properties">
-			<aui:input name="PropertyName--hidden--" type="hidden" value="hidden" />
-
-			<aui:select helpMessage="custom-field-hidden-help" label="hidden" name="Property--hidden--">
-				<aui:option label="<%= true %>" selected="<%= propertyHidden %>" value="1" />
-				<aui:option label="<%= false %>" selected="<%= !propertyHidden %>" value="0" />
-			</aui:select>
-
-			<aui:input name="PropertyName--visible-with-update-permission--" type="hidden" value="visible-with-update-permission" />
-
-			<aui:select helpMessage="custom-field-visible-with-update-permission-help" label="visible-with-update-permission" name="Property--visible-with-update-permission--">
-				<aui:option label="<%= true %>" selected="<%= propertyVisibleWithUpdatePermission %>" value="1" />
-				<aui:option label="<%= false %>" selected="<%= !propertyVisibleWithUpdatePermission %>" value="0" />
-			</aui:select>
-
-			<aui:input name="PropertyName--index-type--" type="hidden" value="index-type" />
-
-			<aui:select helpMessage="custom-field-index-type-help" label="searchability" name="Property--index-type--">
-				<aui:option label="not-searchable" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_NONE %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_NONE %>" />
-
-				<c:if test="<%= (type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">
-					<aui:option label="as-text" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_TEXT %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_TEXT %>" />
-				</c:if>
-
-				<aui:option label="as-keyword" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
-			</aui:select>
-
-			<c:if test="<%= (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.INTEGER_ARRAY) || (type == ExpandoColumnConstants.LONG_ARRAY) || (type == ExpandoColumnConstants.NUMBER_ARRAY) || (type == ExpandoColumnConstants.SHORT_ARRAY) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">
-				<aui:input name="PropertyName--display-type--" type="hidden" value="display-type" />
-
-				<aui:select helpMessage="custom-field-display-type-help" label="display-type" name="Property--display-type--" value="<%= propertyDisplayType %>">
-					<aui:option label="checkbox" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_CHECKBOX %>" />
-					<aui:option label="radio" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_RADIO %>" />
-					<aui:option label="selection-list" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST %>" />
-					<aui:option label="text-box" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX %>" />
-				</aui:select>
-			</c:if>
-
-			<c:if test="<%= type == ExpandoColumnConstants.STRING %>">
-				<aui:input name="PropertyName--secret--" type="hidden" value="secret" />
-
-				<aui:select helpMessage="custom-field-secret-help" label="secret" name="Property--secret--">
-					<aui:option label="<%= true %>" selected="<%= propertySecret %>" value="1" />
-					<aui:option label="<%= false %>" selected="<%= !propertySecret %>" value="0" />
-				</aui:select>
-
-				<aui:input name="PropertyName--height--" type="hidden" value="height" />
-
-				<aui:input cssClass="lfr-input-text short-input-text" helpMessage="custom-field-height-help" label="height" name="Property--height--" type="text" value="<%= propertyHeight %>" />
-
-				<aui:input name="PropertyName--width--" type="hidden" value="width" />
-
-				<aui:input cssClass="lfr-input-text short-input-text" helpMessage="custom-field-height-help" label="width" name="Property--width--" type="text" value="<%= propertyWidth %>" />
+						<aui:field-wrapper label="default-value">
+							<liferay-ui:input-localized cssClass="lfr-input-text-container" name="defaultValue" xml="<%= xml %>" />
+						</aui:field-wrapper>
+					</c:when>
+					<c:otherwise>
+						<aui:input cssClass="lfr-input-text-container" name="defaultValue" type="text" value="<%= String.valueOf(defaultValue) %>" />
+					</c:otherwise>
+				</c:choose>
 			</c:if>
 		</aui:fieldset>
-	</c:if>
+
+		<c:if test="<%= column != null %>">
+			<aui:fieldset label="properties">
+				<aui:input name="PropertyName--hidden--" type="hidden" value="hidden" />
+
+				<aui:select helpMessage="custom-field-hidden-help" label="hidden" name="Property--hidden--">
+					<aui:option label="<%= true %>" selected="<%= propertyHidden %>" value="1" />
+					<aui:option label="<%= false %>" selected="<%= !propertyHidden %>" value="0" />
+				</aui:select>
+
+				<aui:input name="PropertyName--visible-with-update-permission--" type="hidden" value="visible-with-update-permission" />
+
+				<aui:select helpMessage="custom-field-visible-with-update-permission-help" label="visible-with-update-permission" name="Property--visible-with-update-permission--">
+					<aui:option label="<%= true %>" selected="<%= propertyVisibleWithUpdatePermission %>" value="1" />
+					<aui:option label="<%= false %>" selected="<%= !propertyVisibleWithUpdatePermission %>" value="0" />
+				</aui:select>
+
+				<aui:input name="PropertyName--index-type--" type="hidden" value="index-type" />
+
+				<aui:select helpMessage="custom-field-index-type-help" label="searchability" name="Property--index-type--">
+					<aui:option label="not-searchable" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_NONE %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_NONE %>" />
+
+					<c:if test="<%= (type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">
+						<aui:option label="as-text" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_TEXT %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_TEXT %>" />
+					</c:if>
+
+					<aui:option label="as-keyword" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
+				</aui:select>
+
+				<c:if test="<%= (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.INTEGER_ARRAY) || (type == ExpandoColumnConstants.LONG_ARRAY) || (type == ExpandoColumnConstants.NUMBER_ARRAY) || (type == ExpandoColumnConstants.SHORT_ARRAY) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">
+					<aui:input name="PropertyName--display-type--" type="hidden" value="display-type" />
+
+					<aui:select helpMessage="custom-field-display-type-help" label="display-type" name="Property--display-type--" value="<%= propertyDisplayType %>">
+						<aui:option label="checkbox" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_CHECKBOX %>" />
+						<aui:option label="radio" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_RADIO %>" />
+						<aui:option label="selection-list" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST %>" />
+						<aui:option label="text-box" value="<%= ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX %>" />
+					</aui:select>
+				</c:if>
+
+				<c:if test="<%= type == ExpandoColumnConstants.STRING %>">
+					<aui:input name="PropertyName--secret--" type="hidden" value="secret" />
+
+					<aui:select helpMessage="custom-field-secret-help" label="secret" name="Property--secret--">
+						<aui:option label="<%= true %>" selected="<%= propertySecret %>" value="1" />
+						<aui:option label="<%= false %>" selected="<%= !propertySecret %>" value="0" />
+					</aui:select>
+
+					<aui:input name="PropertyName--height--" type="hidden" value="height" />
+
+					<aui:input cssClass="lfr-input-text short-input-text" helpMessage="custom-field-height-help" label="height" name="Property--height--" type="text" value="<%= propertyHeight %>" />
+
+					<aui:input name="PropertyName--width--" type="hidden" value="width" />
+
+					<aui:input cssClass="lfr-input-text short-input-text" helpMessage="custom-field-height-help" label="width" name="Property--width--" type="text" value="<%= propertyWidth %>" />
+				</c:if>
+			</aui:fieldset>
+		</c:if>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

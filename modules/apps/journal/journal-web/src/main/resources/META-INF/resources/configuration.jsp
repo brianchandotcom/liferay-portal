@@ -145,7 +145,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			<liferay-ui:section>
 				<liferay-ui:email-notification-settings
 					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedBody() %>"
-					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailDefinitionTerms='<%= JournalUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, "requested") %>'
 					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedEnabled() %>"
 					emailParam="emailArticleApprovalRequested"
 					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedSubject() %>"

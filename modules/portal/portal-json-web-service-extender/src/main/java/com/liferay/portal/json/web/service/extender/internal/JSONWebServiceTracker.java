@@ -164,7 +164,7 @@ public class JSONWebServiceTracker
 	}
 
 	private ComponentContext _componentContext;
-	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
+	private volatile JSONWebServiceActionsManager _jsonWebServiceActionsManager;
 	private JSONWebServiceRegistrator _jsonWebServiceRegistrator;
 	private ServiceTracker<Object, Object> _serviceTracker;
 

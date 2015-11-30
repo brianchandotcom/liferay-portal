@@ -96,6 +96,6 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			backgroundTask.getBackgroundTaskId());
 	}
 
-	private BackgroundTaskManager _backgroundTaskManager;
+	private volatile BackgroundTaskManager _backgroundTaskManager;
 
 }

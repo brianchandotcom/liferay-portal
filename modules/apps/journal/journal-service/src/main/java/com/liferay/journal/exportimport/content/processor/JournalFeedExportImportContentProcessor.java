@@ -149,7 +149,7 @@ public class JournalFeedExportImportContentProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalFeedExportImportContentProcessor.class);
 
-	private GroupLocalService _groupLocalService;
-	private LayoutLocalService _layoutLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
 
 }

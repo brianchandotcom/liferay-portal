@@ -232,7 +232,7 @@ public class CalendarStagedModelDataHandler
 		_groupLocalService = groupLocalService;
 	}
 
-	private CalendarLocalService _calendarLocalService;
-	private GroupLocalService _groupLocalService;
+	private volatile CalendarLocalService _calendarLocalService;
+	private volatile GroupLocalService _groupLocalService;
 
 }

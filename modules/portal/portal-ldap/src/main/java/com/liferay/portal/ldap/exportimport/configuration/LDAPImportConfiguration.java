@@ -43,9 +43,6 @@ public interface LDAPImportConfiguration extends CompanyScopedConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean importGroupCacheEnabled();
 
-	@Meta.AD(deflt = "true", required = false)
-	public boolean importGroupSearchFilterEnabled();
-
 	@Meta.AD(deflt = "10", required = false)
 	public int importInterval();
 
@@ -72,8 +69,5 @@ public interface LDAPImportConfiguration extends CompanyScopedConfiguration {
 		required = false
 	)
 	public String importUserSyncStrategy();
-
-	@Meta.AD(deflt = "", required = false)
-	public String[] userIgnoreAttributes();
 
 }

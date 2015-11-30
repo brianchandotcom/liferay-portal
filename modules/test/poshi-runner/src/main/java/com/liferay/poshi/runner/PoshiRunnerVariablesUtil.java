@@ -36,6 +36,10 @@ public class PoshiRunnerVariablesUtil {
 		return _executeMap.containsKey(replaceCommandVars(key));
 	}
 
+	public static boolean containsKeyInReturnMap(String key) throws Exception {
+		return _returnMap.containsKey(replaceCommandVars(key));
+	}
+
 	public static String getValueFromCommandMap(String key) throws Exception {
 		return _commandMap.get(replaceCommandVars(key));
 	}
@@ -44,10 +48,15 @@ public class PoshiRunnerVariablesUtil {
 		return _executeMap.get(replaceCommandVars(key));
 	}
 
+	public static String getValueFromReturnMap(String key) throws Exception {
+		return _returnMap.get(replaceCommandVars(key));
+	}
+
 	public static void popCommandMap() {
 		_commandMap = _commandMapStack.pop();
 
 		_executeMap = new HashMap<>();
+		_returnMap = new HashMap<>();
 	}
 
 	public static void pushCommandMap() {
@@ -56,6 +65,7 @@ public class PoshiRunnerVariablesUtil {
 		_commandMap = _executeMap;
 
 		_executeMap = new HashMap<>();
+		_returnMap = new HashMap<>();
 	}
 
 	public static void putIntoCommandMap(String key, String value)
@@ -68,6 +78,12 @@ public class PoshiRunnerVariablesUtil {
 		throws Exception {
 
 		_executeMap.put(replaceCommandVars(key), replaceCommandVars(value));
+	}
+
+	public static void putIntoReturnMap(String key, String value)
+		throws Exception {
+
+		_returnMap.put(replaceCommandVars(key), replaceCommandVars(value));
 	}
 
 	public static String replaceCommandVars(String token) throws Exception {
@@ -99,5 +115,6 @@ public class PoshiRunnerVariablesUtil {
 		new Stack<>();
 	private static Map<String, String> _executeMap = new HashMap<>();
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
+	private static Map<String, String> _returnMap = new HashMap<>();
 
 }

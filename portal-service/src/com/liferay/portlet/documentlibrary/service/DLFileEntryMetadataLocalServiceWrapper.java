@@ -333,6 +333,11 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _dlFileEntryMetadataLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getMismatchedCompanyIdFileEntryMetadatas() {
 		return _dlFileEntryMetadataLocalService.getMismatchedCompanyIdFileEntryMetadatas();
 	}

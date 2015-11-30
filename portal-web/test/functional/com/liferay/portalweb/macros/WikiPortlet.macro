@@ -45,8 +45,10 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Wiki" />
 		</execute>
 
 		<var name="key_wikiNodeName" value="Main" />
@@ -96,7 +98,7 @@
 	</command>
 
 	<command name="viewNoPermissionCP">
-		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Wiki" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Wiki" />
 		<execute function="AssertElementNotPresent" locator1="Button#ADD_WIKI" />
 		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" />
 	</command>

@@ -47,8 +47,6 @@ if (assetRenderer != null) {
 
 String headerTitle = workflowTaskDisplayContext.getHeaderTitle(workflowTask);
 
-boolean showEditURL = workflowTaskDisplayContext.showEditURL(workflowTask);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
@@ -122,7 +120,7 @@ renderResponse.setTitle(headerTitle);
 										</c:if>
 
 										<portlet:param name="type" value="<%= assetRendererFactory.getType() %>" />
-										<portlet:param name="showEditURL" value="<%= String.valueOf(showEditURL) %>" />
+										<portlet:param name="showEditURL" value="<%= String.valueOf(workflowTaskDisplayContext.isShowEditURL(workflowTask)) %>" />
 									</portlet:renderURL>
 
 									<liferay-ui:icon iconCssClass="icon-search" message="view[action]" method="get" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' url="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, null) : viewFullContentURL.toString() %>" />
@@ -134,10 +132,10 @@ renderResponse.setTitle(headerTitle);
 
 								<c:if test="<%= workflowTaskDisplayContext.hasEditPortletURL(workflowTask) %>">
 									<c:choose>
-										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && showEditURL %>">
+										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && workflowTaskDisplayContext.isShowEditURL(workflowTask) %>">
 											<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>" />
 										</c:when>
-										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !showEditURL && !workflowTask.isCompleted() %>">
+										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !workflowTaskDisplayContext.isShowEditURL(workflowTask) && !workflowTask.isCompleted() %>">
 											<liferay-ui:icon-help message="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content" />
 										</c:when>
 									</c:choose>

@@ -235,7 +235,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
-	private WikiNodeLocalService _wikiNodeLocalService;
-	private WikiPageLocalService _wikiPageLocalService;
+	private volatile WikiNodeLocalService _wikiNodeLocalService;
+	private volatile WikiPageLocalService _wikiPageLocalService;
 
 }

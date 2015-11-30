@@ -14,7 +14,9 @@
 
 package com.liferay.shopping.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -23,16 +25,12 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.model.ShoppingCategoryConstants;
 import com.liferay.shopping.model.ShoppingItem;
-import com.liferay.shopping.service.ShoppingItemLocalServiceUtil;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.shopping.service.ShoppingItemLocalService;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
+@OSGiBeanProperties(
 	property = {"model.class.name=com.liferay.shopping.model.ShoppingItem"},
 	service = ShoppingItemPermission.class
 )
@@ -65,7 +63,7 @@ public class ShoppingItemPermission implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long itemId, String actionId)
 		throws PortalException {
 
-		ShoppingItem item = ShoppingItemLocalServiceUtil.getItem(itemId);
+		ShoppingItem item = _shoppingItemLocalService.getItem(itemId);
 
 		return contains(permissionChecker, item, actionId);
 	}
@@ -119,13 +117,10 @@ public class ShoppingItemPermission implements BaseModelPermissionChecker {
 		check(permissionChecker, primaryKey, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setShoppingCategoryPermission(
-		ShoppingCategoryPermission shoppingCategoryPermission) {
-
-		_shoppingCategoryPermission = shoppingCategoryPermission;
-	}
-
+	@BeanReference(type = ShoppingCategoryPermission.class)
 	private static ShoppingCategoryPermission _shoppingCategoryPermission;
+
+	@BeanReference(type = ShoppingItemLocalService.class)
+	private static ShoppingItemLocalService _shoppingItemLocalService;
 
 }

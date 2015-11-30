@@ -388,6 +388,11 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _journalFolderLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public long getInheritedWorkflowFolderId(long folderId)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return _journalFolderLocalService.getInheritedWorkflowFolderId(folderId);

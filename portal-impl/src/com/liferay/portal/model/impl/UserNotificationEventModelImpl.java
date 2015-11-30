@@ -115,9 +115,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long DELIVERED_COLUMN_BITMASK = 8L;
 	public static final long DELIVERYTYPE_COLUMN_BITMASK = 16L;
-	public static final long USERID_COLUMN_BITMASK = 32L;
-	public static final long UUID_COLUMN_BITMASK = 64L;
-	public static final long TIMESTAMP_COLUMN_BITMASK = 128L;
+	public static final long TYPE_COLUMN_BITMASK = 32L;
+	public static final long USERID_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long TIMESTAMP_COLUMN_BITMASK = 256L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserNotificationEvent"));
 
@@ -375,7 +376,17 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public void setType(String type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (_originalType == null) {
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
 	}
 
 	@Override
@@ -642,6 +653,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		userNotificationEventModelImpl._setOriginalUserId = false;
 
+		userNotificationEventModelImpl._originalType = userNotificationEventModelImpl._type;
+
 		userNotificationEventModelImpl._originalDeliveryType = userNotificationEventModelImpl._deliveryType;
 
 		userNotificationEventModelImpl._setOriginalDeliveryType = false;
@@ -828,6 +841,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private String _type;
+	private String _originalType;
 	private long _timestamp;
 	private int _deliveryType;
 	private int _originalDeliveryType;

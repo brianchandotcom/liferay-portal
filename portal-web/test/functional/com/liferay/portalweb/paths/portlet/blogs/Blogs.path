@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ACE_EDITOR</td>
+	<td>//div[contains(@class,'alloy-editor-wrapper')]//div[contains(@class,'ace_line')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_BLOGS_ENTRY</td>
 	<td>//a[contains(.,'Add Blog Entry')]</td>
 	<td></td>

@@ -214,8 +214,8 @@ public class JournalContentPortlet extends MVCPortlet {
 		_journalArticleLocalService = null;
 	}
 
-	private ExportArticleUtil _exportArticleUtil;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalContent _journalContent;
+	private volatile ExportArticleUtil _exportArticleUtil;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private volatile JournalContent _journalContent;
 
 }

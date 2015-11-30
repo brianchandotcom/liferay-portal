@@ -362,9 +362,9 @@ public class CalendarResourceStagedModelDataHandler
 		}
 	}
 
-	private CalendarLocalService _calendarLocalService;
-	private CalendarResourceLocalService _calendarResourceLocalService;
-	private GroupLocalService _groupLocalService;
-	private UserLocalService _userLocalService;
+	private volatile CalendarLocalService _calendarLocalService;
+	private volatile CalendarResourceLocalService _calendarResourceLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

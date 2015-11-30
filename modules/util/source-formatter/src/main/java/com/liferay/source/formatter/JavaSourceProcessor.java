@@ -874,6 +874,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = checkPrincipalException(newContent);
 
+		// LPS-59828
+
+		if (fileName.endsWith("Upgrade.java") &&
+			newContent.contains("implements UpgradeStepRegistrator")) {
+
+			matcher = _componentAnnotationPattern.matcher(newContent);
+
+			if (matcher.find()) {
+				String componentAnnotation = matcher.group();
+
+				if (!componentAnnotation.contains("service =")) {
+					processErrorMessage(
+						fileName, "Missing service in @Component " + fileName);
+				}
+			}
+		}
+
 		// LPS-60473
 
 		if (newContent.contains(".supportsBatchUpdates()") &&
@@ -2200,6 +2217,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName, "Do not use Registry in modules: " + fileName);
 		}
 
+		// LPS-60186
+
+		if (!absolutePath.contains("/test/") &&
+			content.contains("@Meta.OCD") &&
+			!content.contains("@ConfigurationAdmin")) {
+
+			processErrorMessage(
+				fileName,
+				"Specify category using @ConfigurationAdmin: " + fileName);
+		}
+
 		return content;
 	}
 
@@ -2208,40 +2236,40 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String moduleServicePackagePath = null;
 
-		if (_checkModulesServiceUtil) {
-			Matcher matcher = _serviceUtilImportPattern.matcher(content);
+		Matcher matcher = _serviceUtilImportPattern.matcher(content);
 
-			while (matcher.find()) {
-				String serviceUtilClassName = matcher.group(2);
+		while (matcher.find()) {
+			String serviceUtilClassName = matcher.group(2);
 
-				if (moduleServicePackagePath == null) {
-					moduleServicePackagePath = getModuleServicePackagePath(
-						fileName);
-				}
+			if (moduleServicePackagePath == null) {
+				moduleServicePackagePath = getModuleServicePackagePath(
+					fileName);
+			}
 
-				if (Validator.isNotNull(moduleServicePackagePath)) {
-					String serviceUtilClassPackagePath = matcher.group(1);
+			if (Validator.isNotNull(moduleServicePackagePath)) {
+				String serviceUtilClassPackagePath = matcher.group(1);
 
-					if (serviceUtilClassPackagePath.startsWith(
-							moduleServicePackagePath)) {
+				if (serviceUtilClassPackagePath.startsWith(
+						moduleServicePackagePath)) {
 
+					if (_checkModulesServiceUtil) {
 						processErrorMessage(
 							fileName,
 							"LPS-59076: Convert OSGi Component to Spring " +
 								"bean: " + fileName);
-
-						continue;
 					}
-				}
 
-				processErrorMessage(
-					fileName,
-					"LPS-59076: Use @Reference instead of calling " +
-						serviceUtilClassName + " directly: " + fileName);
+					break;
+				}
 			}
+
+			processErrorMessage(
+				fileName,
+				"LPS-59076: Use @Reference instead of calling " +
+					serviceUtilClassName + " directly: " + fileName);
 		}
 
-		Matcher matcher = _setReferenceMethodPattern.matcher(content);
+		matcher = _setReferenceMethodPattern.matcher(content);
 
 		while (matcher.find()) {
 			String annotationParameters = matcher.group(2);
@@ -2272,10 +2300,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 
-			if (!_checkModulesServiceUtil) {
-				continue;
-			}
-
 			String methodContent = matcher.group(6);
 
 			Matcher referenceMethodContentMatcher =
@@ -2285,15 +2309,41 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
+			String typeName = matcher.group(5);
+			String variableName = referenceMethodContentMatcher.group(1);
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("private ");
+			sb.append(typeName);
+			sb.append("\\s+");
+			sb.append(variableName);
+			sb.append(StringPool.SEMICOLON);
+
+			Pattern privateVarPattern = Pattern.compile(sb.toString());
+
+			Matcher privateVarMatcher = privateVarPattern.matcher(content);
+
+			if (privateVarMatcher.find()) {
+				String match = privateVarMatcher.group();
+
+				String replacement = StringUtil.replace(
+					match, "private ", "private volatile ");
+
+				return StringUtil.replace(content, match, replacement);
+			}
+
+			if (!_checkModulesServiceUtil) {
+				continue;
+			}
+
 			if (moduleServicePackagePath == null) {
 				moduleServicePackagePath = getModuleServicePackagePath(
 					fileName);
 			}
 
 			if (Validator.isNotNull(moduleServicePackagePath)) {
-				String typeName = matcher.group(5);
-
-				StringBundler sb = new StringBundler(5);
+				sb = new StringBundler(5);
 
 				sb.append("\nimport ");
 				sb.append(moduleServicePackagePath);
@@ -3363,6 +3413,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						"\n" + firstLine + "\n" + secondLine + "\n");
 				}
 			}
+			else {
+				x = line.lastIndexOf(StringPool.SPACE);
+
+				if (x != -1) {
+					String firstLine = line.substring(0, x);
+					String secondLine =
+						indent + StringPool.TAB + line.substring(x + 1);
+
+					if (getLineLength(secondLine) <= _MAX_LINE_LENGTH) {
+						return StringUtil.replace(
+							content, "\n" + line + "\n",
+							"\n" + firstLine + "\n" + secondLine + "\n");
+					}
+				}
+			}
 		}
 
 		if (line.contains(StringPool.TAB + "for (") && line.endsWith(" {")) {
@@ -3531,6 +3596,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*).+(=|\\]) (\\{)\n");
 	private Pattern _combinedLinesPattern2 = Pattern.compile(
 		"\n(\t*)@.+(\\()\n");
+	private Pattern _componentAnnotationPattern = Pattern.compile(
+		"@Component(\n|\\([\\s\\S]*?\\)\n)");
 	private List<String> _diamondOperatorExclusionFiles;
 	private List<String> _diamondOperatorExclusionPaths;
 	private Pattern _diamondOperatorPattern = Pattern.compile(
@@ -3565,7 +3632,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private Pattern _setReferenceMethodContentPattern = Pattern.compile(
-		"^\\w+ =\\s+\\w+;$");
+		"^(\\w+) =\\s+\\w+;$");
 	private Pattern _setReferenceMethodPattern = Pattern.compile(
 		"\n(\t+)@Reference([\\s\\S]*?)\\s+(protected|public) void (set\\w+?)" +
 			"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\\}");

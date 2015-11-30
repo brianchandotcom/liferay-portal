@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
@@ -26,12 +26,13 @@ import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
  */
 @Deprecated
 public abstract class LayoutSetBranchActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public LayoutSetBranchActionableDynamicQuery() {
 		setBaseLocalService(LayoutSetBranchLocalServiceUtil.getService());
-		setClass(LayoutSetBranch.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(LayoutSetBranch.class);
 
 		setPrimaryKeyPropertyName("layoutSetBranchId");
 	}

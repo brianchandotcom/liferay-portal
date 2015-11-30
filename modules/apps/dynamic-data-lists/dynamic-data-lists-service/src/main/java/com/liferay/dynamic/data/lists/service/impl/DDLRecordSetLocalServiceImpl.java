@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -408,17 +409,22 @@ public class DDLRecordSetLocalServiceImpl
 			ddmStructureId);
 
 		if (ddmStructure == null) {
-			throw new RecordSetDDMStructureIdException();
+			throw new RecordSetDDMStructureIdException(
+				"No DDM structure exists with the DDM structure ID " +
+					ddmStructureId);
 		}
 	}
 
 	protected void validateName(Map<Locale, String> nameMap)
 		throws PortalException {
 
-		String name = nameMap.get(LocaleUtil.getSiteDefault());
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		String name = nameMap.get(locale);
 
 		if (Validator.isNull(name)) {
-			throw new RecordSetNameException();
+			throw new RecordSetNameException(
+				"Name is null for locale " + locale.getDisplayName());
 		}
 	}
 
@@ -436,9 +442,41 @@ public class DDLRecordSetLocalServiceImpl
 		String requireCaptcha = settingsProperties.getProperty(
 			"requireCaptcha");
 
-		if (!Validator.isBoolean(requireCaptcha)) {
+		if (Validator.isNotNull(requireCaptcha) &&
+			!Validator.isBoolean(requireCaptcha)) {
+
 			throw new RecordSetSettingsException(
 				"The property \"requireCaptcha\" is not a boolean");
+		}
+
+		boolean sendEmailNotification = GetterUtil.getBoolean(
+			settingsProperties.getProperty("sendEmailNotification"));
+
+		if (sendEmailNotification) {
+			String emailFromAddress = settingsProperties.getProperty(
+				"emailFromAddress");
+
+			if (!Validator.isEmailAddress(emailFromAddress)) {
+				throw new RecordSetSettingsException(
+					"The property \"emailFromAddress\" is not an email " +
+						"address");
+			}
+
+			String emailFromName = settingsProperties.getProperty(
+				"emailFromName");
+
+			if (Validator.isNull(emailFromName)) {
+				throw new RecordSetSettingsException(
+					"The property \"emailFromName\" is empty");
+			}
+
+			String emailToAddress = settingsProperties.getProperty(
+				"emailToAddresses");
+
+			if (!Validator.isEmailAddress(emailToAddress)) {
+				throw new RecordSetSettingsException(
+					"The property \"emailToAddress\" is not an email address");
+			}
 		}
 	}
 

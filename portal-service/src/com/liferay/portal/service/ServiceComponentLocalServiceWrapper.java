@@ -198,6 +198,11 @@ public class ServiceComponentLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _serviceComponentLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.model.ServiceComponent> getLatestServiceComponents() {
 		return _serviceComponentLocalService.getLatestServiceComponents();
 	}

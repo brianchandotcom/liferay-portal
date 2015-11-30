@@ -94,7 +94,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
-import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -784,11 +784,11 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		return new Object[] {user, oldScreenName, updateLanguageId};
 	}
 
-	private AnnouncementsDeliveryLocalService
+	private volatile AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
-	private DLAppLocalService _dlAppLocalService;
-	private ListTypeLocalService _listTypeLocalService;
-	private UserLocalService _userLocalService;
-	private UserService _userService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile ListTypeLocalService _listTypeLocalService;
+	private volatile UserLocalService _userLocalService;
+	private volatile UserService _userService;
 
 }

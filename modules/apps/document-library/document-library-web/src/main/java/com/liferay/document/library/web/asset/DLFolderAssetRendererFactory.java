@@ -122,6 +122,6 @@ public class DLFolderAssetRendererFactory
 		_dlAppLocalService = dlAppLocalService;
 	}
 
-	private DLAppLocalService _dlAppLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
 
 }

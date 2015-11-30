@@ -5,6 +5,15 @@
 	<var name="portletName" value="Wiki" />
 
 	<set-up>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="SignIn#signInPortalInstanceSetUp" />
+			</then>
+		</if>
+
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#addPG">
@@ -21,11 +30,21 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="WikiPage#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="WikiNode#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="WikiPage#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="WikiNode#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddWikiFrontPage" priority="5">
@@ -121,6 +140,8 @@
 		</execute>
 
 		<execute macro="WikiEntry#confirmHTML" />
+
+		<execute function="Click#clickAt" locator1="Wiki#RICH_TEXT_EDITOR" />
 
 		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
 
@@ -365,11 +386,21 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="htmlSource" value="true" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageText" value="${wikiPageText}" />
+		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
+
+		<execute macro="WikiEntry#selectPageFormat">
+			<var name="pageFormat" value="HTML" />
 		</execute>
+
+		<execute macro="WikiEntry#confirmHTML" />
+
+		<execute function="Click#clickAt" locator1="Wiki#RICH_TEXT_EDITOR" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
+
+		<execute function="Type#typeAceEditor" locator1="TextArea#ACE_EDITOR" value1="${wikiPageContent}" />
+
+		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -423,6 +454,8 @@
 		</execute>
 
 		<execute macro="WikiEntry#confirmHTML" />
+
+		<execute function="Click#clickAt" locator1="Wiki#RICH_TEXT_EDITOR" />
 
 		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
 
@@ -547,7 +580,7 @@
 
 		<execute macro="WikiPage#gotoAllPagesPG" />
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -558,6 +591,8 @@
 		</execute>
 
 		<execute macro="WikiEntry#confirmHTML" />
+
+		<execute function="Click#clickAt" locator1="Wiki#RICH_TEXT_EDITOR" />
 
 		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
 
@@ -589,7 +624,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPages" />
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -669,7 +704,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPages" />
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -693,7 +728,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPages" />
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -791,7 +826,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPages" />
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -909,7 +944,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPages" />
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -1062,7 +1097,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPages" />
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -1106,7 +1141,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPages" />
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -1415,7 +1450,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPages" />
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />

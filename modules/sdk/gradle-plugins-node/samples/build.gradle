@@ -2,6 +2,10 @@ import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
 
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "latest.release"
+	}
+
 	repositories {
 		mavenLocal()
 
@@ -9,18 +13,14 @@ buildscript {
 			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
 	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "latest.release"
-	}
 }
 
 apply plugin: "com.liferay.node"
 
-version = "1.0.3"
-
 task downloadBabel(type: DownloadNodeModuleTask)
 task publishNodeModule(type: PublishNodeModuleTask)
+
+version = "1.0.3"
 
 downloadBabel {
 	moduleName = "babel"

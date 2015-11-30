@@ -402,8 +402,8 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFolderTrashHandler.class);
 
-	private DLAppLocalService _dlAppLocalService;
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-	private DLFolderLocalService _dlFolderLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
+	private volatile DLFolderLocalService _dlFolderLocalService;
 
 }

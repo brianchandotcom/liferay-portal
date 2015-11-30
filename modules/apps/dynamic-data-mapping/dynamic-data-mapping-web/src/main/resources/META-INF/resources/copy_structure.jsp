@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-
 DDMStructure structure = (DDMStructure)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
 DDMStructureVersion structureVersion = structure.getStructureVersion();
@@ -36,7 +34,13 @@ boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplat
 
 <aui:form action="<%= copyStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
+
+	<portlet:renderURL var="closeRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/view.jsp" />
+	</portlet:renderURL>
+
+	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirectURL %>" />
+
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(scopeClassNameId) %>" />

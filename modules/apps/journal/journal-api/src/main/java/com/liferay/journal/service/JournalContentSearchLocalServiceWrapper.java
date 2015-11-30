@@ -249,6 +249,11 @@ public class JournalContentSearchLocalServiceWrapper
 			articleId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _journalContentSearchLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the journal content search with the primary key.
 	*

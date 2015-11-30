@@ -70,6 +70,51 @@ public class UpdateRecordSetSettingsMVCActionCommand
 			workflowDefinitionLinkLocalService;
 	}
 
+	protected void updateRecordSetEmailNotificationSettings(
+		ActionRequest actionRequest, UnicodeProperties settingsProperties) {
+
+		boolean sendEmailNotification = ParamUtil.getBoolean(
+			actionRequest, "sendEmailNotification");
+
+		String emailFromName = ParamUtil.getString(
+			actionRequest, "emailFromName");
+		String emailFromAddress = ParamUtil.getString(
+			actionRequest, "emailFromAddress");
+		String emailToAddress = ParamUtil.getString(
+			actionRequest, "emailToAddress");
+		String emailSubject = ParamUtil.getString(
+			actionRequest, "emailSubject");
+
+		settingsProperties.setProperty(
+			"sendEmailNotification", String.valueOf(sendEmailNotification));
+
+		if (sendEmailNotification) {
+			settingsProperties.setProperty(
+				"emailFromAddress", emailFromAddress);
+			settingsProperties.setProperty("emailFromName", emailFromName);
+			settingsProperties.setProperty("emailToAddress", emailToAddress);
+			settingsProperties.setProperty("emailSubject", emailSubject);
+		}
+	}
+
+	protected void updateRecordSetRedirectURLSettings(
+		ActionRequest actionRequest, UnicodeProperties settingsProperties) {
+
+		String redirectURL = ParamUtil.getString(actionRequest, "redirectURL");
+
+		settingsProperties.setProperty("redirectURL", redirectURL);
+	}
+
+	protected void updateRecordSetRequireCaptchaSettings(
+		ActionRequest actionRequest, UnicodeProperties settingsProperties) {
+
+		boolean requireCaptcha = ParamUtil.getBoolean(
+			actionRequest, "requireCaptcha");
+
+		settingsProperties.setProperty(
+			"requireCaptcha", String.valueOf(requireCaptcha));
+	}
+
 	protected void updateRecordSetSettings(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -77,15 +122,11 @@ public class UpdateRecordSetSettingsMVCActionCommand
 
 		UnicodeProperties settingsProperties = new UnicodeProperties(true);
 
-		String redirectURL = ParamUtil.getString(actionRequest, "redirectURL");
-
-		settingsProperties.setProperty("redirectURL", redirectURL);
-
-		boolean requireCaptcha = ParamUtil.getBoolean(
-			actionRequest, "requireCaptcha");
-
-		settingsProperties.setProperty(
-			"requireCaptcha", String.valueOf(requireCaptcha));
+		updateRecordSetRedirectURLSettings(actionRequest, settingsProperties);
+		updateRecordSetRequireCaptchaSettings(
+			actionRequest, settingsProperties);
+		updateRecordSetEmailNotificationSettings(
+			actionRequest, settingsProperties);
 
 		_ddlRecordSetService.updateRecordSet(
 			recordSetId, settingsProperties.toString());
@@ -111,8 +152,8 @@ public class UpdateRecordSetSettingsMVCActionCommand
 			workflowDefinition);
 	}
 
-	private DDLRecordSetService _ddlRecordSetService;
-	private WorkflowDefinitionLinkLocalService
+	private volatile DDLRecordSetService _ddlRecordSetService;
+	private volatile WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 }

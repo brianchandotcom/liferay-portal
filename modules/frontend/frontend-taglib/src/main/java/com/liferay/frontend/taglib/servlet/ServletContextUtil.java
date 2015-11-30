@@ -55,6 +55,6 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _instance;
 
-	private ServletContext _servletContext;
+	private volatile ServletContext _servletContext;
 
 }

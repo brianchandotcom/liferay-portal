@@ -2,24 +2,43 @@
 	<property name="testray.main.component.name" value="Users and Organizations" />
 
 	<set-up>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="SignIn#signInPortalInstanceSetUp" />
+			</then>
+		</if>
+
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="User#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#logoutAndLoginPG">
+					<var name="userLoginEmailAddress" value="test@liferay.com" />
+					<var name="userLoginFullName" value="Test Test" />
+				</execute>
 
-		<execute macro="Role#tearDownCP" />
+				<execute macro="User#tearDownCP" />
 
-		<execute macro="Site#tearDownCP" />
+				<execute macro="Role#tearDownCP" />
 
-		<execute macro="Suborganization#tearDownCP" />
+				<execute macro="Site#tearDownCP" />
 
-		<execute macro="Organization#tearDownCP" />
+				<execute macro="Suborganization#tearDownCP" />
+
+				<execute macro="Organization#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddOrganizationName50Characters" priority="3">

@@ -59,7 +59,6 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.User;
-import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.PortletItemLocalService;
@@ -1306,18 +1305,19 @@ public class PortletExportController implements ExportController {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletExportController.class);
 
-	private AssetEntryLocalService _assetEntryLocalService;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
-	private ExportImportLifecycleManager _exportImportLifecycleManager;
-	private GroupLocalService _groupLocalService;
-	private LayoutLocalService _layoutLocalService;
+	private volatile ExportImportLifecycleManager _exportImportLifecycleManager;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
-	private PortletItemLocalService _portletItemLocalService;
-	private PortletLocalService _portletLocalService;
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
-	private UserLocalService _userLocalService;
+	private volatile PortletItemLocalService _portletItemLocalService;
+	private volatile PortletLocalService _portletLocalService;
+	private volatile PortletPreferencesLocalService
+		_portletPreferencesLocalService;
+	private volatile UserLocalService _userLocalService;
 
 	private class UpdatePortletLastPublishDateCallable
 		implements Callable<Void> {
@@ -1349,16 +1349,18 @@ public class PortletExportController implements ExportController {
 				}
 			}
 
+			javax.portlet.PortletPreferences jxPortletPreferences = null;
+
 			if (layout == null) {
-				layout = new LayoutImpl();
-
-				layout.setCompanyId(group.getCompanyId());
-				layout.setGroupId(group.getGroupId());
+				jxPortletPreferences =
+					PortletPreferencesFactoryUtil.getStrictPortletSetup(
+						group.getCompanyId(), group.getGroupId(), _portletId);
 			}
-
-			javax.portlet.PortletPreferences jxPortletPreferences =
-				PortletPreferencesFactoryUtil.getStrictPortletSetup(
-					layout, _portletId);
+			else {
+				jxPortletPreferences =
+					PortletPreferencesFactoryUtil.getStrictPortletSetup(
+						layout, _portletId);
+			}
 
 			ExportImportDateUtil.updateLastPublishDate(
 				_portletId, jxPortletPreferences, _dateRange, _endDate);

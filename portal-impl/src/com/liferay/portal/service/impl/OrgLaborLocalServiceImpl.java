@@ -101,7 +101,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 	}
 
 	protected void validate(long typeId) throws PortalException {
-		listTypeService.validate(
+		listTypeLocalService.validate(
 			typeId, ListTypeConstants.ORGANIZATION_SERVICE);
 	}
 

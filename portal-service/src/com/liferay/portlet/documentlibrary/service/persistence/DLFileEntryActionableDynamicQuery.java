@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -27,12 +27,13 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
  */
 @Deprecated
 public abstract class DLFileEntryActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public DLFileEntryActionableDynamicQuery() {
 		setBaseLocalService(DLFileEntryLocalServiceUtil.getService());
-		setClass(DLFileEntry.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(DLFileEntry.class);
 
 		setPrimaryKeyPropertyName("fileEntryId");
 	}

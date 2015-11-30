@@ -37,8 +37,8 @@ if (Validator.isNotNull(ldapSecurityCredentials)) {
 }
 
 String ldapAuthSearchFilter = ldapServerConfiguration.authSearchFilter();
-String ldapImportUserSearchFilter = ldapServerConfiguration.userSearchFilter();
-String ldapImportGroupSearchFilter = ldapServerConfiguration.groupSearchFilter();
+String ldapUserSearchFilter = ldapServerConfiguration.userSearchFilter();
+String ldapGroupSearchFilter = ldapServerConfiguration.groupSearchFilter();
 String ldapUsersDN = ldapServerConfiguration.usersDN();
 String[] ldapUserDefaultObjectClasses = ldapServerConfiguration.userDefaultObjectClasses();
 String ldapGroupsDN = ldapServerConfiguration.groupsDN();
@@ -204,7 +204,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	<aui:fieldset>
 		<aui:input cssClass="lfr-input-text-container" helpMessage="enter-the-search-filter-that-is-used-to-test-the-validity-of-a-user" label="authentication-search-filter" name='<%= "ldap--" + LDAPConstants.AUTH_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapAuthSearchFilter %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "ldap--" + LDAPConstants.IMPORT_USER_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapImportUserSearchFilter %>" />
+		<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "ldap--" + LDAPConstants.USER_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapUserSearchFilter %>" />
 
 		<h4><liferay-ui:message key="user-mapping" /></h4>
 
@@ -247,7 +247,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	<h3><liferay-ui:message key="groups" /></h3>
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "ldap--" + LDAPConstants.IMPORT_GROUP_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapImportGroupSearchFilter %>" />
+		<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "ldap--" + LDAPConstants.GROUP_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapGroupSearchFilter %>" />
 
 		<h4><liferay-ui:message key="group-mapping" /></h4>
 
@@ -500,7 +500,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 		form.fm('ldap--<%= LDAPConstants.SECURITY_PRINCIPAL %>--').val(principal);
 		form.fm('ldap--<%= LDAPConstants.SECURITY_CREDENTIAL %>--').val(credentials);
 		form.fm('ldap--<%= LDAPConstants.AUTH_SEARCH_FILTER %>--').val(searchFilter);
-		form.fm('ldap--<%= LDAPConstants.IMPORT_USER_SEARCH_FILTER %>--').val(importUserSearchFilter);
+		form.fm('ldap--<%= LDAPConstants.USER_SEARCH_FILTER %>--').val(importUserSearchFilter);
 		form.fm('userMappingEmailAddress').val(userMappingEmailAddress);
 		form.fm('userMappingFirstName').val(userMappingFirstName);
 		form.fm('userMappingFullName').val(userMappingFullName);
@@ -513,7 +513,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 		form.fm('userMappingScreenName').val(userMappingScreenName);
 		form.fm('userMappingStatus').val(userMappingStatus);
 		form.fm('userMappingUuid').val(userMappingUuid);
-		form.fm('ldap--<%= LDAPConstants.IMPORT_GROUP_SEARCH_FILTER %>--').val(importGroupSearchFilter);
+		form.fm('ldap--<%= LDAPConstants.GROUP_SEARCH_FILTER %>--').val(importGroupSearchFilter);
 		form.fm('groupMappingDescription').val(groupMappingDescription);
 		form.fm('groupMappingGroupName').val(groupMappingGroupName);
 		form.fm('groupMappingUser').val(groupMappingUser);
@@ -539,7 +539,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 			else if (type == 'ldapGroups') {
 				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_groups" /></portlet:renderURL>';
 
-				data.<portlet:namespace />importGroupSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />ldap--<%= LDAPConstants.IMPORT_GROUP_SEARCH_FILTER %>--'].value;
+				data.<portlet:namespace />importGroupSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />ldap--<%= LDAPConstants.GROUP_SEARCH_FILTER %>--'].value;
 				data.<portlet:namespace />groupMappingDescription = document.<portlet:namespace />fm['<portlet:namespace />groupMappingDescription'].value;
 				data.<portlet:namespace />groupMappingGroupName = document.<portlet:namespace />fm['<portlet:namespace />groupMappingGroupName'].value;
 				data.<portlet:namespace />groupMappingUser = document.<portlet:namespace />fm['<portlet:namespace />groupMappingUser'].value;
@@ -547,7 +547,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 			else if (type == 'ldapUsers') {
 				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_users" /></portlet:renderURL>';
 
-				data.<portlet:namespace />importUserSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />ldap--<%= LDAPConstants.IMPORT_USER_SEARCH_FILTER %>--'].value;
+				data.<portlet:namespace />importUserSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />ldap--<%= LDAPConstants.USER_SEARCH_FILTER %>--'].value;
 				data.<portlet:namespace />userMappingEmailAddress = document.<portlet:namespace />fm['<portlet:namespace />userMappingEmailAddress'].value;
 				data.<portlet:namespace />userMappingFirstName = document.<portlet:namespace />fm['<portlet:namespace />userMappingFirstName'].value;
 				data.<portlet:namespace />userMappingFullName = document.<portlet:namespace />fm['<portlet:namespace />userMappingFullName'].value;

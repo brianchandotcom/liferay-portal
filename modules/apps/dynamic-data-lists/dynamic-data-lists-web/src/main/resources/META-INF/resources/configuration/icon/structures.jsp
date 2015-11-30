@@ -38,6 +38,7 @@
 
 				refererPortletName: '<%= portlet.getPortletName() %>',
 				refererWebDAVToken: '<%= WebDAVUtil.getStorageToken(portlet) %>',
+				showAncestorScopes: true,
 				title: '<%= UnicodeLanguageUtil.get(request, "data-definitions") %>'
 			}
 		);

@@ -116,6 +116,6 @@ public class ItemSelectorUploadView
 			ListUtil.fromArray(
 				new ItemSelectorReturnType[] {new UploadableFileReturnType()}));
 
-	private ServletContext _servletContext;
+	private volatile ServletContext _servletContext;
 
 }

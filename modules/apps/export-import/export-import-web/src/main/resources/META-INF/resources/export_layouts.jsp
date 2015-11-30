@@ -121,146 +121,148 @@ if (!cmd.equals(Constants.ADD)) {
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-ui:trash-undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
-
-<c:if test="<%= showHeader %>">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		title='<%= privateLayout ? LanguageUtil.get(request, "export-private-pages") : LanguageUtil.get(request, "export-public-pages") %>'
+<div class="container-fluid-1280">
+	<liferay-ui:trash-undo
+		portletURL="<%= restoreTrashEntriesURL %>"
 	/>
-</c:if>
 
-<liferay-ui:tabs
-	names="<%= tabs2Names %>"
-	param="tabs2"
-	refresh="<%= false %>"
->
-
-	<%
-	int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, false);
-	%>
-
-	<div class='<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>' id="<portlet:namespace />incompleteProcessMessage">
-		<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
-		</liferay-util:include>
-	</div>
-
-	<liferay-ui:section>
-		<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
-			<aui:nav-bar>
-				<aui:nav cssClass="navbar-nav" id="exportConfigurationButtons">
-					<aui:nav-item
-						data-value="custom"
-						iconCssClass="icon-puzzle"
-						label="custom"
-					/>
-
-					<aui:nav-item
-						data-value="saved"
-						iconCssClass="icon-archive"
-						label="export-templates"
-					/>
-				</aui:nav>
-			</aui:nav-bar>
-		</div>
-
-		<div <%= exportConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
-			<portlet:actionURL name="editExportConfiguration" var="updateExportConfigurationURL">
-				<portlet:param name="mvcPath" value="/export_layouts.jsp" />
-			</portlet:actionURL>
-
-			<portlet:actionURL name="exportLayouts" var="exportPagesURL">
-				<portlet:param name="mvcPath" value="/export_layouts.jsp" />
-				<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
-			</portlet:actionURL>
-
-			<aui:form action='<%= cmd.equals(Constants.EXPORT) ? exportPagesURL : updateExportConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
-				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-				<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
-				<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
-				<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
-				<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />
-				<aui:input name="rootNodeName" type="hidden" value="<%= rootNodeName %>" />
-				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
-				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
-				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>"  />
-				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
-
-				<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
-
-				<div class="export-dialog-tree">
-					<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
-						<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" label='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>' />
-					</c:if>
-
-					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
-						<aui:fieldset cssClass="options-group" label="pages">
-
-							<%
-							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
-							%>
-
-							<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-								<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-								<liferay-util:param name="treeId" value="<%= treeId %>" />
-								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-							</liferay-util:include>
-						</aui:fieldset>
-					</c:if>
-
-					<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
-
-					<aui:fieldset cssClass="options-group" label="permissions">
-						<%@ include file="/permissions.jspf" %>
-					</aui:fieldset>
-				</div>
-
-				<aui:button-row>
-					<c:choose>
-						<c:when test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
-							<aui:button type="submit" value="save" />
-
-							<aui:button href="<%= portletURL.toString() %>" type="cancel" />
-						</c:when>
-						<c:otherwise>
-							<aui:button type="submit" value="export" />
-
-							<aui:button href="<%= backURL %>" type="cancel" />
-						</c:otherwise>
-					</c:choose>
-				</aui:button-row>
-			</aui:form>
-		</div>
-
-		<c:if test="<%= !cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE) %>">
-			<div <%= exportConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
-				<liferay-util:include page="/export_layouts_configurations.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-					<liferay-util:param name="rootNodeName" value="<%= rootNodeName %>" />
-				</liferay-util:include>
-			</div>
-		</c:if>
-	</liferay-ui:section>
-
-	<c:if test="<%= !cmd.equals(Constants.ADD) %>">
-		<liferay-ui:section>
-			<div class="process-list" id="<portlet:namespace />exportProcesses">
-				<liferay-util:include page="/export_layouts_processes.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				</liferay-util:include>
-			</div>
-		</liferay-ui:section>
+	<c:if test="<%= showHeader %>">
+		<liferay-ui:header
+			backURL="<%= backURL %>"
+			title='<%= privateLayout ? LanguageUtil.get(request, "export-private-pages") : LanguageUtil.get(request, "export-public-pages") %>'
+		/>
 	</c:if>
-</liferay-ui:tabs>
+
+	<liferay-ui:tabs
+		names="<%= tabs2Names %>"
+		param="tabs2"
+		refresh="<%= false %>"
+	>
+
+		<%
+		int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, false);
+		%>
+
+		<div class='<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>' id="<portlet:namespace />incompleteProcessMessage">
+			<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
+			</liferay-util:include>
+		</div>
+
+		<liferay-ui:section>
+			<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
+				<aui:nav-bar>
+					<aui:nav cssClass="navbar-nav" id="exportConfigurationButtons">
+						<aui:nav-item
+							data-value="custom"
+							iconCssClass="icon-puzzle"
+							label="custom"
+						/>
+
+						<aui:nav-item
+							data-value="saved"
+							iconCssClass="icon-archive"
+							label="export-templates"
+						/>
+					</aui:nav>
+				</aui:nav-bar>
+			</div>
+
+			<div <%= exportConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
+				<portlet:actionURL name="editExportConfiguration" var="updateExportConfigurationURL">
+					<portlet:param name="mvcPath" value="/export_layouts.jsp" />
+				</portlet:actionURL>
+
+				<portlet:actionURL name="exportLayouts" var="exportPagesURL">
+					<portlet:param name="mvcPath" value="/export_layouts.jsp" />
+					<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
+				</portlet:actionURL>
+
+				<aui:form action='<%= cmd.equals(Constants.EXPORT) ? exportPagesURL : updateExportConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
+					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
+					<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+					<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
+					<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
+					<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
+					<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />
+					<aui:input name="rootNodeName" type="hidden" value="<%= rootNodeName %>" />
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>"  />
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
+
+					<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
+
+					<div class="export-dialog-tree">
+						<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
+							<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" label='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>' />
+						</c:if>
+
+						<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
+							<aui:fieldset cssClass="options-group" label="pages">
+
+								<%
+								request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
+								%>
+
+								<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
+									<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+									<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+									<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+									<liferay-util:param name="treeId" value="<%= treeId %>" />
+									<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+								</liferay-util:include>
+							</aui:fieldset>
+						</c:if>
+
+						<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
+
+						<aui:fieldset cssClass="options-group" label="permissions">
+							<%@ include file="/permissions.jspf" %>
+						</aui:fieldset>
+					</div>
+
+					<aui:button-row>
+						<c:choose>
+							<c:when test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
+								<aui:button type="submit" value="save" />
+
+								<aui:button href="<%= portletURL.toString() %>" type="cancel" />
+							</c:when>
+							<c:otherwise>
+								<aui:button type="submit" value="export" />
+
+								<aui:button href="<%= backURL %>" type="cancel" />
+							</c:otherwise>
+						</c:choose>
+					</aui:button-row>
+				</aui:form>
+			</div>
+
+			<c:if test="<%= !cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE) %>">
+				<div <%= exportConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
+					<liferay-util:include page="/export_layouts_configurations.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+						<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+						<liferay-util:param name="rootNodeName" value="<%= rootNodeName %>" />
+					</liferay-util:include>
+				</div>
+			</c:if>
+		</liferay-ui:section>
+
+		<c:if test="<%= !cmd.equals(Constants.ADD) %>">
+			<liferay-ui:section>
+				<div class="process-list" id="<portlet:namespace />exportProcesses">
+					<liferay-util:include page="/export_layouts_processes.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+						<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+					</liferay-util:include>
+				</div>
+			</liferay-ui:section>
+		</c:if>
+	</liferay-ui:tabs>
+</div>
 
 <aui:script use="liferay-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportLayouts" var="exportProcessesURL">

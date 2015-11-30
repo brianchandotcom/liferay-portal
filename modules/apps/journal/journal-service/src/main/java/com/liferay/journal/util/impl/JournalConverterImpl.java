@@ -52,7 +52,6 @@ import com.liferay.util.xml.XMLUtil;
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -693,12 +692,6 @@ public class JournalConverterImpl implements JournalConverter {
 
 				Serializable fieldValue = ddmField.getValue(locale, count);
 
-				if (fieldValue instanceof Date) {
-					Date valueDate = (Date)fieldValue;
-
-					fieldValue = valueDate.getTime();
-				}
-
 				String valueString = String.valueOf(fieldValue);
 
 				updateDynamicContentValue(
@@ -1059,8 +1052,8 @@ public class JournalConverterImpl implements JournalConverter {
 	private final Map<String, String> _ddmDataTypes;
 	private final Map<String, String> _ddmMetadataAttributes;
 	private final Map<String, String> _ddmTypesToJournalTypes;
-	private DLAppLocalService _dlAppLocalService;
-	private GroupLocalService _groupLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile GroupLocalService _groupLocalService;
 	private final Map<String, String> _journalTypesToDDMTypes;
 	private final Pattern _oldDocumentLibraryURLPattern = Pattern.compile(
 		"uuid=([^&]+)&groupId=([^&]+)");

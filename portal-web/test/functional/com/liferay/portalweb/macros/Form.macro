@@ -24,6 +24,10 @@
 	</command>
 
 	<command name="editName">
+		<var name="key_columnSize" value="${columnSize}" />
+
+		<execute function="AssertElementPresent" locator1="Form#ADD_FIRST_FIELD" />
+
 		<execute function="Type#typeAceEditor" locator1="Form#NAME_FIELD" value1="${formName}" />
 	</command>
 
@@ -60,5 +64,16 @@
 		<execute function="AssertClick" locator1="Form#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="saveWithoutFormName">
+		<execute function="AssertClick" locator1="Form#SAVE_BUTTON" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid form name." />
+	</command>
+
+	<command name="viewFormName">
+		<execute function="AssertTextEquals" locator1="Form#NAME_FIELD" value1="${formName}" />
 	</command>
 </definition>

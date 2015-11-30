@@ -25,6 +25,8 @@ import java.util.Iterator;
  */
 public interface JSONObject extends Externalizable {
 
+	public Object get(String key);
+
 	public boolean getBoolean(String key);
 
 	public boolean getBoolean(String key, boolean defaultValue);

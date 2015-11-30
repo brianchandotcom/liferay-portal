@@ -103,7 +103,7 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 		_userLocalService = userLocalService;
 	}
 
-	private FacebookConnect _facebookConnect;
-	private UserLocalService _userLocalService;
+	private volatile FacebookConnect _facebookConnect;
+	private volatile UserLocalService _userLocalService;
 
 }

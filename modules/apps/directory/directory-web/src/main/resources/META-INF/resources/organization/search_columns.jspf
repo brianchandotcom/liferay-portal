@@ -55,5 +55,5 @@
 <liferay-ui:search-container-column-jsp
 	align="right"
 	cssClass="entry-action"
-	path="/html/portlet/directory/organization_action.jsp"
+	path="/organization_action.jsp"
 />

@@ -1,9 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-field-date',
 	function(A) {
-		var Lang = A.Lang;
-
-		var isArray = Lang.isArray;
+		var isArray = Array.isArray;
 
 		var datePicker = new A.DatePicker(
 			{
@@ -43,13 +41,15 @@ AUI.add(
 							datePicker.on('activeInputChange', A.bind('_onActiveInputChange', instance))
 						);
 
-						instance.bindContainerEvent('click', instance._onClickCalendar, '.input-group-addon');
+						if (!instance.get('readOnly')) {
+							instance.bindContainerEvent('click', instance._onClickCalendar, '.input-group-addon');
+						}
 					},
 
 					formatDate: function(isoDate) {
 						var instance = this;
 
-						var formattedDate = '';
+						var formattedDate;
 
 						if (isoDate) {
 							formattedDate = A.Date.format(
@@ -60,7 +60,7 @@ AUI.add(
 							);
 						}
 
-						return formattedDate;
+						return formattedDate || '';
 					},
 
 					getISODate: function(date) {
@@ -72,13 +72,13 @@ AUI.add(
 					getTemplateContext: function() {
 						var instance = this;
 
-						var isoDate = instance.getLocalizedValue(instance.get('value'));
+						var value = instance.getContextValue();
 
 						return A.merge(
 							DateField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								displayValue: instance.formatDate(isoDate),
-								value: isoDate
+								displayValue: instance.formatDate(value),
+								value: value
 							}
 						);
 					},
@@ -109,13 +109,8 @@ AUI.add(
 						if (datePicker.get('activeInput') === triggerNode) {
 							var date = event.newSelection;
 
-							if (isArray(date)) {
-								if (date.length > 0) {
-									date = date[0];
-								}
-								else {
-									date = new Date();
-								}
+							if (isArray(date) && date.length) {
+								date = date[0];
 							}
 
 							instance.setValue(instance.getISODate(date));

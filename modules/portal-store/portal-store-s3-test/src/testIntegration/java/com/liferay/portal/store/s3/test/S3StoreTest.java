@@ -58,13 +58,17 @@ public class S3StoreTest extends BaseStoreTestCase {
 
 	@Override
 	@Test
-	public void testUpdateFileWithNewFileName() throws Exception {
+	public void testUpdateFileWithNewFileNameNoSuchFileException()
+		throws Exception {
+
 		updateFileShouldNotUpdateFile();
 	}
 
 	@Override
 	@Test
-	public void testUpdateFileWithNewRepositoryId() throws Exception {
+	public void testUpdateFileWithNewRepositoryIdNoSuchFileException()
+		throws Exception {
+
 		updateFileShouldNotUpdateFile();
 	}
 

@@ -14,8 +14,10 @@
 
 package com.liferay.exportimport.background.task;
 
+import com.liferay.exportimport.background.task.display.ExportImportBackgroundTaskDisplay;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
@@ -37,6 +39,13 @@ public abstract class BaseExportImportBackgroundTaskExecutor
 	public BaseExportImportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new DefaultExportImportBackgroundTaskStatusMessageTranslator());
+	}
+
+	@Override
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		BackgroundTask backgroundTask) {
+
+		return new ExportImportBackgroundTaskDisplay(backgroundTask);
 	}
 
 	@Override

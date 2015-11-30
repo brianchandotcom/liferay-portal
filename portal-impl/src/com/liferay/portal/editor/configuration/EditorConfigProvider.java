@@ -70,15 +70,11 @@ public class EditorConfigProvider
 		_serviceReferenceMapper = new EditorServiceReferenceMapper<>();
 	private static final ServiceTrackerMap
 		<String, List<EditorConfigContributor>>
-			_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
+			_serviceTrackerMap = ServiceTrackerCollections.openMultiValueMap(
 				EditorConfigContributor.class,
 				"(|(editor.config.key=*)(editor.name=*)" +
 					"(javax.portlet.name=*)(objectClass=" +
 						EditorConfigContributor.class.getName() + "))",
 				_serviceReferenceMapper);
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 }

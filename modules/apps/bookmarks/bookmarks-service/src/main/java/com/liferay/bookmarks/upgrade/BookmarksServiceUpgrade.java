@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class BookmarksServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
@@ -50,6 +50,6 @@ public class BookmarksServiceUpgrade implements UpgradeStepRegistrator {
 		_settingsFactory = settingsFactory;
 	}
 
-	private SettingsFactory _settingsFactory;
+	private volatile SettingsFactory _settingsFactory;
 
 }

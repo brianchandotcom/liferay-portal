@@ -193,9 +193,9 @@ public class DraftExportImportConfigurationMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private BackgroundTaskLocalService _backgroundTaskLocalService;
-	private ExportImportConfigurationLocalService
+	private volatile BackgroundTaskLocalService _backgroundTaskLocalService;
+	private volatile ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-	private SchedulerEngineHelper _schedulerEngineHelper;
+	private volatile SchedulerEngineHelper _schedulerEngineHelper;
 
 }

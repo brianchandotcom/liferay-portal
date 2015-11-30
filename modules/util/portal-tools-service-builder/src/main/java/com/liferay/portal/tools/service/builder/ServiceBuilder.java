@@ -1810,7 +1810,13 @@ public class ServiceBuilder {
 	}
 
 	private void _createActionableDynamicQuery(Entity entity) throws Exception {
+		File ejbFile = new File(
+			_serviceOutputPath + "/service/persistence/" +
+				entity.getName() + "ActionableDynamicQuery.java");
+
 		if (_osgiModule) {
+			ejbFile.delete();
+
 			return;
 		}
 
@@ -1823,10 +1829,6 @@ public class ServiceBuilder {
 		String content = _processTemplate(_tplActionableDynamicQuery, context);
 
 		// Write file
-
-		File ejbFile = new File(
-			_serviceOutputPath + "/service/persistence/" +
-				entity.getName() + "ActionableDynamicQuery.java");
 
 		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
@@ -1953,7 +1955,13 @@ public class ServiceBuilder {
 	private void _createExportActionableDynamicQuery(Entity entity)
 		throws Exception {
 
+		File ejbFile = new File(
+			_serviceOutputPath + "/service/persistence/" +
+				entity.getName() + "ExportActionableDynamicQuery.java");
+
 		if (_osgiModule) {
+			ejbFile.delete();
+
 			return;
 		}
 
@@ -1967,10 +1975,6 @@ public class ServiceBuilder {
 			_tplExportActionableDynamicQuery, context);
 
 		// Write file
-
-		File ejbFile = new File(
-			_serviceOutputPath + "/service/persistence/" +
-				entity.getName() + "ExportActionableDynamicQuery.java");
 
 		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}

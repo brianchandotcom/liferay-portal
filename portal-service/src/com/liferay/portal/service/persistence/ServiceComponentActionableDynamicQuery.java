@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
@@ -26,12 +26,13 @@ import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
  */
 @Deprecated
 public abstract class ServiceComponentActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public ServiceComponentActionableDynamicQuery() {
 		setBaseLocalService(ServiceComponentLocalServiceUtil.getService());
-		setClass(ServiceComponent.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(ServiceComponent.class);
 
 		setPrimaryKeyPropertyName("serviceComponentId");
 	}

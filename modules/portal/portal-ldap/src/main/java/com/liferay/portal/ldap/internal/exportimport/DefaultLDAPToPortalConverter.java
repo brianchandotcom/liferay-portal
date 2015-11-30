@@ -355,8 +355,8 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLDAPToPortalConverter.class);
 
-	private ContactPersistence _contactPersistence;
-	private ListTypeService _listTypeService;
-	private UserPersistence _userPersistence;
+	private volatile ContactPersistence _contactPersistence;
+	private volatile ListTypeService _listTypeService;
+	private volatile UserPersistence _userPersistence;
 
 }

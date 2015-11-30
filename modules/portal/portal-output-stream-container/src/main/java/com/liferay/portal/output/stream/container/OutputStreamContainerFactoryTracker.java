@@ -14,8 +14,8 @@
 
 package com.liferay.portal.output.stream.container;
 
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
 import java.util.Set;
 
@@ -69,14 +69,12 @@ public class OutputStreamContainerFactoryTracker {
 	protected void activate(BundleContext bundleContext) {
 		try {
 			_outputStreamContainerFactories =
-				ServiceTrackerMapFactory.singleValueMap(
+				ServiceTrackerMapFactory.openSingleValueMap(
 					bundleContext, OutputStreamContainerFactory.class, "name");
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new IllegalStateException(ise);
 		}
-
-		_outputStreamContainerFactories.open();
 	}
 
 	@Deactivate
@@ -86,6 +84,6 @@ public class OutputStreamContainerFactoryTracker {
 
 	private ServiceTrackerMap<String, OutputStreamContainerFactory>
 		_outputStreamContainerFactories;
-	private OutputStreamContainerFactory _outputStreamContainerFactory;
+	private volatile OutputStreamContainerFactory _outputStreamContainerFactory;
 
 }

@@ -17,43 +17,63 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectTeam");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/select_team.jsp");
+portletURL.setParameter("eventName", eventName);
+
+TeamSearch teamSearch = new TeamSearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse));
+
+TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearch.getSearchTerms();
+
+portletURL.setParameter(teamSearch.getCurParam(), String.valueOf(teamSearch.getCur()));
+
+int teamsCount = TeamLocalServiceUtil.searchCount(scopeGroupId, searchTerms.getKeywords(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
+
+teamSearch.setTotal(teamsCount);
 %>
 
-<liferay-ui:header
-	title="teams"
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="teams" selected="<%= true %>" />
+	</aui:nav>
 
-<liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="mvcPath" value="/select_team.jsp" />
-	<portlet:param name="eventName" value="<%= eventName %>" />
-</liferay-portlet:renderURL>
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="form-search" method="get" name="selectTeamFm">
-	<liferay-portlet:renderURLParams varImpl="portletURL" />
+<c:if test="<%= teamsCount > 0 %>">
+	<liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-filters>
+				<liferay-frontend:management-bar-navigation
+					navigationKeys='<%= new String[] {"all"} %>'
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				/>
+			</liferay-frontend:management-bar-filters>
 
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+</c:if>
+
+<aui:form cssClass="container-fluid-1280" name="selectTeamFm">
 	<liferay-ui:search-container
-		searchContainer="<%= new TeamSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= teamSearch %>"
 	>
 
-		<%
-		TeamDisplayTerms searchTerms = (TeamDisplayTerms)searchContainer.getSearchTerms();
-
-		portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
-
-		total = TeamLocalServiceUtil.searchCount(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
-
-		searchContainer.setTotal(total);
-		%>
-
-		<liferay-ui:input-search name="<%= searchTerms.NAME %>" />
-
-		<div class="separator"><!-- --></div>
-
 		<liferay-ui:search-container-results
-			results="<%= TeamLocalServiceUtil.search(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+			results="<%= TeamLocalServiceUtil.search(scopeGroupId, searchTerms.getKeywords(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -64,24 +84,9 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		>
 			<liferay-ui:search-container-column-text
 				name="name"
-				value="<%= HtmlUtil.escape(curTeam.getName()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= HtmlUtil.escape(curTeam.getDescription()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text>
+			>
 
 				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("teamdescription", curTeam.getDescription());
-				data.put("teamid", curTeam.getTeamId());
-				data.put("teamname", curTeam.getName());
-				data.put("teamsearchcontainername", "teams");
-
 				boolean disabled = false;
 
 				Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
@@ -99,12 +104,35 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				}
 				%>
 
-				<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
+				<c:choose>
+					<c:when test="<%= !disabled %>">
+
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("teamdescription", curTeam.getDescription());
+						data.put("teamid", curTeam.getTeamId());
+						data.put("teamname", curTeam.getName());
+						data.put("teamsearchcontainername", "teams");
+						%>
+
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<%= HtmlUtil.escape(curTeam.getName()) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<%= HtmlUtil.escape(curTeam.getName()) %>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-column-text>
 
+			<liferay-ui:search-container-column-text
+				name="description"
+				value="<%= HtmlUtil.escape(curTeam.getDescription()) %>"
+			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

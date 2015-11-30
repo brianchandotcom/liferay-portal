@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -27,12 +27,13 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
  */
 @Deprecated
 public abstract class MBMessageActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public MBMessageActionableDynamicQuery() {
 		setBaseLocalService(MBMessageLocalServiceUtil.getService());
-		setClass(MBMessage.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(MBMessage.class);
 
 		setPrimaryKeyPropertyName("messageId");
 	}

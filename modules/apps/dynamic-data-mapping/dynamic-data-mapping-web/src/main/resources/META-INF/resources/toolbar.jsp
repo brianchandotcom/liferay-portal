@@ -16,9 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+%>
+
 <liferay-frontend:management-bar
-	checkBoxContainerId="entriesContainer"
 	includeCheckBox="<%= !user.isDefaultUser() %>"
+	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />

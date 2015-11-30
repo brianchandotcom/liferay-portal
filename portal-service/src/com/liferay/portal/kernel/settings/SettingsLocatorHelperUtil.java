@@ -67,7 +67,7 @@ public class SettingsLocatorHelperUtil {
 	}
 
 	private static final ServiceTrackerList<SettingsLocatorHelper>
-		_settingsLocatorHelpers = ServiceTrackerCollections.list(
+		_settingsLocatorHelpers = ServiceTrackerCollections.openList(
 			SettingsLocatorHelper.class);
 
 }

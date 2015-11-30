@@ -115,7 +115,7 @@ public class MicroblogsUserNotificationHandler
 		_userLocalService = userLocalService;
 	}
 
-	private MicroblogsEntryLocalService _microblogsEntryLocalService;
-	private UserLocalService _userLocalService;
+	private volatile MicroblogsEntryLocalService _microblogsEntryLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

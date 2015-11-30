@@ -144,7 +144,7 @@ public class BookmarksExportImportPortletPreferencesProcessor
 		_portletLocalService = portletLocalService;
 	}
 
-	private BookmarksFolderLocalService _bookmarksFolderLocalService;
-	private PortletLocalService _portletLocalService;
+	private volatile BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private volatile PortletLocalService _portletLocalService;
 
 }

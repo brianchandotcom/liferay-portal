@@ -103,7 +103,7 @@
 <!--AUTHENTICATION_LDAP-->
 <tr>
 	<td>AUTHENTICATION_LDAP_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'ldap-auth-enabled')]</td>
+	<td>//input[contains(@name,'ldap--enabled')]</td>
 	<td></td>
 </tr>
 <tr>

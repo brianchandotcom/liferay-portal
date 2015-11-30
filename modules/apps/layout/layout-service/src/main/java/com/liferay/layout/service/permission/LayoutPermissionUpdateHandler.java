@@ -54,6 +54,6 @@ public class LayoutPermissionUpdateHandler implements PermissionUpdateHandler {
 		_layoutLocalService = layoutLocalService;
 	}
 
-	private LayoutLocalService _layoutLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
 
 }

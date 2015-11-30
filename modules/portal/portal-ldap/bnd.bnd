@@ -1,6 +1,12 @@
 Bundle-Name: Liferay Portal LDAP
 Bundle-SymbolicName: com.liferay.portal.ldap
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.ldap,\
+	com.liferay.portal.ldap.authenticator.*,\
+	com.liferay.portal.ldap.configuration.*,\
+	com.liferay.portal.ldap.constants.*,\
+	com.liferay.portal.ldap.exportimport.*
 Include-Resource:\
 	classes,\
 	content=src/main/resources/content

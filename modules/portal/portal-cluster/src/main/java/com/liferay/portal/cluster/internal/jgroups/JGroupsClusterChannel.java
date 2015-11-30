@@ -56,6 +56,7 @@ public class JGroupsClusterChannel implements ClusterChannel {
 		}
 
 		_clusterName = clusterName;
+		_clusterReceiver = clusterReceiver;
 
 		try {
 			_jChannel = new JChannel(channelProperties);
@@ -68,7 +69,7 @@ public class JGroupsClusterChannel implements ClusterChannel {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Create a new jgroups channel with properties " +
+					"Create a new JGroups channel with properties " +
 						_jChannel.getProperties());
 			}
 		}
@@ -104,6 +105,11 @@ public class JGroupsClusterChannel implements ClusterChannel {
 	@Override
 	public String getClusterName() {
 		return _clusterName;
+	}
+
+	@Override
+	public ClusterReceiver getClusterReceiver() {
+		return _clusterReceiver;
 	}
 
 	@Override
@@ -172,6 +178,7 @@ public class JGroupsClusterChannel implements ClusterChannel {
 		JGroupsClusterChannel.class);
 
 	private final String _clusterName;
+	private final ClusterReceiver _clusterReceiver;
 	private final JChannel _jChannel;
 	private final Address _localAddress;
 

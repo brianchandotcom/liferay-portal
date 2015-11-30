@@ -179,7 +179,7 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 	protected static final String KEY_THREAD_LOCAL_VALUES = "threadLocalValues";
 
-	private PermissionCheckerFactory _permissionCheckerFactory;
-	private UserLocalService _userLocalService;
+	private volatile PermissionCheckerFactory _permissionCheckerFactory;
+	private volatile UserLocalService _userLocalService;
 
 }

@@ -839,6 +839,10 @@ public class LayoutLocalServiceUtil {
 				   .getFriendlyURLLayout(groupId, privateLayout, friendlyURL);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the layout matching the primary key, group, and privacy; throws a
 	* {@link NoSuchLayoutException} otherwise.

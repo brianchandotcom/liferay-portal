@@ -280,7 +280,8 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchQuerySuggester.class);
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private SuggesterTranslator<SuggestBuilder> _suggesterTranslator;
+	private volatile ElasticsearchConnectionManager
+		_elasticsearchConnectionManager;
+	private volatile SuggesterTranslator<SuggestBuilder> _suggesterTranslator;
 
 }

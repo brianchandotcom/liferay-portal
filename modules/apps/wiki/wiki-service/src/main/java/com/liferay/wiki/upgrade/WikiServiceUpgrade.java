@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  * @author Manuel de la Peña
  */
-@Component(immediate = true)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
@@ -57,6 +57,6 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 		_settingsFactory = settingsFactory;
 	}
 
-	private SettingsFactory _settingsFactory;
+	private volatile SettingsFactory _settingsFactory;
 
 }

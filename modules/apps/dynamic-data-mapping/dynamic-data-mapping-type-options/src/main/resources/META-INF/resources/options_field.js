@@ -263,7 +263,7 @@ AUI.add(
 						if (field.get('repeatedIndex') === repetitions.length - 1) {
 							var newField = instance.addField();
 
-							newField.get('container').scrollIntoView(true);
+							newField.get('container').scrollIntoView();
 						}
 					},
 

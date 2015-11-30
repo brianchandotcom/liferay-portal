@@ -50,13 +50,28 @@ public class DirectServletPathRegisterDispatcher implements RequestDispatcher {
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
+		String includePathInfo = (String)servletRequest.getAttribute(
+			RequestDispatcher.INCLUDE_PATH_INFO);
+
 		servletRequest.setAttribute(RequestDispatcher.INCLUDE_PATH_INFO, null);
+
+		String includeServletPath = (String)servletRequest.getAttribute(
+			RequestDispatcher.INCLUDE_SERVLET_PATH);
+
 		servletRequest.setAttribute(
 			RequestDispatcher.INCLUDE_SERVLET_PATH, _path);
 
 		servletRequest.setAttribute(WebKeys.SERVLET_PATH, _path);
 
-		_requestDispatcher.include(servletRequest, servletResponse);
+		try {
+			_requestDispatcher.include(servletRequest, servletResponse);
+		}
+		finally {
+			servletRequest.setAttribute(
+				RequestDispatcher.INCLUDE_PATH_INFO, includePathInfo);
+			servletRequest.setAttribute(
+				RequestDispatcher.INCLUDE_SERVLET_PATH, includeServletPath);
+		}
 	}
 
 	private final String _path;

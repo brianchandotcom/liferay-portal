@@ -162,7 +162,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	ResourceURL editPermissionsResourceURL = liferayPortletResponse.createResourceURL();
 
-	editPermissionsResourceURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
+	editPermissionsResourceURL.setParameter("mvcPath", "/view_resources.jsp");
 	editPermissionsResourceURL.setParameter(Constants.CMD, Constants.EDIT);
 	editPermissionsResourceURL.setParameter("tabs1", "roles");
 	editPermissionsResourceURL.setParameter("roleId", String.valueOf(role.getRoleId()));

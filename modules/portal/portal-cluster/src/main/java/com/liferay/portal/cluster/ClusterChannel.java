@@ -31,6 +31,8 @@ public interface ClusterChannel {
 
 	public String getClusterName();
 
+	public ClusterReceiver getClusterReceiver();
+
 	public Address getLocalAddress();
 
 	public void sendMulticastMessage(Serializable message);

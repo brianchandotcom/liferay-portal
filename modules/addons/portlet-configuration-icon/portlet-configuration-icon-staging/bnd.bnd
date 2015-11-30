@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portlet Configuration Icon Staging
-Bundle-SymbolicName: com.liferay.portlet.configuration.icon.staging
-Bundle-Version: 1.0.0
-Include-Resource: classes

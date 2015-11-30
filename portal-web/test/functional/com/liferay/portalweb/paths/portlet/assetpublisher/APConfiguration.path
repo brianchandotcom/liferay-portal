@@ -179,11 +179,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_LAYOUT_TAGS_CHECKBOX</td>
-	<td>//input[contains(@id,'mergeLayoutTags')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

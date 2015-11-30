@@ -1,0 +1,121 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+Group group = siteMembershipsDisplayContext.getGroup();
+%>
+
+<liferay-util:buffer var="name">
+	<%= organization.getName() %>
+
+	<c:if test="<%= group.getOrganizationId() == organization.getOrganizationId() %>">
+		<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-site-belongs-to-x-which-is-an-organization-of-type-x", new String[] {organization.getName(), LanguageUtil.get(request, organization.getType())}, false) + StringPool.SPACE + LanguageUtil.format(request, "all-users-of-x-are-automatically-members-of-the-site", organization.getName(), false) %>' />
+	</c:if>
+</liferay-util:buffer>
+
+<c:choose>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
+
+		<%
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:icon-vertical-card
+				actionJsp='<%= !selectOrganizations ? "/organization_action.jsp" : StringPool.BLANK %>'
+				actionJspServletContext="<%= application %>"
+				cssClass="entry-display-style"
+				icon="users"
+				resultRow="<%= row %>"
+				rowChecker="<%= rowChecker %>"
+				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
+				title="<%= name %>"
+			/>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-icon
+			icon="users"
+			toggleRowChecker="<%= true %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
+			<h5><%= name %></h5>
+
+			<h6 class="text-default">
+				<span><%= HtmlUtil.escape(organization.getParentOrganizationName()) %></span>
+			</h6>
+
+			<h6 class="text-default">
+				<span><%= LanguageUtil.get(request, organization.getType()) %></span>
+			</h6>
+
+			<h6 class="text-default">
+				<span><%= HtmlUtil.escape(organization.getAddress().getCity()) %></span>
+				<span><%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %></span>
+				<span><%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %></span>
+			</h6>
+		</liferay-ui:search-container-column-text>
+
+		<c:if test="<%= !selectOrganizations %>">
+			<liferay-ui:search-container-column-jsp
+				path="/organization_action.jsp"
+			/>
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text
+			name="name"
+			orderable="<%= true %>"
+			value="<%= name %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="parent-organization"
+			value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="type"
+			orderable="<%= true %>"
+			value="<%= LanguageUtil.get(request, organization.getType()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="city"
+			value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="region"
+			value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="country"
+			value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
+		/>
+
+		<c:if test="<%= !selectOrganizations %>">
+			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
+				path="/organization_action.jsp"
+			/>
+		</c:if>
+	</c:otherwise>
+</c:choose>

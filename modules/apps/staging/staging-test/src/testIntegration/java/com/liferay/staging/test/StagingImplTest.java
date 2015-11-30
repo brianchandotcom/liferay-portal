@@ -40,11 +40,9 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchConstants;
-import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
@@ -154,23 +152,18 @@ public class StagingImplTest {
 		Assert.assertNotNull(
 			ExportImportDateUtil.getLastPublishDate(layoutSet));
 
-		Layout layout = new LayoutImpl();
-
-		layout.setCompanyId(_group.getCompanyId());
-		layout.setGroupId(_group.getGroupId());
-
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, JournalPortletKeys.JOURNAL);
+				_group.getCompanyId(), _group.getGroupId(),
+				JournalPortletKeys.JOURNAL);
 
 		Assert.assertNull(
 			ExportImportDateUtil.getLastPublishDate(portletPreferences));
 
-		layout.setGroupId(stagingGroup.getGroupId());
-
 		portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, JournalPortletKeys.JOURNAL);
+				stagingGroup.getCompanyId(), stagingGroup.getGroupId(),
+				JournalPortletKeys.JOURNAL);
 
 		Assert.assertNotNull(
 			ExportImportDateUtil.getLastPublishDate(portletPreferences));

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -27,12 +27,13 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
  */
 @Deprecated
 public abstract class MBCategoryActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public MBCategoryActionableDynamicQuery() {
 		setBaseLocalService(MBCategoryLocalServiceUtil.getService());
-		setClass(MBCategory.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(MBCategory.class);
 
 		setPrimaryKeyPropertyName("categoryId");
 	}

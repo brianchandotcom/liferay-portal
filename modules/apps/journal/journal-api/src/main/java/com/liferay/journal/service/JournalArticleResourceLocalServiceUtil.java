@@ -235,6 +235,10 @@ public class JournalArticleResourceLocalServiceUtil {
 		return getService().getArticleResources(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the journal article resource with the primary key.
 	*

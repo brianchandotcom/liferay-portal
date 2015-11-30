@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_PAGE_BTN</td>
+	<td>//div[contains(@class,'add-page-toolbar')]/button[contains(.,'Add Page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_PRODUCER</td>
 	<td>//a[contains(.,'Add Producer')]</td>
 	<td></td>
@@ -96,6 +101,11 @@
 <tr>
 	<td>ADD_TEAM</td>
 	<td>//a[contains(@id,'teams') and contains(@class,'btn-action')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_TEAM_MEMBERS</td>
+	<td>//button[span[contains(.,'Add Team Members')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -276,6 +286,11 @@
 <tr>
 	<td>EXECUTE</td>
 	<td>//button[contains(.,'Execute')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITOR_SWITCH</td>
+	<td>//button[contains(@id,'EditorSwitch')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -221,8 +221,8 @@ public class TeamStagedModelDataHandler
 		_userLocalService = userLocalService;
 	}
 
-	private TeamLocalService _teamLocalService;
-	private UserGroupLocalService _userGroupLocalService;
-	private UserLocalService _userLocalService;
+	private volatile TeamLocalService _teamLocalService;
+	private volatile UserGroupLocalService _userGroupLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

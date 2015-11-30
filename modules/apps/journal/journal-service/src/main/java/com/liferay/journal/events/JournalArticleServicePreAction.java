@@ -105,7 +105,7 @@ public class JournalArticleServicePreAction extends Action {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleServicePreAction.class);
 
-	private AssetEntryLocalService _assetEntryLocalService;
-	private JournalArticleService _journalArticleService;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile JournalArticleService _journalArticleService;
 
 }

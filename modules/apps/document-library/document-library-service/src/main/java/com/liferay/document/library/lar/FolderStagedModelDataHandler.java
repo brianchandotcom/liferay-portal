@@ -515,9 +515,9 @@ public class FolderStagedModelDataHandler
 		}
 	}
 
-	private DLAppLocalService _dlAppLocalService;
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private DLFolderLocalService _dlFolderLocalService;
-	private RepositoryLocalService _repositoryLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private volatile DLFolderLocalService _dlFolderLocalService;
+	private volatile RepositoryLocalService _repositoryLocalService;
 
 }

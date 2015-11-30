@@ -16,9 +16,9 @@ package com.liferay.control.menu.util;
 
 import com.liferay.control.menu.ControlMenuCategory;
 import com.liferay.control.menu.ControlMenuEntry;
-import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -105,13 +105,11 @@ public class ControlMenuCategoryRegistry {
 		throws InvalidSyntaxException {
 
 		_controlMenuCategoryServiceTrackerMap =
-			ServiceTrackerMapFactory.multiValueMap(
+			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ControlMenuCategory.class,
 				"(control.menu.category.key=*)",
 				new ControlMenuCategoryServiceReferenceMapper(),
 				new ServiceRankingPropertyServiceReferenceComparator());
-
-		_controlMenuCategoryServiceTrackerMap.open();
 	}
 
 	@Deactivate
@@ -131,7 +129,7 @@ public class ControlMenuCategoryRegistry {
 
 	private ServiceTrackerMap<String, List<ControlMenuCategory>>
 		_controlMenuCategoryServiceTrackerMap;
-	private ControlMenuEntryRegistry _controlMenuEntryRegistry;
+	private volatile ControlMenuEntryRegistry _controlMenuEntryRegistry;
 
 	private static class ServiceRankingPropertyServiceReferenceComparator
 		extends PropertyServiceReferenceComparator<ControlMenuCategory> {

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.calendar.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.calendar.model.CalEvent;
@@ -27,12 +27,13 @@ import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
  */
 @Deprecated
 public abstract class CalEventActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public CalEventActionableDynamicQuery() {
 		setBaseLocalService(CalEventLocalServiceUtil.getService());
-		setClass(CalEvent.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(CalEvent.class);
 
 		setPrimaryKeyPropertyName("eventId");
 	}

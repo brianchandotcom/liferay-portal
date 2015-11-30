@@ -58,6 +58,6 @@ public class AssetCategoryPermissionUpdateHandler
 		_assetCategoryLocalService = assetCategoryLocalService;
 	}
 
-	private AssetCategoryLocalService _assetCategoryLocalService;
+	private volatile AssetCategoryLocalService _assetCategoryLocalService;
 
 }

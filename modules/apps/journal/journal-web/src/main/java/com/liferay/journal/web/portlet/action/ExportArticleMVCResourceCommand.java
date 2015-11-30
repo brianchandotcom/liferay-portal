@@ -62,6 +62,6 @@ public class ExportArticleMVCResourceCommand extends BaseMVCResourceCommand {
 		_exportArticleUtil = exportArticleUtil;
 	}
 
-	private ExportArticleUtil _exportArticleUtil;
+	private volatile ExportArticleUtil _exportArticleUtil;
 
 }

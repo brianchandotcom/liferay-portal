@@ -28,15 +28,11 @@ public class TagDynamicIdFactoryRegistry {
 		return _instance._tagDynamicIdFactories.getService(tagClassName);
 	}
 
-	private TagDynamicIdFactoryRegistry() {
-		_tagDynamicIdFactories.open();
-	}
-
 	private static final TagDynamicIdFactoryRegistry _instance =
 		new TagDynamicIdFactoryRegistry();
 
 	private final ServiceTrackerMap<String, TagDynamicIdFactory>
-		_tagDynamicIdFactories = ServiceTrackerCollections.singleValueMap(
+		_tagDynamicIdFactories = ServiceTrackerCollections.openSingleValueMap(
 			TagDynamicIdFactory.class, "tagClassName");
 
 }

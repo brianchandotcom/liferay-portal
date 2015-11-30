@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.social.model.SocialActivityAchievement;
@@ -27,12 +27,13 @@ import com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceU
  */
 @Deprecated
 public abstract class SocialActivityAchievementActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public SocialActivityAchievementActionableDynamicQuery() {
 		setBaseLocalService(SocialActivityAchievementLocalServiceUtil.getService());
-		setClass(SocialActivityAchievement.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(SocialActivityAchievement.class);
 
 		setPrimaryKeyPropertyName("activityAchievementId");
 	}

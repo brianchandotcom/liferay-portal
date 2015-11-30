@@ -54,6 +54,6 @@ public class PluginManager extends StandardMBean implements PluginMBeanManager {
 		_pluginStatisticsManager = pluginStatisticsManager;
 	}
 
-	private PluginStatisticsManager _pluginStatisticsManager;
+	private volatile PluginStatisticsManager _pluginStatisticsManager;
 
 }

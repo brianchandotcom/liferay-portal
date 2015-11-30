@@ -57,6 +57,6 @@ public class MBMessageWorkflowHandler extends BaseMBWorkflowHandler {
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
-	private MBMessageLocalService _mbMessageLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
 
 }

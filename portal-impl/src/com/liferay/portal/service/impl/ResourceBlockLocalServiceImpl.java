@@ -778,6 +778,11 @@ public class ResourceBlockLocalServiceImpl
 			updateCompanyScopeResourceTypePermissions(
 				companyId, name, roleId, actionIdsLong, operator);
 
+		List<ResourceBlock> resourceBlocks = resourceBlockPersistence.findByC_N(
+			companyId, name);
+
+		updatePermissions(resourceBlocks, roleId, actionIdsLong, operator);
+
 		PermissionCacheUtil.clearResourceCache();
 	}
 
@@ -789,6 +794,11 @@ public class ResourceBlockLocalServiceImpl
 		resourceTypePermissionLocalService.
 			updateGroupScopeResourceTypePermissions(
 				companyId, groupId, name, roleId, actionIdsLong, operator);
+
+		List<ResourceBlock> resourceBlocks =
+			resourceBlockPersistence.findByC_G_N(companyId, groupId, name);
+
+		updatePermissions(resourceBlocks, roleId, actionIdsLong, operator);
 
 		PermissionCacheUtil.clearResourceCache();
 	}

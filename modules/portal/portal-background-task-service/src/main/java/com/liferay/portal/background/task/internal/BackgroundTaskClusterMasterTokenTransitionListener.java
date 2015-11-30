@@ -46,6 +46,6 @@ public class BackgroundTaskClusterMasterTokenTransitionListener
 	protected void doMasterTokenReleased() throws Exception {
 	}
 
-	private BackgroundTaskManager _backgroundTaskManager;
+	private volatile BackgroundTaskManager _backgroundTaskManager;
 
 }

@@ -107,6 +107,10 @@ public class IgnoreDuplicatesStore implements Store {
 			final String toVersionLabel)
 		throws PortalException {
 
+		if (fromVersionLabel.equals(toVersionLabel)) {
+			return;
+		}
+
 		recoverAndRetryOnFailure(
 			createDeleteFileStoreAction(
 				companyId, repositoryId, fileName, toVersionLabel),
@@ -244,6 +248,10 @@ public class IgnoreDuplicatesStore implements Store {
 			final long newRepositoryId, final String fileName)
 		throws PortalException {
 
+		if (repositoryId == newRepositoryId) {
+			return;
+		}
+
 		recoverAndRetryOnFailure(
 			createDeleteFileStoreAction(companyId, repositoryId, fileName),
 			new StoreAction() {
@@ -262,6 +270,10 @@ public class IgnoreDuplicatesStore implements Store {
 			final long companyId, final long repositoryId,
 			final String fileName, final String newFileName)
 		throws PortalException {
+
+		if (fileName.equals(newFileName)) {
+			return;
+		}
 
 		recoverAndRetryOnFailure(
 			createDeleteFileStoreAction(companyId, repositoryId, newFileName),

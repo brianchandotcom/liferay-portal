@@ -64,33 +64,41 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			themeDisplay.getScopeGroupId(), getFolderId(uploadPortletRequest),
 			themeDisplay.getPermissionChecker());
 
-		UploadException uploadException =
-			(UploadException)portletRequest.getAttribute(
-				WebKeys.UPLOAD_EXCEPTION);
-
-		if (uploadException != null) {
-			if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-				throw new LiferayFileItemException();
-			}
-			else if (uploadException.isExceededSizeLimit()) {
-				throw new FileSizeException(uploadException.getCause());
-			}
-
-			throw new PortalException(uploadException.getCause());
-		}
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
-
 		try {
+			UploadException uploadException =
+				(UploadException)portletRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null) {
+				Throwable cause = uploadException.getCause();
+
+				if (uploadException.isExceededFileSizeLimit()) {
+					throw new FileSizeException(cause);
+				}
+
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException(cause);
+				}
+
+				if (uploadException.isExceededUploadRequestSizeLimit()) {
+					throw new UploadRequestSizeException(cause);
+				}
+
+				throw new PortalException(cause);
+			}
+
 			JSONObject imageJSONObject = getImageJSONObject(portletRequest);
 
-			jsonObject.put("success", Boolean.TRUE);
+			String randomId = ParamUtil.getString(
+				uploadPortletRequest, "randomId");
 
 			imageJSONObject.put("randomId", randomId);
 
 			jsonObject.put("file", imageJSONObject);
+
+			jsonObject.put("success", Boolean.TRUE);
 
 			JSONPortletResponseUtil.writeJSON(
 				portletRequest, portletResponse, jsonObject);
@@ -114,10 +122,13 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException;
 
-	protected abstract void doHandleUploadException(
+	protected void doHandleUploadException(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortalException pe, JSONObject jsonObject)
-		throws PortalException;
+		throws PortalException {
+
+		throw pe;
+	}
 
 	protected abstract FileEntry fetchFileEntry(
 			long userId, long groupId, long folderId, String fileName)
@@ -240,7 +251,9 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		jsonObject.put("success", Boolean.FALSE);
 
 		if (pe instanceof AntivirusScannerException ||
-			pe instanceof FileNameException) {
+			pe instanceof FileNameException ||
+			pe instanceof FileSizeException ||
+			pe instanceof UploadRequestSizeException) {
 
 			String errorMessage = StringPool.BLANK;
 			int errorType = 0;
@@ -258,6 +271,13 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			}
 			else if (pe instanceof FileNameException) {
 				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
+			}
+			else if (pe instanceof FileSizeException) {
+				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
+			}
+			else if (pe instanceof UploadRequestSizeException) {
+				errorType =
+					ServletResponseConstants.SC_UPLOAD_REQUEST_SIZE_EXCEPTION;
 			}
 
 			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();

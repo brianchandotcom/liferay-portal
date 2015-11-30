@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -63,33 +62,7 @@ public class LayoutsAdminDisplayContext {
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String tabs1 = ParamUtil.getString(request, "tabs1");
-
 		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-
-		if (Validator.isNull(tabs1)) {
-			Group group = _themeDisplay.getScopeGroup();
-
-			if (group.isUser()) {
-				tabs1 = "my-profile";
-			}
-			else {
-				tabs1 = "public-pages";
-			}
-
-			if (!group.isControlPanel() && privateLayout) {
-				if (group.isUser()) {
-					tabs1 = "my-dashboard";
-				}
-				else {
-					tabs1 = "private-pages";
-				}
-			}
-		}
-
-		if (tabs1.equals("my-dashboard") || tabs1.equals("private-pages")) {
-			privateLayout = true;
-		}
 
 		Layout selLayout = getSelLayout();
 
@@ -103,7 +76,6 @@ public class LayoutsAdminDisplayContext {
 			isPrivateLayoutsModifiable() && !privateLayout) {
 
 			privateLayout = true;
-			tabs1 = "my-dashboard";
 		}
 
 		Group selGroup = getSelGroup();
@@ -113,7 +85,6 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		_privateLayout = privateLayout;
-		_tabs1 = tabs1;
 
 		_request.setAttribute(
 			com.liferay.portal.kernel.util.WebKeys.LAYOUT_DESCRIPTIONS,
@@ -123,7 +94,6 @@ public class LayoutsAdminDisplayContext {
 	public PortletURL getEditLayoutURL() {
 		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
 
-		editLayoutURL.setParameter("tabs1", getTabs1());
 		editLayoutURL.setParameter("redirect", getRedirect());
 		editLayoutURL.setParameter("groupId", String.valueOf(getSelGroupId()));
 		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
@@ -240,7 +210,6 @@ public class LayoutsAdminDisplayContext {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter("tabs1", getTabs1());
 		portletURL.setParameter("redirect", getRedirect());
 		portletURL.setParameter("groupId", String.valueOf(getSelGroupId()));
 
@@ -330,35 +299,6 @@ public class LayoutsAdminDisplayContext {
 		return _groupDisplayContextHelper.getStagingGroupId();
 	}
 
-	public String getTabs1() {
-		return _tabs1;
-	}
-
-	public String getTabs1Names() {
-		if (_tabs1Names != null) {
-			return _tabs1Names;
-		}
-
-		Group liveGroup = getLiveGroup();
-
-		if (liveGroup.isUser()) {
-			if (isPrivateLayoutsModifiable() && isPublicLayoutsModifiable()) {
-				_tabs1Names = "my-profile,my-dashboard";
-			}
-			else if (isPrivateLayoutsModifiable()) {
-				_tabs1Names = "my-dashboard";
-			}
-			else if (isPublicLayoutsModifiable()) {
-				_tabs1Names = "my-profile";
-			}
-		}
-		else {
-			_tabs1Names = "public-pages,private-pages";
-		}
-
-		return _tabs1Names;
-	}
-
 	public UserGroup getUserGroup() {
 		if (_userGroup != null) {
 			return _userGroup;
@@ -428,8 +368,6 @@ public class LayoutsAdminDisplayContext {
 	private LayoutSet _selLayoutSet;
 	private Long _selPlid;
 	private User _selUser;
-	private final String _tabs1;
-	private String _tabs1Names;
 	private final ThemeDisplay _themeDisplay;
 	private UserGroup _userGroup;
 

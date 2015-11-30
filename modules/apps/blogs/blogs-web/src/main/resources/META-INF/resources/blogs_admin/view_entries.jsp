@@ -56,8 +56,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <liferay-frontend:management-bar
-	checkBoxContainerId="blogEntriesSearchContainer"
 	includeCheckBox="<%= true %>"
+	searchContainerId="blogEntries"
 >
 	<c:if test="<%= Validator.isNull(keywords) %>">
 		<liferay-frontend:management-bar-buttons>

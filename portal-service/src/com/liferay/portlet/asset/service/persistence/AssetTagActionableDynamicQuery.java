@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.asset.model.AssetTag;
@@ -27,12 +27,13 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
  */
 @Deprecated
 public abstract class AssetTagActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public AssetTagActionableDynamicQuery() {
 		setBaseLocalService(AssetTagLocalServiceUtil.getService());
-		setClass(AssetTag.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(AssetTag.class);
 
 		setPrimaryKeyPropertyName("tagId");
 	}

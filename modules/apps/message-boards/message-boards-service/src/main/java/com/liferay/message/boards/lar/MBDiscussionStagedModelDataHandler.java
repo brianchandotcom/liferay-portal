@@ -188,8 +188,8 @@ public class MBDiscussionStagedModelDataHandler
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
-	private AssetEntryLocalService _assetEntryLocalService;
-	private MBDiscussionLocalService _mbDiscussionLocalService;
-	private MBMessageLocalService _mbMessageLocalService;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile MBDiscussionLocalService _mbDiscussionLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
 
 }

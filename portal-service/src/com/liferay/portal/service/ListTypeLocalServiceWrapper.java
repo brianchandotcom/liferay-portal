@@ -189,6 +189,11 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 		return _listTypeLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _listTypeLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the list type with the primary key.
 	*

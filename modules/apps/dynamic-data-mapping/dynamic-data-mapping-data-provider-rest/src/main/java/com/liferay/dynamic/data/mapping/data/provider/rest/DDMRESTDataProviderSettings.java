@@ -16,39 +16,26 @@ package com.liferay.dynamic.data.mapping.data.provider.rest;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderSettings;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, property = "ddm.data.provider.name=rest")
-public class DDMRESTDataProviderSettings implements DDMDataProviderSettings {
+@DDMForm
+public interface DDMRESTDataProviderSettings {
 
-	@Override
-	public Class<?> getSettings() {
-		return RESTSettings.class;
-	}
+	@DDMFormField
+	public String key();
 
-	@DDMForm
-	public interface RESTSettings {
+	@DDMFormField
+	public String password();
 
-		@DDMFormField
-		public String key();
+	@DDMFormField
+	public String url();
 
-		@DDMFormField
-		public String password();
+	@DDMFormField
+	public String username();
 
-		@DDMFormField
-		public String url();
-
-		@DDMFormField
-		public String username();
-
-		@DDMFormField
-		public String value();
-
-	}
+	@DDMFormField
+	public String value();
 
 }

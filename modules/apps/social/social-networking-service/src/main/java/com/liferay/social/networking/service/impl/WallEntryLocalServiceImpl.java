@@ -14,6 +14,8 @@
 
 package com.liferay.social.networking.service.impl;
 
+import com.liferay.mail.service.MailService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -233,5 +235,8 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 
 		mailService.sendEmail(mailMessage);
 	}
+
+	@BeanReference(type = MailService.class)
+	protected MailService mailService;
 
 }

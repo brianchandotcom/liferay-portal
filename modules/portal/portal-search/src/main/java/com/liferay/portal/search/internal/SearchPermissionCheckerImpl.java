@@ -513,13 +513,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchPermissionCheckerImpl.class);
 
-	private GroupLocalService _groupLocalService;
-	private IndexerRegistry _indexerRegistry;
-	private Portal _portal;
-	private ResourceBlockLocalService _resourceBlockLocalService;
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-	private RoleLocalService _roleLocalService;
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
-	private UserLocalService _userLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile IndexerRegistry _indexerRegistry;
+	private volatile Portal _portal;
+	private volatile ResourceBlockLocalService _resourceBlockLocalService;
+	private volatile ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+	private volatile RoleLocalService _roleLocalService;
+	private volatile UserGroupRoleLocalService _userGroupRoleLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

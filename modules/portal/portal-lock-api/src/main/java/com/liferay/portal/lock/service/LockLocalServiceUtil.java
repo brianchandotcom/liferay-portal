@@ -198,6 +198,10 @@ public class LockLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static com.liferay.portal.lock.model.Lock getLock(
 		java.lang.String className, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -1,67 +1,19 @@
 AUI.add(
 	'liferay-search-container',
 	function(A) {
-		var AArray = A.Array;
 		var Lang = A.Lang;
 
 		var CSS_TEMPLATE = 'lfr-template';
 
 		var STR_BLANK = '';
 
-		var STR_CLICK = 'click';
-
 		var STR_CONTENT_BOX = 'contentBox';
-
-		var STR_ROW_SELECTOR = 'rowSelector';
-
-		var TPL_HIDDEN_INPUT = '<input class="hide" name="{name}" value="{value}" type="checkbox" checked />';
-
-		var TPL_INPUT_SELECTOR = 'input[type="checkbox"][value="{value}"]';
 
 		var SearchContainer = A.Component.create(
 			{
 				ATTRS: {
-					classNameHover: {
-						value: STR_BLANK
-					},
-
-					hover: {
-						value: STR_BLANK
-					},
-
 					id: {
 						value: STR_BLANK
-					},
-
-					rowCheckerSelector: {
-						validator: Lang.isString,
-						value: '.click-selector'
-					},
-
-					rowClassNameActive: {
-						validator: Lang.isString,
-						value: 'active'
-					},
-
-					rowClassNameAlternate: {
-						value: STR_BLANK
-					},
-
-					rowClassNameAlternateHover: {
-						value: STR_BLANK
-					},
-
-					rowClassNameBody: {
-						value: STR_BLANK
-					},
-
-					rowClassNameBodyHover: {
-						value: STR_BLANK
-					},
-
-					rowSelector: {
-						validator: Lang.isString,
-						value: 'li.selectable,tr.selectable'
 					}
 				},
 
@@ -100,6 +52,10 @@ AUI.add(
 						var instance = this;
 
 						instance._ids = [];
+
+						instance._actions = {};
+
+						SearchContainer.register(instance);
 					},
 
 					renderUI: function() {
@@ -129,8 +85,6 @@ AUI.add(
 
 						if (instance._table) {
 							instance._table.setAttribute('data-searchContainerId', id);
-
-							SearchContainer.register(instance);
 						}
 					},
 
@@ -150,26 +104,6 @@ AUI.add(
 								defaultFn: instance._deleteRow
 							}
 						);
-
-						var toggleRowFn = A.bind(
-							'_toggleRow',
-							instance,
-							{
-								toggleCheckbox: true
-							}
-						);
-
-						var toggleRowCSSFn = A.bind('_toggleRow', instance, {});
-
-						instance._eventHandles = [
-							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance),
-							instance.get(STR_CONTENT_BOX).delegate(STR_CLICK, toggleRowCSSFn, 'input[type=checkbox]', instance),
-							instance.get(STR_CONTENT_BOX).delegate(STR_CLICK, toggleRowFn, instance.get('rowCheckerSelector'), instance)
-						];
-
-						if (instance.get('hover')) {
-							instance._eventHandles.push(instance.get(STR_CONTENT_BOX).delegate(['mouseenter', 'mouseleave'], instance._onContentHover, 'tr', instance));
-						}
 					},
 
 					syncUI: function() {
@@ -184,12 +118,6 @@ AUI.add(
 
 							instance.updateDataStore(initialIds);
 						}
-					},
-
-					destructor: function() {
-						var instance = this;
-
-						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					addRow: function(arr, id) {
@@ -290,6 +218,14 @@ AUI.add(
 						}
 					},
 
+					executeAction: function(name, params) {
+						var instance = this;
+
+						if (instance._actions[name]) {
+							instance._actions[name](params);
+						}
+					},
+
 					getData: function(toArray) {
 						var instance = this;
 
@@ -308,6 +244,12 @@ AUI.add(
 						return instance._ids.length;
 					},
 
+					registerAction: function(name, fn) {
+						var instance = this;
+
+						instance._actions[name] = fn;
+					},
+
 					updateDataStore: function(ids) {
 						var instance = this;
 
@@ -324,51 +266,6 @@ AUI.add(
 						if (dataStore) {
 							dataStore.val(instance._ids.join(','));
 						}
-					},
-
-					_addRestoreTask: function() {
-						var instance = this;
-
-						Liferay.DOMTaskRunner.addTask(
-							{
-								action: Liferay.SearchContainer.restoreTask,
-								condition: Liferay.SearchContainer.testRestoreTask,
-								params: {
-									containerId: instance.get(STR_CONTENT_BOX).attr('id'),
-									rowClassNameActive: instance.get('rowClassNameActive'),
-									rowSelector: instance.get(STR_ROW_SELECTOR),
-									searchContainerId: instance.get('id')
-								}
-							}
-						);
-					},
-
-					_addRestoreTaskState: function() {
-						var instance = this;
-
-						var elements = [];
-
-						var checkedCheckBoxes = instance.get(STR_CONTENT_BOX).all('input:checked');
-
-						checkedCheckBoxes.each(
-							function(item, index) {
-								elements.push(
-									{
-										name: item.attr('name'),
-										value: item.val()
-									}
-								);
-							}
-						);
-
-						Liferay.DOMTaskRunner.addTaskState(
-							{
-								data: {
-									elements: elements
-								},
-								owner: instance.get('id')
-							}
-						);
 					},
 
 					_addRow: function(event) {
@@ -395,55 +292,6 @@ AUI.add(
 						}
 
 						instance._parentContainer[action]();
-					},
-
-					_onContentHover: function(event) {
-						var instance = this;
-
-						var mouseenter = event.type == 'mouseenter';
-						var row = event.currentTarget;
-
-						var endAlternate = instance.get('rowClassNameAlternateHover');
-						var endBody = instance.get('rowClassNameAlternateHover');
-						var startAlternate = instance.get('rowClassNameAlternate');
-						var startBody = instance.get('rowClassNameBody');
-
-						if (mouseenter) {
-							endAlternate = instance.get('rowClassNameAlternate');
-							endBody = instance.get('rowClassNameBody');
-							startAlternate = instance.get('rowClassNameAlternateHover');
-							startBody = instance.get('rowClassNameBodyHover');
-						}
-
-						if (row.hasClass(startAlternate)) {
-							row.replaceClass(startAlternate, endAlternate);
-						}
-						else if (row.hasClass(startBody)) {
-							row.replaceClass(startBody, endBody);
-						}
-
-						row.toggleClass(instance.get('classNameHover'), mouseenter);
-					},
-
-					_onSurfaceStartNavigate: function(event) {
-						var instance = this;
-
-						instance._addRestoreTask();
-						instance._addRestoreTaskState();
-					},
-
-					_toggleRow: function(config, event) {
-						var instance = this;
-
-						var row = event.currentTarget.ancestor(instance.get(STR_ROW_SELECTOR));
-
-						if (config && config.toggleCheckbox) {
-							var checkbox = row.one('input[type=checkbox]');
-
-							checkbox.attr('checked', !checkbox.attr('checked'));
-						}
-
-						row.toggleClass(instance.get('rowClassNameActive'));
 					}
 				},
 
@@ -453,33 +301,13 @@ AUI.add(
 					var id = obj.get('id');
 
 					instance._cache[id] = obj;
-				},
 
-				restoreTask: function(state, params, node) {
-					var container = node.one('#' + params.containerId);
-
-					var offScreenElementsHtml = '';
-
-					AArray.each(
-						state.data.elements,
-						function(item) {
-							var input = container.one(Lang.sub(TPL_INPUT_SELECTOR, item));
-
-							if (input) {
-								input.attr('checked', true);
-								input.ancestor(params.rowSelector).addClass(params.rowClassNameActive);
-							}
-							else {
-								offScreenElementsHtml += Lang.sub(TPL_HIDDEN_INPUT, item);
-							}
+					Liferay.fire(
+						'search-container:registered',
+						{
+							searchContainer: obj
 						}
 					);
-
-					container.append(offScreenElementsHtml);
-				},
-
-				testRestoreTask: function(state, params, node) {
-					return state.owner === params.searchContainerId && node.one('#' + params.containerId);
 				},
 
 				_cache: {}
@@ -490,6 +318,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-component', 'event-mouseenter']
+		requires: ['aui-base', 'aui-component']
 	}
 );

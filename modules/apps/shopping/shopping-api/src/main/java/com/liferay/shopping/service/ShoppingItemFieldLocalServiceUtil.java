@@ -185,6 +185,10 @@ public class ShoppingItemFieldLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.shopping.model.ShoppingItemField> getItemFields(
 		long itemId) {
 		return getService().getItemFields(itemId);

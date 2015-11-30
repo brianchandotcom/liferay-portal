@@ -480,9 +480,9 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryTrashHandler.class);
 
-	private DLAppLocalService _dlAppLocalService;
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-	private DLFileVersionLocalService _dlFileVersionLocalService;
-	private DLFolderLocalService _dlFolderLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
+	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
+	private volatile DLFolderLocalService _dlFolderLocalService;
 
 }

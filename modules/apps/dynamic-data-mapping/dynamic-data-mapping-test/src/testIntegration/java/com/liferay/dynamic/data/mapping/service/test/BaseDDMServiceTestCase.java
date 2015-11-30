@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,6 +39,11 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
+import java.io.Serializable;
+
+import java.text.DateFormat;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -216,6 +222,17 @@ public class BaseDDMServiceTestCase {
 
 	protected String getBasePath() {
 		return "com/liferay/dynamic/data/mapping/dependencies/";
+	}
+
+	protected Serializable getDateFieldValue(
+		int month, int day, int year, Locale locale) {
+
+		Date dateValue = PortalUtil.getDate(month, day, year);
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd", locale);
+
+		return dateFormat.format(dateValue);
 	}
 
 	protected Map<Locale, String> getDefaultLocaleMap(String value) {

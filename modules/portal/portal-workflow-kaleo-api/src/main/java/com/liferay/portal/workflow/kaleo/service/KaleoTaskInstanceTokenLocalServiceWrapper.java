@@ -253,6 +253,11 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 		return _kaleoTaskInstanceTokenLocalService.getCompanyKaleoTaskInstanceTokensCount(companyId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoTaskInstanceTokenLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the kaleo task instance token with the primary key.
 	*

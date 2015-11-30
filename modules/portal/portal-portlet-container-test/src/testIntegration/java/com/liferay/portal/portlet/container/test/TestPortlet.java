@@ -16,9 +16,6 @@ package com.liferay.portal.portlet.container.test;
 
 import java.io.IOException;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
@@ -33,39 +30,57 @@ import javax.portlet.ResourceResponse;
  */
 public class TestPortlet extends GenericPortlet {
 
-	public TestPortlet() {
-		this(new HashMap<String, String>());
+	public boolean isCalledAction() {
+		return _calledProcessAction;
 	}
 
-	public TestPortlet(Map<String, String> map) {
-		_map = map;
+	public boolean isCalledRender() {
+		return _calledRender;
+	}
+
+	public boolean isCalledServeResource() {
+		return _calledServeResource;
 	}
 
 	@Override
 	public void processAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		_map.put("processAction", Boolean.TRUE.toString());
+		_calledProcessAction = true;
 	}
 
+	/**
+	 * @throws IOException
+	 * @throws PortletException
+	 */
 	@Override
-	@SuppressWarnings("unused")
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		_map.put("render", Boolean.TRUE.toString());
+		_calledRender = true;
 	}
 
+	public void reset() {
+		_calledProcessAction = false;
+		_calledRender = false;
+		_calledServeResource = false;
+	}
+
+	/**
+	 * @throws IOException
+	 * @throws PortletException
+	 */
 	@Override
-	@SuppressWarnings("unused")
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		_map.put("serveResource", Boolean.TRUE.toString());
+		_calledServeResource = true;
 	}
 
-	private final Map<String, String> _map;
+	private boolean _calledProcessAction;
+	private boolean _calledRender;
+	private boolean _calledServeResource;
 
 }

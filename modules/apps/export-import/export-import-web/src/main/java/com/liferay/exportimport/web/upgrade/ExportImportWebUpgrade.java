@@ -55,6 +55,6 @@ public class ExportImportWebUpgrade {
 			"com.liferay.exportimport.web", upgradeProcesses, 1, 1, false);
 	}
 
-	private ReleaseLocalService _releaseLocalService;
+	private volatile ReleaseLocalService _releaseLocalService;
 
 }

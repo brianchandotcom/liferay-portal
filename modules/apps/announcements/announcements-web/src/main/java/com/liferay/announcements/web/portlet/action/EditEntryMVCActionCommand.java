@@ -180,6 +180,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private AnnouncementsEntryService _announcementsEntryService;
+	private volatile AnnouncementsEntryService _announcementsEntryService;
 
 }

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
@@ -31,17 +32,17 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.test.PortletContainerTestUtil;
+import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 import com.liferay.portlet.PortletQName;
 import com.liferay.portlet.PortletURLImpl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -76,6 +77,28 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			UniqueStringRandomizerBumper.INSTANCE);
 		final AtomicBoolean success = new AtomicBoolean(false);
 
+		testPortlet = new TestPortlet() {
+
+			@Override
+			public void render(
+					RenderRequest renderRequest, RenderResponse renderResponse)
+				throws IOException {
+
+				PrintWriter printWriter = renderResponse.getWriter();
+
+				String value = renderRequest.getParameter(prpName);
+
+				if (prpValue.equals(value)) {
+					success.set(true);
+				}
+
+				printWriter.write(value);
+			}
+
+		};
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
 		properties.put(
 			"com.liferay.portlet.application-type",
 			new String[] {
@@ -84,26 +107,6 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			});
 		properties.put(
 			"javax.portlet.supported-public-render-parameter", prpName);
-
-		testPortlet = new TestPortlet() {
-
-			@Override
-			public void render(
-					RenderRequest renderRequest, RenderResponse renderResponse)
-				throws IOException, PortletException {
-
-				PrintWriter writer = renderResponse.getWriter();
-
-				String value = renderRequest.getParameter(prpName);
-
-				if (prpValue.equals(value)) {
-					success.set(true);
-				}
-
-				writer.write(value);
-			}
-
-		};
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID, false);
 
@@ -124,7 +127,8 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name),
 			ServiceContextTestUtil.getServiceContext());
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
 		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
@@ -138,9 +142,9 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			portletURLString.contains(
 				PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE));
 
-		Map<String, List<String>> responseMap = request(portletURLString);
+		Response response = PortletContainerTestUtil.request(portletURLString);
 
-		Assert.assertEquals("200", getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(success.get());
 	}
 
@@ -153,17 +157,14 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			UniqueStringRandomizerBumper.INSTANCE);
 		final AtomicBoolean success = new AtomicBoolean(false);
 
-		properties.put(
-			"javax.portlet.supported-public-render-parameter", prpName);
-
 		testPortlet = new TestPortlet() {
 
 			@Override
 			public void render(
 					RenderRequest renderRequest, RenderResponse renderResponse)
-				throws IOException, PortletException {
+				throws IOException {
 
-				PrintWriter writer = renderResponse.getWriter();
+				PrintWriter printWriter = renderResponse.getWriter();
 
 				String value = renderRequest.getParameter(prpName);
 
@@ -171,14 +172,20 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 					success.set(true);
 				}
 
-				writer.write(value);
+				printWriter.write(value);
 			}
 
 		};
 
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			"javax.portlet.supported-public-render-parameter", prpName);
+
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
 		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
@@ -192,9 +199,9 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			portletURLString.contains(
 				PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE));
 
-		Map<String, List<String>> responseMap = request(portletURLString);
+		Response response = PortletContainerTestUtil.request(portletURLString);
 
-		Assert.assertEquals("200", getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(success.get());
 	}
 

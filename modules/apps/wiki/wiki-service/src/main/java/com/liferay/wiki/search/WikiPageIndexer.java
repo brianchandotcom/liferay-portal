@@ -17,6 +17,7 @@ package com.liferay.wiki.search;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -277,10 +278,10 @@ public class WikiPageIndexer
 	protected void reindexPages(long companyId, long groupId, final long nodeId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_wikiPageLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_wikiPageLocalService.getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -296,9 +297,9 @@ public class WikiPageIndexer
 				}
 
 			});
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setGroupId(groupId);
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setGroupId(groupId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<WikiPage>() {
 
 				@Override
@@ -306,7 +307,7 @@ public class WikiPageIndexer
 					try {
 						Document document = getDocument(page);
 
-						actionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocument(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
@@ -318,9 +319,9 @@ public class WikiPageIndexer
 				}
 
 			});
-		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Reference(unbind = "-")
@@ -347,8 +348,8 @@ public class WikiPageIndexer
 
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();
-	private WikiNodeLocalService _wikiNodeLocalService;
-	private WikiNodeService _wikiNodeService;
-	private WikiPageLocalService _wikiPageLocalService;
+	private volatile WikiNodeLocalService _wikiNodeLocalService;
+	private volatile WikiNodeService _wikiNodeService;
+	private volatile WikiPageLocalService _wikiPageLocalService;
 
 }

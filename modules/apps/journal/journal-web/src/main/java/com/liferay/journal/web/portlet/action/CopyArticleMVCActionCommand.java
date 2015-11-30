@@ -105,6 +105,6 @@ public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 		_journalArticleService = journalArticleService;
 	}
 
-	private JournalArticleService _journalArticleService;
+	private volatile JournalArticleService _journalArticleService;
 
 }

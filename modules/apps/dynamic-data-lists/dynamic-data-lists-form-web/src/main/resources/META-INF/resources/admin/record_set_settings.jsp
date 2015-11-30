@@ -38,6 +38,18 @@ boolean requireCaptcha = GetterUtil.getBoolean(recordSet.getSettingsProperty("re
 		<liferay-ui:error exception="<%= RecordSetSettingsException.class %>" message="please-enter-valid-form-settings" />
 
 		<aui:fieldset>
+			<aui:input helpMessage="enable-email-notification-for-each-form-submission" label="send-email-notification" name="sendEmailNotification" type="checkbox" value="<%= DDLFormEmailNotificationUtil.isEmailNotificationEnabled(recordSet) %>" />
+
+			<aui:input label="name-from" name="emailFromName" value="<%= DDLFormEmailNotificationUtil.getEmailFromName(recordSet) %>" />
+
+			<aui:input label="address-from" name="emailFromAddress" value="<%= DDLFormEmailNotificationUtil.getEmailFromAddress(recordSet) %>" />
+
+			<aui:input label="address-to" name="emailToAddress" value="<%= DDLFormEmailNotificationUtil.getEmailToAddress(recordSet) %>" />
+
+			<aui:input label="subject" name="emailSubject" value="<%= DDLFormEmailNotificationUtil.getEmailSubject(recordSet) %>" />
+		</aui:fieldset>
+
+		<aui:fieldset>
 			<aui:input label="redirect-url-on-success" name="redirectURL" value="<%= HtmlUtil.toInputSafe(redirectURL) %>" wrapperCssClass="lfr-input-text-container" />
 
 			<aui:input name="requireCaptcha" type="checkbox" value="<%= requireCaptcha %>" />
@@ -83,3 +95,30 @@ boolean requireCaptcha = GetterUtil.getBoolean(recordSet.getSettingsProperty("re
 		</aui:button-row>
 	</aui:form>
 </div>
+
+<aui:script use="aui-base">
+	var sendEmailNotificationCheckbox = A.one('#<portlet:namespace />sendEmailNotification');
+
+	<portlet:namespace />toogleDisabledEmailNotificationFields();
+
+	sendEmailNotificationCheckbox.on(
+		'change',
+		function(event) {
+
+			<portlet:namespace />toogleDisabledEmailNotificationFields();
+		}
+	);
+
+	function <portlet:namespace />toogleDisabledEmailNotificationFields() {
+		var toggleDisabled = Liferay.Util.toggleDisabled;
+
+		var checked = sendEmailNotificationCheckbox.get('checked');
+
+		var disable = !checked;
+
+		toggleDisabled(A.one('#<portlet:namespace />emailFromName'), disable);
+		toggleDisabled(A.one('#<portlet:namespace />emailFromAddress'), disable);
+		toggleDisabled(A.one('#<portlet:namespace />emailToAddress'), disable);
+		toggleDisabled(A.one('#<portlet:namespace />emailSubject'), disable);
+	}
+</aui:script>

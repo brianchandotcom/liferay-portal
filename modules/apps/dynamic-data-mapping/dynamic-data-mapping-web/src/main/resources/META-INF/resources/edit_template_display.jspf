@@ -66,7 +66,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 											<li class="palette-item-container">
 												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, language)) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, resourceBundle, templateVariableDefinition)) %>">
-													<%= LanguageUtil.get(request, resourceBundle, templateVariableDefinition.getLabel()) %>
+													<%= HtmlUtil.escape(LanguageUtil.get(request, resourceBundle, templateVariableDefinition.getLabel())) %>
 
 													<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
@@ -105,7 +105,7 @@ if (Validator.isNotNull(scriptContent)) {
 	</liferay-ui:panel>
 </liferay-ui:panel-container>
 
-<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-popover,autocomplete-base,autocomplete-filters,event-mouseenter,event-outside,liferay-util-window,resize,transition">
+<aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-tooltip,autocomplete-base,autocomplete-filters,event-mouseenter,event-outside,liferay-util-window,resize,transition">
 	var ACPlugin = A.Plugin.AceAutoComplete;
 	var AObject = A.Object;
 	var Util = Liferay.Util;
@@ -403,34 +403,18 @@ if (Validator.isNotNull(scriptContent)) {
 					}
 				);
 
-				var tooltip = new A.Popover(
+				new A.TooltipDelegate(
 					{
 						align: {
 							points: [A.WidgetPositionAlign.LC, A.WidgetPositionAlign.RC]
 						},
-						constrain: true,
+						duration: 0.5,
+						html: true,
 						position: 'right',
+						trigger: '#<portlet:namespace />templatePaletteContainer .palette-item',
 						visible: false,
 						zIndex: 6
 					}
-				).render(paletteContainer);
-
-				tooltip.get('boundingBox').on('clickoutside', tooltip.hide, tooltip);
-
-				paletteContainer.delegate(
-					'mouseenter',
-					function(event) {
-						tooltip.hide();
-
-						var node = event.currentTarget;
-
-						tooltip.set('align.node', node);
-
-						tooltip.setStdModContent(A.WidgetStdMod.BODY, node.attr('data-title'));
-
-						tooltip.show();
-					},
-					'.palette-item'
 				);
 
 				createLiveSearch();

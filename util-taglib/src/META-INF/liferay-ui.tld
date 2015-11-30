@@ -1692,6 +1692,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to show the <![CDATA[<code>Submit</code>]]> and <![CDATA[<code>Cancel</code>]]> buttons. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showButtons</name>
 			<required>false</required>
@@ -3728,6 +3733,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The ID of the component that contains the panel. If a <![CDATA[<code>liferay-ui:panel-container</code>]]> is used as the container for the panel, its ID is used as the value for the <![CDATA[<code>parentID</code>]]>.</description>
 			<name>parentId</name>
 			<required>false</required>
@@ -3785,6 +3795,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to remember the component's state and persist it to the database. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>persistState</name>
 			<required>false</required>
@@ -3834,7 +3849,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a progress bar using the <![CDATA[<code>liferay-progress</code>]]> module.</description>
+		<description>Deprecated as of 7.0.0, with no direct replacement</description>
 		<name>progress</name>
 		<tag-class>com.liferay.taglib.ui.ProgressTag</tag-class>
 		<body-content>JSP</body-content>
@@ -4101,11 +4116,6 @@
 		</attribute>
 		<attribute>
 			<name>headerNames</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>hover</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

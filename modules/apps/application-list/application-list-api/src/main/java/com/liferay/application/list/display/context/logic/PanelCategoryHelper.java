@@ -20,6 +20,7 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.List;
@@ -82,6 +83,31 @@ public class PanelCategoryHelper {
 		}
 
 		return null;
+	}
+
+	public int getNotificationsCount(
+		String panelCategoryKey, PermissionChecker permissionChecker,
+		Group group, User user) {
+
+		int count = 0;
+
+		List<PanelCategory> panelCategories =
+			_panelCategoryRegistry.getChildPanelCategories(
+				panelCategoryKey, permissionChecker, group);
+
+		for (PanelCategory panelCategory : panelCategories) {
+			count += panelCategory.getNotificationsCount(
+				this, permissionChecker, group, user);
+		}
+
+		Iterable<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			panelCategoryKey, permissionChecker, group);
+
+		for (PanelApp panelApp : panelApps) {
+			count += panelApp.getNotificationsCount(user);
+		}
+
+		return count;
 	}
 
 	public boolean hasPanelApp(String portletId) {

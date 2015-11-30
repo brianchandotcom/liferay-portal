@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchUpdateDocumentCommand;
-import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch.internal.document.DefaultElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch.internal.facet.DateRangeFacetProcessor;
@@ -56,8 +55,6 @@ import com.liferay.portal.search.unit.test.IndexingFixture;
 
 import java.util.HashMap;
 
-import org.mockito.Mockito;
-
 /**
  * @author André de Oliveira
  */
@@ -66,9 +63,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	public ElasticsearchIndexingFixture(String subdirName) throws Exception {
 		_elasticsearchFixture = new ElasticsearchFixture(
 			subdirName, _properties);
-
-		_elasticsearchFixture.setClusterSettingsContext(
-			Mockito.mock(ClusterSettingsContext.class));
 	}
 
 	@Override

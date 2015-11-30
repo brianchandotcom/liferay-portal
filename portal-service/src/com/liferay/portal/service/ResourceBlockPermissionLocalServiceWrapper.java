@@ -225,6 +225,11 @@ public class ResourceBlockPermissionLocalServiceWrapper
 			name, primKey, actionIds);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _resourceBlockPermissionLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

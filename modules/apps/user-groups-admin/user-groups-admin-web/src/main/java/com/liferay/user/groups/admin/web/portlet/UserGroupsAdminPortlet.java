@@ -206,7 +206,7 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 		_userService = userService;
 	}
 
-	private UserGroupService _userGroupService;
-	private UserService _userService;
+	private volatile UserGroupService _userGroupService;
+	private volatile UserService _userService;
 
 }

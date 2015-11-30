@@ -213,6 +213,11 @@ public class KaleoNotificationLocalServiceWrapper
 		return _kaleoNotificationLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoNotificationLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the kaleo notification with the primary key.
 	*

@@ -165,6 +165,6 @@ public class MBMessageActivityInterpreter
 
 	private static final String[] _CLASS_NAMES = {MBMessage.class.getName()};
 
-	private MBMessageLocalService _mbMessageLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
 
 }

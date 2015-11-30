@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
@@ -26,12 +26,13 @@ import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
  */
 @Deprecated
 public abstract class UserNotificationEventActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public UserNotificationEventActionableDynamicQuery() {
 		setBaseLocalService(UserNotificationEventLocalServiceUtil.getService());
-		setClass(UserNotificationEvent.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(UserNotificationEvent.class);
 
 		setPrimaryKeyPropertyName("userNotificationEventId");
 	}

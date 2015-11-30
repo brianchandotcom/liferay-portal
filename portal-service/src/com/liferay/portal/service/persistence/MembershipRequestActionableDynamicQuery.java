@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
@@ -26,12 +26,13 @@ import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
  */
 @Deprecated
 public abstract class MembershipRequestActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public MembershipRequestActionableDynamicQuery() {
 		setBaseLocalService(MembershipRequestLocalServiceUtil.getService());
-		setClass(MembershipRequest.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(MembershipRequest.class);
 
 		setPrimaryKeyPropertyName("membershipRequestId");
 	}

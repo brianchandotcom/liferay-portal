@@ -48,6 +48,15 @@
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminXugglerPanel" persistState="<%= true %>" title="enabling-xuggler-provides-video-conversion-functionality">
+			<liferay-ui:error exception="<%= XugglerInstallException.class %>">
+
+				<%
+				XugglerInstallException xie = (XugglerInstallException)errorException;
+				%>
+
+				<liferay-ui:message arguments="<%= xie.getMessage() %>" key="an-unexpected-error-occurred-while-installing-xuggler-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
+
 			<c:choose>
 				<c:when test="<%= XugglerUtil.isNativeLibraryInstalled() %>">
 					<div class="alert alert-info">
@@ -55,6 +64,11 @@
 					</div>
 
 					<aui:input label="enabled" name="xugglerEnabled" type="checkbox" value="<%= XugglerUtil.isEnabled() %>" />
+				</c:when>
+				<c:when test="<%= XugglerUtil.isNativeLibraryCopied() %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="xuggler-has-been-installed-you-need-to-reboot-your-server-to-apply-changes" />
+					</div>
 				</c:when>
 				<c:otherwise>
 
@@ -100,14 +114,6 @@
 						<liferay-ui:message key="<%= xugglerHelp %>" />
 					</div>
 
-					<div id="<portlet:namespace />xugglerProgressInfo"></div>
-
-					<liferay-ui:progress
-						id='<%= renderResponse.getNamespace() + "xugglerProgressInfo" %>'
-						message="preparing-the-installation"
-						sessionKey="<%= ProgressTracker.PERCENT + WebKeys.XUGGLER_INSTALL_STATUS %>"
-					/>
-
 					<aui:select label="jar-file" name="jarName">
 
 						<%
@@ -133,7 +139,7 @@
 					</aui:select>
 
 					<aui:button-row>
-						<aui:button name="installXugglerButton" value="install" />
+						<aui:button cssClass="save-server-button" data-cmd="installXuggler" name="installXugglerButton" value="install" />
 					</aui:button-row>
 				</c:otherwise>
 			</c:choose>

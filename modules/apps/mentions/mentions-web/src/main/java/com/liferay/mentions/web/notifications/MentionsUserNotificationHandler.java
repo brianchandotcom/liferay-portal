@@ -111,6 +111,6 @@ public class MentionsUserNotificationHandler
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
-	private MBMessageLocalService _mbMessageLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
 
 }

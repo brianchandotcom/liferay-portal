@@ -153,6 +153,9 @@ public interface PortletFileRepository {
 	public Repository getPortletRepository(long groupId, String portletId)
 		throws PortalException;
 
+	public String getUniqueFileName(
+		long groupId, long folderId, String fileName);
+
 	public FileEntry movePortletFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException;
 

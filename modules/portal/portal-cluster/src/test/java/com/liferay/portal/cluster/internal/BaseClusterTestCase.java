@@ -21,6 +21,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
 
+import org.junit.After;
 import org.junit.Before;
 
 /**
@@ -39,6 +40,11 @@ public class BaseClusterTestCase {
 		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
 
 		PropsUtil.setProps(new PropsImpl());
+	}
+
+	@After
+	public void tearDown() {
+		TestClusterChannel.reset();
 	}
 
 }

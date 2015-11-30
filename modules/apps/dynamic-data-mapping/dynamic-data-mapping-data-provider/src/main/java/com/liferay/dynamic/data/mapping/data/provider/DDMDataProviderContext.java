@@ -32,7 +32,7 @@ public class DDMDataProviderContext {
 		return _parameters;
 	}
 
-	public <T> T getSettings(Class<T> clazz) {
+	public <T> T getSettingsInstance(Class<T> clazz) {
 		return Configurable.createConfigurable(clazz, _properties);
 	}
 

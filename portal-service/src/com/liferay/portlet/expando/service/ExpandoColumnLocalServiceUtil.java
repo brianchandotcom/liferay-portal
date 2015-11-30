@@ -375,6 +375,10 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().getExpandoColumnsCount();
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

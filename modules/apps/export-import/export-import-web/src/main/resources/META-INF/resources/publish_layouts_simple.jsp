@@ -93,12 +93,6 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 						<%
 						List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
 
-						DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration);
-
-						PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), dateRange.getStartDate(), dateRange.getEndDate());
-
-						ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
-
 						Set<String> portletDataHandlerClasses = new HashSet<String>();
 
 						if (!dataSiteLevelPortlets.isEmpty()) {
@@ -113,7 +107,17 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 
 								PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
+								Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
+
+								settingsMap.put("portletId", portlet.getRootPortletId());
+
+								DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration);
+
+								PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), dateRange.getStartDate(), dateRange.getEndDate());
+
 								portletDataHandler.prepareManifestSummary(portletDataContext);
+
+								ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 								long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
 								long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
@@ -122,7 +126,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 
 								UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
-								if (((exportModelCount != 0) || (modelDeletionCount != 0)) && GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault())) {
+								if (((exportModelCount > 0) || (modelDeletionCount > 0)) && GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault())) {
 						%>
 
 									<liferay-util:buffer var="badgeHTML">

@@ -204,7 +204,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 			(classNameId ==
 				classNameLocalService.getClassNameId(Organization.class))) {
 
-			listTypeService.validate(
+			listTypeLocalService.validate(
 				typeId, classNameId, ListTypeConstants.PHONE);
 		}
 

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NESTED_FIELD_VISUAL_GROUPING_DDL_DISPLAY_PNG</td>
+	<td>/portal/screenshots/ddm/nested_field_visual_grouping_ddl_display.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//span[contains(@class,'workflow-status')]/strong</td>
 	<td></td>

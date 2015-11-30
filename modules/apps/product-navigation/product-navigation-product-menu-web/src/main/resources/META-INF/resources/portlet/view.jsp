@@ -16,7 +16,7 @@
 
 <%@ include file="/portlet/init.jsp" %>
 
-<c:if test="<%= productMenuDisplayContext.showProductMenu() %>">
+<c:if test="<%= productMenuDisplayContext.isShowProductMenu() %>">
 	<h4 class="sidebar-header">
 		<span class="company-details">
 			<img alt="" class="company-logo" src="<%= themeDisplay.getCompanyLogo() %>" />
@@ -39,6 +39,14 @@
 					<c:if test="<%= !childPanelCategory.includeHeader(request, new PipingServletResponse(pageContext)) %>">
 						<div class="product-menu-tab-icon">
 							<span class="<%= childPanelCategory.getIconCssClass() %> icon-monospaced"></span>
+
+							<%
+							int notificationsCount = productMenuDisplayContext.getNotificationsCount(childPanelCategory);
+							%>
+
+							<c:if test="<%= notificationsCount > 0 %>">
+								<span class="sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
+							</c:if>
 						</div>
 
 						<div class="product-menu-tab-text">
@@ -72,46 +80,13 @@
 		</div>
 	</div>
 
-	<div class="sidebar-footer">
-		<div class="nameplate">
-			<div class="nameplate-field">
-				<liferay-ui:user-portrait
-					userId="<%= user.getUserId() %>"
-				/>
-			</div>
-
-			<div class="nameplate-content">
-				<div class="user-heading">
-					<%= HtmlUtil.escape(user.getFullName()) %>
-				</div>
-
-				<ul class="user-subheading">
-					<c:if test="<%= productMenuDisplayContext.showMySiteGroup(false) %>">
-						<li>
-							<aui:a href="<%= productMenuDisplayContext.getMySiteGroupURL(false) %>" label="profile" />
-						</li>
-					</c:if>
-
-					<c:if test="<%= productMenuDisplayContext.showMySiteGroup(true) %>">
-						<li>
-							<aui:a href="<%= productMenuDisplayContext.getMySiteGroupURL(true) %>" label="dashboard" />
-						</li>
-					</c:if>
-				</ul>
-			</div>
-
-			<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
-				<div class="nameplate-field">
-					<a class="icon-lg icon-monospaced icon-off user-signout" href="<%= themeDisplay.getURLSignOut() %>"></a>
-				</div>
-			</c:if>
-		</div>
-	</div>
-
 	<aui:script use="liferay-store">
 		AUI.$('#sidenavToggleId').sideNavigation();
 
 		var sidenavSlider = AUI.$('#sidenavSliderId');
+
+		sidenavSlider.off('closed.lexicon.sidenav');
+		sidenavSlider.off('open.lexicon.sidenav');
 
 		sidenavSlider.on(
 			'closed.lexicon.sidenav',

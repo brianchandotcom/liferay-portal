@@ -210,7 +210,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
-	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private volatile BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private volatile BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

@@ -35,10 +35,7 @@ import com.liferay.portlet.exportimport.LARFileException;
 import com.liferay.portlet.exportimport.LARFileNameException;
 import com.liferay.portlet.exportimport.LARFileSizeException;
 import com.liferay.portlet.exportimport.LARTypeException;
-import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -81,14 +78,12 @@ public class PublishPortletMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
-			String portletId = PortalUtil.getPortletId(actionRequest);
-
-			Map<String, String[]> parameterMap =
-				ExportImportConfigurationParameterMapFactory.buildParameterMap(
-					actionRequest);
-
 			SessionMessages.add(
-				actionRequest, portletId + "parameterMap", parameterMap);
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
+
+			hideDefaultSuccessMessage(actionRequest);
 
 			return;
 		}

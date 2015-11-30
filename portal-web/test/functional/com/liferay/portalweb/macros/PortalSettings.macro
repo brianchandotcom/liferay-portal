@@ -237,10 +237,10 @@
 		<if>
 			<equals arg1="${emailVerificationURL}" arg2="true" />
 			<then>
-				<execute function="Type#typeCKEditor" locator1="PortalSettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATION_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_URL$]" />
+				<execute function="Type#typeAlloyEditor" locator1="PortalSettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATION_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_URL$]" />
 			</then>
 			<else>
-				<execute function="Type#typeCKEditor" locator1="PortalSettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATION_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_CODE$]" />
+				<execute function="Type#typeAlloyEditor" locator1="PortalSettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATION_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_CODE$]" />
 			</else>
 		</if>
 

@@ -277,7 +277,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		_groupLocalService = groupLocalService;
 	}
 
-	private CommentManager _commentManager;
-	private GroupLocalService _groupLocalService;
+	private volatile CommentManager _commentManager;
+	private volatile GroupLocalService _groupLocalService;
 
 }

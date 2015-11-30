@@ -209,6 +209,6 @@ public class OpenSSOFilter extends BaseFilter {
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOFilter.class);
 
 	private volatile ConfigurationFactory _configurationFactory;
-	private OpenSSO _openSSO;
+	private volatile OpenSSO _openSSO;
 
 }

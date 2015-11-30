@@ -152,8 +152,9 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
-	private MembershipRequestLocalService _membershipRequestLocalService;
-	private UserExporter _userExporter;
-	private UserLocalService _userLocalService;
+	private volatile MembershipRequestLocalService
+		_membershipRequestLocalService;
+	private volatile UserExporter _userExporter;
+	private volatile UserLocalService _userLocalService;
 
 }

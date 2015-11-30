@@ -136,9 +136,10 @@ public class DDMFormEvaluatorServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private DDMFormEvaluator _ddmFormEvaluator;
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
-	private JSONFactory _jsonFactory;
+	private volatile DDMFormEvaluator _ddmFormEvaluator;
+	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private volatile DDMFormValuesJSONDeserializer
+		_ddmFormValuesJSONDeserializer;
+	private volatile JSONFactory _jsonFactory;
 
 }

@@ -140,7 +140,7 @@ public class FormNavigatorEntryUtil {
 
 	@SuppressWarnings("rawtypes")
 	private FormNavigatorEntryUtil() {
-		_formNavigatorEntries = ServiceTrackerCollections.multiValueMap(
+		_formNavigatorEntries = ServiceTrackerCollections.openMultiValueMap(
 			FormNavigatorEntry.class, null,
 			new ServiceReferenceMapper<String, FormNavigatorEntry>() {
 
@@ -163,8 +163,6 @@ public class FormNavigatorEntryUtil {
 				}
 
 			});
-
-		_formNavigatorEntries.open();
 	}
 
 	private static final FormNavigatorEntryUtil _instance =

@@ -172,9 +172,9 @@ public class WallPortlet extends MVCPortlet {
 		_wallEntryLocalService = wallEntryLocalService;
 	}
 
-	private GroupLocalService _groupLocalService;
-	private SocialRelationLocalService _socialRelationLocalService;
-	private UserLocalService _userLocalService;
-	private WallEntryLocalService _wallEntryLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile SocialRelationLocalService _socialRelationLocalService;
+	private volatile UserLocalService _userLocalService;
+	private volatile WallEntryLocalService _wallEntryLocalService;
 
 }

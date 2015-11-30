@@ -154,6 +154,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 					fn: A.Plugin.DataTableHighlight
 				}
 			],
+			portletNamespace: '<portlet:namespace />',
 			recordsetId: <%= recordSet.getRecordSetId() %>,
 			strings: {
 				asc: '<liferay-ui:message key="ascending" />',

@@ -144,6 +144,6 @@ public class EditRuleGroupInstanceMVCActionCommand
 		}
 	}
 
-	private MDRRuleGroupInstanceService _mdrRuleGroupInstanceService;
+	private volatile MDRRuleGroupInstanceService _mdrRuleGroupInstanceService;
 
 }

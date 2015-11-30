@@ -266,6 +266,11 @@ public class TestGroup implements Group {
 	}
 
 	@Override
+	public String getLogoURL(ThemeDisplay themeDisplay, boolean useDefault) {
+		return null;
+	}
+
+	@Override
 	public boolean getManualMembership() {
 		return false;
 	}

@@ -15,7 +15,6 @@
 package com.liferay.wiki.web.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.upload.BaseUploadHandler;
@@ -29,9 +28,6 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 
 import java.io.InputStream;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 /**
  * @author Roberto Díaz
@@ -69,15 +65,6 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 
 		WikiNodePermissionChecker.check(
 			permissionChecker, page.getNodeId(), ActionKeys.ADD_ATTACHMENT);
-	}
-
-	@Override
-	protected void doHandleUploadException(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortalException pe, JSONObject jsonObject)
-		throws PortalException {
-
-		throw pe;
 	}
 
 	@Override

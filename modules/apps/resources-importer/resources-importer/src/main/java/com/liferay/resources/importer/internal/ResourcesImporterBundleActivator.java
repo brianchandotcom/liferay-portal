@@ -14,12 +14,17 @@
 
 package com.liferay.resources.importer.internal;
 
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.resources.importer.messaging.DestinationNames;
 
+import java.util.Dictionary;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -28,22 +33,39 @@ import org.osgi.framework.ServiceRegistration;
 public class ResourcesImporterBundleActivator implements BundleActivator {
 
 	@Override
-	public void start(BundleContext bundleContext) throws Exception {
-		DestinationConfiguration destinationConfiguration =
-			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				DestinationNames.RESOURCES_IMPORTER);
+	public void start(BundleContext bundleContext) {
+		ServiceReference<DestinationFactory> serviceReference =
+			bundleContext.getServiceReference(DestinationFactory.class);
 
-		_serviceRegistration = bundleContext.registerService(
-			DestinationConfiguration.class, destinationConfiguration,
-			new HashMapDictionary<String, Object>());
+		try {
+			DestinationFactory destinationFactory = bundleContext.getService(
+				serviceReference);
+
+			DestinationConfiguration destinationConfiguration =
+				new DestinationConfiguration(
+					DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+					DestinationNames.RESOURCES_IMPORTER);
+
+			Destination destination = destinationFactory.createDestination(
+				destinationConfiguration);
+
+			Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+			dictionary.put("destination.name", destination.getName());
+
+			_serviceRegistration = bundleContext.registerService(
+				Destination.class, destination, dictionary);
+		}
+		finally {
+			bundleContext.ungetService(serviceReference);
+		}
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
+	public void stop(BundleContext bundleContext) {
 		_serviceRegistration.unregister();
 	}
 
-	private ServiceRegistration<DestinationConfiguration> _serviceRegistration;
+	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

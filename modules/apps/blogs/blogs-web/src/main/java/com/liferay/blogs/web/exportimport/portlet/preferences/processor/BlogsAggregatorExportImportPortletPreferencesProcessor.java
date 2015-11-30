@@ -231,12 +231,12 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	private CompanyLocalService _companyLocalService;
-	private OrganizationLocalService _organizationLocalService;
-	private PortletDisplayTemplateExportCapability
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile OrganizationLocalService _organizationLocalService;
+	private volatile PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
-	private PortletDisplayTemplateImportCapability
+	private volatile PortletDisplayTemplateImportCapability
 		_portletDisplayTemplateImportCapability;
-	private PortletLocalService _portletLocalService;
+	private volatile PortletLocalService _portletLocalService;
 
 }

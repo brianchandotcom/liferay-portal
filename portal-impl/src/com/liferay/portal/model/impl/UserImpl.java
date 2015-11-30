@@ -490,6 +490,19 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public String getInitials() {
+		String[] names = StringUtil.split(getFullName(), StringPool.SPACE);
+
+		StringBundler sb = new StringBundler(names.length);
+
+		for (String name : names) {
+			sb.append(StringUtil.toUpperCase(StringUtil.shorten(name, 1)));
+		}
+
+		return sb.toString();
+	}
+
+	@Override
 	public Locale getLocale() {
 		return _locale;
 	}

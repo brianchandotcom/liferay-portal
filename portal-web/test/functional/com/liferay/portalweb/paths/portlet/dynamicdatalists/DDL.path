@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_PREVIEW</td>
-	<td>//div/div/div[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td>//div[contains(@class,'modal-body')]/p</td>
 	<td></td>
 </tr>
 <tr>

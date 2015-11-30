@@ -79,8 +79,7 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 			deleteTagIds = new long[] {tagId};
 		}
 		else {
-			deleteTagIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteTagIds"), 0L);
+			deleteTagIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 		}
 
 		for (long deleteTagId : deleteTagIds) {
@@ -191,7 +190,7 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 		_assetTagService = assetTagService;
 	}
 
-	private AssetTagLocalService _assetTagLocalService;
-	private AssetTagService _assetTagService;
+	private volatile AssetTagLocalService _assetTagLocalService;
+	private volatile AssetTagService _assetTagService;
 
 }

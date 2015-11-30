@@ -52,7 +52,7 @@ public class CKEditorBBCodeConfigContributor
 		jsonObject.put("allowedContent", Boolean.TRUE);
 		jsonObject.put("enterMode", 2);
 		jsonObject.put(
-			"extraPlugins", "a11yhelpbtn,bbcode,imageselector,wikilink");
+			"extraPlugins", "a11yhelpbtn,bbcode,itemselector,wikilink");
 		jsonObject.put(
 			"fontSize_sizes",
 			"10/10px;12/12px;14/14px;16/16px;18/18px;24/24px;32/32px;48/48px");

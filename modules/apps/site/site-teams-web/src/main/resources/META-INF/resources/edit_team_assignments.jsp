@@ -18,9 +18,6 @@
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");
-String tabs2 = ParamUtil.getString(request, "tabs2", "current");
-
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -34,6 +31,63 @@ long teamId = ParamUtil.getLong(request, "teamId");
 
 Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/edit_team_assignments.jsp");
+portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("teamId", String.valueOf(team.getTeamId()));
+
+request.setAttribute("edit_team_assignments.jsp-tabs1", tabs1);
+
+request.setAttribute("edit_team_assignments.jsp-team", team);
+
+request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(team.getName());
+%>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		usersURL.setParameter("tabs1", "users");
+		%>
+
+		<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
+
+		<%
+		PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		userGroupsURL.setParameter("tabs1", "user-groups");
+		%>
+
+		<aui:nav-item href="<%= userGroupsURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" method="get" name="searchFm">
+			<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<c:choose>
+	<c:when test='<%= tabs1.equals("users") %>'>
+		<liferay-util:include page="/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test='<%= tabs1.equals("user-groups") %>'>
+		<liferay-util:include page="/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
+	</c:when>
+</c:choose>
+
+<%
 Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
 
 if (group != null) {
@@ -46,50 +100,6 @@ if (group.isOrganization()) {
 	organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
 }
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/edit_team_assignments.jsp");
-portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("tabs2", tabs2);
-portletURL.setParameter("teamId", String.valueOf(team.getTeamId()));
-
-request.setAttribute("edit_team_assignments.jsp-tabs1", tabs1);
-request.setAttribute("edit_team_assignments.jsp-tabs2", tabs2);
-
-request.setAttribute("edit_team_assignments.jsp-cur", cur);
-
-request.setAttribute("edit_team_assignments.jsp-redirect", redirect);
-
-request.setAttribute("edit_team_assignments.jsp-team", team);
-
-request.setAttribute("edit_team_assignments.jsp-group", group);
-
-request.setAttribute("edit_team_assignments.jsp-organization", organization);
-
-request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(team.getName());
-%>
-
-<liferay-ui:tabs
-	names="users,user-groups"
-	param="tabs1"
-	portletURL="<%= portletURL %>"
-/>
-
-<c:choose>
-	<c:when test='<%= tabs1.equals("users") %>'>
-		<liferay-util:include page="/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= tabs1.equals("user-groups") %>'>
-		<liferay-util:include page="/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
-	</c:when>
-</c:choose>
-
-<%
 if (group.isOrganization()) {
 	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 }

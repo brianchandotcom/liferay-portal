@@ -113,8 +113,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		_userLocalService = userLocalService;
 	}
 
-	private GroupLocalService _groupLocalService;
-	private SocialRequestLocalService _socialRequestLocalService;
-	private UserLocalService _userLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile SocialRequestLocalService _socialRequestLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

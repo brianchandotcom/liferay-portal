@@ -107,6 +107,9 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public java.lang.String getLiveParentTypeSettingsProperty(
 		java.lang.String key);
 
+	public java.lang.String getLogoURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay, boolean useDefault);
+
 	public long getOrganizationId();
 
 	public com.liferay.portal.model.Group getParentGroup()

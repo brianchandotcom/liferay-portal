@@ -1945,7 +1945,7 @@ public class OrganizationLocalServiceImpl
 		String regionCode = null;
 
 		if (regionId != null) {
-			Region region = regionService.fetchRegion(regionId);
+			Region region = regionPersistence.fetchByPrimaryKey(regionId);
 
 			regionCode = region.getRegionCode();
 		}
@@ -1953,7 +1953,7 @@ public class OrganizationLocalServiceImpl
 		String countryName = null;
 
 		if (countryId != null) {
-			Country country = countryService.fetchCountry(countryId);
+			Country country = countryPersistence.fetchByPrimaryKey(countryId);
 
 			countryName = country.getName();
 		}
@@ -2211,7 +2211,7 @@ public class OrganizationLocalServiceImpl
 			countryPersistence.findByPrimaryKey(countryId);
 		}
 
-		listTypeService.validate(
+		listTypeLocalService.validate(
 			statusId, ListTypeConstants.ORGANIZATION_STATUS);
 	}
 

@@ -14,12 +14,12 @@
 
 package com.liferay.portal.soap.extender.test.activator.configuration;
 
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.soap.extender.test.util.WaiterUtil;
+import com.liferay.portal.soap.extender.test.util.WaiterUtil.Waiter;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.osgi.framework.BundleActivator;
@@ -29,7 +29,6 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Carlos Sierra Andrés
@@ -61,10 +60,13 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 					"JaxWsApiConfiguration",
 				null);
 
+			_jaxWsApiConfigurationProperties =
+				_jaxWsApiConfiguration.getProperties();
+
 			properties = new Hashtable<>();
 
 			properties.put("contextPath", "/soap-test");
-			properties.put("timeout", 10000);
+			properties.put("timeout", 10_000);
 
 			_jaxWsApiConfiguration.update(properties);
 
@@ -82,6 +84,25 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 				"jaxWsServiceFilterStrings", new String[] {"(jaxws=true)"});
 
 			_soapConfiguration.update(properties);
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("(&(objectClass=");
+			sb.append(ServletContextHelper.class.getName());
+			sb.append(")(");
+			sb.append(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
+			sb.append("=soap-test))");
+
+			_filterString = sb.toString();
+
+			try {
+				WaiterUtil.waitForFilter(bundleContext, _filterString, 10_000);
+			}
+			catch (TimeoutException te) {
+				_cleanUp();
+
+				throw te;
+			}
 		}
 		finally {
 			bundleContext.ungetService(serviceReference);
@@ -90,58 +111,43 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		final CountDownLatch countDownLatch = new CountDownLatch(1);
+		Waiter waiter = WaiterUtil.waitForFilterToDisappear(
+			bundleContext, _filterString);
 
-		ServiceTracker<ServletContextHelper, ServletContextHelper>
-			serviceTracker =
-				new ServiceTracker<ServletContextHelper, ServletContextHelper>(
-					bundleContext, ServletContextHelper.class, null) {
+		_cleanUp();
 
-					@Override
-					public void removedService(
-						ServiceReference<ServletContextHelper> reference,
-						ServletContextHelper service) {
+		waiter.waitFor(10_000 * 60);
+	}
 
-						Object contextName = reference.getProperty(
-							HttpWhiteboardConstants.
-								HTTP_WHITEBOARD_CONTEXT_NAME);
-
-						if (Validator.equals(contextName, "soap-test")) {
-							countDownLatch.countDown();
-
-							close();
-						}
-					}
-
-				};
-
-		serviceTracker.open();
-
-		try {
-			_cxfConfiguration.delete();
-		}
-		catch (Exception e) {
-		}
-
-		try {
-			_jaxWsApiConfiguration.delete();
-		}
-		catch (Exception e) {
-		}
-
+	private void _cleanUp() {
 		try {
 			_soapConfiguration.delete();
 		}
 		catch (Exception e) {
 		}
 
-		if (!countDownLatch.await(10, TimeUnit.MINUTES)) {
-			throw new TimeoutException("Service unregister waiting timeout");
+		try {
+			if (_jaxWsApiConfigurationProperties != null) {
+				_jaxWsApiConfiguration.update(_jaxWsApiConfigurationProperties);
+			}
+			else {
+				_jaxWsApiConfiguration.delete();
+			}
+		}
+		catch (Exception e) {
+		}
+
+		try {
+			_cxfConfiguration.delete();
+		}
+		catch (Exception e) {
 		}
 	}
 
 	private Configuration _cxfConfiguration;
+	private String _filterString;
 	private Configuration _jaxWsApiConfiguration;
+	private Dictionary<String, Object> _jaxWsApiConfigurationProperties;
 	private Configuration _soapConfiguration;
 
 }

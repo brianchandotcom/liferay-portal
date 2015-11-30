@@ -3,7 +3,7 @@ package ${packagePath}.service.persistence;
 import ${packagePath}.model.${entity.name};
 import ${packagePath}.service.${entity.name}LocalServiceUtil;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 /**
@@ -12,18 +12,18 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
  * @generated
  */
 @Deprecated
-public abstract class ${entity.name}ActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+public abstract class ${entity.name}ActionableDynamicQuery extends DefaultActionableDynamicQuery {
 
 	public ${entity.name}ActionableDynamicQuery() {
 		setBaseLocalService(${entity.name}LocalServiceUtil.getService());
-		setClass(${entity.name}.class);
 
 		<#if pluginName != "">
 			setClassLoader(${packagePath}.service.ClpSerializer.class.getClassLoader());
 		<#else>
 			setClassLoader(PortalClassLoaderUtil.getClassLoader());
 		</#if>
+
+		setModelClass(${entity.name}.class);
 
 		<#if entity.hasPrimitivePK()>
 			setPrimaryKeyPropertyName("${entity.PKVarName}");

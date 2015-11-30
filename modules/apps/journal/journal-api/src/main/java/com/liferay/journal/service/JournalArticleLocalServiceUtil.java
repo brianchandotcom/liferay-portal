@@ -1707,6 +1707,10 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.journal.model.JournalArticle> getIndexableArticlesByDDMStructureKey(
 		java.lang.String[] ddmStructureKeys) {
 		return getService()

@@ -151,8 +151,8 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 
-	private MBMessageLocalService _mbMessageLocalService;
-	private MBMessageService _mbMessageService;
-	private MBThreadLocalService _mbThreadLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
+	private volatile MBMessageService _mbMessageService;
+	private volatile MBThreadLocalService _mbThreadLocalService;
 
 }

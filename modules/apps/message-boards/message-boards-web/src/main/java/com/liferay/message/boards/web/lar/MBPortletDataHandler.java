@@ -53,6 +53,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -72,7 +73,13 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "message_boards";
 
-	public MBPortletDataHandler() {
+	@Override
+	public String getServiceName() {
+		return MBConstants.SERVICE_NAME;
+	}
+
+	@Activate
+	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(MBBan.class),
 			new StagedModelType(MBCategory.class),
@@ -92,11 +99,6 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		setImportControls(getExportControls());
 		setPublishToLiveByDefault(
 			PropsValues.MESSAGE_BOARDS_PUBLISH_TO_LIVE_BY_DEFAULT);
-	}
-
-	@Override
-	public String getServiceName() {
-		return MBConstants.SERVICE_NAME;
 	}
 
 	@Override
@@ -366,11 +368,11 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 
-	private MBBanLocalService _mbBanLocalService;
-	private MBCategoryLocalService _mbCategoryLocalService;
-	private MBMessageLocalService _mbMessageLocalService;
-	private MBStatsUserLocalService _mbStatsUserLocalService;
-	private MBThreadFlagLocalService _mbThreadFlagLocalService;
-	private MBThreadLocalService _mbThreadLocalService;
+	private volatile MBBanLocalService _mbBanLocalService;
+	private volatile MBCategoryLocalService _mbCategoryLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
+	private volatile MBStatsUserLocalService _mbStatsUserLocalService;
+	private volatile MBThreadFlagLocalService _mbThreadFlagLocalService;
+	private volatile MBThreadLocalService _mbThreadLocalService;
 
 }

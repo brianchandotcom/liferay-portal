@@ -24,12 +24,15 @@ import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.PropsUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RegexUtil;
+import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -183,6 +186,9 @@ public class PoshiRunnerExecutor {
 			}
 			else if (childElementName.equals("for")) {
 				runForElement(childElement);
+			}
+			else if (childElementName.equals("return")) {
+				runReturnElement(childElement);
 			}
 			else if (childElementName.equals("task")) {
 				runTaskElement(childElement);
@@ -378,15 +384,17 @@ public class PoshiRunnerExecutor {
 			else {
 				PoshiRunnerStackTraceUtil.popStackTrace();
 
-				PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
+				if (_functionExecuteElement == executeElement) {
+					PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
-				SummaryLoggerHandler.failSummary(
-					_functionExecuteElement, t.getMessage());
+					SummaryLoggerHandler.failSummary(
+						_functionExecuteElement, t.getMessage());
 
-				CommandLoggerHandler.failCommand(_functionExecuteElement);
+					CommandLoggerHandler.failCommand(_functionExecuteElement);
 
-				_functionExecuteElement = null;
-				_functionWarningMessage = null;
+					_functionExecuteElement = null;
+					_functionWarningMessage = null;
+				}
 
 				throw t;
 			}
@@ -499,7 +507,7 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
-	public static void runMacroCommandElement(
+	public static Map<String, String> runMacroCommandElement(
 			String classCommandName, Element commandElement)
 		throws Exception {
 
@@ -509,7 +517,29 @@ public class PoshiRunnerExecutor {
 
 		parseElement(commandElement);
 
+		Map<String, String> macroReturns = new HashMap<>();
+
+		String returns = commandElement.attributeValue("returns");
+
+		if (Validator.isNotNull(returns)) {
+			String[] returnNames = StringUtil.split(returns);
+
+			for (String returnName : returnNames) {
+				if (PoshiRunnerVariablesUtil.containsKeyInReturnMap(
+						returnName)) {
+
+					String returnValue =
+						PoshiRunnerVariablesUtil.getValueFromReturnMap(
+							returnName);
+
+					macroReturns.put(returnName, returnValue);
+				}
+			}
+		}
+
 		PoshiRunnerVariablesUtil.popCommandMap();
+
+		return macroReturns;
 	}
 
 	public static void runMacroExecuteElement(
@@ -552,7 +582,23 @@ public class PoshiRunnerExecutor {
 			classCommandName);
 
 		try {
-			runMacroCommandElement(classCommandName, commandElement);
+			Map<String, String> macroReturns = runMacroCommandElement(
+				classCommandName, commandElement);
+
+			List<Element> returnElements = executeElement.elements("return");
+
+			for (Element returnElement : returnElements) {
+				String returnFrom = returnElement.attributeValue("from");
+
+				String returnValue = macroReturns.get(returnFrom);
+
+				if (returnValue != null) {
+					String returnName = returnElement.attributeValue("name");
+
+					PoshiRunnerVariablesUtil.putIntoCommandMap(
+						returnName, returnValue);
+				}
+			}
 		}
 		catch (Exception e) {
 			SummaryLoggerHandler.failSummary(executeElement, e.getMessage());
@@ -565,6 +611,24 @@ public class PoshiRunnerExecutor {
 		PoshiRunnerStackTraceUtil.popStackTrace();
 
 		XMLLoggerHandler.updateStatus(executeElement, "pass");
+	}
+
+	public static void runReturnElement(Element returnElement)
+		throws Exception {
+
+		PoshiRunnerStackTraceUtil.setCurrentElement(returnElement);
+
+		if (returnElement.attributeValue("value") != null) {
+			String returnName = returnElement.attributeValue("name");
+			String returnValue = returnElement.attributeValue("value");
+
+			returnValue = PoshiRunnerVariablesUtil.replaceCommandVars(
+				returnValue);
+
+			PoshiRunnerVariablesUtil.putIntoReturnMap(returnName, returnValue);
+		}
+
+		XMLLoggerHandler.updateStatus(returnElement, "pass");
 	}
 
 	public static void runSeleniumElement(Element executeElement)
@@ -590,6 +654,8 @@ public class PoshiRunnerExecutor {
 						selenium.equals("assertConsoleTextNotPresent") ||
 						selenium.equals("assertConsoleTextPresent") ||
 						selenium.equals("assertLocation") ||
+						selenium.equals("assertHTMLSourceTextNotPresent") ||
+						selenium.equals("assertHTMLSourceTextPresent") ||
 						selenium.equals("assertTextNotPresent") ||
 						selenium.equals("assertTextPresent") ||
 						selenium.equals("waitForConfirmation") ||

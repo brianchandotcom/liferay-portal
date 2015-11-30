@@ -374,8 +374,8 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 		SolrQuerySuggester.class);
 
 	private double _distanceThreshold;
-	private NGramQueryBuilder _nGramQueryBuilder;
-	private SolrClientManager _solrClientManager;
+	private volatile NGramQueryBuilder _nGramQueryBuilder;
+	private volatile SolrClientManager _solrClientManager;
 	private StringDistance _stringDistance = new LevensteinDistance();
 
 }

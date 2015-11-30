@@ -182,8 +182,8 @@ public class EditMessageAttachmentsMVCActionCommand
 		_trashEntryService = trashEntryService;
 	}
 
-	private MBMessageLocalService _mbMessageLocalService;
-	private MBMessageService _mbMessageService;
-	private TrashEntryService _trashEntryService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
+	private volatile MBMessageService _mbMessageService;
+	private volatile TrashEntryService _trashEntryService;
 
 }

@@ -65,6 +65,9 @@ public interface LDAPServerConfiguration {
 	@Meta.AD(deflt = "(objectClass=groupOfUniqueNames)", required = false)
 	public String groupSearchFilter();
 
+	@Meta.AD(deflt = "true", required = false)
+	public boolean groupSearchFilterEnabled();
+
 	@Meta.AD(deflt = "0", required = false)
 	public long ldapServerId();
 

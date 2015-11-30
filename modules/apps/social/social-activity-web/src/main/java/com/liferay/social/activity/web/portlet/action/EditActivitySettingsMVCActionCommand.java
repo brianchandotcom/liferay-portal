@@ -188,6 +188,6 @@ public class EditActivitySettingsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private SocialActivitySettingService _socialActivitySettingService;
+	private volatile SocialActivitySettingService _socialActivitySettingService;
 
 }

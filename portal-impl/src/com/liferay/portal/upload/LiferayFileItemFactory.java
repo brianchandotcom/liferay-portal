@@ -16,7 +16,6 @@ package com.liferay.portal.upload;
 
 import java.io.File;
 
-import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 
 /**
@@ -31,12 +30,12 @@ public class LiferayFileItemFactory extends DiskFileItemFactory {
 	}
 
 	@Override
-	public FileItem createItem(
-		String fieldName, String contentType, boolean isFormField,
+	public LiferayFileItem createItem(
+		String fieldName, String contentType, boolean formField,
 		String fileName) {
 
 		return new LiferayFileItem(
-			fieldName, contentType, isFormField, fileName, DEFAULT_SIZE,
+			fieldName, contentType, formField, fileName, DEFAULT_SIZE,
 			_tempDir);
 	}
 

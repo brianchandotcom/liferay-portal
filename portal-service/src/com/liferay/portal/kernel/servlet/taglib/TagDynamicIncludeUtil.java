@@ -108,7 +108,7 @@ public class TagDynamicIncludeUtil {
 	}
 
 	private TagDynamicIncludeUtil() {
-		_tagDynamicIncludes = ServiceTrackerCollections.multiValueMap(
+		_tagDynamicIncludes = ServiceTrackerCollections.openMultiValueMap(
 			TagDynamicInclude.class, null,
 			new ServiceReferenceMapper<String, TagDynamicInclude>() {
 
@@ -145,8 +145,6 @@ public class TagDynamicIncludeUtil {
 				}
 
 			});
-
-		_tagDynamicIncludes.open();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

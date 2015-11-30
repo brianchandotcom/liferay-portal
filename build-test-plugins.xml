@@ -68,6 +68,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 
 		<if>
 			<or>
+				<equals arg1="${liferay.portal.bundle}" arg2="6.2.1" />
 				<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
 				<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
 				<equals arg1="${liferay.portal.bundle}" arg2="6.2.10.1" />

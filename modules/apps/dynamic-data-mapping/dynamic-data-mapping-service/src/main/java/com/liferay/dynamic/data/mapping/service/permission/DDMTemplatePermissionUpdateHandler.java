@@ -57,6 +57,6 @@ public class DDMTemplatePermissionUpdateHandler
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
-	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

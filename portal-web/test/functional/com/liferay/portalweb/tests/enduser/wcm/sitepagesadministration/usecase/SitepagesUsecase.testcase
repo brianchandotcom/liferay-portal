@@ -2,30 +2,49 @@
 	<property name="testray.main.component.name" value="Site Pages Administration" />
 
 	<set-up>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="SignIn#signInPortalInstanceSetUp" />
+			</then>
+		</if>
+
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="test test" />
-		</execute>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Site#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#logoutAndLoginPG">
+					<var name="userLoginEmailAddress" value="test@liferay.com" />
+					<var name="userLoginFullName" value="test test" />
+				</execute>
 
-		<execute macro="WebContent#tearDownCP" />
+				<execute macro="Site#tearDownCP" />
 
-		<execute macro="BlogsEntry#tearDownCP" />
+				<execute macro="WebContent#tearDownCP" />
 
-		<execute macro="MessageboardsThread#tearDownCP" />
+				<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="MessageboardsThread#tearDownCP" />
 
-		<execute macro="SitePage#tearDownPrivateCP" />
+				<execute macro="Page#tearDownPG" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="SitePage#tearDownPrivateCP" />
 
-		<execute macro="Role#tearDownCP" />
+				<execute macro="User#tearDownCP" />
+
+				<execute macro="Role#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddSitePageXSS" priority="3">
@@ -71,8 +90,8 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Private Pages" />
 			<var name="sitePageName" value="Site Page Name" />
-			<var name="sitePagePrivacy" value="Private" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -97,8 +116,8 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Site Page Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -123,15 +142,15 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page1 Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Site Page2 Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -141,10 +160,10 @@
 
 		<execute macro="SitePage#addChildCP">
 			<var name="childSitepageName" value="true" />
+			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="Child Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page2 Name" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="SitePage#changePageTypeLayoutCP">
@@ -221,8 +240,8 @@
 
 		<for list="${childPageNameList}" param="siteChildPageName">
 			<execute macro="SitePage#addChildCP">
+				<var name="page" value="Public Pages" />
 				<var name="siteChildPageName" value="${siteChildPageName}" />
-				<var name="sitePagePrivacy" value="Public" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
@@ -304,9 +323,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Private Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePagePrivacy" value="Private" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -366,8 +385,8 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
+			<var name="page" value="Private Pages" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -412,8 +431,8 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
+			<var name="page" value="Private Pages" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -488,9 +507,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Private Pages" />
 			<var name="siteName" value="Liferay" />
 			<var name="sitePageName" value="Private Page" />
-			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -716,9 +735,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Private Pages" />
 			<var name="siteName" value="Liferay" />
 			<var name="sitePageName" value="Private Page" />
-			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -957,9 +976,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Private Pages" />
 			<var name="siteName" value="Liferay" />
 			<var name="sitePageName" value="Private Page" />
-			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -1204,17 +1223,17 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageName" value="Blank Page" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="pageTypeURL" value="https://www.google.com/" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageName" value="Link to URL Page" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="sitePageType" value="Link to URL" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
@@ -1227,19 +1246,19 @@
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="pageTypeURL" value="http://iscaliforniaonfire.com/" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageName" value="Embedded Page" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="sitePageType" value="Embedded" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
 			<var name="componentName" value="Community" />
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageName" value="Panel Page" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="sitePageType" value="Panel" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>

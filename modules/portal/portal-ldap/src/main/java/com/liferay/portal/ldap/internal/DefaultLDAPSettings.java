@@ -291,14 +291,14 @@ public class DefaultLDAPSettings implements LDAPSettings {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLDAPSettings.class);
 
-	private ConfigurationProvider<LDAPAuthConfiguration>
+	private volatile ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
-	private ConfigurationProvider<LDAPExportConfiguration>
+	private volatile ConfigurationProvider<LDAPExportConfiguration>
 		_ldapExportConfigurationProvider;
-	private ConfigurationProvider<LDAPImportConfiguration>
+	private volatile ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
-	private ConfigurationProvider<LDAPServerConfiguration>
+	private volatile ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

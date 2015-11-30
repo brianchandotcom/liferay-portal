@@ -721,6 +721,11 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _dlFolderLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder getMountFolder(
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -816,6 +821,12 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	@Override
 	public boolean hasFolderLock(long userId, long folderId) {
 		return _dlFolderLocalService.hasFolderLock(userId, folderId);
+	}
+
+	@Override
+	public boolean hasInheritableLock(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.hasInheritableLock(folderId);
 	}
 
 	@Override
@@ -997,6 +1008,13 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.updateStatus(userId, folderId, status,
 			workflowContext, serviceContext);
+	}
+
+	@Override
+	public boolean verifyInheritableLock(long folderId,
+		java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.verifyInheritableLock(folderId, lockUuid);
 	}
 
 	/**

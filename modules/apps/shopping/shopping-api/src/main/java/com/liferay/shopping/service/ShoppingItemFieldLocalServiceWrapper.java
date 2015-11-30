@@ -192,6 +192,11 @@ public class ShoppingItemFieldLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _shoppingItemFieldLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public java.util.List<com.liferay.shopping.model.ShoppingItemField> getItemFields(
 		long itemId) {
 		return _shoppingItemFieldLocalService.getItemFields(itemId);

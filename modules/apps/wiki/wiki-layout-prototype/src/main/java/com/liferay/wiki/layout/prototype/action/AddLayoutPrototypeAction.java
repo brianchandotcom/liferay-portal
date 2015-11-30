@@ -106,8 +106,8 @@ public class AddLayoutPrototypeAction {
 	protected void setWikiPortlet(Portlet portlet) {
 	}
 
-	private CompanyLocalService _companyLocalService;
-	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
-	private UserLocalService _userLocalService;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile LayoutPrototypeLocalService _layoutPrototypeLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

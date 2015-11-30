@@ -16,11 +16,10 @@ package com.liferay.portal.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.List;
-import java.util.Map;
+import com.liferay.portal.util.test.PortletContainerTestUtil;
+import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,20 +39,22 @@ public class LayoutRequestPortletContainerTest
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testLayoutRequest() throws Exception {
-		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+		setUpPortlet(
+			testPortlet, new HashMapDictionary<String, Object>(),
+			TEST_PORTLET_ID);
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		Map<String, List<String>> responseMap = request(
+		Response response = PortletContainerTestUtil.request(
 			layout.getRegularURL(httpServletRequest));
 
-		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("render"));
+		Assert.assertEquals(200, response.getCode());
+		Assert.assertTrue(testPortlet.isCalledRender());
 	}
 
 }

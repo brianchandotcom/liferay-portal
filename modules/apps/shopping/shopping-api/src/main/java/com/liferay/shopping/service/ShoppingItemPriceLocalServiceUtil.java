@@ -185,6 +185,10 @@ public class ShoppingItemPriceLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.shopping.model.ShoppingItemPrice> getItemPrices(
 		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getItemPrices(itemId);

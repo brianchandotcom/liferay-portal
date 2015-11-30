@@ -45,11 +45,7 @@ public class BaseModelPermissionCheckerUtil {
 	}
 
 	private static final ServiceTrackerMap<String, BaseModelPermissionChecker>
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			BaseModelPermissionChecker.class, "model.class.name");
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 }

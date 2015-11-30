@@ -23,7 +23,6 @@ portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="groupId" type="hidden" />
 	<aui:input name="deleteFeedIds" type="hidden" />
 
 	<liferay-ui:search-container
@@ -128,7 +127,6 @@ portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
-			form.fm('groupId').val('<%= scopeGroupId %>');
 			form.fm('deleteFeedIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 			submitForm(form, '<portlet:actionURL name="deleteFeeds"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');

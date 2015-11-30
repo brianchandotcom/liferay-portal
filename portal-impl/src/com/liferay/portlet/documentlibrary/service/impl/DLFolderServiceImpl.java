@@ -16,12 +16,8 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lock.ExpiredLockException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
-import com.liferay.portal.kernel.lock.NoSuchLockException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -440,26 +436,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	@Override
 	public boolean hasInheritableLock(long folderId) throws PortalException {
-		boolean inheritable = false;
-
-		try {
-			Lock lock = LockManagerUtil.getLock(
-				DLFolder.class.getName(), folderId);
-
-			inheritable = lock.isInheritable();
-		}
-		catch (ExpiredLockException ele) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ele, ele);
-			}
-		}
-		catch (NoSuchLockException nsle) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsle, nsle);
-			}
-		}
-
-		return inheritable;
+		return dlFolderLocalService.hasInheritableLock(folderId);
 	}
 
 	@Override
@@ -606,28 +583,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public boolean verifyInheritableLock(long folderId, String lockUuid)
 		throws PortalException {
 
-		boolean verified = false;
-
-		try {
-			Lock lock = LockManagerUtil.getLock(
-				DLFolder.class.getName(), folderId);
-
-			if (!lock.isInheritable()) {
-				throw new NoSuchLockException("{folderId=" + folderId + "}");
-			}
-
-			if (lock.getUuid().equals(lockUuid)) {
-				verified = true;
-			}
-		}
-		catch (ExpiredLockException ele) {
-			throw new NoSuchLockException(ele);
-		}
-
-		return verified;
+		return dlFolderLocalService.verifyInheritableLock(folderId, lockUuid);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLFolderServiceImpl.class);
 
 }

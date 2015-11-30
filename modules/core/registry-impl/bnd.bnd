@@ -3,7 +3,7 @@ Bundle-Name: Liferay Portal Registry Implementation
 Bundle-SymbolicName: com.liferay.registry.impl
 Bundle-Version: 1.0.0
 Import-Package:\
-	com.liferay.osgi.service.tracker.map;version='[1.0.0,2.0.0)',\
+	com.liferay.osgi.service.tracker.collections.map;version='[1.0.0,2.0.0)',\
 	com.liferay.registry;version='[1.0.0,2.0.0)',\
 	com.liferay.registry.collections;version='[1.0.0,2.0.0)',\
 	org.osgi.framework,\

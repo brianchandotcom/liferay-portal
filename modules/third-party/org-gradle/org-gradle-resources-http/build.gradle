@@ -1,0 +1,27 @@
+task jar(type: Jar, overwrite: true)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+String gradleVersion = version.substring(0, version.lastIndexOf('.'))
+
+if (gradleVersion != gradle.gradleVersion) {
+	throw new GradleException("Unable to use Gradle " + gradle.gradleVersion + ", " + gradleVersion + " is required")
+}
+
+dependencies {
+	compile gradleApi()
+}
+
+jar {
+	baseName = "gradle-resources-http"
+	duplicatesStrategy = "exclude"
+	from sourceSets.main.output
+
+	from zipTree(
+		{
+			configurations.compile.find {
+				it.name.startsWith "gradle-resources-http-"
+			}
+		})
+}

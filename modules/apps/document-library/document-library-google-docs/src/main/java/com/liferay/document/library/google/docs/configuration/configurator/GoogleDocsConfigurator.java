@@ -145,13 +145,14 @@ public class GoogleDocsConfigurator {
 		_userLocalService = userLocalService;
 	}
 
-	private ClassNameLocalService _classNameLocalService;
-	private CompanyLocalService _companyLocalService;
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private StorageEngine _storageEngine;
-	private UserLocalService _userLocalService;
+	private volatile ClassNameLocalService _classNameLocalService;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
+	private volatile DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
+	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private volatile StorageEngine _storageEngine;
+	private volatile UserLocalService _userLocalService;
 
 }

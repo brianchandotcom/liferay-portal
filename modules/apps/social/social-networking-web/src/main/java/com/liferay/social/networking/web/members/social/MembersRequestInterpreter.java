@@ -180,9 +180,9 @@ public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MembersRequestInterpreter.class);
 
-	private GroupLocalService _groupLocalService;
-	private OrganizationLocalService _organizationLocalService;
-	private SocialActivityLocalService _socialActivityLocalService;
-	private UserLocalService _userLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile OrganizationLocalService _organizationLocalService;
+	private volatile SocialActivityLocalService _socialActivityLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

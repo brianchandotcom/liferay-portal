@@ -228,6 +228,7 @@ AUI.add(
 						var record = instance.getRecord(alignNode);
 
 						var data = instance.get('data');
+						var portletNamespace = instance.get('portletNamespace');
 						var recordsetId = instance.get('recordsetId');
 						var structure = instance.get('structure');
 
@@ -237,6 +238,7 @@ AUI.add(
 							editor.setAttrs(
 								{
 									data: data,
+									portletNamespace: portletNamespace,
 									record: record,
 									recordsetId: recordsetId,
 									structure: structure,
@@ -410,7 +412,7 @@ AUI.add(
 								config.inputFormatter = function(val) {
 									return val.map(
 										function(item, index) {
-											return item.getTime();
+											return A.DataType.Date.format(item);
 										}
 									);
 								};
@@ -418,9 +420,14 @@ AUI.add(
 								config.outputFormatter = function(val) {
 									return val.map(
 										function(item, index) {
-											var value = Lang.toInt(item) || Date.now();
+											var date;
 
-											var date = new Date(value);
+											if (item !== STR_EMPTY) {
+												date = A.DataType.Date.parse(item);
+											}
+											else {
+												date = new Date();
+											}
 
 											date = DateMath.add(date, DateMath.MINUTES, date.getTimezoneOffset());
 
@@ -434,12 +441,8 @@ AUI.add(
 
 									var value = data[name];
 
-									if (value !== STR_EMPTY) {
-										var date = new Date(Lang.toInt(value));
-
-										date = DateMath.add(date, DateMath.MINUTES, date.getTimezoneOffset());
-
-										value = A.DataType.Date.format(date);
+									if (isArray(value)) {
+										value = value[0];
 									}
 
 									return value;
@@ -570,18 +573,28 @@ AUI.add(
 					return emptyRows;
 				},
 
-				findStructureFieldByAttribute: function(structure, attributeName, attributeValue) {
-					var found = null;
+				findStructureFieldByAttribute: function(fieldsArray, attributeName, attributeValue) {
+					var instance = this;
 
-					structure.some(
-						function(item, index) {
-							found = item;
+					var	structureField;
 
-							return found[attributeName] === attributeValue;
+					AArray.some(
+						fieldsArray,
+						function(item) {
+							var nestedFieldsArray = item.fields;
+
+							if (item[attributeName] === attributeValue) {
+								structureField = item;
+							}
+							else if (nestedFieldsArray) {
+								structureField = instance.findStructureFieldByAttribute(nestedFieldsArray, attributeName, attributeValue);
+							}
+
+							return structureField !== undefined;
 						}
 					);
 
-					return found;
+					return structureField;
 				},
 
 				getCellEditorOptions: function(options) {

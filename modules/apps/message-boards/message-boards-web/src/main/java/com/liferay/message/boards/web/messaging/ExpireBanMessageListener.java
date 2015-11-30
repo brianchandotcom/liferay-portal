@@ -40,7 +40,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael Young
  * @author Tina Tian
  */
-@Component(immediate = true, service = ExpireBanMessageListener.class)
+@Component(
+	configurationPid = "com.liferay.message.boards.configuration.MBConfiguration",
+	immediate = true, service = ExpireBanMessageListener.class
+)
 public class ExpireBanMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
@@ -97,8 +100,8 @@ public class ExpireBanMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private MBBanLocalService _mbBanLocalService;
+	private volatile MBBanLocalService _mbBanLocalService;
 	private volatile MBConfiguration _mbConfiguration;
-	private SchedulerEngineHelper _schedulerEngineHelper;
+	private volatile SchedulerEngineHelper _schedulerEngineHelper;
 
 }

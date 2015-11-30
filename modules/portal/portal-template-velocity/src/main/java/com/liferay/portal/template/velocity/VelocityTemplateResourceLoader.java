@@ -103,7 +103,7 @@ public class VelocityTemplateResourceLoader implements TemplateResourceLoader {
 	private static volatile VelocityEngineConfiguration
 		_velocityEngineConfiguration;
 
-	private MultiVMPool _multiVMPool;
-	private SingleVMPool _singleVMPool;
+	private volatile MultiVMPool _multiVMPool;
+	private volatile SingleVMPool _singleVMPool;
 
 }

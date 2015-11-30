@@ -706,7 +706,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WIKI_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[contains(@value,'wikiwebACCESS_IN_CONTROL_PANEL')]</td>
+	<td>//input[contains(@value,'WikiAdminPortletACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>

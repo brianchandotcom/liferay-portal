@@ -274,6 +274,11 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _shoppingItemLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public com.liferay.shopping.model.ShoppingItem getItem(long companyId,
 		java.lang.String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {

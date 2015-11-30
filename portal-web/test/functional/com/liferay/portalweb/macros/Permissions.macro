@@ -181,6 +181,7 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="${page}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
@@ -602,6 +603,7 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="${page}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />

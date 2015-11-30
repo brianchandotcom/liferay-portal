@@ -87,7 +87,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SiteMembershipsPortlet extends MVCPortlet {
 
-	public void editGroupOrganizations(
+	public void addGroupOrganizations(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -96,13 +96,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		long[] addOrganizationIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addOrganizationIds"), 0L);
-		long[] removeOrganizationIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
 
 		_organizationService.addGroupOrganizations(
 			themeDisplay.getSiteGroupId(), addOrganizationIds);
-		_organizationService.unsetGroupOrganizations(
-			themeDisplay.getSiteGroupId(), removeOrganizationIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -112,7 +108,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 	}
 
-	public void editGroupUserGroups(
+	public void addGroupUserGroups(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -121,13 +117,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		long[] addUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
-		long[] removeUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
 		_userGroupService.addGroupUserGroups(
 			themeDisplay.getSiteGroupId(), addUserGroupIds);
-		_userGroupService.unsetGroupUserGroups(
-			themeDisplay.getSiteGroupId(), removeUserGroupIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -137,7 +129,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 	}
 
-	public void editGroupUsers(
+	public void addGroupUsers(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -151,18 +143,110 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		addUserIds = filterAddUserIds(groupId, addUserIds);
 
-		long[] removeUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
+
+		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		if (Validator.isNotNull(redirect)) {
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+	}
+
+	public void deleteGroupOrganizations(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] removeOrganizationIds = null;
+
+		long removeOrganizationId = ParamUtil.getLong(
+			actionRequest, "removeOrganizationId");
+
+		if (removeOrganizationId > 0) {
+			removeOrganizationIds = new long[] {removeOrganizationId};
+		}
+		else {
+			removeOrganizationIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+		}
+
+		_organizationService.unsetGroupOrganizations(
+			themeDisplay.getSiteGroupId(), removeOrganizationIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		if (Validator.isNotNull(redirect)) {
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+	}
+
+	public void deleteGroupUserGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] removeUserGroupIds = null;
+
+		long removeUserGroupId = ParamUtil.getLong(
+			actionRequest, "removeUserGroupId");
+
+		if (removeUserGroupId > 0) {
+			removeUserGroupIds = new long[] {removeUserGroupId};
+		}
+		else {
+			removeUserGroupIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+		}
+
+		_userGroupService.unsetGroupUserGroups(
+			themeDisplay.getSiteGroupId(), removeUserGroupIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		if (Validator.isNotNull(redirect)) {
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+	}
+
+	public void deleteGroupUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = themeDisplay.getSiteGroupId();
+
+		long[] removeUserIds = null;
+
+		long removeUserId = ParamUtil.getLong(actionRequest, "removeUserId");
+
+		if (removeUserId > 0) {
+			removeUserIds = new long[] {removeUserId};
+		}
+		else {
+			removeUserIds = ParamUtil.getLongValues(actionRequest, "rowIds");
+		}
 
 		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
 		_userService.unsetGroupUsers(groupId, removeUserIds, serviceContext);
 
-		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
 		LiveUsers.leaveGroup(
 			themeDisplay.getCompanyId(), groupId, removeUserIds);
 
@@ -374,12 +458,12 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		_userService = userService;
 	}
 
-	private MembershipRequestService _membershipRequestService;
-	private OrganizationService _organizationService;
-	private UserGroupGroupRoleService _userGroupGroupRoleService;
-	private UserGroupRoleService _userGroupRoleService;
-	private UserGroupService _userGroupService;
-	private UserLocalService _userLocalService;
-	private UserService _userService;
+	private volatile MembershipRequestService _membershipRequestService;
+	private volatile OrganizationService _organizationService;
+	private volatile UserGroupGroupRoleService _userGroupGroupRoleService;
+	private volatile UserGroupRoleService _userGroupRoleService;
+	private volatile UserGroupService _userGroupService;
+	private volatile UserLocalService _userLocalService;
+	private volatile UserService _userService;
 
 }

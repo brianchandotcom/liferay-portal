@@ -9,6 +9,10 @@
 			<available file="${test.base.dir.name}/test.properties" />
 		</and>
 		<then>
+			<property file="${test.base.dir.name}/test.${user.name}.properties" />
+			<property file="${test.base.dir.name}/test.${env.COMPUTERNAME}.properties" />
+			<property file="${test.base.dir.name}/test.${env.HOST}.properties" />
+			<property file="${test.base.dir.name}/test.${env.HOSTNAME}.properties" />
 			<property file="${test.base.dir.name}/test.properties" />
 		</then>
 	</if>
@@ -1310,6 +1314,97 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-portal-legacy-properties">
+		<attribute name="portal.major.version" />
+		<sequential>
+			<var name="portal.legacy.file.content" unset="true" />
+
+			<loadfile property="portal.legacy.file.content" srcFile="portal-impl/src/portal-legacy-@{portal.major.version}.properties" />
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="\$\{resource.repositories.root\}"
+				replace="$${liferay.home}"
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="dl.store.cmis.*"
+				replace=""
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="dl.store.jcr.fetch.delay=.*"
+				replace="dl.store.jcr.fetch.delay=500"
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="dl.store.jcr.fetch.max.failures=.*"
+				replace="dl.store.jcr.fetch.max.failures=5"
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="dl.store.jcr.move.version.labels=.*"
+				replace="dl.store.jcr.move.version.labels=false"
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="dl.store.s3.*"
+				replace=""
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="resource.repositories.root=.*"
+				replace=""
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="permissions.user.check.algorithm=.*"
+				replace=""
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="permissions.view.dynamic.inheritance=.*"
+				replace=""
+			/>
+
+			<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+##
+## From portal-legacy-@{portal.major.version}.properties
+##
+
+${portal.legacy.file.content}</echo>
+
+			<var name="portal.legacy.file.content" unset="true" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-safari-driver">
 		<sequential>
 			<if>
@@ -2011,6 +2106,7 @@ module.framework.base.dir=${liferay.home}/osgi]]></echo>
 				</then>
 				<elseif>
 					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.1" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.2" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.3" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.1" />
@@ -3613,6 +3709,29 @@ go]]></replacevalue>
 		</if>
 	</target>
 
+	<target name="deploy-sql-zip">
+		<if>
+			<matches pattern="http" string="${test.sql.zip.url}" />
+			<then>
+				<mirrors-get
+					dest="sql/release-sql.zip"
+					src="${test.sql.zip.url}"
+				/>
+
+				<unzip dest="sql/" src="sql/release-sql.zip">
+					<patternset
+						includes="liferay-*/**"
+					/>
+					<mapper
+						from="[^/]+/(create.*)"
+						to="\1"
+						type="regexp"
+					/>
+				</unzip>
+			</then>
+		</if>
+	</target>
+
 	<target name="generate-backup-results-xml">
 		<if>
 			<and>
@@ -4467,26 +4586,7 @@ javascript.fast.load=false</echo>
 		<if>
 			<equals arg1="${portal.major.version}" arg2="5.1" />
 			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-##
-## From portal-legacy-5.1.properties
-##
-
-theme.portlet.sharing.default=true
-
-organizations.country.required[regular]=true
-organizations.assignment.auto=true
-organizations.assignment.strict=false
-organizations.membership.strict=true
-
-lucene.dir=$${liferay.home}/lucene/
-
-jcr.jackrabbit.repository.root=$${liferay.home}/jackrabbit
-
-dl.hook.impl=com.liferay.documentlibrary.util.JCRHook
-
-dl.hook.file.system.root.dir=$${liferay.home}/document_library</echo>
+				<prepare-portal-legacy-properties portal.major.version="5.1" />
 			</then>
 		</if>
 
@@ -4496,34 +4596,7 @@ dl.hook.file.system.root.dir=$${liferay.home}/document_library</echo>
 				<equals arg1="${portal.major.version}" arg2="5.2" />
 			</or>
 			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-##
-## From portal-legacy-5.2.properties
-##
-
-users.image.max.height=0
-users.image.max.width=0
-
-locale.prepend.friendly.url.style=0
-
-auth.token.check.enabled=false
-
-#permissions.user.check.algorithm=5
-#permissions.view.dynamic.inheritance=false
-
-image.hook.impl=com.liferay.portal.image.DatabaseHook
-
-cdn.host.http=$${cdn.host}
-cdn.host.https=$${cdn.host}
-
-virtual.hosts.default.community.name=
-
-breadcrumb.show.guest.group=false
-breadcrumb.show.parent.groups=false
-
-wiki.page.titles.regexp=([^/\\\\\\[\\]%&amp;?@]+)
-wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
+				<prepare-portal-legacy-properties portal.major.version="5.2" />
 			</then>
 		</if>
 
@@ -4534,40 +4607,7 @@ wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
 				<equals arg1="${portal.major.version}" arg2="6.0" />
 			</or>
 			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-##
-## From portal-legacy-6.0.properties
-##
-
-users.last.name.required=true
-
-portal.security.manager.strategy=liferay
-
-layout.types=portlet,panel,embedded,article,url,link_to_layout
-
-editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
-
-setup.wizard.enabled=false
-
-discussion.subscribe.by.default=false
-
-#dl.store.cmis.credentials.username=${dl.hook.cmis.credentials.username}
-#dl.store.cmis.credentials.password=${dl.hook.cmis.credentials.password}
-#dl.store.cmis.repository.url=${dl.hook.cmis.repository.url}
-#dl.store.cmis.system.root.dir=${dl.hook.cmis.system.root.dir}
-
-dl.store.file.system.root.dir=${liferay.home}/data/document_library
-
-dl.store.jcr.fetch.delay=500
-dl.store.jcr.fetch.max.failures=5
-dl.store.jcr.move.version.labels=false
-
-dl.store.s3.access.key=
-dl.store.s3.secret.key=
-dl.store.s3.bucket.name=
-
-message.boards.subscribe.by.default=false</echo>
+				<prepare-portal-legacy-properties portal.major.version="6.0" />
 			</then>
 		</if>
 
@@ -4579,28 +4619,7 @@ message.boards.subscribe.by.default=false</echo>
 				<equals arg1="${portal.major.version}" arg2="6.1" />
 			</or>
 			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-##
-## From portal-legacy-6.1.properties
-##
-
-hibernate.cache.use_query_cache=true
-hibernate.cache.use_second_level_cache=true
-
-locale.prepend.friendly.url.style=1
-
-passwords.encryption.algorithm.legacy=SHA
-
-mobile.device.styling.wap.enabled=true
-
-dl.char.blacklist=\\\\,//,:,*,?,\",&lt;,&gt;,|,[,],../,/..
-
-dl.char.last.blacklist=
-
-dl.name.blacklist=
-
-journal.articles.search.with.index=false</echo>
+				<prepare-portal-legacy-properties portal.major.version="6.1" />
 			</then>
 		</if>
 
@@ -4613,13 +4632,11 @@ journal.articles.search.with.index=false</echo>
 				<equals arg1="${portal.major.version}" arg2="6.2" />
 			</or>
 			<then>
+				<prepare-portal-legacy-properties portal.major.version="6.2" />
+
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-##
-## From portal-legacy-6.2.properties
-##
-
-users.image.check.token=false</echo>
+upgrade.processes=${upgrade.processes.master}</echo>
 			</then>
 		</if>
 
@@ -5090,6 +5107,8 @@ module.framework.properties.osgi.console=11312</echo>
 				<equals arg1="${browser.type}" arg2="iossafari" />
 			</or>
 			<then>
+				<stop-appium />
+
 				<start-appium />
 
 				<echo append="true" file="${test.ext.properties.file}">
@@ -6161,6 +6180,8 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<arg value="--password=${database.password}" />
 					<arg value="--user=${database.username}" />
 				</exec>
+
+				<exec executable="mysql_upgrade" />
 			</then>
 		</if>
 	</target>
@@ -6233,6 +6254,52 @@ if (ppstate.equals("normal")) {
 		</gradle-execute>
 
 		<move file="portal-web/test.case.method.names.properties" tofile="test.case.method.names.properties" />
+
+		<echo></echo>
+		<echo>##</echo>
+		<echo>## test.case.method.names.properties</echo>
+		<echo>##</echo>
+		<echo></echo>
+
+		<var name="file.content" unset="true" />
+
+		<loadfile property="file.content" srcFile="test.case.method.names.properties" />
+
+		<if>
+			<contains string="${file.content}" substring="RUN_TEST_CASE_METHOD_GROUP" />
+			<then>
+				<beanshell>
+					<![CDATA[
+						import java.util.regex.Matcher;
+						import java.util.regex.Pattern;
+
+						Pattern pattern = Pattern.compile("RUN_TEST_CASE_METHOD_GROUP.*");
+
+						Matcher matcher = pattern.matcher(project.getProperty("file.content"));
+
+						sb = new StringBuilder();
+
+						while (matcher.find()) {
+							sb.append(matcher.group());
+							sb.append("\n");
+						}
+
+						project.setProperty("file.content", sb.toString());
+					]]>
+				</beanshell>
+
+				<echo></echo>
+				<echo>${file.content}</echo>
+				<echo></echo>
+			</then>
+			<else>
+				<echo></echo>
+				<echo>${file.content}</echo>
+				<echo></echo>
+			</else>
+		</if>
+
+		<var name="file.content" unset="true" />
 	</target>
 
 	<target name="record-test-class-file-names">
@@ -6801,6 +6868,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</if>
 
 		<antcall target="clean-up-mobile-device" />
+
+		<antcall target="clean-up-selenium-driver" />
 	</target>
 
 	<target name="run-simple-server">
@@ -7096,8 +7165,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<var name="app.server.bundle.index" unset="true" />
 			</then>
 		</if>
-
-		<antcall target="clean-up-selenium-driver" />
 
 		<antcall target="clean-up-sikuli-temp-files" />
 

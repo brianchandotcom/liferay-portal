@@ -65,6 +65,6 @@ public class EditActionMVCResourceCommand extends BaseMVCResourceCommand {
 		_mdrActionService = mdrActionService;
 	}
 
-	private MDRActionService _mdrActionService;
+	private volatile MDRActionService _mdrActionService;
 
 }

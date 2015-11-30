@@ -213,8 +213,8 @@ public class NestedPortletsConfigurationAction
 	private static final Pattern _pattern = Pattern.compile(
 		"processColumn[(]\"(.*?)\"(?:, *\"(?:.*?)\")?[)]", Pattern.DOTALL);
 
-	private LayoutLocalService _layoutLocalService;
-	private LayoutTemplateLocalService _layoutTemplateLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile LayoutTemplateLocalService _layoutTemplateLocalService;
 	private volatile NestedPortletsConfiguration _nestedPortletsConfiguration;
 
 }

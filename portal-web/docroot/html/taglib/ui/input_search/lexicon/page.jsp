@@ -41,7 +41,7 @@ String value = ParamUtil.getString(request, name);
 		<div class="basic-search-slider">
 			<button class="basic-search-close btn btn-default" type="button"><span class="icon-remove"></span><%= buttonLabel %></button>
 
-			<input class="form-control" id="<%= namespace + id %>" name="<%= namespace + name %>" placeholder="<%= placeholder %>" title="<%= title %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
+			<input class="form-control search-query" id="<%= namespace + id %>" name="<%= namespace + name %>" placeholder="<%= placeholder %>" title="<%= title %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
 		</div>
 	</div>
 

@@ -193,6 +193,6 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		RequestHeaderAutoLogin.class);
 
 	private volatile ConfigurationFactory _configurationFactory;
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

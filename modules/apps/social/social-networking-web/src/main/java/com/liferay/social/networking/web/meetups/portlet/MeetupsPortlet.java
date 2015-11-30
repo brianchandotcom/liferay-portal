@@ -194,7 +194,8 @@ public class MeetupsPortlet extends MVCPortlet {
 		_meetupsRegistrationLocalService = meetupsRegistrationLocalService;
 	}
 
-	private MeetupsEntryLocalService _meetupsEntryLocalService;
-	private MeetupsRegistrationLocalService _meetupsRegistrationLocalService;
+	private volatile MeetupsEntryLocalService _meetupsEntryLocalService;
+	private volatile MeetupsRegistrationLocalService
+		_meetupsRegistrationLocalService;
 
 }

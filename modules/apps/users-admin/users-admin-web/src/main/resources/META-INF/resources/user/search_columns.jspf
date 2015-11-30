@@ -53,7 +53,7 @@
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="organization-roles"
-			value="<%= UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount) %>"
+			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
 		/>
 	</c:when>
 	<c:otherwise>

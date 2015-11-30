@@ -16,16 +16,20 @@ package com.liferay.asset.publisher.web.util;
 
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
+import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -56,6 +60,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.PortletPreferencesLocalService;
@@ -82,6 +87,7 @@ import com.liferay.portlet.asset.service.AssetEntryService;
 import com.liferay.portlet.asset.service.AssetTagLocalService;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetEntryQueryProcessor;
+import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -89,6 +95,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -97,6 +104,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletException;
@@ -372,6 +380,33 @@ public class AssetPublisherUtil {
 		}
 
 		return assetCategoryIds;
+	}
+
+	public static BaseModelSearchResult<AssetEntry> getAssetEntries(
+			AssetEntryQuery assetEntryQuery, Layout layout,
+			PortletPreferences portletPreferences, String portletName,
+			Locale locale, TimeZone timeZone, long companyId, long scopeGroupId,
+			long userId, Map<String, Serializable> attributes, int start,
+			int end)
+		throws Exception {
+
+		if (isSearchWithIndex(portletName, assetEntryQuery)) {
+			return AssetUtil.searchAssetEntries(
+				assetEntryQuery, getAssetCategoryIds(portletPreferences),
+				getAssetTagNames(portletPreferences), attributes, companyId,
+				assetEntryQuery.getKeywords(), layout, locale, scopeGroupId,
+				timeZone, userId, start, end);
+		}
+
+		int total = _assetEntryService.getEntriesCount(assetEntryQuery);
+
+		assetEntryQuery.setEnd(end);
+		assetEntryQuery.setStart(start);
+
+		List<AssetEntry> results = _assetEntryService.getEntries(
+			assetEntryQuery);
+
+		return new BaseModelSearchResult<>(results, total);
 	}
 
 	public static List<AssetEntry> getAssetEntries(
@@ -702,6 +737,72 @@ public class AssetPublisherUtil {
 		getAssetEntryQueryProcessors() {
 
 		return _instance._assetEntryQueryProcessors;
+	}
+
+	public static List<AssetEntryResult> getAssetEntryResults(
+			AssetPublisherDisplayContext assetPublisherDisplayContext,
+			SearchContainer searchContainer,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		AssetEntryQuery assetEntryQuery =
+			assetPublisherDisplayContext.getAssetEntryQuery();
+
+		Layout layout = assetPublisherDisplayContext.getLayout();
+
+		String portletName = assetPublisherDisplayContext.getPortletName();
+
+		Locale locale = assetPublisherDisplayContext.getLocale();
+
+		TimeZone timeZone = assetPublisherDisplayContext.getTimeZone();
+
+		long companyId = assetPublisherDisplayContext.getCompanyId();
+		long scopeGroupId = assetPublisherDisplayContext.getScopeGroupId();
+		long userId = assetPublisherDisplayContext.getUserId();
+
+		long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
+
+		Map<String, Serializable> attributes =
+			assetPublisherDisplayContext.getAttributes();
+
+		return getAssetEntryResults(
+			searchContainer, assetEntryQuery, layout, portletPreferences,
+			portletName, locale, timeZone, companyId, scopeGroupId, userId,
+			classNameIds, attributes);
+	}
+
+	public static List<AssetEntryResult> getAssetEntryResults(
+			SearchContainer searchContainer, AssetEntryQuery assetEntryQuery,
+			Layout layout, PortletPreferences portletPreferences,
+			String portletName, Locale locale, TimeZone timeZone,
+			long companyId, long scopeGroupId, long userId, long[] classNameIds,
+			Map<String, Serializable> attributes)
+		throws Exception {
+
+		if (!isShowAssetEntryResults(portletName, assetEntryQuery)) {
+			return Collections.emptyList();
+		}
+
+		long assetVocabularyId = GetterUtil.getLong(
+			portletPreferences.getValue("assetVocabularyId", null));
+
+		if (assetVocabularyId > 0) {
+			return getAssetEntryResultsByVocabulary(
+				searchContainer, assetEntryQuery, layout, portletPreferences,
+				portletName, locale, timeZone, companyId, scopeGroupId, userId,
+				classNameIds, assetVocabularyId, attributes);
+		}
+		else if (assetVocabularyId <= -1) {
+			return getAssetEntryResultsByClassName(
+				searchContainer, assetEntryQuery, layout, portletPreferences,
+				portletName, locale, timeZone, companyId, scopeGroupId, userId,
+				classNameIds, attributes);
+		}
+
+		return getAssetEntryResultsByDefault(
+			searchContainer, assetEntryQuery, layout, portletPreferences,
+			portletName, locale, timeZone, companyId, scopeGroupId, userId,
+			classNameIds, attributes);
 	}
 
 	public static String[] getAssetTagNames(
@@ -1315,6 +1416,185 @@ public class AssetPublisherUtil {
 			getSubscriptionClassPK(plid, portletId));
 	}
 
+	protected static List<AssetEntryResult> getAssetEntryResultsByClassName(
+			SearchContainer searchContainer, AssetEntryQuery assetEntryQuery,
+			Layout layout, PortletPreferences portletPreferences,
+			String portletName, Locale locale, TimeZone timeZone,
+			long companyId, long scopeGroupId, long userId, long[] classNameIds,
+			Map<String, Serializable> attributes)
+		throws Exception {
+
+		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
+
+		int end = searchContainer.getEnd();
+		int start = searchContainer.getStart();
+
+		int total = 0;
+
+		for (long classNameId : classNameIds) {
+			assetEntryQuery.setClassNameIds(new long[] {classNameId});
+
+			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+				getAssetEntries(
+					assetEntryQuery, layout, portletPreferences, portletName,
+					locale, timeZone, companyId, scopeGroupId, userId,
+					attributes, start, end);
+
+			int groupTotal = baseModelSearchResult.getLength();
+
+			total += groupTotal;
+
+			List<AssetEntry> assetEntries =
+				baseModelSearchResult.getBaseModels();
+
+			if (!assetEntries.isEmpty() && (start < groupTotal)) {
+				AssetRendererFactory<?> groupAssetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassNameId(classNameId);
+
+				String title = ResourceActionsUtil.getModelResource(
+					locale, groupAssetRendererFactory.getClassName());
+
+				assetEntryResults.add(
+					new AssetEntryResult(title, assetEntries));
+			}
+
+			if (!portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT)) {
+				if (groupTotal > 0) {
+					if ((end > 0) && (end > groupTotal)) {
+						end -= groupTotal;
+					}
+					else {
+						end = 0;
+					}
+
+					if ((start > 0) && (start > groupTotal)) {
+						start -= groupTotal;
+					}
+					else {
+						start = 0;
+					}
+				}
+
+				assetEntryQuery.setEnd(QueryUtil.ALL_POS);
+				assetEntryQuery.setStart(QueryUtil.ALL_POS);
+			}
+		}
+
+		searchContainer.setTotal(total);
+
+		return assetEntryResults;
+	}
+
+	protected static List<AssetEntryResult> getAssetEntryResultsByDefault(
+			SearchContainer searchContainer, AssetEntryQuery assetEntryQuery,
+			Layout layout, PortletPreferences portletPreferences,
+			String portletName, Locale locale, TimeZone timeZone,
+			long companyId, long scopeGroupId, long userId, long[] classNameIds,
+			Map<String, Serializable> attributes)
+		throws Exception {
+
+		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
+
+		int end = searchContainer.getEnd();
+		int start = searchContainer.getStart();
+
+		assetEntryQuery.setClassNameIds(classNameIds);
+
+		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+			getAssetEntries(
+				assetEntryQuery, layout, portletPreferences, portletName,
+				locale, timeZone, companyId, scopeGroupId, userId, attributes,
+				start, end);
+
+		int total = baseModelSearchResult.getLength();
+
+		searchContainer.setTotal(total);
+
+		List<AssetEntry> assetEntries = baseModelSearchResult.getBaseModels();
+
+		if (!assetEntries.isEmpty() && (start < total)) {
+			assetEntryResults.add(new AssetEntryResult(assetEntries));
+		}
+
+		return assetEntryResults;
+	}
+
+	protected static List<AssetEntryResult> getAssetEntryResultsByVocabulary(
+			SearchContainer searchContainer, AssetEntryQuery assetEntryQuery,
+			Layout layout, PortletPreferences portletPreferences,
+			String portletName, Locale locale, TimeZone timeZone,
+			long companyId, long scopeGroupId, long userId, long[] classNameIds,
+			long assetVocabularyId, Map<String, Serializable> attributes)
+		throws Exception {
+
+		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getVocabularyRootCategories(
+				assetVocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		assetEntryQuery.setClassNameIds(classNameIds);
+
+		int end = searchContainer.getEnd();
+		int start = searchContainer.getStart();
+
+		int total = 0;
+
+		for (AssetCategory assetCategory : assetCategories) {
+			long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
+
+			long[] newAllAssetCategoryIds = ArrayUtil.append(
+				oldAllCategoryIds, assetCategory.getCategoryId());
+
+			assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
+
+			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+				getAssetEntries(
+					assetEntryQuery, layout, portletPreferences, portletName,
+					locale, timeZone, companyId, scopeGroupId, userId,
+					attributes, start, end);
+
+			int groupTotal = baseModelSearchResult.getLength();
+
+			total += groupTotal;
+
+			List<AssetEntry> assetEntries =
+				baseModelSearchResult.getBaseModels();
+
+			if (!assetEntries.isEmpty() && (start < groupTotal)) {
+				String title = assetCategory.getTitle(locale);
+
+				assetEntryResults.add(
+					new AssetEntryResult(title, assetEntries));
+			}
+
+			if (groupTotal > 0) {
+				if ((end > 0) && (end > groupTotal)) {
+					end -= groupTotal;
+				}
+				else {
+					end = 0;
+				}
+
+				if ((start > 0) && (start > groupTotal)) {
+					start -= groupTotal;
+				}
+				else {
+					start = 0;
+				}
+			}
+
+			assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
+			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
+			assetEntryQuery.setStart(QueryUtil.ALL_POS);
+		}
+
+		searchContainer.setTotal(total);
+
+		return assetEntryResults;
+	}
+
 	protected static long[] getSiteGroupIds(long[] groupIds) {
 		Set<Long> siteGroupIds = new HashSet<>();
 
@@ -1323,6 +1603,35 @@ public class AssetPublisherUtil {
 		}
 
 		return ArrayUtil.toLongArray(siteGroupIds);
+	}
+
+	protected static boolean isSearchWithIndex(
+			String portletName, AssetEntryQuery assetEntryQuery)
+		throws Exception {
+
+		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX &&
+			(assetEntryQuery.getLinkedAssetEntryId() == 0) &&
+			!portletName.equals(
+				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
+			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected static boolean isShowAssetEntryResults(
+			String portletName, AssetEntryQuery assetEntryQuery)
+		throws Exception {
+
+		if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) ||
+			(assetEntryQuery.getLinkedAssetEntryId() > 0)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Activate

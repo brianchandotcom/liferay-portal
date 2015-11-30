@@ -8,45 +8,35 @@
 <tr><td rowspan="1" colspan="3">CustomFieldsEditResource</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>RESOURCE_HEADER_TITLE</td>
-	<td>//h3[@class='header-title']/span[contains(.,'${key_resourceName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CUSTOM_FIELDS_TABLE-->
 <tr>
-	<td>CUSTOM_FIELDS_TABLE_NAME</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[1]/a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CUSTOM_FIELDS_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[2]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CUSTOM_FIELDS_TABLE_HIDDEN</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[3]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CUSTOM_FIELDS_TABLE_SEARCHABLE</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[4]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CUSTOM_FIELDS_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[5]//div/a</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[7]//div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CUSTOM_FIELDS_TABLE_ACTIONS_GENERIC</td>
-	<td>//tr/td[5]//a[@title='Actions']/span</td>
+	<td>//tr/td[7]//a[@class='dropdown-toggle ']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELDS_TABLE_HIDDEN</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELDS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[2]/a/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELDS_TABLE_SEARCHABLE</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELDS_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[4]/a</td>
 	<td></td>
 </tr>
 </tbody>

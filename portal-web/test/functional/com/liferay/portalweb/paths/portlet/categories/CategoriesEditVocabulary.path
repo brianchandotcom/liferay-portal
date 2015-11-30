@@ -14,13 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ALLOW_MULTIPLE_CATEGORIES_CHECKBOX</td>
+	<td>ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH</td>
 	<td>//input[contains(@id,'multiValued')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEWABLE_BY_SELECT</td>
-	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,18 +40,38 @@
 </tr>
 <!--ASSOCIATED_ASSET_TYPES-->
 <tr>
+	<td>ASSOCIATED_ASSET_TYPES_BAR</td>
+	<td>//a[contains(.,'Associated Asset Types')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED</td>
+	<td>//fieldset//a[contains(.,'Associated Asset Types') and contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSOCIATED_ASSET_TYPES_DROP_DOWN</td>
 	<td>//div[@id='vocabularyExtraFieldsPanelContainer']//div[@class='panel-toggle']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSOCIATED_ASSET_TYPES_SELECT</td>
-	<td>//select[contains(@class,'vocabulary-asset-type-select')]</td>
+	<td>//select[contains(@id,'AssetCategories')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSOCIATED_ASSET_TYPES_SELECT_2</td>
-	<td>xpath=(//select[contains(@class,'vocabulary-asset-type-select')])[2]</td>
+	<td>xpath=(//select[contains(@id,'AssetCategoriesAdminPortlet_classNameId2')])</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -87,6 +102,22 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_BAR</td>
+	<td>//a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_BAR_COLLAPSED</td>
+	<td>//fieldset//a[contains(.,'Permissions') and contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_VIEWABLE_BY_SELECT</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
 	<td></td>
 </tr>
 </tbody>

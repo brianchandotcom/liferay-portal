@@ -76,6 +76,6 @@ public class OpenEntryAction extends BaseStrutsAction {
 		_bookmarksEntryService = bookmarksEntryService;
 	}
 
-	private BookmarksEntryService _bookmarksEntryService;
+	private volatile BookmarksEntryService _bookmarksEntryService;
 
 }

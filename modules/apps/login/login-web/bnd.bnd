@@ -3,5 +3,5 @@ Bundle-SymbolicName: com.liferay.login.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources,\
+	META-INF/resources=src/main/resources/META-INF/resources,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class

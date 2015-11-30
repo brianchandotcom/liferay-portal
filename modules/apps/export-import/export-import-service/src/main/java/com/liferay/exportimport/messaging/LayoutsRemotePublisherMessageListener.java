@@ -137,8 +137,8 @@ public class LayoutsRemotePublisherMessageListener
 		_userLocalService = userLocalService;
 	}
 
-	private ExportImportConfigurationLocalService
+	private volatile ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

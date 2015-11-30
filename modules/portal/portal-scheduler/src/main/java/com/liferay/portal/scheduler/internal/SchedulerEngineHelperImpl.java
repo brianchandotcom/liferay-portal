@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.scheduler.internal.messaging.config.SchedulerProxyMessagingConfigurator;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -852,6 +853,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_schedulerEngine = schedulerEngine;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSchedulerProxyMessagingConfigurator(
+		SchedulerProxyMessagingConfigurator
+			schedulerProxyMessagingConfigurator) {
+	}
+
 	protected void unsetAuditRouter(AuditRouter auditRouter) {
 		_auditRouter = null;
 	}
@@ -862,13 +869,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private boolean _auditMessageSchedulerJob;
 	private volatile AuditRouter _auditRouter;
 	private volatile BundleContext _bundleContext;
-	private ClusterLink _clusterLink;
-	private ClusterMasterExecutor _clusterMasterExecutor;
-	private JSONFactory _jsonFactory;
+	private volatile ClusterLink _clusterLink;
+	private volatile ClusterMasterExecutor _clusterMasterExecutor;
+	private volatile JSONFactory _jsonFactory;
 	private final Map<String, ServiceRegistration<MessageListener>>
 		_messageListenerServiceRegistrations = new HashMap<>();
-	private Props _props;
-	private SchedulerEngine _schedulerEngine;
+	private volatile Props _props;
+	private volatile SchedulerEngine _schedulerEngine;
 	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
 	private final Map
 		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>

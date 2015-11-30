@@ -213,6 +213,11 @@ public class KaleoTaskAssignmentLocalServiceWrapper
 		return _kaleoTaskAssignmentLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoTaskAssignmentLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the kaleo task assignment with the primary key.
 	*

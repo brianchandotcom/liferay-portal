@@ -211,7 +211,7 @@ public class S3FileCacheImpl implements S3FileCache {
 	private AtomicInteger _cacheDirCleanUpExpunge;
 	private AtomicInteger _cacheDirCleanUpFrequency;
 	private int _calledCleanUpCacheFilesCount;
-	private S3KeyTransformer _s3KeyTransformer;
+	private volatile S3KeyTransformer _s3KeyTransformer;
 	private volatile S3StoreConfiguration _s3StoreConfiguration;
 
 }

@@ -13,6 +13,12 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="searchFormEntry">
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${searchTerm}" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+	</command>
+
 	<command name="teardownForms">
 		<while>
 			<condition function="IsElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
@@ -28,6 +34,13 @@
 		</while>
 	</command>
 
+	<command name="viewEntryNotPresent">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldValue" value="${fieldValue}" />
+
+		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
+	</command>
+
 	<command name="viewForm">
 		<var name="key_formName" value="${formName}" />
 
@@ -41,5 +54,9 @@
 		<var name="key_fieldValue" value="${fieldValue}" />
 
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
+	</command>
+
+	<command name="viewNoFormEntries">
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 	</command>
 </definition>

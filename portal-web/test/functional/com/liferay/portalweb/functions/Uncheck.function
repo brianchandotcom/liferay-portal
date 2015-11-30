@@ -32,4 +32,23 @@
 
 		<execute function="AssertNotChecked#assertNotChecked" />
 	</command>
+
+	<command name="uncheckToggleSwitch">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<if>
+			<condition selenium="isChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+
+		<execute function="AssertNotChecked#assertNotCheckedToggleSwitch" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
 </definition>

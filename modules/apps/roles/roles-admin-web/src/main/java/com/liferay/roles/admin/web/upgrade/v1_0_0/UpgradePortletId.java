@@ -14,7 +14,7 @@
 
 package com.liferay.roles.admin.web.upgrade.v1_0_0;
 
-import com.liferay.roles.admin.web.constants.RolesAdminPortletKeys;
+import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 
 /**
  * @author Drew Brokke

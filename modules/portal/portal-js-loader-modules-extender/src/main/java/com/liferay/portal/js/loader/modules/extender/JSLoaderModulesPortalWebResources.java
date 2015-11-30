@@ -65,8 +65,8 @@ public class JSLoaderModulesPortalWebResources {
 		_jsLoaderModulesTracker = jsLoaderModulesTracker;
 	}
 
-	private JSLoaderModulesServlet _jsLoaderModulesServlet;
-	private JSLoaderModulesTracker _jsLoaderModulesTracker;
+	private volatile JSLoaderModulesServlet _jsLoaderModulesServlet;
+	private volatile JSLoaderModulesTracker _jsLoaderModulesTracker;
 	private ServiceRegistration<?> _serviceRegistration;
 
 	private class InternalPortalWebResources

@@ -57,6 +57,6 @@ public class MBDiscussionPermissionUpdateHandler
 		_mbDiscussionLocalService = mbDiscussionLocalService;
 	}
 
-	private MBDiscussionLocalService _mbDiscussionLocalService;
+	private volatile MBDiscussionLocalService _mbDiscussionLocalService;
 
 }

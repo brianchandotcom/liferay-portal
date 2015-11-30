@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.data.provider.rest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
-import com.liferay.dynamic.data.mapping.data.provider.rest.DDMRESTDataProviderSettings.RESTSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -36,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, property = "ddm.data.provider.name=rest")
+@Component(immediate = true, property = "ddm.data.provider.type=rest")
 public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Override
@@ -52,17 +51,25 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		}
 	}
 
+	@Override
+	public Class<?> getSettings() {
+		return DDMRESTDataProviderSettings.class;
+	}
+
 	protected List<KeyValuePair> doGetData(
 			DDMDataProviderContext ddmDataProviderContext)
 		throws PortalException {
 
-		RESTSettings restSettings = ddmDataProviderContext.getSettings(
-			RESTSettings.class);
+		DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
+			ddmDataProviderContext.getSettingsInstance(
+				DDMRESTDataProviderSettings.class);
 
-		HttpRequest httpRequest = HttpRequest.get(restSettings.url());
+		HttpRequest httpRequest = HttpRequest.get(
+			ddmRESTDataProviderSettings.url());
 
 		httpRequest.basicAuthentication(
-			restSettings.username(), restSettings.password());
+			ddmRESTDataProviderSettings.username(),
+			ddmRESTDataProviderSettings.password());
 		httpRequest.query(ddmDataProviderContext.getParameters());
 
 		HttpResponse httpResponse = httpRequest.send();
@@ -74,8 +81,10 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String key = jsonObject.getString(restSettings.key());
-			String value = jsonObject.getString(restSettings.value());
+			String key = jsonObject.getString(
+				ddmRESTDataProviderSettings.key());
+			String value = jsonObject.getString(
+				ddmRESTDataProviderSettings.value());
 
 			results.add(new KeyValuePair(key, value));
 		}
@@ -88,6 +97,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		_jsonFactory = jsonFactory;
 	}
 
-	private JSONFactory _jsonFactory;
+	private volatile JSONFactory _jsonFactory;
 
 }

@@ -125,6 +125,10 @@ public class RowChecker {
 		return _rowIds;
 	}
 
+	public String getRowSelector() {
+		return _rowSelector;
+	}
+
 	public String getValign() {
 		return _valign;
 	}
@@ -163,6 +167,10 @@ public class RowChecker {
 
 	public void setRowIds(String rowIds) {
 		_rowIds = getNamespacedValue(rowIds);
+	}
+
+	public void setRowSelector(String rowSelector) {
+		_rowSelector = getNamespacedValue(rowSelector);
 	}
 
 	public void setValign(String valign) {
@@ -293,6 +301,7 @@ public class RowChecker {
 	private String _formName;
 	private final PortletResponse _portletResponse;
 	private String _rowIds;
+	private String _rowSelector;
 	private String _valign = VALIGN;
 
 }

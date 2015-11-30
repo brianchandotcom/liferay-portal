@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
@@ -26,12 +26,13 @@ import com.liferay.portal.service.SubscriptionLocalServiceUtil;
  */
 @Deprecated
 public abstract class SubscriptionActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public SubscriptionActionableDynamicQuery() {
 		setBaseLocalService(SubscriptionLocalServiceUtil.getService());
-		setClass(Subscription.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(Subscription.class);
 
 		setPrimaryKeyPropertyName("subscriptionId");
 	}

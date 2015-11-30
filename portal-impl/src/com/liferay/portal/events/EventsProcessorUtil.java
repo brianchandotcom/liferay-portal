@@ -101,7 +101,7 @@ public class EventsProcessorUtil {
 
 			properties.put("key", key);
 
-			lifecycleActions = ServiceTrackerCollections.list(
+			lifecycleActions = ServiceTrackerCollections.openList(
 				LifecycleAction.class, "(key=" + key + ")", properties);
 
 			_lifecycleActions.putIfAbsent(key, lifecycleActions);

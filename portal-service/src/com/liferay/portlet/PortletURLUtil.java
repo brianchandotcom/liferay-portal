@@ -318,13 +318,12 @@ public class PortletURLUtil {
 			return false;
 		}
 
-		for (int i = 0; i < _PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS.length;
-				i++) {
+		for (String reservedParameter :
+				_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS) {
 
-			String reservedParameter = namespace.concat(
-				_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS[i]);
+			if (parameter.equals(reservedParameter) ||
+				parameter.equals(namespace.concat(reservedParameter))) {
 
-			if (parameter.equals(reservedParameter)) {
 				return true;
 			}
 		}

@@ -16,11 +16,20 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.upload.LiferayServletRequest;
+import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.bundle.portalimpl.TestAlwaysAllowDoAsUser;
 import com.liferay.portal.util.test.AtomicState;
+import com.liferay.portal.util.test.PortletContainerTestUtil;
+
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -30,6 +39,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Peter Fellwock
@@ -51,6 +61,43 @@ public class PortalImplTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_atomicState.close();
+	}
+
+	@Test
+	public void testGetUploadPortletRequestWithInvalidHttpServletRequest() {
+		try {
+			PortalUtil.getUploadPortletRequest(new MockPortletRequest());
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+			Assert.assertTrue(e instanceof RuntimeException);
+			Assert.assertEquals(
+				"Unable to unwrap the portlet request from " +
+					MockPortletRequest.class,
+				e.getMessage());
+		}
+	}
+
+	@Test
+	public void testGetUploadPortletRequestWithValidHttpServletRequest()
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"/com/liferay/portal/util/dependencies/test.txt");
+
+		LiferayServletRequest liferayServletRequest =
+			PortletContainerTestUtil.getMultipartRequest(
+				"fileParameterName", FileUtil.getBytes(inputStream));
+
+		UploadServletRequest uploadServletRequest =
+			PortalUtil.getUploadServletRequest(
+				(HttpServletRequest)liferayServletRequest.getRequest());
+
+		Assert.assertTrue(
+			uploadServletRequest instanceof UploadServletRequestImpl);
 	}
 
 	@Test

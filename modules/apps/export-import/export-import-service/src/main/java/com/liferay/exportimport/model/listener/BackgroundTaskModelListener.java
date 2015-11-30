@@ -77,7 +77,7 @@ public class BackgroundTaskModelListener
 			exportImportConfigurationLocalService;
 	}
 
-	private ExportImportConfigurationLocalService
+	private volatile ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 
 }

@@ -16,7 +16,10 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.LayoutBranch;
+import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutBranchServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -34,10 +37,22 @@ public class LayoutBranchServiceImpl extends LayoutBranchServiceBaseImpl {
 			boolean master, ServiceContext serviceContext)
 		throws PortalException {
 
-		long groupId = serviceContext.getScopeGroupId();
+		PermissionChecker permissionChecker = getPermissionChecker();
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.ADD_LAYOUT_BRANCH);
+			permissionChecker, serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_LAYOUT_BRANCH);
+
+		LayoutRevision layoutRevision =
+			layoutRevisionPersistence.findByPrimaryKey(layoutRevisionId);
+
+		LayoutSetBranch layoutSetBranch =
+			layoutSetBranchPersistence.findByPrimaryKey(
+				layoutRevision.getLayoutSetBranchId());
+
+		GroupPermissionUtil.check(
+			permissionChecker, layoutSetBranch.getGroupId(),
+			ActionKeys.ADD_LAYOUT_BRANCH);
 
 		return layoutBranchLocalService.addLayoutBranch(
 			layoutRevisionId, name, description, false, serviceContext);

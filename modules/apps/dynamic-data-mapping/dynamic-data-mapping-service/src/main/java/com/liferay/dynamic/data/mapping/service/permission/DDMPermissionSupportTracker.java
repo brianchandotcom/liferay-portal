@@ -16,10 +16,10 @@ package com.liferay.dynamic.data.mapping.service.permission;
 
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 import com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.util.PortalUtil;
 
@@ -81,24 +81,20 @@ public class DDMPermissionSupportTracker {
 		throws InvalidSyntaxException {
 
 		_ddmStructurePermissionSupportServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMStructurePermissionSupport.class,
 				"model.class.name",
 				ServiceTrackerCustomizerFactory.
 					<DDMStructurePermissionSupport>serviceWrapper(
 						bundleContext));
 
-		_ddmStructurePermissionSupportServiceTrackerMap.open();
-
 		_ddmTemplatePermissionSupportServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMTemplatePermissionSupport.class,
 				"model.class.name",
 					ServiceTrackerCustomizerFactory.
 						<DDMTemplatePermissionSupport>serviceWrapper(
 							bundleContext));
-
-		_ddmTemplatePermissionSupportServiceTrackerMap.open();
 	}
 
 	@Deactivate

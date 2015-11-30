@@ -20,10 +20,10 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueRenderer;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -127,34 +127,26 @@ public class DDMFormFieldTypeServicesTrackerImpl
 		throws InvalidSyntaxException {
 
 		_ddmFormFieldRendererServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldRenderer.class,
-			"ddm.form.field.type.name");
-
-		_ddmFormFieldRendererServiceTrackerMap.open();
+				"ddm.form.field.type.name");
 
 		_ddmFormFieldTypeServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldType.class,
 				"ddm.form.field.type.name",
 			ServiceTrackerCustomizerFactory.<DDMFormFieldType>serviceWrapper(
 				bundleContext));
 
-		_ddmFormFieldTypeServiceTrackerMap.open();
-
 		_ddmFormFieldValueAccessorServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldValueAccessor.class,
 				"ddm.form.field.type.name");
 
-		_ddmFormFieldValueAccessorServiceTrackerMap.open();
-
 		_ddmFormFieldValueRendererServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldValueRenderer.class,
 				"ddm.form.field.type.name");
-
-		_ddmFormFieldValueRendererServiceTrackerMap.open();
 	}
 
 	@Deactivate

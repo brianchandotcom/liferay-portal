@@ -22,6 +22,7 @@ import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -155,10 +156,10 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 			long companyId, final long groupId, final long folderId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_bookmarksEntryLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_bookmarksEntryLocalService.getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -180,9 +181,9 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 				}
 
 			});
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setGroupId(groupId);
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setGroupId(groupId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
 
 				@Override
@@ -190,7 +191,7 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 					try {
 						Document document = getDocument(entry);
 
-						actionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocument(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
@@ -203,9 +204,9 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 				}
 
 			});
-		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	protected void reindexFolders(final long companyId) throws PortalException {
@@ -275,8 +276,8 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksEntryIndexer.class);
 
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
-	private BookmarksFolderLocalService _bookmarksFolderLocalService;
-	private GroupLocalService _groupLocalService;
+	private volatile BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private volatile BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private volatile GroupLocalService _groupLocalService;
 
 }

@@ -297,6 +297,11 @@ public class S3Store extends BaseStore {
 			String fileName)
 		throws PortalException {
 
+		if (repositoryId == newRepositoryId) {
+			throw new DuplicateFileException(
+				companyId, newRepositoryId, fileName);
+		}
+
 		String oldKey = _s3KeyTransformer.getFileKey(
 			companyId, repositoryId, fileName);
 		String newKey = _s3KeyTransformer.getFileKey(
@@ -310,6 +315,10 @@ public class S3Store extends BaseStore {
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
 		throws PortalException {
+
+		if (fileName.equals(newFileName)) {
+			throw new DuplicateFileException(companyId, repositoryId, fileName);
+		}
 
 		String oldKey = _s3KeyTransformer.getFileKey(
 			companyId, repositoryId, fileName);
@@ -679,8 +688,8 @@ public class S3Store extends BaseStore {
 	private AmazonS3 _amazonS3;
 	private AWSCredentialsProvider _awsCredentialsProvider;
 	private String _bucketName;
-	private S3FileCache _s3FileCache;
-	private S3KeyTransformer _s3KeyTransformer;
+	private volatile S3FileCache _s3FileCache;
+	private volatile S3KeyTransformer _s3KeyTransformer;
 	private StorageClass _storageClass;
 
 }

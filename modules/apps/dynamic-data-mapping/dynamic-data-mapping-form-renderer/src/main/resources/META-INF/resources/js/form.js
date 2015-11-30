@@ -116,7 +116,7 @@ AUI.add(
 						return {
 							availableLanguageIds: definition.availableLanguageIds,
 							defaultLanguageId: definition.defaultLanguageId,
-							fieldValues: AArray.invoke(instance.get('fields'), 'toJSON')
+							fieldValues: AArray.invoke(instance.getImmediateFields(), 'toJSON')
 						};
 					},
 

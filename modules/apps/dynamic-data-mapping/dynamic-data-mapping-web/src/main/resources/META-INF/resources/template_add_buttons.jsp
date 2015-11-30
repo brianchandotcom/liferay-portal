@@ -96,9 +96,7 @@ String message = "add";
 					}
 				}
 				else {
-					PortletDisplayTemplate portletDisplayTemplate = _getPortletDisplayTemplate();
-
-					templateHandlers = portletDisplayTemplate.getPortletDisplayTemplateHandlers();
+					templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
 
 					Iterator<TemplateHandler> itr = templateHandlers.iterator();
 

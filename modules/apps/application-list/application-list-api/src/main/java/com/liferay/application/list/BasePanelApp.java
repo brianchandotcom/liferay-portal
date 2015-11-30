@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.UserNotificationEventLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.ControlPanelEntry;
 
@@ -52,6 +55,18 @@ public abstract class BasePanelApp implements PanelApp {
 			locale,
 			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
 				getPortletId());
+	}
+
+	@Override
+	public int getNotificationsCount(User user) {
+		if (_userNotificationEventLocalService == null) {
+			return 0;
+		}
+
+		return _userNotificationEventLocalService.
+			getUserNotificationEventsCount(
+				user.getUserId(), _portlet.getPortletId(),
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 	}
 
 	public Portlet getPortlet() {
@@ -117,6 +132,14 @@ public abstract class BasePanelApp implements PanelApp {
 		return null;
 	}
 
+	protected void setUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		_userNotificationEventLocalService = userNotificationEventLocalService;
+	}
+
 	private Portlet _portlet;
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

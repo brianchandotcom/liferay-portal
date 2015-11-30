@@ -59,6 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + ControlMenuPortletKeys.CONTROL_MENU,
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
@@ -152,7 +153,7 @@ public class ControlMenuPortlet extends MVCPortlet {
 		_controlMenuEntryRegistry = controlMenuEntryRegistry;
 	}
 
-	private ControlMenuCategoryRegistry _controlMenuCategoryRegistry;
-	private ControlMenuEntryRegistry _controlMenuEntryRegistry;
+	private volatile ControlMenuCategoryRegistry _controlMenuCategoryRegistry;
+	private volatile ControlMenuEntryRegistry _controlMenuEntryRegistry;
 
 }

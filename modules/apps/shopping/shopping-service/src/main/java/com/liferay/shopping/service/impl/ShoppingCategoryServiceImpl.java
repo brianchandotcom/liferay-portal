@@ -14,10 +14,10 @@
 
 package com.liferay.shopping.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.service.base.ShoppingCategoryServiceBaseImpl;
 import com.liferay.shopping.service.permission.ShoppingCategoryPermission;
@@ -120,7 +120,7 @@ public class ShoppingCategoryServiceImpl
 			mergeWithParentCategory, serviceContext);
 	}
 
-	@ServiceReference(type = ShoppingCategoryPermission.class)
+	@BeanReference(type = ShoppingCategoryPermission.class)
 	protected ShoppingCategoryPermission shoppingCategoryPermission;
 
 }

@@ -394,8 +394,8 @@ public class DLFileEntryTypeStagedModelDataHandler
 		_userLocalService = userLocalService;
 	}
 
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private UserLocalService _userLocalService;
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

@@ -237,7 +237,9 @@ public class DDLDisplayContext {
 
 		_hasEditDisplayDDMTemplatePermission = Boolean.FALSE;
 
-		if (getDisplayDDMTemplateId() == 0) {
+		DDMTemplate displayDDMTemplate = fetchDisplayDDMTemplate();
+
+		if (displayDDMTemplate == null) {
 			return _hasEditDisplayDDMTemplatePermission;
 		}
 

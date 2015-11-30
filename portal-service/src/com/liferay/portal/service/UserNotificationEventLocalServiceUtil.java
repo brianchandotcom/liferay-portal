@@ -431,6 +431,10 @@ public class UserNotificationEventLocalServiceUtil {
 			deliveryType, delivered, actionRequired);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -558,6 +562,13 @@ public class UserNotificationEventLocalServiceUtil {
 	public static int getUserNotificationEventsCount(long userId,
 		int deliveryType) {
 		return getService().getUserNotificationEventsCount(userId, deliveryType);
+	}
+
+	public static int getUserNotificationEventsCount(long userId,
+		java.lang.String type, int deliveryType, boolean archived) {
+		return getService()
+				   .getUserNotificationEventsCount(userId, type, deliveryType,
+			archived);
 	}
 
 	public static com.liferay.portal.model.UserNotificationEvent sendUserNotificationEvents(

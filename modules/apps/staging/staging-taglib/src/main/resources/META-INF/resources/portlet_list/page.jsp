@@ -32,14 +32,20 @@
 
 		PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-		portletDataHandler.prepareManifestSummary(portletDataContext);
-
 		PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
 		PortletDataHandlerControl[] metadataControls = portletDataHandler.getExportMetadataControls();
 
 		if (ArrayUtil.isEmpty(exportControls) && ArrayUtil.isEmpty(metadataControls)) {
 			continue;
 		}
+
+		DateRange dateRange = ExportImportDateUtil.getDateRange(renderRequest, exportGroupId, privateLayout, 0, portlet.getRootPortletId(), defaultRange);
+
+		PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), exportGroupId, dateRange.getStartDate(), dateRange.getEndDate());
+
+		portletDataHandler.prepareManifestSummary(portletDataContext);
+
+		ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 		long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
 

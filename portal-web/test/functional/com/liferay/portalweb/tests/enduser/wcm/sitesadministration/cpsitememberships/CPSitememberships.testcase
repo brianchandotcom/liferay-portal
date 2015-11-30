@@ -2,15 +2,34 @@
 	<property name="testray.main.component.name" value="Site Administration" />
 
 	<set-up>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="SignIn#signInPortalInstanceSetUp" />
+			</then>
+		</if>
+
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<tear-down>
-		<execute macro="Organization#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Site#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Organization#tearDownCP" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="Site#tearDownCP" />
+
+				<execute macro="User#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddMember" priority="5">
@@ -141,9 +160,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -457,9 +476,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Organization Name 1" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -509,8 +528,6 @@
 			<var name="portletName" value="Site Memberships" />
 			<var name="siteScopeName" value="Organization Name 1" />
 		</execute>
-
-		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_LABEL" value1="2 Users" />
 
 		<execute macro="Site#viewMemberOrganizationCP">
 			<var name="orgName" value="Organization Name 1" />
@@ -671,7 +688,7 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
 		<execute function="AssertClick" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="20 Items per Page" />
 		<execute function="Click" locator1="Pagination#FIVE_ITEMS_PER_PAGE" />
 		<execute function="AssertTextEquals" locator1="Pagination#CURRENT_PAGE_SELECT" value1="Page 1 of 3" />
@@ -958,8 +975,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute macro="Page#changeSiteScope">
-			<var name="siteName" value="Liferay" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Liferay" />
 		</execute>
 
 		<execute function="AssertNotVisible" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />

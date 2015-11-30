@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.staging.configuration.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
+	content=../staging-lang/src/main/resources/content,\
 	META-INF/resources=src/main/resources/META-INF/resources

@@ -461,14 +461,15 @@ public class DDLImpl implements DDL {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLImpl.class);
 
-	private DDLRecordLocalService _ddlRecordLocalService;
-	private DDLRecordService _ddlRecordService;
-	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private DDM _ddm;
-	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
-	private DLAppLocalService _dlAppLocalService;
-	private IndexerRegistry _indexerRegistry;
-	private LayoutService _layoutService;
-	private StorageEngine _storageEngine;
+	private volatile DDLRecordLocalService _ddlRecordLocalService;
+	private volatile DDLRecordService _ddlRecordService;
+	private volatile DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private volatile DDM _ddm;
+	private volatile DDMFormValuesToFieldsConverter
+		_ddmFormValuesToFieldsConverter;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile IndexerRegistry _indexerRegistry;
+	private volatile LayoutService _layoutService;
+	private volatile StorageEngine _storageEngine;
 
 }

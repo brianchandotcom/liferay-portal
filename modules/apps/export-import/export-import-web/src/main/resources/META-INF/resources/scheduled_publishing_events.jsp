@@ -76,4 +76,4 @@ for (int i = 0; i < scheduledJobs.size(); i++) {
 }
 %>
 
-<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />

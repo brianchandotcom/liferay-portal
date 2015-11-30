@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.PasswordTracker;
 import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
@@ -26,12 +26,13 @@ import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
  */
 @Deprecated
 public abstract class PasswordTrackerActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public PasswordTrackerActionableDynamicQuery() {
 		setBaseLocalService(PasswordTrackerLocalServiceUtil.getService());
-		setClass(PasswordTracker.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(PasswordTracker.class);
 
 		setPrimaryKeyPropertyName("passwordTrackerId");
 	}

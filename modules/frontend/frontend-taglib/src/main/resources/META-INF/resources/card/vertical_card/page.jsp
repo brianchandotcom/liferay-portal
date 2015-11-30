@@ -16,61 +16,16 @@
 
 <%@ include file="/card/vertical_card/init.jsp" %>
 
-<div class="<%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
-	<div class="<%= showCheckbox ? "checkbox toggle-card-dm" : StringPool.BLANK %>">
-		<c:choose>
-			<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
-				<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
-			</c:when>
-			<c:when test="<%= showCheckbox %>">
-				<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(title)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
-			</c:when>
-		</c:choose>
+<%@ include file="/card/vertical_card/start.jspf" %>
 
-		<div class="card card-dm <%= showCheckbox ? "toggle-card-container" : StringPool.BLANK %>">
-			<div class="aspect-ratio <%= backgroundImage ? "aspect-ratio-bg-center aspect-ratio-bg-cover" : "" %>" style="<%= backgroundImage ? "background-image: url('" + imageUrl + "')" : "" %>">
-				<aui:a href="<%= url %>">
-					<img alt="" class="<%= imageCSSClass %><%= backgroundImage ? " sr-only" : "" %>" src="<%= imageUrl %>" />
-				</aui:a>
+<div class="aspect-ratio <%= backgroundImage ? "aspect-ratio-bg-center aspect-ratio-bg-cover" : "" %>" style="<%= backgroundImage ? "background-image: url('" + imageUrl + "')" : "" %>">
+	<aui:a href="<%= url %>">
+		<img alt="" class="<%= imageCSSClass %><%= backgroundImage ? " sr-only" : "" %>" src="<%= imageUrl %>" />
+	</aui:a>
 
-				<c:if test="<%= Validator.isNotNull(stickerBottom) %>">
-					<%= stickerBottom %>
-				</c:if>
-			</div>
-
-			<c:if test="<%= Validator.isNotNull(actionJsp) || Validator.isNotNull(footer) || Validator.isNotNull(header) || Validator.isNotNull(subtitle) || Validator.isNotNull(title) %>">
-				<div class="card-footer">
-					<div class="card-dm-more-options">
-						<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
-					</div>
-
-					<div class="card-dm-details">
-						<c:if test="<%= Validator.isNotNull(header) %>">
-							<div class="card-dm-text-small">
-								<%= header %>
-							</div>
-						</c:if>
-
-						<c:if test="<%= Validator.isNotNull(title) %>">
-							<aui:a href="<%= url %>">
-								<div class="card-dm-text-large"><%= HtmlUtil.escape(title) %></div>
-							</aui:a>
-						</c:if>
-
-						<c:if test="<%= Validator.isNotNull(subtitle) %>">
-							<div class="card-dm-text">
-								<%= HtmlUtil.escape(subtitle) %>
-							</div>
-						</c:if>
-
-						<c:if test="<%= Validator.isNotNull(footer) %>">
-							<div class="card-dm-text-small">
-								<%= footer %>
-							</div>
-						</c:if>
-					</div>
-				</div>
-			</c:if>
-		</div>
-	</div>
+	<c:if test="<%= Validator.isNotNull(stickerBottom) %>">
+		<%= stickerBottom %>
+	</c:if>
 </div>
+
+<%@ include file="/card/vertical_card/end.jspf" %>

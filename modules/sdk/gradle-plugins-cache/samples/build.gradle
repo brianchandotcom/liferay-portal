@@ -1,17 +1,17 @@
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
 
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "latest.release"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "latest.release"
+	}
+
 	repositories {
 		mavenLocal()
 
 		maven {
 			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
-	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "latest.release"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "latest.release"
 	}
 }
 

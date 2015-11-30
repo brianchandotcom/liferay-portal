@@ -48,6 +48,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -63,7 +64,8 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "calendar";
 
-	public CalendarPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Calendar.class),
@@ -357,10 +359,10 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 	protected static final String RESOURCE_NAME =
 		"com.liferay.portlet.calendar";
 
-	private CalendarBookingLocalService _calendarBookingLocalService;
-	private CalendarLocalService _calendarLocalService;
-	private CalendarNotificationTemplateLocalService
+	private volatile CalendarBookingLocalService _calendarBookingLocalService;
+	private volatile CalendarLocalService _calendarLocalService;
+	private volatile CalendarNotificationTemplateLocalService
 		_calendarNotificationTemplateLocalService;
-	private CalendarResourceLocalService _calendarResourceLocalService;
+	private volatile CalendarResourceLocalService _calendarResourceLocalService;
 
 }

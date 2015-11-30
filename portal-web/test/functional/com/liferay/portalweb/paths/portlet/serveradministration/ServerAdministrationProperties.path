@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PORTAL_PROPERTIES_SEARCH_FIELD</td>
-	<td>//input[@id='_137_keywords']</td>
+	<td>//input[@placeholder='Keywords']</td>
 	<td></td>
 </tr>
 <tr>

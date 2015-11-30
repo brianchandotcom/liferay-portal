@@ -20,9 +20,10 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.CompanyLocalServiceWrapper;
 import com.liferay.portal.service.ServiceWrapper;
-import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManagerUtil;
+import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,7 +49,7 @@ public class KaleoCompanyLocalServiceWrapper
 		Company company = super.checkCompany(webId, mx);
 
 		try {
-			PortalKaleoManagerUtil.deployKaleoDefaults(company.getCompanyId());
+			_portalKaleoManager.deployKaleoDefaults(company.getCompanyId());
 		}
 		catch (PortalException pe) {
 			throw pe;
@@ -62,5 +63,14 @@ public class KaleoCompanyLocalServiceWrapper
 
 		return company;
 	}
+
+	@Reference(unbind = "-")
+	protected void setPortalKaleoManager(
+		PortalKaleoManager portalKaleoManager) {
+
+		_portalKaleoManager = portalKaleoManager;
+	}
+
+	private volatile PortalKaleoManager _portalKaleoManager;
 
 }

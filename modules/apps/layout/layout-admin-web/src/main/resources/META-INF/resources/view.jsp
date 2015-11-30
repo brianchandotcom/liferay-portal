@@ -60,145 +60,15 @@ SitesUtil.addPortletBreadcrumbEntries(group, layoutsAdminDisplayContext.getPages
 	</c:if>
 </liferay-ui:error>
 
-<%
-Group selGroup = layoutsAdminDisplayContext.getSelGroup();
-
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
-%>
-
-<c:if test="<%= !selGroup.isLayoutSetPrototype() || showHeader %>">
-
-	<%
-	Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
-	%>
-
-	<c:if test="<%= showHeader %>">
-		<liferay-ui:header
-			escapeXml="<%= false %>"
-			localizeTitle="<%= false %>"
-			title="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>"
-		/>
-	</c:if>
-
-	<liferay-ui:tabs
-		names="<%= layoutsAdminDisplayContext.getTabs1Names() %>"
-		param="tabs1"
-		url="<%= String.valueOf(layoutsAdminDisplayContext.getRedirectURL()) %>"
-		value="<%= layoutsAdminDisplayContext.getTabs1() %>"
-	/>
-</c:if>
-
-<div class="container-fluid">
+<div class="container-fluid-1280">
 	<div class="lfr-app-column-view manage-view row">
-		<c:if test="<%= !group.isLayoutPrototype() %>">
-			<div class="col-md-3">
-
-				<%
-				Group stagingGroup = layoutsAdminDisplayContext.getStagingGroup();
-				%>
-
-				<c:if test="<%= stagingGroup.isStaged() && (selGroup.getGroupId() == stagingGroup.getGroupId()) %>">
-
-					<%
-					long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
-
-					if (layoutSetBranchId <= 0) {
-						LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
-
-						layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user, selLayoutSet.getLayoutSetId());
-					}
-
-					LayoutSetBranch layoutSetBranch = null;
-
-					if (layoutSetBranchId > 0) {
-						layoutSetBranch = LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(layoutSetBranchId);
-					}
-
-					if (layoutSetBranch == null) {
-						try {
-							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(layoutsAdminDisplayContext.getStagingGroupId(), layoutsAdminDisplayContext.isPrivateLayout());
-						}
-						catch (NoSuchLayoutSetBranchException nslsbe) {
-						}
-					}
-
-					List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(layoutsAdminDisplayContext.getStagingGroupId(), layoutsAdminDisplayContext.isPrivateLayout());
-					%>
-
-					<c:choose>
-						<c:when test="<%= layoutSetBranches.size() > 1 %>">
-							<ul class="nav nav-equal-height nav-nested">
-								<li>
-									<div class="nav-equal-height-heading">
-										<span><%= HtmlUtil.escape(LanguageUtil.get(request, layoutSetBranch.getName())) %></span>
-
-										<span class="nav-equal-height-heading-field">
-											<liferay-ui:icon-menu direction="down" icon="../aui/cog" message="" showArrow="<%= false %>">
-
-												<%
-												Map<String, Object> data = new HashMap<String, Object>();
-
-												data.put("navigation", Boolean.TRUE.toString());
-
-												for (int i = 0; i < layoutSetBranches.size(); i++) {
-													LayoutSetBranch curLayoutSetBranch = layoutSetBranches.get(i);
-
-													boolean selected = (curLayoutSetBranch.getLayoutSetBranchId() == layoutSetBranch.getLayoutSetBranchId());
-
-													PortletURL layoutSetBranchURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
-
-													layoutSetBranchURL.setParameter("mvcPath", "/view.jsp");
-													layoutSetBranchURL.setParameter("redirect", String.valueOf(layoutsAdminDisplayContext.getRedirectURL()));
-													layoutSetBranchURL.setParameter("groupId", String.valueOf(curLayoutSetBranch.getGroupId()));
-													layoutSetBranchURL.setParameter("privateLayout", String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()));
-													layoutSetBranchURL.setParameter("layoutSetBranchId", String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()));
-												%>
-
-													<liferay-ui:icon
-														cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
-														data="<%= data %>"
-														message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
-														url="<%= selected ? null : layoutSetBranchURL.toString() %>"
-													/>
-
-												<%
-												}
-												%>
-
-											</liferay-ui:icon-menu>
-										</span>
-									</div>
-								</li>
-							</ul>
-						</c:when>
-					</c:choose>
-				</c:if>
-
-				<%
-				String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
-				%>
-
-				<liferay-ui:layouts-tree
-					groupId="<%= selGroup.getGroupId() %>"
-					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
-					privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
-					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
-					selectedLayoutIds="<%= selectedLayoutIds %>"
-					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
-					treeId="layoutsTree"
-				/>
-			</div>
-		</c:if>
-
-		<div class='<%= !group.isLayoutPrototype() ? "col-md-9" : "col-md-12" %>'>
-			<c:choose>
-				<c:when test="<%= layoutsAdminDisplayContext.getSelPlid() > 0 %>">
-					<liferay-util:include page="/edit_layout.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:otherwise>
-					<liferay-util:include page="/edit_layout_set.jsp" servletContext="<%= application %>" />
-				</c:otherwise>
-			</c:choose>
-		</div>
+		<c:choose>
+			<c:when test="<%= layoutsAdminDisplayContext.getSelPlid() > 0 %>">
+				<liferay-util:include page="/edit_layout.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-util:include page="/edit_layout_set.jsp" servletContext="<%= application %>" />
+			</c:otherwise>
+		</c:choose>
 	</div>
 </div>

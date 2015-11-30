@@ -163,18 +163,32 @@ public class DLFileEntryTypeFinderImpl
 			}
 
 			sql = StringUtil.replace(
+				sql, "[$BASIC_DOCUMENT$]",
+				getBasicDocumentCount(includeBasicFileEntryType));
+			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(DLFileEntryType.name)", StringPool.LIKE, false,
+				names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, true, descriptions);
+				sql, "DLFileEntryType.description", StringPool.LIKE, true,
+				descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+
+			if (includeBasicFileEntryType) {
+				sql = sql.concat(StringPool.CLOSE_PARENTHESIS);
+			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (includeBasicFileEntryType) {
+				qPos.add(names, 2);
+				qPos.add(descriptions, 2);
+			}
 
 			qPos.add(companyId);
 			qPos.add(groupIds);
@@ -183,17 +197,13 @@ public class DLFileEntryTypeFinderImpl
 
 			int countValue = 0;
 
-			if (includeBasicFileEntryType) {
-				countValue = 1;
-			}
-
 			Iterator<Long> itr = q.iterate();
 
-			if (itr.hasNext()) {
+			while (itr.hasNext()) {
 				Long count = itr.next();
 
 				if (count != null) {
-					return countValue + count.intValue();
+					countValue += count.intValue();
 				}
 			}
 
@@ -235,9 +245,11 @@ public class DLFileEntryTypeFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(DLFileEntryType.name)", StringPool.LIKE, false,
+				names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, true, descriptions);
+				sql, "DLFileEntryType.description", StringPool.LIKE, true,
+				descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			if (orderByComparator != null) {
@@ -245,7 +257,8 @@ public class DLFileEntryTypeFinderImpl
 					orderByComparator.getOrderByFields(), StringPool.COMMA);
 
 				sql = StringUtil.replace(
-					sql, "name ASC", orderByFields.concat(" DESC"));
+					sql, "DLFileEntryType.name ASC",
+					orderByFields.concat(" DESC"));
 			}
 
 			if (includeBasicFileEntryType) {
@@ -284,16 +297,33 @@ public class DLFileEntryTypeFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(6);
+		return getBasicDocument(
+			"(SELECT {DLFileEntryType.*} From DLFileEntryType WHERE ");
+	}
 
-		sb.append("(SELECT {DLFileEntryType.*} From DLFileEntryType WHERE ");
-		sb.append("((companyId = 0) AND (groupId = 0) AND (");
-		sb.append("(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) ");
+	protected String getBasicDocument(String prefix) {
+		StringBundler sb = new StringBundler(9);
+
+		sb.append(prefix);
+		sb.append("((DLFileEntryType.companyId = 0) ");
+		sb.append("AND (DLFileEntryType.groupId = 0) AND (");
+		sb.append("(lower(DLFileEntryType.name) LIKE ? ");
+		sb.append("[$AND_OR_NULL_CHECK$]) ");
 		sb.append("[$AND_OR_CONNECTOR$] ");
-		sb.append("(description LIKE ? [$AND_OR_NULL_CHECK$]) ");
+		sb.append("(DLFileEntryType.description LIKE ? ");
+		sb.append("[$AND_OR_NULL_CHECK$]) ");
 		sb.append("))) UNION ALL (");
 
 		return sb.toString();
+	}
+
+	protected String getBasicDocumentCount(boolean includeBasicFileEntryType) {
+		if (!includeBasicFileEntryType) {
+			return StringPool.BLANK;
+		}
+
+		return getBasicDocument(
+			"(SELECT COUNT(*) AS COUNT_VALUE From DLFileEntryType WHERE ");
 	}
 
 	protected String getGroupIds(long[] groupIds) {
@@ -306,7 +336,7 @@ public class DLFileEntryTypeFinderImpl
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < groupIds.length; i++) {
-			sb.append("groupId = ?");
+			sb.append("DLFileEntryType.groupId = ?");
 
 			if ((i + 1) < groupIds.length) {
 				sb.append(" OR ");

@@ -73,6 +73,7 @@ page import="com.liferay.site.teams.web.search.TeamSearch" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
+page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@

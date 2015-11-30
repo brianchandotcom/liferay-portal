@@ -828,7 +828,7 @@ public class WorkflowTaskDisplayContext {
 		return false;
 	}
 
-	public boolean showEditURL(WorkflowTask workflowTask) {
+	public boolean isShowEditURL(WorkflowTask workflowTask) {
 		boolean showEditURL = false;
 
 		if ((workflowTask.getAssigneeUserId() ==

@@ -112,7 +112,7 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 	protected void setDestination(Destination destination) {
 	}
 
-	private ConfigurationAdmin _configurationAdmin;
-	private ReloadablePersistenceManager _reloadablePersistenceManager;
+	private volatile ConfigurationAdmin _configurationAdmin;
+	private volatile ReloadablePersistenceManager _reloadablePersistenceManager;
 
 }

@@ -121,7 +121,7 @@ public class JSBundleConfigServlet extends HttpServlet {
 	}
 
 	private volatile Details _details;
-	private JSBundleConfigTracker _jsBundleConfigTracker;
+	private volatile JSBundleConfigTracker _jsBundleConfigTracker;
 	private Logger _logger;
 
 }

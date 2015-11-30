@@ -43,7 +43,7 @@ body {
 
 .product-menu {
 	.sidebar-body {
-		bottom: 65px;
+		bottom: 0;
 		left: 0;
 		padding-bottom: 0;
 		padding-top: 0;
@@ -52,7 +52,6 @@ body {
 		top: 120px;
 
 		@include sm() {
-			bottom: 80px;
 			top: 223px;
 		}
 
@@ -64,61 +63,6 @@ body {
 }
 
 .product-menu {
-	.sidebar-footer {
-		bottom: 0;
-		padding: 10px 24px;
-		position: absolute;
-		width: 100%;
-
-		@include sm() {
-			padding-bottom: 16px;
-			padding-top: 16px;
-		}
-
-		@include media-query(null, 320px) {
-			position: static;
-		}
-
-		.nameplate-content,
-		.nameplate-field {
-			vertical-align: middle;
-
-			@include media-query(null, 320px) {
-				display: block;
-			}
-		}
-
-		.user-heading {
-			margin: 0 8px;
-		}
-
-		.user-icon {
-			height: 32px;
-			line-height: 32px;
-			width: 32px;
-
-			@include sm() {
-				height: 48px;
-				line-height: 48px;
-				width: 48px;
-			}
-		}
-
-		.user-subheading {
-			list-style: none;
-			margin: 0 8px;
-			padding: 0;
-
-			> li {
-				float: left;
-
-				&:last-child {
-					float: right;
-				}
-			}
-		}
-	}
-
 	.user-tab {
 		.icon-monospaced {
 			padding-top: 10px;

@@ -64,7 +64,7 @@ renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-n
 		<%@ include file="/edit_vocabulary_settings.jspf" %>
 
 		<c:if test="<%= vocabulary == null %>">
-			<aui:fieldset label="permissions">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 				<liferay-ui:input-permissions
 					modelName="<%= AssetVocabulary.class.getName() %>"
 				/>

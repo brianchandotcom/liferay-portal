@@ -4,7 +4,7 @@ dependencies {
 
 deploy {
 	from("lib") {
-		include "com.liferay.osgi.service.tracker.map.jar"
+		include "com.liferay.osgi.service.tracker.collections.jar"
 	}
 }
 

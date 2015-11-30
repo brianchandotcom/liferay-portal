@@ -16,12 +16,13 @@
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	cssClass="container-fluid-1280"
 	title='<%= (calendar == null) ? LanguageUtil.format(request, "new-calendar-for-x", calendarResourceName) : calendarName %>'
 />
 
 <liferay-portlet:actionURL name="updateCalendar" var="updateCalendarURL" />
 
-<aui:form action="<%= updateCalendarURL %>" method="post" name="fm">
+<aui:form action="<%= updateCalendarURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="mvcPath" type="hidden" value="/edit_calendar.jsp" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

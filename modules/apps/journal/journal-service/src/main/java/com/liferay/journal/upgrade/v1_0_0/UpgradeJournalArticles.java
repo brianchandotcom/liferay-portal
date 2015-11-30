@@ -14,24 +14,34 @@
 
 package com.liferay.journal.upgrade.v1_0_0;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.service.AssetCategoryLocalService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
@@ -40,113 +50,30 @@ import javax.portlet.PortletPreferences;
  */
 public class UpgradeJournalArticles extends UpgradePortletId {
 
+	public UpgradeJournalArticles(
+		AssetCategoryLocalService assetCategoryLocalService,
+		DDMStructureLocalService ddmStructureLocalService,
+		GroupLocalService groupLocalService,
+		LayoutLocalService layoutLocalService) {
+
+		_assetCategoryLocalService = assetCategoryLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
+		_groupLocalService = groupLocalService;
+		_layoutLocalService = layoutLocalService;
+	}
+
 	protected long getCategoryId(long companyId, String type) throws Exception {
-		if (Validator.isNull(type)) {
-			return 0;
+		List<AssetCategory> assetCategories = _assetCategoryLocalService.search(
+			companyId, type, new String[0], QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		if (!assetCategories.isEmpty()) {
+			AssetCategory assetCategory = assetCategories.get(0);
+
+			return assetCategory.getCategoryId();
 		}
 
-		long groupId = getCompanyGroupId(companyId);
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select categoryId from AssetCategory where groupId = " +
-					groupId + " and name = ?");
-
-			ps.setString(1, type);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				return rs.getLong("categoryId");
-			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected long getCompanyGroupId(long companyId) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select groupId from Group_ where classNameId = ? and " +
-					"classPK = ?");
-
-			ps.setLong(1, PortalUtil.getClassNameId(Company.class.getName()));
-			ps.setLong(2, companyId);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				return rs.getLong("groupId");
-			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected long getCompanyId(long plid) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select companyId from Layout where plid = " + plid);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				return rs.getLong("companyId");
-			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected long getGroupId(long plid) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select groupId from Layout where plid = " + plid);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				return rs.getLong("groupId");
-			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
+		return 0;
 	}
 
 	protected String getNewPreferences(long plid, String preferences)
@@ -174,12 +101,12 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 		newPortletPreferences.setValue(
 			"anyAssetType",
 			String.valueOf(
-				PortalUtil.getClassNameId(
-					"com.liferay.portlet.journal.model.JournalArticle")));
+				PortalUtil.getClassNameId(JournalArticle.class.getName())));
 
-		long companyId = getCompanyId(plid);
+		Layout layout = _layoutLocalService.getLayout(plid);
 
-		long structureId = getStructureId(companyId, plid, ddmStructureKey);
+		long structureId = getStructureId(
+			layout.getCompanyId(), layout.getGroupId(), ddmStructureKey);
 
 		if (structureId > 0) {
 			newPortletPreferences.setValue(
@@ -207,7 +134,7 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 		newPortletPreferences.setValue("orderByType1", orderByType);
 		newPortletPreferences.setValue("paginationType", "none");
 
-		long categoryId = getCategoryId(companyId, type);
+		long categoryId = getCategoryId(layout.getCompanyId(), type);
 
 		if (categoryId > 0) {
 			newPortletPreferences.setValue(
@@ -224,7 +151,7 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 
 		String groupName = String.valueOf(groupId);
 
-		if (groupId == getGroupId(plid)) {
+		if (groupId == layout.getGroupId()) {
 			groupName = "default";
 		}
 
@@ -243,41 +170,27 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 	}
 
 	protected long getStructureId(
-			long companyId, long plid, String ddmStructureKey)
+			long companyId, long groupId, String ddmStructureKey)
 		throws Exception {
 
-		if (Validator.isNull(ddmStructureKey)) {
-			return 0;
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			groupId, PortalUtil.getClassNameId(JournalArticle.class.getName()),
+			ddmStructureKey);
+
+		if (ddmStructure == null) {
+			Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
+
+			_ddmStructureLocalService.fetchStructure(
+				companyGroup.getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				ddmStructureKey);
 		}
 
-		long groupId = getGroupId(plid);
-		long companyGroupId = getCompanyGroupId(companyId);
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select structureId from DDMStructure where (groupId = " +
-					groupId + " or groupId = " + companyGroupId + ") and " +
-						"structureKey = ?");
-
-			ps.setString(1, ddmStructureKey);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				return rs.getLong("structureId");
-			}
-
-			return 0;
+		if (ddmStructure != null) {
+			return ddmStructure.getStructureId();
 		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -391,5 +304,10 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeJournalArticles.class);
+
+	private final AssetCategoryLocalService _assetCategoryLocalService;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final GroupLocalService _groupLocalService;
+	private final LayoutLocalService _layoutLocalService;
 
 }

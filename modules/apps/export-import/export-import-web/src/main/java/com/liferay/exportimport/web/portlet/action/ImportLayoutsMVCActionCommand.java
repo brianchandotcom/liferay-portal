@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -114,17 +115,22 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				(UploadException)actionRequest.getAttribute(
 					WebKeys.UPLOAD_EXCEPTION);
 
-			if ((uploadException != null) &&
-				(uploadException.getCause() instanceof
-					FileUploadBase.IOFileUploadException)) {
+			if (uploadException != null) {
+				Throwable cause = uploadException.getCause();
 
-				// Cancelled a temporary upload
+				if (cause instanceof FileUploadBase.IOFileUploadException) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Temporary upload was cancelled");
+					}
+				}
 
-			}
-			else if ((uploadException != null) &&
-					 uploadException.isExceededSizeLimit()) {
+				if (uploadException.isExceededFileSizeLimit()) {
+					throw new FileSizeException(cause);
+				}
 
-				throw new FileSizeException(uploadException.getCause());
+				if (uploadException.isExceededUploadRequestSizeLimit()) {
+					throw new UploadRequestSizeException(cause);
+				}
 			}
 			else {
 				throw e;
@@ -142,11 +148,15 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.UPLOAD_EXCEPTION);
 
 		if (uploadException != null) {
-			if (uploadException.isExceededSizeLimit()) {
-				throw new LARFileSizeException(uploadException.getCause());
+			Throwable cause = uploadException.getCause();
+
+			if (uploadException.isExceededFileSizeLimit() ||
+				uploadException.isExceededUploadRequestSizeLimit()) {
+
+				throw new LARFileSizeException(cause);
 			}
 
-			throw new PortalException(uploadException.getCause());
+			throw new PortalException(cause);
 		}
 	}
 
@@ -444,10 +454,10 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportLayoutsMVCActionCommand.class);
 
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-	private ExportImportConfigurationLocalService
+	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
+	private volatile ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-	private ExportImportService _exportImportService;
-	private LayoutService _layoutService;
+	private volatile ExportImportService _exportImportService;
+	private volatile LayoutService _layoutService;
 
 }

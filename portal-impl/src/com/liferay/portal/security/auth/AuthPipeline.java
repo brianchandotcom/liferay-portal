@@ -115,15 +115,10 @@ public class AuthPipeline {
 	}
 
 	private AuthPipeline() {
-		_authFailures = ServiceTrackerCollections.multiValueMap(
-			AuthFailure.class, "key");
-
-		_authFailures.open();
-
-		_authenticators = ServiceTrackerCollections.multiValueMap(
+		_authenticators = ServiceTrackerCollections.openMultiValueMap(
 			Authenticator.class, "key");
-
-		_authenticators.open();
+		_authFailures = ServiceTrackerCollections.openMultiValueMap(
+			AuthFailure.class, "key");
 	}
 
 	private int _authenticate(

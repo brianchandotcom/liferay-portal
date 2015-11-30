@@ -3,7 +3,8 @@ Bundle-SymbolicName: com.liferay.dynamic.data.lists.form.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class
 JS-Config: /META-INF/resources/admin/js/config.js
 Require-Capability:\
 	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/frontend";version:Version="1.0.0"

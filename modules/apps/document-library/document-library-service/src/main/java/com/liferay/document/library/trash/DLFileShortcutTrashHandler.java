@@ -323,7 +323,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileShortcutTrashHandler.class);
 
-	private DLAppLocalService _dlAppLocalService;
-	private TrashRendererFactory _trashRendererFactory;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile TrashRendererFactory _trashRendererFactory;
 
 }

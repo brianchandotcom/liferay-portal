@@ -116,8 +116,8 @@ public class AssetPublisherPortletLayoutListener
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
-	private JournalArticleLocalService _journalArticleLocalService;
-	private LayoutLocalService _layoutLocalService;
-	private SubscriptionLocalService _subscriptionLocalService;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile SubscriptionLocalService _subscriptionLocalService;
 
 }

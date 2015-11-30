@@ -49,6 +49,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
-	private SubscriptionLocalService _subscriptionLocalService;
+	private volatile SubscriptionLocalService _subscriptionLocalService;
 
 }

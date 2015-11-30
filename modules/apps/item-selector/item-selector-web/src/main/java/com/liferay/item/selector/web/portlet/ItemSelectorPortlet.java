@@ -96,6 +96,6 @@ public class ItemSelectorPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ItemSelectorPortlet.class);
 
-	private ItemSelector _itemSelector;
+	private volatile ItemSelector _itemSelector;
 
 }

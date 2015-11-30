@@ -57,6 +57,6 @@ public class MDRRuleGroupPermissionUpdateHandler
 		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
 	}
 
-	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
+	private volatile MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 
 }

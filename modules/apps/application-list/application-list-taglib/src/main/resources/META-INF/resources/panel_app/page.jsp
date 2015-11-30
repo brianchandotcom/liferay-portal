@@ -21,6 +21,7 @@ boolean active = GetterUtil.getBoolean(request.getAttribute("liferay-application
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-application-list:panel-app:data");
 String id = (String)request.getAttribute("liferay-application-list:panel-app:id");
 String label = (String)request.getAttribute("liferay-application-list:panel-app:label");
+int notificationsCount = GetterUtil.getInteger(request.getAttribute("liferay-application-list:panel-app:notificationsCount"));
 String url = (String)request.getAttribute("liferay-application-list:panel-app:url");
 %>
 
@@ -35,7 +36,12 @@ String url = (String)request.getAttribute("liferay-application-list:panel-app:ur
 			data="<%= data %>"
 			href="<%= url %>"
 			id="<%= id %>"
-			label="<%= label %>"
-		/>
+		>
+			<%= label %>
+
+			<c:if test="<%= notificationsCount > 0 %>">
+				<span class="badge badge-sm badge-warning pull-right"><%= notificationsCount %></span>
+			</c:if>
+		</aui:a>
 	</li>
 </c:if>

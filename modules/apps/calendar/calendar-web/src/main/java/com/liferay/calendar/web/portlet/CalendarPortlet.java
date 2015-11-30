@@ -742,30 +742,30 @@ public class CalendarPortlet extends MVCPortlet {
 		List<PositionalWeekday> positionalWeekdays = new ArrayList<>();
 
 		if (frequency == Frequency.WEEKLY) {
-			for (Weekday weekday : Weekday.values()) {
-				boolean checked = ParamUtil.getBoolean(
-					actionRequest, weekday.getValue());
+			String[] weekdayValues = ParamUtil.getParameterValues(
+				actionRequest, "weekdays");
 
-				if (checked) {
-					java.util.Calendar startTimeJCalendar = getJCalendar(
-						actionRequest, "startTime");
+			for (String weekdayValue : weekdayValues) {
+				Weekday weekday = Weekday.parse(weekdayValue);
 
-					java.util.Calendar weekdayJCalendar =
-						JCalendarUtil.getJCalendar(
-							startTimeJCalendar.getTimeInMillis(),
-							getTimeZone(actionRequest));
+				java.util.Calendar startTimeJCalendar = getJCalendar(
+					actionRequest, "startTime");
 
-					weekdayJCalendar.set(
-						java.util.Calendar.DAY_OF_WEEK,
-						weekday.getCalendarWeekday());
+				java.util.Calendar weekdayJCalendar =
+					JCalendarUtil.getJCalendar(
+						startTimeJCalendar.getTimeInMillis(),
+						getTimeZone(actionRequest));
 
-					weekdayJCalendar = JCalendarUtil.getJCalendar(
-						weekdayJCalendar, calendarTimeZone);
+				weekdayJCalendar.set(
+					java.util.Calendar.DAY_OF_WEEK,
+					weekday.getCalendarWeekday());
 
-					weekday = Weekday.getWeekday(weekdayJCalendar);
+				weekdayJCalendar = JCalendarUtil.getJCalendar(
+					weekdayJCalendar, calendarTimeZone);
 
-					positionalWeekdays.add(new PositionalWeekday(weekday, 0));
-				}
+				weekday = Weekday.getWeekday(weekdayJCalendar);
+
+				positionalWeekdays.add(new PositionalWeekday(weekday, 0));
 			}
 		}
 		else if ((frequency == Frequency.MONTHLY) ||
@@ -1252,14 +1252,14 @@ public class CalendarPortlet extends MVCPortlet {
 		_userLocalService = userLocalService;
 	}
 
-	private CalendarBookingLocalService _calendarBookingLocalService;
-	private CalendarBookingService _calendarBookingService;
-	private CalendarLocalService _calendarLocalService;
-	private CalendarNotificationTemplateService
+	private volatile CalendarBookingLocalService _calendarBookingLocalService;
+	private volatile CalendarBookingService _calendarBookingService;
+	private volatile CalendarLocalService _calendarLocalService;
+	private volatile CalendarNotificationTemplateService
 		_calendarNotificationTemplateService;
-	private CalendarResourceService _calendarResourceService;
-	private CalendarService _calendarService;
-	private GroupLocalService _groupLocalService;
-	private UserLocalService _userLocalService;
+	private volatile CalendarResourceService _calendarResourceService;
+	private volatile CalendarService _calendarService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

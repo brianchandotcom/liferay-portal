@@ -29,11 +29,13 @@
 	<a href="<%= rowURL %>"><strong><%= HtmlUtil.escape(localizedName) %></strong></a>
 
 	<br />
-
-	<span class="key"><liferay-ui:message key="key" /></span>:
-
-	<a href="<%= rowURL %>"><%= HtmlUtil.escape(name) %></a>
 </liferay-ui:search-container-column-text>
+
+<liferay-ui:search-container-column-text
+	href="<%= rowURL %>"
+	name="key"
+	value="<%= HtmlUtil.escape(name) %>"
+/>
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
@@ -76,7 +78,6 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-jsp
-	align="right"
-	cssClass="entry-action"
+	cssClass="list-group-item-field"
 	path="/expando_action.jsp"
 />

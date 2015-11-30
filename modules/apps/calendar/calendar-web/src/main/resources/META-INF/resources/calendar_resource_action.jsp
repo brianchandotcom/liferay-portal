@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 CalendarResource calendarResource = (CalendarResource)row.getObject();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_calendar_resource.jsp" />
@@ -31,7 +31,6 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
 		/>
@@ -48,7 +47,6 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
@@ -63,7 +61,6 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-calendar"
 		message="view-calendars"
 		url="<%= calendarsURL %>"
 	/>
@@ -75,8 +72,10 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 			<portlet:param name="calendarResourceId" value="<%= String.valueOf(calendarResource.getCalendarResourceId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
+		<liferay-ui:icon
+			message="delete"
 			url="<%= deleteURL %>"
 		/>
+
 	</c:if>
 </liferay-ui:icon-menu>

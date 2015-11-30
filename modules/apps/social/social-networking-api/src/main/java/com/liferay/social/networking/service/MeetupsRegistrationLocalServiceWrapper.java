@@ -191,6 +191,11 @@ public class MeetupsRegistrationLocalServiceWrapper
 		return _meetupsRegistrationLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _meetupsRegistrationLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the meetups registration with the primary key.
 	*

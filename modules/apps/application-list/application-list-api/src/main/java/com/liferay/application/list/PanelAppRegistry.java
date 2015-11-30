@@ -15,10 +15,10 @@
 package com.liferay.application.list;
 
 import com.liferay.application.list.util.PanelCategoryServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMapListener;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -74,7 +74,26 @@ public class PanelAppRegistry {
 		PanelCategory parentPanelCategory,
 		final PermissionChecker permissionChecker, final Group group) {
 
-		List<PanelApp> panelApps = getPanelApps(parentPanelCategory);
+		return getPanelApps(
+			parentPanelCategory.getKey(), permissionChecker, group);
+	}
+
+	public List<PanelApp> getPanelApps(String parentPanelCategoryKey) {
+		List<PanelApp> panelApps = _serviceTrackerMap.getService(
+			parentPanelCategoryKey);
+
+		if (panelApps == null) {
+			return Collections.emptyList();
+		}
+
+		return panelApps;
+	}
+
+	public List<PanelApp> getPanelApps(
+		String parentPanelCategoryKey,
+		final PermissionChecker permissionChecker, final Group group) {
+
+		List<PanelApp> panelApps = getPanelApps(parentPanelCategoryKey);
 
 		if (panelApps.isEmpty()) {
 			return panelApps;
@@ -100,28 +119,15 @@ public class PanelAppRegistry {
 			});
 	}
 
-	public List<PanelApp> getPanelApps(String parentPanelCategoryKey) {
-		List<PanelApp> panelApps = _serviceTrackerMap.getService(
-			parentPanelCategoryKey);
-
-		if (panelApps == null) {
-			return Collections.emptyList();
-		}
-
-		return panelApps;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, PanelApp.class, "(panel.category.key=*)",
 			new PanelCategoryServiceReferenceMapper(),
 			new ServiceRankingPropertyServiceReferenceComparator(),
 			new PanelAppsServiceTrackerMapListener());
-
-		_serviceTrackerMap.open();
 	}
 
 	@Deactivate

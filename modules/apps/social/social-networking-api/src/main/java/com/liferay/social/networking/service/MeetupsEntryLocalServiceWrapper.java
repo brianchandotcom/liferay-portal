@@ -204,6 +204,11 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 		return _meetupsEntryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _meetupsEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns a range of all the meetups entries.
 	*

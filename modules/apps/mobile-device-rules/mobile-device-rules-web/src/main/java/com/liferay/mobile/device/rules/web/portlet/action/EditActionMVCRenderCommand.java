@@ -108,7 +108,8 @@ public class EditActionMVCRenderCommand implements MVCRenderCommand {
 		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
 	}
 
-	private MDRActionService _mdrActionService;
-	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+	private volatile MDRActionService _mdrActionService;
+	private volatile MDRRuleGroupInstanceLocalService
+		_mdrRuleGroupInstanceLocalService;
 
 }

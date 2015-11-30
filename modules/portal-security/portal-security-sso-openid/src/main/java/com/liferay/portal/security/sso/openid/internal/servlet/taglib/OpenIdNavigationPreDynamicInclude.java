@@ -97,7 +97,7 @@ public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdNavigationPreDynamicInclude.class);
 
-	private OpenId _openId;
-	private ServletContext _servletContext;
+	private volatile OpenId _openId;
+	private volatile ServletContext _servletContext;
 
 }

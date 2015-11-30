@@ -36,6 +36,7 @@ import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -49,11 +50,6 @@ import org.osgi.service.component.annotations.Component;
 public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "comment";
-
-	public PageCommentsPortletDataHandler() {
-		setDataAlwaysStaged(true);
-		setPublishToLiveByDefault(true);
-	}
 
 	@Override
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes() {
@@ -94,6 +90,12 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public PortletDataHandlerControl[] getImportControls() {
 		return getExportControls();
+	}
+
+	@Activate
+	protected void activate() {
+		setDataAlwaysStaged(true);
+		setPublishToLiveByDefault(true);
 	}
 
 	@Override

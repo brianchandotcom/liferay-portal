@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARD_VERTICAL_ELLIPSIS</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${cardEntry}')]//a[span[contains(@class,'icon-ellipsis-vertical')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARET_LEFT</td>
 	<td>//span[contains(@class,'icon-caret-left')]</td>
 	<td></td>
@@ -85,7 +90,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_VERTICAL_ELLIPSIS</td>
-	<td>//li[@data-title='${key_assetEntry}']//span[contains(@class,'icon-ellipsis-vertical')] | //div[contains(@class,'entry-display') and contains(.,'${key_assetEntry}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//li[@data-title='${key_assetEntry}']//span[contains(@class,'icon-ellipsis-vertical')] | //div[contains(@class,'entry-display') and contains(.,'${key_assetEntry}')]//span[contains(@class,'icon-ellipsis-vertical')] | //tr[contains(.,'${key_assetEntry}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -196,6 +201,11 @@
 <tr>
 	<td>REORDER</td>
 	<td>//a/i[@class='icon-reorder']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLTIP</td>
+	<td>//span[@class='taglib-icon-help']</td>
 	<td></td>
 </tr>
 <tr>

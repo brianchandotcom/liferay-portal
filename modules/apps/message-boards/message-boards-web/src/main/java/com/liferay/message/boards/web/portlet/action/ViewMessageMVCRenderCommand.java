@@ -141,6 +141,6 @@ public class ViewMessageMVCRenderCommand implements MVCRenderCommand {
 		_mbMessageService = mbMessageService;
 	}
 
-	private MBMessageService _mbMessageService;
+	private volatile MBMessageService _mbMessageService;
 
 }

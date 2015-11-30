@@ -171,10 +171,10 @@ public class DLExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLExportImportPortletPreferencesProcessor.class);
 
-	private DLAppLocalService _dlAppLocalService;
-	private PortletDisplayTemplateExportCapability
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
-	private PortletDisplayTemplateImportCapability
+	private volatile PortletDisplayTemplateImportCapability
 		_portletDisplayTemplateImportCapability;
 
 }

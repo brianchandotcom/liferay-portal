@@ -2,12 +2,12 @@ dependencies {
 	compile group: "com.liferay", name: "aQute.bnd", version: "2.3.0"
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "junit", name: "junit", version: "4.12"
-	compile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.8.Final"
+	compile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.9.Final"
 	compile group: "org.jboss.osgi.metadata", name: "jbosgi-metadata", version: "4.0.0.CR1"
 	compile group: "org.osgi", name: "org.osgi.enterprise", version: "5.0.0"
 
-	runtime group: "org.arquillian.liferay", name: "arquillian-container-liferay", version: "1.0.0.Final-SNAPSHOT"
-	runtime group: "org.arquillian.liferay", name: "arquillian-deployment-generator-bnd", version: "1.0.0.Final-SNAPSHOT"
+	runtime group: "org.arquillian.liferay", name: "arquillian-container-liferay", version: "1.0.0.Alpha2"
+	runtime group: "org.arquillian.liferay", name: "arquillian-deployment-generator-bnd", version: "1.0.0.Alpha2"
 }
 
 liferay {

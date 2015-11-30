@@ -128,6 +128,18 @@ public class ExpandoPortlet extends MVCPortlet {
 		_expandoColumnService.deleteColumn(columnId);
 	}
 
+	public void deleteExpandos(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] columnIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "columnIds"), 0L);
+
+		for (long columnId : columnIds) {
+			_expandoColumnService.deleteColumn(columnId);
+		}
+	}
+
 	public void updateExpando(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -379,6 +391,6 @@ public class ExpandoPortlet extends MVCPortlet {
 		expandoBridge.setAttributeProperties(name, properties);
 	}
 
-	private ExpandoColumnService _expandoColumnService;
+	private volatile ExpandoColumnService _expandoColumnService;
 
 }

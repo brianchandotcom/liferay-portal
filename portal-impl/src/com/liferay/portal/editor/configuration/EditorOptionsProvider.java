@@ -67,15 +67,11 @@ public class EditorOptionsProvider
 			_serviceReferenceMapper = new EditorServiceReferenceMapper<>();
 	private static final ServiceTrackerMap
 		<String, List<EditorOptionsContributor>> _serviceTrackerMap =
-			ServiceTrackerCollections.multiValueMap(
+			ServiceTrackerCollections.openMultiValueMap(
 				EditorOptionsContributor.class,
 				"(|(editor.config.key=*)(editor.name=*)(javax.portlet.name=*)" +
 					"(objectClass=" + EditorOptionsContributor.class.getName() +
 						"))",
 				_serviceReferenceMapper);
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 }

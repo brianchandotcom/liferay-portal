@@ -63,7 +63,7 @@ public class ServiceTrackerCollectionsTest {
 	@Test
 	public void testClass() {
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(InterfaceOne.class);
+			ServiceTrackerCollections.openList(InterfaceOne.class);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
@@ -98,7 +98,7 @@ public class ServiceTrackerCollectionsTest {
 		Filter filter = _registry.getFilter("(a.property=G)");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(InterfaceOne.class, filter);
+			ServiceTrackerCollections.openList(InterfaceOne.class, filter);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
@@ -162,7 +162,7 @@ public class ServiceTrackerCollectionsTest {
 		properties.put("a.property", "G");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(
+			ServiceTrackerCollections.openList(
 				InterfaceOne.class, filter, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
@@ -218,7 +218,7 @@ public class ServiceTrackerCollectionsTest {
 				counter);
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(
+			ServiceTrackerCollections.openList(
 				InterfaceOne.class, filter, serviceTrackerCustomizer);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
@@ -294,7 +294,7 @@ public class ServiceTrackerCollectionsTest {
 		properties.put("a.property", "G");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(
+			ServiceTrackerCollections.openList(
 				InterfaceOne.class, filter, serviceTrackerCustomizer,
 				properties);
 
@@ -350,7 +350,7 @@ public class ServiceTrackerCollectionsTest {
 		properties.put("a.property", "G");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(InterfaceOne.class, properties);
+			ServiceTrackerCollections.openList(InterfaceOne.class, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
 
@@ -404,7 +404,7 @@ public class ServiceTrackerCollectionsTest {
 				counter);
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(
+			ServiceTrackerCollections.openList(
 				InterfaceOne.class, serviceTrackerCustomizer);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
@@ -454,7 +454,7 @@ public class ServiceTrackerCollectionsTest {
 		properties.put("a.property", "G");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(
+			ServiceTrackerCollections.openList(
 				InterfaceOne.class, serviceTrackerCustomizer, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());
@@ -518,7 +518,7 @@ public class ServiceTrackerCollectionsTest {
 		properties.put("a.property", "G");
 
 		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.list(
+			ServiceTrackerCollections.openList(
 				InterfaceOne.class, serviceTrackerCustomizer, properties);
 
 		Assert.assertEquals(0, serviceTrackerList.size());

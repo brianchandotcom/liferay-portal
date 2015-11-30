@@ -260,6 +260,11 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 		return _mdrRuleGroupLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _mdrRuleGroupLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the m d r rule group with the primary key.
 	*

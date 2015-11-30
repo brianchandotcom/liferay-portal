@@ -6,4 +6,5 @@ Include-Resource:\
 	com/liferay/portal/soap/extender/test/activator/configuration=classes/com/liferay/portal/soap/extender/test/activator/configuration,\
 	com/liferay/portal/soap/extender/test/activator/handler=classes/com/liferay/portal/soap/extender/test/activator/handler,\
 	com/liferay/portal/soap/extender/test/handler=classes/com/liferay/portal/soap/extender/test/handler,\
-	com/liferay/portal/soap/extender/test/service=classes/com/liferay/portal/soap/extender/test/service
+	com/liferay/portal/soap/extender/test/service=classes/com/liferay/portal/soap/extender/test/service,\
+	com/liferay/portal/soap/extender/test/util=classes/com/liferay/portal/soap/extender/test/util

@@ -91,7 +91,8 @@ public class CheckEntryMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
-	private SchedulerEngineHelper _schedulerEngineHelper;
+	private volatile AnnouncementsEntryLocalService
+		_announcementsEntryLocalService;
+	private volatile SchedulerEngineHelper _schedulerEngineHelper;
 
 }

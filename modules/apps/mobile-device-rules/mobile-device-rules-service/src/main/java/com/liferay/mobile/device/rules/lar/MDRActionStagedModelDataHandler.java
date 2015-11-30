@@ -261,8 +261,9 @@ public class MDRActionStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		MDRActionStagedModelDataHandler.class);
 
-	private LayoutLocalService _layoutLocalService;
-	private MDRActionLocalService _mdrActionLocalService;
-	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile MDRActionLocalService _mdrActionLocalService;
+	private volatile MDRRuleGroupInstanceLocalService
+		_mdrRuleGroupInstanceLocalService;
 
 }

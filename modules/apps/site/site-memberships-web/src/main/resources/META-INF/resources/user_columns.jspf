@@ -1,0 +1,153 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+Group curGroup = siteMembershipsDisplayContext.getGroup();
+%>
+
+<liferay-util:buffer var="name">
+	<%= user2.getFullName() %>
+
+	<%
+	List<String> names = new ArrayList<String>();
+
+	List<String> organizationNames = SitesUtil.getOrganizationNames(curGroup, user2);
+
+	names.addAll(organizationNames);
+
+	boolean organizationUser = !organizationNames.isEmpty();
+
+	row.setParameter("organizationUser", organizationUser);
+
+	List<String> userGroupNames = SitesUtil.getUserGroupNames(curGroup, user2);
+
+	names.addAll(userGroupNames);
+
+	boolean userGroupUser = !userGroupNames.isEmpty();
+
+	row.setParameter("userGroupUser", userGroupUser);
+	%>
+
+	<c:if test="<%= organizationUser || userGroupUser %>">
+		<c:choose>
+			<c:when test="<%= names.size() == 1 %>">
+				<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-user-is-a-member-of-x-because-he-belongs-to-x", new Object[] {HtmlUtil.escape(curGroup.getDescriptiveName(locale)), names.get(0)}, false) %>' />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-user-is-a-member-of-x-because-he-belongs-to-x-and-x", new Object[] {HtmlUtil.escape(curGroup.getDescriptiveName(locale)), StringUtil.merge(names.subList(0, names.size() - 1).toArray(new String[names.size() - 1]), ", "), names.get(names.size() - 1)}, false) %>' />
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</liferay-util:buffer>
+
+<%
+List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), curGroup.getGroupId());
+
+List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(curGroup.getGroupId(), user2.getUserId());
+
+List<String> names = ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR);
+
+names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
+%>
+
+<c:choose>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
+
+		<%
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:user-vertical-card
+				actionJsp='<%= !selectUsers ? "/user_action.jsp" : StringPool.BLANK %>'
+				actionJspServletContext="<%= application %>"
+				cssClass="entry-display-style"
+				resultRow="<%= row %>"
+				rowChecker="<%= rowChecker %>"
+				subtitle="<%= user2.getScreenName() %>"
+				title="<%= name %>"
+				userId="<%= user2.getUserId() %>"
+			>
+				<c:if test="<%= !selectUsers %>">
+					<liferay-frontend:vertical-card-footer>
+						<c:choose>
+							<c:when test="<%= !ListUtil.isEmpty(names) %>">
+								<%= StringUtil.merge(names, StringPool.COMMA_AND_SPACE) %>
+							</c:when>
+							<c:otherwise>
+								&nbsp;
+							</c:otherwise>
+						</c:choose>
+					</liferay-frontend:vertical-card-footer>
+				</c:if>
+			</liferay-frontend:user-vertical-card>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait
+				cssClass="user-icon-lg"
+				userId="<%= user2.getUserId() %>"
+			/>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+			>
+			<h5><%= name %></h5>
+
+			<h6 class="text-default">
+				<span><%= user2.getScreenName() %></span>
+			</h6>
+
+			<c:if test="<%= !selectUsers %>">
+				<h6>
+					<%= StringUtil.merge(names, StringPool.COMMA_AND_SPACE) %>
+				</h6>
+			</c:if>
+		</liferay-ui:search-container-column-text>
+
+		<c:if test="<%= !selectUsers %>">
+			<liferay-ui:search-container-column-jsp
+				path="/user_action.jsp"
+			/>
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text
+			name="name"
+			value="<%= name %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="screen-name"
+			orderable="<%= true %>"
+			property="screenName"
+		/>
+
+		<c:if test="<%= !selectUsers %>">
+			<liferay-ui:search-container-column-text
+				name="site-roles-and-teams"
+				value="<%= StringUtil.merge(names, StringPool.COMMA_AND_SPACE) %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
+				path="/user_action.jsp"
+			/>
+		</c:if>
+	</c:otherwise>
+</c:choose>

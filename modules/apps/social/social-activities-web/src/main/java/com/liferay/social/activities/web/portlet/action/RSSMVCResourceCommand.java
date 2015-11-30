@@ -290,9 +290,9 @@ public class RSSMVCResourceCommand implements MVCResourceCommand {
 		_socialActivityLocalService = socialActivityLocalService;
 	}
 
-	private GroupLocalService _groupLocalService;
-	private SocialActivityInterpreterLocalService
+	private volatile GroupLocalService _groupLocalService;
+	private volatile SocialActivityInterpreterLocalService
 		_socialActivityInterpreterLocalService;
-	private SocialActivityLocalService _socialActivityLocalService;
+	private volatile SocialActivityLocalService _socialActivityLocalService;
 
 }

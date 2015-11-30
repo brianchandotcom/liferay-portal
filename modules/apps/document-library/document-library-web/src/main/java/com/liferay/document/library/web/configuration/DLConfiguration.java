@@ -16,9 +16,12 @@ package com.liferay.document.library.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Sergio González
  */
+@ConfigurationAdmin(category = "collaboration")
 @Meta.OCD(id = "com.liferay.document.library.web.configuration.DLConfiguration")
 public interface DLConfiguration {
 

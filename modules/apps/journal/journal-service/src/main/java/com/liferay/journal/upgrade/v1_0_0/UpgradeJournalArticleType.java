@@ -14,210 +14,116 @@
 
 package com.liferay.journal.upgrade.v1_0_0;
 
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetCategoryConstants;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalService;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
  */
-public class UpgradeJournalArticleType extends UpgradeBaseJournal {
+public class UpgradeJournalArticleType extends UpgradeProcess {
 
-	protected void addAssetCategory(
-			long assetCategoryId, long groupId, long companyId, long userId,
-			long rightAssetCategoryId, long leftAssetCategoryId, String name,
-			String title, long assetVocabularyId)
-		throws Exception {
+	public UpgradeJournalArticleType(
+		AssetCategoryLocalService assetCategoryLocalService,
+		AssetEntryLocalService assetEntryLocalService,
+		AssetVocabularyLocalService assetVocabularyLocalService,
+		CompanyLocalService companyLocalService,
+		DDMStructureLocalService ddmStructureLocalService,
+		GroupLocalService groupLocalService,
+		LayoutLocalService layoutLocalService,
+		UserLocalService userLocalService) {
 
-		Timestamp now = new Timestamp(System.currentTimeMillis());
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("insert into AssetCategory (uuid_, categoryId, ");
-			sb.append("groupId, companyId, userId, userName, createDate, ");
-			sb.append("modifiedDate, parentCategoryId, leftCategoryId, ");
-			sb.append("rightCategoryId, name, title, description, ");
-			sb.append("vocabularyId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			ps.setString(1, PortalUUIDUtil.generate());
-			ps.setLong(2, assetCategoryId);
-			ps.setLong(3, groupId);
-			ps.setLong(4, companyId);
-			ps.setLong(5, userId);
-			ps.setString(6, StringPool.BLANK);
-			ps.setTimestamp(7, now);
-			ps.setTimestamp(8, now);
-			ps.setLong(9, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-			ps.setLong(10, rightAssetCategoryId);
-			ps.setLong(11, leftAssetCategoryId);
-			ps.setString(12, name);
-			ps.setString(13, title);
-			ps.setString(14, StringPool.BLANK);
-			ps.setLong(15, assetVocabularyId);
-
-			ps.executeUpdate();
-
-			Map<String, Long> bitwiseValues = getBitwiseValues(
-				AssetCategory.class.getName());
-
-			List<String> actionIds = new ArrayList<>();
-
-			actionIds.add(ActionKeys.VIEW);
-
-			long bitwiseValue = getBitwiseValue(bitwiseValues, actionIds);
-
-			addResourcePermission(
-				companyId, AssetCategory.class.getName(), assetCategoryId,
-				getRoleId(companyId, RoleConstants.GUEST), bitwiseValue);
-			addResourcePermission(
-				companyId, AssetCategory.class.getName(), assetCategoryId,
-				getRoleId(companyId, RoleConstants.SITE_MEMBER), bitwiseValue);
-		}
-		catch (Exception e) {
-			_log.error("Unable to add asset category");
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		_assetCategoryLocalService = assetCategoryLocalService;
+		_assetEntryLocalService = assetEntryLocalService;
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+		_companyLocalService = companyLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
+		_groupLocalService = groupLocalService;
+		_layoutLocalService = layoutLocalService;
+		_userLocalService = userLocalService;
 	}
 
-	protected void addAssetEntryToAssetCategory(
-			long assetEntryId, long assetCategoryId)
+	protected AssetCategory addAssetCategory(
+			long groupId, long companyId, String title, long assetVocabularyId)
 		throws Exception {
 
-		Connection con = null;
-		PreparedStatement ps = null;
+		long userId = _userLocalService.getDefaultUserId(companyId);
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		ServiceContext serviceContext = new ServiceContext();
 
-			ps = con.prepareStatement(
-				"insert into AssetEntries_AssetCategories (categoryId, " +
-					"entryId) values (?, ?)");
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 
-			ps.setLong(1, assetCategoryId);
-			ps.setLong(2, assetEntryId);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			_log.error("Unable to add asset entry to asset category");
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		return _assetCategoryLocalService.addCategory(
+			userId, groupId, title, assetVocabularyId, serviceContext);
 	}
 
-	protected void addAssetVocabulary(
-			long vocabularyId, long groupId, long companyId, long userId,
-			String name, String title, String settings)
+	protected AssetVocabulary addAssetVocabulary(
+			long groupId, long companyId, String title,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap)
 		throws Exception {
 
-		Timestamp now = new Timestamp(System.currentTimeMillis());
+		long userId = _userLocalService.getDefaultUserId(companyId);
 
-		Connection con = null;
-		PreparedStatement ps = null;
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper();
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
+			new long[] {
+				PortalUtil.getClassNameId(JournalArticle.class.getName())
+			},
+			new long[] {-1}, new boolean[] {false});
+		assetVocabularySettingsHelper.setMultiValued(false);
 
-			StringBundler sb = new StringBundler(4);
+		ServiceContext serviceContext = new ServiceContext();
 
-			sb.append("insert into AssetVocabulary (uuid_, vocabularyId, ");
-			sb.append("groupId, companyId, userId, userName, createDate, ");
-			sb.append("modifiedDate, name, title, description, settings_) ");
-			sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			ps.setString(1, PortalUUIDUtil.generate());
-			ps.setLong(2, vocabularyId);
-			ps.setLong(3, groupId);
-			ps.setLong(4, companyId);
-			ps.setLong(5, userId);
-			ps.setString(6, StringPool.BLANK);
-			ps.setTimestamp(7, now);
-			ps.setTimestamp(8, now);
-			ps.setString(9, name);
-			ps.setString(10, title);
-			ps.setString(11, StringPool.BLANK);
-			ps.setString(12, settings);
-
-			ps.executeUpdate();
-
-			Map<String, Long> bitwiseValues = getBitwiseValues(
-				AssetVocabulary.class.getName());
-
-			List<String> actionIds = new ArrayList<>();
-
-			actionIds.add(ActionKeys.VIEW);
-
-			long bitwiseValue = getBitwiseValue(bitwiseValues, actionIds);
-
-			addResourcePermission(
-				companyId, AssetVocabulary.class.getName(), vocabularyId,
-				getRoleId(companyId, RoleConstants.GUEST), bitwiseValue);
-			addResourcePermission(
-				companyId, AssetVocabulary.class.getName(), vocabularyId,
-				getRoleId(companyId, RoleConstants.SITE_MEMBER), bitwiseValue);
-		}
-		catch (Exception e) {
-			_log.error("Unable to add asset vocabulary");
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		return _assetVocabularyLocalService.addVocabulary(
+			userId, groupId, title, nameMap, descriptionMap,
+			assetVocabularySettingsHelper.toString(), serviceContext);
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateArticleType();
 
-		// UpgradeJournalArticles must be executed after calling
-		// updateArticleType because journal article types must already be
-		// converted to asset categories and asset vocabularies
-
-		upgrade(UpgradeJournalArticles.class);
+		upgrade(
+			new UpgradeJournalArticles(
+				_assetCategoryLocalService, _ddmStructureLocalService,
+				_groupLocalService, _layoutLocalService));
 	}
 
 	protected List<String> getArticleTypes() throws Exception {
@@ -240,37 +146,6 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 			}
 
 			return types;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected long getAssetEntryId(long classPK) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select entryId from AssetEntry where classNameId = ? and " +
-					"classPK = ?");
-
-			ps.setLong(
-				1,
-				PortalUtil.getClassNameId(
-					"com.liferay.portlet.journal.model.JournalArticle"));
-			ps.setLong(2, classPK);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				return rs.getLong("entryId");
-			}
-
-			return 0;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
@@ -338,15 +213,21 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 
 			while (rs.next()) {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
+
+				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+					JournalArticle.class.getName(), resourcePrimKey);
+
+				if (assetEntry == null) {
+					continue;
+				}
+
 				String type = rs.getString("type_");
 
-				long assetEntryId = getAssetEntryId(resourcePrimKey);
 				long assetCategoryId =
 					journalArticleTypesToAssetCategoryIds.get(type);
 
-				if (assetEntryId > 0) {
-					addAssetEntryToAssetCategory(assetEntryId, assetCategoryId);
-				}
+				_assetEntryLocalService.addAssetCategoryAssetEntry(
+					assetCategoryId, assetEntry);
 			}
 		}
 		finally {
@@ -365,72 +246,47 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 			return;
 		}
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		List<Company> companies = _companyLocalService.getCompanies();
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		for (Company company : companies) {
+			Set<Locale> locales = LanguageUtil.getAvailableLocales(
+				company.getGroupId());
 
-			ps = con.prepareStatement("select companyId from Company");
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				UpgradeProcessUtil.getDefaultLanguageId(
+					company.getCompanyId()));
 
-			rs = ps.executeQuery();
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				locales, defaultLocale, "type");
 
-			while (rs.next()) {
-				long vocabularyId = increment();
+			AssetVocabulary assetVocabulary = addAssetVocabulary(
+				company.getGroupId(), company.getCompanyId(), "type", nameMap,
+				new HashMap<Locale, String>());
 
-				long companyId = rs.getLong("companyId");
+			Map<String, Long> journalArticleTypesToAssetCategoryIds =
+				new HashMap<>();
 
-				long groupId = getCompanyGroupId(companyId);
-				long userId = getDefaultUserId(companyId);
+			for (String type : types) {
+				AssetCategory assetCategory = addAssetCategory(
+					company.getGroupId(), company.getCompanyId(), type,
+					assetVocabulary.getVocabularyId());
 
-				String defaultLanguageId =
-					UpgradeProcessUtil.getDefaultLanguageId(companyId);
-
-				AssetVocabularySettingsHelper assetVocabularySettingsHelper =
-					new AssetVocabularySettingsHelper();
-
-				assetVocabularySettingsHelper.setMultiValued(false);
-
-				assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
-					new long[] {
-						PortalUtil.getClassNameId(
-							"com.liferay.portlet.journal.model.JournalArticle")
-					},
-					new long[] {-1}, new boolean[] {false});
-
-				addAssetVocabulary(
-					vocabularyId, groupId, companyId, userId, "type",
-					localize(groupId, "type", defaultLanguageId),
-					assetVocabularySettingsHelper.toString());
-
-				Map<String, Long> journalArticleTypesToAssetCategoryIds =
-					new HashMap<>();
-
-				int i = 1;
-
-				for (String type : types) {
-					long assetCategoryId = increment();
-
-					addAssetCategory(
-						assetCategoryId, groupId, companyId, userId, i++, i++,
-						type, localize(groupId, type, defaultLanguageId),
-						vocabularyId);
-
-					journalArticleTypesToAssetCategoryIds.put(
-						type, assetCategoryId);
-				}
-
-				updateArticles(
-					companyId, journalArticleTypesToAssetCategoryIds);
+				journalArticleTypesToAssetCategoryIds.put(
+					type, assetCategory.getCategoryId());
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
+
+			updateArticles(
+				company.getCompanyId(), journalArticleTypesToAssetCategoryIds);
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeJournalArticleType.class);
+	private final AssetCategoryLocalService _assetCategoryLocalService;
+	private final AssetEntryLocalService _assetEntryLocalService;
+	private final AssetVocabularyLocalService _assetVocabularyLocalService;
+	private final CompanyLocalService _companyLocalService;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final GroupLocalService _groupLocalService;
+	private final LayoutLocalService _layoutLocalService;
+	private final UserLocalService _userLocalService;
 
 }

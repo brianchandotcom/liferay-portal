@@ -81,12 +81,8 @@ public class EditorConfigurationFactoryImpl
 	private static EditorConfigProvider _editorConfigProvider;
 	private static final ServiceTrackerMap<String, EditorConfigTransformer>
 		_editorConfigTransformerServiceTrackerMap =
-			ServiceTrackerCollections.singleValueMap(
+			ServiceTrackerCollections.openSingleValueMap(
 				EditorConfigTransformer.class, "editor.name");
 	private static EditorOptionsProvider _editorOptionsProvider;
-
-	static {
-		_editorConfigTransformerServiceTrackerMap.open();
-	}
 
 }

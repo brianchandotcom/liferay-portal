@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
@@ -26,12 +26,13 @@ import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
  */
 @Deprecated
 public abstract class PasswordPolicyRelActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public PasswordPolicyRelActionableDynamicQuery() {
 		setBaseLocalService(PasswordPolicyRelLocalServiceUtil.getService());
-		setClass(PasswordPolicyRel.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(PasswordPolicyRel.class);
 
 		setPrimaryKeyPropertyName("passwordPolicyRelId");
 	}

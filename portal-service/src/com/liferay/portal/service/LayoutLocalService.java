@@ -717,6 +717,9 @@ public interface LayoutLocalService extends BaseLocalService,
 		boolean privateLayout, java.lang.String friendlyURL)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* Returns the layout matching the primary key, group, and privacy; throws a
 	* {@link NoSuchLayoutException} otherwise.

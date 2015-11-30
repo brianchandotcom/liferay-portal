@@ -110,6 +110,6 @@ public class UpdateTemplateMVCActionCommand
 			serviceContext);
 	}
 
-	private DDMTemplateService _ddmTemplateService;
+	private volatile DDMTemplateService _ddmTemplateService;
 
 }

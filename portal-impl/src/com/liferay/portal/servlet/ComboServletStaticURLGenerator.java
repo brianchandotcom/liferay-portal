@@ -54,6 +54,14 @@ public class ComboServletStaticURLGenerator {
 						continue;
 					}
 
+					if (portletResource.endsWith(".css") && _rtl) {
+						int pos = portletResource.lastIndexOf(
+							StringPool.PERIOD);
+
+						portletResource = portletResource.substring(
+							0, pos) + "_rtl" + portletResource.substring(pos);
+					}
+
 					String url = portletResource;
 
 					if (!HttpUtil.hasProtocol(portletResource)) {
@@ -106,6 +114,10 @@ public class ComboServletStaticURLGenerator {
 		_predicateFilter = predicateFilter;
 	}
 
+	public void setRtl(boolean rtl) {
+		_rtl = rtl;
+	}
+
 	public void setTimestamp(long timestamp) {
 		_timestamp = timestamp;
 	}
@@ -123,6 +135,7 @@ public class ComboServletStaticURLGenerator {
 
 	private PortletResourceAccessor[] _portletResourceAccessors;
 	private PredicateFilter<String> _predicateFilter = PredicateFilter.ALL;
+	private boolean _rtl = false;
 	private long _timestamp;
 	private String _urlPrefix;
 	private Set<String> _visitedURLs;

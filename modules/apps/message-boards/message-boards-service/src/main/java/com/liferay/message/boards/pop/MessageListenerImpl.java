@@ -353,10 +353,10 @@ public class MessageListenerImpl implements MessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MessageListenerImpl.class);
 
-	private CompanyLocalService _companyLocalService;
-	private MBCategoryLocalService _mbCategoryLocalService;
-	private MBMessageLocalService _mbMessageLocalService;
-	private MBMessageService _mbMessageService;
-	private UserLocalService _userLocalService;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile MBCategoryLocalService _mbCategoryLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
+	private volatile MBMessageService _mbMessageService;
+	private volatile UserLocalService _userLocalService;
 
 }

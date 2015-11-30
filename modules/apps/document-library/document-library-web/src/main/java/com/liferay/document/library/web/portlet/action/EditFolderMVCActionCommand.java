@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -120,8 +119,8 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			deleteFolderIds = new long[] {folderId};
 		}
 		else {
-			deleteFolderIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "folderIds"), 0L);
+			deleteFolderIds = ParamUtil.getLongValues(
+				actionRequest, "rowIdsFolder");
 		}
 
 		List<TrashedModel> trashedModels = new ArrayList<>();
@@ -334,6 +333,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private DLAppService _dlAppService;
+	private volatile DLAppService _dlAppService;
 
 }

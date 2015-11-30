@@ -148,6 +148,6 @@ public class ServiceAccessPolicyManagerImpl
 		ServiceAccessPolicyManagerImpl.class);
 
 	private volatile ConfigurationFactory _configurationFactory;
-	private SAPEntryService _sapEntryService;
+	private volatile SAPEntryService _sapEntryService;
 
 }

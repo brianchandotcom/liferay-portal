@@ -302,10 +302,10 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 
 			});
 		exportActionableDynamicQuery.setBaseLocalService(this);
-		exportActionableDynamicQuery.setClass(AssetLink.class);
 		exportActionableDynamicQuery.setClassLoader(getClassLoader());
 		exportActionableDynamicQuery.setCompanyId(
 			portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setModelClass(AssetLink.class);
 		exportActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<AssetLink>() {
 

@@ -107,8 +107,8 @@ public class SolrSearchEngineConfigurator
 		_searchEngines.remove(searchEngineId);
 	}
 
-	private IndexSearcher _indexSearcher;
-	private IndexWriter _indexWriter;
+	private volatile IndexSearcher _indexSearcher;
+	private volatile IndexWriter _indexWriter;
 	private final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();
 

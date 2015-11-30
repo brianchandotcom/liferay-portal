@@ -180,7 +180,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	protected DirectDeployTask addTaskAutoUpdateXml(final Project project) {
-		DirectDeployTask directDeployTask = GradleUtil.addTask(
+		final DirectDeployTask directDeployTask = GradleUtil.addTask(
 			project, AUTO_UPDATE_XML_TASK_NAME, DirectDeployTask.class);
 
 		directDeployTask.setAppServerDeployDir(
@@ -331,7 +331,15 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
-		jar.finalizedBy(directDeployTask);
+		jar.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					directDeployTask.execute();
+				}
+
+			});
 
 		return directDeployTask;
 	}

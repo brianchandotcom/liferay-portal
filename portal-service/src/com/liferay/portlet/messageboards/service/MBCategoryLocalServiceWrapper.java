@@ -433,6 +433,11 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		return _mbCategoryLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _mbCategoryLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns a range of all the message boards categories.
 	*

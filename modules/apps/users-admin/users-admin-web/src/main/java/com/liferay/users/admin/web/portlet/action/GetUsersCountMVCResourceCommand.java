@@ -21,7 +21,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.io.PrintWriter;
 
@@ -133,6 +133,6 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 		_userLocalService = userLocalService;
 	}
 
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.messageboards.model.MBBan;
@@ -27,12 +27,13 @@ import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
  */
 @Deprecated
 public abstract class MBBanActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public MBBanActionableDynamicQuery() {
 		setBaseLocalService(MBBanLocalServiceUtil.getService());
-		setClass(MBBan.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(MBBan.class);
 
 		setPrimaryKeyPropertyName("banId");
 	}

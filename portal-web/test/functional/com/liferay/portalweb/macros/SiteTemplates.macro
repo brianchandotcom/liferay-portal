@@ -5,6 +5,14 @@
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
 		<execute function="Click" locator1="MenuItem#MANAGE" />
 
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
+
+		<var name="key_sitePageName" value="${sitePageName}" />
+
 		<if>
 			<isset var="childSitepageName" />
 			<then>
@@ -16,10 +24,10 @@
 		</if>
 
 		<execute function="Pause" locator1="3000" />
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${siteChildPageName}" />
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -53,9 +61,15 @@
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
 		<execute function="Click" locator1="MenuItem#MANAGE" />
 
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
+
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<if>
 			<isset var="pageType" />
@@ -86,7 +100,7 @@
 		</if>
 
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${sitePageName}" />
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 	</command>
 
 	<command name="allowChangesToPageTemplateCP">

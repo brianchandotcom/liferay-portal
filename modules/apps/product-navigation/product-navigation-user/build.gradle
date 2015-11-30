@@ -1,10 +1,11 @@
 dependencies {
 	compile project(":apps:application-list:application-list-api")
+	compile project(":apps:application-list:application-list-taglib")
 }
 
 deploy {
 	from("lib") {
-		include "com.liferay.osgi.service.tracker.map.jar"
+		include "com.liferay.osgi.service.tracker.collections.jar"
 	}
 }
 

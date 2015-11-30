@@ -217,9 +217,9 @@ public class OAuthManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(OAuthManager.class);
 
-	private CompanyLocalService _companyLocalService;
-	private ExpandoColumnLocalService _expandoColumnLocalService;
-	private ExpandoTableLocalService _expandoTableLocalService;
-	private ExpandoValueLocalService _expandoValueLocalService;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile ExpandoColumnLocalService _expandoColumnLocalService;
+	private volatile ExpandoTableLocalService _expandoTableLocalService;
+	private volatile ExpandoValueLocalService _expandoValueLocalService;
 
 }

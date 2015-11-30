@@ -210,6 +210,11 @@ public class KaleoConditionLocalServiceWrapper
 		return _kaleoConditionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoConditionLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the kaleo condition with the primary key.
 	*

@@ -314,6 +314,11 @@ public class DBStore extends BaseStore {
 			String fileName)
 		throws DuplicateFileException, NoSuchFileException {
 
+		if (repositoryId == newRepositoryId) {
+			throw new DuplicateFileException(
+				companyId, newRepositoryId, fileName);
+		}
+
 		if (!hasFile(companyId, repositoryId, fileName)) {
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
@@ -332,6 +337,11 @@ public class DBStore extends BaseStore {
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
 		throws DuplicateFileException, NoSuchFileException {
+
+		if (fileName.equals(newFileName)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, newFileName);
+		}
 
 		if (!hasFile(companyId, repositoryId, fileName)) {
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
@@ -464,6 +474,6 @@ public class DBStore extends BaseStore {
 
 	private static final Log _log = LogFactoryUtil.getLog(DBStore.class);
 
-	private DLContentLocalService _dlContentLocalService;
+	private volatile DLContentLocalService _dlContentLocalService;
 
 }

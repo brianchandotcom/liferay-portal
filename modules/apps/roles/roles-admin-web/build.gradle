@@ -1,6 +1,7 @@
 dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:portlet-display-template:portlet-display-template")
+	compile project(":apps:roles:roles-admin-api")
 	compile project(":portal:portal-upgrade")
 }
 

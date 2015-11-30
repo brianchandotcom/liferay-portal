@@ -250,7 +250,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
-	private MBCategoryLocalService _mbCategoryLocalService;
-	private MBMessageLocalService _mbMessageLocalService;
+	private volatile MBCategoryLocalService _mbCategoryLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
 
 }

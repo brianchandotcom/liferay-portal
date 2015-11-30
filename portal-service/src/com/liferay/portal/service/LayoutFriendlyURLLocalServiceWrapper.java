@@ -272,6 +272,11 @@ public class LayoutFriendlyURLLocalServiceWrapper
 		return _layoutFriendlyURLLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _layoutFriendlyURLLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the layout friendly u r l with the primary key.
 	*

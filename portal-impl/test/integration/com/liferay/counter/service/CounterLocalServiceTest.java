@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.BaseTestRule;
+import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -48,12 +50,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.Description;
 
 /**
  * @author Shuyang Zhou
@@ -64,24 +65,29 @@ public class CounterLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			HypersonicServerTestRule.INSTANCE, new LiferayIntegrationTestRule(),
-			MainServletTestRule.INSTANCE);
+			false, new LiferayIntegrationTestRule(),
+			MainServletTestRule.INSTANCE, HypersonicServerTestRule.INSTANCE,
+			new BaseTestRule<>(
+				new BaseTestCallback<Void, Void>() {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_COUNTER_NAME = StringUtil.randomString();
+					@Override
+					public void afterClass(Description description, Void v) {
+						CounterLocalServiceUtil.reset(_COUNTER_NAME);
+					}
 
-		CounterLocalServiceUtil.reset(_COUNTER_NAME);
+					@Override
+					public Void beforeClass(Description description) {
+						CounterLocalServiceUtil.reset(_COUNTER_NAME);
 
-		Counter counter = CounterLocalServiceUtil.createCounter(_COUNTER_NAME);
+						Counter counter = CounterLocalServiceUtil.createCounter(
+							_COUNTER_NAME);
 
-		CounterLocalServiceUtil.updateCounter(counter);
-	}
+						CounterLocalServiceUtil.updateCounter(counter);
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		CounterLocalServiceUtil.reset(_COUNTER_NAME);
-	}
+						return null;
+					}
+
+				}));
 
 	@Test
 	public void testConcurrentIncrement() throws Exception {
@@ -163,7 +169,7 @@ public class CounterLocalServiceTest {
 		return classPath;
 	}
 
-	private static String _COUNTER_NAME;
+	private static final String _COUNTER_NAME = StringUtil.randomString();
 
 	private static final int _INCREMENT_COUNT = 10000;
 

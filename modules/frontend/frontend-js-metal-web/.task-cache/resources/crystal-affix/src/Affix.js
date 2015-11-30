@@ -1,200 +1,164 @@
-define(
-    "frontend-js-metal-web@1.0.0/crystal-affix/src/Affix",
-    ['exports', 'module', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/attribute/Attribute', 'metal/src/events/EventEmitter', 'metal/src/events/EventEmitterProxy', 'metal-position/src/Position', 'metal-jquery-adapter/src/JQueryAdapter'],
-    function (exports, module, _metalSrcCore, _metalSrcDomDom, _metalSrcAttributeAttribute, _metalSrcEventsEventEmitter, _metalSrcEventsEventEmitterProxy, _metalPositionSrcPosition, _metalJqueryAdapterSrcJQueryAdapter) {
-        'use strict';
+'use strict';
 
-        var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-        var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+define("frontend-js-metal-web@1.0.0/crystal-affix/src/Affix", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/attribute/Attribute', 'metal/src/events/EventEmitter', 'metal/src/events/EventEmitterProxy', 'metal-position/src/Position', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _Attribute2, _EventEmitter, _EventEmitterProxy, _Position, _JQueryAdapter) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 
-        function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _core2 = _interopRequireDefault(_core);
 
-        function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _dom2 = _interopRequireDefault(_dom);
 
-        function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _Attribute3 = _interopRequireDefault(_Attribute2);
 
-        var _core = _interopRequireDefault(_metalSrcCore);
+	var _EventEmitter2 = _interopRequireDefault(_EventEmitter);
 
-        var _dom = _interopRequireDefault(_metalSrcDomDom);
+	var _EventEmitterProxy2 = _interopRequireDefault(_EventEmitterProxy);
 
-        var _Attribute2 = _interopRequireDefault(_metalSrcAttributeAttribute);
+	var _Position2 = _interopRequireDefault(_Position);
 
-        var _EventEmitter = _interopRequireDefault(_metalSrcEventsEventEmitter);
+	var _JQueryAdapter2 = _interopRequireDefault(_JQueryAdapter);
 
-        var _EventEmitterProxy = _interopRequireDefault(_metalSrcEventsEventEmitterProxy);
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
 
-        var _Position = _interopRequireDefault(_metalPositionSrcPosition);
+	function _classCallCheck(instance, Constructor) {
+		if (!(instance instanceof Constructor)) {
+			throw new TypeError("Cannot call a class as a function");
+		}
+	}
 
-        /**
-      * Affix utility.
-      */
+	function _possibleConstructorReturn(self, call) {
+		if (!self) {
+			throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+		}
 
-        var _JQueryAdapter = _interopRequireDefault(_metalJqueryAdapterSrcJQueryAdapter);
+		return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
 
-        var Affix = (function (_Attribute) {
-            _inherits(Affix, _Attribute);
+	function _inherits(subClass, superClass) {
+		if (typeof superClass !== "function" && superClass !== null) {
+			throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+		}
 
-            /**
-       * @inheritDoc
-       */
+		subClass.prototype = Object.create(superClass && superClass.prototype, {
+			constructor: {
+				value: subClass,
+				enumerable: false,
+				writable: true,
+				configurable: true
+			}
+		});
+		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
 
-            function Affix(opt_config) {
-                _classCallCheck(this, Affix);
+	var Affix = (function (_Attribute) {
+		_inherits(Affix, _Attribute);
 
-                _get(Object.getPrototypeOf(Affix.prototype), 'constructor', this).call(this, opt_config);
+		function Affix(opt_config) {
+			_classCallCheck(this, Affix);
 
-                if (!Affix.emitter_) {
-                    Affix.emitter_ = new _EventEmitter['default']();
-                    Affix.proxy_ = new _EventEmitterProxy['default'](document, Affix.emitter_, null, {
-                        scroll: true
-                    });
-                }
+			var _this = _possibleConstructorReturn(this, _Attribute.call(this, opt_config));
 
-                /**
-        * Holds the last position.
-        * @type {Position.Bottom|Position.Default|Position.Top}
-        * @private
-        */
-                this.lastPosition_ = null;
+			if (!Affix.emitter_) {
+				Affix.emitter_ = new _EventEmitter2.default();
+				Affix.proxy_ = new _EventEmitterProxy2.default(document, Affix.emitter_, null, {
+					scroll: true
+				});
+			}
 
-                /**
-        * Holds event handle that listens scroll shared event emitter proxy.
-        * @type {EventHandle}
-        * @protected
-        */
-                this.scrollHandle_ = Affix.emitter_.on('scroll', this.checkPosition.bind(this));
+			_this.lastPosition_ = null;
+			_this.scrollHandle_ = Affix.emitter_.on('scroll', _this.checkPosition.bind(_this));
 
-                this.on('elementChanged', this.checkPosition);
-                this.on('offsetTopChanged', this.checkPosition);
-                this.on('offsetBottomChanged', this.checkPosition);
-                this.checkPosition();
-            }
+			_this.on('elementChanged', _this.checkPosition);
 
-            /**
-       * Holds positions enum.
-       * @enum {string}
-       */
+			_this.on('offsetTopChanged', _this.checkPosition);
 
-            /**
-       * @inheritDoc
-       */
+			_this.on('offsetBottomChanged', _this.checkPosition);
 
-            _createClass(Affix, [{
-                key: 'disposeInternal',
-                value: function disposeInternal() {
-                    _dom['default'].removeClasses(this.element, Affix.Position.Bottom + ' ' + Affix.Position.Default + ' ' + Affix.Position.Top);
-                    this.scrollHandle_.dispose();
-                    _get(Object.getPrototypeOf(Affix.prototype), 'disposeInternal', this).call(this);
-                }
+			_this.checkPosition();
 
-                /**
-        * Synchronize bottom, top and element regions and checks if position has
-        * changed. If position has changed syncs position.
-        */
-            }, {
-                key: 'checkPosition',
-                value: function checkPosition() {
-                    if (this.intersectTopRegion()) {
-                        this.syncPosition(Affix.Position.Top);
-                    } else if (this.intersectBottomRegion()) {
-                        this.syncPosition(Affix.Position.Bottom);
-                    } else {
-                        this.syncPosition(Affix.Position.Default);
-                    }
-                }
+			return _this;
+		}
 
-                /**
-        * Whether the element is intersecting with bottom region defined by
-        * offsetBottom.
-        * @return {boolean}
-        */
-            }, {
-                key: 'intersectBottomRegion',
-                value: function intersectBottomRegion() {
-                    if (!_core['default'].isDef(this.offsetBottom)) {
-                        return false;
-                    }
-                    var clientHeight = _Position['default'].getHeight(this.scrollElement);
-                    var scrollElementClientHeight = _Position['default'].getClientHeight(this.scrollElement);
-                    return _Position['default'].getScrollTop(this.scrollElement) + scrollElementClientHeight >= clientHeight - this.offsetBottom;
-                }
+		Affix.prototype.disposeInternal = function disposeInternal() {
+			_dom2.default.removeClasses(this.element, Affix.Position.Bottom + ' ' + Affix.Position.Default + ' ' + Affix.Position.Top);
 
-                /**
-        * Whether the element is intersecting with top region defined by
-        * offsetTop.
-        * @return {boolean}
-        */
-            }, {
-                key: 'intersectTopRegion',
-                value: function intersectTopRegion() {
-                    if (!_core['default'].isDef(this.offsetTop)) {
-                        return false;
-                    }
-                    return _Position['default'].getScrollTop(this.scrollElement) <= this.offsetTop;
-                }
+			this.scrollHandle_.dispose();
 
-                /**
-        * Synchronizes element css classes to match with the specified position.
-        * @param {Position.Bottom|Position.Default|Position.Top} position
-        */
-            }, {
-                key: 'syncPosition',
-                value: function syncPosition(position) {
-                    if (this.lastPosition_ !== position) {
-                        _dom['default'].addClasses(this.element, position);
-                        _dom['default'].removeClasses(this.element, this.lastPosition_);
-                        this.lastPosition_ = position;
-                    }
-                }
-            }]);
+			_Attribute.prototype.disposeInternal.call(this);
+		};
 
-            return Affix;
-        })(_Attribute2['default']);
+		Affix.prototype.checkPosition = function checkPosition() {
+			if (this.intersectTopRegion()) {
+				this.syncPosition(Affix.Position.Top);
+			} else if (this.intersectBottomRegion()) {
+				this.syncPosition(Affix.Position.Bottom);
+			} else {
+				this.syncPosition(Affix.Position.Default);
+			}
+		};
 
-        Affix.Position = {
-            Top: 'affix-top',
-            Bottom: 'affix-bottom',
-            Default: 'affix-default'
-        };
+		Affix.prototype.intersectBottomRegion = function intersectBottomRegion() {
+			if (!_core2.default.isDef(this.offsetBottom)) {
+				return false;
+			}
 
-        Affix.ATTRS = {
-            /**
-       * The scrollElement element to be used as scrollElement area for affix. The scrollElement is
-       * where the scroll event is listened from.
-       * @type {Element|Window}
-       */
-            scrollElement: {
-                setter: _dom['default'].toElement,
-                value: document
-            },
+			var clientHeight = _Position2.default.getHeight(this.scrollElement);
 
-            /**
-       * Defines the offset bottom that triggers affix.
-       * @type {number}
-       */
-            offsetTop: {
-                validator: _core['default'].isNumber
-            },
+			var scrollElementClientHeight = _Position2.default.getClientHeight(this.scrollElement);
 
-            /**
-       * Defines the offset top that triggers affix.
-       * @type {number}
-       */
-            offsetBottom: {
-                validator: _core['default'].isNumber
-            },
+			return _Position2.default.getScrollTop(this.scrollElement) + scrollElementClientHeight >= clientHeight - this.offsetBottom;
+		};
 
-            /**
-       * Element to be used as alignment reference of affix.
-       * @type {Element}
-       */
-            element: {
-                setter: _dom['default'].toElement
-            }
-        };
+		Affix.prototype.intersectTopRegion = function intersectTopRegion() {
+			if (!_core2.default.isDef(this.offsetTop)) {
+				return false;
+			}
 
-        module.exports = Affix;
-        _JQueryAdapter['default'].register('affix', Affix);
-    }
-);
+			return _Position2.default.getScrollTop(this.scrollElement) <= this.offsetTop;
+		};
+
+		Affix.prototype.syncPosition = function syncPosition(position) {
+			if (this.lastPosition_ !== position) {
+				_dom2.default.addClasses(this.element, position);
+
+				_dom2.default.removeClasses(this.element, this.lastPosition_);
+
+				this.lastPosition_ = position;
+			}
+		};
+
+		return Affix;
+	})(_Attribute3.default);
+
+	Affix.Position = {
+		Top: 'affix-top',
+		Bottom: 'affix-bottom',
+		Default: 'affix-default'
+	};
+	Affix.ATTRS = {
+		scrollElement: {
+			setter: _dom2.default.toElement,
+			value: document
+		},
+		offsetTop: {
+			validator: _core2.default.isNumber
+		},
+		offsetBottom: {
+			validator: _core2.default.isNumber
+		},
+		element: {
+			setter: _dom2.default.toElement
+		}
+	};
+	exports.default = Affix;
+
+	_JQueryAdapter2.default.register('affix', Affix);
+});
+//# sourceMappingURL=Affix.js.map

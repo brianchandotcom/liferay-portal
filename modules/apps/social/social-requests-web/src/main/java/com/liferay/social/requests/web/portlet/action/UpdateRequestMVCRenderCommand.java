@@ -85,6 +85,6 @@ public class UpdateRequestMVCRenderCommand extends BaseMVCActionCommand {
 		_socialRequestService.updateRequest(requestId, status, themeDisplay);
 	}
 
-	private SocialRequestService _socialRequestService;
+	private volatile SocialRequestService _socialRequestService;
 
 }

@@ -283,7 +283,7 @@ public class FileShortcutStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileShortcutStagedModelDataHandler.class);
 
-	private DLAppLocalService _dlAppLocalService;
-	private DLFileShortcutLocalService _dlFileShortcutLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 }

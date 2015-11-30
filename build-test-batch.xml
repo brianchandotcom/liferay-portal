@@ -811,8 +811,9 @@
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
 		<attribute default="" name="test.license.xml.url" />
+		<attribute default="" name="test.plugin.zip.url" />
 		<attribute default="" name="test.portal.bundle.zip.url" />
-		<attribute default="false" name="test.release.bundle" />
+		<attribute default="" name="test.sql.zip.url" />
 		<attribute default="false" name="tomcat.gc.log" />
 		<attribute default="false" name="tsant.gc.log" />
 
@@ -836,10 +837,12 @@
 				</test-action>
 
 				<test-set-up>
-					<antcall target="compile" />
-
 					<if>
-						<equals arg1="@{test.release.bundle}" arg2="true" />
+						<and>
+							<matches pattern="http" string="@{test.license.xml.url}" />
+							<matches pattern="http" string="@{test.portal.bundle.zip.url}" />
+							<matches pattern="http" string="@{test.sql.zip.url}" />
+						</and>
 						<then>
 							<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
 
@@ -852,10 +855,28 @@
 							<antcall target="deploy-license-xml">
 								<param name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />
 							</antcall>
+
+							<antcall target="deploy-sql-zip">
+								<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />
+							</antcall>
 						</then>
 						<else>
+							<antcall target="compile" />
+
 							<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
 						</else>
+					</if>
+
+					<if>
+						<matches pattern="http" string="@{test.plugin.zip.url}" />
+						<then>
+							<mkdir dir="${liferay.home}/deploy" />
+
+							<mirrors-get
+								dest="${liferay.home}/deploy"
+								src="@{test.plugin.zip.url}"
+							/>
+						</then>
 					</if>
 
 					<antcall target="record-test-generated-properties" />
@@ -1016,15 +1037,16 @@
 		</sequential>
 	</macrodef>
 
-	<target name="functional-release-tomcat-mysql">
+	<target name="functional-bundle-tomcat-mysql">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"
 			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.release.bundle="true"
+			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
 
@@ -1108,6 +1130,43 @@
 		</run-batch-test>
 	</target>
 
+	<target name="oracle-service-start">
+		<exec executable="service" failonerror="true">
+			<arg line="oracledb start" />
+		</exec>
+
+		<retry retrycount="60">
+			<sequential>
+				<local name="output.content" />
+				<local name="return.code" />
+
+				<exec executable="${oracle.lsnrctl.executable}" outputproperty="output.content">
+					<arg value="services" />
+				</exec>
+
+				<echo>Output:
+${output.content}</echo>
+
+				<if>
+					<or>
+						<contains string="${output.content}" substring="The listener supports no services" />
+					</or>
+					<then>
+						<sleep seconds="5" />
+
+						<fail message="Output: ${output.content}" />
+					</then>
+				</if>
+			</sequential>
+		</retry>
+	</target>
+
+	<target name="oracle-service-stop">
+		<exec executable="service">
+			<arg line="oracledb stop" />
+		</exec>
+	</target>
+
 	<target name="plugins-compile">
 		<property name="testray.main.component.name" value="Plugins" />
 		<property name="testray.testcase.priority" value="4" />
@@ -1125,7 +1184,7 @@
 		</run-batch-test>
 	</target>
 
-	<target name="plugins-functional-release-tomcat-mysql">
+	<target name="plugins-functional-bundle-tomcat-mysql">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test
@@ -1133,7 +1192,7 @@
 			database.type="mysql"
 			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.release.bundle="true"
+			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
 
@@ -1294,7 +1353,7 @@ go</echo>
 				</exec>
 
 				<echo>Return code: ${return.code}
-Output content:
+Output:
 ${output.content}</echo>
 
 				<if>
@@ -1306,7 +1365,7 @@ ${output.content}</echo>
 					<then>
 						<clean-restart-sybase retry="true" />
 
-						<fail message="Output content: ${output.content}" />
+						<fail message="Output: ${output.content}" />
 					</then>
 				</if>
 

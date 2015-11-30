@@ -344,6 +344,10 @@ public class JournalFolderLocalServiceUtil {
 		return getService().getFoldersCount(groupId, parentFolderId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static long getInheritedWorkflowFolderId(long folderId)
 		throws com.liferay.journal.exception.NoSuchFolderException {
 		return getService().getInheritedWorkflowFolderId(folderId);

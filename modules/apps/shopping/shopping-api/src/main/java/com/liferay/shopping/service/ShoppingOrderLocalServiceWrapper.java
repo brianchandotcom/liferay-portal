@@ -228,6 +228,11 @@ public class ShoppingOrderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _shoppingOrderLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public com.liferay.shopping.model.ShoppingOrder getLatestOrder(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

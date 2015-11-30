@@ -29,4 +29,6 @@ public interface ServiceTrackerList<S> extends Closeable, List<S> {
 	@Override
 	public void close();
 
+	public void open();
+
 }

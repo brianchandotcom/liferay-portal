@@ -12,6 +12,7 @@
  * @param readOnly
  * @param required
  * @param showLabel
+ * @param strings
  * @param visible
  */
 {template .select}
@@ -28,6 +29,12 @@
 			{/if}
 
 			<select class="form-control" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" {$multiple}>
+				{if not $readOnly}
+					<option dir="{$dir}" selected value="">
+						{$strings.chooseAnOption}
+					</option>
+				{/if}
+
 				{foreach $option in $options}
 					<option dir="{$dir}" {$option.status} value="{$option.value}">
 						{$option.label}

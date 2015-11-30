@@ -36,36 +36,38 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 	<portlet:param name="mvcPath" value="/view.jsp" />
 </liferay-portlet:renderURL>
 
-<liferay-ui:tabs
-	names="public-pages,private-pages"
-	param="tabs1"
-	portletURL="<%= portletURL %>"
-	type="pills"
-/>
+<div class="container-fluid-1280">
+	<liferay-ui:tabs
+		names="public-pages,private-pages"
+		param="tabs1"
+		portletURL="<%= portletURL %>"
+		type="pills"
+	/>
 
-<aui:nav-bar>
-	<aui:nav cssClass="navbar-nav">
-		<liferay-portlet:renderURL var="exportPagesURL">
-			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
-			<portlet:param name="liveGroupId" value="<%= String.valueOf(groupDisplayContextHelper.getLiveGroupId()) %>" />
-			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-			<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-		</liferay-portlet:renderURL>
+	<aui:nav-bar>
+		<aui:nav cssClass="navbar-nav">
+			<liferay-portlet:renderURL var="exportPagesURL">
+				<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
+				<portlet:param name="liveGroupId" value="<%= String.valueOf(groupDisplayContextHelper.getLiveGroupId()) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+			</liferay-portlet:renderURL>
 
-		<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-up" label="export" />
+			<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-up" label="export" />
 
-		<liferay-portlet:renderURL var="importPagesURL">
-			<portlet:param name="mvcRenderCommandName" value="importLayouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
-			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-			<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-		</liferay-portlet:renderURL>
+			<liferay-portlet:renderURL var="importPagesURL">
+				<portlet:param name="mvcRenderCommandName" value="importLayouts" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+			</liferay-portlet:renderURL>
 
-		<aui:nav-item href="<%= importPagesURL %>" iconCssClass="icon-arrow-down" label="import" />
-	</aui:nav>
-</aui:nav-bar>
+			<aui:nav-item href="<%= importPagesURL %>" iconCssClass="icon-arrow-down" label="import" />
+		</aui:nav>
+	</aui:nav-bar>
+</div>

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -66,6 +65,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.ldap.LDAPSettings;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.server.capabilities.ServerCapabilitiesUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -822,7 +822,8 @@ public class MainServlet extends ActionServlet {
 
 		Filter filter = registry.getFilter("(search.engine.id=SYSTEM_ENGINE)");
 
-		serviceDependencyManager.registerDependencies(filter);
+		serviceDependencyManager.registerDependencies(
+			new Class[] {LDAPSettings.class}, new Filter[] {filter});
 	}
 
 	protected void initExt() throws Exception {
@@ -1148,7 +1149,7 @@ public class MainServlet extends ActionServlet {
 
 		response.setContentType(ContentTypes.TEXT_HTML_UTF8);
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = PortalUtil.getLocale(request);
 
 		String message = LanguageUtil.get(locale, messageKey);
 

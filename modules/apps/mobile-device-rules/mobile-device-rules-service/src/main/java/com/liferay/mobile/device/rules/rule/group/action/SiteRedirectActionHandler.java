@@ -147,7 +147,7 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 	private static final Collection<String> _propertyNames =
 		Collections.unmodifiableCollection(Arrays.asList("groupId", "plid"));
 
-	private GroupLocalService _groupLocalService;
-	private LayoutLocalService _layoutLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
 
 }

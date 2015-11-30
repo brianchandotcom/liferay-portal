@@ -422,7 +422,7 @@ public class UIItemsBuilder {
 		portletURL.setParameter("redirect", redirectURL.toString());
 
 		portletURL.setParameter(
-			"fileEntryIds", String.valueOf(_fileEntry.getFileEntryId()));
+			"rowIdsFileEntry", String.valueOf(_fileEntry.getFileEntryId()));
 
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.MOVE, "move",

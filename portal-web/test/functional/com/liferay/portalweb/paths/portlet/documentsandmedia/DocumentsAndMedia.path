@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@id,'DLPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION_OPTIONS</td>
 	<td>//a[@title='Options']</td>
 	<td></td>
@@ -56,7 +61,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_THUMBNAIL</td>
-	<td>//div[@data-title='${key_dmDocumentTitle}']//div[@class='entry-thumbnail']/img</td>
+	<td>//li[@data-title='${key_dmDocumentTitle}']//div[contains(@class,'bg-cover')]/a/img</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +81,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_CHECKBOX</td>
-	<td>//div[contains(.,'${key_dmDocumentTitle}') and a[@data-folder='false']]//input</td>
+	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -101,7 +106,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_WORKFLOW_STATUS</td>
-	<td>//div[contains(.,'${key_dmDocumentTitle}') and a[@data-folder='false']]//span[@class='workflow-status']/strong</td>
+	<td>//div[contains(.,'${key_dmDocumentTitle}') and @class='card-dm-details']//div[@class='status']</td>
 	<td></td>
 </tr>
 <tr>

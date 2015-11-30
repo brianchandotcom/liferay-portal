@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
@@ -27,12 +27,13 @@ import com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil;
  */
 @Deprecated
 public abstract class AssetCategoryPropertyActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public AssetCategoryPropertyActionableDynamicQuery() {
 		setBaseLocalService(AssetCategoryPropertyLocalServiceUtil.getService());
-		setClass(AssetCategoryProperty.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(AssetCategoryProperty.class);
 
 		setPrimaryKeyPropertyName("categoryPropertyId");
 	}

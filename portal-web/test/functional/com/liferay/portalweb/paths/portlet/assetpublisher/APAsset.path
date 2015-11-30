@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_VIEW_CONTENT</td>
+	<td>//div[(@class='asset-content')and contains(.,'${key_assetContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_PENCIL</td>
 	<td>//i[@class='icon-edit-sign']</td>
 	<td></td>

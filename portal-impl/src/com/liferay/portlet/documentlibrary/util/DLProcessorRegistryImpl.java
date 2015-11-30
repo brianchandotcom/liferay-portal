@@ -44,8 +44,6 @@ import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	public void afterPropertiesSet() throws Exception {
-		_dlProcessorServiceTrackerMap.open();
-
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
@@ -271,7 +269,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	private final ServiceTrackerMap<String, DLProcessor>
 		_dlProcessorServiceTrackerMap =
-			ServiceTrackerCollections.singleValueMap(
+			ServiceTrackerCollections.openSingleValueMap(
 				DLProcessor.class, null,
 				new ServiceReferenceMapper<String, DLProcessor>() {
 

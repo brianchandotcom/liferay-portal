@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String mvcPath = ParamUtil.getString(request, "mvcPath", "/view_record_set.jsp");
+
 String redirect = ParamUtil.getString(request, "redirect", portletDisplay.getURLBack());
 
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
@@ -40,7 +42,7 @@ if (editable || ddlDisplayContext.isAdminPortlet()) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/view_record_set.jsp");
+portletURL.setParameter("mvcPath", mvcPath);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
 
@@ -74,7 +76,7 @@ recordSearchContainer.setOrderByComparator(orderByComparator);
 recordSearchContainer.setOrderByType(orderByType);
 %>
 
-<portlet:renderURL var="addRecordURL">
+<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="addRecordURL">
 	<portlet:param name="mvcPath" value="/edit_record.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
@@ -87,7 +89,7 @@ recordSearchContainer.setOrderByType(orderByType);
 			<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
 
 			<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.UPDATE) %>">
-				<portlet:renderURL var="editRecordSetURL">
+				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="editRecordSetURL">
 					<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
@@ -101,7 +103,7 @@ recordSearchContainer.setOrderByType(orderByType);
 
 	<aui:nav-bar-search searchContainer="<%= recordSearchContainer %>">
 		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="searchURL">
-			<portlet:param name="mvcPath" value="/view_record_set.jsp" />
+			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</portlet:renderURL>
@@ -118,7 +120,7 @@ recordSearchContainer.setOrderByType(orderByType);
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />formContainer">
+<div class="container-fluid-1280 view-records-container" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<liferay-ui:search-container
 			searchContainer="<%= recordSearchContainer %>"

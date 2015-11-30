@@ -39,7 +39,7 @@ public class DDLFormDisplayContext {
 
 		_renderRequest = renderRequest;
 
-		if (Validator.isNull(getPortletResource())) {
+		if (Validator.isNotNull(getPortletResource())) {
 			return;
 		}
 

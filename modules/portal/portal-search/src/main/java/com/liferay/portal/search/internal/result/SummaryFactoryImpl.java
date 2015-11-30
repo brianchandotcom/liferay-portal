@@ -94,6 +94,6 @@ public class SummaryFactoryImpl implements SummaryFactory {
 		_indexerRegistry = indexerRegistry;
 	}
 
-	private IndexerRegistry _indexerRegistry;
+	private volatile IndexerRegistry _indexerRegistry;
 
 }

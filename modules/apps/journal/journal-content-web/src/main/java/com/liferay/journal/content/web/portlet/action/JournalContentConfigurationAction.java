@@ -163,7 +163,7 @@ public class JournalContentConfigurationAction
 		_journalContent = null;
 	}
 
-	private AssetEntryLocalService _assetEntryLocalService;
-	private JournalContent _journalContent;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile JournalContent _journalContent;
 
 }

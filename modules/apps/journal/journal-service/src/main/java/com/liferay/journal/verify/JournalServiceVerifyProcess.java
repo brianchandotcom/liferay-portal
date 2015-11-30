@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.VerifyLayout;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
@@ -81,7 +82,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author Shinn Lok
  */
-@Component(immediate = true, service = JournalServiceVerifyProcess.class)
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.journal.service"},
+	service = VerifyProcess.class
+)
 public class JournalServiceVerifyProcess extends VerifyLayout {
 
 	public static final long DEFAULT_GROUP_ID = 14;
@@ -925,14 +930,16 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	private static final Pattern _friendlyURLPattern = Pattern.compile(
 		"[^a-z0-9_-]");
 
-	private AssetEntryLocalService _assetEntryLocalService;
-	private DLAppLocalService _dlAppLocalService;
-	private JournalArticleImageLocalService _journalArticleImageLocalService;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalArticleResourceLocalService
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile JournalArticleImageLocalService
+		_journalArticleImageLocalService;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private volatile JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
-	private JournalFolderLocalService _journalFolderLocalService;
-	private ResourceLocalService _resourceLocalService;
+	private volatile JournalContentSearchLocalService
+		_journalContentSearchLocalService;
+	private volatile JournalFolderLocalService _journalFolderLocalService;
+	private volatile ResourceLocalService _resourceLocalService;
 
 }

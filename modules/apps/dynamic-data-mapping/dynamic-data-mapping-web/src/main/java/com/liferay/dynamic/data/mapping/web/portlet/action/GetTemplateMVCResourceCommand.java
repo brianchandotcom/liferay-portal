@@ -67,9 +67,10 @@ public class GetTemplateMVCResourceCommand extends BaseMVCResourceCommand {
 		String language = GetterUtil.getString(
 			template.getLanguage(), TemplateConstants.LANG_TYPE_VM);
 
-		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) ||
-			language.equals(TemplateConstants.LANG_TYPE_XSL)) {
-
+		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
+			contentType = ContentTypes.APPLICATION_JSON;
+		}
+		else if (language.equals(TemplateConstants.LANG_TYPE_XSL)) {
 			contentType = ContentTypes.TEXT_XML_UTF8;
 		}
 		else {
@@ -94,6 +95,6 @@ public class GetTemplateMVCResourceCommand extends BaseMVCResourceCommand {
 		_ddmTemplateService = ddmTemplateService;
 	}
 
-	private DDMTemplateService _ddmTemplateService;
+	private volatile DDMTemplateService _ddmTemplateService;
 
 }

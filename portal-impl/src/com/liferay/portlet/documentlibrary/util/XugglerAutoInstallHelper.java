@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.Xuggler;
+import com.liferay.portal.kernel.xuggler.XugglerInstallException;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.xuggler.XugglerImpl;
 
@@ -83,7 +84,12 @@ public class XugglerAutoInstallHelper {
 			Xuggler xuggler = new XugglerImpl();
 
 			try {
-				xuggler.installNativeLibraries(xugglerJarFile, null);
+				xuggler.installNativeLibraries(xugglerJarFile);
+			}
+			catch (XugglerInstallException.MustBeURLClassLoader xie) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(xie, xie);
+				}
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);

@@ -142,7 +142,7 @@ public class RenderStructureFieldMVCRenderCommand
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
-	private DDMFormFieldRendererRegistry _ddmFormFieldRendererRegistry;
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private volatile DDMFormFieldRendererRegistry _ddmFormFieldRendererRegistry;
+	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 
 }

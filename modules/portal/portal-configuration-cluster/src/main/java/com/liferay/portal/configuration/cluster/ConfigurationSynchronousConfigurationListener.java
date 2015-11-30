@@ -69,6 +69,6 @@ public class ConfigurationSynchronousConfigurationListener
 	protected void setDestination(Destination destination) {
 	}
 
-	private ClusterLink _clusterLink;
+	private volatile ClusterLink _clusterLink;
 
 }

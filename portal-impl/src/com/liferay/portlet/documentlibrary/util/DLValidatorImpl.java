@@ -209,7 +209,8 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 
 		if (!DLUtil.isValidVersion(versionLabel)) {
-			throw new InvalidFileVersionException();
+			throw new InvalidFileVersionException(
+				"Invalid version label " + versionLabel);
 		}
 	}
 

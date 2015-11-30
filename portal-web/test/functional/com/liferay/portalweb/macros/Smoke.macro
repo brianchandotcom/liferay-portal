@@ -67,6 +67,8 @@
 		<var name="portlet" value="Web Content" />
 
 		<task macro-summary="ProductMenu#gotoSitesContent">
+			<execute macro="Navigator#openURL" />
+
 			<execute macro="ProductMenu#gotoSitesContent">
 				<var name="portlet" value="${portlet}" />
 			</execute>

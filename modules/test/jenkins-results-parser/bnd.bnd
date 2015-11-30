@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Jenkins Results Parser
 Bundle-SymbolicName: com.liferay.jenkins.results.parser
-Bundle-Version: 1.0.8
+Bundle-Version: 1.0.9
 Include-Resource: classes

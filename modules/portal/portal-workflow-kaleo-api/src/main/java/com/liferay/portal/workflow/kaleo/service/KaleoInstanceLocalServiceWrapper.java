@@ -219,6 +219,11 @@ public class KaleoInstanceLocalServiceWrapper
 		return _kaleoInstanceLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoInstanceLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the kaleo instance with the primary key.
 	*

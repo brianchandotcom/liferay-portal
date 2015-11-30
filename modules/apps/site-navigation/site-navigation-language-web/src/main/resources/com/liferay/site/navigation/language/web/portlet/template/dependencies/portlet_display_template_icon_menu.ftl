@@ -3,7 +3,7 @@
 <#if entries?has_content>
 	<@liferay_ui["icon-menu"] icon="../aui/globe" message=locale.getDisplayName(locale)>
 		<#list entries as entry>
-			<#if !entry.isSelected()>
+			<#if !entry.isSelected() && !entry.isDisabled()>
 				<@liferay_ui["icon"]
 					image="../language/" + entry.getLanguageId()
 					label=true

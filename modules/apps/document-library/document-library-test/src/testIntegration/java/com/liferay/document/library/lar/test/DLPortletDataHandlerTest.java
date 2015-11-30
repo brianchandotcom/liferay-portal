@@ -16,6 +16,7 @@ package com.liferay.document.library.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.lar.DLPortletDataHandler;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -162,6 +163,12 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Assert.assertEquals(0, foldersCount);
+	}
+
+	@Override
+	protected void addParameters(Map<String, String[]> parameterMap) {
+		addBooleanParameter(
+			parameterMap, DLPortletDataHandler.NAMESPACE, "repositories", true);
 	}
 
 	protected void addRepositoryEntries() throws Exception {

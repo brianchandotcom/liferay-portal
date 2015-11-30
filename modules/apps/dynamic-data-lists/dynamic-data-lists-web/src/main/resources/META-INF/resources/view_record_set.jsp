@@ -31,11 +31,13 @@ DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_D
 
 long displayDDMTemplateId = ParamUtil.getLong(request, "displayDDMTemplateId");
 
+DDMTemplate displayDDMTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(displayDDMTemplateId);
+
 boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
 %>
 
 <c:choose>
-	<c:when test="<%= displayDDMTemplateId > 0 %>">
+	<c:when test="<%= displayDDMTemplate != null %>">
 		<liferay-util:include page="/view_template_records.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>

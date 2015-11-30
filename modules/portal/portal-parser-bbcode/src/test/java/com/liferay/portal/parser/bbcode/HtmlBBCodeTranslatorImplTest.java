@@ -121,6 +121,15 @@ public class HtmlBBCodeTranslatorImplTest {
 	}
 
 	@Test
+	public void testImgXSS() {
+		String expected = "<img src=\"\" />";
+		String actual = _htmlBBCodeTranslator.parse(
+			"[img]asd[font= onerror=alert(/XSS/.source)//]FF[/font][/img]");
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testIncompleteTag() {
 		String expected = "<strong>text</strong>";
 		String actual = _htmlBBCodeTranslator.parse("[b]text");

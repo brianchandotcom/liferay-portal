@@ -1,17 +1,17 @@
 import com.liferay.gradle.plugins.patcher.PatchTask
 
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "latest.release"
+		classpath group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "latest.release"
+	}
+
 	repositories {
 		mavenLocal()
 
 		maven {
 			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
-	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "latest.release"
-		classpath group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "latest.release"
 	}
 }
 
@@ -20,8 +20,18 @@ apply plugin: "optional-base"
 
 apply plugin: "com.liferay.patcher"
 
+task patch(type: PatchTask)
+
+group = "com.liferay"
+version = "1.1.1.LIFERAY-PATCHED-1"
+
 dependencies {
 	compile group: "com.googlecode.json-simple", name: "json-simple", optional, version: "1.1.1"
+}
+
+patch {
+	fileNames "org/json/simple/JSONObject.java"
+	originalLibModuleName = "json-simple"
 }
 
 repositories {
@@ -31,11 +41,3 @@ repositories {
 		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
 }
-
-task patch(type: PatchTask) {
-	fileNames "org/json/simple/JSONObject.java"
-	originalLibModuleName = "json-simple"
-}
-
-group = "com.liferay"
-version = "1.1.1.LIFERAY-PATCHED-1"

@@ -29,11 +29,7 @@ AUI.add(
 					getTemplateContext: function() {
 						var instance = this;
 
-						var value = instance.get('value');
-
-						if (instance.get('localizable')) {
-							value = value[instance.get('locale')];
-						}
+						var value = instance.getContextValue();
 
 						return A.merge(
 							CheckboxField.superclass.getTemplateContext.apply(instance, arguments),

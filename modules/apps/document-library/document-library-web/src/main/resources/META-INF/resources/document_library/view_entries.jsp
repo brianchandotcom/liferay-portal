@@ -48,6 +48,7 @@ String displayStyle = GetterUtil.getString((String)request.getAttribute("view.js
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
+portletURL.setParameter("navigation", navigation);
 portletURL.setParameter("curFolder", currentFolder);
 portletURL.setParameter("deltaFolder", deltaFolder);
 portletURL.setParameter("folderId", String.valueOf(folderId));
@@ -57,6 +58,8 @@ SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, n
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
 entriesChecker.setCssClass("entry-selector");
+
+EntriesMover entriesMover = new EntriesMover(scopeGroupId);
 
 String orderByCol = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByCol"));
 String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByType"));
@@ -215,9 +218,12 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 	<%
 	String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
+
+	String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	%>
 
 	<liferay-ui:search-container
+		id="<%= searchContainerId %>"
 		searchContainer="<%= dlSearchContainer %>"
 		total="<%= total %>"
 		totalVar="dlSearchContainerTotal"
@@ -229,7 +235,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 		<liferay-ui:search-container-row
 			className="Object"
-			cssClass="app-view-entry-taglib entry-display-style selectable"
+			cssClass="app-view-entry-taglib entry-display-style"
 			modelVar="result"
 		>
 
@@ -263,8 +269,12 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 					if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 						draggable = true;
 
-						if (Validator.isNull(dlSearchContainer.getRowChecker())) {
+						if (dlSearchContainer.getRowChecker() == null) {
 							dlSearchContainer.setRowChecker(entriesChecker);
+						}
+
+						if (dlSearchContainer.getRowMover() == null) {
+							dlSearchContainer.setRowMover(entriesMover);
 						}
 					}
 
@@ -427,8 +437,12 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 					if (DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE)) {
 						draggable = true;
 
-						if (Validator.isNull(dlSearchContainer.getRowChecker())) {
+						if (dlSearchContainer.getRowChecker() == null) {
 							dlSearchContainer.setRowChecker(entriesChecker);
+						}
+
+						if (dlSearchContainer.getRowMover() == null) {
+							dlSearchContainer.setRowMover(entriesMover);
 						}
 					}
 

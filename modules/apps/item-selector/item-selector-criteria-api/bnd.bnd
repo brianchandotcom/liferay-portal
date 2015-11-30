@@ -3,8 +3,10 @@ Bundle-SymbolicName: com.liferay.item.selector.criteria.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.item.selector.criteria,\
+	com.liferay.item.selector.criteria.audio.criterion,\
 	com.liferay.item.selector.criteria.file.criterion,\
 	com.liferay.item.selector.criteria.image.criterion,\
 	com.liferay.item.selector.criteria.upload.criterion,\
+	com.liferay.item.selector.criteria.video.criterion,\
 	com.liferay.item.selector.criteria.url.criterion
 Include-Resource: classes

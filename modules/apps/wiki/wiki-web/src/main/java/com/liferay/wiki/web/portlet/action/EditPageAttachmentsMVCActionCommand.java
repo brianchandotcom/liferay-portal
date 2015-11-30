@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -83,6 +86,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileUploadBase;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -219,8 +224,6 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			List<KeyValuePair> invalidFileNameKVPs)
 		throws Exception {
 
-		String originalSelectedFileName = selectedFileName;
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -234,23 +237,24 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				_TEMP_FOLDER_NAME, selectedFileName);
 
+			String originalSelectedFileName =
+				TempFileEntryUtil.getOriginalTempFileName(
+					tempFileEntry.getFileName());
 			InputStream inputStream = tempFileEntry.getContentStream();
 			String mimeType = tempFileEntry.getMimeType();
 
-			_wikiPageService.addPageAttachment(
-				nodeId, title, selectedFileName, inputStream, mimeType);
+			FileEntry fileEntry = _wikiPageService.addPageAttachment(
+				nodeId, title, originalSelectedFileName, inputStream, mimeType);
 
 			validFileNameKVPs.add(
-				new KeyValuePair(selectedFileName, originalSelectedFileName));
+				new KeyValuePair(fileEntry.getTitle(), selectedFileName));
 		}
 		catch (Exception e) {
 			String errorMessage = getAddMultipleFileEntriesErrorMessage(
 				portletConfig, actionRequest, actionResponse, e);
 
-			KeyValuePair invalidFileNameKVP = new KeyValuePair(
-				selectedFileName, errorMessage);
-
-			invalidFileNameKVPs.add(invalidFileNameKVP);
+			invalidFileNameKVPs.add(
+				new KeyValuePair(selectedFileName, errorMessage));
 		}
 		finally {
 			if (tempFileEntry != null) {
@@ -260,7 +264,8 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void addTempAttachment(ActionRequest actionRequest)
+	protected void addTempAttachment(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -276,9 +281,21 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 			String mimeType = uploadPortletRequest.getContentType("file");
 
-			_wikiPageService.addTempFileEntry(
-				nodeId, _TEMP_FOLDER_NAME, sourceFileName, inputStream,
-				mimeType);
+			String tempFileName = TempFileEntryUtil.getTempFileName(
+				sourceFileName);
+
+			FileEntry fileEntry = _wikiPageService.addTempFileEntry(
+				nodeId, _TEMP_FOLDER_NAME, tempFileName, inputStream, mimeType);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("groupId", fileEntry.getGroupId());
+			jsonObject.put("name", fileEntry.getTitle());
+			jsonObject.put("title", sourceFileName);
+			jsonObject.put("uuid", fileEntry.getUuid());
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -360,11 +377,30 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
-				if (uploadException.isExceededSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
-				}
+				Throwable cause = uploadException.getCause();
 
-				throw new PortalException(uploadException.getCause());
+				if (cmd.equals(Constants.ADD_TEMP)) {
+					if (cause instanceof FileUploadBase.IOFileUploadException) {
+						if (_log.isInfoEnabled()) {
+							_log.info("Temporary upload was cancelled");
+						}
+					}
+				}
+				else {
+					if (uploadException.isExceededFileSizeLimit()) {
+						throw new FileSizeException(cause);
+					}
+
+					if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+						throw new LiferayFileItemException(cause);
+					}
+
+					if (uploadException.isExceededUploadRequestSizeLimit()) {
+						throw new UploadRequestSizeException(cause);
+					}
+
+					throw new PortalException(cause);
+				}
 			}
 			else if (cmd.equals(Constants.ADD)) {
 				addAttachment(actionRequest);
@@ -374,7 +410,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					portletConfig, actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
-				addTempAttachment(actionRequest);
+				addTempAttachment(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.CHECK)) {
 				JSONObject jsonObject = RestoreEntryUtil.checkEntry(
@@ -556,7 +592,8 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				 e instanceof LiferayFileItemException ||
 				 e instanceof NoSuchFolderException ||
 				 e instanceof SourceFileNameException ||
-				 e instanceof StorageFieldRequiredException) {
+				 e instanceof StorageFieldRequiredException ||
+				 e instanceof UploadRequestSizeException) {
 
 			if (!cmd.equals(Constants.ADD_DYNAMIC) &&
 				!cmd.equals(Constants.ADD_MULTIPLE) &&
@@ -579,7 +616,8 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				e instanceof DuplicateFileEntryException ||
 				e instanceof FileExtensionException ||
 				e instanceof FileNameException ||
-				e instanceof FileSizeException) {
+				e instanceof FileSizeException ||
+				e instanceof UploadRequestSizeException) {
 
 				HttpServletResponse response =
 					PortalUtil.getHttpServletResponse(actionResponse);
@@ -747,7 +785,10 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 	private static final String _TEMP_FOLDER_NAME =
 		EditPageAttachmentsMVCActionCommand.class.getName();
 
-	private TrashEntryService _trashEntryService;
-	private WikiPageService _wikiPageService;
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditPageAttachmentsMVCActionCommand.class);
+
+	private volatile TrashEntryService _trashEntryService;
+	private volatile WikiPageService _wikiPageService;
 
 }

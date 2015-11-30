@@ -118,7 +118,7 @@ public class FacebookConnectNavigationPreDynamicInclude
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacebookConnectNavigationPreDynamicInclude.class);
 
-	private FacebookConnect _facebookConnect;
-	private ServletContext _servletContext;
+	private volatile FacebookConnect _facebookConnect;
+	private volatile ServletContext _servletContext;
 
 }

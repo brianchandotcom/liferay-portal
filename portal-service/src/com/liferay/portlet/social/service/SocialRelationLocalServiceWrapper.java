@@ -280,6 +280,11 @@ public class SocialRelationLocalServiceWrapper
 		return _socialRelationLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _socialRelationLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns a range of all the inverse relations of the given type for which
 	* the user is User2 of the relation.

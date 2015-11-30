@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.UserGroupGroupRole;
 import com.liferay.portal.service.UserGroupGroupRoleLocalServiceUtil;
@@ -26,12 +26,13 @@ import com.liferay.portal.service.UserGroupGroupRoleLocalServiceUtil;
  */
 @Deprecated
 public abstract class UserGroupGroupRoleActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public UserGroupGroupRoleActionableDynamicQuery() {
 		setBaseLocalService(UserGroupGroupRoleLocalServiceUtil.getService());
-		setClass(UserGroupGroupRole.class);
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
+
+		setModelClass(UserGroupGroupRole.class);
 
 		setPrimaryKeyPropertyName("primaryKey.userGroupId");
 

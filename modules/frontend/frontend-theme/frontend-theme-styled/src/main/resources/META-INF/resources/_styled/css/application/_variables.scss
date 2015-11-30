@@ -1,7 +1,7 @@
 /* ---------- Dialogs ---------- */
 
 $dialog-footer-padding: 20px !default;
-$dialog-iframe-padding: 20px !default;
+$dialog-iframe-padding: 0 !default;
 
 /* ---------- Labels ---------- */
 
@@ -23,10 +23,6 @@ $label-entry-padding: 0 0 0 12px !default;
 $product-menu-body-bg: #1F282E !default;
 
 $product-menu-collapse-icon-bg: #1A2126 !default;
-
-$product-menu-footer-color: #869CAD !default;
-$product-menu-footer-link-color: $product-menu-footer-color !default;
-$product-menu-footer-link-hover-color: $product-menu-footer-link-color !default;
 
 $product-menu-header-bg: #1B2228 !default;
 $product-menu-header-color: #FFF !default;
@@ -72,6 +68,17 @@ $product-menu-tabs-color: $product-menu-tabs-bg !default;
 $product-menu-tabs-hover-bg: #1C252C !default;
 $product-menu-tabs-hover-border: transparent !default;
 $product-menu-tabs-hover-color: #869CAD !default;
+
+$product-menu-tree-active-border: #FFF;
+$product-menu-tree-active-color: #FFF;
+$product-menu-tree-active-hitarea-bg: #FFF;
+
+$product-menu-tree-border: #869CAD;
+$product-menu-tree-border-style: solid;
+$product-menu-tree-border-width: 2px;
+$product-menu-tree-color: #FFF;
+$product-menu-tree-hitarea-bg: #FFF;
+$product-menu-tree-hitarea-color: #1A2126;
 
 $product-menu-user-signout-bg: #3A4D5A !default;
 $product-menu-user-signout-border-radius: 4px !default;

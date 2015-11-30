@@ -89,7 +89,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 <aui:fieldset>
 	<c:choose>
 		<c:when test="<%= !group.isLayoutPrototype() %>">
-			<aui:input name="name" />
+			<aui:input autoFocus="<%= true %>" name="name" />
 
 			<div class="form-group">
 				<aui:input helpMessage="if-this-is-checked-this-page-does-not-show-up-in-the-navigation-menu" label="hide-from-navigation-menu" name="hidden" />

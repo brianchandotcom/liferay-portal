@@ -981,15 +981,16 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletConfigurationPortlet.class);
 
-	private GroupLocalService _groupLocalService;
-	private LayoutLocalService _layoutLocalService;
-	private PortletLocalService _portletLocalService;
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile PortletLocalService _portletLocalService;
+	private volatile PortletPreferencesLocalService
+		_portletPreferencesLocalService;
 	private final ThreadLocal<PortletRequest> _portletRequestThreadLocal =
 		new AutoResetThreadLocal<>("_portletRequestThreadLocal");
-	private ResourceBlockLocalService _resourceBlockLocalService;
-	private ResourceBlockService _resourceBlockService;
-	private ResourcePermissionService _resourcePermissionService;
+	private volatile ResourceBlockLocalService _resourceBlockLocalService;
+	private volatile ResourceBlockService _resourceBlockService;
+	private volatile ResourcePermissionService _resourcePermissionService;
 
 	private class PortletConfigurationPortletPortletConfig
 		extends PortletConfigImpl {

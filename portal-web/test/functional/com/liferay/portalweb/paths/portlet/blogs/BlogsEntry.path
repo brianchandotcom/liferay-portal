@@ -79,6 +79,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_INLINE_IMAGE</td>
+	<td>//div[contains(@class,'entry-body')]//img[contains(@src,'${key_uploadFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_HTML_BOLD</td>
+	<td>//div[contains(@class,'entry-content')]//b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_HTML_ITALICS</td>
+	<td>//div[contains(@class,'entry-content')]//i</td>
+	<td></td>
+</tr>
+<tr>
 	<td>READ_MORE</td>
 	<td>//div[contains(@class,'read-more')]/a</td>
 	<td></td>

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
@@ -59,7 +59,8 @@ public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 		_settingsFactory = settingsFactory;
 	}
 
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
-	private SettingsFactory _settingsFactory;
+	private volatile PortletPreferencesLocalService
+		_portletPreferencesLocalService;
+	private volatile SettingsFactory _settingsFactory;
 
 }

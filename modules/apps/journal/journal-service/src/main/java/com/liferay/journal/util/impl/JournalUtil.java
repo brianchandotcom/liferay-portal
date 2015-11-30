@@ -509,8 +509,33 @@ public class JournalUtil {
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName) {
 
+		return getEmailDefinitionTerms(
+			portletRequest, emailFromAddress, emailFromName, StringPool.BLANK);
+	}
+
+	public static Map<String, String> getEmailDefinitionTerms(
+		PortletRequest portletRequest, String emailFromAddress,
+		String emailFromName, String emailType) {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		String fromAddress = HtmlUtil.escape(emailFromAddress);
+		String fromName = HtmlUtil.escape(emailFromName);
+		String toAddress = LanguageUtil.get(
+			themeDisplay.getLocale(), "the-address-of-the-email-recipient");
+		String toName = LanguageUtil.get(
+			themeDisplay.getLocale(), "the-name-of-the-email-recipient");
+
+		if (emailType.equals("requested")) {
+			toName = fromName;
+			toAddress = fromAddress;
+
+			fromName = LanguageUtil.get(
+				themeDisplay.getLocale(), "the-name-of-the-email-sender");
+			fromAddress = LanguageUtil.get(
+				themeDisplay.getLocale(), "the-address-of-the-email-sender");
+		}
 
 		Map<String, String> definitionTerms = new LinkedHashMap<>();
 
@@ -537,9 +562,8 @@ public class JournalUtil {
 			"[$ARTICLE_VERSION$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(), "the-web-content-version"));
-		definitionTerms.put(
-			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress));
-		definitionTerms.put("[$FROM_NAME$]", HtmlUtil.escape(emailFromName));
+		definitionTerms.put("[$FROM_ADDRESS$]", fromAddress);
+		definitionTerms.put("[$FROM_NAME$]", fromName);
 
 		Company company = themeDisplay.getCompany();
 
@@ -550,15 +574,8 @@ public class JournalUtil {
 		definitionTerms.put(
 			"[$PORTLET_NAME$]", HtmlUtil.escape(portletDisplay.getTitle()));
 
-		definitionTerms.put(
-			"[$TO_ADDRESS$]",
-			LanguageUtil.get(
-				themeDisplay.getLocale(),
-				"the-address-of-the-email-recipient"));
-		definitionTerms.put(
-			"[$TO_NAME$]",
-			LanguageUtil.get(
-				themeDisplay.getLocale(), "the-name-of-the-email-recipient"));
+		definitionTerms.put("[$TO_ADDRESS$]", toAddress);
+		definitionTerms.put("[$TO_NAME$]", toName);
 
 		return definitionTerms;
 	}

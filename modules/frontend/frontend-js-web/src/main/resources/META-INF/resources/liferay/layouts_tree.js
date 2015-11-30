@@ -7,7 +7,7 @@ AUI.add(
 
 		var NODE_ID_TPL = '{treeId}_layoutId_{layoutId}_plid_{plid}_groupId_{groupId}';
 
-		var NODE_LINK_TPL = '<a class="{cssClass}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="{title}">{label}</a>';
+		var NODE_LINK_TPL = '<a class="{cssClass}" data-navigation="{navigation}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="{title}">{label}</a>';
 
 		var STR_BOUNDING_BOX = 'boundingBox';
 
@@ -311,6 +311,7 @@ AUI.add(
 					{
 						cssClass: cssClass,
 						label: name,
+						navigation: true,
 						plid: node.plid,
 						title: title,
 						url: node.friendlyURL,
@@ -328,10 +329,14 @@ AUI.add(
 				var instance = this;
 
 				var rootLabel = instance._createNodeLink(
-					{
-						label: LString.escapeHTML(rootConfig.label),
-						plid: rootConfig.defaultParentLayoutId
-					},
+					A.merge(
+						{
+							label: LString.escapeHTML(rootConfig.label),
+							navigation: true,
+							plid: rootConfig.defaultParentLayoutId
+						},
+						rootConfig
+					),
 					rootConfig.linkTemplate
 				);
 

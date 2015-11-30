@@ -33,6 +33,7 @@ import java.util.zip.ZipFile;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
+import org.osgi.framework.Version;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
@@ -43,10 +44,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = BundleManager.class)
 public class BundleManager {
 
-	public Bundle getBundle(String symbolicName, String version) {
-		List<Bundle> bundles = getBundles();
+	public Bundle getBundle(String symbolicName, String versionString) {
+		Version version = Version.parseVersion(versionString);
 
-		for (Bundle bundle : bundles) {
+		for (Bundle bundle : getBundles()) {
 			if (symbolicName.equals(bundle.getSymbolicName()) &&
 				version.equals(bundle.getVersion())) {
 
@@ -123,6 +124,10 @@ public class BundleManager {
 	public boolean isInstalled(String symbolicName, String version) {
 		Bundle bundle = getBundle(symbolicName, version);
 
+		if (bundle == null) {
+			return false;
+		}
+
 		return isInstalled(bundle);
 	}
 
@@ -137,6 +142,10 @@ public class BundleManager {
 
 	public void uninstallBundle(String symbolicName, String version) {
 		Bundle bundle = getBundle(symbolicName, version);
+
+		if (bundle == null) {
+			return;
+		}
 
 		uninstallBundle(bundle);
 	}

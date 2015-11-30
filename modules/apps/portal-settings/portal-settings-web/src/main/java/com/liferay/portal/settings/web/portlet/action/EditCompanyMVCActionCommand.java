@@ -215,7 +215,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		}
 	}
 
-	private CompanyService _companyService;
-	private DLAppLocalService _dlAppLocalService;
+	private volatile CompanyService _companyService;
+	private volatile DLAppLocalService _dlAppLocalService;
 
 }

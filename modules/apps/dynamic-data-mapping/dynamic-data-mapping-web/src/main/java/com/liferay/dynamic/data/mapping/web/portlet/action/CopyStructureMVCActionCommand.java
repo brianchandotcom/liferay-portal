@@ -163,7 +163,7 @@ public class CopyStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 		_ddmTemplateService = ddmTemplateService;
 	}
 
-	private DDMStructureService _ddmStructureService;
-	private DDMTemplateService _ddmTemplateService;
+	private volatile DDMStructureService _ddmStructureService;
+	private volatile DDMTemplateService _ddmTemplateService;
 
 }

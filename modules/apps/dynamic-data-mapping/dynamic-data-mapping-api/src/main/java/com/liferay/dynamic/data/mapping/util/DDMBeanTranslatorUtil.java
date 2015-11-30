@@ -17,8 +17,8 @@ package com.liferay.dynamic.data.mapping.util;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -68,15 +68,8 @@ public class DDMBeanTranslatorUtil {
 	}
 
 	private static final ServiceTracker<DDMBeanTranslator, DDMBeanTranslator>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DDMBeanTranslatorUtil.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), DDMBeanTranslator.class, null);
-
-		_serviceTracker.open();
-	}
+		_serviceTracker = ServiceTrackerFactory.open(
+			FrameworkUtil.getBundle(DDMBeanTranslatorUtil.class),
+			DDMBeanTranslator.class);
 
 }

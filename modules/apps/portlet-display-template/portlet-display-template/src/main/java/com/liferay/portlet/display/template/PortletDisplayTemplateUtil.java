@@ -15,6 +15,7 @@
 package com.liferay.portlet.display.template;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -25,7 +26,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -146,16 +146,9 @@ public class PortletDisplayTemplateUtil {
 	}
 
 	private static final ServiceTracker
-		<PortletDisplayTemplate, PortletDisplayTemplate> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			PortletDisplayTemplateUtil.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), PortletDisplayTemplate.class, null);
-
-		_serviceTracker.open();
-	}
+		<PortletDisplayTemplate, PortletDisplayTemplate> _serviceTracker =
+			ServiceTrackerFactory.open(
+				FrameworkUtil.getBundle(PortletDisplayTemplateUtil.class),
+				PortletDisplayTemplate.class);
 
 }

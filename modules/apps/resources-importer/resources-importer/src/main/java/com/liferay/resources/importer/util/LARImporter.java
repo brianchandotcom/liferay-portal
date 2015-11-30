@@ -17,6 +17,7 @@ package com.liferay.resources.importer.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -57,7 +58,9 @@ public class LARImporter extends BaseImporter {
 
 		boolean privateLayout = false;
 
-		if (_privateLARInputStream != null) {
+		if ((_privateLARInputStream != null) ||
+			targetClassName.equals(LayoutSetPrototype.class.getName())) {
+
 			privateLayout = true;
 		}
 

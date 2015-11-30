@@ -141,9 +141,15 @@ public class EditPasswordPolicyAction extends PortletAction {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		boolean changeable = ParamUtil.getBoolean(actionRequest, "changeable");
-		boolean changeRequired = ParamUtil.getBoolean(
-			actionRequest, "changeRequired");
-		long minAge = ParamUtil.getLong(actionRequest, "minAge");
+		boolean changeRequired = false;
+		long minAge = 0L;
+
+		if (changeable) {
+			changeRequired = ParamUtil.getBoolean(
+				actionRequest, "changeRequired");
+			minAge = ParamUtil.getLong(actionRequest, "minAge");
+		}
+
 		boolean checkSyntax = ParamUtil.getBoolean(
 			actionRequest, "checkSyntax");
 		boolean allowDictionaryWords = ParamUtil.getBoolean(

@@ -15,6 +15,7 @@
 package com.liferay.mobile.device.rules.action;
 
 import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
@@ -77,11 +78,9 @@ public class ActionHandlerManagerUtil {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			_bundleContext, ActionHandlerManager.class,
 			new ActionHandlerManagerServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	private ActionHandlerManager _getActionHandlerManager() {

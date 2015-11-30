@@ -9,8 +9,8 @@ AUI.add(
 		var instanceOf = A.instanceOf;
 		var isArray = Array.isArray;
 
-		var isFormBuilderField = function(v) {
-			return (v instanceof A.FormBuilderField);
+		var isFormBuilderField = function(value) {
+			return (value instanceof A.FormBuilderField);
 		};
 
 		var isObject = Lang.isObject;

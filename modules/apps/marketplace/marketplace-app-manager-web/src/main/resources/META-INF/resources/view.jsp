@@ -114,7 +114,7 @@ portletURL.setParameter("state", state);
 
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5>
-					<a href="<%= HttpUtil.encodeURL(appDisplay.getDisplayURL(renderResponse)) %>">
+					<a href="<%= HtmlUtil.escapeHREF(appDisplay.getDisplayURL(renderResponse)) %>">
 						<%= appDisplay.getTitle() %>
 					</a>
 				</h5>

@@ -29,12 +29,32 @@ public class ServiceTrackerFactory {
 		return new ServiceTracker<>(bundle.getBundleContext(), clazz, null);
 	}
 
+	public static <S, T> ServiceTracker<S, T> create(
+		BundleContext bundleContext, Class<S> clazz,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
+
+		return new ServiceTracker<S, T>(
+			bundleContext, clazz, serviceTrackerCustomizer);
+	}
+
 	public static <T> ServiceTracker<T, T> create(Class<T> clazz) {
 		return create(FrameworkUtil.getBundle(clazz), clazz);
 	}
 
 	public static <T> ServiceTracker<T, T> open(Bundle bundle, Class<T> clazz) {
 		ServiceTracker<T, T> serviceTracker = create(bundle, clazz);
+
+		serviceTracker.open();
+
+		return serviceTracker;
+	}
+
+	public static <S, T> ServiceTracker<S, T> open(
+		BundleContext bundleContext, Class<S> clazz,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
+
+		ServiceTracker<S, T> serviceTracker = create(
+			bundleContext, clazz, serviceTrackerCustomizer);
 
 		serviceTracker.open();
 

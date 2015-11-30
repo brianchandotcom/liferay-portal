@@ -17,17 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String bodyLabel = (String)request.getAttribute("liferay-ui:email-notification-settings:bodyLabel");
-String emailBody = (String)request.getAttribute("liferay-ui:email-notification-settings:emailBody");
-Map<String, String> emailDefinitionTerms = (Map<String, String>)request.getAttribute("liferay-ui:email-notification-settings:emailDefinitionTerms");
-boolean emailEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:email-notification-settings:emailEnabled"));
-String emailParam = (String)request.getAttribute("liferay-ui:email-notification-settings:emailParam");
-String emailSubject = (String)request.getAttribute("liferay-ui:email-notification-settings:emailSubject");
-String fieldPrefix = (String)request.getAttribute("liferay-ui:email-notification-settings:fieldPrefix");
-String fieldPrefixSeparator = (String)request.getAttribute("liferay-ui:email-notification-settings:fieldPrefixSeparator");
-String helpMessage = (String)request.getAttribute("liferay-ui:email-notification-settings:helpMessage");
-boolean showEmailEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-ui:email-notification-settings:showEmailEnabled"));
-boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-ui:email-notification-settings:showSubject"));
+String bodyLabel = (String)request.getAttribute("liferay-frontend:email-notification-settings:bodyLabel");
+String emailBody = (String)request.getAttribute("liferay-frontend:email-notification-settings:emailBody");
+Map<String, String> emailDefinitionTerms = (Map<String, String>)request.getAttribute("liferay-frontend:email-notification-settings:emailDefinitionTerms");
+boolean emailEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:email-notification-settings:emailEnabled"));
+String emailParam = (String)request.getAttribute("liferay-frontend:email-notification-settings:emailParam");
+String emailSubject = (String)request.getAttribute("liferay-frontend:email-notification-settings:emailSubject");
+String fieldPrefix = (String)request.getAttribute("liferay-frontend:email-notification-settings:fieldPrefix");
+String fieldPrefixSeparator = (String)request.getAttribute("liferay-frontend:email-notification-settings:fieldPrefixSeparator");
+String helpMessage = (String)request.getAttribute("liferay-frontend:email-notification-settings:helpMessage");
+boolean showEmailEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:email-notification-settings:showEmailEnabled"));
+boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:email-notification-settings:showSubject"));
 %>
 
 <aui:fieldset>

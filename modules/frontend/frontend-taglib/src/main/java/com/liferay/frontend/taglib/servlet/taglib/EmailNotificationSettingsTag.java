@@ -140,7 +140,8 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:bodyLabel", _bodyLabel);
+			"liferay-frontend:email-notification-settings:bodyLabel",
+			_bodyLabel);
 
 		String emailBody = _emailBody;
 
@@ -152,16 +153,18 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailBody", emailBody);
+			"liferay-frontend:email-notification-settings:emailBody",
+			emailBody);
 
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailDefinitionTerms",
+			"liferay-frontend:email-notification-settings:emailDefinitionTerms",
 			_emailDefinitionTerms);
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailEnabled",
+			"liferay-frontend:email-notification-settings:emailEnabled",
 			String.valueOf(_emailEnabled));
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailParam", _emailParam);
+			"liferay-frontend:email-notification-settings:emailParam",
+			_emailParam);
 
 		String emailSubject = _emailSubject;
 
@@ -173,21 +176,24 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailSubject",
+			"liferay-frontend:email-notification-settings:emailSubject",
 			emailSubject);
 
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:fieldPrefix", _fieldPrefix);
+			"liferay-frontend:email-notification-settings:fieldPrefix",
+			_fieldPrefix);
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:fieldPrefixSeparator",
+			"liferay-frontend:email-notification-settings:fieldPrefixSeparator",
 			_fieldPrefixSeparator);
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:helpMessage", _helpMessage);
+			"liferay-frontend:email-notification-settings:helpMessage",
+			_helpMessage);
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:showEmailEnabled",
+			"liferay-frontend:email-notification-settings:showEmailEnabled",
 			_showEmailEnabled);
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:showSubject", _showSubject);
+			"liferay-frontend:email-notification-settings:showSubject",
+			_showSubject);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

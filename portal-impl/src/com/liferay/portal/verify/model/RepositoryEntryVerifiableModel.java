@@ -45,6 +45,11 @@ public class RepositoryEntryVerifiableModel implements VerifiableAuditedModel {
 	}
 
 	@Override
+	public boolean isAnonymousUserAllowed() {
+		return false;
+	}
+
+	@Override
 	public boolean isUpdateDates() {
 		return true;
 	}

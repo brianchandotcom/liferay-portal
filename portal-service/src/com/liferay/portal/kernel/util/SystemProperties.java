@@ -65,20 +65,8 @@ public class SystemProperties {
 		return PropertiesUtil.fromMap(_properties);
 	}
 
-	public static void set(String key, String value) {
-		System.setProperty(key, value);
-
-		_properties.put(key, value);
-	}
-
-	private static final Map<String, String> _properties;
-
-	static {
+	public static void load(ClassLoader classLoader) {
 		Properties properties = new Properties();
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		List<URL> urls = null;
 
@@ -155,8 +143,6 @@ public class SystemProperties {
 			}
 		}
 
-		_properties = new ConcurrentHashMap<>();
-
 		// Use a fast concurrent hash map implementation instead of the slower
 		// java.util.Properties
 
@@ -167,6 +153,23 @@ public class SystemProperties {
 				System.out.println("Loading " + url);
 			}
 		}
+	}
+
+	public static void set(String key, String value) {
+		System.setProperty(key, value);
+
+		_properties.put(key, value);
+	}
+
+	private static final Map<String, String> _properties =
+		new ConcurrentHashMap<>();
+
+	static {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		load(classLoader);
 	}
 
 }

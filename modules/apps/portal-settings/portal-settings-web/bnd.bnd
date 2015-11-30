@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Portal Settings Web
 Bundle-SymbolicName: com.liferay.portal.settings.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.frontend.taglib.servlet.taglib,\
+	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\

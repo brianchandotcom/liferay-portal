@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.set.prototype.internal.lar;
+package com.liferay.layout.set.prototype.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.Conjunction;

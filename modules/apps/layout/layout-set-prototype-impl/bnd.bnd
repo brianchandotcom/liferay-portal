@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Layout Set Prototype Implementation
 Bundle-SymbolicName: com.liferay.layout.set.prototype.impl
 Bundle-Version: 1.0.0
-Export-package: com.liferay.layout.set.prototype.internal.lar
+Export-package: com.liferay.layout.set.prototype.lar
 Include-Resource: classes

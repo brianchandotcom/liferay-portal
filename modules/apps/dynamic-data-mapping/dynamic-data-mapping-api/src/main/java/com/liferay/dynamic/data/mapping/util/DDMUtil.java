@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -32,7 +33,6 @@ import java.io.Serializable;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -154,15 +154,8 @@ public class DDMUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static final ServiceTracker<DDM, DDM> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DDMUtil.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), DDM.class, null);
-
-		_serviceTracker.open();
-	}
+	private static final ServiceTracker<DDM, DDM> _serviceTracker =
+		ServiceTrackerFactory.open(
+			FrameworkUtil.getBundle(DDMUtil.class), DDM.class);
 
 }

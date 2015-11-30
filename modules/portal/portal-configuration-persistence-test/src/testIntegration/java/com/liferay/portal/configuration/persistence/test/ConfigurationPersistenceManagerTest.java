@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.persistence.test;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.configuration.persistence.ConfigurationPersistenceManager;
 import com.liferay.portal.kernel.test.rule.Sync;
 
@@ -33,7 +34,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -51,20 +51,14 @@ public class ConfigurationPersistenceManagerTest {
 		Bundle bundle = FrameworkUtil.getBundle(
 			ConfigurationPersistenceManagerTest.class);
 
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_configurationAdminServiceTracker = new ServiceTracker<>(
-			bundleContext, ConfigurationAdmin.class, null);
-
-		_configurationAdminServiceTracker.open();
+		_configurationAdminServiceTracker = ServiceTrackerFactory.open(
+			bundle, ConfigurationAdmin.class);
 
 		_configurationAdmin = _configurationAdminServiceTracker.waitForService(
 			5000);
 
-		_persistenceManagerServiceTracker = new ServiceTracker<>(
-			bundleContext, PersistenceManager.class, null);
-
-		_persistenceManagerServiceTracker.open();
+		_persistenceManagerServiceTracker = ServiceTrackerFactory.open(
+			bundle, PersistenceManager.class);
 
 		_persistenceManager = _persistenceManagerServiceTracker.waitForService(
 			5000);

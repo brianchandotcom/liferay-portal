@@ -17,9 +17,9 @@ package com.liferay.dynamic.data.mapping.util;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -43,17 +43,10 @@ public class FieldsToDDMFormValuesConverterUtil {
 	}
 
 	private static final ServiceTracker<FieldsToDDMFormValuesConverter,
-		FieldsToDDMFormValuesConverter> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			FieldsToDDMFormValuesConverterUtil.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), FieldsToDDMFormValuesConverter.class,
-			null);
-
-		_serviceTracker.open();
-	}
+		FieldsToDDMFormValuesConverter> _serviceTracker =
+			ServiceTrackerFactory.open(
+				FrameworkUtil.getBundle(
+					FieldsToDDMFormValuesConverterUtil.class),
+				FieldsToDDMFormValuesConverter.class);
 
 }

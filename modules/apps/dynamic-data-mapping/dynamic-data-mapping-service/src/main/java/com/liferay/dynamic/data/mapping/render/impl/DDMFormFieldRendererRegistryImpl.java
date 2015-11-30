@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.render.impl;
 
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
@@ -46,22 +46,16 @@ public class DDMFormFieldRendererRegistryImpl
 
 		_bundleContext = bundle.getBundleContext();
 
-		Filter filter = null;
-
 		try {
-			filter = FrameworkUtil.createFilter(
+			_serviceTracker = ServiceTrackerFactory.open(
+				_bundleContext,
 				"(&(objectClass=" + DDMFormFieldRenderer.class.getName() +
-					")(!(objectClass=" + clazz.getName() + ")))");
+					")(!(objectClass=" + clazz.getName() + ")))",
+				new DDMFormFieldRendererServiceTrackerCustomizer());
 		}
 		catch (InvalidSyntaxException ise) {
 			ReflectionUtil.throwException(ise);
 		}
-
-		_serviceTracker = new ServiceTracker<>(
-			_bundleContext, filter,
-			new DDMFormFieldRendererServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	@Override

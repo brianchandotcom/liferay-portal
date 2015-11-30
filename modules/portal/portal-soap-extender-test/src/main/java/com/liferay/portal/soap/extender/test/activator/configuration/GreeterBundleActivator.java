@@ -14,6 +14,7 @@
 
 package com.liferay.portal.soap.extender.test.activator.configuration;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.soap.extender.test.service.Greeter;
 import com.liferay.portal.soap.extender.test.service.GreeterImpl;
 
@@ -27,7 +28,6 @@ import org.apache.cxf.endpoint.ServerRegistry;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
@@ -51,15 +51,11 @@ public class GreeterBundleActivator implements BundleActivator {
 
 		_configAdminBundleActivator.start(bundleContext);
 
-		Filter filter = bundleContext.createFilter(
+		ServiceTracker<Bus, Bus> serviceTracker = ServiceTrackerFactory.open(
+			bundleContext,
 			"(&(objectClass=" + Bus.class.getName() + ")(" +
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH + "=" +
 					"/soap-test))");
-
-		ServiceTracker<Bus, Bus> serviceTracker = new ServiceTracker<>(
-			bundleContext, filter, null);
-
-		serviceTracker.open();
 
 		Bus bus = serviceTracker.waitForService(10_000);
 

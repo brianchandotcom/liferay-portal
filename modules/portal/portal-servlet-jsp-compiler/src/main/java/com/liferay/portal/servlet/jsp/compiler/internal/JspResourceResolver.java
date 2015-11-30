@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -65,17 +66,14 @@ public class JspResourceResolver implements ResourceResolver {
 		Filter filter = null;
 
 		try {
-			filter = bundleContext.createFilter(
+			_serviceTracker = ServiceTrackerFactory.open(
+				bundleContext,
 				"(&(jsp.compiler.resource.map=*)(objectClass=" +
 					Map.class.getName() + "))");
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new RuntimeException(ise);
 		}
-
-		_serviceTracker = new ServiceTracker<>(bundleContext, filter, null);
-
-		_serviceTracker.open();
 	}
 
 	@Override

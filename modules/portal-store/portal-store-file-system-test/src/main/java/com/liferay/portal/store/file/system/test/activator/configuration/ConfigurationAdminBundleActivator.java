@@ -14,6 +14,7 @@
 
 package com.liferay.portal.store.file.system.test.activator.configuration;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -24,7 +25,6 @@ import java.util.Hashtable;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -124,14 +124,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			String storeType)
 		throws Exception {
 
-		Filter filter = bundleContext.createFilter(
+		ServiceTracker<?, ?> serviceTracker = ServiceTrackerFactory.open(
+			bundleContext,
 			"(&(objectClass=" + Store.class.getName() + ")(store.type=" +
 				storeType + "))");
-
-		ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(
-			bundleContext, filter, null);
-
-		serviceTracker.open();
 
 		Object service = serviceTracker.waitForService(10000);
 

@@ -52,7 +52,7 @@ public class AssetLinkLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteLinksByGroupId() throws Exception {
+	public void testDeleteLinksByAssetEntryGroupId() throws Exception {
 
 		// Add Link between entities in Group 1
 

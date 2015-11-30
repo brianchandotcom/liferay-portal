@@ -186,11 +186,11 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteLinksByGroupId(long groupId) {
+	public void deleteLinksByAssetEntryGroupId(long groupId) {
 		Session session = assetLinkPersistence.openSession();
 
 		try {
-			String sql = CustomSQLUtil.get(_DELETE_STAGED_MODELS);
+			String sql = CustomSQLUtil.get(_DELETE_BY_ASSET_ENTRY_GROUP_ID);
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
@@ -498,8 +498,9 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		}
 	}
 
-	private static final String _DELETE_STAGED_MODELS =
-		AssetLinkLocalServiceImpl.class.getName() + ".deleteStagedModels";
+	private static final String _DELETE_BY_ASSET_ENTRY_GROUP_ID =
+		AssetLinkLocalServiceImpl.class.getName() +
+			".deleteByAssetEntryGroupId";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetLinkLocalServiceImpl.class);

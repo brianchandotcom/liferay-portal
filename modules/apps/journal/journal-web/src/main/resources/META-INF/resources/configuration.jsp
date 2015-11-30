@@ -72,7 +72,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		%>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleAddedBody() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= journalGroupServiceConfiguration.emailArticleAddedEnabled() %>"
@@ -82,7 +82,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleMovedFromFolderBody() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= journalGroupServiceConfiguration.emailArticleMovedFromFolderEnabled() %>"
@@ -92,7 +92,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleMovedToFolderBody() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= journalGroupServiceConfiguration.emailArticleMovedToFolderEnabled() %>"
@@ -102,7 +102,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleReviewBody() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= journalGroupServiceConfiguration.emailArticleReviewEnabled() %>"
@@ -112,7 +112,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleUpdatedBody() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= journalGroupServiceConfiguration.emailArticleUpdatedEnabled() %>"
@@ -123,7 +123,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 		<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLinksCount(themeDisplay.getCompanyId(), scopeGroupId, JournalFolder.class.getName()) > 0 %>">
 			<liferay-ui:section>
-				<liferay-ui:email-notification-settings
+				<liferay-frontend:email-notification-settings
 					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalDeniedBody() %>"
 					emailDefinitionTerms="<%= emailDefinitionTerms %>"
 					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalDeniedEnabled() %>"
@@ -133,7 +133,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-ui:email-notification-settings
+				<liferay-frontend:email-notification-settings
 					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalGrantedBody() %>"
 					emailDefinitionTerms="<%= emailDefinitionTerms %>"
 					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalGrantedEnabled() %>"
@@ -143,7 +143,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-ui:email-notification-settings
+				<liferay-frontend:email-notification-settings
 					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedBody() %>"
 					emailDefinitionTerms='<%= JournalUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, "requested") %>'
 					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedEnabled() %>"

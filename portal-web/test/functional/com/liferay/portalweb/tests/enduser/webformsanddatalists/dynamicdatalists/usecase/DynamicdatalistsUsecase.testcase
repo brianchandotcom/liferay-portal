@@ -1263,8 +1263,6 @@
 	</command>
 
 	<command name="AssertUserUpdateRejectedRecord" priority="4">
-		<var name="workflowAssetTitle" value="DDL List" />
-
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
@@ -1412,7 +1410,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="ddlDataDefinitionName" value="To Do" />
-			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
+			<var name="workflowAssetTitle" value="New To Do for List: DDL List" />
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -1423,7 +1421,7 @@
 
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="ddlDataDefinitionName" value="To Do" />
-			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
+			<var name="workflowAssetTitle" value="New To Do for List: DDL List" />
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -1441,7 +1439,7 @@
 
 		<execute macro="Workflow#viewRejectedTask">
 			<var name="ddlDataDefinitionName" value="To Do" />
-			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
+			<var name="workflowAssetTitle" value="New To Do for List: DDL List" />
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 

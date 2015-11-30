@@ -139,10 +139,7 @@ public class StagedAssetLinkStagedModelDataHandler
 	}
 
 	@Reference(
-		target =
-			"(model.class.name=" +
-				"com.liferay.asset.exportimport.staged.model.repository." +
-					"StagedAssetLinkStagedModelRepository)",
+		target = "(model.class.name=com.liferay.portlet.asset.model.adapter.StagedAssetLink)",
 		unbind = "-"
 	)
 	protected void setStagedAssetLinkStagedModelRepository(

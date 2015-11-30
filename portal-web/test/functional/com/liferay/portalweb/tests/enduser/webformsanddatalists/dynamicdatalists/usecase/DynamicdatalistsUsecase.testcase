@@ -1759,11 +1759,10 @@
 			<var name="localizedLanguage" value="Catalan (Spain)" />
 		</execute>
 
-		<var name="ddlRecordFieldData" value="Contenido" />
-
-		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][1]/input[@value='${ddlRecordFieldData}'])" />
-		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][2]/input[@value='${ddlRecordFieldData} 3'])" />
-		<execute function="AssertElementNotPresent" locator1="xpath=(//div[@data-fieldname='Text'])[3]" />
+		<execute macro="DDLRecord#viewTextFieldRepeated">
+			<var name="ddlRecordFieldData1" value="Contenido" />
+			<var name="ddlRecordFieldData2" value="Contenido 3" />
+		</execute>
 	</command>
 
 	<command name="TemplateAddDeletedField" priority="3">

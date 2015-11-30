@@ -146,6 +146,10 @@ public class AssetLinkLocalServiceUtil {
 		getService().deleteLinks(entryId1, entryId2);
 	}
 
+	public static void deleteLinksByAssetEntryGroupId(long groupId) {
+		getService().deleteLinksByAssetEntryGroupId(groupId);
+	}
+
 	/**
 	* @throws PortalException
 	*/

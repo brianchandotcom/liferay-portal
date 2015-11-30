@@ -53,7 +53,6 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 	public static final String CLASS_NAME = AssetVocabulary.class.getName();
 
 	public AssetVocabularyIndexer() {
-		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.ASSET_VOCABULARY_ID, Field.COMPANY_ID, Field.GROUP_ID,
 			Field.UID);

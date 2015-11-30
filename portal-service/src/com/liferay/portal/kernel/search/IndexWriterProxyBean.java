@@ -53,6 +53,11 @@ public class IndexWriterProxyBean
 	}
 
 	@Override
+	public void commit(long companyId) throws SearchException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void deleteDocument(SearchContext searchContext, String uid) {
 		throw new UnsupportedOperationException();
 	}

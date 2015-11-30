@@ -54,12 +54,13 @@ public class IndexableActionableDynamicQuery
 		}
 	}
 
-	public void setCommitImmediately(boolean commitImmediately) {
-		_commitImmediately = commitImmediately;
-	}
-
 	public void setSearchEngineId(String searchEngineId) {
 		_searchEngineId = searchEngineId;
+	}
+
+	@Override
+	protected void actionsCompleted() throws PortalException {
+		SearchEngineUtil.commit(_searchEngineId, getCompanyId());
 	}
 
 	@Override
@@ -89,12 +90,11 @@ public class IndexableActionableDynamicQuery
 
 		SearchEngineUtil.updateDocuments(
 			_searchEngineId, getCompanyId(), new ArrayList<>(_documents),
-			_commitImmediately);
+			false);
 
 		_documents.clear();
 	}
 
-	private boolean _commitImmediately;
 	private Collection<Document> _documents;
 	private String _searchEngineId;
 

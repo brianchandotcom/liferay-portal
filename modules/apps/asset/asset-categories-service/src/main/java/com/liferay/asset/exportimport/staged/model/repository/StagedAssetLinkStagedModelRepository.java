@@ -107,7 +107,7 @@ public class StagedAssetLinkStagedModelRepository
 	public void deleteStagedModels(PortletDataContext portletDataContext)
 		throws PortalException {
 
-		_assetLinkLocalService.deleteLinksByGroupId(
+		_assetLinkLocalService.deleteLinksByAssetEntryGroupId(
 			portletDataContext.getScopeGroupId());
 	}
 

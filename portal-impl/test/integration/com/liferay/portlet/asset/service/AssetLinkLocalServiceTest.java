@@ -52,7 +52,7 @@ public class AssetLinkLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteLinksByGroupId() throws Exception {
+	public void testDeleteLinksByAssetEntryGroupId() throws Exception {
 
 		// Add Link between entities in Group 1
 
@@ -83,7 +83,8 @@ public class AssetLinkLocalServiceTest {
 			TestPropsValues.getUserId(), assetEntry1.getEntryId(),
 			assetEntry2.getEntryId(), 0, 0);
 
-		AssetLinkLocalServiceUtil.deleteLinksByGroupId(_group1.getGroupId());
+		AssetLinkLocalServiceUtil.deleteLinksByAssetEntryGroupId(
+			_group1.getGroupId());
 
 		List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getAssetLinks(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);

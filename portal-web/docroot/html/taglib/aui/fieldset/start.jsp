@@ -29,4 +29,4 @@
 		</legend>
 	</c:if>
 
-	<div class="<%= column ? "row-fluid" : StringPool.BLANK %>">
+	<div class="<%= column ? "row" : StringPool.BLANK %>">

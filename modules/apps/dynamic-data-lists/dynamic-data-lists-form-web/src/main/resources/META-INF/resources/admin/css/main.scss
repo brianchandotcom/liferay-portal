@@ -157,6 +157,15 @@
 			position: relative;
 		}
 
+		.form-builder-field-toolbar {
+			min-width: 200px;
+			z-index: 750;
+
+			.form-builder-field-toolbar-items {
+				float: right;
+			}
+		}
+
 		.icon-refresh {
 			display: block;
 			font-size: 60px;
@@ -188,6 +197,7 @@
 
 	label {
 		float: none;
+		word-wrap: break-word;
 	}
 }
 
@@ -319,6 +329,7 @@
 
 				.toggle-switch-bar .toggle-switch-handle {
 					text-transform: none;
+					word-break: break-word;
 				}
 			}
 

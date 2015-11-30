@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Wiki Admin",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/wiki_admin/view.jsp",
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,

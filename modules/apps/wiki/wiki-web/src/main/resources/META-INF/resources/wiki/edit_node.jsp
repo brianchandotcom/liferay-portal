@@ -22,6 +22,17 @@ String redirect = ParamUtil.getString(request, "redirect");
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
+
+String headerTitle = (node == null) ? LanguageUtil.get(request, "new-wiki-node") : node.getName();
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
 <portlet:actionURL name="/wiki/edit_node" var="editNodeURL" />
@@ -31,36 +42,40 @@ long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (node == null) %>"
-		title='<%= (node == null) ? "new-wiki-node" : node.getName() %>'
-	/>
+	<c:if test="<%= !portletTitleBasedNavigation %>">
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= (node == null) %>"
+			title="<%= headerTitle %>"
+		/>
+	</c:if>
 
 	<liferay-ui:error exception="<%= DuplicateNodeNameException.class %>" message="please-enter-a-unique-node-name" />
 	<liferay-ui:error exception="<%= NodeNameException.class %>" message="please-enter-a-valid-name" />
 
 	<aui:model-context bean="<%= node %>" model="<%= WikiNode.class %>" />
 
-	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
-		<aui:input name="description" />
+			<aui:input name="description" />
+		</aui:fieldset>
 
 		<c:if test="<%= node == null %>">
-			<aui:field-wrapper label="permissions">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 				<liferay-ui:input-permissions
 					modelName="<%= WikiNode.class.getName() %>"
 				/>
-			</aui:field-wrapper>
+			</aui:fieldset>
 		</c:if>
+	</aui:fieldset-group>
 
-		<aui:button-row>
-			<aui:button type="submit" />
+	<aui:button-row>
+		<aui:button type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
+		<aui:button href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>

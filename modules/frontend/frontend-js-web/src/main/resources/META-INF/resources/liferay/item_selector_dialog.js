@@ -60,6 +60,7 @@ AUI.add(
 
 						var zIndex = instance.get('zIndex');
 
+						instance._currentItem = null;
 						instance._selectedItem = null;
 
 						Util.selectEntity(
@@ -83,6 +84,7 @@ AUI.add(
 											label: strings.add,
 											on: {
 												click: function() {
+													instance._selectedItem = instance._currentItem;
 													instance.close();
 												}
 											}
@@ -113,15 +115,15 @@ AUI.add(
 					_onItemSelected: function(event) {
 						var instance = this;
 
-						var selectedItem = event.data;
+						var currentItem = event.data;
 
 						var dialog = Util.getWindow(instance.get(STR_EVENT_NAME));
 
 						var addButton = dialog.getToolbar('footer').get('boundingBox').one('#addButton');
 
-						Util.toggleDisabled(addButton, !selectedItem);
+						Util.toggleDisabled(addButton, !currentItem);
 
-						instance._selectedItem = selectedItem;
+						instance._currentItem = currentItem;
 					}
 				}
 			}

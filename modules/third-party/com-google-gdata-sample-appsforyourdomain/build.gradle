@@ -57,7 +57,6 @@ downloadSrc {
 	include "gdata/java/sample/util/lib/sample-util.jar"
 
 	includeEmptyDirs = false
-
 	into projectDir
 
 	onlyIf {

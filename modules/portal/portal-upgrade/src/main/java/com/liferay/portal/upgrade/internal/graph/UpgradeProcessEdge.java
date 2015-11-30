@@ -14,7 +14,7 @@
 
 package com.liferay.portal.upgrade.internal.graph;
 
-import com.liferay.portal.upgrade.internal.UpgradeInfo;
+import com.liferay.portal.upgrade.registry.UpgradeInfo;
 
 import org.jgrapht.graph.DefaultEdge;
 

@@ -16,7 +16,7 @@ package com.liferay.portal.upgrade.internal.graph;
 
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.upgrade.internal.UpgradeInfo;
+import com.liferay.portal.upgrade.registry.UpgradeInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -19,163 +19,24 @@
 <%
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-PortletURL portletURL = journalDisplayContext.getPortletURL();
+ArticleSearch articleSearchContainer = journalDisplayContext.getSearchContainer();
 
-ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
-
-OrderByComparator<JournalArticle> orderByComparator = JournalPortletUtil.getArticleOrderByComparator(journalDisplayContext.getOrderByCol(), journalDisplayContext.getOrderByType());
-
-articleSearchContainer.setOrderByCol(journalDisplayContext.getOrderByCol());
-articleSearchContainer.setOrderByComparator(orderByComparator);
-articleSearchContainer.setOrderByType(journalDisplayContext.getOrderByType());
-
-EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
-
-entriesChecker.setCssClass("entry-selector");
-
-articleSearchContainer.setRowChecker(entriesChecker);
-
-EntriesMover entriesMover = new EntriesMover(scopeGroupId);
-
-articleSearchContainer.setRowMover(entriesMover);
-
-ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)articleSearchContainer.getDisplayTerms();
-%>
-
-<c:if test="<%= Validator.isNotNull(displayTerms.getDDMStructureKey()) %>">
-	<aui:input name="<%= ArticleDisplayTerms.DDM_STRUCTURE_KEY %>" type="hidden" value="<%= displayTerms.getDDMStructureKey() %>" />
-</c:if>
-
-<c:if test="<%= Validator.isNotNull(displayTerms.getDDMTemplateKey()) %>">
-	<aui:input name="<%= ArticleDisplayTerms.DDM_TEMPLATE_KEY %>" type="hidden" value="<%= displayTerms.getDDMTemplateKey() %>" />
-</c:if>
-
-<c:if test="<%= portletName.equals(JournalPortletKeys.JOURNAL) && !((themeDisplay.getScopeGroupId() == themeDisplay.getCompanyGroupId()) && (Validator.isNotNull(displayTerms.getDDMStructureKey()) || Validator.isNotNull(displayTerms.getDDMTemplateKey()))) %>">
-	<aui:input name="groupId" type="hidden" />
-</c:if>
-
-<%
-ArticleSearchTerms searchTerms = (ArticleSearchTerms)articleSearchContainer.getSearchTerms();
-
-if (journalDisplayContext.getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	List<Long> folderIds = new ArrayList<Long>(1);
-
-	folderIds.add(journalDisplayContext.getFolderId());
-
-	searchTerms.setFolderIds(folderIds);
-}
-else {
-	searchTerms.setFolderIds(new ArrayList<Long>());
-}
-
-if (Validator.isNotNull(displayTerms.getDDMStructureKey())) {
-	searchTerms.setDDMStructureKey(displayTerms.getDDMStructureKey());
-}
-
-searchTerms.setVersion(-1);
-
-if (journalDisplayContext.isNavigationRecent()) {
-	articleSearchContainer.setOrderByCol("create-date");
-	articleSearchContainer.setOrderByType(journalDisplayContext.getOrderByType());
-}
-
-int status = WorkflowConstants.STATUS_APPROVED;
-
-if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-	status = WorkflowConstants.STATUS_ANY;
-}
-
-List results = null;
-int total = 0;
-%>
-
-<c:choose>
-	<c:when test="<%= journalDisplayContext.isNavigationMine() || journalDisplayContext.isNavigationRecent() %>">
-
-		<%
-		boolean includeOwner = true;
-
-		if (journalDisplayContext.isNavigationMine()) {
-			includeOwner = false;
-		}
-
-		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), journalDisplayContext.getStatus(), includeOwner);
-
-		articleSearchContainer.setTotal(total);
-
-		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), journalDisplayContext.getStatus(), includeOwner, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
-		%>
-
-	</c:when>
-	<c:when test="<%= Validator.isNotNull(displayTerms.getDDMStructureKey()) %>">
-
-		<%
-		total = JournalArticleServiceUtil.getArticlesCountByStructureId(displayTerms.getGroupId(), searchTerms.getDDMStructureKey());
-
-		articleSearchContainer.setTotal(total);
-
-		results = JournalArticleServiceUtil.getArticlesByStructureId(displayTerms.getGroupId(), displayTerms.getDDMStructureKey(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
-		%>
-
-	</c:when>
-	<c:when test="<%= Validator.isNotNull(displayTerms.getDDMTemplateKey()) %>">
-
-		<%
-		total = JournalArticleServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), searchTerms.getDDMStructureKey(), searchTerms.getDDMTemplateKey(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatus(), searchTerms.getReviewDate());
-
-		articleSearchContainer.setTotal(total);
-
-		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getKeywords(), searchTerms.getVersionObj(), searchTerms.getDDMStructureKey(), searchTerms.getDDMTemplateKey(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatus(), searchTerms.getReviewDate(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
-		%>
-
-	</c:when>
-	<c:otherwise>
-
-		<%
-		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), journalDisplayContext.getStatus());
-
-		articleSearchContainer.setTotal(total);
-
-		OrderByComparator<Object> folderOrderByComparator = null;
-
-		boolean orderByAsc = false;
-
-		if (journalDisplayContext.getOrderByType().equals("asc")) {
-			orderByAsc = true;
-		}
-
-		if (journalDisplayContext.getOrderByCol().equals("display-date")) {
-			folderOrderByComparator = new FolderArticleDisplayDateComparator(orderByAsc);
-		}
-		else if (journalDisplayContext.getOrderByCol().equals("modified-date")) {
-			folderOrderByComparator = new FolderArticleModifiedDateComparator(orderByAsc);
-		}
-
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), journalDisplayContext.getStatus(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), folderOrderByComparator);
-		%>
-
-	</c:otherwise>
-</c:choose>
-
-<%
-articleSearchContainer.setResults(results);
-
-request.setAttribute("view.jsp-total", String.valueOf(total));
+request.setAttribute("view.jsp-total", String.valueOf(articleSearchContainer.getTotal()));
 
 request.setAttribute("view_entries.jsp-entryStart", String.valueOf(articleSearchContainer.getStart()));
 request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchContainer.getEnd()));
 %>
 
-<c:if test="<%= results.isEmpty() %>">
+<c:if test="<%= ListUtil.isEmpty(articleSearchContainer.getResults()) %>">
 	<div class="alert alert-info entries-empty">
 		<c:choose>
-			<c:when test="<%= Validator.isNotNull(displayTerms.getDDMStructureKey()) %>">
-				<c:if test="<%= total == 0 %>">
+			<c:when test="<%= Validator.isNotNull(journalDisplayContext.getDDMStructureKey()) %>">
+				<c:if test="<%= articleSearchContainer.getTotal() == 0 %>">
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(journalDisplayContext.getDdmStructureName()) %>" key="there-is-no-web-content-with-structure-x" translateArguments="<%= false %>" />
 				</c:if>
 			</c:when>
 			<c:otherwise>
-				<c:if test="<%= total == 0 %>">
+				<c:if test="<%= articleSearchContainer.getTotal() == 0 %>">
 					<liferay-ui:message key="no-web-content-was-found" />
 				</c:if>
 			</c:otherwise>
@@ -192,14 +53,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 <liferay-ui:search-container
 	id="<%= searchContainerId %>"
 	searchContainer="<%= articleSearchContainer %>"
-	total="<%= total %>"
-	totalVar="articleSearchContainerTotal"
 >
-	<liferay-ui:search-container-results
-		results="<%= results %>"
-		resultsVar="articleSearchContainerResults"
-	/>
-
 	<liferay-ui:search-container-row
 		className="Object"
 		cssClass="entry-display-style"
@@ -287,7 +141,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								actionJspServletContext="<%= application %>"
 								imageUrl='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 								resultRow="<%= row %>"
-								rowChecker="<%= entriesChecker %>"
+								rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 								title="<%= curArticle.getTitle(locale) %>"
 								url="<%= rowURL != null ? rowURL.toString() : null %>"
 							>
@@ -426,7 +280,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								icon="icon-folder-close-alt"
 								imageCSSClass="icon-monospaced"
 								resultRow="<%= row %>"
-								rowChecker="<%= entriesChecker %>"
+								rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 								text="<%= HtmlUtil.escape(curFolder.getName()) %>"
 								url="<%= rowURL.toString() %>"
 							/>

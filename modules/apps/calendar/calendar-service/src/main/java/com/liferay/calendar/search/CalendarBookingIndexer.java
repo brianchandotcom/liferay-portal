@@ -14,8 +14,10 @@
 
 package com.liferay.calendar.search;
 
+import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;
+import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -35,6 +37,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Locale;
@@ -65,6 +69,26 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
+		throws Exception {
+
+		if (actionId.equals(ActionKeys.VIEW)) {
+			CalendarBooking calendarBooking =
+				_calendarBookingLocalService.getCalendarBooking(entryClassPK);
+
+			return CalendarPermission.contains(
+				permissionChecker, calendarBooking.getCalendar(),
+				CalendarActionKeys.VIEW_BOOKING_DETAILS);
+		}
+		else {
+			return super.hasPermission(
+				permissionChecker, entryClassName, entryClassPK, actionId);
+		}
 	}
 
 	@Override

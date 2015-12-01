@@ -93,8 +93,8 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long[] addOrganizationIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addOrganizationIds"), 0L);
+		long[] addOrganizationIds = ParamUtil.getLongValues(
+			actionRequest, "rowIds");
 
 		_organizationService.addGroupOrganizations(
 			themeDisplay.getSiteGroupId(), addOrganizationIds);

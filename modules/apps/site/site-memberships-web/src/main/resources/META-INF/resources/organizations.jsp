@@ -94,7 +94,6 @@ organizationSearch.setResults(organizations);
 <aui:form action="<%= deleteGroupOrganizationsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="organizations" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
-	<aui:input name="addOrganizationIds" type="hidden" />
 
 	<liferay-ui:search-container
 		id="organizations"
@@ -118,6 +117,12 @@ organizationSearch.setResults(organizations);
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
+</aui:form>
+
+<portlet:actionURL name="addGroupOrganizations" var="addGroupOrganizationsURL" />
+
+<aui:form action="<%= addGroupOrganizationsURL %>" cssClass="hide" name="addGroupOrganizationsFm">
+	<aui:input name="tabs1" type="hidden" value="organizations" />
 </aui:form>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
@@ -153,9 +158,11 @@ organizationSearch.setResults(organizations);
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								form.fm('addOrganizationIds').val(selectedItem.addOrganizationIds);
+								var addGroupOrganizationsFm = $(document.<portlet:namespace />addGroupOrganizationsFm);
 
-								submitForm(form, '<portlet:actionURL name="addGroupOrganizations" />');
+								addGroupOrganizationsFm.append(selectedItem);
+
+								submitForm(addGroupOrganizationsFm);
 							}
 						}
 					},

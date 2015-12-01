@@ -62,7 +62,7 @@
 	<command name="clickAtNavigation">
 		<execute function="Click#clickAtNonLiferayNavigation" />
 
-		<execute argument1="//script[contains(@src,'/aui/aui-url/aui-url-min.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/aui/aui-url/aui-url')]" selenium="waitForElementPresent" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -77,7 +77,7 @@
 			<then>
 				<execute argument1="//nav[@id='navigation']" selenium="clickAt" />
 
-				<execute argument1="//script[contains(@src,'/aui/sortable/sortable-min.js')]" selenium="waitForElementPresent" />
+				<execute argument1="//script[contains(@src,'/aui/sortable/sortable')]" selenium="waitForElementPresent" />
 
 				<execute selenium="mouseOver" />
 

@@ -89,6 +89,7 @@
 			<arg value="sass.dir=/html/portlet" />
 			<arg value="sass.docroot.dir=${basedir}/docroot" />
 			<arg value="sass.portal.common.dir=${sass.portal.common.dir}" />
+			<arg value="sass.precision=${sass.precision}" />
 		</java>
 
 		<delete dir="${sass.tmp.dir}" />

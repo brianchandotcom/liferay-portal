@@ -578,18 +578,6 @@
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#PREVIOUS" value1="${kbDisplayPreviousArticle}" />
 	</command>
 
-	<command name="gotoRelatedAssetCP">
-		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBaseArticle#RELATED_ASSETS" value1="${kbArticleRelatedAssetTitle}" />
-	</command>
-
-	<command name="gotoRelatedAssetViaKBDisplayPG">
-		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
-
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
-	</command>
-
 	<command name="gotoSuggestionsNavigationCP">
 		<execute function="AssertClick" locator1="KnowledgeBase#ADMIN_TABS_SUGGESTIONS" value1="Suggestions" />
 	</command>
@@ -838,8 +826,8 @@
 
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_ASSET_TABLE_TITLE" value1="${kbArticleRelatedAssetTitle}" />
-		<execute function="AssertClick" locator1="AssetRelatedAssets#KB_ASSET_TABLE_ACTION" value1="Choose" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#KB_ASSET_TABLE_TITLE_LINK" value1="${kbArticleRelatedAssetTitle}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1004,9 +992,9 @@
 		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
 	</command>
 
-	<command name="viewBlogsEntryRelatedAssetViaKBDisplayPG">
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_TITLE" value1="${RelatedAssetTitle}" />
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
+	<command name="viewBlogsEntryRelatedAsset">
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT_GENERIC" value1="Blogs Entry Content" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE_GENERIC" value1="Blogs Entry Title" />
 	</command>
 
 	<command name="viewChildArticleCP">
@@ -1415,19 +1403,6 @@
 	<command name="viewPGViaKBSection">
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbArticleContent}" />
-	</command>
-
-	<command name="viewRelatedAssetCP">
-		<if>
-			<equals arg1="${relatedAssetType}" arg2="Blogs Entry" />
-			<then>
-				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_CONTENT" value1="${relatedAssetContent}" />
-			</then>
-		</if>
-
-		<var name="key_relatedAssetTitle" value="${relatedAssetTitle}" />
-
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_TITLE" value1="${relatedAssetTitle}" />
 	</command>
 
 	<command name="viewSearchResultsPG">

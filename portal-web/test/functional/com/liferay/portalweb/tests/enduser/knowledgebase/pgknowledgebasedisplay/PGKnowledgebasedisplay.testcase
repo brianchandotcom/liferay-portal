@@ -918,14 +918,12 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticle#gotoRelatedAssetViaKBDisplayPG">
-			<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
-		</execute>
+		<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
+		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute macro="KBArticle#viewBlogsEntryRelatedAssetViaKBDisplayPG">
-			<var name="RelatedAssetContent" value="Blogs Entry Content" />
-			<var name="RelatedAssetTitle" value="Blogs Entry Title" />
-		</execute>
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+
+		<execute macro="KBArticle#viewBlogsEntryRelatedAsset" />
 	</command>
 
 	<command name="ViewKBArticleWithEditedStarRatings" priority="3">

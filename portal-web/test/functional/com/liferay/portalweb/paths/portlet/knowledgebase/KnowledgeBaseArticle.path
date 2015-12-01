@@ -25,53 +25,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_IMAGE_CAPTION</td>
-	<td>//p[@class='caption']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDIT_ON_GITHUB</td>
 	<td>//span[contains(.,'Edit on GitHub')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RELATED_ASSETS</td>
-	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>READ_MORE</td>
-	<td>//div[@class='kb-article-child']//a[contains(.,'Read More')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VOTES</td>
-	<td>//div[@class='kb-article-container']//div[contains(@class,'rating-content')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VOTE_UP</td>
-	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-up')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VOTE_DOWN</td>
-	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-down')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RSS</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'RSS')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUBSCRIBE</td>
 	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Subscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>UNSUBSCRIBE</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Unsubscribe')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,11 +42,6 @@
 <tr>
 	<td>PRINT</td>
 	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Print')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_ACTIONS_BUTTON</td>
-	<td>//div[@class='kb-article-container']//span[contains(.,'Actions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -102,11 +57,6 @@
 <tr>
 	<td>DO_YOU_HAVE_ANY_SUGGESTIONS</td>
 	<td>//div[@class='kb-article-container']//div/a[contains(.,'Do you have any suggestions?')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>THERE_ARE_SUGGESTIONS</td>
-	<td>//div[@class='kb-article-container']//div[@class='kb-article-suggestion-actions']/a[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -132,11 +82,6 @@
 </tr>
 <!--ATTACHMENTS-->
 <tr>
-	<td>ATTACHMENTS_ADD_LINK</td>
-	<td>//a[contains(.,'Add Attachments')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ATTACHMENTS_HEADER_COLLAPSED</td>
 	<td>//div[contains(@class,'toggler-header-collapsed') and contains(.,'Attachments')]/div/span</td>
 	<td></td>
@@ -144,11 +89,6 @@
 <tr>
 	<td>ATTACHMENTS_HEADER_EXPANDED</td>
 	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Attachments')]/div/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ATTACHMENTS_SELECT_FILES_BUTTON</td>
-	<td>//button[contains(.,'Select Files')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -242,68 +182,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--TEMPLATE-->
-<tr>
-	<td>TEMPLATE_TITLE</td>
-	<td>//div[@class='kb-title']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_USE_THIS_TEMPLATE_LINK</td>
-	<td>//span[contains(.,'Use This Template')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_EDIT_LINK</td>
-	<td>//span[contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_PERMISSIONS_LINK</td>
-	<td>//span[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_DELETE_LINK</td>
-	<td>//span[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_CONTENT</td>
-	<td>//div[@class='kb-entity-body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--TEMPLATE_COMMENTS-->
-<tr>
-	<td>TEMPLATE_COMMENTS_DROPDOWN_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and contains(.,'Comments')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_COMMENTS_DROPDOWN_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Comments')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_COMMENTS_BODY</td>
-	<td>//div[@class='panel-body']//textarea</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_COMMENTS_YES_RADIO_BUTTON</td>
-	<td>//label[contains(@class,'radio') and contains(@class,'inline') and contains(.,'Yes')]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_COMMENTS_NO_RADIO_BUTTON</td>
-	<td>//label[contains(@class,'radio') and contains(@class,'inline') and contains(.,'No')]/input</td>
 	<td></td>
 </tr>
 </tbody>

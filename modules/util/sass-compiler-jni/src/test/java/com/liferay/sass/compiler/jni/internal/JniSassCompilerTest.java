@@ -167,6 +167,27 @@ public class JniSassCompilerTest {
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
+	@Test
+	public void testSassPrecision() throws Exception {
+		SassCompiler sassCompiler = new JniSassCompiler(10);
+
+		String expectedOutput = ".foo { line-height: 1.428571429; }";
+		String actualOutput = sassCompiler.compileString(
+			"$val: 1.428571429;.foo { line-height: $val; }", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+
+		sassCompiler = new JniSassCompiler(3);
+
+		expectedOutput = ".foo { line-height: 1.429; }";
+		actualOutput = sassCompiler.compileString(
+			"$val: 1.428571429;.foo { line-height: $val; }", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
 	protected String read(Path filePath) throws Exception {
 		return new String(Files.readAllBytes(filePath));
 	}

@@ -36,10 +36,15 @@ import java.nio.file.Files;
 public class JniSassCompiler implements SassCompiler {
 
 	public JniSassCompiler() {
-		this(System.getProperty("java.io.tmpdir"));
+		this(_PRECISION_DEFAULT);
 	}
 
-	public JniSassCompiler(String tmpDirName) {
+	public JniSassCompiler(int precision) {
+		this(precision, System.getProperty("java.io.tmpdir"));
+	}
+
+	public JniSassCompiler(int precision, String tmpDirName) {
+		_precision = precision;
 		_tmpDirName = tmpDirName;
 	}
 
@@ -224,6 +229,7 @@ public class JniSassCompiler implements SassCompiler {
 		_liferaysassLibrary.sass_option_set_input_path(
 			sassOptions, inputFileName);
 		_liferaysassLibrary.sass_option_set_output_path(sassOptions, "");
+		_liferaysassLibrary.sass_option_set_precision(sassOptions, _precision);
 		_liferaysassLibrary.sass_option_set_output_style(
 			sassOptions, Sass_Output_Style.SASS_STYLE_NESTED);
 		_liferaysassLibrary.sass_option_set_source_comments(
@@ -268,9 +274,12 @@ public class JniSassCompiler implements SassCompiler {
 		}
 	}
 
+	private static final int _PRECISION_DEFAULT = 5;
+
 	private static final LiferaysassLibrary _liferaysassLibrary =
 		LiferaysassLibrary.INSTANCE;
 
+	private final int _precision;
 	private final String _tmpDirName;
 
 }

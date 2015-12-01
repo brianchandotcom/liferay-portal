@@ -33,10 +33,12 @@ public class CSSBuilderArgs {
 		return _docrootDirName;
 	}
 
-	public int getPrecision() { return _precision; }
-
 	public String getPortalCommonDirName() {
 		return _portalCommonDirName;
+	}
+
+	public int getPrecision() {
+		return _precision;
 	}
 
 	public String[] getRtlExcludedPathRegexps() {
@@ -67,12 +69,12 @@ public class CSSBuilderArgs {
 		_generateSourceMap = generateSourceMap;
 	}
 
-	public void setPrecision(int precision) {
-		_precision = precision;
-	}
-
 	public void setPortalCommonDirName(String portalCommonDirName) {
 		_portalCommonDirName = portalCommonDirName;
+	}
+
+	public void setPrecision(int precision) {
+		_precision = precision;
 	}
 
 	public void setRtlExcludedPathRegexps(String rtlExcludedPathRegexps) {
@@ -94,8 +96,8 @@ public class CSSBuilderArgs {
 	private String[] _dirNames = {DIR_NAME};
 	private String _docrootDirName = DOCROOT_DIR_NAME;
 	private boolean _generateSourceMap;
-	private int _precision;
 	private String _portalCommonDirName;
+	private int _precision;
 	private String[] _rtlExcludedPathRegexps = new String[0];
 	private String _sassCompilerClassName;
 

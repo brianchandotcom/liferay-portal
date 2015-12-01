@@ -1828,6 +1828,11 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_AUTOMATICALLY_EXTRACTED_METADATA" value1="Automatically Extracted Metadata" />
 	</command>
 
+	<command name="viewDocumentImageAsWorkflowAsset">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW" />
+	</command>
+
 	<command name="viewDocumentMetadataCP">
 		<var name="key_metadataData" value="${metadataData}" />
 		<var name="key_metadataLabel" value="${metadataLabel}" />

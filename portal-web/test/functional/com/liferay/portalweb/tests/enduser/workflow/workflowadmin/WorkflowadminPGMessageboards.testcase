@@ -131,6 +131,26 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
+			<var name="workflowAssetTitle" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewAsWorkflowAsset">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoViewInContext" />
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
 	</command>
 
 	<command name="RejectMessageBoardsThreadPG" priority="4">

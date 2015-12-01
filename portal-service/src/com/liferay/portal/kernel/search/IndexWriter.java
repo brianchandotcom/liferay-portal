@@ -30,6 +30,8 @@ public interface IndexWriter extends SpellCheckIndexWriter {
 			SearchContext searchContext, Collection<Document> documents)
 		throws SearchException;
 
+	public void commit(long companyId) throws SearchException;
+
 	public void deleteDocument(SearchContext searchContext, String uid)
 		throws SearchException;
 

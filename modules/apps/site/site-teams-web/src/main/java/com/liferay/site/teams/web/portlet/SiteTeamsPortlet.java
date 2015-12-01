@@ -21,7 +21,6 @@ import com.liferay.portal.TeamNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -96,8 +95,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
-		long[] addUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] addUserIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		_userService.addTeamUsers(teamId, addUserIds);
 

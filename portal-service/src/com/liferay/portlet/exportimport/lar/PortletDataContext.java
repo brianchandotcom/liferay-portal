@@ -291,6 +291,12 @@ public interface PortletDataContext extends Serializable {
 	@Deprecated
 	public Map<String, String[]> getAssetCategoryUuidsMap();
 
+	public Set<Long> getAssetLinkIds();
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getAssetLinkIds()}
+	 */
+	@Deprecated
 	public Map<String, List<AssetLink>> getAssetLinksMap();
 
 	public String[] getAssetTagNames(Class<?> clazz, long classPK);

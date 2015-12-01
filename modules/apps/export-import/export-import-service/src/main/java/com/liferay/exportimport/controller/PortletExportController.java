@@ -27,6 +27,7 @@ import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortle
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -59,6 +60,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.PortletItemLocalService;
@@ -70,9 +72,10 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
+import com.liferay.portlet.asset.model.adapter.StagedAssetLink;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.asset.service.AssetLinkLocalService;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.exportimport.LayoutImportException;
 import com.liferay.portlet.exportimport.controller.ExportController;
@@ -100,7 +103,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -476,43 +478,33 @@ public class PortletExportController implements ExportController {
 
 		Element rootElement = document.addElement("links");
 
-		Map<String, List<AssetLink>> assetLinksMap =
-			portletDataContext.getAssetLinksMap();
+		Element exportDataRootElement =
+			portletDataContext.getExportDataRootElement();
 
-		for (Entry<String, List<AssetLink>> entry : assetLinksMap.entrySet()) {
-			String[] assetLinkNameParts = StringUtil.split(
-				entry.getKey(), CharPool.POUND);
+		try {
+			portletDataContext.setExportDataRootElement(rootElement);
 
-			List<AssetLink> assetLinks = entry.getValue();
+			ActionableDynamicQuery linkActionableDynamicQuery =
+				_assetLinkLocalService.getExportActionbleDynamicQuery(
+					portletDataContext);
 
-			String sourceAssetEntryUuid = assetLinkNameParts[0];
+			linkActionableDynamicQuery.performActions();
 
-			Element assetElement = rootElement.addElement("asset-link-group");
+			for (long linkId : portletDataContext.getAssetLinkIds()) {
+				AssetLink assetLink = _assetLinkLocalService.getAssetLink(
+					linkId);
 
-			assetElement.addAttribute("source-uuid", sourceAssetEntryUuid);
+				StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
+					assetLink, AssetLink.class, StagedAssetLink.class);
 
-			for (AssetLink assetLink : assetLinks) {
-				String path = getAssetLinkPath(
-					portletDataContext, assetLink.getLinkId());
-
-				if (portletDataContext.hasPrimaryKey(String.class, path)) {
-					return;
-				}
-
-				Element assetLinkElement = assetElement.addElement(
-					"asset-link");
-
-				assetLinkElement.addAttribute("path", path);
-
-				AssetEntry targetAssetEntry =
-					_assetEntryLocalService.fetchAssetEntry(
-						assetLink.getEntryId2());
-
-				assetLinkElement.addAttribute(
-					"target-uuid", targetAssetEntry.getClassUuid());
-
-				portletDataContext.addZipEntry(path, assetLink);
+				portletDataContext.addClassedModel(
+					portletDataContext.getExportDataElement(stagedAssetLink),
+					ExportImportPathUtil.getModelPath(stagedAssetLink),
+					stagedAssetLink);
 			}
+		}
+		finally {
+			portletDataContext.setExportDataRootElement(exportDataRootElement);
 		}
 
 		portletDataContext.addZipEntry(
@@ -1156,19 +1148,6 @@ public class PortletExportController implements ExportController {
 			serviceName, parentElement);
 	}
 
-	protected String getAssetLinkPath(
-		PortletDataContext portletDataContext, long assetLinkId) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
-		sb.append("/links/");
-		sb.append(assetLinkId);
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
 	protected String getLockPath(
 		PortletDataContext portletDataContext, String className, String key,
 		Lock lock) {
@@ -1258,6 +1237,13 @@ public class PortletExportController implements ExportController {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAssetLinkLocalService(
+		AssetLinkLocalService assetLinkLocalService) {
+
+		_assetLinkLocalService = assetLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setExportImportLifecycleManager(
 		ExportImportLifecycleManager exportImportLifecycleManager) {
 
@@ -1306,6 +1292,7 @@ public class PortletExportController implements ExportController {
 		PortletExportController.class);
 
 	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile AssetLinkLocalService _assetLinkLocalService;
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
 	private volatile ExportImportLifecycleManager _exportImportLifecycleManager;

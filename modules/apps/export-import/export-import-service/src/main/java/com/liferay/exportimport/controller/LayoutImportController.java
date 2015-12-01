@@ -853,7 +853,7 @@ public class LayoutImportController implements ImportController {
 
 		// Asset links
 
-		_portletImportController.readAssetLinks(portletDataContext);
+		_portletImportController.importAssetLinks(portletDataContext);
 
 		// Delete missing layouts
 

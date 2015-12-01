@@ -85,22 +85,6 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 		</#if>
 	</#list>
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ${entity.name}${sessionTypeName}Service getWrapped${entity.name}${sessionTypeName}Service() {
-		return _${entity.varName}${sessionTypeName}Service;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrapped${entity.name}${sessionTypeName}Service(${entity.name}${sessionTypeName}Service ${entity.varName}${sessionTypeName}Service) {
-		_${entity.varName}${sessionTypeName}Service = ${entity.varName}${sessionTypeName}Service;
-	}
-
 	@Override
 	public ${entity.name}${sessionTypeName}Service getWrappedService() {
 		return _${entity.varName}${sessionTypeName}Service;

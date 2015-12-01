@@ -341,6 +341,10 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Private Pages" />
+		</execute>
+
 		<execute macro="SitePage#addCP">
 			<var name="page" value="Private Pages" />
 			<var name="sitePageName" value="Private Page" />

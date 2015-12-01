@@ -123,22 +123,22 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_ARROW_1</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../span[contains(@class,'tree-hitarea')])[1]</td>
+	<td>xpath=(//span[contains(@class,'tree-hitarea') and contains(@class,'icon-plus')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_ARROW_2</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../span[contains(@class,'tree-hitarea')])[2]</td>
+	<td>xpath=(//span[contains(@class,'tree-hitarea') and contains(@class,'icon-plus')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_ARROW_3</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../span[contains(@class,'tree-hitarea')])[3]</td>
+	<td>xpath=(//span[contains(@class,'tree-hitarea') and contains(@class,'icon-plus')])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_ARROW_4</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[4]</td>
+	<td>xpath=(//span[contains(@class,'tree-hitarea') and contains(@class,'icon-plus')])[4]</td>
 	<td></td>
 </tr>
 <tr>
@@ -168,37 +168,37 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK_3</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[3]</td>
+	<td>xpath=(//span[contains(@class,'tree-label')])[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK_4</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[4]</td>
+	<td>xpath=(//span[contains(@class,'tree-label')])[5]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK_5</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[5]</td>
+	<td>xpath=(//span[contains(@class,'tree-label')])[6]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK_6</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[6]</td>
+	<td>xpath=(//span[contains(@class,'tree-label')])[7]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK_7</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[7]</td>
+	<td>xpath=(//span[contains(@class,'tree-label')])[8]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK_8</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[8]</td>
+	<td>xpath=(//span[contains(@class,'tree-label')])[9]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK_TO_PAGE</td>
-	<td>xpath=(//li[contains(@id,'layoutsTree_layoutId_2')]/div/span[contains(@class,'icon-link')])</td>
+	<td>//span[contains(@class,'icon-link')]</td>
 	<td></td>
 </tr>
 <tr>

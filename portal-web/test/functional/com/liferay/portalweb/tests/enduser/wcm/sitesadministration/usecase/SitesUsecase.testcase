@@ -92,14 +92,18 @@
 			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="Blog Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Home" />
 		</execute>
 
-		<execute macro="SitePage#openPageTree" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
+		</execute>
 
 		<execute macro="SitePage#addPageTranslations">
-			<var name="childPageName" value="Blog Page" />
+			<var name="childPageName" value="true" />
 			<var name="pageTranslation" value="es_ES" />
 			<var name="PageTranslationName" value="Blog Página" />
+			<var name="sitePageName" value="Blog Page" />
 		</execute>
 
 		<execute macro="Page#openURL">

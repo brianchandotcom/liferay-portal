@@ -186,12 +186,19 @@
 			<var name="sitePageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
 			<var name="page" value="Private Pages" />
-			<var name="pageAccess" value="Private" />
-			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
+			<var name="sitePageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Blogs Page" />
+			<var name="url" value="http://localhost:8080/group/site-name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

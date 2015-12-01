@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleType;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.journal.upgrade.v1_0_0.UpgradePortletSettings;
@@ -58,17 +57,16 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.journal.service", "0.0.1", "1.0.0",
-			new UpgradeSchema(), new UpgradeClassNames(),
-			new UpgradeCompanyId(),
-			new UpgradeJournal(
-				_companyLocalService, _ddmStructureLocalService,
-				_ddmTemplateLinkLocalService, _ddmTemplateLocalService,
-				_groupLocalService, _userLocalService),
-			new UpgradeJournalArticleType(
+			new UpgradeSchema(
 				_assetCategoryLocalService, _assetEntryLocalService,
 				_assetVocabularyLocalService, _companyLocalService,
 				_ddmStructureLocalService, _groupLocalService,
 				_layoutLocalService, _userLocalService),
+			new UpgradeClassNames(), new UpgradeCompanyId(),
+			new UpgradeJournal(
+				_companyLocalService, _ddmStructureLocalService,
+				_ddmTemplateLinkLocalService, _ddmTemplateLocalService,
+				_groupLocalService, _userLocalService),
 			new UpgradeJournalDisplayPreferences(),
 			new UpgradeLastPublishDate(),
 			new UpgradePortletSettings(_settingsFactory),

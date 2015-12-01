@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -88,6 +89,7 @@ public class AddDefaultSharedPortletLayoutAction extends SimpleAction {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
+		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
@@ -95,11 +97,20 @@ public class AddDefaultSharedPortletLayoutAction extends SimpleAction {
 
 		serviceContext.setUserId(defaultUserId);
 
-		_layoutLocalService.addLayout(
+		layout = _layoutLocalService.addLayout(
 			defaultUserId, group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "shared",
 			StringPool.BLANK, StringPool.BLANK, "shared_portlet", true,
 			"/shared", serviceContext);
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty("occult", "true");
+
+		_layoutLocalService.updateLayout(
+			group.getGroupId(), false, layout.getLayoutId(),
+			typeSettingsProperties.toString());
 	}
 
 	@Reference(unbind = "-")

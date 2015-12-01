@@ -208,6 +208,13 @@ public class LayoutsTreeUtil {
 					request, groupId, privateLayout, parentLayoutId, layouts,
 					treeId)) {
 
+			String typeSettingProperty = layout.getTypeSettingsProperty(
+				"occult", "false");
+
+			if (!typeSettingProperty.equals("false")) {
+				continue;
+			}
+
 			LayoutTreeNode layoutTreeNode = new LayoutTreeNode(layout);
 
 			LayoutTreeNodes childLayoutTreeNodes = null;
@@ -244,7 +251,7 @@ public class LayoutsTreeUtil {
 			layoutTreeNodes.add(layoutTreeNode);
 		}
 
-		return new LayoutTreeNodes(layoutTreeNodes, layouts.size());
+		return new LayoutTreeNodes(layoutTreeNodes, layoutTreeNodes.size());
 	}
 
 	private static int _getLoadedLayoutsCount(

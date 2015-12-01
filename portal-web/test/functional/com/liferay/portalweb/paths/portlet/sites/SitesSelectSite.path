@@ -42,8 +42,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITES_TABLE_CHOOSE_BUTTON</td>
-	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[3]/button</td>
+	<td>SITES_TABLE_CHOOSE_SITE_LINK</td>
+	<td>//td[contains(.,'${key_siteName}')]/a</td>
 	<td></td>
 </tr>
 </tbody>

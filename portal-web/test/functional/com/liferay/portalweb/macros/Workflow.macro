@@ -300,6 +300,16 @@
 		<execute function="Click" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
 	</command>
 
+	<command name="gotoViewCompletedAssetViaMySubmissions">
+		<execute function="Click" locator1="MenuItem#COMPLETED" value1="Completed" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="Click" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TITLE" />
+
+		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" value1="View" />
+	</command>
+
 	<command name="reactivateInactiveWorkflowDefinition">
 		<var name="key_workflowDefinitionName" value="${workflowDefinitionName}" />
 

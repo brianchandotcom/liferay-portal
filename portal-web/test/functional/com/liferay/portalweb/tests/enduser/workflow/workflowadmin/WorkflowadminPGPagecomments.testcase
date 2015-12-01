@@ -121,6 +121,18 @@
 			<var name="commentAuthor" value="${commentAuthor}" />
 			<var name="commentBody" value="${commentBody}" />
 		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
+			<var name="workflowAssetTitle" value="${commentBody}" />
+		</execute>
+
+		<execute macro="PageComment#viewAsWorkflowAsset">
+			<var name="commentBody" value="${commentBody}" />
+		</execute>
 	</command>
 
 	<command name="DeleteComment" priority="4">

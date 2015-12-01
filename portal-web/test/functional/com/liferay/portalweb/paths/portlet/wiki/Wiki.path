@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_ASSET</td>
+	<td>//div[@class='portlet-body']/p[contains(.,'${key_wikiPageContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_HEADER</td>
 	<td>//div[@class='wiki-body']/h1</td>
 	<td></td>

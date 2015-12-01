@@ -23,7 +23,7 @@
 		<execute function="AssertChecked" locator1="Wiki#FILES_READY_TO_BE_SAVED_CHECKBOX" />
 		<execute function="AssertTextEquals" locator1="Wiki#FILES_READY_TO_BE_SAVED_TITLE" value1="${attachmentFileName}" />
 		<execute function="AssertClick" locator1="Button#SAVE_ATTACHMENT" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Wiki#FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
 	</command>
 
 	<command name="addChildPagePG">
@@ -1218,6 +1218,14 @@
 		</execute>
 
 		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
+	<command name="viewAsWorkflowAsset">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${wikiPageTitle}" />
+
+		<var name="key_wikiPageContent" value="${wikiPageContent}" />
+
+		<execute function="AssertTextEquals" locator1="Wiki#BODY_ASSET" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="viewAttachmentPG">

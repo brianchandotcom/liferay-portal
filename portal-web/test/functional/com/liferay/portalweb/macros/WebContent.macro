@@ -1309,6 +1309,14 @@
 		</if>
 	</command>
 
+	<command name="viewEntryAsWorkflowAsset">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${webContentTitle}" />
+
+		<var name="key_webContentContent" value="${webContentContent}" />
+
+		<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+	</command>
+
 	<command name="viewExpirationDateCP">
 		<execute function="AssertClick" locator1="WCEditWebContent#MENU_SCHEDULE" value1="Schedule" />
 		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />

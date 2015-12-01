@@ -64,6 +64,10 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		int state = Bundle.ACTIVE;
 
 		for (Bundle bundle : _bundles) {
+			if (BundleUtil.isFragment(bundle)) {
+				continue;
+			}
+
 			int bundleState = bundle.getState();
 
 			if (state > bundleState) {

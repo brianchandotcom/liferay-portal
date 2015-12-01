@@ -74,6 +74,10 @@ public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 		int state = Bundle.ACTIVE;
 
 		for (Bundle bundle : bundles) {
+			if (BundleUtil.isFragment(bundle)) {
+				continue;
+			}
+
 			int bundleState = bundle.getState();
 
 			if (state > bundleState) {

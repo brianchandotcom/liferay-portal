@@ -141,28 +141,6 @@ public class SocialActivityInterpreterLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #interpret(String,
-	 *             SocialActivity, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public SocialActivityFeedEntry interpret(
-		SocialActivity activity, ThemeDisplay themeDisplay) {
-
-		ServiceContext serviceContext = null;
-
-		try {
-			serviceContext = ServiceContextFactory.getInstance(
-				themeDisplay.getRequest());
-		}
-		catch (Exception e) {
-			return null;
-		}
-
-		return interpret(StringPool.BLANK, activity, serviceContext);
-	}
-
-	/**
 	 * Creates a human readable activity feed entry for the activity using an
 	 * available compatible activity interpreter.
 	 *

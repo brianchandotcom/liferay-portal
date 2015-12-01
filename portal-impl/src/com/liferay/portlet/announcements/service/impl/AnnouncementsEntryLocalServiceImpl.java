@@ -123,31 +123,6 @@ public class AnnouncementsEntryLocalServiceImpl
 		return entry;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addEntry(long, long, long,
-	 *             String, String, String, String, int, int, int, int, int,
-	 *             boolean, int, int, int, int, int, int, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public AnnouncementsEntry addEntry(
-			long userId, long classNameId, long classPK, String title,
-			String content, String url, String type, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute, int priority,
-			boolean alert)
-		throws PortalException {
-
-		return addEntry(
-			userId, classNameId, classPK, title, content, url, type,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, false, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			priority, alert);
-	}
-
 	@Override
 	public void checkEntries() throws PortalException {
 		Date now = new Date();

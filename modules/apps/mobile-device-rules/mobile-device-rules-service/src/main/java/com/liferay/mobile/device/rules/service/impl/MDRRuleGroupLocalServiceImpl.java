@@ -198,23 +198,6 @@ public class MDRRuleGroupLocalServiceImpl
 		return mdrRuleGroupPersistence.countByGroupId(groupIds);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #search(long, String,
-	 *             LinkedHashMap, boolean, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<MDRRuleGroup> search(
-		long groupId, String name, boolean andOperator, int start, int end) {
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("includeGlobalScope", Boolean.TRUE);
-
-		return mdrRuleGroupFinder.findByG_N(
-			groupId, name, params, andOperator, start, end);
-	}
-
 	@Override
 	public List<MDRRuleGroup> search(
 		long groupId, String name, LinkedHashMap<String, Object> params,
@@ -224,24 +207,6 @@ public class MDRRuleGroupLocalServiceImpl
 			groupId, name, params, andOperator, start, end);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
-	 *             String, LinkedHashMap, boolean, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<MDRRuleGroup> searchByKeywords(
-		long groupId, String keywords, boolean andOperator, int start,
-		int end) {
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("includeGlobalScope", Boolean.TRUE);
-
-		return mdrRuleGroupFinder.findByKeywords(
-			groupId, keywords, params, start, end);
-	}
-
 	@Override
 	public List<MDRRuleGroup> searchByKeywords(
 		long groupId, String keywords, LinkedHashMap<String, Object> params,
@@ -251,43 +216,12 @@ public class MDRRuleGroupLocalServiceImpl
 			groupId, keywords, params, start, end);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
-	 *             String, LinkedHashMap, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public int searchByKeywordsCount(
-		long groupId, String keywords, boolean andOperator) {
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("includeGlobalScope", Boolean.TRUE);
-
-		return mdrRuleGroupFinder.countByKeywords(groupId, keywords, params);
-	}
-
 	@Override
 	public int searchByKeywordsCount(
 		long groupId, String keywords, LinkedHashMap<String, Object> params,
 		boolean andOperator) {
 
 		return mdrRuleGroupFinder.countByKeywords(groupId, keywords, params);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #searchCount(long, String,
-	 *             LinkedHashMap, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public int searchCount(long groupId, String name, boolean andOperator) {
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("includeGlobalScope", Boolean.TRUE);
-
-		return mdrRuleGroupFinder.countByG_N(
-			groupId, name, params, andOperator);
 	}
 
 	@Override

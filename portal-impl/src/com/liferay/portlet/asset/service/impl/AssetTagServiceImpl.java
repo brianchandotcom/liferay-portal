@@ -131,47 +131,6 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		return new AssetTagDisplay(tags, total, start, end);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupTagsDisplay(long,
-	 *             String, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public JSONObject getJSONGroupTags(
-			long groupId, String name, int start, int end)
-		throws PortalException {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		int page = end / (end - start);
-
-		jsonObject.put("page", page);
-
-		List<AssetTag> tags = null;
-		int total = 0;
-
-		if (Validator.isNotNull(name)) {
-			name = (CustomSQLUtil.keywords(name))[0];
-
-			tags = getTags(groupId, name, start, end);
-			total = getTagsCount(groupId, name);
-		}
-		else {
-			tags = getGroupTags(groupId, start, end, null);
-			total = getGroupTagsCount(groupId);
-		}
-
-		String tagsJSON = JSONFactoryUtil.looseSerialize(tags);
-
-		JSONArray tagsJSONArray = JSONFactoryUtil.createJSONArray(tagsJSON);
-
-		jsonObject.put("tags", tagsJSONArray);
-
-		jsonObject.put("total", total);
-
-		return jsonObject;
-	}
-
 	@Override
 	public AssetTag getTag(long tagId) throws PortalException {
 		return assetTagLocalService.getTag(tagId);

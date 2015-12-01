@@ -523,20 +523,6 @@ public class DLImpl implements DL {
 			fileEntry, fileVersion, themeDisplay, queryString, true, true);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getPreviewURL(FileEntry,
-	 *             FileVersion, ThemeDisplay, String, boolean, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public String getPreviewURL(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString, boolean appendToken) {
-
-		return getPreviewURL(
-			fileEntry, fileVersion, themeDisplay, queryString, true, true);
-	}
-
 	@Override
 	public String getPreviewURL(
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,

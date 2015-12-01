@@ -114,33 +114,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * resources for the user group.
 	 * </p>
 	 *
-	 * @param      userId the primary key of the user
-	 * @param      companyId the primary key of the user group's company
-	 * @param      name the user group's name
-	 * @param      description the user group's description
-	 * @return     the user group
-	 * @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
-	 *             String, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public UserGroup addUserGroup(
-			long userId, long companyId, String name, String description)
-		throws PortalException {
-
-		return addUserGroup(userId, companyId, name, description, null);
-	}
-
-	/**
-	 * Adds a user group.
-	 *
-	 * <p>
-	 * This method handles the creation and bookkeeping of the user group,
-	 * including its resources, metadata, and internal data structures. It is
-	 * not necessary to make subsequent calls to setup default groups and
-	 * resources for the user group.
-	 * </p>
-	 *
 	 * @param  userId the primary key of the user
 	 * @param  companyId the primary key of the user group's company
 	 * @param  name the user group's name
@@ -224,90 +197,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		userPersistence.clearUserGroups(userId);
 
 		PermissionCacheUtil.clearCache(userId);
-	}
-
-	/**
-	 * Copies the user group's layout to the user.
-	 *
-	 * @param      userGroupId the primary key of the user group
-	 * @param      userId the primary key of the user
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	@Override
-	public void copyUserGroupLayouts(long userGroupId, long userId)
-		throws PortalException {
-
-		Map<String, String[]> parameterMap = getLayoutTemplatesParameters();
-
-		File[] files = exportLayouts(userGroupId, parameterMap);
-
-		try {
-			importLayouts(userId, parameterMap, files[0], files[1]);
-		}
-		finally {
-			if (files[0] != null) {
-				files[0].delete();
-			}
-
-			if (files[1] != null) {
-				files[1].delete();
-			}
-		}
-	}
-
-	/**
-	 * Copies the user group's layouts to the users who are not already members
-	 * of the user group.
-	 *
-	 * @param      userGroupId the primary key of the user group
-	 * @param      userIds the primary keys of the users
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	@Override
-	public void copyUserGroupLayouts(long userGroupId, long[] userIds)
-		throws PortalException {
-
-		Map<String, String[]> parameterMap = getLayoutTemplatesParameters();
-
-		File[] files = exportLayouts(userGroupId, parameterMap);
-
-		try {
-			for (long userId : userIds) {
-				if (!userGroupPersistence.containsUser(userGroupId, userId)) {
-					importLayouts(userId, parameterMap, files[0], files[1]);
-				}
-			}
-		}
-		finally {
-			if (files[0] != null) {
-				files[0].delete();
-			}
-
-			if (files[1] != null) {
-				files[1].delete();
-			}
-		}
-	}
-
-	/**
-	 * Copies the user groups' layouts to the user.
-	 *
-	 * @param      userGroupIds the primary keys of the user groups
-	 * @param      userId the primary key of the user
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	@Override
-	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
-		throws PortalException {
-
-		for (long userGroupId : userGroupIds) {
-			if (!userGroupPersistence.containsUser(userGroupId, userId)) {
-				copyUserGroupLayouts(userGroupId, userId);
-			}
-		}
 	}
 
 	/**
@@ -870,26 +759,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		teamPersistence.removeUserGroups(teamId, userGroupIds);
 
 		PermissionCacheUtil.clearCache();
-	}
-
-	/**
-	 * Updates the user group.
-	 *
-	 * @param      companyId the primary key of the user group's company
-	 * @param      userGroupId the primary key of the user group
-	 * @param      name the user group's name
-	 * @param      description the user group's description
-	 * @return     the user group
-	 * @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
-	 *             String, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public UserGroup updateUserGroup(
-			long companyId, long userGroupId, String name, String description)
-		throws PortalException {
-
-		return updateUserGroup(companyId, userGroupId, name, description, null);
 	}
 
 	/**

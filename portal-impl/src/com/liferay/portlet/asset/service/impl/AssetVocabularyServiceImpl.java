@@ -80,18 +80,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			getUserId(), groupId, title, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, Replaced by {@link #deleteVocabularies(long[],
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void deleteVocabularies(long[] vocabularyIds)
-		throws PortalException {
-
-		deleteVocabularies(vocabularyIds, null);
-	}
-
 	@Override
 	public List<AssetVocabulary> deleteVocabularies(
 			long[] vocabularyIds, ServiceContext serviceContext)
@@ -333,48 +321,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 		return getGroupVocabulariesDisplay(
 			groupId, name, start, end, false, obc);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public JSONObject getJSONGroupVocabularies(
-			long groupId, String name, int start, int end,
-			OrderByComparator<AssetVocabulary> obc)
-		throws PortalException {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		int page = end / (end - start);
-
-		jsonObject.put("page", page);
-
-		List<AssetVocabulary> vocabularies;
-		int total = 0;
-
-		if (Validator.isNotNull(name)) {
-			name = (CustomSQLUtil.keywords(name))[0];
-
-			vocabularies = getGroupVocabularies(groupId, name, start, end, obc);
-			total = getGroupVocabulariesCount(groupId, name);
-		}
-		else {
-			vocabularies = getGroupVocabularies(groupId, start, end, obc);
-			total = getGroupVocabulariesCount(groupId);
-		}
-
-		String vocabulariesJSON = JSONFactoryUtil.looseSerialize(vocabularies);
-
-		JSONArray vocabulariesJSONArray = JSONFactoryUtil.createJSONArray(
-			vocabulariesJSON);
-
-		jsonObject.put("vocabularies", vocabulariesJSONArray);
-
-		jsonObject.put("total", total);
-
-		return jsonObject;
 	}
 
 	/**

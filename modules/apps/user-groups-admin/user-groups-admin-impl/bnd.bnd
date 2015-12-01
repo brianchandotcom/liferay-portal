@@ -1,0 +1,4 @@
+Bundle-Name: Liferay User Groups Admin Implementation
+Bundle-SymbolicName: com.liferay.user.groups.admin.impl
+Bundle-Version: 1.0.0
+Include-Resource: classes

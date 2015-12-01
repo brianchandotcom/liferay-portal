@@ -14,9 +14,11 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -51,6 +53,22 @@ public class IndexableActionableDynamicQuery
 
 		if (_documents.size() >= getInterval()) {
 			indexInterval();
+		}
+	}
+
+	@Override
+	public void performActions() throws PortalException {
+		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			_count = super.performCount();
+		}
+
+		try {
+			super.performActions();
+		}
+		finally {
+			_progress = _count;
+
+			sendStatusMessage();
 		}
 	}
 
@@ -91,11 +109,33 @@ public class IndexableActionableDynamicQuery
 			_searchEngineId, getCompanyId(), new ArrayList<>(_documents),
 			_commitImmediately);
 
+		_progress += _documents.size();
+
 		_documents.clear();
 	}
 
+	@Override
+	protected void intervalCompleted(long startPrimaryKey, long endPrimaryKey)
+		throws PortalException {
+
+		sendStatusMessage();
+	}
+
+	protected void sendStatusMessage() {
+		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			return;
+		}
+
+		Class<?> modelClass = getModelClass();
+
+		ReindexStatusMessageSenderUtil.sendStatusMessage(
+			modelClass.getName(), _progress, _count);
+	}
+
 	private boolean _commitImmediately;
+	private long _count;
 	private Collection<Document> _documents;
+	private long _progress;
 	private String _searchEngineId;
 
 }

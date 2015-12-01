@@ -14,12 +14,13 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.kernel.messaging.Message;
+
 /**
  * @author Andrew Betts
  */
 public interface BackgroundTaskStatusMessageSender {
 
-	public void setBackgroundTaskStatusMessage(
-		BackgroundTaskStatusMessage backgroundTaskStatusMessage);
+	public void sendBackgroundTaskStatusMessage(Message message);
 
 }

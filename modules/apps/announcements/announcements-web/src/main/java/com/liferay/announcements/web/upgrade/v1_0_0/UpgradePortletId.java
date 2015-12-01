@@ -26,7 +26,11 @@ public class UpgradePortletId
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
 			new String[] {"83", AnnouncementsPortletKeys.ALERTS},
-			new String[] {"84", AnnouncementsPortletKeys.ANNOUNCEMENTS}
+			new String[] {"84", AnnouncementsPortletKeys.ANNOUNCEMENTS},
+			new String[] {
+				"1_WAR_soannouncementsportlet",
+				AnnouncementsPortletKeys.ANNOUNCEMENTS
+			}
 		};
 	}
 

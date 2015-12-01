@@ -327,20 +327,6 @@
 	<bean id="com.liferay.portlet.social.service.SocialRequestService" class="com.liferay.portlet.social.service.impl.SocialRequestServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialRequestPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialRequestPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialRequestInterpreterLocalService" class="com.liferay.portlet.social.service.impl.SocialRequestInterpreterLocalServiceImpl" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalService" class="com.liferay.portlet.softwarecatalog.service.impl.SCFrameworkVersionLocalServiceImpl" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" class="com.liferay.portlet.softwarecatalog.service.impl.SCFrameworkVersionServiceImpl" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.persistence.SCFrameworkVersionPersistence" class="com.liferay.portlet.softwarecatalog.service.persistence.impl.SCFrameworkVersionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.SCLicenseLocalService" class="com.liferay.portlet.softwarecatalog.service.impl.SCLicenseLocalServiceImpl" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.SCLicenseService" class="com.liferay.portlet.softwarecatalog.service.impl.SCLicenseServiceImpl" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.persistence.SCLicensePersistence" class="com.liferay.portlet.softwarecatalog.service.persistence.impl.SCLicensePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService" class="com.liferay.portlet.softwarecatalog.service.impl.SCProductEntryLocalServiceImpl" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.SCProductEntryService" class="com.liferay.portlet.softwarecatalog.service.impl.SCProductEntryServiceImpl" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.persistence.SCProductEntryPersistence" class="com.liferay.portlet.softwarecatalog.service.persistence.impl.SCProductEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalService" class="com.liferay.portlet.softwarecatalog.service.impl.SCProductScreenshotLocalServiceImpl" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.persistence.SCProductScreenshotPersistence" class="com.liferay.portlet.softwarecatalog.service.persistence.impl.SCProductScreenshotPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalService" class="com.liferay.portlet.softwarecatalog.service.impl.SCProductVersionLocalServiceImpl" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.SCProductVersionService" class="com.liferay.portlet.softwarecatalog.service.impl.SCProductVersionServiceImpl" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.persistence.SCProductVersionPersistence" class="com.liferay.portlet.softwarecatalog.service.persistence.impl.SCProductVersionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.trash.service.TrashEntryLocalService" class="com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl" />
 	<bean id="com.liferay.portlet.trash.service.TrashEntryService" class="com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl" />
 	<bean id="com.liferay.portlet.trash.service.persistence.TrashEntryPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl" parent="basePersistence" />

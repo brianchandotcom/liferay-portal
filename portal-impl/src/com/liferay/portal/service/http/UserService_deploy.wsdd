@@ -3,12 +3,12 @@
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portal_UserService" provider="java:RPC" style="rpc" use="encoded">
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.announcements.portlet.liferay.com" qname="ns:ArrayOf_tns15_AnnouncementsDeliverySoap" type="java:com.liferay.portlet.announcements.model.AnnouncementsDeliverySoap[]" innerType="cmp-ns:AnnouncementsDeliverySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns2_AddressSoap" type="java:com.liferay.portal.model.AddressSoap[]" innerType="cmp-ns:AddressSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns2_EmailAddressSoap" type="java:com.liferay.portal.model.EmailAddressSoap[]" innerType="cmp-ns:EmailAddressSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns2_PhoneSoap" type="java:com.liferay.portal.model.PhoneSoap[]" innerType="cmp-ns:PhoneSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns2_UserGroupRoleSoap" type="java:com.liferay.portal.model.UserGroupRoleSoap[]" innerType="cmp-ns:UserGroupRoleSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns2_UserSoap" type="java:com.liferay.portal.model.UserSoap[]" innerType="cmp-ns:UserSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns2_WebsiteSoap" type="java:com.liferay.portal.model.WebsiteSoap[]" innerType="cmp-ns:WebsiteSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns6_AddressSoap" type="java:com.liferay.portal.model.AddressSoap[]" innerType="cmp-ns:AddressSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns6_EmailAddressSoap" type="java:com.liferay.portal.model.EmailAddressSoap[]" innerType="cmp-ns:EmailAddressSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns6_PhoneSoap" type="java:com.liferay.portal.model.PhoneSoap[]" innerType="cmp-ns:PhoneSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns6_UserGroupRoleSoap" type="java:com.liferay.portal.model.UserGroupRoleSoap[]" innerType="cmp-ns:UserGroupRoleSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns6_UserSoap" type="java:com.liferay.portal.model.UserSoap[]" innerType="cmp-ns:UserSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.portal.liferay.com" qname="ns:ArrayOf_tns6_WebsiteSoap" type="java:com.liferay.portal.model.WebsiteSoap[]" innerType="cmp-ns:WebsiteSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -77,10 +77,10 @@
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="organizationIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="roleIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupIds" type="tns:ArrayOf_xsd_long"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="addresses" type="tns:ArrayOf_tns2_AddressSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="emailAddresses" type="tns:ArrayOf_tns2_EmailAddressSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="phones" type="tns:ArrayOf_tns2_PhoneSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="websites" type="tns:ArrayOf_tns2_WebsiteSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="addresses" type="tns:ArrayOf_tns6_AddressSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="emailAddresses" type="tns:ArrayOf_tns6_EmailAddressSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="phones" type="tns:ArrayOf_tns6_PhoneSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="websites" type="tns:ArrayOf_tns6_WebsiteSoap"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="announcementsDelivers" type="tns:ArrayOf_tns15_AnnouncementsDeliverySoap"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="sendEmail" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
@@ -138,10 +138,10 @@
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="organizationIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="roleIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupIds" type="tns:ArrayOf_xsd_long"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="addresses" type="tns:ArrayOf_tns2_AddressSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="emailAddresses" type="tns:ArrayOf_tns2_EmailAddressSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="phones" type="tns:ArrayOf_tns2_PhoneSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="websites" type="tns:ArrayOf_tns2_WebsiteSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="addresses" type="tns:ArrayOf_tns6_AddressSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="emailAddresses" type="tns:ArrayOf_tns6_EmailAddressSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="phones" type="tns:ArrayOf_tns6_PhoneSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="websites" type="tns:ArrayOf_tns6_WebsiteSoap"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="announcementsDelivers" type="tns:ArrayOf_tns15_AnnouncementsDeliverySoap"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="sendEmail" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
@@ -187,7 +187,7 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCompanyUsersCount" qname="operNS:getCompanyUsersCount" returnQName="getCompanyUsersCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getCompanyUsers" qname="operNS:getCompanyUsers" returnQName="getCompanyUsersReturn" returnType="rtns:ArrayOf_tns2_UserSoap" returnItemType="tns2:UserSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getCompanyUsers" qname="operNS:getCompanyUsers" returnQName="getCompanyUsersReturn" returnType="rtns:ArrayOf_tns6_UserSoap" returnItemType="tns2:UserSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
@@ -196,13 +196,13 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getGroupUserIds" qname="operNS:getGroupUserIds" returnQName="getGroupUserIdsReturn" returnType="rtns:ArrayOf_xsd_long" returnItemType="tns2:long" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getGroupUsers" qname="operNS:getGroupUsers" returnQName="getGroupUsersReturn" returnType="rtns:ArrayOf_tns2_UserSoap" returnItemType="tns2:UserSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getGroupUsers" qname="operNS:getGroupUsers" returnQName="getGroupUsersReturn" returnType="rtns:ArrayOf_tns6_UserSoap" returnItemType="tns2:UserSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getOrganizationUserIds" qname="operNS:getOrganizationUserIds" returnQName="getOrganizationUserIdsReturn" returnType="rtns:ArrayOf_xsd_long" returnItemType="tns2:long" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="organizationId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getOrganizationUsers" qname="operNS:getOrganizationUsers" returnQName="getOrganizationUsersReturn" returnType="rtns:ArrayOf_tns2_UserSoap" returnItemType="tns2:UserSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getOrganizationUsers" qname="operNS:getOrganizationUsers" returnQName="getOrganizationUsersReturn" returnType="rtns:ArrayOf_tns6_UserSoap" returnItemType="tns2:UserSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="organizationId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getRoleUserIds" qname="operNS:getRoleUserIds" returnQName="getRoleUserIdsReturn" returnType="rtns:ArrayOf_xsd_long" returnItemType="tns2:long" soapAction="">
@@ -219,7 +219,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="screenName" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getUserGroupUsers" qname="operNS:getUserGroupUsers" returnQName="getUserGroupUsersReturn" returnType="rtns:ArrayOf_tns2_UserSoap" returnItemType="tns2:UserSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getUserGroupUsers" qname="operNS:getUserGroupUsers" returnQName="getUserGroupUsersReturn" returnType="rtns:ArrayOf_tns6_UserSoap" returnItemType="tns2:UserSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userGroupId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getUserIdByEmailAddress" qname="operNS:getUserIdByEmailAddress" returnQName="getUserIdByEmailAddressReturn" returnType="rtns:long" soapAction="">
@@ -405,12 +405,12 @@
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="organizationIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="roleIds" type="tns:ArrayOf_xsd_long"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupRoles" type="tns:ArrayOf_tns2_UserGroupRoleSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupRoles" type="tns:ArrayOf_tns6_UserGroupRoleSoap"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupIds" type="tns:ArrayOf_xsd_long"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="addresses" type="tns:ArrayOf_tns2_AddressSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="emailAddresses" type="tns:ArrayOf_tns2_EmailAddressSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="phones" type="tns:ArrayOf_tns2_PhoneSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="websites" type="tns:ArrayOf_tns2_WebsiteSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="addresses" type="tns:ArrayOf_tns6_AddressSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="emailAddresses" type="tns:ArrayOf_tns6_EmailAddressSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="phones" type="tns:ArrayOf_tns6_PhoneSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="websites" type="tns:ArrayOf_tns6_WebsiteSoap"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="announcementsDelivers" type="tns:ArrayOf_tns15_AnnouncementsDeliverySoap"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
@@ -448,12 +448,12 @@
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="organizationIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="roleIds" type="tns:ArrayOf_xsd_long"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupRoles" type="tns:ArrayOf_tns2_UserGroupRoleSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupRoles" type="tns:ArrayOf_tns6_UserGroupRoleSoap"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupIds" type="tns:ArrayOf_xsd_long"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="addresses" type="tns:ArrayOf_tns2_AddressSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="emailAddresses" type="tns:ArrayOf_tns2_EmailAddressSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="phones" type="tns:ArrayOf_tns2_PhoneSoap"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="websites" type="tns:ArrayOf_tns2_WebsiteSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="addresses" type="tns:ArrayOf_tns6_AddressSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="emailAddresses" type="tns:ArrayOf_tns6_EmailAddressSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="phones" type="tns:ArrayOf_tns6_PhoneSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="websites" type="tns:ArrayOf_tns6_WebsiteSoap"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="announcementsDelivers" type="tns:ArrayOf_tns15_AnnouncementsDeliverySoap"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
@@ -491,7 +491,7 @@
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="organizationIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="roleIds" type="tns:ArrayOf_xsd_long"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupRoles" type="tns:ArrayOf_tns2_UserGroupRoleSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupRoles" type="tns:ArrayOf_tns6_UserGroupRoleSoap"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="userGroupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>

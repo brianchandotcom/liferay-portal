@@ -18,7 +18,4 @@
 	<category name="category.sample">
 		<portlet id="47" />
 	</category>
-	<category name="category.tools">
-		<portlet id="98" />
-	</category>
 </display>

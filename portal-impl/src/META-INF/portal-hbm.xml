@@ -122,11 +122,6 @@
 	<import class="com.liferay.portlet.social.model.SocialRelation" />
 	<import class="com.liferay.portlet.social.model.SocialRequest" />
 	<import class="com.liferay.portlet.social.model.SocialRequestInterpreter" />
-	<import class="com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion" />
-	<import class="com.liferay.portlet.softwarecatalog.model.SCLicense" />
-	<import class="com.liferay.portlet.softwarecatalog.model.SCProductEntry" />
-	<import class="com.liferay.portlet.softwarecatalog.model.SCProductScreenshot" />
-	<import class="com.liferay.portlet.softwarecatalog.model.SCProductVersion" />
 	<import class="com.liferay.portlet.trash.model.TrashEntry" />
 	<import class="com.liferay.portlet.trash.model.TrashVersion" />
 	<class name="com.liferay.counter.model.impl.CounterImpl" table="Counter">
@@ -1917,79 +1912,6 @@
 		<property name="extraData" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="receiverUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-	</class>
-	<class name="com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionImpl" table="SCFrameworkVersion">
-		<id name="frameworkVersionId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="url" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-	</class>
-	<class name="com.liferay.portlet.softwarecatalog.model.impl.SCLicenseImpl" table="SCLicense">
-		<id name="licenseId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="url" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="openSource" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
-		<property name="recommended" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-	</class>
-	<class name="com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryImpl" table="SCProductEntry">
-		<id name="productEntryId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
-		<property name="tags" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="shortDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="longDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="pageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="author" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="repoGroupId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="repoArtifactId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-	</class>
-	<class name="com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotImpl" table="SCProductScreenshot">
-		<id name="productScreenshotId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="productEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="thumbnailId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="fullImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-	</class>
-	<class name="com.liferay.portlet.softwarecatalog.model.impl.SCProductVersionImpl" table="SCProductVersion">
-		<id name="productVersionId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="productEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="changeLog" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="downloadPageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="directDownloadURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="repoStoreArtifact" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.trash.model.impl.TrashEntryImpl" table="TrashEntry">
 		<id name="entryId" type="long">

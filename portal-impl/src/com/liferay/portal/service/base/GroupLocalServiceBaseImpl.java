@@ -92,8 +92,6 @@ import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
-import com.liferay.portlet.softwarecatalog.service.persistence.SCFrameworkVersionPersistence;
-import com.liferay.portlet.softwarecatalog.service.persistence.SCProductEntryPersistence;
 import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 
 import java.io.Serializable;
@@ -1562,82 +1560,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the s c framework version local service.
-	 *
-	 * @return the s c framework version local service
-	 */
-	public com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalService getSCFrameworkVersionLocalService() {
-		return scFrameworkVersionLocalService;
-	}
-
-	/**
-	 * Sets the s c framework version local service.
-	 *
-	 * @param scFrameworkVersionLocalService the s c framework version local service
-	 */
-	public void setSCFrameworkVersionLocalService(
-		com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalService scFrameworkVersionLocalService) {
-		this.scFrameworkVersionLocalService = scFrameworkVersionLocalService;
-	}
-
-	/**
-	 * Returns the s c framework version persistence.
-	 *
-	 * @return the s c framework version persistence
-	 */
-	public SCFrameworkVersionPersistence getSCFrameworkVersionPersistence() {
-		return scFrameworkVersionPersistence;
-	}
-
-	/**
-	 * Sets the s c framework version persistence.
-	 *
-	 * @param scFrameworkVersionPersistence the s c framework version persistence
-	 */
-	public void setSCFrameworkVersionPersistence(
-		SCFrameworkVersionPersistence scFrameworkVersionPersistence) {
-		this.scFrameworkVersionPersistence = scFrameworkVersionPersistence;
-	}
-
-	/**
-	 * Returns the s c product entry local service.
-	 *
-	 * @return the s c product entry local service
-	 */
-	public com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService getSCProductEntryLocalService() {
-		return scProductEntryLocalService;
-	}
-
-	/**
-	 * Sets the s c product entry local service.
-	 *
-	 * @param scProductEntryLocalService the s c product entry local service
-	 */
-	public void setSCProductEntryLocalService(
-		com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService scProductEntryLocalService) {
-		this.scProductEntryLocalService = scProductEntryLocalService;
-	}
-
-	/**
-	 * Returns the s c product entry persistence.
-	 *
-	 * @return the s c product entry persistence
-	 */
-	public SCProductEntryPersistence getSCProductEntryPersistence() {
-		return scProductEntryPersistence;
-	}
-
-	/**
-	 * Sets the s c product entry persistence.
-	 *
-	 * @param scProductEntryPersistence the s c product entry persistence
-	 */
-	public void setSCProductEntryPersistence(
-		SCProductEntryPersistence scProductEntryPersistence) {
-		this.scProductEntryPersistence = scProductEntryPersistence;
-	}
-
-	/**
 	 * Returns the trash entry local service.
 	 *
 	 * @return the trash entry local service
@@ -2831,14 +2753,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portlet.social.service.SocialRequestLocalService socialRequestLocalService;
 	@BeanReference(type = SocialRequestPersistence.class)
 	protected SocialRequestPersistence socialRequestPersistence;
-	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalService.class)
-	protected com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalService scFrameworkVersionLocalService;
-	@BeanReference(type = SCFrameworkVersionPersistence.class)
-	protected SCFrameworkVersionPersistence scFrameworkVersionPersistence;
-	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService.class)
-	protected com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService scProductEntryLocalService;
-	@BeanReference(type = SCProductEntryPersistence.class)
-	protected SCProductEntryPersistence scProductEntryPersistence;
 	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
 	protected com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService;
 	@BeanReference(type = TrashEntryPersistence.class)

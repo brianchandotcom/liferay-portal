@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.web.constants;
+package com.liferay.user.groups.admin.constants;
 
 /**
  * @author Drew Brokke

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.portlet.tracker.internal;
 
+import com.liferay.osgi.util.BundleUtil;
+
 import java.io.IOException;
 
 import java.net.URL;
-
-import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +44,7 @@ public class BundlePortletServletContextHelper extends ServletContextHelper {
 
 	@Override
 	public URL getResource(String name) {
-		URL url = _getResourceInBundleOrFragments(name);
+		URL url = BundleUtil.getResourceInBundleOrFragments(_bundle, name);
 
 		if (url == null) {
 			if (name.startsWith("/")) {
@@ -52,8 +52,8 @@ public class BundlePortletServletContextHelper extends ServletContextHelper {
 			}
 
 			if (!name.startsWith("META-INF/resources/")) {
-				url = _getResourceInBundleOrFragments(
-					"META-INF/resources/" + name);
+				url = BundleUtil.getResourceInBundleOrFragments(
+					_bundle, "META-INF/resources/" + name);
 			}
 		}
 
@@ -105,30 +105,6 @@ public class BundlePortletServletContextHelper extends ServletContextHelper {
 	@Override
 	public String toString() {
 		return _string;
-	}
-
-	private URL _getResourceInBundleOrFragments(String name) {
-		String dirName = "/";
-		String fileName = name;
-
-		int index = name.lastIndexOf('/');
-
-		if (index > 0) {
-			dirName = name.substring(0, index);
-			fileName = name.substring(index + 1);
-		}
-		else if (index == 0) {
-			fileName = name.substring(1);
-		}
-
-		Enumeration<URL> enumeration = _bundle.findEntries(
-			dirName, fileName, false);
-
-		if ((enumeration == null) || !enumeration.hasMoreElements()) {
-			return null;
-		}
-
-		return enumeration.nextElement();
 	}
 
 	private final Bundle _bundle;

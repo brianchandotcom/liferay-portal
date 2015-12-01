@@ -105,8 +105,7 @@ Calendar calendar = (Calendar)row.getObject();
 			<portlet:param name="calendarId" value="<%= String.valueOf(calendar.getCalendarId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="delete"
+		<liferay-ui:icon-delete
 			url="<%= deleteURL %>"
 		/>
 	</c:if>

@@ -72,8 +72,7 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 			<portlet:param name="calendarResourceId" value="<%= String.valueOf(calendarResource.getCalendarResourceId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="delete"
+		<liferay-ui:icon-delete
 			url="<%= deleteURL %>"
 		/>
 

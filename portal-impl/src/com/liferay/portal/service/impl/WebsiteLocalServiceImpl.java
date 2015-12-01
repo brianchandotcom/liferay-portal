@@ -32,22 +32,6 @@ import java.util.List;
  */
 public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addWebsite(long, String,
-	 *             long, String, int, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Website addWebsite(
-			long userId, String className, long classPK, String url,
-			long typeId, boolean primary)
-		throws PortalException {
-
-		return addWebsite(
-			userId, className, classPK, url, typeId, primary,
-			new ServiceContext());
-	}
-
 	@Override
 	public Website addWebsite(
 			long userId, String className, long classPK, String url,

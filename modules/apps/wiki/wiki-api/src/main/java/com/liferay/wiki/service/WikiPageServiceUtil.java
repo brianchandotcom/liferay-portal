@@ -129,17 +129,6 @@ public class WikiPageServiceUtil {
 		getService().deletePage(nodeId, title);
 	}
 
-	/**
-	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	double)}
-	*/
-	@Deprecated
-	public static void deletePage(long nodeId, java.lang.String title,
-		double version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deletePage(nodeId, title, version);
-	}
-
 	public static void deletePageAttachment(long nodeId,
 		java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -191,20 +180,6 @@ public class WikiPageServiceUtil {
 		long nodeId, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNodePages(nodeId, max);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getNodePagesRSS(long, int,
-	String, double, String, String, String, String)}
-	*/
-	@Deprecated
-	public static java.lang.String getNodePagesRSS(long nodeId, int max,
-		java.lang.String type, double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getNodePagesRSS(nodeId, max, type, version, displayStyle,
-			feedURL, entryURL);
 	}
 
 	public static java.lang.String getNodePagesRSS(long nodeId, int max,
@@ -299,21 +274,6 @@ public class WikiPageServiceUtil {
 		return getService().getPagesCount(groupId, userId, nodeId, status);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, String,
-	int, String, double, String, String, String, String, Locale)}
-	*/
-	@Deprecated
-	public static java.lang.String getPagesRSS(long companyId, long nodeId,
-		java.lang.String title, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getPagesRSS(companyId, nodeId, title, max, type, version,
-			displayStyle, feedURL, entryURL, locale);
-	}
-
 	public static java.lang.String getPagesRSS(long nodeId,
 		java.lang.String title, int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
@@ -340,18 +300,6 @@ public class WikiPageServiceUtil {
 		java.lang.String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTempFileNames(nodeId, folderName);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
-	String, ServiceContext)}
-	*/
-	@Deprecated
-	public static void movePage(long nodeId, java.lang.String title,
-		java.lang.String newTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().movePage(nodeId, title, newTitle, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry movePageAttachmentToTrash(

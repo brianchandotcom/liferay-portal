@@ -64,32 +64,6 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class AddressServiceSoap {
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addAddress(String, long,
-	String, String, String, String, String, long, long, int,
-	boolean, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.AddressSoap addAddress(
-		java.lang.String className, long classPK, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, long typeId, boolean mailing, boolean primary)
-		throws RemoteException {
-		try {
-			com.liferay.portal.model.Address returnValue = AddressServiceUtil.addAddress(className,
-					classPK, street1, street2, street3, city, zip, regionId,
-					countryId, typeId, mailing, primary);
-
-			return com.liferay.portal.model.AddressSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portal.model.AddressSoap addAddress(
 		java.lang.String className, long classPK, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,

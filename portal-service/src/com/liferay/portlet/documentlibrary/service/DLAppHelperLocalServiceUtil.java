@@ -94,30 +94,10 @@ public class DLAppHelperLocalServiceUtil {
 		return getService().getFileShortcuts(groupId, folderId, active, status);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getFileShortcuts(long, long,
-	boolean, int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(
-		long groupId, long folderId, int status) {
-		return getService().getFileShortcuts(groupId, folderId, status);
-	}
-
 	public static int getFileShortcutsCount(long groupId, long folderId,
 		boolean active, int status) {
 		return getService()
 				   .getFileShortcutsCount(groupId, folderId, active, status);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getFileShortcutsCount(long,
-	long, boolean, int)}
-	*/
-	@Deprecated
-	public static int getFileShortcutsCount(long groupId, long folderId,
-		int status) {
-		return getService().getFileShortcutsCount(groupId, folderId, status);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getNoAssetFileEntries() {

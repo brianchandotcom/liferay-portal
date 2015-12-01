@@ -30,20 +30,6 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 		_websiteLocalService = websiteLocalService;
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addWebsite(long, String,
-	long, String, int, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Website addWebsite(long userId,
-		java.lang.String className, long classPK, java.lang.String url,
-		long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _websiteLocalService.addWebsite(userId, className, classPK, url,
-			typeId, primary);
-	}
-
 	@Override
 	public com.liferay.portal.model.Website addWebsite(long userId,
 		java.lang.String className, long classPK, java.lang.String url,

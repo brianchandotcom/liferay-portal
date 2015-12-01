@@ -83,18 +83,6 @@ public class AssetTagServiceWrapper implements AssetTagService,
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupTagsDisplay(long,
-	String, int, int)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.json.JSONObject getJSONGroupTags(
-		long groupId, java.lang.String name, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetTagService.getJSONGroupTags(groupId, name, start, end);
-	}
-
-	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier

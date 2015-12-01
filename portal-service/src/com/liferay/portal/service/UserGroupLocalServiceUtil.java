@@ -101,31 +101,6 @@ public class UserGroupLocalServiceUtil {
 	* @param companyId the primary key of the user group's company
 	* @param name the user group's name
 	* @param description the user group's description
-	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
-	String, String, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.UserGroup addUserGroup(long userId,
-		long companyId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addUserGroup(userId, companyId, name, description);
-	}
-
-	/**
-	* Adds a user group.
-	*
-	* <p>
-	* This method handles the creation and bookkeeping of the user group,
-	* including its resources, metadata, and internal data structures. It is
-	* not necessary to make subsequent calls to setup default groups and
-	* resources for the user group.
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param companyId the primary key of the user group's company
-	* @param name the user group's name
-	* @param description the user group's description
 	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set expando bridge attributes for the
 	user group.
@@ -900,26 +875,6 @@ public class UserGroupLocalServiceUtil {
 	*/
 	public static void unsetTeamUserGroups(long teamId, long[] userGroupIds) {
 		getService().unsetTeamUserGroups(teamId, userGroupIds);
-	}
-
-	/**
-	* Updates the user group.
-	*
-	* @param companyId the primary key of the user group's company
-	* @param userGroupId the primary key of the user group
-	* @param name the user group's name
-	* @param description the user group's description
-	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
-	String, String, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.UserGroup updateUserGroup(
-		long companyId, long userGroupId, java.lang.String name,
-		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateUserGroup(companyId, userGroupId, name, description);
 	}
 
 	/**

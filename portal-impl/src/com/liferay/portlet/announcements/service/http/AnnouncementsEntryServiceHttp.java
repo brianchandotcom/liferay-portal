@@ -97,53 +97,11 @@ public class AnnouncementsEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.announcements.model.AnnouncementsEntry addEntry(
-		HttpPrincipal httpPrincipal, long plid, long classNameId, long classPK,
-		java.lang.String title, java.lang.String content, java.lang.String url,
-		java.lang.String type, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, int priority,
-		boolean alert)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
-					"addEntry", _addEntryParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, plid,
-					classNameId, classPK, title, content, url, type,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, priority, alert);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.portlet.announcements.model.AnnouncementsEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static void deleteEntry(HttpPrincipal httpPrincipal, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
-					"deleteEntry", _deleteEntryParameterTypes2);
+					"deleteEntry", _deleteEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -170,7 +128,7 @@ public class AnnouncementsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
-					"getEntry", _getEntryParameterTypes3);
+					"getEntry", _getEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -206,7 +164,7 @@ public class AnnouncementsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes4);
+					"updateEntry", _updateEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
 					title, content, url, type, displayDateMonth,
@@ -245,20 +203,13 @@ public class AnnouncementsEntryServiceHttp {
 			int.class, boolean.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, boolean.class
 		};
-	private static final Class<?>[] _addEntryParameterTypes1 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class
-		};
-	private static final Class<?>[] _deleteEntryParameterTypes2 = new Class[] {
+	private static final Class<?>[] _deleteEntryParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getEntryParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getEntryParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateEntryParameterTypes4 = new Class[] {
+	private static final Class<?>[] _updateEntryParameterTypes3 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class, int.class, int.class,

@@ -34,22 +34,34 @@ public interface LDAPImportConfiguration extends CompanyScopedConfiguration {
 	@Override
 	public long companyId();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", description = "%import-create-role-per-group-help",
+		required = false
+	)
 	public boolean importCreateRolePerGroup();
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean importEnabled();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", description = "%import-group-cache-enabled-help",
+		required = false
+	)
 	public boolean importGroupCacheEnabled();
 
 	@Meta.AD(deflt = "10", required = false)
 	public int importInterval();
 
-	@Meta.AD(deflt = "86400000", required = false)
+	@Meta.AD(
+		deflt = "86400000", description = "%import-lock-expiration-time-help",
+		required = false
+	)
 	public long importLockExpirationTime();
 
-	@Meta.AD(deflt = "user", optionValues = {"group", "user"}, required = false)
+	@Meta.AD(
+		deflt = "user", description = "%import-method-help",
+		optionValues = {"group", "user"}, required = false
+	)
 	public String importMethod();
 
 	@Meta.AD(deflt = "false", required = false)

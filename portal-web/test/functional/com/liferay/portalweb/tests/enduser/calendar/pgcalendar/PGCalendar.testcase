@@ -1794,9 +1794,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">

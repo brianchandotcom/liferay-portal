@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.shard.builder.exporter;
 
 import com.liferay.portal.tools.shard.builder.db.mysql.MySQLProvider;
+import com.liferay.portal.tools.shard.builder.db.postgresql.PostgreSQLProvider;
 import com.liferay.portal.tools.shard.builder.exporter.exception.DBProviderNotAvailableException;
 
 import java.util.Properties;
@@ -31,11 +32,24 @@ public class ShardExporterFactory {
 		if (_DATASOURCE_CLASS_NAME_MYSQL.equals(dataSourceClassName)) {
 			return new MySQLProvider(properties);
 		}
+		else if (_DATASOURCE_CLASS_NAME_POSTGRESQL.equals(
+					dataSourceClassName) ||
+				 _DATASOURCE_CLASS_NAME_POSTGRESQL_SIMPLE.equals(
+					 dataSourceClassName)) {
+
+			return new PostgreSQLProvider(properties);
+		}
 
 		throw new DBProviderNotAvailableException();
 	}
 
 	private static final String _DATASOURCE_CLASS_NAME_MYSQL =
 		"com.mysql.jdbc.jdbc2.optional.MysqlDataSource";
+
+	private static final String _DATASOURCE_CLASS_NAME_POSTGRESQL =
+		"com.impossibl.postgres.jdbc.PGDataSource";
+
+	private static final String _DATASOURCE_CLASS_NAME_POSTGRESQL_SIMPLE =
+		"org.postgresql.ds.PGSimpleDataSource";
 
 }

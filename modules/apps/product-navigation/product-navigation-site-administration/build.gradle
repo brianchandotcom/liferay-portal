@@ -1,6 +1,7 @@
 dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:application-list:application-list-taglib")
+	compile project(":apps:product-navigation:product-navigation-product-menu-web")
 }
 
 deploy {

@@ -16,17 +16,25 @@ package com.liferay.product.navigation.site.administration.application.list;
 
 import com.liferay.application.list.BaseJSPPanelCategory;
 import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
+import com.liferay.product.navigation.site.administration.util.LatentGroupManagerUtil;
+
+import java.io.IOException;
 
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,12 +45,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.SITES,
-		"service.ranking:Integer=100"
+		"panel.category.key=" + PanelCategoryKeys.ROOT,
+		"service.ranking:Integer=300"
 	},
 	service = PanelCategory.class
 )
 public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
+
+	@Override
+	public String getHeaderJspPath() {
+		return "/sites/site_administration.jsp";
+	}
 
 	@Override
 	public String getIconCssClass() {
@@ -51,7 +64,7 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getJspPath() {
-		return "/sites/site_administration.jsp";
+		return null;
 	}
 
 	@Override
@@ -70,7 +83,13 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 		throws PortalException {
 
 		if (group.isControlPanel()) {
-			return false;
+			HttpSession session = PortalSessionThreadLocal.getHttpSession();
+
+			group = LatentGroupManagerUtil.getLatentGroup(session);
+
+			if (group == null) {
+				return false;
+			}
 		}
 
 		if (GroupPermissionUtil.contains(
@@ -81,6 +100,16 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean includeHeader(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
+
+		return super.includeHeader(request, response);
 	}
 
 	@Override

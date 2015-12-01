@@ -84,9 +84,10 @@ public class ProductMenuDisplayContext {
 		List<PanelCategory> childPanelCategories = getChildPanelCategories();
 
 		if (!childPanelCategories.isEmpty()) {
-			PanelCategory firstChildPanelCategory = childPanelCategories.get(0);
+			PanelCategory lastChildPanelCategory = childPanelCategories.get(
+				childPanelCategories.size() - 1);
 
-			_rootPanelCategoryKey = firstChildPanelCategory.getKey();
+			_rootPanelCategoryKey = lastChildPanelCategory.getKey();
 
 			if (Validator.isNotNull(_themeDisplay.getPpid())) {
 				PanelCategoryHelper panelCategoryHelper =

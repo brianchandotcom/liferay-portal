@@ -474,80 +474,52 @@
 		<var name="sitesPortletList" value="Sites,Site Templates,Page Templates" />
 		<var name="usersPortletList" value="Users and Organizations,User Groups,Roles,Password Policies,Monitoring" />
 
-		<for list="${usersPortletList}" param="usersPortletName">
-			<if>
-				<equals arg1="${portletName}" arg2="${usersPortletName}" />
-				<then>
-					<var name="portletCategoryName" value="Users" />
-				</then>
-			</if>
-		</for>
+		<if>
+			<contains string="${appsPortletList}" substring="${portletName}" />
+			<then>
+				<var name="category" value="Apps" />
+			</then>
+		</if>
 
-		<for list="${sitesPortletList}" param="sitesPortletName">
-			<if>
-				<equals arg1="${portletName}" arg2="${sitesPortletName}" />
-				<then>
-					<var name="portletCategoryName" value="Sites" />
-				</then>
-			</if>
-		</for>
+		<if>
+			<contains string="${configurationPortletList}" substring="${portletName}" />
+			<then>
+				<var name="category" value="Configuration" />
+			</then>
+		</if>
 
-		<for list="${appsPortletList}" param="appsPortletName">
-			<if>
-				<equals arg1="${portletName}" arg2="${appsPortletName}" />
-				<then>
-					<var name="portletCategoryName" value="Apps" />
-				</then>
-			</if>
-		</for>
+		<if>
+			<contains string="${sitesPortletList}" substring="${portletName}" />
+			<then>
+				<var name="category" value="Sites" />
+			</then>
+		</if>
 
-		<for list="${configurationPortletList}" param="configurationPortletName">
-			<if>
-				<equals arg1="${portletName}" arg2="${configurationPortletName}" />
-				<then>
-					<var name="portletCategoryName" value="Configuration" />
-				</then>
-			</if>
-		</for>
+		<if>
+			<contains string="${usersPortletList}" substring="${portletName}" />
+			<then>
+				<var name="category" value="Users" />
+			</then>
+		</if>
 
 		<if>
 			<not>
-				<isset var="portletCategoryName" />
+				<isset var="category" />
 			</not>
 			<then>
-				<var name="portletCategoryName" value="Apps" />
+				<var name="category" value="Apps" />
 			</then>
 		</if>
 
-		<var name="key_portletCategoryName" value="${portletCategoryName}" />
+		<execute macro="ProductMenuHelper#gotoControlPanel" />
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
-			<then>
-				<execute function="Click" locator1="ProductMenu#TOGGLE" />
-			</then>
-		</if>
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="${category}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_CONTROL_PANEL_NAVIGATION" value1="Control Panel" />
-
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_CONTROL_PANEL_PANEL_TITLE" value1="${portletCategoryName}" />
-
-		<if>
-			<isset var="portletName" />
-			<then>
-				<var name="key_portletName" value="${portletName}" />
-
-				<if>
-					<equals arg1="${portletName}" arg2="Workflow Configuration" />
-					<then>
-						<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM_2" value1="${portletName}" />
-					</then>
-					<else>
-						<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
-					</else>
-				</if>
-			</then>
-		</if>
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portletName}" />
+		</execute>
 
 		<if>
 			<equals arg1="${portletName}" arg2="Portal Settings" />
@@ -555,30 +527,6 @@
 				<execute function="Pause" locator1="5000" />
 			</then>
 		</if>
-	</command>
-
-	<command name="gotoCPLocalized">
-		<description message="Navigate to Control Panel > ${portletName}." />
-
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
-
-		<var name="key_localizedControlPanel" value="${localizedControlPanel}" />
-
-		<execute function="Click" locator1="ControlMenu#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
-		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL_LOCALIZED" value1="${localizedControlPanel}" />
-
-		<var name="key_portletName" value="${localizedPortletName}" />
-
-		<execute function="AssertClick" locator1="Home#CONTROL_PANEL_NAVIGATION" value1="${localizedPortletName}" />
 	</command>
 
 	<command name="gotoEdit">
@@ -599,27 +547,9 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
-			<then>
-				<execute function="Click" locator1="ProductMenu#TOGGLE" />
-			</then>
-		</if>
-
-		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_NAVIGATION" />
-
-		<var name="key_portletName" value="${portletName}" />
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" />
-			<then>
-				<var name="key_portletCategoryName" value="My Account" />
-
-				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MY_SPACE_PANEL_TITLE" value1="My Account" />
-			</then>
-		</if>
-
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="${portletName}" />
+		</execute>
 	</command>
 
 	<command name="gotoMyDashboard">

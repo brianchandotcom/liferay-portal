@@ -29,13 +29,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITES_COMPASS</td>
+	<td>//a[contains(@id,'manageSitesLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_POPUP</td>
+	<td>//div[div[contains(@id,'siteSelectorContent')] and contains(@class,'popover-content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_COLLAPSED</td>
-	<td>//div[contains(@class,'sidebar-body')]/div/div[contains(@class,'active')]//a[contains(.,'${key_category}') and contains(@class,'collapsed')]</td>
+	<td>//div[div[@aria-expanded='true']]/../..//a[@aria-expanded='false' and contains(.,'${key_category}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_EXPANDED</td>
-	<td>//div[contains(@class,'sidebar-body')]/div/div[contains(@class,'active')]//a[contains(.,'${key_category}') and not(contains(@class,'collapsed'))]</td>
+	<td>//div[div[@aria-expanded='true']]/../..//a[@aria-expanded='true' and contains(.,'${key_category}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,12 +65,12 @@
 </tr>
 <tr>
 	<td>PORTLET</td>
-	<td>//div[@class='list-group-item']//li/a[contains(.,'${key_portlet}')]</td>
+	<td>//div[a[@aria-expanded='true']]//a[contains(@id,'Portlet') and contains(.,'${key_portlet}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE</td>
-	<td>//div[contains(@id,'sites')]/ul/li/a[contains(.,'${key_site}')]</td>
+	<td>//div[contains(@id,'siteSelector')]//div[h5[.='${key_site}']]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,6 +86,16 @@
 <tr>
 	<td>SITE_NAME_HEADER</td>
 	<td>//div[contains(@class,'sidebar-header')]//span[contains(.,'${key_siteName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAB_COLLAPSED</td>
+	<td>//div[@role='tab' and contains(.,'${key_tab}')]//div[@aria-expanded='false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAB_EXPANDED</td>
+	<td>//div[@role='tab' and contains(.,'${key_tab}')]//div[@aria-expanded='true']</td>
 	<td></td>
 </tr>
 <tr>
@@ -105,13 +125,43 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_MENU_TABS_SITES_COLLAPSED</td>
+	<td>//div[@role='tab' and contains(@id,'site_administration')]//div[@aria-expanded='false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_MENU_TABS_SITES_EXPANDED</td>
+	<td>//div[@role='tab' and contains(@id,'site_administration')]//div[@aria-expanded='true']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_MENU_TABS_SITES_NAVIGATION</td>
 	<td>//div[contains(.,'Sites')]/../div[contains(@class,'tab-text')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_MENU_TABS_USER_COLLAPSED</td>
+	<td>//div[@role='tab' and contains(@id,'user')]//div[@aria-expanded='false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_MENU_TABS_USER_EXPANDED</td>
+	<td>//div[@role='tab' and contains(@id,'user')]//div[@aria-expanded='true']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_MENU_TABS_USER_NAVIGATION</td>
 	<td>//div[contains(@class,'user-tab')]//div[contains(@class,'user-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_MENU_TABS_CONTROL_PANEL_COLLAPSED</td>
+	<td>//div[@role='tab' and contains(@id,'control_panel')]//div[@aria-expanded='false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_MENU_TABS_CONTROL_PANEL_EXPANDED</td>
+	<td>//div[@role='tab' and contains(@id,'control_panel')]//div[@aria-expanded='true']</td>
 	<td></td>
 </tr>
 <tr>

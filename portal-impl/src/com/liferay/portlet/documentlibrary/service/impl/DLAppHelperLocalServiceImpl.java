@@ -296,34 +296,12 @@ public class DLAppHelperLocalServiceImpl
 			groupId, folderId, active, status);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getFileShortcuts(long, long,
-	 *             boolean, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<DLFileShortcut> getFileShortcuts(
-		long groupId, long folderId, int status) {
-
-		return getFileShortcuts(groupId, folderId, true, status);
-	}
-
 	@Override
 	public int getFileShortcutsCount(
 		long groupId, long folderId, boolean active, int status) {
 
 		return dlFileShortcutPersistence.countByG_F_A_S(
 			groupId, folderId, active, status);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getFileShortcutsCount(long,
-	 *             long, boolean, int)}
-	 */
-	@Deprecated
-	@Override
-	public int getFileShortcutsCount(long groupId, long folderId, int status) {
-		return getFileShortcutsCount(groupId, folderId, true, status);
 	}
 
 	@Override

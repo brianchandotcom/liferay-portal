@@ -317,21 +317,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long,
-	 *             QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<MBThread> getGroupThreads(
-		long groupId, int status, int start, int end) {
-
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getGroupThreads(groupId, queryDefinition);
-	}
-
 	@Override
 	public List<MBThread> getGroupThreads(
 		long groupId, long userId, boolean subscribed, boolean includeAnonymous,
@@ -366,54 +351,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			groupId, userId, subscribed, true, queryDefinition);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
-	 *             boolean, boolean, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<MBThread> getGroupThreads(
-		long groupId, long userId, int status, boolean subscribed,
-		boolean includeAnonymous, int start, int end) {
-
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getGroupThreads(
-			groupId, userId, subscribed, includeAnonymous, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
-	 *             boolean, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<MBThread> getGroupThreads(
-		long groupId, long userId, int status, boolean subscribed, int start,
-		int end) {
-
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getGroupThreads(groupId, userId, subscribed, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
-	 *             QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<MBThread> getGroupThreads(
-		long groupId, long userId, int status, int start, int end) {
-
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getGroupThreads(groupId, userId, false, queryDefinition);
-	}
-
 	@Override
 	public List<MBThread> getGroupThreads(
 		long groupId, long userId, QueryDefinition<MBThread> queryDefinition) {
@@ -437,19 +374,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				queryDefinition.getStatus(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	 *             QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getGroupThreadsCount(long groupId, int status) {
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return getGroupThreadsCount(groupId, queryDefinition);
 	}
 
 	@Override
@@ -484,52 +408,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		return getGroupThreadsCount(
 			groupId, userId, subscribed, true, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	 *             long, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getGroupThreadsCount(long groupId, long userId, int status) {
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return getGroupThreadsCount(groupId, userId, false, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	 *             long, boolean, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getGroupThreadsCount(
-		long groupId, long userId, int status, boolean subscribed) {
-
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return getGroupThreadsCount(
-			groupId, userId, subscribed, true, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	 *             long, boolean, boolean, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getGroupThreadsCount(
-		long groupId, long userId, int status, boolean subscribed,
-		boolean includeAnonymous) {
-
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return getGroupThreadsCount(
-			groupId, userId, subscribed, includeAnonymous, queryDefinition);
 	}
 
 	@Override
@@ -1277,24 +1155,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			MBThread.class);
 
 		indexer.reindex(thread);
-
-		return thread;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long,
-	 *             int)}
-	 */
-	@Deprecated
-	@Override
-	public MBThread updateThread(long threadId, int viewCount)
-		throws PortalException {
-
-		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
-
-		thread.setViewCount(viewCount);
-
-		mbThreadPersistence.update(thread);
 
 		return thread;
 	}

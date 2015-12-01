@@ -533,18 +533,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	 *             double)}
-	 */
-	@Deprecated
-	@Override
-	public void deletePage(long nodeId, String title, double version)
-		throws PortalException {
-
-		discardDraft(nodeId, title, version);
-	}
-
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP, send = false,
@@ -1427,20 +1415,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return getPage(page.getNodeId(), page.getTitle(), previousVersion);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long,
-	 *             int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<WikiPage> getRecentChanges(long nodeId, int start, int end)
-		throws PortalException {
-
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
-
-		return getRecentChanges(node.getGroupId(), nodeId, start, end);
-	}
-
 	@Override
 	public List<WikiPage> getRecentChanges(
 		long groupId, long nodeId, int start, int end) {
@@ -1451,18 +1425,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		return wikiPageFinder.findByCreateDate(
 			groupId, nodeId, cal.getTime(), false, start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getRecentChangesCount(long,
-	 *             long)}
-	 */
-	@Deprecated
-	@Override
-	public int getRecentChangesCount(long nodeId) throws PortalException {
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
-
-		return getRecentChangesCount(node.getGroupId(), nodeId);
 	}
 
 	@Override
@@ -1516,20 +1478,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		throws PortalException {
 
 		moveDependentToTrash(page, trashEntryId, false);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
-	 *             String, String, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void movePage(
-			long userId, long nodeId, String title, String newTitle,
-			boolean strict, ServiceContext serviceContext)
-		throws PortalException {
-
-		renamePage(userId, nodeId, title, newTitle, strict, serviceContext);
 	}
 
 	/**

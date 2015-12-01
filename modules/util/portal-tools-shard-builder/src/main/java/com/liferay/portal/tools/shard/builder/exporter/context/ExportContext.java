@@ -12,15 +12,37 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.exporter;
+package com.liferay.portal.tools.shard.builder.exporter.context;
 
-import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
+import java.util.List;
 
 /**
  * @author Manuel de la Peña
  */
-public interface ShardExporter {
+public class ExportContext {
 
-	public void export(ExportContext exportContext);
+	public ExportContext(
+		List<Long> companyIds, String outputFolder, String schema) {
+
+		_companyIds = companyIds;
+		_outputFolder = outputFolder;
+		_schema = schema;
+	}
+
+	public List<Long> getCompanyIds() {
+		return _companyIds;
+	}
+
+	public String getOutputFolder() {
+		return _outputFolder;
+	}
+
+	public String getSchema() {
+		return _schema;
+	}
+
+	private final List<Long> _companyIds;
+	private final String _outputFolder;
+	private final String _schema;
 
 }

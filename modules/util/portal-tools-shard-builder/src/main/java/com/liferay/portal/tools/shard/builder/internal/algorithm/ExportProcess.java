@@ -1,20 +1,20 @@
-/*
- * *
- *  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *  *
- *  * This library is free software; you can redistribute it and/or modify it under
- *  * the terms of the GNU Lesser General Public License as published by the Free
- *  * Software Foundation; either version 2.1 of the License, or (at your option)
- *  * any later version.
- *  *
- *  * This library is distributed in the hope that it will be useful, but WITHOUT
- *  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- *  * details.
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.liferay.portal.tools.shard.builder.internal.algorithm;
+
+import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,6 @@ import java.sql.SQLException;
 
 import java.util.List;
 
-import com.liferay.portal.tools.shard.builder.db.DBProvider;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -31,25 +30,29 @@ import org.apache.commons.io.FileUtils;
  */
 public class ExportProcess {
 
-	public ExportProcess(DBProvider dbProvider) {
+	public ExportProcess(ExportContext exportContext, DBProvider dbProvider) {
+		_exportContext = exportContext;
 		_dbProvider = dbProvider;
 	}
 
-	public void export(String outputFilePath) throws IOException, SQLException {
-		List<String> tableNamesWithoutCompanyId =
-			_dbProvider.getTableNamesWithoutCompanyId();
+	public void export(ExportContext exportContext)
+		throws IOException, SQLException {
 
-		List<Long> companyIds = _dbProvider.getCompanyIds();
+		List<String> tableNamesWithoutCompanyId =
+			_dbProvider.getTableNamesWithoutCompanyId(
+				exportContext.getSchema());
+
+		List<Long> companyIds = exportContext.getCompanyIds();
 
 		for (Long companyId : companyIds) {
 			_exportCompany(
-				companyId, tableNamesWithoutCompanyId, outputFilePath);
+				companyId, tableNamesWithoutCompanyId, exportContext);
 		}
 	}
 
 	private void _exportCompany(
 			long companyId, List<String> tableNamesWithoutCompanyId,
-			String outputFilePath)
+			ExportContext exportContext)
 		throws IOException, SQLException {
 
 		StringBuilder inserts = new StringBuilder();
@@ -58,11 +61,10 @@ public class ExportProcess {
 			inserts.append(_dbProvider.getTableRows(tableName));
 		}
 
-		String schemaName = _dbProvider.getSchemaName();
+		String outputFileName = exportContext.getSchema() + "-" + companyId;
 
-		String outputFileName = schemaName + "-" + companyId;
-
-		File outputFile = new File(outputFilePath, outputFileName);
+		File outputFile = new File(
+			exportContext.getOutputFolder(), outputFileName);
 
 		outputFile.createNewFile();
 
@@ -70,5 +72,6 @@ public class ExportProcess {
 	}
 
 	private final DBProvider _dbProvider;
+	private final ExportContext _exportContext;
 
 }

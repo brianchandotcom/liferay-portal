@@ -1401,19 +1401,6 @@ public interface UserLocalService extends BaseLocalService,
 		java.lang.String screenName) throws PortalException;
 
 	/**
-	* Returns the user with the UUID.
-	*
-	* @param uuid the user's UUID
-	* @return the user with the UUID
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getUserByUuidAndCompanyId(String, long)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByUuid(java.lang.String uuid)
-		throws PortalException;
-
-	/**
 	* Returns the user with the matching UUID and company.
 	*
 	* @param uuid the user's UUID

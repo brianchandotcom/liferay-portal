@@ -83,15 +83,6 @@ public class PortletLocalServiceUtil {
 		getService().clearPortletsMap();
 	}
 
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #clonePortlet(String)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Portlet clonePortlet(
-		long companyId, java.lang.String portletId) {
-		return getService().clonePortlet(companyId, portletId);
-	}
-
 	public static com.liferay.portal.model.Portlet clonePortlet(
 		java.lang.String portletId) {
 		return getService().clonePortlet(portletId);

@@ -65,33 +65,6 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService,
 			firstReminder, secondReminder, serviceContext);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addEvent(long, String,
-	String, String, int, int, int, int, int, int, int, boolean,
-	boolean, String, boolean, TZSRecurrence, int, int, int,
-	ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portlet.calendar.model.CalEvent addEvent(long userId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String location, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int endDateMonth, int endDateDay, int endDateYear, int durationHour,
-		int durationMinute, boolean allDay, boolean timeZoneSensitive,
-		java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.cal.TZSRecurrence recurrence, int remindBy,
-		int firstReminder, int secondReminder,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calEventLocalService.addEvent(userId, title, description,
-			location, startDateMonth, startDateDay, startDateYear,
-			startDateHour, startDateMinute, endDateMonth, endDateDay,
-			endDateYear, durationHour, durationMinute, allDay,
-			timeZoneSensitive, type, repeating, recurrence, remindBy,
-			firstReminder, secondReminder, serviceContext);
-	}
-
 	@Override
 	public void addEventResources(
 		com.liferay.portlet.calendar.model.CalEvent event,
@@ -576,34 +549,6 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService,
 			description, location, startDateMonth, startDateDay, startDateYear,
 			startDateHour, startDateMinute, durationHour, durationMinute,
 			allDay, timeZoneSensitive, type, repeating, recurrence, remindBy,
-			firstReminder, secondReminder, serviceContext);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #updateEvent(long, long,
-	String, String, String, int, int, int, int, int, int, int,
-	boolean, boolean, String, boolean, TZSRecurrence, int, int,
-	int, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portlet.calendar.model.CalEvent updateEvent(
-		long userId, long eventId, java.lang.String title,
-		java.lang.String description, java.lang.String location,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int durationHour, int durationMinute,
-		boolean allDay, boolean timeZoneSensitive, java.lang.String type,
-		boolean repeating,
-		com.liferay.portal.kernel.cal.TZSRecurrence recurrence, int remindBy,
-		int firstReminder, int secondReminder,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calEventLocalService.updateEvent(userId, eventId, title,
-			description, location, startDateMonth, startDateDay, startDateYear,
-			startDateHour, startDateMinute, endDateMonth, endDateDay,
-			endDateYear, durationHour, durationMinute, allDay,
-			timeZoneSensitive, type, repeating, recurrence, remindBy,
 			firstReminder, secondReminder, serviceContext);
 	}
 

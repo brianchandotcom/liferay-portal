@@ -32,20 +32,6 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(Map,
-	String, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String description, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPrototypeService.addLayoutPrototype(nameMap, description,
-			active);
-	}
-
-	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(Map, Map,
 	boolean, ServiceContext)}
 	*/
@@ -106,21 +92,6 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutPrototype> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeService.search(companyId, active, obc);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
-	Map, String, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
-		long layoutPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String description, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPrototypeService.updateLayoutPrototype(layoutPrototypeId,
-			nameMap, description, active);
 	}
 
 	/**

@@ -26,13 +26,9 @@ import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.TeamPermissionUtil;
 import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
-import com.liferay.portlet.expando.model.ExpandoBridge;
-
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
@@ -72,28 +68,6 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 			getPermissionChecker(), teamId, ActionKeys.ASSIGN_MEMBERS);
 
 		userGroupLocalService.addTeamUserGroups(teamId, userGroupIds);
-	}
-
-	/**
-	 * Adds a user group.
-	 *
-	 * <p>
-	 * This method handles the creation and bookkeeping of the user group,
-	 * including its resources, metadata, and internal data structures.
-	 * </p>
-	 *
-	 * @param      name the user group's name
-	 * @param      description the user group's description
-	 * @return     the user group
-	 * @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public UserGroup addUserGroup(String name, String description)
-		throws PortalException {
-
-		return addUserGroup(name, description, null);
 	}
 
 	/**
@@ -252,39 +226,6 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 			getPermissionChecker(), teamId, ActionKeys.ASSIGN_MEMBERS);
 
 		userGroupLocalService.unsetTeamUserGroups(teamId, userGroupIds);
-	}
-
-	/**
-	 * Updates the user group.
-	 *
-	 * @param      userGroupId the primary key of the user group
-	 * @param      name the user group's name
-	 * @param      description the the user group's description
-	 * @return     the user group
-	 * @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
-	 *             String, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public UserGroup updateUserGroup(
-			long userGroupId, String name, String description)
-		throws PortalException {
-
-		UserGroup oldUserGroup = userGroupPersistence.findByPrimaryKey(
-			userGroupId);
-
-		ExpandoBridge oldExpandoBridge = oldUserGroup.getExpandoBridge();
-
-		Map<String, Serializable> oldExpandoAttributes =
-			oldExpandoBridge.getAttributes();
-
-		UserGroup userGroup = updateUserGroup(
-			userGroupId, name, description, null);
-
-		UserGroupMembershipPolicyUtil.verifyPolicy(
-			userGroup, oldUserGroup, oldExpandoAttributes);
-
-		return userGroup;
 	}
 
 	/**

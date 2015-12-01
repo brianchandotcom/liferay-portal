@@ -435,7 +435,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	@Override
 	public void cancelCheckOut(long fileEntryId) throws PortalException {
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
@@ -478,7 +479,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		repository.checkInFileEntry(
 			getUserId(), fileEntryId, majorVersion, changeLog, serviceContext);
@@ -531,7 +533,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		repository.checkInFileEntry(
 			getUserId(), fileEntryId, lockUuid, serviceContext);
@@ -569,7 +572,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		FileEntry fileEntry = repository.checkOutFileEntry(
 			fileEntryId, serviceContext);
@@ -611,7 +615,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		FileEntry fileEntry = repository.checkOutFileEntry(
 			fileEntryId, owner, expirationTime, serviceContext);
@@ -663,7 +668,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	@Override
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
@@ -701,7 +707,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	@Override
 	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
-		Repository repository = getFileShortcutRepository(fileShortcutId);
+		Repository repository = repositoryProvider.getFileShortcutRepository(
+			fileShortcutId);
 
 		repository.deleteFileShortcut(fileShortcutId);
 	}
@@ -718,7 +725,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		repository.deleteFileVersion(fileEntryId, version);
 	}
@@ -731,7 +739,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	@Override
 	public void deleteFolder(long folderId) throws PortalException {
-		Repository repository = getFolderRepository(folderId);
+		Repository repository = repositoryProvider.getFolderRepository(
+			folderId);
 
 		Folder folder = repository.getFolder(folderId);
 
@@ -1098,7 +1107,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		return repository.getFileEntry(fileEntryId);
 	}
@@ -1122,7 +1132,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				Repository repository = getFolderRepository(folderId);
+				Repository repository = repositoryProvider.getFolderRepository(
+					folderId);
 
 				return repository.getFileEntry(folderId, title);
 			}
@@ -1185,7 +1196,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
-		Repository repository = getFileShortcutRepository(fileShortcutId);
+		Repository repository = repositoryProvider.getFileShortcutRepository(
+			fileShortcutId);
 
 		return repository.getFileShortcut(fileShortcutId);
 	}
@@ -1200,7 +1212,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 
-		Repository repository = getFileVersionRepository(fileVersionId);
+		Repository repository = repositoryProvider.getFileVersionRepository(
+			fileVersionId);
 
 		return repository.getFileVersion(fileVersionId);
 	}
@@ -1213,7 +1226,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	@Override
 	public Folder getFolder(long folderId) throws PortalException {
-		Repository repository = getFolderRepository(folderId);
+		Repository repository = repositoryProvider.getFolderRepository(
+			folderId);
 
 		return repository.getFolder(folderId);
 	}
@@ -2070,7 +2084,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository fromRepository = getFileEntryRepository(fileEntryId);
+		Repository fromRepository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 		Repository toRepository = getFolderRepository(
 			newFolderId, serviceContext.getScopeGroupId());
 
@@ -2111,7 +2126,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		TrashCapability trashCapability = repository.getCapability(
 			TrashCapability.class);
@@ -2137,7 +2153,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public FileEntry moveFileEntryToTrash(long fileEntryId)
 		throws PortalException {
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		TrashCapability trashCapability = repository.getCapability(
 			TrashCapability.class);
@@ -2183,7 +2200,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public FileShortcut moveFileShortcutToTrash(long fileShortcutId)
 		throws PortalException {
 
-		Repository repository = getFileShortcutRepository(fileShortcutId);
+		Repository repository = repositoryProvider.getFileShortcutRepository(
+			fileShortcutId);
 
 		TrashCapability trashCapability = repository.getCapability(
 			TrashCapability.class);
@@ -2210,7 +2228,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long folderId, long parentFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository fromRepository = getFolderRepository(folderId);
+		Repository fromRepository = repositoryProvider.getFolderRepository(
+			folderId);
 		Repository toRepository = getFolderRepository(
 			parentFolderId, serviceContext.getScopeGroupId());
 
@@ -2252,7 +2271,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long folderId, long parentFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = getFolderRepository(folderId);
+		Repository repository = repositoryProvider.getFolderRepository(
+			folderId);
 
 		TrashCapability trashCapability = repository.getCapability(
 			TrashCapability.class);
@@ -2280,7 +2300,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	@Override
 	public Folder moveFolderToTrash(long folderId) throws PortalException {
-		Repository repository = getFolderRepository(folderId);
+		Repository repository = repositoryProvider.getFolderRepository(
+			folderId);
 
 		TrashCapability trashCapability = repository.getCapability(
 			TrashCapability.class);
@@ -2314,7 +2335,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		long fileEntryId = GetterUtil.getLong(lock.getKey());
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		return repository.refreshFileEntryLock(
 			lockUuid, companyId, expirationTime);
@@ -2341,7 +2363,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		long folderId = GetterUtil.getLong(lock.getKey());
 
-		Repository repository = getFolderRepository(folderId);
+		Repository repository = repositoryProvider.getFolderRepository(
+			folderId);
 
 		return repository.refreshFolderLock(
 			lockUuid, companyId, expirationTime);
@@ -2356,7 +2379,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public void restoreFileEntryFromTrash(long fileEntryId)
 		throws PortalException {
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		TrashCapability trashCapability = repository.getCapability(
 			TrashCapability.class);
@@ -2394,7 +2418,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	@Override
 	public void restoreFolderFromTrash(long folderId) throws PortalException {
-		Repository repository = getFolderRepository(folderId);
+		Repository repository = repositoryProvider.getFolderRepository(
+			folderId);
 
 		TrashCapability trashCapability = repository.getCapability(
 			TrashCapability.class);
@@ -2420,7 +2445,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		repository.revertFileEntry(
 			getUserId(), fileEntryId, version, serviceContext);
@@ -2719,7 +2745,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
@@ -2803,7 +2830,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			}
 		}
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
@@ -2829,7 +2857,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				changeLog, majorVersion, null, 0, serviceContext);
 		}
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
@@ -2853,7 +2882,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = getFileEntryRepository(fileEntryId);
+		Repository repository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
 
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
@@ -2887,7 +2917,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = getFileShortcutRepository(fileShortcutId);
+		Repository repository = repositoryProvider.getFileShortcutRepository(
+			fileShortcutId);
 
 		return repository.updateFileShortcut(
 			getUserId(), fileShortcutId, folderId, toFileEntryId,
@@ -3155,30 +3186,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 	}
 
-	protected Repository getFileEntryRepository(long fileEntryId)
-		throws PortalException {
-
-		return repositoryProvider.getFileEntryRepository(fileEntryId);
-	}
-
-	protected Repository getFileShortcutRepository(long fileShortcutId)
-		throws PortalException {
-
-		return repositoryProvider.getFileShortcutRepository(fileShortcutId);
-	}
-
-	protected Repository getFileVersionRepository(long fileVersionId)
-		throws PortalException {
-
-		return repositoryProvider.getFileVersionRepository(fileVersionId);
-	}
-
-	protected Repository getFolderRepository(long folderId)
-		throws PortalException {
-
-		return repositoryProvider.getFolderRepository(folderId);
-	}
-
 	protected Repository getFolderRepository(long folderId, long groupId)
 		throws PortalException {
 
@@ -3186,7 +3193,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			return getRepository(groupId);
 		}
 
-		return getFolderRepository(folderId);
+		return repositoryProvider.getFolderRepository(folderId);
 	}
 
 	protected Repository getRepository(long repositoryId)

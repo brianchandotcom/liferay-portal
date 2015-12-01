@@ -138,6 +138,34 @@ public interface UsersAdmin {
 
 		};
 
+	public static final Accessor<UserGroupGroupRole, Long>
+		USER_GROUP_GROUP_ROLE_ID_ACCESSOR =
+			new Accessor<UserGroupGroupRole, Long>() {
+
+				@Override
+				public Long get(UserGroupGroupRole userGroupGroupRole) {
+					Role role = RoleLocalServiceUtil.fetchRole(
+						userGroupGroupRole.getRoleId());
+
+					if (role == null) {
+						return 0L;
+					}
+
+					return role.getRoleId();
+				}
+
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<UserGroupGroupRole> getTypeClass() {
+					return UserGroupGroupRole.class;
+				}
+
+			};
+
 	public static final Accessor<UserGroupGroupRole, String>
 		USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR =
 			new Accessor<UserGroupGroupRole, String>() {
@@ -166,6 +194,33 @@ public interface UsersAdmin {
 				}
 
 			};
+
+	public static final Accessor<UserGroupRole, Long>
+		USER_GROUP_ROLE_ID_ACCESSOR = new Accessor<UserGroupRole, Long>() {
+
+			@Override
+			public Long get(UserGroupRole userGroupRole) {
+				Role role = RoleLocalServiceUtil.fetchRole(
+					userGroupRole.getRoleId());
+
+				if (role == null) {
+					return 0L;
+				}
+
+				return role.getRoleId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<UserGroupRole> getTypeClass() {
+				return UserGroupRole.class;
+			}
+
+		};
 
 	public static final Accessor<UserGroupRole, String>
 		USER_GROUP_ROLE_TITLE_ACCESSOR = new Accessor<UserGroupRole, String>() {

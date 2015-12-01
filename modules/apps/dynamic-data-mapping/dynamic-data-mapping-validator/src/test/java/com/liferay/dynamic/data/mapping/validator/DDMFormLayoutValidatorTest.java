@@ -19,6 +19,10 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.InvalidRowSize;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustNotDuplicateFieldName;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustSetDefaultLocale;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustSetEqualLocaleForLayoutAndTitle;
 import com.liferay.dynamic.data.mapping.validator.internal.DDMFormLayoutValidatorImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -31,7 +35,7 @@ import org.junit.Test;
  */
 public class DDMFormLayoutValidatorTest {
 
-	@Test(expected = DDMFormLayoutValidationException.class)
+	@Test(expected = MustNotDuplicateFieldName.class)
 	public void testDuplicateFieldNames() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
 			6, "field1", "field2", "field3");
@@ -55,7 +59,7 @@ public class DDMFormLayoutValidatorTest {
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
 
-	@Test(expected = DDMFormLayoutValidationException.class)
+	@Test(expected = InvalidRowSize.class)
 	public void testInvalidRowSize() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
 			6, "field1");
@@ -79,7 +83,7 @@ public class DDMFormLayoutValidatorTest {
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
 
-	@Test(expected = DDMFormLayoutValidationException.class)
+	@Test(expected = MustSetDefaultLocale.class)
 	public void testNullDefaultLocale() throws Exception {
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
@@ -107,7 +111,7 @@ public class DDMFormLayoutValidatorTest {
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
 
-	@Test(expected = DDMFormLayoutValidationException.class)
+	@Test(expected = MustSetEqualLocaleForLayoutAndTitle.class)
 	public void testWrongDefaultLocaleSetForPageTitle() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn = createDDMFormLayoutColumn(
 			12, "field");

@@ -21,7 +21,7 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 %>
 
 <li class="<%= Validator.equals(productMenuState, "open") ? "active" : StringPool.BLANK %>">
-	<a class="control-menu-icon sidenav-toggler" data-content="body" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" href="#sidenavSliderId" id="sidenavToggleId">
+	<a class="control-menu-icon sidenav-toggler" data-content="body" data-target="#sidenavSliderId,#wrapper" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" href="#sidenavSliderId" id="sidenavToggleId">
 		<span class="icon-align-justify icon-monospaced"></span>
 	</a>
 </li>

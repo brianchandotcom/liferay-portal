@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//div[@class='button-holder ddl-form-builder-buttons']/button[contains(.,'Save')]</td>
+	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>

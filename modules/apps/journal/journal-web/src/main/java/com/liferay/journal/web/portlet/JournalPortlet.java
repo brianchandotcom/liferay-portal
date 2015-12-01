@@ -647,16 +647,6 @@ public class JournalPortlet extends MVCPortlet {
 		Map<String, byte[]> images =
 			(HashMap<String, byte[]>)contentAndImages[1];
 
-		Boolean fileItemThresholdSizeExceeded =
-			(Boolean)uploadPortletRequest.getAttribute(
-				WebKeys.FILE_ITEM_THRESHOLD_SIZE_EXCEEDED);
-
-		if ((fileItemThresholdSizeExceeded != null) &&
-			fileItemThresholdSizeExceeded.booleanValue()) {
-
-			throw new ArticleContentSizeException();
-		}
-
 		String ddmTemplateKey = ParamUtil.getString(
 			uploadPortletRequest, "ddmTemplateKey");
 		String layoutUuid = ParamUtil.getString(

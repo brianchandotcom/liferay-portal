@@ -408,7 +408,11 @@ public class BuildServiceTask extends JavaExec {
 
 		args.add("service.target.entity.name=" + targetEntityName);
 
-		args.add("service.test.dir=" + _relativize(getTestDir()));
+		File testDir = getTestDir();
+
+		if (testDir != null) {
+			args.add("service.test.dir=" + _relativize(testDir));
+		}
 
 		return args;
 	}

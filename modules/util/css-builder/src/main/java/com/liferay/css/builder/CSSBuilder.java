@@ -81,9 +81,9 @@ public class CSSBuilder {
 			arguments.get("sass.docroot.dir"), CSSBuilderArgs.DOCROOT_DIR_NAME);
 		boolean generateSourceMap = GetterUtil.getBoolean(
 			arguments.get("sass.generate.source.map"));
+		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 		int precision = GetterUtil.getInteger(
 			arguments.get("sass.precision"), CSSBuilderArgs.PRECISION);
-		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 		String[] rtlExcludedPathRegexps = StringUtil.split(
 			arguments.get("sass.rtl.excluded.path.regexps"));
 		String sassCompilerClassName = arguments.get(
@@ -91,9 +91,8 @@ public class CSSBuilder {
 
 		try {
 			CSSBuilder cssBuilder = new CSSBuilder(
-				docrootDirName, generateSourceMap, precision,
-				portalCommonDirName, rtlExcludedPathRegexps,
-				sassCompilerClassName);
+				docrootDirName, generateSourceMap, portalCommonDirName,
+				precision, rtlExcludedPathRegexps, sassCompilerClassName);
 
 			cssBuilder.execute(dirNames);
 		}
@@ -103,15 +102,15 @@ public class CSSBuilder {
 	}
 
 	public CSSBuilder(
-			String docrootDirName, boolean generateSourceMap, int precision,
-			String portalCommonDirName, String[] rtlExcludedPathRegexps,
-			String sassCompilerClassName)
+			String docrootDirName, boolean generateSourceMap,
+			String portalCommonDirName, int precision,
+			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
 		_docrootDirName = docrootDirName;
 		_generateSourceMap = generateSourceMap;
-		_precision = precision;
 		_portalCommonDirName = portalCommonDirName;
+		_precision = precision;
 		_rtlExcludedPathPatterns = PatternFactory.compile(
 			rtlExcludedPathRegexps);
 
@@ -464,8 +463,8 @@ public class CSSBuilder {
 
 	private final String _docrootDirName;
 	private final boolean _generateSourceMap;
-	private final int _precision;
 	private final String _portalCommonDirName;
+	private final int _precision;
 	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;
 	private final ConcurrentMap<String, SassFile> _sassFileCache =

@@ -101,8 +101,8 @@ public class CSSBuilderTest {
 
 	private void _testSassToCssBuilder(String compiler) throws Exception {
 		CSSBuilder cssBuilder = new CSSBuilder(
-			_docrootDirName, false, 6,
-			"../../frontend/frontend-common-css/tmp/META-INF/resources",
+			_docrootDirName, false,
+			"../../frontend/frontend-common-css/tmp/META-INF/resources", 6,
 			new String[0], compiler);
 
 		cssBuilder.execute(Arrays.asList(new String[] {"/css"}));

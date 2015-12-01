@@ -91,11 +91,7 @@ userSearch.setResults(users);
 
 <aui:form action="<%= deleteGroupUsersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="users" />
-	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
-	<aui:input name="p_u_i_d" type="hidden" />
 	<aui:input name="addUserIds" type="hidden" />
-	<aui:input name="addRoleIds" type="hidden" />
-	<aui:input name="removeRoleIds" type="hidden" />
 
 	<liferay-ui:membership-policy-error />
 
@@ -130,6 +126,13 @@ userSearch.setResults(users);
 	<aui:input name="tabs1" type="hidden" value="users" />
 </aui:form>
 
+<portlet:actionURL name="editUserGroupRole" var="editUserGroupRoleURL" />
+
+<aui:form action="<%= editUserGroupRoleURL %>" cssClass="hide" method="post" name="editUserGroupRoleFm">
+	<aui:input name="tabs1" type="hidden" value="users" />
+	<aui:input name="p_u_i_d" type="hidden" />
+</aui:form>
+
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 	<liferay-frontend:add-menu>
 		<liferay-frontend:add-menu-item id="selectUsers" title='<%= LanguageUtil.get(request, "assign-users") %>' url="javascript:;" />
@@ -158,6 +161,10 @@ userSearch.setResults(users);
 
 			var currentTarget = $(event.currentTarget);
 
+			var editUserGroupRoleFm = $(document.<portlet:namespace />editUserGroupRoleFm);
+
+			editUserGroupRoleFm.fm('p_u_i_d').val(currentTarget.data('userid'));
+
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
 					eventName: '<portlet:namespace />selectUsersRoles',
@@ -166,11 +173,9 @@ userSearch.setResults(users);
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								form.fm('addRoleIds').val(selectedItem.addRoleIds);
-								form.fm('removeRoleIds').val(selectedItem.removeRoleIds);
-								form.fm('p_u_i_d').val(selectedItem.selUserId);
+								editUserGroupRoleFm.append(selectedItem);
 
-								submitForm(form, '<portlet:actionURL name="editUserGroupRole" />');
+								submitForm(editUserGroupRoleFm);
 							}
 						}
 					},

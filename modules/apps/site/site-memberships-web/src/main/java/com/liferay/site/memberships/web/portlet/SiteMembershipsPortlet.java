@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -28,6 +29,7 @@ import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.MembershipRequestConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.service.MembershipRequestService;
@@ -35,17 +37,21 @@ import com.liferay.portal.service.OrganizationService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserGroupGroupRoleService;
+import com.liferay.portal.service.UserGroupRoleLocalService;
 import com.liferay.portal.service.UserGroupRoleService;
 import com.liferay.portal.service.UserGroupService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -247,15 +253,28 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long[] addRoleIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addRoleIds"), 0L);
-		long[] removeRoleIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeRoleIds"), 0L);
+		long[] roleIds = ParamUtil.getLongValues(actionRequest, "rowIds");
+
+		List<UserGroupRole> userGroupRoles =
+			_userGroupRoleLocalService.getUserGroupRoles(
+				user.getUserId(), themeDisplay.getSiteGroupId());
+
+		List<Long> curRoleIds = ListUtil.toList(
+			userGroupRoles, UsersAdmin.USER_GROUP_ROLE_ID_ACCESSOR);
+
+		List<Long> removeRoleIds = new ArrayList<>();
+
+		for (long roleId : curRoleIds) {
+			if (!ArrayUtil.contains(roleIds, roleId)) {
+				removeRoleIds.add(roleId);
+			}
+		}
 
 		_userGroupRoleService.addUserGroupRoles(
-			user.getUserId(), themeDisplay.getSiteGroupId(), addRoleIds);
+			user.getUserId(), themeDisplay.getSiteGroupId(), roleIds);
 		_userGroupRoleService.deleteUserGroupRoles(
-			user.getUserId(), themeDisplay.getSiteGroupId(), removeRoleIds);
+			user.getUserId(), themeDisplay.getSiteGroupId(),
+			ArrayUtil.toLongArray(removeRoleIds));
 	}
 
 	public void replyMembershipRequest(
@@ -379,6 +398,13 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setUserGroupRoleLocalService(
+		UserGroupRoleLocalService userGroupRoleLocalService) {
+
+		_userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserGroupRoleService(
 		UserGroupRoleService userGroupRoleService) {
 
@@ -403,6 +429,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 	private volatile MembershipRequestService _membershipRequestService;
 	private volatile OrganizationService _organizationService;
 	private volatile UserGroupGroupRoleService _userGroupGroupRoleService;
+	private volatile UserGroupRoleLocalService _userGroupRoleLocalService;
 	private volatile UserGroupRoleService _userGroupRoleService;
 	private volatile UserGroupService _userGroupService;
 	private volatile UserLocalService _userLocalService;

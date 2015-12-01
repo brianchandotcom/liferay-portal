@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Portal Tools Sharding Upgrader
-Bundle-SymbolicName: com.liferay.portal.tools.upgrade.sharding
+Bundle-Name: Liferay Portal Tools Shard Builder
+Bundle-SymbolicName: com.liferay.portal.tools.shard.builder
 Bundle-Version: 1.0.0
 Import-Package:\
 	*

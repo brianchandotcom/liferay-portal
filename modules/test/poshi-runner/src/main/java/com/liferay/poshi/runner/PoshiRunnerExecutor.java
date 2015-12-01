@@ -819,6 +819,10 @@ public class PoshiRunnerExecutor {
 				String attribute = element.attributeValue("attribute");
 				String locator = element.attributeValue("locator");
 
+				if (locator.contains("#")) {
+					locator = PoshiRunnerContext.getPathLocator(locator);
+				}
+
 				varValue = liferaySelenium.getAttribute(
 					locator + "@" + attribute);
 			}

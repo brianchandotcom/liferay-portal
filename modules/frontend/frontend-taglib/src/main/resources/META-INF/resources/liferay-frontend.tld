@@ -361,12 +361,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>filter</name>
+			<name>filterItems</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>filterItems</name>
+			<name>value</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

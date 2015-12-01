@@ -37,10 +37,6 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 		return super.doStartTag();
 	}
 
-	public void setFilter(String filter) {
-		_filter = filter;
-	}
-
 	public void setFilterItems(List<ManagementBarFilterItem> filterItems) {
 		_filterItems = filterItems;
 	}
@@ -56,11 +52,15 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setValue(String value) {
+		_value = value;
+	}
+
 	@Override
 	protected void cleanUp() {
-		_filter = null;
 		_filterItems = null;
 		_label = null;
+		_value = null;
 	}
 
 	@Override
@@ -81,11 +81,11 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-frontend:management-bar-filter:filter", _filter);
-		request.setAttribute(
 			"liferay-frontend:management-bar-filter:filterItems", _filterItems);
 		request.setAttribute(
 			"liferay-frontend:management-bar-filter:label", _label);
+		request.setAttribute(
+			"liferay-frontend:management-bar-filter:value", _value);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
@@ -95,8 +95,8 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 
 	private static final String _PAGE = "/management_bar_filter/page.jsp";
 
-	private String _filter;
 	private List<ManagementBarFilterItem> _filterItems;
 	private String _label;
+	private String _value;
 
 }

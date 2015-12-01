@@ -93,7 +93,6 @@ userGroupSearch.setResults(userGroups);
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 	<aui:input name="userGroupId" type="hidden" />
-	<aui:input name="addUserGroupIds" type="hidden" />
 	<aui:input name="addRoleIds" type="hidden" />
 	<aui:input name="removeRoleIds" type="hidden" />
 
@@ -119,6 +118,13 @@ userGroupSearch.setResults(userGroups);
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
+</aui:form>
+
+<portlet:actionURL name="addGroupUserGroups" var="addGroupUserGroupsURL" />
+
+<aui:form action="<%= addGroupUserGroupsURL %>" cssClass="hide" name="addGroupUserGroupsFm">
+	<aui:input name="tabs1" type="hidden" value="user-groups" />
+	<aui:input name="assignmentsRedirect" type="hidden" />
 </aui:form>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
@@ -187,9 +193,11 @@ userGroupSearch.setResults(userGroups);
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								form.fm('addUserGroupIds').val(selectedItem.addUserGroupIds);
+								var addGroupUserGroupsFm = $(document.<portlet:namespace />addGroupUserGroupsFm);
 
-								submitForm(form, '<portlet:actionURL name="addGroupUserGroups" />');
+								addGroupUserGroupsFm.append(selectedItem);
+
+								submitForm(addGroupUserGroupsFm);
 							}
 						}
 					},

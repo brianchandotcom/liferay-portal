@@ -5,7 +5,7 @@ Import-Package:\
 	com.liferay.portal.language.resource.bundle,\
 	com.liferay.portal.settings.portlet.action,\
 	*
-Include-Resource:
+Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /portal-security-sso-opensso

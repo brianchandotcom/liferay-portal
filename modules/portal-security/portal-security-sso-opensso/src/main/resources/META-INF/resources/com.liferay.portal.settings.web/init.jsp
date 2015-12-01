@@ -27,6 +27,8 @@ page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><
 page import="com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants" %><%@
 page import="com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration" %>
 
+<%@ page import="javax.portlet.ActionRequest" %>
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />

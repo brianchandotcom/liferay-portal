@@ -30,6 +30,8 @@ String lastNameAttr = openSSOConfiguration.lastNameAttr();
 %>
 
 <aui:fieldset>
++ <aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/edit_company_opensso_configuration" />
+
 	<aui:input label="enabled" name="open-sso--enabled" type="checkbox" value="<%= enabled %>" />
 
 	<aui:input helpMessage="import-open-sso-users-from-ldap-help" label="import-open-sso-users-from-ldap" name="open-sso--importFromLDAP" type="checkbox" value="<%= importFromLDAP %>" />

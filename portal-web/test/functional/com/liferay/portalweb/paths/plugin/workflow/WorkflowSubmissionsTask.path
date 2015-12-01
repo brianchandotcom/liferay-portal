@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_EDIT</td>
+	<td>//div[@class='task-content-actions']/ul/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW_AUTHOR</td>
 	<td>//span[contains(@class,'metadata-author')]</td>
 	<td></td>

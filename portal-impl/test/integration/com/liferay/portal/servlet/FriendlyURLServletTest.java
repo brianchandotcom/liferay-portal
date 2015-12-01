@@ -81,7 +81,7 @@ public class FriendlyURLServletTest {
 	public void testGetRedirectWithInvalidI18nPath() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
-		_mockHttpServletRequest.setAttribute(WebKeys.I18N_LANGUAGE_ID, "fr");
+		_mockHttpServletRequest.setAttribute(WebKeys.I18N_LANGUAGE_CODE, "fr");
 		_mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
 		String requestURI =

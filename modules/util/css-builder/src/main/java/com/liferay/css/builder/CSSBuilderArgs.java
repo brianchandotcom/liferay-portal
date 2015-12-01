@@ -97,7 +97,7 @@ public class CSSBuilderArgs {
 	private String _docrootDirName = DOCROOT_DIR_NAME;
 	private boolean _generateSourceMap;
 	private String _portalCommonDirName;
-	private int _precision;
+	private int _precision = PRECISION;
 	private String[] _rtlExcludedPathRegexps = new String[0];
 	private String _sassCompilerClassName;
 

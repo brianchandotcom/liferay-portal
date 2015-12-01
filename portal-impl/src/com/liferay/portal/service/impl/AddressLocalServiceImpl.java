@@ -39,26 +39,6 @@ import java.util.List;
  */
 public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addAddress(long, String,
-	 *             long, String, String, String, String, String, long, long,
-	 *             int, boolean, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Address addAddress(
-			long userId, String className, long classPK, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long typeId, boolean mailing,
-			boolean primary)
-		throws PortalException {
-
-		return addAddress(
-			userId, className, classPK, street1, street2, street3, city, zip,
-			regionId, countryId, typeId, mailing, primary,
-			new ServiceContext());
-	}
-
 	@Override
 	public Address addAddress(
 			long userId, String className, long classPK, String street1,

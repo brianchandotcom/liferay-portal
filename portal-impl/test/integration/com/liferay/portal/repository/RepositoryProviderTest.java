@@ -14,7 +14,6 @@
 
 package com.liferay.portal.repository;
 
-import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

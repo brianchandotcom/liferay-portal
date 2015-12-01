@@ -737,6 +737,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _assetLinkIds;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getAssetLinkIds()}
+	 */
+	@Deprecated
+	@Override
+	public Map<String, List<AssetLink>> getAssetLinksMap() {
+		return Collections.emptyMap();
+	}
+
 	@Override
 	public String[] getAssetTagNames(Class<?> clazz, long classPK) {
 		return _assetTagNamesMap.get(getPrimaryKeyString(clazz, classPK));

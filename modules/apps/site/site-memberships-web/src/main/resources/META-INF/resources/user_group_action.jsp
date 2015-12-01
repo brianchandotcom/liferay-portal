@@ -34,6 +34,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("href", assignURL.toString());
+		data.put("usergroupid", userGroup.getUserGroupId());
 		%>
 
 		<liferay-ui:icon

@@ -84,6 +84,8 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 	searchContainerId="wikiNodes"
 >
 	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= portletURL %>"
@@ -105,100 +107,108 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
-	<liferay-ui:trash-undo
-		portletURL="<%= restoreTrashEntriesURL %>"
-	/>
+<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<div class="sidenav-menu-slider">
+		<div class="sidebar sidebar-default sidenav-menu">
+			<liferay-util:include page="/wiki_admin/info_panel.jsp" servletContext="<%= application %>" />
+		</div>
+	</div>
 
-	<liferay-ui:error exception="<%= RequiredNodeException.class %>" message="the-last-main-node-is-required-and-cannot-be-deleted" />
+	<div class="sidenav-content">
+		<liferay-ui:trash-undo
+			portletURL="<%= restoreTrashEntriesURL %>"
+		/>
 
-	<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<liferay-ui:error exception="<%= RequiredNodeException.class %>" message="the-last-main-node-is-required-and-cannot-be-deleted" />
 
-		<%
-		SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-wikis");
+		<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-		NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
+			<%
+			SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-wikis");
 
-		wikiNodesSearchContainer.setRowChecker(nodesChecker);
-		wikiNodesSearchContainer.setOrderByCol(orderByCol);
-		wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
-		wikiNodesSearchContainer.setOrderByType(orderByType);
-		%>
+			NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
 
-		<liferay-ui:search-container
-			id="wikiNodes"
-			searchContainer="<%= wikiNodesSearchContainer %>"
-			total="<%= nodesCount %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= WikiNodeServiceUtil.getNodes(scopeGroupId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-			/>
+			wikiNodesSearchContainer.setRowChecker(nodesChecker);
+			wikiNodesSearchContainer.setOrderByCol(orderByCol);
+			wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
+			wikiNodesSearchContainer.setOrderByType(orderByType);
+			%>
 
-			<liferay-ui:search-container-row
-				className="com.liferay.wiki.model.WikiNode"
-				keyProperty="nodeId"
-				modelVar="result"
+			<liferay-ui:search-container
+				id="wikiNodes"
+				searchContainer="<%= wikiNodesSearchContainer %>"
+				total="<%= nodesCount %>"
 			>
-				<c:choose>
-					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-icon
-							icon="folder"
-							toggleRowChecker="<%= true %>"
-						/>
+				<liferay-ui:search-container-results
+					results="<%= WikiNodeServiceUtil.getNodes(scopeGroupId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+				/>
 
-						<liferay-ui:search-container-column-jsp
-							colspan="2"
-							path="/wiki_admin/view_node_descriptive.jsp"
-						/>
+				<liferay-ui:search-container-row
+					className="com.liferay.wiki.model.WikiNode"
+					keyProperty="nodeId"
+					modelVar="result"
+				>
+					<c:choose>
+						<c:when test='<%= displayStyle.equals("descriptive") %>'>
+							<liferay-ui:search-container-column-icon
+								icon="folder"
+								toggleRowChecker="<%= true %>"
+							/>
 
-						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action"
-							path="/wiki/node_action.jsp"
-						/>
-					</c:when>
-					<c:otherwise>
+							<liferay-ui:search-container-column-jsp
+								colspan="2"
+								path="/wiki_admin/view_node_descriptive.jsp"
+							/>
 
-						<%
-						WikiNode node = (WikiNode)result;
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action"
+								path="/wiki/node_action.jsp"
+							/>
+						</c:when>
+						<c:otherwise>
 
-						PortletURL rowURL = renderResponse.createRenderURL();
+							<%
+							WikiNode node = (WikiNode)result;
 
-						rowURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
-						rowURL.setParameter("redirect", currentURL);
-						rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-						%>
+							PortletURL rowURL = renderResponse.createRenderURL();
 
-						<liferay-ui:search-container-column-text
-							href="<%= rowURL %>"
-							name="wiki"
-							value="<%= node.getName() %>"
-						/>
+							rowURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
+							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+							%>
 
-						<liferay-ui:search-container-column-text
-							href="<%= rowURL %>"
-							name="num-of-pages"
-							value="<%= String.valueOf(WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true)) %>"
-						/>
+							<liferay-ui:search-container-column-text
+								href="<%= rowURL %>"
+								name="wiki"
+								value="<%= node.getName() %>"
+							/>
 
-						<liferay-ui:search-container-column-text
-							href="<%= rowURL %>"
-							name="last-post-date"
-							value='<%= (node.getLastPostDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(node.getLastPostDate()) %>'
-						/>
+							<liferay-ui:search-container-column-text
+								href="<%= rowURL %>"
+								name="num-of-pages"
+								value="<%= String.valueOf(WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true)) %>"
+							/>
 
-						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action"
-							path="/wiki/node_action.jsp"
-						/>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-row>
+							<liferay-ui:search-container-column-text
+								href="<%= rowURL %>"
+								name="last-post-date"
+								value='<%= (node.getLastPostDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(node.getLastPostDate()) %>'
+							/>
 
-			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
-		</liferay-ui:search-container>
-	</aui:form>
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action"
+								path="/wiki/node_action.jsp"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+			</liferay-ui:search-container>
+		</aui:form>
+	</div>
 </div>
 
 <%
@@ -231,4 +241,15 @@ boolean showAddNodeButton = WikiResourcePermissionChecker.contains(permissionChe
 			submitForm(form, '<portlet:actionURL name="/wiki/edit_node" />');
 		}
 	}
+
+	$('#<portlet:namespace />infoPanelId').sideNavigation(
+		{
+			gutter: 15,
+			position: 'right',
+			toggler: '.infoPanelToggler',
+			type: 'relative',
+			typeMobile: 'fixed',
+			width: 320
+		}
+	);
 </aui:script>

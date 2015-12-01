@@ -52,9 +52,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
@@ -3160,71 +3157,25 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	protected Repository getFileEntryRepository(long fileEntryId)
 		throws PortalException {
 
-		try {
-			return RepositoryProviderUtil.getFileEntryRepository(fileEntryId);
-		}
-		catch (InvalidRepositoryIdException irie) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("No FileEntry exists with the key {fileEntryId=");
-			sb.append(fileEntryId);
-			sb.append("}");
-
-			throw new NoSuchFileEntryException(sb.toString(), irie);
-		}
+		return RepositoryProviderUtil.getFileEntryRepository(fileEntryId);
 	}
 
 	protected Repository getFileShortcutRepository(long fileShortcutId)
 		throws PortalException {
 
-		try {
-			return RepositoryProviderUtil.getFileShortcutRepository(
-				fileShortcutId);
-		}
-		catch (InvalidRepositoryIdException irie) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("No FileShortcut exists with the key {fileShortcutId=");
-			sb.append(fileShortcutId);
-			sb.append("}");
-
-			throw new NoSuchFileShortcutException(sb.toString(), irie);
-		}
+		return RepositoryProviderUtil.getFileShortcutRepository(fileShortcutId);
 	}
 
 	protected Repository getFileVersionRepository(long fileVersionId)
 		throws PortalException {
 
-		try {
-			return RepositoryProviderUtil.getFileVersionRepository(
-				fileVersionId);
-		}
-		catch (InvalidRepositoryIdException irie) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("No FileVersion exists with the key {fileVersionId=");
-			sb.append(fileVersionId);
-			sb.append("}");
-
-			throw new NoSuchFileVersionException(sb.toString(), irie);
-		}
+		return RepositoryProviderUtil.getFileVersionRepository(fileVersionId);
 	}
 
 	protected Repository getFolderRepository(long folderId)
 		throws PortalException {
 
-		try {
-			return RepositoryProviderUtil.getFolderRepository(folderId);
-		}
-		catch (InvalidRepositoryIdException irie) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("No Folder exists with the key {folderId=");
-			sb.append(folderId);
-			sb.append("}");
-
-			throw new NoSuchFolderException(sb.toString(), irie);
-		}
+		return RepositoryProviderUtil.getFolderRepository(folderId);
 	}
 
 	protected Repository getFolderRepository(long folderId, long groupId)

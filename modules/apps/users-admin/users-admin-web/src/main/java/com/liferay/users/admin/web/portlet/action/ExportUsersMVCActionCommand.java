@@ -82,6 +82,8 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
+			hideDefaultSuccessMessage(actionRequest);
+
 			String keywords = ParamUtil.getString(actionRequest, "keywords");
 
 			if (Validator.isNotNull(keywords)) {

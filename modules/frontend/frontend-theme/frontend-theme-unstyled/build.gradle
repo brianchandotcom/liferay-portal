@@ -2,40 +2,45 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-task buildAlloyTheme(type: Copy)
+configurations {
+	alloyUI
+}
+
+task buildAlloyUITheme(type: Copy)
 task buildLexicon(type: Copy)
 task buildLexiconIcons(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
-String alloyVersion = "3.0"
+String alloyUIVersion = "3.0.3-deprecated.5"
 String lexiconVersion = "0.1"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
 File thirdPartyDir = file("../../../../portal-web/third-party")
 
-buildAlloyTheme {
+buildAlloyUITheme {
 	File alloyThemeDestinationDir = new File(themeDestinationDir, "images/aui")
-	FileTree alloyZipFileTree = fileTree(dir: thirdPartyDir, include: "alloy-${alloyVersion}*.zip")
 
 	doFirst {
 		delete alloyThemeDestinationDir
 	}
 
+	eachFile new StripPathSegmentsAction(6)
+
 	filesMatching "build/aui-*/assets/skins/sam/**", new StripPathSegmentsAction(5)
 	filesMatching "build/aui-skin-deprecated/images/**", new StripPathSegmentsAction(3)
 
-	from zipTree(alloyZipFileTree.singleFile)
+	from {
+		zipTree(configurations.alloyUI.singleFile)
+	}
 
-	include "build/aui-*/assets/skins/sam/**.gif", "build/aui-*/assets/skins/sam/**.jpg", "build/aui-*/assets/skins/sam/**.png"
-	include "build/aui-skin-deprecated/images/**"
+	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-*/assets/skins/sam/**.gif"
+	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-*/assets/skins/sam/**.jpg"
+	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-*/assets/skins/sam/**.png"
+	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-skin-deprecated/images/**"
 
 	includeEmptyDirs = false
 	into alloyThemeDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, alloyZipFileTree.singleFile, alloyThemeDestinationDir)
-	}
 }
 
 buildCSS {
@@ -126,7 +131,7 @@ buildLexiconIcons {
 }
 
 buildTheme {
-	dependsOn buildAlloyTheme
+	dependsOn buildAlloyUITheme
 	dependsOn buildLexicon
 	dependsOn buildLexiconIcons
 }
@@ -140,6 +145,8 @@ dependencies {
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	alloyUI group: "org.webjars.bower", name: "alloy-ui", transitive: false, version: alloyUIVersion
 }
 
 liferay {

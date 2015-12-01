@@ -15,11 +15,14 @@
 package com.liferay.portal.log.assertor;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
+import java.nio.charset.Charset;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +34,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.w3c.dom.Document;
@@ -45,14 +50,41 @@ import org.xml.sax.InputSource;
  */
 public class PortalLogAssertorTest {
 
-	@Test
-	public void testScanXmlLog() throws IOException {
-		String jenkinsHome = System.getenv("JENKINS_HOME");
+	@BeforeClass
+	public static void setUpClass() {
+		Assume.assumeNotNull(System.getenv("JENKINS_HOME"));
+	}
 
-		if (jenkinsHome == null) {
-			return;
+	@Test
+	public void testScanOsgiLog() throws IOException {
+		StringBundler sb = new StringBundler();
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+			Paths.get(System.getProperty("osgi.state.dir")), "*.log")) {
+
+			for (Path path : directoryStream) {
+				if (!Files.isRegularFile(path)) {
+					continue;
+				}
+
+				sb.append("\nPortal log assert failure, OSGi log found: ");
+				sb.append(path);
+				sb.append(StringPool.COLON);
+				sb.append(StringPool.NEW_LINE);
+				sb.append(
+					new String(
+						Files.readAllBytes(path), Charset.defaultCharset()));
+				sb.append(StringPool.NEW_LINE);
+			}
 		}
 
+		if (sb.index() != 0) {
+			Assert.fail(sb.toString());
+		}
+	}
+
+	@Test
+	public void testScanXmlLog() throws IOException {
 		Files.walkFileTree(
 			Paths.get(System.getProperty("liferay.log.dir")),
 			new SimpleFileVisitor<Path>() {

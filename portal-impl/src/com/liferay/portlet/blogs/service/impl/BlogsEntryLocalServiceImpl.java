@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -557,37 +556,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return null;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
-	 *             Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getCompanyEntries(
-		long companyId, Date displayDate, int status, int start, int end) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getCompanyEntries(companyId, displayDate, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
-	 *             Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getCompanyEntries(
-		long companyId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> obc) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, obc);
-
-		return getCompanyEntries(companyId, displayDate, queryDefinition);
-	}
-
 	@Override
 	public List<BlogsEntry> getCompanyEntries(
 		long companyId, Date displayDate,
@@ -605,21 +573,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				queryDefinition.getStart(), queryDefinition.getEnd(),
 				queryDefinition.getOrderByComparator());
 		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyEntriesCount(long,
-	 *             Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getCompanyEntriesCount(
-		long companyId, Date displayDate, int status) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return getCompanyEntriesCount(companyId, displayDate, queryDefinition);
 	}
 
 	@Override
@@ -661,37 +614,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return blogsEntryPersistence.findByG_UT(groupId, urlTitle);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date,
-	 *             QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getGroupEntries(
-		long groupId, Date displayDate, int status, int start, int end) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getGroupEntries(groupId, displayDate, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date,
-	 *             QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getGroupEntries(
-		long groupId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> obc) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, obc);
-
-		return getGroupEntries(groupId, displayDate, queryDefinition);
-	}
-
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, Date displayDate,
@@ -709,37 +631,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				queryDefinition.getStart(), queryDefinition.getEnd(),
 				queryDefinition.getOrderByComparator());
 		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long,
-	 *             QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getGroupEntries(
-		long groupId, int status, int start, int end) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getGroupEntries(groupId, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long,
-	 *             QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getGroupEntries(
-		long groupId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> obc) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, obc);
-
-		return getGroupEntries(groupId, queryDefinition);
 	}
 
 	@Override
@@ -760,21 +651,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long,
-	 *             Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getGroupEntriesCount(
-		long groupId, Date displayDate, int status) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return getGroupEntriesCount(groupId, displayDate, queryDefinition);
-	}
-
 	@Override
 	public int getGroupEntriesCount(
 		long groupId, Date displayDate,
@@ -788,19 +664,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return blogsEntryPersistence.countByG_LtD_S(
 				groupId, displayDate, queryDefinition.getStatus());
 		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long,
-	 *             QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getGroupEntriesCount(long groupId, int status) {
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return getGroupEntriesCount(groupId, queryDefinition);
 	}
 
 	@Override
@@ -817,23 +680,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupsEntries(long, long,
-	 *             Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getGroupsEntries(
-		long companyId, long groupId, Date displayDate, int status, int start,
-		int end) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getGroupsEntries(
-			companyId, groupId, displayDate, queryDefinition);
-	}
-
 	@Override
 	public List<BlogsEntry> getGroupsEntries(
 		long companyId, long groupId, Date displayDate,
@@ -841,40 +687,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		return blogsEntryFinder.findByGroupIds(
 			companyId, groupId, displayDate, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long,
-	 *             long, Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, Date displayDate, int status, int start,
-		int end) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getGroupUserEntries(
-			groupId, userId, displayDate, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long,
-	 *             long, Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, Date displayDate, int status, int start,
-		int end, OrderByComparator<BlogsEntry> obc) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, obc);
-
-		return getGroupUserEntries(
-			groupId, userId, displayDate, queryDefinition);
 	}
 
 	@Override
@@ -894,22 +706,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				queryDefinition.getStart(), queryDefinition.getEnd(),
 				queryDefinition.getOrderByComparator());
 		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getGroupUserEntriesCount(long, long, Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getGroupUserEntriesCount(
-		long groupId, long userId, Date displayDate, int status) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return getGroupUserEntriesCount(
-			groupId, userId, displayDate, queryDefinition);
 	}
 
 	@Override
@@ -932,61 +728,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return blogsEntryFinder.findByNoAssets();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long,
-	 *             Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getOrganizationEntries(
-		long organizationId, Date displayDate, int status, int start, int end) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getOrganizationEntries(
-			organizationId, displayDate, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long,
-	 *             Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<BlogsEntry> getOrganizationEntries(
-		long organizationId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> obc) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, start, end, obc);
-
-		return getOrganizationEntries(
-			organizationId, displayDate, queryDefinition);
-	}
-
 	@Override
 	public List<BlogsEntry> getOrganizationEntries(
 		long organizationId, Date displayDate,
 		QueryDefinition<BlogsEntry> queryDefinition) {
 
 		return blogsEntryFinder.findByOrganizationId(
-			organizationId, displayDate, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getOrganizationEntriesCount(long, Date, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getOrganizationEntriesCount(
-		long organizationId, Date displayDate, int status) {
-
-		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status);
-
-		return getOrganizationEntriesCount(
 			organizationId, displayDate, queryDefinition);
 	}
 

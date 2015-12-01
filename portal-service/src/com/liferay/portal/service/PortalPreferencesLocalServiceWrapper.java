@@ -32,19 +32,6 @@ public class PortalPreferencesLocalServiceWrapper
 		_portalPreferencesLocalService = portalPreferencesLocalService;
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPortalPreferences(long,
-	int, String)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.PortalPreferences addPortalPreferences(
-		long companyId, long ownerId, int ownerType,
-		java.lang.String defaultPreferences) {
-		return _portalPreferencesLocalService.addPortalPreferences(companyId,
-			ownerId, ownerType, defaultPreferences);
-	}
-
 	@Override
 	public com.liferay.portal.model.PortalPreferences addPortalPreferences(
 		long ownerId, int ownerType, java.lang.String defaultPreferences) {
@@ -270,29 +257,6 @@ public class PortalPreferencesLocalServiceWrapper
 	@Override
 	public int getPortalPreferencesesCount() {
 		return _portalPreferencesLocalService.getPortalPreferencesesCount();
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int)}
-	*/
-	@Deprecated
-	@Override
-	public javax.portlet.PortletPreferences getPreferences(long companyId,
-		long ownerId, int ownerType) {
-		return _portalPreferencesLocalService.getPreferences(companyId,
-			ownerId, ownerType);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int,
-	String)}
-	*/
-	@Deprecated
-	@Override
-	public javax.portlet.PortletPreferences getPreferences(long companyId,
-		long ownerId, int ownerType, java.lang.String defaultPreferences) {
-		return _portalPreferencesLocalService.getPreferences(companyId,
-			ownerId, ownerType, defaultPreferences);
 	}
 
 	@Override

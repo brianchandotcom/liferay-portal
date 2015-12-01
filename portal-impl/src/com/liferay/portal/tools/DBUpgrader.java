@@ -24,10 +24,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.spring.aop.Skip;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
@@ -36,18 +32,13 @@ import com.liferay.portal.model.ReleaseConstants;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
+import com.liferay.portal.upgrade.util.TransactionHelper;
 import com.liferay.portal.util.InitUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistrar;
 import com.liferay.util.dao.orm.CustomSQLUtil;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -56,9 +47,6 @@ import java.sql.ResultSet;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.aopalliance.intercept.MethodInvocation;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -150,7 +138,7 @@ public class DBUpgrader {
 		_checkReleaseState(_getReleaseState());
 
 		if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
-			_disableTransactions();
+			TransactionHelper.disableTransactions();
 		}
 
 		try {
@@ -163,7 +151,7 @@ public class DBUpgrader {
 		}
 		finally {
 			if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
-				_enableTransactions();
+				TransactionHelper.enableTransactions();
 			}
 		}
 
@@ -238,7 +226,7 @@ public class DBUpgrader {
 		// Verify
 
 		if (PropsValues.VERIFY_DATABASE_TRANSACTIONS_DISABLED) {
-			_disableTransactions();
+			TransactionHelper.disableTransactions();
 		}
 
 		boolean newBuildNumber = false;
@@ -261,7 +249,7 @@ public class DBUpgrader {
 		}
 		finally {
 			if (PropsValues.VERIFY_DATABASE_TRANSACTIONS_DISABLED) {
-				_enableTransactions();
+				TransactionHelper.enableTransactions();
 			}
 		}
 
@@ -341,57 +329,6 @@ public class DBUpgrader {
 		sb.append("from a corrupt database.");
 
 		throw new IllegalStateException(sb.toString());
-	}
-
-	private static void _disableTransactions() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Disable transactions");
-		}
-
-		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
-
-		Field field = ReflectionUtil.getDeclaredField(
-			ServiceBeanAopCacheManager.class, "_annotations");
-
-		field.set(
-			null,
-			new HashMap<MethodInvocation, Annotation[]>() {
-
-				@Override
-				public Annotation[] get(Object key) {
-					return _annotations;
-				}
-
-				private Annotation[] _annotations = new Annotation[] {
-					new Skip() {
-
-						@Override
-						public Class<? extends Annotation> annotationType() {
-							return Skip.class;
-						}
-
-					}
-				};
-
-			}
-		);
-	}
-
-	private static void _enableTransactions() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Enable transactions");
-		}
-
-		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.SPRING_HIBERNATE_SESSION_DELEGATED));
-
-		Field field = ReflectionUtil.getDeclaredField(
-			ServiceBeanAopCacheManager.class, "_annotations");
-
-		field.set(
-			null, new ConcurrentHashMap<MethodInvocation, Annotation[]>());
-
-		ServiceBeanAopCacheManagerUtil.reset();
 	}
 
 	private static int _getReleaseState() throws Exception {

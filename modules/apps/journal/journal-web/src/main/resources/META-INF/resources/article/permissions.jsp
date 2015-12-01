@@ -24,8 +24,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
-<aui:field-wrapper cssClass="journal-article-permissions" label="permissions">
-	<liferay-ui:input-permissions
-		modelName="<%= JournalArticle.class.getName() %>"
-	/>
-</aui:field-wrapper>
+<liferay-ui:input-permissions
+	modelName="<%= JournalArticle.class.getName() %>"
+/>

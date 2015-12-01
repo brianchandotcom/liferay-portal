@@ -43,10 +43,8 @@ if (article != null) {
 <liferay-ui:error exception="<%= ArticleDisplayDateException.class %>" message="please-enter-a-valid-display-date" />
 <liferay-ui:error exception="<%= ArticleExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 
-<aui:fieldset>
-	<aui:input formName="fm1" name="displayDate" />
+<aui:input formName="fm1" name="displayDate" />
 
-	<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm1" name="expirationDate" />
+<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm1" name="expirationDate" />
 
-	<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= neverReview %>" formName="fm1" name="reviewDate" />
-</aui:fieldset>
+<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= neverReview %>" formName="fm1" name="reviewDate" />

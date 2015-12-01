@@ -38,15 +38,13 @@ if (!host.equals(layoutSet.getVirtualHostname())) {
 
 <br /><br />
 
-<aui:fieldset>
-	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(sitemapUrl) + "\">", "</a>"}, false) %>
+<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(sitemapUrl) + "\">", "</a>"}, false) %>
 
-	<ul>
-		<li>
-			<aui:a href='<%= "http://www.google.com/webmasters/sitemaps/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Google</aui:a>
-		</li>
-		<li>
-			<aui:a href='<%= "https://siteexplorer.search.yahoo.com/submit/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Yahoo!</aui:a> (<liferay-ui:message key="requires-log-in" />)
-		</li>
-	</ul>
-</aui:fieldset>
+<ul>
+	<li>
+		<aui:a href='<%= "http://www.google.com/webmasters/sitemaps/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Google</aui:a>
+	</li>
+	<li>
+		<aui:a href='<%= "https://siteexplorer.search.yahoo.com/submit/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Yahoo!</aui:a> (<liferay-ui:message key="requires-log-in" />)
+	</li>
+</ul>

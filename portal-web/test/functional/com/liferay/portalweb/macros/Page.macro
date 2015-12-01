@@ -233,13 +233,6 @@
 	<command name="editPageLayoutColumn">
 		<execute function="Click" locator1="ControlMenu#EDIT_COG" />
 
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#NAME" />
-			<then>
-				<execute function="AssertClick" locator1="SitePagesEditPage#DETAILS_PANEL_TOGGLE" value1="Details" />
-			</then>
-		</if>
-
 		<var name="key_columnName" value="${columnName}" />
 
 		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
@@ -971,13 +964,6 @@
 	<command name="viewFriendlyURLLanguageOptionsPG">
 		<execute function="Click" locator1="ControlMenu#EDIT_COG" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="SitePagesEditPage#FRIENDLY_URL_TITLE" />
-			<then>
-				<execute function="Click" locator1="SitePagesEditPage#DETAILS_PANEL_TOGGLE" />
-			</then>
-		</if>
-
 		<for list="${currentLanguageList}" param="languageKey">
 			<execute function="AssertElementPresent" locator1="DockbarEditpanel#${languageKey}" />
 		</for>
@@ -1024,7 +1010,7 @@
 		<if>
 			<condition function="IsElementNotPresent" locator1="SitePagesEditPage#SEO_HTML_TITLE" />
 			<then>
-				<execute function="AssertClick" locator1="SitePagesEditPage#SEO_PANEL_LINK" value1="SEO" />
+				<execute function="Click" locator1="NavListItem#SEO" />
 			</then>
 		</if>
 

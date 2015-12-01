@@ -24,21 +24,19 @@ boolean mergeGuestPublicPages = PropertiesParamUtil.getBoolean(layoutsAdminDispl
 
 <liferay-ui:error-marker key="errorSection" value="advanced" />
 
-<aui:fieldset>
-	<c:choose>
-		<c:when test="<%= !layoutsAdminDisplayContext.isPrivateLayout() && (layoutsAdminDisplayContext.getLiveGroupId() != guestGroup.getGroupId()) %>">
+<c:choose>
+	<c:when test="<%= !layoutsAdminDisplayContext.isPrivateLayout() && (layoutsAdminDisplayContext.getLiveGroupId() != guestGroup.getGroupId()) %>">
 
-			<%
-			String taglibLabel = LanguageUtil.format(request, "merge-x-public-pages", HtmlUtil.escape(guestGroup.getDescriptiveName(locale)), false);
-			String taglibHelpMessage = LanguageUtil.format(request, "you-can-configure-the-top-level-pages-of-this-public-site-to-merge-with-the-top-level-pages-of-the-public-x-site", HtmlUtil.escape(guestGroup.getDescriptiveName(locale)), false);
-			%>
+		<%
+		String taglibLabel = LanguageUtil.format(request, "merge-x-public-pages", HtmlUtil.escape(guestGroup.getDescriptiveName(locale)), false);
+		String taglibHelpMessage = LanguageUtil.format(request, "you-can-configure-the-top-level-pages-of-this-public-site-to-merge-with-the-top-level-pages-of-the-public-x-site", HtmlUtil.escape(guestGroup.getDescriptiveName(locale)), false);
+		%>
 
-			<aui:input helpMessage="<%= taglibHelpMessage %>" label="<%= taglibLabel %>" name="mergeGuestPublicPages" type="checkbox" value="<%= mergeGuestPublicPages %>" />
-		</c:when>
-		<c:otherwise>
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-are-no-available-advanced-settings-for-these-pages" />
-			</div>
-		</c:otherwise>
-	</c:choose>
-</aui:fieldset>
+		<aui:input helpMessage="<%= taglibHelpMessage %>" label="<%= taglibLabel %>" name="mergeGuestPublicPages" type="checkbox" value="<%= mergeGuestPublicPages %>" />
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-info">
+			<liferay-ui:message key="there-are-no-available-advanced-settings-for-these-pages" />
+		</div>
+	</c:otherwise>
+</c:choose>

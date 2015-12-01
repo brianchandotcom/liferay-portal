@@ -24,11 +24,9 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
-<aui:fieldset>
-	<liferay-ui:custom-attribute-list
-		className="<%= JournalArticle.class.getName() %>"
-		classPK="<%= (article != null) ? article.getPrimaryKey() : 0 %>"
-		editable="<%= true %>"
-		label="<%= true %>"
-	/>
-</aui:fieldset>
+<liferay-ui:custom-attribute-list
+	className="<%= JournalArticle.class.getName() %>"
+	classPK="<%= (article != null) ? article.getPrimaryKey() : 0 %>"
+	editable="<%= true %>"
+	label="<%= true %>"
+/>

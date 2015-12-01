@@ -64,51 +64,49 @@ else {
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<aui:fieldset>
-	<aui:input name="devices" type="hidden" value='<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED ? "regular,wap" : "regular" %>' />
+<aui:input name="devices" type="hidden" value='<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED ? "regular,wap" : "regular" %>' />
 
-	<liferay-util:buffer var="rootNodeNameLink">
-		<c:choose>
-			<c:when test="<%= themeDisplay.isStateExclusive() %>">
-				<%= HtmlUtil.escape(rootNodeName) %>
-			</c:when>
-			<c:otherwise>
-				<aui:a href="<%= redirectURL.toString() %>"><%= HtmlUtil.escape(rootNodeName) %></aui:a>
-			</c:otherwise>
-		</c:choose>
-	</liferay-util:buffer>
-
-	<%
-	String taglibLabel = null;
-
-	if (group.isLayoutPrototype()) {
-		taglibLabel = LanguageUtil.get(request, "use-the-same-look-and-feel-of-the-pages-in-which-this-template-is-used");
-	}
-	else {
-		taglibLabel = LanguageUtil.format(request, "use-the-same-look-and-feel-of-the-x", rootNodeNameLink, false);
-	}
-	%>
-
+<liferay-util:buffer var="rootNodeNameLink">
 	<c:choose>
-		<c:when test="<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED %>">
-			<liferay-ui:tabs
-				names="regular-browsers,mobile-devices"
-				refresh="<%= false %>"
-			>
-				<liferay-ui:section>
-					<%@ include file="/layout/look_and_feel_regular_browser.jspf" %>
-				</liferay-ui:section>
-
-				<liferay-ui:section>
-					<%@ include file="/layout/look_and_feel_wap_browser.jspf" %>
-				</liferay-ui:section>
-			</liferay-ui:tabs>
+		<c:when test="<%= themeDisplay.isStateExclusive() %>">
+			<%= HtmlUtil.escape(rootNodeName) %>
 		</c:when>
 		<c:otherwise>
-			<%@ include file="/layout/look_and_feel_regular_browser.jspf" %>
+			<aui:a href="<%= redirectURL.toString() %>"><%= HtmlUtil.escape(rootNodeName) %></aui:a>
 		</c:otherwise>
 	</c:choose>
-</aui:fieldset>
+</liferay-util:buffer>
+
+<%
+String taglibLabel = null;
+
+if (group.isLayoutPrototype()) {
+	taglibLabel = LanguageUtil.get(request, "use-the-same-look-and-feel-of-the-pages-in-which-this-template-is-used");
+}
+else {
+	taglibLabel = LanguageUtil.format(request, "use-the-same-look-and-feel-of-the-x", rootNodeNameLink, false);
+}
+%>
+
+<c:choose>
+	<c:when test="<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED %>">
+		<liferay-ui:tabs
+			names="regular-browsers,mobile-devices"
+			refresh="<%= false %>"
+		>
+			<liferay-ui:section>
+				<%@ include file="/layout/look_and_feel_regular_browser.jspf" %>
+			</liferay-ui:section>
+
+			<liferay-ui:section>
+				<%@ include file="/layout/look_and_feel_wap_browser.jspf" %>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
+	</c:when>
+	<c:otherwise>
+		<%@ include file="/layout/look_and_feel_regular_browser.jspf" %>
+	</c:otherwise>
+</c:choose>
 
 <aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />regularInheritLookAndFeel', '<portlet:namespace />inheritThemeOptions', '<portlet:namespace />themeOptions');

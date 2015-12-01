@@ -40,10 +40,8 @@ if (article != null) {
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
-<aui:fieldset>
-	<liferay-ui:input-asset-links
-		assetEntryId="<%= assetEntryId %>"
-		className="<%= JournalArticle.class.getName() %>"
-		classPK="<%= classPK %>"
-	/>
-</aui:fieldset>
+<liferay-ui:input-asset-links
+	assetEntryId="<%= assetEntryId %>"
+	className="<%= JournalArticle.class.getName() %>"
+	classPK="<%= classPK %>"
+/>

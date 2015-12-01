@@ -51,11 +51,6 @@
 </tr>
 <!--DETAILS-->
 <tr>
-	<td>DETAILS_PANEL_TOGGLE</td>
-	<td>//a[contains(@id,'details')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DETAILS_NAME_FIELD</td>
 	<td>//input[contains(@id,'name')]</td>
 	<td></td>

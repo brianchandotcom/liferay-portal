@@ -16,38 +16,37 @@
 
 <%@ include file="/html/taglib/ui/form_navigator/init.jsp" %>
 
-<liferay-ui:panel-container id="tabs" markupView="lexicon">
+<aui:fieldset-group markupView="lexicon">
+	<aui:fieldset>
+		<c:if test="<%= deprecatedCategorySections.length > 0 %>">
 
-	<%
-	for (int i = 0; i < deprecatedCategorySections.length; i++) {
-		String section = deprecatedCategorySections[i];
+			<%
+			String section = deprecatedCategorySections[0];
 
-		String sectionId = namespace + _getSectionId(section);
-		String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
-	%>
+			String sectionId = namespace + _getSectionId(section);
+			String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
+			%>
 
-		<!-- Begin fragment <%= sectionId %> -->
+			<!-- Begin fragment <%= sectionId %> -->
 
-		<liferay-ui:panel id="<%= sectionId %>" markupView="lexicon" title="<%= section %>">
 			<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
-		</liferay-ui:panel>
 
-		<!-- End fragment <%= sectionId %> -->
+			<!-- End fragment <%= sectionId %> -->
+		</c:if>
 
-	<%
-	}
+		<%
+		List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
+		%>
 
-	List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
+		<c:if test="<%= ListUtil.isNotEmpty(formNavigatorEntries) %>">
 
-	for (int i = 0; i < formNavigatorEntries.size(); i++) {
-		final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(i);
+			<%
+			final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
 
-		String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
-	%>
+			String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
+			%>
 
-		<!-- Begin fragment <%= sectionId %> -->
-
-		<liferay-ui:panel id="<%= sectionId %>" markupView="lexicon" title="<%= formNavigatorEntry.getLabel(locale) %>">
+			<!-- Begin fragment <%= sectionId %> -->
 
 			<%
 			PortalIncludeUtil.include(
@@ -61,7 +60,54 @@
 				});
 			%>
 
-		</liferay-ui:panel>
+			<!-- End fragment <%= sectionId %> -->
+		</c:if>
+	</aui:fieldset>
+
+	<%
+	for (int i = 1; i < deprecatedCategorySections.length; i++) {
+		String section = deprecatedCategorySections[i];
+
+		String sectionId = namespace + _getSectionId(section);
+		String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
+	%>
+
+		<!-- Begin fragment <%= sectionId %> -->
+
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= section %>">
+			<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
+		</aui:fieldset>
+
+		<!-- End fragment <%= sectionId %> -->
+
+	<%
+	}
+
+	List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
+
+	for (int i = 1; i < formNavigatorEntries.size(); i++) {
+		final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(i);
+
+		String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
+	%>
+
+		<!-- Begin fragment <%= sectionId %> -->
+
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= formNavigatorEntry.getLabel(locale) %>">
+
+			<%
+			PortalIncludeUtil.include(
+				pageContext,
+				new PortalIncludeUtil.HTMLRenderer() {
+
+					public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+						formNavigatorEntry.include(request, response);
+					}
+
+				});
+			%>
+
+		</aui:fieldset>
 
 		<!-- End fragment <%= sectionId %> -->
 
@@ -69,7 +115,7 @@
 	}
 	%>
 
-</liferay-ui:panel-container>
+</aui:fieldset-group>
 
 <c:if test="<%= showButtons %>">
 	<aui:button-row>

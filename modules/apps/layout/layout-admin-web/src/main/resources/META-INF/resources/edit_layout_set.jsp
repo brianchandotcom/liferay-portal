@@ -71,6 +71,7 @@ else {
 	<liferay-ui:form-navigator
 		formModelBean="<%= selLayoutSet %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET %>"
+		markupView="lexicon"
 		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
 	/>
 </aui:form>

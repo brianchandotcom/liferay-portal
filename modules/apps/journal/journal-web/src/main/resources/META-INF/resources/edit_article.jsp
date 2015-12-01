@@ -200,104 +200,84 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 					<liferay-util:include page="/article_toolbar.jsp" servletContext="<%= application %>" />
 				</c:if>
 
-				<liferay-util:buffer var="htmlTop">
-					<c:if test="<%= article != null %>">
-						<div class="article-info">
-							<div class="float-container">
-								<c:if test="<%= article.isSmallImage() %>">
-									<img alt="" class="article-image" src="<%= HtmlUtil.escape(article.getArticleImageURL(themeDisplay)) %>" width="150" />
-								</c:if>
-
-								<c:if test="<%= !article.isNew() %>">
-									<span class="article-name"><%= HtmlUtil.escape(article.getTitle(locale)) %></span>
-								</c:if>
-							</div>
-						</div>
-					</c:if>
-				</liferay-util:buffer>
-
-				<liferay-util:buffer var="htmlBottom">
-
-					<%
-					boolean approved = false;
-					boolean pending = false;
-
-					long inheritedWorkflowDDMStructuresFolderId = JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(folderId);
-
-					boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
-
-					if ((article != null) && (version > 0)) {
-						approved = article.isApproved();
-
-						 if (workflowEnabled) {
-							pending = article.isPending();
-						}
-					}
-					%>
-
-					<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-						<c:if test="<%= approved %>">
-							<div class="alert alert-info">
-								<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
-							</div>
-						</c:if>
-
-						<c:if test="<%= pending %>">
-							<div class="alert alert-info">
-								<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-							</div>
-						</c:if>
-					</c:if>
-
-					<aui:button-row cssClass="journal-article-button-row">
-
-						<%
-						boolean hasSavePermission = false;
-
-						if ((article != null) && !article.isNew()) {
-							hasSavePermission = JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE);
-						}
-						else {
-							hasSavePermission = JournalFolderPermission.contains(permissionChecker, groupId, folderId, ActionKeys.ADD_ARTICLE);
-						}
-
-						String saveButtonLabel = "save";
-
-						if ((article == null) || article.isApproved() || article.isDraft() || article.isExpired()) {
-							saveButtonLabel = "save-as-draft";
-						}
-
-						String publishButtonLabel = "publish";
-
-						if (workflowEnabled) {
-							publishButtonLabel = "submit-for-publication";
-						}
-
-						if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-							publishButtonLabel = "save";
-						}
-						%>
-
-						<c:if test="<%= hasSavePermission %>">
-							<aui:button data-actionname="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-
-							<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-								<aui:button data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
-							</c:if>
-						</c:if>
-
-						<aui:button href="<%= redirect %>" type="cancel" />
-					</aui:button-row>
-				</liferay-util:buffer>
-
 				<liferay-ui:form-navigator
 					formModelBean="<%= article %>"
 					formName="fm1"
-					htmlBottom="<%= htmlBottom %>"
-					htmlTop="<%= htmlTop %>"
 					id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
+					markupView="lexicon"
 					showButtons="<%= false %>"
 				/>
+
+				<%
+				boolean approved = false;
+				boolean pending = false;
+
+				long inheritedWorkflowDDMStructuresFolderId = JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(folderId);
+
+				boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+
+				if ((article != null) && (version > 0)) {
+					approved = article.isApproved();
+
+					 if (workflowEnabled) {
+						pending = article.isPending();
+					}
+				}
+				%>
+
+				<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+					<c:if test="<%= approved %>">
+						<div class="alert alert-info">
+							<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
+						</div>
+					</c:if>
+
+					<c:if test="<%= pending %>">
+						<div class="alert alert-info">
+							<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+						</div>
+					</c:if>
+				</c:if>
+
+				<aui:button-row cssClass="journal-article-button-row">
+
+					<%
+					boolean hasSavePermission = false;
+
+					if ((article != null) && !article.isNew()) {
+						hasSavePermission = JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE);
+					}
+					else {
+						hasSavePermission = JournalFolderPermission.contains(permissionChecker, groupId, folderId, ActionKeys.ADD_ARTICLE);
+					}
+
+					String saveButtonLabel = "save";
+
+					if ((article == null) || article.isApproved() || article.isDraft() || article.isExpired()) {
+						saveButtonLabel = "save-as-draft";
+					}
+
+					String publishButtonLabel = "publish";
+
+					if (workflowEnabled) {
+						publishButtonLabel = "submit-for-publication";
+					}
+
+					if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+						publishButtonLabel = "save";
+					}
+					%>
+
+					<c:if test="<%= hasSavePermission %>">
+						<aui:button data-actionname="<%= Constants.PUBLISH %>" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+						<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+							<aui:button data-actionname='<%= ((article == null) || Validator.isNull(article.getArticleId())) ? "addArticle" : "updateArticle" %>' name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+						</c:if>
+					</c:if>
+
+					<aui:button href="<%= redirect %>" type="cancel" />
+				</aui:button-row>
 			</div>
 		</div>
 	</aui:form>

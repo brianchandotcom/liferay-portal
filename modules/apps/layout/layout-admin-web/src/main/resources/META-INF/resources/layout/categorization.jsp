@@ -28,8 +28,6 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <liferay-ui:asset-tags-error />
 
-<aui:fieldset>
-	<aui:input name="categories" type="assetCategories" />
+<aui:input name="categories" type="assetCategories" />
 
-	<aui:input name="tags" type="assetTags" />
-</aui:fieldset>
+<aui:input name="tags" type="assetTags" />

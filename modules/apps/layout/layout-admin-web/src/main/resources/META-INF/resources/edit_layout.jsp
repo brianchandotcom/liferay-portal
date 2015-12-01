@@ -214,9 +214,9 @@ String displayStyle = ParamUtil.getString(request, "displayStyle");
 			</c:if>
 
 			<liferay-ui:form-navigator
-				displayStyle="<%= displayStyle %>"
 				formModelBean="<%= selLayout %>"
 				id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT %>"
+				markupView="lexicon"
 				showButtons="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
 			/>
 		</aui:form>

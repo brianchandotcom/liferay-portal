@@ -10,11 +10,6 @@
 <tbody>
 <!--DETAILS-->
 <tr>
-	<td>DETAILS_PANEL_TOGGLE</td>
-	<td>//li/a[contains(@id,'GroupPagesPortlet_details')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOCALIZED_FLAG_ICON</td>
 	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
 	<td></td>

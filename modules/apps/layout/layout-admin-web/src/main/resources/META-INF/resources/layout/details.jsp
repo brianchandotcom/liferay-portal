@@ -84,128 +84,126 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 <liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 
-<aui:fieldset>
-	<c:choose>
-		<c:when test="<%= !group.isLayoutPrototype() %>">
-			<aui:input name="name" />
+<c:choose>
+	<c:when test="<%= !group.isLayoutPrototype() %>">
+		<aui:input name="name" />
 
-			<div class="form-group">
-				<aui:input helpMessage="if-this-is-checked-this-page-does-not-show-up-in-the-navigation-menu" label="hide-from-navigation-menu" name="hidden" />
-			</div>
+		<div class="form-group">
+			<aui:input helpMessage="if-this-is-checked-this-page-does-not-show-up-in-the-navigation-menu" label="hide-from-navigation-menu" name="hidden" />
+		</div>
 
-			<c:choose>
-				<c:when test="<%= selLayoutType.isURLFriendliable() %>">
-					<aui:field-wrapper cssClass="input-flex-add-on" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' label="friendly-url" name="friendlyURL">
-						<span class="input-group-addon" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
+		<c:choose>
+			<c:when test="<%= selLayoutType.isURLFriendliable() %>">
+				<aui:field-wrapper cssClass="input-flex-add-on" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' label="friendly-url" name="friendlyURL">
+					<span class="input-group-addon" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
 
-						<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="friendlyURL" xml="<%= selLayout.getFriendlyURLsXML() %>" />
-					</aui:field-wrapper>
-				</c:when>
-				<c:otherwise>
-					<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? selLayout.getFriendlyURL() : StringPool.BLANK %>" />
-				</c:otherwise>
-			</c:choose>
+					<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="friendlyURL" xml="<%= selLayout.getFriendlyURLsXML() %>" />
+				</aui:field-wrapper>
+			</c:when>
+			<c:otherwise>
+				<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? selLayout.getFriendlyURL() : StringPool.BLANK %>" />
+			</c:otherwise>
+		</c:choose>
 
-			<c:if test="<%= group.isLayoutSetPrototype() %>">
+		<c:if test="<%= group.isLayoutSetPrototype() %>">
 
-				<%
-				LayoutSetPrototype layoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(group.getClassPK());
+			<%
+			LayoutSetPrototype layoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(group.getClassPK());
 
-				boolean layoutSetPrototypeUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
-				boolean layoutUpdateable = GetterUtil.getBoolean(selLayoutType.getTypeSettingsProperty("layoutUpdateable"), true);
-				%>
+			boolean layoutSetPrototypeUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
+			boolean layoutUpdateable = GetterUtil.getBoolean(selLayoutType.getTypeSettingsProperty("layoutUpdateable"), true);
+			%>
 
-				<aui:input disabled="<%= !layoutSetPrototypeUpdateable %>" helpMessage="allow-site-administrators-to-modify-this-page-for-their-site-help" label="allow-site-administrators-to-modify-this-page-for-their-site" name="TypeSettingsProperties--layoutUpdateable--" type="checkbox" value="<%= layoutUpdateable %>" />
-			</c:if>
-		</c:when>
-		<c:otherwise>
-			<aui:input name='<%= "name_" + defaultLanguageId %>' type="hidden" value="<%= selLayout.getName(defaultLocale) %>" />
-			<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? selLayout.getFriendlyURL() : StringPool.BLANK %>" />
-		</c:otherwise>
-	</c:choose>
+			<aui:input disabled="<%= !layoutSetPrototypeUpdateable %>" helpMessage="allow-site-administrators-to-modify-this-page-for-their-site-help" label="allow-site-administrators-to-modify-this-page-for-their-site" name="TypeSettingsProperties--layoutUpdateable--" type="checkbox" value="<%= layoutUpdateable %>" />
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<aui:input name='<%= "name_" + defaultLanguageId %>' type="hidden" value="<%= selLayout.getName(defaultLocale) %>" />
+		<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? selLayout.getFriendlyURL() : StringPool.BLANK %>" />
+	</c:otherwise>
+</c:choose>
 
-	<c:if test="<%= Validator.isNotNull(selLayout.getLayoutPrototypeUuid()) %>">
+<c:if test="<%= Validator.isNotNull(selLayout.getLayoutPrototypeUuid()) %>">
+
+	<%
+	LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuidAndCompanyId(selLayout.getLayoutPrototypeUuid(), company.getCompanyId());
+	%>
+
+	<aui:input name="layoutPrototypeUuid" type="hidden" value="<%= selLayout.getLayoutPrototypeUuid() %>" />
+
+	<aui:input label='<%= LanguageUtil.format(request, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale())), false) %>' name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= selLayout.isLayoutPrototypeLinkEnabled() %>" />
+
+	<div class='<%= selLayout.isLayoutPrototypeLinkEnabled() ? "" : "hide" %>' id="<portlet:namespace/>layoutPrototypeMergeAlert">
 
 		<%
-		LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuidAndCompanyId(selLayout.getLayoutPrototypeUuid(), company.getCompanyId());
+		request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototype);
+		request.setAttribute("edit_layout_prototype.jsp-redirect", currentURL);
+		request.setAttribute("edit_layout_prototype.jsp-selPlid", String.valueOf(selLayout.getPlid()));
 		%>
 
-		<aui:input name="layoutPrototypeUuid" type="hidden" value="<%= selLayout.getLayoutPrototypeUuid() %>" />
-
-		<aui:input label='<%= LanguageUtil.format(request, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale())), false) %>' name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= selLayout.isLayoutPrototypeLinkEnabled() %>" />
-
-		<div class='<%= selLayout.isLayoutPrototypeLinkEnabled() ? "" : "hide" %>' id="<portlet:namespace/>layoutPrototypeMergeAlert">
-
-			<%
-			request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototype);
-			request.setAttribute("edit_layout_prototype.jsp-redirect", currentURL);
-			request.setAttribute("edit_layout_prototype.jsp-selPlid", String.valueOf(selLayout.getPlid()));
-			%>
-
-			<liferay-util:include page="/layout_merge_alert.jsp" servletContext="<%= application %>" />
-		</div>
-	</c:if>
-
-	<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
-		<aui:select name="type">
-
-			<%
-			for (String type : types) {
-				if (type.equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
-					continue;
-				}
-
-				LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
-
-				if (!layoutTypeController.isInstanceable()) {
-					continue;
-				}
-
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
-			%>
-
-				<aui:option disabled="<%= selLayout.isFirstParent() && !layoutTypeController.isFirstPageable() %>" label='<%= LanguageUtil.get(request, resourceBundle, "layout.types." + type) %>' selected="<%= selLayout.getType().equals(type) %>" value="<%= type %>" />
-
-			<%
-				}
-			%>
-
-		</aui:select>
-
-		<div id="<portlet:namespace />layoutTypeForm">
-
-			<%
-			for (String type : types) {
-				if (type.equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
-					continue;
-				}
-
-				LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
-
-				if (!layoutTypeController.isInstanceable()) {
-					continue;
-				}
-			%>
-
-				<div class="layout-type-form layout-type-form-<%= type %> <%= selLayout.getType().equals(type) ? "" : "hide" %>">
-
-					<%
-					request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);
-
-					DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(request, Collections.singletonMap("idPrefix", new String[] {"details"}));
-					%>
-
-					<%= layoutTypeController.includeEditContent(dynamicServletRequest, response, selLayout) %>
-
-				</div>
-
-			<%
-			}
-			%>
-
-		</div>
+		<liferay-util:include page="/layout_merge_alert.jsp" servletContext="<%= application %>" />
 	</div>
-</aui:fieldset>
+</c:if>
+
+<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
+	<aui:select name="type">
+
+		<%
+		for (String type : types) {
+			if (type.equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+				continue;
+			}
+
+			LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
+
+			if (!layoutTypeController.isInstanceable()) {
+				continue;
+			}
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
+		%>
+
+			<aui:option disabled="<%= selLayout.isFirstParent() && !layoutTypeController.isFirstPageable() %>" label='<%= LanguageUtil.get(request, resourceBundle, "layout.types." + type) %>' selected="<%= selLayout.getType().equals(type) %>" value="<%= type %>" />
+
+		<%
+			}
+		%>
+
+	</aui:select>
+
+	<div id="<portlet:namespace />layoutTypeForm">
+
+		<%
+		for (String type : types) {
+			if (type.equals("article") && (group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+				continue;
+			}
+
+			LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
+
+			if (!layoutTypeController.isInstanceable()) {
+				continue;
+			}
+		%>
+
+			<div class="layout-type-form layout-type-form-<%= type %> <%= selLayout.getType().equals(type) ? "" : "hide" %>">
+
+				<%
+				request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);
+
+				DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(request, Collections.singletonMap("idPrefix", new String[] {"details"}));
+				%>
+
+				<%= layoutTypeController.includeEditContent(dynamicServletRequest, response, selLayout) %>
+
+			</div>
+
+		<%
+		}
+		%>
+
+	</div>
+</div>
 
 <aui:script>
 	Liferay.Util.toggleBoxes('<portlet:namespace />layoutPrototypeLinkEnabled', '<portlet:namespace />layoutPrototypeMergeAlert');

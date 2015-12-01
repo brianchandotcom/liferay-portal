@@ -16,22 +16,52 @@
 
 <%@ include file="/html/taglib/ui/panel/init.jsp" %>
 
+<%
+boolean collapsed = false;
+
+if (accordion) {
+	if ((panelCount != null) && (panelCount.getValue() > 1)) {
+		collapsed = true;
+	}
+}
+else if ((extended != null) && extended) {
+	collapsed = true;
+}
+%>
+
 <div class="panel panel-default">
 	<div class="panel-heading" id="<%= id %>Header" role="tab">
 		<div class="h4 panel-title">
-			<a aria-controls="<%= id %>Content" aria-expanded="true" class="collapse-icon collapse-icon-middle <%= (panelCount.getValue() > 1) ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" data-parent="#<%= parentId %>" href="#<%= id %>Content" role="button">
-				<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
-					<i class="<%= iconCssClass %>"></i>
-				</c:if>
+			<c:choose>
+				<c:when test="<%= collapsible %>">
+					<a aria-controls="<%= id %>Content" aria-expanded="true" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-parent="#<%= accordion ? parentId : StringPool.BLANK %>" data-toggle="collapse" href="#<%= id %>Content" role="button">
+						<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
+							<i class="<%= iconCssClass %>"></i>
+						</c:if>
 
-				<liferay-ui:message key="<%= title %>" />
+						<liferay-ui:message key="<%= title %>" />
 
-				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-					<liferay-ui:icon-help message="<%= helpMessage %>" />
-				</c:if>
-			</a>
+						<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+							<liferay-ui:icon-help message="<%= helpMessage %>" />
+						</c:if>
+					</a>
+				</c:when>
+				<c:otherwise>
+					<span>
+						<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
+							<i class="<%= iconCssClass %>"></i>
+						</c:if>
+
+						<liferay-ui:message key="<%= title %>" />
+
+						<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+							<liferay-ui:icon-help message="<%= helpMessage %>" />
+						</c:if>
+					</span>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 
-	<div aria-labelledby="<%= id %>Header" class="panel-collapse collapse <%= (panelCount.getValue() == 1) ? "in" : StringPool.BLANK %>" id="<%= id %>Content" role="tabpanel">
+	<div aria-labelledby="<%= id %>Header" class="<%= collapsible ? "collapse panel-collapse" : StringPool.BLANK %> <%= !collapsed ? "in" : StringPool.BLANK %>" id="<%= id %>Content" role="tabpanel">
 		<div class="panel-body">

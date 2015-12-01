@@ -32,45 +32,42 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 <liferay-ui:asset-tags-error />
 
-<aui:fieldset>
+<%
+long classPK = 0;
+double priority = 0;
 
-	<%
-	long classPK = 0;
-	double priority = 0;
+JournalArticle article = journalDisplayContext.getArticle();
 
-	JournalArticle article = journalDisplayContext.getArticle();
+if (article != null) {
+	classPK = article.getResourcePrimKey();
 
-	if (article != null) {
-		classPK = article.getResourcePrimKey();
+	if (!article.isApproved() && (article.getVersion() != JournalArticleConstants.VERSION_DEFAULT)) {
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), article.getPrimaryKey());
 
-		if (!article.isApproved() && (article.getVersion() != JournalArticleConstants.VERSION_DEFAULT)) {
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), article.getPrimaryKey());
-
-			if (assetEntry != null) {
-				classPK = article.getPrimaryKey();
-				priority = assetEntry.getPriority();
-			}
-		}
-		else {
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), article.getResourcePrimKey());
-
-			if (assetEntry != null) {
-				priority = assetEntry.getPriority();
-			}
+		if (assetEntry != null) {
+			classPK = article.getPrimaryKey();
+			priority = assetEntry.getPriority();
 		}
 	}
-	%>
+	else {
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), article.getResourcePrimKey());
 
-	<aui:input classPK="<%= classPK %>" classTypePK="<%= ddmStructure.getStructureId() %>" ignoreRequestValue="<%= changeStructure %>" name="categories" type="assetCategories" />
+		if (assetEntry != null) {
+			priority = assetEntry.getPriority();
+		}
+	}
+}
+%>
 
-	<aui:input classPK="<%= classPK %>" ignoreRequestValue="<%= changeStructure %>" name="tags" type="assetTags" />
+<aui:input classPK="<%= classPK %>" classTypePK="<%= ddmStructure.getStructureId() %>" ignoreRequestValue="<%= changeStructure %>" name="categories" type="assetCategories" />
 
-	<aui:input label="priority" name="assetPriority" type="text" value="<%= priority %>">
-		<aui:validator name="number" />
+<aui:input classPK="<%= classPK %>" ignoreRequestValue="<%= changeStructure %>" name="tags" type="assetTags" />
 
-		<aui:validator name="min">[0]</aui:validator>
-	</aui:input>
-</aui:fieldset>
+<aui:input label="priority" name="assetPriority" type="text" value="<%= priority %>">
+	<aui:validator name="number" />
+
+	<aui:validator name="min">[0]</aui:validator>
+</aui:input>
 
 <aui:script>
 	function <portlet:namespace />getSuggestionsContent() {

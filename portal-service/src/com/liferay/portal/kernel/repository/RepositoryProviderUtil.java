@@ -89,7 +89,7 @@ public class RepositoryProviderUtil {
 		return getRepositoryProvider().getImageRepository(imageId);
 	}
 
-	public static List<LocalRepository> getLocalRepositoriesByGroupId(
+	public static List<LocalRepository> getGroupLocalRepositories(
 			long groupId)
 		throws PortalException {
 
@@ -102,7 +102,7 @@ public class RepositoryProviderUtil {
 		return getRepositoryProvider().getLocalRepository(repositoryId);
 	}
 
-	public static List<Repository> getRepositoriesByGroupId(long groupId)
+	public static List<Repository> getGroupRepositories(long groupId)
 		throws PortalException {
 
 		return getRepositoryProvider().getGroupRepositories(groupId);

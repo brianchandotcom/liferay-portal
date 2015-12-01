@@ -39,6 +39,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_module_groups.jsp");
 portletURL.setParameter("state", state);
+
+MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -83,6 +85,13 @@ portletURL.setParameter("state", state);
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showParentGroups="<%= false %>"
+	/>
+
 	<liferay-ui:search-container>
 		<liferay-ui:search-container-results>
 

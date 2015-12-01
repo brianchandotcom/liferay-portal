@@ -37,7 +37,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -102,33 +101,7 @@ public abstract class BaseDBProvider
 
 	@Override
 	public List<String> getControlTableNames(String schemaName) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		List<String> tableNames = new ArrayList<>();
-
-		try {
-			DataSource dataSource = getDataSource();
-
-			con = dataSource.getConnection();
-
-			ps = con.prepareStatement(getControlTablesSql(schemaName));
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				tableNames.add(rs.getString(getTableNameFieldName()));
-			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			_dbManager.cleanUp(con, ps, rs);
-		}
-
-		return tableNames;
+		return _getSchemaTableNames(getControlTablesSql(schemaName));
 	}
 
 	public abstract String getControlTablesSql(String schema);
@@ -143,8 +116,10 @@ public abstract class BaseDBProvider
 
 	@Override
 	public List<String> getPartitionedTableNames(String schemaName) {
-		return Collections.emptyList();
+		return _getSchemaTableNames(getPartitionedTablesSql(schemaName));
 	}
+
+	public abstract String getPartitionedTablesSql(String schema);
 
 	@Override
 	public String serializeTableField(Object field) throws SQLException {
@@ -210,6 +185,36 @@ public abstract class BaseDBProvider
 	}
 
 	protected final Properties dbProperties;
+
+	private List<String> _getSchemaTableNames(String sql) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		List<String> tableNames = new ArrayList<>();
+
+		try {
+			DataSource dataSource = getDataSource();
+
+			con = dataSource.getConnection();
+
+			ps = con.prepareStatement(sql);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				tableNames.add(rs.getString(getTableNameFieldName()));
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			_dbManager.cleanUp(con, ps, rs);
+		}
+
+		return tableNames;
+	}
 
 	private final DataSource _dataSource;
 	private final DBManager _dbManager = new DBManager();

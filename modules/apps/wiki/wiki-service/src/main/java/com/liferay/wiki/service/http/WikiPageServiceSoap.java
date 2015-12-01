@@ -163,23 +163,6 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	/**
-	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	double)}
-	*/
-	@Deprecated
-	public static void deletePage(long nodeId, java.lang.String title,
-		double version) throws RemoteException {
-		try {
-			WikiPageServiceUtil.deletePage(nodeId, title, version);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void deletePageAttachment(long nodeId,
 		java.lang.String title, java.lang.String fileName)
 		throws RemoteException {
@@ -295,28 +278,6 @@ public class WikiPageServiceSoap {
 					max);
 
 			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getNodePagesRSS(long, int,
-	String, double, String, String, String, String)}
-	*/
-	@Deprecated
-	public static java.lang.String getNodePagesRSS(long nodeId, int max,
-		java.lang.String type, double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL)
-		throws RemoteException {
-		try {
-			java.lang.String returnValue = WikiPageServiceUtil.getNodePagesRSS(nodeId,
-					max, type, version, displayStyle, feedURL, entryURL);
-
-			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -516,29 +477,6 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, String,
-	int, String, double, String, String, String, String, Locale)}
-	*/
-	@Deprecated
-	public static java.lang.String getPagesRSS(long companyId, long nodeId,
-		java.lang.String title, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, String locale) throws RemoteException {
-		try {
-			java.lang.String returnValue = WikiPageServiceUtil.getPagesRSS(companyId,
-					nodeId, title, max, type, version, displayStyle, feedURL,
-					entryURL, LocaleUtil.fromLanguageId(locale));
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static java.lang.String getPagesRSS(long nodeId,
 		java.lang.String title, int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
@@ -596,25 +534,6 @@ public class WikiPageServiceSoap {
 					folderName);
 
 			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
-	String, ServiceContext)}
-	*/
-	@Deprecated
-	public static void movePage(long nodeId, java.lang.String title,
-		java.lang.String newTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			WikiPageServiceUtil.movePage(nodeId, title, newTitle, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

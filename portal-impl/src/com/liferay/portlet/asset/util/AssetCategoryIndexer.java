@@ -57,7 +57,6 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 	public static final String CLASS_NAME = AssetCategory.class.getName();
 
 	public AssetCategoryIndexer() {
-		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.ASSET_CATEGORY_ID, Field.COMPANY_ID, Field.GROUP_ID,
 			Field.UID);

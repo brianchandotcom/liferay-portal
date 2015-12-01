@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Language Resource Bundle
+Bundle-SymbolicName: com.liferay.portal.language.resource.bundle
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.language.resource.bundle
+Include-Resource: classes

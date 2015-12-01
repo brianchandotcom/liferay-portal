@@ -19,33 +19,22 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.model.Group" %><%@
-page import="com.liferay.portal.model.GroupConstants" %><%@
-page import="com.liferay.portal.model.Layout" %><%@
 page import="com.liferay.portal.model.User" %><%@
 page import="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil" %><%@
-page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portlet.sites.util.SitesUtil" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
+page import="com.liferay.portlet.PortletURLUtil" %><%@
+page import="com.liferay.site.browser.web.display.context.SiteBrowserDisplayContext" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.HashMap" %><%@
-page import="java.util.LinkedHashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
@@ -54,14 +43,8 @@ page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 
-<%@ page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %>
-
 <%
-boolean filterManageableGroups = true;
-
-if (permissionChecker.isCompanyAdmin()) {
-	filterManageableGroups = false;
-}
+SiteBrowserDisplayContext siteBrowserDisplayContext = new SiteBrowserDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

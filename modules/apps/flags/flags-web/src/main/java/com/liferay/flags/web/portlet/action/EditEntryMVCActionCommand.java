@@ -14,7 +14,7 @@
 
 package com.liferay.flags.web.portlet.action;
 
-import com.liferay.flags.service.FlagsEntryServiceUtil;
+import com.liferay.flags.service.FlagsEntryService;
 import com.liferay.flags.web.constants.FlagsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -26,6 +26,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -61,11 +62,18 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				"com.liferay.portlet.flags.model.FlagsEntry", actionRequest);
 
-			FlagsEntryServiceUtil.addEntry(
+			_flagsEntryService.addEntry(
 				className, classPK, reporterEmailAddress, reportedUserId,
 				contentTitle, contentURL, reason, serviceContext);
 
 			actionResponse.setRenderParameter("mvcPath", "edit_entry.jsp");
 	}
+
+	@Reference(unbind = "-")
+	protected void setFlagsEntryService(FlagsEntryService flagsEntryService) {
+		_flagsEntryService = flagsEntryService;
+	}
+
+	private volatile FlagsEntryService _flagsEntryService;
 
 }

@@ -635,7 +635,7 @@ public class PortletImportController implements ImportController {
 			_log.debug("Importing asset links");
 		}
 
-		readAssetLinks(portletDataContext);
+		importAssetLinks(portletDataContext);
 
 		// Deletion system events
 
@@ -1033,7 +1033,7 @@ public class PortletImportController implements ImportController {
 			portletDataHandler.getDeletionSystemEventStagedModelTypes());
 	}
 
-	protected void readAssetLinks(PortletDataContext portletDataContext)
+	protected void importAssetLinks(PortletDataContext portletDataContext)
 		throws Exception {
 
 		String xml = portletDataContext.getZipEntryAsString(

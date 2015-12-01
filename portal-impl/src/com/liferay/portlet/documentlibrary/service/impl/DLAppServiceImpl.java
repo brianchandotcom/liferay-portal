@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -26,7 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
-import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -3157,25 +3158,25 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	protected Repository getFileEntryRepository(long fileEntryId)
 		throws PortalException {
 
-		return RepositoryProviderUtil.getFileEntryRepository(fileEntryId);
+		return repositoryProvider.getFileEntryRepository(fileEntryId);
 	}
 
 	protected Repository getFileShortcutRepository(long fileShortcutId)
 		throws PortalException {
 
-		return RepositoryProviderUtil.getFileShortcutRepository(fileShortcutId);
+		return repositoryProvider.getFileShortcutRepository(fileShortcutId);
 	}
 
 	protected Repository getFileVersionRepository(long fileVersionId)
 		throws PortalException {
 
-		return RepositoryProviderUtil.getFileVersionRepository(fileVersionId);
+		return repositoryProvider.getFileVersionRepository(fileVersionId);
 	}
 
 	protected Repository getFolderRepository(long folderId)
 		throws PortalException {
 
-		return RepositoryProviderUtil.getFolderRepository(folderId);
+		return repositoryProvider.getFolderRepository(folderId);
 	}
 
 	protected Repository getFolderRepository(long folderId, long groupId)
@@ -3192,7 +3193,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return RepositoryProviderUtil.getRepository(repositoryId);
+			return repositoryProvider.getRepository(repositoryId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -3293,6 +3294,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return newFolder;
 	}
+
+	@BeanReference(type = RepositoryProvider.class)
+	protected RepositoryProvider repositoryProvider;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLAppServiceImpl.class);

@@ -246,56 +246,10 @@ public class MBThreadLocalServiceUtil {
 		return getService().getGroupThreads(groupId, queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
-		long groupId, int status, int start, int end) {
-		return getService().getGroupThreads(groupId, status, start, end);
-	}
-
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBThread> queryDefinition) {
 		return getService().getGroupThreads(groupId, userId, queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
-		long groupId, long userId, int status, int start, int end) {
-		return getService().getGroupThreads(groupId, userId, status, start, end);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
-	boolean, boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
-		long groupId, long userId, int status, boolean subscribed,
-		boolean includeAnonymous, int start, int end) {
-		return getService()
-				   .getGroupThreads(groupId, userId, status, subscribed,
-			includeAnonymous, start, end);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
-	boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
-		long groupId, long userId, int status, boolean subscribed, int start,
-		int end) {
-		return getService()
-				   .getGroupThreads(groupId, userId, status, subscribed, start,
-			end);
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
@@ -319,51 +273,10 @@ public class MBThreadLocalServiceUtil {
 		return getService().getGroupThreadsCount(groupId, queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	public static int getGroupThreadsCount(long groupId, int status) {
-		return getService().getGroupThreadsCount(groupId, status);
-	}
-
 	public static int getGroupThreadsCount(long groupId, long userId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBThread> queryDefinition) {
 		return getService()
 				   .getGroupThreadsCount(groupId, userId, queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	long, QueryDefinition)}
-	*/
-	@Deprecated
-	public static int getGroupThreadsCount(long groupId, long userId, int status) {
-		return getService().getGroupThreadsCount(groupId, userId, status);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	long, boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	public static int getGroupThreadsCount(long groupId, long userId,
-		int status, boolean subscribed) {
-		return getService()
-				   .getGroupThreadsCount(groupId, userId, status, subscribed);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	long, boolean, boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	public static int getGroupThreadsCount(long groupId, long userId,
-		int status, boolean subscribed, boolean includeAnonymous) {
-		return getService()
-				   .getGroupThreadsCount(groupId, userId, status, subscribed,
-			includeAnonymous);
 	}
 
 	public static int getGroupThreadsCount(long groupId, long userId,
@@ -628,17 +541,6 @@ public class MBThreadLocalServiceUtil {
 		long userId, long threadId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateStatus(userId, threadId, status);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long,
-	int)}
-	*/
-	@Deprecated
-	public static com.liferay.portlet.messageboards.model.MBThread updateThread(
-		long threadId, int viewCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateThread(threadId, viewCount);
 	}
 
 	public static MBThreadLocalService getService() {

@@ -77,16 +77,6 @@ public interface AssetTagService extends BaseService {
 		long[] groupIds);
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupTagsDisplay(long,
-	String, int, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.json.JSONObject getJSONGroupTags(
-		long groupId, java.lang.String name, int start, int end)
-		throws PortalException;
-
-	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier

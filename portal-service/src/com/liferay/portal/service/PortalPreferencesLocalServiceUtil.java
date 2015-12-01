@@ -40,20 +40,6 @@ public class PortalPreferencesLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PortalPreferencesLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPortalPreferences(long,
-	int, String)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.PortalPreferences addPortalPreferences(
-		long companyId, long ownerId, int ownerType,
-		java.lang.String defaultPreferences) {
-		return getService()
-				   .addPortalPreferences(companyId, ownerId, ownerType,
-			defaultPreferences);
-	}
-
 	public static com.liferay.portal.model.PortalPreferences addPortalPreferences(
 		long ownerId, int ownerType, java.lang.String defaultPreferences) {
 		return getService()
@@ -257,28 +243,6 @@ public class PortalPreferencesLocalServiceUtil {
 	*/
 	public static int getPortalPreferencesesCount() {
 		return getService().getPortalPreferencesesCount();
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int)}
-	*/
-	@Deprecated
-	public static javax.portlet.PortletPreferences getPreferences(
-		long companyId, long ownerId, int ownerType) {
-		return getService().getPreferences(companyId, ownerId, ownerType);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int,
-	String)}
-	*/
-	@Deprecated
-	public static javax.portlet.PortletPreferences getPreferences(
-		long companyId, long ownerId, int ownerType,
-		java.lang.String defaultPreferences) {
-		return getService()
-				   .getPreferences(companyId, ownerId, ownerType,
-			defaultPreferences);
 	}
 
 	public static javax.portlet.PortletPreferences getPreferences(

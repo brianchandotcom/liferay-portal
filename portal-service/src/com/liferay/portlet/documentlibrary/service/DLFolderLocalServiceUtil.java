@@ -82,23 +82,6 @@ public class DLFolderLocalServiceUtil {
 			parentFolderId, name, description, hidden, serviceContext);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by more general {@link #addFolder(long,
-	long, long, boolean, long, String, String, boolean,
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
-		long userId, long groupId, long repositoryId, boolean mountPoint,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addFolder(userId, groupId, repositoryId, mountPoint,
-			parentFolderId, name, description, serviceContext);
-	}
-
 	public static void clearDLFileEntryTypeDLFolders(long fileEntryTypeId) {
 		getService().clearDLFileEntryTypeDLFolders(fileEntryTypeId);
 	}
@@ -463,37 +446,12 @@ public class DLFolderLocalServiceUtil {
 			queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getFileEntriesAndFileShortcuts(long, long, QueryDefinition)}
-	*/
-	@Deprecated
-	public static java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
-		long groupId, long folderId, int status, int start, int end) {
-		return getService()
-				   .getFileEntriesAndFileShortcuts(groupId, folderId, status,
-			start, end);
-	}
-
 	public static int getFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
 		return getService()
 				   .getFileEntriesAndFileShortcutsCount(groupId, folderId,
 			queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getFileEntriesAndFileShortcutsCount(long, long,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	public static int getFileEntriesAndFileShortcutsCount(long groupId,
-		long folderId, int status) {
-		return getService()
-				   .getFileEntriesAndFileShortcutsCount(groupId, folderId,
-			status);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
@@ -566,36 +524,6 @@ public class DLFolderLocalServiceUtil {
 			mimeTypes, includeMountFolders, queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getFoldersAndFileEntriesAndFileShortcuts(long, long,
-	String[], boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long groupId, long folderId, int status, boolean includeMountFolders,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
-		return getService()
-				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,
-			status, includeMountFolders, start, end, obc);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
-	String[], boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
-		boolean includeMountFolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
-		return getService()
-				   .getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,
-			status, mimeTypes, includeMountFolders, start, end, obc);
-	}
-
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,
@@ -603,33 +531,6 @@ public class DLFolderLocalServiceUtil {
 		return getService()
 				   .getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
 			folderId, mimeTypes, includeMountFolders, queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
-	String[], boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, int status, boolean includeMountFolders) {
-		return getService()
-				   .getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
-			folderId, status, includeMountFolders);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
-	String[], boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
-		boolean includeMountFolders) {
-		return getService()
-				   .getFoldersAndFileEntriesAndFileShortcutsCount(groupId,
-			folderId, status, mimeTypes, includeMountFolders);
 	}
 
 	public static int getFoldersCount(long groupId, long parentFolderId) {

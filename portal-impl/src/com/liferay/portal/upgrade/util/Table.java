@@ -205,7 +205,7 @@ public class Table {
 			throw e;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 
 			unsyncBufferedWriter.close();
 		}

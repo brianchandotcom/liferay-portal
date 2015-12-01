@@ -240,7 +240,7 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

@@ -141,7 +141,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			return false;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -224,7 +224,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -279,7 +279,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		runSQL("drop table DLFileEntryTypes_DDMStructures");
@@ -307,7 +307,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -380,7 +380,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				companyId, fileEntryTypeId, nameLanguageKey, name, description);
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -516,7 +516,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

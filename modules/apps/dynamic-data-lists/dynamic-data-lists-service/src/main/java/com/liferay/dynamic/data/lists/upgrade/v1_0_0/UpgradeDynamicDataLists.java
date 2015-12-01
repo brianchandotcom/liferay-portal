@@ -144,7 +144,7 @@ public class UpgradeDynamicDataLists extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -205,7 +205,7 @@ public class UpgradeDynamicDataLists extends UpgradeProcess {
 			return fieldsMap;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -343,7 +343,7 @@ public class UpgradeDynamicDataLists extends UpgradeProcess {
 			deleteExpandoData(ddmStorageIds);
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

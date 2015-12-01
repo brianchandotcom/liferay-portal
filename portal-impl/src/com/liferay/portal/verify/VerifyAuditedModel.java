@@ -147,7 +147,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -190,7 +190,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -222,7 +222,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			return StringPool.BLANK;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -355,7 +355,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

@@ -66,7 +66,7 @@ public class VerifyWorkflow extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

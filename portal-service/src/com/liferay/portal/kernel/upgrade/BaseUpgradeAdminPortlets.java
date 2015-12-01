@@ -79,7 +79,7 @@ public abstract class BaseUpgradeAdminPortlets extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -101,7 +101,7 @@ public abstract class BaseUpgradeAdminPortlets extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -154,7 +154,7 @@ public abstract class BaseUpgradeAdminPortlets extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

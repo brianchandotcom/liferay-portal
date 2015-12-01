@@ -87,7 +87,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				"Unable to find dynamic data mapping structure " + structureId);
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -151,7 +151,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -246,7 +246,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				}
 			}
 			finally {
-				DataAccess.cleanUp(null, ps, rs);
+				DataAccess.cleanUp(ps, rs);
 			}
 		}
 	}

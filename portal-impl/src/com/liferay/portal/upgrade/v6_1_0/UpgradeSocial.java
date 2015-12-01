@@ -454,7 +454,7 @@ public class UpgradeSocial extends UpgradeProcess {
 					String.valueOf(enabled));
 			}
 
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 
 			StringBundler sb = new StringBundler(12);
 
@@ -606,7 +606,7 @@ public class UpgradeSocial extends UpgradeProcess {
 				migrateEquityLog(rs);
 			}
 
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 
 			sb = new StringBundler(4);
 

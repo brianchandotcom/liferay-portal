@@ -460,7 +460,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return bitwiseValues;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -587,7 +587,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return roleId;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

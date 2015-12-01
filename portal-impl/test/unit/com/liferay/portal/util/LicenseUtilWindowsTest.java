@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.license.util;
+package com.liferay.portal.util;
 
 import java.util.Set;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.license;
+package com.liferay.portal.kernel.license;
 
 import java.util.Date;
 

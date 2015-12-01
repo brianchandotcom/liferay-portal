@@ -16,12 +16,12 @@ package com.liferay.marketplace.store.web.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.license.util.LicenseManagerUtil;
-import com.liferay.portal.license.util.LicenseUtil;
+import com.liferay.portal.util.LicenseUtil;
 
 import java.io.File;
 

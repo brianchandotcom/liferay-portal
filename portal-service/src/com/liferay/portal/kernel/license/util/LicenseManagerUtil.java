@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.license.util;
+package com.liferay.portal.kernel.license.util;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.license.LicenseInfo;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.license.LicenseInfo;
 
 import java.util.List;
 import java.util.Map;

@@ -3,10 +3,18 @@
 	<var name="siteType" value="Open" />
 
 	<command name="addAllMembersCP">
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
-		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
+		<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Check" locator1="Checkbox#SELECT_ALL" />
-		<execute function="Click" locator1="Button#SAVE" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -183,7 +191,7 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute function="Click" locator1="Button#ADD" />
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -1047,8 +1055,12 @@
 	<command name="viewLimitMembershipParentSiteCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
-		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
+		<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="AssertTextNotPresent" locator1="SiteMembershipsAddMembers#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextNotPresent" locator1="SiteMembershipsAddMembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>

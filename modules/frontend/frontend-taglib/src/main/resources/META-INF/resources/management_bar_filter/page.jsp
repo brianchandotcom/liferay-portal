@@ -17,15 +17,15 @@
 <%@ include file="/management_bar_filter/init.jsp" %>
 
 <%
-String filter = (String)request.getAttribute("liferay-frontend:management-bar-filter:filter");
 List<ManagementBarFilterItem> filterItems = (List<ManagementBarFilterItem>)request.getAttribute("liferay-frontend:management-bar-filter:filterItems");
 String label = (String)request.getAttribute("liferay-frontend:management-bar-filter:label");
+String value = (String)request.getAttribute("liferay-frontend:management-bar-filter:value");
 %>
 
 <c:if test="<%= filterItems.size() > 0 %>">
 	<li class="dropdown">
 		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
-			<span class="management-bar-item-title"><liferay-ui:message key="<%= filter %>" />: <liferay-ui:message key="<%= label %>" /></span>
+			<span class="management-bar-item-title"><liferay-ui:message key="<%= label %>" />: <liferay-ui:message key="<%= value %>" /></span>
 			<span class="icon-sort"></span>
 		</a>
 
@@ -35,7 +35,7 @@ String label = (String)request.getAttribute("liferay-frontend:management-bar-fil
 			for (ManagementBarFilterItem curItem : filterItems) {
 			%>
 
-				<li class="<%= Validator.equals(curItem.getLabel(), label) ? "active" : StringPool.BLANK %>">
+				<li class="<%= Validator.equals(curItem.getLabel(), value) ? "active" : StringPool.BLANK %>">
 					<aui:a href="<%= curItem.getURL() %>" label="<%= curItem.getLabel() %>" />
 				</li>
 

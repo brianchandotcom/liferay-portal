@@ -215,18 +215,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		wikiPageLocalService.deletePage(nodeId, title);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	 *             double)}
-	 */
-	@Deprecated
-	@Override
-	public void deletePage(long nodeId, String title, double version)
-		throws PortalException {
-
-		discardDraft(nodeId, title, version);
-	}
-
 	@Override
 	public void deletePageAttachment(long nodeId, String title, String fileName)
 		throws PortalException {
@@ -348,21 +336,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 
 		return pages;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getNodePagesRSS(long, int,
-	 *             String, double, String, String, String, String)}
-	 */
-	@Deprecated
-	@Override
-	public String getNodePagesRSS(
-			long nodeId, int max, String type, double version,
-			String displayStyle, String feedURL, String entryURL)
-		throws PortalException {
-
-		return getNodePagesRSS(
-			nodeId, max, type, version, displayStyle, feedURL, entryURL, null);
 	}
 
 	@Override
@@ -553,23 +526,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, String,
-	 *             int, String, double, String, String, String, String, Locale)}
-	 */
-	@Deprecated
-	@Override
-	public String getPagesRSS(
-			long companyId, long nodeId, String title, int max, String type,
-			double version, String displayStyle, String feedURL,
-			String entryURL, Locale locale)
-		throws PortalException {
-
-		return getPagesRSS(
-			nodeId, title, max, type, version, displayStyle, feedURL, entryURL,
-			null, locale);
-	}
-
 	@Override
 	public String getPagesRSS(
 			long nodeId, String title, int max, String type, double version,
@@ -630,20 +586,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		return wikiPageLocalService.getTempFileNames(
 			node.getGroupId(), getUserId(), folderName);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
-	 *             String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void movePage(
-			long nodeId, String title, String newTitle,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		renamePage(nodeId, title, newTitle, serviceContext);
 	}
 
 	@Override

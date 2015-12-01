@@ -153,24 +153,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by more general {@link #addFolder(long,
-	 *             long, long, boolean, long, String, String, boolean,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFolder addFolder(
-			long userId, long groupId, long repositoryId, boolean mountPoint,
-			long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFolder(
-			userId, groupId, repositoryId, mountPoint, parentFolderId, name,
-			description, false, serviceContext);
-	}
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
 	 */
 	@Deprecated
@@ -346,43 +328,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return dlFolderPersistence.countByCompanyId(companyId);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getFileEntriesAndFileShortcuts(long, long, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<Object> getFileEntriesAndFileShortcuts(
-		long groupId, long folderId, int status, int start, int end) {
-
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return getFileEntriesAndFileShortcuts(
-			groupId, folderId, queryDefinition);
-	}
-
 	@Override
 	public List<Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
 
 		return dlFolderFinder.findFE_FS_ByG_F(
-			groupId, folderId, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getFileEntriesAndFileShortcutsCount(long, long,
-	 *             QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, int status) {
-
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
-
-		return getFileEntriesAndFileShortcutsCount(
 			groupId, folderId, queryDefinition);
 	}
 
@@ -489,82 +439,12 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return getFolders(groupId, parentFolderId, true, start, end, obc);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getFoldersAndFileEntriesAndFileShortcuts(long, long,
-	 *             String[], boolean, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long groupId, long folderId, int status, boolean includeMountFolders,
-		int start, int end, OrderByComparator<?> obc) {
-
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-			status, start, end, (OrderByComparator<Object>)obc);
-
-		return getFoldersAndFileEntriesAndFileShortcuts(
-			groupId, folderId, null, includeMountFolders, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
-	 *             String[], boolean, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-		long groupId, long folderId, int status, String[] mimeTypes,
-		boolean includeMountFolders, int start, int end,
-		OrderByComparator<?> obc) {
-
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-			status, start, end, (OrderByComparator<Object>)obc);
-
-		return getFoldersAndFileEntriesAndFileShortcuts(
-			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
-	}
-
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, String[] mimeTypes,
 		boolean includeMountFolders, QueryDefinition<?> queryDefinition) {
 
 		return dlFolderFinder.findF_FE_FS_ByG_F_M_M(
-			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
-	 *             String[], boolean, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, int status, boolean includeMountFolders) {
-
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
-
-		return getFoldersAndFileEntriesAndFileShortcutsCount(
-			groupId, folderId, null, includeMountFolders, queryDefinition);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
-	 *             String[], boolean, QueryDefinition)}
-	 */
-	@Deprecated
-	@Override
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-		long groupId, long folderId, int status, String[] mimeTypes,
-		boolean includeMountFolders) {
-
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
-
-		return getFoldersAndFileEntriesAndFileShortcutsCount(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
 	}
 

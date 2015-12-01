@@ -63,10 +63,10 @@ public class UpgradeCalendarTest extends UpgradeCalendar {
 
 	@Test
 	public void testUpgradeCreatesCalendarTimeZoneId() throws Exception {
+		upgrade();
+
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			connection = con;
-
-			upgrade();
 
 			Assert.assertTrue(tableHasColumn("Calendar", "timeZoneId"));
 		}

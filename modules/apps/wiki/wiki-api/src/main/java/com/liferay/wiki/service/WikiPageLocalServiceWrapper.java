@@ -186,17 +186,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		_wikiPageLocalService.deletePage(nodeId, title);
 	}
 
-	/**
-	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	double)}
-	*/
-	@Deprecated
-	@Override
-	public void deletePage(long nodeId, java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.deletePage(nodeId, title, version);
-	}
-
 	@Override
 	public void deletePage(com.liferay.wiki.model.WikiPage page)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -739,32 +728,9 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 			end);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long,
-	int, int)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(
-		long nodeId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getRecentChanges(nodeId, start, end);
-	}
-
 	@Override
 	public int getRecentChangesCount(long groupId, long nodeId) {
 		return _wikiPageLocalService.getRecentChangesCount(groupId, nodeId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getRecentChangesCount(long,
-	long)}
-	*/
-	@Deprecated
-	@Override
-	public int getRecentChangesCount(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getRecentChangesCount(nodeId);
 	}
 
 	@Override
@@ -898,20 +864,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiPageLocalService.movePage(userId, nodeId, title, newTitle,
-			serviceContext);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
-	String, String, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public void movePage(long userId, long nodeId, java.lang.String title,
-		java.lang.String newTitle, boolean strict,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.movePage(userId, nodeId, title, newTitle, strict,
 			serviceContext);
 	}
 

@@ -180,26 +180,6 @@ public class AssetTagServiceSoap {
 		}
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupTagsDisplay(long,
-	String, int, int)}
-	*/
-	@Deprecated
-	public static java.lang.String getJSONGroupTags(long groupId,
-		java.lang.String name, int start, int end) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue = AssetTagServiceUtil.getJSONGroupTags(groupId,
-					name, start, end);
-
-			return returnValue.toString();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portlet.asset.model.AssetTagSoap getTag(
 		long tagId) throws RemoteException {
 		try {

@@ -248,32 +248,6 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	/**
 	* Updates the state of the layout set prototype link.
 	*
-	* <p>
-	* This method can disable the layout set prototype's link by setting
-	* <code>layoutSetPrototypeLinkEnabled</code> to <code>false</code>.
-	* However, this method can only enable the layout set prototype's link if
-	* the layout set prototype's current uuid is not <code>null</code>. Setting
-	* the <code>layoutSetPrototypeLinkEnabled</code> to <code>true</code> when
-	* the layout set prototype's current uuid is <code>null</code> will have no
-	* effect.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout set is private to the group
-	* @param layoutSetPrototypeLinkEnabled whether the layout set
-	prototype is link enabled
-	* @deprecated As of 6.1.0, replaced by {@link
-	#updateLayoutSetPrototypeLinkEnabled(long, boolean, boolean,
-	String)}
-	*/
-	@java.lang.Deprecated
-	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
-		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
-		throws PortalException;
-
-	/**
-	* Updates the state of the layout set prototype link.
-	*
 	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout set is private to the group
 	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is

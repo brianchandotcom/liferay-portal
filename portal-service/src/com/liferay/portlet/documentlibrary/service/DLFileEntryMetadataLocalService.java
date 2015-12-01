@@ -251,14 +251,6 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata getFileEntryMetadata(
 		long fileEntryMetadataId) throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getFileVersionFileEntryMetadatasCount(long)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getFileVersionFileEntryMetadatas(
 		long fileVersionId);

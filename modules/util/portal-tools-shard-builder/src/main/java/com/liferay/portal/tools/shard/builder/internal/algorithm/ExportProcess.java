@@ -16,14 +16,15 @@ package com.liferay.portal.tools.shard.builder.internal.algorithm;
 
 import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.io.OutputStream;
 import java.sql.SQLException;
 
 import java.util.List;
-
-import org.apache.commons.io.FileUtils;
 
 /**
  * @author Manuel de la Peña
@@ -61,14 +62,16 @@ public class ExportProcess {
 			inserts.append(_dbProvider.getTableRows(tableName));
 		}
 
-		String outputFileName = exportContext.getSchema() + "-" + companyId;
+		String outputFileName =
+			exportContext.getSchema() + "-" + companyId + ".sql";
 
 		File outputFile = new File(
 			exportContext.getOutputFolder(), outputFileName);
 
-		outputFile.createNewFile();
+		OutputStream outputStream = new BufferedOutputStream(
+			new FileOutputStream(outputFile));
 
-		FileUtils.writeStringToFile(outputFile, inserts.toString());
+		outputStream.write(inserts.toString().getBytes());
 	}
 
 	private final DBProvider _dbProvider;

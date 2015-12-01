@@ -29,14 +29,14 @@ import java.util.List;
  */
 public class ExportProcess {
 
-	public ExportProcess(DBProvider dbProvider) {
-		_dbProvider = dbProvider;
+	public ExportProcess(DBExporter dbExporter) {
+		_dbExporter = dbExporter;
 	}
 
 	public void export(ExportContext exportContext) throws IOException {
 		List<String> partitionedTableNames =
-			_dbProvider.getPartitionedTableNames(exportContext.getSchemaName());
-		List<String> controlTableNames = _dbProvider.getControlTableNames(
+			_dbExporter.getPartitionedTableNames(exportContext.getSchemaName());
+		List<String> controlTableNames = _dbExporter.getControlTableNames(
 			exportContext.getSchemaName());
 
 		List<Long> companyIds = exportContext.getCompanyIds();
@@ -61,7 +61,7 @@ public class ExportProcess {
 			new FileOutputStream(outputFile));
 
 		for (String tableName : tableNames) {
-			_dbProvider.write(tableName, outputStream);
+			_dbExporter.write(tableName, outputStream);
 
 			outputStream.flush();
 		}
@@ -69,6 +69,6 @@ public class ExportProcess {
 		outputStream.close();
 	}
 
-	private final DBProvider _dbProvider;
+	private final DBExporter _dbExporter;
 
 }

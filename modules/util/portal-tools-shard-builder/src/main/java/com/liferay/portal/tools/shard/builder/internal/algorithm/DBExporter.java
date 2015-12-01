@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Manuel de la Peña
  */
-public interface DBProvider {
+public interface DBExporter {
 
 	public List<String> getControlTableNames(String schemaName);
 

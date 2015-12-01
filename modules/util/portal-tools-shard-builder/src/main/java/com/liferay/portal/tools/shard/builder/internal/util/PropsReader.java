@@ -14,31 +14,27 @@
  *
  */
 
-package com.liferay.portal.tools.shard.builder.db;
+package com.liferay.portal.tools.shard.builder.internal.util;
 
-import java.sql.SQLException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
-import java.util.List;
-
-import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * @author Manuel de la Peña
  */
-public interface DBProvider {
+public class PropsReader {
 
-	public List<Long> getCompanyIds() throws SQLException;
+	public static Properties getProperties(String path) throws IOException {
+		InputStream is = new FileInputStream(path);
 
-	public DataSource getDataSource();
+		Properties properties = new Properties();
 
-	public String getSchemaName();
+		properties.load(is);
 
-	public String getTableNameFieldName();
-
-	public List<String> getTableNamesWithoutCompanyId() throws SQLException;
-
-	public String getTableRows(String tableName) throws SQLException;
-
-	public String serializeTableField(Object field);
+		return properties;
+	}
 
 }

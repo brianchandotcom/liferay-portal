@@ -14,7 +14,7 @@
  *
  */
 
-package com.liferay.portal.tools.shard.builder.db;
+package com.liferay.portal.tools.shard.builder.internal.algorithm;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +23,7 @@ import java.sql.SQLException;
 
 import java.util.List;
 
+import com.liferay.portal.tools.shard.builder.db.DBProvider;
 import org.apache.commons.io.FileUtils;
 
 /**

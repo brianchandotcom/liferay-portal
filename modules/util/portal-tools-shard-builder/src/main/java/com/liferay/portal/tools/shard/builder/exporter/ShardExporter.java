@@ -14,27 +14,17 @@
  *
  */
 
-package com.liferay.portal.tools.shard.builder.util;
+package com.liferay.portal.tools.shard.builder.exporter;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
-import java.util.Properties;
+import java.sql.SQLException;
 
 /**
  * @author Manuel de la Peña
  */
-public class PropsReader {
+public interface ShardExporter {
 
-	public static Properties getProperties(String path) throws IOException {
-		InputStream is = new FileInputStream(path);
-
-		Properties properties = new Properties();
-
-		properties.load(is);
-
-		return properties;
-	}
+	public void export(String outputFilePath) throws IOException, SQLException;
 
 }

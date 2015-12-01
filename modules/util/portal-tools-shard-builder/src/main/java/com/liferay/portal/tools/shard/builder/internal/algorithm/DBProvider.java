@@ -14,17 +14,31 @@
  *
  */
 
-package com.liferay.portal.tools.shard.builder.db;
-
-import java.io.IOException;
+package com.liferay.portal.tools.shard.builder.internal.algorithm;
 
 import java.sql.SQLException;
+
+import java.util.List;
+
+import javax.sql.DataSource;
 
 /**
  * @author Manuel de la Peña
  */
-public interface Exporter {
+public interface DBProvider {
 
-	public void export(String outputFilePath) throws IOException, SQLException;
+	public List<Long> getCompanyIds() throws SQLException;
+
+	public DataSource getDataSource();
+
+	public String getSchemaName();
+
+	public String getTableNameFieldName();
+
+	public List<String> getTableNamesWithoutCompanyId() throws SQLException;
+
+	public String getTableRows(String tableName) throws SQLException;
+
+	public String serializeTableField(Object field);
 
 }

@@ -17,7 +17,6 @@ package com.liferay.user.groups.admin.internal.lar;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.model.impl.UserGroupImpl;
 import com.liferay.portal.service.UserGroupLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
@@ -25,7 +24,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import java.util.List;
@@ -59,8 +57,6 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "user-groups", true, true, null,
 				UserGroup.class.getName()));
 		setSupportsDataStrategyCopyAsNew(false);
-
-		XStreamAliasRegistryUtil.register(UserGroupImpl.class, "UserGroup");
 	}
 
 	@Override

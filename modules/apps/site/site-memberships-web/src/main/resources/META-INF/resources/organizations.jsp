@@ -93,7 +93,6 @@ organizationSearch.setResults(organizations);
 
 <aui:form action="<%= deleteGroupOrganizationsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="organizations" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 	<aui:input name="addOrganizationIds" type="hidden" />
 

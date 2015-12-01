@@ -82,11 +82,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 			actionRequest, "rowIds");
 
 		_userGroupService.addTeamUserGroups(teamId, addUserGroupIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void addTeamUsers(
@@ -98,11 +93,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		long[] addUserIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		_userService.addTeamUsers(teamId, addUserIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void deleteTeam(
@@ -145,11 +135,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		}
 
 		_userGroupService.unsetTeamUserGroups(teamId, removeUserGroupIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void deleteTeamUsers(
@@ -170,11 +155,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		}
 
 		_userService.unsetTeamUsers(teamId, removeUserIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void editTeam(

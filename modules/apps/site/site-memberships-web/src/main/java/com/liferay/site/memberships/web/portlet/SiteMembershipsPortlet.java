@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.MembershipRequest;
@@ -99,13 +98,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		_organizationService.addGroupOrganizations(
 			themeDisplay.getSiteGroupId(), addOrganizationIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
 	}
 
 	public void addGroupUserGroups(
@@ -120,13 +112,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		_userGroupService.addGroupUserGroups(
 			themeDisplay.getSiteGroupId(), addUserGroupIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
 	}
 
 	public void addGroupUsers(
@@ -148,13 +133,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
 
 		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
 	}
 
 	public void deleteGroupOrganizations(
@@ -179,13 +157,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		_organizationService.unsetGroupOrganizations(
 			themeDisplay.getSiteGroupId(), removeOrganizationIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
 	}
 
 	public void deleteGroupUserGroups(
@@ -210,13 +181,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		_userGroupService.unsetGroupUserGroups(
 			themeDisplay.getSiteGroupId(), removeUserGroupIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
 	}
 
 	public void deleteGroupUsers(
@@ -248,13 +212,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		LiveUsers.leaveGroup(
 			themeDisplay.getCompanyId(), groupId, removeUserIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
 	}
 
 	public void editUserGroupGroupRole(
@@ -275,13 +232,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			userGroupId, themeDisplay.getSiteGroupId(), addRoleIds);
 		_userGroupGroupRoleService.deleteUserGroupGroupRoles(
 			userGroupId, themeDisplay.getSiteGroupId(), removeRoleIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
 	}
 
 	public void editUserGroupRole(
@@ -306,13 +256,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			user.getUserId(), themeDisplay.getSiteGroupId(), addRoleIds);
 		_userGroupRoleService.deleteUserGroupRoles(
 			user.getUserId(), themeDisplay.getSiteGroupId(), removeRoleIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
 	}
 
 	public void replyMembershipRequest(

@@ -91,7 +91,6 @@ userSearch.setResults(users);
 
 <aui:form action="<%= deleteGroupUsersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="users" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 	<aui:input name="p_u_i_d" type="hidden" />
 	<aui:input name="addUserIds" type="hidden" />
@@ -129,7 +128,6 @@ userSearch.setResults(users);
 
 <aui:form action="<%= addGroupUsersURL %>" cssClass="hide" method="post" name="addGroupUsersFm">
 	<aui:input name="tabs1" type="hidden" value="users" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
 </aui:form>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">

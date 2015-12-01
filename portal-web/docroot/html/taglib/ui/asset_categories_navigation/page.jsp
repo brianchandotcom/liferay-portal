@@ -45,12 +45,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 <liferay-ui:panel-container cssClass="taglib-asset-categories-navigation" extended="<%= true %>" id='<%= namespace + "taglibAssetCategoriesNavigationPanel" %>' persistState="<%= true %>">
 
 	<%
+	long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
+
 	for (int i = 0; i < vocabularies.size(); i++) {
 		AssetVocabulary vocabulary = vocabularies.get(i);
 
 		vocabulary = vocabulary.toEscapedModel();
 
-		String vocabularyNavigation = _buildVocabularyNavigation(vocabulary, categoryId, portletURL, themeDisplay);
+		String vocabularyNavigation = _buildVocabularyNavigation(groupId, vocabulary, categoryId, portletURL, themeDisplay);
 
 		if (Validator.isNotNull(vocabularyNavigation)) {
 			hidePortletWhenEmpty = false;
@@ -158,8 +160,8 @@ private void _buildCategoriesNavigation(List<AssetCategory> categories, long cat
 	}
 }
 
-private String _buildVocabularyNavigation(AssetVocabulary vocabulary, long categoryId, PortletURL portletURL, ThemeDisplay themeDisplay) throws Exception {
-	List<AssetCategory> categories = AssetCategoryServiceUtil.getVocabularyRootCategories(vocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+private String _buildVocabularyNavigation(long groupId, AssetVocabulary vocabulary, long categoryId, PortletURL portletURL, ThemeDisplay themeDisplay) throws Exception {
+	List<AssetCategory> categories = AssetCategoryServiceUtil.getVocabularyRootCategories(groupId, vocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 	if (categories.isEmpty()) {
 		return null;

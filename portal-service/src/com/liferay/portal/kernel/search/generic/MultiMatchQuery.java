@@ -90,10 +90,6 @@ public class MultiMatchQuery extends BaseQueryImpl {
 		return _prefixLength;
 	}
 
-	public MatchQuery.RewriteMethod getRewriteMethod() {
-		return _rewriteMethod;
-	}
-
 	public Integer getSlop() {
 		return _slop;
 	}
@@ -164,10 +160,6 @@ public class MultiMatchQuery extends BaseQueryImpl {
 		_prefixLength = prefixLength;
 	}
 
-	public void setRewriteMethod(MatchQuery.RewriteMethod rewriteMethod) {
-		_rewriteMethod = rewriteMethod;
-	}
-
 	public void setSlop(Integer slop) {
 		_slop = slop;
 	}
@@ -201,7 +193,6 @@ public class MultiMatchQuery extends BaseQueryImpl {
 	private String _minShouldMatch;
 	private MatchQuery.Operator _operator;
 	private Integer _prefixLength;
-	private MatchQuery.RewriteMethod _rewriteMethod;
 	private Integer _slop;
 	private Float _tieBreaker;
 	private Type _type;

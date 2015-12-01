@@ -68,10 +68,6 @@ public class MatchQuery extends BaseQueryImpl {
 		return _prefixLength;
 	}
 
-	public RewriteMethod getRewriteMethod() {
-		return _rewriteMethod;
-	}
-
 	public Integer getSlop() {
 		return _slop;
 	}
@@ -136,10 +132,6 @@ public class MatchQuery extends BaseQueryImpl {
 		_prefixLength = prefixLength;
 	}
 
-	public void setRewriteMethod(RewriteMethod rewriteMethod) {
-		_rewriteMethod = rewriteMethod;
-	}
-
 	public void setSlop(Integer slop) {
 		_slop = slop;
 	}
@@ -188,7 +180,6 @@ public class MatchQuery extends BaseQueryImpl {
 	private String _minShouldMatch;
 	private Operator _operator;
 	private Integer _prefixLength;
-	private RewriteMethod _rewriteMethod;
 	private Integer _slop;
 	private Type _type;
 	private final String _value;

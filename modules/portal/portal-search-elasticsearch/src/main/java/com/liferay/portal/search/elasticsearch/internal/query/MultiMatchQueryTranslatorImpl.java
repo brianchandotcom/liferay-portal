@@ -103,13 +103,6 @@ public class MultiMatchQueryTranslatorImpl
 				multiMatchQuery.getPrefixLength());
 		}
 
-		if (multiMatchQuery.getRewriteMethod() != null) {
-			String multiMatchQueryRewriteMethod = translate(
-				multiMatchQuery.getRewriteMethod());
-
-			multiMatchQueryBuilder.rewrite(multiMatchQueryRewriteMethod);
-		}
-
 		if (multiMatchQuery.getSlop() != null) {
 			multiMatchQueryBuilder.slop(multiMatchQuery.getSlop());
 		}

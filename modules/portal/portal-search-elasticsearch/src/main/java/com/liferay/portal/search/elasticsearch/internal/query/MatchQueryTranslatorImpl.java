@@ -97,12 +97,6 @@ public class MatchQueryTranslatorImpl
 			matchQueryBuilder.prefixLength(matchQuery.getPrefixLength());
 		}
 
-		if (matchQuery.getRewriteMethod() != null) {
-			String matchQueryRewrite = translate(matchQuery.getRewriteMethod());
-
-			matchQueryBuilder.rewrite(matchQueryRewrite);
-		}
-
 		if (matchQuery.getSlop() != null) {
 			matchQueryBuilder.slop(matchQuery.getSlop());
 		}

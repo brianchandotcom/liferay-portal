@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.css.builder;
 
+import com.liferay.css.builder.CSSBuilderArgs;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -141,6 +142,11 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	@Input
+	public int getPrecision() {
+		return GradleUtil.toInteger(_precision);
+	}
+
+	@Input
 	public List<String> getRtlExcludedPathRegexps() {
 		return GradleUtil.toStringList(_rtlExcludedPathRegexps);
 	}
@@ -211,6 +217,10 @@ public class BuildCSSTask extends JavaExec {
 		_portalCommonDir = portalCommonDir;
 	}
 
+	public void setPrecision(Object precision) {
+		_precision = precision;
+	}
+
 	public void setRtlExcludedPathRegexps(
 		Iterable<Object> rtlExcludedPathRegexps) {
 
@@ -253,6 +263,8 @@ public class BuildCSSTask extends JavaExec {
 			getPortalCommonDir());
 
 		args.add("sass.portal.common.dir=" + portalCommonDirName);
+
+		args.add("sass.precision=" + getPrecision());
 
 		String rtlExcludedPathRegexps = CollectionUtils.join(
 			",", getRtlExcludedPathRegexps());
@@ -300,6 +312,7 @@ public class BuildCSSTask extends JavaExec {
 	private Object _docrootDir;
 	private boolean _generateSourceMap;
 	private Object _portalCommonDir;
+	private Object _precision = CSSBuilderArgs.PRECISION;
 	private final Set<Object> _rtlExcludedPathRegexps = new LinkedHashSet<>();
 	private Object _sassCompilerClassName;
 

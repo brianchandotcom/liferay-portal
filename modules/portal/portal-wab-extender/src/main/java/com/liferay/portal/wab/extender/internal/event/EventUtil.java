@@ -14,6 +14,7 @@
 
 package com.liferay.portal.wab.extender.internal.event;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.wab.extender.internal.WabUtil;
@@ -52,10 +53,8 @@ public class EventUtil
 
 		_webExtenderBundle = _bundleContext.getBundle();
 
-		_eventAdminServiceTracker = new ServiceTracker<>(
-			_bundleContext, EventAdmin.class.getName(), this);
-
-		_eventAdminServiceTracker.open();
+		_eventAdminServiceTracker = ServiceTrackerFactory.open(
+			_bundleContext, EventAdmin.class, this);
 	}
 
 	@Override

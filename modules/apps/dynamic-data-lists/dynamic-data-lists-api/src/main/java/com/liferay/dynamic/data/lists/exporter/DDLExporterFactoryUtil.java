@@ -14,9 +14,10 @@
 
 package com.liferay.dynamic.data.lists.exporter;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -38,15 +39,8 @@ public class DDLExporterFactoryUtil {
 	}
 
 	private static final ServiceTracker<DDLExporterFactory, DDLExporterFactory>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DDLExporterFactoryUtil.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), DDLExporterFactory.class, null);
-
-		_serviceTracker.open();
-	}
+		_serviceTracker = ServiceTrackerFactory.open(
+			FrameworkUtil.getBundle(DDLExporterFactoryUtil.class),
+			DDLExporterFactory.class);
 
 }

@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.calendar.model.CalendarResource;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -2157,14 +2156,6 @@ public class CalendarResourceUtil {
 	public void setPersistence(CalendarResourcePersistence persistence) {
 	}
 
-	private static ServiceTracker<CalendarResourcePersistence, CalendarResourcePersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CalendarResourceUtil.class);
-
-		_serviceTracker = new ServiceTracker<CalendarResourcePersistence, CalendarResourcePersistence>(bundle.getBundleContext(),
-				CalendarResourcePersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<CalendarResourcePersistence, CalendarResourcePersistence> _serviceTracker =
+		ServiceTrackerFactory.open(CalendarResourcePersistence.class);
 }

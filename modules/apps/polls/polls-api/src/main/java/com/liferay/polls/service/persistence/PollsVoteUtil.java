@@ -16,14 +16,13 @@ package com.liferay.polls.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.polls.model.PollsVote;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1041,14 +1040,6 @@ public class PollsVoteUtil {
 	public void setPersistence(PollsVotePersistence persistence) {
 	}
 
-	private static ServiceTracker<PollsVotePersistence, PollsVotePersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(PollsVoteUtil.class);
-
-		_serviceTracker = new ServiceTracker<PollsVotePersistence, PollsVotePersistence>(bundle.getBundleContext(),
-				PollsVotePersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<PollsVotePersistence, PollsVotePersistence> _serviceTracker =
+		ServiceTrackerFactory.open(PollsVotePersistence.class);
 }

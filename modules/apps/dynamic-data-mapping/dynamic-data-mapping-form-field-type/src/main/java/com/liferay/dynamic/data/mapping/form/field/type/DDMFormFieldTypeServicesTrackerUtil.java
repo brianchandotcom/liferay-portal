@@ -14,13 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -98,17 +98,9 @@ public class DDMFormFieldTypeServicesTrackerUtil {
 
 	private static final ServiceTracker
 		<DDMFormFieldTypeServicesTracker, DDMFormFieldTypeServicesTracker>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMFormFieldTypeServicesTrackerUtil.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), DDMFormFieldTypeServicesTracker.class,
-			null);
-
-		_serviceTracker.open();
-	}
+			_serviceTracker = ServiceTrackerFactory.open(
+				FrameworkUtil.getBundle(
+					DDMFormFieldTypeServicesTrackerUtil.class),
+				DDMFormFieldTypeServicesTracker.class);
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.js.bundle.config.extender;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import java.net.URL;
 
 import java.util.Collection;
@@ -24,8 +26,6 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.Filter;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -51,14 +51,11 @@ public class JSBundleConfigTracker
 			_serviceTracker.close();
 		}
 
-		Filter filter = FrameworkUtil.createFilter(
+		_serviceTracker = ServiceTrackerFactory.open(
+			componentContext.getBundleContext(),
 			"(&(objectClass=" + ServletContext.class.getName() +
-				")(osgi.web.contextpath=*))");
-
-		_serviceTracker = new ServiceTracker<>(
-			componentContext.getBundleContext(), filter, this);
-
-		_serviceTracker.open();
+				")(osgi.web.contextpath=*))",
+			this);
 	}
 
 	@Override

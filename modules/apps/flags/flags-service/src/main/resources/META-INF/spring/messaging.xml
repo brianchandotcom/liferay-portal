@@ -12,7 +12,7 @@
 	<!-- Listeners -->
 
 	<bean id="messageListener.flags" class="com.liferay.flags.messaging.FlagsRequestMessageListener" />
-	
+
 	<!-- Configurator -->
 
 	<bean id="messagingConfigurator.misc" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">

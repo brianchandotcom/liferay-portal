@@ -24,12 +24,12 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.flags.web.constants.FlagsPortletKeys" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.model.Group" %><%@
-page import="com.liferay.portal.model.Layout" %>
+page import="com.liferay.portal.model.Layout" %><%@
+page import="com.liferay.portal.util.PropsValues" %>
 
 <portlet:defineObjects />
 

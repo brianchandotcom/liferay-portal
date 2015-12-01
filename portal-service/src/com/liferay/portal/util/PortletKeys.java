@@ -48,7 +48,7 @@ public class PortletKeys {
 	public static final String FAST_LOGIN =
 		"com_liferay_login_web_portlet_FastLoginPortlet";
 
-	public static final String FLAGS = 
+	public static final String FLAGS =
 		"com_liferay_flags_web_portlet_FlagsPortlet";
 
 	public static final String FRIENDS_DIRECTORY =

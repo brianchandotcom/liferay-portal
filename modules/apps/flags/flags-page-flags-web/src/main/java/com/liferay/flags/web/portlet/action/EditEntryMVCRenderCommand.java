@@ -44,4 +44,5 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 
 		return "/edit_entry.jsp";
 	}
+
 }

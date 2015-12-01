@@ -16,6 +16,7 @@ package com.liferay.flags.web.portlet;
 
 import com.liferay.flags.web.constants.FlagsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Flags",
-		"javax.portlet.expiration-cache=0",
+		"javax.portlet.display-name=Flags", "javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/edit_entry.jsp",
 		"javax.portlet.name=" + FlagsPortletKeys.FLAGS,

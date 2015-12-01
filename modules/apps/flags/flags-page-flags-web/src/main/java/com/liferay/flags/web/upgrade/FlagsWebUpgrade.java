@@ -14,10 +14,8 @@
 
 package com.liferay.flags.web.upgrade;
 
-import com.liferay.flags.web.constants.FlagsPortletKeys;
 import com.liferay.flags.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(immediate = true)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class FlagsWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

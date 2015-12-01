@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 
-
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -31,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Julio Camarero
- * @author Peter Fellwock 
+ * @author Peter Fellwock
  */
 @Component(
 	property = {
@@ -56,17 +54,18 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "reportedUserId");
 			String contentTitle = ParamUtil.getString(
 				actionRequest, "contentTitle");
-			String contentURL = ParamUtil.getString(actionRequest, "contentURL");
+			String contentURL = ParamUtil.getString(
+				actionRequest, "contentURL");
 			String reason = ParamUtil.getString(actionRequest, "reason");
-	
+
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				"com.liferay.portlet.flags.model.FlagsEntry", actionRequest);
-	
+
 			FlagsEntryServiceUtil.addEntry(
 				className, classPK, reporterEmailAddress, reportedUserId,
 				contentTitle, contentURL, reason, serviceContext);
-	
-			actionResponse.setRenderParameter("mvcPath", "edit_entry.jsp");
 
+			actionResponse.setRenderParameter("mvcPath", "edit_entry.jsp");
 	}
+
 }

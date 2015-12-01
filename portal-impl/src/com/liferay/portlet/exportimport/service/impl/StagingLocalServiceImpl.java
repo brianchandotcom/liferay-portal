@@ -77,6 +77,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -422,6 +423,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		File file = null;
 
+		Locale siteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
+
 		try {
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
 			ExportImportThreadLocal.setLayoutStagingInProcess(true);
@@ -462,6 +465,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			throw new SystemException(ioe);
 		}
 		finally {
+			LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);
+
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 		}

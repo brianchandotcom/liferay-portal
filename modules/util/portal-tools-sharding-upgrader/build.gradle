@@ -1,5 +1,6 @@
 dependencies {
-	provided group: "com.zaxxer", name: "HikariCP", transitive: true, version: "2.4.1"
+	compile group: "com.zaxxer", name: "HikariCP", transitive: true, version: "2.4.1"
+
 	provided group: "commons-io", name: "commons-io", transitive: true, version: "2.4"
 	provided fileTree(dir: 'third-party', include: '*.jar')
 }

@@ -132,7 +132,7 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset cssClass="text-muted">
 				<h5>
-					<liferay-ui:message key="the-site-of-a-user-group-cannot-be-accessed-directly-by-end-users" />
+					<liferay-ui:message key="the-pages-of-a-user-group-cannot-be-accessed-directly-by-end-users" />
 				</h5>
 
 				<%

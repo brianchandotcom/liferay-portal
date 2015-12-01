@@ -97,7 +97,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 
 		<liferay-ui:icon
 			iconCssClass="icon-copy"
-			message="manage-site-pages"
+			message="manage-pages"
 			url="<%= managePagesURL.toString() %>"
 		/>
 	</c:if>
@@ -109,7 +109,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= hasViewPermission && (userGroupGroup.getPublicLayoutsPageCount() > 0) %>">
 		<liferay-ui:icon
 			iconCssClass="icon-search"
-			message="go-to-the-site's-public-pages"
+			message="go-to-profile-pages"
 			target="_blank"
 			url="<%= userGroupGroup.getDisplayURL(themeDisplay, false) %>"
 		/>
@@ -118,7 +118,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= hasViewPermission && (userGroupGroup.getPrivateLayoutsPageCount() > 0) %>">
 		<liferay-ui:icon
 			iconCssClass="icon-search"
-			message="go-to-the-site's-private-pages"
+			message="go-to-dashboard-pages"
 			target="_blank"
 			url="<%= userGroupGroup.getDisplayURL(themeDisplay, true) %>"
 		/>

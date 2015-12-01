@@ -138,8 +138,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		long groupId = themeDisplay.getSiteGroupId();
 
-		long[] addUserIds = ParamUtil.getLongValues(
-			actionRequest, "rowIds");
+		long[] addUserIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		addUserIds = filterAddUserIds(groupId, addUserIds);
 

@@ -19,7 +19,7 @@ import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortle
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
+import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import java.util.List;
 

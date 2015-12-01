@@ -14,7 +14,7 @@
 
 package com.liferay.user.groups.admin.web.upgrade.v1_0_0;
 
-import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
+import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 /**
  * @author Drew Brokke

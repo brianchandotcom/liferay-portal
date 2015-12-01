@@ -26,7 +26,7 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
-import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
+import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import java.util.List;
 

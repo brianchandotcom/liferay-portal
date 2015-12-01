@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
+import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

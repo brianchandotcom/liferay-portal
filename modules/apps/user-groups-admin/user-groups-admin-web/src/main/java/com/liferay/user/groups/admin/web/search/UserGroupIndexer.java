@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalService;
-import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
+import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;

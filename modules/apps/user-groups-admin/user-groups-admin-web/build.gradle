@@ -3,6 +3,7 @@ dependencies {
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:portlet-display-template:portlet-display-template")
+	compile project(":apps:user-groups-admin:user-groups-admin-api")
 	compile project(":portal:portal-upgrade")
 }
 

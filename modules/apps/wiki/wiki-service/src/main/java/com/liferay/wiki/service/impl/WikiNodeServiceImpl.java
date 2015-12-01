@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
@@ -116,6 +117,15 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 		long groupId, int status, int start, int end) {
 
 		return wikiNodePersistence.filterFindByG_S(groupId, status, start, end);
+	}
+
+	@Override
+	public List<WikiNode> getNodes(
+		long groupId, int status, int start, int end,
+		OrderByComparator<WikiNode> obc) {
+
+		return wikiNodePersistence.filterFindByG_S(
+			groupId, status, start, end, obc);
 	}
 
 	@Override

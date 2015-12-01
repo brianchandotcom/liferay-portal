@@ -209,7 +209,7 @@ public class LayoutsTreeUtil {
 					treeId)) {
 
 			String typeSettingProperty = layout.getTypeSettingsProperty(
-				"occult", "false");
+				"hide", "false");
 
 			if (!typeSettingProperty.equals("false")) {
 				continue;

@@ -91,7 +91,7 @@ public class VerifySQLServer extends VerifyProcess {
 			_log.error(e, e);
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -238,7 +238,7 @@ public class VerifySQLServer extends VerifyProcess {
 			_log.error(e, e);
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -278,7 +278,7 @@ public class VerifySQLServer extends VerifyProcess {
 			_log.error(e, e);
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return columnNames;

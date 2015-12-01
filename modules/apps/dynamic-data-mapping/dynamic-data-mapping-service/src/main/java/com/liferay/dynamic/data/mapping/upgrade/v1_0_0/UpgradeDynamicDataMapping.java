@@ -311,7 +311,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					structureId);
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -434,7 +434,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -454,7 +454,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -536,7 +536,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -587,7 +587,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -660,7 +660,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -724,7 +724,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -766,7 +766,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -849,7 +849,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -914,7 +914,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			updateStructureVersionStorageType();
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -1928,7 +1928,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				return 0;
 			}
 			finally {
-				DataAccess.cleanUp(null, ps, rs);
+				DataAccess.cleanUp(ps, rs);
 			}
 		}
 
@@ -1967,7 +1967,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				}
 			}
 			finally {
-				DataAccess.cleanUp(null, ps, rs);
+				DataAccess.cleanUp(ps, rs);
 			}
 
 			return 0;
@@ -2011,7 +2011,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				return 0;
 			}
 			finally {
-				DataAccess.cleanUp(null, ps, rs);
+				DataAccess.cleanUp(ps, rs);
 			}
 		}
 

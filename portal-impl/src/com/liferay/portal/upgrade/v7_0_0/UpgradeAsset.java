@@ -75,7 +75,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -108,7 +108,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		try {
@@ -138,7 +138,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -161,7 +161,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, statement, result);
+			DataAccess.cleanUp(statement, result);
 		}
 	}
 
@@ -187,7 +187,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

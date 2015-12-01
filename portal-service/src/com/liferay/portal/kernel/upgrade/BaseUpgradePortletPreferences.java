@@ -65,7 +65,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return companyId;
@@ -92,7 +92,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return group;
@@ -125,7 +125,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return layout;
@@ -162,7 +162,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return uuid;
@@ -298,7 +298,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

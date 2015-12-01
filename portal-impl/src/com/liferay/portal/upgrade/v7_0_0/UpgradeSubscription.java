@@ -127,7 +127,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return 0;
@@ -156,7 +156,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 			return false;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -211,7 +211,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

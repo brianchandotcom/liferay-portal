@@ -48,7 +48,7 @@ public class UpgradeWikiPageResource extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -71,7 +71,7 @@ public class UpgradeWikiPageResource extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return groupId;

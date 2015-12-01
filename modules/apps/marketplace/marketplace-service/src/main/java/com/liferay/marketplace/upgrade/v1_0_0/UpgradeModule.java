@@ -71,7 +71,7 @@ public class UpgradeModule extends UpgradeProcess {
 			_log.error("Unable to update modules", sqle);
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

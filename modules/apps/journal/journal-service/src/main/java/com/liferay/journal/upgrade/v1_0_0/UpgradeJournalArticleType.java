@@ -145,7 +145,7 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			return types;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -170,7 +170,7 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			return false;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -222,7 +222,7 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

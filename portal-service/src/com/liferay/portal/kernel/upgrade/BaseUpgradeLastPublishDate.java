@@ -62,7 +62,7 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -109,7 +109,7 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -135,7 +135,7 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 			return stagedGroupIds;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

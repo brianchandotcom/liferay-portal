@@ -171,7 +171,7 @@ public abstract class VerifyProcess extends BaseDBProcess {
 			return rs.getInt(1);
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

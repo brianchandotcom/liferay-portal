@@ -94,7 +94,7 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		deleteKaleoInstanceTokens();
@@ -145,7 +145,7 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

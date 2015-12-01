@@ -145,7 +145,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return groupId;

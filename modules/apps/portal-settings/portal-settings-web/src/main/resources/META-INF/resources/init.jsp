@@ -61,7 +61,6 @@ page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.security.sso.OpenSSOUtil" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.settings.web.constants.PortalSettingsWebKeys" %><%@
-page import="com.liferay.portal.util.Portal" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@

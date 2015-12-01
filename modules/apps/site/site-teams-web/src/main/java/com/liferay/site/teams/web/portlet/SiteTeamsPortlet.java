@@ -79,8 +79,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
-		long[] addUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
+		long[] addUserGroupIds = ParamUtil.getLongValues(
+			actionRequest, "rowIds");
 
 		_userGroupService.addTeamUserGroups(teamId, addUserGroupIds);
 

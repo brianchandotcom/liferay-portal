@@ -47,11 +47,7 @@
 
 		<@liferay.silently geometryJSONObject.put("type", "Point") />
 
-		<#assign coordinatesJSONArray = jsonFactoryUtil.createJSONArray() />
-
-		<@liferay.silently coordinatesJSONArray.put(coordinatesJSONObject.getDouble("longitude")) />
-
-		<@liferay.silently coordinatesJSONArray.put(coordinatesJSONObject.getDouble("latitude")) />
+		<#assign coordinatesJSONArray = [coordinatesJSONObject.getDouble("longitude")?double, coordinatesJSONObject.getDouble("latitude")?double] />
 
 		<@liferay.silently geometryJSONObject.put("coordinates", coordinatesJSONArray) />
 

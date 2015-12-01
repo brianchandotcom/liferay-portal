@@ -36,7 +36,6 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalService;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -198,13 +197,10 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 			String oldRootPortletId, String newRootPortletId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(9);
 
 			sb.append("select portletPreferencesId, plid, portletId, ");
@@ -217,7 +213,7 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 			sb.append(oldRootPortletId);
 			sb.append("_USER_%_INSTANCE_%'");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -244,7 +240,7 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -271,13 +267,10 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 			String newPreferences)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update PortletPreferences set preferences = ?, " +
 					"portletId = ? where portletPreferencesId = " +
 						portletPreferencesId);
@@ -293,7 +286,7 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 

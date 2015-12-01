@@ -63,16 +63,14 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	public void verify() throws VerifyException {
 		long start = System.currentTimeMillis();
 
-		try {
-			if (_log.isInfoEnabled()) {
-				_log.info("Verifying " + ClassUtil.getClassName(this));
-			}
+		if (_log.isInfoEnabled()) {
+			_log.info("Verifying " + ClassUtil.getClassName(this));
+		}
 
-			try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-				connection = con;
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			connection = con;
 
-				doVerify();
-			}
+			doVerify();
 		}
 		catch (Exception e) {
 			throw new VerifyException(e);

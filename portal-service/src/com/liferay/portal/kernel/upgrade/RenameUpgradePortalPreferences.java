@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -47,7 +46,6 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 			String newValue)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -67,8 +65,6 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 			runSQL(sb.toString());
 		}
 		catch (Exception e) {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			sb = new StringBundler(7);
 
 			sb.append("select ");
@@ -79,7 +75,7 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 			sb.append(oldValue);
 			sb.append("%'");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -93,7 +89,7 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -104,7 +100,6 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 
 		preferences = StringUtil.replace(preferences, oldValue, newValue);
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -117,9 +112,7 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 		sb.append(" = ?");
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setString(1, preferences);
 			ps.setLong(2, primaryKey);
@@ -127,7 +120,7 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

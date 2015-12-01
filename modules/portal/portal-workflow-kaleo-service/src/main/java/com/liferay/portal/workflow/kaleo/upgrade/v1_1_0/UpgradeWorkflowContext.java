@@ -21,7 +21,6 @@ import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
 
 import java.io.Serializable;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -44,14 +43,11 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 	protected void updateTable(String tableName, String fieldName)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select " + fieldName + ", workflowContext from " + tableName +
 					" where workflowContext is not null and workflowContext " +
 						"not like '%serializable%'");
@@ -79,7 +75,7 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -88,13 +84,10 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 			String workflowContext)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update " + tableName + " set workflowContext = ? where " +
 					fieldName + " = ?");
 
@@ -104,7 +97,7 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 

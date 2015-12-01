@@ -152,16 +152,13 @@ public class UpgradeSharding extends UpgradeProcess {
 	}
 
 	protected List<String> getShardNames() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		List<String> shardNames = new ArrayList<>();
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select name from Shard");
+			ps = connection.prepareStatement("select name from Shard");
 
 			rs = ps.executeQuery();
 
@@ -170,7 +167,7 @@ public class UpgradeSharding extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 
 		return shardNames;

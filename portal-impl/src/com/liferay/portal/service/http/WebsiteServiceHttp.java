@@ -55,45 +55,12 @@ import com.liferay.portal.service.WebsiteServiceUtil;
 public class WebsiteServiceHttp {
 	public static com.liferay.portal.model.Website addWebsite(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		java.lang.String url, long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
-					"addWebsite", _addWebsiteParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					className, classPK, url, typeId, primary);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.portal.model.Website)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.portal.model.Website addWebsite(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		java.lang.String url, long typeId, boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
-					"addWebsite", _addWebsiteParameterTypes1);
+					"addWebsite", _addWebsiteParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK, url, typeId, primary, serviceContext);
@@ -124,7 +91,7 @@ public class WebsiteServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
-					"deleteWebsite", _deleteWebsiteParameterTypes2);
+					"deleteWebsite", _deleteWebsiteParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, websiteId);
 
@@ -151,7 +118,7 @@ public class WebsiteServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
-					"getWebsite", _getWebsiteParameterTypes3);
+					"getWebsite", _getWebsiteParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, websiteId);
 
@@ -182,7 +149,7 @@ public class WebsiteServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
-					"getWebsites", _getWebsitesParameterTypes4);
+					"getWebsites", _getWebsitesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK);
@@ -215,7 +182,7 @@ public class WebsiteServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(WebsiteServiceUtil.class,
-					"updateWebsite", _updateWebsiteParameterTypes5);
+					"updateWebsite", _updateWebsiteParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					websiteId, url, typeId, primary);
@@ -245,23 +212,19 @@ public class WebsiteServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(WebsiteServiceHttp.class);
 	private static final Class<?>[] _addWebsiteParameterTypes0 = new Class[] {
 			java.lang.String.class, long.class, java.lang.String.class,
-			long.class, boolean.class
-		};
-	private static final Class<?>[] _addWebsiteParameterTypes1 = new Class[] {
-			java.lang.String.class, long.class, java.lang.String.class,
 			long.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteWebsiteParameterTypes2 = new Class[] {
+	private static final Class<?>[] _deleteWebsiteParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getWebsiteParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getWebsiteParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getWebsitesParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getWebsitesParameterTypes3 = new Class[] {
 			java.lang.String.class, long.class
 		};
-	private static final Class<?>[] _updateWebsiteParameterTypes5 = new Class[] {
+	private static final Class<?>[] _updateWebsiteParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class, long.class, boolean.class
 		};
 }

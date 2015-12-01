@@ -75,6 +75,15 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+
+		<%
+		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteNodes();";
+		%>
+
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
@@ -85,6 +94,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 	<liferay-ui:error exception="<%= RequiredNodeException.class %>" message="the-last-main-node-is-required-and-cannot-be-deleted" />
 
 	<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<%
@@ -187,3 +197,16 @@ boolean showAddNodeButton = WikiResourcePermissionChecker.contains(permissionChe
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-wiki") %>' url="<%= addNodeURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
+
+<aui:script>
+	function <portlet:namespace />deleteNodes() {
+		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
+
+			submitForm(form, '<portlet:actionURL name="/wiki/edit_node" />');
+		}
+	}
+</aui:script>

@@ -226,15 +226,6 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		long layoutSetPrototypeId) throws PortalException;
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getLayoutSetPrototypeByUuidAndCompanyId(String, long)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuid(
-		java.lang.String uuid) throws PortalException;
-
-	/**
 	* Returns the layout set prototype with the matching UUID and company.
 	*
 	* @param uuid the layout set prototype's UUID

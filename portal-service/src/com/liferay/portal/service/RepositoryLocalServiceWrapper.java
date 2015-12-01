@@ -56,25 +56,6 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 			typeSettingsProperties, hidden, serviceContext);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addRepository(long, long,
-	long, long, String, String, String, UnicodeProperties,
-	boolean, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Repository addRepository(long userId,
-		long groupId, long classNameId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String portletId,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryLocalService.addRepository(userId, groupId,
-			classNameId, parentFolderId, name, description, portletId,
-			typeSettingsProperties, serviceContext);
-	}
-
 	@Override
 	public void checkRepository(long repositoryId) {
 		_repositoryLocalService.checkRepository(repositoryId);

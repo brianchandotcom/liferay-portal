@@ -73,27 +73,6 @@ public class UserGroupServiceUtil {
 	*
 	* @param name the user group's name
 	* @param description the user group's description
-	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.UserGroup addUserGroup(
-		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addUserGroup(name, description);
-	}
-
-	/**
-	* Adds a user group.
-	*
-	* <p>
-	* This method handles the creation and bookkeeping of the user group,
-	* including its resources, metadata, and internal data structures.
-	* </p>
-	*
-	* @param name the user group's name
-	* @param description the user group's description
 	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set expando bridge attributes for the
 	user group.
@@ -198,23 +177,6 @@ public class UserGroupServiceUtil {
 	public static void unsetTeamUserGroups(long teamId, long[] userGroupIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsetTeamUserGroups(teamId, userGroupIds);
-	}
-
-	/**
-	* Updates the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param name the user group's name
-	* @param description the the user group's description
-	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
-	String, String, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.UserGroup updateUserGroup(
-		long userGroupId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateUserGroup(userGroupId, name, description);
 	}
 
 	/**

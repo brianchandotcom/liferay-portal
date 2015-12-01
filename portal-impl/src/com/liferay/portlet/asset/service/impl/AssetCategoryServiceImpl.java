@@ -31,7 +31,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetCategoryDisplay;
-import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.base.AssetCategoryServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.util.Autocomplete;
@@ -203,86 +202,6 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 				parentCategoryId, start, end, obc));
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #search(long[], String,
-	 *             long[], int, int)}
-	 */
-	@Deprecated
-	@Override
-	public JSONArray getJSONSearch(
-			long groupId, String name, long[] vocabularyIds, int start, int end)
-		throws PortalException {
-
-		return search(new long[] {groupId}, name, vocabularyIds, start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getVocabularyCategoriesDisplay(long, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public JSONObject getJSONVocabularyCategories(
-			long vocabularyId, int start, int end,
-			OrderByComparator<AssetCategory> obc)
-		throws PortalException {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		List<AssetCategory> categories = filterCategories(
-			assetCategoryLocalService.getVocabularyCategories(
-				vocabularyId, start, end, obc));
-
-		jsonObject.put("categories", toJSONArray(categories));
-		jsonObject.put("total", categories.size());
-
-		return jsonObject;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getVocabularyCategoriesDisplay(long, String, long, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public JSONObject getJSONVocabularyCategories(
-			long groupId, String name, long vocabularyId, int start, int end,
-			OrderByComparator<AssetCategory> obc)
-		throws PortalException {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		int page = 0;
-
-		if ((end > 0) && (start > 0)) {
-			page = end / (end - start);
-		}
-
-		jsonObject.put("page", page);
-
-		List<AssetCategory> categories;
-		int total = 0;
-
-		if (Validator.isNotNull(name)) {
-			name = (CustomSQLUtil.keywords(name))[0];
-
-			categories = getVocabularyCategories(
-				groupId, name, vocabularyId, start, end, obc);
-			total = getVocabularyCategoriesCount(groupId, name, vocabularyId);
-		}
-		else {
-			categories = getVocabularyCategories(vocabularyId, start, end, obc);
-			total = getVocabularyCategoriesCount(groupId, vocabularyId);
-		}
-
-		jsonObject.put("categories", toJSONArray(categories));
-		jsonObject.put("total", total);
-
-		return jsonObject;
-	}
-
 	@Override
 	public List<AssetCategory> getVocabularyCategories(
 			long vocabularyId, int start, int end,
@@ -392,25 +311,6 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		}
 
 		return new AssetCategoryDisplay(categories, total, start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getVocabularyRootCategories(long, long, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<AssetCategory> getVocabularyRootCategories(
-			long vocabularyId, int start, int end,
-			OrderByComparator<AssetCategory> obc)
-		throws PortalException {
-
-		AssetVocabulary vocabulary = assetVocabularyLocalService.getVocabulary(
-			vocabularyId);
-
-		return getVocabularyRootCategories(
-			vocabulary.getGroupId(), vocabularyId, start, end, obc);
 	}
 
 	@Override

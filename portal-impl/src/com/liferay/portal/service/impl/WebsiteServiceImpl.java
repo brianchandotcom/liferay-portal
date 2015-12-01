@@ -29,24 +29,6 @@ import java.util.List;
  */
 public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addWebsite(String, long,
-	 *             String, int, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Website addWebsite(
-			String className, long classPK, String url, long typeId,
-			boolean primary)
-		throws PortalException {
-
-		CommonPermissionUtil.check(
-			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
-
-		return websiteLocalService.addWebsite(
-			getUserId(), className, classPK, url, typeId, primary);
-	}
-
 	@Override
 	public Website addWebsite(
 			String className, long classPK, String url, long typeId,

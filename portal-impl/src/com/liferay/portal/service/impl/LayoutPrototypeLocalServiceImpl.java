@@ -116,22 +116,6 @@ public class LayoutPrototypeLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
-	 *             long, Map, String, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPrototype addLayoutPrototype(
-			long userId, long companyId, Map<Locale, String> nameMap,
-			String description, boolean active)
-		throws PortalException {
-
-		return addLayoutPrototype(
-			userId, companyId, nameMap, description, active,
-			new ServiceContext());
-	}
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(long,
 	 *             long, Map, Map, boolean, ServiceContext)}
 	 */
@@ -217,18 +201,6 @@ public class LayoutPrototypeLocalServiceImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getLayoutPrototypeByUuidAndCompanyId(String, long)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPrototype getLayoutPrototypeByUuid(String uuid)
-		throws PortalException {
-
-		return layoutPrototypePersistence.findByUuid_First(uuid, null);
-	}
-
 	@Override
 	public LayoutPrototype getLayoutPrototypeByUuidAndCompanyId(
 			String uuid, long companyId)
@@ -293,21 +265,6 @@ public class LayoutPrototypeLocalServiceImpl
 		layoutPersistence.update(layout);
 
 		return layoutPrototype;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
-	 *             Map, String, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPrototype updateLayoutPrototype(
-			long layoutPrototypeId, Map<Locale, String> nameMap,
-			String description, boolean active)
-		throws PortalException {
-
-		return updateLayoutPrototype(
-			layoutPrototypeId, nameMap, description, active, null);
 	}
 
 	/**

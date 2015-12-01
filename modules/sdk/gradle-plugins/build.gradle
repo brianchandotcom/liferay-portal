@@ -8,7 +8,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.js.transpiler", version: "1.0.14"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "1.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.9"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "1.0.6"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "1.0.8"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "1.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.soy", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.1"

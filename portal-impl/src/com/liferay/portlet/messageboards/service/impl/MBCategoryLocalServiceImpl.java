@@ -1140,7 +1140,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	protected void validate(String name) throws PortalException {
 		if (Validator.isNull(name)) {
-			throw new CategoryNameException();
+			throw new CategoryNameException("Name is null");
 		}
 	}
 

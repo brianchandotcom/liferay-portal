@@ -249,23 +249,26 @@ public class MBMailingListLocalServiceImpl
 		}
 
 		if (!Validator.isEmailAddress(emailAddress)) {
-			throw new MailingListEmailAddressException();
+			throw new MailingListEmailAddressException(emailAddress);
 		}
 		else if (Validator.isNull(inServerName)) {
-			throw new MailingListInServerNameException();
+			throw new MailingListInServerNameException("InServerName is null");
 		}
 		else if (Validator.isNull(inUserName)) {
-			throw new MailingListInUserNameException();
+			throw new MailingListInUserNameException("InUserName is null");
 		}
 		else if (Validator.isNull(outEmailAddress)) {
-			throw new MailingListOutEmailAddressException();
+			throw new MailingListOutEmailAddressException(
+				"OutEmailAddress is null");
 		}
 		else if (outCustom) {
 			if (Validator.isNull(outServerName)) {
-				throw new MailingListOutServerNameException();
+				throw new MailingListOutServerNameException(
+					"OutServerName is null");
 			}
 			else if (Validator.isNull(outUserName)) {
-				throw new MailingListOutUserNameException();
+				throw new MailingListOutUserNameException(
+					"OutUserName is null");
 			}
 		}
 	}

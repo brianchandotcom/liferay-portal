@@ -2,7 +2,7 @@ Bundle-Name: Liferay Frontend Taglib
 Bundle-SymbolicName: com.liferay.frontend.taglib
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.frontend.taglib.servlet.taglib
+	com.liferay.frontend.taglib.servlet.taglib.*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources

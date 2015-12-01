@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module relativePaths="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="web" name="Web">
+      <configuration>
+        <webroots>
+          <root url="file://$MODULE_DIR$/src/main/resources/META-INF/resources" relative="/" />
+        </webroots>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/classes" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="journal-api" />
+    <orderEntry type="module" module-name="dynamic-data-mapping-api" />
+    <orderEntry type="module" module-name="osgi-service-tracker-collections" />
+    <orderEntry type="module" module-name="registry-api" />
+    <orderEntry type="module" module-name="portal-search" />
+    <orderEntry type="module" module-name="configuration-admin-api" />
+    <orderEntry type="module" module-name="journal-content-asset-addon-entry-common" />
+    <orderEntry type="module" module-name="journal-service" />
+    <orderEntry type="module" module-name="dynamic-data-mapping-service" />
+    <orderEntry type="module" module-name="dynamic-data-mapping-io" />
+    <orderEntry type="module" module-name="dynamic-data-mapping-form-field-type" />
+    <orderEntry type="module" module-name="dynamic-data-mapping-validator" />
+    <orderEntry type="module" module-name="export-import-api" />
+    <orderEntry type="module" module-name="mobile-device-rules-api" />
+    <orderEntry type="module" module-name="portal-upgrade" />
+    <orderEntry type="module" module-name="portal-output-stream-container" />
+    <orderEntry type="module" module-name="export-import-service" />
+    <orderEntry type="module" module-name="portal-background-task-api" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/com/liferay/portal/util-taglib/7.0.0-SNAPSHOT/util-taglib-7.0.0-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/jsp/jsp-api/2.1/jsp-api-2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/com/liferay/portal/portal-service/7.0.0-SNAPSHOT/portal-service-7.0.0-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/javax.portlet/portlet-api/2.0/1cd72f2a37fcf8ab9893a9468d7ba71c85fe2653/portlet-api-2.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/javax.portlet/portlet-api/2.0/aa3977c82050c29bb3577fc98c428d61ec187503/portlet-api-2.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/com/liferay/portal/portal-impl/7.0.0-SNAPSHOT/portal-impl-7.0.0-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.6/commons-lang-2.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.osgi/org.osgi.compendium/5.0.0/9d7a9c35591f6fa1c98ac85af32775c12361aee4/org.osgi.compendium-5.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.osgi/org.osgi.compendium/5.0.0/3f5760f4c64374f86e4071adae75e0db055eec84/org.osgi.compendium-5.0.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.apache.felix.utils/1.6.0/org.apache.felix.utils-1.6.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/biz.aQute.bnd/biz.aQute.bnd/2.4.1/bd6bf6435d4f73928d74a4d997c6578e6d7f7777/biz.aQute.bnd-2.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/biz.aQute.bnd/biz.aQute.bnd/2.4.1/275ea1af0bd0f9a51ab2839b30456fd7bb899698/biz.aQute.bnd-2.4.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/biz.aQute.bnd/biz.aQute.bndlib/3.0.0/563b21a20cc0dca3e44d297f954c8deb50598ced/biz.aQute.bndlib-3.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/biz.aQute.bnd/biz.aQute.bndlib/3.0.0/b6b811087e2946f46b9d3494fffa7acfe7a3ccb8/biz.aQute.bndlib-3.0.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/com.thoughtworks.xstream/xstream/1.4.7/bce3282142b63068260f021fcbe48b72e8d71a1a/xstream-1.4.7.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/com.thoughtworks.xstream/xstream/1.4.7/5db922f39e8bd8af65d4c4a9471fd94771e273d7/xstream-1.4.7-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.jodd/jodd-bean/3.6.4/4a23de4b6aed9e387602a89a3126985b0e2b4f9d/jodd-bean-3.6.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.jodd/jodd-bean/3.6.4/7b88d372e5eb64727a6965ef21ff07911385d1eb/jodd-bean-3.6.4-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.portal.spring.extender/1.0.2/deccecd20686137ea9bdf86c83af13094059d7ff/com.liferay.portal.spring.extender-1.0.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/xmlpull/xmlpull/1.1.3.1/xmlpull-1.1.3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.jodd/jodd-core/3.6.4/1364ed4465822699e11dc227fc1ca5dce61c0dc6/jodd-core-3.6.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.jodd/jodd-core/3.6.4/3ce6014860ebefa038f454d057e85718f37ee56e/jodd-core-3.6.4-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.apache.felix/org.apache.felix.dependencymanager/3.2.0/cb9f756a8bfe422fad8e2fd46fb553edad885e2a/org.apache.felix.dependencymanager-3.2.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.apache.felix/org.apache.felix.dependencymanager/3.2.0/723df717c17f5cbc94cea2340bc969ccbffd3e54/org.apache.felix.dependencymanager-3.2.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.apache.felix/org.apache.felix.dependencymanager.shell/3.2.0/54495ca63295266960a78a9137f0e16d7dadabd8/org.apache.felix.dependencymanager.shell-3.2.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.apache.felix/org.apache.felix.dependencymanager.shell/3.2.0/9d1f58d17ced0fcd8ca03c331cbf07f209aff6cd/org.apache.felix.dependencymanager.shell-3.2.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.apache.felix/org.apache.felix.gogo.runtime/0.10.0/9a390811c533254033fae4c7ae4c94620ec836f6/org.apache.felix.gogo.runtime-0.10.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.apache.felix/org.apache.felix.gogo.runtime/0.10.0/1f4059804ed10c2ef99d74917d1128819135c96e/org.apache.felix.gogo.runtime-0.10.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.osgi/org.osgi.core/6.0.0/c49acdc9ac62cf69ee49cb6f1905b4fdb79ea5c/org.osgi.core-6.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.osgi/org.osgi.core/6.0.0/347531f45363ed10e222b03231d49bb7df016a4d/org.osgi.core-6.0.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-api-mockito/1.6.1/82e69a577d593d410e999058648ab95c2cce763e/powermock-api-mockito-1.6.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-api-mockito/1.6.1/1c1f0959d391d420b83a61db86a109f32a34ce67/powermock-api-mockito-1.6.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-api-support/1.6.1/592ee6d929c324109d3469501222e0c76ccf0869/powermock-api-support-1.6.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-api-support/1.6.1/aa94bd7c7dfc5b633138060420aae87ff66905d7/powermock-api-support-1.6.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-core/1.6.1/5afc1efce8d44ed76b30af939657bd598e45d962/powermock-core-1.6.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-core/1.6.1/8de7ccce9e151590a636ad15d01be7e43bbd4e26/powermock-core-1.6.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-module-junit4/1.6.1/ea8530b2848542624f110a393513af397b37b9cf/powermock-module-junit4-1.6.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-module-junit4/1.6.1/a83243738ad1a30b4c1f8527166f41d48f608f/powermock-module-junit4-1.6.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-module-junit4-common/1.6.1/7222ced54dabc310895d02e45c5428ca05193cda/powermock-module-junit4-common-1.6.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-module-junit4-common/1.6.1/d2532fa21f6916e830b5f53ea89b40b11f196701/powermock-module-junit4-common-1.6.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-reflect/1.6.1/97d25eda8275c11161bcddda6ef8beabd534c878/powermock-reflect-1.6.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.powermock/powermock-reflect/1.6.1/e8383abd56f0367a494ace9f9bed112f2dfeb592/powermock-reflect-1.6.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.springframework/spring-test/3.2.10.RELEASE/f157f4cb7d0805e7b22744aa6e94b04ab13b3388/spring-test-3.2.10.RELEASE.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.springframework/spring-test/3.2.10.RELEASE/a43612913308ab5ee5669fa16d4f17bdc65c2bf4/spring-test-3.2.10.RELEASE-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/com/liferay/portal/portal-test/7.0.0-SNAPSHOT/portal-test-7.0.0-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/com/liferay/portal/portal-test-internal/7.0.0-SNAPSHOT/portal-test-internal-7.0.0-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.javassist/javassist/3.18.2-GA/1180a90fbad732b60fb728a6bbe8fcb3151423d7/javassist-3.18.2-GA.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.javassist/javassist/3.18.2-GA/7163084913aa7399e4ce2cbc3ee5c00ac2b1f35f/javassist-3.18.2-GA-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.1/87c0ea803b69252868d09308b4618f766f135a96/objenesis-2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.1/611a57d836e2c320d59f9851d4ad587f3c8472e/objenesis-2.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/3.2.10.RELEASE/304a432abd4f60cc329fcaaab90a3f73f3e69684/spring-core-3.2.10.RELEASE.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/3.2.10.RELEASE/1d16cfd7ae6b2a5e38ea3a13b884091dcbb60b/spring-core-3.2.10.RELEASE-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.1.3/commons-logging-1.1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.mockito/mockito-all/1.10.8/290232467869e43983cb6f269268aea2920c21b8/mockito-all-1.10.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.mockito/mockito-all/1.10.8/73d1dbe5c848d01819d024337981840f9aeb2817/mockito-all-1.10.8-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.whip/1.0.0/b17b8878c5fa9aa83b7d9fbc2d9c8f98e3ef5e95/com.liferay.whip-1.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/com.liferay/com.liferay.whip/1.0.0/17aa461b8d9282aa01061b9388dc4f19fda74e61/com.liferay.whip-1.0.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-debug-all/5.0.1/f69b5f7d96cec0d448acf1c1a266584170c9643b/asm-debug-all-5.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-debug-all/5.0.1/78ebb2694324283f3120aa3ed52465b22fab8a4a/asm-debug-all-5.0.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>

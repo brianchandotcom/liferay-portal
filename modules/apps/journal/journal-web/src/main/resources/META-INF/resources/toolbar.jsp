@@ -39,6 +39,12 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-filter
+			filter="status"
+			filterItems="<%= journalDisplayContext.getStatusFilterItems() %>"
+			label="<%= journalDisplayContext.getStatusFilterLabel() %>"
+		/>
+
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
 			orderByType="<%= journalDisplayContext.getOrderByType() %>"

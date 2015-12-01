@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
+import com.liferay.frontend.taglib.servlet.taglib.util.ManagementBarFilterItem;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -51,14 +52,17 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.PortletURLUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 
@@ -490,6 +494,60 @@ public class JournalDisplayContext {
 		return _status;
 	}
 
+	public List<ManagementBarFilterItem> getStatusFilterItems()
+		throws PortalException, PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String parameterName = "status";
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			getPortletURL(), _liferayPortletResponse);
+
+		List<ManagementBarFilterItem> filterItems = new ArrayList<>();
+
+		filterItems.add(
+			_getFilteredItem(
+				parameterName, portletURL, WorkflowConstants.STATUS_ANY));
+		filterItems.add(
+			_getFilteredItem(
+				parameterName, portletURL, WorkflowConstants.STATUS_DRAFT));
+
+		int linksCount =
+			WorkflowDefinitionLinkLocalServiceUtil.
+				getWorkflowDefinitionLinksCount(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					JournalFolder.class.getName());
+
+		if (linksCount > 0) {
+			filterItems.add(
+				_getFilteredItem(
+					parameterName, portletURL,
+					WorkflowConstants.STATUS_PENDING));
+			filterItems.add(
+				_getFilteredItem(
+					parameterName, portletURL,
+					WorkflowConstants.STATUS_DENIED));
+		}
+
+		filterItems.add(
+			_getFilteredItem(
+				parameterName, portletURL, WorkflowConstants.STATUS_SCHEDULED));
+		filterItems.add(
+			_getFilteredItem(
+				parameterName, portletURL, WorkflowConstants.STATUS_APPROVED));
+		filterItems.add(
+			_getFilteredItem(
+				parameterName, portletURL, WorkflowConstants.STATUS_EXPIRED));
+
+		return filterItems;
+	}
+
+	public String getStatusFilterLabel() {
+		return WorkflowConstants.getStatusLabel(getStatus());
+	}
+
 	public boolean isNavigationHome() {
 		if (Validator.equals(getNavigation(), "home")) {
 			return true;
@@ -607,6 +665,14 @@ public class JournalDisplayContext {
 		}
 
 		return displayStyle;
+	}
+
+	private ManagementBarFilterItem _getFilteredItem(
+		String parameterName, PortletURL portletURL, int status) {
+
+		portletURL.setParameter(parameterName, String.valueOf(status));
+		return new ManagementBarFilterItem(
+			WorkflowConstants.getStatusLabel(status), portletURL.toString());
 	}
 
 	private JournalArticle _article;

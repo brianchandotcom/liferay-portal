@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
+import org.dom4j.Node;
 
 /**
  * @author Karen Dang
@@ -227,7 +228,17 @@ public class PoshiRunnerValidation {
 			PoshiRunnerGetterUtil.getAllChildElements(element, "return");
 
 		if (returns == null) {
-			if (!returnElements.isEmpty()) {
+			List<Element> validReturnElements = new ArrayList<>();
+
+			for (Element returnElement : returnElements) {
+				Element parentElement = returnElement.getParent();
+
+				if (!Validator.equals(parentElement.getName(), "execute")) {
+					validReturnElements.add(returnElement);
+				}
+			}
+
+			if (!validReturnElements.isEmpty()) {
 				_exceptions.add(
 					new Exception(
 						element.attributeValue("name") +

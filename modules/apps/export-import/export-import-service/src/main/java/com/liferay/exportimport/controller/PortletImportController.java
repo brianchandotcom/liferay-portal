@@ -753,6 +753,42 @@ public class PortletImportController implements ImportController {
 		return PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS;
 	}
 
+	protected void importAssetLinks(PortletDataContext portletDataContext)
+		throws Exception {
+
+		String xml = portletDataContext.getZipEntryAsString(
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/links.xml");
+
+		if (xml == null) {
+			return;
+		}
+
+		Element importDataRootElement =
+			portletDataContext.getImportDataRootElement();
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			Element rootElement = document.getRootElement();
+
+			portletDataContext.setImportDataRootElement(rootElement);
+
+			Element linksElement = portletDataContext.getImportDataGroupElement(
+				StagedAssetLink.class);
+
+			List<Element> linkElements = linksElement.elements();
+
+			for (Element linkElement : linkElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, linkElement);
+			}
+		}
+		finally {
+			portletDataContext.setImportDataRootElement(importDataRootElement);
+		}
+	}
+
 	protected void importPortletData(
 			PortletDataContext portletDataContext, Element portletDataElement)
 		throws Exception {
@@ -1031,42 +1067,6 @@ public class PortletImportController implements ImportController {
 
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
 			portletDataHandler.getDeletionSystemEventStagedModelTypes());
-	}
-
-	protected void importAssetLinks(PortletDataContext portletDataContext)
-		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/links.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Element importDataRootElement =
-			portletDataContext.getImportDataRootElement();
-
-		try {
-			Document document = SAXReaderUtil.read(xml);
-
-			Element rootElement = document.getRootElement();
-
-			portletDataContext.setImportDataRootElement(rootElement);
-
-			Element linksElement = portletDataContext.getImportDataGroupElement(
-				StagedAssetLink.class);
-
-			List<Element> linkElements = linksElement.elements();
-
-			for (Element linkElement : linkElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, linkElement);
-			}
-		}
-		finally {
-			portletDataContext.setImportDataRootElement(importDataRootElement);
-		}
 	}
 
 	protected void readExpandoTables(PortletDataContext portletDataContext)

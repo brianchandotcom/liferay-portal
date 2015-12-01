@@ -352,6 +352,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>management-bar-filter</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>label</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>filter</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>filterItems</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>management-bar-filters</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarFiltersTag</tag-class>
 		<body-content>JSP</body-content>
@@ -397,26 +417,6 @@
 		</attribute>
 		<attribute>
 			<name>portletURL</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<name>management-bar-status</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarStatusTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>portletURL</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>status</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>statuses</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

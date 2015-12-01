@@ -15,3 +15,5 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%@ page import="com.liferay.frontend.taglib.servlet.taglib.util.ManagementBarFilterItem" %>

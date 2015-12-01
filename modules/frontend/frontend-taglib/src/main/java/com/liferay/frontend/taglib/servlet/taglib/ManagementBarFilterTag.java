@@ -15,11 +15,10 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.servlet.taglib.util.ManagementBarFilterItem;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.Map;
-
-import javax.portlet.PortletURL;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -29,13 +28,25 @@ import javax.servlet.jsp.tagext.BodyTag;
 /**
  * @author Eudaldo Alonso
  */
-public class ManagementBarStatusTag extends IncludeTag implements BodyTag {
+public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 
 	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		return super.doStartTag();
+	}
+
+	public void setFilter(String filter) {
+		_filter = filter;
+	}
+
+	public void setFilterItems(List<ManagementBarFilterItem> filterItems) {
+		_filterItems = filterItems;
+	}
+
+	public void setLabel(String label) {
+		_label = label;
 	}
 
 	@Override
@@ -45,23 +56,11 @@ public class ManagementBarStatusTag extends IncludeTag implements BodyTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setPortletURL(PortletURL portletURL) {
-		_portletURL = portletURL;
-	}
-
-	public void setStatus(int status) {
-		_status = status;
-	}
-
-	public void setStatuses(Map<Integer, String> statuses) {
-		_statuses = statuses;
-	}
-
 	@Override
 	protected void cleanUp() {
-		_portletURL = null;
-		_status = -1;
-		_statuses = null;
+		_filter = null;
+		_filterItems = null;
+		_label = null;
 	}
 
 	@Override
@@ -82,22 +81,22 @@ public class ManagementBarStatusTag extends IncludeTag implements BodyTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-frontend:management-bar-status:portletURL", _portletURL);
+			"liferay-frontend:management-bar-filter:filter", _filter);
 		request.setAttribute(
-			"liferay-frontend:management-bar-status:status", _status);
+			"liferay-frontend:management-bar-filter:filterItems", _filterItems);
 		request.setAttribute(
-			"liferay-frontend:management-bar-status:statuses", _statuses);
+			"liferay-frontend:management-bar-filter:label", _label);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-frontend:management-bar-status:";
+		"liferay-frontend:management-bar-filter:";
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE = "/management_bar_status/page.jsp";
+	private static final String _PAGE = "/management_bar_filter/page.jsp";
 
-	private PortletURL _portletURL;
-	private int _status;
-	private Map<Integer, String> _statuses;
+	private String _filter;
+	private List<ManagementBarFilterItem> _filterItems;
+	private String _label;
 
 }

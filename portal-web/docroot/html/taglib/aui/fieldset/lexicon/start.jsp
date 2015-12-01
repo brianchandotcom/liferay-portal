@@ -27,7 +27,7 @@
 		</liferay-util:buffer>
 
 		<div class="panel-heading" id="<%= panelId %>Header" role="presentation">
-			<div class="h4 panel-title" id="<%= panelId %>Title">
+			<div class="panel-title" id="<%= panelId %>Title">
 				<c:choose>
 					<c:when test="<%= collapsible %>">
 						<a aria-controls="<%= panelId %>Content" aria-expanded="true" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" href="#<%= panelId %>Content" role="button">
@@ -42,5 +42,5 @@
 		</div>
 	</c:if>
 
-	<div aria-labelledby="<%= panelId %>Header" class="<%= !collapsed ? "in" : StringPool.BLANK %> <%= collapsible ? "panel-collapse collapse" : StringPool.BLANK %> <%= column ? "row-fluid" : StringPool.BLANK %>" id="<%= panelId %>Content" role="presentation">
+	<div aria-labelledby="<%= panelId %>Header" class="<%= !collapsed ? "in" : StringPool.BLANK %> <%= collapsible ? "panel-collapse collapse" : StringPool.BLANK %> <%= column ? "row" : StringPool.BLANK %>" id="<%= panelId %>Content" role="presentation">
 		<div class="panel-body">

@@ -18,14 +18,14 @@
 
 <%
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:management-bar-status:portletURL");
-int status = GetterUtil.getInteger((String)request.getAttribute("liferay-frontend:management-bar-status:status"));
-int[] statuses = (int[])request.getAttribute("liferay-frontend:management-bar-status:statuses");
+int status = GetterUtil.getInteger(request.getAttribute("liferay-frontend:management-bar-status:status"));
+Map<Integer, String> statuses = (Map<Integer, String>)request.getAttribute("liferay-frontend:management-bar-status:statuses");
 %>
 
-<c:if test="<%= statuses.length > 0 %>">
+<c:if test="<%= statuses.size() > 0 %>">
 	<li class="dropdown">
 		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
-			<span class="management-bar-item-title"><liferay-ui:message key="status" />: <liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(status) %>" /></span>
+			<span class="management-bar-item-title"><liferay-ui:message key="status" />: <liferay-ui:message key="<%= statuses.get(status) %>" /></span>
 			<span class="icon-sort"></span>
 		</a>
 
@@ -34,12 +34,12 @@ int[] statuses = (int[])request.getAttribute("liferay-frontend:management-bar-st
 			<%
 			PortletURL statusURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
-			for (int curStatus : statuses) {
+			for (int curStatus : statuses.keySet()) {
 				statusURL.setParameter("status", String.valueOf(curStatus));
 			%>
 
 				<li class="<%= (status == curStatus) ? "active" : StringPool.BLANK %>">
-					<aui:a href="<%= statusURL.toString() %>" label="<%= WorkflowConstants.getStatusLabel(curStatus) %>" />
+					<aui:a href="<%= statusURL.toString() %>" label="<%= statuses.get(curStatus) %>" />
 				</li>
 
 			<%

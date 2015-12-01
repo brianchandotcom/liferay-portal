@@ -15,8 +15,9 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -52,14 +53,14 @@ public class ManagementBarStatusTag extends IncludeTag implements BodyTag {
 		_status = status;
 	}
 
-	public void setStatuses(int[] statuses) {
+	public void setStatuses(Map<Integer, String> statuses) {
 		_statuses = statuses;
 	}
 
 	@Override
 	protected void cleanUp() {
 		_portletURL = null;
-		_status = WorkflowConstants.STATUS_APPROVED;
+		_status = -1;
 		_statuses = null;
 	}
 
@@ -96,7 +97,7 @@ public class ManagementBarStatusTag extends IncludeTag implements BodyTag {
 	private static final String _PAGE = "/management_bar_status/page.jsp";
 
 	private PortletURL _portletURL;
-	private int _status = WorkflowConstants.STATUS_APPROVED;
-	private int[] _statuses;
+	private int _status;
+	private Map<Integer, String> _statuses;
 
 }

@@ -417,7 +417,7 @@
 		</attribute>
 		<attribute>
 			<name>statuses</name>
-			<required>false</required>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

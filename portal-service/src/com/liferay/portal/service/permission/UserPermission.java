@@ -22,32 +22,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
  */
 public interface UserPermission {
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public void check(
-			PermissionChecker permissionChecker, long userId,
-			long organizationId, long locationId, String actionId)
-		throws PrincipalException;
-
-	public void check(
-			PermissionChecker permissionChecker, long userId,
-			long[] organizationIds, String actionId)
-		throws PrincipalException;
-
-	public void check(
-			PermissionChecker permissionChecker, long userId, String actionId)
-		throws PrincipalException;
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public boolean contains(
-		PermissionChecker permissionChecker, long userId, long organizationId,
-		long locationId, String actionId);
-
 	public boolean contains(
 		PermissionChecker permissionChecker, long userId,
 		long[] organizationIds, String actionId);

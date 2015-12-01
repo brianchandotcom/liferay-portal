@@ -16,6 +16,7 @@ package com.liferay.portal.license.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.license.LicenseInfo;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -23,7 +24,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.license.LicenseInfo;
+import com.liferay.portal.util.LicenseUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Arrays;
@@ -37,7 +38,7 @@ import java.util.Set;
  */
 @DoPrivileged
 public class DefaultLicenseManagerImpl
-	implements com.liferay.portal.license.util.LicenseManager {
+	implements com.liferay.portal.kernel.license.util.LicenseManager {
 
 	@Override
 	public void checkLicense(String productId) {

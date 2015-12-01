@@ -12,27 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.license.util;
+package com.liferay.portal.util;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 
 /**
  * @author Manuel de la Peña
  */
-public class LicenseUtilLinuxTest extends BaseLicenseUtilTestCase {
+public class LicenseUtilAixTest extends BaseLicenseUtilTestCase {
 
 	@Override
 	protected String getDependenciesFileName() {
-		return "ubuntu";
+		return "aix";
+	}
+
+	@Override
+	protected Pattern getMacAddressPattern() {
+		return Pattern.compile(
+			"\\s((\\p{XDigit}{1,2}(\\.)){5}(\\p{XDigit}{1,2}))(?:\\s|$)");
 	}
 
 	@Override
 	protected void testMacAddresses(Set<String> macAddresses) {
 		Assert.assertEquals(macAddresses.size(), 2);
-		Assert.assertTrue(macAddresses.contains("5c:26:0a:33:b3:d5"));
-		Assert.assertTrue(macAddresses.contains("00:24:d7:82:96:f4"));
+		Assert.assertTrue(macAddresses.contains("66:da:90:6b:f1:17"));
+		Assert.assertTrue(macAddresses.contains("66:da:90:6b:f1:18"));
 	}
 
 }

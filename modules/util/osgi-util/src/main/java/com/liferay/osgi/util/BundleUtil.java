@@ -29,22 +29,11 @@ public class BundleUtil {
 
 	public static URL getResourceInBundleOrFragments(
 		Bundle bundle, String name) {
-		
-		String dirName = "/";
-		String fileName = name;
 
-		int index = name.lastIndexOf('/');
-
-		if (index > 0) {
-			dirName = name.substring(0, index);
-			fileName = name.substring(index + 1);
-		}
-		else if (index == 0) {
-			fileName = name.substring(1);
-		}
+		File file = new File(name);
 
 		Enumeration<URL> enumeration = bundle.findEntries(
-			dirName, fileName, false);
+			file.getParent(), file.getName(), false);
 
 		if ((enumeration == null) || !enumeration.hasMoreElements()) {
 			return null;

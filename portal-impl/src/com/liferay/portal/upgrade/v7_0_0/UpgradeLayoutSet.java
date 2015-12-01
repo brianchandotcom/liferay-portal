@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 
 import java.sql.Connection;
@@ -47,7 +48,7 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 			ps = con.prepareStatement(
 				"update Group_ set site = ? where groupId = ?");
 
-			ps.setInt(1, 0);
+			ps.setBoolean(1, false);
 			ps.setLong(2, groupId);
 
 			ps.executeUpdate();
@@ -73,14 +74,15 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 			ps = con.prepareStatement(
-				"update LayoutSet set layoutSetPrototypeLinkEnabled = ? ," +
-					" layoutSetPrototypeUuid = '' , modifiedDate = ?," +
-						"pageCount = ? where layoutSetId = ?");
+				"update LayoutSet set modifiedDate = ?, pageCount = ?," +
+				" layoutSetPrototypeUuid = ?," +
+				" layoutSetPrototypeLinkEnabled = ?  where layoutSetId = ?");
 
-			ps.setInt(1, 0);
-			ps.setTimestamp(2, timestamp);
-			ps.setInt(3, 0);
-			ps.setLong(4, layoutSetId);
+			ps.setTimestamp(1, timestamp);
+			ps.setInt(2, 0);
+			ps.setString(3, StringPool.BLANK);
+			ps.setBoolean(4, false);
+			ps.setLong(5, layoutSetId);
 
 			ps.executeUpdate();
 		}
@@ -106,14 +108,14 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(8);
-			sb.append("select LayoutSet.layoutSetId, Group_.groupId,");
-			sb.append("Layout.privateLayout, Group_.site, Group_.classNameId ");
-			sb.append("from LayoutSet left join Group_ on ");
-			sb.append("(Group_.groupid = LayoutSet.groupid) left join");
-			sb.append(" Layout on (Layout.groupid = LayoutSet.groupid ");
-			sb.append("and Layout.privateLayout = LayoutSet.privateLayout) ");
-			sb.append("where LayoutSet.layoutSetPrototypeUuid != ''");
-			sb.append("and LayoutSet.layoutSetPrototypeLinkEnabled = 1 ");
+			sb.append("select LayoutSet.layoutSetId, Layout.privateLayout,");
+			sb.append(" Group_.groupId, Group_.site, Group_.classNameId");
+			sb.append(" from LayoutSet left join Group_ on");
+			sb.append(" (Group_.groupId = LayoutSet.groupId) left join");
+			sb.append(" Layout on (Layout.groupId = LayoutSet.groupId");
+			sb.append(" and Layout.privateLayout = LayoutSet.privateLayout)");
+			sb.append(" where LayoutSet.layoutSetPrototypeUuid != ''");
+			sb.append(" and LayoutSet.layoutSetPrototypeLinkEnabled = 1");
 
 			ps = con.prepareStatement(sb.toString());
 
@@ -121,29 +123,17 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 
 			while (rs.next()) {
 				long layoutSetId = rs.getLong("layoutSetId");
-				long groupId = rs.getLong("groupId");
 				String privateLayout = rs.getString("privateLayout");
+				long groupId = rs.getLong("groupId");
 				boolean isSite = rs.getBoolean("site");
 				long orgClassNameId = rs.getLong("classNameId");
 
-				boolean isOrganization =
-					orgClassNameId == classNameId ? true : false;
-				boolean updateLayoutSetRequired = false;
+				if ((classNameId == orgClassNameId) &&
+					(!isSite || (privateLayout == null))) {
+						updateLayoutSet(layoutSetId);
 
-				if (isSite) {
-					if ((privateLayout == null) && isOrganization) {
-						updateLayoutSetRequired = true;
-						}
-				}
-				else if (isOrganization) {
-					updateLayoutSetRequired = true;
-				}
-
-				if (updateLayoutSetRequired) {
-					updateLayoutSet(layoutSetId);
-
-					updateGroupSite(groupId);
-				}
+						updateGroupSite(groupId);
+					}
 			}
 		}
 		finally {

@@ -89,9 +89,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 <aui:form action="<%= deleteTeamUsersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
-	<aui:input name="addUserIds" type="hidden" />
 
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-button-on-the-top-of-this-box"
@@ -119,6 +117,14 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	</liferay-ui:search-container>
 </aui:form>
 
+<portlet:actionURL name="addTeamUsers" var="addTeamUsersURL" />
+
+<aui:form action="<%= addTeamUsersURL %>" cssClass="hide" name="addTeamUsersFm">
+	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
+</aui:form>
+
 <aui:script use="liferay-item-selector-dialog">
 	var Util = Liferay.Util;
 
@@ -143,9 +149,11 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								form.fm('addUserIds').val(selectedItem.value);
+								var addTeamUsersFm = $(document.<portlet:namespace />addTeamUsersFm);
 
-								submitForm(form, '<portlet:actionURL name="addTeamUsers" />');
+								addTeamUsersFm.append(selectedItem);
+
+								submitForm(addTeamUsersFm);
 							}
 						}
 					},

@@ -110,29 +110,18 @@ roleSearch.setResults(roles);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	$('input[name="<portlet:namespace />rowIds"]').on(
-		'change',
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroupGroupRoleRole');
+
+	searchContainer.on(
+		'rowToggled',
 		function(event) {
-			<portlet:namespace />updateUserGroupGroupRole();
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(eventName) %>',
+				{
+					data: event.elements.allSelectedElements.getDOMNodes()
+				}
+			);
 		}
 	);
-
-	function <portlet:namespace />updateUserGroupGroupRole() {
-		var Util = Liferay.Util;
-
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		var values = {
-			data: {
-				addRoleIds: Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'),
-				removeRoleIds: Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'),
-				userGroupId: <%= siteMembershipsDisplayContext.getUserGroupId() %>
-			}
-		};
-
-		Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', values);
-	}
-
-	<portlet:namespace />updateUserGroupGroupRole();
 </aui:script>

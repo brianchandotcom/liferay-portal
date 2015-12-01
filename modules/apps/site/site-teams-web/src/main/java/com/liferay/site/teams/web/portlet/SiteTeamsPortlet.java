@@ -21,7 +21,6 @@ import com.liferay.portal.TeamNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -79,15 +78,10 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
-		long[] addUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
+		long[] addUserGroupIds = ParamUtil.getLongValues(
+			actionRequest, "rowIds");
 
 		_userGroupService.addTeamUserGroups(teamId, addUserGroupIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void addTeamUsers(
@@ -96,15 +90,9 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
-		long[] addUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] addUserIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		_userService.addTeamUsers(teamId, addUserIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void deleteTeam(
@@ -147,11 +135,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		}
 
 		_userGroupService.unsetTeamUserGroups(teamId, removeUserGroupIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void deleteTeamUsers(
@@ -172,11 +155,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		}
 
 		_userService.unsetTeamUsers(teamId, removeUserIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void editTeam(

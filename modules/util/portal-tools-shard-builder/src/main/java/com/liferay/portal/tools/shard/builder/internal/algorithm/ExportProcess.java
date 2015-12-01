@@ -39,28 +39,22 @@ public class ExportProcess {
 	public void export(ExportContext exportContext)
 		throws IOException, SQLException {
 
-		List<String> tableNamesWithoutCompanyId =
-			_dbProvider.getTableNamesWithoutCompanyId(
+		List<String> partitionedTables = _dbProvider.getPartitionedTables(
 				exportContext.getSchema());
+		List<String> controlTables = _dbProvider.getControlTables(
+			exportContext.getSchema());
 
 		List<Long> companyIds = exportContext.getCompanyIds();
 
 		for (Long companyId : companyIds) {
-			_exportCompany(
-				companyId, tableNamesWithoutCompanyId, exportContext);
+			_exportCompany(companyId, partitionedTables, exportContext);
+			_exportCompany(companyId, controlTables, exportContext);
 		}
 	}
 
 	private void _exportCompany(
-			long companyId, List<String> tableNamesWithoutCompanyId,
-			ExportContext exportContext)
-		throws IOException, SQLException {
-
-		StringBuilder inserts = new StringBuilder();
-
-		for (String tableName : tableNamesWithoutCompanyId) {
-			inserts.append(_dbProvider.getTableRows(tableName));
-		}
+			long companyId, List<String> tables,ExportContext exportContext)
+		throws IOException {
 
 		String outputFileName =
 			exportContext.getSchema() + "-" + companyId + ".sql";
@@ -71,7 +65,12 @@ public class ExportProcess {
 		OutputStream outputStream = new BufferedOutputStream(
 			new FileOutputStream(outputFile));
 
-		outputStream.write(inserts.toString().getBytes());
+		for (String tableName : tables) {
+			_dbProvider.write(tableName, outputStream);
+		}
+
+		outputStream.flush();
+		outputStream.close();
 	}
 
 	private final DBProvider _dbProvider;

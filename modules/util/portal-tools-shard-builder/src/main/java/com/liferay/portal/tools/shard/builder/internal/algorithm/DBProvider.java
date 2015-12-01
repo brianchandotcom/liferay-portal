@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.shard.builder.internal.algorithm;
 
+import java.io.OutputStream;
 import java.sql.SQLException;
 
 import java.util.List;
@@ -23,8 +24,10 @@ import java.util.List;
  */
 public interface DBProvider {
 
-	public List<String> getTableNamesWithoutCompanyId(String schema);
+	public List<String> getControlTables(String schema);
 
-	public String getTableRows(String tableName) throws SQLException;
+	public List<String> getPartitionedTables(String schema);
+
+	public String write(String tableName, OutputStream outputStream);
 
 }

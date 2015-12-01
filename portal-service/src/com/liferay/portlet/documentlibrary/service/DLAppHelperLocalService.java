@@ -82,26 +82,9 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(
 		long groupId, long folderId, boolean active, int status);
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getFileShortcuts(long, long,
-	boolean, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(
-		long groupId, long folderId, int status);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileShortcutsCount(long groupId, long folderId,
 		boolean active, int status);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getFileShortcutsCount(long,
-	long, boolean, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileShortcutsCount(long groupId, long folderId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getNoAssetFileEntries();

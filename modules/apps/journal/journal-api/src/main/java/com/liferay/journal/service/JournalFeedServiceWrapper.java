@@ -57,16 +57,6 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 		_journalFeedService.deleteFeed(feedId);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
-	*/
-	@Deprecated
-	@Override
-	public void deleteFeed(long groupId, long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_journalFeedService.deleteFeed(groupId, feedId);
-	}
-
 	@Override
 	public void deleteFeed(long groupId, java.lang.String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -83,16 +73,6 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 	public com.liferay.journal.model.JournalFeed getFeed(long groupId,
 		java.lang.String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFeedService.getFeed(groupId, feedId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.journal.model.JournalFeed getFeed(long groupId,
-		long feedId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedService.getFeed(groupId, feedId);
 	}
 

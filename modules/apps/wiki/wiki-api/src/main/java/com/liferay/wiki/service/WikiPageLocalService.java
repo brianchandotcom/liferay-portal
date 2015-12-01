@@ -138,14 +138,6 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public void deletePage(long nodeId, java.lang.String title)
 		throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	double)}
-	*/
-	@java.lang.Deprecated
-	public void deletePage(long nodeId, java.lang.String title, double version)
-		throws PortalException;
-
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false, type = SystemEventConstants.TYPE_DELETE)
 	public void deletePage(com.liferay.wiki.model.WikiPage page)
 		throws PortalException;
@@ -496,25 +488,8 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(
 		long groupId, long nodeId, int start, int end);
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long,
-	int, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(
-		long nodeId, int start, int end) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecentChangesCount(long groupId, long nodeId);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getRecentChangesCount(long,
-	long)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecentChangesCount(long nodeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getRedirectorPages(
@@ -613,16 +588,6 @@ public interface WikiPageLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public void movePage(long userId, long nodeId, java.lang.String title,
 		java.lang.String newTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
-	String, String, boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public void movePage(long userId, long nodeId, java.lang.String title,
-		java.lang.String newTitle, boolean strict,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

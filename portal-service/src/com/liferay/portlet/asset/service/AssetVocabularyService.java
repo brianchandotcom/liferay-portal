@@ -60,14 +60,6 @@ public interface AssetVocabularyService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, Replaced by {@link #deleteVocabularies(long[],
-	ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public void deleteVocabularies(long[] vocabularyIds)
-		throws PortalException;
-
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> deleteVocabularies(
 		long[] vocabularyIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -149,16 +141,6 @@ public interface AssetVocabularyService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getGroupsVocabularies(
 		long[] groupIds, java.lang.String className, long classTypePK);
-
-	/**
-	* @deprecated As of 6.2.0, with no direct replacement
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.json.JSONObject getJSONGroupVocabularies(
-		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> obc)
-		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

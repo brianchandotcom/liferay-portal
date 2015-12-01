@@ -85,9 +85,9 @@
 			<jvmarg value="-Xmx1024m" />
 			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
 			<arg value="sass.compiler.class.name=${sass.compiler.class.name}" />
-			<arg value="sass.generate.source.map=${sass.generate.source.map}" />
 			<arg value="sass.dir=/html/portlet" />
 			<arg value="sass.docroot.dir=${basedir}/docroot" />
+			<arg value="sass.generate.source.map=${sass.generate.source.map}" />
 			<arg value="sass.portal.common.dir=${sass.portal.common.dir}" />
 			<arg value="sass.precision=${sass.precision}" />
 		</java>

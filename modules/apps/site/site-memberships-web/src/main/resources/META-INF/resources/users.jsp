@@ -125,6 +125,13 @@ userSearch.setResults(users);
 	</liferay-ui:search-container>
 </aui:form>
 
+<portlet:actionURL name="addGroupUsers" var="addGroupUsersURL" />
+
+<aui:form action="<%= addGroupUsersURL %>" cssClass="hide" method="post" name="addGroupUsersFm">
+	<aui:input name="tabs1" type="hidden" value="users" />
+	<aui:input name="assignmentsRedirect" type="hidden" />
+</aui:form>
+
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 	<liferay-frontend:add-menu>
 		<liferay-frontend:add-menu-item id="selectUsers" title='<%= LanguageUtil.get(request, "assign-users") %>' url="javascript:;" />
@@ -191,9 +198,11 @@ userSearch.setResults(users);
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								form.fm('addUserIds').val(selectedItem.addUserIds);
+								var addGroupUsersFm = $(document.<portlet:namespace />addGroupUsersFm);
 
-								submitForm(form, '<portlet:actionURL name="addGroupUsers" />');
+								addGroupUsersFm.append(selectedItem);
+
+								submitForm(addGroupUsersFm);
 							}
 						}
 					},

@@ -118,21 +118,18 @@ userSearch.setResults(users);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	var Util = Liferay.Util;
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
 
-	var form = AUI.$(document.<portlet:namespace />fm);
-
-	$('input[name="<portlet:namespace />rowIds"]').on(
-		'change',
+	searchContainer.on(
+		'rowToggled',
 		function(event) {
-			var values = {
-				data: {
-					addUserIds: Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(eventName) %>',
+				{
+					data: event.elements.allSelectedElements.getDOMNodes()
 				}
-			};
-
-			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', values);
+			);
 		}
 	);
 </aui:script>

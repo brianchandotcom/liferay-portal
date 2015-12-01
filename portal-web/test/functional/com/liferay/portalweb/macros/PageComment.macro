@@ -5,7 +5,7 @@
 
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
@@ -50,7 +50,7 @@
 			<then>
 				<execute function="ClickNoError" locator1="Comments#DELETE_LINK_GENERIC" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request processed successfully." />
+				<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>

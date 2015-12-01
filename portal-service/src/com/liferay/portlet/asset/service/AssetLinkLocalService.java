@@ -107,6 +107,8 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
 		long linkId) throws PortalException;
 
+	public void deleteGroupLinks(long groupId);
+
 	/**
 	* Deletes the asset link.
 	*

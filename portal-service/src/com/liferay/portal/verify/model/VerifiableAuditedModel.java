@@ -25,6 +25,8 @@ public interface VerifiableAuditedModel extends VerifiableModel {
 
 	public String getRelatedPKColumnName();
 
+	public boolean isAnonymousUserAllowed();
+
 	public boolean isUpdateDates();
 
 }

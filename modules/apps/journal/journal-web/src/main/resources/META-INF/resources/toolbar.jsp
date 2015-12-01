@@ -18,8 +18,6 @@
 
 <%
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
-
-String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <liferay-frontend:management-bar
@@ -27,19 +25,32 @@ String keywords = ParamUtil.getString(request, "keywords");
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
+			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+		</c:if>
 
-		<c:if test="<%= Validator.isNull(keywords) %>">
-			<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
+		<c:if test="<%= !journalDisplayContext.isSearch() %>">
+			<liferay-frontend:management-bar-display-buttons
+				displayViews="<%= journalDisplayContext.getDisplayViews() %>"
+				portletURL="<%= journalDisplayContext.getPortletURL() %>"
+				selectedDisplayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
+			/>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
+			orderByType="<%= journalDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"display-date", "modified-date"} %>'
+			portletURL="<%= journalDisplayContext.getPortletURL() %>"
+		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
+			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+		</c:if>
 
 		<%
 		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";

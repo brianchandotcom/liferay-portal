@@ -186,12 +186,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		try {
-			Class.forName(SystemProperties.class.getName());
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
-		}
+		Thread currentThread = Thread.currentThread();
+
+		SystemProperties.load(currentThread.getContextClassLoader());
 
 		DBFactoryUtil.reset();
 		DeployManagerUtil.reset();

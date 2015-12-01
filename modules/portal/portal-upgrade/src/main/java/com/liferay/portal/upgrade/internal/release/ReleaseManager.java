@@ -26,16 +26,15 @@ import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.RunnableUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.portal.upgrade.internal.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
+import com.liferay.portal.upgrade.registry.UpgradeInfo;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -193,10 +192,10 @@ public class ReleaseManager {
 
 		OutputStream outputStream = outputStreamContainer.getOutputStream();
 
-		RunnableUtil.runWithSwappedSystemOut(
+		_outputStreamContainerFactoryTracker.runWithSwappedLog(
 			new UpgradeInfosRunnable(
 				bundleSymbolicName, upgradeInfos, outputStream),
-			outputStream);
+			outputStreamContainer.getDescription(), outputStream);
 
 		try {
 			outputStream.close();
@@ -305,7 +304,7 @@ public class ReleaseManager {
 		private final OutputStream _outputStream;
 		private final List<UpgradeInfo> _upgradeInfos;
 
-	};
+	}
 
 	private class UpgradeServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<UpgradeStep, UpgradeInfo> {

@@ -258,6 +258,22 @@ AUI.add(
 						pages._uiSetActivePageNumber(pages.get('activePageNumber'));
 					},
 
+					_setFieldToolbarConfig: function() {
+						var instance = this;
+
+						return A.merge(
+							FormBuilder.superclass._setFieldToolbarConfig.apply(instance, arguments),
+							{
+								items: [
+									A.FormBuilderFieldToolbar.ITEM_EDIT,
+									A.FormBuilderFieldToolbar.ITEM_MOVE,
+									A.FormBuilderFieldToolbar.ITEM_REMOVE,
+									A.FormBuilderFieldToolbar.ITEM_CLOSE
+								]
+							}
+						);
+					},
+
 					_setFieldTypes: function(fieldTypes) {
 						var instance = this;
 

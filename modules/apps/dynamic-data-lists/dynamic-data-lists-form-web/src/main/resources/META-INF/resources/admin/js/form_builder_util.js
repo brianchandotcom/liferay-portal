@@ -22,6 +22,12 @@ AUI.add(
 						NAME: fieldClass.NAME
 					}
 				);
+			},
+
+			normalizeModalXY: function(xy) {
+				xy[1] = 0;
+
+				return xy;
 			}
 		};
 

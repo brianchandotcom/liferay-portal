@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#WEB_ID" value1="${webId}" />
 		<execute function="Type" locator1="TextInput#VIRTUAL_HOST" value1="${virtualHost}" />
@@ -21,6 +21,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -28,9 +29,11 @@
 		<var name="key_virtualHost" value="${virtualHost}" />
 
 		<execute function="Click" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_ACTIVE" value1="No" />
@@ -41,9 +44,11 @@
 
 		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
 		<execute function="Click" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS" />
+
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextNotPresent" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
 	</command>
@@ -52,7 +57,7 @@
 		<var name="key_virtualHost" value="${virtualHost}" />
 
 		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
-		<execute function="AssertClick" locator1="PortalInstances#INSTANCE_TABLE_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="CPPortalinstancesEdit#MAIL_DOMAIN_FIELD" value1="${mailDomain}" />
 		<execute function="AssertClick" locator1="CPPortalinstancesEdit#SAVE_BUTTON" value1="Save" />

@@ -44,37 +44,6 @@
 	<td>//tr[contains(.,'${key_calendarName}')]/td[5]/div/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ACTIONS_MENULIST-->
-<tr>
-	<td>ACTIONS_MENULIST_EDIT</td>
-	<td>//ul/li/a[contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIONS_MENULIST_EXPORT</td>
-	<td>//ul/li/a[contains(.,'Export')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIONS_MENULIST_IMPORT</td>
-	<td>//ul/li/a[contains(.,'Import')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIONS_MENULIST_PERMISSIONS</td>
-	<td>//ul/li/a[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIONS_MENULIST_RSS</td>
-	<td>//ul/li/a[contains(.,'RSS')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

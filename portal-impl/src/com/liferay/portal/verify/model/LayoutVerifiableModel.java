@@ -59,6 +59,11 @@ public class LayoutVerifiableModel
 	}
 
 	@Override
+	public boolean isAnonymousUserAllowed() {
+		return false;
+	}
+
+	@Override
 	public boolean isUpdateDates() {
 		return false;
 	}

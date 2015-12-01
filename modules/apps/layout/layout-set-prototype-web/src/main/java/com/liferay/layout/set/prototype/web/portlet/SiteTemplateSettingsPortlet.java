@@ -14,7 +14,7 @@
 
 package com.liferay.layout.set.prototype.web.portlet;
 
-import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
+import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.portal.service.LayoutSetPrototypeService;
 
 import javax.portlet.Portlet;

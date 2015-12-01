@@ -93,6 +93,12 @@
 	}
 }
 
+@include sm {
+	.lfr-ddl-form-builder-field-types-modal {
+		padding-top: 85px;
+	}
+}
+
 .portal-popup, .portlet-forms-admin {
 	.alert {
 		margin: 0;
@@ -153,8 +159,31 @@
 	.ddl-form-builder-app {
 		margin-top: -120px;
 
+		.form-builder-content,
+		.lfr-ddm-form-content {
+			background: #FFF;
+			border: 1px solid #DCE0E3;
+			border-radius: 1px;
+			box-shadow: 0 2px 4px rgba(188, 197, 204, 0.3);
+			margin: 0 auto;
+			width: auto;
+		}
+
 		.form-builder-field-list-empty .form-builder-field-list-add-button {
 			position: relative;
+		}
+
+		.form-builder-field-toolbar-items {
+			z-index: 500;
+		}
+
+		.form-builder-field-toolbar {
+			min-width: 200px;
+			z-index: 750;
+
+			.form-builder-field-toolbar-items {
+				float: right;
+			}
 		}
 
 		.icon-refresh {
@@ -164,14 +193,8 @@
 			text-align: center;
 		}
 
-		.form-builder-content,
-		.lfr-ddm-form-content {
-			background: #FFF;
-			border: 1px solid #DCE0E3;
-			border-radius: 1px;
-			box-shadow: 0 2px 4px rgba(188, 197, 204, 0.3);
-			margin: 0 auto;
-			width: auto;
+		.liferay-ddm-form-field-text textarea {
+			resize: none;
 		}
 	}
 }
@@ -184,11 +207,71 @@
 
 	label {
 		float: none;
+		word-wrap: break-word;
 	}
 }
 
 .lfr-ddl-field-settings-modal.form-builder-field-settings {
-	width: 720px;
+	height: 100%;
+	margin: 0;
+	width: 100%;
+
+	&:focus {
+		outline: none;
+	}
+
+	.modal-body {
+		background-color: #FFF;
+		height: 100%;
+		max-height: 100%;
+		overflow-x: hidden;
+		overflow-y: auto;
+		padding-bottom: 0;
+	}
+
+	.modal-content.form-builder-field-settings-content {
+		border-radius: 0;
+		border-width: 0;
+		height: 100%;
+		padding-bottom: 85px;
+		padding-top: 62px;
+	}
+
+	.modal-footer {
+		bottom: 2px;
+
+		.btn {
+			width: auto;
+		}
+	}
+
+	.modal-header {
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	@include sm {
+		.modal-content.form-builder-field-settings-content {
+			border-radius: 4px;
+			padding-bottom: 80px;
+		}
+	}
+
+	@include lg {
+		.modal-body {
+			max-height: 451px;
+		}
+
+		.modal-content.form-builder-field-settings-content {
+			padding-bottom: inherit;
+			padding-top: 0;
+		}
+
+		.modal-header {
+			position: initial;
+		}
+	}
 
 	.form-builder-field-settings-content {
 		.has-error .key-value-editor {
@@ -279,8 +362,6 @@
 		}
 
 		.lfr-ddm-form-container {
-			padding: 0 50px;
-
 			.lfr-ddm-form-field-container {
 				position: relative;
 
@@ -315,6 +396,7 @@
 
 				.toggle-switch-bar .toggle-switch-handle {
 					text-transform: none;
+					word-break: break-word;
 				}
 			}
 
@@ -322,10 +404,6 @@
 				&.active {
 					&.advanced {
 						display: block;
-					}
-
-					&.basic {
-						padding-bottom: 65px;
 					}
 				}
 
@@ -338,39 +416,47 @@
 			}
 		}
 
-		.modal-body {
-			background-color: #FFF;
-			max-height: 500px;
-			overflow-x: hidden;
-			overflow-y: auto;
-			padding-bottom: 0;
-		}
-
 		.settings-toggler {
 			background-color: #F5F8FA;
 			bottom: 81px;
 			color: #879CB5;
 			display: block;
 			font-weight: 500;
-			margin: 0;
+			margin: 0 -50px;
 			padding: 18px 50px;
-			position: absolute;
+			position: static;
 			text-decoration: none;
-			width: 100%;
-
-			&.active {
-				margin: 0 -50px;
-				position: static;
-				width: auto;
-			}
+			width: auto;
 		}
+	}
+}
+
+@include sm {
+	.lfr-ddl-field-settings-modal.form-builder-field-settings {
+		height: 670px;
+		padding-top: 85px;
+		width: 390px;
+	}
+}
+
+@include md {
+	.lfr-ddl-field-settings-modal.form-builder-field-settings {
+		height: 676px;
+		width: 720px;
 	}
 }
 
 .lfr-ddl-form-builder-field-types-modal {
 	max-height: 550px;
 	outline: none;
+	padding-top: 73px;
 	width: 500px;
+
+	@include sm {
+		&.modal-dialog {
+			width: 392px;
+		}
+	}
 
 	&.lfr-ddl-form-builder-field-types-modal-hidden {
 		display: none;
@@ -381,9 +467,12 @@
 		padding: 25px 35px;
 
 		.field-type {
-			float: none;
 			padding: 20px 0;
-			width: auto;
+
+			@include md {
+				float: none;
+				width: auto;
+			}
 
 			.field-type-icon, .field-type-label {
 				color: #879CAC;

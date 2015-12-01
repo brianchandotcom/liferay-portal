@@ -61,7 +61,7 @@ public class UpgradeModules extends UpgradeProcess {
 				ps.setString(6, "0.0.1");
 				ps.setInt(7, 001);
 				ps.setTimestamp(8, timestamp);
-				ps.setBoolean(9, true);
+				ps.setBoolean(9, false);
 				ps.setInt(10, 0);
 				ps.setString(11, ReleaseConstants.TEST_STRING);
 
@@ -100,8 +100,7 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.layout.prototype.web",
 		"com.liferay.layout.set.prototype.web",
 		"com.liferay.loan.calculator.web", "com.liferay.marketplace.service",
-		"com.liferay.message.boards.web", "com.liferay.microblogs.service",
-		"com.liferay.microblogs.web", "com.liferay.mobile.device.rules.web",
+		"com.liferay.message.boards.web", "com.liferay.mobile.device.rules.web",
 		"com.liferay.my.account.web", "com.liferay.nested.portlets.web",
 		"com.liferay.network.utilities.web",
 		"com.liferay.password.generator.web",
@@ -125,7 +124,6 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.site.teams.web", "com.liferay.social.activities.web",
 		"com.liferay.social.activity.web",
 		"com.liferay.social.group.statistics.web",
-		"com.liferay.social.networking.service",
 		"com.liferay.social.requests.web",
 		"com.liferay.social.user.statistics.web", "com.liferay.staging.bar.web",
 		"com.liferay.translator.web", "com.liferay.trash.web",

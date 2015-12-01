@@ -89,17 +89,6 @@ if (article != null) {
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
-String[] mainSections = journalWebConfiguration.journalArticleFormAdd();
-
-if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-	mainSections = journalWebConfiguration.journalArticleFormDefaultValues();
-}
-else if ((article != null) && (article.getId() > 0)) {
-	mainSections = journalWebConfiguration.journalArticleFormUpdate();
-}
-
-String[][] categorySections = {mainSections};
-
 request.setAttribute("edit_article.jsp-redirect", redirect);
 
 request.setAttribute("edit_article.jsp-structure", ddmStructure);
@@ -112,7 +101,37 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 <div class="article-form <%= ((article != null) && !article.isNew()) ? "article-form-edit" : "article-form-add" %> container-fluid-1280">
 	<c:if test="<%= showHeader %>">
-		<liferay-util:include page="/article_header.jsp" servletContext="<%= application %>" />
+
+		<%
+		portletDisplay.setShowBackIcon(true);
+
+		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) && (article != null)) {
+			PortletURL backURL = liferayPortletResponse.createRenderURL();
+
+			backURL.setParameter("groupId", String.valueOf(article.getGroupId()));
+			backURL.setParameter("folderId", String.valueOf(article.getFolderId()));
+
+			portletDisplay.setURLBack(backURL.toString());
+		}
+		else {
+			portletDisplay.setURLBack(redirect);
+		}
+
+		String title = StringPool.BLANK;
+
+		if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+			title = LanguageUtil.get(request, "structure-default-values");
+		}
+		else if ((article != null) && !article.isNew()) {
+			title = article.getTitle(locale);
+		}
+		else {
+			title = LanguageUtil.get(request, "new-web-content");
+		}
+
+		renderResponse.setTitle(title);
+		%>
+
 	</c:if>
 
 	<aui:form enctype="multipart/form-data" method="post" name="fm2">
@@ -272,13 +291,11 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 				</liferay-util:buffer>
 
 				<liferay-ui:form-navigator
-					categorySections="<%= categorySections %>"
 					formModelBean="<%= article %>"
 					formName="fm1"
 					htmlBottom="<%= htmlBottom %>"
 					htmlTop="<%= htmlTop %>"
-					id="journal.article.form"
-					jspPath="/article/"
+					id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
 					showButtons="<%= false %>"
 				/>
 			</div>

@@ -83,7 +83,7 @@ public class AppDisplayFactoryUtil {
 
 				continue;
 			}
-			else if (curAppTitle != null) {
+			else if (curAppTitle == null) {
 				continue;
 			}
 

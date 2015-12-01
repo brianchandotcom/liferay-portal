@@ -45,7 +45,7 @@
 
 		<execute function="Pause" value1="1000" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="delete">
@@ -71,7 +71,7 @@
 
 		<execute function="Confirm" value1="Are you sure you want to delete the selected comment?" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextNotPresent" value1="${entryComment}" />
 	</command>
 

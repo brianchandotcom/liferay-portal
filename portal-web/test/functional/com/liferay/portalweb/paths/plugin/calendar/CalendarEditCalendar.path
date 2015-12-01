@@ -41,12 +41,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_GENERAL_TAB</td>
-	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'General')]</td>
+	<td>//ul[contains(@class,'nav navbar-nav')]/li/a/span[contains(.,'General')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_NOTIFICATION_TEMPLATES_TAB</td>
-	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'Notification Templates')]</td>
+	<td>//ul[contains(@class,'nav navbar-nav')]/li/a/span[contains(.,'Notification Templates')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,22 +67,22 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_ACTIVE</td>
-	<td>//ul[contains(@class,'nav nav-tabs')]/li[@class='tab active']/a[contains(.,'Invite Email')]</td>
+	<td>//ul[contains(@class,'nav navbar-nav')]/li[contains(@class,'active')]/a[contains(.,'Invite Email')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_INACTIVE</td>
-	<td>//ul[contains(@class,'nav nav-tabs')]/li[@class='tab']/a[contains(.,'Invite Email')]</td>
+	<td>//ul[contains(@class,'nav navbar-nav')]/li[not(contains(@class,'active'))]/a[contains(.,'Invite Email')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_ACTIVE</td>
-	<td>//ul[contains(@class,'nav nav-tabs')]/li[@class='tab active']/a[contains(.,'Reminder Email')]</td>
+	<td>//ul[contains(@class,'nav navbar-nav')]/li[contains(@class,'active')]/a[contains(.,'Reminder Email')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_INACTIVE</td>
-	<td>//ul[contains(@class,'nav nav-tabs')]/li[@class='tab']/a[contains(.,'Reminder Email')]</td>
+	<td>//ul[contains(@class,'nav navbar-nav')]/li[not(contains(@class,'active'))]/a[contains(.,'Reminder Email')]</td>
 	<td></td>
 </tr>
 <tr>

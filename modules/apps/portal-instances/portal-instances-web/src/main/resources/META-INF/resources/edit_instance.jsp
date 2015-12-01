@@ -30,18 +30,16 @@ try {
 }
 catch (Exception e) {
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	escapeXml="<%= false %>"
-	localizeTitle="<%= (selCompany == null) %>"
-	title='<%= (selCompany == null) ? "new-portal-instance" : HtmlUtil.escape(selCompany.getName()) %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle((selCompany == null) ? "new-portal-instance" : HtmlUtil.escape(selCompany.getName()));
+%>
 
 <portlet:actionURL name="/portal_instances/edit_instance" var="editInstanceURL" />
 
-<aui:form action="<%= editInstanceURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
+<aui:form action="<%= editInstanceURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="companyId" type="hidden" value="<%= companyId %>" />
@@ -52,33 +50,35 @@ catch (Exception e) {
 
 	<aui:model-context bean="<%= selCompany %>" model="<%= Company.class %>" />
 
-	<aui:fieldset>
-		<c:choose>
-			<c:when test="<%= selCompany != null %>">
-				<aui:input name="id" type="resource" value="<%= String.valueOf(companyId) %>" />
+	<aui:fieldset-group>
+		<aui:fieldset>
+			<c:choose>
+				<c:when test="<%= selCompany != null %>">
+					<aui:input name="id" type="resource" value="<%= String.valueOf(companyId) %>" />
 
-				<aui:input name="web-id" type="resource" value="<%= selCompany.getWebId() %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="webId">
-					<aui:validator name="required" />
-				</aui:input>
-			</c:otherwise>
-		</c:choose>
+					<aui:input name="web-id" type="resource" value="<%= selCompany.getWebId() %>" />
+				</c:when>
+				<c:otherwise>
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="webId">
+						<aui:validator name="required" />
+					</aui:input>
+				</c:otherwise>
+			</c:choose>
 
-		<aui:input bean="<%= virtualHost %>" fieldParam="virtualHostname" label="virtual-host" model="<%= VirtualHost.class %>" name="hostname" />
+			<aui:input bean="<%= virtualHost %>" fieldParam="virtualHostname" label="virtual-host" model="<%= VirtualHost.class %>" name="hostname" />
 
-		<aui:input label="mail-domain" name="mx" />
+			<aui:input label="mail-domain" name="mx" />
 
-		<aui:input name="maxUsers" />
+			<aui:input name="maxUsers" />
 
-		<aui:input disabled="<%= (selCompany != null) && (selCompany.getCompanyId() == PortalInstances.getDefaultCompanyId()) %>" name="active" type="checkbox" value="<%= (selCompany != null) ? selCompany.isActive() : true %>" />
-	</aui:fieldset>
+			<aui:input disabled="<%= (selCompany != null) && (selCompany.getCompanyId() == PortalInstances.getDefaultCompanyId()) %>" name="active" type="toggle-switch" value="<%= (selCompany != null) ? selCompany.isActive() : true %>" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

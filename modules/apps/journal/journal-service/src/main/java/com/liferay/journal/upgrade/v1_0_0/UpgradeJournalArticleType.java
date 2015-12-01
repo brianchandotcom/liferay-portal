@@ -247,7 +247,8 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			return;
 		}
 
-		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
+		Locale localeThreadLocalDefaultLocale =
+			LocaleThreadLocal.getDefaultLocale();
 
 		try {
 			List<Company> companies = _companyLocalService.getCompanies();
@@ -288,7 +289,7 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			}
 		}
 		finally {
-			LocaleThreadLocal.setDefaultLocale(defaultLocale);
+			LocaleThreadLocal.setDefaultLocale(localeThreadLocalDefaultLocale);
 		}
 	}
 

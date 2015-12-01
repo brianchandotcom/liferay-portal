@@ -40,6 +40,21 @@ else {
 
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
+
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "order-by-col", orderByCol);
+	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "order-by-col", "name");
+	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "order-by-type", "asc");
+}
+
+request.setAttribute("view.jsp-orderByCol", orderByCol);
+request.setAttribute("view.jsp-orderByType", orderByType);
 %>
 
 <portlet:actionURL name="/wiki/edit_node" var="restoreTrashEntriesURL">
@@ -76,6 +91,10 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 		/>
 	</liferay-frontend:management-bar-buttons>
 
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/wiki_admin/sort_nodes_button.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
+
 	<liferay-frontend:management-bar-action-buttons>
 
 		<%
@@ -103,6 +122,9 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 		NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
 
 		wikiNodesSearchContainer.setRowChecker(nodesChecker);
+		wikiNodesSearchContainer.setOrderByCol(orderByCol);
+		wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
+		wikiNodesSearchContainer.setOrderByType(orderByType);
 		%>
 
 		<liferay-ui:search-container
@@ -111,7 +133,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 			total="<%= nodesCount %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= WikiNodeServiceUtil.getNodes(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+				results="<%= WikiNodeServiceUtil.getNodes(scopeGroupId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 			/>
 
 			<liferay-ui:search-container-row

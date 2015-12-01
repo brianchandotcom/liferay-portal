@@ -48,8 +48,7 @@ public class ExportProcess {
 	}
 
 	private void _exportCompany(
-			long companyId, List<String> tableNames,
-			ExportContext exportContext)
+			long companyId, List<String> tableNames, ExportContext exportContext)
 		throws IOException {
 
 		String outputFileName =
@@ -63,9 +62,9 @@ public class ExportProcess {
 
 		for (String tableName : tableNames) {
 			_dbProvider.write(tableName, outputStream);
-		}
 
-		outputStream.flush();
+			outputStream.flush();
+		}
 
 		outputStream.close();
 	}

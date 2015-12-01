@@ -19,8 +19,6 @@ import com.liferay.journal.service.base.JournalFeedServiceBaseImpl;
 import com.liferay.journal.service.permission.JournalFeedPermission;
 import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 

@@ -16,7 +16,6 @@ package com.liferay.portlet.expando.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portlet.expando.DuplicateTableNameException;
 import com.liferay.portlet.expando.TableNameException;
 import com.liferay.portlet.expando.model.ExpandoTable;

@@ -3295,8 +3295,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				if (repositoryEntry instanceof FileEntry) {
 					FileEntry fileEntry = (FileEntry)repositoryEntry;
 
-					copyFileEntry(
-						toRepository, fileEntry, newFolder.getFolderId(),
+					moveFileEntry(
+						fileEntry.getFileEntryId(), newFolder.getFolderId(),
 						serviceContext);
 				}
 				else if (repositoryEntry instanceof Folder) {

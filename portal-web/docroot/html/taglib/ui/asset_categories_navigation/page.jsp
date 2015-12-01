@@ -159,7 +159,7 @@ private void _buildCategoriesNavigation(List<AssetCategory> categories, long cat
 }
 
 private String _buildVocabularyNavigation(AssetVocabulary vocabulary, long categoryId, PortletURL portletURL, ThemeDisplay themeDisplay) throws Exception {
-	List<AssetCategory> categories = AssetCategoryServiceUtil.getVocabularyRootCategories(vocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	List<AssetCategory> categories = AssetCategoryServiceUtil.getVocabularyRootCategories(scopeGroupId, vocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 	if (categories.isEmpty()) {
 		return null;

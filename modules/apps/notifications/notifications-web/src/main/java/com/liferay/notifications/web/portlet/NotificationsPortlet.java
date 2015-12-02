@@ -14,9 +14,8 @@
 
 package com.liferay.notifications.web.portlet;
 
-import com.liferay.notifications.util.PortletKeys;
-import com.liferay.notifications.util.PortletPropsValues;
 import com.liferay.notifications.web.constants.NotificationsPortletKeys;
+import com.liferay.notifications.web.util.PortletPropsValues;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
@@ -57,7 +57,6 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
@@ -88,7 +87,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = Portlet.class
+	service = javax.portlet.Portlet.class
 )
 public class NotificationsPortlet extends MVCPortlet {
 
@@ -405,7 +404,7 @@ public class NotificationsPortlet extends MVCPortlet {
 		if (subscriptionId > 0) {
 			PortletURL unsubscribeActionURL =
 				liferayPortletResponse.createActionURL(
-					PortletKeys.NOTIFICATIONS);
+					NotificationsPortletKeys.NOTIFICATIONS);
 
 			unsubscribeActionURL.setParameter(
 				"subscriptionId", String.valueOf(subscriptionId));
@@ -690,7 +689,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			(LiferayPortletResponse)resourceResponse;
 
 		PortletURL actionURL = liferayPortletResponse.createActionURL(
-			PortletKeys.NOTIFICATIONS);
+			NotificationsPortletKeys.NOTIFICATIONS);
 
 		actionURL.setParameter(
 			"userNotificationEventId",

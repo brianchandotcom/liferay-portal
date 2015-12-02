@@ -65,15 +65,15 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 		Repository repository = repositoryProvider.getFileEntryRepository(
 			fileEntryId);
 
-		TrashCapability trashCapability = repository.getCapability(
-			TrashCapability.class);
-
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
 		DLFileEntryPermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.UPDATE);
 
 		Folder destinationFolder = repository.getFolder(newFolderId);
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
 
 		return trashCapability.moveFileEntryFromTrash(
 			getUserId(), fileEntry, destinationFolder, serviceContext);
@@ -92,13 +92,13 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 		Repository repository = repositoryProvider.getFileEntryRepository(
 			fileEntryId);
 
-		TrashCapability trashCapability = repository.getCapability(
-			TrashCapability.class);
-
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
 		DLFileEntryPermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.DELETE);
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
 
 		return trashCapability.moveFileEntryToTrash(getUserId(), fileEntry);
 	}
@@ -139,13 +139,13 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 		Repository repository = repositoryProvider.getFileShortcutRepository(
 			fileShortcutId);
 
-		TrashCapability trashCapability = repository.getCapability(
-			TrashCapability.class);
-
 		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
 			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
 
 		return trashCapability.moveFileShortcutToTrash(
 			getUserId(), fileShortcut);
@@ -168,9 +168,6 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 		Repository repository = repositoryProvider.getFolderRepository(
 			folderId);
 
-		TrashCapability trashCapability = repository.getCapability(
-			TrashCapability.class);
-
 		Folder folder = repository.getFolder(folderId);
 
 		DLFolderPermission.check(
@@ -181,6 +178,9 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			destinationFolder = repository.getFolder(parentFolderId);
 		}
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
 
 		return trashCapability.moveFolderFromTrash(
 			getUserId(), folder, destinationFolder, serviceContext);
@@ -197,13 +197,13 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 		Repository repository = repositoryProvider.getFolderRepository(
 			folderId);
 
-		TrashCapability trashCapability = repository.getCapability(
-			TrashCapability.class);
-
 		Folder folder = repository.getFolder(folderId);
 
 		DLFolderPermission.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
 
 		return trashCapability.moveFolderToTrash(getUserId(), folder);
 	}
@@ -220,13 +220,13 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 		Repository repository = repositoryProvider.getFileEntryRepository(
 			fileEntryId);
 
-		TrashCapability trashCapability = repository.getCapability(
-			TrashCapability.class);
-
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
 		DLFileEntryPermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.DELETE);
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
 
 		trashCapability.restoreFileEntryFromTrash(getUserId(), fileEntry);
 	}
@@ -259,13 +259,13 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 		Repository repository = repositoryProvider.getFolderRepository(
 			folderId);
 
-		TrashCapability trashCapability = repository.getCapability(
-			TrashCapability.class);
-
 		Folder folder = repository.getFolder(folderId);
 
 		DLFolderPermission.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
 
 		trashCapability.restoreFolderFromTrash(getUserId(), folder);
 	}

@@ -1590,6 +1590,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void postFormat() throws Exception {
 	}
 
+	protected void printError(String fileName, String message) {
+		_sourceFormatterHelper.printError(fileName, message);
+	}
+
 	protected void processErrorMessage(String fileName, String message) {
 		List<String> errorMessages = _errorMessagesMap.get(fileName);
 

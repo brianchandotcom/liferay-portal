@@ -16,11 +16,11 @@
 
 <%@ include file="/card/image_card/init.jsp" %>
 
-<div class="taglib-vertical-card <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+<div class="taglib-vertical-card <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 	<div>
 		<div class="card card-dm">
 			<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover" style="<%= "background-image: url('" + imageUrl + "')" %>">
-				<img alt="" class="<%= Validator.isNotNull(imageCSSClass) ? imageCSSClass : StringPool.BLANK %> sr-only" src="<%= imageUrl %>" />
+				<img alt="" class="<%= imageCSSClass %> sr-only" src="<%= imageUrl %>" />
 			</div>
 		</div>
 	</div>

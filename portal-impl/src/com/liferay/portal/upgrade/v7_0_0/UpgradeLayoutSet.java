@@ -37,32 +37,6 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 		upgradeLayoutSet();
 	}
 
-	protected void updateGroupSite(long groupId) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"update Group_ set site = ? where groupId = ?");
-
-			ps.setBoolean(1, false);
-			ps.setLong(2, groupId);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to update Group " + groupId, e);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
 	protected void updateLayoutSet(long layoutSetId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -132,7 +106,9 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 					(!isSite || (privateLayout == null))) {
 						updateLayoutSet(layoutSetId);
 
-						updateGroupSite(groupId);
+						runSQL(
+							"update Group_ set site = FALSE where groupId = " +
+								groupId);
 					}
 			}
 		}

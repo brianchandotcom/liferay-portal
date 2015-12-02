@@ -118,6 +118,11 @@ public interface VelocityTaglib {
 
 	public void doAsURL(long doAsUserId) throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.frontend.taglib.servlet.taglib.FlagsTag}
+	 */
+	@Deprecated
 	public void flags(
 			String className, long classPK, String contentTitle, boolean label,
 			String message, long reportedUserId)
@@ -134,6 +139,11 @@ public interface VelocityTaglib {
 
 	public DiscussionTag getDiscussionTag() throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.frontend.taglib.servlet.taglib.FlagsTag}
+	 */
+	@Deprecated
 	public FlagsTag getFlagsTag() throws Exception;
 
 	public IconTag getIconTag() throws Exception;

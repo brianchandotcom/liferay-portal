@@ -131,12 +131,6 @@
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />
 
-		<!-- Flags -->
-
-		<action path="/flags/edit_entry" type="com.liferay.portlet.flags.action.EditEntryAction">
-			<forward name="portlet.flags.edit_entry" path="portlet.flags.edit_entry" />
-		</action>
-
 		<!-- Global Prayer Digest -->
 
 		<action path="/global_prayer_digest/view" type="com.liferay.portlet.globalprayerdigest.action.ViewAction">

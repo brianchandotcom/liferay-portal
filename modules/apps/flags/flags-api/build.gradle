@@ -1,0 +1,10 @@
+dependencies {
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:configuration-admin:configuration-admin-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

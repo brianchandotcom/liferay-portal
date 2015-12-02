@@ -14,8 +14,8 @@
 
 package com.liferay.notifications.web.poller;
 
-import com.liferay.notifications.util.PortletPropsValues;
 import com.liferay.notifications.web.constants.NotificationsPortletKeys;
+import com.liferay.notifications.web.util.PortletPropsValues;
 import com.liferay.portal.kernel.poller.BasePollerProcessor;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.poller.PollerRequest;

@@ -145,8 +145,6 @@ public class PortletKeys {
 	public static final String SITE_MEMBERS_DIRECTORY =
 		"com_liferay_directory_web_portlet_SiteMembersDirectoryPortlet";
 
-	public static final String SOFTWARE_CATALOG = "98";
-
 	public static final String STAGING_BAR =
 		"com_liferay_staging_bar_web_portlet_StagingBarPortlet";
 

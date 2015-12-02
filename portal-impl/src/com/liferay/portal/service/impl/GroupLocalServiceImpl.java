@@ -739,7 +739,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * The group is unstaged and its assets and resources including layouts,
 	 * membership requests, subscriptions, teams, blogs, bookmarks, events,
 	 * image gallery, journals, message boards, polls, shopping related
-	 * entities, software catalog, and wikis are also deleted.
+	 * entities, and wikis are also deleted.
 	 * </p>
 	 *
 	 * @param  group the group
@@ -890,12 +890,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				classNameLocalService.getClassNameId(Group.class),
 				group.getGroupId());
 
-			// Software catalog
-
-			scFrameworkVersionLocalService.deleteFrameworkVersions(
-				group.getGroupId());
-			scProductEntryLocalService.deleteProductEntries(group.getGroupId());
-
 			// Resources
 
 			List<ResourcePermission> resourcePermissions =
@@ -997,7 +991,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * The group is unstaged and its assets and resources including layouts,
 	 * membership requests, subscriptions, teams, blogs, bookmarks, events,
 	 * image gallery, journals, message boards, polls, shopping related
-	 * entities, software catalog, and wikis are also deleted.
+	 * entities, and wikis are also deleted.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group

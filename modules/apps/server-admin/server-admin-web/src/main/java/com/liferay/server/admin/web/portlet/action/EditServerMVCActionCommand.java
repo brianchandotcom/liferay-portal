@@ -691,12 +691,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "journalImageSmallMaxSize");
 		String shoppingImageExtensions = getFileExtensions(
 			actionRequest, "shoppingImageExtensions");
-		long scImageMaxSize = ParamUtil.getLong(
-			actionRequest, "scImageMaxSize");
-		long scImageThumbnailMaxHeight = ParamUtil.getLong(
-			actionRequest, "scImageThumbnailMaxHeight");
-		long scImageThumbnailMaxWidth = ParamUtil.getLong(
-			actionRequest, "scImageThumbnailMaxWidth");
 		long shoppingImageLargeMaxSize = ParamUtil.getLong(
 			actionRequest, "shoppingImageLargeMaxSize");
 		long shoppingImageMediumMaxSize = ParamUtil.getLong(
@@ -731,22 +725,14 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		portletPreferences.setValue(
 			PropsKeys.SHOPPING_IMAGE_EXTENSIONS, shoppingImageExtensions);
 		portletPreferences.setValue(
-			PropsKeys.SHOPPING_IMAGE_LARGE_MAX_SIZE,
-			String.valueOf(shoppingImageLargeMaxSize));
+				PropsKeys.SHOPPING_IMAGE_LARGE_MAX_SIZE,
+				String.valueOf(shoppingImageLargeMaxSize));
 		portletPreferences.setValue(
 			PropsKeys.SHOPPING_IMAGE_MEDIUM_MAX_SIZE,
 			String.valueOf(shoppingImageMediumMaxSize));
 		portletPreferences.setValue(
 			PropsKeys.SHOPPING_IMAGE_SMALL_MAX_SIZE,
 			String.valueOf(shoppingImageSmallMaxSize));
-		portletPreferences.setValue(
-			PropsKeys.SC_IMAGE_MAX_SIZE, String.valueOf(scImageMaxSize));
-		portletPreferences.setValue(
-			PropsKeys.SC_IMAGE_THUMBNAIL_MAX_HEIGHT,
-			String.valueOf(scImageThumbnailMaxHeight));
-		portletPreferences.setValue(
-			PropsKeys.SC_IMAGE_THUMBNAIL_MAX_WIDTH,
-			String.valueOf(scImageThumbnailMaxWidth));
 		portletPreferences.setValue(
 			PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 			String.valueOf(uploadServletRequestImplMaxSize));

@@ -31,7 +31,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -237,9 +236,6 @@ public class UpgradeSubscription extends UpgradeProcess {
 			MBCategory.class.getName(), "MBCategory,groupId,categoryId");
 		_getGroupIdSQLPartsMap.put(
 			MBThread.class.getName(), "MBThread,groupId,threadId");
-		_getGroupIdSQLPartsMap.put(
-			SCProductEntry.class.getName(),
-			"SCProductEntry,groupId,productEntryId");
 		_getGroupIdSQLPartsMap.put(
 			WorkflowInstance.class.getName(),
 			"WorkflowInstance,groupId,workflowInstanceId");

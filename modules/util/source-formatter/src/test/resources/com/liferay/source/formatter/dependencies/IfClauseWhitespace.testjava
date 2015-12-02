@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.softwarecatalog.UnavailableProductVersionDirectDownloadURLException;
 
 /**
  * @author Hugo Huijser
@@ -94,10 +93,7 @@ public class IfClauseWhitespace {
 			if (e instanceof PortalException) {
 				testString = "World";
 			}
-			else if (e instanceof SystemException ||
-					 e instanceof
-						UnavailableProductVersionDirectDownloadURLException) {
-
+			else if (e instanceof SystemException) {
 				return;
 			}
 		}

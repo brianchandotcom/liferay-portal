@@ -516,8 +516,6 @@
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivitySetting" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialRequest" />
-		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCFrameworkVersion" />
-		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCProductEntry" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
 	<entity name="Image" local-service="true" remote-service="true">

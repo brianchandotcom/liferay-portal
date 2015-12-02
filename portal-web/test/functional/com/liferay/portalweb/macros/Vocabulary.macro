@@ -110,7 +110,7 @@
 		<if>
 			<equals arg1="${required}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CategoriesEditVocabulary#REQUIRED_CHECKBOX" />
+				<execute function="Check#checkToggleSwitch" locator1="CategoriesEditVocabulary#REQUIRED_CHECKBOX" />
 			</then>
 		</if>
 

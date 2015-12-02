@@ -29,12 +29,6 @@
 		</for>
 
 		<execute function="Click" locator1="Button#CLOSE_MODAL" />
-
-		<for list="${categoryNameList}" param="categoryName">
-			<var name="key_categoryName" value="${categoryName}" />
-
-			<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
-		</for>
 	</command>
 
 	<command name="addTag">

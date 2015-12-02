@@ -270,15 +270,15 @@ public class JenkinsResultsParserUtil {
 
 				URL urlObject = new URL(url);
 
-				URLConnection connection = urlObject.openConnection();
+				URLConnection urlConnection = urlObject.openConnection();
 
 				if (timeout != 0) {
-					connection.setConnectTimeout(timeout);
-					connection.setReadTimeout(timeout);
+					urlConnection.setConnectTimeout(timeout);
+					urlConnection.setReadTimeout(timeout);
 				}
 
 				InputStreamReader inputStreamReader = new InputStreamReader(
-					connection.getInputStream());
+					urlConnection.getInputStream());
 
 				BufferedReader bufferedReader = new BufferedReader(
 					inputStreamReader);

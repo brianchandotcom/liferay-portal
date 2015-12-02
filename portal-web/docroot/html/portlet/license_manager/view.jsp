@@ -16,7 +16,18 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<iframe allowTransparency="true" frameborder="0" id="<portlet:namespace />iframe" scrolling="no" src="<%= themeDisplay.getPathMain() %>/portal/license?p_l_id=<%= themeDisplay.getPlid() %>&p_p_state=pop_up" style="border: none; width: 100%;"></iframe>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item
+			label="licenses"
+			selected="<%= true %>"
+		/>
+	</aui:nav>
+</aui:nav-bar>
+
+<div class="container-fluid-1280">
+	<iframe allowTransparency="true" frameborder="0" id="<portlet:namespace />iframe" scrolling="no" src="<%= themeDisplay.getPathMain() %>/portal/license?p_l_id=<%= themeDisplay.getPlid() %>&p_p_state=pop_up" style="border: none; width: 100%;"></iframe>
+</div>
 
 <aui:script use="aui-autosize-iframe">
 	var iframe = A.one('#<portlet:namespace />iframe');

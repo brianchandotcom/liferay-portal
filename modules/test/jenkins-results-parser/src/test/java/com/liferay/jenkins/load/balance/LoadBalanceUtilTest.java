@@ -46,7 +46,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Test
 	public void testGetMostAvailableMasterURL() throws Exception {
-		LoadBalanceUtil.recentJobsPeriod = 10;
+		LoadBalanceUtil.rejectJobsPeriod = 10;
 		assertSamples();
 	}
 

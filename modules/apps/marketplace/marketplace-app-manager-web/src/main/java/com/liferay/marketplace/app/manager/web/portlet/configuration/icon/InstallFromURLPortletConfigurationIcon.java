@@ -16,7 +16,7 @@ package com.liferay.marketplace.app.manager.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Douglas Wong
@@ -24,8 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 public class InstallFromURLPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public InstallFromURLPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public InstallFromURLPortletConfigurationIcon(
+		PortletRequest portletRequest) {
+
+		super(portletRequest);
 	}
 
 	@Override

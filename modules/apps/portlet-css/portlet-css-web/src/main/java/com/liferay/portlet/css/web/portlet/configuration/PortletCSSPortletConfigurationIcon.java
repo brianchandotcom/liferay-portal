@@ -23,16 +23,14 @@ import com.liferay.portlet.css.web.constants.PortletCSSPortletKeys;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Eudaldo Alonso
  */
 public class PortletCSSPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public PortletCSSPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public PortletCSSPortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override
@@ -50,16 +48,16 @@ public class PortletCSSPortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletURL baseActionURL = PortletURLFactoryUtil.create(
-			request, PortletCSSPortletKeys.PORTLET_CSS, themeDisplay.getPlid(),
-			PortletRequest.ACTION_PHASE);
+			portletRequest, PortletCSSPortletKeys.PORTLET_CSS,
+			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
 
 		PortletURL baseRenderURL = PortletURLFactoryUtil.create(
-			request, PortletCSSPortletKeys.PORTLET_CSS, themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			portletRequest, PortletCSSPortletKeys.PORTLET_CSS,
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		PortletURL baseResourceURL = PortletURLFactoryUtil.create(
-			request, PortletCSSPortletKeys.PORTLET_CSS, themeDisplay.getPlid(),
-			PortletRequest.RESOURCE_PHASE);
+			portletRequest, PortletCSSPortletKeys.PORTLET_CSS,
+			themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
 
 		StringBundler sb = new StringBundler(9);
 

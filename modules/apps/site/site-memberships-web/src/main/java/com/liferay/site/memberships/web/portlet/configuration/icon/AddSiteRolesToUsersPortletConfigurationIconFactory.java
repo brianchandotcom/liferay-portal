@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,8 +35,8 @@ public class AddSiteRolesToUsersPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(HttpServletRequest request) {
-		return new AddSiteRolesToUsersPortletConfigurationIcon(request);
+	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+		return new AddSiteRolesToUsersPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override

@@ -22,8 +22,7 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import javax.portlet.PortletPreferences;
-
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -31,8 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 public class FacebookPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public FacebookPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public FacebookPortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override

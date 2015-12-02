@@ -32,7 +32,6 @@ AUI.add(
 						validator: Lang.isObject,
 						value: {
 							addTemplate: Liferay.Language.get('please-add-a-template-to-render-this-structure'),
-							permissions: Liferay.Language.get('permissions'),
 							saveAsDraftBeforePreview: Liferay.Language.get('in-order-to-preview-your-changes,-the-web-content-is-saved-as-a-draft')
 						}
 					}
@@ -77,14 +76,6 @@ AUI.add(
 							eventHandles.push(basicPreviewButton.on(STR_CLICK, instance._previewArticle, instance));
 
 							Util.toggleDisabled(basicPreviewButton, false);
-						}
-
-						var permissionsButton = instance.one('#articlePermissionsButton');
-
-						if (permissionsButton) {
-							eventHandles.push(permissionsButton.on(STR_CLICK, instance._viewArticlePermissions, instance));
-
-							Util.toggleDisabled(permissionsButton, false);
 						}
 
 						var buttonRow = instance.one('.journal-article-button-row');
@@ -295,27 +286,6 @@ AUI.add(
 						var classNameId = instance._getByName(form, 'classNameId');
 
 						return (classNameId && classNameId.val() > 0);
-					},
-
-					_viewArticlePermissions: function(event) {
-						var instance = this;
-
-						event.preventDefault();
-
-						var article = instance.get(STR_ARTICLE);
-						var strings = instance.get(STR_STRINGS);
-
-						Util.openWindow(
-							{
-								dialog: {
-									cssClass: 'portlet-asset-categories-admin-dialog permissions-change',
-									destroyOnHide: true
-								},
-								id: instance.ns('articlePermissions'),
-								title: strings.permissions,
-								uri: article.permissionsUrl
-							}
-						);
 					}
 				}
 			}

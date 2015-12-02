@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.netvibes;
+package com.liferay.journal.web.portlet.configuration.icon;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
@@ -25,20 +26,25 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIconFactory.class)
-public class NetvibesPortletConfigurationIconFactory
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"path=/edit_article.jsp"
+	},
+	service = PortletConfigurationIconFactory.class
+)
+public class PermissionsPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(
-		final PortletRequest portletRequest) {
-
-		return new NetvibesPortletConfigurationIcon(portletRequest);
+	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+		return new PermissionsPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override
 	public double getWeight() {
-		return 2.0;
+		return 101.0;
 	}
 
 }

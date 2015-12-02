@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.Files;
@@ -285,6 +286,22 @@ public class JenkinsResultsParserUtil {
 				Thread.sleep(5000);
 			}
 		}
+	}
+
+	protected static URL createURL(String urlString) throws Exception {
+		URL url = new URL(urlString);
+
+		return encode(url);
+	}
+
+	protected static URL encode(URL url) throws Exception {
+		URI uri = new URI(
+			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
+			url.getPath(), url.getQuery(), url.getRef());
+
+		String uriASCIIString = uri.toASCIIString();
+
+		return new URL(uriASCIIString.replace("#", "%23"));
 	}
 
 	private static final Pattern _localURLPattern1 = Pattern.compile(

@@ -51,7 +51,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	}
 
 	@Test
-	public void testGetFailedJobsMessage() throws Exception {
+	public void testGetGitHubMessage() throws Exception {
 		assertSamples();
 	}
 
@@ -84,7 +84,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		urlString = replaceToken(urlString, "hostName", hostName);
 		urlString = replaceToken(urlString, "jobName", jobName);
 
-		URL url = createURL(urlString);
+		URL url = JenkinsResultsParserUtil.createURL(urlString);
 
 		downloadSample(sampleKey, url);
 	}

@@ -1,0 +1,143 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.jenkins.results.parser;
+
+import org.dom4j.Element;
+import org.dom4j.tree.DefaultElement;
+
+/**
+ * @author Peter Yoo
+ */
+public class JenkinsPerformanceTableUtil {
+
+	public static String generateHTML() {
+		if (JenkinsPerformanceDataUtil.resultsList == null) {
+			return "";
+		}
+
+		Element tableElement = new DefaultElement("table");
+
+		Element headerElement = createTableHeader();
+
+		tableElement.add(headerElement);
+
+		for (JenkinsPerformanceDataUtil.Result result :
+				JenkinsPerformanceDataUtil.resultsList) {
+
+			tableElement.add(createRow(result));
+		}
+
+		JenkinsPerformanceDataUtil.resultsList.clear();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<style>\n");
+		sb.append(" table {\n");
+		sb.append("  table-layout: fixed;\n");
+		sb.append("  width: 95%;\n");
+		sb.append(" }\n");
+		sb.append(" table, th, td {\n");
+		sb.append("  border: 1px solid black;\n");
+		sb.append("  border-collapse: collapse;\n");
+		sb.append(" }\n");
+		sb.append(" th, td {\n");
+		sb.append("  word-wrap: break-word;\n");
+		sb.append("  padding: 3px;\n");
+		sb.append("  text-align: left;\n");
+		sb.append(" }\n");
+		sb.append("</style>\n");
+
+		sb.append(tableElement.asXML());
+
+		return sb.toString();
+	}
+
+	protected static Element createRow(
+		JenkinsPerformanceDataUtil.Result result) {
+
+		return createRow(
+			"td", result.getAxis(), result.getBatch(), result.getClassName(),
+			Float.toString(result.getDuration()), result.getName(),
+			result.getStatus(), result.getUrl());
+	}
+
+	protected static Element createRow(
+		String cellTag, String axis, String batch, String className,
+		String duration, String name, String status, String url) {
+
+		Element row = new DefaultElement("tr");
+
+		Element axisCell = new DefaultElement(cellTag);
+		Element batchCell = new DefaultElement(cellTag);
+		Element classNameCell = new DefaultElement(cellTag);
+		Element durationCell = new DefaultElement(cellTag);
+		Element nameCell = new DefaultElement(cellTag);
+		Element statusCell = new DefaultElement(cellTag);
+
+		int x = axis.indexOf("=");
+
+		String shortAxis = axis;
+
+		if (x != -1) {
+			shortAxis = axis.substring(x + 1);
+		}
+
+		axisCell.addText(shortAxis);
+
+		int y = batch.indexOf("/");
+
+		String shortBatch = batch.substring(y + 1);
+
+		batchCell.addText(shortBatch);
+		classNameCell.addText(className);
+		durationCell.addText(duration);
+		statusCell.addText(status);
+
+		if (url != null) {
+			Element anchor = new DefaultElement("a");
+
+			anchor.addAttribute("href", url);
+			anchor.addText(name);
+
+			nameCell.add(anchor);
+		}
+		else {
+			nameCell.addText(name);
+		}
+
+		axisCell.addAttribute("width", "8%");
+		batchCell.addAttribute("width", "16%");
+		classNameCell.addAttribute("width", "30%");
+		durationCell.addAttribute("width", "4%");
+		nameCell.addAttribute("width", "30%");
+		statusCell.addAttribute("width", "8%");
+
+		row.add(batchCell);
+		row.add(axisCell);
+		row.add(classNameCell);
+		row.add(nameCell);
+		row.add(statusCell);
+		row.add(durationCell);
+
+		return row;
+	}
+
+	protected static Element createTableHeader() {
+		return createRow(
+			"th", "Axis", "Batch", "Class Name", "Duration (Seconds)", "Name",
+			"Status", null);
+	}
+
+}

@@ -30,6 +30,8 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
+		<execute macro="SystemSettingsNavigator#gotoPlatformCP" />
+
 		<execute macro="SystemSettings#viewPlatformSettingCP">
 			<var name="configurationName" value="LDAPAuth configuration" />
 		</execute>

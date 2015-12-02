@@ -351,7 +351,7 @@
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="${portletLocator}" />
+		<execute function="AssertElementNotPresent" locator1="${portletLocator}" />
 	</command>
 
 	<command name="viewDuplicatePG">

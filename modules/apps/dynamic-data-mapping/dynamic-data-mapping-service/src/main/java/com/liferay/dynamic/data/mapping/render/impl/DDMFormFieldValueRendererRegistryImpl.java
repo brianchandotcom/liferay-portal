@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.render.impl;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -189,7 +189,7 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_WORKFLOW_STATUS</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class='status']</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[@class='status']</td>
 	<td></td>
 </tr>
 <tr>

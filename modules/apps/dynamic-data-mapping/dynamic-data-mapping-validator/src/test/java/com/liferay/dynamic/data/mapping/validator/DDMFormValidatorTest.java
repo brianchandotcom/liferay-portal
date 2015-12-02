@@ -174,6 +174,8 @@ public class DDMFormValidatorTest {
 		DDMFormField ddmFormField = new DDMFormField(
 			"Select", DDMFormFieldType.SELECT);
 
+		ddmFormField.setProperty("dataSourceType", "manual");
+
 		ddmForm.addDDMFormField(ddmFormField);
 
 		_ddmFormValidator.validate(ddmForm);
@@ -218,6 +220,8 @@ public class DDMFormValidatorTest {
 		DDMFormField ddmFormField = new DDMFormField(
 			"Select", DDMFormFieldType.SELECT);
 
+		ddmFormField.setProperty("dataSourceType", "manual");
+
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
 
@@ -253,6 +257,8 @@ public class DDMFormValidatorTest {
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"Select", DDMFormFieldType.SELECT);
+
+		ddmFormField.setProperty("dataSourceType", "manual");
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();

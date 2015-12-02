@@ -31,8 +31,7 @@ import java.util.List;
  */
 public class ExportProcess {
 
-	public ExportProcess(ExportContext exportContext, DBProvider dbProvider) {
-		_exportContext = exportContext;
+	public ExportProcess(DBProvider dbProvider) {
 		_dbProvider = dbProvider;
 	}
 
@@ -74,6 +73,5 @@ public class ExportProcess {
 	}
 
 	private final DBProvider _dbProvider;
-	private final ExportContext _exportContext;
 
 }

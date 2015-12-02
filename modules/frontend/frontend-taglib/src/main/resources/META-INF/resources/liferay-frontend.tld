@@ -361,7 +361,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>filterItems</name>
+			<name>managementBarFilterItems</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

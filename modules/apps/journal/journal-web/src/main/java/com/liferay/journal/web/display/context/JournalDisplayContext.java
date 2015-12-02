@@ -244,6 +244,61 @@ public class JournalDisplayContext {
 		return _keywords;
 	}
 
+	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems()
+		throws PortalException, PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String parameterName = "status";
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			getPortletURL(), _liferayPortletResponse);
+
+		List<ManagementBarFilterItem> managementBarFilterItems =
+			new ArrayList<>();
+
+		managementBarFilterItems.add(
+			_getFilteredItem(
+				parameterName, portletURL, WorkflowConstants.STATUS_ANY));
+		managementBarFilterItems.add(
+			_getFilteredItem(
+				parameterName, portletURL, WorkflowConstants.STATUS_DRAFT));
+
+		int linksCount =
+			WorkflowDefinitionLinkLocalServiceUtil.
+				getWorkflowDefinitionLinksCount(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					JournalFolder.class.getName());
+
+		if (linksCount > 0) {
+			managementBarFilterItems.add(
+				_getFilteredItem(
+					parameterName, portletURL,
+					WorkflowConstants.STATUS_PENDING));
+			managementBarFilterItems.add(
+				_getFilteredItem(
+					parameterName, portletURL,
+					WorkflowConstants.STATUS_DENIED));
+		}
+
+		managementBarFilterItems.add(
+			_getFilteredItem(
+				parameterName, portletURL, WorkflowConstants.STATUS_SCHEDULED));
+		managementBarFilterItems.add(
+			_getFilteredItem(
+				parameterName, portletURL, WorkflowConstants.STATUS_APPROVED));
+		managementBarFilterItems.add(
+			_getFilteredItem(
+				parameterName, portletURL, WorkflowConstants.STATUS_EXPIRED));
+
+		return managementBarFilterItems;
+	}
+
+	public String getManagementBarStatusFilterValue() {
+		return WorkflowConstants.getStatusLabel(getStatus());
+	}
+
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -333,6 +388,12 @@ public class JournalDisplayContext {
 		if (!isShowEditActions()) {
 			portletURL.setParameter(
 				"showEditActions", String.valueOf(isShowEditActions()));
+		}
+
+		String status = ParamUtil.getString(_request, "status");
+
+		if (Validator.isNotNull(status)) {
+			portletURL.setParameter("status", String.valueOf(getStatus()));
 		}
 
 		return portletURL;
@@ -492,60 +553,6 @@ public class JournalDisplayContext {
 		_status = ParamUtil.getInteger(_request, "status", defaultStatus);
 
 		return _status;
-	}
-
-	public List<ManagementBarFilterItem> getStatusFilterItems()
-		throws PortalException, PortletException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String parameterName = "status";
-
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
-
-		List<ManagementBarFilterItem> filterItems = new ArrayList<>();
-
-		filterItems.add(
-			_getFilteredItem(
-				parameterName, portletURL, WorkflowConstants.STATUS_ANY));
-		filterItems.add(
-			_getFilteredItem(
-				parameterName, portletURL, WorkflowConstants.STATUS_DRAFT));
-
-		int linksCount =
-			WorkflowDefinitionLinkLocalServiceUtil.
-				getWorkflowDefinitionLinksCount(
-					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-					JournalFolder.class.getName());
-
-		if (linksCount > 0) {
-			filterItems.add(
-				_getFilteredItem(
-					parameterName, portletURL,
-					WorkflowConstants.STATUS_PENDING));
-			filterItems.add(
-				_getFilteredItem(
-					parameterName, portletURL,
-					WorkflowConstants.STATUS_DENIED));
-		}
-
-		filterItems.add(
-			_getFilteredItem(
-				parameterName, portletURL, WorkflowConstants.STATUS_SCHEDULED));
-		filterItems.add(
-			_getFilteredItem(
-				parameterName, portletURL, WorkflowConstants.STATUS_APPROVED));
-		filterItems.add(
-			_getFilteredItem(
-				parameterName, portletURL, WorkflowConstants.STATUS_EXPIRED));
-
-		return filterItems;
-	}
-
-	public String getStatusFilterLabel() {
-		return WorkflowConstants.getStatusLabel(getStatus());
 	}
 
 	public boolean isNavigationHome() {

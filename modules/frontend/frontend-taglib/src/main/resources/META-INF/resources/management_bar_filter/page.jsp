@@ -17,12 +17,12 @@
 <%@ include file="/management_bar_filter/init.jsp" %>
 
 <%
-List<ManagementBarFilterItem> filterItems = (List<ManagementBarFilterItem>)request.getAttribute("liferay-frontend:management-bar-filter:filterItems");
 String label = (String)request.getAttribute("liferay-frontend:management-bar-filter:label");
+List<ManagementBarFilterItem> managementBarFilterItems = (List<ManagementBarFilterItem>)request.getAttribute("liferay-frontend:management-bar-filter:managementBarFilterItems");
 String value = (String)request.getAttribute("liferay-frontend:management-bar-filter:value");
 %>
 
-<c:if test="<%= filterItems.size() > 0 %>">
+<c:if test="<%= managementBarFilterItems.size() > 0 %>">
 	<li class="dropdown">
 		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
 			<span class="management-bar-item-title"><liferay-ui:message key="<%= label %>" />: <liferay-ui:message key="<%= value %>" /></span>
@@ -32,7 +32,7 @@ String value = (String)request.getAttribute("liferay-frontend:management-bar-fil
 		<ul class="dropdown-menu">
 
 			<%
-			for (ManagementBarFilterItem curItem : filterItems) {
+			for (ManagementBarFilterItem curItem : managementBarFilterItems) {
 			%>
 
 				<li class="<%= Validator.equals(curItem.getLabel(), value) ? "active" : StringPool.BLANK %>">

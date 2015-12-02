@@ -37,12 +37,14 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 		return super.doStartTag();
 	}
 
-	public void setFilterItems(List<ManagementBarFilterItem> filterItems) {
-		_filterItems = filterItems;
-	}
-
 	public void setLabel(String label) {
 		_label = label;
+	}
+
+	public void setManagementBarFilterItems(
+		List<ManagementBarFilterItem> managementBarFilterItems) {
+
+		_managementBarFilterItems = managementBarFilterItems;
 	}
 
 	@Override
@@ -58,8 +60,8 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
-		_filterItems = null;
 		_label = null;
+		_managementBarFilterItems = null;
 		_value = null;
 	}
 
@@ -81,9 +83,10 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-frontend:management-bar-filter:filterItems", _filterItems);
-		request.setAttribute(
 			"liferay-frontend:management-bar-filter:label", _label);
+		request.setAttribute(
+			"liferay-frontend:management-bar-filter:managementBarFilterItems",
+				_managementBarFilterItems);
 		request.setAttribute(
 			"liferay-frontend:management-bar-filter:value", _value);
 	}
@@ -95,8 +98,8 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 
 	private static final String _PAGE = "/management_bar_filter/page.jsp";
 
-	private List<ManagementBarFilterItem> _filterItems;
 	private String _label;
+	private List<ManagementBarFilterItem> _managementBarFilterItems;
 	private String _value;
 
 }

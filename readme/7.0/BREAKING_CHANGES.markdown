@@ -2955,3 +2955,28 @@ In previous versions of Liferay, some applications such as Blogs and Wiki shared
 the tags of their entries within the page. The Asset Publisher was able to use
 them to show other assets with the same tags. This functionality has changed, so
 the preference is no longer used.
+
+---------------------------------------
+
+### Removed the getPageOrderByComparator method from WikiUtil
+- **Date:** 2015-Dec-1
+- **JIRA Ticket:** LPS-60843
+
+#### What changed?
+
+The `getPageOrderByComparator` method has been removed from the WikiUtil.
+
+#### Who is affected?
+
+This affects developers that use this method in their own developments.
+
+#### How should I update my code?
+
+You should update your code to invoke:
+
+- `WikiPortletUtil.getPageOrderByComparator(String, String)`:
+
+#### Why was this change made?
+
+As part of the modularization efforts it has been considered that that this
+logic belongs to wiki-web module.

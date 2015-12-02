@@ -36,18 +36,18 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 	<liferay-ui:trash-undo portletURL="<%= undoTrashURL.toString() %>" />
 </c:if>
 
-<c:if test="<%= wikiVisualizationHelper.isNodeNameVisible() %>">
+<%
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
-	<%
-	PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
-	%>
+PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
 
-	<liferay-ui:header
-		backURL="<%= backToNodeURL.toString() %>"
-		localizeTitle="<%= false %>"
-		title="<%= node.getName() %>"
-	/>
-</c:if>
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backToNodeURL.toString());
+
+	renderResponse.setTitle(node.getName());
+}
+%>
 
 <c:if test="<%= !print %>">
 	<c:if test="<%= wikiVisualizationHelper.isNodeNavigationVisible() %>">

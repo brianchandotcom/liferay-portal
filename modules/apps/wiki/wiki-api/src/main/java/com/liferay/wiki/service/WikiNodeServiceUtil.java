@@ -87,6 +87,12 @@ public class WikiNodeServiceUtil {
 		return getService().getNodes(groupId, status, start, end);
 	}
 
+	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiNode> obc) {
+		return getService().getNodes(groupId, status, start, end, obc);
+	}
+
 	public static int getNodesCount(long groupId) {
 		return getService().getNodesCount(groupId);
 	}

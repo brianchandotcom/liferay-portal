@@ -44,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.struts-path=wiki",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Wiki", "javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.portlet-title-based-navigation=false",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/wiki/view.jsp",
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,

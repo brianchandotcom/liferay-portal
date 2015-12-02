@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -52,8 +51,6 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
-import com.liferay.wiki.util.comparator.PageCreateDateComparator;
-import com.liferay.wiki.util.comparator.PageTitleComparator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
 
 import java.io.IOException;
@@ -321,30 +318,6 @@ public class WikiUtil {
 		}
 
 		return nodes;
-	}
-
-	public static OrderByComparator<WikiPage> getPageOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<WikiPage> orderByComparator = null;
-
-		if (orderByCol.equals("modifiedDate")) {
-			orderByComparator = new PageCreateDateComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("title")) {
-			orderByComparator = new PageTitleComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("version")) {
-			orderByComparator = new PageVersionComparator(orderByAsc);
-		}
-
-		return orderByComparator;
 	}
 
 	public static WikiImporter getWikiImporter(String importer) {

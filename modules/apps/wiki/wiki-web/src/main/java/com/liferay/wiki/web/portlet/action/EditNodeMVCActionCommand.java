@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -44,6 +45,9 @@ import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -81,37 +85,53 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		long[] deleteNodeIds = null;
+
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 
-		WikiNode wikiNode = _wikiNodeService.getNode(nodeId);
-
-		String oldName = wikiNode.getName();
-
-		WikiCacheThreadLocal.setClearCache(false);
-
-		WikiNode trashWikiNode = null;
-
-		if (moveToTrash) {
-			trashWikiNode = _wikiNodeService.moveNodeToTrash(nodeId);
+		if (nodeId > 0) {
+			deleteNodeIds = new long[] {nodeId};
 		}
 		else {
-			_wikiNodeService.deleteNode(nodeId);
+			deleteNodeIds = ParamUtil.getLongValues(
+				actionRequest, "rowIdsWikiNode");
 		}
-
-		WikiCacheUtil.clearCache(nodeId);
-
-		WikiCacheThreadLocal.setClearCache(true);
 
 		WikiPortletInstanceOverriddenConfiguration
 			wikiPortletInstanceOverriddenConfiguration =
 				getWikiPortletInstanceOverriddenConfiguration(actionRequest);
 
-		updateSettings(
-			wikiPortletInstanceOverriddenConfiguration, oldName,
-			StringPool.BLANK);
+		for (long deleteNodeId : deleteNodeIds) {
+			WikiNode wikiNode = _wikiNodeService.getNode(deleteNodeId);
 
-		if (moveToTrash && (trashWikiNode != null)) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashWikiNode);
+			String oldName = wikiNode.getName();
+
+			WikiCacheThreadLocal.setClearCache(false);
+
+			WikiNode trashWikiNode = null;
+
+			if (moveToTrash) {
+				trashWikiNode = _wikiNodeService.moveNodeToTrash(deleteNodeId);
+
+				trashedModels.add(trashWikiNode);
+			}
+			else {
+				_wikiNodeService.deleteNode(deleteNodeId);
+			}
+
+			WikiCacheUtil.clearCache(deleteNodeId);
+
+			updateSettings(
+				wikiPortletInstanceOverriddenConfiguration, oldName,
+				StringPool.BLANK);
+		}
+
+		WikiCacheThreadLocal.setClearCache(true);
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
 		}

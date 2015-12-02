@@ -25,7 +25,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN, "mvc.command.name=/"
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"mvc.command.name=/", "mvc.command.name=/wiki_admin/view"
 	},
 	service = MVCRenderCommand.class
 )
@@ -34,7 +35,7 @@ public class WikiAdminViewNodesMVCRenderCommand
 
 	@Override
 	protected String getPath() {
-		return "/wiki/view_nodes.jsp";
+		return "/wiki_admin/view.jsp";
 	}
 
 }

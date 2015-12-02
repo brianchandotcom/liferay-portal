@@ -18,8 +18,9 @@ import com.liferay.exportimport.xstream.ConverterAdapter;
 import com.liferay.exportimport.xstream.XStreamStagedModelTypeHierarchyPermission;
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.exportimport.xstream.configurator.XStreamConfiguratorRegistryUtil;
-import com.liferay.portal.exception.NoSuchRoleException;
-import com.liferay.portal.exception.NoSuchTeamException;
+import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.NoSuchRoleException;
+import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -72,6 +73,7 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -2112,6 +2114,22 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 				referenceElement.addAttribute(
 					"live-group-id", String.valueOf(liveGroupId));
+
+				if (group.isLayout()) {
+					try {
+						Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
+							group.getClassPK());
+
+						referenceElement.addAttribute(
+							"scope-layout-uuid", scopeLayout.getUuid());
+					}
+					catch (NoSuchLayoutException nsle) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to find layout " + group.getClassPK());
+						}
+					}
+				}
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

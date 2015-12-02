@@ -250,7 +250,7 @@
 </tr>
 <tr>
 	<td>SELECT_ALL</td>
-	<td>//input[contains(@id,'allRowIds') or contains(@name,'allRowIds')]</td>
+	<td>//input[contains(@id,'allRowIds') or contains(@name,'allRowIds') or contains(@class,'select-all-checkboxes')]</td>
 	<td></td>
 </tr>
 <tr>

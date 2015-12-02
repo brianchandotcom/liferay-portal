@@ -3,5 +3,7 @@ Bundle-SymbolicName: com.liferay.notifications.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Web-ContextPath: /notifications-web

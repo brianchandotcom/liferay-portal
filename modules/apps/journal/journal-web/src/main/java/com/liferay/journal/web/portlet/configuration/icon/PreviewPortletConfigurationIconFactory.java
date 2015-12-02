@@ -12,31 +12,55 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.refresh;
+package com.liferay.journal.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIconFactory.class)
-public class RefreshPortletConfigurationIconFactory
-	extends BasePortletConfigurationIconFactory {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"path=/edit_article.jsp"
+	},
+	service = PortletConfigurationIconFactory.class
+)
+public class PreviewPortletConfigurationIconFactory
+	extends BaseJSPPortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new RefreshPortletConfigurationIcon(portletRequest);
+		return new PreviewPortletConfigurationIcon(portletRequest);
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/preview.jsp";
 	}
 
 	@Override
 	public double getWeight() {
-		return 17.0;
+		return 100.0;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

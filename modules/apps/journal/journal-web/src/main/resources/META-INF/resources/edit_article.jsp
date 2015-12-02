@@ -196,8 +196,6 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 			<div class="journal-article-wrapper-content">
 				<c:if test="<%= (article != null) && !article.isNew() && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 					<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
-
-					<liferay-util:include page="/article_toolbar.jsp" servletContext="<%= application %>" />
 				</c:if>
 
 				<liferay-ui:form-navigator
@@ -310,15 +308,6 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 				id: '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>',
 
 				<c:if test="<%= (article != null) && !article.isNew() %>">
-					<liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-						modelResource="<%= JournalArticle.class.getName() %>"
-						modelResourceDescription="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
-						resourceGroupId="<%= String.valueOf(article.getGroupId()) %>"
-						resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
-						var="permissionsURL"
-					/>
-
-					permissionsUrl: '<%= permissionsURL %>',
 					previewUrl: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>',
 				</c:if>
 
@@ -330,15 +319,3 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 		}
 	);
 </aui:script>
-
-<c:if test='<%= (article != null) && SessionMessages.contains(renderRequest, "previewRequested") %>'>
-	<aui:script use="liferay-journal-preview">
-		Liferay.fire(
-			'previewArticle',
-			{
-				title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
-				uri: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>'
-			}
-		);
-	</aui:script>
-</c:if>

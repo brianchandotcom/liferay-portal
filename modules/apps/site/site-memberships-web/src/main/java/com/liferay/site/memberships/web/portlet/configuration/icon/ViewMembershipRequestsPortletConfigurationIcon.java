@@ -25,8 +25,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Eudaldo Alonso
  */
@@ -34,9 +32,9 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public ViewMembershipRequestsPortletConfigurationIcon(
-		HttpServletRequest request) {
+		PortletRequest portletRequest) {
 
-		super(request);
+		super(portletRequest);
 	}
 
 	@Override
@@ -47,7 +45,7 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 	@Override
 	public String getURL() {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
+			portletRequest, SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_membership_requests.jsp");

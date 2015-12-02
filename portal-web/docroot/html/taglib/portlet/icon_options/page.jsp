@@ -34,7 +34,7 @@
 	portletConfigurationIconFactories = ListUtil.sort(portletConfigurationIconFactories, new PropertyComparator("weight", false, false));
 
 	for (PortletConfigurationIconFactory portletConfigurationIconFactory : portletConfigurationIconFactories) {
-		PortletConfigurationIcon portletConfigurationIcon = portletConfigurationIconFactory.create(request);
+		PortletConfigurationIcon portletConfigurationIcon = portletConfigurationIconFactory.create(portletRequest);
 
 		if (portletConfigurationIcon.isShow()) {
 			boolean include = portletConfigurationIconFactory.include(request, new PipingServletResponse(pageContext));

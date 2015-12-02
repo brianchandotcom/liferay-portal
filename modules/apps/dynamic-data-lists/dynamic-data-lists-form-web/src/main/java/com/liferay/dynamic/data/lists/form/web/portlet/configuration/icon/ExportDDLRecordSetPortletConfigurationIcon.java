@@ -22,7 +22,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.PortletDisplay;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Rafael Praxedes
@@ -31,9 +31,9 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public ExportDDLRecordSetPortletConfigurationIcon(
-		HttpServletRequest request) {
+		PortletRequest portletRequest) {
 
-		super(request);
+		super(portletRequest);
 	}
 
 	@Override
@@ -48,10 +48,7 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		long recordSetId = ParamUtil.getLong(
-			request, portletDisplay.getNamespace() + "recordSetId");
+		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
 
 		if (recordSetId == 0) {
 			return false;

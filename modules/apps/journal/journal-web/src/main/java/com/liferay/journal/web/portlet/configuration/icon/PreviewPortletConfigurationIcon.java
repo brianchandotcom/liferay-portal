@@ -12,58 +12,47 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.print;
+package com.liferay.journal.web.portlet.configuration.icon;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.theme.PortletDisplay;
 
 import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class PrintPortletConfigurationIcon
+public class PreviewPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public PrintPortletConfigurationIcon(PortletRequest portletRequest) {
+	public PreviewPortletConfigurationIcon(PortletRequest portletRequest) {
 		super(portletRequest);
 	}
 
 	@Override
-	public String getCssClass() {
-		return "portlet-print portlet-print-icon";
-	}
-
-	@Override
 	public String getMessage() {
-		return "print";
-	}
-
-	@Override
-	public String getOnClick() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return "location.href = '".concat(
-			portletDisplay.getURLPrint()).concat("'; return false;");
-	}
-
-	@Override
-	public String getTarget() {
-		return "_blank";
+		return "preview";
 	}
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getURLPrint();
+		return "javascript:;";
 	}
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		try {
+			JournalArticle article = ActionUtil.getArticle(portletRequest);
 
-		return portletDisplay.isShowPrintIcon();
+			if ((article != null) && !article.isNew()) {
+				return true;
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	@Override

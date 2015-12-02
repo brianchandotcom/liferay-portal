@@ -12,21 +12,22 @@
  * details.
  */
 
-package com.liferay.blogs.web.portlet.configuration.icon;
+package com.liferay.journal.web.portlet.configuration.icon;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.permission.JournalArticlePermission;
+import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
 public class PermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
@@ -45,10 +46,13 @@ public class PermissionsPortletConfigurationIcon
 		String url = StringPool.BLANK;
 
 		try {
+			JournalArticle article = getArticle();
+
 			url = PermissionsURLTag.doTag(
-				StringPool.BLANK, "com.liferay.portlet.blogs",
-				themeDisplay.getScopeGroupName(), null,
-				String.valueOf(themeDisplay.getScopeGroupId()),
+				StringPool.BLANK, JournalArticle.class.getName(),
+				HtmlUtil.escape(article.getTitle(themeDisplay.getLocale())),
+				String.valueOf(article.getGroupId()),
+				String.valueOf(article.getResourcePrimKey()),
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
@@ -60,28 +64,24 @@ public class PermissionsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		User user = themeDisplay.getUser();
-
-		if (user.isDefaultUser()) {
-			return false;
-		}
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		try {
-			if (!BlogsPermission.contains(
-					permissionChecker, themeDisplay.getScopeGroupId(),
+			JournalArticle article = getArticle();
+
+			if ((article == null) || article.isNew()) {
+				return false;
+			}
+
+			if (JournalArticlePermission.contains(
+					themeDisplay.getPermissionChecker(), article,
 					ActionKeys.PERMISSIONS)) {
 
-				return false;
+				return true;
 			}
 		}
 		catch (Exception e) {
-			return false;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override
@@ -92,6 +92,10 @@ public class PermissionsPortletConfigurationIcon
 	@Override
 	public boolean isUseDialog() {
 		return true;
+	}
+
+	protected JournalArticle getArticle() throws Exception {
+		return ActionUtil.getArticle(portletRequest);
 	}
 
 }

@@ -9,7 +9,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Check" locator1="Checkbox#SELECT_ALL" />
+		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
 		<execute function="SelectFrameTop" />
 

@@ -3319,10 +3319,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			}
 		}
 		catch (PortalException pe) {
-			if (getFoldersAndFileEntriesAndFileShortcutsCount(
+			int foldersAndFileEntriesAndFileShortcutsCount =
+				getFoldersAndFileEntriesAndFileShortcutsCount(
 					newFolder.getRepositoryId(), newFolder.getFolderId(),
-					WorkflowConstants.STATUS_ANY, true) == 0) {
+					WorkflowConstants.STATUS_ANY, true);
 
+			if (foldersAndFileEntriesAndFileShortcutsCount == 0) {
 				toRepository.deleteFolder(newFolder.getFolderId());
 			}
 

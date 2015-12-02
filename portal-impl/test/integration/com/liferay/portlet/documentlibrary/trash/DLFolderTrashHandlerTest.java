@@ -33,6 +33,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsAssetable;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
@@ -113,7 +114,7 @@ public class DLFolderTrashHandlerTest
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		DLAppServiceUtil.moveFolderFromTrash(
+		DLTrashServiceUtil.moveFolderFromTrash(
 			(Long)classedModel.getPrimaryKeyObj(),
 			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
 
@@ -122,7 +123,7 @@ public class DLFolderTrashHandlerTest
 
 	@Override
 	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
-		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+		DLTrashServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
 	@Override
@@ -258,7 +259,7 @@ public class DLFolderTrashHandlerTest
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+		DLTrashServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
 	private static final String _FOLDER_NAME = RandomTestUtil.randomString(100);

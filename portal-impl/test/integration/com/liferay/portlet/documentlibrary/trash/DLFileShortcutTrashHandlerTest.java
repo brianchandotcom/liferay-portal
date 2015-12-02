@@ -41,6 +41,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsAssetable;
@@ -107,7 +108,7 @@ public class DLFileShortcutTrashHandlerTest
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		DLAppServiceUtil.moveFileShortcutFromTrash(
+		DLTrashServiceUtil.moveFileShortcutFromTrash(
 			(Long)classedModel.getPrimaryKeyObj(),
 			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
 
@@ -116,7 +117,7 @@ public class DLFileShortcutTrashHandlerTest
 
 	@Override
 	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
-		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+		DLTrashServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
 	@Test
@@ -238,7 +239,7 @@ public class DLFileShortcutTrashHandlerTest
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		DLAppServiceUtil.moveFileShortcutToTrash(primaryKey);
+		DLTrashServiceUtil.moveFileShortcutToTrash(primaryKey);
 	}
 
 	protected void trashFileEntry() throws Exception {
@@ -267,7 +268,7 @@ public class DLFileShortcutTrashHandlerTest
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
 
-		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
+		DLTrashServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 
 		Assert.assertEquals(
 			initialBaseModelsCount,
@@ -276,7 +277,8 @@ public class DLFileShortcutTrashHandlerTest
 			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
 
-		DLAppServiceUtil.restoreFileEntryFromTrash(fileEntry.getFileEntryId());
+		DLTrashServiceUtil.restoreFileEntryFromTrash(
+			fileEntry.getFileEntryId());
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,

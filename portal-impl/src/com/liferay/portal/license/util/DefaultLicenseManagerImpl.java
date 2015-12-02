@@ -14,16 +14,16 @@
 
 package com.liferay.portal.license.util;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.license.LicenseInfo;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.LicenseUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Amos Fong
@@ -85,7 +86,7 @@ public class DefaultLicenseManagerImpl
 		}
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = new JSONObjectImpl();
 
 			byte[] serverIdBytes = LicenseUtil.getServerIdBytes();
 
@@ -100,7 +101,10 @@ public class DefaultLicenseManagerImpl
 
 			jsonObject.put("productVersion", productVersion);
 
-			String randomUuid = PortalUUIDUtil.generate();
+			UUID uuid = new UUID(
+				SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
+
+			String randomUuid = uuid.toString();
 
 			jsonObject.put("randomUuid", randomUuid);
 
@@ -114,8 +118,7 @@ public class DefaultLicenseManagerImpl
 
 			String response = LicenseUtil.sendRequest(jsonObject.toString());
 
-			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-				response);
+			JSONObject responseJSONObject = new JSONObjectImpl(response);
 
 			String errorMessage = responseJSONObject.getString("errorMessage");
 
@@ -133,7 +136,7 @@ public class DefaultLicenseManagerImpl
 			}
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage());
+			_log.error(e, e);
 		}
 
 		return 0;

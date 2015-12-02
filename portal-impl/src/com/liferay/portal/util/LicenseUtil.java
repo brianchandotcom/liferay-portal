@@ -14,13 +14,13 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -334,8 +334,7 @@ public class LicenseUtil {
 
 			String response = sendRequest(jsonObject.toString());
 
-			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-				response);
+			JSONObject responseJSONObject = new JSONObjectImpl(response);
 
 			attributes.put(
 				"ORDER_PRODUCT_ID", responseJSONObject.getString("productId"));
@@ -467,7 +466,7 @@ public class LicenseUtil {
 			String orderUuid, String productEntryName, int maxServers)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = new JSONObjectImpl();
 
 		jsonObject.put("version", 2);
 		jsonObject.put("orderUuid", orderUuid);
@@ -537,7 +536,7 @@ public class LicenseUtil {
 			return bytes;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = new JSONObjectImpl();
 
 		bytes = Encryptor.encryptUnencoded(_symmetricKey, bytes);
 

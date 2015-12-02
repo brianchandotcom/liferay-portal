@@ -1,3 +1,7 @@
+configurations.compile {
+	transitive = false
+}
+
 dependencies {
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"

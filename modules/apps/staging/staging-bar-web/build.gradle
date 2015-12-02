@@ -1,3 +1,7 @@
+configurations.compile {
+	transitive = false
+}
+
 dependencies {
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion

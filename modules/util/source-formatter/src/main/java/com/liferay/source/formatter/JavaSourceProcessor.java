@@ -2269,29 +2269,33 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					serviceUtilClassName + " directly: " + fileName);
 		}
 
-		matcher = _setReferenceMethodPattern.matcher(content);
+		matcher = _referenceMethodPattern.matcher(content);
 
 		while (matcher.find()) {
-			String annotationParameters = matcher.group(2);
+			String methodName = matcher.group(4);
+
+			if (!methodName.startsWith("set")) {
+				continue;
+			}
+
+			String annotationParameters = matcher.group(1);
 
 			if (!annotationParameters.contains("unbind =")) {
-				String setMethodName = matcher.group(4);
-
-				if (!content.contains("un" + setMethodName + "(")) {
+				if (!content.contains("un" + methodName + "(")) {
 					if (Validator.isNull(annotationParameters)) {
 						return StringUtil.insert(
-							content, "(unbind = \"-\")", matcher.start(2));
+							content, "(unbind = \"-\")", matcher.start(1));
 					}
 
 					if (!annotationParameters.contains(StringPool.NEW_LINE)) {
 						return StringUtil.insert(
-							content, ", unbind = \"-\"", matcher.end(2) - 1);
+							content, ", unbind = \"-\"", matcher.end(1) - 1);
 					}
 
 					if (!annotationParameters.contains("\n\n")) {
-						String indent = matcher.group(1) + StringPool.TAB;
+						String indent = "\t\t";
 
-						int x = content.lastIndexOf("\n", matcher.end(2) - 1);
+						int x = content.lastIndexOf("\n", matcher.end(1) - 1);
 
 						return StringUtil.replaceFirst(
 							content, "\n",
@@ -2303,7 +2307,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String methodContent = matcher.group(6);
 
 			Matcher referenceMethodContentMatcher =
-				_setReferenceMethodContentPattern.matcher(methodContent);
+				_referenceMethodContentPattern.matcher(methodContent);
 
 			if (!referenceMethodContentMatcher.find()) {
 				continue;
@@ -3631,11 +3635,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _secureXmlExclusionFiles;
 	private Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
-	private Pattern _setReferenceMethodContentPattern = Pattern.compile(
+	private Pattern _referenceMethodContentPattern = Pattern.compile(
 		"^(\\w+) =\\s+\\w+;$");
-	private Pattern _setReferenceMethodPattern = Pattern.compile(
-		"\n(\t+)@Reference([\\s\\S]*?)\\s+(protected|public) void (set\\w+?)" +
-			"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\\}");
+	private Pattern _referenceMethodPattern = Pattern.compile(
+		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
+			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
@@ -869,7 +870,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource && isModulesFile(absolutePath)) {
 			newContent = formatModulesFile(
-				fileName, absolutePath, packagePath, newContent);
+				fileName, absolutePath, className, packagePath, newContent);
 		}
 
 		// LPS-48156
@@ -1254,6 +1255,112 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				content = StringUtil.replace(
 					content, match, formattedClassLine);
 			}
+		}
+
+		return content;
+	}
+
+	protected String formatDuplicateReferenceMethods(
+			String fileName, String content, String className,
+			String packagePath)
+		throws Exception {
+
+		String moduleSuperClassContent = getModuleSuperClassContent(
+			content, className, packagePath);
+
+		if (Validator.isNull(moduleSuperClassContent) ||
+			!moduleSuperClassContent.contains("@Component") ||
+			!moduleSuperClassContent.contains("@Reference")) {
+
+			return content;
+		}
+
+		boolean bndInheritRequired = false;
+
+		Matcher matcher = _referenceMethodPattern.matcher(
+			moduleSuperClassContent);
+
+		while (matcher.find()) {
+			String referenceMethod = matcher.group();
+
+			int pos = content.indexOf(referenceMethod);
+
+			if (pos != -1) {
+				String referenceMethodContent = matcher.group(6);
+
+				Matcher referenceMethodContentMatcher =
+					_referenceMethodContentPattern.matcher(
+						referenceMethodContent);
+
+				if (referenceMethodContentMatcher.find()) {
+					String variableName = referenceMethodContentMatcher.group(
+						1);
+
+					if (StringUtil.count(content, variableName) > 1) {
+						continue;
+					}
+				}
+
+				int x = content.lastIndexOf("\n\n", pos);
+				int y = pos + referenceMethod.length();
+
+				String entireMethod = content.substring(x + 1, y);
+
+				content = StringUtil.replace(
+					content, entireMethod, StringPool.BLANK);
+
+				bndInheritRequired = true;
+			}
+			else {
+				String referenceMethodModifierAndName = matcher.group(2);
+
+				Pattern duplicateReferenceMethodPattern = Pattern.compile(
+					referenceMethodModifierAndName +
+						"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)" +
+							"\\s*?\n\t\\}\n");
+
+				Matcher duplicateReferenceMethodMatcher =
+					duplicateReferenceMethodPattern.matcher(content);
+
+				if (!duplicateReferenceMethodMatcher.find()) {
+					bndInheritRequired = true;
+
+					continue;
+				}
+
+				String methodContent = duplicateReferenceMethodMatcher.group(2);
+				String referenceMethodName = matcher.group(4);
+
+				if (methodContent.startsWith("super." + referenceMethodName)) {
+					int x = content.lastIndexOf(
+						"\n\n", duplicateReferenceMethodMatcher.start());
+					int y = duplicateReferenceMethodMatcher.end();
+
+					String entireMethod = content.substring(x + 1, y);
+
+					content = StringUtil.replace(
+						content, entireMethod, StringPool.BLANK);
+
+					bndInheritRequired = true;
+				}
+			}
+		}
+
+		Tuple bndFileLocationAndContentTuple =
+			getBNDFileLocationAndContentTuple(fileName);
+
+		String bndFileLocation =
+			(String)bndFileLocationAndContentTuple.getObject(0);
+
+		Tuple bndInheritTuple = _bndInheritRequiredTupleMap.get(
+			bndFileLocation);
+
+		if ((bndInheritTuple == null) || bndInheritRequired) {
+			String bndContent =
+				(String)bndFileLocationAndContentTuple.getObject(1);
+
+			_bndInheritRequiredTupleMap.put(
+				bndFileLocation, new Tuple(bndContent, bndInheritRequired));
 		}
 
 		return content;
@@ -2159,8 +2266,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatModulesFile(
-		String fileName, String absolutePath, String packagePath,
-		String content) {
+			String fileName, String absolutePath, String className,
+			String packagePath, String content)
+		throws Exception {
 
 		// LPS-56706 and LPS-57722
 
@@ -2207,7 +2315,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-59076
 
 		if (content.contains("@Component")) {
-			content = formatOSGIComponents(fileName, absolutePath, content);
+			content = formatOSGIComponents(
+				fileName, absolutePath, content, className, packagePath);
 		}
 
 		if (!absolutePath.contains("/modules/core/") &&
@@ -2234,7 +2343,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatOSGIComponents(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content,
+			String className, String packagePath)
+		throws Exception {
 
 		String moduleServicePackagePath = null;
 
@@ -2372,7 +2483,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		return content;
+		return formatDuplicateReferenceMethods(
+			fileName, content, className, packagePath);
 	}
 
 	protected String getCombinedLinesContent(String content, Pattern pattern) {
@@ -3703,6 +3815,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
+	private Map<String, Tuple> _bndInheritRequiredTupleMap = new HashMap<>();
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;

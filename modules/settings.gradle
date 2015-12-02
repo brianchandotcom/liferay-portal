@@ -98,6 +98,7 @@ FileTree fileTree = fileTree(rootDir) {
 		include "portal-store/*/build.gradle"
 		include "portal/*/build.gradle"
 		include "util/ip-geocoder/build.gradle"
+		include "util/osgi-util/build.gradle"
 		include "util/pmd/build.gradle"
 		include "util/portal-tools-sample-sql-builder/build.gradle"
 		include "util/sass-compiler-jni/build.gradle"

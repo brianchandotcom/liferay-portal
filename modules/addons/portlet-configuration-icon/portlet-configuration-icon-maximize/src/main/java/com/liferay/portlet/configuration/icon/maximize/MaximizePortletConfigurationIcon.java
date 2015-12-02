@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.theme.PortletDisplay;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 public class MaximizePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public MaximizePortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public MaximizePortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override

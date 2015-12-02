@@ -24,16 +24,14 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Eudaldo Alonso
  */
 public class FeedsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public FeedsPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public FeedsPortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override
@@ -44,7 +42,8 @@ public class FeedsPortletConfigurationIcon
 	@Override
 	public String getURL() {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
+			portletRequest, JournalPortletKeys.JOURNAL,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 

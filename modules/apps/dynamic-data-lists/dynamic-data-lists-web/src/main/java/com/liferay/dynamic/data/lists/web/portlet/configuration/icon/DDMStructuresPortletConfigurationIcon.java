@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.model.User;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Rafael Praxedes
@@ -27,8 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 public class DDMStructuresPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public DDMStructuresPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public DDMStructuresPortletConfigurationIcon(
+		PortletRequest portletRequest) {
+
+		super(portletRequest);
 	}
 
 	@Override

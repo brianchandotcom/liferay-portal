@@ -16,14 +16,21 @@ package com.liferay.marketplace.app.manager.web.util;
 
 import com.liferay.marketplace.app.manager.web.constants.BundleConstants;
 import com.liferay.marketplace.model.App;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
+
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 
@@ -31,6 +38,22 @@ import org.osgi.framework.Bundle;
  * @author Ryan Park
  */
 public class MarketplaceAppManagerUtil {
+
+	public static void addPortletBreadcrumbEntry(
+		AppDisplay appDisplay, HttpServletRequest request,
+		RenderResponse renderResponse) {
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, LanguageUtil.get(request, "app-manager"),
+			portletURL.toString());
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, appDisplay.getTitle(), null);
+	}
 
 	public static String[] getCategories(List<App> apps, List<Bundle> bundles) {
 		List<String> categories = new ArrayList<>();

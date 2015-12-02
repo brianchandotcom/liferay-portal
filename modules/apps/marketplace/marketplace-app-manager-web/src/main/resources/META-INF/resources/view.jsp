@@ -29,6 +29,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("category", category);
 portletURL.setParameter("state", state);
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-manager"), null);
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -77,6 +79,13 @@ portletURL.setParameter("state", state);
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showParentGroups="<%= false %>"
+	/>
+
 	<liferay-ui:search-container
 		id="appDisplays"
 	>

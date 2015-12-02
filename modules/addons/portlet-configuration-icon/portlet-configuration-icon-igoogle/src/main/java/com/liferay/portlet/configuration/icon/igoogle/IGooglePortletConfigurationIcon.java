@@ -27,8 +27,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import javax.portlet.PortletPreferences;
-
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -36,8 +35,8 @@ import javax.servlet.http.HttpServletRequest;
 public class IGooglePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public IGooglePortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public IGooglePortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override
@@ -55,7 +54,7 @@ public class IGooglePortletConfigurationIcon
 	@Override
 	public String getURL() {
 		try {
-			Portlet portlet = (Portlet)request.getAttribute(
+			Portlet portlet = (Portlet)portletRequest.getAttribute(
 				WebKeys.RENDER_PORTLET);
 
 			return "http://fusion.google.com/add?source=atgs&moduleurl=" +

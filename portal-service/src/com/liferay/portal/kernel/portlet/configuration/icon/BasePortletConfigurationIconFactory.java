@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import java.io.IOException;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +28,7 @@ public class BasePortletConfigurationIconFactory
 	implements PortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(HttpServletRequest request) {
+	public PortletConfigurationIcon create(PortletRequest portletRequest) {
 		return null;
 	}
 

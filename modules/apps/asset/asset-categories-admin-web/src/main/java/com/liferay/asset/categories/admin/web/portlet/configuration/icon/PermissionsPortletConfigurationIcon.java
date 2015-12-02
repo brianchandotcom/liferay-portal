@@ -24,7 +24,7 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -32,8 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 public class PermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public PermissionsPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public PermissionsPortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override

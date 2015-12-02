@@ -17,7 +17,7 @@ package com.liferay.portlet.configuration.icon.edit.defaults;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.theme.PortletDisplay;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 public class EditDefaultsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public EditDefaultsPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public EditDefaultsPortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override

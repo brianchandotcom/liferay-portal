@@ -19,7 +19,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -27,10 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BasePortletConfigurationIcon
 	implements PortletConfigurationIcon {
 
-	public BasePortletConfigurationIcon(HttpServletRequest request) {
-		this.request = request;
+	public BasePortletConfigurationIcon(PortletRequest portletRequest) {
+		this.portletRequest = portletRequest;
 
-		themeDisplay = (ThemeDisplay)request.getAttribute(
+		themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -139,7 +139,7 @@ public abstract class BasePortletConfigurationIcon
 		return false;
 	}
 
-	protected HttpServletRequest request;
+	protected PortletRequest portletRequest;
 	protected ThemeDisplay themeDisplay;
 
 }

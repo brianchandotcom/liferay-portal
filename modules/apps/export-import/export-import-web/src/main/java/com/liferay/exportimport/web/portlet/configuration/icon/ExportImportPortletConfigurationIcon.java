@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.theme.PortletDisplay;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ExportImportPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public ExportImportPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public ExportImportPortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override

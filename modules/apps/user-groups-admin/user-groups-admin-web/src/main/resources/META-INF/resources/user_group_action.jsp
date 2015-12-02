@@ -72,7 +72,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= hasPermissionsPermission %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Group.class.getName() %>"
-			modelResourceDescription='<%= LanguageUtil.format(request, "site-for-user-group-x", userGroup.getName(), false) %>'
+			modelResourceDescription='<%= LanguageUtil.format(request, "pages-for-user-group-x", userGroup.getName(), false) %>'
 			resourcePrimKey="<%= String.valueOf(userGroup.getGroup().getGroupId()) %>"
 			var="permissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
@@ -80,7 +80,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 
 		<liferay-ui:icon
 			iconCssClass="icon-lock"
-			message="site-permissions"
+			message="user-group-pages-permissions"
 			method="get"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"

@@ -129,13 +129,13 @@
 		</attribute>
 		<attribute>
 			<description>A CSS class for styling the card image</description>
-			<name>imageCSSClass</name>
+			<name>imageCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>A URL for the card's image</description>
-			<name>imageUrl</name>
+			<name>imageURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -291,12 +291,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>imageCSSClass</name>
+			<name>imageCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>imageUrl</name>
+			<name>imageURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -618,13 +618,13 @@
 		</attribute>
 		<attribute>
 			<description>A CSS class for styling the card image</description>
-			<name>imageCSSClass</name>
+			<name>imageCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>A URL for the card's image</description>
-			<name>imageUrl</name>
+			<name>imageURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -19,6 +19,6 @@
 <%
 String cssClass = (String)request.getAttribute("liferay-frontend:image-card:cssClass");
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-frontend:image-card:data");
-String imageCSSClass = (String)request.getAttribute("liferay-frontend:image-card:imageCSSClass");
-String imageUrl = (String)request.getAttribute("liferay-frontend:image-card:imageUrl");
+String imageCssClass = (String)request.getAttribute("liferay-frontend:image-card:imageCssClass");
+String imageURL = (String)request.getAttribute("liferay-frontend:image-card:imageURL");
 %>

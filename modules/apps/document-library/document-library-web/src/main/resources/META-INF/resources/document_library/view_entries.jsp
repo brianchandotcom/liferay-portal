@@ -332,7 +332,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									actionJsp="/document_library/file_entry_action.jsp"
 									actionJspServletContext="<%= application %>"
 									cssClass="entry-display-style"
-									imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay) %>"
+									imageURL="<%= DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay) %>"
 									resultRow="<%= row %>"
 									rowChecker="<%= entriesChecker %>"
 									title="<%= latestFileVersion.getTitle() %>"
@@ -490,7 +490,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									actionJsp="/document_library/folder_action.jsp"
 									actionJspServletContext="<%= application %>"
 									icon='<%= curFolder.isMountPoint() ? "icon-hdd" : "icon-folder-close-alt" %>'
-									imageCSSClass="icon-monospaced"
+									imageCssClass="icon-monospaced"
 									resultRow="<%= row %>"
 									rowChecker="<%= entriesChecker %>"
 									text="<%= HtmlUtil.escape(curFolder.getName()) %>"

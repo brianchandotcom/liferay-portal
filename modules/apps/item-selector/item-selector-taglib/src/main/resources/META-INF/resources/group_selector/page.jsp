@@ -65,7 +65,7 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 			<liferay-ui:search-container-column-text colspan="<%= 3 %>">
 				<liferay-frontend:horizontal-card
 					icon="icon-folder-close-alt"
-					imageCSSClass="icon-monospaced"
+					imageCssClass="icon-monospaced"
 					resultRow="<%= row %>"
 					text="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>"
 					url="<%= viewGroupURL.toString() %>"

@@ -18,9 +18,9 @@
 
 <%@ include file="/card/vertical_card/start.jspf" %>
 
-<div class="aspect-ratio <%= backgroundImage ? "aspect-ratio-bg-center aspect-ratio-bg-cover" : "" %>" style="<%= backgroundImage ? "background-image: url('" + imageUrl + "')" : "" %>">
+<div class="aspect-ratio <%= backgroundImage ? "aspect-ratio-bg-center aspect-ratio-bg-cover" : "" %>" style="<%= backgroundImage ? "background-image: url('" + imageURL + "')" : "" %>">
 	<aui:a href="<%= url %>">
-		<img alt="" class="<%= imageCSSClass %><%= backgroundImage ? " sr-only" : "" %>" src="<%= imageUrl %>" />
+		<img alt="" class="<%= imageCssClass %><%= backgroundImage ? " sr-only" : "" %>" src="<%= imageURL %>" />
 	</aui:a>
 
 	<c:if test="<%= Validator.isNotNull(stickerBottom) %>">

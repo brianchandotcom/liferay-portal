@@ -139,7 +139,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							<liferay-frontend:vertical-card
 								actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
 								actionJspServletContext="<%= application %>"
-								imageUrl='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+								imageURL='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 								resultRow="<%= row %>"
 								rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 								title="<%= curArticle.getTitle(locale) %>"
@@ -278,7 +278,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/folder_action.jsp" : null %>'
 								actionJspServletContext="<%= application %>"
 								icon="icon-folder-close-alt"
-								imageCSSClass="icon-monospaced"
+								imageCssClass="icon-monospaced"
 								resultRow="<%= row %>"
 								rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 								text="<%= HtmlUtil.escape(curFolder.getName()) %>"

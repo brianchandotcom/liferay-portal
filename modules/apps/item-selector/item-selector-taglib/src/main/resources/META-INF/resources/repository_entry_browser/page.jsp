@@ -315,7 +315,7 @@ if (Validator.isNotNull(keywords)) {
 									<liferay-ui:search-container-column-text colspan="<%= 3 %>">
 										<liferay-frontend:horizontal-card
 											icon="icon-folder-close-alt"
-											imageCSSClass="icon-monospaced"
+											imageCssClass="icon-monospaced"
 											resultRow="<%= row %>"
 											text="<%= HtmlUtil.escape(folder.getName()) %>"
 											url="<%= viewFolderURL.toString() %>"
@@ -348,7 +348,7 @@ if (Validator.isNotNull(keywords)) {
 										<liferay-frontend:image-card
 											cssClass="item-preview"
 											data="<%= data %>"
-											imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
+											imageURL="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
 										/>
 									</liferay-ui:search-container-column-text>
 

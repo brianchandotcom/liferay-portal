@@ -261,11 +261,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITES_SELECT_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_siteName}')]//button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITES_SELECT_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_siteName}')]/td[1]</td>
 	<td></td>

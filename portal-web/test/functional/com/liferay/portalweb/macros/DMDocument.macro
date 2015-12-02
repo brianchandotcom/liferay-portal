@@ -488,7 +488,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#SHORTCUT" value1="Shortcut" />
 
-		<execute function="AssertClick" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_BUTTON" value1="Select" />
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 
 		<execute function="SelectFrame" locator1="SitesSelectSite#SELECT_SITE_IFRAME" />
 
@@ -498,7 +500,7 @@
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
 		<execute function="Click" locator1="Icon#ADVANCED_SEARCH" />
 		<execute function="AssertTextEquals" locator1="SitesSelectSite#SITES_TABLE_NAME" value1="${siteName}" />
-		<execute function="AssertClick" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="Click" locator1="SITES_TABLE_CHOOSE_SITE_LINK" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 		<execute function="AssertClick" locator1="DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_CHOOSE" value1="Select" />
 		<execute function="SelectFrame" locator1="IFrame#SELECT_FILE" />

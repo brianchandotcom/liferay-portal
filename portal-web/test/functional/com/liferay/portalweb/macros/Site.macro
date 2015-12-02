@@ -119,7 +119,10 @@
 				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${parentSiteName}" />
 				<execute function="KeyPress" locator1="NavBar#BASIC_SEARCH_FIELD" value1="\RETURN" />
 				<execute function="AssertTextEquals" locator1="SitesSelectSite#SITES_TABLE_NAME" value1="${parentSiteName}" />
-				<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+				<var name="key_siteName" value="${parentSiteName}" />
+
+				<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 
 				<var name="key_parentSiteName" value="${parentSiteName}" />
 
@@ -438,7 +441,7 @@
 		<execute function="Type" locator1="CPUsersandorganizationsUser#SITES_SELECT_SEARCH_FIELD" value1="${siteName}" />
 		<execute function="KeyPress" locator1="CPUsersandorganizationsUser#SITES_SELECT_SEARCH_FIELD" value1="\RETURN" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_SELECT_TABLE_NAME" value1="${siteName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#SITES_SELECT_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -875,7 +878,6 @@
 			<equals arg1="${chooseButtonAvailable}" arg2="false" />
 			<then>
 				<execute function="AssertTextNotPresent" locator1="SitesSelectSite#SITES_TABLE_NAME" value1="${parentSiteName}" />
-				<execute function="AssertTextNotPresent" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No sites were found." />
 			</then>
 		</if>

@@ -78,6 +78,7 @@ import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
+import com.liferay.portlet.documentlibrary.service.DLTrashService;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.trash.service.TrashEntryService;
@@ -375,7 +376,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 		if (fileEntry.isRepositoryCapabilityProvided(TrashCapability.class)) {
-			fileEntry = _dlAppService.moveFileEntryToTrash(fileEntryId);
+			fileEntry = _dlTrashService.moveFileEntryToTrash(fileEntryId);
 
 			TrashUtil.addTrashSessionMessages(
 				actionRequest, (TrashedModel)fileEntry.getModel());
@@ -895,6 +896,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDLTrashService(DLTrashService dlTrashService) {
+		_dlTrashService = dlTrashService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;
 	}
@@ -1025,6 +1031,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		EditFileEntryMVCActionCommand.class);
 
 	private volatile DLAppService _dlAppService;
+	private volatile DLTrashService _dlTrashService;
 	private volatile TrashEntryService _trashEntryService;
 
 }

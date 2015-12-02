@@ -52,6 +52,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
+import com.liferay.portlet.documentlibrary.service.DLTrashService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
@@ -127,7 +128,8 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {
-				Folder folder = _dlAppService.moveFolderToTrash(deleteFolderId);
+				Folder folder = _dlTrashService.moveFolderToTrash(
+					deleteFolderId);
 
 				if (folder.getModel() instanceof DLFolder) {
 					trashedModels.add((DLFolder)folder.getModel());
@@ -241,6 +243,11 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		_dlAppService = dlAppService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLTrashService(DLTrashService dlTrashService) {
+		_dlTrashService = dlTrashService;
+	}
+
 	protected void subscribeFolder(ActionRequest actionRequest)
 		throws Exception {
 
@@ -334,5 +341,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private volatile DLAppService _dlAppService;
+	private volatile DLTrashService _dlTrashService;
 
 }

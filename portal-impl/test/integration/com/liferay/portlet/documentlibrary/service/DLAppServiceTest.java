@@ -795,7 +795,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
 
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 			DLAppServiceUtil.deleteFolder(folder.getFolderId());
 
@@ -838,9 +838,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
 
-			DLAppServiceUtil.moveFolderToTrash(subfolder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(subfolder.getFolderId());
 
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 			DLAppServiceUtil.deleteFolder(folder.getFolderId());
 
@@ -879,7 +879,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
 
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 			folder = DLAppServiceUtil.getFolder(folder.getFolderId());
 
@@ -908,9 +908,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
 
-			DLAppServiceUtil.moveFolderToTrash(subfolder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(subfolder.getFolderId());
 
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 			folder = DLAppServiceUtil.getFolder(folder.getFolderId());
 
@@ -1000,7 +1000,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			Assert.assertTrue(_fileEntry.isCheckedOut());
 
-			DLAppServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
+			DLTrashServiceUtil.moveFileEntryToTrash(
+				_fileEntry.getFileEntryId());
 
 			_fileEntry = DLAppServiceUtil.getFileEntry(
 				_fileEntry.getFileEntryId());
@@ -1021,7 +1022,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					DLFileEntryConstants.getClassName(),
 					fileVersion.getFileVersionId()));
 
-			DLAppServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
+			DLTrashServiceUtil.moveFileEntryToTrash(
+				_fileEntry.getFileEntryId());
 
 			Assert.assertNull(
 				AssetEntryLocalServiceUtil.fetchEntry(

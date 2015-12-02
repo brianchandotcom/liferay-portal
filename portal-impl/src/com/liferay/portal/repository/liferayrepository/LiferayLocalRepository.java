@@ -398,7 +398,7 @@ public class LiferayLocalRepository
 
 		List<Object> dlFoldersAndDLFileEntriesAndDLFileShortcuts =
 			dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
-				getGroupId(), toFolderId(folderId), null, true,
+				getGroupId(), toFolderId(folderId), null, includeMountFolders,
 				queryDefinition);
 
 		return RepositoryModelUtil.toRepositoryEntries(

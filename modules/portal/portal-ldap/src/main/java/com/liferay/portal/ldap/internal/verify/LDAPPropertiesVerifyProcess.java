@@ -234,6 +234,10 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	private String convert(String[] stringArray) {
+		return StringUtil.merge(stringArray, StringPool.PIPE);
+	}
+
 	private void verifyLDAPExportProperties(long companyId) {
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
@@ -361,26 +365,33 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 				"ldap://localhost:10389"));
 		dictionary.put(
 			LDAPConstants.CONTACT_CUSTOM_MAPPINGS,
-			_prefsProps.getStringArray(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix,
-				StringPool.NEW_LINE));
+			convert(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix,
+					StringPool.NEW_LINE)));
 		dictionary.put(
 			LDAPConstants.CONTACT_MAPPINGS,
-			_prefsProps.getStringArray(
-				companyId, LegacyLDAPPropsKeys.LDAP_CONTACT_MAPPINGS + postfix,
-				StringPool.NEW_LINE));
+			convert(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_CONTACT_MAPPINGS + postfix,
+					StringPool.NEW_LINE)));
 		dictionary.put(
 			LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES,
-			_prefsProps.getStringArray(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix,
-				StringPool.COMMA));
+			convert(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES +
+						postfix,
+					StringPool.COMMA)));
 		dictionary.put(
 			LDAPConstants.GROUP_MAPPINGS,
-			_prefsProps.getStringArray(
-				companyId, LegacyLDAPPropsKeys.LDAP_GROUP_MAPPINGS + postfix,
-				StringPool.NEW_LINE));
+			convert(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_GROUP_MAPPINGS + postfix,
+					StringPool.NEW_LINE)));
 		dictionary.put(
 			LDAPConstants.GROUP_SEARCH_FILTER,
 			_prefsProps.getString(
@@ -417,27 +428,32 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 				companyId, LegacyLDAPPropsKeys.LDAP_SERVER_NAME + postfix));
 		dictionary.put(
 			LDAPConstants.USER_CUSTOM_MAPPINGS,
-			_prefsProps.getStringArray(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix,
-				StringPool.NEW_LINE));
+			convert(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix,
+					StringPool.NEW_LINE)));
 		dictionary.put(
 			LDAPConstants.USER_DEFAULT_OBJECT_CLASSES,
-			_prefsProps.getStringArray(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES + postfix,
-				StringPool.COMMA));
+			convert(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES +
+						postfix,
+					StringPool.COMMA)));
 		dictionary.put(
 			LDAPConstants.USER_IGNORE_ATTRIBUTES,
-			_prefsProps.getStringArray(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_USER_IGNORE_ATTRIBUTES + postfix,
-				StringPool.COMMA));
+			convert(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_USER_IGNORE_ATTRIBUTES + postfix,
+					StringPool.COMMA)));
 		dictionary.put(
 			LDAPConstants.USER_MAPPINGS,
-			_prefsProps.getStringArray(
-				companyId, LegacyLDAPPropsKeys.LDAP_USER_MAPPINGS + postfix,
-				StringPool.NEW_LINE));
+			convert(
+				_prefsProps.getStringArray(
+					companyId, LegacyLDAPPropsKeys.LDAP_USER_MAPPINGS + postfix,
+					StringPool.NEW_LINE)));
 		dictionary.put(
 			LDAPConstants.USER_SEARCH_FILTER,
 			_prefsProps.getString(

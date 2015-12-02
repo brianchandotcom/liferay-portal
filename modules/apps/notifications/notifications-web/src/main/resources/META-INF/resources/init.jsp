@@ -24,9 +24,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.notifications.util.PortletKeys" %><%@
-page import="com.liferay.notifications.util.PortletPropsValues" %><%@
-page import="com.liferay.notifications.util.comparator.PortletIdComparator" %><%@
+<%@ page import="com.liferay.notifications.web.constants.NotificationsPortletKeys" %><%@
+page import="com.liferay.notifications.web.util.PortletPropsValues" %><%@
+page import="com.liferay.notifications.web.util.comparator.PortletIdComparator" %><%@
 page import="com.liferay.portal.kernel.notifications.UserNotificationDefinition" %><%@
 page import="com.liferay.portal.kernel.notifications.UserNotificationDeliveryType" %><%@
 page import="com.liferay.portal.kernel.notifications.UserNotificationManagerUtil" %><%@

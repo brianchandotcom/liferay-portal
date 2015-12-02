@@ -426,8 +426,6 @@ if (System.getenv("JENKINS_HOME")) {
 	}
 
 	startTestableTomcat {
-		ext {
-			deleteLiferayHome = false
-		}
+		deleteLiferayHome = false
 	}
 }

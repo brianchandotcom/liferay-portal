@@ -8,3 +8,4 @@ Include-Resource:\
 JS-Config: /META-INF/resources/js/config.js
 Require-SchemaVersion: 1.0.0
 Web-ContextPath: /dynamic-data-mapping-web
+-dsannotations-options: inherit

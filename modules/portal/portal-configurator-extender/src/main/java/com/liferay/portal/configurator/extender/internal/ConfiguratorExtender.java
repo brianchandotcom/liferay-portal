@@ -147,7 +147,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 			namedConfigurationContentFactory);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {
 

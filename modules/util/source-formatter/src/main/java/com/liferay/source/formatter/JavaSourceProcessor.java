@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
@@ -34,7 +35,9 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -207,6 +210,33 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, sb.toString());
 
 			return;
+		}
+	}
+
+	protected void checkBndInheritAnnotationOption() {
+		for (Map.Entry<String, Tuple> entry :
+				_bndInheritRequiredTupleMap.entrySet()) {
+
+			String bndFileLocation = entry.getKey();
+
+			Tuple bndInheritTuple = entry.getValue();
+
+			String bndContent = (String)bndInheritTuple.getObject(0);
+			boolean bndInheritRequired = (Boolean)bndInheritTuple.getObject(1);
+
+			if (bndContent.contains("-dsannotations-options: inherit")) {
+				if (!bndInheritRequired) {
+					printError(
+						bndFileLocation,
+						"Redundant '-dsannotations-options: inherit'" +
+							bndFileLocation);
+				}
+			}
+			else if (bndInheritRequired) {
+				printError(
+					bndFileLocation,
+					"Add '-dsannotations-options: inherit'" + bndFileLocation);
+			}
 		}
 	}
 
@@ -867,7 +897,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource && isModulesFile(absolutePath)) {
 			newContent = formatModulesFile(
-				fileName, absolutePath, packagePath, newContent);
+				fileName, absolutePath, className, packagePath, newContent);
 		}
 
 		// LPS-48156
@@ -1253,6 +1283,99 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					content, match, formattedClassLine);
 			}
 		}
+
+		return content;
+	}
+
+	protected String formatDuplicateReferenceMethods(
+			String fileName, String content, String className,
+			String packagePath)
+		throws Exception {
+
+		String moduleSuperClassContent = getModuleSuperClassContent(
+			content, className, packagePath);
+
+		if (Validator.isNull(moduleSuperClassContent) ||
+			!moduleSuperClassContent.contains("@Component") ||
+			!moduleSuperClassContent.contains("@Reference")) {
+
+			setBNDInheritRequiredValue(fileName, false);
+
+			return content;
+		}
+
+		boolean bndInheritRequired = false;
+
+		Matcher matcher = _referenceMethodPattern.matcher(
+			moduleSuperClassContent);
+
+		while (matcher.find()) {
+			String referenceMethod = matcher.group();
+
+			int pos = content.indexOf(referenceMethod);
+
+			if (pos != -1) {
+				String referenceMethodContent = matcher.group(6);
+
+				Matcher referenceMethodContentMatcher =
+					_referenceMethodContentPattern.matcher(
+						referenceMethodContent);
+
+				if (referenceMethodContentMatcher.find()) {
+					String variableName = referenceMethodContentMatcher.group(
+						1);
+
+					if (StringUtil.count(content, variableName) > 1) {
+						continue;
+					}
+				}
+
+				int x = content.lastIndexOf("\n\n", pos);
+				int y = pos + referenceMethod.length();
+
+				String entireMethod = content.substring(x + 1, y);
+
+				content = StringUtil.replace(
+					content, entireMethod, StringPool.BLANK);
+
+				bndInheritRequired = true;
+			}
+			else {
+				String referenceMethodModifierAndName = matcher.group(2);
+
+				Pattern duplicateReferenceMethodPattern = Pattern.compile(
+					referenceMethodModifierAndName +
+						"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)" +
+							"\\s*?\n\t\\}\n");
+
+				Matcher duplicateReferenceMethodMatcher =
+					duplicateReferenceMethodPattern.matcher(content);
+
+				if (!duplicateReferenceMethodMatcher.find()) {
+					bndInheritRequired = true;
+
+					continue;
+				}
+
+				String methodContent = duplicateReferenceMethodMatcher.group(2);
+				String referenceMethodName = matcher.group(4);
+
+				if (methodContent.startsWith("super." + referenceMethodName)) {
+					int x = content.lastIndexOf(
+						"\n\n", duplicateReferenceMethodMatcher.start());
+					int y = duplicateReferenceMethodMatcher.end();
+
+					String entireMethod = content.substring(x + 1, y);
+
+					content = StringUtil.replace(
+						content, entireMethod, StringPool.BLANK);
+
+					bndInheritRequired = true;
+				}
+			}
+		}
+
+		setBNDInheritRequiredValue(fileName, bndInheritRequired);
 
 		return content;
 	}
@@ -2157,8 +2280,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatModulesFile(
-		String fileName, String absolutePath, String packagePath,
-		String content) {
+			String fileName, String absolutePath, String className,
+			String packagePath, String content)
+		throws Exception {
 
 		// LPS-56706 and LPS-57722
 
@@ -2205,7 +2329,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-59076
 
 		if (content.contains("@Component")) {
-			content = formatOSGIComponents(fileName, absolutePath, content);
+			content = formatOSGIComponents(
+				fileName, absolutePath, content, className, packagePath);
 		}
 
 		if (!absolutePath.contains("/modules/core/") &&
@@ -2232,7 +2357,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatOSGIComponents(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content,
+			String className, String packagePath)
+		throws Exception {
 
 		String moduleServicePackagePath = null;
 
@@ -2269,29 +2396,33 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					serviceUtilClassName + " directly: " + fileName);
 		}
 
-		matcher = _setReferenceMethodPattern.matcher(content);
+		matcher = _referenceMethodPattern.matcher(content);
 
 		while (matcher.find()) {
-			String annotationParameters = matcher.group(2);
+			String methodName = matcher.group(4);
+
+			if (!methodName.startsWith("set")) {
+				continue;
+			}
+
+			String annotationParameters = matcher.group(1);
 
 			if (!annotationParameters.contains("unbind =")) {
-				String setMethodName = matcher.group(4);
-
-				if (!content.contains("un" + setMethodName + "(")) {
+				if (!content.contains("un" + methodName + "(")) {
 					if (Validator.isNull(annotationParameters)) {
 						return StringUtil.insert(
-							content, "(unbind = \"-\")", matcher.start(2));
+							content, "(unbind = \"-\")", matcher.start(1));
 					}
 
 					if (!annotationParameters.contains(StringPool.NEW_LINE)) {
 						return StringUtil.insert(
-							content, ", unbind = \"-\"", matcher.end(2) - 1);
+							content, ", unbind = \"-\"", matcher.end(1) - 1);
 					}
 
 					if (!annotationParameters.contains("\n\n")) {
-						String indent = matcher.group(1) + StringPool.TAB;
+						String indent = "\t\t";
 
-						int x = content.lastIndexOf("\n", matcher.end(2) - 1);
+						int x = content.lastIndexOf("\n", matcher.end(1) - 1);
 
 						return StringUtil.replaceFirst(
 							content, "\n",
@@ -2303,7 +2434,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String methodContent = matcher.group(6);
 
 			Matcher referenceMethodContentMatcher =
-				_setReferenceMethodContentPattern.matcher(methodContent);
+				_referenceMethodContentPattern.matcher(methodContent);
 
 			if (!referenceMethodContentMatcher.find()) {
 				continue;
@@ -2366,7 +2497,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		return content;
+		return formatDuplicateReferenceMethods(
+			fileName, content, className, packagePath);
 	}
 
 	protected String getCombinedLinesContent(String content, Pattern pattern) {
@@ -3155,6 +3287,76 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return x + 1;
 	}
 
+	protected String getModuleClassContent(String fullClassName)
+		throws Exception {
+
+		String superClassContent = _moduleFileContentsMap.get(fullClassName);
+
+		if (superClassContent != null) {
+			return superClassContent;
+		}
+
+		Map<String, String> moduleFileNamesMap = getModuleFileNamesMap();
+
+		String moduleFileName = moduleFileNamesMap.get(fullClassName);
+
+		if (moduleFileName == null) {
+			_moduleFileContentsMap.put(fullClassName, StringPool.BLANK);
+
+			return StringPool.BLANK;
+		}
+
+		File file = new File(moduleFileName);
+
+		superClassContent = FileUtil.read(file);
+
+		_moduleFileContentsMap.put(fullClassName, superClassContent);
+
+		return superClassContent;
+	}
+
+	protected Map<String, String> getModuleFileNamesMap() throws Exception {
+		if (_moduleFileNamesMap != null) {
+			return _moduleFileNamesMap;
+		}
+
+		_moduleFileNamesMap = new HashMap<>();
+
+		List<String> fileNames = new ArrayList<>();
+
+		String moduleRootDirLocation =
+			sourceFormatterArgs.getBaseDirName() + "modules/";
+
+		for (int i = 0; i < 6; i++) {
+			File file = new File(moduleRootDirLocation);
+
+			if (file.exists()) {
+				fileNames = getFileNames(
+					moduleRootDirLocation, null, new String[0], getIncludes());
+
+				break;
+			}
+
+			moduleRootDirLocation = "../" + moduleRootDirLocation;
+		}
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			String className = StringUtil.replace(
+				fileName, StringPool.SLASH, StringPool.PERIOD);
+
+			int pos = className.lastIndexOf(".com.liferay.");
+
+			className = className.substring(pos + 1, fileName.length() - 5);
+
+			_moduleFileNamesMap.put(className, fileName);
+		}
+
+		return _moduleFileNamesMap;
+	}
+
 	protected String getModuleServicePackagePath(String fileName) {
 		String serviceDirLocation = fileName;
 
@@ -3191,6 +3393,49 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int pos = serviceDirLocation.lastIndexOf(".com.");
 
 		return serviceDirLocation.substring(pos + 1);
+	}
+
+	protected String getModuleSuperClassContent(
+			String content, String className, String packagePath)
+		throws Exception {
+
+		Pattern pattern = Pattern.compile(
+			" class " + className + "\\s+extends\\s+([\\w.]+) ");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String superClassName = matcher.group(1);
+
+		if (superClassName.contains(StringPool.PERIOD)) {
+			if (!superClassName.startsWith("com.liferay")) {
+				return null;
+			}
+
+			return getModuleClassContent(superClassName);
+		}
+
+		String superClassPackagePath = packagePath;
+
+		pattern = Pattern.compile("\nimport (.+?)\\." + superClassName);
+
+		matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			superClassPackagePath = matcher.group(1);
+		}
+
+		if (!superClassPackagePath.startsWith("com.liferay")) {
+			return null;
+		}
+
+		String superClassFullClassName =
+			superClassPackagePath + StringPool.PERIOD + superClassName;
+
+		return getModuleClassContent(superClassFullClassName);
 	}
 
 	protected String getNextLine(String content, int lineCount) {
@@ -3528,6 +3773,33 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return false;
 	}
 
+	@Override
+	protected void postFormat() throws Exception {
+		checkBndInheritAnnotationOption();
+	}
+
+	protected void setBNDInheritRequiredValue(
+			String fileName, boolean bndInheritRequired)
+		throws Exception {
+
+		Tuple bndFileLocationAndContentTuple =
+			getBNDFileLocationAndContentTuple(fileName);
+
+		String bndFileLocation =
+			(String)bndFileLocationAndContentTuple.getObject(0);
+
+		Tuple bndInheritTuple = _bndInheritRequiredTupleMap.get(
+			bndFileLocation);
+
+		if ((bndInheritTuple == null) || bndInheritRequired) {
+			String bndContent =
+				(String)bndFileLocationAndContentTuple.getObject(1);
+
+			_bndInheritRequiredTupleMap.put(
+				bndFileLocation, new Tuple(bndContent, bndInheritRequired));
+		}
+	}
+
 	protected String sortExceptions(String line) {
 		if (!line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
 			!line.endsWith(StringPool.SEMICOLON)) {
@@ -3584,6 +3856,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
+	private Map<String, Tuple> _bndInheritRequiredTupleMap = new HashMap<>();
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;
@@ -3623,19 +3896,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
+	private Map<String, String> _moduleFileContentsMap = new HashMap<>();
+	private Map<String, String> _moduleFileNamesMap;
 	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
+	private Pattern _referenceMethodContentPattern = Pattern.compile(
+		"^(\\w+) =\\s+\\w+;$");
+	private Pattern _referenceMethodPattern = Pattern.compile(
+		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
+			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private List<String> _secureRandomExclusionFiles;
 	private List<String> _secureXmlExclusionFiles;
 	private Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
-	private Pattern _setReferenceMethodContentPattern = Pattern.compile(
-		"^(\\w+) =\\s+\\w+;$");
-	private Pattern _setReferenceMethodPattern = Pattern.compile(
-		"\n(\t+)@Reference([\\s\\S]*?)\\s+(protected|public) void (set\\w+?)" +
-			"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\\}");
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;

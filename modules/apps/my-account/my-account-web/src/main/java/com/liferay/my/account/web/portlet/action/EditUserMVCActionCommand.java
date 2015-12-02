@@ -22,18 +22,12 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.pwd.PwdAuthenticator;
-import com.liferay.portal.service.ListTypeLocalService;
-import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.service.UserService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,41 +54,6 @@ public class EditUserMVCActionCommand
 		}
 
 		super.doProcessAction(actionRequest, actionResponse);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setAnnouncementsDeliveryLocalService(
-		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
-
-		super.setAnnouncementsDeliveryLocalService(
-			announcementsDeliveryLocalService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		super.setDLAppLocalService(dlAppLocalService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setListTypeLocalService(
-		ListTypeLocalService listTypeLocalService) {
-
-		super.setListTypeLocalService(listTypeLocalService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		super.setUserLocalService(userLocalService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setUserService(UserService userService) {
-		super.setUserService(userService);
 	}
 
 	@Override

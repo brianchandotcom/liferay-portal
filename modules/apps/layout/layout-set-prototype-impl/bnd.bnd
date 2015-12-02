@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.layout.set.prototype.impl
 Bundle-Version: 1.0.0
 Export-package: com.liferay.layout.set.prototype.lar
 Include-Resource: classes
+-dsannotations-options: inherit

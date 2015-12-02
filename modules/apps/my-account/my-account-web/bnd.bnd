@@ -5,3 +5,4 @@ Include-Resource:\
 	classes,\
 	content=../../users-admin/users-admin-web/src/main/resources/content,\
 	META-INF/resources=../../users-admin/users-admin-web/src/main/resources/META-INF/resources
+-dsannotations-options: inherit

@@ -31,13 +31,7 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var ddmDataProviderInstanceIdField = instance.getField('ddmDataProviderInstanceId');
-
-						if (ddmDataProviderInstanceIdField) {
-							instance._eventHandlers.push(
-								ddmDataProviderInstanceIdField.after('render', A.bind('_afterDDMDataProviderInstanceIdFieldRender', instance))
-							);
-						}
+						instance._initDataProvider();
 
 						var labelField = instance.getField('label');
 
@@ -91,6 +85,14 @@ AUI.add(
 						);
 					},
 
+					_afterDataSourceTypeFieldValueChanged: function(event) {
+						var instance = this;
+
+						var optionsField = instance.getField('options');
+
+						optionsField.set('required', event.target.getValue() === 'manual');
+					},
+
 					_afterDDMDataProviderInstanceIdFieldRender: function(event) {
 						var instance = this;
 
@@ -118,7 +120,10 @@ AUI.add(
 
 						var optionsField = instance.getField('options');
 
-						optionsField.set('visible', dataSourceType === 'manual');
+						var manualDataSourceType = dataSourceType === 'manual';
+
+						optionsField.set('required', manualDataSourceType);
+						optionsField.set('visible', manualDataSourceType);
 					},
 
 					_afterSettingsFormRender: function() {
@@ -237,6 +242,26 @@ AUI.add(
 						}
 
 						return hasErrors;
+					},
+
+					_initDataProvider: function() {
+						var instance = this;
+
+						var ddmDataProviderInstanceIdField = instance.getField('ddmDataProviderInstanceId');
+
+						if (ddmDataProviderInstanceIdField) {
+							instance._eventHandlers.push(
+								ddmDataProviderInstanceIdField.after('render', A.bind('_afterDDMDataProviderInstanceIdFieldRender', instance))
+							);
+						}
+
+						var dataSourceTypeField = instance.getField('dataSourceType');
+
+						if (dataSourceTypeField) {
+							instance._eventHandlers.push(
+								dataSourceTypeField.after('valueChanged', A.bind('_afterDataSourceTypeFieldValueChanged', instance))
+							);
+						}
 					},
 
 					_onClickModeToggler: function(event) {

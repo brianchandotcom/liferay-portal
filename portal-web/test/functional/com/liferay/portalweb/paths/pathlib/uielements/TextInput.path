@@ -325,12 +325,12 @@
 </tr>
 <tr>
 	<td>POLL_CHOICE_A</td>
-	<td>//input[contains(.,'choiceDescriptiona')]</td>
+	<td>//input[contains(@id,'choiceDescriptiona')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>POLL_CHOICE_B</td>
-	<td>//input[contains(.,'choiceDescriptionb')]</td>
+	<td>//input[contains(@id,'choiceDescriptionb')]</td>
 	<td></td>
 </tr>
 <tr>

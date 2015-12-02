@@ -50,7 +50,7 @@
 		<if>
 			<equals arg1="${invalidSize}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a file with a valid file size no larger than ${maxAttachmentFileSize}KB." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Request is larger than ${maxAttachmentFileSize}KB and could not be processed." />
 			</then>
 		</if>
 	</command>

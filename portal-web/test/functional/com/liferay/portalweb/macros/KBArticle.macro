@@ -143,17 +143,30 @@
 					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please select at least one category for ${vocabularyName}." />
 				</then>
 			</elseif>
-			<elseif>
-				<equals arg1="${kbArticleInvalidAttachmentSize}" arg2="true" />
-				<then>
-					<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
-					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please Enter a file with a valid file size no larger than 1k" />
-				</then>
-			</elseif>
 			<else>
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
+	</command>
+
+	<command name="addCPWithInvalidAttachmentSize">
+		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_ARTICLE" value1="Add Article" />
+
+		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
+
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContent}" />
+
+		<execute macro="KBArticle#selectAttachmentCP">
+			<var name="kbArticleAttachment" value="${kbArticleAttachment}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ATTACHMENTS_INVALID_SIZE_ERROR" value1="Request is larger than 1024 and could not be processed." />
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCPWithInvalidTitle">
@@ -1092,6 +1105,13 @@
 
 				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#CATEGORY_HEADER" value1="${vocabularyName}: ${categoryName}" />
 				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#CATEGORY_LINKS" value1="${categoryName}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="noAttachment" arg2="true" />
+			<then>
+				<execute function="AssertAlertNotPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
 			</then>
 		</if>
 	</command>

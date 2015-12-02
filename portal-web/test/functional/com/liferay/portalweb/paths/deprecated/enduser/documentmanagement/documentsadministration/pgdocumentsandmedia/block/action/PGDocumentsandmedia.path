@@ -374,17 +374,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SUBSCRIBE-->
-<tr>
-	<td>SUBSCRIBE_LINK</td>
-	<td>//div[@class='subscribe-action']/span/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ENTRY_ICON_DOCUMENT-->
 <tr>
 	<td>ENTRY_ICON_DOCUMENT_THUMBNAIL</td>

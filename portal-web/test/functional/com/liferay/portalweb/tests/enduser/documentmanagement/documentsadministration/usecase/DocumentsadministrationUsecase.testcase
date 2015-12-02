@@ -230,6 +230,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -311,7 +313,7 @@
 
 		<var name="key_dmDocumentTitle" value="Document1" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Document1" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Document1" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_VERSION" value1="Version PWC" />
 
@@ -340,7 +342,7 @@
 
 		<var name="key_dmDocumentTitle" value="Document1" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Document1" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="Document1" />
 
 		<execute function="AssertClick#assertTextClick" locator1="Button#EDIT" value1="Edit" />
 

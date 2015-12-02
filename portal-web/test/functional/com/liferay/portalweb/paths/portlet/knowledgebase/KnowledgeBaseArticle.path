@@ -92,6 +92,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ATTACHMENTS_INVALID_SIZE_ERROR</td>
+	<td>//li[contains(@class,'upload-error')]//span[@class='error-message']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_SELECT_FILES_BUTTON</td>
+	<td>//button[contains(.,'Select Files')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER</td>
 	<td>//div[contains(@id,'AttachmentsContainer')]</td>
 	<td></td>

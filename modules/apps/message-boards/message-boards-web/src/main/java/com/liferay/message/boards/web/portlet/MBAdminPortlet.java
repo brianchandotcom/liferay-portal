@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.struts-path=message_boards",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Message Boards Admim",
+		"javax.portlet.display-name=Message Boards Admin",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.config-template=/message_boards_admin/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",

@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Blogs", "javax.portlet.expiration-cache=0",
+		"javax.portlet.display-name=Blogs Admin", "javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",

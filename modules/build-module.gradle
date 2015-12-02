@@ -168,8 +168,6 @@ eclipse {
 				}
 			}
 		}
-
-		plusConfigurations += [configurations.testIntegrationRuntime]
 	}
 }
 
@@ -218,8 +216,6 @@ idea {
 				}
 			}
 		}
-
-		scopes.TEST.plus += [configurations.testIntegrationRuntime]
 	}
 }
 

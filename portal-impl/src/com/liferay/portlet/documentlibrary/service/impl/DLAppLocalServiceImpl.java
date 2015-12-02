@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -52,7 +52,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.base.DLAppLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 
@@ -1491,14 +1490,13 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		dlAppHelperLocalService.addFolder(
 			userId, destinationFolder, serviceContext);
 
-		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
-				sourceLocalRepository.getRepositoryId(), folderId,
-				WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+		List<RepositoryEntry> foldersAndFileEntriesAndFileShortcuts =
+			sourceLocalRepository.getFoldersAndFileEntriesAndFileShortcuts(
+				folderId, WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
 		try {
-			for (Object folderAndFileEntryAndFileShortcut :
+			for (RepositoryEntry folderAndFileEntryAndFileShortcut :
 					foldersAndFileEntriesAndFileShortcuts) {
 
 				if (folderAndFileEntryAndFileShortcut instanceof FileEntry) {
@@ -1550,9 +1548,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		return destinationFolder;
 	}
-
-	@BeanReference(type = DLAppService.class)
-	protected DLAppService dlAppService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLAppLocalServiceImpl.class);

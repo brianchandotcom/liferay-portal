@@ -254,6 +254,16 @@ public class LocalRepositoryWrapper implements LocalRepository {
 	}
 
 	@Override
+	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
+			long folderId, int status, boolean includeMountFolders, int start,
+			int end, OrderByComparator<?> obc)
+		throws PortalException {
+
+		return _localRepository.getFoldersAndFileEntriesAndFileShortcuts(
+			folderId, status, includeMountFolders, start, end, obc);
+	}
+
+	@Override
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
 		throws PortalException {
 

@@ -1,5 +1,7 @@
 @import "bourbon";
 
+$val: 1.555555555;
+
 .test {
 	-moz-border-radius-bottomleft: 1px;
 	-moz-border-radius-bottomright: 0px;
@@ -30,6 +32,7 @@
 	padding-left: 0px;
 	padding-right: 1px;
 	text-align:left;
+	line-height: $val;
 
 	.test-quad {
 		-moz-border-radius: 10px 1px 20px 0px;

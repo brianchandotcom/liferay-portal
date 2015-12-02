@@ -1128,6 +1128,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
+	protected void configureTaskBuildCSSPrecision(BuildCSSTask buildCSSTask) {
+		String precision = GradleUtil.getProperty(
+			buildCSSTask.getProject(), "sass.precision", (String)null);
+
+		if (Validator.isNotNull(precision)) {
+			buildCSSTask.setPrecision(precision);
+		}
+	}
+
 	protected void configureTaskBuildCSSSassCompilerClassName(
 		BuildCSSTask buildCSSTask) {
 
@@ -1603,6 +1612,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				@Override
 				public void execute(BuildCSSTask buildCSSTask) {
 					configureTaskBuildCSSGenerateSourceMap(buildCSSTask);
+					configureTaskBuildCSSPrecision(buildCSSTask);
 					configureTaskBuildCSSSassCompilerClassName(buildCSSTask);
 				}
 

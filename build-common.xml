@@ -1550,6 +1550,7 @@ rerun your task.
 				nodejs.npm.user=${nodejs.npm.user}
 				sass.compiler.class.name=${sass.compiler.class.name}
 				sass.generate.source.map=${sass.generate.source.map}
+				sass.precision=${sass.precision}
 				upgrade.table.dir=${upgrade.table.dir}
 			</echo>
 		</sequential>

@@ -27,7 +27,8 @@
   margin-right: 1px;
   padding-left: 0px;
   padding-right: 1px;
-  text-align: left; }
+  text-align: left;
+  line-height: 1.555556; }
   .test .test-quad {
     -moz-border-radius: 10px 1px 20px 0px;
     -webkit-border-radius: 10px 1px 20px 0px;

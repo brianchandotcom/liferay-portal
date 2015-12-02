@@ -52,6 +52,7 @@ public class CSSBuilderInvoker {
 			"sass.portal.common.dir=" +
 				_getAbsolutePath(
 					baseDir, cssBuilderArgs.getPortalCommonDirName()));
+		args.add("sass.precision=" + cssBuilderArgs.getPrecision());
 
 		String[] rtlExcludedPathRegexps =
 			cssBuilderArgs.getRtlExcludedPathRegexps();

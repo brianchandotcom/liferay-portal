@@ -72,6 +72,13 @@ public class BuildCSSMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setPrecision(int precision) {
+		_cssBuilderArgs.setPrecision(precision);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setRtlExcludedPathRegexps(String rtlExcludedPathRegexps) {
 		_cssBuilderArgs.setRtlExcludedPathRegexps(rtlExcludedPathRegexps);
 	}

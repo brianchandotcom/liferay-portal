@@ -1,4 +1,6 @@
 dependencies {
 	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
+
+	provided project(":util:css-builder")
 }

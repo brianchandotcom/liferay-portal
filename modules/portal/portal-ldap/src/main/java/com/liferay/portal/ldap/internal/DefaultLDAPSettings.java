@@ -233,7 +233,13 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		for (String keyValuePair : keyValuePairs) {
 			String[] keyValue = StringUtil.split(keyValuePair, CharPool.EQUAL);
 
-			properties.put(keyValue[0], keyValue[1]);
+			String value = StringPool.BLANK;
+
+			if (keyValue.length == 2) {
+				value = keyValue[1];
+			}
+
+			properties.put(keyValue[0], value);
 		}
 
 		return properties;

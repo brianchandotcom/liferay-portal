@@ -323,6 +323,11 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		DoAsURLTag.doTag(doAsUserId, _request);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.frontend.taglib.servlet.taglib.FlagsTag}
+	 */
+	@Deprecated
 	@Override
 	public void flags(
 			String className, long classPK, String contentTitle, boolean label,
@@ -392,6 +397,11 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		return discussionTag;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.frontend.taglib.servlet.taglib.FlagsTag}
+	 */
+	@Deprecated
 	@Override
 	public FlagsTag getFlagsTag() throws Exception {
 		FlagsTag flagsTag = new FlagsTag();

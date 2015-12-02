@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.util.PortalUtil;
 
 import java.sql.Connection;
@@ -45,14 +46,19 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+			StringBundler sb = new StringBundler(4);
 
-			ps = con.prepareStatement(
-				"update LayoutSet set modifiedDate = ?, pageCount = ?," +
-				" layoutSetPrototypeUuid = ?," +
-				" layoutSetPrototypeLinkEnabled = ?  where layoutSetId = ?");
+			sb.append("update LayoutSet set modifiedDate = ?, pageCount = ?, ");
+			sb.append("layoutSetPrototypeUuid = ?, ");
+			sb.append("layoutSetPrototypeLinkEnabled = ?  where layoutSetId ");
+			sb.append("= ?");
 
-			ps.setTimestamp(1, timestamp);
+			ps = con.prepareStatement(sb.toString());
+
+			Timestamp now = new Timestamp(System.currentTimeMillis());
+
+			ps.setTimestamp(1, now);
+
 			ps.setInt(2, 0);
 			ps.setString(3, StringPool.BLANK);
 			ps.setBoolean(4, false);
@@ -71,9 +77,6 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 	}
 
 	protected void upgradeLayoutSet() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portal.model.Organization");
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -82,18 +85,21 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(8);
-			sb.append("select LayoutSet.layoutSetId, Layout.privateLayout,");
-			sb.append(" Group_.groupId, Group_.site, Group_.classNameId");
-			sb.append(" from LayoutSet left join Group_ on");
-			sb.append(" (Group_.groupId = LayoutSet.groupId) left join");
-			sb.append(" Layout on (Layout.groupId = LayoutSet.groupId");
-			sb.append(" and Layout.privateLayout = LayoutSet.privateLayout)");
-			sb.append(" where LayoutSet.layoutSetPrototypeUuid != ''");
-			sb.append(" and LayoutSet.layoutSetPrototypeLinkEnabled = 1");
+
+			sb.append("select LayoutSet.layoutSetId, Layout.privateLayout, ");
+			sb.append("Group_.groupId, Group_.site, Group_.classNameId ");
+			sb.append("from LayoutSet left join Group_ on ");
+			sb.append("(Group_.groupId = LayoutSet.groupId) left join Layout ");
+			sb.append("on (Layout.groupId = LayoutSet.groupId and ");
+			sb.append("Layout.privateLayout = LayoutSet.privateLayout)" );
+			sb.append("where LayoutSet.layoutSetPrototypeUuid != '' ");
+			sb.append("and LayoutSet.layoutSetPrototypeLinkEnabled = 1");
 
 			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
+
+			long classNameId = PortalUtil.getClassNameId(Organization.class);
 
 			while (rs.next()) {
 				long layoutSetId = rs.getLong("layoutSetId");
@@ -104,12 +110,13 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 
 				if ((classNameId == orgClassNameId) &&
 					(!isSite || (privateLayout == null))) {
-						updateLayoutSet(layoutSetId);
 
-						runSQL(
-							"update Group_ set site = FALSE where groupId = " +
-								groupId);
-					}
+					updateLayoutSet(layoutSetId);
+
+					runSQL(
+						"update Group_ set site = FALSE where groupId = " +
+							groupId);
+				}
 			}
 		}
 		finally {

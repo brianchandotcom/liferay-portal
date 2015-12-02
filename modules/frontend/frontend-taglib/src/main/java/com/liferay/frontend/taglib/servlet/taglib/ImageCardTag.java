@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Map;
 
@@ -24,7 +25,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Roberto Díaz
  */
-public class ImageCardTag extends CardTag {
+public class ImageCardTag extends IncludeTag {
 
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;

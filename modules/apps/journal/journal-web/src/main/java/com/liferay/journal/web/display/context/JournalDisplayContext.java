@@ -455,13 +455,14 @@ public class JournalDisplayContext {
 		}
 		else if (Validator.isNotNull(getDDMStructureKey())) {
 			int total = JournalArticleServiceUtil.getArticlesCountByStructureId(
-				themeDisplay.getScopeGroupId(), getDDMStructureKey());
+				themeDisplay.getScopeGroupId(), getDDMStructureKey(),
+				getStatus());
 
 			articleSearchContainer.setTotal(total);
 
 			List results = JournalArticleServiceUtil.getArticlesByStructureId(
 				themeDisplay.getScopeGroupId(), getDDMStructureKey(),
-				articleSearchContainer.getStart(),
+				getStatus(), articleSearchContainer.getStart(),
 				articleSearchContainer.getEnd(),
 				articleSearchContainer.getOrderByComparator());
 
@@ -497,8 +498,7 @@ public class JournalDisplayContext {
 		}
 		else {
 			int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getFolderId(), getStatus());
+				themeDisplay.getScopeGroupId(), 0, getFolderId(), getStatus());
 
 			articleSearchContainer.setTotal(total);
 
@@ -520,8 +520,8 @@ public class JournalDisplayContext {
 			}
 
 			List results = JournalFolderServiceUtil.getFoldersAndArticles(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getFolderId(), getStatus(), articleSearchContainer.getStart(),
+				themeDisplay.getScopeGroupId(), 0, getFolderId(), getStatus(),
+				articleSearchContainer.getStart(),
 				articleSearchContainer.getEnd(), folderOrderByComparator);
 
 			articleSearchContainer.setResults(results);

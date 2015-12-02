@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.shard.builder.internal.algorithm;
 
 import java.io.OutputStream;
-import java.sql.SQLException;
 
 import java.util.List;
 

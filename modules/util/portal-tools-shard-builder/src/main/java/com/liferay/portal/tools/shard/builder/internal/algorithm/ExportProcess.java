@@ -20,8 +20,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.io.OutputStream;
+
 import java.sql.SQLException;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class ExportProcess {
 		throws IOException, SQLException {
 
 		List<String> partitionedTables = _dbProvider.getPartitionedTables(
-				exportContext.getSchema());
+			exportContext.getSchema());
 		List<String> controlTables = _dbProvider.getControlTables(
 			exportContext.getSchema());
 
@@ -53,7 +53,7 @@ public class ExportProcess {
 	}
 
 	private void _exportCompany(
-			long companyId, List<String> tables,ExportContext exportContext)
+			long companyId, List<String> tables, ExportContext exportContext)
 		throws IOException {
 
 		String outputFileName =

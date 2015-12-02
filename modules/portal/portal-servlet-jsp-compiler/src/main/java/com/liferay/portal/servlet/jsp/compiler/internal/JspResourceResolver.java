@@ -42,7 +42,6 @@ import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWire;
@@ -62,8 +61,6 @@ public class JspResourceResolver implements ResourceResolver {
 		_logger = logger;
 
 		BundleContext bundleContext = _bundle.getBundleContext();
-
-		Filter filter = null;
 
 		try {
 			_serviceTracker = ServiceTrackerFactory.open(

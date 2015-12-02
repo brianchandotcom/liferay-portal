@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.storage.impl;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.List;
 import java.util.Map;

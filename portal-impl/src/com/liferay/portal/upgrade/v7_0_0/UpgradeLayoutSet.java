@@ -84,33 +84,30 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(10);
 
 			sb.append("select LayoutSet.layoutSetId, Layout.privateLayout, ");
-			sb.append("Group_.groupId, Group_.site, Group_.classNameId ");
-			sb.append("from LayoutSet left join Group_ on ");
-			sb.append("(Group_.groupId = LayoutSet.groupId) left join Layout ");
-			sb.append("on (Layout.groupId = LayoutSet.groupId and ");
+			sb.append("Group_.groupId, Group_.site from LayoutSet left join ");
+			sb.append("Group_ on (Group_.groupId = LayoutSet.groupId) ");
+			sb.append("left join Layout on ");
+			sb.append("(Layout.groupId = LayoutSet.groupId and ");
 			sb.append("Layout.privateLayout = LayoutSet.privateLayout)" );
 			sb.append("where LayoutSet.layoutSetPrototypeUuid != '' ");
-			sb.append("and LayoutSet.layoutSetPrototypeLinkEnabled = 1");
+			sb.append("and LayoutSet.layoutSetPrototypeLinkEnabled = 1 and ");
+			sb.append("Group_.classNameId = ");
+			sb.append(PortalUtil.getClassNameId(Organization.class));
 
 			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
-
-			long classNameId = PortalUtil.getClassNameId(Organization.class);
 
 			while (rs.next()) {
 				long layoutSetId = rs.getLong("layoutSetId");
 				String privateLayout = rs.getString("privateLayout");
 				long groupId = rs.getLong("groupId");
 				boolean isSite = rs.getBoolean("site");
-				long orgClassNameId = rs.getLong("classNameId");
 
-				if ((classNameId == orgClassNameId) &&
-					(!isSite || (privateLayout == null))) {
-
+				if (!isSite || (privateLayout == null)) {
 					updateLayoutSet(layoutSetId);
 
 					runSQL(

@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String cssClass = (String)request.getAttribute("liferay-frontend:image-card:cssClass");
+String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-frontend:image-card:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-frontend:image-card:data");
-String imageCssClass = (String)request.getAttribute("liferay-frontend:image-card:imageCssClass");
+String imageCssClass = GetterUtil.getString((String)request.getAttribute("liferay-frontend:image-card:imageCssClass"));
 String imageURL = (String)request.getAttribute("liferay-frontend:image-card:imageURL");
 %>

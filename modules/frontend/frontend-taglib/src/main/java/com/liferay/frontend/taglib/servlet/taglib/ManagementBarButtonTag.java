@@ -54,6 +54,10 @@ public class ManagementBarButtonTag extends IncludeTag {
 		_href = href;
 	}
 
+	public void setIcon(String icon) {
+		_icon = icon;
+	}
+
 	public void setIconCssClass(String iconCssClass) {
 		_iconCssClass = iconCssClass;
 	}
@@ -79,6 +83,7 @@ public class ManagementBarButtonTag extends IncludeTag {
 		_cssClass = null;
 		_data = null;
 		_href = null;
+		_icon = null;
 		_iconCssClass = null;
 		_id = null;
 		_label = null;
@@ -105,6 +110,8 @@ public class ManagementBarButtonTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-frontend:management-bar-button:href", _href);
 		request.setAttribute(
+			"liferay-frontend:management-bar-button:icon", _icon);
+		request.setAttribute(
 			"liferay-frontend:management-bar-button:iconCssClass",
 			_iconCssClass);
 		request.setAttribute("liferay-frontend:management-bar-button:id", _id);
@@ -120,6 +127,7 @@ public class ManagementBarButtonTag extends IncludeTag {
 	private String _cssClass;
 	private Map<String, Object> _data;
 	private String _href;
+	private String _icon;
 	private String _iconCssClass;
 	private String _id;
 	private String _label;

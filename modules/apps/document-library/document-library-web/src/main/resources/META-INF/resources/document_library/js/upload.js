@@ -1158,8 +1158,6 @@ AUI.add(
 					_startNextUpload: function(event) {
 						var instance = this;
 
-						instance._detachSubscriptions();
-
 						instance._destroyEntry();
 
 						var dataSet = instance._getDataSet();

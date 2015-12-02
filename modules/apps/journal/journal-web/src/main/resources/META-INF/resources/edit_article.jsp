@@ -196,12 +196,6 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 			<div class="journal-article-wrapper-content">
 				<c:if test="<%= (article != null) && !article.isNew() && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 					<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
-
-					<div class="article-toolbar toolbar" id="<portlet:namespace />articleToolbar">
-						<div class="btn-group">
-							<aui:button data-title='<%= LanguageUtil.get(request, "in-order-to-preview-your-changes,-the-web-content-is-saved-as-a-draft") %>' disabled="<%= true %>" icon="icon-search" name="basicPreviewButton" value="basic-preview" />
-						</div>
-					</div>
 				</c:if>
 
 				<liferay-ui:form-navigator
@@ -325,15 +319,3 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 		}
 	);
 </aui:script>
-
-<c:if test='<%= (article != null) && SessionMessages.contains(renderRequest, "previewRequested") %>'>
-	<aui:script use="liferay-journal-preview">
-		Liferay.fire(
-			'previewArticle',
-			{
-				title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
-				uri: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>'
-			}
-		);
-	</aui:script>
-</c:if>

@@ -37,7 +37,7 @@ String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 <liferay-frontend:horizontal-card
 	cssClass="template-preview-content"
 	data="<%= data %>"
-	imageCSSClass='<%= Validator.isNotNull(ddmTemplateImageURL) ? "icon-monospaced" : StringPool.BLANK %>'
-	imageUrl="<%= ddmTemplateImageURL %>"
+	imageCssClass='<%= Validator.isNotNull(ddmTemplateImageURL) ? "icon-monospaced" : StringPool.BLANK %>'
+	imageURL="<%= ddmTemplateImageURL %>"
 	text="<%= ddmTemplate.getName(locale) %>"
 />

@@ -129,13 +129,13 @@
 		</attribute>
 		<attribute>
 			<description>A CSS class for styling the card image</description>
-			<name>imageCSSClass</name>
+			<name>imageCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>A URL for the card's image</description>
-			<name>imageUrl</name>
+			<name>imageURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -273,6 +273,31 @@
 			<description>A title for the card</description>
 			<name>title</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>image-card</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ImageCardTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>data</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>imageCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>imageURL</name>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
@@ -593,13 +618,13 @@
 		</attribute>
 		<attribute>
 			<description>A CSS class for styling the card image</description>
-			<name>imageCSSClass</name>
+			<name>imageCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>A URL for the card's image</description>
-			<name>imageUrl</name>
+			<name>imageURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

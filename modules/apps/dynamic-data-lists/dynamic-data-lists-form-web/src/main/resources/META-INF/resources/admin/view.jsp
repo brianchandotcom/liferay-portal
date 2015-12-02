@@ -101,7 +101,7 @@ recordSetSearch.setOrderByType(orderByType);
 								actionJsp="/admin/record_set_action.jsp"
 								actionJspServletContext="<%= application %>"
 								cssClass="entry-display-style"
-								imageUrl='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+								imageURL='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 								resultRow="<%= row %>"
 								showCheckbox= "<%= false %>"
 								title="<%= recordSet.getName(locale) %>"

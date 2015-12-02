@@ -69,7 +69,7 @@
 				actionJsp="/blogs_admin/entry_action.jsp"
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
-				imageUrl='<%= Validator.isNotNull(entryImageURL) ? entryImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+				imageURL='<%= Validator.isNotNull(entryImageURL) ? entryImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
 				title="<%= entry.getTitle() %>"

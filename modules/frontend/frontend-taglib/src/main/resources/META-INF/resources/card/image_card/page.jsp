@@ -14,18 +14,14 @@
  */
 --%>
 
-<%@ include file="/card/vertical_card/init.jsp" %>
+<%@ include file="/card/image_card/init.jsp" %>
 
-<%@ include file="/card/vertical_card/start.jspf" %>
-
-<div class="aspect-ratio <%= backgroundImage ? "aspect-ratio-bg-center aspect-ratio-bg-cover" : "" %>" style="<%= backgroundImage ? "background-image: url('" + imageURL + "')" : "" %>">
-	<aui:a href="<%= url %>">
-		<img alt="" class="<%= imageCssClass %><%= backgroundImage ? " sr-only" : "" %>" src="<%= imageURL %>" />
-	</aui:a>
-
-	<c:if test="<%= Validator.isNotNull(stickerBottom) %>">
-		<%= stickerBottom %>
-	</c:if>
+<div class="taglib-vertical-card <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
+	<div>
+		<div class="card card-dm">
+			<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover" style="<%= "background-image: url('" + imageURL + "')" %>">
+				<img alt="" class="<%= imageCssClass %> sr-only" src="<%= imageURL %>" />
+			</div>
+		</div>
+	</div>
 </div>
-
-<%@ include file="/card/vertical_card/end.jspf" %>

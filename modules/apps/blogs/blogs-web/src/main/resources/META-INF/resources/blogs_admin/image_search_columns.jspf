@@ -55,7 +55,7 @@
 			<liferay-frontend:vertical-card
 				actionJsp="/blogs_admin/image_action.jsp"
 				actionJspServletContext="<%= application %>"
-				imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
+				imageURL="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
 				title="<%= fileEntry.getTitle() %>"

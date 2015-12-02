@@ -82,12 +82,12 @@ public class CardTag extends IncludeTag {
 		_data = data;
 	}
 
-	public void setImageCSSClass(String imageCSSClass) {
-		_imageCSSClass = imageCSSClass;
+	public void setImageCssClass(String imageCssClass) {
+		_imageCssClass = imageCssClass;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		_imageUrl = imageUrl;
+	public void setImageURL(String imageURL) {
+		_imageURL = imageURL;
 	}
 
 	@Override
@@ -126,8 +126,8 @@ public class CardTag extends IncludeTag {
 		_checkboxValue = null;
 		_cssClass = null;
 		_data = null;
-		_imageUrl = null;
-		_imageCSSClass = null;
+		_imageURL = null;
+		_imageCssClass = null;
 		_resultRow = null;
 		_rowChecker = null;
 		_showCheckbox = false;
@@ -166,8 +166,8 @@ public class CardTag extends IncludeTag {
 		request.setAttribute("liferay-frontend:card:cssClass", _cssClass);
 		request.setAttribute("liferay-frontend:card:data", _data);
 		request.setAttribute(
-			"liferay-frontend:card:imageCSSClass", _imageCSSClass);
-		request.setAttribute("liferay-frontend:card:imageUrl", _imageUrl);
+			"liferay-frontend:card:imageCssClass", _imageCssClass);
+		request.setAttribute("liferay-frontend:card:imageURL", _imageURL);
 		request.setAttribute("liferay-frontend:card:resultRow", _resultRow);
 		request.setAttribute("liferay-frontend:card:rowChecker", _rowChecker);
 
@@ -194,8 +194,8 @@ public class CardTag extends IncludeTag {
 	private String _checkboxValue;
 	private String _cssClass;
 	private Map<String, Object> _data;
-	private String _imageCSSClass;
-	private String _imageUrl;
+	private String _imageCssClass;
+	private String _imageURL;
 	private ResultRow _resultRow;
 	private RowChecker _rowChecker;
 	private boolean _showCheckbox;

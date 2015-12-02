@@ -39,6 +39,10 @@
 			@include animation(spin 1000ms infinite linear);
 		}
 
+		.liferay-ddm-form-field-checkbox .toggle-switch-handle {
+			text-indent: 66px;
+		}
+
 		.lfr-ddm-form-field-repeatable-add-button {
 			position: absolute;
 			right: 0;

@@ -91,6 +91,10 @@
 		font-size: 14px;
 		position: absolute;
 	}
+
+	.liferay-ddm-form-field-checkbox .toggle-switch-handle {
+		text-indent: 66px;
+	}
 }
 
 @include sm {

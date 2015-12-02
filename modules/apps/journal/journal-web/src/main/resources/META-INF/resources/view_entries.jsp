@@ -107,16 +107,37 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-image
-							src='<%= Validator.isNotNull(curArticle.getArticleImageURL(themeDisplay)) ? curArticle.getArticleImageURL(themeDisplay) : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
-							toggleRowChecker="<%= journalDisplayContext.isShowEditActions() %>"
-						/>
+						<liferay-ui:search-container-column-text>
+							<liferay-ui:user-portrait
+								cssClass="user-icon-lg"
+								userId="<%= curArticle.getUserId() %>"
+							/>
+						</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-container-column-jsp
-							colspan="2"
-							href="<%= rowURL %>"
-							path="/view_article_descriptive.jsp"
-						/>
+						<liferay-ui:search-container-column-text
+							colspan="<%= 2 %>"
+						>
+
+							<%
+							Date createDate = curArticle.getModifiedDate();
+
+							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+							%>
+
+							<h6 class="text-default">
+								<liferay-ui:message arguments="<%= new String[] {curArticle.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+							</h6>
+
+							<h5>
+								<aui:a href="<%= rowURL != null ? rowURL.toString() : null %>">
+									<%= curArticle.getTitle(locale) %>
+								</aui:a>
+							</h5>
+
+							<h6 class="text-default">
+								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
+							</h6>
+						</liferay-ui:search-container-column-text>
 
 						<c:if test="<%= journalDisplayContext.isShowEditActions() %>">
 							<liferay-ui:search-container-column-jsp
@@ -148,12 +169,20 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								<liferay-frontend:vertical-card-sticker-bottom>
 									<liferay-ui:user-portrait
 										cssClass="sticker sticker-bottom"
+										imageCssClass="user-icon-lg"
 										userId="<%= curArticle.getUserId() %>"
 									/>
 								</liferay-frontend:vertical-card-sticker-bottom>
 
 								<liferay-frontend:vertical-card-header>
-									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - curArticle.getModifiedDate().getTime(), true), HtmlUtil.escape(curArticle.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+
+									<%
+									Date createDate = curArticle.getModifiedDate();
+
+									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+									%>
+
+									<liferay-ui:message arguments="<%= new String[] {curArticle.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
 								</liferay-frontend:vertical-card-header>
 
 								<liferay-frontend:vertical-card-footer>
@@ -175,6 +204,11 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							truncate="<%= true %>"
 						/>
 
+						<liferay-ui:search-container-column-text
+							name="author"
+							value="<%= PortalUtil.getUserName(curArticle) %>"
+						/>
+
 						<liferay-ui:search-container-column-status
 							name="status"
 						/>
@@ -187,11 +221,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						<liferay-ui:search-container-column-date
 							name="display-date"
 							value="<%= curArticle.getDisplayDate() %>"
-						/>
-
-						<liferay-ui:search-container-column-text
-							name="author"
-							value="<%= PortalUtil.getUserName(curArticle) %>"
 						/>
 
 						<%
@@ -238,27 +267,33 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-icon
-							icon="icon-folder-close"
+							icon="folder"
 							toggleRowChecker="<%= true %>"
 						/>
 
-						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-							<liferay-ui:app-view-entry
-								actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/folder_action.jsp" : null %>'
-								actionJspServletContext="<%= application %>"
-								author="<%= curFolder.getUserName() %>"
-								createDate="<%= curFolder.getCreateDate() %>"
-								description="<%= curFolder.getDescription() %>"
-								displayStyle="descriptive"
-								folder="<%= true %>"
-								markupView="lexicon"
-								modifiedDate="<%= curFolder.getModifiedDate() %>"
-								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
-								rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
-								showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
-								title="<%= curFolder.getName() %>"
-								url="<%= rowURL.toString() %>"
-							/>
+						<liferay-ui:search-container-column-text
+							colspan="<%= 2 %>"
+						>
+
+							<%
+							Date createDate = curFolder.getCreateDate();
+
+							String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+							%>
+
+							<h6 class="text-default">
+								<liferay-ui:message arguments="<%= new String[] {curFolder.getUserName(), createDateDescription} %>" key="x-modified-x-ago" />
+							</h6>
+
+							<h5>
+								<aui:a href="<%= rowURL != null ? rowURL.toString() : null %>">
+									<%= curFolder.getName() %>
+								</aui:a>
+							</h5>
+
+							<h6 class="text-default">
+								<span><%= curFolder.getDescription() %></span>
+							</h6>
 						</liferay-ui:search-container-column-text>
 
 						<c:if test="<%= journalDisplayContext.isShowEditActions() %>">
@@ -300,6 +335,11 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						/>
 
 						<liferay-ui:search-container-column-text
+							name="author"
+							value="<%= PortalUtil.getUserName(curFolder) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
 							name="status"
 							value="--"
 						/>
@@ -312,11 +352,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						<liferay-ui:search-container-column-text
 							name="display-date"
 							value="--"
-						/>
-
-						<liferay-ui:search-container-column-text
-							name="author"
-							value="<%= PortalUtil.getUserName(curFolder) %>"
 						/>
 
 						<liferay-ui:search-container-column-text

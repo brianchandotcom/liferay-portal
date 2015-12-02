@@ -144,11 +144,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS</td>
-	<td>//div[contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REQUIRED_INFO</td>
 	<td>//div[contains(@class,'required') and contains(@role,'alert')]</td>
 	<td></td>

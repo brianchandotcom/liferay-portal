@@ -24,6 +24,12 @@ Layout selLayout = LayoutLocalServiceUtil.fetchLayout(selPlid);
 
 Group selGroup = themeDisplay.getScopeGroup();
 
+if (selGroup.isControlPanel()) {
+	HttpServletRequest originalRequest = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+
+	selGroup = LatentGroupManagerUtil.getLatentGroup(originalRequest.getSession());
+}
+
 Group stagingGroup = StagingUtil.getStagingGroup(selGroup.getGroupId());
 Group liveGroup = StagingUtil.getLiveGroup(selGroup.getGroupId());
 

@@ -21,7 +21,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 /**
  * @author Raymond Augé
  */
-@ConfigurationAdmin(category = "collaboration")
+@ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
 	id = "com.liferay.xsl.content.web.configuration.XSLContentConfiguration",
 	localization = "content/Language"

@@ -15,10 +15,10 @@
 package com.liferay.dynamic.data.mapping.io;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,16 +41,9 @@ public class DDMFormXSDDeserializerUtil {
 	}
 
 	private static final ServiceTracker
-		<DDMFormXSDDeserializer, DDMFormXSDDeserializer> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMFormXSDDeserializerUtil.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), DDMFormXSDDeserializer.class, null);
-
-		_serviceTracker.open();
-	}
+		<DDMFormXSDDeserializer, DDMFormXSDDeserializer> _serviceTracker =
+			ServiceTrackerFactory.open(
+				FrameworkUtil.getBundle(DDMFormXSDDeserializerUtil.class),
+				DDMFormXSDDeserializer.class);
 
 }

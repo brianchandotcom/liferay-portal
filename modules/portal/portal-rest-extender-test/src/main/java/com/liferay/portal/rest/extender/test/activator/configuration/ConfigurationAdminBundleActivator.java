@@ -14,6 +14,7 @@
 
 package com.liferay.portal.rest.extender.test.activator.configuration;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.rest.extender.test.service.Greeter;
 
@@ -32,7 +33,6 @@ import org.apache.cxf.endpoint.ServerRegistry;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
@@ -87,15 +87,12 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			_serviceRegistration = bundleContext.registerService(
 				Application.class, new Greeter(), properties);
 
-			Filter filter = bundleContext.createFilter(
-				"(&(objectClass=" + Bus.class.getName() + ")(" +
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH + "=" +
-						"/rest-test))");
-
-			ServiceTracker<Bus, Bus> serviceTracker = new ServiceTracker<>(
-				bundleContext, filter, null);
-
-			serviceTracker.open();
+			ServiceTracker<Bus, Bus> serviceTracker =
+				ServiceTrackerFactory.open(
+					bundleContext,
+					"(&(objectClass=" + Bus.class.getName() + ")(" +
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
+							"=/rest-test))");
 
 			Bus bus = serviceTracker.waitForService(10000L);
 

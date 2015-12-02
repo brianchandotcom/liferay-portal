@@ -16,13 +16,12 @@ package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1035,14 +1034,6 @@ public class KaleoTaskInstanceTokenUtil {
 	public void setPersistence(KaleoTaskInstanceTokenPersistence persistence) {
 	}
 
-	private static ServiceTracker<KaleoTaskInstanceTokenPersistence, KaleoTaskInstanceTokenPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(KaleoTaskInstanceTokenUtil.class);
-
-		_serviceTracker = new ServiceTracker<KaleoTaskInstanceTokenPersistence, KaleoTaskInstanceTokenPersistence>(bundle.getBundleContext(),
-				KaleoTaskInstanceTokenPersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<KaleoTaskInstanceTokenPersistence, KaleoTaskInstanceTokenPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(KaleoTaskInstanceTokenPersistence.class);
 }

@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -81,12 +82,20 @@ public class DDLFormDisplayContext {
 		return _recordSetId;
 	}
 
+	public boolean isFormAvailable() {
+		if (isSharedURL()) {
+			return isPublished() && isFormShared();
+		}
+
+		return getRecordSet() != null;
+	}
+
 	public boolean isShowConfigurationIcon() throws PortalException {
 		if (_showConfigurationIcon != null) {
 			return _showConfigurationIcon;
 		}
 
-		if (isFormShared()) {
+		if (isSharedURL() && isPublished() && isFormShared()) {
 			_showConfigurationIcon = false;
 
 			return _showConfigurationIcon;
@@ -146,6 +155,27 @@ public class DDLFormDisplayContext {
 
 	protected boolean isFormShared() {
 		return ParamUtil.getBoolean(_renderRequest, "shared");
+	}
+
+	protected boolean isPublished() {
+		DDLRecordSet ddlRecordSet = getRecordSet();
+
+		if (ddlRecordSet == null) {
+			return false;
+		}
+
+		String published = ddlRecordSet.getSettingsProperty(
+			"published", Boolean.FALSE.toString());
+
+		return GetterUtil.getBoolean(published);
+	}
+
+	protected boolean isSharedURL() {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		String urlCurrent = themeDisplay.getURLCurrent();
+
+		return urlCurrent.contains("/shared");
 	}
 
 	private Boolean _hasViewPermission;

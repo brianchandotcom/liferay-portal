@@ -56,7 +56,7 @@
 	<command name="textMouseOverClickNavigation">
 		<execute argument1="//nav[@id='navigation']" argument2="" selenium="clickAt" />
 
-		<execute argument1="//script[contains(@src,'/aui/sortable/sortable-min.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/aui/sortable/sortable')]" selenium="waitForElementPresent" />
 
 		<execute function="MouseOver#textMouseOver" />
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
+import com.liferay.portal.ldap.configuration.SystemLDAPConfiguration;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.model.User;
@@ -108,6 +109,14 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		LogUtil.debug(_log, contactMappings);
 
 		return contactMappings;
+	}
+
+	@Override
+	public String getErrorPasswordHistory(long companyId) {
+		SystemLDAPConfiguration systemLDAPConfiguration =
+			_systemLDAPConfigurationProvider.getConfiguration(companyId);
+
+		return systemLDAPConfiguration.errorPasswordHistory();
 	}
 
 	@Override
@@ -289,6 +298,17 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
 	}
 
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.ldap.configuration.SystemLDAPConfiguration)",
+		unbind = "-"
+	)
+	protected void setSystemLDAPConfigurationProvider(
+		ConfigurationProvider<SystemLDAPConfiguration>
+			systemLDAPConfigurationProvider) {
+
+		_systemLDAPConfigurationProvider = systemLDAPConfigurationProvider;
+	}
+
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
@@ -305,6 +325,8 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		_ldapImportConfigurationProvider;
 	private volatile ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
+	private volatile ConfigurationProvider<SystemLDAPConfiguration>
+		_systemLDAPConfigurationProvider;
 	private volatile UserLocalService _userLocalService;
 
 }

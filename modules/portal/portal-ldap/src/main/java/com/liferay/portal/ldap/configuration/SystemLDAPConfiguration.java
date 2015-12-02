@@ -63,10 +63,10 @@ public interface SystemLDAPConfiguration extends CompanyScopedConfiguration {
 	@Meta.AD(deflt = "com.sun.jndi.ldap.LdapCtxFactory", required = false)
 	public String factoryInitial();
 
-	@Meta.AD(deflt = "1000", required = false)
+	@Meta.AD(deflt = "1000", description = "%page-size-help", required = false)
 	public int pageSize();
 
-	@Meta.AD(deflt = "1000", required = false)
+	@Meta.AD(deflt = "1000", description = "%range-size-help", required = false)
 	public int rangeSize();
 
 	@Meta.AD(

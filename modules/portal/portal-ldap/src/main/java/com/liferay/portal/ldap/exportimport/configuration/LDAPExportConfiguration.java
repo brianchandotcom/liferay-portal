@@ -34,10 +34,15 @@ public interface LDAPExportConfiguration extends CompanyScopedConfiguration {
 	@Override
 	public long companyId();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", description = "%export-enabled-help", required = false
+	)
 	public boolean exportEnabled();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", description = "%export-group-enabled-help",
+		required = false
+	)
 	public boolean exportGroupEnabled();
 
 }

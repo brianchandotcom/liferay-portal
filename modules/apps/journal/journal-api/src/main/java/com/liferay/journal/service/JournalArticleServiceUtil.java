@@ -698,6 +698,40 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the web content articles matching the
+	* group, default class name ID, and DDM structure key.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param ddmStructureKey the primary key of the web content article's DDM
+	structure
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @param obc the comparator to order the web content articles
+	* @return the range of matching web content articles ordered by the
+	comparator
+	*/
+	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticlesByStructureId(
+		long groupId, java.lang.String ddmStructureKey, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
+		return getService()
+				   .getArticlesByStructureId(groupId, ddmStructureKey, status,
+			start, end, obc);
+	}
+
+	/**
 	* Returns the number of web content articles matching the group and folder.
 	*
 	* @param groupId the primary key of the web content article's group
@@ -773,6 +807,25 @@ public class JournalArticleServiceUtil {
 		java.lang.String ddmStructureKey) {
 		return getService()
 				   .getArticlesCountByStructureId(groupId, ddmStructureKey);
+	}
+
+	/**
+	* Returns the number of web content articles matching the group, default
+	* class name ID, and DDM structure key.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param ddmStructureKey the primary key of the web content article's DDM
+	structure
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @return the number of matching web content articles
+	*/
+	public static int getArticlesCountByStructureId(long groupId,
+		java.lang.String ddmStructureKey, int status) {
+		return getService()
+				   .getArticlesCountByStructureId(groupId, ddmStructureKey,
+			status);
 	}
 
 	/**

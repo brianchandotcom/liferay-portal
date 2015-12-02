@@ -27,12 +27,12 @@ $val: 1.555555555;
 	clear: left;
 	direction: ltr;
 	float: left;
+	line-height: $val;
 	margin-left: 0px;
 	margin-right: 1px;
 	padding-left: 0px;
 	padding-right: 1px;
 	text-align:left;
-	line-height: $val;
 
 	.test-quad {
 		-moz-border-radius: 10px 1px 20px 0px;

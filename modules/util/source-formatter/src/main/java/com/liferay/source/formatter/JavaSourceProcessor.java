@@ -34,7 +34,9 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -3277,6 +3279,76 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return x + 1;
 	}
 
+	protected String getModuleClassContent(String fullClassName)
+		throws Exception {
+
+		String classContent = _moduleFileContentsMap.get(fullClassName);
+
+		if (classContent != null) {
+			return classContent;
+		}
+
+		Map<String, String> moduleFileNamesMap = getModuleFileNamesMap();
+
+		String moduleFileName = moduleFileNamesMap.get(fullClassName);
+
+		if (moduleFileName == null) {
+			_moduleFileContentsMap.put(fullClassName, StringPool.BLANK);
+
+			return StringPool.BLANK;
+		}
+
+		File file = new File(moduleFileName);
+
+		classContent = FileUtil.read(file);
+
+		_moduleFileContentsMap.put(fullClassName, classContent);
+
+		return classContent;
+	}
+
+	protected Map<String, String> getModuleFileNamesMap() throws Exception {
+		if (_moduleFileNamesMap != null) {
+			return _moduleFileNamesMap;
+		}
+
+		_moduleFileNamesMap = new HashMap<>();
+
+		List<String> fileNames = new ArrayList<>();
+
+		String moduleRootDirLocation =
+			sourceFormatterArgs.getBaseDirName() + "modules/";
+
+		for (int i = 0; i < 6; i++) {
+			File file = new File(moduleRootDirLocation);
+
+			if (file.exists()) {
+				fileNames = getFileNames(
+					moduleRootDirLocation, null, new String[0], getIncludes());
+
+				break;
+			}
+
+			moduleRootDirLocation = "../" + moduleRootDirLocation;
+		}
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			String className = StringUtil.replace(
+				fileName, StringPool.SLASH, StringPool.PERIOD);
+
+			int pos = className.lastIndexOf(".com.liferay.");
+
+			className = className.substring(pos + 1, fileName.length() - 5);
+
+			_moduleFileNamesMap.put(className, fileName);
+		}
+
+		return _moduleFileNamesMap;
+	}
+
 	protected String getModuleServicePackagePath(String fileName) {
 		String serviceDirLocation = fileName;
 
@@ -3313,6 +3385,49 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int pos = serviceDirLocation.lastIndexOf(".com.");
 
 		return serviceDirLocation.substring(pos + 1);
+	}
+
+	protected String getModuleSuperClassContent(
+			String content, String className, String packagePath)
+		throws Exception {
+
+		Pattern pattern = Pattern.compile(
+			" class " + className + "\\s+extends\\s+([\\w.]+) ");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String superClassName = matcher.group(1);
+
+		if (superClassName.contains(StringPool.PERIOD)) {
+			if (!superClassName.startsWith("com.liferay")) {
+				return null;
+			}
+
+			return getModuleClassContent(superClassName);
+		}
+
+		String superClassPackagePath = packagePath;
+
+		pattern = Pattern.compile("\nimport (.+?)\\." + superClassName + ";");
+
+		matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			superClassPackagePath = matcher.group(1);
+		}
+
+		if (!superClassPackagePath.startsWith("com.liferay")) {
+			return null;
+		}
+
+		String superClassFullClassName =
+			superClassPackagePath + StringPool.PERIOD + superClassName;
+
+		return getModuleClassContent(superClassFullClassName);
 	}
 
 	protected String getNextLine(String content, int lineCount) {
@@ -3758,6 +3873,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"(\t| = |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
 	private Pattern _missingEmptyLinePattern2 = Pattern.compile(
 		"(\n\t*)(public|private|protected) [^;]+? \\{");
+	private Map<String, String> _moduleFileContentsMap = new HashMap<>();
+	private Map<String, String> _moduleFileNamesMap;
 	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;

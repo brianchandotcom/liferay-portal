@@ -118,9 +118,16 @@
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#FORM_FIELD" />
+
 		<execute function="MouseOver" locator1="DDMEditStructure#FORM_FIELD" />
+
 		<execute function="ClickNoError" locator1="DDMEditStructure#FORM_FIELD_DELETE_ICON" />
-		<execute function="Confirm" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
+
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="${fieldFieldLabel}" />
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
+
+		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

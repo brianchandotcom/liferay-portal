@@ -89,6 +89,7 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
@@ -1323,6 +1324,8 @@ public class AssetPublisherUtil {
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+		subscriptionSender.setLocalizedPortletTitleMap(
+			PortletConfigurationUtil.getPortletTitleMap(portletPreferences));
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("asset_entry", assetEntry.getEntryId());
 		subscriptionSender.setPortletId(

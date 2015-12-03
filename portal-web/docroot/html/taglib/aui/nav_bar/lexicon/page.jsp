@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/aui/nav_bar/init.jsp" %>
 
 <c:if test="<%= Validator.isContent(bodyContentString) %>">
-	<div class="navbar navbar-default <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+	<div class="navbar navbar-default <%= cssClass %>" id="<%= id %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<div class="container-fluid-1280">
 			<c:if test="<%= Validator.isNotNull(responsiveButtons) %>">
 				<div class="navbar-header">

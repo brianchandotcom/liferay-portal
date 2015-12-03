@@ -122,14 +122,14 @@ public class JenkinsPerformanceTableUtilTest
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
-		String urlsText = JenkinsResultsParserUtil.toString(
+		String content = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(urlString + "/urls.txt"));
 
-		if (urlsText.length() == 0) {
+		if (content.length() == 0) {
 			return "";
 		}
 
-		for (String url : urlsText.split("\\|")) {
+		for (String url : content.split("\\|")) {
 			JenkinsPerformanceDataUtil.processPerformanceData(
 				"build", url.trim(), 100);
 		}

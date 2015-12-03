@@ -17,13 +17,11 @@ package com.liferay.jenkins.load.balance;
 import com.liferay.jenkins.results.parser.BaseJenkinsResultsParserTestCase;
 
 import java.io.File;
-
 import java.net.URL;
-
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.apache.tools.ant.Project;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,6 +45,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Test
 	public void testGetMostAvailableMasterURL() throws Exception {
 		LoadBalanceUtil.recentJobPeriod = 0;
+
 		assertSamples();
 	}
 
@@ -90,10 +89,11 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Override
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		Project project = getDownloadProject(sampleDir.getName());
-		int maxHostNameCount = LoadBalanceUtil.getHostNameCount(
+
+		int hostNameCount = LoadBalanceUtil.getHostNameCount(
 			project, sampleDir.getName());
 
-		for (int i = 1; i <= maxHostNameCount; i++) {
+		for (int i = 1; i <= hostNameCount; i++) {
 			downloadSampleURL(
 				new File(sampleDir, sampleDir.getName() + "-" + i),
 				createURL(
@@ -123,20 +123,22 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	protected Project getTestProject(String baseInvocationHostName) {
 		Project project = getDownloadProject(baseInvocationHostName);
-		Hashtable<String, Object> propertiesTable = project.getProperties();
 
-		for (String key : propertiesTable.keySet()) {
+		Map<String, Object> properties = project.getProperties();
+
+		for (String key : properties.keySet()) {
 			if (key.equals("base.invocation.url")) {
 				continue;
 			}
 
-			String value = (String)propertiesTable.get(key);
+			String value = (String)properties.get(key);
 
 			if (value.contains("http://")) {
 				value = value.replace(
 					"http://",
 					"file:" + dependenciesDir.getAbsolutePath() + "/" +
 						baseInvocationHostName + "/");
+
 				project.setProperty(key, value);
 			}
 		}

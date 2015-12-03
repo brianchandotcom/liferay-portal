@@ -119,7 +119,9 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 		>
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5>
-					<%= moduleGroupDisplay.getTitle() %>
+					<a href="<%= HtmlUtil.escapeHREF(moduleGroupDisplay.getDisplayURL(renderResponse)) %>">
+						<%= moduleGroupDisplay.getTitle() %>
+					</a>
 				</h5>
 
 				<h6 class="text-default">

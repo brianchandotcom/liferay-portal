@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletURL;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.Version;
 
@@ -62,6 +65,16 @@ public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 
 	public String getDescription() {
 		return _description;
+	}
+
+	public String getDisplayURL(MimeResponse mimeResponse) {
+		PortletURL portletURL = mimeResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view_modules.jsp");
+
+		portletURL.setParameter("app", _title);
+
+		return portletURL.toString();
 	}
 
 	public int getState() {

@@ -306,19 +306,9 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		Layout layout = layoutLocalService.getLayout(
 			groupId, privateLayout, layoutId);
 
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
 		if (!layout.getType().equals(LayoutConstants.TYPE_PORTLET)) {
 			return;
 		}
-
-		String layoutTemplateId = ParamUtil.getString(
-			actionRequest, "layoutTemplateId",
-			PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
-
-		layoutTypePortlet.setLayoutTemplateId(
-			themeDisplay.getUserId(), layoutTemplateId);
 
 		long copyLayoutId = ParamUtil.getLong(actionRequest, "copyLayoutId");
 

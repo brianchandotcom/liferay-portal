@@ -35,16 +35,19 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -61,6 +64,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
@@ -257,6 +261,18 @@ public class DDLFormAdminDisplayContext {
 		}
 	}
 
+	public String getSerializedDDMDataProviders() throws PortalException {
+		ThemeDisplay themeDisplay =
+			_ddlFormAdminRequestHelper.getThemeDisplay();
+
+		List<DDMDataProviderInstance> ddmDataProviderInstances =
+			DDMDataProviderInstanceLocalServiceUtil.getDataProviderInstances(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId()));
+
+		return serialize(ddmDataProviderInstances, themeDisplay.getLocale());
+	}
+
 	public String getSerializedDDMForm() throws PortalException {
 		String definition = ParamUtil.getString(_renderRequest, "definition");
 
@@ -384,6 +400,23 @@ public class DDLFormAdminDisplayContext {
 		return DDLRecordLocalServiceUtil.fetchDDLRecord(recordId);
 	}
 
+	protected String serialize(
+		List<DDMDataProviderInstance> ddmDataProviderInstances, Locale locale) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (DDMDataProviderInstance ddmDataProviderInstance :
+				ddmDataProviderInstances) {
+
+			JSONObject jsonObject = toJSONObject(
+				ddmDataProviderInstance, locale);
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray.toString();
+	}
+
 	protected void setDDMFormFieldReadOnly(DDMFormField ddmFormField) {
 		ddmFormField.setReadOnly(true);
 
@@ -392,6 +425,18 @@ public class DDLFormAdminDisplayContext {
 
 			setDDMFormFieldReadOnly(nestedDDMFormField);
 		}
+	}
+
+	protected JSONObject toJSONObject(
+		DDMDataProviderInstance ddmDataProviderInstance, Locale locale) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put(
+			"id", ddmDataProviderInstance.getDataProviderInstanceId());
+		jsonObject.put("name", ddmDataProviderInstance.getName(locale));
+
+		return jsonObject;
 	}
 
 	private static final ServiceTracker

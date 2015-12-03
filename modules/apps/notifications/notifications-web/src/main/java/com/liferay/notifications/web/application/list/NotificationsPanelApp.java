@@ -19,6 +19,9 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.notifications.web.constants.NotificationsPortletKeys;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.service.UserNotificationEventLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,6 +40,18 @@ import org.osgi.service.component.annotations.Reference;
 public class NotificationsPanelApp extends BasePanelApp {
 
 	@Override
+	public int getNotificationsCount(User user) {
+		if (_userNotificationEventLocalService == null) {
+			return 0;
+		}
+
+		return _userNotificationEventLocalService.
+			getArchivedUserNotificationEventsCount(
+				user.getUserId(),
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
+	}
+
+	@Override
 	public String getPortletId() {
 		return NotificationsPortletKeys.NOTIFICATIONS;
 	}
@@ -49,5 +64,15 @@ public class NotificationsPanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		_userNotificationEventLocalService = userNotificationEventLocalService;
+	}
+
+	private volatile UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

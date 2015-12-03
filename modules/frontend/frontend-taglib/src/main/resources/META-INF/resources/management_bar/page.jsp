@@ -23,7 +23,7 @@
 				<c:if test="<%= includeCheckBox %>">
 					<div class="checkbox">
 						<label>
-							<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" title="select-all" type="checkbox" />
+							<aui:input cssClass="select-all-checkboxes" data-qa-id="selectAllCheckbox" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" title="select-all" type="checkbox" />
 						</label>
 					</div>
 				</c:if>
@@ -52,7 +52,7 @@
 					<c:if test="<%= includeCheckBox %>">
 						<div class="checkbox">
 							<label>
-								<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="actionsCheckBox" title="select-all" type="checkbox" />
+								<aui:input cssClass="select-all-checkboxes" data-qa-id="selectAllCheckbox" inline="<%= true %>" label="" name="actionsCheckBox" title="select-all" type="checkbox" />
 							</label>
 						</div>
 					</c:if>

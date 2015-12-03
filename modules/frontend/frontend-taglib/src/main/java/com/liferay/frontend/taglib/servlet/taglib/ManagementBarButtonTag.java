@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -106,6 +107,13 @@ public class ManagementBarButtonTag extends IncludeTag {
 			"liferay-frontend:management-bar-button:active", _active);
 		request.setAttribute(
 			"liferay-frontend:management-bar-button:cssClass", _cssClass);
+
+		if (_data == null) {
+			_data = new HashMap<>();
+		}
+
+		_data.put("qa-id", _label + "Button");
+
 		request.setAttribute(
 			"liferay-frontend:management-bar-button:data", _data);
 		request.setAttribute(

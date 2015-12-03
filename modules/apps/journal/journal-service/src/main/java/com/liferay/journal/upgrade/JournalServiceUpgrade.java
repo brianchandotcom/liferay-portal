@@ -58,6 +58,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.journal.service", "0.0.1", "0.0.2",
+			new UpgradeClassNames());
+
+		registry.register(
+			"com.liferay.journal.service", "0.0.2", "0.0.3",
 			new UpgradeJournalArticleType(
 				_assetCategoryLocalService, _assetEntryLocalService,
 				_assetVocabularyLocalService, _companyLocalService,
@@ -65,9 +69,8 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 				_layoutLocalService, _userLocalService));
 
 		registry.register(
-			"com.liferay.journal.service", "0.0.2", "1.0.0",
-			new UpgradeSchema(), new UpgradeClassNames(),
-			new UpgradeCompanyId(),
+			"com.liferay.journal.service", "0.0.3", "1.0.0",
+			new UpgradeSchema(), new UpgradeCompanyId(),
 			new UpgradeJournal(
 				_companyLocalService, _ddmStructureLocalService,
 				_ddmTemplateLinkLocalService, _ddmTemplateLocalService,

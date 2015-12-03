@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.Files;
@@ -37,6 +38,22 @@ import org.json.JSONObject;
  * @author Peter Yoo
  */
 public class JenkinsResultsParserUtil {
+
+	public static URL createURL(String urlString) throws Exception {
+		URL url = new URL(urlString);
+
+		return encode(url);
+	}
+
+	public static URL encode(URL url) throws Exception {
+		URI uri = new URI(
+			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
+			url.getPath(), url.getQuery(), url.getRef());
+
+		String uriASCIIString = uri.toASCIIString();
+
+		return new URL(uriASCIIString.replace("#", "%23"));
+	}
 
 	public static String expandSlaveRange(String value) {
 		StringBuilder sb = new StringBuilder();
@@ -285,6 +302,21 @@ public class JenkinsResultsParserUtil {
 				Thread.sleep(5000);
 			}
 		}
+	}
+
+	public static void write(File file, String content) throws IOException {
+		System.out.println(
+			"Write file " + file + " with length " + content.length());
+
+		File parentDir = file.getParentFile();
+
+		if (!parentDir.exists()) {
+			System.out.println("Make parent directories for " + file);
+
+			parentDir.mkdirs();
+		}
+
+		Files.write(Paths.get(file.toURI()), content.getBytes());
 	}
 
 	private static final Pattern _localURLPattern1 = Pattern.compile(

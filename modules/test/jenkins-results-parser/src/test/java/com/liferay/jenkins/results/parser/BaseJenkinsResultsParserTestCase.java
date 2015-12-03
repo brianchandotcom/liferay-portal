@@ -61,12 +61,6 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		}
 	}
 
-	protected URL createURL(String urlString) throws Exception {
-		URL url = new URL(urlString);
-
-		return encode(url);
-	}
-
 	protected void deleteFile(File file) {
 		if (!file.exists()) {
 			return;
@@ -121,20 +115,10 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			urlString += "?pretty";
 		}
 
-		write(
+		JenkinsResultsParserUtil.write(
 			new File(dir, urlSuffix),
 			JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.getLocalURL(urlString)));
-	}
-
-	protected URL encode(URL url) throws Exception {
-		URI uri = new URI(
-			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
-			url.getPath(), url.getQuery(), url.getRef());
-
-		String uriASCIIString = uri.toASCIIString();
-
-		return new URL(uriASCIIString.replace("#", "%23"));
 	}
 
 	protected abstract String getMessage(String urlString) throws Exception;
@@ -171,26 +155,11 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		return urlString.replace(System.getProperty("user.dir"), "${user.dir}");
 	}
 
-	protected void write(File file, String content) throws Exception {
-		System.out.println(
-			"Write file " + file + " with length " + content.length());
-
-		File parentDir = file.getParentFile();
-
-		if (!parentDir.exists()) {
-			System.out.println("Make parent directories for " + file);
-
-			parentDir.mkdirs();
-		}
-
-		Files.write(Paths.get(file.toURI()), content.getBytes());
-	}
-
 	protected void writeExpectedMessage(File sampleDir) throws Exception {
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
 		String expectedMessage = getMessage(toURLString(sampleDir));
 
-		write(expectedMessageFile, expectedMessage);
+		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
 	}
 
 	protected File dependenciesDir = new File(

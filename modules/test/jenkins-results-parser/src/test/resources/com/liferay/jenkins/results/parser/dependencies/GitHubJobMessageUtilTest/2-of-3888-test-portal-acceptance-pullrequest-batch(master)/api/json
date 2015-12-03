@@ -1,0 +1,152 @@
+{
+    "result": "UNSTABLE",
+    "building": false,
+    "executor": null,
+    "number": 3415,
+    "builtOn": "cloud-10-0-112-200",
+    "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/3415/",
+    "artifacts": [],
+    "timestamp": 1445932310000,
+    "estimatedDuration": 1487769,
+    "id": "2015-10-27_00-51-50",
+    "duration": 1615077,
+    "fullDisplayName": "test-portal-acceptance-pullrequest-batch(master) #3415",
+    "keepLog": false,
+    "culprits": [],
+    "changeSet": {
+        "items": [],
+        "kind": null
+    },
+    "description": null,
+    "runs": [
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-0/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-1/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-2/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-3/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-4/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-5/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-6/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-7/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-8/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-9/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-10/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-11/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-12/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-13/3415/"
+        },
+        {
+            "number": 3415,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/2-of-3888-test-portal-acceptance-pullrequest-batch(master)/run-14/3415/"
+        },
+        {
+            "number": 3388,
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23AddCategory,label_exp=!master/3388/"
+        },
+        {
+            "number": 3388,
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23AddDisplayTemplateVelocity,label_exp=!master/3388/"
+        },
+        {
+            "number": 3388,
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PortalSmoke%23Smoke,label_exp=!master/3388/"
+        },
+        {
+            "number": 3400,
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizard%23HypersonicToHypersonic,label_exp=!master/3400/"
+        },
+        {
+            "number": 3388,
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizard%23HypersonicToMySQL,label_exp=!master/3388/"
+        },
+        {
+            "number": 3388,
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=TestRuntimePortlet%23Smoke,label_exp=!master/3388/"
+        },
+        {
+            "number": 3388,
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=UIInfrastructureUsecase%23Smoke,label_exp=!master/3388/"
+        }
+    ],
+    "actions": [
+        {"parameters": [
+            {
+                "name": "AXIS_VARIABLES",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_NAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JOB_VARIANT",
+                "value": "modules-integration-oracle"
+            },
+            {
+                "name": "TOP_LEVEL_SHARED_DIR",
+                "value": "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1552"
+            }
+        ]},
+        {"causes": [{"shortDescription": "Started by remote host 10.0.16.21"}]},
+        null,
+        {
+            "failCount": 2,
+            "totalCount": 3888,
+            "urlName": "testReport",
+            "skipCount": 410
+        },
+        {}
+    ]
+}

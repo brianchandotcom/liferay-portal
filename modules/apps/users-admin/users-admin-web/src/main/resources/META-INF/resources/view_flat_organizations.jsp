@@ -21,6 +21,8 @@ String usersListView = (String)request.getAttribute("view.jsp-usersListView");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 boolean showList = true;
@@ -50,7 +52,39 @@ if (filterManageableOrganizations) {
 		searchContainer.setRowChecker(rowChecker);
 		%>
 
+		<liferay-frontend:management-bar
+			includeCheckBox="<%= true %>"
+			searchContainerId="organizations"
+		>
+			<liferay-frontend:management-bar-filters>
+				<liferay-frontend:management-bar-navigation
+					navigationKeys='<%= new String[] {"all"} %>'
+					portletURL="<%= renderResponse.createRenderURL() %>"
+				/>
+
+				<liferay-frontend:management-bar-sort
+					orderByCol="<%= searchContainer.getOrderByCol() %>"
+					orderByType="<%= searchContainer.getOrderByType() %>"
+					orderColumns='<%= new String[] {"name", "type"} %>'
+					portletURL="<%= portletURL %>"
+				/>
+			</liferay-frontend:management-bar-filters>
+
+			<liferay-frontend:management-bar-buttons>
+				<liferay-frontend:management-bar-display-buttons
+					displayViews='<%= new String[] {"list"} %>'
+					portletURL="<%= renderResponse.createRenderURL() %>"
+					selectedDisplayStyle="<%= displayStyle %>"
+				/>
+			</liferay-frontend:management-bar-buttons>
+
+			<liferay-frontend:management-bar-action-buttons>
+				<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteOrganizations();" %>' icon="trash" id="deleteOrganizations" label="delete" />
+			</liferay-frontend:management-bar-action-buttons>
+		</liferay-frontend:management-bar>
+
 		<liferay-ui:search-container
+			id="organizations"
 			searchContainer="<%= searchContainer %>"
 			var="organizationSearchContainer"
 		>
@@ -103,16 +137,6 @@ if (filterManageableOrganizations) {
 					path="/organization_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
-
-			<%
-			List<Organization> results = searchContainer.getResults();
-			%>
-
-			<c:if test="<%= !results.isEmpty() %>">
-				<div class="separator"><!-- --></div>
-
-				<aui:button cssClass="delete-organizations" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
-			</c:if>
 
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>

@@ -20,6 +20,7 @@
 
 <%
 SearchContainer searchContainer = new UserSearch(renderRequest, "cur2", currentURLObj);
+UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
 RowChecker rowChecker = new RowChecker(renderResponse);
 
@@ -30,9 +31,58 @@ searchContainer.setRowChecker(rowChecker);
 if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	currentURLObj.setParameter("status", String.valueOf(status));
 }
+
+boolean showDeleteButton = (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && (searchTerms.isActive() || (!searchTerms.isActive() && PropsValues.USERS_DELETE));
+boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && !searchTerms.isActive();
 %>
 
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="users"
+>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= searchContainer.getOrderByCol() %>"
+			orderByType="<%= searchContainer.getOrderByType() %>"
+			orderColumns='<%= new String[] {"first-name", "last-name", "screen-name"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<c:if test="<%= showRestoreButton %>">
+			<%
+			String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "deleteUsers('" + Constants.RESTORE + "');";
+			%>
+
+			<liferay-frontend:management-bar-button href="<%= taglibOnClick %>" iconCssClass="icon-undo" id="restoreUsers" label="restore" />
+		</c:if>
+
+		<c:if test="<%= showDeleteButton %>">
+			<%
+			String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "deleteUsers('" + (searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE) + "');";
+			%>
+
+			<liferay-frontend:management-bar-button href="<%= taglibOnClick %>" icon="trash" id="deleteUsers" label="<%= searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>" />
+		</c:if>
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
+
 <liferay-ui:search-container
+	id="users"
 	searchContainer="<%= searchContainer %>"
 	var="userSearchContainer"
 >
@@ -41,8 +91,6 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	<aui:input name="status" type="hidden" value="<%= status %>" />
 
 	<%
-	UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
-
 	if ((searchTerms.getOrganizationId() > 0) && !OrganizationPermissionUtil.contains(permissionChecker, searchTerms.getOrganizationId(), ActionKeys.MANAGE_USERS)) {
 		inactiveUsersCount = 0;
 
@@ -223,34 +271,12 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	<%
 	List<User> results = searchContainer.getResults();
 
-	boolean showDeleteButton = !results.isEmpty() && (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && (searchTerms.isActive() || (!searchTerms.isActive() && PropsValues.USERS_DELETE));
-	boolean showRestoreButton = !results.isEmpty() && (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && !searchTerms.isActive();
+	showDeleteButton = !results.isEmpty() && showDeleteButton;
+	showRestoreButton = !results.isEmpty() && showRestoreButton;
 	%>
 
 	<c:if test="<%= showDeleteButton || showRestoreButton %>">
-		<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) && (userOrganization == null) %>">
-			<div class="separator"><!-- --></div>
-		</c:if>
-
 		<div class="clearfix user-table">
-			<c:if test="<%= showDeleteButton %>">
-
-				<%
-				String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + (searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE) + "');";
-				%>
-
-				<aui:button disabled="<%= true %>" name="deactivate" onClick="<%= taglibOnClick %>" value="<%= searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>" />
-			</c:if>
-
-			<c:if test="<%= showRestoreButton %>">
-
-				<%
-				String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + Constants.RESTORE + "');";
-				%>
-
-				<aui:button disabled="<%= true %>" name="restore" onClick="<%= taglibOnClick %>" value="restore" />
-			</c:if>
-
 			<c:if test="<%= (inactiveUsersCount > 0) && (usersCount > 0) %>">
 				<div class="user-status-selector">
 					<aui:select changesContext="<%= true %>" inlineField="<%= true %>" inlineLabel="left" label="show" name="userStatusSelect" onChange='<%= renderResponse.getNamespace() + "showUsers(this);" %>'>

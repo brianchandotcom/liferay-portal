@@ -226,12 +226,14 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) %>">
 
 									<%
-									if (((double[])value).length == 0) {
-										value = defaultValue;
+									String textValue = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--");
+
+									if (Validator.isNull(textValue)) {
+										textValue = StringUtil.merge(curValue.length > 0 ? curValue : (double[])defaultValue, StringPool.NEW_LINE);
 									}
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(curValue, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= textValue %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -286,12 +288,14 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) %>">
 
 									<%
-									if (((float[])value).length == 0) {
-										value = defaultValue;
+									String textValue = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--");
+
+									if (Validator.isNull(textValue)) {
+										textValue = StringUtil.merge(curValue.length > 0 ? curValue : (float[])defaultValue, StringPool.NEW_LINE);
 									}
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(curValue, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= textValue %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -346,12 +350,14 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) %>">
 
 									<%
-									if (((int[])value).length == 0) {
-										value = defaultValue;
+									String textValue = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--");
+
+									if (Validator.isNull(textValue)) {
+										textValue = StringUtil.merge(curValue.length > 0 ? curValue : (int[])defaultValue, StringPool.NEW_LINE);
 									}
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(curValue, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= textValue %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -406,12 +412,14 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) %>">
 
 									<%
-									if (((long[])value).length == 0) {
-										value = defaultValue;
+									String textValue = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--");
+
+									if (Validator.isNull(textValue)) {
+										textValue = StringUtil.merge(curValue.length > 0 ? curValue : (long[])defaultValue, StringPool.NEW_LINE);
 									}
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(curValue, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= textValue %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -466,12 +474,14 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) %>">
 
 									<%
-									if (((Number[])value).length == 0) {
-										value = defaultValue;
+									String textValue = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--");
+
+									if (Validator.isNull(textValue)) {
+										textValue = StringUtil.merge(curValue.length > 0 ? curValue : (Number[])defaultValue, StringPool.NEW_LINE);
 									}
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(curValue, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= textValue %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -526,12 +536,14 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) %>">
 
 									<%
-									if (((short[])value).length == 0) {
-										value = defaultValue;
+									String textValue = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--");
+
+									if (Validator.isNull(textValue)) {
+										textValue = StringUtil.merge(curValue.length > 0 ? curValue : (short[])defaultValue, StringPool.NEW_LINE);
 									}
 									%>
 
-									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= StringUtil.merge(curValue, StringPool.NEW_LINE) %></textarea>
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= textValue %></textarea>
 								</c:when>
 							</c:choose>
 						</c:when>

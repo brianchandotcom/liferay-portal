@@ -73,17 +73,6 @@ String displayStyle = ParamUtil.getString(request, "displayStyle");
 <c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav" id="layoutsNav">
-			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.PERMISSIONS) %>">
-				<liferay-security:permissionsURL
-					modelResource="<%= Layout.class.getName() %>"
-					modelResourceDescription="<%= selLayout.getName(locale) %>"
-					resourcePrimKey="<%= String.valueOf(selLayout.getPlid()) %>"
-					var="permissionURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
-
-				<aui:nav-item href="<%= permissionURL %>" iconCssClass="icon-lock" label="permissions" useDialog="<%= true %>" />
-			</c:if>
 			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.DELETE) %>">
 				<aui:nav-item cssClass="remove-layout" iconCssClass="icon-remove" label="delete" />
 			</c:if>

@@ -533,6 +533,22 @@
 	<td>//label/input[@value='${key_widthSize}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ARE_YOU_SURE_DIALOG_BOX-->
+<tr>
+	<td>ARE_YOU_SURE_DIALOG_BOX_HEADER</td>
+	<td>//div[contains(@class,'modal-header')]/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARE_YOU_SURE_DIALOG_BOX_BODY</td>
+	<td>//div[contains(@class,'modal-body') and contains(.,'Are you sure')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

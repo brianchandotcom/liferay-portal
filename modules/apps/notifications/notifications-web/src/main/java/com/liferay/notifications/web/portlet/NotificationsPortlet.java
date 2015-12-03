@@ -176,9 +176,6 @@ public class NotificationsPortlet extends MVCPortlet {
 			else if (actionName.equals("markAsRead")) {
 				markAsRead(actionRequest, actionResponse);
 			}
-			else if (actionName.equals("setDelivered")) {
-				setDelivered(actionRequest, actionResponse);
-			}
 			else if (actionName.equals("unsubscribe")) {
 				unsubscribe(actionRequest, actionResponse);
 			}
@@ -212,40 +209,6 @@ public class NotificationsPortlet extends MVCPortlet {
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
-	}
-
-	public void setDelivered(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			List<UserNotificationEvent> userNotificationEvents =
-				UserNotificationEventLocalServiceUtil.
-					getDeliveredUserNotificationEvents(
-						themeDisplay.getUserId(),
-						UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
-
-			for (UserNotificationEvent userNotificationEvent :
-					userNotificationEvents) {
-
-				userNotificationEvent.setDelivered(true);
-
-				UserNotificationEventLocalServiceUtil.
-					updateUserNotificationEvent(userNotificationEvent);
-			}
-
-			jsonObject.put("success", Boolean.TRUE);
-		}
-		catch (Exception e) {
-			jsonObject.put("success", Boolean.FALSE);
-		}
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	public void unsubscribe(

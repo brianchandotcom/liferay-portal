@@ -32,10 +32,10 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	public LoadBalancerUtilTest() {
 		dependenciesDir = dependenciesDir.getParentFile();
-		dependenciesDir = dependenciesDir.getParentFile();
 
 		dependenciesDir = new File(
-			dependenciesDir, "dependencies/" + getSimpleClassName());
+			dependenciesDir,
+			"load/balancer/dependencies/" + getSimpleClassName());
 	}
 
 	@Before

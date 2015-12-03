@@ -357,6 +357,11 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	@Override
+	public List<UserNotificationEvent> getTypeNotificationEvents(String type) {
+		return userNotificationEventPersistence.findByType(type);
+	}
+
+	@Override
 	public List<UserNotificationEvent> getUserNotificationEvents(long userId) {
 		return userNotificationEventPersistence.findByUserId(userId);
 	}

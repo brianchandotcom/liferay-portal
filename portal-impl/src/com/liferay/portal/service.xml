@@ -2846,6 +2846,9 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
+		<finder name="Type" return-type="Collection">
+			<finder-column name="type" />
+		</finder>
 		<finder name="U_DT" return-type="Collection">
 			<finder-column name="userId" />
 			<finder-column name="deliveryType" />

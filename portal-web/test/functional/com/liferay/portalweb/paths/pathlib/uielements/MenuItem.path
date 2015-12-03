@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_FILE_ENTRY</td>
+	<td>//a[@role='menuitem' and contains(.,'Add File Entry')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_FOLDER</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Folder')]</td>
 	<td></td>
@@ -91,6 +96,11 @@
 <tr>
 	<td>ADD_SUBCATEGORY</td>
 	<td>//div[contains(@class,'open')]//a[contains(.,'Add Subcategory')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBFOLDER</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>

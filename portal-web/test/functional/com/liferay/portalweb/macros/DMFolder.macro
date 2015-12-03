@@ -116,7 +116,7 @@
 	<command name="addSubfolderPGViaMG">
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="PGMediagallery#FOLDER_MENU_ADD_SUBFOLDER" value1="Add Subfolder" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_SUBFOLDER" value1="Add Subfolder" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${mgSubfolderName}" />
 

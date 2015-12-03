@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `da3549d`.*
+*This document has been reviewed through commit `127b66e`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2959,23 +2959,22 @@ time to focus on other areas of the product that add more value.
 
 ---------------------------------------
 
-### Removed the getPageOrderByComparator method from WikiUtil
-- **Date:** 2015-Dec-1
+### Removed the getPageOrderByComparator Method from WikiUtil
+- **Date:** 2015-Dec-01
 - **JIRA Ticket:** LPS-60843
 
 #### What changed?
 
-The `getPageOrderByComparator` method has been removed from the WikiUtil.
+The `getPageOrderByComparator` method has been removed from `WikiUtil`.
 
 #### Who is affected?
 
-This affects developers that use this method in their own developments.
+This affects developers that use this method in their code.
 
 #### How should I update my code?
 
-You should update your code to invoke:
-
-- `WikiPortletUtil.getPageOrderByComparator(String, String)`:
+You should update your code to invoke
+`WikiPortletUtil.getPageOrderByComparator(String, String)`.
 
 #### Why was this change made?
 
@@ -3070,6 +3069,7 @@ Even if you handled blank values in your custom validator, that blank value
 would fail the email validator.
 
 This change will required most custom validators to be refactored, but allows
+<<<<<<< HEAD
 greater flexibility for all developers.
 
 ---------------------------------------
@@ -3101,3 +3101,6 @@ responsible of exposing the Recycle Bin logic, delegating into another
 components; problem was, those components depended themselves on
 `DLAppService` to implement their logic. Breaking the service in two
 was the only sensible solution to this circularity.
+=======
+greater flexibility for all developers.
+>>>>>>> 7951f82... LPS-60843 Edit breaking change

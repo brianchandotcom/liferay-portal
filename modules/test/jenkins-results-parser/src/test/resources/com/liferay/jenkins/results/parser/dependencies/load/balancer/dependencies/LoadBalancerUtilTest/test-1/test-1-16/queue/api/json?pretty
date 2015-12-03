@@ -1,0 +1,61 @@
+{
+  "items" : [
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "functional-tomcat-mysql/2"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-7/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1610"
+            }
+          ]
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by remote host 10.0.17.159"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : false,
+      "id" : 35833,
+      "inQueueSince" : 1449172364364,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=functional-tomcat-mysql/2\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-7/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1610",
+      "stuck" : false,
+      "task" : {
+        "name" : "test-portal-acceptance-pullrequest-batch(master)",
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35833/",
+      "why" : "In the quiet period. Expires in 4.2 sec",
+      "timestamp" : 1449172369364
+    }
+  ]
+}

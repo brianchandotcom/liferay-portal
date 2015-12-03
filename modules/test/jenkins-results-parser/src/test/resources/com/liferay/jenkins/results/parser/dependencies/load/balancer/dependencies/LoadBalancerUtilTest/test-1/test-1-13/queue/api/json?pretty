@@ -1,0 +1,262 @@
+{
+  "items" : [
+    {
+      "actions" : [
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by timer"
+            },
+            {
+              "shortDescription" : "Started by timer"
+            },
+            {
+              "shortDescription" : "Started by timer"
+            },
+            {
+              "shortDescription" : "Started by timer"
+            }
+          ]
+        }
+      ],
+      "blocked" : true,
+      "buildable" : false,
+      "id" : 62247,
+      "inQueueSince" : 1448856000159,
+      "params" : "",
+      "stuck" : false,
+      "task" : {
+        "name" : "maintenance-daily",
+        "url" : "https://test-1-13.liferay.com/job/maintenance-daily/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/62247/",
+      "why" : "Build #5 is already in progress",
+      "buildableStartMilliseconds" : 1448856000166
+    },
+    {
+      "actions" : [
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"maintenance\" build number 10",
+              "upstreamBuild" : 10,
+              "upstreamProject" : "maintenance",
+              "upstreamUrl" : "job/maintenance/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 71687,
+      "inQueueSince" : 1449144176213,
+      "params" : "",
+      "stuck" : true,
+      "task" : {
+        "name" : "label=cloud-10-0-110-161",
+        "url" : "https://test-1-13.liferay.com/job/maintenance/label=cloud-10-0-110-161/",
+        "color" : "blue"
+      },
+      "url" : "queue/item/71687/",
+      "why" : "cloud-10-0-110-161 is offline",
+      "buildableStartMilliseconds" : 1449144176650,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"maintenance\" build number 10",
+              "upstreamBuild" : 10,
+              "upstreamProject" : "maintenance",
+              "upstreamUrl" : "job/maintenance/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 71686,
+      "inQueueSince" : 1449144176175,
+      "params" : "",
+      "stuck" : true,
+      "task" : {
+        "name" : "label=cloud-10-0-110-158",
+        "url" : "https://test-1-13.liferay.com/job/maintenance/label=cloud-10-0-110-158/",
+        "color" : "blue"
+      },
+      "url" : "queue/item/71686/",
+      "why" : "cloud-10-0-110-158 is offline",
+      "buildableStartMilliseconds" : 1449144176431,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"maintenance\" build number 10",
+              "upstreamBuild" : 10,
+              "upstreamProject" : "maintenance",
+              "upstreamUrl" : "job/maintenance/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 71659,
+      "inQueueSince" : 1449144144115,
+      "params" : "",
+      "stuck" : true,
+      "task" : {
+        "name" : "label=cloud-10-0-110-159",
+        "url" : "https://test-1-13.liferay.com/job/maintenance/label=cloud-10-0-110-159/",
+        "color" : "blue"
+      },
+      "url" : "queue/item/71659/",
+      "why" : "cloud-10-0-110-159 is offline",
+      "buildableStartMilliseconds" : 1449144144310,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"maintenance\" build number 10",
+              "upstreamBuild" : 10,
+              "upstreamProject" : "maintenance",
+              "upstreamUrl" : "job/maintenance/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 71619,
+      "inQueueSince" : 1449144102592,
+      "params" : "",
+      "stuck" : true,
+      "task" : {
+        "name" : "label=cloud-10-0-110-160",
+        "url" : "https://test-1-13.liferay.com/job/maintenance/label=cloud-10-0-110-160/",
+        "color" : "blue"
+      },
+      "url" : "queue/item/71619/",
+      "why" : "cloud-10-0-110-160 is offline",
+      "buildableStartMilliseconds" : 1449144102956,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"maintenance-daily\" build number 5",
+              "upstreamBuild" : 5,
+              "upstreamProject" : "maintenance-daily",
+              "upstreamUrl" : "job/maintenance-daily/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 61902,
+      "inQueueSince" : 1448769600673,
+      "params" : "",
+      "stuck" : true,
+      "task" : {
+        "name" : "label=cloud-10-0-110-160",
+        "url" : "https://test-1-13.liferay.com/job/maintenance-daily/label=cloud-10-0-110-160/",
+        "color" : "blue"
+      },
+      "url" : "queue/item/61902/",
+      "why" : "cloud-10-0-110-160 is offline",
+      "buildableStartMilliseconds" : 1448769600677,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"maintenance-daily\" build number 5",
+              "upstreamBuild" : 5,
+              "upstreamProject" : "maintenance-daily",
+              "upstreamUrl" : "job/maintenance-daily/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 61861,
+      "inQueueSince" : 1448769600472,
+      "params" : "",
+      "stuck" : true,
+      "task" : {
+        "name" : "label=cloud-10-0-110-158",
+        "url" : "https://test-1-13.liferay.com/job/maintenance-daily/label=cloud-10-0-110-158/",
+        "color" : "blue"
+      },
+      "url" : "queue/item/61861/",
+      "why" : "cloud-10-0-110-158 is offline",
+      "buildableStartMilliseconds" : 1448769600475,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"maintenance-daily\" build number 5",
+              "upstreamBuild" : 5,
+              "upstreamProject" : "maintenance-daily",
+              "upstreamUrl" : "job/maintenance-daily/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 61848,
+      "inQueueSince" : 1448769600398,
+      "params" : "",
+      "stuck" : true,
+      "task" : {
+        "name" : "label=cloud-10-0-110-159",
+        "url" : "https://test-1-13.liferay.com/job/maintenance-daily/label=cloud-10-0-110-159/",
+        "color" : "blue"
+      },
+      "url" : "queue/item/61848/",
+      "why" : "cloud-10-0-110-159 is offline",
+      "buildableStartMilliseconds" : 1448769600406,
+      "pending" : false
+    }
+  ]
+}

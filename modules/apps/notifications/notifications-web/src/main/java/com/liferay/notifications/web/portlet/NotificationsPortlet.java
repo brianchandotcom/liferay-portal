@@ -225,27 +225,10 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		try {
 			List<UserNotificationEvent> userNotificationEvents =
-				new ArrayList<>();
-
-			if (PortletPropsValues.USER_NOTIFICATION_DOCKBAR_SPLIT) {
-				boolean actionable = ParamUtil.getBoolean(
-					actionRequest, "actionable");
-
-				userNotificationEvents.addAll(
-					UserNotificationEventLocalServiceUtil.
-						getDeliveredUserNotificationEvents(
-							themeDisplay.getUserId(),
-							UserNotificationDeliveryConstants.TYPE_WEBSITE,
-							false, actionable));
-			}
-			else {
-				userNotificationEvents.addAll(
-					UserNotificationEventLocalServiceUtil.
-						getDeliveredUserNotificationEvents(
-							themeDisplay.getUserId(),
-							UserNotificationDeliveryConstants.TYPE_WEBSITE,
-							false));
-			}
+				UserNotificationEventLocalServiceUtil.
+					getDeliveredUserNotificationEvents(
+						themeDisplay.getUserId(),
+						UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
 			for (UserNotificationEvent userNotificationEvent :
 					userNotificationEvents) {
@@ -438,73 +421,23 @@ public class NotificationsPortlet extends MVCPortlet {
 			jsonObject.put(
 				"timestamp", String.valueOf(System.currentTimeMillis()));
 
-			if (PortletPropsValues.USER_NOTIFICATION_DOCKBAR_SPLIT) {
-				int newActionableUserNotificationsCount =
-					UserNotificationEventLocalServiceUtil.
-						getDeliveredUserNotificationEventsCount(
-							themeDisplay.getUserId(),
-							UserNotificationDeliveryConstants.TYPE_WEBSITE,
-							false, true);
+			int newUserNotificationsCount =
+				UserNotificationEventLocalServiceUtil.
+					getDeliveredUserNotificationEventsCount(
+						themeDisplay.getUserId(),
+						UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
-				jsonObject.put(
-					"newActionableUserNotificationsCount",
-					newActionableUserNotificationsCount);
+			jsonObject.put(
+				"newUserNotificationsCount", newUserNotificationsCount);
 
-				int newNonactionableUserNotificationsCount =
-					UserNotificationEventLocalServiceUtil.
-						getDeliveredUserNotificationEventsCount(
-							themeDisplay.getUserId(),
-							UserNotificationDeliveryConstants.TYPE_WEBSITE,
-							false, false);
+			int unreadUserNotificationsCount =
+				UserNotificationEventLocalServiceUtil.
+					getArchivedUserNotificationEventsCount(
+						themeDisplay.getUserId(),
+						UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
-				jsonObject.put(
-					"newNonactionableUserNotificationsCount",
-					newNonactionableUserNotificationsCount);
-
-				int unreadActionableUserNotificationsCount =
-					UserNotificationEventLocalServiceUtil.
-						getArchivedUserNotificationEventsCount(
-							themeDisplay.getUserId(),
-							UserNotificationDeliveryConstants.TYPE_WEBSITE,
-							true, false);
-
-				jsonObject.put(
-					"unreadActionableUserNotificationsCount",
-					unreadActionableUserNotificationsCount);
-
-				int unreadNonactionableUserNotificationsCount =
-					UserNotificationEventLocalServiceUtil.
-						getArchivedUserNotificationEventsCount(
-							themeDisplay.getUserId(),
-							UserNotificationDeliveryConstants.TYPE_WEBSITE,
-							false, false);
-
-				jsonObject.put(
-					"unreadNonactionableUserNotificationsCount",
-					unreadNonactionableUserNotificationsCount);
-			}
-			else {
-				int newUserNotificationsCount =
-					UserNotificationEventLocalServiceUtil.
-						getDeliveredUserNotificationEventsCount(
-							themeDisplay.getUserId(),
-							UserNotificationDeliveryConstants.TYPE_WEBSITE,
-							false);
-
-				jsonObject.put(
-					"newUserNotificationsCount", newUserNotificationsCount);
-
-				int unreadUserNotificationsCount =
-					UserNotificationEventLocalServiceUtil.
-						getArchivedUserNotificationEventsCount(
-							themeDisplay.getUserId(),
-							UserNotificationDeliveryConstants.TYPE_WEBSITE,
-							false);
-
-				jsonObject.put(
-					"unreadUserNotificationsCount",
-					unreadUserNotificationsCount);
-			}
+			jsonObject.put(
+				"unreadUserNotificationsCount", unreadUserNotificationsCount);
 
 			jsonObject.put("success", Boolean.TRUE);
 		}

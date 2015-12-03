@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
@@ -56,6 +55,7 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
@@ -87,7 +87,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = javax.portlet.Portlet.class
+	service = Portlet.class
 )
 public class NotificationsPortlet extends MVCPortlet {
 
@@ -510,8 +510,9 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		String actionDiv = _ACTION_DIV_DEFAULT;
 
-		Portlet portlet = _portletLocalService.getPortletById(
-			themeDisplay.getCompanyId(), userNotificationEvent.getType());
+		com.liferay.portal.model.Portlet portlet =
+			_portletLocalService.getPortletById(
+				themeDisplay.getCompanyId(), userNotificationEvent.getType());
 
 		String portletName = portlet.getDisplayName();
 		String portletIcon = portlet.getContextPath() + portlet.getIcon();
@@ -567,7 +568,9 @@ public class NotificationsPortlet extends MVCPortlet {
 				});
 
 			return StringUtil.replace(
-				ContentUtil.get(_USER_NOTIFICATION_ENTRY_TMPL_PATH),
+				ContentUtil.get(
+					"com/liferay/notifications/web/dependencies" +
+						"/user_notification_entry.tmpl"),
 				new String[] {
 					"[$ACTION_DIV$]", "[$BODY$]", "[$CSS_CLASS$]",
 					"[$ICON_MENU$]", "[$PORTLET_ICON$]", "[$PORTLET_NAME$]",
@@ -621,7 +624,9 @@ public class NotificationsPortlet extends MVCPortlet {
 		}
 
 		return StringUtil.replace(
-			ContentUtil.get(_USER_NOTIFICATION_ENTRY_TMPL_PATH),
+			ContentUtil.get(
+				"com/liferay/notifications/web/dependencies" +
+					"/user_notification_entry.tmpl"),
 			new String[] {
 				"[$ACTION_DIV$]", "[$BODY$]", "[$CSS_CLASS$]", "[$ICON_MENU$]",
 				"[$PORTLET_ICON$]", "[$PORTLET_NAME$]", "[$TIMESTAMP$]",
@@ -696,10 +701,6 @@ public class NotificationsPortlet extends MVCPortlet {
 	private static final String _MARK_AS_READ_DIV =
 		"<div class=\"clearfix user-notification-link\" data-href=\"" +
 			"[$LINK$]\" data-markAsReadURL=\"[$MARK_AS_READ_URL$]\">";
-
-	private static final String _USER_NOTIFICATION_ENTRY_TMPL_PATH =
-		"com/liferay/notifications/web/dependencies/user_notification_entry." +
-			"tmpl";
 
 	private volatile PortletLocalService _portletLocalService;
 	private volatile SubscriptionLocalService _subscriptionLocalService;

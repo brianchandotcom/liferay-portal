@@ -14,6 +14,7 @@
 
 package com.liferay.marketplace.app.manager.web.util;
 
+import com.liferay.marketplace.model.App;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
@@ -79,7 +80,19 @@ public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 
 		portletURL.setParameter("mvcPath", "/view_modules.jsp");
 
-		portletURL.setParameter("app", _title);
+		if (_appDisplay instanceof MarketplaceAppDisplay) {
+			MarketplaceAppDisplay marketplaceAppDisplay =
+				(MarketplaceAppDisplay)_appDisplay;
+
+			App app = marketplaceAppDisplay.getApp();
+
+			portletURL.setParameter("app", String.valueOf(app.getAppId()));
+		}
+		else {
+			portletURL.setParameter("app", _appDisplay.getTitle());
+		}
+
+		portletURL.setParameter("moduleGroup", _title);
 
 		return portletURL.toString();
 	}

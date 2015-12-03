@@ -19,40 +19,16 @@
 <%
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
-Group group = layoutsAdminDisplayContext.getGroup();
-Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
-long groupId = layoutsAdminDisplayContext.getGroupId();
 long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
 boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
-int pagesCount = 0;
-
 if (selGroup.isLayoutSetPrototype()) {
 	privateLayout = true;
 }
-
-if (privateLayout) {
-	if (group != null) {
-		pagesCount = selGroup.getPrivateLayoutsPageCount();
-	}
-}
-else {
-	if (group != null) {
-		pagesCount = selGroup.getPublicLayoutsPageCount();
-	}
-}
 %>
-
-<aui:nav-bar>
-	<aui:nav cssClass="navbar-nav">
-		<c:if test="<%= pagesCount > 0 %>">
-			<aui:nav-item href="<%= selGroup.getDisplayURL(themeDisplay, privateLayout) %>" iconCssClass="icon-file" label="view-pages" target="_blank" />
-		</c:if>
-	</aui:nav>
-</aui:nav-bar>
 
 <portlet:actionURL name="editLayoutSet" var="editLayoutSetURL">
 	<portlet:param name="mvcPath" value="/view.jsp" />

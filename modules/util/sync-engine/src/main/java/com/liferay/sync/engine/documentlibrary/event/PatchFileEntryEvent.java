@@ -44,7 +44,7 @@ public class PatchFileEntryEvent extends BaseEvent {
 		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 
 		syncFile.setState(SyncFile.STATE_IN_PROGRESS);
-		syncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADING);
+		syncFile.setUiEvent(SyncFile.UI_EVENT_UPLOADING);
 
 		SyncFileService.update(syncFile);
 

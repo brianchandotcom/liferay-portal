@@ -32,6 +32,10 @@ public class BundleUtil {
 
 		File file = new File(name);
 
+		if (file.isDirectory()) {
+			return bundle.getEntry(name);
+		}
+
 		Enumeration<URL> enumeration = bundle.findEntries(
 			file.getParent(), file.getName(), false);
 

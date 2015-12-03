@@ -52,6 +52,14 @@ public class BundleUtilTest {
 	}
 
 	@Test
+	public void testGetResourceInBundleOrFragmentsWhenDir() throws IOException {
+		URL url = BundleUtil.getResourceInBundleOrFragments(
+			_bundle, "/bundle-util");
+
+		Assert.assertNotNull(url);
+	}
+
+	@Test
 	public void testGetResourceInBundleOrFragmentsWhenInRoot()
 		throws IOException {
 
@@ -73,6 +81,15 @@ public class BundleUtilTest {
 			_bundle, "/fileMissing.properties");
 
 		Assert.assertNull(url);
+	}
+
+	@Test
+	public void testGetResourceInBundleOrFragmentsWhenRoot()
+		throws IOException {
+
+		URL url = BundleUtil.getResourceInBundleOrFragments(_bundle, "/");
+
+		Assert.assertNotNull(url);
 	}
 
 	@ArquillianResource

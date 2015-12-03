@@ -78,11 +78,12 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 			"AssociateTag", _amazonRankingsConfiguration.amazonAssociateTag());
 		parameters.put(
 			"AWSAccessKeyId", _amazonRankingsConfiguration.amazonAccessKeyId());
-		parameters.put("IdType", "ASIN");
+		parameters.put("IdType", "ISBN");
 		parameters.put("ItemId", _isbn);
 		parameters.put("Operation", "ItemLookup");
 		parameters.put(
 			"ResponseGroup", "Images,ItemAttributes,Offers,SalesRank");
+		parameters.put("SearchIndex", "Books");
 		parameters.put("Service", "AWSECommerceService");
 		parameters.put("Timestamp", AmazonRankingsUtil.getTimestamp());
 

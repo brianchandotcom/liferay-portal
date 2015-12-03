@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -36,6 +37,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
@@ -43,26 +45,26 @@ import java.util.List;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Eudaldo Alonso
  */
 public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
-			HttpServletRequest request,
+			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		_request = request;
+		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_groupDisplayContextHelper = new GroupDisplayContextHelper(request);
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_groupDisplayContextHelper = new GroupDisplayContextHelper(
+			PortalUtil.getHttpServletRequest(liferayPortletRequest));
+		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+		boolean privateLayout = ParamUtil.getBoolean(
+			liferayPortletRequest, "privateLayout");
 
 		Layout selLayout = getSelLayout();
 
@@ -86,7 +88,7 @@ public class LayoutsAdminDisplayContext {
 
 		_privateLayout = privateLayout;
 
-		_request.setAttribute(
+		_liferayPortletRequest.setAttribute(
 			com.liferay.portal.kernel.util.WebKeys.LAYOUT_DESCRIPTIONS,
 			getLayoutDescriptions());
 	}
@@ -201,7 +203,7 @@ public class LayoutsAdminDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_request, "redirect");
+		_redirect = ParamUtil.getString(_liferayPortletRequest, "redirect");
 
 		return _redirect;
 	}
@@ -272,7 +274,7 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		_selPlid = ParamUtil.getLong(
-			_request, "selPlid", LayoutConstants.DEFAULT_PLID);
+			_liferayPortletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 
 		return _selPlid;
 	}
@@ -357,12 +359,12 @@ public class LayoutsAdminDisplayContext {
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Organization _organization;
 	private String _pagesName;
 	private final boolean _privateLayout;
 	private String _redirect;
-	private final HttpServletRequest _request;
 	private String _rootNodeName;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;

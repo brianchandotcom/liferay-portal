@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +63,10 @@ public class ManagementBarButtonTag extends IncludeTag {
 		_id = id;
 	}
 
+	public void setLabel(String label) {
+		_label = label;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -77,6 +82,7 @@ public class ManagementBarButtonTag extends IncludeTag {
 		_href = null;
 		_iconCssClass = null;
 		_id = null;
+		_label = null;
 	}
 
 	@Override
@@ -103,6 +109,8 @@ public class ManagementBarButtonTag extends IncludeTag {
 			"liferay-frontend:management-bar-button:iconCssClass",
 			_iconCssClass);
 		request.setAttribute("liferay-frontend:management-bar-button:id", _id);
+		request.setAttribute(
+			"liferay-frontend:management-bar-button:label", _label);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -115,5 +123,6 @@ public class ManagementBarButtonTag extends IncludeTag {
 	private String _href;
 	private String _iconCssClass;
 	private String _id;
+	private String _label;
 
 }

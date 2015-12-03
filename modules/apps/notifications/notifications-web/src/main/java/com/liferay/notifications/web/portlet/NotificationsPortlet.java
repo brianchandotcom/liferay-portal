@@ -37,13 +37,13 @@ import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalService;
+import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.service.UserNotificationDeliveryLocalService;
+import com.liferay.portal.service.UserNotificationEventLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.ContentUtil;
@@ -63,6 +63,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -98,7 +99,7 @@ public class NotificationsPortlet extends MVCPortlet {
 			actionRequest, "userNotificationEventId");
 
 		try {
-			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
 				userNotificationEventId);
 		}
 		catch (Exception e) {
@@ -222,11 +223,11 @@ public class NotificationsPortlet extends MVCPortlet {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			SubscriptionLocalServiceUtil.deleteSubscription(subscriptionId);
+			_subscriptionLocalService.deleteSubscription(subscriptionId);
 
 			UserNotificationEvent userNotificationEvent =
-				UserNotificationEventLocalServiceUtil.
-					fetchUserNotificationEvent(userNotificationEventId);
+				_userNotificationEventLocalService.fetchUserNotificationEvent(
+					userNotificationEventId);
 
 			if (userNotificationEvent != null) {
 				if (!userNotificationEvent.isArchived()) {
@@ -255,7 +256,7 @@ public class NotificationsPortlet extends MVCPortlet {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			UserNotificationDeliveryLocalServiceUtil.
+			_userNotificationDeliveryLocalService.
 				updateUserNotificationDelivery(
 					userNotificationDeliveryId, deliver);
 
@@ -339,7 +340,7 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		if (subscriptionId > 0) {
 			Subscription subscription =
-				SubscriptionLocalServiceUtil.fetchSubscription(subscriptionId);
+				_subscriptionLocalService.fetchSubscription(subscriptionId);
 
 			if (subscription == null) {
 				subscriptionId = 0;
@@ -384,7 +385,7 @@ public class NotificationsPortlet extends MVCPortlet {
 				"timestamp", String.valueOf(System.currentTimeMillis()));
 
 			int newUserNotificationsCount =
-				UserNotificationEventLocalServiceUtil.
+				_userNotificationEventLocalService.
 					getDeliveredUserNotificationEventsCount(
 						themeDisplay.getUserId(),
 						UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
@@ -393,7 +394,7 @@ public class NotificationsPortlet extends MVCPortlet {
 				"newUserNotificationsCount", newUserNotificationsCount);
 
 			int unreadUserNotificationsCount =
-				UserNotificationEventLocalServiceUtil.
+				_userNotificationEventLocalService.
 					getArchivedUserNotificationEventsCount(
 						themeDisplay.getUserId(),
 						UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
@@ -428,14 +429,14 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		if (fullView) {
 			userNotificationEvents =
-				UserNotificationEventLocalServiceUtil.
+				_userNotificationEventLocalService.
 					getDeliveredUserNotificationEvents(
 						themeDisplay.getUserId(),
 						UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
 						actionable, start, end);
 
 			total =
-				UserNotificationEventLocalServiceUtil.
+				_userNotificationEventLocalService.
 					getArchivedUserNotificationEventsCount(
 						themeDisplay.getUserId(),
 						UserNotificationDeliveryConstants.TYPE_WEBSITE,
@@ -443,14 +444,14 @@ public class NotificationsPortlet extends MVCPortlet {
 		}
 		else {
 			userNotificationEvents =
-				UserNotificationEventLocalServiceUtil.
+				_userNotificationEventLocalService.
 					getArchivedUserNotificationEvents(
 						themeDisplay.getUserId(),
 						UserNotificationDeliveryConstants.TYPE_WEBSITE,
 						actionable, false, start, end);
 
 			total =
-				UserNotificationEventLocalServiceUtil.
+				_userNotificationEventLocalService.
 					getArchivedUserNotificationEventsCount(
 						themeDisplay.getUserId(),
 						UserNotificationDeliveryConstants.TYPE_WEBSITE,
@@ -509,7 +510,7 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		String actionDiv = _ACTION_DIV_DEFAULT;
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+		Portlet portlet = _portletLocalService.getPortletById(
 			themeDisplay.getCompanyId(), userNotificationEvent.getType());
 
 		String portletName = portlet.getDisplayName();
@@ -526,7 +527,7 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		String userPortraitURL = StringPool.BLANK;
 
-		User user = UserLocalServiceUtil.fetchUserById(userId);
+		User user = _userLocalService.fetchUserById(userId);
 
 		if (user != null) {
 			userPortraitURL = user.getPortraitURL(themeDisplay);
@@ -633,16 +634,51 @@ public class NotificationsPortlet extends MVCPortlet {
 			});
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserNotificationDeliveryLocalService(
+		UserNotificationDeliveryLocalService
+			userNotificationDeliveryLocalService) {
+
+		_userNotificationDeliveryLocalService =
+			userNotificationDeliveryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		_userNotificationEventLocalService = userNotificationEventLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUseryLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected void updateArchived(long userNotificationEventId)
 		throws Exception {
 
 		UserNotificationEvent userNotificationEvent =
-			UserNotificationEventLocalServiceUtil.getUserNotificationEvent(
+			_userNotificationEventLocalService.getUserNotificationEvent(
 				userNotificationEventId);
 
 		userNotificationEvent.setArchived(true);
 
-		UserNotificationEventLocalServiceUtil.updateUserNotificationEvent(
+		_userNotificationEventLocalService.updateUserNotificationEvent(
 			userNotificationEvent);
 	}
 
@@ -664,5 +700,13 @@ public class NotificationsPortlet extends MVCPortlet {
 	private static final String _USER_NOTIFICATION_ENTRY_TMPL_PATH =
 		"com/liferay/notifications/web/dependencies/user_notification_entry." +
 			"tmpl";
+
+	private volatile PortletLocalService _portletLocalService;
+	private volatile SubscriptionLocalService _subscriptionLocalService;
+	private volatile UserLocalService _userLocalService;
+	private volatile UserNotificationDeliveryLocalService
+		_userNotificationDeliveryLocalService;
+	private volatile UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

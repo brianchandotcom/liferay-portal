@@ -1,5 +1,7 @@
-configurations.compile {
-	transitive = false
+configurations {
+	compile {
+		transitive = false
+	}
 }
 
 dependencies {

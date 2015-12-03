@@ -16,7 +16,7 @@
 
 <%@ include file="/management_bar/init.jsp" %>
 
-<div class="management-bar-container" id="<%= namespace %>managementBarContainerId">
+<div class="management-bar-container" data-qa-id="managementBar" id="<%= namespace %>managementBarContainerId">
 	<div class="management-bar management-bar-default">
 		<div class="container-fluid-1280">
 			<div class="management-bar-header">

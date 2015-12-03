@@ -55,12 +55,6 @@ else {
 renderResponse.setTitle(headerTitle);
 %>
 
-<aui:nav-bar>
-	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="toolbarItem" value='<%= (organization == null) ? "add" : "view" %>' />
-	</liferay-util:include>
-</aui:nav-bar>
-
 <div id="breadcrumb">
 	<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 </div>

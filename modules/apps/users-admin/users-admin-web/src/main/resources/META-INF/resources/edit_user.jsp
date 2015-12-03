@@ -151,12 +151,6 @@ if (selUser != null) {
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
-	<aui:nav-bar>
-		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="toolbarItem" value='<%= (selUser == null) ? "add" : "view" %>' />
-		</liferay-util:include>
-	</aui:nav-bar>
-
 	<div id="breadcrumb">
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>

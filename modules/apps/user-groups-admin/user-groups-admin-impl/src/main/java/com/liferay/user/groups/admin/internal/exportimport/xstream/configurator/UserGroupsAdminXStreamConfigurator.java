@@ -16,6 +16,7 @@ package com.liferay.user.groups.admin.internal.exportimport.xstream.configurator
 
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.model.impl.UserGroupImpl;
 import com.liferay.portlet.exportimport.xstream.XStreamAlias;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
 

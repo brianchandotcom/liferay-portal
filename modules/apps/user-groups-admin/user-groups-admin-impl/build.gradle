@@ -1,4 +1,6 @@
 dependencies {
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:portlet-display-template:portlet-display-template")

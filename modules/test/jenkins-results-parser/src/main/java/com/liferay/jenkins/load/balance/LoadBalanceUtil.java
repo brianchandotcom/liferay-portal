@@ -42,10 +42,10 @@ import org.json.JSONObject;
  */
 public class LoadBalanceUtil {
 
-	public static String getMostAvailableMasterURL(Project project)
+	public static String getMostAvailableSlaveMasterURL(Project project)
 		throws Exception {
 
-		int retries = 0;
+		int retryCount = 0;
 
 		while (true) {
 			String baseInvocationURL = project.getProperty(
@@ -70,11 +70,11 @@ public class LoadBalanceUtil {
 
 			JenkinsResultsParserUtil.write(semaphoreFile, _MY_HOST_NAME);
 
-			Map<String, Integer> recentJobsMap = getRecentJobCountsMap(
-				new File(baseDir, "recentJobs"));
+			Map<String, Integer> recentJobMap = getRecentJobCountMap(
+				new File(baseDir, "recentJob"));
 
 			List<String> hostNames = new ArrayList<>(hostNameCount);
-			int maxAvailableCount = Integer.MIN_VALUE;
+			int maxAvailableSlaveCount = Integer.MIN_VALUE;
 			int x = -1;
 
 			try {
@@ -82,7 +82,7 @@ public class LoadBalanceUtil {
 					hostNameCount);
 
 				startParallelTasks(
-					recentJobsMap, hostNames, hostNamePrefix, hostNameCount,
+					recentJobMap, hostNames, hostNamePrefix, hostNameCount,
 					project, futureTasks);
 
 				List<Integer> badIndices = new ArrayList<>(futureTasks.size());
@@ -93,9 +93,9 @@ public class LoadBalanceUtil {
 				for (int i = 0; i < futureTasks.size(); i++) {
 					FutureTask<Integer> futureTask = futureTasks.get(i);
 
-					Integer availableCount = futureTask.get();
+					Integer availableSlaveCount = futureTask.get();
 
-					if (availableCount == null) {
+					if (availableSlaveCount == null) {
 						badIndices.add(i);
 
 						continue;
@@ -103,28 +103,28 @@ public class LoadBalanceUtil {
 
 					sb.append(hostNames.get(i));
 					sb.append(" : ");
-					sb.append(availableCount);
+					sb.append(availableSlaveCount);
 					sb.append("\n");
 
-					if (availableCount > maxAvailableCount) {
-						maxAvailableCount = availableCount;
+					if (availableSlaveCount > maxAvailableSlaveCount) {
+						maxAvailableSlaveCount = availableSlaveCount;
 
 						maxIndices.clear();
 					}
 
-					if (availableCount >= maxAvailableCount) {
+					if (availableSlaveCount >= maxAvailableSlaveCount) {
 						maxIndices.add(i);
 					}
 				}
 
-				if (maxAvailableCount == Integer.MIN_VALUE) {
-					if (retries == 3) {
+				if (maxAvailableSlaveCount == Integer.MIN_VALUE) {
+					if (retryCount == 3) {
 						throw new RuntimeException(
 							"Retry limit exceeded. Unable to communicate " +
 								" with masters.");
 					}
 
-					retries++;
+					retryCount++;
 
 					continue;
 				}
@@ -145,10 +145,10 @@ public class LoadBalanceUtil {
 					}
 				}
 
-				sb.append("\nMost available master ");
+				sb.append("\nMaster with the most available slaves ");
 				sb.append(hostNames.get(x));
 				sb.append(" has ");
-				sb.append(maxAvailableCount);
+				sb.append(maxAvailableSlaveCount);
 				sb.append(" available slaves.");
 
 				System.out.println(sb);
@@ -158,15 +158,14 @@ public class LoadBalanceUtil {
 			finally {
 				JenkinsResultsParserUtil.write(semaphoreFile, "");
 
-				if (recentJobsPeriod > 0) {
+				if (recentJobPeriod > 0) {
 					StringBuilder sb = new StringBuilder();
 
-					File recentJobsFile = new File(
-						baseDir, "recentJobs/" + hostNames.get(x));
+					File recentJobFile = new File(
+						baseDir, "recentJob/" + hostNames.get(x));
 
-					if (recentJobsFile.exists()) {
-						sb.append(
-							JenkinsResultsParserUtil.read(recentJobsFile));
+					if (recentJobFile.exists()) {
+						sb.append(JenkinsResultsParserUtil.read(recentJobFile));
 
 						if (sb.length() > 0) {
 							sb.append("|");
@@ -187,7 +186,7 @@ public class LoadBalanceUtil {
 					sb.append(System.currentTimeMillis());
 
 					JenkinsResultsParserUtil.write(
-						recentJobsFile, sb.toString());
+						recentJobFile, sb.toString());
 				}
 			}
 		}
@@ -230,7 +229,7 @@ public class LoadBalanceUtil {
 		return start + (int)Math.round(size * randomDouble);
 	}
 
-	protected static Map<String, Integer> getRecentJobCountsMap(File dir)
+	protected static Map<String, Integer> getRecentJobCountMap(File dir)
 		throws Exception {
 
 		Map<String, Integer> jobCountMap = new HashMap<>();
@@ -241,7 +240,7 @@ public class LoadBalanceUtil {
 
 		for (File file : dir.listFiles()) {
 			if ((System.currentTimeMillis() - file.lastModified()) >
-					recentJobsPeriod) {
+					recentJobPeriod) {
 
 				file.delete();
 
@@ -266,7 +265,7 @@ public class LoadBalanceUtil {
 					long timestamp = Long.parseLong(
 						jobCountData.substring(x + 1));
 
-					if ((timestamp + recentJobsPeriod) >
+					if ((timestamp + recentJobPeriod) >
 							System.currentTimeMillis()) {
 
 						if (sb.length() > 0) {
@@ -296,7 +295,7 @@ public class LoadBalanceUtil {
 	}
 
 	protected static void startParallelTasks(
-			Map<String, Integer> recentJobsMap, List<String> hostNames,
+			Map<String, Integer> recentJobMap, List<String> hostNames,
 			String hostNamePrefix, int hostNameCount, Project project,
 			List<FutureTask<Integer>> futureTasks)
 		throws Exception {
@@ -310,8 +309,8 @@ public class LoadBalanceUtil {
 			hostNames.add(targetHostName);
 
 			FutureTask<Integer> futureTask = new FutureTask<>(
-				new AvailableSlavesCallable(
-					recentJobsMap.get(targetHostName),
+				new AvailableSlaveCallable(
+					recentJobMap.get(targetHostName),
 					project.getProperty(
 						"jenkins.local.url[" + targetHostName + "]")));
 
@@ -345,7 +344,7 @@ public class LoadBalanceUtil {
 		}
 	}
 
-	protected static long recentJobsPeriod = 120 * 1000;
+	protected static long recentJobPeriod = 120 * 1000;
 
 	private static final long _MAX_AGE = 30 * 1000;
 
@@ -369,7 +368,7 @@ public class LoadBalanceUtil {
 		_MY_HOST_NAME = inetHostName;
 	}
 
-	private static class AvailableSlavesCallable implements Callable<Integer> {
+	private static class AvailableSlaveCallable implements Callable<Integer> {
 
 		@Override
 		public Integer call() throws Exception {
@@ -393,18 +392,15 @@ public class LoadBalanceUtil {
 				return null;
 			}
 
-			JSONArray jsonArray = computerJSONObject.getJSONArray("computer");
+			JSONArray computers = computerJSONObject.getJSONArray("computer");
 
 			int idleCount = 0;
 
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject idleJSONObject = jsonArray.getJSONObject(i);
+			for (int i = 0; i < computers.length(); i++) {
+				JSONObject idle = computers.getJSONObject(i);
 
-				if (idleJSONObject.getBoolean("idle") &&
-					!idleJSONObject.getBoolean("offline")) {
-
-					String displayName = idleJSONObject.getString(
-						"displayName");
+				if (idle.getBoolean("idle") && !idle.getBoolean("offline")) {
+					String displayName = idle.getString("displayName");
 
 					if (!displayName.equals("master")) {
 						idleCount++;
@@ -415,44 +411,43 @@ public class LoadBalanceUtil {
 			int queueCount = 0;
 
 			if (queueJSONObject.has("items")) {
-				JSONArray itemsJsonArray = queueJSONObject.getJSONArray(
-					"items");
+				JSONArray items = queueJSONObject.getJSONArray("items");
 
-				queueCount = itemsJsonArray.length();
+				queueCount = items.length();
 			}
 
-			int availableCount = idleCount - queueCount;
+			int availableSlaveCount = idleCount - queueCount;
 
-			if (recentJobsCount != null) {
-				availableCount -= recentJobsCount;
+			if (recentJobCount != null) {
+				availableSlaveCount -= recentJobCount;
 			}
 
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("{available=");
-			sb.append(availableCount);
+			sb.append(availableSlaveCount);
 			sb.append(", idle=");
 			sb.append(idleCount);
 			sb.append(", queue=");
 			sb.append(queueCount);
 			sb.append(", recentJobs=");
-			sb.append(recentJobsCount);
+			sb.append(recentJobCount);
 			sb.append(", url=");
 			sb.append(url);
 			sb.append("}");
 
 			System.out.println(sb.toString());
 
-			return availableCount;
+			return availableSlaveCount;
 		}
 
-		protected AvailableSlavesCallable(Integer recentJobsCount, String url) {
-			this.recentJobsCount = recentJobsCount;
+		protected AvailableSlaveCallable(Integer recentJobCount, String url) {
+			this.recentJobCount = recentJobCount;
 
 			this.url = url;
 		}
 
-		protected Integer recentJobsCount;
+		protected Integer recentJobCount;
 		protected String url;
 
 	}

@@ -260,7 +260,7 @@ public class JenkinsResultsParserUtil {
 			return _toStringCache.get(key);
 		}
 
-		int retries = 0;
+		int retryCount = 0;
 
 		while (true) {
 			try {
@@ -299,9 +299,9 @@ public class JenkinsResultsParserUtil {
 				return sb.toString();
 			}
 			catch (FileNotFoundException fnfe) {
-				retries++;
+				retryCount++;
 
-				if (retries > 3) {
+				if (retryCount > 3) {
 					throw fnfe;
 				}
 

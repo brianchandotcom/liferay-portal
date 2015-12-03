@@ -46,7 +46,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Test
 	public void testGetMostAvailableMasterURL() throws Exception {
-		LoadBalanceUtil.recentJobsPeriod = 0;
+		LoadBalanceUtil.recentJobPeriod = 0;
 		assertSamples();
 	}
 
@@ -118,7 +118,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		Project project = getTestProject(sampleDir.getName());
 
-		return LoadBalanceUtil.getMostAvailableMasterURL(project);
+		return LoadBalanceUtil.getMostAvailableSlaveMasterURL(project);
 	}
 
 	protected Project getTestProject(String baseInvocationHostName) {

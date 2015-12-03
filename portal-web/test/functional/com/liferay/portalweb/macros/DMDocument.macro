@@ -480,7 +480,9 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="Choose" />
+
+		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="${assetType}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

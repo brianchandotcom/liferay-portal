@@ -132,7 +132,7 @@
 <!--ASSET_TABLE-->
 <tr>
 	<td>ASSET_TABLE_CHOOSE</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]/td/button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td/a</td>
 	<td></td>
 </tr>
 </tbody>

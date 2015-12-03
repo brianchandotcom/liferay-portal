@@ -1981,8 +1981,8 @@
 		</execute>
 
 		<execute macro="WebContent#viewPaginateRelatedAssets">
-			<var name="itemsPerPage" value="5 Items per Page" />
-			<var name="numberOfPages" value="Page 1 of 2" />
+			<var name="itemsPerPage" value="5 Entries" />
+			<var name="numberOfPages" value="Showing 1 to 5 of 6 entries." />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

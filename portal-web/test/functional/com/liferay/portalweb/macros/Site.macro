@@ -332,7 +332,7 @@
 
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertClick" locator1="SiteSettingsDefaultUserAssociations#TEAMS_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="SiteSettingsDefaultUserAssociations#TEAMS_CHOOSE_BUTTON" value1="${teamName}" />
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

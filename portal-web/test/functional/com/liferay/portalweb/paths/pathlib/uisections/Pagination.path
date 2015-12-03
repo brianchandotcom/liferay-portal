@@ -50,12 +50,12 @@
 </tr>
 <tr>
 	<td>CURRENT_PAGE_SELECT</td>
-	<td>//div[contains(@class,'current-page-menu')]/a</td>
+	<td>//div[contains(@class,'pagination-results')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEMS_PER_PAGE_SELECT</td>
-	<td>//a[contains(@title,'Items per Page')]</td>
+	<td>//div[contains(@class,'pagination-items-per-page')]/a[contains(@class,'toggle')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -127,22 +127,22 @@
 </tr>
 <tr>
 	<td>MENU_CATEGORIZATION</td>
-	<td>//a[contains(@id,'categorizationLink')]</td>
+	<td>//div[contains(@id,'CategorizationTitle')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_SCHEDULE</td>
-	<td>//a[contains(@id,'scheduleLink')]</td>
+	<td>//div[contains(@id,'ScheduleTitle')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_DISPLAY_PAGE</td>
-	<td>//a[contains(@id,'displayPageLink')]</td>
+	<td>//div[contains(@id,'display-pageTitle')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_RELATED_ASSETS</td>
-	<td>//a[contains(@id,'relatedAssetsLink')]</td>
+	<td>//div[contains(@id,'Related-AssetsTitle')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -152,7 +152,7 @@
 </tr>
 <tr>
 	<td>MENU_CUSTOM_FIELDS</td>
-	<td>//a[contains(@id,'customFieldsLink')]</td>
+	<td>//div[contains(@id,'Custom-FieldsTitle')]/a</td>
 	<td></td>
 </tr>
 <tr>

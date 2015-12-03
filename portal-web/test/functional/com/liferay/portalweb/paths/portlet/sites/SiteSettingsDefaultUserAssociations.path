@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>TEAMS_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_teamName}')]//button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_teamName}')]/td/a</td>
 	<td></td>
 </tr>
 </tbody>

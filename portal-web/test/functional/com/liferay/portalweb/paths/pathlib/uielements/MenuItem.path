@@ -340,7 +340,7 @@
 </tr>
 <tr>
 	<td>ITEMS_PER_PAGE</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a/span[contains(.,'${key_itemsPerPage}')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_itemsPerPage}')]</td>
 	<td></td>
 </tr>
 <tr>

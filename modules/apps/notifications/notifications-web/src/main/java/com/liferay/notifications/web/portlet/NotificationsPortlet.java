@@ -15,7 +15,6 @@
 package com.liferay.notifications.web.portlet;
 
 import com.liferay.notifications.web.constants.NotificationsPortletKeys;
-import com.liferay.notifications.web.util.PortletPropsValues;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -567,7 +566,7 @@ public class NotificationsPortlet extends MVCPortlet {
 				});
 
 			return StringUtil.replace(
-				ContentUtil.get(PortletPropsValues.USER_NOTIFICATION_ENTRY),
+				ContentUtil.get(_USER_NOTIFICATION_ENTRY_TMPL_PATH),
 				new String[] {
 					"[$ACTION_DIV$]", "[$BODY$]", "[$CSS_CLASS$]",
 					"[$ICON_MENU$]", "[$PORTLET_ICON$]", "[$PORTLET_NAME$]",
@@ -621,7 +620,7 @@ public class NotificationsPortlet extends MVCPortlet {
 		}
 
 		return StringUtil.replace(
-			ContentUtil.get(PortletPropsValues.USER_NOTIFICATION_ENTRY),
+			ContentUtil.get(_USER_NOTIFICATION_ENTRY_TMPL_PATH),
 			new String[] {
 				"[$ACTION_DIV$]", "[$BODY$]", "[$CSS_CLASS$]", "[$ICON_MENU$]",
 				"[$PORTLET_ICON$]", "[$PORTLET_NAME$]", "[$TIMESTAMP$]",
@@ -661,5 +660,9 @@ public class NotificationsPortlet extends MVCPortlet {
 	private static final String _MARK_AS_READ_DIV =
 		"<div class=\"clearfix user-notification-link\" data-href=\"" +
 			"[$LINK$]\" data-markAsReadURL=\"[$MARK_AS_READ_URL$]\">";
+
+	private static final String _USER_NOTIFICATION_ENTRY_TMPL_PATH =
+		"com/liferay/notifications/web/dependencies/user_notification_entry." +
+			"tmpl";
 
 }

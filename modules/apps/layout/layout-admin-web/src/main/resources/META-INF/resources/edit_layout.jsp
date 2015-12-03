@@ -76,48 +76,6 @@ String displayStyle = ParamUtil.getString(request, "displayStyle");
 			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.DELETE) %>">
 				<aui:nav-item cssClass="remove-layout" iconCssClass="icon-remove" label="delete" />
 			</c:if>
-			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
-				<aui:nav-item iconCssClass="icon-list-alt" id="copyApplications" label="copy-applications" />
-
-				<aui:script use="liferay-util-window">
-					A.one('#<portlet:namespace />copyApplications').on(
-						'click',
-						function() {
-							var content = A.one('#<portlet:namespace />copyPortletsFromPage');
-
-							var popUp = Liferay.Util.Window.getWindow(
-								{
-									dialog: {
-										bodyContent: content.show()
-									},
-									title: '<%= UnicodeLanguageUtil.get(request, "copy-applications") %>'
-								}
-							);
-
-							popUp.show();
-
-							var submitButton = popUp.get('contentBox').one('#<portlet:namespace />copySubmitButton');
-
-							if (submitButton) {
-								submitButton.on(
-									'click',
-									function(event) {
-										popUp.hide();
-
-										var form = A.one('#<portlet:namespace />fm');
-
-										if (form) {
-											form.append(content);
-
-											submitForm(form);
-										}
-									}
-								);
-							}
-						}
-					);
-				</aui:script>
-			</c:if>
 		</aui:nav>
 	</aui:nav-bar>
 </c:if>

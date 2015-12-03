@@ -85,6 +85,10 @@ public class LayoutsTreeTag extends IncludeTag {
 		_rootNodeName = rootNodeName;
 	}
 
+	public void setRootPortletURL(String rootPortletURL) {
+		_rootPortletURL = rootPortletURL;
+	}
+
 	public void setSaveState(boolean saveState) {
 		_saveState = saveState;
 	}
@@ -118,6 +122,7 @@ public class LayoutsTreeTag extends IncludeTag {
 		_privateLayout = false;
 		_rootLinkTemplate = null;
 		_rootNodeName = null;
+		_rootPortletURL = null;
 		_saveState = true;
 		_selectableTree = false;
 		_selectedLayoutIds = null;
@@ -213,6 +218,8 @@ public class LayoutsTreeTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:layouts-tree:rootNodeName", _rootNodeName);
 		request.setAttribute(
+			"liferay-ui:layouts-tree:rootPortletURL", _rootPortletURL);
+		request.setAttribute(
 			"liferay-ui:layouts-tree:saveState", String.valueOf(_saveState));
 		request.setAttribute(
 			"liferay-ui:layouts-tree:selectableTree",
@@ -238,6 +245,7 @@ public class LayoutsTreeTag extends IncludeTag {
 	private boolean _privateLayout;
 	private String _rootLinkTemplate;
 	private String _rootNodeName;
+	private String _rootPortletURL;
 	private boolean _saveState = true;
 	private boolean _selectableTree;
 	private String _selectedLayoutIds;

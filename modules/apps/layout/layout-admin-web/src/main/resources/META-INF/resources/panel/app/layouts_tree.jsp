@@ -132,6 +132,12 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 	<a data-plid="{plid}" data-privateLayout="{privateLayout}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
 </liferay-util:buffer>
 
+<liferay-util:buffer var="rootURLLinkTemplate">
+	<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
+
+	<a data-plid="{plid}" data-privateLayout="{privateLayout}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
+</liferay-util:buffer>
+
 <c:if test="<%= !selGroup.isLayoutSetPrototype() && !selGroup.isLayoutPrototype() %>">
 
 	<%
@@ -147,8 +153,9 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 		linkTemplate="<%= linkTemplate %>"
 		portletURL="<%= editPublicLayoutURL %>"
 		privateLayout="<%= false %>"
-		rootLinkTemplate="<%= rootLinkTemplate %>"
+		rootLinkTemplate="<%= (selGroup.getPublicLayoutsPageCount() > 0) ? rootURLLinkTemplate : rootLinkTemplate %>"
 		rootNodeName="<%= liveGroup.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
+		rootPortletURL="<%= (selGroup.getPublicLayoutsPageCount() > 0) ? selGroup.getDisplayURL(themeDisplay, false) : StringPool.BLANK %>"
 		selectedLayoutIds="<%= selectedLayoutIds %>"
 		selPlid="<%= ((selPlid > 0) || !privateLayout) ? selPlid : null %>"
 		treeId="publicLayoutsTree"
@@ -168,8 +175,9 @@ editPrivateLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 	linkTemplate="<%= linkTemplate %>"
 	portletURL="<%= editPrivateLayoutURL %>"
 	privateLayout="<%= true %>"
-	rootLinkTemplate="<%= rootLinkTemplate %>"
+	rootLinkTemplate="<%= (selGroup.getPrivateLayoutsPageCount() > 0) ? rootURLLinkTemplate : rootLinkTemplate %>"
 	rootNodeName="<%= liveGroup.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
+	rootPortletURL="<%= (selGroup.getPrivateLayoutsPageCount() > 0) ? selGroup.getDisplayURL(themeDisplay, true) : StringPool.BLANK %>"
 	selectedLayoutIds="<%= selectedLayoutIds %>"
 	selPlid="<%= ((selPlid > 0) || privateLayout) ? selPlid : null %>"
 	treeId="privateLayoutsTree"

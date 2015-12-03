@@ -44,6 +44,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--FORMS_DISPLAY-->
+<tr>
+	<td>FORM_ICON_DISPLAY_NAME</td>
+	<td>//div[@class='card-footer']//a/div[contains(.,'${key_formName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_ICON_DISPLAY_THUMBNAIL</td>
+	<td>//div[contains(@class,'card')]//div[contains(@style,'image')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FORMS_ENTRY_TABLE-->
 <tr>
 	<td>FORM_ENTRY_TABLE_ENTRY</td>

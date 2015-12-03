@@ -226,7 +226,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewIconDisplay">
+		<execute macro="FormsAdmin#viewFormIcon">
 			<var name="formName" value="Test Form" />
 		</execute>
 
@@ -441,7 +441,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewIconDisplay" />
+		<execute macro="FormsAdmin#viewFormIcon" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -748,7 +748,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewIconDisplay" />
+		<execute macro="FormsAdmin#viewFormIcon" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -849,7 +849,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewIconDisplay" />
+		<execute macro="FormsAdmin#viewFormIcon" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -953,7 +953,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewIconDisplay" />
+		<execute macro="FormsAdmin#viewFormIcon" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -1051,7 +1051,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewIconDisplay" />
+		<execute macro="FormsAdmin#viewFormIcon" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -1144,7 +1144,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewIconDisplay" />
+		<execute macro="FormsAdmin#viewFormIcon" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -1234,7 +1234,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewIconDisplay" />
+		<execute macro="FormsAdmin#viewFormIcon" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -1319,7 +1319,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewIconDisplay" />
+		<execute macro="FormsAdmin#viewFormIcon" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -1490,7 +1490,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="FormsAdmin#viewIconDisplay" />
+		<execute macro="FormsAdmin#viewFormIcon" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 

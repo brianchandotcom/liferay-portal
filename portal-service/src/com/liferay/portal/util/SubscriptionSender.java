@@ -372,6 +372,12 @@ public class SubscriptionSender implements Serializable {
 		this.localizedBodyMap = localizedBodyMap;
 	}
 
+	public void setLocalizedPortletTitleMap(
+		Map<Locale, String> localizedPortletTitleMap) {
+
+		this.localizedPortletTitleMap = localizedPortletTitleMap;
+	}
+
 	public void setLocalizedSubjectMap(
 		Map<Locale, String> localizedSubjectMap) {
 
@@ -711,11 +717,34 @@ public class SubscriptionSender implements Serializable {
 			content = StringUtil.replace(content, key, valueString);
 		}
 
+		String portletName = StringPool.BLANK;
+
 		if (Validator.isNotNull(portletId)) {
-			String portletName = PortalUtil.getPortletTitle(portletId, locale);
+			portletName = PortalUtil.getPortletTitle(portletId, locale);
 
 			content = StringUtil.replace(
 				content, "[$PORTLET_NAME$]", portletName);
+		}
+
+		String portletTitle = portletName;
+
+		if (localizedPortletTitleMap != null) {
+			portletTitle = localizedPortletTitleMap.get(locale);
+
+			if (Validator.isNull(portletTitle)) {
+				Locale defaultLocale = LocaleUtil.getDefault();
+
+				portletTitle = localizedPortletTitleMap.get(defaultLocale);
+
+				if (Validator.isNull(portletTitle)) {
+					portletTitle = portletName;
+				}
+			}
+		}
+
+		if (Validator.isNotNull(portletTitle)) {
+			content = StringUtil.replace(
+				content, "[$PORTLET_TITLE$]", portletTitle);
 		}
 
 		Company company = CompanyLocalServiceUtil.getCompany(companyId);
@@ -896,6 +925,7 @@ public class SubscriptionSender implements Serializable {
 	protected boolean htmlFormat;
 	protected String inReplyTo;
 	protected Map<Locale, String> localizedBodyMap;
+	protected Map<Locale, String> localizedPortletTitleMap;
 	protected Map<Locale, String> localizedSubjectMap;
 	protected String mailId;
 	protected String portletId;

@@ -48,7 +48,7 @@ public abstract class BaseAppDisplay implements AppDisplay {
 	public List<ModuleGroupDisplay> getModuleGroupDisplays() {
 		if (_moduleGroupDisplays == null) {
 			_moduleGroupDisplays =
-				ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(_bundles);
+				ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(this);
 		}
 
 		return _moduleGroupDisplays;

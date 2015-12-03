@@ -96,7 +96,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 		<liferay-ui:search-container-results>
 
 			<%
-			List<ModuleGroupDisplay> moduleGroupDisplays = ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(appDisplay.getBundles(), BundleStateConstants.getState(state));
+			List<ModuleGroupDisplay> moduleGroupDisplays = ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(appDisplay, BundleStateConstants.getState(state));
 
 			moduleGroupDisplays = ListUtil.sort(moduleGroupDisplays, new ModuleGroupDisplayComparator(orderByType));
 

@@ -32,7 +32,9 @@ import org.osgi.framework.Version;
 public class ModuleGroupDisplayFactoryUtil {
 
 	public static List<ModuleGroupDisplay> getModuleGroupDisplays(
-		List<Bundle> bundles) {
+		AppDisplay appDisplay) {
+
+		List<Bundle> bundles = appDisplay.getBundles();
 
 		Map<String, ModuleGroupDisplay> moduleGroupDisplaysMap =
 			new HashMap<>();
@@ -71,10 +73,10 @@ public class ModuleGroupDisplayFactoryUtil {
 	}
 
 	public static List<ModuleGroupDisplay> getModuleGroupDisplays(
-		List<Bundle> bundles, int state) {
+		AppDisplay appDisplay, int state) {
 
 		List<ModuleGroupDisplay> moduleGroupDisplays = getModuleGroupDisplays(
-			bundles);
+			appDisplay);
 
 		filterModuleGroupDisplays(moduleGroupDisplays, state);
 

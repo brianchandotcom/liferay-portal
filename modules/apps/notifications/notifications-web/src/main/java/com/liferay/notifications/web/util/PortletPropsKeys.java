@@ -22,7 +22,4 @@ public class PortletPropsKeys {
 	public static final String USER_NOTIFICATION_ENTRY =
 		"user.notification.entry";
 
-	public static final String USER_NOTIFICATIONS_DOCKBAR_DISPLAY_ENABLED =
-		"user.notifications.dockbar.display.enabled";
-
 }

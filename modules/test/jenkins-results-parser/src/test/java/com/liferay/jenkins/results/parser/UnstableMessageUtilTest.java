@@ -105,7 +105,7 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			runJSONObject.put("url", toURLString(runDir));
 		}
 
-		write(jobJSONFile, jobJSONObject.toString(4));
+		JenkinsResultsParserUtil.write(jobJSONFile, jobJSONObject.toString(4));
 	}
 
 	@Override

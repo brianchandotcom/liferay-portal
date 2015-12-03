@@ -39,6 +39,22 @@ import org.json.JSONObject;
  */
 public class JenkinsResultsParserUtil {
 
+	public static URL createURL(String urlString) throws Exception {
+		URL url = new URL(urlString);
+
+		return encode(url);
+	}
+
+	public static URL encode(URL url) throws Exception {
+		URI uri = new URI(
+			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
+			url.getPath(), url.getQuery(), url.getRef());
+
+		String uriASCIIString = uri.toASCIIString();
+
+		return new URL(uriASCIIString.replace("#", "%23"));
+	}
+
 	public static String expandSlaveRange(String value) {
 		StringBuilder sb = new StringBuilder();
 
@@ -288,20 +304,19 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	protected static URL createURL(String urlString) throws Exception {
-		URL url = new URL(urlString);
+	public static void write(File file, String content) throws IOException {
+		System.out.println(
+			"Write file " + file + " with length " + content.length());
 
-		return encode(url);
-	}
+		File parentDir = file.getParentFile();
 
-	protected static URL encode(URL url) throws Exception {
-		URI uri = new URI(
-			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
-			url.getPath(), url.getQuery(), url.getRef());
+		if (!parentDir.exists()) {
+			System.out.println("Make parent directories for " + file);
 
-		String uriASCIIString = uri.toASCIIString();
+			parentDir.mkdirs();
+		}
 
-		return new URL(uriASCIIString.replace("#", "%23"));
+		Files.write(Paths.get(file.toURI()), content.getBytes());
 	}
 
 	private static final Pattern _localURLPattern1 = Pattern.compile(

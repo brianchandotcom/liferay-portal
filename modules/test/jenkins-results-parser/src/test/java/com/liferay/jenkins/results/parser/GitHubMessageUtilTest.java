@@ -121,7 +121,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 			File reportFile = new File(sampleDir, jobCount + "-report.html");
 
-			write(
+			JenkinsResultsParserUtil.write(
 				reportFile,
 				"<h5 job-result=\\\"" + jsonObject.getString("result") +
 					"\\\"><a href=\"" + urlString + "\">" +

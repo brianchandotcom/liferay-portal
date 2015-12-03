@@ -30,52 +30,57 @@ import org.json.JSONObject;
  */
 public class JenkinsPerformanceDataUtil {
 
+	public static List<Result> getLongestResults() {
+		return _results;
+	}
+
 	public static void processPerformanceData(
 			String batch, String url, int size)
 		throws Exception {
 
 		if (url.contains("-source")) {
-			JSONObject sourceJSON =
-				JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.getLocalURL(url + "/api/json"));
-			
-			results.add(new Result(batch, sourceJSON));
+			JSONObject sourceJSON = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(url + "/api/json"));
+
+			_results.add(new Result(batch, sourceJSON));
 		}
 		else {
 			JSONObject json = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
 					url + "/testReport/api/json"));
 
-			results.addAll(getLongestResults(batch, json, size));
+			_results.addAll(getLongestResults(batch, json, size));
 		}
 
-		Collections.sort(results);
+		Collections.sort(_results);
 
-		truncate(results, size);
+		truncate(_results, size);
+	}
+
+	public static void reset() {
+		_results.clear();
 	}
 
 	public static class Result implements Comparable<Result> {
 
-		public Result(String batch, JSONObject sourceJSON)
-			throws Exception {
-
-			axis = "";
-			this.batch = batch;
-			className = "";
-			duration = sourceJSON.getInt("duration") / 1000;
-			name = sourceJSON.getString("fullDisplayName");
-			status = sourceJSON.getString("result");
-			url = sourceJSON.getString("url");
+		public Result(String batch, JSONObject sourceJSON) throws Exception {
+			_axis = "";
+			_batch = batch;
+			_className = "";
+			_duration = sourceJSON.getInt("duration") / 1000;
+			_name = sourceJSON.getString("fullDisplayName");
+			_status = sourceJSON.getString("result");
+			_url = sourceJSON.getString("url");
 		}
 
 		public Result(String batch, JSONObject caze, JSONObject child)
 			throws Exception {
 
-			this.batch = batch;
-			className = caze.getString("className");
-			duration = caze.getInt("duration");
-			name = caze.getString("name");
-			status = caze.getString("status");
+			_batch = batch;
+			_className = caze.getString("className");
+			_duration = caze.getInt("duration");
+			_name = caze.getString("name");
+			_status = caze.getString("status");
 
 			setAxis(child);
 			setUrl(child);
@@ -86,45 +91,45 @@ public class JenkinsPerformanceDataUtil {
 		}
 
 		public String getAxis() {
-			return axis;
+			return _axis;
 		}
 
 		public String getBatch() {
-			return batch;
+			return _batch;
 		}
 
 		public String getClassName() {
-			return className;
+			return _className;
 		}
 
 		public float getDuration() {
-			return duration;
+			return _duration;
 		}
 
 		public String getName() {
-			return name;
+			return _name;
 		}
 
 		public String getStatus() {
-			return status;
+			return _status;
 		}
 
 		public String getUrl() {
-			return url;
+			return _url;
 		}
 
 		private void setAxis(JSONObject childJSONObject) throws Exception {
-			String url = childJSONObject.getString("url");
+			String _url = childJSONObject.getString("url");
 
-			url = URLDecoder.decode(url, "UTF-8");
+			_url = URLDecoder.decode(_url, "UTF-8");
 
-			int x = url.indexOf("AXIS_VARIABLE");
+			int x = _url.indexOf("AXIS_VARIABLE");
 
-			url = url.substring(x);
+			_url = _url.substring(x);
 
-			int y = url.indexOf(",");
+			int y = _url.indexOf(",");
 
-			axis = url.substring(0, y);
+			_axis = _url.substring(0, y);
 		}
 
 		private void setUrl(JSONObject childJSONObject) throws Exception {
@@ -135,15 +140,15 @@ public class JenkinsPerformanceDataUtil {
 
 			sb.append("testReport/");
 
-			int x = className.lastIndexOf(".");
+			int x = _className.lastIndexOf(".");
 
-			sb.append(className.substring(0, x));
+			sb.append(_className.substring(0, x));
 			sb.append("/");
-			sb.append(className.substring(x + 1));
+			sb.append(_className.substring(x + 1));
 			sb.append("/");
 
-			if (className.contains("poshi")) {
-				String poshiName = name;
+			if (_className.contains("poshi")) {
+				String poshiName = _name;
 
 				poshiName = poshiName.replaceAll("\\[", "_");
 				poshiName = poshiName.replaceAll("\\]", "_");
@@ -153,23 +158,23 @@ public class JenkinsPerformanceDataUtil {
 				sb.append("/");
 			}
 			else {
-				sb.append(name);
+				sb.append(_name);
 			}
 
 			URL urlObject = JenkinsResultsParserUtil.createURL(sb.toString());
 
 			URI uri = urlObject.toURI();
 
-			url = uri.toASCIIString();
+			_url = uri.toASCIIString();
 		}
 
-		protected String axis;
-		protected String batch;
-		protected String className;
-		protected int duration;
-		protected String name;
-		protected String status;
-		protected String url;
+		private String _axis;
+		private final String _batch;
+		private final String _className;
+		private final int _duration;
+		private final String _name;
+		private final String _status;
+		private String _url;
 
 	}
 
@@ -177,12 +182,10 @@ public class JenkinsPerformanceDataUtil {
 			String name, JSONObject job, int maxSize)
 		throws Exception {
 
-		JSONArray childReports = job.getJSONArray(
-			"childReports");
+		JSONArray childReports = job.getJSONArray("childReports");
 		List<Result> results = new ArrayList<>();
 
 		for (int i = 0; i < childReports.length(); i++) {
-
 			JSONObject childReport = childReports.getJSONObject(i);
 
 			JSONObject child = childReport.getJSONObject("child");
@@ -192,18 +195,14 @@ public class JenkinsPerformanceDataUtil {
 			JSONArray suites = childReportResult.getJSONArray("suites");
 
 			for (int j = 0; j < suites.length(); j++) {
-
 				JSONObject suite = suites.getJSONObject(j);
 
-				JSONArray cases = suite.getJSONArray(
-					"cases");
+				JSONArray cases = suite.getJSONArray("cases");
 
 				for (int k = 0; k < cases.length(); k++) {
-					
 					JSONObject caze = cases.getJSONObject(k);
 
-					Result result = new Result(
-						name, caze, child);
+					Result result = new Result(name, caze, child);
 
 					results.add(result);
 				}
@@ -227,14 +226,6 @@ public class JenkinsPerformanceDataUtil {
 		subList.clear();
 	}
 
-	public static List<Result> getLongestResults() {
-		return results;
-	}
-	
-	public static void reset() {
-		results.clear();
-	}
-	
-	private static List<Result> results = new ArrayList<>();
+	private static final List<Result> _results = new ArrayList<>();
 
 }

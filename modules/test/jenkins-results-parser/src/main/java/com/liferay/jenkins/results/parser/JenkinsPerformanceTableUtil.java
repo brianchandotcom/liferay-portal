@@ -27,7 +27,7 @@ public class JenkinsPerformanceTableUtil {
 	public static String generateHTML() {
 		List<JenkinsPerformanceDataUtil.Result> results =
 			JenkinsPerformanceDataUtil.getLongestResults();
-		
+
 		if (results == null) {
 			return "";
 		}
@@ -67,62 +67,56 @@ public class JenkinsPerformanceTableUtil {
 		return sb.toString();
 	}
 
-	private static Element createRow(
-		JenkinsPerformanceDataUtil.Result result) {
+	private static Element createAxisCell(
+		String axis, String tag, String width) {
 
-		return createRow(
-			"td", result.getAxis(), result.getBatch(), result.getClassName(),
-			Float.toString(result.getDuration()), result.getName(),
-			result.getStatus(), result.getUrl());
-	}
-	
-	private static Element createAxisCell(String axis, String tag, String width) {
 		String text = axis;
+
 		if (axis.contains("=")) {
 			text = axis.substring(axis.indexOf("=") + 1);
 		}
-		
-		return createRowCell(text, tag, width);	
+
+		return createRowCell(text, tag, width);
 	}
-	
-	private static Element createBatchCell(String batch, String tag, String width) {
+
+	private static Element createBatchCell(
+		String batch, String tag, String width) {
+
 		String text = batch;
+
 		if (batch.contains("/")) {
 			text = batch.substring(batch.indexOf("/") + 1);
 		}
-		
+
 		return createRowCell(text, tag, width);
 	}
-	
-	private static Element createRowCell(
-		String text, String tag, String width) {
 
-		Element cell = new DefaultElement(tag);
-		
-		cell.addAttribute("width", width);
-
-		return cell.addText(text);
-	}
-	
 	private static Element createNameCell(
 		String name, String tag, String url, String width) {
 
-		if (url == null || url.length() == 0) {
+		if ((url == null) || (url.length() == 0)) {
 			return createRowCell(name, tag, width);
 		}
 
 		Element cell = new DefaultElement(tag);
-		
+
 		cell.addAttribute("width", width);
-		
+
 		Element anchor = new DefaultElement("a");
 
 		anchor.addAttribute("href", url);
 		anchor.addText(name);
 
 		cell.add(anchor);
-		
+
 		return cell;
+	}
+
+	private static Element createRow(JenkinsPerformanceDataUtil.Result result) {
+		return createRow(
+			"td", result.getAxis(), result.getBatch(), result.getClassName(),
+			Float.toString(result.getDuration()), result.getName(),
+			result.getStatus(), result.getUrl());
 	}
 
 	private static Element createRow(
@@ -144,6 +138,16 @@ public class JenkinsPerformanceTableUtil {
 		row.add(createRowCell(duration, tag, "4%"));
 
 		return row;
+	}
+
+	private static Element createRowCell(
+		String text, String tag, String width) {
+
+		Element cell = new DefaultElement(tag);
+
+		cell.addAttribute("width", width);
+
+		return cell.addText(text);
 	}
 
 	private static Element createTableHeader() {

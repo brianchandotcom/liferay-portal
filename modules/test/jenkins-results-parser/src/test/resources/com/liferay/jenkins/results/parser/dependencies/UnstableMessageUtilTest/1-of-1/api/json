@@ -132,7 +132,7 @@
         },
         {
             "number": 5141,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/1-of-1/run-18/5141/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/1-of-1/run-18/5141/"
         },
         {
             "number": 5130,

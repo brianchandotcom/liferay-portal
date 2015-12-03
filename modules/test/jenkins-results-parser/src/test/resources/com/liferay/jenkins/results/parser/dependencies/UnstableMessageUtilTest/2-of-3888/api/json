@@ -60,63 +60,63 @@
     "runs": [
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-0/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-0/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-1/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-1/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-2/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-2/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-3/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-3/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-4/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-4/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-5/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-5/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-6/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-6/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-7/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-7/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-8/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-8/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-9/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-9/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-10/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-10/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-11/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-11/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-12/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-12/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-13/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-13/3415/"
         },
         {
             "number": 3415,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-14/3415/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/2-of-3888/run-14/3415/"
         },
         {
             "number": 3388,

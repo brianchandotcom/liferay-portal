@@ -20,9 +20,10 @@ import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.poller.PollerRequest;
 import com.liferay.portal.kernel.poller.PollerResponse;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.service.UserNotificationEventLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -47,6 +48,13 @@ public class DockbarNotificationsPollerProcessor extends BasePollerProcessor {
 	protected void doSend(PollerRequest pollerRequest) throws Exception {
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		_userNotificationEventLocalService = userNotificationEventLocalService;
+	}
+
 	protected PollerResponse setUserNotificationsCount(
 			PollerRequest pollerRequest)
 		throws Exception {
@@ -57,7 +65,7 @@ public class DockbarNotificationsPollerProcessor extends BasePollerProcessor {
 			"timestamp", String.valueOf(System.currentTimeMillis()));
 
 		int newUserNotificationsCount =
-			UserNotificationEventLocalServiceUtil.
+			_userNotificationEventLocalService.
 				getDeliveredUserNotificationEventsCount(
 					pollerRequest.getUserId(),
 					UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
@@ -67,7 +75,7 @@ public class DockbarNotificationsPollerProcessor extends BasePollerProcessor {
 			String.valueOf(newUserNotificationsCount));
 
 		int unreadUserNotificationsCount =
-			UserNotificationEventLocalServiceUtil.
+			_userNotificationEventLocalService.
 				getArchivedUserNotificationEventsCount(
 					pollerRequest.getUserId(),
 					UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
@@ -78,5 +86,8 @@ public class DockbarNotificationsPollerProcessor extends BasePollerProcessor {
 
 		return pollerResponse;
 	}
+
+	private volatile UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

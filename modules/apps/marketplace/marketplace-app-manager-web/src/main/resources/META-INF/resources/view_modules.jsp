@@ -21,14 +21,22 @@ String app = ParamUtil.getString(request, "app");
 
 AppDisplay appDisplay = null;
 
-List<Bundle> bundles = BundleManagerUtil.getBundles();
+List<Bundle> allBundles = BundleManagerUtil.getBundles();
 
 if (Validator.isNumber(app)) {
-	appDisplay = AppDisplayFactoryUtil.getAppDisplay(bundles, Long.parseLong(app));
+	appDisplay = AppDisplayFactoryUtil.getAppDisplay(allBundles, Long.parseLong(app));
 }
 
 if (appDisplay == null) {
-	appDisplay = AppDisplayFactoryUtil.getAppDisplay(bundles, app);
+	appDisplay = AppDisplayFactoryUtil.getAppDisplay(allBundles, app);
+}
+
+String moduleGroup = ParamUtil.getString(request, "moduleGroup");
+
+ModuleGroupDisplay moduleGroupDisplay = null;
+
+if (Validator.isNotNull(moduleGroup)) {
+	moduleGroupDisplay = ModuleGroupDisplayFactoryUtil.getModuleGroupDisplay(appDisplay, moduleGroup);
 }
 
 String state = ParamUtil.getString(request, "state", "all-statuses");
@@ -39,9 +47,10 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_modules.jsp");
 portletURL.setParameter("app", app);
+portletURL.setParameter("moduleGroup", moduleGroup);
 portletURL.setParameter("state", state);
 
-MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
+MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, request, renderResponse);
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -98,21 +107,28 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 		<liferay-ui:search-container-results>
 
 			<%
-			List<Bundle> appDisplayBundles = appDisplay.getBundles();
+			List<Bundle> bundles = null;
 
-			BundleUtil.filterBundles(appDisplayBundles, BundleStateConstants.getState(state));
+			if (moduleGroupDisplay != null) {
+				bundles = moduleGroupDisplay.getBundles();
+			}
+			else {
+				bundles = appDisplay.getBundles();
+			}
 
-			appDisplayBundles = ListUtil.sort(appDisplayBundles, new BundleComparator(orderByType));
+			BundleUtil.filterBundles(bundles, BundleStateConstants.getState(state));
+
+			bundles = ListUtil.sort(bundles, new BundleComparator(orderByType));
 
 			int end = searchContainer.getEnd();
 
-			if (end > appDisplayBundles.size()) {
-				end = appDisplayBundles.size();
+			if (end > bundles.size()) {
+				end = bundles.size();
 			}
 
-			searchContainer.setResults(appDisplayBundles.subList(searchContainer.getStart(), end));
+			searchContainer.setResults(bundles.subList(searchContainer.getStart(), end));
 
-			searchContainer.setTotal(appDisplayBundles.size());
+			searchContainer.setTotal(bundles.size());
 			%>
 
 		</liferay-ui:search-container-results>

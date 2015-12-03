@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -298,9 +297,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			localRepository.deleteFileEntry(fileEntryId);
 		}
-		catch (InvalidRepositoryIdException irie) {
+		catch (NoSuchFileEntryException nsfee) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(irie, irie);
+				_log.warn(nsfee, nsfee);
 			}
 		}
 		finally {
@@ -337,9 +336,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			localRepository.deleteFolder(folderId);
 		}
-		catch (InvalidRepositoryIdException irie) {
+		catch (NoSuchFileEntryException nsfee) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(irie, irie);
+				_log.warn(nsfee, nsfee);
 			}
 		}
 		finally {
@@ -463,8 +462,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			return localRepository.getFileEntry(fileEntryId);
 		}
-		catch (InvalidRepositoryIdException irid) {
-			throw new NoSuchFileEntryException(irid);
+		catch (NoSuchFileEntryException nsfee) {
+			throw new NoSuchFileEntryException(nsfee);
 		}
 	}
 
@@ -551,8 +550,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			return localRepository.getFolder(folderId);
 		}
-		catch (InvalidRepositoryIdException irid) {
-			throw new NoSuchFolderException(irid);
+		catch (NoSuchFileEntryException nsfee) {
+			throw new NoSuchFolderException(nsfee);
 		}
 	}
 

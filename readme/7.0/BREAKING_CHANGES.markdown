@@ -2980,3 +2980,93 @@ You should update your code to invoke:
 
 As part of the modularization efforts it has been considered that that this
 logic belongs to wiki-web module.
+
+---------------------------------------
+
+### Custom AUI Validators no longer, implicitly, required
+- **Date:** 2015-12-02
+- **JIRA Ticket:** LPS-60995
+
+#### What changed?
+
+The AUI Validator taglib no longer forces custom validators (`name="custom"`)
+to be required, and are now optional by default.
+
+#### Who is affected?
+
+Developers using custom validators. Especially ones which relied on the field
+being implicitly required, via the custom validator.
+
+#### How should I update my code?
+
+##### Blank value checking is no longer necessary.
+
+```diff
+ <aui:input name="privateVirtualHost">
+     <aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom">
+         function(val, fieldNode, ruleValue) {
+-            return !val || val != A.one('#<portlet:namespace />publicVirtualHost').val();
++            return val != A.one('#<portlet:namespace />publicVirtualHost').val();
+         }
+     </aui:validator>
+ </aui:input>
+
+ <aui:input name="publicVirtualHost">
+     <aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom">
+         function(val, fieldNode, ruleValue) {
+-            return !val || val != A.one('#<portlet:namespace />privateVirtualHost').val();
++            return val != A.one('#<portlet:namespace />privateVirtualHost').val();
+         }
+     </aui:validator>
+ </aui:input>
+```
+
+##### Instead of using a custom validator, to determine if a field is required, use a conditional `required` validator.
+
+```diff
+ <aui:input name="file" type="file" />
+
+ <aui:input name="title">
+-    <aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">
+-        function(val, fieldNode, ruleValue) {
+-            return !!val || !!A.one('#<portlet:namespace />file').val();
++    <aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="required">
++        function(fieldNode) {
++            return !A.one('#<portlet:namespace />file').val();
+         }
+     </aui:validator>
+ </aui:input>
+```
+
+##### Custom validators that assumed validation would always run, must now explicitly pass the `required` validator.
+
+```diff
+ <aui:input name="vowlesOnly">
+     <aui:validator errorMessage="must-contain-only-the-following-characters" name="custom">
+         function(val, fieldNode, ruleValue) {
+             var allowedCharacters = 'aeiouy';
+
+             var regex = new RegExp('[^' + allowedCharacters + ']');
+
+             return !regex.test(val);
+         }
+     </aui:validator>
++    <aui:validator name="required" />
+ </aui:input>
+```
+
+#### Why was this change made?
+
+A custom validator caused the field to be implicitly required. This meant that
+all validators on the field would be evaluated. This created a condition where
+you could not combine custom validators with another validator on an optional
+field.
+
+For example, imagine an optional field which has an email validator, plus a
+custom validator which checks for email addresses within a specific domain,
+eg. `example.com`. There was no way for this optional field to pass validation.
+Even if you handled blank values in your custom validator, that blank value
+would fail the email validator.
+
+This change will required most custom validators to be refactored, but allows
+greater flexibility for all developers.

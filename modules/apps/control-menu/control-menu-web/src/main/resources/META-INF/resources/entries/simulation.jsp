@@ -14,27 +14,26 @@
  */
 --%>
 
-<%@ include file="/panel_category/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<c:if test="<%= !panelApps.isEmpty() %>">
-	<ul aria-labelledby="<%= id %>" class="nav nav-equal-height" role="menu">
+<portlet:renderURL var="previewContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:param name="mvcPath" value="/simulation_panel.jsp" />
+</portlet:renderURL>
 
-		<%
-		for (PanelApp panelApp : panelApps) {
-		%>
+<%
+Map<String, Object> data = new HashMap<String, Object>();
 
-			<liferay-application-list:panel-app panelApp="<%= panelApp %>" />
+data.put("panelURL", previewContentURL);
+%>
 
-		<%
-		}
-		%>
-
-	</ul>
-</c:if>
-
-<liferay-application-list:panel panelCategory="<%= panelCategory %>" />
-
-<c:if test="<%= !panelApps.isEmpty() && showHeader %>">
-		</div>
-	</div>
-</c:if>
+<li>
+	<liferay-ui:icon
+		data="<%= data %>"
+		iconCssClass="icon-desktop icon-monospaced"
+		id="previewPanel"
+		label="<%= false %>"
+		linkCssClass="control-menu-icon"
+		message="simulation"
+		url="javascript:;"
+	/>
+</li>

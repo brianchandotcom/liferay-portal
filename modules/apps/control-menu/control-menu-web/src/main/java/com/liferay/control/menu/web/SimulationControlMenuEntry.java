@@ -14,16 +14,20 @@
 
 package com.liferay.control.menu.web;
 
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
+import com.liferay.control.menu.application.list.SimulationPanelCategory;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -42,12 +46,12 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ControlMenuEntry.class
 )
-public class PreviewControlMenuEntry
+public class SimulationControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
 	public String getJspPath() {
-		return "/entries/preview.jsp";
+		return "/entries/simulation.jsp";
 	}
 
 	@Override
@@ -63,9 +67,15 @@ public class PreviewControlMenuEntry
 			return false;
 		}
 
-		if (!(hasPreviewInDevicePermission(themeDisplay) ||
-			  hasUpdateLayoutPermission(themeDisplay))) {
+		if (!hasUpdateLayoutPermission(themeDisplay)) {
+			return false;
+		}
 
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			SimulationPanelCategory.SIMULATION,
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());
+
+		if (panelApps.isEmpty()) {
 			return false;
 		}
 
@@ -81,14 +91,6 @@ public class PreviewControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
-	protected boolean hasPreviewInDevicePermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return GroupPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
-			ActionKeys.PREVIEW_IN_DEVICE);
-	}
-
 	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -96,5 +98,12 @@ public class PreviewControlMenuEntry
 			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 			ActionKeys.UPDATE);
 	}
+
+	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		_panelAppRegistry = panelAppRegistry;
+	}
+
+	private volatile PanelAppRegistry _panelAppRegistry;
 
 }

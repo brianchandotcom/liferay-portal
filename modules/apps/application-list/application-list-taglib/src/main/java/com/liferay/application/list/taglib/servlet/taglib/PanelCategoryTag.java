@@ -51,7 +51,7 @@ public class PanelCategoryTag extends BasePanelTag {
 		super.cleanUp();
 
 		_panelCategory = null;
-		_showHeader = false;
+		_showHeader = true;
 		_showOpen = false;
 	}
 
@@ -122,7 +122,7 @@ public class PanelCategoryTag extends BasePanelTag {
 	}
 
 	private PanelCategory _panelCategory;
-	private boolean _showHeader;
+	private boolean _showHeader = true;
 	private boolean _showOpen;
 
 }

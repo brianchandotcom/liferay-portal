@@ -16,24 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:renderURL var="previewContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcPath" value="/preview_panel.jsp" />
-</portlet:renderURL>
-
 <%
-Map<String, Object> data = new HashMap<String, Object>();
-
-data.put("panelURL", previewContentURL);
+PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
+PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(SimulationPanelCategory.SIMULATION);
 %>
 
-<li>
-	<liferay-ui:icon
-		data="<%= data %>"
-		iconCssClass="icon-desktop icon-monospaced"
-		id="previewPanel"
-		label="<%= false %>"
-		linkCssClass="control-menu-icon"
-		message="preview"
-		url="javascript:;"
-	/>
-</li>
+<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showHeader="<%= false %>" />

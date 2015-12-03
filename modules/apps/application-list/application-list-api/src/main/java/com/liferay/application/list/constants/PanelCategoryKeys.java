@@ -38,6 +38,8 @@ public interface PanelCategoryKeys {
 	public static final String CONTROL_PANEL_USERS =
 		PortletCategoryKeys.CONTROL_PANEL_USERS;
 
+	public static final String HIDDEN = "hidden";
+
 	public static final String ROOT = "root";
 
 	public static final String SITE_ADMINISTRATION = "site_administration";

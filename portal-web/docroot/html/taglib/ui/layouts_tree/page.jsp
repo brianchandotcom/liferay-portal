@@ -30,6 +30,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:layouts-tre
 boolean privateLayout = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:privateLayout"));
 String rootLinkTemplate = (String)request.getAttribute("liferay-ui:layouts-tree:rootLinkTemplate");
 String rootNodeName = (String)request.getAttribute("liferay-ui:layouts-tree:rootNodeName");
+String rootPortletURL = (String)request.getAttribute("liferay-ui:layouts-tree:rootPortletURL");
 boolean saveState = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:saveState"));
 boolean selectableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:selectableTree"));
 Long selPlid = (Long)request.getAttribute("liferay-ui:layouts-tree:selPlid");
@@ -129,6 +130,11 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 				</c:if>
 
 				privateLayout: <%= privateLayout %>
+
+				<c:if test="<%= Validator.isNotNull(rootPortletURL) %>">
+					,
+					regularURL: '<%= rootPortletURL %>'
+				</c:if>
 			}
 
 			<c:if test="<%= selPlid != null %>">

@@ -67,67 +67,14 @@ if (layoutRevision != null) {
 	}
 }
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
+renderResponse.setTitle(selLayout.getName(locale));
 %>
 
 <c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav" id="layoutsNav">
-			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.PERMISSIONS) %>">
-				<liferay-security:permissionsURL
-					modelResource="<%= Layout.class.getName() %>"
-					modelResourceDescription="<%= selLayout.getName(locale) %>"
-					resourcePrimKey="<%= String.valueOf(selLayout.getPlid()) %>"
-					var="permissionURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
-
-				<aui:nav-item href="<%= permissionURL %>" iconCssClass="icon-lock" label="permissions" useDialog="<%= true %>" />
-			</c:if>
 			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.DELETE) %>">
 				<aui:nav-item cssClass="remove-layout" iconCssClass="icon-remove" label="delete" />
-			</c:if>
-			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
-				<aui:nav-item iconCssClass="icon-list-alt" id="copyApplications" label="copy-applications" />
-
-				<aui:script use="liferay-util-window">
-					A.one('#<portlet:namespace />copyApplications').on(
-						'click',
-						function() {
-							var content = A.one('#<portlet:namespace />copyPortletsFromPage');
-
-							var popUp = Liferay.Util.Window.getWindow(
-								{
-									dialog: {
-										bodyContent: content.show()
-									},
-									title: '<%= UnicodeLanguageUtil.get(request, "copy-applications") %>'
-								}
-							);
-
-							popUp.show();
-
-							var submitButton = popUp.get('contentBox').one('#<portlet:namespace />copySubmitButton');
-
-							if (submitButton) {
-								submitButton.on(
-									'click',
-									function(event) {
-										popUp.hide();
-
-										var form = A.one('#<portlet:namespace />fm');
-
-										if (form) {
-											form.append(content);
-
-											submitForm(form);
-										}
-									}
-								);
-							}
-						}
-					);
-				</aui:script>
 			</c:if>
 		</aui:nav>
 	</aui:nav-bar>

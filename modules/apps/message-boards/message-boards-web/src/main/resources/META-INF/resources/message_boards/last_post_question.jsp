@@ -31,6 +31,7 @@ User userDisplay = UserLocalServiceUtil.fetchUserById(thread.getLastPostByUserId
 <div class="user-info">
 	<div class="portrait">
 		<liferay-ui:user-portrait
+			imageCssClass="user-icon-lg"
 			userId="<%= (userDisplay == null) ? 0 : userDisplay.getUserId() %>"
 			userName='<%= (message.isAnonymous() || (userDisplay == null)) ? LanguageUtil.get(request, "anonymous") : userDisplay.getFullName() %>'
 		/>

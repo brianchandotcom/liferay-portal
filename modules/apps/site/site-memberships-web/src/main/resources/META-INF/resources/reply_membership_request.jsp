@@ -65,6 +65,7 @@ MembershipRequest membershipRequest = MembershipRequestLocalServiceUtil.getMembe
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<liferay-ui:user-portrait
+				imageCssClass="user-icon-lg"
 				userId="<%= membershipRequest.getUserId() %>"
 			/>
 

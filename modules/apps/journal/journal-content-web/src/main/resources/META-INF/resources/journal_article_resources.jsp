@@ -37,6 +37,7 @@ if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
 >
 	<liferay-frontend:vertical-card-sticker-bottom>
 		<liferay-ui:user-portrait
+			imageCssClass="user-icon-lg"
 			userId="<%= assetRenderer.getUserId() %>"
 		/>
 	</liferay-frontend:vertical-card-sticker-bottom>

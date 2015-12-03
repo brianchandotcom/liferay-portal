@@ -469,7 +469,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskTestIntegration(
-		Test test, final SourceSet testIntegrationSourceSet,
+		final Test test, final SourceSet testIntegrationSourceSet,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension,
 		final StartTestableTomcatTask startTestableTomcatTask) {
 
@@ -502,14 +502,26 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		test.jvmArgs("-Dliferay.mode=test");
 		test.jvmArgs("-Duser.timezone=GMT");
 
-		test.systemProperty(
-			"app.server.tomcat.dir",
-			new Object() {
+		// GRADLE-2697
+
+		Project project = test.getProject();
+
+		project.afterEvaluate(
+			new Action<Project>() {
 
 				@Override
-				public String toString() {
-					return FileUtil.getAbsolutePath(
-						testIntegrationTomcatExtension.getDir());
+				public void execute(Project project) {
+					Map<String, Object> systemProperties =
+						test.getSystemProperties();
+
+					if (!systemProperties.containsKey(
+							"app.server.tomcat.dir")) {
+
+						systemProperties.put(
+							"app.server.tomcat.dir",
+							FileUtil.getAbsolutePath(
+								testIntegrationTomcatExtension.getDir()));
+					}
 				}
 
 			});

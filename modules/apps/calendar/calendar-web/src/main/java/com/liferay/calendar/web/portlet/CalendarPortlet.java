@@ -360,69 +360,22 @@ public class CalendarPortlet extends MVCPortlet {
 		long[] reminders = getReminders(actionRequest);
 		String[] remindersType = getRemindersType(actionRequest);
 
+		int instanceIndex = ParamUtil.getInteger(
+			actionRequest, "instanceIndex");
+		boolean updateCalendarBookingInstance = ParamUtil.getBoolean(
+			actionRequest, "updateCalendarBookingInstance");
+		boolean allFollowing = ParamUtil.getBoolean(
+			actionRequest, "allFollowing");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CalendarBooking.class.getName(), actionRequest);
 
-		CalendarBooking calendarBooking = null;
-
-		if (calendarBookingId <= 0) {
-			calendarBooking = _calendarBookingService.addCalendarBooking(
-				calendarId, childCalendarIds,
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				titleMap, descriptionMap, location,
-				startTimeJCalendar.getTimeInMillis(),
-				endTimeJCalendar.getTimeInMillis(), allDay, recurrence,
-				reminders[0], remindersType[0], reminders[1], remindersType[1],
-				serviceContext);
-		}
-		else {
-			int instanceIndex = ParamUtil.getInteger(
-				actionRequest, "instanceIndex");
-
-			boolean updateCalendarBookingInstance = ParamUtil.getBoolean(
-				actionRequest, "updateCalendarBookingInstance");
-
-			if (updateCalendarBookingInstance) {
-				boolean allFollowing = ParamUtil.getBoolean(
-					actionRequest, "allFollowing");
-
-				calendarBooking =
-					_calendarBookingService.updateCalendarBookingInstance(
-						calendarBookingId, instanceIndex, calendarId,
-						childCalendarIds, titleMap, descriptionMap, location,
-						startTimeJCalendar.getTimeInMillis(),
-						endTimeJCalendar.getTimeInMillis(), allDay, recurrence,
-						allFollowing, reminders[0], remindersType[0],
-						reminders[1], remindersType[1], serviceContext);
-			}
-			else {
-				calendarBooking =
-					_calendarBookingService.getCalendarBookingInstance(
-						calendarBookingId, instanceIndex);
-
-				long duration =
-					(endTimeJCalendar.getTimeInMillis() -
-						startTimeJCalendar.getTimeInMillis());
-				long offset =
-					(startTimeJCalendar.getTimeInMillis() -
-						calendarBooking.getStartTime());
-
-				calendarBooking =
-					_calendarBookingService.
-						getNewStartTimeAndDurationCalendarBooking(
-							calendarBookingId, offset, duration);
-
-				calendarBooking = getFirstCalendarBookingInstance(
-					calendarBooking, recurrence, calendar.getTimeZone());
-
-				calendarBooking = _calendarBookingService.updateCalendarBooking(
-					calendarBookingId, calendarId, childCalendarIds, titleMap,
-					descriptionMap, location, calendarBooking.getStartTime(),
-					calendarBooking.getEndTime(), allDay, recurrence,
-					reminders[0], remindersType[0], reminders[1],
-					remindersType[1], serviceContext);
-			}
-		}
+		CalendarBooking calendarBooking = updateCalendarBooking(
+			calendarBookingId, calendar, childCalendarIds, titleMap,
+			descriptionMap, location, startTimeJCalendar.getTimeInMillis(),
+			endTimeJCalendar.getTimeInMillis(), allDay, recurrence, reminders,
+			remindersType, instanceIndex, updateCalendarBookingInstance,
+			allFollowing, serviceContext);
 
 		String redirect = getRedirect(actionRequest, actionResponse);
 
@@ -1296,6 +1249,65 @@ public class CalendarPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	protected CalendarBooking updateCalendarBooking(
+			long calendarBookingId, Calendar calendar, long[] childCalendarIds,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String location, long startTime, long endTime, boolean allDay,
+			String recurrence, long[] reminders, String[] remindersType,
+			int instanceIndex, boolean updateInstance, boolean allFollowing,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CalendarBooking calendarBooking = null;
+
+		long calendarId = calendar.getCalendarId();
+
+		if (calendarBookingId <= 0) {
+			calendarBooking = _calendarBookingService.addCalendarBooking(
+				calendarId, childCalendarIds,
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				titleMap, descriptionMap, location, startTime, endTime, allDay,
+				recurrence, reminders[0], remindersType[0], reminders[1],
+				remindersType[1], serviceContext);
+		}
+		else {
+			if (updateInstance) {
+				calendarBooking =
+					_calendarBookingService.updateCalendarBookingInstance(
+						calendarBookingId, instanceIndex, calendarId,
+						childCalendarIds, titleMap, descriptionMap, location,
+						startTime, endTime, allDay, recurrence, allFollowing,
+						reminders[0], remindersType[0], reminders[1],
+						remindersType[1], serviceContext);
+			}
+			else {
+				calendarBooking =
+					_calendarBookingService.getCalendarBookingInstance(
+						calendarBookingId, instanceIndex);
+
+				long duration = endTime - startTime;
+				long offset = startTime - calendarBooking.getStartTime();
+
+				calendarBooking =
+					_calendarBookingService.
+						getNewStartTimeAndDurationCalendarBooking(
+							calendarBookingId, offset, duration);
+
+				calendarBooking = getFirstCalendarBookingInstance(
+					calendarBooking, recurrence, calendar.getTimeZone());
+
+				calendarBooking = _calendarBookingService.updateCalendarBooking(
+					calendarBookingId, calendarId, childCalendarIds, titleMap,
+					descriptionMap, location, calendarBooking.getStartTime(),
+					calendarBooking.getEndTime(), allDay, recurrence,
+					reminders[0], remindersType[0], reminders[1],
+					remindersType[1], serviceContext);
+			}
+		}
+
+		return calendarBooking;
 	}
 
 	private volatile CalendarBookingLocalService _calendarBookingLocalService;

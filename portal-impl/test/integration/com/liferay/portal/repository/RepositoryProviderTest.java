@@ -28,6 +28,9 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -100,7 +103,7 @@ public class RepositoryProviderTest {
 		RepositoryProviderUtil.getLocalRepository(dlFolder.getRepositoryId());
 	}
 
-	@Test(expected = InvalidRepositoryIdException.class)
+	@Test(expected = NoSuchFileEntryException.class)
 	public void testCreateLocalRepositoryFromNonexistentFileEntryId()
 		throws Exception {
 
@@ -109,7 +112,7 @@ public class RepositoryProviderTest {
 		RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
 	}
 
-	@Test(expected = InvalidRepositoryIdException.class)
+	@Test(expected = NoSuchFileVersionException.class)
 	public void testCreateLocalRepositoryFromNonexistentFileVersionId()
 		throws Exception {
 
@@ -118,7 +121,7 @@ public class RepositoryProviderTest {
 		RepositoryProviderUtil.getFileVersionLocalRepository(fileVersionId);
 	}
 
-	@Test(expected = InvalidRepositoryIdException.class)
+	@Test(expected = NoSuchFolderException.class)
 	public void testCreateLocalRepositoryFromNonexistentFolderId()
 		throws Exception {
 
@@ -229,7 +232,7 @@ public class RepositoryProviderTest {
 		RepositoryProviderUtil.getRepository(dlFolder.getRepositoryId());
 	}
 
-	@Test(expected = InvalidRepositoryIdException.class)
+	@Test(expected = NoSuchFileEntryException.class)
 	public void testCreateRepositoryFromNonexistentFileEntryId()
 		throws Exception {
 
@@ -238,7 +241,7 @@ public class RepositoryProviderTest {
 		RepositoryProviderUtil.getFileEntryRepository(fileEntryId);
 	}
 
-	@Test(expected = InvalidRepositoryIdException.class)
+	@Test(expected = NoSuchFileVersionException.class)
 	public void testCreateRepositoryFromNonexistentFileVersionId()
 		throws Exception {
 
@@ -247,7 +250,7 @@ public class RepositoryProviderTest {
 		RepositoryProviderUtil.getFileVersionRepository(fileVersionId);
 	}
 
-	@Test(expected = InvalidRepositoryIdException.class)
+	@Test(expected = NoSuchFolderException.class)
 	public void testCreateRepositoryFromNonexistentFolderId() throws Exception {
 		long folderId = RandomTestUtil.randomLong();
 

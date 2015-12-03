@@ -291,6 +291,55 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			layout.getTypeSettingsProperties());
 	}
 
+	public void copyApplications(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
+
+		Layout layout = layoutLocalService.getLayout(
+			groupId, privateLayout, layoutId);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		if (!layout.getType().equals(LayoutConstants.TYPE_PORTLET)) {
+			return;
+		}
+
+		String layoutTemplateId = ParamUtil.getString(
+			actionRequest, "layoutTemplateId",
+			PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+
+		layoutTypePortlet.setLayoutTemplateId(
+			themeDisplay.getUserId(), layoutTemplateId);
+
+		long copyLayoutId = ParamUtil.getLong(actionRequest, "copyLayoutId");
+
+		if ((copyLayoutId == 0) || (copyLayoutId == layout.getLayoutId())) {
+			return;
+		}
+
+		Layout copyLayout = layoutLocalService.fetchLayout(
+			groupId, privateLayout, copyLayoutId);
+
+		if ((copyLayout == null) || !copyLayout.isTypePortlet()) {
+			return;
+		}
+
+		ActionUtil.removePortletIds(actionRequest, layout);
+
+		ActionUtil.copyPreferences(actionRequest, layout, copyLayout);
+
+		SitesUtil.copyLookAndFeel(layout, copyLayout);
+	}
+
 	public void deleteLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -402,31 +451,10 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			layoutTypePortlet.setLayoutTemplateId(
 				themeDisplay.getUserId(), layoutTemplateId);
 
-			long copyLayoutId = ParamUtil.getLong(
-				uploadPortletRequest, "copyLayoutId");
+			layoutTypeSettingsProperties.putAll(formTypeSettingsProperties);
 
-			if ((copyLayoutId > 0) && (copyLayoutId != layout.getLayoutId())) {
-				Layout copyLayout = layoutLocalService.fetchLayout(
-					groupId, privateLayout, copyLayoutId);
-
-				if ((copyLayout != null) && copyLayout.isTypePortlet()) {
-					layoutTypeSettingsProperties =
-						copyLayout.getTypeSettingsProperties();
-
-					ActionUtil.removePortletIds(actionRequest, layout);
-
-					ActionUtil.copyPreferences(
-						actionRequest, layout, copyLayout);
-
-					SitesUtil.copyLookAndFeel(layout, copyLayout);
-				}
-			}
-			else {
-				layoutTypeSettingsProperties.putAll(formTypeSettingsProperties);
-
-				layoutService.updateLayout(
-					groupId, privateLayout, layoutId, layout.getTypeSettings());
-			}
+			layoutService.updateLayout(
+				groupId, privateLayout, layoutId, layout.getTypeSettings());
 		}
 		else {
 			layout.setTypeSettingsProperties(formTypeSettingsProperties);

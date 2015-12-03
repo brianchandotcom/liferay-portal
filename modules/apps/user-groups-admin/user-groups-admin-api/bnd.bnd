@@ -1,0 +1,5 @@
+Bundle-Name: Liferay User Groups Admin API
+Bundle-SymbolicName: com.liferay.user.groups.admin.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.users.groups.admin.constants
+Include-Resource: classes

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.web.lar;
+package com.liferay.user.groups.admin.internal.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;

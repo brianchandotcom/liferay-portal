@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.web.exportimport.portlet.preferences.processor;
+package com.liferay.user.groups.admin.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;

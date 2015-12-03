@@ -61,45 +61,6 @@ if (organization != null) {
 %>
 
 <c:if test="<%= portletName.equals(UsersAdminPortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
-	<aui:nav cssClass="nav-tabs">
-		<portlet:renderURL var="viewUsersTreeURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="browse" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewUsersTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
-
-		<portlet:renderURL var="viewOrganizationsFlatURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="view-all-organizations" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="all-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
-
-		<portlet:renderURL var="viewUsersFlatURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="view-all-users" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewUsersFlatURL %>" label="all-users" selected='<%= toolbarItem.equals("view-all-users") %>' />
-	</aui:nav>
-
-	<aui:nav-bar>
-		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
-
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" />
-			</div>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
-
 	<div id="breadcrumb">
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>

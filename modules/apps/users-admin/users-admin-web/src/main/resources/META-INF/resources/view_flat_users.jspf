@@ -124,50 +124,6 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 				<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 			</div>
 		</c:if>
-
-		<aui:nav cssClass="nav-tabs">
-			<portlet:renderURL var="viewUsersTreeURL">
-				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-				<portlet:param name="toolbarItem" value="browse" />
-				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-			</portlet:renderURL>
-
-			<aui:nav-item href="<%= viewUsersTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
-
-			<portlet:renderURL var="viewOrganizationsFlatURL">
-				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-				<portlet:param name="toolbarItem" value="view-all-organizations" />
-				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
-				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-			</portlet:renderURL>
-
-			<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="all-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
-
-			<portlet:renderURL var="viewUsersFlatURL">
-				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-				<portlet:param name="toolbarItem" value="view-all-users" />
-				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-			</portlet:renderURL>
-
-			<aui:nav-item href="<%= viewUsersFlatURL %>" label="all-users" selected='<%= toolbarItem.equals("view-all-users") %>' />
-		</aui:nav>
-
-		<aui:nav-bar>
-
-			<%
-			request.setAttribute(WebKeys.SEARCH_CONTAINER, userSearchContainer);
-			%>
-
-			<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
-
-			<c:if test="<%= userOrganization == null %>">
-				<aui:nav-bar-search>
-					<liferay-ui:user-search-form />
-				</aui:nav-bar-search>
-			</c:if>
-		</aui:nav-bar>
 	</c:if>
 
 	<c:if test="<%= userOrganization != null %>">

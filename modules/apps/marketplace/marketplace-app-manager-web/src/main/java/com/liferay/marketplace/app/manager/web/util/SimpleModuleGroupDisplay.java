@@ -31,14 +31,17 @@ import org.osgi.framework.Version;
 public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 
 	public SimpleModuleGroupDisplay() {
+		_appDisplay = null;
 		_title = MODULE_GROUP_TITLE_UNCATEGORIZED;
 		_description = StringPool.BLANK;
 		_version = null;
 	}
 
 	public SimpleModuleGroupDisplay(
-		String title, String description, Version version) {
+		AppDisplay appDisplay, String title, String description,
+		Version version) {
 
+		_appDisplay = appDisplay;
 		_title = title;
 		_description = description;
 		_version = version;
@@ -57,6 +60,10 @@ public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 		String title = getTitle();
 
 		return title.compareToIgnoreCase(moduleGroupDisplay.getTitle());
+	}
+
+	public AppDisplay getAppDisplay() {
+		return _appDisplay;
 	}
 
 	public List<Bundle> getBundles() {
@@ -109,6 +116,7 @@ public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 		return _version.toString();
 	}
 
+	private final AppDisplay _appDisplay;
 	private final List<Bundle> _bundles = new ArrayList<>();
 	private final String _description;
 	private final String _title;

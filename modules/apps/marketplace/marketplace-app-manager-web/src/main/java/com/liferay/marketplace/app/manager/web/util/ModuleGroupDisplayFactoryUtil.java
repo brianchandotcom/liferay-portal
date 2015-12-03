@@ -59,7 +59,7 @@ public class ModuleGroupDisplayFactoryUtil {
 				Version moduleGroupVersion = bundle.getVersion();
 
 				moduleGroupDisplay = new SimpleModuleGroupDisplay(
-					moduleGroupTitle, moduleGroupDescription,
+					appDisplay, moduleGroupTitle, moduleGroupDescription,
 					moduleGroupVersion);
 
 				moduleGroupDisplaysMap.put(

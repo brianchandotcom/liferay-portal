@@ -26,7 +26,7 @@ public class JenkinsPerformanceTableUtil {
 
 	public static String generateHTML() {
 		List<JenkinsPerformanceDataUtil.Result> results =
-			JenkinsPerformanceDataUtil.getLongestResults();
+			JenkinsPerformanceDataUtil.getSlowestResults();
 
 		if (results == null) {
 			return "";

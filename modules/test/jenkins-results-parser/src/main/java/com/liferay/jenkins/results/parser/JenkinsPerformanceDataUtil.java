@@ -30,7 +30,7 @@ import org.json.JSONObject;
  */
 public class JenkinsPerformanceDataUtil {
 
-	public static List<Result> getLongestResults() {
+	public static List<Result> getSlowestResults() {
 		return _results;
 	}
 
@@ -49,7 +49,7 @@ public class JenkinsPerformanceDataUtil {
 				JenkinsResultsParserUtil.getLocalURL(
 					url + "/testReport/api/json"));
 
-			_results.addAll(getLongestResults(batch, json, size));
+			_results.addAll(getSlowestResults(batch, json, size));
 		}
 
 		Collections.sort(_results);
@@ -178,7 +178,7 @@ public class JenkinsPerformanceDataUtil {
 
 	}
 
-	private static List<Result> getLongestResults(
+	private static List<Result> getSlowestResults(
 			String name, JSONObject job, int maxSize)
 		throws Exception {
 

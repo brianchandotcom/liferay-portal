@@ -12,18 +12,22 @@
  * details.
  */
 
-package com.liferay.flags.page.flags.web.constants;
+package com.liferay.flags.page.flags.web.upgrade.v1_0_0;
+
+import com.liferay.flags.page.flags.web.constants.PageFlagsPortletKeys;
 
 /**
- * @author Adolfo Pérez
  * @author Peter Fellwock
  */
-public class PageFlagsPortletKeys {
+public class UpgradePortletId
+	extends com.liferay.portal.upgrade.util.UpgradePortletId {
 
-	public static final String FLAGS =
-		"com_liferay_flags_web_portlet_FlagsPortlet";
-
-	public static final String PAGE_FLAGS =
-		"com_liferay_flags_page_flags_web_portlet_PageFlagsPortlet";
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"142", PageFlagsPortletKeys.FLAGS},
+			new String[] {"143", PageFlagsPortletKeys.PAGE_FLAGS}
+		};
+	}
 
 }

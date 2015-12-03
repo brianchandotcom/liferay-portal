@@ -132,10 +132,6 @@
 		<put name="portlet_content" value="/portlet/calendar/view_event.jsp" />
 	</definition>
 
-	<!-- Flags -->
-
-	<definition name="portlet.flags.edit_entry" path="/portlet/flags/edit_entry.jsp" />
-
 	<!-- Group Statistics -->
 
 	<definition name="portlet.group_statistics" extends="portlet" />

@@ -22,10 +22,6 @@ import com.liferay.util.portlet.PortletProps;
  */
 public class PortletPropsValues {
 
-	public static final boolean USER_NOTIFICATION_DOCKBAR_SPLIT =
-		GetterUtil.getBoolean(
-			PortletProps.get(PortletPropsKeys.USER_NOTIFICATION_DOCKBAR_SPLIT));
-
 	public static final String USER_NOTIFICATION_ENTRY = PortletProps.get(
 		PortletPropsKeys.USER_NOTIFICATION_ENTRY);
 

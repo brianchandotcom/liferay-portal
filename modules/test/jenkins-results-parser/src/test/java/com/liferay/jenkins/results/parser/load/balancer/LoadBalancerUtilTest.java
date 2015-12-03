@@ -15,13 +15,16 @@
 package com.liferay.jenkins.results.parser.load.balancer;
 
 import com.liferay.jenkins.results.parser.BaseJenkinsResultsParserTestCase;
-import com.liferay.jenkins.results.parser.load.balancer.LoadBalancerUtil;
 
 import java.io.File;
+
 import java.net.URL;
+
 import java.util.Map;
 
 import org.apache.tools.ant.Project;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,6 +45,14 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 	public void setUp() throws Exception {
 		downloadSample("test-1", null);
 		downloadSample("test-2", null);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		Project project = getTestProject(null);
+		File jenkinsSharedDir = new File(
+			project.getProperty("jenkins.shared.dir"));
+		deleteFile(jenkinsSharedDir);
 	}
 
 	@Test

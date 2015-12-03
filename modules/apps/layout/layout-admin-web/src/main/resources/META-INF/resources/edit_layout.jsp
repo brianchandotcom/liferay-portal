@@ -67,7 +67,7 @@ if (layoutRevision != null) {
 	}
 }
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
+renderResponse.setTitle(selLayout.getName(locale));
 %>
 
 <c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">

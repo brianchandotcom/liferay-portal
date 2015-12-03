@@ -28,6 +28,8 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 if (selGroup.isLayoutSetPrototype()) {
 	privateLayout = true;
 }
+
+renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 %>
 
 <portlet:actionURL name="editLayoutSet" var="editLayoutSetURL">

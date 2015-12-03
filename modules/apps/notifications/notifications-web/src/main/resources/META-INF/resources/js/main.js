@@ -19,50 +19,6 @@ AUI.add(
 						instance._nonactionableNotificationsList = config.nonactionableNotificationsList;
 						instance._portletKey = config.portletKey;
 
-						var navAccountControls = A.one('.nav-account-controls');
-
-						navAccountControls.delegate(
-							'click',
-							function(event) {
-								var target = event.target;
-
-								if (target.ancestor('.dockbar-user-notifications-container')) {
-									return;
-								}
-
-								var currentTarget = event.currentTarget;
-
-								instance._setDelivered(currentTarget.hasClass('actionable-container'));
-
-								var container = currentTarget.one('.dockbar-user-notifications-container');
-
-								container.toggleClass('open');
-
-								currentTarget.toggleClass('open');
-
-								var menuOpen = container.hasClass('open');
-
-								if (menuOpen) {
-									currentTarget.on(
-										'clickoutside',
-										function(event) {
-											container.removeClass('open');
-											currentTarget.removeClass('open');
-										}
-									);
-
-									if (currentTarget.hasClass('actionable-container')) {
-										instance._actionableNotificationsList.render();
-									}
-
-									if (currentTarget.hasClass('nonactionable-container')) {
-										instance._nonactionableNotificationsList.render();
-									}
-								}
-							},
-							'.dockbar-user-notifications'
-						);
-
 						A.on(
 							'domready',
 							function() {

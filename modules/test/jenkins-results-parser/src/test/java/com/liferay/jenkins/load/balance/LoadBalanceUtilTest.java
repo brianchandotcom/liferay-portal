@@ -90,10 +90,10 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Override
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		Project project = getDownloadProject(sampleDir.getName());
-		int maxHostNames = LoadBalanceUtil.getHostNameCount(
+		int maxHostNameCount = LoadBalanceUtil.getHostNameCount(
 			project, sampleDir.getName());
 
-		for (int i = 1; i <= maxHostNames; i++) {
+		for (int i = 1; i <= maxHostNameCount; i++) {
 			downloadSampleURL(
 				new File(sampleDir, sampleDir.getName() + "-" + i),
 				createURL(

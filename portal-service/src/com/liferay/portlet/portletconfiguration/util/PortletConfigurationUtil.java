@@ -15,6 +15,7 @@
 package com.liferay.portlet.portletconfiguration.util;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -22,6 +23,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletSetupUtil;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -99,6 +104,42 @@ public class PortletConfigurationUtil {
 		}
 
 		return portletTitle;
+	}
+
+	public static Map<Locale, String> getPortletTitleMap(
+		PortletPreferences portletSetup) {
+
+		String useCustomTitle = GetterUtil.getString(
+			portletSetup.getValue(
+				"portletSetupUseCustomTitle", StringPool.BLANK));
+
+		if (!useCustomTitle.equals("true")) {
+			return null;
+		}
+
+		Map<Locale, String> map = new HashMap<>();
+
+		boolean empty = true;
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			String portletTitle = getPortletTitle(
+				portletSetup, LocaleUtil.toLanguageId(locale));
+
+			if (Validator.isNotNull(portletTitle)) {
+				empty = false;
+			}
+			else {
+				portletTitle = StringPool.BLANK;
+			}
+
+			map.put(locale, portletTitle);
+		}
+
+		if (!empty) {
+			return map;
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

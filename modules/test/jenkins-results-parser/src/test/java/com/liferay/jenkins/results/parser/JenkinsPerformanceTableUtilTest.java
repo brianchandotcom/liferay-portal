@@ -102,7 +102,7 @@ public class JenkinsPerformanceTableUtilTest
 				urlSuffix = "/testReport/api/json";
 			}
 
-			write(
+			JenkinsResultsParserUtil.write(
 				new File(sampleDir, "job-" + fileSuffix + urlSuffix),
 				JenkinsResultsParserUtil.toString(
 					JenkinsResultsParserUtil.getLocalURL(
@@ -117,7 +117,8 @@ public class JenkinsPerformanceTableUtilTest
 			jobCount++;
 		}
 
-		write(new File(sampleDir, "urls.txt"), sb.toString());
+		JenkinsResultsParserUtil.write(
+			new File(sampleDir, "urls.txt"), sb.toString());
 	}
 
 	@Override

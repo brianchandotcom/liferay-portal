@@ -40,6 +40,22 @@ import org.json.JSONObject;
  */
 public class JenkinsResultsParserUtil {
 
+	public static URL createURL(String urlString) throws Exception {
+		URL url = new URL(urlString);
+
+		return encode(url);
+	}
+
+	public static URL encode(URL url) throws Exception {
+		URI uri = new URI(
+			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
+			url.getPath(), url.getQuery(), url.getRef());
+
+		String uriASCIIString = uri.toASCIIString();
+
+		return new URL(uriASCIIString.replace("#", "%23"));
+	}
+
 	public static String expandSlaveRange(String value) {
 		StringBuilder sb = new StringBuilder();
 
@@ -329,22 +345,6 @@ public class JenkinsResultsParserUtil {
 				Thread.sleep(5000);
 			}
 		}
-	}
-
-	protected static URL createURL(String urlString) throws Exception {
-		URL url = new URL(urlString);
-
-		return encode(url);
-	}
-
-	protected static URL encode(URL url) throws Exception {
-		URI uri = new URI(
-			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
-			url.getPath(), url.getQuery(), url.getRef());
-
-		String uriASCIIString = uri.toASCIIString();
-
-		return new URL(uriASCIIString.replace("#", "%23"));
 	}
 
 	public static void write(File file, String content) throws IOException {

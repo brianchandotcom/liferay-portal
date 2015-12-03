@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `252b72b`.*
+*This document has been reviewed through commit `da3549d`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2928,7 +2928,7 @@ the preference is no longer used.
 
 ---------------------------------------
 
-### Software Catalog portlet and services are no longer available
+### Removed Software Catalog Portlet and Services
 - **Date:** 2015-Nov-21
 - **JIRA Ticket:** LPS-60705
 
@@ -2940,22 +2940,22 @@ of Liferay's source code or binaries.
 #### Who is affected?
 
 This affects portals which were making use of the Software Catalog portlet to
-manage a catalog of their software. Also developers who were making use of the
-software catalog services from their custom code.
+manage a catalog of their software. Developers who were making use of the
+software catalog services from their custom code are also affected.
 
 #### How should I update my code?
 
 There is no direct replacement for invocations to the Software Catalog services.
-In cases where it is really needed it is possible to obtain the code from a
-previous release and include it in the custom product (subject to the licensing)
+In cases where it is really needed, it is possible to obtain the code from a
+previous release and include it in the custom product (subject to licensing).
 
 #### Why was this change made?
 
 The Software Catalog was developed to implement the very first versions of what
-later become Liferay's Marketplace. It was later replaced and has not been in
-use by Liferay since then. We have also detected very small to no usage outside
-of Liferay. We made the decision to remove it to make Liferay more lightweight
-and free time to focus on other areas of the product that add more value.
+later become Liferay's Marketplace. It was later replaced and has not been used
+by Liferay since then. It has also been used minimally outside of Liferay. The
+decision was made to remove it so Liferay could be more lightweight and free
+time to focus on other areas of the product that add more value.
 
 ---------------------------------------
 

@@ -92,6 +92,7 @@ if (comment) {
 				<span class="thumbnail">
 					<a href="<%= receiverUserDisplayURL %>">
 						<liferay-ui:user-portrait
+							imageCssClass="user-icon-lg"
 							userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>"
 						/>
 					</a>
@@ -144,6 +145,7 @@ if (comment) {
 		<c:if test="<%= comment %>">
 			<span class="thumbnail">
 				<liferay-ui:user-portrait
+					imageCssClass="user-icon-lg"
 					userId="<%= user.getUserId() %>"
 				/>
 			</span>

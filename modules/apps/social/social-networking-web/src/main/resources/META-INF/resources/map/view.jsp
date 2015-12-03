@@ -161,7 +161,7 @@ if (Validator.isNull(apiKey)) {
 						<c:when test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 							var infoWindow = new google.maps.InfoWindow(
 								{
-									content: '<center><liferay-ui:user-portrait userId="<%= mapUser.getUserId() %>" /><br /><%= HtmlUtil.escapeJS(HtmlUtil.escape(mapUser.getFullName())) %></center>'
+									content: '<center><liferay-ui:user-portrait imageCssClass="user-icon-lg" userId="<%= mapUser.getUserId() %>" /><br /><%= HtmlUtil.escapeJS(HtmlUtil.escape(mapUser.getFullName())) %></center>'
 								}
 							);
 

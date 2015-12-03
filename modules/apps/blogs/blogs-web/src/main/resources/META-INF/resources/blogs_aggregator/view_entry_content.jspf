@@ -70,6 +70,7 @@
 			<c:if test='<%= displayStyle.endsWith("-image") %>'>
 				<a href="<%= viewAllEntriesURL %>">
 					<liferay-ui:user-portrait
+						imageCssClass="user-icon-lg"
 						userId="<%= entry.getUserId() %>"
 					/>
 				</a>

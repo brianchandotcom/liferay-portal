@@ -32,6 +32,7 @@ ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayCont
 	</c:if>
 
 	<liferay-ui:user-portrait
+		imageCssClass="user-icon-lg"
 		userId="<%= user.getUserId() %>"
 	/>
 

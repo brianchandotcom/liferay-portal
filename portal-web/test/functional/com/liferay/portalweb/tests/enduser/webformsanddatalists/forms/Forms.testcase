@@ -222,6 +222,14 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="icon" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewIconDisplay">
+			<var name="formName" value="Test Form" />
+		</execute>
+
 		<execute macro="FormsAdminNavigator#gotoViewEntries">
 			<var name="formName" value="Test Form" />
 		</execute>
@@ -433,9 +441,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
-		</execute>
+		<execute macro="FormsAdmin#viewIconDisplay" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -742,9 +748,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
-		</execute>
+		<execute macro="FormsAdmin#viewIconDisplay" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -845,9 +849,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
-		</execute>
+		<execute macro="FormsAdmin#viewIconDisplay" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -951,9 +953,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
-		</execute>
+		<execute macro="FormsAdmin#viewIconDisplay" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -1051,9 +1051,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
-		</execute>
+		<execute macro="FormsAdmin#viewIconDisplay" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -1138,17 +1136,15 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Forms" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
-		</execute>
+		<execute macro="FormsAdmin#viewIconDisplay" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -1238,9 +1234,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
-		</execute>
+		<execute macro="FormsAdmin#viewIconDisplay" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -1317,21 +1311,15 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Forms" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
-		</execute>
+		<execute macro="FormsAdmin#viewIconDisplay" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
@@ -1502,9 +1490,7 @@
 			<var name="displayStyle" value="icon" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
-		</execute>
+		<execute macro="FormsAdmin#viewIconDisplay" />
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 

@@ -165,8 +165,8 @@ public class LoadBalanceUtil {
 						baseDir, "recentJobs/" + hostNames.get(x));
 
 					if (recentJobsFile.exists()) {
-						sb.append(JenkinsResultsParserUtil.read(
-							recentJobsFile));
+						sb.append(
+							JenkinsResultsParserUtil.read(recentJobsFile));
 
 						if (sb.length() > 0) {
 							sb.append("|");
@@ -181,13 +181,13 @@ public class LoadBalanceUtil {
 
 						invokedJobBatchSize = "1";
 					}
-					
+
 					sb.append(invokedJobBatchSize);
 					sb.append("-");
 					sb.append(System.currentTimeMillis());
 
 					JenkinsResultsParserUtil.write(
-						recentJobsFile,	sb.toString());
+						recentJobsFile, sb.toString());
 				}
 			}
 		}
@@ -261,10 +261,10 @@ public class LoadBalanceUtil {
 				for (String jobCountData : content.split("\\|")) {
 					int x = jobCountData.indexOf("-");
 
-					int jobCount =
-						Integer.parseInt(jobCountData.substring(0, x));
-					long timestamp =
-						Long.parseLong(jobCountData.substring(x + 1));
+					int jobCount = Integer.parseInt(
+						jobCountData.substring(0, x));
+					long timestamp = Long.parseLong(
+						jobCountData.substring(x + 1));
 
 					if ((timestamp + recentJobsPeriod) >
 							System.currentTimeMillis()) {
@@ -272,6 +272,7 @@ public class LoadBalanceUtil {
 						if (sb.length() > 0) {
 							sb.append("|");
 						}
+
 						sb.append(jobCountData);
 						totalJobCount += jobCount;
 					}
@@ -308,12 +309,11 @@ public class LoadBalanceUtil {
 
 			hostNames.add(targetHostName);
 
-			FutureTask<Integer> futureTask =
-				new FutureTask<>(
-					new AvailableSlavesCallable(
-						recentJobsMap.get(targetHostName),
-						project.getProperty(
-							"jenkins.local.url[" + targetHostName + "]")));
+			FutureTask<Integer> futureTask = new FutureTask<>(
+				new AvailableSlavesCallable(
+					recentJobsMap.get(targetHostName),
+					project.getProperty(
+						"jenkins.local.url[" + targetHostName + "]")));
 
 			executorService.execute(futureTask);
 

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Hits;
@@ -30,7 +31,6 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -124,15 +124,8 @@ public class DDLUtil {
 			recordId, recordSetId, mergeFields, serviceContext);
 	}
 
-	private static final ServiceTracker<DDL, DDL> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DDLUtil.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), DDL.class, null);
-
-		_serviceTracker.open();
-	}
+	private static final ServiceTracker<DDL, DDL> _serviceTracker =
+		ServiceTrackerFactory.open(
+			FrameworkUtil.getBundle(DDLUtil.class), DDL.class);
 
 }

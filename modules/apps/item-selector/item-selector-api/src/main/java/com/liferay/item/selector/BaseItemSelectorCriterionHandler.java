@@ -14,6 +14,7 @@
 
 package com.liferay.item.selector;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.ClassUtil;
 
 import java.util.ArrayList;
@@ -60,11 +61,9 @@ public abstract class BaseItemSelectorCriterionHandler
 	}
 
 	protected void activate(BundleContext bundleContext) {
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, ItemSelectorView.class,
 			new ItemSelectorViewServiceTrackerCustomizer(bundleContext));
-
-		_serviceTracker.open();
 	}
 
 	private boolean _isItemSelectorViewSupported(

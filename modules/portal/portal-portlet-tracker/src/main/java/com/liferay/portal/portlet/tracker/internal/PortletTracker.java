@@ -14,6 +14,7 @@
 
 package com.liferay.portal.portlet.tracker.internal;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -256,10 +257,8 @@ public class PortletTracker
 
 		BundleContext bundleContext = _componentContext.getBundleContext();
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, Portlet.class, this);
-
-		_serviceTracker.open();
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Activated");

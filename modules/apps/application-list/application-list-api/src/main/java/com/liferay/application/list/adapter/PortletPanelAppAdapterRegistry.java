@@ -15,6 +15,7 @@
 package com.liferay.application.list.adapter;
 
 import com.liferay.application.list.PanelApp;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -39,12 +40,10 @@ public class PortletPanelAppAdapterRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, Portlet.class,
 			new PortletPanelAppAdapterServiceTrackerCustomizer(
 				bundleContext, _serviceRegistrations));
-
-		_serviceTracker.open();
 	}
 
 	@Deactivate

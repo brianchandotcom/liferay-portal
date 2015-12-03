@@ -1,5 +1,6 @@
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.2"
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 

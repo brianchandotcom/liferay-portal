@@ -16,6 +16,7 @@ package com.liferay.exportimport.content.processor;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.registry.util.StringPlus;
 
@@ -56,11 +57,9 @@ public class ExportImportContentProcessorRegistryUtil {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			_bundleContext, ExportImportContentProcessor.class,
 			new ExportImportContentProcessorServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	private ExportImportContentProcessor _getExportImportContentProcessor(

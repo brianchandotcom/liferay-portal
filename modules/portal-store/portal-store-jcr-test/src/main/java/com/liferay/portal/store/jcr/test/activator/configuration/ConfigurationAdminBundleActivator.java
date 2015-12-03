@@ -14,6 +14,7 @@
 
 package com.liferay.portal.store.jcr.test.activator.configuration;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.io.IOException;
@@ -23,7 +24,6 @@ import java.util.Hashtable;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -64,14 +64,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 			jcrConfiguration.update(properties);
 
-			Filter filter = bundleContext.createFilter(
+			ServiceTracker<?, ?> serviceTracker = ServiceTrackerFactory.open(
+				bundleContext,
 				"(&(objectClass=" + Store.class.getName() +
 					")(store.type=com.liferay.portal.store.jcr.JCRStore))");
-
-			ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(
-				bundleContext, filter, null);
-
-			serviceTracker.open();
 
 			Object jcrStore = serviceTracker.waitForService(10000);
 

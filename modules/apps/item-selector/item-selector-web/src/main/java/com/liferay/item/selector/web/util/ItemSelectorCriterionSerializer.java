@@ -17,6 +17,7 @@ package com.liferay.item.selector.web.util;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONContext;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -161,11 +162,9 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 		_bundleContext = bundleContext;
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, ItemSelectorView.class,
 			new ItemSelectorReturnTypeServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	@Deactivate

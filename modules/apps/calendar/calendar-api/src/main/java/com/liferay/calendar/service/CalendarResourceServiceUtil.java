@@ -16,8 +16,7 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -139,14 +138,6 @@ public class CalendarResourceServiceUtil {
 	public void setService(CalendarResourceService service) {
 	}
 
-	private static ServiceTracker<CalendarResourceService, CalendarResourceService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CalendarResourceServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<CalendarResourceService, CalendarResourceService>(bundle.getBundleContext(),
-				CalendarResourceService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<CalendarResourceService, CalendarResourceService> _serviceTracker =
+		ServiceTrackerFactory.open(CalendarResourceService.class);
 }

@@ -10,6 +10,7 @@ classes {
 
 dependencies {
 	compile group: "com.github.rotty3000", name: "phidias", version: "0.3.6"
+	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.2"
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "org.glassfish", name: "javax.el", transitive: false, version: "3.0.1-b05"
 	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"

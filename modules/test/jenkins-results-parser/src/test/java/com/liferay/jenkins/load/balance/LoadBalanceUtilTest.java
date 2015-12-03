@@ -118,7 +118,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		Project project = getTestProject(sampleDir.getName());
 
-		return LoadBalanceUtil.getMostAvailableSlaveMasterURL(project);
+		return LoadBalanceUtil.getMostAvailableMasterURL(project);
 	}
 
 	protected Project getTestProject(String baseInvocationHostName) {

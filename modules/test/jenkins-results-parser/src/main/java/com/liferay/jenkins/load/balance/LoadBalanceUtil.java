@@ -42,7 +42,7 @@ import org.json.JSONObject;
  */
 public class LoadBalanceUtil {
 
-	public static String getMostAvailableSlaveMasterURL(Project project)
+	public static String getMostAvailableMasterURL(Project project)
 		throws Exception {
 
 		int retryCount = 0;
@@ -145,7 +145,7 @@ public class LoadBalanceUtil {
 					}
 				}
 
-				sb.append("\nMaster with the most available slaves ");
+				sb.append("\nMost available master ");
 				sb.append(hostNames.get(x));
 				sb.append(" has ");
 				sb.append(maxAvailableSlaveCount);
@@ -254,8 +254,8 @@ public class LoadBalanceUtil {
 					continue;
 				}
 
-				int totalJobCount = 0;
 				StringBuilder sb = new StringBuilder();
+				int totalJobCount = 0;
 
 				for (String jobCountData : content.split("\\|")) {
 					int x = jobCountData.indexOf("-");
@@ -273,6 +273,7 @@ public class LoadBalanceUtil {
 						}
 
 						sb.append(jobCountData);
+
 						totalJobCount += jobCount;
 					}
 				}
@@ -392,12 +393,13 @@ public class LoadBalanceUtil {
 				return null;
 			}
 
-			JSONArray computers = computerJSONObject.getJSONArray("computer");
-
 			int idleCount = 0;
 
-			for (int i = 0; i < computers.length(); i++) {
-				JSONObject idle = computers.getJSONObject(i);
+			JSONArray computersJSONArray = computerJSONObject.getJSONArray(
+				"computer");
+
+			for (int i = 0; i < computersJSONArray.length(); i++) {
+				JSONObject idle = computersJSONArray.getJSONObject(i);
 
 				if (idle.getBoolean("idle") && !idle.getBoolean("offline")) {
 					String displayName = idle.getString("displayName");
@@ -411,9 +413,10 @@ public class LoadBalanceUtil {
 			int queueCount = 0;
 
 			if (queueJSONObject.has("items")) {
-				JSONArray items = queueJSONObject.getJSONArray("items");
+				JSONArray itemsJSONArray = queueJSONObject.getJSONArray(
+					"items");
 
-				queueCount = items.length();
+				queueCount = itemsJSONArray.length();
 			}
 
 			int availableSlaveCount = idleCount - queueCount;

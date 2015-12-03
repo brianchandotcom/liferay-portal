@@ -14,8 +14,11 @@
 
 package com.liferay.control.menu.web;
 
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
+import com.liferay.control.menu.application.list.SimulationPanelCategory;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -23,6 +26,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -66,6 +71,14 @@ public class SimulationControlMenuEntry
 			return false;
 		}
 
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			SimulationPanelCategory.SIMULATION,
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());
+
+		if (panelApps.isEmpty()) {
+			return false;
+		}
+
 		return super.hasAccessPermission(request);
 	}
 
@@ -85,5 +98,12 @@ public class SimulationControlMenuEntry
 			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 			ActionKeys.UPDATE);
 	}
+
+	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		_panelAppRegistry = panelAppRegistry;
+	}
+
+	private volatile PanelAppRegistry _panelAppRegistry;
 
 }

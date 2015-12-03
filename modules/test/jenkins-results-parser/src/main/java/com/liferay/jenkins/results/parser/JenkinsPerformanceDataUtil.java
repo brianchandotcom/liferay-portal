@@ -31,56 +31,54 @@ import org.json.JSONObject;
 public class JenkinsPerformanceDataUtil {
 
 	public static void processPerformanceData(
-			String buildName, String jenkinsJobURL, int reportSize)
+			String batch, String url, int size)
 		throws Exception {
 
-		if (jenkinsJobURL.contains("-source")) {
-			JSONObject sourceJobJSONObject =
+		if (url.contains("-source")) {
+			JSONObject sourceJSON =
 				JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.getLocalURL(
-						jenkinsJobURL + "/api/json"));
-			resultsList.add(new Result(buildName, sourceJobJSONObject));
+					JenkinsResultsParserUtil.getLocalURL(url + "/api/json"));
+			
+			results.add(new Result(batch, sourceJSON));
 		}
 		else {
-			JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			JSONObject json = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
-					jenkinsJobURL + "/testReport/api/json"));
+					url + "/testReport/api/json"));
 
-			List<Result> resultList = getLongestResults(
-				buildName, jobJSONObject, reportSize);
-
-			resultsList.addAll(resultList);
+			results.addAll(getLongestResults(batch, json, size));
 		}
 
-		Collections.sort(resultsList);
+		Collections.sort(results);
 
-		truncateList(resultsList, reportSize);
+		truncate(results, size);
 	}
 
 	public static class Result implements Comparable<Result> {
 
-		public Result(String buildName, JSONObject sourceJobJSONObject)
+		public Result(String batch, JSONObject sourceJSON)
 			throws Exception {
 
 			axis = "";
-			batch = buildName;
+			this.batch = batch;
 			className = "";
-			duration = sourceJobJSONObject.getInt("duration") / 1000;
-			name = sourceJobJSONObject.getString("fullDisplayName");
-			status = sourceJobJSONObject.getString("result");
-			url = sourceJobJSONObject.getString("url");
+			duration = sourceJSON.getInt("duration") / 1000;
+			name = sourceJSON.getString("fullDisplayName");
+			status = sourceJSON.getString("result");
+			url = sourceJSON.getString("url");
 		}
 
-		public Result(
-				String buildName, JSONObject caseJSONObject,
-				JSONObject childJSONObject)
+		public Result(String batch, JSONObject caze, JSONObject child)
 			throws Exception {
 
-			batch = buildName;
+			this.batch = batch;
+			className = caze.getString("className");
+			duration = caze.getInt("duration");
+			name = caze.getString("name");
+			status = caze.getString("status");
 
-			setAxis(childJSONObject);
-			setCaseInfo(caseJSONObject);
-			setUrl(childJSONObject);
+			setAxis(child);
+			setUrl(child);
 		}
 
 		public int compareTo(Result result) {
@@ -115,45 +113,21 @@ public class JenkinsPerformanceDataUtil {
 			return url;
 		}
 
-		public JSONObject toJSONObject() {
-			JSONObject jsonObject = new JSONObject();
+		private void setAxis(JSONObject childJSONObject) throws Exception {
+			String url = childJSONObject.getString("url");
 
-			jsonObject.put("axis", axis);
-			jsonObject.put("batch", batch);
-			jsonObject.put("className", className);
-			jsonObject.put("duration", duration);
-			jsonObject.put("name", name);
-			jsonObject.put("status", status);
+			url = URLDecoder.decode(url, "UTF-8");
 
-			return jsonObject;
+			int x = url.indexOf("AXIS_VARIABLE");
+
+			url = url.substring(x);
+
+			int y = url.indexOf(",");
+
+			axis = url.substring(0, y);
 		}
 
-		public String toString() {
-			return toJSONObject().toString(4);
-		}
-
-		protected void setAxis(JSONObject childJSONObject) throws Exception {
-			String urlString = childJSONObject.getString("url");
-
-			urlString = URLDecoder.decode(urlString, "UTF-8");
-
-			int x = urlString.indexOf("AXIS_VARIABLE");
-
-			urlString = urlString.substring(x);
-
-			int y = urlString.indexOf(",");
-
-			axis = urlString.substring(0, y);
-		}
-
-		protected void setCaseInfo(JSONObject caseObject) {
-			className = caseObject.getString("className");
-			duration = caseObject.getInt("duration");
-			name = caseObject.getString("name");
-			status = caseObject.getString("status");
-		}
-
-		protected void setUrl(JSONObject childJSONObject) throws Exception {
+		private void setUrl(JSONObject childJSONObject) throws Exception {
 			String urlString = URLDecoder.decode(
 				childJSONObject.getString("url"), "UTF-8");
 
@@ -199,60 +173,68 @@ public class JenkinsPerformanceDataUtil {
 
 	}
 
-	protected static List<Result> getLongestResults(
-			String buildName, JSONObject jobJSONObject, int maxSize)
+	private static List<Result> getLongestResults(
+			String name, JSONObject job, int maxSize)
 		throws Exception {
 
-		JSONArray childReportsJSONArray = jobJSONObject.getJSONArray(
+		JSONArray childReports = job.getJSONArray(
 			"childReports");
-		List<Result> resultList = new ArrayList<>();
+		List<Result> results = new ArrayList<>();
 
-		for (int i = 0; i < childReportsJSONArray.length(); i++) {
-			JSONObject childReportJSONObject =
-				childReportsJSONArray.getJSONObject(i);
+		for (int i = 0; i < childReports.length(); i++) {
 
-			JSONObject childJSONObject = childReportJSONObject.getJSONObject(
-				"child");
+			JSONObject childReport = childReports.getJSONObject(i);
 
-			JSONObject resultJSONObject = childReportJSONObject.getJSONObject(
-				"result");
+			JSONObject child = childReport.getJSONObject("child");
 
-			JSONArray suitesJSONArray = resultJSONObject.getJSONArray("suites");
+			JSONObject childReportResult = childReport.getJSONObject("result");
 
-			for (int j = 0; j < suitesJSONArray.length(); j++) {
-				JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(j);
+			JSONArray suites = childReportResult.getJSONArray("suites");
 
-				JSONArray casesJSONArray = suiteJSONObject.getJSONArray(
+			for (int j = 0; j < suites.length(); j++) {
+
+				JSONObject suite = suites.getJSONObject(j);
+
+				JSONArray cases = suite.getJSONArray(
 					"cases");
 
-				for (int k = 0; k < casesJSONArray.length(); k++) {
-					JSONObject caseJSONObject = casesJSONArray.getJSONObject(k);
+				for (int k = 0; k < cases.length(); k++) {
+					
+					JSONObject caze = cases.getJSONObject(k);
 
 					Result result = new Result(
-						buildName, caseJSONObject, childJSONObject);
+						name, caze, child);
 
-					resultList.add(result);
+					results.add(result);
 				}
 			}
 		}
 
-		Collections.sort(resultList);
+		Collections.sort(results);
 
-		truncateList(resultList, maxSize);
+		truncate(results, maxSize);
 
-		return resultList;
+		return results;
 	}
 
-	protected static void truncateList(List<Result> list, int maxSize) {
+	private static void truncate(List<?> list, int maxSize) {
 		if (list.size() < maxSize) {
 			return;
 		}
 
-		List<Result> subList = list.subList(maxSize, list.size());
+		List<?> subList = list.subList(maxSize, list.size());
 
 		subList.clear();
 	}
 
-	protected static final List<Result> resultsList = new ArrayList<>();
+	public static List<Result> getLongestResults() {
+		return results;
+	}
+	
+	public static void reset() {
+		results.clear();
+	}
+	
+	private static List<Result> results = new ArrayList<>();
 
 }

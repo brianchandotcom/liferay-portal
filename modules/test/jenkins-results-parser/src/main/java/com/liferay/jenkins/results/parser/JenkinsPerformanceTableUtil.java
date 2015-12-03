@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.List;
+
 import org.dom4j.Element;
 import org.dom4j.tree.DefaultElement;
 
@@ -23,7 +25,10 @@ import org.dom4j.tree.DefaultElement;
 public class JenkinsPerformanceTableUtil {
 
 	public static String generateHTML() {
-		if (JenkinsPerformanceDataUtil.resultsList == null) {
+		List<JenkinsPerformanceDataUtil.Result> results =
+			JenkinsPerformanceDataUtil.getLongestResults();
+		
+		if (results == null) {
 			return "";
 		}
 
@@ -33,13 +38,11 @@ public class JenkinsPerformanceTableUtil {
 
 		tableElement.add(headerElement);
 
-		for (JenkinsPerformanceDataUtil.Result result :
-				JenkinsPerformanceDataUtil.resultsList) {
-
+		for (JenkinsPerformanceDataUtil.Result result : results) {
 			tableElement.add(createRow(result));
 		}
 
-		JenkinsPerformanceDataUtil.resultsList.clear();
+		JenkinsPerformanceDataUtil.reset();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -64,7 +67,7 @@ public class JenkinsPerformanceTableUtil {
 		return sb.toString();
 	}
 
-	protected static Element createRow(
+	private static Element createRow(
 		JenkinsPerformanceDataUtil.Result result) {
 
 		return createRow(
@@ -72,69 +75,78 @@ public class JenkinsPerformanceTableUtil {
 			Float.toString(result.getDuration()), result.getName(),
 			result.getStatus(), result.getUrl());
 	}
+	
+	private static Element createAxisCell(String axis, String tag, String width) {
+		String text = axis;
+		if (axis.contains("=")) {
+			text = axis.substring(axis.indexOf("=") + 1);
+		}
+		
+		return createRowCell(text, tag, width);	
+	}
+	
+	private static Element createBatchCell(String batch, String tag, String width) {
+		String text = batch;
+		if (batch.contains("/")) {
+			text = batch.substring(batch.indexOf("/") + 1);
+		}
+		
+		return createRowCell(text, tag, width);
+	}
+	
+	private static Element createRowCell(
+		String text, String tag, String width) {
 
-	protected static Element createRow(
-		String cellTag, String axis, String batch, String className,
+		Element cell = new DefaultElement(tag);
+		
+		cell.addAttribute("width", width);
+
+		return cell.addText(text);
+	}
+	
+	private static Element createNameCell(
+		String name, String tag, String url, String width) {
+
+		if (url == null || url.length() == 0) {
+			return createRowCell(name, tag, width);
+		}
+
+		Element cell = new DefaultElement(tag);
+		
+		cell.addAttribute("width", width);
+		
+		Element anchor = new DefaultElement("a");
+
+		anchor.addAttribute("href", url);
+		anchor.addText(name);
+
+		cell.add(anchor);
+		
+		return cell;
+	}
+
+	private static Element createRow(
+		String tag, String axis, String batch, String className,
 		String duration, String name, String status, String url) {
 
 		Element row = new DefaultElement("tr");
 
-		Element axisCell = new DefaultElement(cellTag);
-		Element batchCell = new DefaultElement(cellTag);
-		Element classNameCell = new DefaultElement(cellTag);
-		Element durationCell = new DefaultElement(cellTag);
-		Element nameCell = new DefaultElement(cellTag);
-		Element statusCell = new DefaultElement(cellTag);
+		row.add(createBatchCell(batch, tag, "16%"));
 
-		int x = axis.indexOf("=");
+		row.add(createAxisCell(axis, tag, "8%"));
 
-		String shortAxis = axis;
+		row.add(createRowCell(className, tag, "30%"));
 
-		if (x != -1) {
-			shortAxis = axis.substring(x + 1);
-		}
+		row.add(createNameCell(name, tag, url, "30%"));
 
-		axisCell.addText(shortAxis);
+		row.add(createRowCell(status, tag, "8%"));
 
-		int y = batch.indexOf("/");
-
-		String shortBatch = batch.substring(y + 1);
-
-		batchCell.addText(shortBatch);
-		classNameCell.addText(className);
-		durationCell.addText(duration);
-		statusCell.addText(status);
-
-		if (url != null) {
-			Element anchor = new DefaultElement("a");
-
-			anchor.addAttribute("href", url);
-			anchor.addText(name);
-
-			nameCell.add(anchor);
-		}
-		else {
-			nameCell.addText(name);
-		}
-
-		axisCell.addAttribute("width", "8%");
-		batchCell.addAttribute("width", "16%");
-		classNameCell.addAttribute("width", "30%");
-		durationCell.addAttribute("width", "4%");
-		nameCell.addAttribute("width", "30%");
-		statusCell.addAttribute("width", "8%");
-
-		row.add(batchCell);
-		row.add(axisCell);
-		row.add(classNameCell);
-		row.add(nameCell);
-		row.add(statusCell);
-		row.add(durationCell);
+		row.add(createRowCell(duration, tag, "4%"));
 
 		return row;
 	}
 
-	protected static Element createTableHeader() {
+	private static Element createTableHeader() {
 		return createRow(
 			"th", "Axis", "Batch", "Class Name", "Duration (Seconds)", "Name",
 			"Status", null);

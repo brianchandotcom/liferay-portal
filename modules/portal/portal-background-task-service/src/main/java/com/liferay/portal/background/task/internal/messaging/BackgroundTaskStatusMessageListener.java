@@ -14,6 +14,7 @@
 
 package com.liferay.portal.background.task.internal.messaging;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
@@ -41,7 +42,8 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		long backgroundTaskId = message.getLong("backgroundTaskId");
+		long backgroundTaskId = message.getLong(
+			BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
 		if (backgroundTaskId != _backgroundTaskId) {
 			return;

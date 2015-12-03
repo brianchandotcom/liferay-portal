@@ -17,6 +17,8 @@ package com.liferay.portal.search.internal.background.task;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.search.internal.SearchEngineInitializer;
 
 /**
@@ -35,6 +37,10 @@ public class ReindexPortalBackgroundTaskExecutor
 		throws Exception {
 
 		for (long companyId : companyIds) {
+			ReindexStatusMessageSenderUtil.sendStatusMessage(
+				ReindexBackgroundTaskConstants.PORTAL_START, companyId,
+				companyIds);
+
 			try {
 				SearchEngineInitializer searchEngineInitializer =
 					new SearchEngineInitializer(companyId);
@@ -43,6 +49,11 @@ public class ReindexPortalBackgroundTaskExecutor
 			}
 			catch (Exception e) {
 				_log.error(e, e);
+			}
+			finally {
+				ReindexStatusMessageSenderUtil.sendStatusMessage(
+					ReindexBackgroundTaskConstants.PORTAL_END, companyId,
+					companyIds);
 			}
 		}
 	}

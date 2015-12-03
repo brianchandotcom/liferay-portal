@@ -392,7 +392,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 				try {
 					BackgroundTask backgroundTask =
 						BackgroundTaskManagerUtil.getBackgroundTask(
-							message.getLong("backgroundTaskId"));
+							message.getLong(
+								BackgroundTaskConstants.BACKGROUND_TASK_ID));
 
 					Map<String, Serializable> taskContextMap =
 						backgroundTask.getTaskContextMap();

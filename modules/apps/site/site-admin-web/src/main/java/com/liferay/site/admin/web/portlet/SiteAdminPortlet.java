@@ -31,6 +31,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PendingBackgroundTaskException;
 import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.RequiredGroupException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -162,7 +163,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		long backgroundTaskId = ParamUtil.getLong(
-			actionRequest, "backgroundTaskId");
+			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
 		BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
 	}

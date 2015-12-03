@@ -14,9 +14,11 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -54,6 +56,22 @@ public class IndexableActionableDynamicQuery
 		}
 	}
 
+	@Override
+	public void performActions() throws PortalException {
+		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			_total = super.performCount();
+		}
+
+		try {
+			super.performActions();
+		}
+		finally {
+			_count = _total;
+
+			sendStatusMessage();
+		}
+	}
+
 	public void setSearchEngineId(String searchEngineId) {
 		_searchEngineId = searchEngineId;
 	}
@@ -63,6 +81,8 @@ public class IndexableActionableDynamicQuery
 		if (Validator.isNotNull(_searchEngineId)) {
 			SearchEngineUtil.commit(_searchEngineId, getCompanyId());
 		}
+
+		sendStatusMessage();
 	}
 
 	@Override
@@ -94,10 +114,25 @@ public class IndexableActionableDynamicQuery
 			_searchEngineId, getCompanyId(), new ArrayList<>(_documents),
 			false);
 
+		_count += _documents.size();
+
 		_documents.clear();
 	}
 
+	protected void sendStatusMessage() {
+		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			return;
+		}
+
+		Class<?> modelClass = getModelClass();
+
+		ReindexStatusMessageSenderUtil.sendStatusMessage(
+			modelClass.getName(), _count, _total);
+	}
+
+	private long _count;
 	private Collection<Document> _documents;
 	private String _searchEngineId;
+	private long _total;
 
 }

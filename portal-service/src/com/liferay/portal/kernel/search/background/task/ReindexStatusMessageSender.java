@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.backgroundtask;
+package com.liferay.portal.kernel.search.background.task;
 
-import com.liferay.portal.kernel.messaging.Message;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Andrew Betts
  */
-public class BackgroundTaskStatusMessage extends Message {
+@ProviderType
+public interface ReindexStatusMessageSender {
 
-	public BackgroundTaskStatusMessage() {
-		put(
-			"backgroundTaskId",
-			BackgroundTaskThreadLocal.getBackgroundTaskId());
-	}
+	public void sendStatusMessage(String className, long count, long total);
+
+	public void sendStatusMessage(
+		String state, long searchContext, long[] items);
 
 }

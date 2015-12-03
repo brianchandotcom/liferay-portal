@@ -31,9 +31,11 @@ import org.junit.Test;
 public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	public LoadBalancerUtilTest() {
+		dependenciesDir = dependenciesDir.getParentFile();
+		dependenciesDir = dependenciesDir.getParentFile();
+
 		dependenciesDir = new File(
-			"src/test/resources/com/liferay/jenkins/results/parser" +
-				"/load/balancer/dependencies/" + getSimpleClassName());
+			dependenciesDir, "dependencies/" + getSimpleClassName());
 	}
 
 	@Before

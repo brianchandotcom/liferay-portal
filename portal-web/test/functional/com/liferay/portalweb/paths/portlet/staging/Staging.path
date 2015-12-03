@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATION</td>
-	<td>//a[span[contains(.,'${key_sitePagesVariationName}')]]</td>
+	<td>//div[contains(@class,'layout-set-branch-selector')]/a//span[contains(.,'${key_sitePagesVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>

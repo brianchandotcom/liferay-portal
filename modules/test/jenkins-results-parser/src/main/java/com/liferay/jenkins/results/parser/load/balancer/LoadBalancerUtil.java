@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jenkins.load.balance;
+package com.liferay.jenkins.results.parser.load.balancer;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
@@ -40,7 +40,7 @@ import org.json.JSONObject;
 /**
  * @author Peter Yoo
  */
-public class LoadBalanceUtil {
+public class LoadBalancerUtil {
 
 	public static String getMostAvailableMasterURL(Project project)
 		throws Exception {

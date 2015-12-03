@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.jenkins.load.balance;
+package com.liferay.jenkins.results.parser.load.balancer;
 
 import com.liferay.jenkins.results.parser.BaseJenkinsResultsParserTestCase;
+import com.liferay.jenkins.results.parser.load.balancer.LoadBalancerUtil;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Hashtable;
 import java.util.Map;
 
 import org.apache.tools.ant.Project;
@@ -28,12 +28,12 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
+public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 
-	public LoadBalanceUtilTest() {
+	public LoadBalancerUtilTest() {
 		dependenciesDir = new File(
-			"src/test/resources/com/liferay/load/balance/dependencies/" +
-				getSimpleClassName());
+			"src/test/resources/com/liferay/jenkins/results/parser" +
+				"/load/balancer/dependencies/" + getSimpleClassName());
 	}
 
 	@Before
@@ -44,7 +44,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Test
 	public void testGetMostAvailableMasterURL() throws Exception {
-		LoadBalanceUtil.recentJobPeriod = 0;
+		LoadBalancerUtil.recentJobPeriod = 0;
 
 		assertSamples();
 	}
@@ -90,7 +90,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		Project project = getDownloadProject(sampleDir.getName());
 
-		int hostNameCount = LoadBalanceUtil.getHostNameCount(
+		int hostNameCount = LoadBalancerUtil.getHostNameCount(
 			project, sampleDir.getName());
 
 		for (int i = 1; i <= hostNameCount; i++) {
@@ -118,7 +118,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		Project project = getTestProject(sampleDir.getName());
 
-		return LoadBalanceUtil.getMostAvailableMasterURL(project);
+		return LoadBalancerUtil.getMostAvailableMasterURL(project);
 	}
 
 	protected Project getTestProject(String baseInvocationHostName) {

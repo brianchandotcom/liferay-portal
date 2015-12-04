@@ -152,9 +152,9 @@ AUI.add(
 				},
 
 				_parsePositionalByDay: function(string) {
-					var position = string.split(0, -2);
+					var position = string.slice(0, -2);
 
-					var dayOfWeek = string.split(-2);
+					var dayOfWeek = string.slice(-2);
 
 					return {
 						dayOfWeek: dayOfWeek,

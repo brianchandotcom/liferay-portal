@@ -386,17 +386,28 @@
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
+
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+
 		<execute function="Click" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
 
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Check" locator1="Checkbox#SITE_OWNER" />
-		<execute function="Click" locator1="Button#UPDATE_ASSOCIATIONS" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute function="Click" locator1="Button#ADD" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertChecked" locator1="Checkbox#SITE_OWNER" />
 	</command>
 
 	<command name="assignSiteRolesUserGroupsCP">

@@ -37,6 +37,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.UserGroupGroupRole;
 import com.liferay.portal.model.impl.UserGroupGroupRoleImpl;
 import com.liferay.portal.model.impl.UserGroupGroupRoleModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.UserGroupGroupRolePK;
 import com.liferay.portal.service.persistence.UserGroupGroupRolePersistence;
 

@@ -38,6 +38,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.model.impl.UserTrackerImpl;
 import com.liferay.portal.model.impl.UserTrackerModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.UserTrackerPersistence;
 
 import java.io.Serializable;

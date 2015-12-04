@@ -38,6 +38,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.PasswordTracker;
 import com.liferay.portal.model.impl.PasswordTrackerImpl;
 import com.liferay.portal.model.impl.PasswordTrackerModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.PasswordTrackerPersistence;
 
 import java.io.Serializable;

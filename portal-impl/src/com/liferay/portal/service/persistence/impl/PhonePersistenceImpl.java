@@ -42,6 +42,7 @@ import com.liferay.portal.model.impl.PhoneImpl;
 import com.liferay.portal.model.impl.PhoneModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.PhonePersistence;
 
 import java.io.Serializable;

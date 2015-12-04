@@ -37,6 +37,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.impl.ResourceBlockPermissionImpl;
 import com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
 
 import java.io.Serializable;

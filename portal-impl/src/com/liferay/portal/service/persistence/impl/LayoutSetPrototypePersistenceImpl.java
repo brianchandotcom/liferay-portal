@@ -44,6 +44,7 @@ import com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.LayoutSetPrototypePersistence;
 
 import java.io.Serializable;

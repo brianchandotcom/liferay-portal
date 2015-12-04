@@ -40,6 +40,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.Ticket;
 import com.liferay.portal.model.impl.TicketImpl;
 import com.liferay.portal.model.impl.TicketModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.TicketPersistence;
 
 import java.io.Serializable;

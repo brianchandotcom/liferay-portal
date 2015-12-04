@@ -39,6 +39,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.model.impl.PortletModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.PortletPersistence;
 
 import java.io.Serializable;

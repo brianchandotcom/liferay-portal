@@ -38,6 +38,7 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.model.impl.ImageModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.ImagePersistence;
 
 import java.io.Serializable;

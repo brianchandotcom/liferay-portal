@@ -38,6 +38,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.impl.SystemEventImpl;
 import com.liferay.portal.model.impl.SystemEventModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 
 import java.io.Serializable;

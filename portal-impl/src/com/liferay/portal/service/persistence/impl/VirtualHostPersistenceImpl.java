@@ -38,6 +38,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.model.impl.VirtualHostImpl;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.VirtualHostPersistence;
 
 import java.io.Serializable;

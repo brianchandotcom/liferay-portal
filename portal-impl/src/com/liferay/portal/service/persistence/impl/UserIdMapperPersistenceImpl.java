@@ -39,6 +39,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.UserIdMapper;
 import com.liferay.portal.model.impl.UserIdMapperImpl;
 import com.liferay.portal.model.impl.UserIdMapperModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.UserIdMapperPersistence;
 
 import java.io.Serializable;

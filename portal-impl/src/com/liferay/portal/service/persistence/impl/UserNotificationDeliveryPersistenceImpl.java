@@ -38,6 +38,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.impl.UserNotificationDeliveryImpl;
 import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.UserNotificationDeliveryPersistence;
 
 import java.io.Serializable;

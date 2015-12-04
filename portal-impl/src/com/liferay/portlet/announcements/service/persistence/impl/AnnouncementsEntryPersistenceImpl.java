@@ -46,8 +46,8 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.CompanyProvider;
 
 import com.liferay.portlet.announcements.NoSuchEntryException;
 import com.liferay.portlet.announcements.model.AnnouncementsEntry;

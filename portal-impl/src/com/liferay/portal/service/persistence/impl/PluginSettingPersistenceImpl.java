@@ -39,6 +39,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.model.impl.PluginSettingImpl;
 import com.liferay.portal.model.impl.PluginSettingModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.PluginSettingPersistence;
 
 import java.io.Serializable;

@@ -38,6 +38,7 @@ import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.impl.LayoutBranchImpl;
 import com.liferay.portal.model.impl.LayoutBranchModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.LayoutBranchPersistence;
 
 import java.io.Serializable;

@@ -37,6 +37,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.impl.MembershipRequestImpl;
 import com.liferay.portal.model.impl.MembershipRequestModelImpl;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.MembershipRequestPersistence;
 
 import java.io.Serializable;

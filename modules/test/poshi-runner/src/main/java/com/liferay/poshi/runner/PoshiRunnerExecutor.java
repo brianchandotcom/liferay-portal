@@ -656,6 +656,7 @@ public class PoshiRunnerExecutor {
 						selenium.equals("assertLocation") ||
 						selenium.equals("assertHTMLSourceTextNotPresent") ||
 						selenium.equals("assertHTMLSourceTextPresent") ||
+						selenium.equals("assertNotLocation") ||
 						selenium.equals("assertTextNotPresent") ||
 						selenium.equals("assertTextPresent") ||
 						selenium.equals("waitForConfirmation") ||

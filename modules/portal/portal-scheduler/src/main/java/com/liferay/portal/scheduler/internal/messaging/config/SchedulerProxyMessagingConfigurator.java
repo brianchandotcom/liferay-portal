@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.spring.aop.InvocationHandlerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.messaging.proxy.MessagingProxyInvocationHandler;
-import com.liferay.portal.spring.aop.InvocationHandlerFactory;
 
 import java.lang.reflect.InvocationHandler;
 

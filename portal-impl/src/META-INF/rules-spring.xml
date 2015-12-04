@@ -19,7 +19,7 @@
 			</bean>
 		</constructor-arg>
 		<constructor-arg>
-			<bean class="com.liferay.portal.messaging.proxy.MessagingProxyInvocationHandler" factory-method="getInvocationHandlerFactory" />
+			<bean class="com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler" factory-method="getInvocationHandlerFactory" />
 		</constructor-arg>
 	</bean>
 

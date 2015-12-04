@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.messaging.proxy;
+package com.liferay.portal.kernel.messaging.proxy;
 
-import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.messaging.proxy.ProxyRequest;
-import com.liferay.portal.spring.aop.InvocationHandlerFactory;
+import com.liferay.portal.kernel.spring.aop.InvocationHandlerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

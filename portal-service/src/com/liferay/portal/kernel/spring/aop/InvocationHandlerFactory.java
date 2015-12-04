@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.spring.aop;
+package com.liferay.portal.kernel.spring.aop;
 
 import java.lang.reflect.InvocationHandler;
 

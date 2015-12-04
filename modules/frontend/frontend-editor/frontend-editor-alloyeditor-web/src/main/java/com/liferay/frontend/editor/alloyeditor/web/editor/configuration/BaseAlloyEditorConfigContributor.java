@@ -36,6 +36,8 @@ public class BaseAlloyEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		jsonObject.put("allowedContent", Boolean.TRUE);
+
 		String contentsLanguageDir = getContentsLanguageDir(
 			inputEditorTaglibAttributes);
 

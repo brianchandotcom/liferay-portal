@@ -274,6 +274,9 @@
 					</if>
 
 					<execute function="AssertChecked" locator1="DynamicUploader#SELECT_ALL_CHECKBOX" />
+
+					<var name="key_documentName" value="${dmDocumentFile}" />
+
 					<execute function="AssertElementPresent" locator1="DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE" value1="${dmDocumentFile}" />
 				</for>
 			</then>
@@ -2341,7 +2344,8 @@
 	</command>
 
 	<command name="viewStagingDetailsPG">
-		<execute function="Click" locator1="Toolbar#ADD" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
 		<execute function="AssertTextEquals" locator1="MenuItem#FOLDER" value1="Folder" />
 		<execute function="AssertTextEquals" locator1="MenuItem#SHORTCUT" value1="Shortcut" />
 		<execute function="AssertTextEquals" locator1="MenuItem#REPOSITORY" value1="Repository" />
@@ -2352,22 +2356,27 @@
 		<execute function="AssertTextEquals" locator1="MenuItem#ONLINE_TRAINING" value1="Online Training" />
 		<execute function="AssertTextEquals" locator1="MenuItem#SALES_PRESENTATION" value1="Sales Presentation" />
 
+		<execute function="SelectFrameTop" />
+
 		<var name="key_dmDocumentTitle" value="Document_1.jpeg" />
+
+		<execute function="Check" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
+
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#DOWNLOAD" value1="Download" />
 		<execute function="AssertTextEquals" locator1="MenuItem#EDIT" value1="Edit" />
 		<execute function="AssertTextEquals" locator1="MenuItem#MOVE" value1="Move" />
 		<execute function="AssertTextEquals" locator1="MenuItem#CHECKOUT" value1="Checkout" />
-		<execute function="AssertTextEquals" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
-		<execute function="AssertTextEquals" locator1="MenuItem#DELETE" value1="Move to the Recycle Bin" />
-
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ACTIONS" value1="Actions" />
-		<execute function="AssertTextEquals" locator1="MenuItem#CANCEL_CHECKOUT" value1="Cancel Checkout" />
-		<execute function="AssertTextEquals" locator1="MenuItem#CHECKIN" value1="Checkin" />
-		<execute function="AssertTextEquals" locator1="MenuItem#CHECKOUT" value1="Checkout" />
-		<execute function="AssertTextEquals" locator1="MenuItem#MOVE" value1="Move" />
+		<execute function="AssertTextEquals" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 		<execute function="AssertTextEquals" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+		<execute function="Check" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
+
+		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_CANCEL_CHECKOUT_ICON_BUTTON" />
+		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_LOCK_ICON_BUTTON" />
+		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_UNLOCK_ICON_BUTTON"  />
+		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_MOVE_ICON_BUTTON"  />
+		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_TRASH_ICON_BUTTON" />
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
@@ -2379,13 +2388,16 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" />
+		<execute function="AssertElementNotPresent" locator1="Portlet#ICON_PLUS_SIGN" />
+
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#DOWNLOAD" value1="Download" />
-		<execute function="AssertTextEquals" locator1="MenuItem#DELETE" value1="Move to the Recycle Bin" />
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ACTIONS" value1="Actions" />
 		<execute function="AssertTextEquals" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
+
+		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_TRASH_ICON_BUTTON" />
 	</command>
 
 	<command name="viewWithWorkflowCP">

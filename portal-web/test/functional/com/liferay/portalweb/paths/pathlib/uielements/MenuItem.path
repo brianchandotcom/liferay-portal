@@ -315,7 +315,7 @@
 </tr>
 <tr>
 	<td>GOOGLE_DOCS</td>
-	<td>//a[@role='menuitem' and contains(.,'Google Docs')]</td>
+	<td>//li[contains(@class,'open')]//a[contains(.,'Google Docs')] | //div[contains(@class,'open')]//a[contains(.,'Google Docs')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -400,7 +400,7 @@
 </tr>
 <tr>
 	<td>MARKETING_BANNER</td>
-	<td>//a[@role='menuitem' and contains(.,'Marketing Banner')]</td>
+	<td>//li[contains(@class,'open')]//a[contains(.,'Marketing Banner')] | //div[contains(@class,'open')]//a[contains(.,'Marketing Banner')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -435,12 +435,12 @@
 </tr>
 <tr>
 	<td>MULTIPLE_DOCUMENTS</td>
-	<td>//a[@role='menuitem' and contains(.,'Multiple Documents')]</td>
+	<td>//li[contains(@class,'open')]//a[contains(.,'Multiple Documents')] | //div[contains(@class,'open')]//a[contains(.,'Multiple Documents')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ONLINE_TRAINING</td>
-	<td>//a[@role='menuitem' and contains(.,'Online Training')]</td>
+	<td>//li[contains(@class,'open')]//a[contains(.,'Online Training')] | //div[contains(@class,'open')]//a[contains(.,'Online Training')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -520,7 +520,7 @@
 </tr>
 <tr>
 	<td>REPOSITORY</td>
-	<td>//li[contains(@class,'open')]//a[@role='menuitem' and @title='Repository']</td>
+	<td>//li[contains(@class,'open')]//a[contains(.,'Repository')] | //div[contains(@class,'open')]//a[contains(.,'Repository')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -545,7 +545,7 @@
 </tr>
 <tr>
 	<td>SALES_PRESENTATION</td>
-	<td>//a[@role='menuitem' and contains(.,'Sales Presentation')]</td>
+	<td>//li[contains(@class,'open')]//a[contains(.,'Sales Presentation')] | //div[contains(@class,'open')]//a[contains(.,'Sales Presentation')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -570,7 +570,7 @@
 </tr>
 <tr>
 	<td>SHORTCUT</td>
-	<td>//li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Shortcut')]</td>
+	<td>//li[contains(@class,'open')]//a[contains(.,'Shortcut')] | //div[contains(@class,'open')]//a[contains(.,'Shortcut')]</td>
 	<td></td>
 </tr>
 <tr>

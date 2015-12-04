@@ -1,6 +1,10 @@
 import com.liferay.gradle.util.GradleUtil
 
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.8"
+	}
+
 	repositories {
 		if (!Boolean.getBoolean("maven.local.ignore")) {
 			mavenLocal()
@@ -10,13 +14,11 @@ buildscript {
 			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
 	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.8"
-	}
 }
 
 apply plugin: "com.liferay.poshi.runner"
+
+task updateGradleCache
 
 configurations {
 	sikuliComplete
@@ -56,8 +58,6 @@ repositories {
 		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
 }
-
-task updateGradleCache
 
 runPoshi {
 	jvmArgs "-Dfile.encoding=UTF-8"

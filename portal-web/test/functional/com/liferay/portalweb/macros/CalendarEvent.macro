@@ -1682,4 +1682,26 @@
 			</elseif>
 		</if>
 	</command>
+
+	<command name="setRepeatingYearlyEvent">
+		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
+
+		<execute macro="CalendarEvent#selectRepeatFrequency">
+		<var name="frequency" value="${frequency}" />
+		</execute>
+
+		<execute function="AssertSelectedLabel" locator1="CalendarEditEvent#REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
+
+		<execute function="Click" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO" />
+
+		<execute function="Pause" value1="1000" />
+		<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
+		<execute function="Pause" value1="1000" />
+
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${setYearlyRecurrenceSummary}" />
+
+		<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
+
+		<execute function="Check" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
+	</command>
 </definition>

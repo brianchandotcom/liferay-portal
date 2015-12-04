@@ -420,8 +420,10 @@
 		</execute>
 
 		<execute macro="BookmarksFolder#editCP">
-			<var name="folderDescription" value="${editFolderDescription}" />
-			<var name="folderName" value="${editFolderName}" />
+			<var name="folderDescription" value="${folderDescription}" />
+			<var name="folderDescriptionEdit" value="${editFolderDescription}" />
+			<var name="folderName" value="${folderName}" />
+			<var name="folderNameEdit" value="${editFolderName}" />
 		</execute>
 	</command>
 

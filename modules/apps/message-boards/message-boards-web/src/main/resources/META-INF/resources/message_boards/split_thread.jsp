@@ -36,9 +36,11 @@ String parentAuthor = null;
 String body = StringPool.BLANK;
 boolean quote = false;
 boolean splitThread = true;
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 %>
 
-<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<portlet:actionURL name="/message_boards/split_thread" var="splitThreadURL">
 		<portlet:param name="mvcRenderCommandName" value="/message_boards/split_thread" />
 	</portlet:actionURL>

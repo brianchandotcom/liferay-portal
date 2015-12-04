@@ -16,11 +16,11 @@
 
 <%
 for (int j = 0; j < entryColumns.length; j++) {
-	String bookmarksEntryColumn = entryColumns[j];
+	String curEntryColumn = entryColumns[j];
 %>
 
 	<c:choose>
-		<c:when test='<%= bookmarksEntryColumn.equals("action") %>'>
+		<c:when test='<%= curEntryColumn.equals("action") %>'>
 
 			<%
 			String align = SearchEntry.DEFAULT_ALIGN;
@@ -36,32 +36,45 @@ for (int j = 0; j < entryColumns.length; j++) {
 				path="/bookmarks/entry_action.jsp"
 			/>
 		</c:when>
-		<c:when test='<%= bookmarksEntryColumn.equals("modified-date") %>'>
+		<c:when test='<%= curEntryColumn.equals("modified-date") %>'>
 			<liferay-ui:search-container-column-date
-				href="<%= rowHREF %>"
-				name="<%= bookmarksEntryColumn %>"
+				href="<%= rowURL.toString() %>"
+				name="<%= curEntryColumn %>"
 				value="<%= entry.getModifiedDate() %>"
 			/>
 		</c:when>
-		<c:when test='<%= bookmarksEntryColumn.equals("name") %>'>
+		<c:when test='<%= curEntryColumn.equals("name") %>'>
+
+			<%
+			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(BookmarksEntry.class.getName());
+
+			AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(entry.getEntryId());
+			%>
+
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="<%= bookmarksEntryColumn %>"
-				value="<%= HtmlUtil.escape(entry.getName()) %>"
-			/>
+				name="<%= curEntryColumn %>"
+			>
+				<liferay-ui:app-view-entry
+					displayStyle="list"
+					iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+					showCheckbox="<%= false %>"
+					title="<%= entry.getName() %>"
+					url="<%= rowURL.toString() %>"
+				/>
+			</liferay-ui:search-container-column-text>
 		</c:when>
-		<c:when test='<%= bookmarksEntryColumn.equals("url") %>'>
+		<c:when test='<%= curEntryColumn.equals("url") %>'>
 			<liferay-ui:search-container-column-text
 				cssClass="row-url"
-				href="<%= rowHREF %>"
-				name="<%= bookmarksEntryColumn %>"
+				href="<%= rowURL.toString() %>"
+				name="<%= curEntryColumn %>"
 				value="<%= HtmlUtil.escape(entry.getUrl()) %>"
 			/>
 		</c:when>
-		<c:when test='<%= bookmarksEntryColumn.equals("visits") %>'>
+		<c:when test='<%= curEntryColumn.equals("visits") %>'>
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="<%= bookmarksEntryColumn %>"
+				href="<%= rowURL.toString() %>"
+				name="<%= curEntryColumn %>"
 				value="<%= String.valueOf(entry.getVisits()) %>"
 			/>
 		</c:when>

@@ -57,11 +57,11 @@
 				<execute macro="DMDocument#showCategorization" />
 
 				<for list="${tagNameList}" param="tagName">
-					<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
+					<execute function="Click#clickAt" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
 					<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
 				</for>
 
-				<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
+				<execute function="Click#clickAt" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
 			</then>
 		</if>
 
@@ -1563,7 +1563,7 @@
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="AssetCategorization#TAGS_FIELD" />
 			<then>
-				<execute function="AssertClick" locator1="PGDocumentsandmediaEditdocument#CATEGORIZATION_PANEL_COLLAPSED" value1="Categorization" />
+				<execute function="Click#clickAt" locator1="AssetCategorization#PANEL_TOGGLE" value1="Categorization" />
 			</then>
 		</if>
 	</command>

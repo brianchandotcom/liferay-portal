@@ -73,7 +73,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<portlet:actionURL name="/document_library/edit_file_shortcut" var="editFileShortcutURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
 	</portlet:actionURL>
@@ -99,49 +99,51 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:error exception="<%= FileShortcutPermissionException.class %>" message="you-do-not-have-permission-to-create-a-shortcut-to-the-selected-document" />
 		<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-document-could-not-be-found" />
 
-		<aui:fieldset>
-			<div class="alert alert-info">
-				<liferay-ui:message key="you-can-create-a-shortcut-to-any-document-that-you-have-read-access-for" />
-			</div>
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<div class="alert alert-info">
+					<liferay-ui:message key="you-can-create-a-shortcut-to-any-document-that-you-have-read-access-for" />
+				</div>
 
-			<%
-			String toGroupName = StringPool.BLANK;
+				<%
+				String toGroupName = StringPool.BLANK;
 
-			if (toGroup != null) {
-				toGroupName = HtmlUtil.escape(toGroup.getDescriptiveName(locale));
-			}
-			%>
+				if (toGroup != null) {
+					toGroupName = HtmlUtil.escape(toGroup.getDescriptiveName(locale));
+				}
+				%>
 
-			<div class="form-group">
-				<aui:input label="site" name="toGroupName" type="resource" value="<%= toGroupName %>" />
+				<div class="form-group">
+					<aui:input label="site" name="toGroupName" type="resource" value="<%= toGroupName %>" />
 
-				<aui:button name="selectGroupButton" value="select" />
-			</div>
+					<aui:button name="selectGroupButton" value="select" />
+				</div>
 
-			<%
-			String toFileEntryTitle = BeanPropertiesUtil.getString(toFileEntry, "title");
-			%>
+				<%
+				String toFileEntryTitle = BeanPropertiesUtil.getString(toFileEntry, "title");
+				%>
 
-			<div class="form-group">
-				<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= toFileEntryTitle %>" />
+				<div class="form-group">
+					<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= toFileEntryTitle %>" />
 
-				<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
-			</div>
+					<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
+				</div>
+			</aui:fieldset>
 
 			<c:if test="<%= fileShortcut == null %>">
-				<aui:field-wrapper label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= DLFileShortcutConstants.getClassName() %>"
 					/>
-				</aui:field-wrapper>
+				</aui:fieldset>
 			</c:if>
+		</aui:fieldset-group>
 
-			<aui:button-row>
-				<aui:button type="submit" />
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" />
 
-				<aui:button href="<%= redirect %>" type="cancel" />
-			</aui:button-row>
-		</aui:fieldset>
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
 	</aui:form>
 </div>
 

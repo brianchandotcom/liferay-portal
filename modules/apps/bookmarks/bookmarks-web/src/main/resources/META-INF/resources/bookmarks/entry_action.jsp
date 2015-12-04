@@ -21,9 +21,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 BookmarksEntry entry = null;
 
-String cssClass = StringPool.BLANK;
-String listGroupItemCssClass = StringPool.BLANK;
-
 boolean view = false;
 
 if (row != null) {
@@ -41,14 +38,11 @@ if (row != null) {
 else {
 	entry = (BookmarksEntry)request.getAttribute("view_entry.jsp-entry");
 
-	cssClass = "list-group nav";
-	listGroupItemCssClass = "list-group-item";
-
 	view = true;
 }
 %>
 
-<liferay-ui:icon-menu cssClass="<%= cssClass %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
@@ -58,8 +52,6 @@ else {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			cssClass="<%= listGroupItemCssClass %>"
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
 		/>
@@ -75,8 +67,6 @@ else {
 		/>
 
 		<liferay-ui:icon
-			cssClass="<%= listGroupItemCssClass %>"
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
@@ -94,8 +84,6 @@ else {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					cssClass="<%= listGroupItemCssClass %>"
-					iconCssClass="icon-remove-sign"
 					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
 				/>
@@ -108,8 +96,6 @@ else {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					cssClass="<%= listGroupItemCssClass %>"
-					iconCssClass="icon-ok-sign"
 					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>
@@ -130,7 +116,6 @@ else {
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			cssClass="<%= listGroupItemCssClass %>"
 			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
 		/>

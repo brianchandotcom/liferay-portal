@@ -15,7 +15,9 @@
 package com.liferay.bookmarks.web.portlet.action;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
+import com.liferay.bookmarks.web.portlet.toolbar.item.BookmarksPortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -25,6 +27,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -34,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
-		"mvc.command.name=/bookmarks/view"
+		"mvc.command.name=/", "mvc.command.name=/bookmarks/view"
 	},
 	service = MVCRenderCommand.class
 )
@@ -47,6 +50,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			ActionUtil.getFolder(renderRequest);
+
+			renderRequest.setAttribute(
+				BookmarksWebKeys.BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR,
+				_bookmarksPortletToolbarContributor);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFolderException ||
@@ -63,5 +70,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		return "/bookmarks/view.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLPortletToolbarContributor(
+		BookmarksPortletToolbarContributor bookmarksPortletToolbarContributor) {
+
+		_bookmarksPortletToolbarContributor =
+			bookmarksPortletToolbarContributor;
+	}
+
+	private volatile BookmarksPortletToolbarContributor
+		_bookmarksPortletToolbarContributor;
 
 }

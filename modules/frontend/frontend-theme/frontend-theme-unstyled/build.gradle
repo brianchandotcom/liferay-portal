@@ -9,7 +9,7 @@ task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
 String alloyVersion = "3.0.1"
-String lexiconVersion = "0.1.24"
+String lexiconVersion = "0.1.25"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
 File thirdPartyDir = file("../../../../portal-web/third-party")

@@ -114,6 +114,8 @@ public class PoshiRunner {
 
 			PoshiRunnerStackTraceUtil.emptyStackTrace();
 
+			e.printStackTrace();
+
 			throw new Exception(e.getMessage(), e);
 		}
 		finally {

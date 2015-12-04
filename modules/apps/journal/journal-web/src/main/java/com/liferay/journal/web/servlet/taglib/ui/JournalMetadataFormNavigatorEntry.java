@@ -25,15 +25,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {"service.ranking:Integer=10"},
+	property = {"service.ranking:Integer=60"},
 	service = FormNavigatorEntry.class
 )
-public class JournalCustomFieldsFormNavigatorEntry
+public class JournalMetadataFormNavigatorEntry
 	extends BaseJournalFormNavigatorEntry {
 
 	@Override
 	public String getKey() {
-		return "custom-fields";
+		return "metadata";
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class JournalCustomFieldsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/article/custom_fields.jsp";
+		return "/article/metadata.jsp";
 	}
 
 }

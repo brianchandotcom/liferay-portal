@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METADATA</td>
+	<td>//div[@id='metadataTitle']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINE</td>
 	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Mine')]/a/span</td>
 	<td></td>

@@ -16,6 +16,13 @@
 
 <%@ include file="/html/taglib/aui/fieldset/init.jsp" %>
 
+<%
+if (Validator.isNull(label)) {
+	collapsible = false;
+	collapsed = false;
+}
+%>
+
 <div aria-labelledby="<%= panelId %>Title" class="<%= collapsible ? "panel panel-default" : StringPool.BLANK %> <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> role="group">
 	<c:if test="<%= Validator.isNotNull(label) %>">
 		<liferay-util:buffer var="header">

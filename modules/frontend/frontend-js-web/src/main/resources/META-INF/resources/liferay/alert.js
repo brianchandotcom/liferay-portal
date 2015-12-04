@@ -46,8 +46,7 @@ AUI.add(
 						var boundingBox = instance.get('boundingBox');
 
 						instance._eventHandles = [
-							instance.after('messageChange', instance._setBodyContent, instance),
-							instance.after('titleChange', instance._setBodyContent, instance),
+							instance.after(['messageChange', 'titleChange'], instance._setBodyContent, instance),
 							instance.after('typeChange', instance._afterTypeChange, instance),
 							boundingBox.on('mouseenter', instance._cancelHide, instance),
 							boundingBox.on('mouseleave', instance.hide, instance)

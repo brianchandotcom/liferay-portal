@@ -18,6 +18,9 @@ import com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException
 import com.liferay.dynamic.data.lists.exception.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
 import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException;
+import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException.MustEnterValidEmailAddress;
+import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException.MustEnterValidRedirectURL;
+import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException.RequiredValue;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -435,8 +438,7 @@ public class DDLRecordSetLocalServiceImpl
 		String redirectURL = settingsProperties.getProperty("redirectURL");
 
 		if (Validator.isNotNull(redirectURL) && !Validator.isUrl(redirectURL)) {
-			throw new RecordSetSettingsException(
-				"The property \"redirectURL\" is not a URL");
+			throw new MustEnterValidRedirectURL();
 		}
 
 		String requireCaptcha = settingsProperties.getProperty(
@@ -457,25 +459,21 @@ public class DDLRecordSetLocalServiceImpl
 				"emailFromAddress");
 
 			if (!Validator.isEmailAddress(emailFromAddress)) {
-				throw new RecordSetSettingsException(
-					"The property \"emailFromAddress\" is not an email " +
-						"address");
+				throw new MustEnterValidEmailAddress("emailFromAddress");
 			}
 
 			String emailFromName = settingsProperties.getProperty(
 				"emailFromName");
 
 			if (Validator.isNull(emailFromName)) {
-				throw new RecordSetSettingsException(
-					"The property \"emailFromName\" is empty");
+				throw new RequiredValue("emailFromName");
 			}
 
 			String emailToAddress = settingsProperties.getProperty(
 				"emailToAddresses");
 
 			if (!Validator.isEmailAddress(emailToAddress)) {
-				throw new RecordSetSettingsException(
-					"The property \"emailToAddress\" is not an email address");
+				throw new MustEnterValidEmailAddress("emailToAddress");
 			}
 		}
 	}

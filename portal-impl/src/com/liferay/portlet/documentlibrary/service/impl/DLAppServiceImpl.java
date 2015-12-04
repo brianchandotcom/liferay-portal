@@ -54,6 +54,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLTrashService;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
@@ -2112,6 +2113,36 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Moves the file entry from a trashed folder to the new folder.
+	 *
+	 * @param  fileEntryId the primary key of the file entry
+	 * @param  newFolderId the primary key of the new folder
+	 * @param  serviceContext the service context to be applied
+	 * @return the file entry
+	 */
+	@Override
+	public FileEntry moveFileEntryFromTrash(
+			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return dlTrashService.moveFileEntryFromTrash(
+			fileEntryId, newFolderId, serviceContext);
+	}
+
+	/**
+	 * Moves the file entry with the primary key to the trash portlet.
+	 *
+	 * @param  fileEntryId the primary key of the file entry
+	 * @return the file entry
+	 */
+	@Override
+	public FileEntry moveFileEntryToTrash(long fileEntryId)
+		throws PortalException {
+
+		return dlTrashService.moveFileEntryToTrash(fileEntryId);
+	}
+
+	/**
 	 * Moves the folder to the new parent folder with the primary key.
 	 *
 	 * @param  folderId the primary key of the folder
@@ -2151,6 +2182,17 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return moveFolders(
 			folderId, parentFolderId, fromRepository, toRepository,
 			serviceContext);
+	}
+
+	/**
+	 * Moves the folder with the primary key to the trash portlet.
+	 *
+	 * @param  folderId the primary key of the folder
+	 * @return the file entry
+	 */
+	@Override
+	public Folder moveFolderToTrash(long folderId) throws PortalException {
+		return dlTrashService.moveFolderToTrash(folderId);
 	}
 
 	/**
@@ -2207,6 +2249,28 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return repository.refreshFolderLock(
 			lockUuid, companyId, expirationTime);
+	}
+
+	/**
+	 * Restores the file entry with the primary key from the trash portlet.
+	 *
+	 * @param fileEntryId the primary key of the file entry
+	 */
+	@Override
+	public void restoreFileEntryFromTrash(long fileEntryId)
+		throws PortalException {
+
+		dlTrashService.restoreFileEntryFromTrash(fileEntryId);
+	}
+
+	/**
+	 * Restores the folder with the primary key from the trash portlet.
+	 *
+	 * @param folderId the primary key of the folder
+	 */
+	@Override
+	public void restoreFolderFromTrash(long folderId) throws PortalException {
+		dlTrashService.restoreFolderFromTrash(folderId);
 	}
 
 	/**
@@ -3078,6 +3142,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return newFolder;
 	}
+
+	@BeanReference(type = DLTrashService.class)
+	protected DLTrashService dlTrashService;
 
 	@BeanReference(type = RepositoryProvider.class)
 	protected RepositoryProvider repositoryProvider;

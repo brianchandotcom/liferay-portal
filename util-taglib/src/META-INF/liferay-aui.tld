@@ -2127,6 +2127,13 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", foo&gt;</code> would render as the attribute <code>data-class-name = foo;</code>.]]></description>
+			<name>data</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[An ID for the component instance]]></description>
 			<name>id</name>
 			<required>false</required>

@@ -1086,6 +1086,12 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
+				<name>data</name>
+				<inputType>java.lang.Object</inputType>
+				<outputType>java.util.Map</outputType>
+			</attribute>
+			<attribute>
 				<description>An ID for the component instance</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>

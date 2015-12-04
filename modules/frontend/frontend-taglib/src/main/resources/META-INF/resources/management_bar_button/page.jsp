@@ -17,5 +17,5 @@
 <%@ include file="/management_bar_button/init.jsp" %>
 
 <li class="<%= active ? "active" : StringPool.BLANK %>">
-	<aui:a cssClass="<%= cssClass %>" href="<%= href %>" iconCssClass="<%= iconCssClass %>" id="<%= id %>" />
+	<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= href %>" iconCssClass="<%= iconCssClass %>" id="<%= id %>" title="<%= label %>" />
 </li>

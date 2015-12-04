@@ -45,6 +45,7 @@ for (String displayStyle : displayViews) {
 		active="<%= displayStyle.equals(selectedDisplayStyle) %>"
 		href="<%= displayStyleURL.toString() %>"
 		iconCssClass="<%= iconCssClass %>"
+		label="<%= displayStyle %>"
 	/>
 
 <%

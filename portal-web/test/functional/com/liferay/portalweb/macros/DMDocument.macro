@@ -187,9 +187,11 @@
 
 		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 
-		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
-		<execute function="Type" locator1="DocumentsAndMediaEditDocument#TITLE_FIELD" value1="${dmDocumentTitle}" />
-		<execute function="Type" locator1="DocumentsAndMediaEditDocument#DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute macro="DMDocument#editDocument">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
 
 		<if>
 			<isset var="selectOption" />
@@ -315,16 +317,11 @@
 			</else>
 		</if>
 
-		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
-
-		<execute function="Type" locator1="DocumentsAndMediaEditDocument#TITLE_FIELD" value1="${dmDocumentTitle}" />
-
-		<if>
-			<isset var="dmDocumentDescription" />
-			<then>
-				<execute function="Type" locator1="DocumentsAndMediaEditDocument#DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
-			</then>
-		</if>
+		<execute macro="DMDocument#editDocument">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
 
 		<if>
 			<isset var="categoryName" />
@@ -389,9 +386,12 @@
 		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 
-		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
-		<execute function="Type" locator1="DocumentsAndMediaEditDocument#TITLE_FIELD" value1="${dmDocumentTitle}" />
-		<execute function="Type" locator1="DocumentsAndMediaEditDocument#DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute macro="DMDocument#editDocument">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="SelectFrame" locator1="relative=top" />
@@ -540,9 +540,11 @@
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
 		</execute>
 
-		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
-		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
-		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
+		<execute macro="DMDocument#editDocument">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
 
 		<execute macro="Button#clickSubmitForPublication" />
 
@@ -978,6 +980,18 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="editDocument">
+		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
+		<execute function="Type" locator1="DocumentsAndMediaEditDocument#TITLE_FIELD" value1="${dmDocumentTitle}" />
+
+		<if>
+			<isset var="dmDocumentDescription" />
+			<then>
+				<execute function="Type" locator1="DocumentsAndMediaEditDocument#DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="editPG">
@@ -1501,9 +1515,12 @@
 		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmediaFolder#TOOLBAR_ADD" value1="Add" />
 		<execute function="AssertClick" locator1="PGDocumentsandmediaFolder#ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
-		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
-		<execute function="Type" locator1="DocumentsAndMediaEditDocument#TITLE_FIELD" value1="${dmDocumentTitle}" />
-		<execute function="Type" locator1="DocumentsAndMediaEditDocument#DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute macro="DMDocument#editDocument">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaFolder#SUCCESS_MESSAGE" value1="Your request completed successfully." />

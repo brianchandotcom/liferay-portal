@@ -78,7 +78,7 @@ userSearch.setResults(users);
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedUsers" label="delete" />
+			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedUsers" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>

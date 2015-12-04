@@ -45,7 +45,7 @@ AUI.add(
 						var boundingBox = instance.get('boundingBox');
 
 						instance._eventHandles = [
-							instance.after(['messageChange', 'titleChange'], instance._setBodyContent, instance),
+							instance.after(['messageChange', 'titleChange'], instance._updateBodyContent, instance),
 							instance.after('typeChange', instance._afterTypeChange, instance),
 							boundingBox.on('mouseenter', instance._cancelHide, instance),
 							boundingBox.on('mouseleave', instance.hide, instance)
@@ -57,8 +57,8 @@ AUI.add(
 					render: function(parentNode) {
 						var instance = this;
 
-						instance._setBodyContent();
-						instance._setCssClass();
+						instance._updateBodyContent();
+						instance._updateCssClass();
 
 						parentNode = A.one(parentNode);
 
@@ -68,7 +68,7 @@ AUI.add(
 					_afterTypeChange: function(event) {
 						var instance = this;
 
-						instance._setCssClass();
+						instance._updateCssClass();
 					},
 
 					_cancelHide: function() {
@@ -156,26 +156,6 @@ AUI.add(
 						}
 					},
 
-					_setBodyContent: function() {
-						var instance = this;
-
-						var bodyContent = Lang.sub(
-							TPL_CONTENT,
-							{
-								message: instance.get('message'),
-								title: instance.get('title') || ''
-							}
-						);
-
-						instance.set('bodyContent', bodyContent);
-					},
-
-					_setCssClass: function() {
-						var instance = this;
-
-						instance.set('cssClass', 'alert-' + instance.get('type'));
-					},
-
 					_transition: function(visible) {
 						var instance = this;
 
@@ -204,6 +184,26 @@ AUI.add(
 								}
 							);
 						}
+					},
+
+					_updateBodyContent: function() {
+						var instance = this;
+
+						var bodyContent = Lang.sub(
+							TPL_CONTENT,
+							{
+								message: instance.get('message'),
+								title: instance.get('title') || ''
+							}
+						);
+
+						instance.set('bodyContent', bodyContent);
+					},
+
+					_updateCssClass: function() {
+						var instance = this;
+
+						instance.set('cssClass', 'alert-' + instance.get('type'));
 					}
 				}
 			}

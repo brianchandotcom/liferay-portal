@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>SystemSettings</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SystemSettings</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>MENUBAR_CATEGORY</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_category}')]</td>
+	<td></td>
+</tr>
+<!--PRODUCTIVITY-->
+<tr>
+	<td>DYNAMIC_DATA_CONFIGURATION</td>
+	<td>//a[contains(.,'Dynamic Data ${key_configuration}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

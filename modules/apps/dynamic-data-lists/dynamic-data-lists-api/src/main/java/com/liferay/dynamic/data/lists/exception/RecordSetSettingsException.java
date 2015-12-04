@@ -42,44 +42,56 @@ public class RecordSetSettingsException extends PortalException {
 	public static class MustEnterValidEmailAddress
 		extends RecordSetSettingsException {
 
-		public MustEnterValidEmailAddress(String fieldName) {
+		public MustEnterValidEmailAddress(String propertyName) {
 			super(
 				String.format(
-					"Please enter a valid email address for field: '%s'",
-					fieldName));
-			_fieldName = fieldName;
+					"The property \"%s\" is not an email address",
+					propertyName));
+
+			_propertyName = propertyName;
 		}
 
-		public String getFieldName() {
-			return _fieldName;
+		public String getPropertyName() {
+			return _propertyName;
 		}
 
-		private final String _fieldName;
+		private final String _propertyName;
 
 	}
 
-	public static class MustEnterValidRedirectURL
-		extends RecordSetSettingsException {
+	public static class MustEnterValidURL extends RecordSetSettingsException {
 
-		public MustEnterValidRedirectURL() {
-			super("Please enter a valid redirect URL");
+		public MustEnterValidURL(String propertyName) {
+			super(
+				String.format(
+					"The property \"%s\" is not a valid URL", propertyName));
+
+			_propertyName = propertyName;
 		}
+
+		public String getPropertyName() {
+			return _propertyName;
+		}
+
+		private final String _propertyName;
 
 	}
 
 	public static class RequiredValue extends RecordSetSettingsException {
 
-		public RequiredValue(String fieldName) {
-			super(String.format("No value defined for field %s", fieldName));
+		public RequiredValue(String propertyName) {
+			super(
+				String.format(
+					"No value defined for property \"%s\"", propertyName));
 
-			_fieldName = fieldName;
+			_propertyName = propertyName;
 		}
 
-		public String getFieldName() {
-			return _fieldName;
+		public String getPropertyName() {
+			return _propertyName;
 		}
 
-		private final String _fieldName;
+		private final String _propertyName;
 
 	}
 

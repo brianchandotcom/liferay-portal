@@ -30,26 +30,15 @@ boolean requireCaptcha = GetterUtil.getBoolean(recordSet.getSettingsProperty("re
 	<portlet:param name="mvcPath" value="/admin/record_set_settings.jsp" />
 </portlet:actionURL>
 
-<liferay-ui:error exception="<%= RecordSetSettingsException.class %>" message="please-enter-valid-form-settings" />
-
-<liferay-ui:error exception="<%= RecordSetSettingsException.MustEnterValidEmailAddress.class %>">
-
-	<%
-	RecordSetSettingsException.MustEnterValidEmailAddress mevea = (RecordSetSettingsException.MustEnterValidEmailAddress)errorException;
-	%>
-
-	<liferay-ui:message arguments="<%= mevea.getFieldName() %>" key="please-enter-a-valid-email-address-for-field-x" translateArguments="<%= false %>" />
-</liferay-ui:error>
-
-<liferay-ui:error exception="<%= RecordSetSettingsException.MustEnterValidRedirectURL.class %>" message="please-enter-a-valid-redirect-url" />
-
-<liferay-ui:error exception="<%= RecordSetSettingsException.RequiredValue.class %>">
+<liferay-ui:error exception="<%= RecordSetSettingsException.MustEnterValidEmailAddress.class %>" message="please-enter-a-valid-email-address" />
+<liferay-ui:error exception="<%= RecordSetSettingsException.MustEnterValidURL.class %>" message="please-enter-a-valid-redirect-url" />
+<liferay-ui:error exception="<%= RecordSetSettingsException.RequiredValue.class %>" message="please-enter-a-valid-address-from">
 
 	<%
 	RecordSetSettingsException.RequiredValue rv = (RecordSetSettingsException.RequiredValue)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= rv.getFieldName() %>" key="no-value-defined-for-field-x" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= rv.getPropertyName() %>" key="no-value-defined-for-field-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <div class="container-fluid-1280">

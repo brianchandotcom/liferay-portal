@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.lists.exception.RecordSetDuplicateRecordSetKeyEx
 import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
 import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException;
 import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException.MustEnterValidEmailAddress;
-import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException.MustEnterValidRedirectURL;
+import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException.MustEnterValidURL;
 import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException.RequiredValue;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetLocalServiceBaseImpl;
@@ -438,7 +438,7 @@ public class DDLRecordSetLocalServiceImpl
 		String redirectURL = settingsProperties.getProperty("redirectURL");
 
 		if (Validator.isNotNull(redirectURL) && !Validator.isUrl(redirectURL)) {
-			throw new MustEnterValidRedirectURL();
+			throw new MustEnterValidURL("redirectURL");
 		}
 
 		String requireCaptcha = settingsProperties.getProperty(

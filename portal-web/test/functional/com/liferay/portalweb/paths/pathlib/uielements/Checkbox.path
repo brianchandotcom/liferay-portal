@@ -295,7 +295,7 @@
 </tr>
 <tr>
 	<td>SITE_OWNER</td>
-	<td>xpath=(//input[contains(@name,'rowIds')])[2]</td>
+	<td>//tr[contains(.,'Site Owner')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

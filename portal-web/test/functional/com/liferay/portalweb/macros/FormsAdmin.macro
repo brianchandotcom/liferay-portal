@@ -1,6 +1,23 @@
 <definition>
 	<var name="formName" value="Created Form Name" />
 
+	<command name="addDisplayStyle">
+		<execute function="Click" locator1="FormsAdmin#ADD_DISPLAY_STYLE" />
+
+		<execute macro="FormsAdmin#editDisplayStyle">
+			<var name="displayStyle" value="" />
+			<var name="newDisplayStyle" value="${displayStyle}" />
+		</execute>
+	</command>
+
+	<command name="assertVisibleDisplayStyle">
+		<for list="${displayStyle}" param="displayStyle">
+			<var name="key_displayStyle" value="${displayStyle}" />
+
+			<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_${key_displayStyle}" />
+		</for>
+	</command>
+
 	<command name="deleteForm">
 		<var name="key_cardEntry" value="${formName}" />
 
@@ -9,6 +26,32 @@
 		<execute function="AssertClick" locator1="MenuItem#DELETE" value1="Delete" />
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="editDisplayStyle">
+		<var name="key_displayStyle" value="${displayStyle}" />
+
+		<execute function="Type" locator1="FormsAdmin#EDIT_DISPLAY_STYLE" value1="${newDisplayStyle}" />
+	</command>
+
+	<command name="removeDisplayStyle">
+		<var name="key_displayStyle" value="${displayStyle}" />
+
+		<execute function="Click" locator1="FormsAdmin#REMOVE_DISPLAY_STYLE" />
+	</command>
+
+	<command name="saveFormConfiguration">
+		<if>
+			<condition function="IsElementPresent" locator1="Button#SAVE" />
+			<then>
+				<execute function="Click" locator1="Button#SAVE" />
+			</then>
+			<else>
+				<execute function="Click" locator1="Button#UPDATE" />
+			</else>
+		</if>
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>

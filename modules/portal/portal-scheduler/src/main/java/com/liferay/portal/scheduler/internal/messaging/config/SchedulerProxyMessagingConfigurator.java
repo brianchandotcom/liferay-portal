@@ -20,7 +20,14 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
+import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
+import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.messaging.proxy.MessagingProxyInvocationHandler;
+import com.liferay.portal.spring.aop.InvocationHandlerFactory;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Dictionary;
 
@@ -49,20 +56,62 @@ public class SchedulerProxyMessagingConfigurator {
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
-		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+		Dictionary<String, Object> destinationDictionary =
+			new HashMapDictionary<>();
 
-		dictionary.put("destination.name", destination.getName());
+		destinationDictionary.put("destination.name", destination.getName());
 
-		_serviceRegistration = bundleContext.registerService(
-			Destination.class, destination, dictionary);
+		_destinationServiceRegistration = bundleContext.registerService(
+			Destination.class, destination, destinationDictionary);
 
 		destination.register(_proxyMessageListener);
+
+		SchedulerEngineProxyBean schedulerEngineProxyBean =
+			new SchedulerEngineProxyBean();
+
+		schedulerEngineProxyBean.setDestinationName(
+			DestinationNames.SCHEDULER_ENGINE);
+		schedulerEngineProxyBean.setSynchronousDestinationName(
+			DestinationNames.SCHEDULER_ENGINE);
+		schedulerEngineProxyBean.setSynchronousMessageSenderMode(
+			SynchronousMessageSender.Mode.DIRECT);
+
+		schedulerEngineProxyBean.afterPropertiesSet();
+
+		InvocationHandlerFactory invocationHandlerFactory =
+			MessagingProxyInvocationHandler.getInvocationHandlerFactory();
+
+		InvocationHandler invocationHandler =
+			invocationHandlerFactory.createInvocationHandler(
+				schedulerEngineProxyBean);
+
+		Class<?> beanClass = schedulerEngineProxyBean.getClass();
+
+		Thread thread = Thread.currentThread();
+
+		SchedulerEngine schedulerEngineProxy =
+			(SchedulerEngine)ProxyUtil.newProxyInstance(
+				thread.getContextClassLoader(), beanClass.getInterfaces(),
+				invocationHandler);
+
+		Dictionary<String, Object> schedulerEngineDictionary =
+			new HashMapDictionary<>();
+
+		schedulerEngineDictionary.put("isProxy", Boolean.TRUE);
+
+		_schedulerEngineServiceRegistration = bundleContext.registerService(
+			SchedulerEngine.class, schedulerEngineProxy,
+			schedulerEngineDictionary);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
+		if (_destinationServiceRegistration != null) {
+			_destinationServiceRegistration.unregister();
+		}
+
+		if (_schedulerEngineServiceRegistration != null) {
+			_schedulerEngineServiceRegistration.unregister();
 		}
 	}
 
@@ -89,7 +138,10 @@ public class SchedulerProxyMessagingConfigurator {
 	}
 
 	private volatile DestinationFactory _destinationFactory;
+	private volatile ServiceRegistration<Destination>
+		_destinationServiceRegistration;
 	private volatile ProxyMessageListener _proxyMessageListener;
-	private volatile ServiceRegistration<Destination> _serviceRegistration;
+	private volatile ServiceRegistration<SchedulerEngine>
+		_schedulerEngineServiceRegistration;
 
 }

@@ -905,7 +905,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_props = props;
 	}
 
-	@Reference(target = "(bean.id=*.SchedulerEngineProxyBean)", unbind = "-")
+	@Reference(target = "(isProxy=true)", unbind = "-")
 	protected void setSchedulerEngine(SchedulerEngine schedulerEngine) {
 		_schedulerEngine = schedulerEngine;
 	}

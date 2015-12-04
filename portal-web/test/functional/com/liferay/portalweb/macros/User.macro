@@ -1177,7 +1177,7 @@
 			<equals arg1="${trivialPassword}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="That password is too trivial." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="That password uses common words. Please enter a password that is harder to guess (i.e. contains a mix of numbers and letters)." />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />

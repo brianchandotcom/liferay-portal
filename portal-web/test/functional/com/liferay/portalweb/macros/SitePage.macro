@@ -26,7 +26,7 @@
 				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
 			</then>
 			<else>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 			</else>
 		</if>
 
@@ -172,7 +172,7 @@
 				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
 			</then>
 			<else>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 			</else>
 		</if>
 
@@ -273,9 +273,9 @@
 		<var name="key_sitePageName" value="${sitePageName}" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 			<then>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 				<execute function="ClickNoError" locator1="SitePages#TOOLBAR_DELETE" />
 
@@ -294,9 +294,9 @@
 		<var name="key_sitePageName" value="${sitePageName}" />
 
 		<if>
-			<condition function="IsVisible" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+			<condition function="IsVisible" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 			<then>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 				<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 			</then>
@@ -366,7 +366,7 @@
 	<command name="editCP">
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${sitePageNameEdit}" />
 
@@ -396,10 +396,10 @@
 	</command>
 
 	<command name="expandRootCP">
-		<execute function="AssertElementPresent#assertElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<if>
-			<condition function="IsNotVisible" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+			<condition function="IsNotVisible" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 			<then>
 				<execute function="Click" locator1="SitePages#PAGE_TREE_ROOT_ARROW" />
 			</then>
@@ -423,7 +423,7 @@
 	<command name="firstPageCanNotBeOfTypeLinkToURL">
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 
@@ -440,7 +440,7 @@
 	<command name="gotoCP">
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 	</command>
 
 	<command name="openPageTree">
@@ -555,9 +555,9 @@
 		<execute function="Pause" locator1="5000" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 			<then>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 				<execute function="Click" locator1="SitePages#TOOLBAR_DELETE" />
 				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -635,7 +635,7 @@
 
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${sitePageName}" />
 	</command>
@@ -690,7 +690,7 @@
 	<command name="viewFriendlyURLCP">
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<execute function="AssertTextEquals" locator1="SitePages#DETAILS_FRIENDLY_BASE_URL" value1="http://localhost:8080/web${siteFriendlyURL}" />
 	</command>
@@ -794,7 +794,7 @@
 	</command>
 
 	<command name="viewPagesOrderCP">
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" value1="${pageName1}" />
+		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" value1="${pageName1}" />
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" value1="${pageName2}" />
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_3" value1="${pageName3}" />
 	</command>

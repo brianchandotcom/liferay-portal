@@ -19,7 +19,7 @@
 				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
 			</then>
 			<else>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 			</else>
 		</if>
 

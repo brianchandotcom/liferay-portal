@@ -157,7 +157,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TREE_PAGE_LINK_1</td>
+	<td>PAGE_TREE_PAGE_EDIT_COG</td>
 	<td>//span[a[contains(.,'${key_sitePageName}')]]//span[contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>

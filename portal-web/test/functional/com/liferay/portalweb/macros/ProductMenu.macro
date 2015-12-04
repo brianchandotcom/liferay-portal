@@ -59,6 +59,16 @@
 		</execute>
 	</command>
 
+	<command name="gotoEditPage" summary="Navigate to Product Menu > Sites > Pages > Public Pages > ${page}">
+		<var name="page" value="${page}" />
+
+		<execute macro="ProductMenuHelper#gotoEditPage" />
+	</command>
+
+	<command name="gotoEditPublicPages" summary="Navigate to Product Menu > Sites > Pages > Public Pages > ${page}">
+		<execute macro="ProductMenuHelper#gotoEditPublicPages" />
+	</command>
+
 	<command name="gotoLocalizedControlPanel" summary="Navigate to Product Menu > Control Panel > ${category} > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 

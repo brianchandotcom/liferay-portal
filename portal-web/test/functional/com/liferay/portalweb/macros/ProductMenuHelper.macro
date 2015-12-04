@@ -33,6 +33,20 @@
 		</if>
 	</command>
 
+	<command name="gotoEditPage">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<var name="key_page" value="${page}" />
+
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" value1="${page}" />
+	</command>
+
+	<command name="gotoEditPublicPages">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute function="Click" locator1="ProductMenu#PUBLIC_PAGES" />
+	</command>
+
 	<command name="gotoPortlet">
 		<var name="key_portlet" value="${portlet}" />
 

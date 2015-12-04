@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Map;
@@ -80,13 +81,13 @@ public class ManagementBarButtonTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_active = false;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_data = null;
 		_href = null;
-		_icon = null;
-		_iconCssClass = null;
-		_id = null;
-		_label = null;
+		_icon = StringPool.BLANK;
+		_iconCssClass = StringPool.BLANK;
+		_id = StringPool.BLANK;
+		_label = StringPool.BLANK;
 	}
 
 	@Override
@@ -124,12 +125,12 @@ public class ManagementBarButtonTag extends IncludeTag {
 	private static final String _PAGE = "/management_bar_button/page.jsp";
 
 	private boolean _active;
-	private String _cssClass;
+	private String _cssClass = StringPool.BLANK;
 	private Map<String, Object> _data;
 	private String _href;
-	private String _icon;
-	private String _iconCssClass;
-	private String _id;
-	private String _label;
+	private String _icon = StringPool.BLANK;
+	private String _iconCssClass = StringPool.BLANK;
+	private String _id = StringPool.BLANK;
+	private String _label = StringPool.BLANK;
 
 }

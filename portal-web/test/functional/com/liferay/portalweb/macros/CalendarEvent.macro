@@ -1185,6 +1185,7 @@
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${currentDay}" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${numberOfOccurrences} Times" />
+
 				<execute macro="CalendarEvent#viewRepeatingMonthPosition" />
 			</then>
 			<elseif>
@@ -1225,7 +1226,7 @@
 		<execute function="Check" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
 	</command>
 
-	<command name="setRepeatingYearlyEvent">
+	<command name="setRepeatingYearly">
 		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
 
 		<execute macro="CalendarEvent#selectRepeatFrequency">
@@ -1237,10 +1238,12 @@
 		<execute function="Click" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO" />
 
 		<execute function="Pause" value1="1000" />
+
 		<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
+
 		<execute function="Pause" value1="1000" />
 
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${setYearlyRecurrenceSummary}" />
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${yearlyRecurrenceSummary}" />
 
 		<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
 

@@ -1149,9 +1149,9 @@
 			<var name="startDateTime" value="01:00 AM" />
 		</execute>
 
-		<execute macro="CalendarEvent#setRepeatingYearlyEvent">
+		<execute macro="CalendarEvent#setRepeatingYearly">
 			<var name="frequency" value="Yearly" />
-			<var name="setYearlyRecurrenceSummary" value="Yearly, On The Third Sunday Of February" />
+			<var name="yearlyRecurrenceSummary" value="Yearly, On The Third Sunday Of February" />
 		</execute>
 
 		<execute macro="CalendarEvent#publish" />

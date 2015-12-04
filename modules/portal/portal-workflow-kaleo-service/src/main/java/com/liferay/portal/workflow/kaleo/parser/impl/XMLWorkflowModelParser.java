@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.kaleo.parser.impl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -65,12 +65,15 @@ import java.util.Set;
 public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	@Override
-	public Definition parse(InputStream inputStream) throws WorkflowException {
+	public Definition parse(InputStream inputStream)
+		throws WorkflowDefinitionFileException {
+
 		try {
 			return doParse(inputStream);
 		}
 		catch (Exception e) {
-			throw new WorkflowException("Unable to parse definition", e);
+			throw new WorkflowDefinitionFileException(
+				"Unable to parse definition", e);
 		}
 	}
 

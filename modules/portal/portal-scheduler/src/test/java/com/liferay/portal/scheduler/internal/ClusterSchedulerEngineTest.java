@@ -23,6 +23,10 @@ import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.messaging.BaseDestination;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.JobState;
@@ -62,6 +66,7 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -101,6 +106,7 @@ public class ClusterSchedulerEngineTest {
 		setUpClusterLink();
 		setUpClusterSchedulerEngine();
 		setUpClusterInvokeAcceptor();
+		setUpDestinationFactory();
 		setUpComponentContext();
 		setUpPortalUUIDUtil();
 		setUpSchedulerEngineHelper(setUpJSONFactory());
@@ -1873,6 +1879,23 @@ public class ClusterSchedulerEngineTest {
 		);
 	}
 
+	protected void setUpDestinationFactory() throws Exception {
+		_destinationFactory = new DestinationFactory() {
+			@Override
+			public Destination createDestination(
+				DestinationConfiguration destinationConfiguration) {
+
+				return new BaseDestination() {};
+			}
+
+			@Override
+			public Collection<String> getDestinationTypes() {
+				return null;
+			}
+
+		};
+	}
+
 	protected JSONFactory setUpJSONFactory() {
 		JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
 
@@ -1975,6 +1998,7 @@ public class ClusterSchedulerEngineTest {
 		_schedulerEngineHelperImpl.setProps(_props);
 
 		_schedulerEngineHelperImpl.setClusterLink(_clusterLink);
+		_schedulerEngineHelperImpl.setDestinationFactory(_destinationFactory);
 	}
 
 	private static final int _DEFAULT_INTERVAL = 20;
@@ -2001,6 +2025,7 @@ public class ClusterSchedulerEngineTest {
 	private ClusterLink _clusterLink;
 	private ClusterSchedulerEngine _clusterSchedulerEngine;
 	private ComponentContext _componentContext;
+	private DestinationFactory _destinationFactory;
 	private Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 		_memoryClusteredJobs;
 	private final MockClusterMasterExecutor _mockClusterMasterExecutor =

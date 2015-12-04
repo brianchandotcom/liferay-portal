@@ -59,13 +59,13 @@ public class ToggleControlsControlMenuEntry
 				"visible"));
 
 		if (toggleControls.equals("visible")) {
-			stateCss = "icon-eye-open";
+			stateCss = "view";
 		}
 		else {
-			stateCss = "icon-eye-close";
+			stateCss = "hidden";
 		}
 
-		return "controls-state-icon " + stateCss;
+		return stateCss;
 	}
 
 	@Override

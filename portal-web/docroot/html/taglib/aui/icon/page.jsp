@@ -19,7 +19,9 @@
 <liferay-util:buffer var="iconContent">
 	<i class="icon-<%= image %>"></i>
 
-	<liferay-ui:message key="<%= label %>" />
+	<span class="taglib-icon-label">
+		<liferay-ui:message key="<%= label %>" />
+	</span>
 </liferay-util:buffer>
 
 <c:choose>

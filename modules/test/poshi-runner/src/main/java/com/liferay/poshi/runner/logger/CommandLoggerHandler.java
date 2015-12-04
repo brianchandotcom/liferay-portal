@@ -27,6 +27,8 @@ import java.util.List;
 
 import org.dom4j.Element;
 
+import org.openqa.selenium.WebDriver;
+
 /**
  * @author Michael Hashimoto
  * @author Peter Yoo
@@ -507,6 +509,12 @@ public final class CommandLoggerHandler {
 		_functionLinkId++;
 	}
 
+	private static void _setHTMLSource() throws Exception {
+		WebDriver webDriver = WebDriverUtil.getWebDriver();
+
+		_htmlSource = webDriver.getPageSource();
+	}
+
 	private static void _takeScreenshot(String screenshotName, int errorLinkId)
 		throws Exception {
 
@@ -537,6 +545,7 @@ public final class CommandLoggerHandler {
 	private static LoggerElement _commandLogLoggerElement;
 	private static int _errorLinkId;
 	private static int _functionLinkId;
+	private static String _htmlSource;
 	private static LoggerElement _lineGroupLoggerElement;
 	private static final LoggerElement _xmlLogLoggerElement = new LoggerElement(
 		"xml-log");

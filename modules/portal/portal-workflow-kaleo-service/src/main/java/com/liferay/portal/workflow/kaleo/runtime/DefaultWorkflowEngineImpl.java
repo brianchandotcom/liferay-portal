@@ -111,8 +111,8 @@ public class DefaultWorkflowEngineImpl
 		catch (WorkflowException we) {
 			throw we;
 		}
-		catch (PortalException e) {
-			throw new WorkflowException(e);
+		catch (PortalException pe) {
+			throw new WorkflowException(pe);
 		}
 	}
 

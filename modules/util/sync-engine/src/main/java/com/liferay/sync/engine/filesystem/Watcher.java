@@ -310,6 +310,10 @@ public abstract class Watcher implements Runnable {
 				return;
 			}
 
+			if (!Files.isDirectory(filePath)) {
+				FileUtil.checkFilePath(filePath);
+			}
+
 			addCreatedFilePathName(filePath.toString());
 
 			if (_downloadedFilePathNames.remove(filePath.toString())) {

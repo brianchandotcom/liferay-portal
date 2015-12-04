@@ -171,7 +171,6 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		where.lt("localSyncTime", localSyncTime);
 		where.or(
 			where.eq("state", SyncFile.STATE_SYNCED),
-			where.eq("uiEvent", SyncFile.UI_EVENT_DELETED_LOCAL),
 			where.eq("uiEvent", SyncFile.UI_EVENT_UPLOADING));
 		where.ne("type", SyncFile.TYPE_SYSTEM);
 

@@ -30,6 +30,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SchedulerProxyMessagingConfigurator {
 
+	@Reference(
+		service = Destination.class,
+		target = "(destination.name=" + DestinationNames.SCHEDULER_ENGINE + ")",
+		unbind = "unsetDestination"
+	)
+	protected void setDestination(Destination destination) {
+		destination.register(_proxyMessageListener);
+	}
+
 	@Reference(unbind = "-")
 	protected void setMessageBus(MessageBus messageBus) {
 	}
@@ -45,24 +54,7 @@ public class SchedulerProxyMessagingConfigurator {
 		_proxyMessageListener = proxyMessageListener;
 	}
 
-	@Reference(
-		service = Destination.class,
-		target = "(destination.name=" + DestinationNames.SCHEDULER_DISPATCH + ")",
-		unbind = "-"
-	)
-	protected void setSchedulerDispatchDestination(Destination destination) {
-	}
-
-	@Reference(
-		service = Destination.class,
-		target = "(destination.name=" + DestinationNames.SCHEDULER_ENGINE + ")",
-		unbind = "unsetSchedulerEngineDestination"
-	)
-	protected void setSchedulerEngineDestination(Destination destination) {
-		destination.register(_proxyMessageListener);
-	}
-
-	protected void unsetSchedulerEngineDestination(Destination destination) {
+	protected void unsetDestination(Destination destination) {
 		destination.unregister(_proxyMessageListener);
 	}
 

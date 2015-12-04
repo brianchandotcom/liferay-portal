@@ -1,6 +1,6 @@
 <definition component-name="portal-test-plugins">
 	<property name="testray.main.component.name" value="Test Plugins" />
-	<property name="custom.properties" value="chat-portlet,test-clp-portlet" />
+	<property name="portlet.plugins.includes" value="chat-portlet,test-clp-portlet" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

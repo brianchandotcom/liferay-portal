@@ -128,7 +128,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		if (Validator.isNull(firstName) ||
 			(fullNameDefinition.isFieldRequired("last-name") &&
-			Validator.isNull(lastName))) {
+			 Validator.isNull(lastName))) {
 
 			String fullName = LDAPUtil.getAttributeString(
 				attributes, userMappings, UserConverterKeys.FULL_NAME);

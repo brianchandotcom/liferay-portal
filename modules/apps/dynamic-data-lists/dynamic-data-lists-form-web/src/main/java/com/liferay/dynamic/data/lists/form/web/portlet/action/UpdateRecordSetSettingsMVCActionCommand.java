@@ -51,6 +51,8 @@ public class UpdateRecordSetSettingsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		hideDefaultErrorMessage(actionRequest);
+
 		updateRecordSetSettings(actionRequest);
 		updateWorkflowDefinitionLink(actionRequest);
 	}

@@ -436,7 +436,7 @@ public class StagedModelDataHandlerUtil {
 			groupId, className, classPK);
 
 		StagedModel stagedModel =
-			(StagedModel)portletDataContext.getZipEntryAsObject(path);
+			(StagedModel)portletDataContext.getZipEntryAsObject(element, path);
 
 		if (stagedModel != null) {
 			return stagedModel;
@@ -445,7 +445,8 @@ public class StagedModelDataHandlerUtil {
 		path = ExportImportPathUtil.getCompanyModelPath(
 			portletDataContext.getSourceCompanyId(), className, classPK);
 
-		return (StagedModel)portletDataContext.getZipEntryAsObject(path);
+		return (StagedModel)portletDataContext.getZipEntryAsObject(
+			element, path);
 	}
 
 	private static StagedModel _getStagedModel(

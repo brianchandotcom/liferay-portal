@@ -110,6 +110,9 @@ public class PropsValues {
 	public static final boolean SAVE_SOURCE = GetterUtil.getBoolean(
 		PropsUtil.get("save.source"));
 
+	public static final boolean SAVE_WEB_PAGE = GetterUtil.getBoolean(
+		PropsUtil.get("save.web.page"));
+
 	public static final String SELENIUM_CHROME_DRIVER_EXECUTABLE =
 		PropsUtil.get("selenium.chrome.driver.executable");
 

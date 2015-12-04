@@ -36,6 +36,8 @@ public class ConfigurationClusterConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
+		_bundleContext = bundleContext;
+
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
@@ -54,11 +56,20 @@ public class ConfigurationClusterConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
+		if (_bundleContext == null) {
+			return;
 		}
 
-		_serviceRegistration = null;
+		if (_serviceRegistration != null) {
+			Destination destination = _bundleContext.getService(
+				_serviceRegistration.getReference());
+
+			_serviceRegistration.unregister();
+
+			destination.destroy();
+		}
+
+		_bundleContext = null;
 	}
 
 	@Reference(unbind = "-")
@@ -68,6 +79,7 @@ public class ConfigurationClusterConfigurator {
 		_destinationFactory = destinationFactory;
 	}
 
+	private volatile BundleContext _bundleContext;
 	private volatile DestinationFactory _destinationFactory;
 	private ServiceRegistration<Destination> _serviceRegistration;
 

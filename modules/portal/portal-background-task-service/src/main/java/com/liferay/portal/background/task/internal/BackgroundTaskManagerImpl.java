@@ -453,6 +453,8 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
 		registerDestination(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.BACKGROUND_TASK);
@@ -463,11 +465,22 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Deactivate
 	protected void deactivate() {
+		if (_bundleContext == null) {
+			return;
+		}
+
 		for (ServiceRegistration<Destination> serviceRegistration :
 				_serviceRegistrations) {
 
+			Destination destination = _bundleContext.getService(
+				serviceRegistration.getReference());
+
 			serviceRegistration.unregister();
+
+			destination.destroy();
 		}
+
+		_bundleContext = null;
 	}
 
 	protected ServiceRegistration<Destination> registerDestination(
@@ -552,6 +565,7 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	private volatile BackgroundTaskLocalService _backgroundTaskLocalService;
+	private volatile BundleContext _bundleContext;
 	private volatile DestinationFactory _destinationFactory;
 	private final Set<ServiceRegistration<Destination>> _serviceRegistrations =
 		new HashSet<>();

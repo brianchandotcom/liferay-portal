@@ -49,6 +49,8 @@ public class SchedulerProxyMessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
+		_bundleContext = bundleContext;
+
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
@@ -107,13 +109,24 @@ public class SchedulerProxyMessagingConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
+		if (_bundleContext == null) {
+			return;
+		}
+
 		if (_destinationServiceRegistration != null) {
+			Destination destination = _bundleContext.getService(
+				_destinationServiceRegistration.getReference());
+
 			_destinationServiceRegistration.unregister();
+
+			destination.destroy();
 		}
 
 		if (_schedulerEngineServiceRegistration != null) {
 			_schedulerEngineServiceRegistration.unregister();
 		}
+
+		_bundleContext = null;
 	}
 
 	@Reference(unbind = "-")
@@ -144,6 +157,7 @@ public class SchedulerProxyMessagingConfigurator {
 			singleDestinationMessageSenderFactory) {
 	}
 
+	private volatile BundleContext _bundleContext;
 	private volatile DestinationFactory _destinationFactory;
 	private volatile ServiceRegistration<Destination>
 		_destinationServiceRegistration;

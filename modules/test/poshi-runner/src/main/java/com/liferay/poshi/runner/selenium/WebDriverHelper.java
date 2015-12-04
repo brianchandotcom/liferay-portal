@@ -34,6 +34,12 @@ import junit.framework.TestCase;
 
 import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -277,6 +283,31 @@ public class WebDriverHelper {
 		catch (Exception e) {
 			throw new WebDriverException();
 		}
+	}
+
+	public static String getCssSource(String html) throws Exception {
+		Document htmlDocument = Jsoup.parse(html);
+
+		Elements elements = htmlDocument.select("link[type=text/css]");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Element element : elements) {
+			String hrefValue = element.attr("href");
+
+			if (!hrefValue.contains(PropsValues.PORTAL_URL)) {
+				hrefValue = PropsValues.PORTAL_URL + hrefValue;
+			}
+
+			Connection connection = Jsoup.connect(hrefValue);
+
+			Document document = connection.get();
+
+			sb.append(document.text());
+			sb.append("\n");
+		}
+
+		return sb.toString();
 	}
 
 	public static String getDefaultWindowHandle() {

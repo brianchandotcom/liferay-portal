@@ -17,7 +17,7 @@ task buildLfrAMDLoader(type: Copy)
 task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
 
-String alloyVersion = "3.0.1"
+String alloyVersion = "3.0.3"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
 String lexiconVersion = "0.1.25"
@@ -30,7 +30,7 @@ File thirdPartyDir = file("../../../portal-web/third-party")
 
 buildAlloy {
 	File alloyDestinationDir = new File(jsDestinationDir, "aui")
-	File alloyZipFile = new File(thirdPartyDir, "alloy-${alloyVersion}.zip")
+	File alloyZipFile = new File(thirdPartyDir, "alloy-${alloyVersion}*.zip")
 
 	doFirst {
 		delete alloyDestinationDir

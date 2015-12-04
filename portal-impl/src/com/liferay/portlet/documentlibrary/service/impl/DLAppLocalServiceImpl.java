@@ -1503,8 +1503,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					FileEntry fileEntry =
 						(FileEntry)folderAndFileEntryAndFileShortcut;
 
-					copyFileEntry(
-						userId, destinationLocalRepository, fileEntry,
+					moveFileEntry(
+						userId, fileEntry.getFileEntryId(),
 						destinationFolder.getFolderId(), serviceContext);
 				}
 				else if (folderAndFileEntryAndFileShortcut instanceof Folder) {
@@ -1530,8 +1530,15 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			}
 		}
 		catch (PortalException pe) {
-			destinationLocalRepository.deleteFolder(
-				destinationFolder.getFolderId());
+			int fileEntriesAndFileShortcutsCount =
+				destinationLocalRepository.getFileEntriesAndFileShortcutsCount(
+					destinationFolder.getFolderId(),
+					WorkflowConstants.STATUS_ANY);
+
+			if (fileEntriesAndFileShortcutsCount == 0) {
+				destinationLocalRepository.deleteFolder(
+					destinationFolder.getFolderId());
+			}
 
 			throw pe;
 		}

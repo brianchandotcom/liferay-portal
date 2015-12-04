@@ -147,6 +147,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPEAT_WEEKLY_CURRENT_DAY</td>
+	<td>//td[contains(@class,'calendar-recurrence-weekday-checkbox')]//input[@disabled='']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

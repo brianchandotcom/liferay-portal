@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-alert',
 	function(A) {
-		var getClassName = A.getClassName;
 		var Lang = A.Lang;
 
 		var TPL_ALERTS_CONTAINER = '<div class="lfr-alert-container"></div>';
@@ -136,7 +135,7 @@ AUI.add(
 					},
 
 					_onClickBoundingBox: function(event) {
-						if (event.target.test('.' + getClassName('close'))) {
+						if (event.target.test('.close')) {
 							this._ignoreHideDelay = true;
 							this.hide();
 						}
@@ -172,7 +171,7 @@ AUI.add(
 					_setCssClass: function() {
 						var instance = this;
 
-						instance.set('cssClass', getClassName('alert', instance.get('type')));
+						instance.set('cssClass', 'alert-' + instance.get('type'));
 					},
 
 					_transition: function(visible) {

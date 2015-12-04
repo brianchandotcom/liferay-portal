@@ -38,6 +38,7 @@ data.put("panelURL", addURL);
 		data="<%= data %>"
 		id="infoButton"
 		image="information-live"
+		label="additional-information"
 		markupView="lexicon"
 		url="javascript:;"
 	/>

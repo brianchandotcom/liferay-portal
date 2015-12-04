@@ -34,6 +34,7 @@ data.put("panelURL", addURL);
 		data="<%= data %>"
 		id="addPanel"
 		image="plus"
+		label="add"
 		markupView="lexicon"
 		url="javascript:;"
 	/>

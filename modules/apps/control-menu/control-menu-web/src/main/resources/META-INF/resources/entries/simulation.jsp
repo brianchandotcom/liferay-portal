@@ -32,6 +32,7 @@ data.put("panelURL", previewContentURL);
 		data="<%= data %>"
 		id="previewPanel"
 		image="simulation-menu-closed"
+		label="simulation"
 		markupView="lexicon"
 		url="javascript:;"
 	/>

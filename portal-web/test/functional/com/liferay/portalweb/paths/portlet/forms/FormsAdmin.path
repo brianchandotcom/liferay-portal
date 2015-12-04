@@ -61,6 +61,22 @@
 	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
+<!--FORM_CONFIGURATION-->
+<tr>
+	<td>ADD_DISPLAY_STYLE</td>
+	<td>//div/a[contains(@class,'add-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_DISPLAY_STYLE</td>
+	<td>//div[contains(.,'Supported display view')]/div/input[@value='${key_displayStyle}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_DISPLAY_STYLE</td>
+	<td>//div[div/input[contains(@value,'${key_displayStyle}')]]/following-sibling::div/a[contains(@class,'delete-button')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -577,15 +577,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public boolean isClusteredSchedulerEngine() {
-		if (_schedulerEngine instanceof ClusterSchedulerEngine) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public void pause(String groupName, StorageType storageType)
 		throws SchedulerException {
 

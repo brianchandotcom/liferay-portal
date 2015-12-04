@@ -211,10 +211,6 @@ public class SchedulerEngineHelperUtil {
 			jobName, groupName, storageType);
 	}
 
-	public static boolean isClusteredSchedulerEngine() {
-		return getSchedulerEngineHelper().isClusteredSchedulerEngine();
-	}
-
 	public static void pause(String groupName, StorageType storageType)
 		throws SchedulerException {
 

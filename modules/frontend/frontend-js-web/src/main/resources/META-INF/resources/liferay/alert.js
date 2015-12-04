@@ -98,7 +98,7 @@ AUI.add(
 									var navbar = rootNode.one('.navbar');
 
 									if (navbar) {
-										navbar.insert(alertsContainer, 'after');
+										navbar.placeAfter(alertsContainer);
 									}
 									else {
 										rootNode.one('.portlet-body').prepend(alertsContainer);
@@ -137,6 +137,7 @@ AUI.add(
 					_onClickBoundingBox: function(event) {
 						if (event.target.test('.close')) {
 							this._ignoreHideDelay = true;
+
 							this.hide();
 						}
 					},
@@ -150,6 +151,7 @@ AUI.add(
 
 						if (visible && !parentNode.test('.in')) {
 							instance._uiSetVisibleHost(true);
+
 							parentNode.setStyle('height', 0);
 						}
 					},

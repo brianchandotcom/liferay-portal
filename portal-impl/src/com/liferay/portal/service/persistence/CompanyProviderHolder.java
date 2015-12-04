@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence.impl;
+package com.liferay.portal.service.persistence;
+
+import com.liferay.portal.service.persistence.CompanyProvider;
 
 /**
  * @author Cristina González

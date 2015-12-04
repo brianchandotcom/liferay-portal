@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence.impl;
+package com.liferay.portal.service.persistence;
 
 /**
  * @author Manuel de la Peña

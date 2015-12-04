@@ -17,10 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
+String groupMapsAPIProvider = (String)request.getAttribute(MapProviderWebKeys.GROUP_MAPS_API_PROVIDER);
 
-String mapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "Google");
-String googleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
+MapProviderTracker mapProviderTracker = (MapProviderTracker)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_TRACKER);
+
+Set<String> mapProviders = mapProviderTracker.getMapProviders();
 %>
 
 <liferay-ui:error-marker key="errorSection" value="maps" />
@@ -29,15 +30,28 @@ String googleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, re
 
 <p><liferay-ui:message key="select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets" /></p>
 
-<aui:input checked='<%= mapsAPIProvider.equals("Google") %>' helpMessage="use-google-maps-as-the-maps-api-provider" id="mapsGoogleMapsEnabled" label="google-maps" name="settings--mapsAPIProvider--" type="radio" value="Google" />
+<%
+	for (String provider : mapProviders) {
+		MapProvider mapProvider = mapProviderTracker.getMapProvider(provider);
+%>
 
-<div class="maps-google-maps-api-key" id="<portlet:namespace />googleMapsAPIKey">
-	<aui:input helpMessage="set-the-google-maps-api-key-that-is-used-for-this-set-of-pages" label='<%= LanguageUtil.get(request, "google-maps-api-key") + " (" + LanguageUtil.get(request, "optional") + ")" %>' name="settings--googleMapsAPIKey--" size="40" type="text" value="<%= googleMapsAPIKey %>" />
+<aui:input checked='<%= groupMapsAPIProvider.equals(mapProvider.getKey()) %>'
+helpMessage='<%= mapProvider.getHelpMessage() %>'
+id='<%= mapProvider.getKey() + "Enabled" %>'
+label='<%= mapProvider.getLabel() %>'
+name='TypeSettingsProperties--mapsAPIProvider--'
+type='radio'
+value='<%= mapProvider.getKey() %>'
+/>
+
+<div id="<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>">
+	<c:if test="<%= !mapProvider.includeConfiguration(request, new PipingServletResponse(pageContext)) %>" />
 </div>
 
-<aui:input checked='<%= mapsAPIProvider.equals("OpenStreet") %>' helpMessage="use-openstreetmap-as-the-maps-api-provider" id="mapsOpenStreetMapEnabled" label="openstreetmap" name="settings--mapsAPIProvider--" type="radio" value="OpenStreet" />
-
 <aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />mapsGoogleMapsEnabled', '<portlet:namespace />googleMapsAPIKey', '');
-	Liferay.Util.toggleRadio('<portlet:namespace />mapsOpenStreetMapEnabled', '', '<portlet:namespace />googleMapsAPIKey');
+	Liferay.Util.toggleRadio('<portlet:namespace /><%= mapProvider.getKey() %>Enabled', '<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>', '');
 </aui:script>
+
+<%
+	}
+%>

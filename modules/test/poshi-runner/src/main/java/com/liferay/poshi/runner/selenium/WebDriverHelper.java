@@ -16,6 +16,7 @@ package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.CharPool;
+import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.PropsValues;
@@ -673,6 +674,28 @@ public class WebDriverHelper {
 		if (isAlertPresent(webDriver)) {
 			getConfirmation(webDriver);
 		}
+	}
+
+	public static void saveWebPage(
+			WebDriver webDriver, String fileName, String html)
+		throws Exception {
+
+		if (!PropsValues.SAVE_WEB_PAGE) {
+			return;
+		}
+
+		String css = getCssSource(html);
+
+		html = html.replace("<\\html>", "");
+
+		StringBuilder sb = new StringBuilder(4);
+
+		sb.append(html);
+		sb.append("<style>");
+		sb.append(css);
+		sb.append("</style></html>");
+
+		FileUtil.write(fileName, sb.toString());
 	}
 
 	public static void select(

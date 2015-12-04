@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.osgi.util</artifactId>
-  <version>2.0.3</version>
+  <version>2.0.4</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -19,9 +19,9 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git@github.com:liferay/liferay-portal.git</connection>
-    <developerConnection>scm:git:git@github.com:liferay/liferay-portal.git</developerConnection>
-    <url>http://github.com/liferay/liferay-portal</url>
+    <connection>scm:git:git@github.com:liferay/liferay-plugins.git</connection>
+    <developerConnection>scm:git:git@github.com:liferay/liferay-plugins.git</developerConnection>
+    <url>http://github.com/liferay/liferay-plugins</url>
   </scm>
   <dependencies>
     <dependency>

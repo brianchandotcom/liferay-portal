@@ -38,18 +38,20 @@ public class JenkinsPerformanceDataUtil {
 			String batch, String url, int size)
 		throws Exception {
 
+		JSONObject jsonObject = null;
+
 		if (url.contains("-source")) {
-			JSONObject sourceJSON = JenkinsResultsParserUtil.toJSONObject(
+			jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(url + "/api/json"));
 
-			_results.add(new Result(batch, sourceJSON));
+			_results.add(new Result(batch, jsonObject));
 		}
 		else {
-			JSONObject json = JenkinsResultsParserUtil.toJSONObject(
+			jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
 					url + "/testReport/api/json"));
 
-			_results.addAll(getSlowestResults(batch, json, size));
+			_results.addAll(getSlowestResults(batch, jsonObject, size));
 		}
 
 		Collections.sort(_results);

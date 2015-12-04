@@ -851,7 +851,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingMonthly2Times" priority="4">
+	<command name="AddCalendarEventRepeatingMonthly2Times" priority="5">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 

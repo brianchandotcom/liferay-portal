@@ -39,4 +39,60 @@ public class RecordSetSettingsException extends PortalException {
 		super(cause);
 	}
 
+	public static class MustEnterValidEmailAddress
+		extends RecordSetSettingsException {
+
+		public MustEnterValidEmailAddress(String propertyName) {
+			super(
+				String.format(
+					"The property \"%s\" is not an email address",
+					propertyName));
+
+			_propertyName = propertyName;
+		}
+
+		public String getPropertyName() {
+			return _propertyName;
+		}
+
+		private final String _propertyName;
+
+	}
+
+	public static class MustEnterValidURL extends RecordSetSettingsException {
+
+		public MustEnterValidURL(String propertyName) {
+			super(
+				String.format(
+					"The property \"%s\" is not a valid URL", propertyName));
+
+			_propertyName = propertyName;
+		}
+
+		public String getPropertyName() {
+			return _propertyName;
+		}
+
+		private final String _propertyName;
+
+	}
+
+	public static class RequiredValue extends RecordSetSettingsException {
+
+		public RequiredValue(String propertyName) {
+			super(
+				String.format(
+					"No value defined for property \"%s\"", propertyName));
+
+			_propertyName = propertyName;
+		}
+
+		public String getPropertyName() {
+			return _propertyName;
+		}
+
+		private final String _propertyName;
+
+	}
+
 }

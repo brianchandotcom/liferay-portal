@@ -57,21 +57,7 @@ repositories {
 	}
 }
 
-File localPoshiDir = new File(buildDir, "poshi")
-
-task copyLocalPoshi(type: GradleBuild)
 task updateGradleCache
-
-copyLocalPoshi {
-	configure(startParameter) {
-		configureOnDemand = true
-		gradleUserHomeDir = file("../.gradle")
-		projectProperties = ["destinationDir": localPoshiDir]
-	}
-
-	dir = file("../modules/test/poshi-runner")
-	tasks = ["deployWithDependencies"]
-}
 
 runPoshi {
 	jvmArgs "-Dfile.encoding=UTF-8"
@@ -83,10 +69,13 @@ updateGradleCache << {
 }
 
 if (GradleUtil.getProperty(project, "local", false)) {
+	File localPoshiDir = file("../tools/sdk/tmp/portal-tools/poshi-runner")
+
 	dependencies {
-		poshiRunner fileTree(localPoshiDir) {
-			builtBy copyLocalPoshi
-			include "*.jar"
-		}
+		poshiRunner fileTree(dir: localPoshiDir, include: "*.jar")
+	}
+
+	expandPoshiRunner {
+		from zipTree(new File(localPoshiDir, "com.liferay.poshi.runner.jar"))
 	}
 }

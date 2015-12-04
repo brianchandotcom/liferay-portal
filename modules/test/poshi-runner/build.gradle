@@ -1,6 +1,5 @@
 import com.liferay.gradle.util.GradleUtil
-
-task deployWithDependencies(type: Copy)
+import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 buildCSS {
 	ext {
@@ -24,9 +23,11 @@ dependencies {
 	compile group: "org.sikuli", name: "sikuli-api", version: "1.2.0"
 }
 
-deployWithDependencies {
+deploy {
 	from configurations.runtime
-	from jar
+	rename new RenameDependencyClosure(project, configurations.runtime.name)
+}
 
-	into GradleUtil.getProperty(project, "destinationDir", (File)null)
+liferay {
+	deployDir = "../../../tools/sdk/tmp/portal-tools/poshi-runner"
 }

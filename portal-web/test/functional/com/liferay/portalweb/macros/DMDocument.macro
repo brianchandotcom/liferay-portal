@@ -2,6 +2,15 @@
 	<var name="assetType" value="Document" />
 	<var name="dmDocumentTypeName" value="Basic Document" />
 
+	<command name="addCategories">
+		<execute macro="DMDocument#showCategorization" />
+
+		<execute macro="AssetCategorization#addMultipleCategories">
+			<var name="categoryNameList" value="${categoryNameList}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
 	<command name="addCommentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
@@ -68,9 +77,7 @@
 		<if>
 			<isset var="vocabularyName" />
 			<then>
-				<execute macro="DMDocument#showCategorization" />
-
-				<execute macro="AssetCategorization#addMultipleCategories">
+				<execute macro="DMDocument#addCategories">
 					<var name="categoryNameList" value="${categoryNameList}" />
 					<var name="vocabularyName" value="${vocabularyName}" />
 				</execute>

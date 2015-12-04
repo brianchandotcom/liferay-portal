@@ -294,7 +294,7 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 	}
 	%>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <%@ include file="/add_menu.jspf" %>

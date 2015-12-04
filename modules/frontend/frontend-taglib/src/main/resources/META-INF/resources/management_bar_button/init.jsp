@@ -21,9 +21,14 @@ boolean active = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:ma
 String cssClass = (String)request.getAttribute("liferay-frontend:management-bar-button:cssClass");
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-frontend:management-bar-button:data");
 String href = (String)request.getAttribute("liferay-frontend:management-bar-button:href");
+String icon = (String)request.getAttribute("liferay-frontend:management-bar-button:icon");
 String iconCssClass = (String)request.getAttribute("liferay-frontend:management-bar-button:iconCssClass");
 String id = (String)request.getAttribute("liferay-frontend:management-bar-button:id");
 String label = (String)request.getAttribute("liferay-frontend:management-bar-button:label");
 
-cssClass = "btn " + cssClass;
+cssClass = "btn btn-link " + cssClass;
+
+if (active) {
+	cssClass = "active " + cssClass;
+}
 %>

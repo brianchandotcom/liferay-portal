@@ -2881,6 +2881,13 @@
 			<type>java.lang.Class</type>
 		</attribute>
 		<attribute>
+			<description><![CDATA[Whether to show the workflow status help message. The default value is <code>true</code>.]]></description>
+			<name>showHelpMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[Whether to show the workflow status icon. The default value is <code>true</code>.]]></description>
 			<name>showIcon</name>
 			<required>false</required>

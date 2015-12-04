@@ -9925,6 +9925,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		TableMapperFactory.removeTableMapper("Users_Roles");
 	}
 
+	@BeanReference(type = CompanyProvider.class)
+	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	@BeanReference(type = GroupPersistence.class)

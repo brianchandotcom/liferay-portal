@@ -3935,6 +3935,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		TableMapperFactory.removeTableMapper("UserGroups_Teams");
 	}
 
+	@BeanReference(type = CompanyProvider.class)
+	protected CompanyProvider companyProvider;
 	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
 	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	@BeanReference(type = UserPersistence.class)

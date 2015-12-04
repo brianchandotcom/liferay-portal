@@ -24,6 +24,7 @@ java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.ge
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:workflow-status:id"));
 java.lang.String markupView = GetterUtil.getString((java.lang.String)request.getAttribute("aui:workflow-status:markupView"));
 java.lang.Class<?> model = (java.lang.Class<?>)request.getAttribute("aui:workflow-status:model");
+boolean showHelpMessage = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:workflow-status:showHelpMessage")), true);
 boolean showIcon = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:workflow-status:showIcon")), true);
 boolean showLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:workflow-status:showLabel")), true);
 java.lang.Integer status = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:workflow-status:status")));

@@ -61,7 +61,7 @@ public abstract class BaseIndexWriter
 	 * @throws SearchException
 	 */
 	@Override
-	public void commit(long companyId) throws SearchException {
+	public void commit(SearchContext searchContext) throws SearchException {
 	}
 
 	@Override

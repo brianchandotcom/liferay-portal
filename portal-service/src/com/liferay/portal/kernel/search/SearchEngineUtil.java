@@ -173,7 +173,12 @@ public class SearchEngineUtil {
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
-		indexWriter.commit(companyId);
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setSearchEngineId(searchEngineId);
+
+		indexWriter.commit(searchContext);
 	}
 
 	/**

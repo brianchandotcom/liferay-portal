@@ -79,7 +79,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 	}
 
 	@Override
-	public void commit(long companyId) throws SearchException {
+	public void commit(SearchContext searchContext) throws SearchException {
 		try {
 			AdminClient adminClient =
 				_elasticsearchConnectionManager.getAdminClient();
@@ -87,7 +87,8 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			IndicesAdminClient indicesAdminClient = adminClient.indices();
 
 			RefreshRequestBuilder refreshRequestBuilder =
-				indicesAdminClient.prepareRefresh(String.valueOf(companyId));
+				indicesAdminClient.prepareRefresh(
+					String.valueOf(searchContext.getCompanyId()));
 
 			RefreshResponse refreshResponse = refreshRequestBuilder.get();
 

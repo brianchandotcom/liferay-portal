@@ -1,0 +1,509 @@
+{
+  "computer" : [
+    {
+      "displayName" : "master",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-146",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-147",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-148",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-149",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-150",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-151",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-152",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-153",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-154",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-155",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-156",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-157",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-158",
+      "idle" : true,
+      "offline" : true
+    },
+    {
+      "displayName" : "cloud-10-0-110-159",
+      "idle" : true,
+      "offline" : true
+    },
+    {
+      "displayName" : "cloud-10-0-110-160",
+      "idle" : true,
+      "offline" : true
+    },
+    {
+      "displayName" : "cloud-10-0-110-161",
+      "idle" : true,
+      "offline" : true
+    },
+    {
+      "displayName" : "cloud-10-0-110-162",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-163",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-164",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-165",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-166",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-167",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-168",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-169",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-170",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-171",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-172",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-173",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-174",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-175",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-176",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-177",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-178",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-179",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-180",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-181",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-182",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-183",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-184",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-185",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-186",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-187",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-188",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-189",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-190",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-191",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-192",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-193",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-194",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-195",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-196",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-197",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-198",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-199",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-200",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-201",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-202",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-203",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-204",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-205",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-206",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-207",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-208",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-209",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-210",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-211",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-212",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-213",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-214",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-215",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-216",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-217",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-218",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-219",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-220",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-221",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-222",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-223",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-224",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-225",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-226",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-227",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-228",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-229",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-230",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-231",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-232",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-233",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-234",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-235",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-236",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-237",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-238",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-239",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-240",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-241",
+      "idle" : true,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-242",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-243",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-244",
+      "idle" : false,
+      "offline" : false
+    },
+    {
+      "displayName" : "cloud-10-0-110-245",
+      "idle" : true,
+      "offline" : false
+    }
+  ]
+}

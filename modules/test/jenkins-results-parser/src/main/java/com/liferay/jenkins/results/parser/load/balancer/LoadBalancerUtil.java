@@ -384,7 +384,7 @@ public class LoadBalancerUtil {
 					false, 5000);
 				queueJSONObject = JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(
-						url + "/queue/api/json?pretty"),
+						url + "/queue/api/json"),
 					false, 5000);
 			}
 			catch (Exception e) {

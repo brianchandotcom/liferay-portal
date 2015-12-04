@@ -125,6 +125,8 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			urlString += "?pretty";
 		}
 
+		urlSuffix = JenkinsResultsParserUtil.fixFileName(urlSuffix);
+
 		JenkinsResultsParserUtil.write(
 			new File(dir, urlSuffix),
 			JenkinsResultsParserUtil.toString(

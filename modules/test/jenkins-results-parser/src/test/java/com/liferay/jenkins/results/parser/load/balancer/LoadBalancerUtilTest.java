@@ -43,22 +43,22 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		//downloadSample("test-1", null);
-		//downloadSample("test-2", null);
+		downloadSample("test-1", null);
+		downloadSample("test-2", null);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		//Project project = getTestProject(null);
+		Project project = getTestProject(null);
 
-		//deleteFile(project.getProperty("jenkins.shared.dir"));
+		deleteFile(project.getProperty("jenkins.shared.dir"));
 	}
 
 	@Test
 	public void testGetMostAvailableMasterURL() throws Exception {
 		LoadBalancerUtil.recentJobPeriod = 0;
 
-		//assertSamples();
+		assertSamples();
 	}
 
 	protected static Project getDownloadProject(String baseInvocationHostName) {
@@ -120,7 +120,7 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 					project.getProperty(
 						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
 						"]")),
-				"/queue/api/json?pretty");
+				"/queue/api/json");
 		}
 	}
 

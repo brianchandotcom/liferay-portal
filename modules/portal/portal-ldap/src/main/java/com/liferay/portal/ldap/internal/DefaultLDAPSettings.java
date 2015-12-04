@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -241,6 +242,10 @@ public class DefaultLDAPSettings implements LDAPSettings {
 
 		for (String keyValuePair : keyValuePairs) {
 			String[] keyValue = StringUtil.split(keyValuePair, CharPool.EQUAL);
+
+			if (ArrayUtil.isEmpty(keyValue)) {
+				continue;
+			}
 
 			String value = StringPool.BLANK;
 

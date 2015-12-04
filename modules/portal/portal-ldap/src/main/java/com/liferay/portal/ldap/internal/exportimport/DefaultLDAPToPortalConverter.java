@@ -36,6 +36,8 @@ import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.ListType;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.FullNameDefinition;
+import com.liferay.portal.security.auth.FullNameDefinitionFactory;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.ldap.LDAPGroup;
@@ -121,7 +123,13 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		String lastName = LDAPUtil.getAttributeString(
 			attributes, userMappings, UserConverterKeys.LAST_NAME);
 
-		if (Validator.isNull(firstName) || Validator.isNull(lastName)) {
+		FullNameDefinition fullNameDefinition =
+			FullNameDefinitionFactory.getInstance(LocaleUtil.getDefault());
+
+		if (Validator.isNull(firstName) ||
+			(fullNameDefinition.isFieldRequired("last-name") &&
+			 Validator.isNull(lastName))) {
+
 			String fullName = LDAPUtil.getAttributeString(
 				attributes, userMappings, UserConverterKeys.FULL_NAME);
 
@@ -130,9 +138,17 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 			String[] names = fullNameGenerator.splitFullName(fullName);
 
-			firstName = names[0];
-			middleName = names[1];
-			lastName = names[2];
+			if (Validator.isNull(firstName)) {
+				firstName = names[0];
+			}
+
+			if (Validator.isNull(middleName)) {
+				middleName = names[1];
+			}
+
+			if (Validator.isNull(lastName)) {
+				lastName = names[2];
+			}
 		}
 
 		if (!autoScreenName && Validator.isNull(screenName)) {

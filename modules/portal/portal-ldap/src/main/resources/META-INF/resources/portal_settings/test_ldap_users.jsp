@@ -43,11 +43,13 @@ if (ldapContext == null) {
 	return;
 }
 
+FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(locale);
+
 if (Validator.isNull(ParamUtil.getString(request, "userMappingScreenName")) ||
 	Validator.isNull(ParamUtil.getString(request, "userMappingPassword")) ||
-	Validator.isNull(ParamUtil.getString(request, "userMappingEmailAddress")) ||
+	(Validator.isNull(ParamUtil.getString(request, "userMappingEmailAddress")) && PropsValues.USERS_EMAIL_ADDRESS_REQUIRED) ||
 	Validator.isNull(ParamUtil.getString(request, "userMappingFirstName")) ||
-	Validator.isNull(ParamUtil.getString(request, "userMappingLastName"))) {
+	(Validator.isNull(ParamUtil.getString(request, "userMappingLastName")) && fullNameDefinition.isFieldRequired("last-name"))) {
 %>
 
 	<liferay-ui:message key="please-map-each-of-the-user-properties-screen-name,-password,-email-address,-first-name,-and-last-name-to-an-ldap-attribute" />
@@ -145,7 +147,7 @@ portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		Attribute attribute = attributes.get(userMappings.getProperty("group"));
 
-		if (Validator.isNull(emailAddress) || Validator.isNull(firstName) || Validator.isNull(lastName) || Validator.isNull(password) || Validator.isNull(screenName)) {
+		if ((PropsValues.USERS_EMAIL_ADDRESS_REQUIRED && Validator.isNull(emailAddress)) || Validator.isNull(firstName) || (fullNameDefinition.isFieldRequired("last-name") && Validator.isNull(lastName)) || Validator.isNull(password) || Validator.isNull(screenName)) {
 			showMissingAttributeMessage = true;
 		}
 		%>

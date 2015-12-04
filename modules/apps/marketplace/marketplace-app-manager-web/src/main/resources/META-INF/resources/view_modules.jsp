@@ -21,14 +21,22 @@ String app = ParamUtil.getString(request, "app");
 
 AppDisplay appDisplay = null;
 
-List<Bundle> bundles = BundleManagerUtil.getBundles();
+List<Bundle> allBundles = BundleManagerUtil.getBundles();
 
 if (Validator.isNumber(app)) {
-	appDisplay = AppDisplayFactoryUtil.getAppDisplay(bundles, Long.parseLong(app));
+	appDisplay = AppDisplayFactoryUtil.getAppDisplay(allBundles, Long.parseLong(app));
 }
 
 if (appDisplay == null) {
-	appDisplay = AppDisplayFactoryUtil.getAppDisplay(bundles, app);
+	appDisplay = AppDisplayFactoryUtil.getAppDisplay(allBundles, app);
+}
+
+String moduleGroup = ParamUtil.getString(request, "moduleGroup");
+
+ModuleGroupDisplay moduleGroupDisplay = null;
+
+if (Validator.isNotNull(moduleGroup)) {
+	moduleGroupDisplay = ModuleGroupDisplayFactoryUtil.getModuleGroupDisplay(appDisplay, moduleGroup);
 }
 
 String state = ParamUtil.getString(request, "state", "all-statuses");
@@ -37,21 +45,24 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/view_module_groups.jsp");
+portletURL.setParameter("mvcPath", "/view_modules.jsp");
+portletURL.setParameter("app", app);
+portletURL.setParameter("moduleGroup", moduleGroup);
 portletURL.setParameter("state", state);
 
-MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
+MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, request, renderResponse);
 %>
 
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewURL">
-			<portlet:param name="mvcPath" value="/view_module_groups.jsp" />
+			<portlet:param name="mvcPath" value="/view_modules.jsp" />
+			<portlet:param name="app" value="<%= app %>" />
 		</portlet:renderURL>
 
 		<aui:nav-item
 			href="<%= viewURL %>"
-			label="module-groups"
+			label="modules"
 			selected="<%= true %>"
 		/>
 	</aui:nav>
@@ -96,36 +107,55 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 		<liferay-ui:search-container-results>
 
 			<%
-			List<ModuleGroupDisplay> moduleGroupDisplays = ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(appDisplay, BundleStateConstants.getState(state));
+			List<Bundle> bundles = null;
 
-			moduleGroupDisplays = ListUtil.sort(moduleGroupDisplays, new ModuleGroupDisplayComparator(orderByType));
+			if (moduleGroupDisplay != null) {
+				bundles = moduleGroupDisplay.getBundles();
+			}
+			else {
+				bundles = appDisplay.getBundles();
+			}
+
+			BundleUtil.filterBundles(bundles, BundleStateConstants.getState(state));
+
+			bundles = ListUtil.sort(bundles, new BundleComparator(orderByType));
 
 			int end = searchContainer.getEnd();
 
-			if (end > moduleGroupDisplays.size()) {
-				end = moduleGroupDisplays.size();
+			if (end > bundles.size()) {
+				end = bundles.size();
 			}
 
-			searchContainer.setResults(moduleGroupDisplays.subList(searchContainer.getStart(), end));
+			searchContainer.setResults(bundles.subList(searchContainer.getStart(), end));
 
-			searchContainer.setTotal(moduleGroupDisplays.size());
+			searchContainer.setTotal(bundles.size());
 			%>
 
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplay"
-			modelVar="moduleGroupDisplay"
+			className="org.osgi.framework.Bundle"
+			modelVar="bundle"
 		>
+
+			<%
+			Dictionary<String, String> headers = bundle.getHeaders();
+
+			String bundleName = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_NAME));
+			String bundleDescription = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_DESCRIPTION));
+			%>
+
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5>
-					<a href="<%= HtmlUtil.escapeHREF(moduleGroupDisplay.getDisplayURL(renderResponse)) %>">
-						<%= moduleGroupDisplay.getTitle() %>
-					</a>
+					<%= bundleName %>
 				</h5>
 
 				<h6 class="text-default">
-					<%= moduleGroupDisplay.getDescription() %>
+					<%= bundleDescription %>
+				</h6>
+
+				<h6 class="text-default">
+					<%= bundle.getSymbolicName() %>
 				</h6>
 
 				<div class="additional-info text-default">
@@ -134,7 +164,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 							<liferay-ui:message key="version" />:
 						</strong>
 
-						<%= moduleGroupDisplay.getVersion() %>
+						<%= String.valueOf(bundle.getVersion()) %>
 					</div>
 
 					<div class="additional-info-item">
@@ -142,13 +172,13 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 							<liferay-ui:message key="status" />:
 						</strong>
 
-						<liferay-ui:message key="<%= BundleStateConstants.getLabel(moduleGroupDisplay.getState()) %>" />
+						<liferay-ui:message key="<%= BundleStateConstants.getLabel(bundle.getState()) %>" />
 					</div>
 				</div>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				path="/module_group_display_action.jsp"
+				path="/bundle_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

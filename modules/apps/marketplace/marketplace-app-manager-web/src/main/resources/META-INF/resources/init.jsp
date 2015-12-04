@@ -24,10 +24,13 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.marketplace.app.manager.web.constants.BundleStateConstants" %><%@
+<%@ page import="com.liferay.marketplace.app.manager.web.constants.BundleConstants" %><%@
+page import="com.liferay.marketplace.app.manager.web.constants.BundleStateConstants" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.AppDisplay" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.AppDisplayComparator" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.AppDisplayFactoryUtil" %><%@
+page import="com.liferay.marketplace.app.manager.web.util.BundleComparator" %><%@
+page import="com.liferay.marketplace.app.manager.web.util.BundleUtil" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.MarketplaceAppManagerUtil" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplay" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplayComparator" %><%@
@@ -41,6 +44,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.upload.UploadException" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -52,7 +56,8 @@ page import="com.liferay.portal.service.CompanyLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.Dictionary" %><%@
+page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

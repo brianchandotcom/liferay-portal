@@ -55,6 +55,32 @@ public class MarketplaceAppManagerUtil {
 			request, appDisplay.getTitle(), null);
 	}
 
+	public static void addPortletBreadcrumbEntry(
+		AppDisplay appDisplay, ModuleGroupDisplay moduleGroupDisplay,
+		HttpServletRequest request, RenderResponse renderResponse) {
+
+		if (moduleGroupDisplay == null) {
+			addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
+
+			return;
+		}
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, LanguageUtil.get(request, "app-manager"),
+			portletURL.toString());
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, appDisplay.getTitle(),
+			appDisplay.getDisplayURL(renderResponse));
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, moduleGroupDisplay.getTitle(), null);
+	}
+
 	public static String[] getCategories(List<App> apps, List<Bundle> bundles) {
 		List<String> categories = new ArrayList<>();
 

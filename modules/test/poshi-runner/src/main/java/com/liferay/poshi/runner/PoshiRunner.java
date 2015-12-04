@@ -150,10 +150,7 @@ public class PoshiRunner {
 		List<Element> varElements = rootElement.elements("var");
 
 		for (Element varElement : varElements) {
-			String name = varElement.attributeValue("name");
-			String value = varElement.attributeValue("value");
-
-			PoshiRunnerVariablesUtil.putIntoExecuteMap(name, value);
+			PoshiRunnerExecutor.runVarElement(varElement, false, false);
 		}
 
 		PoshiRunnerVariablesUtil.pushCommandMap();

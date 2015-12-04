@@ -95,7 +95,8 @@ AUI.add(
 
 								if (targetNode) {
 									targetNode.prepend(alertsContainer);
-								} else {
+								}
+								else {
 									var navbar = rootNode.one('.navbar');
 
 									if (navbar) {

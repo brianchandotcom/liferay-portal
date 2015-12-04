@@ -94,54 +94,6 @@ AUI.add(
 								}
 							);
 						}
-
-						var manageLink = A.one('.notifications-portlet .user-notifications-container .user-notifications-sidebar .nav .manage');
-
-						if (manageLink) {
-							manageLink.on(
-								'click',
-								function() {
-									var userNotificationsSidebar = A.one('.user-notifications-sidebar');
-
-									if (userNotificationsSidebar) {
-										userNotificationsSidebar.all('.nav a').removeClass('selected');
-									}
-
-									manageLink.addClass('selected');
-
-									if (notificationsConfigurationNode) {
-										notificationsConfigurationNode.show();
-										notificationsConfigurationNode.plug(A.LoadingMask).loadingmask.show();
-
-										userNotificationsListNode.hide();
-
-										var portletURL = new Liferay.PortletURL.createURL(instance._baseRenderURL);
-
-										portletURL.setParameter('mvcPath', '/notifications/configuration.jsp');
-
-										portletURL.setWindowState('exclusive');
-
-										notificationsConfigurationNode.plug(A.Plugin.ParseContent);
-
-										notificationsConfigurationNode.load(
-											portletURL.toString(),
-											'#' + instance._namespace + 'manageNotifications',
-											function() {
-												var manageNotificationsNode = notificationsConfigurationNode.one('.manage-notifications');
-
-												if (!manageNotificationsNode) {
-													var html = '<div class=\"manage-notifications\">' + Liferay.Language.get('please-sign-in-to-continue') + '</div>';
-
-													notificationsConfigurationNode.setHTML(html);
-												}
-
-												notificationsConfigurationNode.unplug(A.LoadingMask);
-											}
-										);
-									}
-								}
-							);
-						}
 					}
 				}
 			}

@@ -124,6 +124,8 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			new UpgradeJournalArticles(
 				_assetCategoryLocalService, _ddmStructureLocalService,
 				_groupLocalService, _layoutLocalService));
+
+		runSQL("alter table JournalArticle drop column type_");
 	}
 
 	protected List<String> getArticleTypes() throws Exception {

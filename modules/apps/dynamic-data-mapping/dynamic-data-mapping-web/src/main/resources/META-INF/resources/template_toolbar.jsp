@@ -38,7 +38,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteTemplates();";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-trash" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="trash" />
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 </liferay-frontend:management-bar>

@@ -78,11 +78,11 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 			<liferay-frontend:management-bar-action-buttons>
 				<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-					<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteArticles" />
+					<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteArticles" />
 				</c:if>
 
 				<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-					<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-time" id="expireArticles" />
+					<liferay-frontend:management-bar-button href="javascript:;" icon="time" id="expireArticles" />
 				</c:if>
 			</liferay-frontend:management-bar-action-buttons>
 		</liferay-frontend:management-bar>

@@ -75,17 +75,18 @@ AUI.add(
 						var instance = this;
 
 						instance._clearHideTimer();
+
 						instance._set('visible', true);
 					},
 
-					_getParentNode: function(targetNode) {
+					_getAlertsContainer: function(targetNode) {
 						var instance = this;
-
-						var rootNode = targetNode || instance.get('rootNode') || A;
 
 						var alertsContainer = instance._alertsContainer;
 
 						if (!alertsContainer) {
+							var rootNode = targetNode || instance.get('rootNode') || A;
+
 							alertsContainer = (targetNode && targetNode.one('.lfr-alert-container')) || rootNode.one('.lfr-alert-container');
 
 							if (!alertsContainer) {
@@ -109,10 +110,18 @@ AUI.add(
 							instance._alertsContainer = alertsContainer;
 						}
 
+						return alertsContainer;
+					},
+
+					_getParentNode: function(targetNode) {
+						var instance = this;
+
 						var parentNode = instance._parentNode;
 
 						if (!parentNode) {
 							parentNode = A.Node.create(TPL_ALERT_NODE);
+
+							var alertsContainer = instance._getAlertsContainer(targetNode);
 
 							alertsContainer.prepend(parentNode);
 

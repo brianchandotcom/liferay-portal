@@ -19,6 +19,8 @@ import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
+import com.liferay.poshi.runner.selenium.WebDriverHelper;
+import com.liferay.poshi.runner.selenium.WebDriverUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
@@ -538,6 +540,23 @@ public final class CommandLoggerHandler {
 		LoggerUtil.executeJavaScript(
 			"loggerInterface.fire('command-complete', '" +
 				loggerElement.getID() + "')");
+	}
+
+	private static void _writeWebPage(int errorLinkId) throws Exception {
+		WebDriver webDriver = WebDriverUtil.getWebDriver();
+
+		String testClassCommandName =
+			PoshiRunnerContext.getTestCaseCommandName();
+
+		testClassCommandName = StringUtil.replace(
+			testClassCommandName, "#", "_");
+
+		WebDriverHelper.saveWebPage(
+			webDriver,
+			PoshiRunnerGetterUtil.getCanonicalPath(".") + "/test-results/" +
+				testClassCommandName + "/web-pages/index" + errorLinkId +
+				".html",
+			_htmlSource);
 	}
 
 	private static int _btnLinkId;

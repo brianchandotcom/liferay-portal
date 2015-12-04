@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.spring.aop.InvocationHandlerFactory;
@@ -135,6 +136,12 @@ public class SchedulerProxyMessagingConfigurator {
 		ProxyMessageListener proxyMessageListener) {
 
 		_proxyMessageListener = proxyMessageListener;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSingleDestinationMessageSenderFactory(
+		SingleDestinationMessageSenderFactory
+			singleDestinationMessageSenderFactory) {
 	}
 
 	private volatile DestinationFactory _destinationFactory;

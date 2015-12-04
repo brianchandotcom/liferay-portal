@@ -50,8 +50,8 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 
 			sb.append("update LayoutSet set modifiedDate = ?, pageCount = ?, ");
 			sb.append("layoutSetPrototypeUuid = ?, ");
-			sb.append("layoutSetPrototypeLinkEnabled = ?  where layoutSetId ");
-			sb.append("= ?");
+			sb.append("layoutSetPrototypeLinkEnabled = ? where layoutSetId = ");
+			sb.append("?");
 
 			ps = con.prepareStatement(sb.toString());
 

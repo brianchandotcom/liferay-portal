@@ -894,8 +894,6 @@
 			<var name="frequency" value="Monthly" />
 			<var name="numberOfOccurrences" value="2" />
 			<var name="pageName" value="${pageName}" />
-			<var name="position" value="Third" />
-			<var name="weekday" value="Wednesday" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1180,9 +1178,6 @@
 
 		<execute macro="CalendarEvent#setRepeating">
 			<var name="frequency" value="Yearly" />
-			<var name="month" value="February" />
-			<var name="position" value="First" />
-			<var name="weekday" value="Tuesday" />
 		</execute>
 
 		<execute macro="CalendarEvent#publish" />

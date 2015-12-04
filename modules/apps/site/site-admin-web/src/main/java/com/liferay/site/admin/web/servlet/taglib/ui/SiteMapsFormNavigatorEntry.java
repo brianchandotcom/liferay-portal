@@ -14,15 +14,22 @@
 
 package com.liferay.site.admin.web.servlet.taglib.ui;
 
+import com.liferay.frontend.map.api.constants.MapProviderWebKeys;
+import com.liferay.frontend.map.api.util.MapAPIHelperUtil;
+import com.liferay.frontend.map.api.util.MapProviderTracker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 
+import java.io.IOException;
+
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,6 +59,21 @@ public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		request.setAttribute(
+			MapProviderWebKeys.GROUP_MAPS_API_PROVIDER,
+			_mapAPIHelperUtil.getGroupMapsAPIProvider(request));
+
+		request.setAttribute(
+			MapProviderWebKeys.MAP_PROVIDER_TRACKER, _mapProviderTracker);
+
+		super.include(request, response);
+	}
+
+	@Override
 	public boolean isVisible(User user, Group group) {
 		if (group == null) {
 			return false;
@@ -73,5 +95,20 @@ public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 	protected String getJspPath() {
 		return "/site/maps.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected void setMapAPIHelperUtil(MapAPIHelperUtil mapAPIHelperUtil) {
+		_mapAPIHelperUtil = mapAPIHelperUtil;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMapProviderTracker(
+		MapProviderTracker mapProviderTracker) {
+
+		_mapProviderTracker = mapProviderTracker;
+	}
+
+	private volatile MapAPIHelperUtil _mapAPIHelperUtil;
+	private volatile MapProviderTracker _mapProviderTracker;
 
 }

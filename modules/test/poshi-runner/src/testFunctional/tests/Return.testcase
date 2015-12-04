@@ -1,4 +1,5 @@
 <definition component-name="portal-tools">
+	<property name="poshi.runner.acceptance" value="true" />
 	<property name="testray.main.component.name" value="Smoke" />
 
 	<command name="ReturnExample" priority="5">

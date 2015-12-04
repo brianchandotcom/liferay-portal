@@ -959,6 +959,7 @@
 
 		<execute macro="User#editPasswordInvalidCP">
 			<var name="newPassword" value="NO1else" />
+			<var name="regex" value="${atLeastFourCharNoNumbers}" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userScreenName" value="test1" />
 		</execute>
@@ -1017,6 +1018,7 @@
 
 		<execute macro="User#editPasswordInvalidCP">
 			<var name="newPassword" value="1-2-3ABC" />
+			<var name="regex" value="${atLeastSixCharNumbersPermitted}" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userScreenName" value="test1" />
 		</execute>
@@ -1048,6 +1050,7 @@
 
 		<execute macro="User#editPasswordInvalidCP">
 			<var name="newPassword" value="12AB" />
+			<var name="regex" value="${atLeastSixCharNumbersPermitted}" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userScreenName" value="test1" />
 		</execute>

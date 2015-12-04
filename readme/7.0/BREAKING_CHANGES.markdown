@@ -3041,7 +3041,7 @@ being implicitly required, via the custom validator.
 ##### Custom validators that assumed validation would always run, must now explicitly pass the `required` validator.
 
 ```diff
- <aui:input name="vowlesOnly">
+ <aui:input name="vowelsOnly">
      <aui:validator errorMessage="must-contain-only-the-following-characters" name="custom">
          function(val, fieldNode, ruleValue) {
              var allowedCharacters = 'aeiouy';

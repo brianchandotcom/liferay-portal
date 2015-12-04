@@ -250,7 +250,7 @@ if (organization != null) {
 							<%
 							SearchContainer searchContainer = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
 
-							RowChecker rowChecker = new RowChecker(renderResponse);
+							RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 							rowChecker.setRowIds("rowIdsOrganization");
 

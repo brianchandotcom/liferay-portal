@@ -39,4 +39,48 @@ public class RecordSetSettingsException extends PortalException {
 		super(cause);
 	}
 
+	public static class MustEnterValidEmailAddress
+		extends RecordSetSettingsException {
+
+		public MustEnterValidEmailAddress(String fieldName) {
+			super(
+				String.format(
+					"Please enter a valid email address for field: '%s'",
+					fieldName));
+			_fieldName = fieldName;
+		}
+
+		public String getFieldName() {
+			return _fieldName;
+		}
+
+		private final String _fieldName;
+
+	}
+
+	public static class MustEnterValidRedirectURL
+		extends RecordSetSettingsException {
+
+		public MustEnterValidRedirectURL() {
+			super("Please enter a valid redirect URL");
+		}
+
+	}
+
+	public static class RequiredValue extends RecordSetSettingsException {
+
+		public RequiredValue(String fieldName) {
+			super(String.format("No value defined for field %s", fieldName));
+
+			_fieldName = fieldName;
+		}
+
+		public String getFieldName() {
+			return _fieldName;
+		}
+
+		private final String _fieldName;
+
+	}
+
 }

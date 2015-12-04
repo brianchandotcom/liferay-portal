@@ -1,5 +1,0 @@
-<definition>
-	<command name="returnMacro" returns="variable">
-		<return name="variable" value="Return Value" />
-	</command>
-</definition>

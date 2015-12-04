@@ -36,6 +36,70 @@
 		</if>
 	</tear-down>
 
+	<command name="EditDDLFormConfigurationViaConfigAdmin">
+		<description message="This is a use case for LPS-59749" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdmin#assertVisibleDisplayStyle">
+			<var name="displayStyle" value="DESCRIPTIVE,ICON,LIST" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Productivity" />
+		</execute>
+
+		<execute macro="SystemSettings#editProductivityConfiguration">
+			<var name="configurationName" value="Dynamic Data Lists Form Configuration" />
+		</execute>
+
+		<execute macro="FormsAdmin#removeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute macro="FormsAdmin#saveFormConfiguration" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdmin#assertVisibleDisplayStyle">
+			<var name="displayStyle" value="DESCRIPTIVE,ICON" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Productivity" />
+		</execute>
+
+		<execute macro="SystemSettings#editProductivityConfiguration">
+			<var name="configurationName" value="Dynamic Data Lists Form Configuration" />
+		</execute>
+
+		<execute macro="FormsAdmin#addDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute macro="FormsAdmin#saveFormConfiguration" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdmin#assertVisibleDisplayStyle">
+			<var name="displayStyle" value="DESCRIPTIVE,ICON,LIST" />
+		</execute>
+	</command>
+
 	<command name="NavigateToCorrectForm" priority="4">
 		<description message="This is a use case for LPS-59331" />
 

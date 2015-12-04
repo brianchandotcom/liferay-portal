@@ -46,7 +46,7 @@ public class DummyIndexWriter implements IndexWriter {
 	}
 
 	@Override
-	public void commit(long companyId) {
+	public void commit(SearchContext searchContext) {
 	}
 
 	@Override

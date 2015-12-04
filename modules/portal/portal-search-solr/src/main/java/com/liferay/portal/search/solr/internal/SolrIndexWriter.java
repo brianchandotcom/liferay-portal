@@ -69,7 +69,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 	}
 
 	@Override
-	public void commit(long companyId) throws SearchException {
+	public void commit(SearchContext searchContext) throws SearchException {
 		SolrClient solrClient = _solrClientManager.getSolrClient();
 
 		try {

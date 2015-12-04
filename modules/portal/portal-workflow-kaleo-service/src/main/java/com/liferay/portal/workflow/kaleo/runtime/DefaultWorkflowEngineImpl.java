@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.model.Group;
@@ -109,8 +108,8 @@ public class DefaultWorkflowEngineImpl
 
 			return workflowDefinition;
 		}
-		catch (WorkflowDefinitionFileException e) {
-			throw new WorkflowDefinitionFileException(e);
+		catch (WorkflowException we) {
+			throw we;
 		}
 		catch (PortalException e) {
 			throw new WorkflowException(e);

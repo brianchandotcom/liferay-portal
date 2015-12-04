@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -65,9 +66,7 @@ import java.util.Set;
 public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 	@Override
-	public Definition parse(InputStream inputStream)
-		throws WorkflowDefinitionFileException {
-
+	public Definition parse(InputStream inputStream) throws WorkflowException {
 		try {
 			return doParse(inputStream);
 		}

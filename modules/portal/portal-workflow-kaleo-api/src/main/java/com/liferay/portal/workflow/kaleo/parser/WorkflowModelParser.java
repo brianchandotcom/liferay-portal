@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.parser;
 
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 
 import java.io.InputStream;
@@ -24,7 +24,6 @@ import java.io.InputStream;
  */
 public interface WorkflowModelParser {
 
-	public Definition parse(InputStream inputStream)
-		throws WorkflowDefinitionFileException;
+	public Definition parse(InputStream inputStream) throws WorkflowException;
 
 }

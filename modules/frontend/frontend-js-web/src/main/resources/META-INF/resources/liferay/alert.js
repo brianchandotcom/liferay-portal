@@ -4,9 +4,9 @@ AUI.add(
 		var getClassName = A.getClassName;
 		var Lang = A.Lang;
 
-		var STR_ALERT_NODE = '<div class="container-fluid-1280 lfr-alert-wrapper"></div>';
+		var TPL_ALERTS_CONTAINER = '<div class="lfr-alert-container"></div>';
 
-		var STR_ALERTS_CONTAINER = '<div class="lfr-alert-container"></div>';
+		var TPL_ALERT_NODE = '<div class="container-fluid-1280 lfr-alert-wrapper"></div>';
 
 		var TPL_CONTENT = '<strong class="lead">{title}</strong>{message}';
 
@@ -91,7 +91,7 @@ AUI.add(
 							alertsContainer = (targetNode && targetNode.one('.lfr-alert-container')) || rootNode.one('.lfr-alert-container');
 
 							if (!alertsContainer) {
-								alertsContainer = A.Node.create(STR_ALERTS_CONTAINER);
+								alertsContainer = A.Node.create(TPL_ALERTS_CONTAINER);
 
 								if (targetNode) {
 									targetNode.prepend(alertsContainer);
@@ -114,7 +114,7 @@ AUI.add(
 						var parentNode = instance._parentNode;
 
 						if (!parentNode) {
-							parentNode = A.Node.create(STR_ALERT_NODE);
+							parentNode = A.Node.create(TPL_ALERT_NODE);
 
 							alertsContainer.prepend(parentNode);
 

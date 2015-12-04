@@ -26,7 +26,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 >
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" />
 		</c:if>
 
 		<c:if test="<%= !journalDisplayContext.isSearch() %>">
@@ -55,26 +55,26 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 	<liferay-frontend:management-bar-action-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" />
 		</c:if>
 
 		<%
 		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
 		%>
 
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' />
 
 		<%
 		taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'expireEntries'}); void(0);";
 		%>
 
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-time" />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="time" />
 
 		<%
 		taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'moveEntries'}); void(0);";
 		%>
 
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-move" />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="change" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

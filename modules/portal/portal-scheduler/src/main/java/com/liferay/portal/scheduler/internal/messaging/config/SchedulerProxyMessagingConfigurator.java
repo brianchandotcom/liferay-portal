@@ -15,11 +15,20 @@
 package com.liferay.portal.scheduler.internal.messaging.config;
 
 import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
+import java.util.Dictionary;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -30,13 +39,38 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SchedulerProxyMessagingConfigurator {
 
-	@Reference(
-		service = Destination.class,
-		target = "(destination.name=" + DestinationNames.SCHEDULER_ENGINE + ")",
-		unbind = "unsetDestination"
-	)
-	protected void setDestination(Destination destination) {
+	@Activate
+	protected void activate(BundleContext bundleContext) throws Exception {
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+				DestinationNames.SCHEDULER_ENGINE);
+
+		Destination destination = _destinationFactory.createDestination(
+			destinationConfiguration);
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("destination.name", destination.getName());
+
+		_serviceRegistration = bundleContext.registerService(
+			Destination.class, destination, dictionary);
+
 		destination.register(_proxyMessageListener);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setDestinationFactory(
+		DestinationFactory destinationFactory) {
+
+		_destinationFactory = destinationFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -54,10 +88,8 @@ public class SchedulerProxyMessagingConfigurator {
 		_proxyMessageListener = proxyMessageListener;
 	}
 
-	protected void unsetDestination(Destination destination) {
-		destination.unregister(_proxyMessageListener);
-	}
-
+	private volatile DestinationFactory _destinationFactory;
 	private volatile ProxyMessageListener _proxyMessageListener;
+	private volatile ServiceRegistration<Destination> _serviceRegistration;
 
 }

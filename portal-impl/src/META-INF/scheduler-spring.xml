@@ -31,18 +31,4 @@
 		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
 
-	<!-- Messaging -->
-
-	<bean id="messagingConfigurator.scheduler" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
-		<property name="destinationConfigurations">
-			<util:set>
-				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
-					<constructor-arg name="destinationName" value="liferay/scheduler_engine" />
-					<constructor-arg name="destinationType">
-						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />
-					</constructor-arg>
-				</bean>
-			</util:set>
-		</property>
-	</bean>
 </beans>

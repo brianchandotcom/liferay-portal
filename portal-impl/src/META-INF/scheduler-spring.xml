@@ -33,42 +33,16 @@
 
 	<!-- Messaging -->
 
-	<bean id="messageListener.scheduler_scripting" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
-		<property name="messageListener">
-			<bean class="com.liferay.portal.scheduler.messaging.ScriptingMessageListener" />
-		</property>
-	</bean>
 	<bean id="messagingConfigurator.scheduler" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
 		<property name="destinationConfigurations">
 			<util:set>
-				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
-					<constructor-arg name="destinationName" value="liferay/scheduler_dispatch" />
-					<constructor-arg name="destinationType">
-						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />
-					</constructor-arg>
-				</bean>
 				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
 					<constructor-arg name="destinationName" value="liferay/scheduler_engine" />
 					<constructor-arg name="destinationType">
 						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />
 					</constructor-arg>
 				</bean>
-				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
-					<constructor-arg name="destinationName" value="liferay/scheduler_scripting" />
-					<constructor-arg name="destinationType">
-						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />
-					</constructor-arg>
-				</bean>
 			</util:set>
-		</property>
-		<property name="messageListeners">
-			<map key-type="java.lang.String" value-type="java.util.List">
-				<entry key="liferay/scheduler_scripting">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.scheduler_scripting" />
-					</list>
-				</entry>
-			</map>
 		</property>
 	</bean>
 </beans>

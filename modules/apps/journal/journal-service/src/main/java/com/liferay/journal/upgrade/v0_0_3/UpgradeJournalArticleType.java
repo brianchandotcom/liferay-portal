@@ -14,7 +14,6 @@
 
 package com.liferay.journal.upgrade.v0_0_3;
 
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,8 +25,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalService;
-import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
@@ -59,18 +56,12 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 		AssetEntryLocalService assetEntryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		CompanyLocalService companyLocalService,
-		DDMStructureLocalService ddmStructureLocalService,
-		GroupLocalService groupLocalService,
-		LayoutLocalService layoutLocalService,
 		UserLocalService userLocalService) {
 
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_companyLocalService = companyLocalService;
-		_ddmStructureLocalService = ddmStructureLocalService;
-		_groupLocalService = groupLocalService;
-		_layoutLocalService = layoutLocalService;
 		_userLocalService = userLocalService;
 	}
 
@@ -119,11 +110,6 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateArticleType();
-
-		upgrade(
-			new UpgradeJournalArticles(
-				_assetCategoryLocalService, _ddmStructureLocalService,
-				_groupLocalService, _layoutLocalService));
 
 		runSQL("alter table JournalArticle drop column type_");
 	}
@@ -289,9 +275,6 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final CompanyLocalService _companyLocalService;
-	private final DDMStructureLocalService _ddmStructureLocalService;
-	private final GroupLocalService _groupLocalService;
-	private final LayoutLocalService _layoutLocalService;
 	private final UserLocalService _userLocalService;
 
 }

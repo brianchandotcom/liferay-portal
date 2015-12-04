@@ -21,6 +21,7 @@ import com.liferay.journal.upgrade.v0_0_2.UpgradeClassNames;
 import com.liferay.journal.upgrade.v0_0_3.UpgradeJournalArticleType;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticles;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.journal.upgrade.v1_0_0.UpgradePortletSettings;
@@ -65,8 +66,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeJournalArticleType(
 				_assetCategoryLocalService, _assetEntryLocalService,
 				_assetVocabularyLocalService, _companyLocalService,
-				_ddmStructureLocalService, _groupLocalService,
-				_layoutLocalService, _userLocalService));
+				_userLocalService));
 
 		registry.register(
 			"com.liferay.journal.service", "0.0.3", "1.0.0",
@@ -75,6 +75,9 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 				_companyLocalService, _ddmStructureLocalService,
 				_ddmTemplateLinkLocalService, _ddmTemplateLocalService,
 				_groupLocalService, _userLocalService),
+			new UpgradeJournalArticles(
+				_assetCategoryLocalService, _ddmStructureLocalService,
+				_groupLocalService, _layoutLocalService),
 			new UpgradeJournalDisplayPreferences(),
 			new UpgradeLastPublishDate(),
 			new UpgradePortletSettings(_settingsFactory),

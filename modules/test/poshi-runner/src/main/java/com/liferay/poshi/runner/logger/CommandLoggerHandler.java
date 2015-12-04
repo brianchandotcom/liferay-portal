@@ -547,8 +547,6 @@ public final class CommandLoggerHandler {
 	}
 
 	private static void _writeWebPage(int errorLinkId) throws Exception {
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
-
 		String testClassCommandName =
 			PoshiRunnerContext.getTestCaseCommandName();
 
@@ -556,7 +554,6 @@ public final class CommandLoggerHandler {
 			testClassCommandName, "#", "_");
 
 		WebDriverHelper.saveWebPage(
-			webDriver,
 			PoshiRunnerGetterUtil.getCanonicalPath(".") + "/test-results/" +
 				testClassCommandName + "/web-pages/index" + errorLinkId +
 				".html",

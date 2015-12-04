@@ -286,21 +286,21 @@ public class WebDriverHelper {
 		}
 	}
 
-	public static String getCssSource(String html) throws Exception {
-		Document htmlDocument = Jsoup.parse(html);
+	public static String getCSSSource(String htmlSource) throws Exception {
+		Document htmlDocument = Jsoup.parse(htmlSource);
 
 		Elements elements = htmlDocument.select("link[type=text/css]");
 
 		StringBuilder sb = new StringBuilder();
 
 		for (Element element : elements) {
-			String hrefValue = element.attr("href");
+			String href = element.attr("href");
 
-			if (!hrefValue.contains(PropsValues.PORTAL_URL)) {
-				hrefValue = PropsValues.PORTAL_URL + hrefValue;
+			if (!href.contains(PropsValues.PORTAL_URL)) {
+				href = PropsValues.PORTAL_URL + href;
 			}
 
-			Connection connection = Jsoup.connect(hrefValue);
+			Connection connection = Jsoup.connect(href);
 
 			Document document = connection.get();
 
@@ -676,26 +676,22 @@ public class WebDriverHelper {
 		}
 	}
 
-	public static void saveWebPage(
-			WebDriver webDriver, String fileName, String html)
+	public static void saveWebPage(String fileName, String htmlSource)
 		throws Exception {
 
 		if (!PropsValues.SAVE_WEB_PAGE) {
 			return;
 		}
 
-		String css = getCssSource(html);
-
-		html = html.replace("<\\html>", "");
+		String cssSource = getCSSSource(htmlSource);
 
 		StringBuilder sb = new StringBuilder(4);
 
-		sb.append(html);
 		sb.append("<style>");
-		sb.append(css);
+		sb.append(cssSource);
 		sb.append("</style></html>");
 
-		FileUtil.write(fileName, sb.toString());
+		FileUtil.write(fileName, htmlSource.replace("<\\html>", sb.toString()));
 	}
 
 	public static void select(

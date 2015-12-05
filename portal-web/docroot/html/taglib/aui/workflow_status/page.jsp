@@ -41,7 +41,7 @@
 		</strong>
 	</span>
 
-	<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+	<c:if test="<%= showHelpMessage && Validator.isNotNull(helpMessage) %>">
 		<liferay-ui:icon-help message="<%= helpMessage %>" />
 	</c:if>
 </span>

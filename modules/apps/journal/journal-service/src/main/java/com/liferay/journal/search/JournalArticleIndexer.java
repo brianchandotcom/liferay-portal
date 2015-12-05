@@ -803,7 +803,7 @@ public class JournalArticleIndexer
 					try {
 						Document document = getDocument(article);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

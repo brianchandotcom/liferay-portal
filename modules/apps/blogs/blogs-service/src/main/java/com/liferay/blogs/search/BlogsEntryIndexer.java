@@ -188,7 +188,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 					try {
 						Document document = getDocument(entry);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

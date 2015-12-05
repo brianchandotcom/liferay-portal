@@ -73,6 +73,11 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	}
 
 	@Override
+	public boolean isParallel() {
+		return _parallel;
+	}
+
+	@Override
 	public void performActions() throws PortalException {
 		try {
 			long previousPrimaryKey = -1;

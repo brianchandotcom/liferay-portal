@@ -192,7 +192,7 @@ public class ContactIndexer extends BaseIndexer<Contact> {
 						Document document = getDocument(contact);
 
 						if (document != null) {
-							indexableActionableDynamicQuery.addDocument(
+							indexableActionableDynamicQuery.addDocuments(
 								document);
 						}
 					}

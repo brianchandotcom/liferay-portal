@@ -166,7 +166,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 					try {
 						Document document = getDocument(node);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

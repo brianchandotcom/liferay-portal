@@ -243,7 +243,7 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 					try {
 						Document document = getDocument(organization);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

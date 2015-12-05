@@ -602,7 +602,7 @@ public class DLFileEntryIndexer
 						Document document = getDocument(dlFileEntry);
 
 						if (document != null) {
-							indexableActionableDynamicQuery.addDocument(
+							indexableActionableDynamicQuery.addDocuments(
 								document);
 						}
 					}

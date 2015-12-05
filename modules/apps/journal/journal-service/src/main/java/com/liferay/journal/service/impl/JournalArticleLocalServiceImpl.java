@@ -4775,7 +4775,7 @@ public class JournalArticleLocalServiceImpl
 					com.liferay.portal.kernel.search.Document document =
 						indexer.getDocument(article);
 
-					indexableActionableDynamicQuery.addDocument(document);
+					indexableActionableDynamicQuery.addDocuments(document);
 				}
 
 			});

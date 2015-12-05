@@ -238,7 +238,7 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 						Document document = getDocument(category);
 
 						if (document != null) {
-							indexableActionableDynamicQuery.addDocument(
+							indexableActionableDynamicQuery.addDocuments(
 								document);
 						}
 					}

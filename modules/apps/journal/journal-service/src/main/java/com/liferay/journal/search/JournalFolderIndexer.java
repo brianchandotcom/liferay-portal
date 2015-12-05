@@ -179,7 +179,7 @@ public class JournalFolderIndexer
 						Document document = getDocument(folder);
 
 						if (document != null) {
-							indexableActionableDynamicQuery.addDocument(
+							indexableActionableDynamicQuery.addDocuments(
 								document);
 						}
 					}

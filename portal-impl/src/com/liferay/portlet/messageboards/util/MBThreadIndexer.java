@@ -282,7 +282,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 					try {
 						Document document = getDocument(thread);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

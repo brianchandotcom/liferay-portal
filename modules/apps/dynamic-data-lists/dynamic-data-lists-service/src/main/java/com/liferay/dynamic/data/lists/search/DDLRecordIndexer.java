@@ -334,7 +334,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 						Document document = getDocument(record);
 
 						if (document != null) {
-							indexableActionableDynamicQuery.addDocument(
+							indexableActionableDynamicQuery.addDocuments(
 								document);
 						}
 					}

@@ -168,7 +168,7 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 					try {
 						Document document = getDocument(userGroup);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

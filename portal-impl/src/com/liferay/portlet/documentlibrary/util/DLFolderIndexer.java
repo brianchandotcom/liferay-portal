@@ -199,7 +199,7 @@ public class DLFolderIndexer
 						Document document = getDocument(dlFolder);
 
 						if (document != null) {
-							indexableActionableDynamicQuery.addDocument(
+							indexableActionableDynamicQuery.addDocuments(
 								document);
 						}
 					}

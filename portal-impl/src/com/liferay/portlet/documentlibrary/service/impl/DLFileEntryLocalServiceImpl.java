@@ -1838,7 +1838,7 @@ public class DLFileEntryLocalServiceImpl
 
 					Document document = indexer.getDocument(dlFileEntry);
 
-					indexableActionableDynamicQuery.addDocument(document);
+					indexableActionableDynamicQuery.addDocuments(document);
 				}
 
 			});

@@ -182,7 +182,7 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 						Document document = getDocument(assetVocabulary);
 
 						if (document != null) {
-							indexableActionableDynamicQuery.addDocument(
+							indexableActionableDynamicQuery.addDocuments(
 								document);
 						}
 					}

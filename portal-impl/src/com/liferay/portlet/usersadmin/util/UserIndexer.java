@@ -400,7 +400,7 @@ public class UserIndexer extends BaseIndexer<User> {
 						try {
 							Document document = getDocument(user);
 
-							indexableActionableDynamicQuery.addDocument(
+							indexableActionableDynamicQuery.addDocuments(
 								document);
 						}
 						catch (PortalException pe) {

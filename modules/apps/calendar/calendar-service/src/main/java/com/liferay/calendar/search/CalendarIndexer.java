@@ -169,7 +169,7 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 				try {
 					Document document = getDocument(calendar);
 
-					indexableActionableDynamicQuery.addDocument(document);
+					indexableActionableDynamicQuery.addDocuments(document);
 				}
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {

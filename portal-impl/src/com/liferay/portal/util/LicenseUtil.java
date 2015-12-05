@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
@@ -209,7 +210,7 @@ public class LicenseUtil {
 			for (NetworkInterface networkInterface : networkInterfaces) {
 				byte[] hardwareAddress = networkInterface.getHardwareAddress();
 
-				if (hardwareAddress == null) {
+				if (ArrayUtil.isEmpty(hardwareAddress)) {
 					continue;
 				}
 

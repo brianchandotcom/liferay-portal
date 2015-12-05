@@ -15,7 +15,6 @@
 package com.liferay.portal.cache.ehcache;
 
 import com.liferay.portal.cache.PortalCacheWrapper;
-import com.liferay.portal.cache.ehcache.internal.EhcachePortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 
 import java.io.Serializable;
@@ -28,14 +27,21 @@ import net.sf.ehcache.Ehcache;
 public class EhcacheUnwrapUtil {
 
 	public static Ehcache getEhcache(PortalCache<?, ?> portalCache) {
-		EhcachePortalCache<?, ?> ehcachePortalCache = getEhcachePortalCache(
+		PortalCache<?, ?> wrappedPortalCache = getWrappedPortalCache(
 			portalCache);
 
-		return ehcachePortalCache.getEhcache();
+		if (wrappedPortalCache instanceof EhcacheWrapper) {
+			EhcacheWrapper ehcacheWrapper = (EhcacheWrapper)wrappedPortalCache;
+
+			return ehcacheWrapper.getEhcache();
+		}
+
+		throw new IllegalArgumentException(
+			"Unable to locate Ehcache from " + portalCache);
 	}
 
-	public static <K extends Serializable, V> EhcachePortalCache<K, V>
-		getEhcachePortalCache(PortalCache<K, V> portalCache) {
+	public static <K extends Serializable, V> PortalCache<K, V>
+		getWrappedPortalCache(PortalCache<K, V> portalCache) {
 
 		PortalCache<K, V> currentPortalCache = portalCache;
 
@@ -46,12 +52,7 @@ public class EhcacheUnwrapUtil {
 			currentPortalCache = portalCacheWrapper.getWrappedPortalCache();
 		}
 
-		if (currentPortalCache instanceof EhcachePortalCache) {
-			return (EhcachePortalCache<K, V>)currentPortalCache;
-		}
-
-		throw new IllegalArgumentException(
-			"Unable to locate Ehcache from " + portalCache);
+		return currentPortalCache;
 	}
 
 }

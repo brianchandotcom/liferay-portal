@@ -275,7 +275,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 				if (portalCache != null) {
 					EhcachePortalCache<K, V> ehcachePortalCache =
-						EhcacheUnwrapUtil.getEhcachePortalCache(portalCache);
+						(EhcachePortalCache<K, V>)
+							EhcacheUnwrapUtil.getWrappedPortalCache(
+								portalCache);
 
 					if (ehcachePortalCache != null) {
 						ehcachePortalCache.reconfigEhcache(ehcache);

@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.cache.internal.transactional;
+package com.liferay.portal.cache;
 
-import com.liferay.portal.cache.PortalCacheWrapper;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.transactional.TransactionalPortalCacheHelper;
 

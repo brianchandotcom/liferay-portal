@@ -14,6 +14,7 @@
 
 package com.liferay.deployment.helper.servlet;
 
+import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.File;
@@ -119,6 +120,15 @@ public class DeploymentHelperContextListener implements ServletContextListener {
 						deploymentFileName + ":\n" + e.getMessage(),
 					e);
 			}
+		}
+
+		try {
+			DeployManagerUtil.undeploy(servletContext.getServletContextName());
+		}
+		catch (Exception e) {
+			servletContext.log(
+				"Could not undeploy " + servletContext.getServletContextName(),
+				e);
 		}
 	}
 

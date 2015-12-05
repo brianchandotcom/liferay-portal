@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -28,6 +29,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.NoSuchUserGroupException" %><%@
 page import="com.liferay.portal.RequiredUserGroupException" %><%@
 page import="com.liferay.portal.UserGroupNameException" %><%@
+page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
@@ -54,21 +56,27 @@ page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutSetLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutSetPrototypeServiceUtil" %><%@
+page import="com.liferay.portal.service.UserGroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.UserGroupServiceUtil" %><%@
+page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.UserGroupPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.portlet.PortalPreferences" %><%@
+page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.admin.util.PortalMyAccountApplicationType" %><%@
+page import="com.liferay.portlet.usergroupsadmin.search.SetUserUserGroupChecker" %><%@
+page import="com.liferay.portlet.usergroupsadmin.search.UnsetUserUserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
-page import="com.liferay.portlet.usergroupsadmin.search.UserUserGroupChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
-page import="com.liferay.taglib.search.ResultRow" %>
+page import="com.liferay.taglib.search.ResultRow" %><%@
+page import="com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys" %>
 
 <%@ page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %>
@@ -86,6 +94,8 @@ WindowState windowState = liferayPortletRequest.getWindowState();
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();
+
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
 boolean filterManageableOrganizations = true;
 

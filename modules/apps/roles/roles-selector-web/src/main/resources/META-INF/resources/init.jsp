@@ -38,7 +38,6 @@ page import="com.liferay.portal.model.User" %><%@
 page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.OrganizationLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.RoleLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.UserGroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@

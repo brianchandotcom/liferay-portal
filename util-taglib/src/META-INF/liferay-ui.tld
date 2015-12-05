@@ -5799,11 +5799,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>user-group-search-form</name>
-		<tag-class>com.liferay.taglib.ui.UserGroupSearchFormTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
 		<name>user-portrait</name>
 		<tag-class>com.liferay.taglib.ui.UserPortraitTag</tag-class>
 		<body-content>JSP</body-content>

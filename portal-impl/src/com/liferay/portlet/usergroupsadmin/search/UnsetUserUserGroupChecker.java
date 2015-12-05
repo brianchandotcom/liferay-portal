@@ -14,22 +14,22 @@
 
 package com.liferay.portlet.usergroupsadmin.search;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 
 /**
  * @author Charles May
+ * @author Pei-Jung Lan
  */
-public class UserUserGroupChecker extends RowChecker {
+public class UnsetUserUserGroupChecker extends EmptyOnClickRowChecker {
 
-	public UserUserGroupChecker(
+	public UnsetUserUserGroupChecker(
 		RenderResponse renderResponse, UserGroup userGroup) {
 
 		super(renderResponse);
@@ -38,38 +38,14 @@ public class UserUserGroupChecker extends RowChecker {
 	}
 
 	@Override
-	public boolean isChecked(Object obj) {
-		User user = (User)obj;
-
-		try {
-			return UserLocalServiceUtil.hasUserGroupUser(
-				_userGroup.getUserGroupId(), user.getUserId());
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return false;
-		}
-	}
-
-	@Override
 	public boolean isDisabled(Object obj) {
 		User user = (User)obj;
 
 		try {
-			if (isChecked(user)) {
-				if (UserGroupMembershipPolicyUtil.isMembershipRequired(
-						user.getUserId(), _userGroup.getUserGroupId())) {
+			if (UserGroupMembershipPolicyUtil.isMembershipRequired(
+					user.getUserId(), _userGroup.getUserGroupId())) {
 
-					return true;
-				}
-			}
-			else {
-				if (!UserGroupMembershipPolicyUtil.isMembershipAllowed(
-						user.getUserId(), _userGroup.getUserGroupId())) {
-
-					return true;
-				}
+				return true;
 			}
 		}
 		catch (Exception e) {
@@ -80,7 +56,7 @@ public class UserUserGroupChecker extends RowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserUserGroupChecker.class);
+		UnsetUserUserGroupChecker.class);
 
 	private final UserGroup _userGroup;
 

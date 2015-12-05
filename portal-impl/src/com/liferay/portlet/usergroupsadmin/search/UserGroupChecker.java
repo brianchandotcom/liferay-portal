@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.usergroupsadmin.search;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -26,7 +26,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Drew Brokke
  */
-public class UserGroupChecker extends RowChecker {
+public class UserGroupChecker extends EmptyOnClickRowChecker {
 
 	public UserGroupChecker(RenderResponse renderResponse) {
 		super(renderResponse);

@@ -8,15 +8,15 @@ task buildLexiconIcons(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
-String alloyVersion = "3.0.1"
-String lexiconVersion = "0.1.25"
+String alloyVersion = "3.0"
+String lexiconVersion = "0.1"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
 File thirdPartyDir = file("../../../../portal-web/third-party")
 
 buildAlloyTheme {
 	File alloyThemeDestinationDir = new File(themeDestinationDir, "images/aui")
-	File alloyZipFile = new File(thirdPartyDir, "alloy-${alloyVersion}.zip")
+	FileTree alloyZipFileTree = fileTree(dir: thirdPartyDir, include: "alloy-${alloyVersion}*.zip")
 
 	doFirst {
 		delete alloyThemeDestinationDir
@@ -25,7 +25,7 @@ buildAlloyTheme {
 	filesMatching "build/aui-*/assets/skins/sam/**", new StripPathSegmentsAction(5)
 	filesMatching "build/aui-skin-deprecated/images/**", new StripPathSegmentsAction(3)
 
-	from zipTree(alloyZipFile)
+	from zipTree(alloyZipFileTree.singleFile)
 
 	include "build/aui-*/assets/skins/sam/**.gif", "build/aui-*/assets/skins/sam/**.jpg", "build/aui-*/assets/skins/sam/**.png"
 	include "build/aui-skin-deprecated/images/**"
@@ -34,7 +34,7 @@ buildAlloyTheme {
 	into alloyThemeDestinationDir
 
 	onlyIf {
-		!FileUtil.isUpToDate(project, alloyZipFile, alloyThemeDestinationDir)
+		!FileUtil.isUpToDate(project, alloyZipFileTree.singleFile, alloyThemeDestinationDir)
 	}
 }
 
@@ -44,7 +44,7 @@ buildCSS {
 
 buildLexicon {
 	File lexiconDestinationDir = new File(themeDestinationDir, "css/aui/lexicon")
-	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
+	FileTree lexiconZipFileTree = fileTree(dir: thirdPartyDir, include: "lexicon-${lexiconVersion}*.zip")
 
 	doFirst {
 		delete lexiconDestinationDir
@@ -92,7 +92,7 @@ buildLexicon {
 	}
 
 	filesMatching "scss/**", new StripPathSegmentsAction(1)
-	from zipTree(lexiconZipFile)
+	from zipTree(lexiconZipFileTree.singleFile)
 
 	include "fonts/**"
 	include "scss/**"
@@ -101,27 +101,27 @@ buildLexicon {
 	into lexiconDestinationDir
 
 	onlyIf {
-		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconDestinationDir)
+		!FileUtil.isUpToDate(project, lexiconZipFileTree.singleFile, lexiconDestinationDir)
 	}
 }
 
 buildLexiconIcons {
 	File lexiconIconsDestinationDir = new File(themeDestinationDir, "images/lexicon")
-	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
+	FileTree lexiconZipFileTree = fileTree(dir: thirdPartyDir, include: "lexicon-${lexiconVersion}*.zip")
 
 	doFirst {
 		delete lexiconIconsDestinationDir
 	}
 
 	filesMatching "images/icons/**", new StripPathSegmentsAction(2)
-	from zipTree(lexiconZipFile)
+	from zipTree(lexiconZipFileTree.singleFile)
 
 	include "images/icons/**"
 	includeEmptyDirs = false
 	into lexiconIconsDestinationDir
 
 	onlyIf {
-		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconIconsDestinationDir)
+		!FileUtil.isUpToDate(project, lexiconZipFileTree.singleFile, lexiconIconsDestinationDir)
 	}
 }
 

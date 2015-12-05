@@ -17,10 +17,10 @@ task buildLfrAMDLoader(type: Copy)
 task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
 
-String alloyVersion = "3.0.3"
+String alloyVersion = "3.0"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
-String lexiconVersion = "0.1.25"
+String lexiconVersion = "0.1"
 String lfrAMDLoaderVersion = "1.3.5"
 String lodashVersion = "3.10.1"
 String svg4everybodyVersion = "2.0.0"
@@ -30,7 +30,7 @@ File thirdPartyDir = file("../../../portal-web/third-party")
 
 buildAlloy {
 	File alloyDestinationDir = new File(jsDestinationDir, "aui")
-	File alloyZipFile = new File(thirdPartyDir, "alloy-${alloyVersion}*.zip")
+	FileTree alloyZipFileTree = fileTree(dir: thirdPartyDir, include: "alloy-${alloyVersion}*.zip")
 
 	doFirst {
 		delete alloyDestinationDir
@@ -55,13 +55,13 @@ buildAlloy {
 	}
 
 	eachFile new StripPathSegmentsAction(1)
-	from zipTree(alloyZipFile)
+	from zipTree(alloyZipFileTree.singleFile)
 	include "build/**"
 	includeEmptyDirs = false
 	into alloyDestinationDir
 
 	onlyIf {
-		!FileUtil.isUpToDate(project, alloyZipFile, alloyDestinationDir)
+		!FileUtil.isUpToDate(project, alloyZipFileTree.singleFile, alloyDestinationDir)
 	}
 }
 
@@ -99,19 +99,19 @@ buildJQueryPluginsForm {
 
 buildLexicon {
 	File lexiconDestinationDir = new File(jsDestinationDir, "lexicon")
-	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
+	FileTree lexiconZipFileTree = fileTree(dir: thirdPartyDir, include: "lexicon-${lexiconVersion}*.zip")
 
 	doFirst {
 		delete lexiconDestinationDir
 	}
 
 	eachFile new ReplaceLeadingPathAction("js": lexiconDestinationDir.name)
-	from zipTree(lexiconZipFile)
+	from zipTree(lexiconZipFileTree.singleFile)
 	includeEmptyDirs = false
 	into jsDestinationDir
 
 	onlyIf {
-		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconDestinationDir)
+		!FileUtil.isUpToDate(project, lexiconZipFileTree.singleFile, lexiconDestinationDir)
 	}
 }
 

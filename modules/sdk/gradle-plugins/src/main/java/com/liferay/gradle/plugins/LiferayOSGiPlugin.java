@@ -510,15 +510,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			});
 	}
 
-	@Override
-	protected Task addTaskSetupArquillian(Project project) {
-		Task task = super.addTaskSetupArquillian(project);
-
-		task.setEnabled(false);
-
-		return task;
-	}
-
 	protected Copy addTaskUnzipJar(final Project project) {
 		Copy copy = GradleUtil.addTask(
 			project, UNZIP_JAR_TASK_NAME, Copy.class);

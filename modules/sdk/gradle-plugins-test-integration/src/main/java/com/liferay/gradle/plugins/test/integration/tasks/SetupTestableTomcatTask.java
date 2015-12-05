@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.tasks;
+package com.liferay.gradle.plugins.test.integration.tasks;
 
-import com.liferay.gradle.plugins.extensions.AppServer;
-import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.Validator;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import groovy.lang.Closure;
@@ -48,7 +46,6 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.TaskAction;
 
 import org.w3c.dom.Document;
@@ -60,49 +57,40 @@ import org.w3c.dom.NodeList;
  * @author Andrea Di Giorgi
  */
 public class SetupTestableTomcatTask
-	extends DefaultTask implements AppServerTask {
+	extends DefaultTask implements JmxRemotePortSpec, ManagerSpec {
 
-	public SetupTestableTomcatTask() {
-		_project = getProject();
+	public File getBinDir() {
+		return new File(getDir(), "bin");
 	}
 
-	@Override
-	public String getAppServerType() {
-		return "tomcat";
+	@Input
+	public File getDir() {
+		return GradleUtil.toFile(getProject(), _dir);
 	}
 
 	@Input
 	public int getJmxRemotePort() {
-		return _jmxRemotePort;
+		return GradleUtil.toInteger(_jmxRemotePort);
 	}
 
-	@InputDirectory
+	@Input
+	public String getManagerPassword() {
+		return GradleUtil.toString(_managerPassword);
+	}
+
+	@Input
+	public String getManagerUserName() {
+		return GradleUtil.toString(_managerUserName);
+	}
+
+	@Input
 	public File getModuleFrameworkBaseDir() {
-		return _moduleFrameworkBaseDir;
-	}
-
-	public File getTomcatBinDir() {
-		return new File(getTomcatDir(), "bin");
-	}
-
-	@InputDirectory
-	public File getTomcatDir() {
-		return _tomcatAppServer.getDir();
+		return GradleUtil.toFile(getProject(), _moduleFrameworkBaseDir);
 	}
 
 	@Input
-	public String getTomcatManagerPassword() {
-		return _tomcatAppServer.getManagerPassword();
-	}
-
-	@Input
-	public String getTomcatManagerUserName() {
-		return _tomcatAppServer.getManagerUserName();
-	}
-
-	@Input
-	public String getTomcatZipUrl() {
-		return _tomcatAppServer.getZipUrl();
+	public String getZipUrl() {
+		return GradleUtil.toString(_zipUrl);
 	}
 
 	@Input
@@ -120,36 +108,19 @@ public class SetupTestableTomcatTask
 		return _jmxRemoteSsl;
 	}
 
-	@Override
-	public void merge(AppServer appServer) {
-		TomcatAppServer tomcatAppServer = (TomcatAppServer)appServer;
-
-		if (getTomcatDir() == null) {
-			setTomcatDir(tomcatAppServer.getDir());
-		}
-
-		if (Validator.isNull(getTomcatManagerPassword())) {
-			setTomcatManagerPassword(tomcatAppServer.getManagerPassword());
-		}
-
-		if (Validator.isNull(getTomcatManagerUserName())) {
-			setTomcatManagerUserName(tomcatAppServer.getManagerUserName());
-		}
-
-		if (Validator.isNull(getTomcatZipUrl())) {
-			setTomcatZipUrl(tomcatAppServer.getZipUrl());
-		}
-	}
-
 	public void setDebugLogging(boolean debugLogging) {
 		_debugLogging = debugLogging;
+	}
+
+	public void setDir(Object dir) {
+		_dir = dir;
 	}
 
 	public void setJmxRemoteAuthenticate(boolean jmxRemoteAuthenticate) {
 		_jmxRemoteAuthenticate = jmxRemoteAuthenticate;
 	}
 
-	public void setJmxRemotePort(int jmxRemotePort) {
+	public void setJmxRemotePort(Object jmxRemotePort) {
 		_jmxRemotePort = jmxRemotePort;
 	}
 
@@ -157,24 +128,16 @@ public class SetupTestableTomcatTask
 		_jmxRemoteSsl = jmxRemoteSsl;
 	}
 
-	public void setModuleFrameworkBaseDir(File moduleFrameworkBaseDir) {
+	public void setManagerPassword(Object managerPassword) {
+		_managerPassword = managerPassword;
+	}
+
+	public void setManagerUserName(Object managerUserName) {
+		_managerUserName = managerUserName;
+	}
+
+	public void setModuleFrameworkBaseDir(Object moduleFrameworkBaseDir) {
 		_moduleFrameworkBaseDir = moduleFrameworkBaseDir;
-	}
-
-	public void setTomcatDir(Object tomcatDir) {
-		_tomcatAppServer.setDir(tomcatDir);
-	}
-
-	public void setTomcatManagerPassword(Object tomcatManagerPassword) {
-		_tomcatAppServer.setManagerPassword(tomcatManagerPassword);
-	}
-
-	public void setTomcatManagerUserName(Object tomcatManagerUserName) {
-		_tomcatAppServer.setManagerUserName(tomcatManagerUserName);
-	}
-
-	public void setTomcatZipUrl(Object tomcatZipUrl) {
-		_tomcatAppServer.setZipUrl(tomcatZipUrl);
 	}
 
 	@TaskAction
@@ -185,8 +148,12 @@ public class SetupTestableTomcatTask
 		setupOsgiModules();
 	}
 
+	public void setZipUrl(Object zipUrl) {
+		_zipUrl = zipUrl;
+	}
+
 	protected boolean contains(String fileName, String s) throws Exception {
-		File file = new File(getTomcatDir(), fileName);
+		File file = new File(getDir(), fileName);
 
 		String fileContent = new String(Files.readAllBytes(file.toPath()));
 
@@ -200,7 +167,7 @@ public class SetupTestableTomcatTask
 	protected PrintWriter getAppendPrintWriter(String fileName)
 		throws Exception {
 
-		File file = new File(getTomcatDir(), fileName);
+		File file = new File(getDir(), fileName);
 
 		return new PrintWriter(
 			Files.newBufferedWriter(
@@ -282,18 +249,19 @@ public class SetupTestableTomcatTask
 	}
 
 	protected void setupManager() throws Exception {
-		final File managerDir = new File(getTomcatDir(), "webapps/manager");
+		final File managerDir = new File(getDir(), "webapps/manager");
 
 		if (!managerDir.exists()) {
-			final File tomcatZipFile = FileUtil.get(
-				_project, getTomcatZipUrl());
+			final Project project = getProject();
+
+			final File zipFile = FileUtil.get(project, getZipUrl());
 
 			Closure<Void> closure = new Closure<Void>(null) {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
 					copySpec.eachFile(new StripPathSegmentsAction(2));
-					copySpec.from(_project.zipTree(tomcatZipFile));
+					copySpec.from(project.zipTree(zipFile));
 					copySpec.include("apache-tomcat-*/webapps/manager/**/*");
 					copySpec.into(managerDir.getParentFile());
 					copySpec.setIncludeEmptyDirs(false);
@@ -301,13 +269,13 @@ public class SetupTestableTomcatTask
 
 			};
 
-			_project.copy(closure);
+			project.copy(closure);
 		}
 
 		Document document = null;
 
 		final File tomcatUsersXmlFile = new File(
-			getTomcatDir(), "conf/tomcat-users.xml");
+			getDir(), "conf/tomcat-users.xml");
 
 		try (InputStreamReader inputStreamReader = new InputStreamReader(
 				new FileInputStream(tomcatUsersXmlFile))) {
@@ -341,7 +309,7 @@ public class SetupTestableTomcatTask
 			else if (elementName.equals("user")) {
 				String userName = element.getAttribute("username");
 
-				if (userName.equals(getTomcatManagerUserName())) {
+				if (userName.equals(getManagerUserName())) {
 					tomcatManagerUserExists = true;
 				}
 			}
@@ -364,11 +332,11 @@ public class SetupTestableTomcatTask
 		if (!tomcatManagerUserExists) {
 			Element element = document.createElement("user");
 
-			element.setAttribute("password", getTomcatManagerPassword());
+			element.setAttribute("password", getManagerPassword());
 			element.setAttribute(
 				"roles",
 				"tomcat,manager-gui,manager-script,manager-jmx,manager-status");
-			element.setAttribute("username", getTomcatManagerUserName());
+			element.setAttribute("username", getManagerUserName());
 
 			tomcatUsersElement.appendChild(element);
 
@@ -392,6 +360,8 @@ public class SetupTestableTomcatTask
 	}
 
 	protected void setupOsgiModules() {
+		Project project = getProject();
+
 		Closure<Void> closure = new Closure<Void>(null) {
 
 			@SuppressWarnings("unused")
@@ -404,7 +374,7 @@ public class SetupTestableTomcatTask
 
 		};
 
-		_project.copy(closure);
+		project.copy(closure);
 	}
 
 	private static final String[] _TOMCAT_USERS_ROLE_NAMES = {
@@ -413,14 +383,15 @@ public class SetupTestableTomcatTask
 	};
 
 	private boolean _debugLogging;
+	private Object _dir;
 	private boolean _jmxRemoteAuthenticate;
-	private int _jmxRemotePort;
+	private Object _jmxRemotePort;
 	private boolean _jmxRemoteSsl;
-	private File _moduleFrameworkBaseDir;
-	private final Project _project;
+	private Object _managerPassword;
+	private Object _managerUserName;
+	private Object _moduleFrameworkBaseDir;
 	private final DateFormat _timestampDateFormat = new SimpleDateFormat(
 		"yyyyMMddkkmmssSSS");
-	private final TomcatAppServer _tomcatAppServer = new TomcatAppServer(
-		getProject());
+	private Object _zipUrl;
 
 }

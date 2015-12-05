@@ -12,19 +12,26 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.tasks;
+package com.liferay.gradle.plugins.test.integration.tasks;
 
-import com.liferay.gradle.plugins.extensions.AppServer;
+import org.gradle.api.tasks.TaskAction;
 
-import org.gradle.api.Task;
+import org.zeroturnaround.exec.ProcessExecutor;
 
 /**
  * @author Andrea Di Giorgi
  */
-public interface AppServerTask extends Task {
+public class StopAppServerTask extends BaseAppServerTask {
 
-	public String getAppServerType();
+	@TaskAction
+	public void stopAppServer() throws Exception {
+		if (!isReachable()) {
+			return;
+		}
 
-	public void merge(AppServer appServer);
+		ProcessExecutor processExecutor = getProcessExecutor();
+
+		processExecutor.executeNoTimeout();
+	}
 
 }

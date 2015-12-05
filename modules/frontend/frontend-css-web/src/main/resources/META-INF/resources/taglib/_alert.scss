@@ -1,0 +1,21 @@
+.lfr-alert-container {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 400px;
+	z-index: 1000;
+
+	.lfr-alert-wrapper {
+		margin-bottom: 5px;
+		overflow: hidden;
+	}
+}
+
+.portlet-body {
+	.lfr-alert-container {
+		right: auto;
+		top: auto;
+		width: 100%;
+		z-index: 1;
+	}
+}

@@ -74,6 +74,7 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.service.persistence.impl.NestedSetsTreeManager;
 import com.liferay.portal.service.persistence.impl.PersistenceNestedSetsTreeManager;
@@ -1713,6 +1714,28 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 		</#list>
 	}
+
+	<#if entity.isShardedModel()>
+		<#if osgiModule>
+			@ServiceReference(type = CompanyProvider.class)
+		<#else>
+			@BeanReference(type = CompanyProvider.class)
+		</#if>
+		protected CompanyProvider companyProvider;
+	<#else>
+		<#list entity.columnList as column>
+			<#if column.isCollection() && column.isMappingManyToMany()>
+				<#if osgiModule>
+					@ServiceReference(type = CompanyProvider.class)
+				<#else>
+					@BeanReference(type = CompanyProvider.class)
+				</#if>
+				protected CompanyProvider companyProvider;
+
+				<#break>
+			</#if>
+		</#list>
+	</#if>
 
 	<#if osgiModule>
 		@ServiceReference(type = EntityCache.class)

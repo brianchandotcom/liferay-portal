@@ -71,6 +71,38 @@ alter table LayoutSetBranch drop column logo;
 
 alter table Organization_ add logoId LONG;
 
+create table RecentLayoutBranch (
+	mvccVersion LONG default 0,
+	recentLayoutBranchId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	layoutSetBranchId LONG,
+	plid LONG,
+	layoutBranchId LONG
+);
+
+create table RecentLayoutRevision (
+	mvccVersion LONG default 0,
+	recentLayoutRevisionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	layoutSetBranchId LONG,
+	plid LONG,
+	layoutRevisionId LONG
+);
+
+create table RecentLayoutSetBranch (
+	mvccVersion LONG default 0,
+	recentLayoutSetBranchId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	layoutSetId LONG,
+	layoutSetBranchId LONG
+);
+
 alter table RatingsEntry add uuid_ VARCHAR(75) null;
 
 insert into Region (regionId, countryId, regionCode, name, active_) values (33001, 33, 'AT-1', 'Burgenland', TRUE);

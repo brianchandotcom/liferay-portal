@@ -1740,6 +1740,14 @@
 				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
 			</attribute>
 			<attribute>
+				<description>Whether to show the workflow status help message. The default value is <![CDATA[<code>true</code>]]>.</description>
+				<name>showHelpMessage</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+				<type>boolean</type>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<description>Whether to show the workflow status icon. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>showIcon</name>
 				<required>false</required>

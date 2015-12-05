@@ -53,6 +53,10 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		return _model;
 	}
 
+	public boolean getShowHelpMessage() {
+		return _showHelpMessage;
+	}
+
 	public boolean getShowIcon() {
 		return _showIcon;
 	}
@@ -103,6 +107,12 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		setScopedAttribute("model", model);
 	}
 
+	public void setShowHelpMessage(boolean showHelpMessage) {
+		_showHelpMessage = showHelpMessage;
+
+		setScopedAttribute("showHelpMessage", showHelpMessage);
+	}
+
 	public void setShowIcon(boolean showIcon) {
 		_showIcon = showIcon;
 
@@ -142,6 +152,7 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		_id = null;
 		_markupView = null;
 		_model = null;
+		_showHelpMessage = true;
 		_showIcon = true;
 		_showLabel = true;
 		_status = null;
@@ -161,6 +172,7 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "markupView", _markupView);
 		setNamespacedAttribute(request, "model", _model);
+		setNamespacedAttribute(request, "showHelpMessage", _showHelpMessage);
 		setNamespacedAttribute(request, "showIcon", _showIcon);
 		setNamespacedAttribute(request, "showLabel", _showLabel);
 		setNamespacedAttribute(request, "status", _status);
@@ -178,6 +190,7 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 	private java.lang.String _id = null;
 	private java.lang.String _markupView = null;
 	private java.lang.Class<?> _model = null;
+	private boolean _showHelpMessage = true;
 	private boolean _showIcon = true;
 	private boolean _showLabel = true;
 	private java.lang.Integer _status = null;

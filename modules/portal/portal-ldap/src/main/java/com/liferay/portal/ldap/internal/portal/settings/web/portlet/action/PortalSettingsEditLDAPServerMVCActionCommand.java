@@ -226,6 +226,10 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 
 		Object propertyValue = dictionary.get(property);
 
+		if (Validator.isNull(propertyValue)) {
+			return;
+		}
+
 		if (propertyValue instanceof String) {
 			String propertyValues = StringUtil.replace(
 				(String)propertyValue, StringPool.COMMA, StringPool.PIPE);

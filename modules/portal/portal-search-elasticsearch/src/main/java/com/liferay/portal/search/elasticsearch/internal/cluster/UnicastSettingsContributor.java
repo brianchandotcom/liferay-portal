@@ -77,14 +77,7 @@ public class UnicastSettingsContributor extends BaseSettingsContributor {
 		String port =
 			elasticsearchConfiguration.discoveryZenPingUnicastHostsPort();
 
-		int pos = port.indexOf(CharPool.MINUS);
-
-		if (pos == -1) {
-			port = CharPool.COLON + port;
-		}
-		else {
-			port = CharPool.OPEN_BRACKET + port + CharPool.CLOSE_BRACKET;
-		}
+		port = CharPool.COLON + port;
 
 		for (int i = 0; i < hosts.length; i++) {
 			hosts[i] = hosts[i] + port;

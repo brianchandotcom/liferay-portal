@@ -336,9 +336,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			localRepository.deleteFolder(folderId);
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFolderException nsfe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsfee, nsfee);
+				_log.warn(nsfe, nsfe);
 			}
 		}
 		finally {
@@ -550,8 +550,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			return localRepository.getFolder(folderId);
 		}
-		catch (NoSuchFileEntryException nsfee) {
-			throw new NoSuchFolderException(nsfee);
+		catch (NoSuchFolderException nsfe) {
+			throw new NoSuchFolderException(nsfe);
 		}
 	}
 

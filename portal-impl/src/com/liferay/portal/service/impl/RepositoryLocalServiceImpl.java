@@ -31,16 +31,11 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
-import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
-import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 import java.util.List;
@@ -284,101 +279,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			description, hidden, serviceContext);
 
 		return dlFolder.getFolderId();
-	}
-
-	protected long getExternalRepositoryId(
-		long folderId, long fileEntryId, long fileVersionId) {
-
-		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
-			folderId, fileEntryId, fileVersionId);
-
-		RepositoryEntry repositoryEntry =
-			repositoryEntryLocalService.fetchRepositoryEntry(repositoryEntryId);
-
-		if (repositoryEntry == null) {
-			return 0;
-		}
-
-		return repositoryEntry.getRepositoryId();
-	}
-
-	protected long getInternalRepositoryId(
-		long folderId, long fileEntryId, long fileVersionId,
-		long fileShortcutId) {
-
-		long repositoryId = 0;
-
-		if (folderId != 0) {
-			DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
-
-			if (dlFolder != null) {
-				if (dlFolder.isMountPoint()) {
-					repositoryId = dlFolder.getGroupId();
-				}
-				else {
-					repositoryId = dlFolder.getRepositoryId();
-				}
-			}
-		}
-		else if (fileEntryId != 0) {
-			DLFileEntry dlFileEntry = dlFileEntryLocalService.fetchDLFileEntry(
-				fileEntryId);
-
-			if (dlFileEntry != null) {
-				repositoryId = dlFileEntry.getRepositoryId();
-			}
-		}
-		else if (fileVersionId != 0) {
-			DLFileVersion dlFileVersion =
-				dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
-
-			if (dlFileVersion != null) {
-				repositoryId = dlFileVersion.getRepositoryId();
-			}
-		}
-		else if (fileShortcutId != 0) {
-			DLFileShortcut dlFileShortcut =
-				dlFileShortcutLocalService.fetchDLFileShortcut(fileShortcutId);
-
-			if (dlFileShortcut != null) {
-				repositoryId = dlFileShortcut.getRepositoryId();
-			}
-		}
-		else {
-			throw new InvalidRepositoryIdException(
-				"Missing a valid ID for folder, file entry, or file " +
-					"version");
-		}
-
-		return repositoryId;
-	}
-
-	protected long getRepositoryId(
-		long folderId, long fileEntryId, long fileVersionId,
-		long fileShortcutId) {
-
-		long repositoryId = getInternalRepositoryId(
-			folderId, fileEntryId, fileVersionId, fileShortcutId);
-
-		if (repositoryId != 0) {
-			return repositoryId;
-		}
-
-		if (fileShortcutId != 0) {
-			throw new IllegalArgumentException();
-		}
-
-		repositoryId = getExternalRepositoryId(
-			folderId, fileEntryId, fileVersionId);
-
-		if (repositoryId == 0) {
-			throw new InvalidRepositoryIdException(
-				String.format(
-					"No folder or repository entry found with folder ID %s",
-					folderId));
-		}
-
-		return repositoryId;
 	}
 
 	@BeanReference(type = RepositoryProvider.class)

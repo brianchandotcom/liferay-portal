@@ -77,6 +77,18 @@ public class RepositoryProviderUtil {
 		return getRepositoryProvider().getFolderRepository(folderId);
 	}
 
+	public static List<LocalRepository> getGroupLocalRepositories(long groupId)
+		throws PortalException {
+
+		return getRepositoryProvider().getGroupLocalRepositories(groupId);
+	}
+
+	public static List<Repository> getGroupRepositories(long groupId)
+		throws PortalException {
+
+		return getRepositoryProvider().getGroupRepositories(groupId);
+	}
+
 	public static LocalRepository getImageLocalRepository(long imageId)
 		throws PortalException {
 
@@ -89,23 +101,10 @@ public class RepositoryProviderUtil {
 		return getRepositoryProvider().getImageRepository(imageId);
 	}
 
-	public static List<LocalRepository> getLocalRepositoriesByGroupId(
-			long groupId)
-		throws PortalException {
-
-		return getRepositoryProvider().getGroupLocalRepositories(groupId);
-	}
-
 	public static LocalRepository getLocalRepository(long repositoryId)
 		throws PortalException {
 
 		return getRepositoryProvider().getLocalRepository(repositoryId);
-	}
-
-	public static List<Repository> getRepositoriesByGroupId(long groupId)
-		throws PortalException {
-
-		return getRepositoryProvider().getGroupRepositories(groupId);
 	}
 
 	public static Repository getRepository(long repositoryId)

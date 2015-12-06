@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -298,9 +297,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			localRepository.deleteFileEntry(fileEntryId);
 		}
-		catch (InvalidRepositoryIdException irie) {
+		catch (NoSuchFileEntryException nsfee) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(irie, irie);
+				_log.warn(nsfee, nsfee);
 			}
 		}
 		finally {
@@ -337,9 +336,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			localRepository.deleteFolder(folderId);
 		}
-		catch (InvalidRepositoryIdException irie) {
+		catch (NoSuchFolderException nsfe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(irie, irie);
+				_log.warn(nsfe, nsfe);
 			}
 		}
 		finally {
@@ -457,15 +456,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public FileEntry getPortletFileEntry(long fileEntryId)
 		throws PortalException {
 
-		try {
-			LocalRepository localRepository =
-				RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
 
-			return localRepository.getFileEntry(fileEntryId);
-		}
-		catch (InvalidRepositoryIdException irid) {
-			throw new NoSuchFileEntryException(irid);
-		}
+		return localRepository.getFileEntry(fileEntryId);
 	}
 
 	@Override
@@ -545,15 +539,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public Folder getPortletFolder(long folderId) throws PortalException {
-		try {
-			LocalRepository localRepository =
-				RepositoryProviderUtil.getFolderLocalRepository(folderId);
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getFolderLocalRepository(folderId);
 
-			return localRepository.getFolder(folderId);
-		}
-		catch (InvalidRepositoryIdException irid) {
-			throw new NoSuchFolderException(irid);
-		}
+		return localRepository.getFolder(folderId);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ import com.liferay.portal.search.elasticsearch.internal.connection.EmbeddedElast
 import org.elasticsearch.cluster.service.InternalClusterService;
 import org.elasticsearch.common.inject.Injector;
 import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.node.internal.InternalNode;
+import org.elasticsearch.node.Node;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -50,10 +50,9 @@ public class ClusterSettingsTest {
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection =
 			elasticsearchFixture.getEmbeddedElasticsearchConnection();
 
-		InternalNode internalNode = ReflectionTestUtil.getFieldValue(
-			embeddedElasticsearchConnection, "_node");
+		Node node = embeddedElasticsearchConnection.getNode();
 
-		Injector injector = internalNode.injector();
+		Injector injector = node.injector();
 
 		InternalClusterService internalClusterService = injector.getInstance(
 			InternalClusterService.class);

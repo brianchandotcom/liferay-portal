@@ -78,6 +78,10 @@ public class EmbeddedElasticsearchConnection
 		_node = null;
 	}
 
+	public Node getNode() {
+		return _node;
+	}
+
 	@Override
 	public OperationMode getOperationMode() {
 		return OperationMode.EMBEDDED;

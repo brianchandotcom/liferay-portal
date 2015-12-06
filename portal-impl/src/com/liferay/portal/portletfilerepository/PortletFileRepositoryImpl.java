@@ -456,15 +456,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public FileEntry getPortletFileEntry(long fileEntryId)
 		throws PortalException {
 
-		try {
-			LocalRepository localRepository =
-				RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
 
-			return localRepository.getFileEntry(fileEntryId);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			throw new NoSuchFileEntryException(nsfee);
-		}
+		return localRepository.getFileEntry(fileEntryId);
 	}
 
 	@Override
@@ -544,15 +539,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public Folder getPortletFolder(long folderId) throws PortalException {
-		try {
-			LocalRepository localRepository =
-				RepositoryProviderUtil.getFolderLocalRepository(folderId);
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getFolderLocalRepository(folderId);
 
-			return localRepository.getFolder(folderId);
-		}
-		catch (NoSuchFolderException nsfe) {
-			throw new NoSuchFolderException(nsfe);
-		}
+		return localRepository.getFolder(folderId);
 	}
 
 	@Override

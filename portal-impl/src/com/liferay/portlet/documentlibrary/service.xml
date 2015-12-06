@@ -709,6 +709,9 @@
 			<finder-column name="typePK" />
 		</finder>
 	</entity>
+	<entity name="DLTrash" local-service="false" remote-service="true">
+		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLAppHelper" />
+	</entity>
 	<exceptions>
 		<exception>DirectoryName</exception>
 		<exception>DuplicateDirectory</exception>

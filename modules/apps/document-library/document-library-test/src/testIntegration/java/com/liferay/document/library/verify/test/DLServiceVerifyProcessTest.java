@@ -58,6 +58,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
@@ -209,7 +210,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		FileEntry fileEntry = addFileEntry(parentFolder.getFolderId());
 
-		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
+		DLTrashServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 
 		DLFolderLocalServiceUtil.deleteFolder(
 			parentFolder.getFolderId(), false);
@@ -237,7 +238,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		addFileEntry(parentFolder.getFolderId());
 
-		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
+		DLTrashServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
 
 		DLFolderLocalServiceUtil.deleteFolder(
 			grandparentFolder.getFolderId(), false);
@@ -265,7 +266,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			parentFolder.getFolderId(), fileEntry.getFileEntryId(),
 			serviceContext);
 
-		DLAppServiceUtil.moveFileShortcutToTrash(
+		DLTrashServiceUtil.moveFileShortcutToTrash(
 			fileShortcut.getFileShortcutId());
 
 		DLFolderLocalServiceUtil.deleteFolder(
@@ -294,7 +295,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		addFileEntry(parentFolder.getFolderId());
 
-		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
+		DLTrashServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
 
 		DLFolderLocalServiceUtil.deleteFolder(
 			grandparentFolder.getFolderId(), false);
@@ -318,7 +319,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
-		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+		DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 		DLFolderLocalServiceUtil.deleteFolder(
 			parentFolder.getFolderId(), false);
@@ -349,7 +350,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
-		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
+		DLTrashServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
 
 		DLFolderLocalServiceUtil.deleteFolder(
 			grandparentFolder.getFolderId(), false);

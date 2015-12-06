@@ -43,7 +43,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
 
 import java.util.List;
 
@@ -97,7 +97,7 @@ public class DLFolderFinderTest {
 			_folder.getFolderId(), "Folder C", StringPool.BLANK,
 			serviceContext);
 
-		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+		DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 		FileEntry fileEntry = addFileEntry(
 			_group.getGroupId(), _folder.getFolderId(), "FE1.txt",
@@ -116,7 +116,7 @@ public class DLFolderFinderTest {
 			_group.getGroupId(), _folder.getFolderId(), "FE3.txt",
 			ContentTypes.TEXT_PLAIN);
 
-		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
+		DLTrashServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 	}
 
 	@Test

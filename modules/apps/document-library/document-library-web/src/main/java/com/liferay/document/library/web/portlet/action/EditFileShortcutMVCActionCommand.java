@@ -30,6 +30,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
+import com.liferay.portlet.documentlibrary.service.DLTrashService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import javax.portlet.ActionRequest;
@@ -61,7 +62,7 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "fileShortcutId");
 
 		if (moveToTrash) {
-			FileShortcut fileShortcut = _dlAppService.moveFileShortcutToTrash(
+			FileShortcut fileShortcut = _dlTrashService.moveFileShortcutToTrash(
 				fileShortcutId);
 
 			if (fileShortcut.getModel() instanceof TrashedModel) {
@@ -119,6 +120,11 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		_dlAppService = dlAppService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLTrashService(DLTrashService dlTrashService) {
+		_dlTrashService = dlTrashService;
+	}
+
 	protected void updateFileShortcut(ActionRequest actionRequest)
 		throws Exception {
 
@@ -149,5 +155,6 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private volatile DLAppService _dlAppService;
+	private volatile DLTrashService _dlTrashService;
 
 }

@@ -54,6 +54,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.util.ArrayList;
@@ -1440,7 +1441,7 @@ public class DLFileEntryFinderTest {
 			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
 			"Folder C", StringPool.BLANK, serviceContext);
 
-		DLAppServiceUtil.moveFolderToTrash(folderC.getFolderId());
+		DLTrashServiceUtil.moveFolderToTrash(folderC.getFolderId());
 
 		FileEntry fileEntry = addFileEntry(
 			_user.getUserId(), repositoryId, folder.getFolderId(), "FE1.txt",
@@ -1488,7 +1489,7 @@ public class DLFileEntryFinderTest {
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion3);
 
-		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
+		DLTrashServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 
 		return new Object[] {folder, dlFileVersion};
 	}

@@ -1637,35 +1637,6 @@ public class DLAppServiceUtil {
 	}
 
 	/**
-	* Moves the file shortcut from a trashed folder to the new folder.
-	*
-	* @param fileShortcutId the primary key of the file shortcut
-	* @param newFolderId the primary key of the new folder
-	* @param serviceContext the service context to be applied
-	* @return the file shortcut
-	*/
-	public static com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
-		long fileShortcutId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .moveFileShortcutFromTrash(fileShortcutId, newFolderId,
-			serviceContext);
-	}
-
-	/**
-	* Moves the file shortcut with the primary key to the trash portlet.
-	*
-	* @param fileShortcutId the primary key of the file shortcut
-	* @return the file shortcut
-	*/
-	public static com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
-		long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveFileShortcutToTrash(fileShortcutId);
-	}
-
-	/**
 	* Moves the folder to the new parent folder with the primary key.
 	*
 	* @param folderId the primary key of the folder
@@ -1678,23 +1649,6 @@ public class DLAppServiceUtil {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveFolder(folderId, parentFolderId, serviceContext);
-	}
-
-	/**
-	* Moves the folder with the primary key from the trash portlet to the new
-	* parent folder with the primary key.
-	*
-	* @param folderId the primary key of the folder
-	* @param parentFolderId the primary key of the new parent folder
-	* @param serviceContext the service context to be applied
-	* @return the file entry
-	*/
-	public static com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
-		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .moveFolderFromTrash(folderId, parentFolderId, serviceContext);
 	}
 
 	/**
@@ -1753,16 +1707,6 @@ public class DLAppServiceUtil {
 	public static void restoreFileEntryFromTrash(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restoreFileEntryFromTrash(fileEntryId);
-	}
-
-	/**
-	* Restores the file shortcut with the primary key from the trash portlet.
-	*
-	* @param fileShortcutId the primary key of the file shortcut
-	*/
-	public static void restoreFileShortcutFromTrash(long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().restoreFileShortcutFromTrash(fileShortcutId);
 	}
 
 	/**

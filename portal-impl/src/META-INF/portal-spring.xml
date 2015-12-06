@@ -255,6 +255,7 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLSyncEventPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLSyncEventPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.documentlibrary.service.DLTrashService" class="com.liferay.portlet.documentlibrary.service.impl.DLTrashServiceImpl" />
 	<bean id="com.liferay.portlet.expando.service.ExpandoColumnLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl" />
 	<bean id="com.liferay.portlet.expando.service.ExpandoColumnService" class="com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl" />
 	<bean id="com.liferay.portlet.expando.service.persistence.ExpandoColumnPersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoColumnPersistenceImpl" parent="basePersistence" />

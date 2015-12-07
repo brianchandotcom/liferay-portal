@@ -102,17 +102,9 @@ for (long defaultTeamId : defaultTeamIds) {
 	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
-<liferay-ui:icon
-	cssClass="modify-link"
-	iconCssClass="icon-search"
-	id="selectSiteRoleLink"
-	label="<%= true %>"
-	linkCssClass="btn btn-default"
-	message="select"
-	url="javascript:;"
-/>
-
-<br /><br />
+<aui:button-row>
+	<aui:button cssClass="modify-link" id="selectSiteRoleLink" value="select" />
+</aui:button-row>
 
 <h3><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h3>
 
@@ -145,15 +137,9 @@ for (long defaultTeamId : defaultTeamIds) {
 	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
-<liferay-ui:icon
-	cssClass="modify-link"
-	iconCssClass="icon-search"
-	id="selectTeamLink"
-	label="<%= true %>"
-	linkCssClass="btn btn-default"
-	message="select"
-	url="javascript:;"
-/>
+<aui:button-row>
+	<aui:button cssClass="modify-link" id="selectTeamLink" value="select" />
+</aui:button-row>
 
 <aui:script use="liferay-search-container">
 	var Util = Liferay.Util;

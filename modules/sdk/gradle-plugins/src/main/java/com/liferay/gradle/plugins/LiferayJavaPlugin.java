@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
+import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorExtension;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.js.transpiler.TranspileJSTask;
@@ -151,6 +152,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		applyConfigScripts(project);
 
 		configureArtifacts(project);
+		configureJSModuleConfigGenerator(project);
 		configureTestIntegrationTomcat(project, liferayExtension);
 
 		configureTaskClean(project);
@@ -573,6 +575,20 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project.getConfigurations();
 
 		configurationContainer.all(action);
+	}
+
+	protected void configureJSModuleConfigGenerator(final Project project) {
+		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
+			GradleUtil.getExtension(
+				project, JSModuleConfigGeneratorExtension.class);
+
+		String version = GradleUtil.getProperty(
+			project, "nodejs.lfr.module.config.generator.version",
+			(String)null);
+
+		if (Validator.isNotNull(version)) {
+			jsModuleConfigGeneratorExtension.setVersion(version);
+		}
 	}
 
 	protected void configureProperties(Project project) {

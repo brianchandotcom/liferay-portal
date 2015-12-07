@@ -1879,8 +1879,9 @@ public class ClusterSchedulerEngineTest {
 		);
 	}
 
-	protected void setUpDestinationFactory() throws Exception {
+	protected void setUpDestinationFactory() {
 		_destinationFactory = new DestinationFactory() {
+
 			@Override
 			public Destination createDestination(
 				DestinationConfiguration destinationConfiguration) {

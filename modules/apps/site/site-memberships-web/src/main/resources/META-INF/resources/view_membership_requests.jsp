@@ -119,6 +119,7 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 
 			<liferay-ui:search-container-column-text>
 				<liferay-ui:user-portrait
+					imageCssClass="user-icon-lg"
 					userId="<%= membershipRequestUser.getUserId() %>"
 				/>
 			</liferay-ui:search-container-column-text>

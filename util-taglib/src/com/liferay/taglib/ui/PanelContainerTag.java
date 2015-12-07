@@ -116,6 +116,10 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		return _id;
 	}
 
+	public boolean isAccordion() {
+		return _accordion;
+	}
+
 	public void setAccordion(boolean accordion) {
 		_accordion = accordion;
 	}

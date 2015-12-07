@@ -22,96 +22,101 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 %>
 
-<c:choose>
-	<c:when test="<%= PropsValues.LIVE_USERS_ENABLED && PropsValues.SESSION_TRACKER_MEMORY_ENABLED %>">
-		<liferay-ui:header
-			title="live-sessions"
-		/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="live-sessions" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
 
-		<%
-		Map<String, UserTracker> sessionUsers = LiveUsers.getSessionUsers(company.getCompanyId());
+<div class="container-fluid-1280">
+	<c:choose>
+		<c:when test="<%= PropsValues.LIVE_USERS_ENABLED && PropsValues.SESSION_TRACKER_MEMORY_ENABLED %>">
 
-		List<UserTracker> userTrackers = new ArrayList<UserTracker>(sessionUsers.values());
+			<%
+			Map<String, UserTracker> sessionUsers = LiveUsers.getSessionUsers(company.getCompanyId());
 
-		userTrackers = ListUtil.sort(userTrackers, new UserTrackerModifiedDateComparator());
-		%>
+			List<UserTracker> userTrackers = new ArrayList<UserTracker>(sessionUsers.values());
 
-		<liferay-ui:search-container
-			emptyResultsMessage="there-are-no-live-sessions"
-			headerNames="session-id,user-id,name,screen-name,last-request,num-of-hits"
-			total="<%= userTrackers.size() %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= ListUtil.subList(userTrackers, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
+			userTrackers = ListUtil.sort(userTrackers, new UserTrackerModifiedDateComparator());
+			%>
 
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.model.UserTracker"
-				keyProperty="userTrackerId"
-				modelVar="userTracker"
+			<liferay-ui:search-container
+				emptyResultsMessage="there-are-no-live-sessions"
+				headerNames="session-id,user-id,name,screen-name,last-request,num-of-hits"
+				total="<%= userTrackers.size() %>"
 			>
-
-				<%
-				User user2 = null;
-
-				try {
-					user2 = UserLocalServiceUtil.getUserById(userTracker.getUserId());
-				}
-				catch (NoSuchUserException nsue) {
-				}
-				%>
-
-				<portlet:renderURL var="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/monitoring/edit_session" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="sessionId" value="<%= userTracker.getSessionId() %>" />
-				</portlet:renderURL>
-
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="session-id"
-					property="sessionId"
+				<liferay-ui:search-container-results
+					results="<%= ListUtil.subList(userTrackers, searchContainer.getStart(), searchContainer.getEnd()) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="user-id"
-					property="userId"
-				/>
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.model.UserTracker"
+					keyProperty="userTrackerId"
+					modelVar="userTracker"
+				>
 
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="user-id"
-					value='<%= ((user2 != null) ? HtmlUtil.escape(user2.getFullName()) : LanguageUtil.get(request, "not-available")) %>'
-				/>
+					<%
+					User user2 = null;
 
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="screen-name"
-					value='<%= ((user2 != null) ? user2.getScreenName() : LanguageUtil.get(request, "not-available")) %>'
-				/>
+					try {
+						user2 = UserLocalServiceUtil.getUserById(userTracker.getUserId());
+					}
+					catch (NoSuchUserException nsue) {
+					}
+					%>
 
-				<liferay-ui:search-container-column-date
-					href="<%= rowURL %>"
-					name="last-request"
-					value="<%= userTracker.getModifiedDate() %>"
-				/>
+					<portlet:renderURL var="rowURL">
+						<portlet:param name="mvcRenderCommandName" value="/monitoring/edit_session" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="sessionId" value="<%= userTracker.getSessionId() %>" />
+					</portlet:renderURL>
 
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="num-of-hits"
-					property="hits"
-				/>
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="session-id"
+						property="sessionId"
+					/>
 
-			</liferay-ui:search-container-row>
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="user-id"
+						property="userId"
+					/>
 
-			<liferay-ui:search-iterator />
-		</liferay-ui:search-container>
-	</c:when>
-	<c:when test="<%= !PropsValues.LIVE_USERS_ENABLED %>">
-		<liferay-ui:message arguments="<%= PropsKeys.LIVE_USERS_ENABLED %>" key="display-of-live-session-data-is-disabled" translateArguments="<%= false %>" />
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:message arguments="<%= PropsKeys.SESSION_TRACKER_MEMORY_ENABLED %>" key="display-of-live-session-data-is-disabled" translateArguments="<%= false %>" />
-	</c:otherwise>
-</c:choose>
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="user-name"
+						value='<%= ((user2 != null) ? HtmlUtil.escape(user2.getFullName()) : LanguageUtil.get(request, "not-available")) %>'
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="screen-name"
+						value='<%= ((user2 != null) ? user2.getScreenName() : LanguageUtil.get(request, "not-available")) %>'
+					/>
+
+					<liferay-ui:search-container-column-date
+						href="<%= rowURL %>"
+						name="last-request"
+						value="<%= userTracker.getModifiedDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="num-of-hits"
+						property="hits"
+					/>
+
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+			</liferay-ui:search-container>
+		</c:when>
+		<c:when test="<%= !PropsValues.LIVE_USERS_ENABLED %>">
+			<liferay-ui:message arguments="<%= PropsKeys.LIVE_USERS_ENABLED %>" key="display-of-live-session-data-is-disabled" translateArguments="<%= false %>" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message arguments="<%= PropsKeys.SESSION_TRACKER_MEMORY_ENABLED %>" key="display-of-live-session-data-is-disabled" translateArguments="<%= false %>" />
+		</c:otherwise>
+	</c:choose>
+</div>

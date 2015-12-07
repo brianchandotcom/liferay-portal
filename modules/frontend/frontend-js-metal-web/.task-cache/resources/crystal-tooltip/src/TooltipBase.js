@@ -138,6 +138,12 @@ define("frontend-js-metal-web@1.0.0/crystal-tooltip/src/TooltipBase", ['exports'
 			}
 
 			if (alignElement) {
+				var dataTitle = alignElement.getAttribute('data-title');
+
+				if (dataTitle) {
+					this.content = dataTitle;
+				}
+
 				if (this.visible) {
 					alignElement.setAttribute('aria-describedby', this.id);
 				} else {
@@ -193,6 +199,7 @@ define("frontend-js-metal-web@1.0.0/crystal-tooltip/src/TooltipBase", ['exports'
 		return TooltipBase;
 	})(_Component3.default);
 
+	TooltipBase.prototype.registerMetalComponent && TooltipBase.prototype.registerMetalComponent(TooltipBase, 'TooltipBase')
 	TooltipBase.Align = _Align2.default;
 	TooltipBase.ATTRS = {
 		alignElement: {

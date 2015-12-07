@@ -46,7 +46,7 @@ public interface TokenConfiguration {
 	)
 	public boolean importFromLDAP();
 
-	@Meta.AD(deflt ="", required = false)
+	@Meta.AD(required = false)
 	public String logoutRedirectURL();
 
 	@Meta.AD(

@@ -56,7 +56,7 @@ boolean ldapPasswordPolicyEnabled = ldapAuthConfiguration.passwordPolicyEnabled(
 </aui:button-row>
 
 <aui:fieldset>
-	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/edit_company_ldap_configuration" />
+	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/ldap" />
 
 	<c:if test="<%= !ldapServerConfigurations.isEmpty() %>">
 		<br /><br />

@@ -162,7 +162,8 @@ public class AutoLoginFilter extends BasePortalFilter {
 			}
 
 			processFilter(
-				AutoLoginFilter.class, request, response, filterChain);
+				AutoLoginFilter.class.getName(), request, response,
+				filterChain);
 
 			return;
 		}
@@ -183,7 +184,8 @@ public class AutoLoginFilter extends BasePortalFilter {
 			}
 
 			processFilter(
-				AutoLoginFilter.class, request, response, filterChain);
+				AutoLoginFilter.class.getName(), request, response,
+				filterChain);
 
 			return;
 		}
@@ -263,7 +265,8 @@ public class AutoLoginFilter extends BasePortalFilter {
 			}
 		}
 
-		processFilter(AutoLoginFilter.class, request, response, filterChain);
+		processFilter(
+			AutoLoginFilter.class.getName(), request, response, filterChain);
 	}
 
 	private static final String _PATH_CHAT_LATEST = "/-/chat/latest";

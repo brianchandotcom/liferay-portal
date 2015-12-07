@@ -104,7 +104,7 @@
 
 				if (selectedItem) {
 					Util.getWindow(eventName).onceAfter(
-						'visibleChange',
+						'destroy',
 						function() {
 							var imageSrc = selectedItem.value;
 

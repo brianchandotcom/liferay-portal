@@ -22,14 +22,14 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Company companyObject = (Company)row.getObject();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="/portal_instances/edit_instance" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="companyId" value="<%= String.valueOf(companyObject.getCompanyId()) %>" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= editURL %>" />
+	<liferay-ui:icon message="edit" url="<%= editURL %>" />
 
 	<c:if test="<%= companyObject.getCompanyId() != PortalInstances.getDefaultCompanyId() %>">
 		<portlet:actionURL name="/portal_instances/edit_instance" var="deleteURL">

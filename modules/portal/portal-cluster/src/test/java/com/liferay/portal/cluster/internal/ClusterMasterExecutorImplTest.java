@@ -53,7 +53,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Exchanger;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -457,13 +460,18 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		ClusterExecutorAdvice.unblock(1);
 
+		Assert.assertNull(ClusterExecutorAdvice.waitClusterNode());
+
 		ClusterExecutorAdvice.waitUntilBlock(1);
 
-		mockClusterExecutor.addClusterNode(
-			_TEST_ADDRESS,
-			new ClusterNode(_TEST_CLUSTER_NODE_ID, InetAddress.getLocalHost()));
+		ClusterNode clusterNode = new ClusterNode(
+			_TEST_CLUSTER_NODE_ID, InetAddress.getLocalHost());
+
+		mockClusterExecutor.addClusterNode(_TEST_ADDRESS, clusterNode);
 
 		ClusterExecutorAdvice.unblock(1);
+
+		Assert.assertSame(clusterNode, ClusterExecutorAdvice.waitClusterNode());
 
 		thread.join();
 
@@ -500,13 +508,15 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		ClusterExecutorAdvice.unblock(1);
 
+		Assert.assertNull(ClusterExecutorAdvice.waitClusterNode());
+
 		ClusterExecutorAdvice.waitUntilBlock(1);
 
-		mockClusterExecutor.addClusterNode(
-			_TEST_ADDRESS,
-			new ClusterNode(_TEST_CLUSTER_NODE_ID, InetAddress.getLocalHost()));
+		mockClusterExecutor.addClusterNode(_TEST_ADDRESS, clusterNode);
 
 		ClusterExecutorAdvice.unblock(1);
+
+		Assert.assertSame(clusterNode, ClusterExecutorAdvice.waitClusterNode());
 
 		thread.join();
 	}
@@ -635,6 +645,16 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			_semaphore.release(permits);
 		}
 
+		public static ClusterNode waitClusterNode() throws Exception {
+			try {
+				return _clusterNodeExchanger.exchange(
+					null, 1000, TimeUnit.MILLISECONDS);
+			}
+			catch (TimeoutException te) {
+				return new ClusterNode("null", InetAddress.getLocalHost());
+			}
+		}
+
 		public static void waitUntilBlock(int threadCount) {
 			Semaphore semaphore = _semaphore;
 
@@ -656,9 +676,15 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 				semaphore.acquire();
 			}
 
-			return proceedingJoinPoint.proceed();
+			Object result = proceedingJoinPoint.proceed();
+
+			_clusterNodeExchanger.exchange((ClusterNode)result);
+
+			return result;
 		}
 
+		private static final Exchanger<ClusterNode> _clusterNodeExchanger =
+			new Exchanger<>();
 		private static volatile Semaphore _semaphore;
 
 	}
@@ -670,7 +696,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			"execution(public static boolean com.liferay.portal.kernel." +
 				"resiliency.spi.SPIUtil.isSPI())"
 		)
-		public boolean getClusterNode(ProceedingJoinPoint proceedingJoinPoint)
+		public boolean isSPI(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
 			return true;

@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-boolean accordion = false;
+boolean accordion = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:panel:accordion"));
 boolean collapsible = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:panel:collapsible"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:panel:cssClass"));
 String defaultState = (String)request.getAttribute("liferay-ui:panel:defaultState");

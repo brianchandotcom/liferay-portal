@@ -87,8 +87,8 @@ public class ThemePreviewFilter extends BasePortalFilter {
 			new BufferCacheServletResponse(response);
 
 		processFilter(
-			ThemePreviewFilter.class, request, bufferCacheServletResponse,
-			filterChain);
+			ThemePreviewFilter.class.getName(), request,
+			bufferCacheServletResponse, filterChain);
 
 		String content = bufferCacheServletResponse.getString();
 

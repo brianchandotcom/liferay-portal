@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">PortalInstances</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>HEADER_TITLE</td>
-	<td>//h3[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--INSTANCE_TABLE-->
 <tr>
 	<td>INSTANCE_TABLE_INSTANCE_ID</td>
@@ -60,18 +50,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INSTANCE_TABLE_ACTIONS_EDIT</td>
-	<td>//tr[contains(.,'${key_virtualHost}')]/td[8]/span/a[contains(@id,'menu_edit')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INSTANCE_TABLE_ACTIONS_GENERIC</td>
 	<td>//tr/td[8]/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INSTANCE_TABLE_EDIT</td>
-	<td>//tr[contains(.,'${key_virtualHost}')]/td[8]/span/a/span[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 </tbody>

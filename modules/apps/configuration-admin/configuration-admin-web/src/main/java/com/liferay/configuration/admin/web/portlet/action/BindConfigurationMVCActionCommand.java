@@ -84,8 +84,15 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 			_bundleContext, _configurationAdmin, _extendedMetaTypeService,
 			themeDisplay.getLanguageId());
 
-		ConfigurationModel configurationModel =
-			configurationHelper.getConfigurationModel(pid);
+		ConfigurationModel configurationModel = null;
+
+		if (Validator.isNotNull(factoryPid)) {
+			configurationModel = configurationHelper.getConfigurationModel(
+				factoryPid);
+		}
+		else {
+			configurationModel = configurationHelper.getConfigurationModel(pid);
+		}
 
 		Configuration configuration = configurationHelper.getConfiguration(pid);
 

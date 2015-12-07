@@ -47,7 +47,8 @@ public class AxisCleanUpFilter extends BaseFilter {
 
 		try {
 			processFilter(
-				AxisCleanUpFilter.class, request, response, filterChain);
+				AxisCleanUpFilter.class.getName(), request, response,
+				filterChain);
 		}
 		finally {
 			try {

@@ -28,8 +28,11 @@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.product.navigation.product.menu.web.display.context.ProductMenuDisplayContext" %><%@
 page import="com.liferay.product.navigation.user.application.list.UserPanelCategory" %><%@
-page import="com.liferay.product.navigation.user.display.context.MyAccountPanelCategoryDisplayContext" %>
+page import="com.liferay.product.navigation.user.display.context.MyAccountPanelCategoryDisplayContext" %><%@
+page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <portlet:defineObjects />
 

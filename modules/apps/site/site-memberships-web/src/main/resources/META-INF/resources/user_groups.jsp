@@ -77,7 +77,7 @@ userGroupSearch.setResults(userGroups);
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedUserGroups" />
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedUserGroups" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>
@@ -90,12 +90,6 @@ userGroupSearch.setResults(userGroups);
 
 <aui:form action="<%= deleteGroupUserGroupsURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="tabs1" type="hidden" value="user-groups" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
-	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
-	<aui:input name="userGroupId" type="hidden" />
-	<aui:input name="addUserGroupIds" type="hidden" />
-	<aui:input name="addRoleIds" type="hidden" />
-	<aui:input name="removeRoleIds" type="hidden" />
 
 	<liferay-ui:search-container
 		id="userGroups"
@@ -119,6 +113,19 @@ userGroupSearch.setResults(userGroups);
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
+</aui:form>
+
+<portlet:actionURL name="addGroupUserGroups" var="addGroupUserGroupsURL" />
+
+<aui:form action="<%= addGroupUserGroupsURL %>" cssClass="hide" name="addGroupUserGroupsFm">
+	<aui:input name="tabs1" type="hidden" value="user-groups" />
+</aui:form>
+
+<portlet:actionURL name="editUserGroupGroupRole" var="editUserGroupGroupRoleURL" />
+
+<aui:form action="<%= editUserGroupGroupRoleURL %>" cssClass="hide" name="editUserGroupGroupRoleFm">
+	<aui:input name="tabs1" type="hidden" value="user-groups" />
+	<aui:input name="userGroupId" type="hidden" />
 </aui:form>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
@@ -149,6 +156,10 @@ userGroupSearch.setResults(userGroups);
 
 			var currentTarget = $(event.currentTarget);
 
+			var editUserGroupGroupRoleFm = $(document.<portlet:namespace />editUserGroupGroupRoleFm);
+
+			editUserGroupGroupRoleFm.fm('userGroupId').val(currentTarget.data('usergroupid'));
+
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
 					eventName: '<portlet:namespace />selectUserGroupsRoles',
@@ -157,11 +168,9 @@ userGroupSearch.setResults(userGroups);
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								form.fm('addRoleIds').val(selectedItem.addRoleIds);
-								form.fm('removeRoleIds').val(selectedItem.removeRoleIds);
-								form.fm('userGroupId').val(selectedItem.userGroupId);
+								editUserGroupGroupRoleFm.append(selectedItem);
 
-								submitForm(form, '<portlet:actionURL name="editUserGroupGroupRole" />');
+								submitForm(editUserGroupGroupRoleFm);
 							}
 						}
 					},
@@ -187,9 +196,11 @@ userGroupSearch.setResults(userGroups);
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								form.fm('addUserGroupIds').val(selectedItem.addUserGroupIds);
+								var addGroupUserGroupsFm = $(document.<portlet:namespace />addGroupUserGroupsFm);
 
-								submitForm(form, '<portlet:actionURL name="addGroupUserGroups" />');
+								addGroupUserGroupsFm.append(selectedItem);
+
+								submitForm(addGroupUserGroupsFm);
 							}
 						}
 					},

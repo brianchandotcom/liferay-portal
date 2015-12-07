@@ -1,15 +1,17 @@
 @import "mixins";
 
 body {
-	&.open {
+	&.open #wrapper {
 		@include sm() {
 			padding-left: 320px;
 		}
 	}
 
 	&.open, &.sidenav-transition {
-		@include sm() {
-			overflow-x: hidden;
+		#wrapper {
+			@include sm() {
+				overflow-x: hidden;
+			}
 		}
 	}
 }
@@ -45,14 +47,13 @@ body {
 	.sidebar-body {
 		bottom: 0;
 		left: 0;
-		padding-bottom: 0;
-		padding-top: 0;
+		padding: 0;
 		position: absolute;
 		right: 0;
-		top: 120px;
+		top: 35px;
 
 		@include sm() {
-			top: 223px;
+			top: 63px;
 		}
 
 		@include media-query(null, 320px) {
@@ -63,28 +64,12 @@ body {
 }
 
 .product-menu {
-	.user-tab {
-		.icon-monospaced {
-			padding-top: 10px;
-		}
-
-		.user-icon {
-			img {
-				display: block;
-				width: 100%;
-			}
-		}
-
-	}
-}
-
-.product-menu {
 	small {
 		display: block;
 	}
 
 	.collapse-icon:before {
-		right: 20px;
+		right: 5px;
 		top: auto;
 	}
 
@@ -99,8 +84,6 @@ body {
 	}
 
 	.list-group-heading {
-		padding: 10px 20px;
-
 		h1, h2, h3, h4, h5, h6 {
 			margin-bottom: 0;
 			margin-top: 0;
@@ -153,66 +136,37 @@ body {
 	}
 }
 
-.product-menu-tabs {
-	border-bottom-width: 0;
-	margin-left: 24px;
-	margin-right: 24px;
-	margin-top: 15px;
+.product-menu.popover {
+	background-color: #FFF;
+}
 
-	@include sm() {
-		margin: 0;
-		padding: 16px 24px;
+.product-menu {
+	.manage-sites-link {
+		padding: 1em;
 	}
 
-	> li > a {
-		font-size: 12px;
-		padding: 10px 0;
+	.site-selector {
+		box-shadow: none;
 
-		@include sm() {
-			padding: 0;
+		.selectable-site {
+			color: #333;
+			height: auto;
 		}
-	}
-}
 
-.product-menu-tabs {
-	.sticker {
-		left: 5px;
-		top: 3px;
-	}
-
-	.sticker-bottom {
-		bottom: 3px;
-		top: auto;
-	}
-
-	.sticker-right {
-		left: auto;
-		right: 5px;
-	}
-}
-
-.product-menu-tab-icon {
-	.icon-monospaced {
-		height: 0.9em;
-		width: 0.9em;
-
-		@include sm() {
-			font-size: 24px;
-			height: 60px;
-			line-height: 60px;
+		.list-group-item-content, .list-group-item-field {
+			vertical-align: middle;
 		}
-	}
 
-	.label-sm {
-		left: 50%;
-		position: absolute;
-		z-index: 1;
-	}
-}
+		.site-link {
+			color: #333;
 
-.product-menu-tab-text {
-	@include sm() {
-		font-size: 12px;
-		line-height: 60px;
+			&.selected-site {
+				color: #999;
+			}
+		}
+
+		.site-logo-container {
+			padding: 2em;
+		}
 	}
 }

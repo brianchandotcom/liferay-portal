@@ -19,7 +19,8 @@
 							requires: [
 								'aui-debounce',
 								'liferay-fullscreen-source-editor',
-								'liferay-source-editor'
+								'liferay-source-editor',
+								'plugin'
 							]
 						}
 					},

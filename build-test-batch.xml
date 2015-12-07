@@ -1082,6 +1082,10 @@
 		<run-integration-test database.type="sybase" />
 	</target>
 
+	<target name="modules-functional-tomcat-mysql">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
 	<target name="modules-integration-db2">
 		<run-modules-integration-test database.type="db2" />
 	</target>

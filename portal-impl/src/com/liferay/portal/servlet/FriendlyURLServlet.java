@@ -348,12 +348,12 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				boolean i18nRedirect = false;
 
-				String i18nLanguageId = (String)request.getAttribute(
-					WebKeys.I18N_LANGUAGE_ID);
+				String i18nLanguageCode = (String)request.getAttribute(
+					WebKeys.I18N_LANGUAGE_CODE);
 
-				if (Validator.isNotNull(i18nLanguageId)) {
-					Locale i18nLocale = LocaleUtil.fromLanguageId(
-						i18nLanguageId, true, false);
+				if (Validator.isNotNull(i18nLanguageCode)) {
+					Locale i18nLocale = LanguageUtil.getLocale(
+						group.getGroupId(), i18nLanguageCode);
 
 					if (!LanguageUtil.isAvailableLocale(
 							group.getGroupId(), i18nLocale)) {

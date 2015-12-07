@@ -18,12 +18,15 @@ import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
+import com.liferay.portal.ldap.configuration.SystemLDAPConfiguration;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.model.User;
@@ -108,6 +111,14 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		LogUtil.debug(_log, contactMappings);
 
 		return contactMappings;
+	}
+
+	@Override
+	public String getErrorPasswordHistory(long companyId) {
+		SystemLDAPConfiguration systemLDAPConfiguration =
+			_systemLDAPConfigurationProvider.getConfiguration(companyId);
+
+		return systemLDAPConfiguration.errorPasswordHistory();
 	}
 
 	@Override
@@ -231,9 +242,23 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		Properties properties = new Properties();
 
 		for (String keyValuePair : keyValuePairs) {
+			if (Validator.isNull(keyValuePair)) {
+				continue;
+			}
+
 			String[] keyValue = StringUtil.split(keyValuePair, CharPool.EQUAL);
 
-			properties.put(keyValue[0], keyValue[1]);
+			if (ArrayUtil.isEmpty(keyValue)) {
+				continue;
+			}
+
+			String value = StringPool.BLANK;
+
+			if (keyValue.length == 2) {
+				value = keyValue[1];
+			}
+
+			properties.put(keyValue[0], value);
 		}
 
 		return properties;
@@ -283,6 +308,17 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
 	}
 
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.ldap.configuration.SystemLDAPConfiguration)",
+		unbind = "-"
+	)
+	protected void setSystemLDAPConfigurationProvider(
+		ConfigurationProvider<SystemLDAPConfiguration>
+			systemLDAPConfigurationProvider) {
+
+		_systemLDAPConfigurationProvider = systemLDAPConfigurationProvider;
+	}
+
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
@@ -299,6 +335,8 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		_ldapImportConfigurationProvider;
 	private volatile ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
+	private volatile ConfigurationProvider<SystemLDAPConfiguration>
+		_systemLDAPConfigurationProvider;
 	private volatile UserLocalService _userLocalService;
 
 }

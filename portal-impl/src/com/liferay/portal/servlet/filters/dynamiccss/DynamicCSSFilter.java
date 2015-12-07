@@ -186,8 +186,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 					new BufferCacheServletResponse(response);
 
 				processFilter(
-					DynamicCSSFilter.class, request, bufferCacheServletResponse,
-					filterChain);
+					DynamicCSSFilter.class.getName(), request,
+					bufferCacheServletResponse, filterChain);
 
 				bufferCacheServletResponse.finishResponse(false);
 
@@ -260,7 +260,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		if (parsedContent == null) {
 			processFilter(
-				DynamicCSSFilter.class, request, response, filterChain);
+				DynamicCSSFilter.class.getName(), request, response,
+				filterChain);
 		}
 		else {
 			if (parsedContent instanceof File) {

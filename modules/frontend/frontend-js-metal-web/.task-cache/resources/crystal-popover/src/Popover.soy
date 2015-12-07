@@ -1,0 +1,36 @@
+{namespace Templates.Popover}
+
+/**
+ * This renders the main element.
+ * @param? elementClasses
+ * @param id
+ * @param? position
+ * @skipUpdates elementClasses position
+ */
+{template .content}
+	{let $positionClasses: ['top', 'right', 'bottom', 'left'] /}
+	{let $positionClass: isNonnull($position) ? $positionClasses[$position] : 'bottom' /}
+	<div id="{$id}" class="popover component {$positionClass}{$elementClasses ? ' ' + $elementClasses : ''}" role="tooltip">
+		<div class="arrow"></div>
+		{call .title data="all" /}
+		{call .innerContent data="all" /}
+	</div>
+{/template}
+
+/**
+ * @param id
+ * @param? title
+ */
+{template .title}
+	<h3 id="{$id}-title" class="popover-title{$title ? '' : ' hidden'}">{$title}</h3>
+{/template}
+
+/**
+ * @param? content
+ * @param id
+ */
+{template .innerContent}
+	<div id="{$id}-innerContent" class="popover-content">
+		<p>{$content ? $content : ''}</p>
+	</div>
+{/template}

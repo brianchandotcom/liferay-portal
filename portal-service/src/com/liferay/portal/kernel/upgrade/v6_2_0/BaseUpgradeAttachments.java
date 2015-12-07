@@ -35,7 +35,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -57,13 +56,10 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			String mimeType, String title, long size)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
 			long fileEntryId = increment();
-
-			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(9);
 
@@ -79,7 +75,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setString(1, PortalUUIDUtil.generate());
 			ps.setLong(2, fileEntryId);
@@ -136,7 +132,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return -1;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -147,12 +143,9 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			String title, long size)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(8);
 
 			sb.append("insert into DLFileVersion (uuid_, fileVersionId, ");
@@ -166,7 +159,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setString(1, PortalUUIDUtil.generate());
 			ps.setLong(2, fileVersionId);
@@ -203,7 +196,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -214,12 +207,9 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			boolean hidden)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(8);
 
 			sb.append("insert into DLFolder (uuid_, folderId, groupId, ");
@@ -233,7 +223,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setString(1, PortalUUIDUtil.generate());
 			ps.setLong(2, folderId);
@@ -297,7 +287,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return -1;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -317,12 +307,9 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return -1;
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("insert into Repository (uuid_, repositoryId, groupId, ");
@@ -331,7 +318,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			sb.append("portletId, typeSettings, dlFolderId) values (?, ?, ?, ");
 			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setString(1, PortalUUIDUtil.generate());
 			ps.setLong(2, repositoryId);
@@ -361,7 +348,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return -1;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -370,14 +357,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			long actionIds)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
 			long resourcePermissionId = increment(
 				ResourcePermission.class.getName());
-
-			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(3);
 
@@ -387,7 +371,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setLong(1, resourcePermissionId);
 			ps.setLong(2, companyId);
@@ -406,7 +390,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -450,14 +434,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return bitwiseValues;
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select actionId, bitwiseValue from ResourceAction " +
 					"where name = ?");
 
@@ -479,7 +460,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return bitwiseValues;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -511,14 +492,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return -1;
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select folderId from DLFolder where repositoryId = ? and " +
 					"parentFolderId = ? and name = ?");
 
@@ -535,7 +513,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 
 		return addDLFolder(
@@ -550,14 +528,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			Timestamp createDate, long classNameId, String portletId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select repositoryId from Repository where groupId = ? and " +
 					"name = ? and portletId = ?");
 
@@ -574,7 +549,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 
 		return addRepository(
@@ -591,14 +566,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return roleId;
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select roleId from Role_ where companyId = ? and name = ?");
 
 			ps.setLong(1, companyId);
@@ -615,7 +587,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return roleId;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

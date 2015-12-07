@@ -37,6 +37,7 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("href", assignURL.toString());
+		data.put("userid", user2.getUserId());
 		%>
 
 		<liferay-ui:icon

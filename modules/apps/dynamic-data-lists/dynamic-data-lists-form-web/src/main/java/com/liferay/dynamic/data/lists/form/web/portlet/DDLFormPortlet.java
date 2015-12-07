@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.io.IOException;
 
@@ -72,6 +73,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.application-type=widget",
 		"com.liferay.portlet.css-class-wrapper=portlet-forms-display",
 		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.friendly-url-mapping=form",
 		"com.liferay.portlet.header-portlet-css=/admin/css/main.css",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.layout-cacheable=true",
@@ -299,7 +301,8 @@ public class DDLFormPortlet extends MVCPortlet {
 		throws PortalException {
 
 		long recordSetId = PrefsParamUtil.getLong(
-			renderRequest.getPreferences(), renderRequest, "recordSetId");
+			PortletPreferencesFactoryUtil.getPortletSetup(renderRequest),
+			renderRequest, "recordSetId");
 
 		if (recordSetId == 0) {
 			return;

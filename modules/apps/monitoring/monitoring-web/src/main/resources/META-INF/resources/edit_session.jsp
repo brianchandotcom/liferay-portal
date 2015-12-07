@@ -27,18 +27,18 @@ List<UserTrackerPath> paths = userTracker.getPaths();
 int numHits = userTracker.getHits();
 
 userTracker = userTracker.toEscapedModel();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, false));
 %>
 
 <portlet:actionURL name="/monitoring/edit_session" var="editSessionURL" />
 
-<aui:form action="<%= editSessionURL %>" method="post" name="fm">
+<aui:form action="<%= editSessionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="sessionId" type="hidden" value="<%= sessionId %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="live-session"
-	/>
 
 	<c:choose>
 		<c:when test="<%= userTracker == null %>">
@@ -61,7 +61,7 @@ userTracker = userTracker.toEscapedModel();
 			%>
 
 			<liferay-ui:panel-container extended="<%= true %>" id="monitoringSessionHistoryPanelContainer" persistState="<%= true %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="monitoringSessionPanel" persistState="<%= false %>" title="session">
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="monitoringSessionPanel" markupView="lexicon" persistState="<%= false %>" title="session">
 					<dl>
 						<dt>
 							<liferay-ui:message key="session-id" />
@@ -114,7 +114,7 @@ userTracker = userTracker.toEscapedModel();
 					</dl>
 				</liferay-ui:panel>
 
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="sessionAccessedURLsPanels" persistState="<%= true %>" title="accessed-urls">
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="sessionAccessedURLsPanels" markupView="lexicon" persistState="<%= true %>" title="accessed-urls">
 					<dl>
 
 						<%
@@ -136,7 +136,7 @@ userTracker = userTracker.toEscapedModel();
 					</dl>
 				</liferay-ui:panel>
 
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="monitoringSessionAttributesPanel" persistState="<%= true %>" title="session-attributes">
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="monitoringSessionAttributesPanel" markupView="lexicon" persistState="<%= true %>" title="session-attributes">
 					<dl>
 
 						<%

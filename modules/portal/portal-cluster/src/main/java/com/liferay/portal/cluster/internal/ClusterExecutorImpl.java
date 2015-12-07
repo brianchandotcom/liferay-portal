@@ -316,9 +316,20 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		ClusterInvokeThreadLocal.setEnabled(false);
 
 		try {
-			return ClusterNodeResponse.createResultClusterNodeResponse(
+			Object result = methodHandler.invoke();
+
+			if ((result instanceof Serializable) || (result == null)) {
+				return ClusterNodeResponse.createResultClusterNodeResponse(
+					_localClusterNodeStatus.getClusterNode(),
+					clusterRequest.getUuid(), (Serializable)result);
+			}
+
+			return ClusterNodeResponse.createExceptionClusterNodeResponse(
 				_localClusterNodeStatus.getClusterNode(),
-				clusterRequest.getUuid(), (Serializable)methodHandler.invoke());
+				clusterRequest.getUuid(),
+				new ClusterException(
+					methodHandler + " returned value " + result +
+						" that is not serializable"));
 		}
 		catch (Exception e) {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(

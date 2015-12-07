@@ -15,6 +15,7 @@
 package com.liferay.staging.configuration.web.portlet;
 
 import com.liferay.portal.NoSuchBackgroundTaskException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -78,7 +79,7 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 
 		try {
 			long backgroundTaskId = ParamUtil.getLong(
-				actionRequest, "backgroundTaskId");
+				actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
 			BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
 

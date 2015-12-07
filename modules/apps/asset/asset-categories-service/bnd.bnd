@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Asset Categories Service
 Bundle-SymbolicName: com.liferay.asset.categories.service
 Bundle-Version: 1.0.0
+Export-package: com.liferay.asset.exportimport.staged.model.repository
 Include-Resource: classes

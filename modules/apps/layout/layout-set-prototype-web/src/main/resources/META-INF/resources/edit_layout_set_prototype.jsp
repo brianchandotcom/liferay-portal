@@ -76,7 +76,7 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 
 	<aui:model-context bean="<%= layoutSetPrototype %>" model="<%= LayoutSetPrototype.class %>" />
 
-	<aui:fieldset-group>
+	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 

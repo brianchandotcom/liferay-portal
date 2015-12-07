@@ -64,6 +64,10 @@ public class BuildCSSTask extends Task {
 		_cssBuilderArgs.setPortalCommonDirName(portalCommonDirName);
 	}
 
+	public void setPrecision(int precision) {
+		_cssBuilderArgs.setPrecision(precision);
+	}
+
 	public void setRtlExcludedPathRegexps(String rtlExcludedPathRegexps) {
 		_cssBuilderArgs.setRtlExcludedPathRegexps(rtlExcludedPathRegexps);
 	}

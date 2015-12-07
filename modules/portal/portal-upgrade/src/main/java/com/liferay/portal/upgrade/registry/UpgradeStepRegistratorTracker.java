@@ -14,9 +14,9 @@
 
 package com.liferay.portal.upgrade.registry;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.upgrade.internal.UpgradeInfo;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator.Registry;
 
 import java.util.ArrayList;
@@ -103,11 +103,9 @@ public class UpgradeStepRegistratorTracker {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, UpgradeStepRegistrator.class,
 			new UpgradeStepRegistratorServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	protected List<UpgradeInfo> createUpgradeInfos(

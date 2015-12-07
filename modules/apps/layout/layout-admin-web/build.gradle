@@ -5,6 +5,7 @@ dependencies {
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:mobile-device-rules:mobile-device-rules-api")
 	compile project(":apps:mobile-device-rules:mobile-device-rules-service")
+	compile project(":apps:product-navigation:product-navigation-site-administration")
 	compile project(":portal:portal-upgrade")
 }
 

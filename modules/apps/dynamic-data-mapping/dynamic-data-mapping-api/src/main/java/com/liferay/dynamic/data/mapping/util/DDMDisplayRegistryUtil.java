@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -62,11 +63,9 @@ public class DDMDisplayRegistryUtil {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			_bundleContext, DDMDisplay.class,
 			new DDMDisplayServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	private DDMDisplay _getDDMDisplay(String portletId) {

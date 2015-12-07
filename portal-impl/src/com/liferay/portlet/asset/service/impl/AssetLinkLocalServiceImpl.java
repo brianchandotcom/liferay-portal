@@ -23,7 +23,10 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +42,7 @@ import com.liferay.portlet.asset.service.base.AssetLinkLocalServiceBaseImpl;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,6 +117,29 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		}
 
 		return link;
+	}
+
+	@Override
+	public void deleteGroupLinks(long groupId) {
+		Session session = assetLinkPersistence.openSession();
+
+		try {
+			String sql = CustomSQLUtil.get(_DELETE_BY_ASSET_ENTRY_GROUP_ID);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(groupId);
+			qPos.add(groupId);
+
+			sqlQuery.executeUpdate();
+		}
+		finally {
+			assetLinkPersistence.closeSession(session);
+
+			assetLinkPersistence.clearCache();
+		}
 	}
 
 	/**
@@ -470,6 +497,10 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 			}
 		}
 	}
+
+	private static final String _DELETE_BY_ASSET_ENTRY_GROUP_ID =
+		AssetLinkLocalServiceImpl.class.getName() +
+			".deleteByAssetEntryGroupId";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetLinkLocalServiceImpl.class);

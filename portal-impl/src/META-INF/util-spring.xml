@@ -153,6 +153,10 @@
 			<bean class="com.liferay.portal.language.UnicodeLanguageImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.license.util.LicenseManager" class="com.liferay.portal.license.util.DefaultLicenseManagerImpl" />
+	<bean id="com.liferay.portal.kernel.license.util.LicenseManagerUtil" class="com.liferay.portal.kernel.license.util.LicenseManagerUtil">
+		<property name="licenseManager" ref="com.liferay.portal.kernel.license.util.LicenseManager" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.management.PortalManagerUtil" class="com.liferay.portal.kernel.management.PortalManagerUtil">
 		<property name="portalManager">
 			<bean class="com.liferay.portal.management.BasePortalManager" />
@@ -397,10 +401,6 @@
 	<bean id="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" class="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil">
 		<property name="runtimePage" ref="com.liferay.portal.layoutconfiguration.util.RuntimePage" />
 	</bean>
-	<bean id="com.liferay.portal.license.util.LicenseManager" class="com.liferay.portal.license.util.DefaultLicenseManagerImpl" />
-	<bean id="com.liferay.portal.license.util.LicenseManagerUtil" class="com.liferay.portal.license.util.LicenseManagerUtil">
-		<property name="licenseManager" ref="com.liferay.portal.license.util.LicenseManager" />
-	</bean>
 	<bean id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />
 	<bean id="com.liferay.portal.plugin.PluginPackageIndexer" class="com.liferay.portal.plugin.PluginPackageIndexer" />
 	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepository" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl" />
@@ -533,8 +533,6 @@
 	<bean class="com.liferay.portal.verify.model.RatingsEntryVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.RepositoryEntryVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.RoleVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.SCFrameworkVersionVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.SCProductEntryVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.TeamVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.UserGroupVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.UserVerifiableModel" />
@@ -611,19 +609,6 @@
 	<bean id="com.liferay.portlet.social.util.SocialConfigurationUtil" class="com.liferay.portlet.social.util.SocialConfigurationUtil">
 		<property name="socialConfiguration" ref="com.liferay.portlet.social.util.SocialConfiguration" />
 	</bean>
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCActionCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditLicenseMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.EditLicenseMVCActionCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditLicenseMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.EditLicenseMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditProductEntryMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.EditProductEntryMVCActionCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditProductEntryMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.EditProductEntryMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCActionCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.ViewMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.ViewMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.ViewProductEntryMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.ViewProductEntryMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" class="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.permission.SCProductEntryPermission" class="com.liferay.portlet.softwarecatalog.service.permission.SCProductEntryPermission" />
-	<bean id="com.liferay.portlet.softwarecatalog.util.SCIndexer" class="com.liferay.portlet.softwarecatalog.util.SCIndexer" />
 	<bean id="com.liferay.portlet.trash.util.Trash" class="com.liferay.portlet.trash.util.TrashImpl" />
 	<bean id="com.liferay.portlet.trash.util.TrashIndexer" class="com.liferay.portlet.trash.util.TrashIndexer" />
 	<bean id="com.liferay.portlet.trash.util.TrashUtil" class="com.liferay.portlet.trash.util.TrashUtil">

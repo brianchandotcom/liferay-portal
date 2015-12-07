@@ -71,6 +71,18 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 
+	public void deletePasswordPolicies(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] passwordPolicyIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "passwordPolicyIds"), 0L);
+
+		for (long passwordPolicyId : passwordPolicyIds) {
+			_passwordPolicyService.deletePasswordPolicy(passwordPolicyId);
+		}
+	}
+
 	public void deletePasswordPolicy(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

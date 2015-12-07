@@ -18,7 +18,7 @@
 
 <%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jspf" %>
 
-<ul class="<%= searchContainer.getCssClass() %> <%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> tabular-list-group" id="<%= namespace + id %>SearchContainer">
+<ul class="tabular-list-group">
 	<c:if test="<%= (headerNames != null) && Validator.isNotNull(headerNames.get(0)) %>">
 		<li class="list-group-heading"><liferay-ui:message key="<%= headerNames.get(0) %>" /></li>
 	</c:if>

@@ -53,7 +53,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 
-	<aui:fieldset-group>
+	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset cssClass="col-md-4">
 			<label for="<portlet:namespace />assetTagsSelector">
 				<liferay-ui:message key="tags" />

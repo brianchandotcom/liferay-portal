@@ -3,6 +3,7 @@
 AUI.add(
 	'liferay-alloy-editor',
 	function(A) {
+		var Do = A.Do;
 		var Lang = A.Lang;
 
 		var contentFilter = new CKEDITOR.filter(
@@ -63,10 +64,15 @@ AUI.add(
 						var editorConfig = instance.get('editorConfig');
 
 						instance._alloyEditor = AlloyEditor.editable(editorConfig.srcNode, editorConfig);
+						instance._srcNode = A.one('#' + editorConfig.srcNode);
 					},
 
 					bindUI: function() {
 						var instance = this;
+
+						instance._eventHandles = [
+							Do.after('_afterGet', instance._srcNode, 'get', instance)
+						];
 
 						var nativeEditor = instance.getNativeEditor();
 
@@ -100,6 +106,8 @@ AUI.add(
 						if (editor) {
 							editor.destroy();
 						}
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 
 						instance.instanceReady = false;
 					},
@@ -154,6 +162,25 @@ AUI.add(
 						var instance = this;
 
 						instance.getNativeEditor().setData(value);
+					},
+
+					_afterGet: function(attrName) {
+						var instance = this;
+
+						if (attrName === 'form') {
+							var parentForm = instance._parentForm;
+
+							if (!parentForm) {
+								parentForm = instance._srcNode.ancestor('form');
+
+								instance._parentForm = parentForm;
+							}
+
+							return new Do.AlterReturn(
+								'Return ancestor parent form',
+								parentForm
+							);
+						}
 					},
 
 					_onBlur: function(event) {

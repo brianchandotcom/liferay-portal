@@ -49,7 +49,7 @@ AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 				data="<%= data %>"
 				iconCssClass="icon-edit-sign"
 				label="<%= false %>"
-				message='<%= HtmlUtil.render(LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false)) %>'
+				message='<%= LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) %>'
 				method="get"
 				url="<%= editPortletURL.toString() %>"
 				useDialog="<%= true %>"

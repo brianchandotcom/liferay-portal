@@ -74,6 +74,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/events/EventHandle", ['exports', '
 		return EventHandle;
 	})(_Disposable3.default);
 
+	EventHandle.prototype.registerMetalComponent && EventHandle.prototype.registerMetalComponent(EventHandle, 'EventHandle')
 	exports.default = EventHandle;
 });
 //# sourceMappingURL=EventHandle.js.map

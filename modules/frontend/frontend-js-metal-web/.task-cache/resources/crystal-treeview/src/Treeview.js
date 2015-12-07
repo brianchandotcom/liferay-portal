@@ -120,6 +120,7 @@ define("frontend-js-metal-web@1.0.0/crystal-treeview/src/Treeview", ['exports', 
 		return Treeview;
 	})(_Treeview2.default);
 
+	Treeview.prototype.registerMetalComponent && Treeview.prototype.registerMetalComponent(Treeview, 'Treeview')
 	Treeview.ELEMENT_CLASSES = 'treeview';
 	Treeview.ATTRS = {
 		nodes: {
@@ -129,9 +130,6 @@ define("frontend-js-metal-web@1.0.0/crystal-treeview/src/Treeview", ['exports', 
 			}
 		}
 	};
-
-	_Treeview2.default.setImpl(Treeview);
-
 	exports.default = Treeview;
 
 	_JQueryAdapter2.default.register('treeview', Treeview);

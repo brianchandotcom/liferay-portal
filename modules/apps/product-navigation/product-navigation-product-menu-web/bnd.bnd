@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Product Navigation Product Menu Web
 Bundle-SymbolicName: com.liferay.product.navigation.product.menu.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.product.navigation.product.menu.web.display.context.*
 Import-Package:\
 	com.liferay.application.list.taglib.servlet.taglib,\
 	*

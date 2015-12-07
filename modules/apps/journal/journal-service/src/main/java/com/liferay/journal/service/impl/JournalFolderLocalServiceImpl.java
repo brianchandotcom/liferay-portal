@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
@@ -1425,13 +1426,25 @@ public class JournalFolderLocalServiceImpl
 						article.getDDMStructureKey(), true);
 
 				if (ddmStructure == null) {
-					throw new InvalidDDMStructureException();
+					StringBundler sb = new StringBundler(7);
+
+					sb.append("No DDM structure exists for group ");
+					sb.append(article.getGroupId());
+					sb.append(", class name ");
+					sb.append(classNameId);
+					sb.append(", and structure key ");
+					sb.append(article.getDDMStructureKey());
+					sb.append(" that includes ancestor structures");
+
+					throw new InvalidDDMStructureException(sb.toString());
 				}
 
 				if (!ArrayUtil.contains(
 						ddmStructureIds, ddmStructure.getStructureId())) {
 
-					throw new InvalidDDMStructureException();
+					throw new InvalidDDMStructureException(
+						"Invalid DDM structure " +
+							ddmStructure.getStructureId());
 				}
 			}
 		}

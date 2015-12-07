@@ -61,6 +61,11 @@ public class PollsVoteVerifiableModel
 	}
 
 	@Override
+	public boolean isAnonymousUserAllowed() {
+		return true;
+	}
+
+	@Override
 	public boolean isUpdateDates() {
 		return true;
 	}

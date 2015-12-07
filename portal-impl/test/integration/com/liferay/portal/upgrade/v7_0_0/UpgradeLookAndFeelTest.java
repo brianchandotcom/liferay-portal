@@ -56,7 +56,7 @@ public class UpgradeLookAndFeelTest extends UpgradeLookAndFeel {
 		setPortletShowBorders("portlet1", true);
 		setPortletShowBorders("portlet2", false);
 
-		doUpgrade();
+		upgrade();
 
 		CacheRegistryUtil.clear();
 

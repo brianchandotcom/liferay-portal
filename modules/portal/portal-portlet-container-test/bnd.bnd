@@ -6,4 +6,5 @@ Include-Resource:\
 	test-classes/integration,\
 	@../../../util-java/util-java.jar!/com/liferay/util/Encryptor*.class
 Require-Capability:\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ddm))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))"

@@ -75,6 +75,13 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 	}
 
 	@Override
+	public String getSettingsProperty(String key) {
+		UnicodeProperties settingsProperties = getSettingsProperties();
+
+		return settingsProperties.getProperty(key);
+	}
+
+	@Override
 	public String getSettingsProperty(String key, String defaultValue) {
 		UnicodeProperties settingsProperties = getSettingsProperties();
 

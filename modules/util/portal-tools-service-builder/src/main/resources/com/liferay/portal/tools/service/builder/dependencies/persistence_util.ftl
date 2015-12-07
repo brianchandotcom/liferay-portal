@@ -4,6 +4,7 @@ import ${packagePath}.model.${entity.name};
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -181,15 +182,7 @@ public class ${entity.name}Util {
 	}
 
 	<#if osgiModule>
-		private static ServiceTracker<${entity.name}Persistence, ${entity.name}Persistence> _serviceTracker;
-
-		static {
-			Bundle bundle = FrameworkUtil.getBundle(${entity.name}Util.class);
-
-			_serviceTracker = new ServiceTracker<${entity.name}Persistence, ${entity.name}Persistence>(bundle.getBundleContext(), ${entity.name}Persistence.class, null);
-
-			_serviceTracker.open();
-		}
+		private static ServiceTracker<${entity.name}Persistence, ${entity.name}Persistence> _serviceTracker = ServiceTrackerFactory.open(${entity.name}Persistence.class);
 	<#else>
 		private static ${entity.name}Persistence _persistence;
 	</#if>

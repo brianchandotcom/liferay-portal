@@ -60,7 +60,6 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutPrototypeLocalService;
@@ -90,7 +89,6 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -108,7 +106,6 @@ import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -294,11 +291,6 @@ public class LayoutImportController implements ImportController {
 				zipReader.close();
 			}
 		}
-	}
-
-	@Activate
-	protected void activate() {
-		XStreamAliasRegistryUtil.register(LayoutImpl.class, "Layout");
 	}
 
 	protected void deleteMissingLayouts(
@@ -861,7 +853,7 @@ public class LayoutImportController implements ImportController {
 
 		// Asset links
 
-		_portletImportController.readAssetLinks(portletDataContext);
+		_portletImportController.importAssetLinks(portletDataContext);
 
 		// Delete missing layouts
 

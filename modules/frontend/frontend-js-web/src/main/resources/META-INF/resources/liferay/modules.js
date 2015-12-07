@@ -55,6 +55,15 @@
 				combine: COMBINE,
 				filter: filterConfig,
 				modules: {
+					'liferay-alert': {
+						path: 'alert.js',
+						requires: [
+							'aui-alert',
+							'event-mouseenter',
+							'liferay-portlet-base',
+							'timers'
+						]
+					},
 					'liferay-asset-addon-entry-selector': {
 						path: 'asset_addon_entry_selector.js',
 						requires: [

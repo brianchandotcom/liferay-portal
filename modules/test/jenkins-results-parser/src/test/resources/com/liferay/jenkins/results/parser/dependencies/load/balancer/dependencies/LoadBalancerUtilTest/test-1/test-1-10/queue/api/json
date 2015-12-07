@@ -1,0 +1,36 @@
+{
+  "items" : [
+    {
+      "actions" : [
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"maintenance-daily\" build number 7",
+              "upstreamBuild" : 7,
+              "upstreamProject" : "maintenance-daily",
+              "upstreamUrl" : "job/maintenance-daily/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 55157,
+      "inQueueSince" : 1449201600803,
+      "params" : "",
+      "stuck" : true,
+      "task" : {
+        "name" : "label=cloud-10-0-19-120",
+        "url" : "https://test-1-10.liferay.com/job/maintenance-daily/label=cloud-10-0-19-120/",
+        "color" : "blue"
+      },
+      "url" : "queue/item/55157/",
+      "why" : "Waiting for next available executor on cloud-10-0-19-120",
+      "buildableStartMilliseconds" : 1449201600817,
+      "pending" : false
+    }
+  ]
+}

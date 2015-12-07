@@ -14,8 +14,17 @@
 
 package com.liferay.portlet.exportimport.lar;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.util.LongWrapper;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.service.PortletLocalServiceUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -39,13 +48,32 @@ public class PortletDataHandlerStatusMessageSenderImpl
 	public void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary) {
 
-		PortletDataHandlerBackgroundTaskStatusMessage
-			portletDataHandlerBackgroundTaskStatusMessage =
-				new PortletDataHandlerBackgroundTaskStatusMessage(
-					messageType, portletId, manifestSummary);
+		Message message = new Message();
 
-		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			portletDataHandlerBackgroundTaskStatusMessage);
+		init(message, messageType, manifestSummary);
+
+		message.put("portletId", portletId);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+		if (portlet != null) {
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			long portletModelAdditionCountersTotal =
+				portletDataHandler.getExportModelCount(manifestSummary);
+
+			if (portletModelAdditionCountersTotal < 0) {
+				portletModelAdditionCountersTotal = 0;
+			}
+
+			message.put(
+				"portletModelAdditionCountersTotal",
+				portletModelAdditionCountersTotal);
+		}
+
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			message);
 	}
 
 	@Override
@@ -53,32 +81,67 @@ public class PortletDataHandlerStatusMessageSenderImpl
 		String messageType, String[] portletIds,
 		ManifestSummary manifestSummary) {
 
-		PortletDataHandlerBackgroundTaskStatusMessage
-			portletDataHandlerBackgroundTaskStatusMessage =
-				new PortletDataHandlerBackgroundTaskStatusMessage(
-					messageType, portletIds, manifestSummary);
+		Message message = new Message();
 
-		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			portletDataHandlerBackgroundTaskStatusMessage);
+		init(message, messageType, manifestSummary);
+
+		message.put("portletIds", portletIds);
+
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			message);
 	}
 
 	@Override
 	public <T extends StagedModel> void sendStatusMessage(
 		String messageType, T stagedModel, ManifestSummary manifestSummary) {
 
-		PortletDataHandlerBackgroundTaskStatusMessage
-			portletDataHandlerBackgroundTaskStatusMessage =
-				new PortletDataHandlerBackgroundTaskStatusMessage(
-					messageType, stagedModel, manifestSummary);
+		Message message = new Message();
 
-		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			portletDataHandlerBackgroundTaskStatusMessage);
+		init(message, messageType, manifestSummary);
+
+		StagedModelDataHandler<T> stagedModelDataHandler =
+			(StagedModelDataHandler<T>)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					stagedModel.getModelClassName());
+
+		message.put(
+			"stagedModelName",
+			stagedModelDataHandler.getDisplayName(stagedModel));
+
+		message.put(
+			"stagedModelType",
+			String.valueOf(stagedModel.getStagedModelType()));
+		message.put("uuid", stagedModel.getUuid());
+
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+			message);
 	}
 
 	public void setBackgroundTaskStatusMessageSender(
 		BackgroundTaskStatusMessageSender backgroundTaskStatusMessageSender) {
 
 		_backgroundTaskStatusMessageSender = backgroundTaskStatusMessageSender;
+	}
+
+	protected void init(
+		Message message, String messageType, ManifestSummary manifestSummary) {
+
+		message.put(
+			BackgroundTaskConstants.BACKGROUND_TASK_ID,
+			BackgroundTaskThreadLocal.getBackgroundTaskId());
+		message.put("messageType", messageType);
+
+		Map<String, LongWrapper> modelAdditionCounters =
+			manifestSummary.getModelAdditionCounters();
+
+		message.put(
+			"modelAdditionCounters", new HashMap<>(modelAdditionCounters));
+
+		Map<String, LongWrapper> modelDeletionCounters =
+			manifestSummary.getModelDeletionCounters();
+
+		message.put(
+			"modelDeletionCounters", new HashMap<>(modelDeletionCounters));
 	}
 
 	private BackgroundTaskStatusMessageSender

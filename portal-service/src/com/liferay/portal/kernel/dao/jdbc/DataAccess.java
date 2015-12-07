@@ -56,6 +56,7 @@ public class DataAccess {
 
 	public static void cleanUp(Connection connection, Statement statement) {
 		cleanUp(statement);
+
 		cleanUp(connection);
 	}
 
@@ -63,7 +64,9 @@ public class DataAccess {
 		Connection connection, Statement statement, ResultSet resultSet) {
 
 		cleanUp(resultSet);
+
 		cleanUp(statement);
+
 		cleanUp(connection);
 	}
 
@@ -93,14 +96,20 @@ public class DataAccess {
 		}
 	}
 
+	public static void cleanUp(Statement statement, ResultSet resultSet) {
+		cleanUp(resultSet);
+
+		cleanUp(statement);
+	}
+
 	public static void deepCleanUp(ResultSet resultSet) {
 		try {
 			if (resultSet != null) {
 				Statement statement = resultSet.getStatement();
 
-				Connection con = statement.getConnection();
+				Connection connection = statement.getConnection();
 
-				cleanUp(con, statement, resultSet);
+				cleanUp(connection, statement, resultSet);
 			}
 		}
 		catch (SQLException sqle) {
@@ -127,7 +136,7 @@ public class DataAccess {
 	public static Connection getUpgradeOptimizedConnection()
 		throws SQLException {
 
-		Connection con = getConnection();
+		Connection connection = getConnection();
 
 		Thread currentThread = Thread.currentThread();
 
@@ -135,7 +144,7 @@ public class DataAccess {
 
 		return (Connection)ProxyUtil.newProxyInstance(
 			classLoader, new Class[] {Connection.class},
-			new UpgradeOptimizedConnectionHandler(con));
+			new UpgradeOptimizedConnectionHandler(connection));
 	}
 
 	public interface PACL {

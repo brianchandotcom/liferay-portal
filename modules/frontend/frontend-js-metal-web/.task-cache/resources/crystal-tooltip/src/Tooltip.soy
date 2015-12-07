@@ -1,0 +1,27 @@
+{namespace Templates.Tooltip}
+
+/**
+ * This renders the main element.
+ * @param? elementClasses
+ * @param id
+ * @param? position
+ * @skipUpdates elementClasses position
+ */
+{template .content}
+	{let $positionClasses: ['top', 'right', 'bottom', 'left'] /}
+	{let $positionClass: isNonnull($position) ? $positionClasses[$position] : 'bottom' /}
+	<div id="{$id}" class="tooltip component {$positionClass}{$elementClasses ? ' ' + $elementClasses : ''}" role="tooltip">
+		<div class="tooltip-arrow"></div>
+		{call .inner data="all" /}
+	</div>
+{/template}
+
+/**
+ * @param? content
+ * @param id
+ */
+{template .inner}
+	<section id="{$id}-inner" class="tooltip-inner">
+		{$content ? $content : ''}
+	</section>
+{/template}

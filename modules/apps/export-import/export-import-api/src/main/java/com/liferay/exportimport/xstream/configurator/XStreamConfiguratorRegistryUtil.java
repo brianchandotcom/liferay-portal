@@ -16,6 +16,7 @@ package com.liferay.exportimport.xstream.configurator;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -75,7 +76,7 @@ public class XStreamConfiguratorRegistryUtil {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			_bundleContext, XStreamConfigurator.class,
 			new XStreamConfiguratorServiceTrackerCustomizer());
 

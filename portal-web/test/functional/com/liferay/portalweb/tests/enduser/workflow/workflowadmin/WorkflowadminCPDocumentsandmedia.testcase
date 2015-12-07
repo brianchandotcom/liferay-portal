@@ -82,7 +82,7 @@
 
 		<execute macro="DMDocument#addWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
@@ -129,6 +129,18 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
+			<var name="workflowAssetTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentImageAsWorkflowAsset">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 	</command>

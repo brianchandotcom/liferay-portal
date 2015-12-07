@@ -92,14 +92,18 @@
 			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="Blog Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Home" />
 		</execute>
 
-		<execute macro="SitePage#openPageTree" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
+		</execute>
 
 		<execute macro="SitePage#addPageTranslations">
-			<var name="childPageName" value="Blog Page" />
+			<var name="childPageName" value="true" />
 			<var name="pageTranslation" value="es_ES" />
 			<var name="PageTranslationName" value="Blog Página" />
+			<var name="sitePageName" value="Blog Page" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -165,9 +169,11 @@
 
 		<execute function="Refresh" />
 
-		<var name="key_portletName" value="Asset Publisher" />
+		<execute macro="Portlet#viewTitle">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Asset Publisher" />
+		<execute function="Click" locator1="ControlMenu#PAGE_INFO_MESSAGE_ICON" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page has been changed since the last update from the site template." />
 		<execute function="AssertClick" locator1="Button#RESET_CHANGES" value1="Reset Changes" />
@@ -178,7 +184,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Asset Publisher" />
+		<execute macro="Portlet#viewNoSpecificPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
 
 		<execute macro="PermissionsInline#gotoConfigurationPG" >
 			<var name="portletName" value="Polls Display" />
@@ -203,8 +211,7 @@
 
 		<execute macro="Polls#viewPollPG">
 			<var name="pollsQuestion" value="What is the most important issue for this election?" />
-			<var name="pollsQuestionChoiceA" value="The Economy" />
-			<var name="pollsQuestionChoiceB" value="The National Debt" />
+			<var name="pollsQuestionChoiceList" value="The Economy,The National Debt" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoConfigurationPG" >
@@ -233,10 +240,11 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="This is the message boards thread." />
 			<var name="threadSubject" value="Thread" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -248,15 +256,16 @@
 
 		<execute function="Open" locator1="http://localhost:8080/web/site-name/home" />
 
-		<var name="key_portletName" value="Message Boards" />
-
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Message Boards" />
+		<execute macro="Portlet#viewTitle">
+			<var name="portletName" value="Message Boards" />
+		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
 			<var name="threadBody" value="This is the message boards thread." />
 			<var name="threadSubject" value="Thread" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -264,27 +273,24 @@
 			<var name="threadSubject" value="Thread" />
 		</execute>
 
-		<var name="key_portletName" value="Polls Display" />
-
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Polls Display" />
+		<execute macro="Portlet#viewTitle">
+			<var name="portletName" value="Polls Display" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="BasePortlet#INFO_MESSAGE" value1="Please sign in to vote." />
 
 		<execute function="AssertElementPresent" locator1="Search#SEARCH_FIELD" />
 
-		<var name="key_portletName" value="User Statistics" />
+		<execute macro="Portlet#viewTitle">
+			<var name="portletName" value="User Statistics" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="User Statistics" />
+		<execute macro="SignIn#signInViaDockbar">
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="userPassword" value="test" />
+		</execute>
 
-		<var name="key_portletName" value="Upcoming Events" />
-
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Upcoming Events" />
-
-		<execute function="AssertClick" locator1="ControlMenu#USER_SIGN_IN" value1="Sign In" />
-
-		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="test@liferay.com" />
-		<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
-		<execute function="Click" locator1="Button#SIGN_IN" value1="Sign In" />
+		<execute function="Open" locator1="http://localhost:8080/web/site-name/home" />
 
 		<execute macro="PermissionsInline#gotoConfigurationPG" >
 			<var name="portletName" value="Polls Display" />

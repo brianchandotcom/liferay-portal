@@ -345,11 +345,10 @@ if (Validator.isNotNull(keywords)) {
 								%>
 
 									<liferay-ui:search-container-column-text>
-										<liferay-frontend:vertical-card
+										<liferay-frontend:image-card
 											cssClass="item-preview"
 											data="<%= data %>"
 											imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
-											resultRow="<%= row %>"
 										/>
 									</liferay-ui:search-container-column-text>
 

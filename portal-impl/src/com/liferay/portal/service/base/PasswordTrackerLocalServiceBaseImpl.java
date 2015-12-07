@@ -393,25 +393,6 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the password policy remote service.
-	 *
-	 * @return the password policy remote service
-	 */
-	public com.liferay.portal.service.PasswordPolicyService getPasswordPolicyService() {
-		return passwordPolicyService;
-	}
-
-	/**
-	 * Sets the password policy remote service.
-	 *
-	 * @param passwordPolicyService the password policy remote service
-	 */
-	public void setPasswordPolicyService(
-		com.liferay.portal.service.PasswordPolicyService passwordPolicyService) {
-		this.passwordPolicyService = passwordPolicyService;
-	}
-
-	/**
 	 * Returns the password policy persistence.
 	 *
 	 * @return the password policy persistence
@@ -466,25 +447,6 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	public void setUserLocalService(
 		com.liferay.portal.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
 	}
 
 	/**
@@ -583,16 +545,12 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.PasswordPolicyLocalService.class)
 	protected com.liferay.portal.service.PasswordPolicyLocalService passwordPolicyLocalService;
-	@BeanReference(type = com.liferay.portal.service.PasswordPolicyService.class)
-	protected com.liferay.portal.service.PasswordPolicyService passwordPolicyService;
 	@BeanReference(type = PasswordPolicyPersistence.class)
 	protected PasswordPolicyPersistence passwordPolicyPersistence;
 	@BeanReference(type = PasswordPolicyFinder.class)
 	protected PasswordPolicyFinder passwordPolicyFinder;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)

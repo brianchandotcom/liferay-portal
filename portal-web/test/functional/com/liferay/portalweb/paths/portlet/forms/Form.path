@@ -10,7 +10,17 @@
 <tbody>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//div[@class='button-holder ddl-form-builder-buttons']/button[contains(.,'Save')]</td>
+	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON_DROPDOWN</td>
+	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(@id,'submitToggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON_DROPDOWN_SAVE_AND_PUBLISH_LIVE_PAGE</td>
+	<td>//div[@class='button-holder ddl-form-builder-buttons']//ul[@class='dropdown-menu']//a[@class='ddl-button publish save']</td>
 	<td></td>
 </tr>
 <tr>

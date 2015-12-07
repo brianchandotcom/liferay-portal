@@ -162,7 +162,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedCategories" />
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedCategories" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>
@@ -203,7 +203,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 
 			<liferay-ui:search-container-column-text
 				name="description"
-				value="<%= curCategory.getDescription(locale) %>"
+				value="<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-date

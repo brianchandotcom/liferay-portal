@@ -31,11 +31,15 @@ import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 
 import java.util.Collection;
 
+import org.elasticsearch.action.admin.indices.refresh.RefreshRequestBuilder;
+import org.elasticsearch.action.admin.indices.refresh.RefreshResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequestBuilder;
 import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
@@ -72,6 +76,27 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 
 		_elasticsearchUpdateDocumentCommand.updateDocuments(
 			DocumentTypes.LIFERAY, searchContext, documents, false);
+	}
+
+	@Override
+	public void commit(SearchContext searchContext) throws SearchException {
+		try {
+			AdminClient adminClient =
+				_elasticsearchConnectionManager.getAdminClient();
+
+			IndicesAdminClient indicesAdminClient = adminClient.indices();
+
+			RefreshRequestBuilder refreshRequestBuilder =
+				indicesAdminClient.prepareRefresh(
+					String.valueOf(searchContext.getCompanyId()));
+
+			RefreshResponse refreshResponse = refreshRequestBuilder.get();
+
+			LogUtil.logActionResponse(_log, refreshResponse);
+		}
+		catch (Exception e) {
+			throw new SearchException("Unable to commit indices", e);
+		}
 	}
 
 	@Override

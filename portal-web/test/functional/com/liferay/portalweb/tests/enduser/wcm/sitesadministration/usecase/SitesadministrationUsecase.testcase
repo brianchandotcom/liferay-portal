@@ -994,6 +994,7 @@
 				<var name="childSitepageName" value="true" />
 				<var name="page" value="Public Pages" />
 				<var name="siteChildPageName" value="${childPageName}" />
+				<var name="sitePageName" value="Arenas" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>

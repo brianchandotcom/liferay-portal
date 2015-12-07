@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Sass Compiler Ruby
 Bundle-SymbolicName: com.liferay.sass.compiler.ruby
-Bundle-Version: 2.0.1
+Bundle-Version: 2.0.2
 Include-Resource:\
 	classes,\
 	@lib/com.liferay.ruby.gems.jar

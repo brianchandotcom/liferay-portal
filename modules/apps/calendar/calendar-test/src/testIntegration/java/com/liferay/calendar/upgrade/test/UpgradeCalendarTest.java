@@ -20,10 +20,10 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendar;
 import com.liferay.calendar.util.CalendarResourceUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Group;
@@ -31,6 +31,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.sql.Connection;
 
 import java.util.List;
 
@@ -45,7 +47,7 @@ import org.junit.runner.RunWith;
  * @author Adam Brandizzi
  */
 @RunWith(Arquillian.class)
-public class UpgradeCalendarTest {
+public class UpgradeCalendarTest extends UpgradeCalendar {
 
 	@ClassRule
 	@Rule
@@ -61,12 +63,13 @@ public class UpgradeCalendarTest {
 
 	@Test
 	public void testUpgradeCreatesCalendarTimeZoneId() throws Exception {
-		UpgradeProcess upgradeProcess = new UpgradeCalendar();
+		upgrade();
 
-		upgradeProcess.upgrade();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			connection = con;
 
-		Assert.assertTrue(
-			upgradeProcess.tableHasColumn("Calendar", "timeZoneId"));
+			Assert.assertTrue(tableHasColumn("Calendar", "timeZoneId"));
+		}
 	}
 
 	@Test
@@ -75,9 +78,7 @@ public class UpgradeCalendarTest {
 			CalendarResourceUtil.getGroupCalendarResource(
 				_group.getGroupId(), new ServiceContext());
 
-		UpgradeProcess upgradeProcess = new UpgradeCalendar();
-
-		upgradeProcess.upgrade();
+		upgrade();
 
 		List<Calendar> calendars =
 			CalendarLocalServiceUtil.getCalendarResourceCalendars(
@@ -104,9 +105,7 @@ public class UpgradeCalendarTest {
 			CalendarResourceUtil.getUserCalendarResource(
 				_user.getUserId(), serviceContext);
 
-		UpgradeProcess upgradeProcess = new UpgradeCalendar();
-
-		upgradeProcess.upgrade();
+		upgrade();
 
 		List<Calendar> calendars =
 			CalendarLocalServiceUtil.getCalendarResourceCalendars(

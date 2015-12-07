@@ -94,6 +94,7 @@ define("frontend-js-metal-web@1.0.0/crystal-dropdown/src/Dropdown.soy", ['export
     return Dropdown;
   })(_Component3.default);
 
+  Dropdown.prototype.registerMetalComponent && Dropdown.prototype.registerMetalComponent(Dropdown, 'Dropdown')
   Dropdown.RENDERER = _SoyRenderer2.default;
   Dropdown.setImpl(Dropdown);
 

@@ -1,16 +1,17 @@
 dependencies {
 	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.3"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "1.0.8"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "1.0.10"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "1.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.javadoc.formatter", version: "1.0.5"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.js.module.config.generator", version: "1.0.13"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.js.transpiler", version: "1.0.14"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "1.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.9"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "1.0.6"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "1.0.8"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "1.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.soy", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.test.integration", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.upgrade.table.builder", version: "1.0.2"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.2"
@@ -21,5 +22,4 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
 	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.6.3"
-	compile group: "org.zeroturnaround", name: "zt-exec", version: "1.8"
 }

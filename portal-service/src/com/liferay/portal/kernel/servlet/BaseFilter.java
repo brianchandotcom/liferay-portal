@@ -93,7 +93,17 @@ public abstract class BaseFilter implements LiferayFilter {
 	protected abstract Log getLog();
 
 	protected void processFilter(
-			Class<?> filterClass, HttpServletRequest request,
+			HttpServletRequest request, HttpServletResponse response,
+			FilterChain filterChain)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		processFilter(clazz.getName(), request, response, filterChain);
+	}
+
+	protected void processFilter(
+			String logName, HttpServletRequest request,
 			HttpServletResponse response, FilterChain filterChain)
 		throws Exception {
 
@@ -126,8 +136,7 @@ public abstract class BaseFilter implements LiferayFilter {
 			path = request.getRequestURI();
 
 			log.debug(
-				"[" + threadName + "]" + depther + "> " +
-					filterClass.getName() + " " + path);
+				"[" + threadName + "]" + depther + "> " + logName + " " + path);
 		}
 
 		filterChain.doFilter(request, response);
@@ -146,24 +155,13 @@ public abstract class BaseFilter implements LiferayFilter {
 
 		log.debug(
 			"[" + threadName + "]" + depther + "< " +
-				filterClass.getName() + " " + path + " " +
-					(endTime - startTime) + " ms");
+				logName + " " + path + " " + (endTime - startTime) + " ms");
 
 		if (depther.length() > 0) {
 			depther = depther.substring(1);
 		}
 
 		request.setAttribute(_DEPTHER, depther);
-	}
-
-	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"Please implement processFilter(HttpServletRequest, " +
-				"HttpServletResponse, FilterChain)");
 	}
 
 	private static final String _DEPTHER = "DEPTHER";

@@ -26,7 +26,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -42,14 +41,11 @@ public class UpgradeRatings extends UpgradeProcess {
 	}
 
 	protected void upgradeRatingsEntry() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select distinct classNameId from RatingsEntry");
 
 			rs = ps.executeQuery();
@@ -59,7 +55,7 @@ public class UpgradeRatings extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -93,13 +89,10 @@ public class UpgradeRatings extends UpgradeProcess {
 			long classNameId, int normalizationFactor)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update RatingsEntry set score = score / ? where classNameId " +
 					"= ?");
 
@@ -109,20 +102,17 @@ public class UpgradeRatings extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
 	protected void upgradeRatingsEntryThumbs(long classNameId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update RatingsEntry set score = ? where score = ? and " +
 					"classNameId = ?");
 
@@ -133,7 +123,7 @@ public class UpgradeRatings extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -151,11 +141,10 @@ public class UpgradeRatings extends UpgradeProcess {
 			"update RatingsStats set totalEntries = ?, totalScore = ?, " +
 				"averageScore = ? where classNameId = ? and classPK = ?";
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement ps1 = con.prepareStatement(selectSQL);
+		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
 			ResultSet rs = ps1.executeQuery();
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				con.prepareStatement(updateSQL))) {
+				connection.prepareStatement(updateSQL))) {
 
 			while (rs.next()) {
 				ps2.setInt(1, rs.getInt("totalEntries"));

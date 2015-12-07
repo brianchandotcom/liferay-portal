@@ -168,7 +168,7 @@ public class DB2DB extends BaseDB {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return reorgTableRequired;

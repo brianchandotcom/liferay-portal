@@ -15,6 +15,7 @@
 package com.liferay.staging.processes.web.portlet.action;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -101,7 +102,7 @@ public class EditPublishConfigurationMVCActionCommand
 		throws PortalException {
 
 		long backgroundTaskId = ParamUtil.getLong(
-			actionRequest, "backgroundTaskId");
+			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.getBackgroundTask(backgroundTaskId);

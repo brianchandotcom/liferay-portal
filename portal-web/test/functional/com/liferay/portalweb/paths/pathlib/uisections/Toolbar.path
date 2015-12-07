@@ -33,6 +33,33 @@
 	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Sort By']</td>
 	<td></td>
 </tr>
+<!--MANAGEMENT_BAR-->
+<tr>
+	<td>MANAGEMENT_BAR_CANCEL_CHECKOUT_ICON_BUTTON</td>
+	<td>//div[contains(@class,'management-bar-container')]//a/span[contains(@class,'icon-monospaced icon-remove')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGEMENT_BAR_LOCK_ICON_BUTTON</td>
+	<td>//div[contains(@class,'management-bar-container')]//a/span[contains(@class,'icon-monospaced icon-lock')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGEMENT_BAR_UNLOCK_ICON_BUTTON</td>
+	<td>//div[contains(@class,'management-bar-container')]//a/span[contains(@class,'icon-monospaced icon-unlock')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGEMENT_BAR_MOVE_ICON_BUTTON</td>
+	<td>//div[contains(@class,'management-bar-container')]//a/span[contains(@class,'icon-monospaced icon-move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGEMENT_BAR_TRASH_ICON_BUTTON</td>
+	<td>//div[contains(@class,'management-bar-container')]//a/span[contains(@class,'icon-monospaced icon-trash')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.json.web.service.extender.internal;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistratorFactory;
@@ -46,14 +47,11 @@ public class JSONWebServiceTracker
 		BundleContext bundleContext = componentContext.getBundleContext();
 
 		try {
-			_serviceTracker = new ServiceTracker<Object, Object>(
+			_serviceTracker = ServiceTrackerFactory.open(
 				bundleContext,
-				bundleContext.createFilter(
-					"(&(json.web.service.context.name=*)(json.web.service." +
-						"context.path=*))"),
-					this);
-
-			_serviceTracker.open();
+				"(&(json.web.service.context.name=*)(json.web.service." +
+					"context.path=*))",
+				this);
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new RuntimeException(

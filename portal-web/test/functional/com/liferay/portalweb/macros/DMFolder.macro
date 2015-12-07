@@ -79,7 +79,7 @@
 	</command>
 
 	<command name="addSubfolderPG">
-		<execute function="Click#clickAtAndWait" locator1="Button#PLUS" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
 		<execute function="AssertClick" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
 
@@ -116,7 +116,7 @@
 	<command name="addSubfolderPGViaMG">
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="PGMediagallery#FOLDER_MENU_ADD_SUBFOLDER" value1="Add Subfolder" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_SUBFOLDER" value1="Add Subfolder" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${mgSubfolderName}" />
 
@@ -202,8 +202,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 		<execute function="Check" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="Click" locator1="Icon#DELETE" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${dmFolderName} was moved to the Recycle Bin. Undo" />
 		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
 	</command>
@@ -279,7 +278,7 @@
 	<command name="gotoPG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />
 	</command>
 
 	<command name="gotoPGViaMG">
@@ -384,8 +383,11 @@
 	</command>
 
 	<command name="subscribePG">
-		<execute function="AssertClick" locator1="PGDocumentsandmediaFolder#SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaFolder#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Click" locator1="Icon#INFO" />
+
+		<execute function="AssertClick" locator1="Link#SUBSCRIBE" value1="Subscribe" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">
@@ -516,9 +518,5 @@
 
 		<execute function="Click" locator1="MediaGallery#FOLDER_NAME" value1="${mgFolderName}" />
 		<execute function="AssertTextEquals" locator1="MediaGallery#FOLDER_HEADER_TITLE" value1="${mgFolderName}" />
-	</command>
-
-	<command name="viewSubcribedPG">
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaFolder#SUBSCRIBE_LINK" value1="Unsubscribe" />
 	</command>
 </definition>

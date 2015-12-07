@@ -14,13 +14,17 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * @author Andrew Betts
@@ -28,38 +32,50 @@ import java.util.Collection;
 public class IndexableActionableDynamicQuery
 	extends DefaultActionableDynamicQuery {
 
-	public void addDocument(Document document) throws PortalException {
+	public void addDocuments(Document... documents) throws PortalException {
 		if (_documents == null) {
-			_documents = new ArrayList<>();
+			if (isParallel()) {
+				_documents = new ConcurrentLinkedDeque<>();
+			}
+			else {
+				_documents = new ArrayList<>();
+			}
 		}
 
-		_documents.add(document);
+		_documents.addAll(Arrays.asList(documents));
 
 		if (_documents.size() >= getInterval()) {
 			indexInterval();
 		}
 	}
 
-	public void addDocuments(Collection<Document> documents)
-		throws PortalException {
-
-		if (_documents == null) {
-			_documents = new ArrayList<>();
+	@Override
+	public void performActions() throws PortalException {
+		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			_total = super.performCount();
 		}
 
-		_documents.addAll(documents);
-
-		if (_documents.size() >= getInterval()) {
-			indexInterval();
+		try {
+			super.performActions();
 		}
-	}
+		finally {
+			_count = _total;
 
-	public void setCommitImmediately(boolean commitImmediately) {
-		_commitImmediately = commitImmediately;
+			sendStatusMessage();
+		}
 	}
 
 	public void setSearchEngineId(String searchEngineId) {
 		_searchEngineId = searchEngineId;
+	}
+
+	@Override
+	protected void actionsCompleted() throws PortalException {
+		if (Validator.isNotNull(_searchEngineId)) {
+			SearchEngineUtil.commit(_searchEngineId, getCompanyId());
+		}
+
+		sendStatusMessage();
 	}
 
 	@Override
@@ -89,13 +105,27 @@ public class IndexableActionableDynamicQuery
 
 		SearchEngineUtil.updateDocuments(
 			_searchEngineId, getCompanyId(), new ArrayList<>(_documents),
-			_commitImmediately);
+			false);
+
+		_count += _documents.size();
 
 		_documents.clear();
 	}
 
-	private boolean _commitImmediately;
+	protected void sendStatusMessage() {
+		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			return;
+		}
+
+		Class<?> modelClass = getModelClass();
+
+		ReindexStatusMessageSenderUtil.sendStatusMessage(
+			modelClass.getName(), _count, _total);
+	}
+
+	private long _count;
 	private Collection<Document> _documents;
 	private String _searchEngineId;
+	private long _total;
 
 }

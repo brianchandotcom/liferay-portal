@@ -1,0 +1,50 @@
+{namespace Templates.Slider}
+
+/**
+ * This renders the main element.
+ * @param? elementClasses
+ * @param id
+ * @skipUpdates elementClasses
+ */
+{template .content}
+	<div id="{$id}" class="slider component{$elementClasses ? ' ' + $elementClasses : ''}">
+		{call .input data="all" /}
+		{call .label data="all" /}
+		{call .rail data="all" /}
+	</div>
+{/template}
+
+/**
+ * @param id
+ * @param inputName
+ * @param value
+ */
+{template .input}
+	<div id="{$id}-input">
+		<input name="{$inputName ? $inputName : $id}" type="hidden" value="{$value}">
+	</div>
+{/template}
+
+/**
+ * @param id
+ * @param value
+ */
+{template .label}
+	<div id="{$id}-label">
+		<span>{$value}</span>
+	</div>
+{/template}
+
+/**
+ * @param id
+ */
+{template .rail}
+	<div id="{$id}-rail">
+		<div class="rail" data-onmousedown="onRailMouseDown_">
+			<div class="rail-active"></div>
+			<div class="rail-handle">
+				<div class="handle" tabindex="0"></div>
+			</div>
+		</div>
+	</div>
+{/template}

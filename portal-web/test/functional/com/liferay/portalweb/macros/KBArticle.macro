@@ -143,17 +143,30 @@
 					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please select at least one category for ${vocabularyName}." />
 				</then>
 			</elseif>
-			<elseif>
-				<equals arg1="${kbArticleInvalidAttachmentSize}" arg2="true" />
-				<then>
-					<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
-					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please Enter a file with a valid file size no larger than 1k" />
-				</then>
-			</elseif>
 			<else>
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
+	</command>
+
+	<command name="addCPWithInvalidAttachmentSize">
+		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_ARTICLE" value1="Add Article" />
+
+		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
+
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContent}" />
+
+		<execute macro="KBArticle#selectAttachmentCP">
+			<var name="kbArticleAttachment" value="${kbArticleAttachment}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ATTACHMENTS_INVALID_SIZE_ERROR" value1="Request is larger than 1024 and could not be processed." />
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCPWithInvalidTitle">
@@ -578,18 +591,6 @@
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#PREVIOUS" value1="${kbDisplayPreviousArticle}" />
 	</command>
 
-	<command name="gotoRelatedAssetCP">
-		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBaseArticle#RELATED_ASSETS" value1="${kbArticleRelatedAssetTitle}" />
-	</command>
-
-	<command name="gotoRelatedAssetViaKBDisplayPG">
-		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
-
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
-	</command>
-
 	<command name="gotoSuggestionsNavigationCP">
 		<execute function="AssertClick" locator1="KnowledgeBase#ADMIN_TABS_SUGGESTIONS" value1="Suggestions" />
 	</command>
@@ -838,8 +839,8 @@
 
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_ASSET_TABLE_TITLE" value1="${kbArticleRelatedAssetTitle}" />
-		<execute function="AssertClick" locator1="AssetRelatedAssets#KB_ASSET_TABLE_ACTION" value1="Choose" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#KB_ASSET_TABLE_TITLE_LINK" value1="${kbArticleRelatedAssetTitle}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1004,9 +1005,9 @@
 		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
 	</command>
 
-	<command name="viewBlogsEntryRelatedAssetViaKBDisplayPG">
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_TITLE" value1="${RelatedAssetTitle}" />
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_CONTENT" value1="${RelatedAssetContent}" />
+	<command name="viewBlogsEntryRelatedAsset">
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT_GENERIC" value1="Blogs Entry Content" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE_GENERIC" value1="Blogs Entry Title" />
 	</command>
 
 	<command name="viewChildArticleCP">
@@ -1104,6 +1105,13 @@
 
 				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#CATEGORY_HEADER" value1="${vocabularyName}: ${categoryName}" />
 				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminArticle#CATEGORY_LINKS" value1="${categoryName}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="noAttachment" arg2="true" />
+			<then>
+				<execute function="AssertAlertNotPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
 			</then>
 		</if>
 	</command>
@@ -1415,19 +1423,6 @@
 	<command name="viewPGViaKBSection">
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbArticleContent}" />
-	</command>
-
-	<command name="viewRelatedAssetCP">
-		<if>
-			<equals arg1="${relatedAssetType}" arg2="Blogs Entry" />
-			<then>
-				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_CONTENT" value1="${relatedAssetContent}" />
-			</then>
-		</if>
-
-		<var name="key_relatedAssetTitle" value="${relatedAssetTitle}" />
-
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#BLOGS_ENTRY_TITLE" value1="${relatedAssetTitle}" />
 	</command>
 
 	<command name="viewSearchResultsPG">

@@ -17,10 +17,10 @@ package com.liferay.journal.upgrade;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
+import com.liferay.journal.upgrade.v0_0_2.UpgradeClassNames;
+import com.liferay.journal.upgrade.v0_0_3.UpgradeJournalArticleType;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleType;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.journal.upgrade.v1_0_0.UpgradePortletSettings;
@@ -57,18 +57,24 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.journal.service", "0.0.1", "1.0.0",
-			new UpgradeSchema(), new UpgradeClassNames(),
-			new UpgradeCompanyId(),
-			new UpgradeJournal(
-				_companyLocalService, _ddmStructureLocalService,
-				_ddmTemplateLinkLocalService, _ddmTemplateLocalService,
-				_groupLocalService, _userLocalService),
+			"com.liferay.journal.service", "0.0.1", "0.0.2",
+			new UpgradeClassNames());
+
+		registry.register(
+			"com.liferay.journal.service", "0.0.2", "0.0.3",
 			new UpgradeJournalArticleType(
 				_assetCategoryLocalService, _assetEntryLocalService,
 				_assetVocabularyLocalService, _companyLocalService,
 				_ddmStructureLocalService, _groupLocalService,
-				_layoutLocalService, _userLocalService),
+				_layoutLocalService, _userLocalService));
+
+		registry.register(
+			"com.liferay.journal.service", "0.0.3", "1.0.0",
+			new UpgradeSchema(), new UpgradeCompanyId(),
+			new UpgradeJournal(
+				_companyLocalService, _ddmStructureLocalService,
+				_ddmTemplateLinkLocalService, _ddmTemplateLocalService,
+				_groupLocalService, _userLocalService),
 			new UpgradeJournalDisplayPreferences(),
 			new UpgradeLastPublishDate(),
 			new UpgradePortletSettings(_settingsFactory),

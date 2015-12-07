@@ -1,5 +1,7 @@
 @import "bourbon";
 
+$val: 1.555555555;
+
 .test {
 	-moz-border-radius-bottomleft: 1px;
 	-moz-border-radius-bottomright: 0px;
@@ -25,6 +27,7 @@
 	clear: left;
 	direction: ltr;
 	float: left;
+	line-height: $val;
 	margin-left: 0px;
 	margin-right: 1px;
 	padding-left: 0px;

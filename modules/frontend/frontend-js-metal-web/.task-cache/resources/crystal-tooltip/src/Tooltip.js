@@ -2,12 +2,10 @@
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-define("frontend-js-metal-web@1.0.0/crystal-tooltip/src/Tooltip", ['exports', 'metal/src/component/ComponentRegistry', 'crystal-tooltip/src/TooltipBase', 'metal-jquery-adapter/src/JQueryAdapter', 'crystal-tooltip/src/Tooltip.soy'], function (exports, _ComponentRegistry, _TooltipBase2, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.0/crystal-tooltip/src/Tooltip", ['exports', 'crystal-tooltip/src/TooltipBase', 'metal-jquery-adapter/src/JQueryAdapter', 'crystal-tooltip/src/Tooltip.soy'], function (exports, _TooltipBase2, _JQueryAdapter) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-
-  var _ComponentRegistry2 = _interopRequireDefault(_ComponentRegistry);
 
   var _TooltipBase3 = _interopRequireDefault(_TooltipBase2);
 
@@ -67,11 +65,9 @@ define("frontend-js-metal-web@1.0.0/crystal-tooltip/src/Tooltip", ['exports', 'm
     return Tooltip;
   })(_TooltipBase3.default);
 
+  Tooltip.prototype.registerMetalComponent && Tooltip.prototype.registerMetalComponent(Tooltip, 'Tooltip')
   Tooltip.Align = _TooltipBase3.default.Align;
   Tooltip.ELEMENT_CLASSES = 'tooltip';
-
-  _ComponentRegistry2.default.register(Tooltip);
-
   exports.default = Tooltip;
 
   _JQueryAdapter2.default.register('tooltip', Tooltip);

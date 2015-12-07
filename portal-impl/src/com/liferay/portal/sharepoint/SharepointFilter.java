@@ -86,7 +86,8 @@ public class SharepointFilter extends SecureFilter {
 
 		if (!isSharepointRequest(request.getRequestURI())) {
 			processFilter(
-				SharepointFilter.class, request, response, filterChain);
+				SharepointFilter.class.getName(), request, response,
+				filterChain);
 
 			return;
 		}

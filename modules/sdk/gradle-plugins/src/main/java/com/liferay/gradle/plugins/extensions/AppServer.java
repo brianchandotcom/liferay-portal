@@ -68,7 +68,7 @@ public class AppServer {
 	}
 
 	public int getPortNumber() {
-		return _portNumber;
+		return GradleUtil.toInteger(_portNumber);
 	}
 
 	public String getStartExecutable() {
@@ -141,7 +141,7 @@ public class AppServer {
 		_portalDir = portalDir;
 	}
 
-	public void setPortNumber(int portNumber) {
+	public void setPortNumber(Object portNumber) {
 		_portNumber = portNumber;
 	}
 
@@ -189,7 +189,7 @@ public class AppServer {
 	private Object _libGlobalDir;
 	private final String _name;
 	private Object _portalDir;
-	private int _portNumber = 8080;
+	private Object _portNumber = 8080;
 	private final Project _project;
 	private Object _startExecutable;
 	private final List<Object> _startExecutableArgs = new ArrayList<>();

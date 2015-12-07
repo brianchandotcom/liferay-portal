@@ -55,7 +55,7 @@ renderResponse.setTitle(layoutPrototype.isNew() ? LanguageUtil.get(request, "new
 
 	<aui:model-context bean="<%= layoutPrototype %>" model="<%= LayoutPrototype.class %>" />
 
-	<aui:fieldset-group>
+	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 

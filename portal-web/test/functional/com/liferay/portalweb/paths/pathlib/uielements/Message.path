@@ -140,12 +140,7 @@
 </tr>
 <tr>
 	<td>RECYCLE_BIN_RESTORE_SUCCESS</td>
-	<td>//div[contains(@class,'alert-success') and em[contains(@class,'restore')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS</td>
-	<td>//div[contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]</td>
+	<td>//div[contains(@class,'alert-success') and em[contains(@class,'restore')]] | //div[contains(@class,'alert-success') and contains(.,'restored')]</td>
 	<td></td>
 </tr>
 <tr>

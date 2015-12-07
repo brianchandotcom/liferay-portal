@@ -91,6 +91,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/SurfaceCollector", ['exp
 		return SurfaceCollector;
 	})(_Disposable3.default);
 
+	SurfaceCollector.prototype.registerMetalComponent && SurfaceCollector.prototype.registerMetalComponent(SurfaceCollector, 'SurfaceCollector')
 	exports.default = SurfaceCollector;
 });
 //# sourceMappingURL=SurfaceCollector.js.map

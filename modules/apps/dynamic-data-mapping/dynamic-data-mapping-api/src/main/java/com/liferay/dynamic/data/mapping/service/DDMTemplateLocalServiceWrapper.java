@@ -468,6 +468,12 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	}
 
 	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMTemplate fetchTemplate(
+		long templateId) {
+		return _ddmTemplateLocalService.fetchTemplate(templateId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _ddmTemplateLocalService.getActionableDynamicQuery();
 	}

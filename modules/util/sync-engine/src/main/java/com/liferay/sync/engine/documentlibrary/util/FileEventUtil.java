@@ -359,6 +359,18 @@ public class FileEventUtil {
 	public static void retryFileTransfers(long syncAccountId)
 		throws IOException {
 
+		List<SyncFile> deletingSyncFiles = SyncFileService.findSyncFiles(
+			syncAccountId, SyncFile.UI_EVENT_DELETED_LOCAL, "syncFileId", true);
+
+		for (SyncFile deletingSyncFile : deletingSyncFiles) {
+			if (deletingSyncFile.isFolder()) {
+				deleteFolder(syncAccountId, deletingSyncFile);
+			}
+			else {
+				deleteFile(syncAccountId, deletingSyncFile);
+			}
+		}
+
 		List<SyncFile> downloadingSyncFiles = SyncFileService.findSyncFiles(
 			syncAccountId, SyncFile.UI_EVENT_DOWNLOADING, "size", true);
 

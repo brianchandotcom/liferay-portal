@@ -73,19 +73,29 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	}
 
 	@Override
+	public boolean isParallel() {
+		return _parallel;
+	}
+
+	@Override
 	public void performActions() throws PortalException {
-		long previousPrimaryKey = -1;
+		try {
+			long previousPrimaryKey = -1;
 
-		while (true) {
-			long lastPrimaryKey = doPerformActions(previousPrimaryKey);
+			while (true) {
+				long lastPrimaryKey = doPerformActions(previousPrimaryKey);
 
-			if (lastPrimaryKey < 0) {
-				return;
+				if (lastPrimaryKey < 0) {
+					return;
+				}
+
+				intervalCompleted(previousPrimaryKey, lastPrimaryKey);
+
+				previousPrimaryKey = lastPrimaryKey;
 			}
-
-			intervalCompleted(previousPrimaryKey, lastPrimaryKey);
-
-			previousPrimaryKey = lastPrimaryKey;
+		}
+		finally {
+			actionsCompleted();
 		}
 	}
 
@@ -201,6 +211,12 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 		TransactionAttribute transactionAttribute) {
 
 		_transactionAttribute = transactionAttribute;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	protected void actionsCompleted() throws PortalException {
 	}
 
 	protected void addCriteria(DynamicQuery dynamicQuery) {

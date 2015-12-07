@@ -145,7 +145,7 @@ else if (type.equals("tagged_pages")) {
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
-OrderByComparator<WikiPage> orderByComparator = WikiUtil.getPageOrderByComparator(orderByCol, orderByType);
+OrderByComparator<WikiPage> orderByComparator = WikiPortletUtil.getPageOrderByComparator(orderByCol, orderByType);
 
 Map orderableHeaders = new HashMap();
 

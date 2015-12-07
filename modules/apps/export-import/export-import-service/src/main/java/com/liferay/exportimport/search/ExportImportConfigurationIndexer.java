@@ -304,7 +304,7 @@ public class ExportImportConfigurationIndexer
 						Document document = getDocument(
 							exportImportConfiguration);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

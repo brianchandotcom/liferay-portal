@@ -56,6 +56,14 @@
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
 	</command>
 
+	<command name="viewFormIcon">
+		<var name="key_formName" value="${formName}" />
+
+		<execute function="AssertElementPresent" locator1="FormsAdmin#FORM_ICON_DISPLAY_THUMBNAIL" />
+
+		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ICON_DISPLAY_NAME" value1="${formName}" />
+	</command>
+
 	<command name="viewNoFormEntries">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 	</command>

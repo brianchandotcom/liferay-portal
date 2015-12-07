@@ -78,8 +78,6 @@ AUI.add(
 
 		var SELECTOR_ENTRY_LINK = STR_DOT + CSS_ENTRY_LINK;
 
-		var SELECTOR_ENTRY_SELECTOR = STR_DOT + CSS_ENTRY_SELECTOR;
-
 		var SELECTOR_ENTRY_TITLE_TEXT = STR_DOT + CSS_ENTRY_TITLE_TEXT;
 
 		var SELECTOR_IMAGE_ICON = 'img.icon';
@@ -1157,8 +1155,6 @@ AUI.add(
 
 					_startNextUpload: function(event) {
 						var instance = this;
-
-						instance._detachSubscriptions();
 
 						instance._destroyEntry();
 

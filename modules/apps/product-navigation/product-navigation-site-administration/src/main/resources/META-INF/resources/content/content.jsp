@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/content/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);

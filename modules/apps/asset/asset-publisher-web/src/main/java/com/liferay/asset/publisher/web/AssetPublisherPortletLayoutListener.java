@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.SubscriptionLocalService;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,9 +68,18 @@ public class AssetPublisherPortletLayoutListener
 					layout.getGroupId(), layout.getUuid());
 			}
 
+			long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
+			int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+
+			if (PortletConstants.hasUserId(portletId)) {
+				ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
+				ownerId = PortletConstants.getUserId(portletId);
+			}
+
 			_subscriptionLocalService.deleteSubscriptions(
 				layout.getCompanyId(), PortletPreferences.class.getName(),
-				AssetPublisherUtil.getSubscriptionClassPK(plid, portletId));
+				AssetPublisherUtil.getSubscriptionClassPK(
+					ownerId, ownerType, plid, portletId));
 		}
 		catch (Exception e) {
 			throw new PortletLayoutListenerException(e);

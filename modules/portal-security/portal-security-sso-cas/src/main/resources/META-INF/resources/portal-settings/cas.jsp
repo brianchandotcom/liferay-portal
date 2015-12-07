@@ -37,7 +37,7 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 	<liferay-ui:error key="casLogoutURLInvalid" message="the-cas-logout-url-is-invalid" />
 	<liferay-ui:error key="casNoSuchUserURLInvalid" message="the-cas-no-such-user-url-is-invalid" />
 
-	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/edit_company_cas_configuration" />
+	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/cas" />
 
 	<aui:input label="enabled" name="cas--enabled" type="checkbox" value="<%= enabled %>" />
 
@@ -81,7 +81,7 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 			data.<portlet:namespace />casServerURL = document.<portlet:namespace />fm['<portlet:namespace />cas--serverURL'].value;
 			data.<portlet:namespace />casServiceURL = document.<portlet:namespace />fm['<portlet:namespace />cas--serviceURL'].value;
 
-			var url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_cas_configuration" /></portlet:renderURL>';
+			var url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_cas" /></portlet:renderURL>';
 
 			var dialog = Liferay.Util.Window.getWindow(
 				{

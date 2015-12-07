@@ -31,6 +31,11 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustNotDuplicateFieldName;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetOptionsForField;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldName;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.PortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -112,7 +117,12 @@ public class DDMPortlet extends MVCPortlet {
 
 				include("/error.jsp", actionRequest, actionResponse);
 			}
-			else if (e instanceof LocaleException ||
+			else if (e instanceof DDMFormLayoutValidationException ||
+					 e instanceof DDMFormValidationException ||
+					 e instanceof LocaleException ||
+					 e instanceof MustNotDuplicateFieldName ||
+					 e instanceof MustSetOptionsForField ||
+					 e instanceof MustSetValidCharactersForFieldName ||
 					 e instanceof RequiredStructureException ||
 					 e instanceof StructureDefinitionException ||
 					 e instanceof StructureDuplicateElementException ||

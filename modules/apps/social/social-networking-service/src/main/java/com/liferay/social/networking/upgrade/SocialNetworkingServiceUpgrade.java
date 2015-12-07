@@ -32,11 +32,11 @@ public class SocialNetworkingServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.social.networking.service", "0.0.1", "1.0.0",
+			"com.liferay.social.networking.service", "1.0.0", "1.0.1",
 			new UpgradeNamespace());
 
 		registry.register(
-			"com.liferay.social.networking.service", "1.0.0", "1.0.1",
+			"com.liferay.social.networking.service", "1.0.1", "1.0.2",
 			new UpgradePortletId());
 	}
 

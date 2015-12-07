@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.storage.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
+import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException.RequiredValue;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -127,7 +127,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		validate(structure.getStructureId(), fields);
 	}
 
-	@Test(expected = StorageFieldRequiredException.class)
+	@Test(expected = RequiredValue.class)
 	public void testCreateWithInvalidDDMFormValues() throws Exception {
 		DDMStructure structure = addStructure(
 			_CLASS_NAME_ID, "Default Structure");
@@ -505,7 +505,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		validate(structure.getStructureId(), fields);
 	}
 
-	@Test(expected = StorageFieldRequiredException.class)
+	@Test(expected = RequiredValue.class)
 	public void testUpdateWithInvalidDDMFormValues() throws Exception {
 		DDMStructure structure = addStructure(
 			_CLASS_NAME_ID, "Default Structure");

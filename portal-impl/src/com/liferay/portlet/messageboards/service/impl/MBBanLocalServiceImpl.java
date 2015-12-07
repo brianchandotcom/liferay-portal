@@ -73,7 +73,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkBan(long groupId, long banUserId) throws PortalException {
 		if (hasBan(groupId, banUserId)) {
-			throw new BannedUserException();
+			throw new BannedUserException("Banned user " + banUserId);
 		}
 	}
 

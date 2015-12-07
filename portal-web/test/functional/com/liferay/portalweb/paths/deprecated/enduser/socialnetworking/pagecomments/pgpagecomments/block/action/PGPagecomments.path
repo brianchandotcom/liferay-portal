@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENT_BODY_ASSET</td>
+	<td>//div/p[contains(.,'${key_commentBody}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_AUTHOR</td>
 	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//header[@class='lfr-discussion-message-author']/a</td>
 	<td></td>

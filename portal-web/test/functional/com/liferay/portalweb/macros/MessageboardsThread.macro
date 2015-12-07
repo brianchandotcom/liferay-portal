@@ -50,7 +50,7 @@
 		<if>
 			<equals arg1="${invalidSize}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a file with a valid file size no larger than ${maxAttachmentFileSize}KB." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Request is larger than ${maxAttachmentFileSize}KB and could not be processed." />
 			</then>
 		</if>
 	</command>
@@ -410,6 +410,10 @@
 				<execute function="Click" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="gotoViewInContext">
+		<execute function="AssertClick" locator1="Link#VIEW_IN_CONTEXT" value1="View in Context »" />
 	</command>
 
 	<command name="lockPG">
@@ -812,6 +816,11 @@
 		<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" value1="Back" />
 	</command>
 
+	<command name="viewAsWorkflowAsset">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
+	</command>
+
 	<command name="viewCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
@@ -1182,7 +1191,7 @@
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#TOP_POSTERS_AUTHOR_POSTS" value1="Posts: ${userPostNumber}" />
 		<execute function="AssertElementPresent" locator1="MessageBoardsStatistics#TOP_POSTERS_AUTHOR_JOIN_DATE" />
 		<execute function="AssertElementPresent" locator1="MessageBoardsStatistics#TOP_POSTERS_AUTHOR_LAST_POST_DATE" />
-		<execute function="AssertElementPresent" locator1="MessageBoardsStatistics#TOP_POSTERS_AUTHOR_PROFILE_PICTURE" />
+		<execute function="AssertElementPresent" locator1="MessageBoardsStatistics#TOP_POSTERS_AUTHOR_ICON" />
 	</command>
 
 	<command name="viewTagPG">

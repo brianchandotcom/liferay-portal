@@ -460,25 +460,6 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d d m data provider instance remote service.
-	 *
-	 * @return the d d m data provider instance remote service
-	 */
-	public com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService getDDMDataProviderInstanceService() {
-		return ddmDataProviderInstanceService;
-	}
-
-	/**
-	 * Sets the d d m data provider instance remote service.
-	 *
-	 * @param ddmDataProviderInstanceService the d d m data provider instance remote service
-	 */
-	public void setDDMDataProviderInstanceService(
-		com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService ddmDataProviderInstanceService) {
-		this.ddmDataProviderInstanceService = ddmDataProviderInstanceService;
-	}
-
-	/**
 	 * Returns the d d m data provider instance persistence.
 	 *
 	 * @return the d d m data provider instance persistence
@@ -555,25 +536,6 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the group remote service.
-	 *
-	 * @return the group remote service
-	 */
-	public com.liferay.portal.service.GroupService getGroupService() {
-		return groupService;
-	}
-
-	/**
-	 * Sets the group remote service.
-	 *
-	 * @param groupService the group remote service
-	 */
-	public void setGroupService(
-		com.liferay.portal.service.GroupService groupService) {
-		this.groupService = groupService;
-	}
-
-	/**
 	 * Returns the group persistence.
 	 *
 	 * @return the group persistence
@@ -608,25 +570,6 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 	public void setUserLocalService(
 		com.liferay.portal.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
 	}
 
 	/**
@@ -701,8 +644,6 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService.class)
 	protected DDMDataProviderInstanceLocalService ddmDataProviderInstanceLocalService;
-	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService.class)
-	protected com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService ddmDataProviderInstanceService;
 	@BeanReference(type = DDMDataProviderInstancePersistence.class)
 	protected DDMDataProviderInstancePersistence ddmDataProviderInstancePersistence;
 	@BeanReference(type = DDMDataProviderInstanceFinder.class)
@@ -711,14 +652,10 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupService.class)
-	protected com.liferay.portal.service.GroupService groupService;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)

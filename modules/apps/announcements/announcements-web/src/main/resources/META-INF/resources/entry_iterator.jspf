@@ -26,6 +26,8 @@ searchContainer.setResults(results);
 for (int i = 0; i < results.size(); i++) {
 	AnnouncementsEntry entry = results.get(i);
 
+	request.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
+
 	String className = StringPool.BLANK;
 
 	if (i == 0) {
@@ -35,9 +37,13 @@ for (int i = 0; i < results.size(); i++) {
 	if ((i + 1) == results.size()) {
 		className += " last";
 	}
+
+	request.setAttribute("view_entry.jsp-className", className);
+	request.setAttribute("view_entry.jsp-flagValue", flagValue);
+	request.setAttribute("view_entry.jsp-tabs1", tabs1);
 %>
 
-	<%@ include file="/view_entry.jspf" %>
+	<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
 
 <%
 }

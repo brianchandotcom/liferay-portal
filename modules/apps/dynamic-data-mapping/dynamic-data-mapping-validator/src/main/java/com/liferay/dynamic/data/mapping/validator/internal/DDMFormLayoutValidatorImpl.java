@@ -20,6 +20,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.InvalidColumnSize;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.InvalidRowSize;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustNotDuplicateFieldName;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustSetDefaultLocale;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustSetEqualLocaleForLayoutAndTitle;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -53,8 +58,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 		Locale defaultLocale = ddmFormLayout.getDefaultLocale();
 
 		if (defaultLocale == null) {
-			throw new DDMFormLayoutValidationException(
-				"DDM form layout does not have a default locale");
+			throw new MustSetDefaultLocale();
 		}
 	}
 
@@ -77,9 +81,8 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 						ddmFormLayoutColumn.getDDMFormFieldNames());
 
 					if (!intersectDDMFormFieldNames.isEmpty()) {
-						throw new DDMFormLayoutValidationException(
-							"Field names " + intersectDDMFormFieldNames +
-								" were defined more than once");
+						throw new MustNotDuplicateFieldName(
+							intersectDDMFormFieldNames);
 					}
 
 					ddmFormFieldNames.addAll(
@@ -100,9 +103,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 			LocalizedValue title = ddmFormLayoutPage.getTitle();
 
 			if (!defaultLocale.equals(title.getDefaultLocale())) {
-				throw new DDMFormLayoutValidationException(
-					"DDM form layout page title's default locale is not the " +
-						"same as the DDM form layout's default locale");
+				throw new MustSetEqualLocaleForLayoutAndTitle();
 			}
 		}
 	}
@@ -124,18 +125,14 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 					int columnSize = ddmFormLayoutColumn.getSize();
 
 					if ((columnSize <= 0) || (columnSize > _MAX_ROW_SIZE)) {
-						throw new DDMFormLayoutValidationException(
-							"Invalid column size, it must be positive and " +
-								"less than maximum row size of 12");
+						throw new InvalidColumnSize();
 					}
 
 					rowSize += ddmFormLayoutColumn.getSize();
 				}
 
 				if (rowSize != _MAX_ROW_SIZE) {
-					throw new DDMFormLayoutValidationException(
-						"Invalid row size, the sum of all column sizes of a " +
-							"row must be less than maximum row size of 12");
+					throw new InvalidRowSize();
 				}
 			}
 		}

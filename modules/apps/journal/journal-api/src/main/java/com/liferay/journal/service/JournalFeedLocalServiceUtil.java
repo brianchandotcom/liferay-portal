@@ -16,8 +16,7 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -466,14 +465,6 @@ public class JournalFeedLocalServiceUtil {
 	public void setService(JournalFeedLocalService service) {
 	}
 
-	private static ServiceTracker<JournalFeedLocalService, JournalFeedLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(JournalFeedLocalServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<JournalFeedLocalService, JournalFeedLocalService>(bundle.getBundleContext(),
-				JournalFeedLocalService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<JournalFeedLocalService, JournalFeedLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(JournalFeedLocalService.class);
 }

@@ -46,6 +46,17 @@
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactoryUtil" class="com.liferay.portal.kernel.search.StringQueryFactoryUtil">
 		<property name="stringQueryFactory" ref="com.liferay.portal.kernel.search.StringQueryFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil" class="com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil">
+		<property name="reindexStatusMessageSender">
+			<bean class="com.liferay.portal.search.background.task.ReindexStatusMessageSenderImpl">
+				<property name="backgroundTaskStatusMessageSender">
+					<bean class="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSenderImpl">
+						<property name="destinationName" value="liferay/background_task_status" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory" class="com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory" />
 	<bean id="com.liferay.portal.kernel.search.facet.ModifiedFacetFactory" class="com.liferay.portal.kernel.search.facet.ModifiedFacetFactory" />
 	<bean id="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" class="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" />

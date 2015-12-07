@@ -421,25 +421,6 @@ public abstract class KaleoNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the kaleo definition remote service.
-	 *
-	 * @return the kaleo definition remote service
-	 */
-	public com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService getKaleoDefinitionService() {
-		return kaleoDefinitionService;
-	}
-
-	/**
-	 * Sets the kaleo definition remote service.
-	 *
-	 * @param kaleoDefinitionService the kaleo definition remote service
-	 */
-	public void setKaleoDefinitionService(
-		com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService kaleoDefinitionService) {
-		this.kaleoDefinitionService = kaleoDefinitionService;
-	}
-
-	/**
 	 * Returns the kaleo definition persistence.
 	 *
 	 * @return the kaleo definition persistence
@@ -1009,25 +990,6 @@ public abstract class KaleoNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the class name remote service.
-	 *
-	 * @return the class name remote service
-	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
-		return classNameService;
-	}
-
-	/**
-	 * Sets the class name remote service.
-	 *
-	 * @param classNameService the class name remote service
-	 */
-	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
-		this.classNameService = classNameService;
-	}
-
-	/**
 	 * Returns the class name persistence.
 	 *
 	 * @return the class name persistence
@@ -1082,25 +1044,6 @@ public abstract class KaleoNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setUserLocalService(
 		com.liferay.portal.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
 	}
 
 	/**
@@ -1183,8 +1126,6 @@ public abstract class KaleoNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected KaleoConditionPersistence kaleoConditionPersistence;
 	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService.class)
 	protected com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService kaleoDefinitionLocalService;
-	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService.class)
-	protected com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService kaleoDefinitionService;
 	@BeanReference(type = KaleoDefinitionPersistence.class)
 	protected KaleoDefinitionPersistence kaleoDefinitionPersistence;
 	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService.class)
@@ -1245,16 +1186,12 @@ public abstract class KaleoNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)

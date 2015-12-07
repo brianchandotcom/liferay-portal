@@ -48,7 +48,8 @@ public class PortletKeys {
 	public static final String FAST_LOGIN =
 		"com_liferay_login_web_portlet_FastLoginPortlet";
 
-	public static final String FLAGS = "142";
+	public static final String FLAGS =
+		"com_liferay_flags_page_flags_web_portlet_FlagsPortlet";
 
 	public static final String FRIENDS_DIRECTORY =
 		"com_liferay_directory_web_portlet_FriendsDirectoryPortlet";
@@ -144,8 +145,6 @@ public class PortletKeys {
 
 	public static final String SITE_MEMBERS_DIRECTORY =
 		"com_liferay_directory_web_portlet_SiteMembersDirectoryPortlet";
-
-	public static final String SOFTWARE_CATALOG = "98";
 
 	public static final String STAGING_BAR =
 		"com_liferay_staging_bar_web_portlet_StagingBarPortlet";

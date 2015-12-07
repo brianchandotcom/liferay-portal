@@ -20,6 +20,7 @@
 long groupId = ParamUtil.getLong(request, "groupId");
 String articleId = ParamUtil.getString(request, "articleId");
 double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", renderResponse.getNamespace() + "selectVersionFm");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -31,9 +32,31 @@ portletURL.setParameter("articleId", articleId);
 portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="selectVersionFm">
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="versions" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
+
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectVersionFm">
 	<liferay-ui:search-container
-		id="journalArticleVersionSearchContainer"
 		iteratorURL="<%= portletURL %>"
 		total="<%= JournalArticleLocalServiceUtil.getArticlesCount(groupId, articleId) %>"
 	>
@@ -47,42 +70,37 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 		>
 			<liferay-ui:search-container-column-text
 				name="version"
-				value="<%= String.valueOf(curArticle.getVersion()) %>"
-			/>
+			>
+
+				<%
+				double curSourceVersion = sourceVersion;
+				double curTargetVersion = curArticle.getVersion();
+
+				if (curTargetVersion < curSourceVersion) {
+					double tempVersion = curTargetVersion;
+
+					curTargetVersion = curSourceVersion;
+					curSourceVersion = tempVersion;
+				}
+
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("sourceversion", curSourceVersion);
+				data.put("targetversion", curTargetVersion);
+				%>
+
+				<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+					<%= String.valueOf(curArticle.getVersion()) %>
+				</aui:a>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-date
 				name="date"
 				value="<%= curArticle.getModifiedDate() %>"
 			/>
-
-			<liferay-ui:search-container-column-text
-				name=""
-			>
-				<c:if test="<%= sourceVersion != curArticle.getVersion() %>">
-
-					<%
-					double curSourceVersion = sourceVersion;
-					double curTargetVersion = curArticle.getVersion();
-
-					if (curTargetVersion < curSourceVersion) {
-						double tempVersion = curTargetVersion;
-
-						curTargetVersion = curSourceVersion;
-						curSourceVersion = tempVersion;
-					}
-
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("sourceversion", curSourceVersion);
-					data.put("targetversion", curTargetVersion);
-					%>
-
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-				</c:if>
-			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

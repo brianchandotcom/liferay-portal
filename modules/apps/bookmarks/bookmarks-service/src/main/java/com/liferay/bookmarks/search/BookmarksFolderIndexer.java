@@ -183,7 +183,7 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 					try {
 						Document document = getDocument(folder);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

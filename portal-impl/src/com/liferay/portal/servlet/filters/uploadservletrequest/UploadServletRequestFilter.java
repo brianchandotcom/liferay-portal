@@ -91,14 +91,14 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 
 		if (uploadServletRequest == null) {
 			processFilter(
-				UploadServletRequestFilter.class, request, response,
+				UploadServletRequestFilter.class.getName(), request, response,
 				filterChain);
 		}
 		else {
 			try {
 				processFilter(
-					UploadServletRequestFilter.class, uploadServletRequest,
-					response, filterChain);
+					UploadServletRequestFilter.class.getName(),
+					uploadServletRequest, response, filterChain);
 			}
 			finally {
 				uploadServletRequest.cleanUp();

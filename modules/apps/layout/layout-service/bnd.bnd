@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Layout Service
-Bundle-SymbolicName: com.liferay.layout.service
-Bundle-Version: 1.0.0
-Include-Resource: classes

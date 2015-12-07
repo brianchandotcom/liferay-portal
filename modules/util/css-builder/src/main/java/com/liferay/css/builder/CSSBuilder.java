@@ -82,6 +82,8 @@ public class CSSBuilder {
 		boolean generateSourceMap = GetterUtil.getBoolean(
 			arguments.get("sass.generate.source.map"));
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
+		int precision = GetterUtil.getInteger(
+			arguments.get("sass.precision"), CSSBuilderArgs.PRECISION);
 		String[] rtlExcludedPathRegexps = StringUtil.split(
 			arguments.get("sass.rtl.excluded.path.regexps"));
 		String sassCompilerClassName = arguments.get(
@@ -90,7 +92,7 @@ public class CSSBuilder {
 		try {
 			CSSBuilder cssBuilder = new CSSBuilder(
 				docrootDirName, generateSourceMap, portalCommonDirName,
-				rtlExcludedPathRegexps, sassCompilerClassName);
+				precision, rtlExcludedPathRegexps, sassCompilerClassName);
 
 			cssBuilder.execute(dirNames);
 		}
@@ -101,13 +103,14 @@ public class CSSBuilder {
 
 	public CSSBuilder(
 			String docrootDirName, boolean generateSourceMap,
-			String portalCommonDirName, String[] rtlExcludedPathRegexps,
-			String sassCompilerClassName)
+			String portalCommonDirName, int precision,
+			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
 		_docrootDirName = docrootDirName;
 		_generateSourceMap = generateSourceMap;
 		_portalCommonDirName = portalCommonDirName;
+		_precision = precision;
 		_rtlExcludedPathPatterns = PatternFactory.compile(
 			rtlExcludedPathRegexps);
 
@@ -250,7 +253,7 @@ public class CSSBuilder {
 			try {
 				System.setProperty("jna.nosys", Boolean.TRUE.toString());
 
-				_sassCompiler = new JniSassCompiler();
+				_sassCompiler = new JniSassCompiler(_precision);
 
 				System.out.println("Using native Sass compiler");
 			}
@@ -258,12 +261,12 @@ public class CSSBuilder {
 				System.out.println(
 					"Unable to load native compiler, falling back to Ruby");
 
-				_sassCompiler = new RubySassCompiler();
+				_sassCompiler = new RubySassCompiler(_precision);
 			}
 		}
 		else {
 			try {
-				_sassCompiler = new RubySassCompiler();
+				_sassCompiler = new RubySassCompiler(_precision);
 
 				System.out.println("Using Ruby Sass compiler");
 			}
@@ -273,7 +276,7 @@ public class CSSBuilder {
 
 				System.setProperty("jna.nosys", Boolean.TRUE.toString());
 
-				_sassCompiler = new JniSassCompiler();
+				_sassCompiler = new JniSassCompiler(_precision);
 			}
 		}
 	}
@@ -461,6 +464,7 @@ public class CSSBuilder {
 	private final String _docrootDirName;
 	private final boolean _generateSourceMap;
 	private final String _portalCommonDirName;
+	private final int _precision;
 	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;
 	private final ConcurrentMap<String, SassFile> _sassFileCache =

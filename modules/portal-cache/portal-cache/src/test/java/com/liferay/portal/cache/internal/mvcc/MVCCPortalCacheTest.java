@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.internal.mvcc;
 
-import com.liferay.portal.cache.internal.LowLevelCache;
+import com.liferay.portal.cache.LowLevelCache;
 import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.cache.test.TestPortalCacheListener;
 import com.liferay.portal.cache.test.TestPortalCacheReplicator;

@@ -135,7 +135,7 @@ public class OracleDB extends BaseDB {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return indexes;

@@ -28,6 +28,28 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(factoryConfigurationModel.getName());
 %>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item
+			label="entries"
+			selected="<%= true %>"
+		/>
+	</aui:nav>
+</aui:nav-bar>
+
+<liferay-frontend:add-menu>
+	<portlet:renderURL var="createFactoryConfigURL">
+		<portlet:param name="mvcRenderCommandName" value="/edit_configuration" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="factoryPid" value="<%= factoryConfigurationModel.getID() %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu-item
+		title='<%= LanguageUtil.format(request, "add-x", factoryConfigurationModel.getName()) %>'
+		url="<%= createFactoryConfigURL %>"
+	/>
+</liferay-frontend:add-menu>
+
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-configurations-were-found"
@@ -53,26 +75,6 @@ renderResponse.setTitle(factoryConfigurationModel.getName());
 				<aui:a href="<%= editURL %>"><%= configurationModel.getName() %></aui:a><br />
 
 				<%= configurationModel.getID() %>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				align="center"
-				name="status"
-			>
-				<c:choose>
-					<c:when test="<%= configurationModel.getConfiguration() != null %>">
-						<liferay-ui:icon
-							cssClass="icon-check"
-							message="active"
-						/>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:icon
-							cssClass="icon-check-empty"
-							message="not-active"
-						/>
-					</c:otherwise>
-				</c:choose>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

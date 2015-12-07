@@ -16,6 +16,13 @@
 
 <%@ include file="/management_bar_button/init.jsp" %>
 
-<li class="<%= active ? "active" : StringPool.BLANK %>">
-	<aui:a cssClass="<%= cssClass %>" href="<%= href %>" iconCssClass="<%= iconCssClass %>" id="<%= id %>" />
-</li>
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(icon) %>">
+		<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= href %>" id="<%= id %>" title="<%= label %>">
+			<aui:icon cssClass="icon-monospaced" image="<%= icon %>" markupView="lexicon" />
+		</aui:a>
+	</c:when>
+	<c:when test="<%= Validator.isNotNull(iconCssClass) %>">
+		<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= href %>" iconCssClass="<%= iconCssClass %>" id="<%= id %>" title="<%= label %>" />
+	</c:when>
+</c:choose>

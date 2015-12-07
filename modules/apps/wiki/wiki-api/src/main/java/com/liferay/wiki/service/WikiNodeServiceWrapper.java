@@ -86,6 +86,13 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiNode> obc) {
+		return _wikiNodeService.getNodes(groupId, status, start, end, obc);
+	}
+
+	@Override
 	public int getNodesCount(long groupId) {
 		return _wikiNodeService.getNodesCount(groupId);
 	}

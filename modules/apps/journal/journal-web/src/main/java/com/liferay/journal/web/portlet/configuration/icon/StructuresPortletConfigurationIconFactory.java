@@ -19,8 +19,9 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfig
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,8 +38,8 @@ public class StructuresPortletConfigurationIconFactory
 	extends BaseJSPPortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(HttpServletRequest request) {
-		return new StructuresPortletConfigurationIcon(request);
+	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+		return new StructuresPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override

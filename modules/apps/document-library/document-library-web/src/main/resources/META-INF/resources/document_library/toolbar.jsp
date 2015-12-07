@@ -35,7 +35,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" label="info" />
 
 		<c:if test="<%= !search %>">
 			<liferay-util:include page="/document_library/display_style_buttons.jsp" servletContext="<%= application %>" />
@@ -60,25 +60,25 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-remove" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-remove" label="delete" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-lock" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-lock" label="lock" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-unlock" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-unlock" label="unlock" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-move" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-move" label="move" />
 		</c:if>
 
 		<%

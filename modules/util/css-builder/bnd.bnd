@@ -1,6 +1,6 @@
 Bundle-Name: Liferay CSS Builder
 Bundle-SymbolicName: com.liferay.css.builder
-Bundle-Version: 1.0.11
+Bundle-Version: 1.0.12
 Export-Package: com.liferay.css.builder
 Include-Resource:\
 	classes,\

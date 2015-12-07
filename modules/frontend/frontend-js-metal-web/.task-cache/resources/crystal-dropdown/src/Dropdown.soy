@@ -1,0 +1,29 @@
+{namespace Templates.Dropdown}
+
+/**
+ * @param? elementClasses
+ * @param? expanded
+ * @param header
+ * @param id
+ * @skipUpdates elementClasses expanded
+ */
+{template .content}
+	<div id="{$id}" class="dropdown component{$elementClasses ? ' ' + $elementClasses : ''}{$expanded ? ' open' : ''}">
+		{if $header}
+			{$header}
+		{/if}
+		{call .body data="all" /}
+	</div>
+{/template}
+
+/**
+ * @param body
+ * @param id
+ */
+{template .body}
+	<ul id="{$id}-body" class="dropdown-menu">
+		{if $body}
+			{$body}
+		{/if}
+	</ul>
+{/template}

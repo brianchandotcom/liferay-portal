@@ -16,12 +16,10 @@ package com.liferay.flags.page.flags.web.portlet;
 
 import com.liferay.flags.page.flags.web.constants.PageFlagsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -48,12 +46,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class PageFlagsPortlet extends MVCPortlet {
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.flags.page.flags.web)(release.schema.version=1.0.0))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 }

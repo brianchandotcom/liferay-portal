@@ -222,6 +222,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ASSET_ABSTRACT_DDL_RECORD-->
+<tr>
+	<td>ASSET_ABSTRACT_DDL_RECORD_1</td>
+	<td>//div[@class='asset-content']//div[contains(@class,'field-wrapper-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_DDL_RECORD_2</td>
+	<td>xPath=(//div[@class='asset-content']//div[contains(@class,'field-wrapper-content')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_DDL_RECORD_3</td>
+	<td>xPath=(//div[@class='asset-content']//div[contains(@class,'field-wrapper-content')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--METADATA-->
 <tr>
 	<td>METADATA_AUTHOR</td>

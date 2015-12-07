@@ -18,14 +18,11 @@ import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -34,9 +31,9 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public DDLRecordSetSettingsPortletConfigurationIcon(
-		HttpServletRequest request) {
+		PortletRequest portletRequest) {
 
-		super(request);
+		super(portletRequest);
 	}
 
 	@Override
@@ -47,7 +44,7 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 	@Override
 	public String getURL() {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+			portletRequest, DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/admin/record_set_settings.jsp");
@@ -85,10 +82,7 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 	}
 
 	protected long getRecordSetId() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return ParamUtil.getLong(
-			request, portletDisplay.getNamespace() + "recordSetId");
+		return ParamUtil.getLong(portletRequest, "recordSetId");
 	}
 
 }

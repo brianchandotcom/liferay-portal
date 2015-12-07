@@ -206,15 +206,12 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticle#gotoRelatedAssetCP">
-			<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
-		</execute>
+		<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
+		<var name="key_relatedAssetTitle" value="${relatedAssetTitle}" />
 
-		<execute macro="KBArticle#viewRelatedAssetCP">
-			<var name="relatedAssetContent" value="Blogs Entry Content" />
-			<var name="relatedAssetTitle" value="Blogs Entry Title" />
-			<var name="relatedAssetType" value="Blogs Entry" />
-		</execute>
+		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TITLE" value1="${kbArticleRelatedAssetTitle}" />
+
+		<execute macro="KBArticle#viewBlogsEntryRelatedAsset" />
 	</command>
 
 	<command name="AddKBArticleWithCategory" priority="4">
@@ -275,11 +272,20 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<execute macro="KBArticle#addCP">
+		<execute macro="KBArticle#addCPWithInvalidAttachmentSize">
 			<var name="kbArticleAttachment" value="Document_1.png" />
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleInvalidAttachmentSize" value="true" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#viewCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="noAttachment" value="true" />
 		</execute>
 	</command>
 

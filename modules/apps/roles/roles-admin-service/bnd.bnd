@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Roles Admin Service
-Bundle-SymbolicName: com.liferay.roles.admin.service
-Bundle-Version: 1.0.0
-Include-Resource: classes

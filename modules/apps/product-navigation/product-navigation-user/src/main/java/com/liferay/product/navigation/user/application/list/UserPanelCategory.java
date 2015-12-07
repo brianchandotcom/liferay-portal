@@ -73,7 +73,7 @@ public class UserPanelCategory extends BaseJSPPanelCategory {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		request.setAttribute(ApplicationListWebKeys.PANEL_APP, this);
+		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
 
 		return super.includeHeader(request, response);
 	}

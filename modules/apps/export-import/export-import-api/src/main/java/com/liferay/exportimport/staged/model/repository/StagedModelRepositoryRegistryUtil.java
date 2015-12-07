@@ -16,6 +16,7 @@ package com.liferay.exportimport.staged.model.repository;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -52,11 +53,10 @@ public class StagedModelRepositoryRegistryUtil {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_serviceTracker = new ServiceTracker<>(
-			_bundleContext, StagedModelRepository.class.getName(),
+		_serviceTracker = ServiceTrackerFactory.open(
+			_bundleContext, (Class<StagedModelRepository<?>>)(Class<?>)
+				StagedModelRepository.class,
 			new StagedModelRepositoryServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	private List<StagedModelRepository<?>> _getStagedModelRepositories() {

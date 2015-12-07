@@ -15,6 +15,8 @@ AUI.add(
 
 		var LIMIT_UNLIMITED = 'never';
 
+		var WEEK_LENGTH = A.DataType.DateMath.WEEK_LENGTH;
+
 		var RecurrenceDialogController = A.Component.create(
 			{
 
@@ -24,7 +26,7 @@ AUI.add(
 						value: null
 					},
 
-					dayOfWeekSelect: {
+					dayOfWeekInput: {
 						setter: A.one,
 						value: null
 					},
@@ -51,6 +53,11 @@ AUI.add(
 					},
 
 					intervalSelect: {
+						setter: A.one,
+						value: null
+					},
+
+					lastPositionCheckbox: {
 						setter: A.one,
 						value: null
 					},
@@ -100,11 +107,20 @@ AUI.add(
 						value: null
 					},
 
+					position: {
+						getter: '_getPosition'
+					},
+
 					positionalDayOfWeek: {
 						getter: '_getPositionalDayOfWeek'
 					},
 
 					positionalDayOfWeekOptions: {
+						setter: A.one,
+						value: null
+					},
+
+					positionInput: {
 						setter: A.one,
 						value: null
 					},
@@ -139,6 +155,10 @@ AUI.add(
 
 					startDateDatePicker: {
 						value: null
+					},
+
+					startDatePosition: {
+						getter: '_getStartDatePosition'
 					},
 
 					startTimeDayOfWeekInput: {
@@ -179,6 +199,30 @@ AUI.add(
 						limitDateDatePicker.after('selectionChange', A.bind(instance._onInputChange, instance));
 
 						startDateDatePicker.after('selectionChange', A.bind(instance._onStartDateDatePickerChange, instance));
+					},
+
+					_calculatePosition: function() {
+						var instance = this;
+
+						var lastPositionCheckbox = instance.get('lastPositionCheckbox');
+
+						var position = instance.get('startDatePosition');
+
+						if (instance._isLastDayOfWeekInMonth()) {
+							if ((position > 4) || lastPositionCheckbox.get('checked')) {
+								position = -1;
+							}
+						}
+
+						return position;
+					},
+
+					_canChooseLastDayOfWeek: function() {
+						var instance = this;
+
+						var mandatoryLastDay = instance.get('startDatePosition') > 4;
+
+						return instance._isLastDayOfWeekInMonth() && !mandatoryLastDay;
 					},
 
 					_getDaysOfWeek: function() {
@@ -248,11 +292,18 @@ AUI.add(
 						return checkedLimitRadioButton && checkedLimitRadioButton.val();
 					},
 
+					_getPosition: function() {
+						var instance = this;
+
+						var positionInput = instance.get('positionInput');
+
+						return positionInput.val();
+					},
+
 					_getPositionalDayOfWeek: function() {
 						var instance = this;
 
-						var dayOfWeekSelect = instance.get('dayOfWeekSelect');
-						var positionSelect = instance.get('positionSelect');
+						var dayOfWeekInput = instance.get('dayOfWeekInput');
 
 						var positionalDayOfWeek = null;
 
@@ -263,8 +314,8 @@ AUI.add(
 						if (instance._isPositionalFrequency() && repeatOnDayOfWeek) {
 							positionalDayOfWeek = {
 								month: startDate.getMonth(),
-								position: positionSelect.val(),
-								weekday: dayOfWeekSelect.val()
+								position: instance.get('position'),
+								weekday: dayOfWeekInput.val()
 							};
 						}
 
@@ -293,6 +344,16 @@ AUI.add(
 						return startDateDatePicker.getDate();
 					},
 
+					_getStartDatePosition: function() {
+						var instance = this;
+
+						var startDateDatePicker = instance.get('startDateDatePicker');
+
+						var startDate = startDateDatePicker.getDate();
+
+						return Math.ceil(startDate.getDate() / WEEK_LENGTH);
+					},
+
 					_getStartTimeDayOfWeekInput: function() {
 						var instance = this;
 
@@ -307,6 +368,16 @@ AUI.add(
 						var recurrence = instance.get('recurrence');
 
 						return Liferay.RecurrenceUtil.getSummary(recurrence);
+					},
+
+					_isLastDayOfWeekInMonth: function() {
+						var instance = this;
+
+						var startDate = instance.get('startDate');
+
+						var lastDate = A.DataType.DateMath.findMonthEnd(startDate);
+
+						return lastDate.getDate() - startDate.getDate() < WEEK_LENGTH;
 					},
 
 					_isPositionalFrequency: function() {
@@ -332,7 +403,13 @@ AUI.add(
 						}
 
 						if (currentTarget === instance.get('repeatOnDayOfWeekRadioButton')) {
-							instance._toggleView('positionalDayOfWeekOptions', currentTarget.get('checked'));
+							instance._toggleView('positionalDayOfWeekOptions', currentTarget.get('checked') && instance._canChooseLastDayOfWeek());
+						}
+
+						if (currentTarget === instance.get('lastPositionCheckbox')) {
+							var positionInput = instance.get('positionInput');
+
+							positionInput.val(instance._calculatePosition());
 						}
 
 						var disableLimitCountInput = (limitType === LIMIT_UNLIMITED) || (limitType === LIMIT_DATE);
@@ -355,17 +432,23 @@ AUI.add(
 
 						var dayOfWeek = DAYS_OF_WEEK[date.getDay()];
 
+						var dayOfWeekInput = instance.get('dayOfWeekInput');
+
 						var daysOfWeekCheckboxes = instance.get('daysOfWeekCheckboxes');
+
+						var positionInput = instance.get('positionInput');
 
 						var repeatCheckbox = instance.get('repeatCheckbox');
 
+						var repeatOnDayOfWeekRadioButton = instance.get('repeatOnDayOfWeekRadioButton');
+
 						var startTimeDayOfWeekInput = instance.get('startTimeDayOfWeekInput');
 
-						startTimeDayOfWeekInput.set('value', dayOfWeek);
+						startTimeDayOfWeekInput.val(dayOfWeek);
 
 						daysOfWeekCheckboxes.each(
 							function(item) {
-								if (item.get('value') == dayOfWeek) {
+								if (item.val() == dayOfWeek) {
 									item.set('checked', true);
 									item.set('disabled', true);
 								}
@@ -378,6 +461,14 @@ AUI.add(
 								}
 							}
 						);
+
+						dayOfWeekInput.val(dayOfWeek);
+
+						positionInput.val(instance._calculatePosition());
+
+						if (repeatOnDayOfWeekRadioButton.get('checked')) {
+							instance._toggleView('positionalDayOfWeekOptions', instance._canChooseLastDayOfWeek());
+						}
 
 						if (repeatCheckbox.get('checked')) {
 							instance.fire('recurrenceChange');
@@ -401,6 +492,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-calendar-recurrence-util']
+		requires: ['aui-base', 'aui-datatype', 'liferay-calendar-recurrence-util']
 	}
 );

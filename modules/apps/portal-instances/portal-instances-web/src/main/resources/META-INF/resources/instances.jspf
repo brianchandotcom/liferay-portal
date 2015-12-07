@@ -16,19 +16,6 @@
 
 <liferay-ui:error exception="<%= RequiredCompanyException.class %>" message="the-default-company-is-required" />
 
-<div class="btn-toolbar">
-	<portlet:renderURL var="addURL">
-		<portlet:param name="mvcRenderCommandName" value="/portal_instances/edit_instance" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<%
-	String taglibAdd = "location.href = '" + addURL + "';";
-	%>
-
-	<aui:button onClick="<%= taglibAdd %>" value="add" />
-</div>
-
 <liferay-ui:search-container
 	iteratorURL="<%= portletURL %>"
 	total="<%= CompanyLocalServiceUtil.getCompaniesCount(false) %>"
@@ -97,10 +84,19 @@
 		/>
 
 		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action"
+			cssClass="list-group-item-field"
 			path="/instance_actions.jsp"
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
 </liferay-ui:search-container>
+
+<portlet:renderURL var="addURL">
+	<portlet:param name="mvcRenderCommandName" value="/portal_instances/edit_instance" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:renderURL>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addURL.toString() %>" />
+</liferay-frontend:add-menu>

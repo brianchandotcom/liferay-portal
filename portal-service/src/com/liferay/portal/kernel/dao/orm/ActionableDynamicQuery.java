@@ -31,6 +31,8 @@ public interface ActionableDynamicQuery {
 
 	public PerformCountMethod getPerformCountMethod();
 
+	public boolean isParallel();
+
 	public void performActions() throws PortalException;
 
 	public long performCount() throws PortalException;

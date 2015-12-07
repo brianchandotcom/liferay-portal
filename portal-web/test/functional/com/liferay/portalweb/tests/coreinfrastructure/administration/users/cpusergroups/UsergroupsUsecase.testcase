@@ -148,7 +148,7 @@
 		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
 
 		<execute function="AssertClick" locator1="CPUsersandorganizationsManagepages#NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
-		<execute function="AssertTextNotEquals" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" value1="Test User Group Page 1" />
+		<execute function="AssertTextNotEquals" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_EDIT_COG" value1="Test User Group Page 1" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />

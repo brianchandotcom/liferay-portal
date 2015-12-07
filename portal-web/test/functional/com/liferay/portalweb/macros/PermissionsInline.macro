@@ -54,12 +54,10 @@
 				<then>
 					<execute function="AssertNotChecked" locator1="Permissions#CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
 					<execute function="AssertNotChecked" locator1="Permissions#CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-					<execute function="AssertNotChecked" locator1="Permissions#CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 				</then>
 				<else>
 					<execute function="AssertChecked" locator1="Permissions#CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
 					<execute function="AssertChecked" locator1="Permissions#CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
-					<execute function="AssertChecked" locator1="Permissions#CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 				</else>
 			</if>
 
@@ -297,15 +295,10 @@
 	</command>
 
 	<command name="gotoSitepageCP">
-		<execute macro="SitePage#addCmd">
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-		</execute>
-
-		<execute macro="SitePage#expandRootCP" />
-
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+
 		<execute function="AssertClick" locator1="SitePages#TOOLBAR_PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
@@ -333,7 +326,7 @@
 
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" value1="${sitePageName}" />
 		<execute function="AssertClick" locator1="SitePages#TOOLBAR_PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />

@@ -1,0 +1,152 @@
+{
+    "actions": [
+        {"parameters": [
+            {
+                "name": "AXIS_VARIABLES",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_NAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JOB_VARIANT",
+                "value": "functional-tomcat-hypersonic/0"
+            },
+            {
+                "name": "TOP_LEVEL_SHARED_DIR",
+                "value": "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1545"
+            }
+        ]},
+        {"causes": [{"shortDescription": "Started by remote host 10.0.16.21"}]},
+        null,
+        {
+            "failCount": 1,
+            "skipCount": 0,
+            "totalCount": 1,
+            "urlName": "testReport"
+        },
+        {}
+    ],
+    "artifacts": [],
+    "building": false,
+    "builtOn": "cloud-10-0-19-70",
+    "changeSet": {
+        "items": [],
+        "kind": null
+    },
+    "culprits": [],
+    "description": null,
+    "duration": 682320,
+    "estimatedDuration": 823434,
+    "executor": null,
+    "fullDisplayName": "test-portal-acceptance-pullrequest-batch(master) #5141",
+    "id": "2015-10-26_12-10-33",
+    "keepLog": false,
+    "number": 5141,
+    "result": "UNSTABLE",
+    "runs": [
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=0,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=1,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=10,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=11,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=12,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=13,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=14,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=2,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=3,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=4,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=5,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=6,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=7,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=8,label_exp=!master/5140/"
+        },
+        {
+            "number": 5140,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=9,label_exp=!master/5140/"
+        },
+        {
+            "number": 5130,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23AddCategory,label_exp=!master/5130/"
+        },
+        {
+            "number": 5130,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23AddDisplayTemplateVelocity,label_exp=!master/5130/"
+        },
+        {
+            "number": 5130,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PortalSmoke%23Smoke,label_exp=!master/5130/"
+        },
+        {
+            "number": 5141,
+            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/UnstableMessageUtilTest/1-of-1/run-18/5141/"
+        },
+        {
+            "number": 5130,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizard%23HypersonicToMySQL,label_exp=!master/5130/"
+        },
+        {
+            "number": 5130,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=TestRuntimePortlet%23Smoke,label_exp=!master/5130/"
+        },
+        {
+            "number": 5130,
+            "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=UIInfrastructureUsecase%23Smoke,label_exp=!master/5130/"
+        }
+    ],
+    "timestamp": 1445886633000,
+    "url": "https://test-1-9.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/5141/"
+}

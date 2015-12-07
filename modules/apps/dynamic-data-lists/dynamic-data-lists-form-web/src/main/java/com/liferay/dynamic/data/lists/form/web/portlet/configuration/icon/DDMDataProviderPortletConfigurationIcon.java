@@ -25,16 +25,16 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Rafael Praxedes
  */
 public class DDMDataProviderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public DDMDataProviderPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public DDMDataProviderPortletConfigurationIcon(
+		PortletRequest portletRequest) {
+
+		super(portletRequest);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class DDMDataProviderPortletConfigurationIcon
 			PortletProvider.Action.EDIT);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, portletId, themeDisplay.getPlid(),
+			portletRequest, portletId, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		try {

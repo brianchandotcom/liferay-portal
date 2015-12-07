@@ -63,6 +63,10 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 		verifyLDAPProperties();
 	}
 
+	protected String merge(String[] stringArray) {
+		return StringUtil.merge(stringArray, StringPool.PIPE);
+	}
+
 	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
@@ -176,65 +180,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 		_ldapAuthConfigurationProvider.updateProperties(companyId, dictionary);
 	}
 
-	protected void verifyLDAPProperties() throws Exception {
-		List<Company> companies =_companyLocalService.getCompanies(false);
-
-		for (Company company : companies) {
-			long companyId = company.getCompanyId();
-
-			verifyLDAPAuthProperties(companyId);
-			verifyLDAPExportProperties(companyId);
-			verifyLDAPImportProperties(companyId);
-			verifySystemLDAPConfiguration(companyId);
-
-			long[] ldapServerIds = StringUtil.split(
-				_prefsProps.getString(companyId, "ldap.server.ids"), 0L);
-
-			Set<String> keys = new HashSet<>();
-
-			keys.addAll(
-				Arrays.asList(LegacyLDAPPropsKeys.NONPOSTFIXED_LDAP_KEYS));
-
-			for (long ldapServerId : ldapServerIds) {
-				String postfix = _ldapSettings.getPropertyPostfix(ldapServerId);
-
-				verifyLDAPServerConfiguration(companyId, ldapServerId, postfix);
-
-				for (int i = 0;
-						i < LegacyLDAPPropsKeys.SERVER_ID_POSTFIXED_KEYS.length;
-							i++) {
-
-					keys.add(
-						LegacyLDAPPropsKeys.SERVER_ID_POSTFIXED_KEYS[i] +
-							postfix);
-				}
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Removing preference keys " + keys + " for company " +
-						companyId);
-			}
-
-			_companyLocalService.removePreferences(
-				companyId, keys.toArray(new String[keys.size()]));
-
-			UnicodeProperties properties = new UnicodeProperties();
-
-			properties.put("ldap.server.ids", StringPool.BLANK);
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Removing LDAP server IDs " +
-						ListUtil.toList(ldapServerIds) + " for company " +
-							companyId);
-			}
-
-			_companyLocalService.updatePreferences(companyId, properties);
-		}
-	}
-
-	private void verifyLDAPExportProperties(long companyId) {
+	protected void verifyLDAPExportProperties(long companyId) {
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
 		dictionary.put(
@@ -272,7 +218,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			companyId, dictionary);
 	}
 
-	private void verifyLDAPImportProperties(long companyId) {
+	protected void verifyLDAPImportProperties(long companyId) {
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
 		dictionary.put(
@@ -338,7 +284,65 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			companyId, dictionary);
 	}
 
-	private void verifyLDAPServerConfiguration(
+	protected void verifyLDAPProperties() throws Exception {
+		List<Company> companies =_companyLocalService.getCompanies(false);
+
+		for (Company company : companies) {
+			long companyId = company.getCompanyId();
+
+			verifyLDAPAuthProperties(companyId);
+			verifyLDAPExportProperties(companyId);
+			verifyLDAPImportProperties(companyId);
+			verifySystemLDAPConfiguration(companyId);
+
+			long[] ldapServerIds = StringUtil.split(
+				_prefsProps.getString(companyId, "ldap.server.ids"), 0L);
+
+			Set<String> keys = new HashSet<>();
+
+			keys.addAll(
+				Arrays.asList(LegacyLDAPPropsKeys.NONPOSTFIXED_LDAP_KEYS));
+
+			for (long ldapServerId : ldapServerIds) {
+				String postfix = _ldapSettings.getPropertyPostfix(ldapServerId);
+
+				verifyLDAPServerConfiguration(companyId, ldapServerId, postfix);
+
+				for (int i = 0;
+						i < LegacyLDAPPropsKeys.SERVER_ID_POSTFIXED_KEYS.length;
+							i++) {
+
+					keys.add(
+						LegacyLDAPPropsKeys.SERVER_ID_POSTFIXED_KEYS[i] +
+							postfix);
+				}
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Removing preference keys " + keys + " for company " +
+						companyId);
+			}
+
+			_companyLocalService.removePreferences(
+				companyId, keys.toArray(new String[keys.size()]));
+
+			UnicodeProperties properties = new UnicodeProperties();
+
+			properties.put("ldap.server.ids", StringPool.BLANK);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Removing LDAP server IDs " +
+						ListUtil.toList(ldapServerIds) + " for company " +
+							companyId);
+			}
+
+			_companyLocalService.updatePreferences(companyId, properties);
+		}
+	}
+
+	protected void verifyLDAPServerConfiguration(
 		long companyId, long ldapServerId, String postfix) {
 
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
@@ -361,26 +365,33 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 				"ldap://localhost:10389"));
 		dictionary.put(
 			LDAPConstants.CONTACT_CUSTOM_MAPPINGS,
-			_prefsProps.getStringArray(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix,
-				StringPool.NEW_LINE));
+			merge(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix,
+					StringPool.NEW_LINE)));
 		dictionary.put(
 			LDAPConstants.CONTACT_MAPPINGS,
-			_prefsProps.getStringArray(
-				companyId, LegacyLDAPPropsKeys.LDAP_CONTACT_MAPPINGS + postfix,
-				StringPool.NEW_LINE));
+			merge(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_CONTACT_MAPPINGS + postfix,
+					StringPool.NEW_LINE)));
 		dictionary.put(
 			LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES,
-			_prefsProps.getStringArray(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix,
-				StringPool.COMMA));
+			merge(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES +
+						postfix,
+					StringPool.COMMA)));
 		dictionary.put(
 			LDAPConstants.GROUP_MAPPINGS,
-			_prefsProps.getStringArray(
-				companyId, LegacyLDAPPropsKeys.LDAP_GROUP_MAPPINGS + postfix,
-				StringPool.NEW_LINE));
+			merge(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_GROUP_MAPPINGS + postfix,
+					StringPool.NEW_LINE)));
 		dictionary.put(
 			LDAPConstants.GROUP_SEARCH_FILTER,
 			_prefsProps.getString(
@@ -417,27 +428,32 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 				companyId, LegacyLDAPPropsKeys.LDAP_SERVER_NAME + postfix));
 		dictionary.put(
 			LDAPConstants.USER_CUSTOM_MAPPINGS,
-			_prefsProps.getStringArray(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix,
-				StringPool.NEW_LINE));
+			merge(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix,
+					StringPool.NEW_LINE)));
 		dictionary.put(
 			LDAPConstants.USER_DEFAULT_OBJECT_CLASSES,
-			_prefsProps.getStringArray(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES + postfix,
-				StringPool.COMMA));
+			merge(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES +
+						postfix,
+					StringPool.COMMA)));
 		dictionary.put(
 			LDAPConstants.USER_IGNORE_ATTRIBUTES,
-			_prefsProps.getStringArray(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_USER_IGNORE_ATTRIBUTES + postfix,
-				StringPool.COMMA));
+			merge(
+				_prefsProps.getStringArray(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_USER_IGNORE_ATTRIBUTES + postfix,
+					StringPool.COMMA)));
 		dictionary.put(
 			LDAPConstants.USER_MAPPINGS,
-			_prefsProps.getStringArray(
-				companyId, LegacyLDAPPropsKeys.LDAP_USER_MAPPINGS + postfix,
-				StringPool.NEW_LINE));
+			merge(
+				_prefsProps.getStringArray(
+					companyId, LegacyLDAPPropsKeys.LDAP_USER_MAPPINGS + postfix,
+					StringPool.NEW_LINE)));
 		dictionary.put(
 			LDAPConstants.USER_SEARCH_FILTER,
 			_prefsProps.getString(
@@ -461,7 +477,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			companyId, ldapServerId, dictionary);
 	}
 
-	private void verifySystemLDAPConfiguration(long companyId) {
+	protected void verifySystemLDAPConfiguration(long companyId) {
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
 		Properties connectionProperties = _props.getProperties(

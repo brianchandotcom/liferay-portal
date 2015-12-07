@@ -24,14 +24,10 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<h3><liferay-ui:message key="categorization" /></h3>
-
 <liferay-ui:asset-categories-error />
 
 <liferay-ui:asset-tags-error />
 
-<aui:fieldset>
-	<aui:input name="categories" type="assetCategories" />
+<aui:input name="categories" type="assetCategories" />
 
-	<aui:input name="tags" type="assetTags" />
-</aui:fieldset>
+<aui:input name="tags" type="assetTags" />

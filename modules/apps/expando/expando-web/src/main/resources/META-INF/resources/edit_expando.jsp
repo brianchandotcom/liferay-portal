@@ -80,7 +80,7 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 	<liferay-ui:error exception="<%= DuplicateColumnNameException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= ValueDataException.class %>" message="please-enter-a-valid-value" />
 
-	<aui:fieldset-group>
+	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<c:choose>
 				<c:when test="<%= column != null %>">

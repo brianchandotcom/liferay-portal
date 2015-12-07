@@ -29,7 +29,6 @@ import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -162,13 +161,10 @@ public class UpgradePortletId extends UpgradeProcess {
 			String oldRootPortletId, String newRootPortletId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(8);
 
 			sb.append("select portletPreferencesId, portletId from ");
@@ -180,7 +176,7 @@ public class UpgradePortletId extends UpgradeProcess {
 			sb.append(oldRootPortletId);
 			sb.append("_USER_%_INSTANCE_%'");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -195,20 +191,17 @@ public class UpgradePortletId extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateLayout(long plid, String typeSettings)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update Layout set typeSettings = ? where plid = " + plid);
 
 			ps.setString(1, typeSettings);
@@ -221,7 +214,7 @@ public class UpgradePortletId extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -229,14 +222,11 @@ public class UpgradePortletId extends UpgradeProcess {
 			long plid, String oldPortletId, String newPortletId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select typeSettings from Layout where plid = " + plid);
 
 			rs = ps.executeQuery();
@@ -256,7 +246,7 @@ public class UpgradePortletId extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -265,13 +255,10 @@ public class UpgradePortletId extends UpgradeProcess {
 			boolean exactMatch)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(14);
 
 			sb.append("select plid, typeSettings from Layout where ");
@@ -293,7 +280,7 @@ public class UpgradePortletId extends UpgradeProcess {
 			sb.append(oldRootPortletId);
 			sb.append("_USER_%'");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -309,7 +296,7 @@ public class UpgradePortletId extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -342,13 +329,10 @@ public class UpgradePortletId extends UpgradeProcess {
 			long portletPreferencesId, String portletId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update PortletPreferences set portletId = ? where " +
 					"portletPreferencesId = " + portletPreferencesId);
 
@@ -362,7 +346,7 @@ public class UpgradePortletId extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -370,13 +354,10 @@ public class UpgradePortletId extends UpgradeProcess {
 			long resourcePermissionId, String name, String primKey)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update ResourcePermission set name = ?, primKey = ? where " +
 					"resourcePermissionId = " + resourcePermissionId);
 
@@ -391,7 +372,7 @@ public class UpgradePortletId extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -400,14 +381,11 @@ public class UpgradePortletId extends UpgradeProcess {
 			boolean updateName)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select resourcePermissionId, name, scope, primKey from " +
 					"ResourcePermission where name = '" + oldRootPortletId +
 						"'");
@@ -464,7 +442,7 @@ public class UpgradePortletId extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

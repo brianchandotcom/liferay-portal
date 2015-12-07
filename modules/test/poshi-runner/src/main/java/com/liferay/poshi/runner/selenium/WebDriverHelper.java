@@ -16,6 +16,7 @@ package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.CharPool;
+import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.PropsValues;
@@ -33,6 +34,12 @@ import java.util.regex.Pattern;
 import junit.framework.TestCase;
 
 import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -277,6 +284,31 @@ public class WebDriverHelper {
 		catch (Exception e) {
 			throw new WebDriverException();
 		}
+	}
+
+	public static String getCSSSource(String htmlSource) throws Exception {
+		Document htmlDocument = Jsoup.parse(htmlSource);
+
+		Elements elements = htmlDocument.select("link[type=text/css]");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Element element : elements) {
+			String href = element.attr("href");
+
+			if (!href.contains(PropsValues.PORTAL_URL)) {
+				href = PropsValues.PORTAL_URL + href;
+			}
+
+			Connection connection = Jsoup.connect(href);
+
+			Document document = connection.get();
+
+			sb.append(document.text());
+			sb.append("\n");
+		}
+
+		return sb.toString();
 	}
 
 	public static String getDefaultWindowHandle() {
@@ -642,6 +674,22 @@ public class WebDriverHelper {
 		if (isAlertPresent(webDriver)) {
 			getConfirmation(webDriver);
 		}
+	}
+
+	public static void saveWebPage(String fileName, String htmlSource)
+		throws Exception {
+
+		if (!PropsValues.SAVE_WEB_PAGE) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder(3);
+
+		sb.append("<style>");
+		sb.append(getCSSSource(htmlSource));
+		sb.append("</style></html>");
+
+		FileUtil.write(fileName, htmlSource.replace("<\\html>", sb.toString()));
 	}
 
 	public static void select(

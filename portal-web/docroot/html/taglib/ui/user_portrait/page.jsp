@@ -18,7 +18,7 @@
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(portraitURL) %>">
-		<div class="<%= cssClass %> user-icon user-icon-lg">
+		<div class="<%= cssClass %> user-icon">
 			<img alt="thumbnail" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(portraitURL) %>">
 		</div>
 	</c:when>

@@ -992,6 +992,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<jvmarg value="-Djava.net.preferIPv4Stack=true" />
 				<jvmarg value="-Dliferay.log.dir=${liferay.home}/logs" />
 				<jvmarg value="-Dliferay.mode=test" />
+				<jvmarg value="-Dosgi.state.dir=${liferay.home}/osgi/state" />
 				<misc />
 				<jvmarg value="-Duser.timezone=GMT" />
 				<classpath location="test-coverage" />
@@ -1549,6 +1550,7 @@ rerun your task.
 				nodejs.npm.user=${nodejs.npm.user}
 				sass.compiler.class.name=${sass.compiler.class.name}
 				sass.generate.source.map=${sass.generate.source.map}
+				sass.precision=${sass.precision}
 				upgrade.table.dir=${upgrade.table.dir}
 			</echo>
 		</sequential>

@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_BTN</td>
-	<td>//div[contains(@class,'add-page-toolbar')]/button[contains(.,'Add Page')]</td>
+	<td>//button[contains(@id,'GroupPagesPortlet') and contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,6 +106,11 @@
 <tr>
 	<td>ADD_TEAM_MEMBERS</td>
 	<td>//button[span[contains(.,'Add Team Members')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_USER</td>
+	<td>//button[contains(.,'Add Users')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -575,7 +580,7 @@
 </tr>
 <tr>
 	<td>SIGN_IN</td>
-	<td>//button[contains(.,'Sign In')] | //button[contains(.,'Acceder')] | //button[contains(.,'ログイン')] | //button[contains(.,'登录')]</td>
+	<td>//button[contains(.,'Sign In')] | //button[contains(.,'Acceder')] | //button[contains(.,'Anmelden')] | //button[contains(.,'ログイン')] | //button[contains(.,'登录')]</td>
 	<td></td>
 </tr>
 <tr>

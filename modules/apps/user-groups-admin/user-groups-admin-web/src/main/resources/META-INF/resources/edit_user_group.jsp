@@ -30,19 +30,18 @@ boolean hasUserGroupUpdatePermission = true;
 if (userGroup != null) {
 	hasUserGroupUpdatePermission = UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.UPDATE);
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-user-group") : userGroup.getName());
 %>
 
 <portlet:actionURL name="editUserGroup" var="editUserGroupURL" />
 
-<aui:form action="<%= editUserGroupURL %>" method="post" name="fm">
+<aui:form action="<%= editUserGroupURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroupId %>" />
-
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		localizeTitle="<%= (userGroup == null) %>"
-		title='<%= (userGroup == null) ? "new-user-group" : userGroup.getName() %>'
-	/>
 
 	<liferay-ui:error exception="<%= DuplicateUserGroupException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= RequiredUserGroupException.class %>" message="this-is-a-required-user-group" />
@@ -128,7 +127,10 @@ if (userGroup != null) {
 	%>
 
 	<c:if test="<%= (userGroupGroup != null) || !layoutSetPrototypes.isEmpty() %>">
-		<aui:fieldset helpMessage="user-group-site-help" label="user-group-site">
+		<aui:fieldset cssClass="text-muted">
+			<h5>
+				<liferay-ui:message key="the-site-of-a-user-group-cannot-be-accessed-directly-by-end-users" />
+			</h5>
 
 			<%
 			boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
@@ -149,7 +151,7 @@ if (userGroup != null) {
 
 			<c:choose>
 				<c:when test="<%= ((userGroupGroup == null) || ((publicLayoutSetPrototype == null) && (userGroupGroup.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select disabled="<%= !hasUpdateSitePermission || !hasUserGroupUpdatePermission %>" label="public-pages" name="publicLayoutSetPrototypeId">
+					<aui:select disabled="<%= !hasUpdateSitePermission || !hasUserGroupUpdatePermission %>" label="my-profile" name="publicLayoutSetPrototypeId">
 						<aui:option label="none" selected="<%= true %>" value="" />
 
 						<%
@@ -176,7 +178,7 @@ if (userGroup != null) {
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<aui:field-wrapper label="public-pages">
+					<aui:field-wrapper label="my-profile">
 						<c:choose>
 							<c:when test="<%= userGroupGroup != null %>">
 								<c:choose>
@@ -213,7 +215,7 @@ if (userGroup != null) {
 
 			<c:choose>
 				<c:when test="<%= ((userGroup == null) || ((privateLayoutSetPrototype == null) && (userGroupGroup.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select disabled="<%= !hasUpdateSitePermission || !hasUserGroupUpdatePermission %>" label="private-pages" name="privateLayoutSetPrototypeId">
+					<aui:select disabled="<%= !hasUpdateSitePermission || !hasUserGroupUpdatePermission %>" label="my-dashboard" name="privateLayoutSetPrototypeId">
 						<aui:option label="none" selected="<%= true %>" value="" />
 
 						<%
@@ -240,7 +242,7 @@ if (userGroup != null) {
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<aui:field-wrapper label="private-pages">
+					<aui:field-wrapper label="my-dashboard">
 						<c:choose>
 							<c:when test="<%= userGroupGroup != null %>">
 								<c:choose>

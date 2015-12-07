@@ -63,6 +63,8 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
+	public java.lang.String getSettingsProperty(java.lang.String key);
+
 	public java.lang.String getSettingsProperty(java.lang.String key,
 		java.lang.String defaultValue);
 }

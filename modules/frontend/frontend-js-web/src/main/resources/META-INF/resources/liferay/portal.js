@@ -72,23 +72,21 @@
 		}
 	);
 
-	ToolTip._getText = A.cached(
-		function(id) {
-			var node = A.one('#' + id);
+	ToolTip._getText = function(id) {
+		var node = A.one('#' + id);
 
-			var text = '';
+		var text = '';
 
-			if (node) {
-				var toolTipTextNode = node.next('.tooltip-text');
+		if (node) {
+			var toolTipTextNode = node.next('.tooltip-text');
 
-				if (toolTipTextNode) {
-					text = toolTipTextNode.html();
-				}
+			if (toolTipTextNode) {
+				text = toolTipTextNode.html();
 			}
-
-			return text;
 		}
-	);
+
+		return text;
+	};
 
 	ToolTip.hide = function() {
 		var instance = this;

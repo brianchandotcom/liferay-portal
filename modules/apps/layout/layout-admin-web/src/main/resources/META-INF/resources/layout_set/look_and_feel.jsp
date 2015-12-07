@@ -33,29 +33,25 @@ ColorScheme selWapColorScheme = layoutSet.getWapColorScheme();
 
 <aui:model-context bean="<%= layoutSet %>" model="<%= Layout.class %>" />
 
-<h3><liferay-ui:message key="look-and-feel" /></h3>
+<aui:input name="devices" type="hidden" value='<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED? "regular,wap" : "regular" %>' />
 
-<aui:fieldset>
-	<aui:input name="devices" type="hidden" value='<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED? "regular,wap" : "regular" %>' />
+<c:choose>
+	<c:when test="<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED %>">
 
-	<c:choose>
-		<c:when test="<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED %>">
-
-		<liferay-ui:tabs
-			names="regular-browsers,mobile-devices"
-			refresh="<%= false %>"
-		>
-			<liferay-ui:section>
-				<%@ include file="/layout_set/look_and_feel_regular_browser.jspf" %>
-			</liferay-ui:section>
-
-			<liferay-ui:section>
-				<%@ include file="/layout_set/look_and_feel_wap_browser.jspf" %>
-			</liferay-ui:section>
-		</liferay-ui:tabs>
-		</c:when>
-		<c:otherwise>
+	<liferay-ui:tabs
+		names="regular-browsers,mobile-devices"
+		refresh="<%= false %>"
+	>
+		<liferay-ui:section>
 			<%@ include file="/layout_set/look_and_feel_regular_browser.jspf" %>
-		</c:otherwise>
-	</c:choose>
-</aui:fieldset>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<%@ include file="/layout_set/look_and_feel_wap_browser.jspf" %>
+		</liferay-ui:section>
+	</liferay-ui:tabs>
+	</c:when>
+	<c:otherwise>
+		<%@ include file="/layout_set/look_and_feel_regular_browser.jspf" %>
+	</c:otherwise>
+</c:choose>

@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -75,6 +77,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -420,6 +423,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		File file = null;
 
+		Locale siteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
+
 		try {
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
 			ExportImportThreadLocal.setLayoutStagingInProcess(true);
@@ -439,6 +444,11 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 			settingsMap.put("userId", userId);
 
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
+			LocaleThreadLocal.setSiteDefaultLocale(
+				PortalUtil.getSiteDefaultLocale(targetGroupId));
+
 			exportImportLocalService.importLayoutsDataDeletions(
 				exportImportConfiguration, file);
 
@@ -457,6 +467,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		finally {
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
+
+			LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);
 		}
 	}
 

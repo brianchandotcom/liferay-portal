@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -58,14 +57,11 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select kaleoTaskInstanceTokenId, kaleoInstanceTokenId from " +
 					"KaleoTaskInstanceToken");
 
@@ -98,7 +94,7 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		deleteKaleoInstanceTokens();
@@ -107,13 +103,10 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 	protected long getKaleoInstanceTokenId(long kaleoInstanceTokenId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler();
 
 			sb.append("select KaleoNode.type_, ");
@@ -127,7 +120,7 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setLong(1, kaleoInstanceTokenId);
 
@@ -152,7 +145,7 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

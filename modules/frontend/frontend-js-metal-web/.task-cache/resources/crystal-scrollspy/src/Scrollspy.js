@@ -202,6 +202,7 @@ define("frontend-js-metal-web@1.0.0/crystal-scrollspy/src/Scrollspy", ['exports'
 		return Scrollspy;
 	})(_Attribute3.default);
 
+	Scrollspy.prototype.registerMetalComponent && Scrollspy.prototype.registerMetalComponent(Scrollspy, 'Scrollspy')
 	Scrollspy.ATTRS = {
 		activeClass: {
 			validator: _core2.default.isString,

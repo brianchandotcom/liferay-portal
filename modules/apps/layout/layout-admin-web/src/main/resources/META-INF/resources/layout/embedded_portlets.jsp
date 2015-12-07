@@ -32,8 +32,6 @@ RowChecker rowChecker = new RowChecker(liferayPortletResponse);
 rowChecker.setRowIds("removeEmbeddedPortletIds");
 %>
 
-<h3><liferay-ui:message key="embedded-portlets" /></h3>
-
 <c:choose>
 	<c:when test="<%= selLayout.isLayoutPrototypeLinkActive() %>">
 

@@ -451,6 +451,11 @@ public class DDMTemplateLocalServiceImpl
 		}
 	}
 
+	@Override
+	public DDMTemplate fetchTemplate(long templateId) {
+		return ddmTemplatePersistence.fetchByPrimaryKey(templateId);
+	}
+
 	/**
 	 * Returns the template matching the group and template key.
 	 *

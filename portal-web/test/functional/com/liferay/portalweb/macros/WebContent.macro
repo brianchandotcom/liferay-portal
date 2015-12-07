@@ -5,7 +5,7 @@
 	</command>
 
 	<command name="addCategoryPGViaWCD">
-		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Categorization" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -52,7 +52,7 @@
 
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
-		<execute function="Click" locator1="Button#CHOOSE" value1="Choose" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="${assetTitle}" />
 
 		<execute function="SelectFrameTop" />
 
@@ -239,7 +239,7 @@
 
 	<command name="addTagPGViaWCD">
 		<execute function="AssertElementPresent" locator1="Button#BASIC_PREVIEW" />
-		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Categorization" />
 
 		<var name="key_tagName" value="${tagName}" />
 
@@ -435,7 +435,7 @@
 	<command name="addWithMultipleCategories">
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Categorization" />
 
 		<execute macro="AssetCategorization#addMultipleCategories">
 			<var name="categoryNameList" value="${categoryNameList}" />
@@ -593,7 +593,7 @@
 	<command name="addWithTagCP">
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Metadata" />
 
 		<for list="${tagNameList}" param="tagName">
 			<execute function="Click" locator1="AssetCategorization#TAGS_ADD_BUTTON" />
@@ -1008,7 +1008,7 @@
 
 		<execute function="SelectFrame" locator1="AssetRelatedAssets#SELECT_ASSET_IFRAME" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="Items per Page" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="20 Entries" />
 
 		<var name="key_itemsPerPage" value="${itemsPerPage}" />
 
@@ -1061,7 +1061,7 @@
 	</command>
 
 	<command name="selectCategory">
-		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Categorization" />
 
 		<if>
 			<isset var="userSegmentDetailTitle" />
@@ -1154,7 +1154,7 @@
 	<command name="viewCategorizationCategoryCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="NavListItem#CATEGORIZATION" />
+		<execute function="Click" locator1="NavListItem#METADATA" />
 
 		<for list="${categoryNameList}" param="categoryName">
 			<var name="key_categoryName" value="${categoryName}" />
@@ -1166,7 +1166,7 @@
 	<command name="viewCategorizationCategoryNotVisibleCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="NavListItem#CATEGORIZATION" />
+		<execute function="Click" locator1="NavListItem#METADATA" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
@@ -1176,7 +1176,7 @@
 	<command name="viewCategorizationVocabularyCP">
 		<var name="count" value="1" />
 
-		<execute function="Click" locator1="NavListItem#CATEGORIZATION" />
+		<execute function="Click" locator1="NavListItem#METADATA" />
 
 		<for list="${vocabularyNameList}" param="vocabularyName">
 			<var name="key_count" value="${count}" />
@@ -1307,6 +1307,14 @@
 				<execute function="AssertElementNotPresent" locator1="WCConfiguration#NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL" />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewEntryAsWorkflowAsset">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${webContentTitle}" />
+
+		<var name="key_webContentContent" value="${webContentContent}" />
+
+		<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 	</command>
 
 	<command name="viewExpirationDateCP">
@@ -1632,19 +1640,6 @@
 		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-	</command>
-
-	<command name="viewWithTagCP">
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-
-		<for list="${tagNameList}" param="tagName">
-			<var name="key_tagName" value="${tagName}" />
-			<var name="key_webContentTitle" value="${webContentTitle}" />
-
-			<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TAG" value1="${tagName}" />
-		</for>
 	</command>
 
 	<command name="viewWithWorkflowCP">

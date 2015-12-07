@@ -218,7 +218,7 @@ public class BackgroundTaskLocalServiceImpl
 					Message message = new Message();
 
 					message.put(
-						"backgroundTaskId",
+						BackgroundTaskConstants.BACKGROUND_TASK_ID,
 						backgroundTask.getBackgroundTaskId());
 					message.put("name", backgroundTask.getName());
 					message.put("status", status);
@@ -521,7 +521,8 @@ public class BackgroundTaskLocalServiceImpl
 
 		Message message = new Message();
 
-		message.put("backgroundTaskId", backgroundTaskId);
+		message.put(
+			BackgroundTaskConstants.BACKGROUND_TASK_ID, backgroundTaskId);
 
 		MessageBusUtil.sendMessage(DestinationNames.BACKGROUND_TASK, message);
 	}
@@ -531,7 +532,8 @@ public class BackgroundTaskLocalServiceImpl
 	public void triggerBackgroundTask(long backgroundTaskId) {
 		Message message = new Message();
 
-		message.put("backgroundTaskId", backgroundTaskId);
+		message.put(
+			BackgroundTaskConstants.BACKGROUND_TASK_ID, backgroundTaskId);
 
 		MessageBusUtil.sendMessage(DestinationNames.BACKGROUND_TASK, message);
 	}

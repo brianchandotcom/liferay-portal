@@ -69,6 +69,20 @@ public class SolrIndexWriter extends BaseIndexWriter {
 	}
 
 	@Override
+	public void commit(SearchContext searchContext) throws SearchException {
+		SolrClient solrClient = _solrClientManager.getSolrClient();
+
+		try {
+			solrClient.commit();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new SearchException(e.getMessage());
+		}
+	}
+
+	@Override
 	public void deleteDocument(SearchContext searchContext, String uid)
 		throws SearchException {
 

@@ -181,6 +181,23 @@ public class WikiNodeServiceSoap {
 		}
 	}
 
+	public static com.liferay.wiki.model.WikiNodeSoap[] getNodes(long groupId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiNode> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.wiki.model.WikiNode> returnValue = WikiNodeServiceUtil.getNodes(groupId,
+					status, start, end, obc);
+
+			return com.liferay.wiki.model.WikiNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getNodesCount(long groupId) throws RemoteException {
 		try {
 			int returnValue = WikiNodeServiceUtil.getNodesCount(groupId);

@@ -70,7 +70,6 @@ public class UserIndexer extends BaseIndexer<User> {
 	}
 
 	public UserIndexer() {
-		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.ASSET_TAG_NAMES, Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
@@ -401,7 +400,7 @@ public class UserIndexer extends BaseIndexer<User> {
 						try {
 							Document document = getDocument(user);
 
-							indexableActionableDynamicQuery.addDocument(
+							indexableActionableDynamicQuery.addDocuments(
 								document);
 						}
 						catch (PortalException pe) {

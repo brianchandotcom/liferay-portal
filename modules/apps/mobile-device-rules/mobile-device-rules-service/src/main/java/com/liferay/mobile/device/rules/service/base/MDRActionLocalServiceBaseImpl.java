@@ -466,25 +466,6 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the m d r action remote service.
-	 *
-	 * @return the m d r action remote service
-	 */
-	public com.liferay.mobile.device.rules.service.MDRActionService getMDRActionService() {
-		return mdrActionService;
-	}
-
-	/**
-	 * Sets the m d r action remote service.
-	 *
-	 * @param mdrActionService the m d r action remote service
-	 */
-	public void setMDRActionService(
-		com.liferay.mobile.device.rules.service.MDRActionService mdrActionService) {
-		this.mdrActionService = mdrActionService;
-	}
-
-	/**
 	 * Returns the m d r action persistence.
 	 *
 	 * @return the m d r action persistence
@@ -580,25 +561,6 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
 	 * Returns the user persistence.
 	 *
 	 * @return the user persistence
@@ -633,25 +595,6 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setMDRRuleGroupInstanceLocalService(
 		com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
 		this.mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
-	}
-
-	/**
-	 * Returns the m d r rule group instance remote service.
-	 *
-	 * @return the m d r rule group instance remote service
-	 */
-	public com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService getMDRRuleGroupInstanceService() {
-		return mdrRuleGroupInstanceService;
-	}
-
-	/**
-	 * Sets the m d r rule group instance remote service.
-	 *
-	 * @param mdrRuleGroupInstanceService the m d r rule group instance remote service
-	 */
-	public void setMDRRuleGroupInstanceService(
-		com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
-		this.mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
 	}
 
 	/**
@@ -727,8 +670,6 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRActionLocalService.class)
 	protected MDRActionLocalService mdrActionLocalService;
-	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRActionService.class)
-	protected com.liferay.mobile.device.rules.service.MDRActionService mdrActionService;
 	@BeanReference(type = MDRActionPersistence.class)
 	protected MDRActionPersistence mdrActionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
@@ -739,14 +680,10 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected SystemEventPersistence systemEventPersistence;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService.class)
 	protected com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService;
-	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService.class)
-	protected com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService mdrRuleGroupInstanceService;
 	@BeanReference(type = MDRRuleGroupInstancePersistence.class)
 	protected MDRRuleGroupInstancePersistence mdrRuleGroupInstancePersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)

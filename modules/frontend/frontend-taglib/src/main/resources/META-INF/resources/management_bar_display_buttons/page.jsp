@@ -28,23 +28,21 @@ PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResp
 for (String displayStyle : displayViews) {
 	displayStyleURL.setParameter("displayStyle", displayStyle);
 
-	String iconCssClass = "icon-";
+	String icon = "table2";
 
 	if (displayStyle.equals("descriptive")) {
-		iconCssClass += "th-list";
+		icon = "list";
 	}
 	else if (displayStyle.equals("icon")) {
-		iconCssClass += "th-large";
-	}
-	else if (displayStyle.equals("list")) {
-		iconCssClass += "align-justify";
+		icon = "cards2";
 	}
 %>
 
 	<liferay-frontend:management-bar-button
 		active="<%= displayStyle.equals(selectedDisplayStyle) %>"
 		href="<%= displayStyleURL.toString() %>"
-		iconCssClass="<%= iconCssClass %>"
+		icon="<%= icon %>"
+		label="<%= displayStyle %>"
 	/>
 
 <%

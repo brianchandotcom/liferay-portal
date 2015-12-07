@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -43,13 +42,10 @@ public class UpgradeCalendar extends UpgradeProcess {
 	protected void updateCalendarTimeZoneId(long calendarId, String timeZoneId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update Calendar set timeZoneId = ? where calendarId = ?");
 
 			ps.setString(1, timeZoneId);
@@ -58,18 +54,15 @@ public class UpgradeCalendar extends UpgradeProcess {
 			ps.execute();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
 	protected void updateCalendarTimeZoneIds() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("select Calendar.calendarId, CalendarResource.");
@@ -79,7 +72,7 @@ public class UpgradeCalendar extends UpgradeProcess {
 			sb.append("calendarResourceId inner join User_ on ");
 			sb.append("CalendarResource.userId = User_.userId");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -103,7 +96,7 @@ public class UpgradeCalendar extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

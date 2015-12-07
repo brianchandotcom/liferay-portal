@@ -107,6 +107,18 @@ public class FailureMessageUtil {
 			}
 		}
 
+		for (Pattern pattern : _messagePatterns) {
+			Matcher messageMatcher = pattern.matcher(consoleOutput);
+
+			if (messageMatcher.find()) {
+				sb.append("<pre>");
+				sb.append(messageMatcher.group("snippet"));
+				sb.append("</pre>");
+
+				return sb.toString();
+			}
+		}
+
 		int x = consoleOutput.indexOf("[exec] * Exception is:");
 
 		if (x != -1) {
@@ -156,6 +168,13 @@ public class FailureMessageUtil {
 		return sb.toString();
 	}
 
+	private static final Pattern[] _messagePatterns = new Pattern[] {
+		Pattern.compile(
+			"(?<snippet>^\\s+\\[exec\\] " +
+				"com.liferay.source.formatter.SourceFormatterTest > " +
+				"testSourceFormatter FAILED.*?)^\\s+\\[exec\\]\\s+\\:",
+			Pattern.DOTALL | Pattern.MULTILINE)
+	};
 	private static final Pattern _pattern = Pattern.compile(
 		"\\n[a-z\\-\\.]+\\:\\n");
 

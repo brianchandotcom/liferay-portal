@@ -1,0 +1,63 @@
+{namespace Templates.Modal}
+
+/**
+ * This renders the main element.
+ * @param id
+ * @param? elementClasses
+ * @param? role
+ * @skipUpdates elementClasses
+ */
+{template .content}
+	<div
+		id="{$id}"
+		class="modal component{$elementClasses ? ' ' + $elementClasses : ''}"
+		role="{$role ? $role : 'dialog'}"
+		aria-labelledby="{$id}-header">
+		<div class="modal-dialog" tabindex="0">
+			<div class="modal-content">
+				{call .header data="all" /}
+				{call .body data="all" /}
+				{call .footer data="all" /}
+			</div>
+		</div>
+	</div>
+{/template}
+
+/**
+ * @param id
+ * @param body
+ */
+{template .body}
+	<section id="{$id}-body" class="modal-body">
+		{if $body}
+			{$body}
+		{/if}
+	</section>
+{/template}
+
+/**
+ * @param footer
+ * @param id
+ */
+{template .footer}
+	<footer id="{$id}-footer" class="modal-footer">
+		{if $footer}
+			{$footer}
+		{/if}
+	</footer>
+{/template}
+
+/**
+ * @param header
+ * @param id
+ */
+{template .header}
+	<header id="{$id}-header" class="modal-header">
+		{if $header}
+			<button type="button" class="close" data-onclick="hide" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			{$header}
+		{/if}
+	</header>
+{/template}

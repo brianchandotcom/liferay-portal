@@ -166,7 +166,7 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
-		doUpgrade();
+		upgrade();
 
 		CacheRegistryUtil.clear();
 

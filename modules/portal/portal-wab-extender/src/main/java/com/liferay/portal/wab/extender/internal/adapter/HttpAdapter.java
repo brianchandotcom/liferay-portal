@@ -124,13 +124,13 @@ public class HttpAdapter {
 		_httpServiceServlet = null;
 	}
 
-	@Reference(target = "(original.bean=true)")
-	protected void getServletContext(ServletContext servletContext) {
+	@Reference(target = "(original.bean=true)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
 
 	private HttpServiceServlet _httpServiceServlet;
 	private ServiceRegistration<?> _serviceRegistration;
-	private ServletContext _servletContext;
+	private volatile ServletContext _servletContext;
 
 }

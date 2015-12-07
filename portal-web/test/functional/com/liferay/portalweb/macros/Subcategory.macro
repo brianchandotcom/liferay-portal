@@ -227,7 +227,7 @@
 		<if>
 			<equals arg1="${nullResult}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no categories." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no categories. You can add a category by clicking the plus button on the bottom right corner." />
 			</then>
 		</if>
 	</command>

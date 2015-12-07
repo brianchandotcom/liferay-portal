@@ -16,8 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -294,14 +293,6 @@ public class DDMTemplateVersionLocalServiceUtil {
 	public void setService(DDMTemplateVersionLocalService service) {
 	}
 
-	private static ServiceTracker<DDMTemplateVersionLocalService, DDMTemplateVersionLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DDMTemplateVersionLocalServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<DDMTemplateVersionLocalService, DDMTemplateVersionLocalService>(bundle.getBundleContext(),
-				DDMTemplateVersionLocalService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<DDMTemplateVersionLocalService, DDMTemplateVersionLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(DDMTemplateVersionLocalService.class);
 }

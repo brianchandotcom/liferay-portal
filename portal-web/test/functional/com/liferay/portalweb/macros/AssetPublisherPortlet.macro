@@ -44,7 +44,7 @@
 
 				<var name="key_siteName" value="${otherSiteName}" />
 
-				<execute function="AssertClick" locator1="APConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 
 				<execute function="SelectFrame" />
 				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -63,7 +63,7 @@
 
 				<var name="key_siteName" value="${siteName}" />
 
-				<execute function="AssertClick" locator1="APConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 
 				<execute function="SelectFrame" />
 				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -156,6 +156,7 @@
 
 		<execute function="Select" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_BY_SELECT" value1="${fieldNameOrder}" />
 		<execute function="Select" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTION_SELECT" value1="${sortOrder}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
@@ -404,7 +405,7 @@
 		<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
 		<execute function="AssertTextEquals" locator1="APConfigurationSites#SITES_TABLE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="APConfigurationSites#SITES_TABLE_TYPE" value1="${siteScopeType}" />
-		<execute function="AssertClickNoError" locator1="APConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="ClickNoError" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -638,7 +639,7 @@
 
 				<execute function="AssertTextEquals" locator1="APConfigurationSites#SITES_TABLE_NAME" value1="${globalSiteName}" />
 				<execute function="AssertTextEquals" locator1="APConfigurationSites#SITES_TABLE_TYPE" value1="${globalSiteType}" />
-				<execute function="AssertElementPresent" locator1="APConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 
 				<var name="key_siteName" value="${liferaySiteName}" />
 
@@ -651,7 +652,7 @@
 						<execute function="AssertElementPresent" locator1="APConfigurationSites#SITES_TABLE_CHOOSE_BUTTON_DISABLED" />
 					</then>
 					<else>
-						<execute function="AssertElementPresent" locator1="APConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" />
+						<execute function="AssertElementPresent" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 					</else>
 				</if>
 			</then>
@@ -663,14 +664,14 @@
 					<execute function="AssertTextNotPresent" value1="${globalSiteName}" />
 					<execute function="AssertElementNotPresent" locator1="APConfigurationSites#SITES_TABLE_NAME" value1="${globalSiteName}" />
 					<execute function="AssertElementNotPresent" locator1="APConfigurationSites#SITES_TABLE_TYPE" value1="${globalSiteType}" />
-					<execute function="AssertElementNotPresent" locator1="APConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" />
+					<execute function="AssertElementNotPresent" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 
 					<var name="key_siteName" value="${liferaySiteName}" />
 
 					<execute function="AssertTextNotPresent" value1="${liferaySiteName}" />
 					<execute function="AssertElementNotPresent" locator1="APConfigurationSites#SITES_TABLE_NAME" value1="${liferaySiteName}" />
 					<execute function="AssertElementNotPresent" locator1="APConfigurationSites#SITES_TABLE_TYPE" value1="${liferaySiteType}" />
-					<execute function="AssertElementNotPresent" locator1="APConfigurationSites#SITES_TABLE_CHOOSE_BUTTON" />
+					<execute function="AssertElementNotPresent" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 				</then>
 			</elseif>
 		</if>
@@ -803,6 +804,12 @@
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_GENERIC_TITLE_1" value1="${assetTitle1}" />
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_GENERIC_TITLE_2" value1="${assetTitle2}" />
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_GENERIC_TITLE_3" value1="${assetTitle3}" />
+	</command>
+
+	<command name="viewMultipleDDLRecordsViaAP">
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DDL_RECORD_1" value1="${ddlRecordFieldData1}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DDL_RECORD_2" value1="${ddlRecordFieldData2}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DDL_RECORD_3" value1="${ddlRecordFieldData3}" />
 	</command>
 
 	<command name="viewMultipleSiteScopesAddDropdowns">

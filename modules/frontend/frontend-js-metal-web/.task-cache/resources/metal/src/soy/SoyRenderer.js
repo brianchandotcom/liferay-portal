@@ -137,6 +137,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soy
 				return TemplateComponent;
 			})(_Component3.default);
 
+			TemplateComponent.prototype.registerMetalComponent && TemplateComponent.prototype.registerMetalComponent(TemplateComponent, 'TemplateComponent')
 			TemplateComponent.RENDERER = SoyRenderer;
 
 			_ComponentRegistry2.default.register(TemplateComponent, name);
@@ -270,6 +271,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soy
 		return SoyRenderer;
 	})(_ComponentRenderer3.default);
 
+	SoyRenderer.prototype.registerMetalComponent && SoyRenderer.prototype.registerMetalComponent(SoyRenderer, 'SoyRenderer')
 	var originalSanitizedHtmlFromFn = soydata.SanitizedHtml.from;
 
 	soydata.SanitizedHtml.from = function (value) {

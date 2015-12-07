@@ -129,7 +129,7 @@
 			<elseif>
 				<equals arg1="${userScreenNameVariation}" arg2="Invalid" />
 				<then>
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#SCREEN_NAME_FIELD_ALERT" value1="The screen name cannot be an email address or a reserved word, such as cyrus, postfix. It must contain only alphanumeric or the following special characters: -._." />
+					<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#SCREEN_NAME_FIELD_ALERT" value1="The screen name cannot be an email address or a reserved word, such as postfix. It must contain only alphanumeric or the following special characters: -._." />
 				</then>
 			</elseif>
 			<else>
@@ -1319,7 +1319,7 @@
 		<execute function="Type" locator1="CPUsersandorganizationsUser#SITES_SELECT_SEARCH_FIELD" value1="${siteName}" />
 		<execute function="KeyPress" locator1="CPUsersandorganizationsUser#SITES_SELECT_SEARCH_FIELD" value1="\RETURN" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_SELECT_TABLE_NAME" value1="${siteName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#SITES_SELECT_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -1330,10 +1330,10 @@
 
 	<command name="expandRootCP">
 		<execute function="Click" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_ROOT_ARROW" />
-		<execute function="AssertElementPresent#assertElementPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_EDIT_COG" />
 			<then>
 				<execute function="Click" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_ROOT_ARROW" />
 			</then>

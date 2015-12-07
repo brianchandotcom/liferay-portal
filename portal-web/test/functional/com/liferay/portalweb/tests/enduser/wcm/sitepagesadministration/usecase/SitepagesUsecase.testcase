@@ -85,8 +85,8 @@
 	</command>
 
 	<command name="CannotDeleteLastPrivatePage" priority="3">
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Private Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -95,24 +95,27 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Private Pages" />
 		</execute>
 
-		<execute macro="SitePage#deletePrivatePageCP" />
+		<execute macro="SitePage#deletePrivatePageCP">
+			<var name="sitePageName" value="Site Page Name" />
+		</execute>
 	</command>
 
 	<command name="CannotDeleteLastPublicPage" priority="3">
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#deletePublicPageCP">
 			<var name="lastPublicSitepage" value="true" />
+			<var name="sitePageName" value="Welcome" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -121,11 +124,13 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#deletePublicPageCP" />
+		<execute macro="SitePage#deletePublicPageCP">
+			<var name="sitePageName" value="Site Page Name" />
+		</execute>
 	</command>
 
 	<command name="ChangingPageTypeLayoutToLinkToAPageOfThisSiteHidesChildPages" priority="3">
@@ -138,7 +143,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -166,10 +171,15 @@
 			<var name="sitePageName" value="Site Page2 Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
+		</execute>
+
 		<execute macro="SitePage#changePageTypeLayoutCP">
 			<var name="indexNumber" value="4" />
+			<var name="pageName" value="- - Child Page Name" />
 			<var name="pageType" value="Link to a Page of This Site" />
-			<var name="sitePageName" value="- - Child Page Name" />
+			<var name="sitePageName" value="Site Page2 Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -179,12 +189,12 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_TO_PAGE" />
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_ARROW_2" />
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_3" value1="Child Page Name" />
+		<execute macro="SitePage#viewChildPage">
+			<var name="sitePageName" value="Child Page Name" />
+		</execute>
 	</command>
 
 	<command name="DefaultLanguageWithEmptyFriendlyURLThrowsErrorExceptions" priority="3">
@@ -230,8 +240,8 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#viewLoadMoreResultsPages">
@@ -242,12 +252,13 @@
 			<execute macro="SitePage#addChildCP">
 				<var name="page" value="Public Pages" />
 				<var name="siteChildPageName" value="${siteChildPageName}" />
+				<var name="sitePageName" value="Welcome" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#viewLoadMoreResultsPages">
@@ -284,7 +295,7 @@
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="My Profile" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoAddPage" />
@@ -318,7 +329,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+			<var name="page" value="Private Pages" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -381,11 +392,10 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Private Pages" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
-			<var name="page" value="Private Pages" />
 			<var name="sitePageName" value="Site Page" />
 		</execute>
 
@@ -427,11 +437,11 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Private Pages" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
-			<var name="page" value="Private Pages" />
+			<var name="page" value="Private" />
 			<var name="sitePageName" value="Site Page" />
 		</execute>
 
@@ -1219,7 +1229,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -1238,12 +1248,9 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
-		<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
-		<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The first page cannot be of type Link to URL." />
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" value1="Blank Page" />
+		<execute macro="SitePage#firstPageCanNotBeOfTypeLinkToURL">
+			<var name="sitePageName" value="Blank Page" />
+		</execute>
 
 		<execute macro="SitePage#addCP">
 			<var name="page" value="Public Pages" />

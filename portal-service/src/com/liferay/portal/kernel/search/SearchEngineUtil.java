@@ -166,6 +166,21 @@ public class SearchEngineUtil {
 		}
 	}
 
+	public static void commit(String searchEngineId, long companyId)
+		throws SearchException {
+
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
+
+		IndexWriter indexWriter = searchEngine.getIndexWriter();
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setSearchEngineId(searchEngineId);
+
+		indexWriter.commit(searchContext);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #deleteDocument(String, long,
 	 *             String, boolean)}

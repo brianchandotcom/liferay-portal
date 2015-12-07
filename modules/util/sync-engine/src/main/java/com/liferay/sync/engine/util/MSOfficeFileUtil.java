@@ -35,9 +35,10 @@ import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
 public class MSOfficeFileUtil {
 
 	public static Date getLastSavedDate(Path filePath) {
+		NPOIFSFileSystem npoifsFileSystem = null;
+
 		try {
-			NPOIFSFileSystem npoifsFileSystem = new NPOIFSFileSystem(
-				filePath.toFile());
+			npoifsFileSystem = new NPOIFSFileSystem(filePath.toFile());
 
 			HPSFPropertiesOnlyDocument hpsfPropertiesOnlyDocument =
 				new HPSFPropertiesOnlyDocument(npoifsFileSystem);
@@ -49,6 +50,16 @@ public class MSOfficeFileUtil {
 		}
 		catch (Exception e) {
 			return null;
+		}
+		finally {
+			if (npoifsFileSystem != null) {
+				try {
+					npoifsFileSystem.close();
+				}
+				catch (Exception e) {
+					return null;
+				}
+			}
 		}
 	}
 

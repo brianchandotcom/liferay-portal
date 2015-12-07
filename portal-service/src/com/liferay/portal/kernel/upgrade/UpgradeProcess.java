@@ -48,122 +48,15 @@ public abstract class UpgradeProcess
 		return 0;
 	}
 
-	public boolean hasTable(String tableName) throws Exception {
-		if (doHasTable(StringUtil.toLowerCase(tableName)) ||
-			doHasTable(StringUtil.toUpperCase(tableName)) ||
-			doHasTable(tableName)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public long increment() {
-		DB db = DBFactoryUtil.getDB();
-
-		return db.increment();
-	}
-
-	public long increment(String name) {
-		DB db = DBFactoryUtil.getDB();
-
-		return db.increment(name);
-	}
-
-	public boolean isSupportsAlterColumnName() {
-		DB db = DBFactoryUtil.getDB();
-
-		return db.isSupportsAlterColumnName();
-	}
-
-	public boolean isSupportsAlterColumnType() {
-		DB db = DBFactoryUtil.getDB();
-
-		return db.isSupportsAlterColumnType();
-	}
-
-	public boolean isSupportsStringCaseSensitiveQuery() {
-		DB db = DBFactoryUtil.getDB();
-
-		return db.isSupportsStringCaseSensitiveQuery();
-	}
-
-	public boolean isSupportsUpdateWithInnerJoin() {
-		DB db = DBFactoryUtil.getDB();
-
-		return db.isSupportsUpdateWithInnerJoin();
-	}
-
-	public boolean tableHasColumn(String tableName, String columnName)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select * from " + tableName);
-
-			rs = ps.executeQuery();
-
-			ResultSetMetaData rsmd = rs.getMetaData();
-
-			for (int i = 0; i < rsmd.getColumnCount(); i++) {
-				String curColumnName = rsmd.getColumnName(i + 1);
-
-				if (StringUtil.equalsIgnoreCase(curColumnName, columnName)) {
-					return true;
-				}
-			}
-		}
-		catch (Exception e) {
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-
-		return false;
-	}
-
-	public boolean tableHasData(String tableName) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select count(*) from " + tableName);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				int count = rs.getInt(1);
-
-				if (count > 0) {
-					return true;
-				}
-			}
-		}
-		catch (Exception e) {
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-
-		return false;
-	}
-
 	public void upgrade() throws UpgradeException {
 		long start = System.currentTimeMillis();
 
-		try {
-			if (_log.isInfoEnabled()) {
-				_log.info("Upgrading " + ClassUtil.getClassName(this));
-			}
+		if (_log.isInfoEnabled()) {
+			_log.info("Upgrading " + ClassUtil.getClassName(this));
+		}
+
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			connection = con;
 
 			doUpgrade();
 		}
@@ -171,6 +64,8 @@ public abstract class UpgradeProcess
 			throw new UpgradeException(e);
 		}
 		finally {
+			connection = null;
+
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Completed upgrade process " +
@@ -205,14 +100,11 @@ public abstract class UpgradeProcess
 	}
 
 	protected boolean doHasTable(String tableName) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			DatabaseMetaData metadata = con.getMetaData();
+			DatabaseMetaData metadata = connection.getMetaData();
 
 			rs = metadata.getTables(null, null, tableName, null);
 
@@ -221,13 +113,118 @@ public abstract class UpgradeProcess
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return false;
 	}
 
-	protected void doUpgrade() throws Exception {
+	protected abstract void doUpgrade() throws Exception;
+
+	protected boolean hasTable(String tableName) throws Exception {
+		if (doHasTable(StringUtil.toLowerCase(tableName)) ||
+			doHasTable(StringUtil.toUpperCase(tableName)) ||
+			doHasTable(tableName)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected long increment() {
+		DB db = DBFactoryUtil.getDB();
+
+		return db.increment();
+	}
+
+	protected long increment(String name) {
+		DB db = DBFactoryUtil.getDB();
+
+		return db.increment(name);
+	}
+
+	protected boolean isSupportsAlterColumnName() {
+		DB db = DBFactoryUtil.getDB();
+
+		return db.isSupportsAlterColumnName();
+	}
+
+	protected boolean isSupportsAlterColumnType() {
+		DB db = DBFactoryUtil.getDB();
+
+		return db.isSupportsAlterColumnType();
+	}
+
+	protected boolean isSupportsStringCaseSensitiveQuery() {
+		DB db = DBFactoryUtil.getDB();
+
+		return db.isSupportsStringCaseSensitiveQuery();
+	}
+
+	protected boolean isSupportsUpdateWithInnerJoin() {
+		DB db = DBFactoryUtil.getDB();
+
+		return db.isSupportsUpdateWithInnerJoin();
+	}
+
+	protected boolean tableHasColumn(String tableName, String columnName)
+		throws Exception {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement("select * from " + tableName);
+
+			rs = ps.executeQuery();
+
+			ResultSetMetaData rsmd = rs.getMetaData();
+
+			for (int i = 0; i < rsmd.getColumnCount(); i++) {
+				String curColumnName = rsmd.getColumnName(i + 1);
+
+				if (StringUtil.equalsIgnoreCase(curColumnName, columnName)) {
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+
+		return false;
+	}
+
+	protected boolean tableHasData(String tableName) throws Exception {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"select count(*) from " + tableName);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count > 0) {
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+
+		return false;
 	}
 
 	protected void upgradeTable(String tableName, Object[][] tableColumns)

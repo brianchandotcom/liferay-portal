@@ -965,7 +965,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			}
 		</#if>
 
-		<#if tempEntity.hasRemoteService()>
+		<#if (sessionTypeName != "Local") && tempEntity.hasRemoteService()>
 			/**
 			 * Returns the ${tempEntity.humanName} remote service.
 			 *
@@ -1149,7 +1149,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			protected ${tempEntity.packagePath}.service.${tempEntity.name}LocalService ${tempEntity.varName}LocalService;
 		</#if>
 
-		<#if tempEntity.hasRemoteService()>
+		<#if (sessionTypeName != "Local") && tempEntity.hasRemoteService()>
 			@BeanReference(type = ${tempEntity.packagePath}.service.${tempEntity.name}Service.class)
 
 			<#if !classDeprecated && tempEntity.isDeprecated()>

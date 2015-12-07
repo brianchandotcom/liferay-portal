@@ -99,7 +99,7 @@ public class SQLServerDB extends BaseDB {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return indexes;

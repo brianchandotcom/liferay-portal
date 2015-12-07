@@ -16,6 +16,7 @@ package com.liferay.exportimport.web.portlet.action;
 
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.NoSuchBackgroundTaskException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -46,7 +47,7 @@ public class DeleteBackgroundTaskMVCActionCommand extends BaseMVCActionCommand {
 		throws PortalException {
 
 		long backgroundTaskId = ParamUtil.getLong(
-			actionRequest, "backgroundTaskId");
+			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
 		BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
 	}

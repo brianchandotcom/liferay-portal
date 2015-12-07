@@ -2837,6 +2837,36 @@ Portal.
 
 ---------------------------------------
 
+### Software Catalog portlet and services are no longer available
+- **Date:** 2015-Nov-21
+- **JIRA Ticket:** LPS-60705
+
+#### What changed?
+
+The Software Catalog portlet and its associated services are no longer part
+of Liferay's source code or binaries.
+
+#### Who is affected?
+
+This affects portals which were making use of the Software Catalog portlet to
+manage a catalog of their software. Also developers who were making use of the
+software catalog services from their custom code.
+
+#### How should I update my code?
+
+There is no direct replacement for invocations to the Software Catalog services.
+In cases where it is really needed it is possible to obtain the code from a
+previous release and include it in the custom product (subject to the licensing)
+
+#### Why was this change made?
+
+The Software Catalog was developed to implement the very first versions of what
+later become Liferay's Marketplace. It was later replaced and has not been in
+use by Liferay since then. We have also detected very small to no usage outside
+of Liferay. We made the decision to remove it to make Liferay more lightweight
+and free time to focus on other areas of the product that add more value.
+---------------------------------------
+
 ### Removed Hover and Alternate Style Features of Search Container Tag
 - **Date:** 2015-Nov-03
 - **JIRA Ticket:** LPS-58854
@@ -2925,3 +2955,28 @@ In previous versions of Liferay, some applications such as Blogs and Wiki shared
 the tags of their entries within the page. The Asset Publisher was able to use
 them to show other assets with the same tags. This functionality has changed, so
 the preference is no longer used.
+
+---------------------------------------
+
+### Removed the getPageOrderByComparator method from WikiUtil
+- **Date:** 2015-Dec-1
+- **JIRA Ticket:** LPS-60843
+
+#### What changed?
+
+The `getPageOrderByComparator` method has been removed from the WikiUtil.
+
+#### Who is affected?
+
+This affects developers that use this method in their own developments.
+
+#### How should I update my code?
+
+You should update your code to invoke:
+
+- `WikiPortletUtil.getPageOrderByComparator(String, String)`:
+
+#### Why was this change made?
+
+As part of the modularization efforts it has been considered that that this
+logic belongs to wiki-web module.

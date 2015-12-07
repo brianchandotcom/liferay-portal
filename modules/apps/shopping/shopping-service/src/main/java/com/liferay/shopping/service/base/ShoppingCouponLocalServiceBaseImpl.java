@@ -335,25 +335,6 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the shopping coupon remote service.
-	 *
-	 * @return the shopping coupon remote service
-	 */
-	public com.liferay.shopping.service.ShoppingCouponService getShoppingCouponService() {
-		return shoppingCouponService;
-	}
-
-	/**
-	 * Sets the shopping coupon remote service.
-	 *
-	 * @param shoppingCouponService the shopping coupon remote service
-	 */
-	public void setShoppingCouponService(
-		com.liferay.shopping.service.ShoppingCouponService shoppingCouponService) {
-		this.shoppingCouponService = shoppingCouponService;
-	}
-
-	/**
 	 * Returns the shopping coupon persistence.
 	 *
 	 * @return the shopping coupon persistence
@@ -430,25 +411,6 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
 	 * Returns the user persistence.
 	 *
 	 * @return the user persistence
@@ -483,25 +445,6 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	public void setShoppingCategoryLocalService(
 		com.liferay.shopping.service.ShoppingCategoryLocalService shoppingCategoryLocalService) {
 		this.shoppingCategoryLocalService = shoppingCategoryLocalService;
-	}
-
-	/**
-	 * Returns the shopping category remote service.
-	 *
-	 * @return the shopping category remote service
-	 */
-	public com.liferay.shopping.service.ShoppingCategoryService getShoppingCategoryService() {
-		return shoppingCategoryService;
-	}
-
-	/**
-	 * Sets the shopping category remote service.
-	 *
-	 * @param shoppingCategoryService the shopping category remote service
-	 */
-	public void setShoppingCategoryService(
-		com.liferay.shopping.service.ShoppingCategoryService shoppingCategoryService) {
-		this.shoppingCategoryService = shoppingCategoryService;
 	}
 
 	/**
@@ -540,25 +483,6 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	public void setShoppingItemLocalService(
 		com.liferay.shopping.service.ShoppingItemLocalService shoppingItemLocalService) {
 		this.shoppingItemLocalService = shoppingItemLocalService;
-	}
-
-	/**
-	 * Returns the shopping item remote service.
-	 *
-	 * @return the shopping item remote service
-	 */
-	public com.liferay.shopping.service.ShoppingItemService getShoppingItemService() {
-		return shoppingItemService;
-	}
-
-	/**
-	 * Sets the shopping item remote service.
-	 *
-	 * @param shoppingItemService the shopping item remote service
-	 */
-	public void setShoppingItemService(
-		com.liferay.shopping.service.ShoppingItemService shoppingItemService) {
-		this.shoppingItemService = shoppingItemService;
 	}
 
 	/**
@@ -652,8 +576,6 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.shopping.service.ShoppingCouponLocalService.class)
 	protected ShoppingCouponLocalService shoppingCouponLocalService;
-	@BeanReference(type = com.liferay.shopping.service.ShoppingCouponService.class)
-	protected com.liferay.shopping.service.ShoppingCouponService shoppingCouponService;
 	@BeanReference(type = ShoppingCouponPersistence.class)
 	protected ShoppingCouponPersistence shoppingCouponPersistence;
 	@BeanReference(type = ShoppingCouponFinder.class)
@@ -662,20 +584,14 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = com.liferay.shopping.service.ShoppingCategoryLocalService.class)
 	protected com.liferay.shopping.service.ShoppingCategoryLocalService shoppingCategoryLocalService;
-	@BeanReference(type = com.liferay.shopping.service.ShoppingCategoryService.class)
-	protected com.liferay.shopping.service.ShoppingCategoryService shoppingCategoryService;
 	@BeanReference(type = ShoppingCategoryPersistence.class)
 	protected ShoppingCategoryPersistence shoppingCategoryPersistence;
 	@BeanReference(type = com.liferay.shopping.service.ShoppingItemLocalService.class)
 	protected com.liferay.shopping.service.ShoppingItemLocalService shoppingItemLocalService;
-	@BeanReference(type = com.liferay.shopping.service.ShoppingItemService.class)
-	protected com.liferay.shopping.service.ShoppingItemService shoppingItemService;
 	@BeanReference(type = ShoppingItemPersistence.class)
 	protected ShoppingItemPersistence shoppingItemPersistence;
 	@BeanReference(type = ShoppingItemFinder.class)

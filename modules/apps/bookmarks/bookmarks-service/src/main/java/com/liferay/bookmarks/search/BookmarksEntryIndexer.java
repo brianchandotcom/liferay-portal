@@ -191,7 +191,7 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 					try {
 						Document document = getDocument(entry);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

@@ -29,19 +29,17 @@
 				</c:if>
 			</div>
 
-			<c:if test="<%= Validator.isNotNull(buttons) %>">
-				<div class="management-bar-header-right">
-					<ul class="management-bar-nav nav">
-						<%= buttons %>
-					</ul>
-				</div>
-			</c:if>
-
 			<c:if test="<%= Validator.isNotNull(filters) %>">
 				<div class="collapse management-bar-collapse">
 					<ul class="management-bar-nav nav">
 						<%= filters %>
 					</ul>
+				</div>
+			</c:if>
+
+			<c:if test="<%= Validator.isNotNull(buttons) %>">
+				<div class="management-bar-header-right">
+					<%= buttons %>
 				</div>
 			</c:if>
 		</div>
@@ -52,17 +50,11 @@
 			<div class="container-fluid-1280">
 				<div class="management-bar-header">
 					<c:if test="<%= includeCheckBox %>">
-						<label class="checkbox">
-							<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="actionsCheckBox" title="select-all" type="checkbox" />
-						</label>
-					</c:if>
-				</div>
-
-				<div class="management-bar-header-right">
-					<c:if test="<%= Validator.isNotNull(actionButtons) %>">
-						<ul class="management-bar-nav nav">
-							<%= actionButtons %>
-						</ul>
+						<div class="checkbox">
+							<label>
+								<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="actionsCheckBox" title="select-all" type="checkbox" />
+							</label>
+						</div>
 					</c:if>
 				</div>
 
@@ -74,6 +66,12 @@
 							</span>
 						</li>
 					</ul>
+				</div>
+
+				<div class="management-bar-header-right">
+					<c:if test="<%= Validator.isNotNull(actionButtons) %>">
+						<%= actionButtons %>
+					</c:if>
 				</div>
 			</div>
 		</div>

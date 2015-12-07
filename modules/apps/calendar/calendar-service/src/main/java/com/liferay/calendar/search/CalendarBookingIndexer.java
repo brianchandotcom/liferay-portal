@@ -224,8 +224,6 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 				}
 
 			});
-		indexableActionableDynamicQuery.setCommitImmediately(
-			isCommitImmediately());
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<CalendarBooking>() {
@@ -235,7 +233,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 					try {
 						Document document = getDocument(calendarBooking);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

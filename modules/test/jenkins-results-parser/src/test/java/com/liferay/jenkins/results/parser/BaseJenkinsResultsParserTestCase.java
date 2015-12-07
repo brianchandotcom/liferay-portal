@@ -86,6 +86,10 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		}
 	}
 
+	protected void deleteFile(String fileName) {
+		deleteFile(new File(fileName));
+	}
+
 	protected abstract void downloadSample(File sampleDir, URL url)
 		throws Exception;
 
@@ -121,7 +125,9 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			urlString += "?pretty";
 		}
 
-		write(
+		urlSuffix = JenkinsResultsParserUtil.fixFileName(urlSuffix);
+
+		JenkinsResultsParserUtil.write(
 			new File(dir, urlSuffix),
 			JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.getLocalURL(urlString)));
@@ -171,30 +177,15 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		return urlString.replace(System.getProperty("user.dir"), "${user.dir}");
 	}
 
-	protected void write(File file, String content) throws Exception {
-		System.out.println(
-			"Write file " + file + " with length " + content.length());
-
-		File parentDir = file.getParentFile();
-
-		if (!parentDir.exists()) {
-			System.out.println("Make parent directories for " + file);
-
-			parentDir.mkdirs();
-		}
-
-		Files.write(Paths.get(file.toURI()), content.getBytes());
-	}
-
 	protected void writeExpectedMessage(File sampleDir) throws Exception {
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
 		String expectedMessage = getMessage(toURLString(sampleDir));
 
-		write(expectedMessageFile, expectedMessage);
+		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
 	}
 
 	protected File dependenciesDir = new File(
-		"src/test/resources/com/liferay/results/parser/dependencies/" +
+		"src/test/resources/com/liferay/jenkins/results/parser/dependencies/" +
 			getSimpleClassName());
 
 }

@@ -25,6 +25,10 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
+			new String[] {
+				"1_WAR_soannouncementsportlet",
+				AnnouncementsPortletKeys.ANNOUNCEMENTS
+			},
 			new String[] {"83", AnnouncementsPortletKeys.ALERTS},
 			new String[] {"84", AnnouncementsPortletKeys.ANNOUNCEMENTS}
 		};

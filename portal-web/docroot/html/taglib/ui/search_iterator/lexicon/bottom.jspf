@@ -14,11 +14,14 @@
  */
 --%>
 
-<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_BOTTOM && paginate %>">
-	<div class="taglib-search-iterator-page-iterator-bottom">
-		<liferay-ui:search-paginator id='<%= id + "PageIteratorBottom" %>' markupView="<%= markupView %>" searchContainer="<%= searchContainer %>" type="<%= type %>" />
+		<c:if test="<%= paginate %>">
+			<div class="taglib-search-iterator-page-iterator-bottom">
+				<liferay-ui:search-paginator id='<%= id + "PageIteratorBottom" %>' markupView="<%= markupView %>" searchContainer="<%= searchContainer %>" type="<%= type %>" />
+			</div>
+		</c:if>
+
 	</div>
-</c:if>
+</div>
 
 <c:if test="<%= Validator.isNotNull(id) %>">
 	<input id="<%= namespace + id %>PrimaryKeys" name="<%= namespace + id %>PrimaryKeys" type="hidden" value="" />

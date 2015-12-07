@@ -70,7 +70,7 @@ public class UpgradePortletDisplayTemplatePreferencesTest
 			"portlet1", DISPLAY_STYLE_PREFIX_6_2 + ddmTemplate.getUuid());
 		setPortletDisplayStyle("portlet2", "testDisplayStyle");
 
-		doUpgrade();
+		upgrade();
 
 		CacheRegistryUtil.clear();
 

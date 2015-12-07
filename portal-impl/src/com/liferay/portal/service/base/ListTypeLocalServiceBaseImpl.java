@@ -326,25 +326,6 @@ public abstract class ListTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the list type remote service.
-	 *
-	 * @return the list type remote service
-	 */
-	public com.liferay.portal.service.ListTypeService getListTypeService() {
-		return listTypeService;
-	}
-
-	/**
-	 * Sets the list type remote service.
-	 *
-	 * @param listTypeService the list type remote service
-	 */
-	public void setListTypeService(
-		com.liferay.portal.service.ListTypeService listTypeService) {
-		this.listTypeService = listTypeService;
-	}
-
-	/**
 	 * Returns the list type persistence.
 	 *
 	 * @return the list type persistence
@@ -398,25 +379,6 @@ public abstract class ListTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setClassNameLocalService(
 		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name remote service.
-	 *
-	 * @return the class name remote service
-	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
-		return classNameService;
-	}
-
-	/**
-	 * Sets the class name remote service.
-	 *
-	 * @param classNameService the class name remote service
-	 */
-	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
-		this.classNameService = classNameService;
 	}
 
 	/**
@@ -492,16 +454,12 @@ public abstract class ListTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.ListTypeLocalService.class)
 	protected ListTypeLocalService listTypeLocalService;
-	@BeanReference(type = com.liferay.portal.service.ListTypeService.class)
-	protected com.liferay.portal.service.ListTypeService listTypeService;
 	@BeanReference(type = ListTypePersistence.class)
 	protected ListTypePersistence listTypePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)

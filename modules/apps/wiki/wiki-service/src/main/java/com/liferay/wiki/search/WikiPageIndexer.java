@@ -307,7 +307,7 @@ public class WikiPageIndexer
 					try {
 						Document document = getDocument(page);
 
-						indexableActionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

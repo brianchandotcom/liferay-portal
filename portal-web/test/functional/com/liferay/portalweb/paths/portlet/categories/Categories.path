@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_ENTRY_LINK</td>
-	<td>//tr[contains(.,'${key_categoryName}')]/td[2]/a</td>
+	<td>//td/a[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

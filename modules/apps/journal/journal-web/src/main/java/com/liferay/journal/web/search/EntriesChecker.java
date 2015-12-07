@@ -50,7 +50,8 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 
 		_journalDisplayContext = new JournalDisplayContext(
 			PortalUtil.getHttpServletRequest(liferayPortletRequest),
-			liferayPortletResponse, liferayPortletRequest.getPreferences());
+			liferayPortletRequest, liferayPortletResponse,
+			liferayPortletRequest.getPreferences());
 
 		_liferayPortletResponse = liferayPortletResponse;
 

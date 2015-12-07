@@ -2173,13 +2173,9 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#viewSuggestionCountPG">
-			<var name="kbSuggestionCount" value="4" />
-		</execute>
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
 
-		<execute macro="KBArticleSuggestion#viewPG">
-			<var name="kbSuggestionCount" value="4" />
-		</execute>
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There are 4 suggestions." />
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
 

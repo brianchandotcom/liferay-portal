@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -51,14 +50,11 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	protected long getCompanyId(String sql, long primaryKey) throws Exception {
 		long companyId = 0;
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			ps.setLong(1, primaryKey);
 
@@ -69,7 +65,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return companyId;
@@ -78,14 +74,11 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	protected Object[] getGroup(long groupId) throws Exception {
 		Object[] group = null;
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select companyId from Group_ where groupId = ?");
 
 			ps.setLong(1, groupId);
@@ -99,7 +92,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return group;
@@ -108,14 +101,11 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	protected Object[] getLayout(long plid) throws Exception {
 		Object[] layout = null;
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId, companyId, privateLayout, layoutId from " +
 					"Layout where plid = ?");
 
@@ -135,7 +125,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return layout;
@@ -150,14 +140,11 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 		String uuid = null;
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select uuid_ from Layout where groupId = ? and " +
 					"privateLayout = ? and layoutId = ?");
 
@@ -175,7 +162,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 
 		return uuid;
@@ -221,13 +208,10 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	}
 
 	protected void updatePortletPreferences() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select portletPreferencesId, ownerId, ownerType, ");
@@ -242,7 +226,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
@@ -314,7 +298,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -322,13 +306,10 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			long portletPreferencesId, String preferences)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update PortletPreferences set preferences = ? where " +
 					"portletPreferencesId = " + portletPreferencesId);
 
@@ -337,7 +318,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 

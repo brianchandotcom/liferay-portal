@@ -47,10 +47,13 @@ public class PanelTag extends IncludeTag {
 				PanelContainerTag panelContainerTag =
 					(PanelContainerTag)baseBodyTagSupport;
 
+				_accordion = panelContainerTag.isAccordion();
 				_parentId = panelContainerTag.getId();
 			}
 		}
 
+		request.setAttribute(
+			"liferay-ui:panel:accordion", String.valueOf(_accordion));
 		request.setAttribute("liferay-ui:panel:helpMessage", _helpMessage);
 		request.setAttribute("liferay-ui:panel:iconCssClass", _iconCssClass);
 		request.setAttribute("liferay-ui:panel:id", _id);
@@ -128,6 +131,7 @@ public class PanelTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_accordion = false;
 		_collapsible = true;
 		_cssClass = null;
 		_defaultState = "open";
@@ -172,6 +176,7 @@ public class PanelTag extends IncludeTag {
 		}
 	}
 
+	private boolean _accordion;
 	private boolean _collapsible = true;
 	private String _cssClass;
 	private String _defaultState = "open";

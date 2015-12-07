@@ -225,7 +225,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -341,7 +341,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="List Name" />
 		</execute>
 
@@ -562,7 +562,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP" />
+		<execute macro="DDLNavigator#gotoListRecords" />
 
 		<execute macro="DDLRecord#gotoRecordPreview" />
 
@@ -592,7 +592,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP" />
+		<execute macro="DDLNavigator#gotoListRecords" />
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData2}" />
@@ -1263,8 +1263,6 @@
 	</command>
 
 	<command name="AssertUserUpdateRejectedRecord" priority="4">
-		<var name="workflowAssetTitle" value="DDL List" />
-
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
@@ -1412,7 +1410,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="ddlDataDefinitionName" value="To Do" />
-			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
+			<var name="workflowAssetTitle" value="New To Do for List: DDL List" />
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -1423,7 +1421,7 @@
 
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="ddlDataDefinitionName" value="To Do" />
-			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
+			<var name="workflowAssetTitle" value="New To Do for List: DDL List" />
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -1441,18 +1439,18 @@
 
 		<execute macro="Workflow#viewRejectedTask">
 			<var name="ddlDataDefinitionName" value="To Do" />
-			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
+			<var name="workflowAssetTitle" value="New To Do for List: DDL List" />
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
-		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="DDL Record Title" />
+			<var name="workflowAssetTitle" value="New To Do for List: DDL List" />
+			<var name="workflowAssignedTo" value="userfn userln" />
+			<var name="workflowTask" value="Update" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="New To Do for List: DDL List" />
-
-		<execute function="AssertClick" locator1="MyAccountMyWorkflowInstances#EDIT_LINK" value1="Edit" />
-		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="MyaccountMyworkflowtasks#MY_ACCOUNT_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Button#VIEW_HISTORY" value1="View History" />
+		<execute macro="DDLNavigator#gotoDDLRecordEditViaWorkflow" />
 
 		<execute macro="User#logoutPG" />
 
@@ -1759,11 +1757,10 @@
 			<var name="localizedLanguage" value="Catalan (Spain)" />
 		</execute>
 
-		<var name="ddlRecordFieldData" value="Contenido" />
-
-		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][1]/input[@value='${ddlRecordFieldData}'])" />
-		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][2]/input[@value='${ddlRecordFieldData} 3'])" />
-		<execute function="AssertElementNotPresent" locator1="xpath=(//div[@data-fieldname='Text'])[3]" />
+		<execute macro="DDLRecord#viewTextFieldRepeated">
+			<var name="ddlRecordFieldData1" value="Contenido" />
+			<var name="ddlRecordFieldData2" value="Contenido 3" />
+		</execute>
 	</command>
 
 	<command name="TemplateAddDeletedField" priority="3">
@@ -1944,7 +1941,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="List Name" />
 		</execute>
 
@@ -2051,6 +2048,97 @@
 		</execute>
 	</command>
 
+	<command name="ViewMultipleDDLRecordsInAssetPublisherAndSortByModifiedDate" priority="3">
+		<description message="This is a use case for LPS-57993" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP" />
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP" />
+
+		<execute macro="DDLDataDefinition#selectCP" />
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLNavigator#gotoListRecords" />
+
+		<for list="firstRecord,secondText,thirdTest" param="ddlRecordFieldData">
+			<execute macro="DDLNavigator#gotoAddListRecord" />
+
+			<execute macro="DDLRecord#populateFieldText">
+				<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+				<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+				<var name="fieldName" value="TextName" />
+			</execute>
+
+			<execute macro="DDLRecord#publishCP" />
+		</for>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMultipleDDLRecordsViaAP">
+			<var name="ddlRecordFieldData1" value="thirdTest" />
+			<var name="ddlRecordFieldData2" value="secondText" />
+			<var name="ddlRecordFieldData3" value="firstRecord" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSelectedPG">
+			<var name="selectedAsset" value="Dynamic Data Lists Record" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
+			<var name="fieldNameOrder" value="Modified Date" />
+			<var name="sortOrder" value="Ascending" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMultipleDDLRecordsViaAP">
+			<var name="ddlRecordFieldData1" value="firstRecord" />
+			<var name="ddlRecordFieldData2" value="secondText" />
+			<var name="ddlRecordFieldData3" value="thirdTest" />
+		</execute>
+	</command>
+
 	<command name="ViewNestedFieldDoesNotDisplayInRecordTable" priority="3">
 		<description message="This is a use case for LPS-51538." />
 
@@ -2124,7 +2212,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="Dynamic Data List" />
 		</execute>
 
@@ -2204,7 +2292,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="Dynamic Data List" />
 		</execute>
 

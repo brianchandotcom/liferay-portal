@@ -198,7 +198,10 @@ public class BaseJSONHandler extends BaseHandler {
 		}
 		else if (exception.equals(
 					"com.liferay.portlet.documentlibrary." +
-						"NoSuchFileEntryException")) {
+						"NoSuchFileEntryException") ||
+				 exception.equals(
+					"com.liferay.portlet.documentlibrary." +
+						"NoSuchFolderException")) {
 
 			SyncFile syncFile = getLocalSyncFile();
 

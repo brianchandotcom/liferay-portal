@@ -26,17 +26,13 @@ String robots = ParamUtil.getString(request, "robots", defaultRobots);
 
 <liferay-ui:error-marker key="errorSection" value="robots" />
 
-<h3><liferay-ui:message key="robots" /></h3>
-
-<aui:fieldset>
-	<c:choose>
-		<c:when test="<%= Validator.isNotNull(virtualHostName) %>">
-			<aui:input cols="60" label="set-the-robots-txt" name="robots" rows="15" type="textarea" value="<%= robots %>" />
-		</c:when>
-		<c:otherwise>
-			<div class="alert alert-info">
-				<liferay-ui:message key="please-set-the-virtual-host-before-you-set-the-robots-txt" />
-			</div>
-		</c:otherwise>
-	</c:choose>
-</aui:fieldset>
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(virtualHostName) %>">
+		<aui:input cols="60" label="set-the-robots-txt" name="robots" rows="15" type="textarea" value="<%= robots %>" />
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-info">
+			<liferay-ui:message key="please-set-the-virtual-host-before-you-set-the-robots-txt" />
+		</div>
+	</c:otherwise>
+</c:choose>

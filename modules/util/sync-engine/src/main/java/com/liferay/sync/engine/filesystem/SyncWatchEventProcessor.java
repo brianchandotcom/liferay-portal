@@ -225,7 +225,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			try {
 				if ((Files.size(targetFilePath) == 0) ||
 					FileUtil.isModified(syncFile, targetFilePath) ||
-					isInErrorState(targetFilePath)) {
+					isInErrorState(sourceFilePath)) {
 
 					SyncFileService.addFileSyncFile(
 						targetFilePath, parentSyncFile.getTypePK(),
@@ -486,8 +486,6 @@ public class SyncWatchEventProcessor implements Runnable {
 
 	protected boolean isInErrorState(Path filePath) {
 		while (true) {
-			filePath = filePath.getParent();
-
 			if (filePath == null) {
 				return false;
 			}
@@ -495,18 +493,20 @@ public class SyncWatchEventProcessor implements Runnable {
 			SyncFile syncFile = SyncFileService.fetchSyncFile(
 				filePath.toString());
 
-			if (syncFile == null) {
-				continue;
+			if (syncFile != null) {
+				if (syncFile.isSystem()) {
+					break;
+				}
+
+				if (syncFile.getState() == SyncFile.STATE_ERROR) {
+					return true;
+				}
 			}
 
-			if (!syncFile.isSystem() &&
-				(syncFile.getState() == SyncFile.STATE_ERROR)) {
-
-				return true;
-			}
-
-			return false;
+			filePath = filePath.getParent();
 		}
+
+		return false;
 	}
 
 	protected boolean isPendingTypePK(SyncFile syncFile) {

@@ -272,6 +272,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-debounce', 'liferay-fullscreen-source-editor', 'liferay-source-editor']
+		requires: ['aui-debounce', 'liferay-fullscreen-source-editor', 'liferay-source-editor', 'plugin']
 	}
 );

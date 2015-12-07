@@ -23,7 +23,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Sergio González
@@ -31,8 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 public class PermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public PermissionsPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public PermissionsPortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override

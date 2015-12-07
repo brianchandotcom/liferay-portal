@@ -31,10 +31,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.portal.CompanyMxException" %><%@
 page import="com.liferay.portal.CompanyVirtualHostException" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
-page import="com.liferay.portal.facebook.FacebookConnectUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.DynamicInclude" %><%@
@@ -62,7 +60,6 @@ page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.security.sso.OpenSSOUtil" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.settings.web.constants.PortalSettingsWebKeys" %><%@
-page import="com.liferay.portal.util.Portal" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
@@ -89,16 +86,13 @@ page import="java.util.Map" %><%@
 page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletPreferences" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
-
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();

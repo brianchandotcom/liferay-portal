@@ -35,6 +35,8 @@
 		</execute>
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 	</set-up>
 
 	<tear-down>
@@ -1747,7 +1749,9 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#viewSubcribedPG" />
+		<execute function="Click" locator1="Icon#INFO" />
+
+		<execute function="AssertTextEquals" locator1="Link#UNSUBSCRIBE" value1="Unsubscribe" />
 	</command>
 
 	<command name="UnlockFolderDocument" priority="4">

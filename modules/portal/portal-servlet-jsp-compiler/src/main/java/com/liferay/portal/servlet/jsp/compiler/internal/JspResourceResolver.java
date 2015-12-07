@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -41,7 +42,6 @@ import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWire;
@@ -62,20 +62,15 @@ public class JspResourceResolver implements ResourceResolver {
 
 		BundleContext bundleContext = _bundle.getBundleContext();
 
-		Filter filter = null;
-
 		try {
-			filter = bundleContext.createFilter(
+			_serviceTracker = ServiceTrackerFactory.open(
+				bundleContext,
 				"(&(jsp.compiler.resource.map=*)(objectClass=" +
 					Map.class.getName() + "))");
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new RuntimeException(ise);
 		}
-
-		_serviceTracker = new ServiceTracker<>(bundleContext, filter, null);
-
-		_serviceTracker.open();
 	}
 
 	@Override

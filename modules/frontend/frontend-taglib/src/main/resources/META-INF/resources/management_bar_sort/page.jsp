@@ -53,26 +53,34 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:manag
 	</li>
 </c:if>
 
-<li class="<%= ((Validator.isNotNull(orderByType)) && orderByType.equals("asc")) ? "active" : StringPool.BLANK %>">
+<%
+PortletURL orderByColAscURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
-	<%
-	PortletURL orderByColAscURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+orderByColAscURL.setParameter("orderByCol", orderByCol);
+orderByColAscURL.setParameter("orderByType", "asc");
+%>
 
-	orderByColAscURL.setParameter("orderByCol", orderByCol);
-	orderByColAscURL.setParameter("orderByType", "asc");
-	%>
-
-	<a class="btn hidden-xs" href="<%= orderByColAscURL %>"><span class="icon-caret-up icon-monospaced"></span></a>
+<li>
+	<liferay-frontend:management-bar-button
+		active='<%= ((Validator.isNotNull(orderByType)) && orderByType.equals("asc")) %>'
+		href="<%= orderByColAscURL.toString() %>"
+		icon="caret-top"
+		label="ascending"
+	/>
 </li>
 
-<li class="<%= ((Validator.isNotNull(orderByType)) && orderByType.equals("desc")) ? "active" : StringPool.BLANK %>">
+<%
+PortletURL orderByColDescURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
-	<%
-	PortletURL orderByColDescURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+orderByColDescURL.setParameter("orderByCol", orderByCol);
+orderByColDescURL.setParameter("orderByType", "desc");
+%>
 
-	orderByColDescURL.setParameter("orderByCol", orderByCol);
-	orderByColDescURL.setParameter("orderByType", "desc");
-	%>
-
-	<a class="btn hidden-xs" href="<%= orderByColDescURL %>"><span class="icon-caret-down icon-monospaced"></span></a>
+<li>
+	<liferay-frontend:management-bar-button
+		active='<%= Validator.isNotNull(orderByType) && orderByType.equals("desc") %>'
+		href="<%= orderByColDescURL.toString() %>"
+		icon="caret-bottom"
+		label="descending"
+	/>
 </li>

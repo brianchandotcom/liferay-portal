@@ -63,6 +63,11 @@ public class BlogsContentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		jsonObject.put(
+			"allowedContent",
+			"b strong i hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr th; " +
+				"img a[*]");
+
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:namespace"));

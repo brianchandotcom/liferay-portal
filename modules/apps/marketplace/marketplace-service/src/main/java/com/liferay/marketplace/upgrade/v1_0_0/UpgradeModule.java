@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.io.IOException;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,14 +37,11 @@ public class UpgradeModule extends UpgradeProcess {
 	}
 
 	protected void updateModules() {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select moduleId, contextName from Marketplace_Module");
 
 			rs = ps.executeQuery();
@@ -75,7 +71,7 @@ public class UpgradeModule extends UpgradeProcess {
 			_log.error("Unable to update modules", sqle);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

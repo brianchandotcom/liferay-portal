@@ -29,47 +29,65 @@ DDLRecordSet recordSet = ddlFormDisplayContext.getRecordSet();
 		</div>
 	</c:when>
 	<c:otherwise>
-		<portlet:actionURL name="addRecord" var="addRecordActionURL" />
+		<c:choose>
+			<c:when test="<%= ddlFormDisplayContext.isFormAvailable() %>">
+				<portlet:actionURL name="addRecord" var="addRecordActionURL" />
 
-		<div class="portlet-forms">
-			<aui:form action="<%= addRecordActionURL %>" method="post" name="fm">
-
-				<%
-				String redirectURL = GetterUtil.getString(recordSet.getSettingsProperty("redirectURL", StringPool.BLANK));
-				%>
-
-				<c:if test="<%= Validator.isNull(redirectURL) %>">
-					<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-				</c:if>
-
-				<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
-				<aui:input name="recordSetId" type="hidden" value="<%= recordSet.getRecordSetId() %>" />
-				<aui:input name="availableLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
-				<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
-				<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
-
-				<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
-				<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
-
-				<div class="ddl-form-basic-info">
-					<div class="container-fluid-1280">
-						<h1 class="ddl-form-name"><%= recordSet.getName(locale) %></h1>
+				<div class="portlet-forms">
+					<aui:form action="<%= addRecordActionURL %>" method="post" name="fm">
 
 						<%
-						String description = recordSet.getDescription(locale);
+						String redirectURL = GetterUtil.getString(recordSet.getSettingsProperty("redirectURL", StringPool.BLANK));
 						%>
 
-						<c:if test="<%= Validator.isNotNull(description) %>">
-							<h2 class="ddl-form-description"><%= description %></h2>
+						<c:if test="<%= Validator.isNull(redirectURL) %>">
+							<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 						</c:if>
-					</div>
-				</div>
 
-				<div class="container-fluid-1280 ddl-form-builder-app">
-					<%= request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
+						<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
+						<aui:input name="recordSetId" type="hidden" value="<%= recordSet.getRecordSetId() %>" />
+						<aui:input name="availableLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
+						<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
+						<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+
+						<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
+						<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
+
+						<liferay-ui:error exception="<%= StorageFieldValueException.RequiredValue.class %>">
+
+							<%
+							StorageFieldValueException.RequiredValue rv = (StorageFieldValueException.RequiredValue)errorException;
+							%>
+
+							<liferay-ui:message arguments="<%= rv.getFieldName() %>" key="no-value-defined-for-field-x" translateArguments="<%= false %>" />
+						</liferay-ui:error>
+
+						<div class="ddl-form-basic-info">
+							<div class="container-fluid-1280">
+								<h1 class="ddl-form-name"><%= recordSet.getName(locale) %></h1>
+
+								<%
+								String description = recordSet.getDescription(locale);
+								%>
+
+								<c:if test="<%= Validator.isNotNull(description) %>">
+									<h2 class="ddl-form-description"><%= description %></h2>
+								</c:if>
+							</div>
+						</div>
+
+						<div class="container-fluid-1280 ddl-form-builder-app">
+							<%= request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
+						</div>
+					</aui:form>
 				</div>
-			</aui:form>
-		</div>
+			</c:when>
+			<c:otherwise>
+				<div class="alert alert-warning">
+					<liferay-ui:message key="this-form-not-available-or-it-was-not-published" />
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>
 

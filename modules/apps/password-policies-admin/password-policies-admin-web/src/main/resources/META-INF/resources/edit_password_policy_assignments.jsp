@@ -27,6 +27,8 @@ long passwordPolicyId = ParamUtil.getLong(request, "passwordPolicyId");
 
 PasswordPolicy passwordPolicy = PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(passwordPolicyId);
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/edit_password_policy_assignments.jsp");
@@ -42,23 +44,81 @@ portletURL.setParameter("tabs2", tabs2);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs2), portletURL.toString());
 
 portletURL.setParameter("tabs3", tabs3);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(passwordPolicy.getName());
+
+SearchContainer searchContainer = new SearchContainer();
+
+if (tabs2.equals("users")) {
+	searchContainer = new UserSearch(renderRequest, portletURL);
+}
+else if (tabs2.equals("organizations")) {
+	searchContainer = new OrganizationSearch(renderRequest, portletURL);
+}
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title="<%= passwordPolicy.getName() %>"
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
 
-<liferay-ui:tabs
-	names="users,organizations"
-	param="tabs2"
-	url="<%= portletURL.toString() %>"
-/>
+		<%
+		PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		usersURL.setParameter("tabs2", "users");
+		%>
+
+		<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs2.equals("users") %>' />
+
+		<%
+		PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		userGroupsURL.setParameter("tabs2", "organizations");
+		%>
+
+		<aui:nav-item href="<%= userGroupsURL.toString() %>" label="organizations" selected='<%= tabs2.equals("organizations") %>' />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="passwordPolicyMembers"
+>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= searchContainer.getOrderByCol() %>"
+			orderByType="<%= searchContainer.getOrderByType() %>"
+			orderColumns='<%= new String[] {"name"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
 
 <portlet:actionURL name="editPasswordPolicyAssignments" var="editPasswordPolicyAssignmentsURL" />
 
-<aui:form action="<%= editPasswordPolicyAssignmentsURL %>" method="post" name="fm">
+<aui:form action="<%= editPasswordPolicyAssignmentsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
@@ -77,11 +137,11 @@ portletURL.setParameter("tabs3", tabs3);
 			/>
 
 			<liferay-ui:search-container
+				id="passwordPolicyMembers"
 				rowChecker="<%= new UserPasswordPolicyChecker(renderResponse, passwordPolicy) %>"
-				searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
+				searchContainer="<%= searchContainer %>"
 				var="userSearchContainer"
 			>
-				<liferay-ui:user-search-form />
 
 				<%
 				UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
@@ -93,7 +153,10 @@ portletURL.setParameter("tabs3", tabs3);
 				}
 				%>
 
-				<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
+				<liferay-ui:user-search-container-results
+					useIndexer="<%= false %>"
+					userParams="<%= userParams %>"
+				/>
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.model.User"
@@ -145,7 +208,7 @@ portletURL.setParameter("tabs3", tabs3);
 
 				<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-				<liferay-ui:search-iterator />
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 		</c:when>
 		<c:when test='<%= tabs2.equals("organizations") %>'>
@@ -159,11 +222,11 @@ portletURL.setParameter("tabs3", tabs3);
 			/>
 
 			<liferay-ui:search-container
+				id="passwordPolicyMembers"
 				rowChecker="<%= new OrganizationPasswordPolicyChecker(renderResponse, passwordPolicy) %>"
-				searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
+				searchContainer="<%= searchContainer %>"
 				var="organizationSearchContainer"
 			>
-				<liferay-ui:organization-search-form />
 
 				<%
 				OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
@@ -175,7 +238,11 @@ portletURL.setParameter("tabs3", tabs3);
 				}
 				%>
 
-				<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= OrganizationConstants.ANY_PARENT_ORGANIZATION_ID %>" />
+				<liferay-ui:organization-search-container-results
+					organizationParams="<%= organizationParams %>"
+					parentOrganizationId="<%= OrganizationConstants.ANY_PARENT_ORGANIZATION_ID %>"
+					useIndexer="<%= false %>"
+				/>
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.model.Organization"
@@ -183,12 +250,6 @@ portletURL.setParameter("tabs3", tabs3);
 					keyProperty="organizationId"
 					modelVar="organization"
 				>
-					<liferay-ui:search-container-column-text
-						name="name"
-						orderable="<%= true %>"
-						property="name"
-					/>
-
 					<liferay-ui:search-container-column-text
 						name="name"
 						orderable="<%= true %>"
@@ -254,7 +315,7 @@ portletURL.setParameter("tabs3", tabs3);
 
 				<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-				<liferay-ui:search-iterator />
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 		</c:when>
 	</c:choose>

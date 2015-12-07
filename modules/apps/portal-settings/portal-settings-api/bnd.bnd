@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Settings API
+Bundle-SymbolicName: com.liferay.portal.settings.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.settings.portlet.action
+Include-Resource: classes

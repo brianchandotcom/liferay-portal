@@ -133,6 +133,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/helpers/DragAutoScroll",
 		return DragAutoScroll;
 	})(_Attribute3.default);
 
+	DragAutoScroll.prototype.registerMetalComponent && DragAutoScroll.prototype.registerMetalComponent(DragAutoScroll, 'DragAutoScroll')
 	DragAutoScroll.ATTRS = {
 		delay: {
 			validator: _core2.default.isNumber,

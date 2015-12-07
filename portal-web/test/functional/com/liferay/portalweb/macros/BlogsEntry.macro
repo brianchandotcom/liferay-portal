@@ -278,7 +278,9 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="Choose" />
+
+		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="${assetTitle}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1379,6 +1381,14 @@
 		<execute function="AssertTextEquals" locator1="PGBlogs#PORTLET_TITLE" value1="Blogs" />
 		<execute function="AssertElementPresent" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertElementPresent" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
+	</command>
+
+	<command name="viewEntryAsWorkflowAsset">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryContent" value="${entryContent}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewEntryAuthorCP">

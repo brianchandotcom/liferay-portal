@@ -656,6 +656,7 @@ public class PoshiRunnerExecutor {
 						selenium.equals("assertLocation") ||
 						selenium.equals("assertHTMLSourceTextNotPresent") ||
 						selenium.equals("assertHTMLSourceTextPresent") ||
+						selenium.equals("assertNotLocation") ||
 						selenium.equals("assertTextNotPresent") ||
 						selenium.equals("assertTextPresent") ||
 						selenium.equals("waitForConfirmation") ||
@@ -817,7 +818,12 @@ public class PoshiRunnerExecutor {
 				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
 
 				String attribute = element.attributeValue("attribute");
+
 				String locator = element.attributeValue("locator");
+
+				if (locator.contains("#")) {
+					locator = PoshiRunnerContext.getPathLocator(locator);
+				}
 
 				varValue = liferaySelenium.getAttribute(
 					locator + "@" + attribute);

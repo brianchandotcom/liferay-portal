@@ -17,7 +17,7 @@ package com.liferay.journal.web.portlet.configuration.icon;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.model.User;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 public class TemplatesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public TemplatesPortletConfigurationIcon(HttpServletRequest request) {
-		super(request);
+	public TemplatesPortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override

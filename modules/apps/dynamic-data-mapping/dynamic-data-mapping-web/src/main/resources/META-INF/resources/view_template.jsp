@@ -117,18 +117,22 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 			>
 
 				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
+				String rowHREF = StringPool.BLANK;
 
-				rowURL.setParameter("mvcPath", "/edit_template.jsp");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
-				rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
-				rowURL.setParameter("classNameId", String.valueOf(classNameId));
-				rowURL.setParameter("classPK", String.valueOf(template.getClassPK()));
-				rowURL.setParameter("type", template.getType());
-				rowURL.setParameter("structureAvailableFields", renderResponse.getNamespace() + "getAvailableFields");
+				if (DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.UPDATE)) {
+					PortletURL rowURL = renderResponse.createRenderURL();
 
-				String rowHREF = rowURL.toString();
+					rowURL.setParameter("mvcPath", "/edit_template.jsp");
+					rowURL.setParameter("redirect", currentURL);
+					rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
+					rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
+					rowURL.setParameter("classNameId", String.valueOf(classNameId));
+					rowURL.setParameter("classPK", String.valueOf(template.getClassPK()));
+					rowURL.setParameter("type", template.getType());
+					rowURL.setParameter("structureAvailableFields", renderResponse.getNamespace() + "getAvailableFields");
+
+					rowHREF = rowURL.toString();
+				}
 				%>
 
 				<liferay-ui:search-container-row-parameter

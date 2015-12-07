@@ -133,20 +133,4 @@
 			</else>
 		</if>
 	</command>
-
-	<command name="viewSuggestionCountPG">
-		<var name="kbSuggestionCount" value="${kbSuggestionCount}" />
-
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
-
-		<if>
-			<equals arg1="${kbSuggestionCount}" arg2="1" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There is one suggestion." />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There are ${kbSuggestionCount} suggestions." />
-			</else>
-		</if>
-	</command>
 </definition>

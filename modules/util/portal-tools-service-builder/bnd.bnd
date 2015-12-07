@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Tools Service Builder
 Bundle-SymbolicName: com.liferay.portal.tools.service.builder
-Bundle-Version: 1.0.59
+Bundle-Version: 1.0.62
 Import-Package:\
 	!javax.portlet.*,\
 	!javax.servlet.*,\
@@ -46,7 +46,6 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/ratings/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/shopping/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/social/service.xml,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/softwarecatalog/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/trash/service.xml,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/bean/BeanProperties.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/bean/BeanPropertiesUtil.class,\

@@ -36,12 +36,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_USER_SETTINGS</td>
-	<td>//ul[@class='lfr-nav nav nav-tabs']/li/a[contains(.,'User Settings')]</td>
+	<td>//ul[@class='lfr-nav nav navbar-nav']/li/a/span[contains(.,'User Settings')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_USER_RSS</td>
-	<td>//ul[@class='lfr-nav nav nav-tabs']/li/a[contains(.,'RSS')]</td>
+	<td>//ul[@class='lfr-nav nav navbar-nav']/li/a/span[contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 <tr>

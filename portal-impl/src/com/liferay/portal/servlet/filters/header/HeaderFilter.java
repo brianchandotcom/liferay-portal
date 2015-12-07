@@ -151,7 +151,8 @@ public class HeaderFilter extends BasePortalFilter {
 			}
 		}
 
-		processFilter(HeaderFilter.class, request, response, filterChain);
+		processFilter(
+			HeaderFilter.class.getName(), request, response, filterChain);
 	}
 
 	private static final String _DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss z";

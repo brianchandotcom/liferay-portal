@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Language Servlet Filter
+Bundle-SymbolicName: com.liferay.portal.language.servlet.filter
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*

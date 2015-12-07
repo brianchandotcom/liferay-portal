@@ -165,8 +165,11 @@ public class AuthVerifierFilter extends BasePortalFilter {
 
 			accessControlContext.setRequest(protectedServletRequest);
 
+			Class<?> clazz = getClass();
+
 			processFilter(
-				getClass(), protectedServletRequest, response, filterChain);
+				clazz.getName(), protectedServletRequest, response,
+				filterChain);
 		}
 		else {
 			_log.error("Unimplemented state " + state);

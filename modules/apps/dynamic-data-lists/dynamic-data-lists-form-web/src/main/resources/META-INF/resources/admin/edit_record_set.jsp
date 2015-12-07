@@ -47,11 +47,70 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
+		<aui:input name="publish" type="hidden" />
+
+		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
+
+		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.MustNotDuplicateFieldName.class %>">
+
+			<%
+			DDMFormLayoutValidationException.MustNotDuplicateFieldName mndfn = (DDMFormLayoutValidationException.MustNotDuplicateFieldName)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= DDMFormValidationException.class %>" message="please-enter-a-valid-form-definition" />
+
+		<liferay-ui:error exception="<%= DDMFormValidationException.MustNotDuplicateFieldName.class %>">
+
+			<%
+			DDMFormValidationException.MustNotDuplicateFieldName mndfn = (DDMFormValidationException.MustNotDuplicateFieldName)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= mndfn.getFieldName() %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetOptionsForField.class %>">
+
+			<%
+			DDMFormValidationException.MustSetOptionsForField msoff = (DDMFormValidationException.MustSetOptionsForField)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= msoff.getFieldName() %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidCharactersForFieldName.class %>">
+
+			<%
+			DDMFormValidationException.MustSetValidCharactersForFieldName msvcffn = (DDMFormValidationException.MustSetValidCharactersForFieldName)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= msvcffn.getFieldName() %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= RecordSetNameException.class %>" message="please-enter-a-valid-form-name" />
-		<liferay-ui:error exception="<%= StructureDefinitionException .class %>" message="please-enter-a-valid-form-definition" />
-		<liferay-ui:error exception="<%= StructureLayoutException .class %>" message="please-enter-a-valid-form-layout" />
-		<liferay-ui:error exception="<%= StructureNameException .class %>" message="please-enter-a-valid-form-name" />
+		<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-form-definition" />
+		<liferay-ui:error exception="<%= StructureLayoutException.class %>" message="please-enter-a-valid-form-layout" />
+		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-form-name" />
+
+		<c:if test="<%= ddlFormAdminDisplayContext.isRecordSetPublished() %>">
+			<div class="alert alert-success ddl-form-alert">
+				<div class="container-fluid-1280">
+					<button class="close" type="button">
+						<span aria-hidden="true">&times;</span>
+						<span class="sr-only"><liferay-ui:message key="close" /></span>
+					</button>
+
+					<liferay-util:buffer var="publishedLink">
+						<a href="<%= ddlFormAdminDisplayContext.getRecordSetLayoutURL() %>" target="_blank"><%= ddlFormAdminDisplayContext.getRecordSetLayoutURL() %></a>
+						<span class="icon-external-link"></span>
+					</liferay-util:buffer>
+
+					<liferay-ui:message arguments="<%= new Object[] {publishedLink} %>" key="form-published-at-x" />
+				</div>
+			</div>
+		</c:if>
 
 		<aui:fieldset cssClass="ddl-form-basic-info">
 			<div class="container-fluid-1280">
@@ -80,7 +139,20 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 		<div class="container-fluid-1280">
 			<aui:button-row cssClass="ddl-form-builder-buttons">
-				<aui:button cssClass="btn-lg" id="submit" label="save" primary="<%= true %>" type="submit" />
+				<aui:button cssClass="btn-lg ddl-button" disabled="<%= true %>" id="submit" primary="<%= true %>" type="submit" value="save">
+					<c:choose>
+						<c:when test="<%= !ddlFormAdminDisplayContext.isRecordSetPublished() %>">
+							<li>
+								<aui:a cssClass="ddl-button publish save" href="javascript:;"><%= LanguageUtil.get(request, "save-and-publish-live-page") %></aui:a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li>
+								<aui:a cssClass="ddl-button save unpublish" href="javascript:;"><%= LanguageUtil.get(request, "save-and-unpublish-live-page") %></aui:a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+				</aui:button>
 
 				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
@@ -107,6 +179,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 								new Liferay.DDL.Portlet(
 									{
+										dataProviders: <%= ddlFormAdminDisplayContext.getSerializedDDMDataProviders() %>,
 										definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
 										editForm: event.form,
 										layout: <%= ddlFormAdminDisplayContext.getSerializedDDMFormLayout() %>,

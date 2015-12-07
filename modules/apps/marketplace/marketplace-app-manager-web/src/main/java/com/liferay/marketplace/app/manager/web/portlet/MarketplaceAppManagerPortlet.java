@@ -19,6 +19,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
+import com.liferay.marketplace.app.manager.web.util.BundleUtil;
 import com.liferay.marketplace.bundle.BundleManagerUtil;
 import com.liferay.marketplace.exception.FileExtensionException;
 import com.liferay.marketplace.service.AppService;
@@ -114,6 +115,10 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
 
 		for (Bundle bundle : bundles) {
+			if (BundleUtil.isFragment(bundle)) {
+				continue;
+			}
+
 			if (ArrayUtil.contains(bundleIds, bundle.getBundleId())) {
 				bundle.start();
 			}
@@ -130,6 +135,10 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
 
 		for (Bundle bundle : bundles) {
+			if (BundleUtil.isFragment(bundle)) {
+				continue;
+			}
+
 			if (ArrayUtil.contains(bundleIds, bundle.getBundleId())) {
 				bundle.stop();
 			}

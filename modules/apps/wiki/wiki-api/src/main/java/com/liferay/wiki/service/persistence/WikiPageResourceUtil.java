@@ -16,14 +16,13 @@ package com.liferay.wiki.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.wiki.model.WikiPageResource;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -733,14 +732,6 @@ public class WikiPageResourceUtil {
 	public void setPersistence(WikiPageResourcePersistence persistence) {
 	}
 
-	private static ServiceTracker<WikiPageResourcePersistence, WikiPageResourcePersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(WikiPageResourceUtil.class);
-
-		_serviceTracker = new ServiceTracker<WikiPageResourcePersistence, WikiPageResourcePersistence>(bundle.getBundleContext(),
-				WikiPageResourcePersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<WikiPageResourcePersistence, WikiPageResourcePersistence> _serviceTracker =
+		ServiceTrackerFactory.open(WikiPageResourcePersistence.class);
 }

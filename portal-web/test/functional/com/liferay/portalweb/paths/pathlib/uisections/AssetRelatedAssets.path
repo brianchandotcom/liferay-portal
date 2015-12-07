@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>BACK_TO_HEADER</td>
-	<td>//h3[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>HEADER</td>
 	<td>//h2[contains(@class,'asset-links-title')]</td>
 	<td></td>
@@ -48,11 +43,6 @@
 	<td>//li[@class='asset-links-list-item']//a/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td>ASSET_CONTENT</td>
-	<td>//div[@class='asset-content']</td>
-	<td></td>
-</tr>
 <!--This is temporary. After path restructure, the ideal solution is to make the path variable more generic.-->
 <tr>
 	<td>KB_RELATED_ASSETS_LINKS</td>
@@ -83,22 +73,6 @@
 <tr>
 	<td>RELATED_ASSETS_TABLE_REMOVE_LINK</td>
 	<td>//tr[contains(.,'${key_assetTitle}')]//td[4]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--BLOGS_ENTRY-->
-<tr>
-	<td>BLOGS_ENTRY_CONTENT</td>
-	<td>//div[contains(@class,'entry-body')]/p</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BLOGS_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'entry-title')]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -146,33 +120,8 @@
 <!--This is temporary. After path restructure, the ideal solution is to make the key_kbArticleRelatedAssetTitle path variable more generic.-->
 <!--KB_ASSET_TABLE-->
 <tr>
-	<td>KB_ASSET_TABLE_TITLE</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>KB_ASSET_TABLE_DESCRIPTION</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>KB_ASSET_TABLE_USER_NAME</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>KB_ASSET_TABLE_MODIFIED_DATE</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[4]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>KB_ASSET_TABLE_SITE</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[5]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>KB_ASSET_TABLE_ACTION</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[6]/button[contains(.,'Choose')]</td>
+	<td>KB_ASSET_TABLE_TITLE_LINK</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[1]/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -182,33 +131,8 @@
 </tr>
 <!--ASSET_TABLE-->
 <tr>
-	<td>ASSET_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]/td[count(//th[contains(.,'Title')]/preceding-sibling::th) + 1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]/td[count(//th[contains(.,'Description')]/preceding-sibling::th) + 1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TABLE_USER_NAME</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]/td[count(//th[contains(.,'User Name')]/preceding-sibling::th) + 1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TABLE_MODIFIED_DATE</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]/td[count(//th[contains(.,'Modified Date')]/preceding-sibling::th) + 1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TABLE_SITE</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]/td[count(//th[contains(.,'Site')]/preceding-sibling::th) + 1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_TABLE_CHOOSE</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]/td/button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td/a</td>
 	<td></td>
 </tr>
 </tbody>

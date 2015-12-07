@@ -14,17 +14,16 @@
 
 package com.liferay.flags.page.flags.web.upgrade;
 
-import com.liferay.flags.page.flags.web.constants.PageFlagsPortletKeys;
+import com.liferay.flags.page.flags.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adolfo Pérez
+ * @author Raymond Augé
+ * @author Peter Fellwock
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class PageFlagsWebUpgrade implements UpgradeStepRegistrator {
@@ -32,23 +31,8 @@ public class PageFlagsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.flags.page.flags.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
-
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
-
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {"143", PageFlagsPortletKeys.PAGE_FLAGS}
-				};
-			}
-
-		};
-
-		registry.register(
 			"com.liferay.flags.page.flags.web", "0.0.1", "1.0.0",
-			upgradePortletId);
+			new UpgradePortletId());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

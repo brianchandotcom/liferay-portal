@@ -1,0 +1,96 @@
+{
+  "actions" : [
+    {
+      "parameters" : [
+        {
+          "name" : "AXIS_VARIABLES",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_BRANCH_NAME",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+          "value" : ""
+        },
+        {
+          "name" : "JOB_VARIANT",
+          "value" : "modules-unit"
+        },
+        {
+          "name" : "TOP_LEVEL_SHARED_DIR",
+          "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-5/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1672"
+        }
+      ]
+    },
+    {
+      
+    },
+    {
+      "causes" : [
+        {
+          "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 7,031",
+          "upstreamBuild" : 7031,
+          "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+          "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+        }
+      ]
+    },
+    null,
+    {
+      
+    },
+    {
+      
+    },
+    {
+      "failCount" : 1,
+      "skipCount" : 0,
+      "totalCount" : 228,
+      "urlName" : "testReport"
+    },
+    {
+      
+    },
+    {
+      
+    },
+    {
+      
+    }
+  ],
+  "artifacts" : [
+    
+  ],
+  "building" : false,
+  "description" : "<strong>brianchandotcom</strong> - <a href=\"https://github.com/brianchandotcom/liferay-portal/pull/32472\">PR#32472</a> - <a href=\"https://test-1-5.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1672/jenkins-report.html\">Jenkins Report</a>",
+  "duration" : 690151,
+  "estimatedDuration" : 1497259,
+  "executor" : null,
+  "fullDisplayName" : "test-portal-acceptance-pullrequest-batch(master) » 1,!master #7031",
+  "id" : "2015-11-21_14-56-15",
+  "keepLog" : false,
+  "number" : 7031,
+  "result" : "UNSTABLE",
+  "timestamp" : 1448146575000,
+  "url" : "https://test-1-14.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=1,label_exp=!master/7031/",
+  "builtOn" : "cloud-10-0-111-58",
+  "changeSet" : {
+    "items" : [
+      
+    ],
+    "kind" : null
+  },
+  "culprits" : [
+    
+  ]
+}

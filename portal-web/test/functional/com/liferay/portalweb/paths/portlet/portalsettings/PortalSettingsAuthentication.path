@@ -57,37 +57,72 @@
 <!--AUTHENTICATION_CAS-->
 <tr>
 	<td>AUTHENTICATION_CAS_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'cas-auth-enabled')]</td>
+	<td>//input[contains(@name,'cas--enabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX</td>
+	<td>//input[contains(@id,'cas-import-from-ldap')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGIN_URL_FIELD</td>
-	<td>//input[contains(@id,'cas-login-url')]</td>
+	<td>//input[contains(@name,'cas--loginURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_LOGIN_URL_HEADER</td>
+	<td>//label[contains(@for,'cas-login-url')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGOUT_URL_FIELD</td>
-	<td>//input[contains(@id,'cas-logout-url')]</td>
+	<td>//input[contains(@name,'cas--logoutURL')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>AUTHENTICATION_CAS_SERVER_NAME_FIELD</td>
-	<td>//input[contains(@id,'cas-server-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_SERVER_URL_FIELD</td>
-	<td>//input[contains(@id,'cas-server-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_SERVICE_URL_FIELD</td>
-	<td>//input[contains(@id,'cas-service-url')]</td>
+	<td>AUTHENTICATION_CAS_LOGOUT_URL_HEADER</td>
+	<td>//label[contains(@for,'cas-logout-url')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD</td>
-	<td>//input[contains(@id,'cas-no-such-user-redirect-url')]</td>
+	<td>//input[contains(@name,'cas--noSuchUserRedirectURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER</td>
+	<td>//label[contains(@for,'cas-no-such-user-redirect-url')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVER_NAME_FIELD</td>
+	<td>//input[contains(@name,'cas--serverName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVER_NAME_HEADER</td>
+	<td>//label[contains(@for,'cas-server-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVER_URL_FIELD</td>
+	<td>//input[contains(@name,'cas--serverURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVER_URL_HEADER</td>
+	<td>//label[contains(@for,'cas-server-url')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVICE_URL_FIELD</td>
+	<td>//input[contains(@name,'cas--serviceURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVICE_URL_HEADER</td>
+	<td>//label[contains(@for,'cas-service-url')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,7 +143,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_LDAP_REQUIRED_CHECKBOX</td>
-	<td>//input[contains(@id,'ldap-auth-required')]</td>
+	<td>//input[contains(@name,'ldap--required')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,7 +158,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_LDAP_USE_LDAP_PASSWORD_POLICY_CHECKBOX</td>
-	<td>//input[contains(@id,'ldap-password-policy-enabled')]</td>
+	<td>//input[contains(@name,'ldap--passwordPolicyEnabled')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -154,42 +189,42 @@
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_HEADER</td>
-	<td>//label[contains(@for,'ldap-base-provider-url-0')]</td>
+	<td>//label[contains(@for,'baseProviderURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_FIELD</td>
-	<td>//input[contains(@id,'ldap-base-provider-url-0')]</td>
+	<td>//input[contains(@name,'ldap--baseProviderURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_BASE_DN_HEADER</td>
-	<td>//label[contains(@for,'ldap-base-dn-0')]</td>
+	<td>//label[contains(@for,'baseDN')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_BASE_DN_FIELD</td>
-	<td>//input[contains(@id,'ldap-base-dn-0')]</td>
+	<td>//input[contains(@name,'ldap--baseDN')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_PRINCIPAL_HEADER</td>
-	<td>//label[contains(@for,'ldap-security-principal-0')]</td>
+	<td>//label[contains(@for,'securityPrincipal')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_PRINCIPAL_FIELD</td>
-	<td>//input[contains(@id,'ldap-security-principal-0')]</td>
+	<td>//input[contains(@name,'ldap--securityPrincipal')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_CREDENTIALS_HEADER</td>
-	<td>//label[contains(@for,'ldap-security-credentials-0')]</td>
+	<td>//label[contains(@for,'securityCredential')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LDAP_SERVER_CONNECTION_CREDENTIALS_FIELD</td>
-	<td>//input[contains(@id,'ldap-security-credentials-0')]</td>
+	<td>//input[contains(@name,'ldap--securityCredential')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -205,87 +240,6 @@
 <tr>
 	<td>LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON</td>
 	<td>//button[contains(.,'Test LDAP Groups')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--AUTHENTICATION_CAS-->
-<tr>
-	<td>AUTHENTICATION_CAS_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'cas-auth-enabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[contains(@id,'cas-import-from-ldap')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_LOGIN_URL_HEADER</td>
-	<td>//label[contains(@for,'cas-login-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_LOGIN_URL_FIELD</td>
-	<td>//input[contains(@id,'cas-login-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_LOGOUT_URL_HEADER</td>
-	<td>//label[contains(@for,'cas-logout-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_LOGOUT_URL_FIELD</td>
-	<td>//input[contains(@id,'cas-logout-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_SERVER_NAME_HEADER</td>
-	<td>//label[contains(@for,'cas-server-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_SERVER_NAME_FIELD</td>
-	<td>//input[contains(@id,'cas-server-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_SERVER_URL_HEADER</td>
-	<td>//label[contains(@for,'cas-server-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_SERVER_URL_FIELD</td>
-	<td>//input[contains(@id,'cas-server-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_SERVICE_URL_HEADER</td>
-	<td>//label[contains(@for,'cas-service-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_SERVICE_URL_FIELD</td>
-	<td>//input[contains(@id,'cas-service-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER</td>
-	<td>//label[contains(@for,'cas-no-such-user-redirect-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD</td>
-	<td>//input[contains(@id,'cas-no-such-user-redirect-url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON</td>
-	<td>//button[contains(.,'Test CAS Configuration')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -6,10 +6,13 @@
 	<command name="addCP">
 		<var name="key_ddlListName" value="${ddlListName}" />
 
-		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
+		<execute macro="DDLNavigator#gotoListRecords">
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${ddlListName}" />
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="DDLNavigator#gotoAddListRecord">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
 	</command>
 
 	<command name="addRepeatableField">
@@ -340,15 +343,6 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="viewCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${ddlListName}" />
-	</command>
-
 	<command name="viewFieldCP">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
@@ -378,7 +372,10 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+				<execute macro="DDLRecord#viewPopulatedField">
+					<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+				</execute>
 			</else>
 		</if>
 
@@ -635,6 +632,12 @@
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_VISUAL_GROUPING_DDL_DISPLAY_PNG" />
 	</command>
 
+	<command name="viewPopulatedField">
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+	</command>
+
 	<command name="viewRepeatableNestedFieldsVisualGrouping">
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG" />
 	</command>
@@ -656,7 +659,10 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+				<execute macro="DDLRecord#viewPopulatedField">
+					<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+				</execute>
 			</else>
 		</if>
 	</command>
@@ -680,7 +686,16 @@
 	<command name="viewTextFieldRepeated">
 		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData1}" />
 		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData2}" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][3]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData3}" />
+
+		<if>
+			<isset var="ddlRecordFieldData3" />
+			<then>
+				<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][3]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData3}" />
+			</then>
+			<else>
+				<execute function="AssertElementNotPresent" locator1="xpath=(//div[@data-fieldname='Text'])[3]" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewViaDDLDisplayPG">

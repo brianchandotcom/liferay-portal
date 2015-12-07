@@ -48,6 +48,8 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
 			"Select", "Select", "select", "string", false, false, false);
 
+		ddmFormField.setProperty("dataSourceType", "manual");
+
 		int numberOfOptions = 2;
 
 		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions(
@@ -83,6 +85,8 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
 			"Select", "Select", "select", "string", false, false, false);
+
+		ddmFormField.setProperty("dataSourceType", "manual");
 
 		int numberOfOptions = 1;
 

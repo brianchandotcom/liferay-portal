@@ -101,7 +101,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 	}
 
 	protected Object[] getAuditedModelArray(
-			Connection con, String tableName, String pkColumnName, long primKey)
+			Connection con, String tableName, String pkColumnName, long primKey,
+			boolean allowAnonymousUser, long previousUserId)
 		throws Exception {
 
 		PreparedStatement ps = null;
@@ -118,13 +119,24 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 			if (rs.next()) {
 				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
+
+				long userId = 0;
+				String userName = null;
+
+				if (allowAnonymousUser) {
+					userId = previousUserId;
+					userName = "Anonymous";
+				}
+				else {
+					userId = rs.getLong("userId");
+					userName = getUserName(con, userId);
+				}
+
 				Timestamp createDate = rs.getTimestamp("createDate");
 				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 
 				return new Object[] {
-					companyId, userId, getUserName(con, userId), createDate,
-					modifiedDate
+					companyId, userId, userName, createDate, modifiedDate
 				};
 			}
 
@@ -135,7 +147,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -178,7 +190,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -210,7 +222,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			return StringPool.BLANK;
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -290,7 +302,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 			sb.append("select ");
 			sb.append(verifiableAuditedModel.getPrimaryKeyColumnName());
-			sb.append(", companyId");
+			sb.append(", companyId, userId");
 
 			if (verifiableAuditedModel.getJoinByTableName() != null) {
 				sb.append(StringPool.COMMA_AND_SPACE);
@@ -313,6 +325,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 				long companyId = rs.getLong("companyId");
 				long primKey = rs.getLong(
 					verifiableAuditedModel.getPrimaryKeyColumnName());
+				long previousUserId = rs.getLong("userId");
 
 				if (verifiableAuditedModel.getJoinByTableName() != null) {
 					long relatedPrimKey = rs.getLong(
@@ -321,7 +334,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 					auditedModelArray = getAuditedModelArray(
 						con, verifiableAuditedModel.getRelatedModelName(),
 						verifiableAuditedModel.getRelatedPKColumnName(),
-						relatedPrimKey);
+						relatedPrimKey,
+						verifiableAuditedModel.isAnonymousUserAllowed(),
+						previousUserId);
 				}
 				else if (previousCompanyId != companyId) {
 					auditedModelArray = getDefaultUserArray(con, companyId);
@@ -340,7 +355,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(null, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

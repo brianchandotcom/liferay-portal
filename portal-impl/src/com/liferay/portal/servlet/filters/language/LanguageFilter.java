@@ -80,7 +80,7 @@ public class LanguageFilter extends BasePortalFilter {
 			new BufferCacheServletResponse(response);
 
 		processFilter(
-			LanguageFilter.class, request, bufferCacheServletResponse,
+			LanguageFilter.class.getName(), request, bufferCacheServletResponse,
 			filterChain);
 
 		if (_log.isDebugEnabled()) {

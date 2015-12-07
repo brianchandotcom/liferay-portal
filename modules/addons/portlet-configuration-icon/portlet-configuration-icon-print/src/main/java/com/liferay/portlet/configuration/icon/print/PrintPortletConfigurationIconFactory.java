@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,8 +30,8 @@ public class PrintPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(HttpServletRequest request) {
-		return new PrintPortletConfigurationIcon(request);
+	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+		return new PrintPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override

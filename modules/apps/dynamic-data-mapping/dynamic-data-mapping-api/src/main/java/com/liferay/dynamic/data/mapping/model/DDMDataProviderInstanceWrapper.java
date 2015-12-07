@@ -184,6 +184,12 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 		return _ddmDataProviderInstance.getCreateDate();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.util.KeyValuePair> getData()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmDataProviderInstance.getData();
+	}
+
 	/**
 	* Returns the data provider instance ID of this d d m data provider instance.
 	*

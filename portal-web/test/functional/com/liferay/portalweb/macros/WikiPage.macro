@@ -23,7 +23,8 @@
 		<execute function="AssertChecked" locator1="Wiki#FILES_READY_TO_BE_SAVED_CHECKBOX" />
 		<execute function="AssertTextEquals" locator1="Wiki#FILES_READY_TO_BE_SAVED_TITLE" value1="${attachmentFileName}" />
 		<execute function="AssertClick" locator1="Button#SAVE_ATTACHMENT" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Wiki#FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
 	</command>
 
 	<command name="addChildPagePG">
@@ -61,7 +62,7 @@
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Button#REPLY" value1="Reply" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCommentPG">
@@ -102,7 +103,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCP">
@@ -646,7 +647,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteCP">
@@ -708,9 +709,12 @@
 		<var name="key_commentBody" value="${commentBody}" />
 
 		<execute function="AssertClick" locator1="Wiki#COMMENT_EDIT_LINK" value1="Edit" />
+
 		<execute function="Type" locator1="Wiki#COMMENT_EDIT_BODY_FIELD" value1="${commentBodyEdit}" />
+
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editFrontPagePG">
@@ -1218,6 +1222,14 @@
 		</execute>
 
 		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
+	<command name="viewAsWorkflowAsset">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${wikiPageTitle}" />
+
+		<var name="key_wikiPageContent" value="${wikiPageContent}" />
+
+		<execute function="AssertTextEquals" locator1="Wiki#BODY_ASSET" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="viewAttachmentPG">

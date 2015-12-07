@@ -75,6 +75,8 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public List<Portlet> getEmbeddedPortlets();
 
+	public List<Portlet> getExplicitlyAddedPortlets();
+
 	public Layout getLayoutSetPrototypeLayout();
 
 	public String getLayoutSetPrototypeLayoutProperty(String key);

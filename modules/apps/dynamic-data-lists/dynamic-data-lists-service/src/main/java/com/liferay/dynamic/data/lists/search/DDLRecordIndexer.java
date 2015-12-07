@@ -322,8 +322,6 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 						recordSetProperty.in(recordSetDynamicQuery));
 				}
 		});
-		indexableActionableDynamicQuery.setCommitImmediately(
-			isCommitImmediately());
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DDLRecord>() {
@@ -336,7 +334,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 						Document document = getDocument(record);
 
 						if (document != null) {
-							indexableActionableDynamicQuery.addDocument(
+							indexableActionableDynamicQuery.addDocuments(
 								document);
 						}
 					}

@@ -125,7 +125,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="RelatedassetsSelect#SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 	</command>
 
 	<command name="viewAdvancedSearchNoResultCP">
@@ -160,7 +160,7 @@
 	</command>
 
 	<command name="viewNoSearchResultsCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no results." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no results." />
 	</command>
 
 	<command name="viewPG">
@@ -173,7 +173,7 @@
 		<execute function="SelectFrame" locator1="RelatedassetsSelect#IFRAME" />
 		<execute function="AssertElementPresent" locator1="RelatedassetsSelect#SEARCH_ADVANCED_MENULIST" />
 		<execute function="AssertElementPresent" locator1="RelatedassetsSelect#SEARCH_FIELD" />
-		<execute function="AssertTextEquals" locator1="RelatedassetsSelect#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertElementPresent" locator1="Icon#BASIC_SEARCH" />
 
 		<for list="${forList}" param="assetTitle">
 			<var name="key_assetTitle" value="${assetTitle}" />

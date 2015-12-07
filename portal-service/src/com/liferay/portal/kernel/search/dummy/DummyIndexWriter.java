@@ -46,6 +46,10 @@ public class DummyIndexWriter implements IndexWriter {
 	}
 
 	@Override
+	public void commit(SearchContext searchContext) {
+	}
+
+	@Override
 	public void deleteDocument(SearchContext searchContext, String uid) {
 	}
 

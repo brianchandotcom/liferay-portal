@@ -642,6 +642,10 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isEmailAddress(String emailAddress) {
+		if (Validator.isNull(emailAddress)) {
+			return false;
+		}
+
 		Matcher matcher = _emailAddressPattern.matcher(emailAddress);
 
 		return matcher.matches();

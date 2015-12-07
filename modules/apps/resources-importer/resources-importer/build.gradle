@@ -1,9 +1,8 @@
 dependencies {
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
+	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":apps:journal:journal-api")
 	compile project(":apps:journal:journal-service")
-	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
-	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":apps:wiki:wiki-api")
 }
 

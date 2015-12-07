@@ -328,39 +328,6 @@ public class JournalFeedLocalServiceImpl
 		return feed;
 	}
 
-	protected boolean isValidStructureField(
-		long groupId, String ddmStructureKey, String contentField) {
-
-		if (contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) ||
-			contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT)) {
-
-			return true;
-		}
-
-		try {
-			DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-				groupId,
-				classNameLocalService.getClassNameId(JournalArticle.class),
-				ddmStructureKey, true);
-
-			DDMForm ddmForm = ddmStructure.getDDMForm();
-
-			Map<String, DDMFormField> ddmFormFieldsMap =
-				ddmForm.getDDMFormFieldsMap(true);
-
-			if (ddmFormFieldsMap.containsKey(contentField)) {
-				return true;
-			}
-
-			return isValidStructureOptionValue(ddmFormFieldsMap, contentField);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return false;
-	}
-
 	protected boolean isValidStructureOptionValue(
 		Map<String, DDMFormField> ddmFormFieldsMap, String contentField) {
 
@@ -400,7 +367,7 @@ public class JournalFeedLocalServiceImpl
 				(feedId.indexOf(CharPool.COMMA) != -1) ||
 				(feedId.indexOf(CharPool.SPACE) != -1)) {
 
-				throw new FeedIdException();
+				throw new FeedIdException("Invalid feedId: " + feedId);
 			}
 
 			JournalFeed feed = journalFeedPersistence.fetchByG_F(
@@ -430,18 +397,45 @@ public class JournalFeedLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
-			throw new FeedNameException();
+			throw new FeedNameException("Name is null");
 		}
 
 		long plid = PortalUtil.getPlidFromFriendlyURL(
 			companyId, targetLayoutFriendlyUrl);
 
 		if (plid <= 0) {
-			throw new FeedTargetLayoutFriendlyUrlException();
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("No layout exists for company ");
+			sb.append(companyId);
+			sb.append(" and friendly URL ");
+			sb.append(targetLayoutFriendlyUrl);
+
+			throw new FeedTargetLayoutFriendlyUrlException(sb.toString());
 		}
 
-		if (!isValidStructureField(groupId, ddmStructureKey, contentField)) {
-			throw new FeedContentFieldException();
+		if (contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT) ||
+			contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION)) {
+
+			return;
+		}
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			groupId, classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		if (ddmFormFieldsMap.containsKey(contentField)) {
+			return;
+		}
+
+		if (!isValidStructureOptionValue(ddmFormFieldsMap, contentField)) {
+			throw new FeedContentFieldException(
+				"Invalid content field " + contentField);
 		}
 	}
 

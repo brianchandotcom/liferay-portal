@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -29,15 +28,13 @@ public class UpgradeRelease extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select distinct buildNumber from Release_");
+			ps = connection.prepareStatement(
+				"select distinct buildNumber from Release_ " +
+					"where schemaVersion is null");
 
 			rs = ps.executeQuery();
 
@@ -48,11 +45,12 @@ public class UpgradeRelease extends UpgradeProcess {
 
 				runSQL(
 					"update Release_ set schemaVersion = '" + schemaVersion +
-						"' where buildNumber = " + buildNumber);
+						"' where buildNumber = " + buildNumber +
+							" and schemaVersion is null");
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

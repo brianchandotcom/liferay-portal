@@ -48,7 +48,7 @@ public abstract class BaseAppDisplay implements AppDisplay {
 	public List<ModuleGroupDisplay> getModuleGroupDisplays() {
 		if (_moduleGroupDisplays == null) {
 			_moduleGroupDisplays =
-				ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(_bundles);
+				ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(this);
 		}
 
 		return _moduleGroupDisplays;
@@ -64,6 +64,10 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		int state = Bundle.ACTIVE;
 
 		for (Bundle bundle : _bundles) {
+			if (BundleUtil.isFragment(bundle)) {
+				continue;
+			}
+
 			int bundleState = bundle.getState();
 
 			if (state > bundleState) {

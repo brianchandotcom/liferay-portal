@@ -36,6 +36,7 @@ for (int i = 1; i<organizations.size(); i++) {
 
 <div class="details">
 	<liferay-ui:user-portrait
+		imageCssClass="user-icon-lg"
 		userId="<%= selUser.getUserId() %>"
 	/>
 

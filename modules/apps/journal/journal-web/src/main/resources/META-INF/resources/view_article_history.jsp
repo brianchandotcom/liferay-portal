@@ -24,9 +24,6 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "version");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
 JournalArticle article = journalDisplayContext.getArticle();
 %>
 
@@ -72,8 +69,8 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-sort
-					orderByCol="<%= orderByCol %>"
-					orderByType="<%= orderByType %>"
+					orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
+					orderByType="<%= journalDisplayContext.getOrderByType() %>"
 					orderColumns='<%= new String[] {"version", "display-date", "modified-date"} %>'
 					portletURL="<%= portletURL %>"
 				/>
@@ -81,11 +78,11 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 			<liferay-frontend:management-bar-action-buttons>
 				<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-					<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteArticles" />
+					<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteArticles" label="delete" />
 				</c:if>
 
 				<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-					<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-time" id="expireArticles" />
+					<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-time" id="expireArticles" label="expire" />
 				</c:if>
 			</liferay-frontend:management-bar-action-buttons>
 		</liferay-frontend:management-bar>

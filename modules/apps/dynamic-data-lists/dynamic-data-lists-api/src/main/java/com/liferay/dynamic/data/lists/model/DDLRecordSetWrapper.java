@@ -504,6 +504,11 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
+	public java.lang.String getSettingsProperty(java.lang.String key) {
+		return _ddlRecordSet.getSettingsProperty(key);
+	}
+
+	@Override
 	public java.lang.String getSettingsProperty(java.lang.String key,
 		java.lang.String defaultValue) {
 		return _ddlRecordSet.getSettingsProperty(key, defaultValue);

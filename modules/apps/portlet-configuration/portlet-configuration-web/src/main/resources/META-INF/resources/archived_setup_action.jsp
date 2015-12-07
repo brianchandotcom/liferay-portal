@@ -19,10 +19,7 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Object[] objects = (Object[])row.getObject();
-
-ArchivedSettings archivedSettings = (ArchivedSettings)objects[0];
-portletResource = (String)objects[1];
+ArchivedSettings archivedSettings = (ArchivedSettings)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">

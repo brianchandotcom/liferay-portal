@@ -470,7 +470,7 @@ public class DDLRecordSetLocalServiceImpl
 			}
 
 			String emailToAddress = settingsProperties.getProperty(
-				"emailToAddresses");
+				"emailToAddress");
 
 			if (!Validator.isEmailAddress(emailToAddress)) {
 				throw new MustEnterValidEmailAddress("emailToAddress");

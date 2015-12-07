@@ -773,7 +773,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			try {
 				if (!AssetPublisherUtil.isScopeIdSelectable(
 						PermissionThreadLocal.getPermissionChecker(), newValue,
-						companyGroupId, layout)) {
+						companyGroupId, layout, false)) {
 
 					continue;
 				}

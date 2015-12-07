@@ -1227,6 +1227,15 @@ public class AssetPublisherUtil {
 			long companyGroupId, Layout layout)
 		throws PortalException {
 
+		return isScopeIdSelectable(
+			permissionChecker, scopeId, companyGroupId, layout, true);
+	}
+
+	public static boolean isScopeIdSelectable(
+			PermissionChecker permissionChecker, String scopeId,
+			long companyGroupId, Layout layout, boolean checkPermission)
+		throws PortalException {
+
 		long groupId = getGroupIdFromScopeId(
 			scopeId, layout.getGroupId(), layout.isPrivateLayout());
 
@@ -1258,10 +1267,12 @@ public class AssetPublisherUtil {
 				return false;
 			}
 
-			return GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.UPDATE);
+			if (checkPermission) {
+				return GroupPermissionUtil.contains(
+					permissionChecker, group, ActionKeys.UPDATE);
+			}
 		}
-		else if (groupId != companyGroupId) {
+		else if ((groupId != companyGroupId) && checkPermission) {
 			return GroupPermissionUtil.contains(
 				permissionChecker, groupId, ActionKeys.UPDATE);
 		}

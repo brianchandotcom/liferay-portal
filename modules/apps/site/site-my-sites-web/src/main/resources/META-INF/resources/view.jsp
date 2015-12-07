@@ -73,20 +73,11 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 		<liferay-ui:search-container-results>
 
 			<%
-			if (searchTerms.isAdvancedSearch()) {
-				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
+			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);
 
-				searchContainer.setTotal(total);
+			searchContainer.setTotal(total);
 
-				results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
-			else {
-				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);
-
-				searchContainer.setTotal(total);
-
-				results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
+			results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 			searchContainer.setResults(results);
 
@@ -99,7 +90,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 
 		<aui:nav-bar>
 			<aui:nav-bar-search>
-				<%@ include file="/search.jspf" %>
+				<liferay-ui:input-search />
 			</aui:nav-bar-search>
 		</aui:nav-bar>
 

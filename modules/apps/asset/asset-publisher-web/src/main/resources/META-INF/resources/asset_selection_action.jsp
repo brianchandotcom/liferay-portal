@@ -87,6 +87,7 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 	<portlet:param name="assetEntryOrder" value="<%= String.valueOf(assetEntryOrder) %>" />
 </liferay-portlet:actionURL>
 
-<liferay-ui:icon-delete
+<liferay-ui:icon
+	iconCssClass="icon-remove"
 	url="<%= deleteURL %>"
 />

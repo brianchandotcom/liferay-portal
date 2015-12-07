@@ -252,6 +252,7 @@ for (long defaultTeamId : defaultTeamIds) {
 					selectSiteRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
 					selectSiteRoleURL.setParameter("step", "2");
 					selectSiteRoleURL.setParameter("groupId", String.valueOf(groupId));
+					selectSiteRoleURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectSiteRole");
 					selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
 					%>
 

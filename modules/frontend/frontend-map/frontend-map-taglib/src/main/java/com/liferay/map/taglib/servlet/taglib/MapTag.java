@@ -14,9 +14,11 @@
 
 package com.liferay.map.taglib.servlet.taglib;
 
+import com.liferay.map.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Chema Balsas
@@ -41,6 +43,13 @@ public class MapTag extends IncludeTag {
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setPoints(String points) {

@@ -109,10 +109,6 @@ public class SchedulerProxyMessagingConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_bundleContext == null) {
-			return;
-		}
-
 		if (_destinationServiceRegistration != null) {
 			Destination destination = _bundleContext.getService(
 				_destinationServiceRegistration.getReference());

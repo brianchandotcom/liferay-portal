@@ -80,10 +80,6 @@ public class ExportImportLifecycleManagerImpl
 
 	@Deactivate
 	protected void deactivate() {
-		if (_bundleContext == null) {
-			return;
-		}
-
 		for (ServiceRegistration<Destination> serviceRegistration :
 				_serviceRegistrations) {
 

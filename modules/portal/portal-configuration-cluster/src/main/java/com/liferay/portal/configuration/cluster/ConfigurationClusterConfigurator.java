@@ -56,10 +56,6 @@ public class ConfigurationClusterConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_bundleContext == null) {
-			return;
-		}
-
 		if (_serviceRegistration != null) {
 			Destination destination = _bundleContext.getService(
 				_serviceRegistration.getReference());

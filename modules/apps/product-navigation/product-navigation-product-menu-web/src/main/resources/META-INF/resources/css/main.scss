@@ -104,6 +104,16 @@ body {
 			width: 32px;
 		}
 	}
+
+	.collapse-icon {
+		.panel-notifications-count {
+			display: none;
+		}
+
+		&.collapsed .panel-notifications-count {
+			display: inline-block;
+		}
+	}
 }
 
 .product-menu {

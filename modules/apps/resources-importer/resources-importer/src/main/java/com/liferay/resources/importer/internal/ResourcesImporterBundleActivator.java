@@ -63,7 +63,12 @@ public class ResourcesImporterBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) {
+		Destination destination = bundleContext.getService(
+			_serviceRegistration.getReference());
+
 		_serviceRegistration.unregister();
+
+		destination.destroy();
 	}
 
 	private ServiceRegistration<Destination> _serviceRegistration;

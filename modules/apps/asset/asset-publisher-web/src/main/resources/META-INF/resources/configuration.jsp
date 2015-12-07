@@ -101,6 +101,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 					<liferay-ui:search-container-column-text
 						align="right"
+						cssClass="list-group-item-field"
 					>
 						<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="deleteURL">
 							<portlet:param name="<%= Constants.CMD %>" value="remove-scope" />
@@ -115,7 +116,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator paginate="<%= false %>" />
+				<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 			</liferay-ui:search-container>
 
 			<div class="select-asset-selector">

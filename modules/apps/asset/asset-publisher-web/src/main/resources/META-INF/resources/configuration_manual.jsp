@@ -93,12 +93,12 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 
 					<liferay-ui:search-container-column-jsp
 						align="right"
-						cssClass="entry-action"
+						cssClass="list-group-item-field"
 						path="/asset_selection_action.jsp"
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" />
+				<liferay-ui:search-iterator markupView="lexicon" paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" />
 			</liferay-ui:search-container>
 
 			<c:if test='<%= SessionMessages.contains(renderRequest, "deletedMissingAssetEntries") %>'>

@@ -412,7 +412,7 @@ public class CalendarPortlet extends MVCPortlet {
 						getNewStartTimeAndDurationCalendarBooking(
 							calendarBookingId, offset, duration);
 
-				calendarBooking = getFirstInstanceInRecurrence(
+				calendarBooking = getFirstCalendarBookingInstance(
 					calendarBooking, recurrence, calendar.getTimeZone());
 
 				calendarBooking = _calendarBookingService.updateCalendarBooking(
@@ -669,7 +669,7 @@ public class CalendarPortlet extends MVCPortlet {
 		return editCalendarURL;
 	}
 
-	protected CalendarBooking getFirstInstanceInRecurrence(
+	protected CalendarBooking getFirstCalendarBookingInstance(
 		CalendarBooking calendarBooking, String recurrence, TimeZone timeZone) {
 
 		if (Validator.isNull(recurrence)) {
@@ -677,17 +677,20 @@ public class CalendarPortlet extends MVCPortlet {
 		}
 
 		Recurrence recurrenceObj = RecurrenceSerializer.deserialize(recurrence);
+
 		List<Integer> daysOfWeek = getDaysOfWeek(recurrenceObj);
 
 		java.util.Calendar startTimeJCalendar = CalendarFactoryUtil.getCalendar(
 			calendarBooking.getStartTime(), timeZone);
-		int firstStartTimeDayOfWeek = startTimeJCalendar.get(
+
+		int startTimeDayOfWeek = startTimeJCalendar.get(
 			java.util.Calendar.DAY_OF_WEEK);
 
 		if ((recurrenceObj.getFrequency() == Frequency.WEEKLY) &&
-			!daysOfWeek.contains(firstStartTimeDayOfWeek)) {
+			!daysOfWeek.contains(startTimeDayOfWeek)) {
 
 			calendarBooking.setRecurrence(recurrence);
+
 			calendarBooking = RecurrenceUtil.getCalendarBookingInstance(
 				calendarBooking, 1);
 		}

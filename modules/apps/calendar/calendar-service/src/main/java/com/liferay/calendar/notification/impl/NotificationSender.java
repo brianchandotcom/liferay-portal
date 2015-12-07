@@ -20,6 +20,7 @@ package com.liferay.calendar.notification.impl;
 public interface NotificationSender {
 
 	public void sendNotification(
+			String fromAddress, String fromName,
 			NotificationRecipient notificationRecipient,
 			NotificationTemplateContext notificationTemplateContext)
 		throws NotificationSenderException;

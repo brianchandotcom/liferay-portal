@@ -21,6 +21,7 @@ public class IMNotificationSender implements NotificationSender {
 
 	@Override
 	public void sendNotification(
+		String fromAddress, String fromName,
 		NotificationRecipient notificationRecipient,
 		NotificationTemplateContext notificationTemplateContext) {
 	}

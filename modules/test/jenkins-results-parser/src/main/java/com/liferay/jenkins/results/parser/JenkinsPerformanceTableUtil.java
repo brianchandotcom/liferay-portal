@@ -127,7 +127,7 @@ public class JenkinsPerformanceTableUtil {
 
 		row.add(createBatchCell(batch, tag, "16%"));
 
-		row.add(createAxisCell(axis, tag, "8%"));
+		row.add(createAxisCell(axis, tag, "12%"));
 
 		row.add(createRowCell(className, tag, "30%"));
 

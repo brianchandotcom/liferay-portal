@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 ArchivedSettings archivedSettings = (ArchivedSettings)row.getObject();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:actionURL name="restoreArchivedSetup" var="restoreArchivedSetupURL">
 		<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

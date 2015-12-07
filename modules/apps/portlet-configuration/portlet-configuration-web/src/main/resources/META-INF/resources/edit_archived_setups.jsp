@@ -88,11 +88,12 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 			/>
 
 			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
 				path="/archived_setup_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 
 	<aui:input label="archive-name-for-current-setup" name="name" size="20" type="text" />

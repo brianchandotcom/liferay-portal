@@ -26,6 +26,18 @@ portletURL.setParameter("mvcPath", "/edit_archived_setups.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
+
+SearchContainer<ArchivedSettings> archivedSettingsSearch = new SearchContainer<ArchivedSettings>(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-archived-setups");
+
+List<ArchivedSettings> archivedSettingsList = SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(scopeGroupId, selPortlet.getRootPortletId());
+
+int archivedSettingsCount = archivedSettingsList.size();
+
+archivedSettingsSearch.setTotal(archivedSettingsCount);
+
+archivedSettingsList = ListUtil.subList(archivedSettingsList, archivedSettingsSearch.getStart(), archivedSettingsSearch.getEnd());
+
+archivedSettingsSearch.setResults(archivedSettingsList);
 %>
 
 <portlet:renderURL var="backURL">
@@ -53,58 +65,36 @@ portletURL.setParameter("portletResource", portletResource);
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
-	<%
-	List<String> headerNames = new ArrayList<String>();
+	<liferay-ui:search-container
+		searchContainer="<%= archivedSettingsSearch %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.settings.ArchivedSettings"
+			keyProperty="name"
+			modelVar="archivedSettings"
+		>
+			<liferay-ui:search-container-column-text
+				name="name"
+			/>
 
-	headerNames.add("name");
-	headerNames.add("user");
-	headerNames.add("modified-date");
-	headerNames.add(StringPool.BLANK);
+			<liferay-ui:search-container-column-text
+				name="user-name"
+				property="userName"
+			/>
 
-	SearchContainer<ArchivedSettings> searchContainer = new SearchContainer<ArchivedSettings>(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-archived-setups");
+			<liferay-ui:search-container-column-date
+				name="modified-date"
+				property="modifiedDate"
+			/>
 
-	List<ArchivedSettings> archivedSettingsList = SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(scopeGroupId, selPortlet.getRootPortletId());
+			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
+				path="/archived_setup_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-	int total = archivedSettingsList.size();
-
-	searchContainer.setTotal(total);
-
-	List<ArchivedSettings> results = ListUtil.subList(archivedSettingsList, searchContainer.getStart(), searchContainer.getEnd());
-
-	searchContainer.setResults(results);
-
-	List resultRows = searchContainer.getResultRows();
-
-	for (int i = 0; i < results.size(); i++) {
-		ArchivedSettings archivedSettings = results.get(i);
-
-		ResultRow row = new ResultRow(new Object[] {archivedSettings, portletResource}, archivedSettings.getName(), i);
-
-		// Name
-
-		row.addText(archivedSettings.getName());
-
-		// User
-
-		row.addText(archivedSettings.getUserName());
-
-		// Date
-
-		row.addDate(archivedSettings.getModifiedDate());
-
-		// Action
-
-		row.addJSP("/archived_setup_action.jsp", "entry-action", application, request, response);
-
-		// Add result row
-
-		resultRows.add(row);
-	}
-	%>
-
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
-
-	<div class="separator"><!-- --></div>
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
 
 	<aui:input label="archive-name-for-current-setup" name="name" size="20" type="text" />
 

@@ -105,32 +105,34 @@ journalContentSearch.setResults(documents);
 
 			summary.setHighlight(PropsValues.INDEX_SEARCH_HIGHLIGHT_ENABLED);
 			summary.setQueryTerms(queryTerms);
-
-			row.setObject(new Object[] {document, summary});
 			%>
 
 			<liferay-ui:search-container-column-text
-				name="#"
-				value="<%= journalContentSearch.getStart() + index + 1 + StringPool.PERIOD %>"
-			/>
+				colspan="<%= 2 %>"
+			>
+				<h5>
+					<%= summary.getHighlightedTitle() %>
+				</h5>
 
-			<liferay-ui:search-container-column-jsp
-				name="language"
-				path="/article_language.jsp"
-			/>
+				<%
+				Locale snippetLocale = summary.getLocale();
 
-			<liferay-ui:search-container-column-text
-				name="name"
-				value="<%= summary.getHighlightedTitle() %>"
-			/>
+				String languageId = LocaleUtil.toLanguageId(snippetLocale);
+				%>
 
-			<liferay-ui:search-container-column-jsp
-				name="content"
-				path="/article_content.jsp"
-			/>
+				<c:if test="<%= languageId.length() > 0 %>">
+					<h6 class="text-default">
+						<liferay-ui:icon image='<%= "../language/" + languageId %>' message='<%= LanguageUtil.format(request, "this-result-comes-from-the-x-version-of-this-content", snippetLocale.getDisplayLanguage(locale), false) %>' />
+					</h6>
+				</c:if>
+
+				<h6 class="text-default">
+					<%@ include file="/article_content.jspf" %>
+				</h6>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

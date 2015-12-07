@@ -14,17 +14,15 @@
 
 package com.liferay.calendar.notification.impl;
 
-import com.liferay.portal.model.User;
-
 /**
  * @author Eduardo Lundgren
  */
 public interface NotificationSender {
 
 	public void sendNotification(
+			String fromAddress, String fromName,
 			NotificationRecipient notificationRecipient,
-			NotificationTemplateContext notificationTemplateContext,
-			User sender)
+			NotificationTemplateContext notificationTemplateContext)
 		throws NotificationSenderException;
 
 	public void sendNotification(

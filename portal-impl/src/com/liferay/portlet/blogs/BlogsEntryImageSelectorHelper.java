@@ -64,9 +64,9 @@ public class BlogsEntryImageSelectorHelper {
 	}
 
 	public boolean isFileEntryTempFile() {
-		if (_fileEntryTempFile = null) {
+		if (_fileEntryTempFile == null) {
 			if ((_imageFileEntryId == 0) ||
-				(_imageFileEntryId == _oldImageFileEntryId) ) {
+				(_imageFileEntryId == _oldImageFileEntryId)) {
 
 				_fileEntryTempFile = false;
 			}

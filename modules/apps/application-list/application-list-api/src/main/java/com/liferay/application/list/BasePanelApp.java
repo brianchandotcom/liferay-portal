@@ -155,7 +155,11 @@ public abstract class BasePanelApp implements PanelApp {
 			return null;
 		}
 
-		return LatentGroupManagerUtil.getLatentGroup(request.getSession());
+		HttpServletRequest originalRequest =
+			PortalUtil.getOriginalServletRequest(request);
+
+		return LatentGroupManagerUtil.getLatentGroup(
+			originalRequest.getSession());
 	}
 
 	protected void setUserNotificationEventLocalService(

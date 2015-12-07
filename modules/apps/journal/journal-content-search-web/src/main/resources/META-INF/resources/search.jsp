@@ -39,6 +39,36 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 String defaultKeywords = LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD;
 
 String keywords = StringUtil.unquote(ParamUtil.getString(request, "keywords", defaultKeywords));
+
+PortletURL renderURL = renderResponse.createRenderURL();
+
+renderURL.setParameter("mvcPath", "/search.jsp");
+renderURL.setParameter("keywords", keywords);
+
+SearchContainer journalContentSearch = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, renderURL, null, LanguageUtil.format(request, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false));
+
+Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
+
+SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+searchContext.setGroupIds(null);
+searchContext.setKeywords(keywords);
+
+Hits hits = indexer.search(searchContext);
+
+String[] queryTerms = hits.getQueryTerms();
+
+ContentHits contentHits = new ContentHits();
+
+contentHits.setShowListed(journalContentSearchPortletInstanceConfiguration.showListed());
+
+contentHits.recordHits(hits, layout.getGroupId(), layout.isPrivateLayout(), journalContentSearch.getStart(), journalContentSearch.getEnd());
+
+journalContentSearch.setTotal(hits.getLength());
+
+List documents = ListUtil.toList(hits.getDocs());
+
+journalContentSearch.setResults(documents);
 %>
 
 <liferay-ui:header
@@ -48,106 +78,61 @@ String keywords = StringUtil.unquote(ParamUtil.getString(request, "keywords", de
 
 <portlet:renderURL var="searchURL">
 	<portlet:param name="mvcPath" value="/search.jsp" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="targetPortletId" value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "search(); event.preventDefault();" %>'>
+	<div class="form-search">
+		<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+	</div>
 
-	<%
-	PortletURL renderURL = renderResponse.createRenderURL();
+	<div class="search-results">
+		<liferay-ui:search-speed hits="<%= hits %>" searchContainer="<%= journalContentSearch %>" />
+	</div>
 
-	renderURL.setParameter("mvcPath", "/search.jsp");
-	renderURL.setParameter("keywords", keywords);
+	<liferay-ui:search-container
+		searchContainer="<%= journalContentSearch %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.search.Document"
+			keyProperty="entryClassPK"
+			modelVar="document"
+		>
 
-	List<String> headerNames = new ArrayList<String>();
-
-	headerNames.add("#");
-	headerNames.add("language");
-	headerNames.add("name");
-	headerNames.add("content");
-
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, renderURL, headerNames, LanguageUtil.format(request, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false));
-
-	try {
-		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
-
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-		searchContext.setGroupIds(null);
-		searchContext.setKeywords(keywords);
-
-		Hits hits = indexer.search(searchContext);
-
-		String[] queryTerms = hits.getQueryTerms();
-
-		ContentHits contentHits = new ContentHits();
-
-		contentHits.setShowListed(journalContentSearchPortletInstanceConfiguration.showListed());
-
-		contentHits.recordHits(hits, layout.getGroupId(), layout.isPrivateLayout(), searchContainer.getStart(), searchContainer.getEnd());
-
-		int total = hits.getLength();
-
-		searchContainer.setTotal(total);
-
-		List<Document> results = ListUtil.toList(hits.getDocs());
-
-		List resultRows = searchContainer.getResultRows();
-
-		for (int i = 0; i < results.size(); i++) {
-			Document doc = results.get(i);
-
-			Summary summary = indexer.getSummary(doc, StringPool.BLANK, renderRequest, renderResponse);
+			<%
+			Summary summary = indexer.getSummary(document, StringPool.BLANK, renderRequest, renderResponse);
 
 			summary.setHighlight(PropsValues.INDEX_SEARCH_HIGHLIGHT_ENABLED);
 			summary.setQueryTerms(queryTerms);
 
-			ResultRow row = new ResultRow(new Object[] {doc, summary}, i, i);
+			row.setObject(new Object[] {document, summary});
+			%>
 
-			// Position
+			<liferay-ui:search-container-column-text
+				name="#"
+				value="<%= journalContentSearch.getStart() + index + 1 + StringPool.PERIOD %>"
+			/>
 
-			row.addText(searchContainer.getStart() + i + 1 + StringPool.PERIOD);
+			<liferay-ui:search-container-column-jsp
+				name="language"
+				path="/article_language.jsp"
+			/>
 
-			row.addJSP("/article_language.jsp", application, request, response);
+			<liferay-ui:search-container-column-text
+				name="name"
+				value="<%= summary.getHighlightedTitle() %>"
+			/>
 
-			// Title
+			<liferay-ui:search-container-column-jsp
+				name="content"
+				path="/article_content.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-			String title = summary.getHighlightedTitle();
-
-			row.addText(title);
-
-			// Content
-
-			row.addJSP("/article_content.jsp", application, request, response);
-
-			// Add result row
-
-			resultRows.add(row);
-		}
-	%>
-
-		<div class="form-search">
-			<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
-		</div>
-
-		<div class="search-results">
-			<liferay-ui:search-speed hits="<%= hits %>" searchContainer="<%= searchContainer %>" />
-
-			<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
-		</div>
-
-	<%
-	}
-	catch (Exception e) {
-		_log.error(e.getMessage());
-	}
-	%>
-
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_journal_content_search_web.search_jsp");
-%>
 
 <aui:script>
 	function <portlet:namespace />search() {

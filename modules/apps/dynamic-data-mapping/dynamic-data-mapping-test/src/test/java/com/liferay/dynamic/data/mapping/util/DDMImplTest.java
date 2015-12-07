@@ -82,6 +82,54 @@ public class DDMImplTest extends BaseDDMTestCase {
 	}
 
 	@Test
+	public void testMergeAfterNewFieldIsAddedAndPublishingContentAtBranch()
+		throws Exception {
+
+		DDMForm ddmForm = createDDMForm();
+
+		addDDMFormFields(
+			ddmForm,
+			createTextDDMFormField("Text1807", "", true, false, false));
+
+		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
+
+		Field existingField = createField(
+			ddmStructure.getStructureId(), "Text1807", null, null);
+
+		Field existingFieldsDisplayField = createFieldsDisplayField(
+			ddmStructure.getStructureId(), "Text1807_INSTANCE_hgfs");
+
+		Fields existingFields = createFields(
+			existingField, existingFieldsDisplayField);
+
+		ddmStructure.setDDMForm(ddmForm);
+
+		Field newField = createField(
+			ddmStructure.getStructureId(), "Test2", null, null);
+
+		Field newFieldsDisplayField = createFieldsDisplayField(
+			ddmStructure.getStructureId(),
+			"Text1807_INSTANCE_hgfs,Text1853_INSTANCE_cgac");
+
+		Fields newFields = createFields(newField, newFieldsDisplayField);
+
+		Fields mergedFields = _ddmImpl.mergeFields(newFields, existingFields);
+
+		Field fieldsDisplayField = mergedFields.get(
+			DDMImpl.FIELDS_DISPLAY_NAME);
+
+		Assert.assertNotNull(fieldsDisplayField);
+
+		String fieldsDisplayValue = (String)fieldsDisplayField.getValue();
+
+		String[] fieldsDisplayValues = StringUtil.split(fieldsDisplayValue);
+
+		testValues(
+			fieldsDisplayValues, "Text1807_INSTANCE_hgfs",
+			"Text1853_INSTANCE_cgac");
+	}
+
+	@Test
 	public void testMergeFieldsAfterFieldValueIsRemovedFromTheMiddleOfSeries()
 		throws Exception {
 

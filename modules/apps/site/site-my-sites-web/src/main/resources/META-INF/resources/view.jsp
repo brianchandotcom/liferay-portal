@@ -27,9 +27,41 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("tabs1", tabs1);
 
-pageContext.setAttribute("portletURL", portletURL);
-
 request.setAttribute("view.jsp-tabs1", tabs1);
+
+GroupSearch groupSearch = new GroupSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
+
+GroupSearchTerms searchTerms = (GroupSearchTerms)groupSearch.getSearchTerms();
+
+LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
+
+groupParams.put("site", Boolean.TRUE);
+
+if (tabs1.equals("my-sites")) {
+	groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
+	groupParams.put("active", Boolean.TRUE);
+}
+else {
+	List types = new ArrayList();
+
+	types.add(Integer.valueOf(GroupConstants.TYPE_SITE_OPEN));
+	types.add(Integer.valueOf(GroupConstants.TYPE_SITE_RESTRICTED));
+
+	groupParams.put("types", types);
+	groupParams.put("active", Boolean.TRUE);
+}
+
+int groupsCount = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);
+
+groupSearch.setTotal(groupsCount);
+
+List<Group> groups = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), groupParams, groupSearch.getStart(), groupSearch.getEnd(), groupSearch.getOrderByComparator());
+
+groupSearch.setResults(groups);
+
+long[] groupIds = ListUtil.toLongArray(groups, Group.GROUP_ID_ACCESSOR);
+
+Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.getCompanyId(), WorkflowConstants.STATUS_APPROVED, groupIds);
 %>
 
 <liferay-ui:success key="membershipRequestSent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
@@ -65,51 +97,8 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
 	<liferay-ui:search-container
-		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= groupSearch %>"
 	>
-
-		<%
-		GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
-
-		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
-
-		groupParams.put("site", Boolean.TRUE);
-
-		if (tabs1.equals("my-sites")) {
-			groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
-			groupParams.put("active", Boolean.TRUE);
-		}
-		else {
-			List types = new ArrayList();
-
-			types.add(Integer.valueOf(GroupConstants.TYPE_SITE_OPEN));
-			types.add(Integer.valueOf(GroupConstants.TYPE_SITE_RESTRICTED));
-
-			groupParams.put("types", types);
-			groupParams.put("active", Boolean.TRUE);
-		}
-
-		Map<Long, Integer> groupUsersCounts = Collections.emptyMap();
-		%>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);
-
-			searchContainer.setTotal(total);
-
-			results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-			searchContainer.setResults(results);
-
-			long[] groupIds = ListUtil.toLongArray(results, Group.GROUP_ID_ACCESSOR);
-
-			groupUsersCounts = UserLocalServiceUtil.searchCounts(company.getCompanyId(), WorkflowConstants.STATUS_APPROVED, groupIds);
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.Group"
 			keyProperty="groupId"

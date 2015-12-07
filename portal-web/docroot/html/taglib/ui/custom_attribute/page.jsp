@@ -550,13 +550,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 						<c:when test="<%= type == ExpandoColumnConstants.STRING_ARRAY %>">
 
 							<%
-							String paramValue = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--");
-
-							String[] curValue = (String[])value;
-
-							if (Validator.isNotNull(paramValue)) {
-								curValue = new String[] {paramValue};
-							}
+							String[] curValue = ParamUtil.getStringValues(request, "ExpandoAttribute--" + name + "--", (String[])value);
 							%>
 
 							<c:choose>
@@ -632,11 +626,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 						<c:otherwise>
 
 							<%
-							String paramValue = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--");
-
-							if (Validator.isNotNull(paramValue)) {
-								value = paramValue;
-							}
+							value = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--", String.valueOf(value));
 
 							if (Validator.isNull(String.valueOf(value))) {
 								value = defaultValue;

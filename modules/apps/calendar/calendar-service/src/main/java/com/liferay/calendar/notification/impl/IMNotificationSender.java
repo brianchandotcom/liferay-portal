@@ -14,8 +14,6 @@
 
 package com.liferay.calendar.notification.impl;
 
-import com.liferay.portal.model.User;
-
 /**
  * @author Eduardo Lundgren
  */
@@ -23,8 +21,9 @@ public class IMNotificationSender implements NotificationSender {
 
 	@Override
 	public void sendNotification(
+		String fromAddress, String fromName,
 		NotificationRecipient notificationRecipient,
-		NotificationTemplateContext notificationTemplateContext, User sender) {
+		NotificationTemplateContext notificationTemplateContext) {
 	}
 
 	@Override

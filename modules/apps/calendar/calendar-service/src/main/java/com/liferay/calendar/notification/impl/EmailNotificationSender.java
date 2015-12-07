@@ -19,7 +19,6 @@ import com.liferay.calendar.model.CalendarNotificationTemplateConstants;
 import com.liferay.calendar.notification.NotificationField;
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
-import com.liferay.portal.model.User;
 
 import javax.mail.internet.InternetAddress;
 
@@ -30,26 +29,26 @@ public class EmailNotificationSender implements NotificationSender {
 
 	@Override
 	public void sendNotification(
+			String fromAddress, String fromName,
 			NotificationRecipient notificationRecipient,
-			NotificationTemplateContext notificationTemplateContext,
-			User sender)
+			NotificationTemplateContext notificationTemplateContext)
 		throws NotificationSenderException {
 
 		try {
 			CalendarNotificationTemplate calendarNotificationTemplate =
 				notificationTemplateContext.getCalendarNotificationTemplate();
 
-			String fromAddress = NotificationUtil.getTemplatePropertyValue(
+			String fromAddressValue = NotificationUtil.getTemplatePropertyValue(
 				calendarNotificationTemplate,
 				CalendarNotificationTemplateConstants.PROPERTY_FROM_ADDRESS,
-				sender.getEmailAddress());
-			String fromName = NotificationUtil.getTemplatePropertyValue(
+				fromAddress);
+			String fromNameValue = NotificationUtil.getTemplatePropertyValue(
 				calendarNotificationTemplate,
 				CalendarNotificationTemplateConstants.PROPERTY_FROM_NAME,
-				sender.getFullName());
+				fromName);
 
-			notificationTemplateContext.setFromAddress(fromAddress);
-			notificationTemplateContext.setFromName(fromName);
+			notificationTemplateContext.setFromAddress(fromAddressValue);
+			notificationTemplateContext.setFromName(fromNameValue);
 			notificationTemplateContext.setToAddress(
 				notificationRecipient.getEmailAddress());
 			notificationTemplateContext.setToName(

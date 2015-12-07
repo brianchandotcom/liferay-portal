@@ -127,7 +127,7 @@ public class DeploymentHelperContextListener implements ServletContextListener {
 		}
 		catch (Exception e) {
 			servletContext.log(
-				"Could not undeploy " + servletContext.getServletContextName(),
+				"Unable to undeploy " + servletContext.getServletContextName(),
 				e);
 		}
 	}

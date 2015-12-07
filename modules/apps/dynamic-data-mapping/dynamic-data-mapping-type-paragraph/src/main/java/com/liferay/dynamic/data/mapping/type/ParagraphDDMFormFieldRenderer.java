@@ -68,9 +68,6 @@ public class ParagraphDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		Template template, DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		super.populateRequiredContext(
-			template, ddmFormField, ddmFormFieldRenderingContext);
-
 		template.put("text", ddmFormField.getProperty("text"));
 	}
 

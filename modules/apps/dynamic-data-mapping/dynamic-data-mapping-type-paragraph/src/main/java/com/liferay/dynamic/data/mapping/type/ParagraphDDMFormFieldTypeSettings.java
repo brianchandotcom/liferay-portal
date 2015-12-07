@@ -28,13 +28,13 @@ public interface ParagraphDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
-			label = "%title",
-			properties = {
-				"placeholder=%enter-title-sentence", "setting.category=basic",
-				"setting.weight=4"
-			},
-			required = true, tip = "%enter-title-sentence", type = "key-value"
-		)
+		label = "%title",
+		properties = {
+			"placeholder=%enter-title-sentence", "setting.category=basic",
+			"setting.weight=4"
+		},
+		required = true, tip = "%enter-title-sentence", type = "key-value"
+	)
 	public LocalizedValue label();
 
 	@DDMFormField(visibilityExpression = "false")

@@ -34,9 +34,7 @@ public class JenkinsPerformanceTableUtil {
 
 		Element tableElement = new DefaultElement("table");
 
-		Element headerElement = createTableHeader();
-
-		tableElement.add(headerElement);
+		tableElement.add(createTableHeader());
 
 		for (JenkinsPerformanceDataUtil.Result result : results) {
 			tableElement.add(createRow(result));
@@ -76,7 +74,7 @@ public class JenkinsPerformanceTableUtil {
 			text = axis.substring(axis.indexOf("=") + 1);
 		}
 
-		return createRowCell(text, tag, width);
+		return createCell(text, tag, width);
 	}
 
 	private static Element createBatchCell(
@@ -88,14 +86,22 @@ public class JenkinsPerformanceTableUtil {
 			text = batch.substring(batch.indexOf("/") + 1);
 		}
 
-		return createRowCell(text, tag, width);
+		return createCell(text, tag, width);
+	}
+
+	private static Element createCell(String text, String tag, String width) {
+		Element cell = new DefaultElement(tag);
+
+		cell.addAttribute("width", width);
+
+		return cell.addText(text);
 	}
 
 	private static Element createNameCell(
 		String name, String tag, String url, String width) {
 
 		if ((url == null) || (url.length() == 0)) {
-			return createRowCell(name, tag, width);
+			return createCell(name, tag, width);
 		}
 
 		Element cell = new DefaultElement(tag);
@@ -129,25 +135,15 @@ public class JenkinsPerformanceTableUtil {
 
 		row.add(createAxisCell(axis, tag, "12%"));
 
-		row.add(createRowCell(className, tag, "30%"));
+		row.add(createCell(className, tag, "30%"));
 
 		row.add(createNameCell(name, tag, url, "30%"));
 
-		row.add(createRowCell(status, tag, "8%"));
+		row.add(createCell(status, tag, "8%"));
 
-		row.add(createRowCell(duration, tag, "4%"));
+		row.add(createCell(duration, tag, "4%"));
 
 		return row;
-	}
-
-	private static Element createRowCell(
-		String text, String tag, String width) {
-
-		Element cell = new DefaultElement(tag);
-
-		cell.addAttribute("width", width);
-
-		return cell.addText(text);
 	}
 
 	private static Element createTableHeader() {

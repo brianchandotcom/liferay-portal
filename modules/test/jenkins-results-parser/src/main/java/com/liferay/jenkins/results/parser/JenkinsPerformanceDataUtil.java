@@ -75,17 +75,19 @@ public class JenkinsPerformanceDataUtil {
 			_url = sourceJSON.getString("url");
 		}
 
-		public Result(String batch, JSONObject caze, JSONObject child)
+		public Result(
+				String batch, JSONObject caseJSONObject,
+				JSONObject childJSONObject)
 			throws Exception {
 
 			_batch = batch;
-			_className = caze.getString("className");
-			_duration = caze.getInt("duration");
-			_name = caze.getString("name");
-			_status = caze.getString("status");
+			_className = caseJSONObject.getString("className");
+			_duration = caseJSONObject.getInt("duration");
+			_name = caseJSONObject.getString("name");
+			_status = caseJSONObject.getString("status");
 
-			setAxis(child);
-			setUrl(child);
+			setAxis(childJSONObject);
+			setUrl(childJSONObject);
 		}
 
 		public int compareTo(Result result) {
@@ -181,30 +183,37 @@ public class JenkinsPerformanceDataUtil {
 	}
 
 	private static List<Result> getSlowestResults(
-			String name, JSONObject job, int maxSize)
+			String name, JSONObject jobJSONObject, int maxSize)
 		throws Exception {
 
-		JSONArray childReports = job.getJSONArray("childReports");
+		JSONArray childReportsJSONArray = jobJSONObject.getJSONArray(
+			"childReports");
 		List<Result> results = new ArrayList<>();
 
-		for (int i = 0; i < childReports.length(); i++) {
-			JSONObject childReport = childReports.getJSONObject(i);
+		for (int i = 0; i < childReportsJSONArray.length(); i++) {
+			JSONObject childReportJSONObject =
+				childReportsJSONArray.getJSONObject(i);
 
-			JSONObject child = childReport.getJSONObject("child");
+			JSONObject childJSONObject = childReportJSONObject.getJSONObject(
+				"child");
 
-			JSONObject childReportResult = childReport.getJSONObject("result");
+			JSONObject childResultJSONObject =
+				childReportJSONObject.getJSONObject("result");
 
-			JSONArray suites = childReportResult.getJSONArray("suites");
+			JSONArray suitesJSONArray = childResultJSONObject.getJSONArray(
+				"suites");
 
-			for (int j = 0; j < suites.length(); j++) {
-				JSONObject suite = suites.getJSONObject(j);
+			for (int j = 0; j < suitesJSONArray.length(); j++) {
+				JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(j);
 
-				JSONArray cases = suite.getJSONArray("cases");
+				JSONArray casesJSONArray = suiteJSONObject.getJSONArray(
+					"cases");
 
-				for (int k = 0; k < cases.length(); k++) {
-					JSONObject caze = cases.getJSONObject(k);
+				for (int k = 0; k < casesJSONArray.length(); k++) {
+					JSONObject caseJSONObject = casesJSONArray.getJSONObject(k);
 
-					Result result = new Result(name, caze, child);
+					Result result = new Result(
+						name, caseJSONObject, childJSONObject);
 
 					results.add(result);
 				}

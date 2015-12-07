@@ -185,7 +185,6 @@ public abstract class BaseJenkinsResultsParserTestCase {
 	}
 
 	protected File dependenciesDir = new File(
-		"src/test/resources/dependencies/" +
-			getSimpleClassName());
+		"src/test/resources/dependencies/" + getSimpleClassName());
 
 }

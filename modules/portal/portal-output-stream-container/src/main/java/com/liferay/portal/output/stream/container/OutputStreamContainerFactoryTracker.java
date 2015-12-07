@@ -26,6 +26,8 @@ import java.io.Writer;
 
 import java.nio.charset.Charset;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Set;
 
 import org.apache.log4j.Level;
@@ -35,6 +37,7 @@ import org.apache.log4j.WriterAppender;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -153,6 +156,21 @@ public class OutputStreamContainerFactoryTracker {
 			_outputStreamContainerFactories =
 				ServiceTrackerMapFactory.openSingleValueMap(
 					bundleContext, OutputStreamContainerFactory.class, "name");
+
+			//Add default OutputStreamContainerFactory
+
+			OutputStreamContainerFactory
+				consoleOutputStreamContainerFactory =
+					new ConsoleOutputStreamContainerFactory();
+
+			Dictionary<String, Object> properties = new Hashtable<>();
+
+			properties.put("name", "console");
+			properties.put("service.ranking", 100);
+
+			_serviceRegistration = bundleContext.registerService(
+				OutputStreamContainerFactory.class,
+				consoleOutputStreamContainerFactory, properties);
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new IllegalStateException(ise);
@@ -180,19 +198,15 @@ public class OutputStreamContainerFactoryTracker {
 	protected void setOutputStreamContainerFactory(
 		OutputStreamContainerFactory outputStreamContainerFactory) {
 
-		if (outputStreamContainerFactory == null) {
-			_outputStreamContainerFactory =
-				new ConsoleOutputStreamContainerFactory();
-		}
-		else {
-			_outputStreamContainerFactory = outputStreamContainerFactory;
-		}
+		_outputStreamContainerFactory = outputStreamContainerFactory;
 	}
 
 	private org.apache.felix.utils.log.Logger _logger;
 	private ServiceTrackerMap<String, OutputStreamContainerFactory>
 		_outputStreamContainerFactories;
 	private volatile OutputStreamContainerFactory _outputStreamContainerFactory;
+	private ServiceRegistration<OutputStreamContainerFactory>
+		_serviceRegistration;
 	private WriterAppender _writerAppender;
 	private final ThreadLocal<Writer> _writerThreadLocal = new ThreadLocal<>();
 

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -73,8 +72,7 @@ public class AddDefaultSharedPortletLayoutAction extends SimpleAction {
 	}
 
 	protected void doRun(long companyId) throws Exception {
-		Group group = _groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
+		Group group = _groupLocalService.getCompanyGroup(companyId);
 
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			group.getGroupId(), false, "/shared");
@@ -89,7 +87,6 @@ public class AddDefaultSharedPortletLayoutAction extends SimpleAction {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
-		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
@@ -100,8 +97,9 @@ public class AddDefaultSharedPortletLayoutAction extends SimpleAction {
 		layout = _layoutLocalService.addLayout(
 			defaultUserId, group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "shared",
-			StringPool.BLANK, StringPool.BLANK, "shared_portlet", true,
-			"/shared", serviceContext);
+			StringPool.BLANK, StringPool.BLANK,
+			LayoutConstants.TYPE_SHARED_PORTLET, true, "/shared",
+			serviceContext);
 
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();

@@ -31,10 +31,8 @@ DDLRecordSet recordSet = ddlFormDisplayContext.getRecordSet();
 	<c:otherwise>
 		<c:choose>
 			<c:when test="<%= ddlFormDisplayContext.isFormAvailable() %>">
-				<portlet:actionURL name="addRecord" var="addRecordActionURL" />
-
 				<div class="portlet-forms">
-					<aui:form action="<%= addRecordActionURL %>" method="post" name="fm">
+					<aui:form action="<%= ddlFormDisplayContext.getAddRecordURL() %>" method="post" name="fm">
 
 						<%
 						String redirectURL = GetterUtil.getString(recordSet.getSettingsProperty("redirectURL", StringPool.BLANK));

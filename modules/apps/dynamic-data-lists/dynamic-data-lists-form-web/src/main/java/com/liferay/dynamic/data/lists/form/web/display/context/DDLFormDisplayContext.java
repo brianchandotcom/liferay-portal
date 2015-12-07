@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.display.context;
 
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
@@ -24,11 +25,18 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLFactoryUtil;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
 /**
@@ -51,6 +59,22 @@ public class DDLFormDisplayContext {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
+	}
+
+	public String getAddRecordURL() {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		Layout globalLayout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			themeDisplay.getCompanyGroupId(), false, "/shared");
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			_renderRequest, DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM,
+			new VirtualLayout(globalLayout, themeDisplay.getScopeGroup()),
+			PortletRequest.ACTION_PHASE);
+
+		portletURL.setParameter(ActionRequest.ACTION_NAME, "addRecord");
+
+		return portletURL.toString();
 	}
 
 	public DDLRecordSet getRecordSet() {

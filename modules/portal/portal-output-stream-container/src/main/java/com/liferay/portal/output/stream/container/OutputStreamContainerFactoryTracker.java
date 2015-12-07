@@ -181,9 +181,17 @@ public class OutputStreamContainerFactoryTracker {
 	protected void deactivate() {
 		Logger rootLogger = Logger.getRootLogger();
 
-		rootLogger.removeAppender(_writerAppender);
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 
-		_outputStreamContainerFactories.close();
+		if (_outputStreamContainerFactory != null) {
+			_outputStreamContainerFactories.close();
+		}
+
+		if (rootLogger != null) {
+			rootLogger.removeAppender(_writerAppender);
+		}
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind ="-")

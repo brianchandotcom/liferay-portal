@@ -34,14 +34,36 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 
 <liferay-ui:success key="membershipRequestSent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		PortletURL mySitesURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		mySitesURL.setParameter("tabs1", "my-sites");
+		%>
+
+		<aui:nav-item href="<%= mySitesURL.toString() %>" label="my-sites" selected='<%= tabs1.equals("my-sites") %>' />
+
+		<%
+		PortletURL availableSitesURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		availableSitesURL.setParameter("tabs1", "available-sites");
+		%>
+
+		<aui:nav-item href="<%= availableSitesURL.toString() %>" label="available-sites" selected='<%= tabs1.equals("available-sites") %>' />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL %>" name="searchFm">
+			<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
 <aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="portletURL" />
-
-	<liferay-ui:tabs
-		names="my-sites,available-sites"
-		portletURL="<%= portletURL %>"
-	/>
-
 	<liferay-ui:search-container
 		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 	>
@@ -87,12 +109,6 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			%>
 
 		</liferay-ui:search-container-results>
-
-		<aui:nav-bar>
-			<aui:nav-bar-search>
-				<liferay-ui:input-search />
-			</aui:nav-bar-search>
-		</aui:nav-bar>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.Group"

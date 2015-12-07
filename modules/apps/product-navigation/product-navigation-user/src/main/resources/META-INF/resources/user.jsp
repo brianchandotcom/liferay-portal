@@ -37,6 +37,6 @@ ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayCont
 	</span>
 
 	<c:if test="<%= notificationsCount > 0 %>">
-		<span class="sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
+		<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
 	</c:if>
 </div>

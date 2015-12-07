@@ -80,7 +80,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 			</c:if>
 
 			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
-				<span class="sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
+				<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
 			</c:if>
 		</div>
 	</div>

@@ -81,15 +81,15 @@
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-15/1287/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-15/1287/"
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-16/1287/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-16/1287/"
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-17/1287/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-17/1287/"
         },
         {
             "number": 1272,
@@ -97,15 +97,15 @@
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-19/1287/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-19/1287/"
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-20/1287/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-20/1287/"
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-21/1287/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-21/1287/"
         }
     ],
     "actions": [

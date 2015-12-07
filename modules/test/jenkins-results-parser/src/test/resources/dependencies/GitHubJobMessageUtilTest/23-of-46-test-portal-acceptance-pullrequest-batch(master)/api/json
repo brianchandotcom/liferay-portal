@@ -221,7 +221,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-50/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-50/2251/"
         },
         {
             "number": 2226,
@@ -245,7 +245,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-56/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-56/2251/"
         },
         {
             "number": 2226,
@@ -269,7 +269,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-62/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-62/2251/"
         },
         {
             "number": 2226,
@@ -293,7 +293,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-68/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-68/2251/"
         },
         {
             "number": 2226,
@@ -317,7 +317,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-74/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-74/2251/"
         },
         {
             "number": 2226,
@@ -341,7 +341,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-80/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-80/2251/"
         },
         {
             "number": 2226,
@@ -365,7 +365,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-86/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-86/2251/"
         },
         {
             "number": 2226,
@@ -389,7 +389,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-92/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-92/2251/"
         },
         {
             "number": 2226,
@@ -413,7 +413,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-98/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-98/2251/"
         },
         {
             "number": 2226,
@@ -437,7 +437,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-104/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-104/2251/"
         },
         {
             "number": 2226,
@@ -461,7 +461,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-110/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-110/2251/"
         },
         {
             "number": 2226,
@@ -485,7 +485,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-116/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-116/2251/"
         },
         {
             "number": 2226,
@@ -509,7 +509,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-122/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-122/2251/"
         },
         {
             "number": 2226,
@@ -533,7 +533,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-128/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-128/2251/"
         },
         {
             "number": 2226,
@@ -557,7 +557,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-134/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-134/2251/"
         },
         {
             "number": 2226,
@@ -581,7 +581,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-140/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-140/2251/"
         },
         {
             "number": 2226,
@@ -605,7 +605,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-146/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-146/2251/"
         },
         {
             "number": 2226,
@@ -629,7 +629,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-152/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-152/2251/"
         },
         {
             "number": 2226,
@@ -653,7 +653,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-158/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-158/2251/"
         },
         {
             "number": 2226,
@@ -677,7 +677,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-164/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-164/2251/"
         },
         {
             "number": 2226,
@@ -701,7 +701,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-170/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-170/2251/"
         },
         {
             "number": 2226,
@@ -729,7 +729,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-177/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-177/2251/"
         },
         {
             "number": 2226,
@@ -753,7 +753,7 @@
         },
         {
             "number": 2251,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/jenkins/results/parser/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-183/2251/"
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubJobMessageUtilTest/23-of-46-test-portal-acceptance-pullrequest-batch(master)/run-183/2251/"
         },
         {
             "number": 2226,

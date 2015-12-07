@@ -138,8 +138,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		final LiferayExtension liferayExtension = addLiferayExtension(project);
 
-		configureTasksBuildCSS(project);
-
 		applyPlugins(project);
 
 		configureConf2ScopeMappings(project);
@@ -165,6 +163,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
 		configureTaskTranspileJS(project);
+		configureTasksBuildCSS(project);
 		configureTasksBuildLang(project);
 		configureTasksBuildUpgradeTable(project);
 

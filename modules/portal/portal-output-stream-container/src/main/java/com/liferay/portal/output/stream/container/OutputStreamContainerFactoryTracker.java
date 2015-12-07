@@ -134,22 +134,6 @@ public class OutputStreamContainerFactoryTracker {
 			outputStreamContainer.getOutputStream());
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
-	)
-	public void setOutputStreamContainerFactory(
-		OutputStreamContainerFactory outputStreamContainerFactory) {
-
-		if (outputStreamContainerFactory == null) {
-			_outputStreamContainerFactory =
-				new ConsoleOutputStreamContainerFactory();
-		}
-		else {
-			_outputStreamContainerFactory = outputStreamContainerFactory;
-		}
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_logger = new org.apache.felix.utils.log.Logger(bundleContext);
@@ -187,6 +171,22 @@ public class OutputStreamContainerFactoryTracker {
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind ="-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+	)
+	protected void setOutputStreamContainerFactory(
+		OutputStreamContainerFactory outputStreamContainerFactory) {
+
+		if (outputStreamContainerFactory == null) {
+			_outputStreamContainerFactory =
+				new ConsoleOutputStreamContainerFactory();
+		}
+		else {
+			_outputStreamContainerFactory = outputStreamContainerFactory;
+		}
 	}
 
 	private org.apache.felix.utils.log.Logger _logger;

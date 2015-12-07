@@ -103,25 +103,64 @@
 
 									<liferay-ui:search-container-row
 										className="com.liferay.portal.model.Group"
+										keyProperty="groupId"
 										modelVar="childGroup"
 									>
+										<c:choose>
+											<c:when test='<%= displayStyle.equals("icon") %>'>
+												<liferay-ui:app-view-entry
+													assetCategoryClassName="<%= Group.class.getName() %>"
+													assetCategoryClassPK="<%= childGroup.getGroupId() %>"
+													assetTagClassName="<%= Group.class.getName() %>"
+													assetTagClassPK="<%= childGroup.getGroupId() %>"
+													description="<%= HtmlUtil.escape(childGroup.getDescription(locale)) %>"
+													displayStyle="<%= displayStyle %>"
+													showCheckbox="<%= false %>"
+													thumbnailSrc="<%= childGroup.getLogoURL(themeDisplay, true) %>"
+													title="<%= childGroup.getDescriptiveName(locale) %>"
+													url="<%= (childGroup.getGroupId() != scopeGroupId) ? childGroup.getDisplayURL(themeDisplay) : null %>"
+												/>
+											</c:when>
+											<c:otherwise>
+												<liferay-ui:search-container-column-image
+													src="<%= childGroup.getLogoURL(themeDisplay, true) %>"
+												/>
+
+												<liferay-ui:search-container-column-text
+													colspan="<%= 2 %>"
+												>
+													<h5>
+														<aui:a href="<%= (childGroup.getGroupId() != scopeGroupId) ? childGroup.getDisplayURL(themeDisplay) : null %>">
+															<%= childGroup.getDescriptiveName(locale) %>
+														</aui:a>
+													</h5>
+
+													<h6 class="text-default">
+														<%= HtmlUtil.escape(childGroup.getDescription(locale)) %>
+													</h6>
+
+													<h6 class="text-default">
+														<liferay-ui:asset-tags-summary
+															className="<%= Group.class.getName() %>"
+															classPK="<%= childGroup.getGroupId() %>"
+														/>
+													</h6>
+
+													<h6 class="text-default">
+														<liferay-ui:asset-categories-summary
+															className="<%= Group.class.getName() %>"
+															classPK="<%= childGroup.getGroupId() %>"
+														/>
+													</h6>
+												</liferay-ui:search-container-column-text>
+											</c:otherwise>
+										</c:choose>
 										<liferay-ui:search-container-column-text>
-											<liferay-ui:app-view-entry
-												assetCategoryClassName="<%= Group.class.getName() %>"
-												assetCategoryClassPK="<%= childGroup.getGroupId() %>"
-												assetTagClassName="<%= Group.class.getName() %>"
-												assetTagClassPK="<%= childGroup.getGroupId() %>"
-												description="<%= HtmlUtil.escape(childGroup.getDescription(locale)) %>"
-												displayStyle="<%= displayStyle %>"
-												showCheckbox="<%= false %>"
-												thumbnailSrc="<%= childGroup.getLogoURL(themeDisplay, true) %>"
-												title="<%= childGroup.getDescriptiveName(locale) %>"
-												url="<%= (childGroup.getGroupId() != scopeGroupId) ? childGroup.getDisplayURL(themeDisplay) : null %>"
-											/>
+
 										</liferay-ui:search-container-column-text>
 									</liferay-ui:search-container-row>
 
-									<liferay-ui:search-iterator />
+									<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 								</liferay-ui:search-container>
 							</c:otherwise>
 						</c:choose>

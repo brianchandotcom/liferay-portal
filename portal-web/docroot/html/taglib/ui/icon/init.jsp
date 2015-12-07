@@ -40,6 +40,7 @@ boolean auiImage = GetterUtil.getBoolean((String)request.getAttribute("liferay-u
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:icon:data");
 String details = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:details"));
+String icon = (String)request.getAttribute("liferay-ui:icon:icon");
 String iconCssClass = (String)request.getAttribute("liferay-ui:icon:iconCssClass");
 String id = (String)request.getAttribute("liferay-ui:icon:id");
 String image = (String)request.getAttribute("liferay-ui:icon:image");

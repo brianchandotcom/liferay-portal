@@ -53,7 +53,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 		<%@ include file="/layout/mobile_device_rules_rule_group_instance_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator type="more" />
+	<liferay-ui:search-iterator markupView="lexicon" type="more" />
 </liferay-ui:search-container>
 
 <aui:script>

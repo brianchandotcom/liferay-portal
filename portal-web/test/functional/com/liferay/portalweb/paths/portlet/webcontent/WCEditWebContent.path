@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STATUS_LABEL</td>
-	<td>//span[contains(@class,'workflow-status')]/strong</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECTED_STRUCTURE</td>
 	<td>//span[contains(@id,'structureNameLabel')]</td>
 	<td></td>

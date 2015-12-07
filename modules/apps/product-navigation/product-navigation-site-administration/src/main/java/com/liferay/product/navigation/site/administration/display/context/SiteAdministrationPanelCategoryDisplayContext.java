@@ -110,6 +110,18 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return _groupName;
 	}
 
+	public String getGroupURL() {
+		if (_groupURL != null) {
+			return _groupURL;
+		}
+
+		_groupURL = StringPool.BLANK;
+
+		Group group = getGroup();
+
+		return getGroupURL(group);
+	}
+
 	public String getGroupURL(boolean privateLayout) {
 		if (_groupURL != null) {
 			return _groupURL;
@@ -359,6 +371,22 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		}
 
 		return null;
+	}
+
+	protected String getGroupURL(Group group) {
+		String groupDisplayURL = group.getDisplayURL(_themeDisplay, false);
+
+		if (Validator.isNotNull(groupDisplayURL)) {
+			return groupDisplayURL;
+		}
+
+		groupDisplayURL = group.getDisplayURL(_themeDisplay, true);
+
+		if (Validator.isNotNull(groupDisplayURL)) {
+			return groupDisplayURL;
+		}
+
+		return getGroupAdministrationURL(group);
 	}
 
 	protected String getGroupURL(Group group, boolean privateLayout) {

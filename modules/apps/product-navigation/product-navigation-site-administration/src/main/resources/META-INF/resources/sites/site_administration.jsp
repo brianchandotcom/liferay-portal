@@ -59,10 +59,6 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 		</div>
 
 		<div class="toolbar-group-content">
-			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
-				<span class="sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
-			</c:if>
-
 			<span class="site-name">
 				<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
 
@@ -81,6 +77,10 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 						<aui:a cssClass="icon-circle-blank icon-monospaced" href="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL() %>" title="live" />
 					</div>
 				</div>
+			</c:if>
+
+			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
+				<span class="sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
 			</c:if>
 		</div>
 	</div>

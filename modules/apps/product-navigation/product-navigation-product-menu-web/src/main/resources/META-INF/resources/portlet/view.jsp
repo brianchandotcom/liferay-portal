@@ -42,6 +42,7 @@
 						<div class="panel-title">
 							<c:if test="<%= !childPanelCategory.includeHeader(request, new PipingServletResponse(pageContext)) %>">
 								<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Collapse" aria-expanded="<%= Validator.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" class="panel-toggler collapse-icon <%= Validator.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Collapse" role="button">
+									<span><%= childPanelCategory.getLabel(locale) %></span>
 
 									<%
 									int notificationsCount = productMenuDisplayContext.getNotificationsCount(childPanelCategory);
@@ -50,9 +51,6 @@
 									<c:if test="<%= notificationsCount > 0 %>">
 										<span class="sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
 									</c:if>
-
-									<span><%= childPanelCategory.getLabel(locale) %></span>
-
 								</div>
 							</c:if>
 						</div>

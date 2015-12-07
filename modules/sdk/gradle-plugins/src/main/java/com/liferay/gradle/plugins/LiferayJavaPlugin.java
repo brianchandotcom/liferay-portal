@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorExtension;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
+import com.liferay.gradle.plugins.js.transpiler.JSTranspilerExtension;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.js.transpiler.TranspileJSTask;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
@@ -153,6 +154,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureArtifacts(project);
 		configureJSModuleConfigGenerator(project);
+		configureJSTranspiler(project);
 		configureTestIntegrationTomcat(project, liferayExtension);
 
 		configureTaskClean(project);
@@ -588,6 +590,25 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		if (Validator.isNotNull(version)) {
 			jsModuleConfigGeneratorExtension.setVersion(version);
+		}
+	}
+
+	protected void configureJSTranspiler(Project project) {
+		JSTranspilerExtension jsTranspilerExtension = GradleUtil.getExtension(
+			project, JSTranspilerExtension.class);
+
+		String babelVersion = GradleUtil.getProperty(
+			project, "nodejs.babel.version", (String)null);
+
+		if (Validator.isNotNull(babelVersion)) {
+			jsTranspilerExtension.setBabelVersion(babelVersion);
+		}
+
+		String lfrAmdLoaderVersion = GradleUtil.getProperty(
+			project, "nodejs.lfr.amd.loader.version", (String)null);
+
+		if (Validator.isNotNull(lfrAmdLoaderVersion)) {
+			jsTranspilerExtension.setLfrAmdLoaderVersion(lfrAmdLoaderVersion);
 		}
 	}
 

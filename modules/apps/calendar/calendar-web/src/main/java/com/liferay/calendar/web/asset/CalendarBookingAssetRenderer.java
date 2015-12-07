@@ -227,7 +227,7 @@ public class CalendarBookingAssetRenderer
 	}
 
 	@Override
-	public Boolean isEnableComments() {
+	public boolean isCommentable() {
 		try {
 			Calendar calendar = _calendarBooking.getCalendar();
 
@@ -241,7 +241,12 @@ public class CalendarBookingAssetRenderer
 	}
 
 	@Override
-	public Boolean isEnableRatings() {
+	public boolean isPrintable() {
+		return true;
+	}
+
+	@Override
+	public boolean isRatable() {
 		try {
 			Calendar calendar = _calendarBooking.getCalendar();
 
@@ -253,11 +258,6 @@ public class CalendarBookingAssetRenderer
 
 		return false;
 	};
-
-	@Override
-	public boolean isPrintable() {
-		return true;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingAssetRenderer.class);

@@ -53,6 +53,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 				draggableTree="<%= false %>"
 				groupId="<%= groupId %>"
 				incomplete="<%= false %>"
+				portletURL="<%= renderResponse.createRenderURL() %>"
 				privateLayout="<%= privateLayout %>"
 				rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
 				selectableTree="<%= true %>"

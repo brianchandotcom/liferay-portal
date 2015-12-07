@@ -48,7 +48,6 @@ page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Collections" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>

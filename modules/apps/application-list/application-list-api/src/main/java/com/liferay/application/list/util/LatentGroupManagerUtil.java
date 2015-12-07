@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.site.administration.util;
+package com.liferay.application.list.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;

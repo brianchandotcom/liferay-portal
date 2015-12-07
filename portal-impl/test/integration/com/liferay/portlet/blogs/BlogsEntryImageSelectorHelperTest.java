@@ -105,7 +105,7 @@ public class BlogsEntryImageSelectorHelperTest {
 			ImageSelector imageSelector =
 				blogsEntryImageSelectorHelper.getImageSelector();
 
-			Assert.assertEquals(bytes, imageSelector.getImageBytes());
+			Assert.assertArrayEquals(bytes, imageSelector.getImageBytes());
 			Assert.assertEquals(_IMAGE_TITLE, imageSelector.getImageTitle());
 			Assert.assertEquals(
 				MimeTypesUtil.getContentType(_IMAGE_TITLE),
@@ -206,7 +206,7 @@ public class BlogsEntryImageSelectorHelperTest {
 			ImageSelector imageSelector =
 				blogsEntryImageSelectorHelper.getImageSelector();
 
-			Assert.assertEquals(bytes, imageSelector.getImageBytes());
+			Assert.assertArrayEquals(bytes, imageSelector.getImageBytes());
 			Assert.assertEquals(_IMAGE_TITLE, imageSelector.getImageTitle());
 			Assert.assertEquals(
 				MimeTypesUtil.getContentType(_IMAGE_TITLE),

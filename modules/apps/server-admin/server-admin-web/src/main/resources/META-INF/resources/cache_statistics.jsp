@@ -51,10 +51,6 @@ percentFormat.setMaximumFractionDigits(3);
 	<liferay-ui:input-search placeholder='<%= LanguageUtil.get(request, "keywords") %>'>
 		<aui:validator errorMessage='<%= LanguageUtil.format(request, "field-must-contain-only-following-characters-x", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.*", false) %>' name="custom">
 			function(val) {
-				if (!val) {
-					return true;
-				}
-
 				var pattern = new RegExp('[A-Za-z0-9.*]+');
 
 				if (val.match(pattern)) {

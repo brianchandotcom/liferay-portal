@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -89,6 +90,11 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		HttpPrincipal httpPrincipal = null;
 		MissingReferences missingReferences = null;
 		long stagingRequestId = 0L;
+
+		Thread currentThread = Thread.currentThread();
+
+		currentThread.setContextClassLoader(
+			ClassLoaderUtil.getPortalClassLoader());
 
 		try {
 			ExportImportThreadLocal.setLayoutStagingInProcess(true);

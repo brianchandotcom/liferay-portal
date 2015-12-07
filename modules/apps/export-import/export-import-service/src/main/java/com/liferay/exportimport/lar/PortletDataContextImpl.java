@@ -211,19 +211,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		element.addAttribute("path", path);
 
-		if (classedModel instanceof AttachedModel) {
-			AttachedModel attachedModel = (AttachedModel)classedModel;
-
-			element.addAttribute("class-name", attachedModel.getClassName());
-		}
-		else if (BeanUtil.hasProperty(classedModel, "className")) {
-			String className = BeanPropertiesUtil.getStringSilent(
-				classedModel, "className");
-
-			if (className != null) {
-				element.addAttribute("class-name", className);
-			}
-		}
+		populateClassNameAttribute(classedModel, element);
 
 		if (!hasPrimaryKey(String.class, path)) {
 			if (classedModel instanceof AuditedModel) {
@@ -1387,9 +1375,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Object getZipEntryAsObject(Element element, String path) {
 		Object object = fromXML(getZipEntryAsString(path));
 
-		Attribute classNameAttribute = element.attribute("class-name");
+		Attribute classNameAttribute = element.attribute("attached-class-name");
 
-		if (classNameAttribute != null) {
+		if ((object != null) && (classNameAttribute != null)) {
 			BeanPropertiesUtil.setProperty(
 				object, "className", classNameAttribute.getText());
 		}
@@ -2175,6 +2163,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 		referenceElement.addAttribute(
 			"class-pk", String.valueOf(classedModel.getPrimaryKeyObj()));
 
+		populateClassNameAttribute(classedModel, referenceElement);
+
 		if (missing) {
 			if (classedModel instanceof StagedModel) {
 				referenceElement.addAttribute(
@@ -2560,6 +2550,26 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return true;
+	}
+
+	protected void populateClassNameAttribute(
+		ClassedModel classedModel, Element element) {
+
+		String attachedClassName = null;
+
+		if (classedModel instanceof AttachedModel) {
+			AttachedModel attachedModel = (AttachedModel)classedModel;
+
+			attachedClassName = attachedModel.getClassName();
+		}
+		else if (BeanUtil.hasProperty(classedModel, "className")) {
+			attachedClassName = BeanPropertiesUtil.getStringSilent(
+				classedModel, "className");
+		}
+
+		if (Validator.isNotNull(attachedClassName)) {
+			element.addAttribute("attached-class-name", attachedClassName);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

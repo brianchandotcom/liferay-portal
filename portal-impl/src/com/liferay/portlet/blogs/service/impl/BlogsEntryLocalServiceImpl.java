@@ -133,6 +133,32 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return doAddFolder(userId, groupId, BlogsConstants.SERVICE_NAME);
 	}
 
+	public void addCoverImage(long entryId, ImageSelector imageSelector)
+		throws PortalException {
+
+		if (imageSelector == null) {
+			return;
+		}
+
+		BlogsEntry entry = getBlogsEntry(entryId);
+
+		if (Validator.isNotNull(imageSelector.getImageURL())) {
+			entry.setSmallImageURL(imageSelector.getImageURL());
+		}
+		else if (ArrayUtil.isNotEmpty(imageSelector.getImageBytes())) {
+			long coverImageFileEntryId = addCoverImageFileEntry(
+				entry.getUserId(), entry.getGroupId(), entryId, imageSelector);
+
+			entry.setCoverImageFileEntryId(coverImageFileEntryId);
+		}
+		else {
+			entry.setSmallImageURL(null);
+			entry.setCoverImageFileEntryId(0);
+		}
+
+		updateBlogsEntry(entry);
+	}
+
 	@Override
 	public BlogsEntry addEntry(
 			long userId, String title, String content, Date displayDate,
@@ -424,6 +450,35 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					imageSelector.getImageMimeType(), imageBytes);
 
 		return originalFileEntry.getFileEntryId();
+	}
+
+	public void addSmallImage(long entryId, ImageSelector imageSelector)
+		throws PortalException {
+
+		if (imageSelector == null) {
+			return;
+		}
+
+		BlogsEntry entry = getBlogsEntry(entryId);
+
+		if (Validator.isNotNull(imageSelector.getImageURL())) {
+			entry.setSmallImage(true);
+			entry.setSmallImageURL(imageSelector.getImageURL());
+		}
+		else if (ArrayUtil.isNotEmpty(imageSelector.getImageBytes())) {
+			long smallImageFileEntryId = addSmallImageFileEntry(
+				entry.getUserId(), entry.getGroupId(), entryId, imageSelector);
+
+			entry.setSmallImage(true);
+			entry.setSmallImageFileEntryId(smallImageFileEntryId);
+		}
+		else {
+			entry.setSmallImage(false);
+			entry.setSmallImageURL(StringPool.BLANK);
+			entry.setSmallImageFileEntryId(0);
+		}
+
+		updateBlogsEntry(entry);
 	}
 
 	@Override

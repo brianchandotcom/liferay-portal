@@ -488,8 +488,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 	<liferay-util:buffer var="removeGroupIcon">
 		<liferay-ui:icon
-			iconCssClass="icon-unlink"
-			label="<%= true %>"
+			iconCssClass="icon-remove"
 			message="remove"
 		/>
 	</liferay-util:buffer>
@@ -527,12 +526,14 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 				value="<%= LanguageUtil.get(request, curGroup.getTypeLabel()) %>"
 			/>
 
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text
+				cssClass="list-group-item-field"
+			>
 				<a class="modify-link" data-rowId="<%= curGroup.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator paginate="<%= false %>" />
+		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 	</liferay-ui:search-container>
 
 	<liferay-ui:icon

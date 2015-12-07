@@ -116,11 +116,12 @@ public class DDMImplTest extends BaseDDMTestCase {
 		Fields mergedFields = _ddmImpl.mergeFields(newFields, existingFields);
 
 		Field fieldsDisplayField = mergedFields.get(
-			_ddmImpl.FIELDS_DISPLAY_NAME);
+			DDMImpl.FIELDS_DISPLAY_NAME);
 
 		Assert.assertNotNull(fieldsDisplayField);
 
 		String fieldsDisplayValue = (String)fieldsDisplayField.getValue();
+
 		String[] fieldsDisplayValues = StringUtil.split(fieldsDisplayValue);
 
 		testValues(

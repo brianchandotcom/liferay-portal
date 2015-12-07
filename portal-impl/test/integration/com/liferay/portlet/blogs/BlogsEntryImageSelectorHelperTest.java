@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -93,9 +92,8 @@ public class BlogsEntryImageSelectorHelperTest {
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _IMAGE_TITLE,
-				MimeTypesUtil.getContentType(_IMAGE_TITLE),
-				StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-				bytes, serviceContext);
+				MimeTypesUtil.getContentType(_IMAGE_TITLE), "image",
+				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
 
 			BlogsEntryImageSelectorHelper blogsEntryImageSelectorHelper =
 				new BlogsEntryImageSelectorHelper(

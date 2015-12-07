@@ -64,7 +64,7 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getJspPath() {
-		return null;
+		return "/sites/site_administration_body.jsp";
 	}
 
 	@Override
@@ -100,6 +100,16 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
+
+		return super.include(request, response);
 	}
 
 	@Override

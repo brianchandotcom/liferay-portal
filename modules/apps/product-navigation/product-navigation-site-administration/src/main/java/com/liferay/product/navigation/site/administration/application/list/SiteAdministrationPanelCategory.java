@@ -54,7 +54,7 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getHeaderJspPath() {
-		return "/sites/site_administration.jsp";
+		return "/sites/site_administration_header.jsp";
 	}
 
 	@Override

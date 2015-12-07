@@ -58,6 +58,10 @@ public class LoadBalancerUtil {
 			}
 
 			int hostNameCount = getHostNameCount(project, hostNamePrefix);
+			
+			if (hostNameCount == 1) {
+				return "http://" + hostNamePrefix + "-1";
+			}
 
 			File baseDir = new File(
 				project.getProperty("jenkins.shared.dir") + "/" +
@@ -153,7 +157,7 @@ public class LoadBalancerUtil {
 
 				System.out.println(sb);
 
-				return hostNames.get(x);
+				return "http://" + hostNames.get(x);
 			}
 			finally {
 				JenkinsResultsParserUtil.write(semaphoreFile, "");

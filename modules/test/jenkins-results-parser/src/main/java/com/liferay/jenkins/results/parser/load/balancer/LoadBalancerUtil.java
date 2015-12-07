@@ -58,7 +58,7 @@ public class LoadBalancerUtil {
 			}
 
 			int hostNameCount = getHostNameCount(project, hostNamePrefix);
-			
+
 			if (hostNameCount == 1) {
 				return "http://" + hostNamePrefix + "-1";
 			}

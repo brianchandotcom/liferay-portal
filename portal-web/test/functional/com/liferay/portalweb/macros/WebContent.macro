@@ -1061,7 +1061,7 @@
 	</command>
 
 	<command name="selectCategory">
-		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Metadata" />
 
 		<if>
 			<isset var="userSegmentDetailTitle" />

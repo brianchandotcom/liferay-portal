@@ -43,12 +43,9 @@
 
 </liferay-ui:icon-menu>
 
-<br />
-
 <liferay-util:buffer var="removeLinkIcon">
 	<liferay-ui:icon
 		iconCssClass="icon-remove"
-		label="<%= true %>"
 		message="remove"
 	/>
 </liferay-util:buffer>
@@ -86,12 +83,14 @@
 			value="<%= HtmlUtil.escape(inputAssetLinksDisplayContext.getGroupDescriptiveName(assetLinkEntry)) %>"
 		/>
 
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			cssClass="list-group-item-field"
+		>
 			<a class="modify-link" data-rowId="<%= assetLinkEntry.getEntryId() %>" href="javascript:;"><%= removeLinkIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
 <aui:input name="assetLinkEntryIds" type="hidden" />

@@ -224,8 +224,7 @@ public class BundleJavaManager
 
 	private String getClassNameFromPath(String resourceName) {
 		if (resourceName.endsWith(".class")) {
-			resourceName = resourceName.substring(
-				0, resourceName.length() - ".class".length());
+			resourceName = resourceName.substring(0, resourceName.length() - 6);
 		}
 
 		return resourceName.replace('/', '.');

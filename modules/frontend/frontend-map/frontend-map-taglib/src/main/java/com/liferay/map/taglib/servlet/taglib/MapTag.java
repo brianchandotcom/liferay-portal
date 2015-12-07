@@ -14,8 +14,19 @@
 
 package com.liferay.map.taglib.servlet.taglib;
 
+import com.liferay.frontend.map.api.MapProvider;
+import com.liferay.frontend.map.api.util.MapProviderTracker;
 import com.liferay.map.taglib.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
+
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -78,13 +89,58 @@ public class MapTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		validate(request);
 		request.setAttribute("liferay-map:map:apiKey", _apiKey);
 		request.setAttribute("liferay-map:map:geolocation", _geolocation);
 		request.setAttribute("liferay-map:map:latitude", _latitude);
 		request.setAttribute("liferay-map:map:longitude", _longitude);
 		request.setAttribute("liferay-map:map:name", _name);
 		request.setAttribute("liferay-map:map:points", _points);
-		request.setAttribute("liferay-map:map:provider", _provider);
+		request.setAttribute("liferay-map:map:mapProvider", _getMapProvider());
+	}
+
+	private MapProvider _getMapProvider() {
+		MapProviderTracker mapProviderTracker =
+			ServletContextUtil.getMapProviderTracker();
+		return mapProviderTracker.getMapProvider(_provider);
+	}
+
+	private void validate(HttpServletRequest request) {
+		if (Validator.isNull(_apiKey) || Validator.isNull(_provider)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			Company company = themeDisplay.getCompany();
+
+			Group group = themeDisplay.getSiteGroup();
+
+			if (group.isStagingGroup()) {
+				group = group.getLiveGroup();
+			}
+
+			UnicodeProperties groupTypeSettings = new UnicodeProperties();
+
+			if (group != null) {
+				groupTypeSettings = group.getTypeSettingsProperties();
+			}
+
+			PortletPreferences companyPortletPreferences =
+				PrefsPropsUtil.getPreferences(company.getCompanyId());
+
+			if (Validator.isNull(_apiKey)) {
+				_apiKey = groupTypeSettings.getProperty(
+					"googleMapsAPIKey",
+					companyPortletPreferences.getValue(
+						"googleMapsAPIKey", null));
+			}
+
+			if (Validator.isNull(_provider)) {
+				_provider = groupTypeSettings.getProperty(
+					"mapsAPIProvider",
+					companyPortletPreferences.getValue(
+						"mapsAPIProvider", "Google"));
+			}
+		}
 	}
 
 	private static final String _PAGE = "/map/page.jsp";

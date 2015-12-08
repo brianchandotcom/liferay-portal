@@ -189,8 +189,7 @@ public class JspResourceResolver implements ResourceResolver {
 	}
 
 	protected Collection<String> handleSystemBundle(
-		BundleWiring bundleWiring, final String path, final String fileRegex,
-		int options) {
+		BundleWiring bundleWiring, String path, String fileRegex, int options) {
 
 		String key = path + '/' + fileRegex;
 
@@ -212,9 +211,7 @@ public class JspResourceResolver implements ResourceResolver {
 			urls = extraPackageMap.get(packageName);
 		}
 
-		if (((urls == null) || urls.isEmpty()) &&
-			isExportsPackage(bundleWiring, packageName)) {
-
+		if ((urls == null) || urls.isEmpty()) {
 			ClassLoader classLoader = bundleWiring.getClassLoader();
 
 			try {

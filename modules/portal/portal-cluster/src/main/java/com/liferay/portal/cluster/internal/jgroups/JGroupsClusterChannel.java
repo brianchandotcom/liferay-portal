@@ -61,11 +61,13 @@ public class JGroupsClusterChannel implements ClusterChannel {
 		try {
 			_jChannel = new JChannel(channelProperties);
 
-			ProtocolStack protocolStack = _jChannel.getProtocolStack();
+			if (bindInetAddress != null) {
+				ProtocolStack protocolStack = _jChannel.getProtocolStack();
 
-			TP tp = protocolStack.getTransport();
+				TP tp = protocolStack.getTransport();
 
-			tp.setBindAddress(bindInetAddress);
+				tp.setBindAddress(bindInetAddress);
+			}
 
 			_jChannel.setReceiver(new JGroupsReceiver(clusterReceiver));
 

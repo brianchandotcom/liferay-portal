@@ -97,14 +97,18 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		File sampleDir = new File(sampleDirName);
 
-		if (sampleDir.exists()) {
+		File expectedMessageFile = new File(sampleDir, "expected_message.html");
+
+		if (expectedMessageFile.exists()) {
 			return;
 		}
 
-		System.out.println("Downloading sample " + sampleKey);
-
 		try {
-			downloadSample(sampleDir, url);
+			if (!sampleDir.exists()) {
+				System.out.println("Downloading sample " + sampleKey);
+
+				downloadSample(sampleDir, url);
+			}
 
 			writeExpectedMessage(sampleDir);
 		}

@@ -185,7 +185,6 @@ public abstract class BaseJenkinsResultsParserTestCase {
 	}
 
 	protected File dependenciesDir = new File(
-		"src/test/resources/com/liferay/jenkins/results/parser/dependencies/" +
-			getSimpleClassName());
+		"src/test/resources/dependencies/" + getSimpleClassName());
 
 }

@@ -5,6 +5,7 @@ dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:polls:polls-service")
 
+	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 	provided group: "jfree", name: "jfreechart", version: "1.0.13"
 }
 

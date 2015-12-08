@@ -123,14 +123,6 @@ configurations {
 	}
 }
 
-if (FileUtil.exists(project, "docroot")) {
-	copyLibs {
-		from(appServerLibPortalDir) {
-			include "util-bridges.jar", "util-java.jar", "util-taglib.jar"
-		}
-	}
-}
-
 dependencies {
 	alloyTaglib rootProject.files("../lib/development/alloy-taglib.jar", "../lib/development/org.freemarker-2.3.17.LIFERAY-PATCHED-1.jar")
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "1.0.11"

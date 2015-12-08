@@ -1,0 +1,3 @@
+Bundle-SymbolicName: org.phidias
+Bundle-Version: 0.3.6.LIFERAY-PATCHED-1
+Include-Resource: classes

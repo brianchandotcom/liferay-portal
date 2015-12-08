@@ -1,0 +1,26 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+dependencies {
+	compile group: "com.github.rotty3000", name: "phidias", optional, version: "0.3.6"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "**/org/phidias/compile/BundleJavaManager.java"
+
+	originalLibModuleName = "phidias"
+}

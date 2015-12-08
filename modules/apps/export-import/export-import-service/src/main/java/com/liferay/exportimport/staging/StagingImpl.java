@@ -1082,7 +1082,11 @@ public class StagingImpl implements Staging {
 	public long[] getStagingAndLiveGroupId(long groupId)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(groupId);
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return new long[] {groupId, 0L};
+		}
 
 		Group stagingGroup = group.getStagingGroup();
 

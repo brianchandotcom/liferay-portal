@@ -68,16 +68,20 @@ afterEvaluate {
 	}
 }
 
-buildCSS {
-	dependsOn {
-		FileCollection cssFiles = getCSSFiles()
+Project frontendCommonCssProject = findProject(":frontend:frontend-common-css")
 
-		if (!cssFiles.empty) {
-			":frontend:frontend-common-css:buildCssCommon"
+if (frontendCommonCssProject) {
+	buildCSS {
+		dependsOn {
+			FileCollection cssFiles = getCSSFiles()
+
+			if (!cssFiles.empty) {
+				return frontendCommonCssProject.path + ":buildCssCommon"
+			}
 		}
-	}
 
-	portalCommonDir = new File(rootDir, "frontend/frontend-common-css/tmp/META-INF/resources")
+		portalCommonDir = new File(frontendCommonCssProject.projectDir, "tmp/META-INF/resources")
+	}
 }
 
 configure([test, testIntegration]) {

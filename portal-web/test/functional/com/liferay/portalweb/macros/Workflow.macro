@@ -286,6 +286,14 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="gotoPreviewEdit">
+		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" value1="Edit" />
+	</command>
+
+	<command name="gotoPreviewView">
+		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" value1="View" />
+	</command>
+
 	<command name="gotoTaskAssignedToMeActionsCmd">
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
@@ -307,7 +315,7 @@
 
 		<execute function="Click" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TITLE" />
 
-		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" value1="View" />
+		<execute macro="Workflow#gotoPreviewView" />
 	</command>
 
 	<command name="reactivateInactiveWorkflowDefinition">

@@ -584,6 +584,8 @@ public interface WebKeys {
 
 	public static final String TEAM = "TEAM";
 
+	public static final String TEMPLATE = "TEMPLATE";
+
 	public static final String THEME = "THEME";
 
 	public static final String THEME_DISPLAY = "LIFERAY_SHARED_THEME_DISPLAY";

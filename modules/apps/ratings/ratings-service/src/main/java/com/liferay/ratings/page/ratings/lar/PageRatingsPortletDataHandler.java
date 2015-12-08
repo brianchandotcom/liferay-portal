@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ratings.page.ratings.web.lar;
+package com.liferay.ratings.page.ratings.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,10 +24,9 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalService;
-import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
+import com.liferay.ratings.page.ratings.constants.PageRatingsPortletKeys;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -61,8 +60,6 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 				StagedModelType.REFERRER_CLASS_NAME_ALL));
 		setImportControls(getExportControls());
 		setPublishToLiveByDefault(true);
-
-		XStreamAliasRegistryUtil.register(RatingsEntry.class, "RatingsEntry");
 	}
 
 	@Override

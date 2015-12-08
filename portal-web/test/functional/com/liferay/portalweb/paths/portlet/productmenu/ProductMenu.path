@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>USER_PROFILE</td>
-	<td>//div[contains(@class,'nameplate')]//a[contains(.,'Profile')]</td>
+	<td>//div[contains(@class,'list-group')]//a[contains(.,'Profile')]</td>
 	<td></td>
 </tr>
 <tr>

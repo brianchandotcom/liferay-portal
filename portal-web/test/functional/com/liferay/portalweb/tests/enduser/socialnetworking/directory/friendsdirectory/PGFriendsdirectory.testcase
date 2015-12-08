@@ -84,8 +84,10 @@
 
 		<execute macro="ProductMenu#gotoPersonalSite" />
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
 		</execute>
 
 		<execute macro="SitePage#addFromMyProfile">

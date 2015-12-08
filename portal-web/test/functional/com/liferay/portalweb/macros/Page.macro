@@ -703,11 +703,15 @@
 
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
-		<execute function="AssertClick" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_CATEGORY" value1="${portletCategoryName}" />
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="${portletCategoryName}" />
+		</execute>
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertClick" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portletName}" />
+		</execute>
 	</command>
 
 	<command name="gotoUsersCP">

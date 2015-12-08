@@ -108,6 +108,8 @@
 	</command>
 
 	<command name="gotoPersonalSite" summary="Navigate to Product Menu > Profile" >
+		<execute macro="ProductMenuHelper#gotoUser" />
+
 		<execute function="Click" locator1="ProductMenu#USER_PROFILE" />
 	</command>
 

@@ -31,7 +31,6 @@ import java.security.PrivilegedAction;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -187,8 +186,13 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-		Collection<String> resourcePaths = bundleWiring.listResources(
-			"/", "*.tld", BundleWiring.FINDENTRIES_RECURSE);
+		List<String> resourcePaths = new ArrayList<>(
+			bundleWiring.listResources(
+				"/META-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE));
+
+		resourcePaths.addAll(
+			bundleWiring.listResources(
+				"/WEB-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE));
 
 		for (String resourcePath : resourcePaths) {
 			URL url = bundle.getResource(resourcePath);

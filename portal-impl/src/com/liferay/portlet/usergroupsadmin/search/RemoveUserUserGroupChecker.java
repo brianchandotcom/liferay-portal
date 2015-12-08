@@ -27,9 +27,9 @@ import javax.portlet.RenderResponse;
  * @author Charles May
  * @author Pei-Jung Lan
  */
-public class UnsetUserUserGroupChecker extends EmptyOnClickRowChecker {
+public class RemoveUserUserGroupChecker extends EmptyOnClickRowChecker {
 
-	public UnsetUserUserGroupChecker(
+	public RemoveUserUserGroupChecker(
 		RenderResponse renderResponse, UserGroup userGroup) {
 
 		super(renderResponse);
@@ -56,7 +56,7 @@ public class UnsetUserUserGroupChecker extends EmptyOnClickRowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UnsetUserUserGroupChecker.class);
+		RemoveUserUserGroupChecker.class);
 
 	private final UserGroup _userGroup;
 

@@ -72,6 +72,13 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 	public static final String DIRECT_DEPLOY_TASK_NAME = "directDeploy";
 
+	@Override
+	public void apply(Project project) {
+		super.apply(project);
+
+		configureDependencies(project);
+	}
+
 	protected Task addTaskBuildServiceCompile(
 		BuildServiceTask buildServiceTask) {
 
@@ -205,10 +212,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		GradleUtil.applyPlugin(project, WarPlugin.class);
 	}
 
-	@Override
 	protected void configureDependencies(Project project) {
-		super.configureDependencies(project);
-
 		configureDependenciesCompile(project);
 	}
 

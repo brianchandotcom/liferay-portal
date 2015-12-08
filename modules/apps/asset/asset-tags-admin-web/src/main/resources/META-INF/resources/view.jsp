@@ -131,8 +131,9 @@ tagsSearchContainer.setResults(tags);
 		>
 			<liferay-ui:search-container-column-text
 				name="name"
-				property="name"
-			/>
+			>
+				<strong><%= tag.getName() %></strong>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="usages"

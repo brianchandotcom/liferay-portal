@@ -1100,7 +1100,7 @@ public class StagingImpl implements Staging {
 			return new long[] {groupId, liveGroup.getGroupId()};
 		}
 
-		return new long[] {groupId};
+		return new long[] {groupId, 0L};
 	}
 
 	@Override

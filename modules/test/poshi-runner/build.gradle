@@ -9,7 +9,7 @@ buildCSS {
 
 dependencies {
 	compile group: "com.google.guava", name: "guava", version: "16.0.1"
-	compile group: "com.jayway.jsonpath", name: "json-path", version: "2.0.0"
+	compile group: "com.jayway.jsonpath", name: "json-path", version: "2.1.0"
 	compile group: "com.liferay", name: "net.jsourcerer.webdriver.JSErrorCollector", version: "0.6"
 	compile group: "commons-io", name: "commons-io", version: "2.4"
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"

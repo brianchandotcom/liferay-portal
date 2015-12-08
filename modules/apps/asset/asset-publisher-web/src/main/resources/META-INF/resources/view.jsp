@@ -80,8 +80,9 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-remove-sign"
+					icon="start"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
 				/>
@@ -92,8 +93,9 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-ok-sign"
+					icon="start-o"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>

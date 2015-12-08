@@ -472,7 +472,8 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 	<liferay-util:buffer var="removeGroupIcon">
 		<liferay-ui:icon
-			iconCssClass="icon-remove"
+			icon="times"
+			markupView="lexicon"
 			message="remove"
 		/>
 	</liferay-util:buffer>

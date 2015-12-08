@@ -215,15 +215,19 @@ if (Validator.isNotNull(languageId)) {
 				<div class="legend-info">
 					<liferay-ui:icon
 						cssClass="legend-item"
-						iconCssClass="delete icon-stop"
+						icon="stop"
+						iconCssClass="delete"
 						label="<%= true %>"
+						markupView="lexicon"
 						message="deleted"
 					/>
 
 					<liferay-ui:icon
 						cssClass="legend-item"
-						iconCssClass="add icon-stop"
+						icon="stop"
+						iconCssClass="add"
 						label="<%= true %>"
+						markupView="lexicon"
 						message="added"
 					/>
 

@@ -40,7 +40,8 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-arrow-down"
+			icon="angle-down"
+			markupView="lexicon"
 			message="down"
 			url="<%= taglibDownURL %>"
 		/>
@@ -50,7 +51,8 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-arrow-up"
+			icon="angle-up"
+			markupView="lexicon"
 			message="up"
 			url="<%= taglibUpURL %>"
 		/>
@@ -62,7 +64,8 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-arrow-down"
+			icon="angle-down"
+			markupView="lexicon"
 			message="down"
 			url="<%= taglibDownURL %>"
 		/>
@@ -74,7 +77,8 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-arrow-up"
+			icon="angle-up"
+			markupView="lexicon"
 			message="up"
 			url="<%= taglibUpURL %>"
 		/>
@@ -88,6 +92,7 @@ boolean last = (assetEntryOrder == (searchContainer.getTotal() - 1));
 </liferay-portlet:actionURL>
 
 <liferay-ui:icon
-	iconCssClass="icon-remove"
+	icon="times"
+	markupView="lexicon"
 	url="<%= deleteURL %>"
 />

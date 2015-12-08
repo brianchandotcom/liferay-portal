@@ -55,7 +55,8 @@ for (long defaultTeamId : defaultTeamIds) {
 
 <liferay-util:buffer var="removeRoleIcon">
 	<liferay-ui:icon
-		iconCssClass="icon-remove"
+		icon="times"
+		markupView="lexicon"
 		message="remove"
 	/>
 </liferay-util:buffer>

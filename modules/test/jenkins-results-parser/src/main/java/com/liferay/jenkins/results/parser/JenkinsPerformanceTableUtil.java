@@ -14,15 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.CharArrayWriter;
 import java.io.IOException;
-import java.io.Writer;
 
 import java.util.List;
 
 import org.dom4j.Element;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
 
 /**
@@ -65,15 +61,7 @@ public class JenkinsPerformanceTableUtil {
 		sb.append("  text-align: left;\n");
 		sb.append(" }\n");
 		sb.append("</style>\n");
-
-		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
-		Writer writer = new CharArrayWriter();
-
-		XMLWriter xmlWriter = new XMLWriter(writer, outputFormat);
-		
-		xmlWriter.write(tableElement);
-		
-		sb.append(writer.toString());
+		sb.append(JenkinsResultsParserUtil.format(tableElement));
 
 		return sb.toString();
 	}

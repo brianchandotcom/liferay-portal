@@ -18,6 +18,9 @@ buildscript {
 	}
 }
 
+_setPropertyDefault project, "junit.java.integration.gc", "-Xms512m -Xmx512m -XX:MaxNewSize=32m -XX:MaxPermSize=200m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=200m -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:-UseAdaptiveSizePolicy -XX:+UseParallelOldGC"
+_setPropertyDefault project, "junit.java.unit.gc", "-Xms256m -Xmx256m -XX:MaxNewSize=32m -XX:MaxPermSize=64m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=64m -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:-UseAdaptiveSizePolicy -XX:+UseParallelOldGC -XX:-UseSplitVerifier"
+
 _setPropertyDefault project, "nodejs.npm.module.author", "Nathan Cavanaugh <nathan.cavanaugh@liferay.com> (https://github.com/natecavanaugh)"
 _setPropertyDefault project, "nodejs.npm.module.bugs.url", "https://issues.liferay.com/"
 _setPropertyDefault project, "nodejs.npm.module.license", "LGPL"

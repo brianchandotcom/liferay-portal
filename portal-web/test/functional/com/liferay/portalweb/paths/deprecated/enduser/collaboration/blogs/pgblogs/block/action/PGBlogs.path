@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>PORTLET_TITLE</td>
-	<td>//h1[@class='portlet-title']/span[contains(@class,'portlet-title-text')]</td>
+	<td>//div[contains(@class,'portlet-content')]/h2[contains(@class,'portlet-title-text')]</td>
 	<td></td>
 </tr>
 <tr>

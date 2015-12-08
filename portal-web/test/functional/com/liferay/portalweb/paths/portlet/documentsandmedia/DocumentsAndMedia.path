@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_THUMBNAIL</td>
-	<td>//li[@data-title='${key_dmDocumentTitle}']//div[contains(@class,'group-item-field')]/div/img</td>
+	<td>//li[@data-title='${key_dmDocumentTitle}']//div[contains(@class,'bg-cover')]/a/img</td>
 	<td></td>
 </tr>
 <tr>

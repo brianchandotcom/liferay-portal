@@ -720,6 +720,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	@Override
 	public void unregister(MessageListener messageListener) {
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		synchronized (_serviceRegistrations) {
 			ServiceRegistration<SchedulerEventMessageListener>
 				serviceRegistration = _serviceRegistrations.remove(

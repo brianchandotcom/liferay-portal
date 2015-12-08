@@ -18,6 +18,11 @@ buildscript {
 	}
 }
 
+project.ext.set "nodejs.npm.module.author", "Nathan Cavanaugh <nathan.cavanaugh@liferay.com> (https://github.com/natecavanaugh)"
+project.ext.set "nodejs.npm.module.bugs.url", "https://issues.liferay.com/"
+project.ext.set "nodejs.npm.module.license", "LGPL"
+project.ext.set "nodejs.npm.module.repository", "liferay/liferay-portal"
+
 apply plugin: "com.liferay.plugin"
 apply plugin: "eclipse"
 apply plugin: "findbugs"

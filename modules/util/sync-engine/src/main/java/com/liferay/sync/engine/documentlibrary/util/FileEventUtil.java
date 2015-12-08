@@ -417,6 +417,8 @@ public class FileEventUtil {
 
 			uploadingSyncFile.setChecksum(checksum);
 
+			uploadingSyncFile.setSize(Files.size(filePath));
+
 			SyncFileService.update(uploadingSyncFile);
 
 			if (uploadingSyncFile.getTypePK() > 0) {

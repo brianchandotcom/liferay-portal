@@ -152,18 +152,18 @@ public class SyncAccountService {
 
 				// Sync file
 
-				SyncFileService.addSyncFile(
-					null, null, null, syncSite.getFilePathName(), null,
-					syncSite.getName(), 0, syncSite.getGroupId(),
-					SyncFile.STATE_SYNCED, syncSite.getSyncAccountId(),
-					SyncFile.TYPE_SYSTEM, false);
-
 				if (syncSite.isActive() &&
 					!Files.exists(Paths.get(syncSite.getFilePathName()))) {
 
 					Files.createDirectories(
 						Paths.get(syncSite.getFilePathName()));
 				}
+
+				SyncFileService.addSyncFile(
+					null, null, null, syncSite.getFilePathName(), null,
+					syncSite.getName(), 0, syncSite.getGroupId(),
+					SyncFile.STATE_SYNCED, syncSite.getSyncAccountId(),
+					SyncFile.TYPE_SYSTEM, false);
 			}
 		}
 

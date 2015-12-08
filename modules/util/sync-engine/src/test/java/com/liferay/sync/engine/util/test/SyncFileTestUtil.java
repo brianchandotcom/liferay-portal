@@ -17,6 +17,9 @@ package com.liferay.sync.engine.util.test;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**
  * @author Shinn Lok
  */
@@ -34,6 +37,8 @@ public class SyncFileTestUtil {
 			String filePathName, long parentFolderId, long repositoryId,
 			long syncAccountId, long typePK)
 		throws Exception {
+
+		Files.createFile(Paths.get(filePathName));
 
 		SyncFile syncFile = SyncFileService.addSyncFile(
 			null, null, null, filePathName, null, null, parentFolderId,
@@ -68,6 +73,8 @@ public class SyncFileTestUtil {
 			String filePathName, long parentFolderId, long repositoryId,
 			long syncAccountId, long typePK)
 		throws Exception {
+
+		Files.createDirectory(Paths.get(filePathName));
 
 		SyncFile syncFile = SyncFileService.addSyncFile(
 			null, null, null, filePathName, null, null, parentFolderId,

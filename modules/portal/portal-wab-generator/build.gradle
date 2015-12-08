@@ -10,7 +10,7 @@ compileJava {
 }
 
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "2.4.1"
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"

@@ -145,7 +145,20 @@ public final class CommandLoggerHandler {
 	}
 
 	public static void warnCommand(Element element) throws Exception {
-		failCommand(element);
+		if (!_isCurrentCommand(element)) {
+			return;
+		}
+
+		_writeWebPage(_errorLinkId);
+
+		_commandElement = null;
+
+		_warningLineGroupLoggerElement(_lineGroupLoggerElement);
+
+		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
+			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+
+		_updateStatus(xmlLoggerElement, "warning");
 	}
 
 	private static void _failLineGroupLoggerElement(
@@ -170,6 +183,29 @@ public final class CommandLoggerHandler {
 			runLineLoggerElement.addClassName("error-line");
 		}
 	}
+
+	private static void _warningLineGroupLoggerElement(
+			LoggerElement lineGroupLoggerElement)
+		throws Exception {
+
+		lineGroupLoggerElement.addClassName("warning");
+
+		lineGroupLoggerElement.addChildLoggerElement(
+			_getErrorContainerLoggerElement());
+
+		LoggerElement childContainerLoggerElement =
+			lineGroupLoggerElement.loggerElement("ul");
+
+		List<LoggerElement> runLineLoggerElements =
+			childContainerLoggerElement.loggerElements("li");
+
+		if (!runLineLoggerElements.isEmpty()) {
+			LoggerElement runLineLoggerElement = runLineLoggerElements.get(
+				runLineLoggerElements.size() - 1);
+
+			runLineLoggerElement.addClassName("warning-line");
+		}
+	}	
 
 	private static LoggerElement _getButtonLoggerElement(int btnLinkId) {
 		LoggerElement loggerElement = new LoggerElement();

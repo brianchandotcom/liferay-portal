@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.rotty3000</groupId>
   <artifactId>phidias</artifactId>
-  <version>0.3.2</version>
+  <version>0.3.7</version>
   <name>Phidias Compiler Adapter</name>
   <description>A small javax compiler adapter for OSGi environments.</description>
   <url>https://github.com/rotty3000/phidias</url>

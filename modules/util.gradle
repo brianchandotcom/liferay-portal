@@ -4,16 +4,16 @@ import com.liferay.gradle.util.copy.RenameDependencyClosure
 import java.util.regex.Matcher
 
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
+	}
+
 	repositories {
 		mavenLocal()
 
 		maven {
 			url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
-	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
 	}
 }
 

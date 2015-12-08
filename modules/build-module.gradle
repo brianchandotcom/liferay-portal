@@ -210,6 +210,15 @@ idea {
 	}
 }
 
+jsModuleConfigGenerator {
+	version = "1.1.7"
+}
+
+jsTranspiler {
+	babelVersion = "5.8.23"
+	lfrAmdLoaderVersion = "1.3.5"
+}
+
 node {
 	npmArgs "--fetch-retries", "10"
 	npmArgs "--fetch-retry-maxtimeout", "120000"

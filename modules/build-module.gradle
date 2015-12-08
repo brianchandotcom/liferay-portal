@@ -18,10 +18,10 @@ buildscript {
 	}
 }
 
-project.ext.set "nodejs.npm.module.author", "Nathan Cavanaugh <nathan.cavanaugh@liferay.com> (https://github.com/natecavanaugh)"
-project.ext.set "nodejs.npm.module.bugs.url", "https://issues.liferay.com/"
-project.ext.set "nodejs.npm.module.license", "LGPL"
-project.ext.set "nodejs.npm.module.repository", "liferay/liferay-portal"
+_setPropertyDefault project, "nodejs.npm.module.author", "Nathan Cavanaugh <nathan.cavanaugh@liferay.com> (https://github.com/natecavanaugh)"
+_setPropertyDefault project, "nodejs.npm.module.bugs.url", "https://issues.liferay.com/"
+_setPropertyDefault project, "nodejs.npm.module.license", "LGPL"
+_setPropertyDefault project, "nodejs.npm.module.repository", "liferay/liferay-portal"
 
 apply plugin: "com.liferay.plugin"
 apply plugin: "eclipse"
@@ -367,5 +367,11 @@ if (System.getenv("JENKINS_HOME")) {
 
 	startTestableTomcat {
 		deleteLiferayHome = false
+	}
+}
+
+private void _setPropertyDefault(Project project, String name, Object value) {
+	if (!project.hasProperty(name)) {
+		project.ext.set name, value
 	}
 }

@@ -49,8 +49,6 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 					%>
 
 						<li class="move-folder">
-							<i class="<%= journalMovesEntriesDisplayContext.getIconCssClass(folder) %>"></i>
-
 							<span class="folder-title">
 								<%= HtmlUtil.escape(folder.getName()) %>
 							</span>
@@ -77,8 +75,6 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 					%>
 
 						<li class="icon-warning-sign move-error move-folder">
-							<i class="<%= journalMovesEntriesDisplayContext.getIconCssClass(folder) %>"></i>
-
 							<span class="folder-title">
 								<%= HtmlUtil.escape(folder.getName()) %>
 							</span>
@@ -111,8 +107,6 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 					%>
 
 						<li class="move-article">
-							<i class="<%= journalMovesEntriesDisplayContext.getIconCssClass(validMoveArticle) %>"></i>
-
 							<span class="article-title" title="<%= HtmlUtil.escapeAttribute(validMoveArticle.getTitle(locale)) %>">
 								<%= HtmlUtil.escape(validMoveArticle.getTitle(locale)) %>
 							</span>
@@ -139,8 +133,6 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 					%>
 
 						<li class="icon-warning-sign move-article move-error">
-							<i class="<%= journalMovesEntriesDisplayContext.getIconCssClass(invalidMoveArticle) %>"></i>
-
 							<span class="article-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveArticle.getTitle()) %>">
 								<%= HtmlUtil.escape(invalidMoveArticle.getTitle()) %>
 							</span>

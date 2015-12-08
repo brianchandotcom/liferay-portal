@@ -26,16 +26,12 @@ long entryClassPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 
 AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(entryClassName);
 
-AssetRenderer<?> assetRenderer = null;
-
 if (assetRendererFactory != null) {
 	long resourcePrimKey = GetterUtil.getLong(document.get(Field.ROOT_ENTRY_CLASS_PK));
 
 	if (resourcePrimKey > 0) {
 		entryClassPK = resourcePrimKey;
 	}
-
-	assetRenderer = assetRendererFactory.getAssetRenderer(entryClassPK);
 }
 %>
 
@@ -46,7 +42,7 @@ if (assetRendererFactory != null) {
 
 	<span class="toggle-details">[+]</span>
 
-	<span class="asset-entry-title <%= (assetRenderer != null) ? assetRenderer.getIconCssClass() : StringPool.BLANK %>">
+	<span class="asset-entry-title">
 
 		<%
 		String name = document.get(locale, Field.NAME);

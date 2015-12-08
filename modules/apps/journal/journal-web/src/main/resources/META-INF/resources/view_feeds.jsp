@@ -40,7 +40,6 @@ portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 
 					<aui:nav-item
 						href="<%= editFeedURL %>"
-						iconCssClass="icon-plus"
 						label="add-feed"
 					/>
 				</c:if>
@@ -56,7 +55,6 @@ portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 
 					<aui:nav-item
 						href="<%= permissionsURL %>"
-						iconCssClass="icon-lock"
 						label="permissions"
 					/>
 				</c:if>

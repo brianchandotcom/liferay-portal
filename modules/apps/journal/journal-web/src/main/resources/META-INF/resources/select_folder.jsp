@@ -66,6 +66,7 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 
 		<liferay-ui:search-container-row
 			className="com.liferay.journal.model.JournalFolderModel"
+			escapedModel="<%= true %>"
 			keyProperty="folderId"
 			modelVar="curFolder"
 			rowVar="row"
@@ -94,15 +95,9 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 			%>
 
 			<liferay-ui:search-container-column-text
-				name="folder"
-			>
-				<liferay-ui:icon
-					iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-					label="<%= true %>"
-					message="<%= HtmlUtil.escape(curFolder.getName()) %>"
-					url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>"
-				/>
-			</liferay-ui:search-container-column-text>
+				href="<%= rowURL %>"
+				name="name"
+			/>
 
 			<liferay-ui:search-container-column-text
 				name="num-of-folders"

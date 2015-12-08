@@ -100,8 +100,9 @@ public class AddDefaultSharedPortletLayoutAction extends SimpleAction {
 		layout = _layoutLocalService.addLayout(
 			defaultUserId, group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "shared",
-			StringPool.BLANK, StringPool.BLANK, "shared_portlet", true,
-			"/shared", serviceContext);
+			StringPool.BLANK, StringPool.BLANK,
+			LayoutConstants.TYPE_SHARED_PORTLET, true, "/shared",
+			serviceContext);
 
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();

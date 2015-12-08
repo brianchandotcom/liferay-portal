@@ -1171,6 +1171,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public boolean isTypeSharedPortlet() {
+		if (Validator.equals(getType(), LayoutConstants.TYPE_SHARED_PORTLET)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isTypeURL() {
 		if (Validator.equals(getType(), LayoutConstants.TYPE_URL)) {
 			return true;

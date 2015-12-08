@@ -439,6 +439,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isTypePortlet();
 
+	public boolean isTypeSharedPortlet();
+
 	public boolean isTypeURL();
 
 	public boolean matches(javax.servlet.http.HttpServletRequest request,

@@ -577,12 +577,14 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void javaScriptMouseDown(String locator) {
-		WebDriverHelper.executeJavaScriptMouseEvent(this, locator, "mousedown");
+		WebDriverHelper.executeJavaScriptEvent(
+			this, locator, "MouseEvent", "mousedown");
 	}
 
 	@Override
 	public void javaScriptMouseUp(String locator) {
-		WebDriverHelper.executeJavaScriptMouseEvent(this, locator, "mouseup");
+		WebDriverHelper.executeJavaScriptEvent(
+			this, locator, "MouseEvent", "mouseup");
 	}
 
 	@Override

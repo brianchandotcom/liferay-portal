@@ -48,6 +48,8 @@
 			<var name="webContentTitle" value="${folderName}" />
 		</execute>
 
+		<execute function="Click" locator1="AssetWorkflow#WEB_CONTENT_FOLDER_STRUCTURE_RESTRICTIONS_TOGGLE" />
+
 		<if>
 			<equals arg1="${workflowRestriction}" arg2="Parent Folder" />
 			<then>

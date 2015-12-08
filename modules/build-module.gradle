@@ -219,12 +219,6 @@ jsTranspiler {
 	lfrAmdLoaderVersion = "1.3.5"
 }
 
-node {
-	npmArgs "--fetch-retries", "10"
-	npmArgs "--fetch-retry-maxtimeout", "120000"
-	npmArgs "--fetch-retry-mintimeout", "60000"
-}
-
 pmd {
 	ruleSetFiles = rootProject.files("../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml")
 	ruleSets = []
@@ -391,10 +385,6 @@ if (System.getenv("JENKINS_HOME")) {
 
 			println "Found web.xml after running ${path}:\n${webXmlFile.text}."
 		}
-	}
-
-	node {
-		nodeUrl = "https://nodejs.org/dist/v${nodeVersion}/node-v${nodeVersion}-linux-x64.tar.gz"
 	}
 
 	pluginManager.withPlugin("com.liferay.cache") {

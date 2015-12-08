@@ -21,6 +21,7 @@ long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupI
 
 PortletURL portletURL = currentURLObj;
 
+portletURL.setParameter("mvcRenderCommandName", "publishPortlet");
 portletURL.setParameter("tabs3", "current-and-previous");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");

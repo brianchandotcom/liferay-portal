@@ -399,6 +399,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MARK_AS_READ</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Mark as Read')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Show')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIDE</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Hide')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MARKETING_BANNER</td>
 	<td>//li[contains(@class,'open')]//a[contains(.,'Marketing Banner')] | //div[contains(@class,'open')]//a[contains(.,'Marketing Banner')]</td>
 	<td></td>

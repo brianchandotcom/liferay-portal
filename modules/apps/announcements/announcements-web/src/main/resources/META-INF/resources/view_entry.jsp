@@ -49,35 +49,56 @@ if (entry.getPriority() > 0) {
 }
 %>
 
-<div class="entry<%= className %>" id="<portlet:namespace /><%= entry.getEntryId() %>">
-	<liferay-ui:user-display userId="<%= entry.getUserId() %>" />
+<div class="panel" id="<portlet:namespace /><%= entry.getEntryId() %>">
+	<div class="panel-heading">
+		<div class="card-row">
+			<div class="card-col-field">
+				<div class="list-group-card-icon">
+					<liferay-ui:user-portrait userId="<%= entry.getUserId() %>" />
+				</div>
+			</div>
 
-	<div class="entry-time">
-		<%= Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, dateFormatDate) %>
+			<div class="card-col-content card-col-gutters">
+
+				<%
+				String userDisplayText = user.getFullName() + StringPool.COMMA_AND_SPACE + Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, dateFormatDate);
+				%>
+
+				<h5 class="text-default" title="<%= userDisplayText %>">
+					<%= userDisplayText %>
+				</h5>
+
+				<h4 title="<%= HtmlUtil.escape(entry.getTitle()) %>">
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(entry.getUrl()) %>">
+							<a href="<%= HtmlUtil.escapeHREF(entry.getUrl()) %>">
+								<%= HtmlUtil.escape(entry.getTitle()) %>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<%= HtmlUtil.escape(entry.getTitle()) %>
+						</c:otherwise>
+					</c:choose>
+				</h4>
+
+				<%
+				boolean showScopeName = false;
+				%>
+
+				<div class="<%= hiddenEntry ? "hide" : StringPool.BLANK %> entry-scope">
+					<%@ include file="/entry_scope.jspf" %>
+				</div>
+			</div>
+
+			<c:if test='<%= !tabs1.equals("preview") %>'>
+				<div class="card-col-field">
+					<%@ include file="/entry_action.jspf" %>
+				</div>
+			</c:if>
+		</div>
 	</div>
 
-	<h3 class="entry-title">
-		<c:choose>
-			<c:when test="<%= Validator.isNotNull(entry.getUrl()) %>">
-				<a class="entry-url" href="<%= HtmlUtil.escapeHREF(entry.getUrl()) %>"><%= HtmlUtil.escape(entry.getTitle()) %></a>
-			</c:when>
-			<c:when test="<%= Validator.isNull(entry.getUrl()) %>">
-				<%= HtmlUtil.escape(entry.getTitle()) %>
-			</c:when>
-		</c:choose>
-	</h3>
-
-	<c:if test='<%= !tabs1.equals("preview") %>'>
-		<%@ include file="/entry_action.jspf" %>
-	</c:if>
-
-	<%
-	boolean showScopeName = false;
-	%>
-
-	<div class="<%= hiddenEntry ? "hide" : "" %> entry-content entry-type-<%= HtmlUtil.escapeAttribute(entry.getType()) %>">
-		<%@ include file="/entry_scope.jspf" %>
-
-		<%= entry.getContent() %>
+	<div class="entry-content <%= hiddenEntry ? "hide" : StringPool.BLANK %> panel-body">
+		<%= HtmlUtil.escape(entry.getContent()) %>
 	</div>
 </div>

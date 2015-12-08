@@ -34,45 +34,20 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ENTRY-->
+<!--CARD_VIEW_ENTRY-->
 <tr>
-	<td>ENTRY_TITLE</td>
-	<td>//h3[@class='entry-title' and contains(.,'${key_entryTitle}')]/a</td>
+	<td>CARD_VIEW_ENTRY_TITLE</td>
+	<td>//div[@class='panel']//h4[@title='${key_entryTitle}']/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_EDIT</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='edit-entry']/span/a/span</td>
+	<td>CARD_VIEW_ENTRY_SCOPE</td>
+	<td>//div[@class='panel']//h4[@title='${key_entryTitle}']/..//div[contains(@class,'entry-scope')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_DELETE</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='delete-entry']/span/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_MARK_AS_READ</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='control-entry' and contains(.,'Mark as Read')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_SHOW</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='control-entry' and contains(.,'Show')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_HIDE</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//li[@class='control-entry' and contains(.,'Hide')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_SCOPE</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//span[@class='entry-scope']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CONTENT</td>
-	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//div[contains(@class,'entry-content')]</td>
+	<td>CARD_VIEW_ENTRY_CONTENT</td>
+	<td>//div[@class='panel']//div[contains(@class,'entry-content') and contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 </tbody>

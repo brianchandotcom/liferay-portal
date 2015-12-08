@@ -981,7 +981,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_props = props;
 	}
 
-	@Reference(target = "(isProxy=true)", unbind = "-")
+	@Reference(target = "(scheduler.engine.is.proxy=true)", unbind = "-")
 	protected void setSchedulerEngine(SchedulerEngine schedulerEngine) {
 		_schedulerEngine = schedulerEngine;
 	}

@@ -861,12 +861,14 @@ public class PoshiRunnerContext {
 			sb.append("\n");
 		}
 
-		if ((PropsValues.TEST_BATCH_MAX_GROUP_SIZE > 0) &&
-			(PropsValues.TEST_BATCH_PROPERTY_NAMES != null) &&
-			(PropsValues.TEST_BATCH_PROPERTY_VALUES != null)) {
+		if ((PropsValues.TEST_BATCH_FILTER_PROPERTY_NAMES != null) &&
+			(PropsValues.TEST_BATCH_FILTER_PROPERTY_VALUES != null) &&
+			(PropsValues.TEST_BATCH_MAX_GROUP_SIZE > 0)) {
 
-			String[] propertyNames = PropsValues.TEST_BATCH_PROPERTY_NAMES;
-			String[] propertyValues = PropsValues.TEST_BATCH_PROPERTY_VALUES;
+			String[] propertyNames =
+				PropsValues.TEST_BATCH_FILTER_PROPERTY_NAMES;
+			String[] propertyValues =
+				PropsValues.TEST_BATCH_FILTER_PROPERTY_VALUES;
 
 			List<String> classCommandNames = new ArrayList<>();
 

@@ -175,14 +175,14 @@ public class PropsValues {
 	public static final String TEST_BASE_DIR_NAME = PropsUtil.get(
 		"test.base.dir.name");
 
+	public static final String[] TEST_BATCH_FILTER_PROPERTY_NAMES =
+		StringUtil.split(PropsUtil.get("test.batch.filter.property.names"));
+
+	public static final String[] TEST_BATCH_FILTER_PROPERTY_VALUES =
+		StringUtil.split(PropsUtil.get("test.batch.filter.property.values"));
+
 	public static final int TEST_BATCH_MAX_GROUP_SIZE = GetterUtil.getInteger(
 		PropsUtil.get("test.batch.max.group.size"));
-
-	public static final String[] TEST_BATCH_PROPERTY_NAMES = StringUtil.split(
-		PropsUtil.get("test.batch.property.names"));
-
-	public static final String[] TEST_BATCH_PROPERTY_VALUES = StringUtil.split(
-		PropsUtil.get("test.batch.property.values"));
 
 	public static final String TEST_CASE_AVAILABLE_PROPERTY_NAMES =
 		PropsUtil.get("test.case.available.property.names");

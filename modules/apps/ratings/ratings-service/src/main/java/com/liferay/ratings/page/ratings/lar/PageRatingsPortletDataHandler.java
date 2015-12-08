@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ratings.lar;
+package com.liferay.ratings.page.ratings.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;

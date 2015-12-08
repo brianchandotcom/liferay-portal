@@ -24,6 +24,9 @@ public class PropsValues {
 
 	public static final String BROWSER_TYPE = PropsUtil.get("browser.type");
 
+	public static final String BROWSER_VERSION = PropsUtil.get(
+		"browser.version");
+
 	public static final String CLUSTER_NODE_1 = PropsUtil.get("cluster.node1");
 
 	public static final String CLUSTER_NODE_2 = PropsUtil.get("cluster.node2");
@@ -118,9 +121,6 @@ public class PropsValues {
 
 	public static final String SELENIUM_DESIRED_CAPABILITIES_PLATFORM =
 		PropsUtil.get("selenium.desired.capabilities.platform");
-
-	public static final String SELENIUM_DESIRED_CAPABILITIES_VERSION =
-		PropsUtil.get("selenium.desired.capabilities.version");
 
 	public static final String SELENIUM_EXECUTABLE_DIR_NAME =
 		PropsUtil.get("selenium.executable.dir.name");

@@ -35,6 +35,10 @@ public class InternetExplorerWebDriverImpl extends BaseWebDriverImpl {
 			WebDriverHelper.executeJavaScriptEvent(
 				this, locator, "MouseEvent", "pointerdown");
 		}
+		else if (PropsValues.BROWSER_VERSION.equals("10.0")) {
+			WebDriverHelper.executeJavaScriptEvent(
+				this, locator, "MSPointerEvent", "MSPointerDown");
+		}
 		else {
 			super.javaScriptMouseDown(locator);
 		}
@@ -45,6 +49,10 @@ public class InternetExplorerWebDriverImpl extends BaseWebDriverImpl {
 		if (PropsValues.BROWSER_VERSION.equals("11.0")) {
 			WebDriverHelper.executeJavaScriptEvent(
 				this, locator, "MouseEvent", "pointerup");
+		}
+		else if (PropsValues.BROWSER_VERSION.equals("10.0")) {
+			WebDriverHelper.executeJavaScriptEvent(
+				this, locator, "MSPointerEvent", "MSPointerUp");
 		}
 		else {
 			super.javaScriptMouseUp(locator);

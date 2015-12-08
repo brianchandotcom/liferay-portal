@@ -21,8 +21,8 @@ import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.usergroupsadmin.search.SetUserUserGroupChecker;
-import com.liferay.portlet.usergroupsadmin.search.UnsetUserUserGroupChecker;
+import com.liferay.portlet.usergroupsadmin.search.AddUserUserGroupChecker;
+import com.liferay.portlet.usergroupsadmin.search.RemoveUserUserGroupChecker;
 
 import javax.portlet.RenderResponse;
 
@@ -56,12 +56,12 @@ public class UserGroupMembershipPolicyRowCheckerTest
 		UserGroup forbiddenUserGroup = UserGroupLocalServiceUtil.getUserGroup(
 			forbiddenUserGroupId);
 
-		SetUserUserGroupChecker setUserUserGroupChecker =
-			new SetUserUserGroupChecker(renderResponse, forbiddenUserGroup);
+		AddUserUserGroupChecker addUserUserGroupChecker =
+			new AddUserUserGroupChecker(renderResponse, forbiddenUserGroup);
 
 		User user = UserTestUtil.addUser();
 
-		Assert.assertTrue(setUserUserGroupChecker.isDisabled(user));
+		Assert.assertTrue(addUserUserGroupChecker.isDisabled(user));
 	}
 
 	@Test
@@ -75,12 +75,12 @@ public class UserGroupMembershipPolicyRowCheckerTest
 		UserGroup requiredUserGroup = UserGroupLocalServiceUtil.getUserGroup(
 			requiredUserGroupId);
 
-		SetUserUserGroupChecker setUserUserGroupChecker =
-			new SetUserUserGroupChecker(renderResponse, requiredUserGroup);
+		AddUserUserGroupChecker addUserUserGroupChecker =
+			new AddUserUserGroupChecker(renderResponse, requiredUserGroup);
 
 		User user = UserTestUtil.addUser();
 
-		Assert.assertFalse(setUserUserGroupChecker.isDisabled(user));
+		Assert.assertFalse(addUserUserGroupChecker.isDisabled(user));
 	}
 
 	@Test
@@ -94,15 +94,15 @@ public class UserGroupMembershipPolicyRowCheckerTest
 		UserGroup forbiddenUserGroup = UserGroupLocalServiceUtil.getUserGroup(
 			forbiddenUserGroupId);
 
-		UnsetUserUserGroupChecker setUserUserGroupChecker =
-			new UnsetUserUserGroupChecker(renderResponse, forbiddenUserGroup);
+		RemoveUserUserGroupChecker removeUserUserGroupChecker =
+			new RemoveUserUserGroupChecker(renderResponse, forbiddenUserGroup);
 
 		User user = UserTestUtil.addUser();
 
 		UserGroupLocalServiceUtil.addUserUserGroup(
 			user.getUserId(), forbiddenUserGroupId);
 
-		Assert.assertFalse(setUserUserGroupChecker.isDisabled(user));
+		Assert.assertFalse(removeUserUserGroupChecker.isDisabled(user));
 	}
 
 	@Test
@@ -116,15 +116,15 @@ public class UserGroupMembershipPolicyRowCheckerTest
 		UserGroup requiredUserGroup = UserGroupLocalServiceUtil.getUserGroup(
 			requiredUserGroupId);
 
-		UnsetUserUserGroupChecker setUserUserGroupChecker =
-			new UnsetUserUserGroupChecker(renderResponse, requiredUserGroup);
+		RemoveUserUserGroupChecker removeUserUserGroupChecker =
+			new RemoveUserUserGroupChecker(renderResponse, requiredUserGroup);
 
 		User user = UserTestUtil.addUser();
 
 		UserGroupLocalServiceUtil.addUserUserGroup(
 			user.getUserId(), requiredUserGroupId);
 
-		Assert.assertTrue(setUserUserGroupChecker.isDisabled(user));
+		Assert.assertTrue(removeUserUserGroupChecker.isDisabled(user));
 	}
 
 }

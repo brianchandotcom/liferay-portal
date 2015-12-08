@@ -57,7 +57,7 @@ if (filterManageableOrganizations) {
 
 userParams.put("usersUserGroups", Long.valueOf(userGroup.getUserGroupId()));
 
-RowChecker rowChecker = new UnsetUserUserGroupChecker(renderResponse, userGroup);
+RowChecker rowChecker = new RemoveUserUserGroupChecker(renderResponse, userGroup);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

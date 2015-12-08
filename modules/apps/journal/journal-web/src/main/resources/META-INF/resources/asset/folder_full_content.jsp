@@ -40,19 +40,11 @@ JournalFolder folder = journalDisplayContext.getFolder();
 					<liferay-ui:message arguments="<%= dateFormatDateTime.format(folder.getModifiedDate()) %>" key="last-updated-x" translateArguments="<%= false %>" />
 				</div>
 
-				<%
-				AssetRendererFactory<JournalFolder> journalFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalFolder.class);
-				%>
-
-				<div class="<%= journalFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
+				<div class="lfr-asset-icon">
 					<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 				</div>
 
-				<%
-				AssetRendererFactory<JournalArticle> journalArticleAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
-				%>
-
-				<div class="<%= journalArticleAssetRendererFactory.getIconCssClass() %> last lfr-asset-icon">
+				<div class="last lfr-asset-icon">
 					<%= entriesCount %> <liferay-ui:message key='<%= (entriesCount == 1) ? "article" : "articles" %>' />
 				</div>
 			</div>

@@ -1,6 +1,10 @@
 import com.liferay.gradle.util.GradleUtil
 
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.8"
+	}
+
 	repositories {
 		if (!Boolean.getBoolean("maven.local.ignore")) {
 			mavenLocal()
@@ -10,13 +14,11 @@ buildscript {
 			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
 	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.8"
-	}
 }
 
 apply plugin: "com.liferay.poshi.runner"
+
+task updateGradleCache
 
 configurations {
 	sikuliComplete
@@ -57,22 +59,6 @@ repositories {
 	}
 }
 
-File localPoshiDir = new File(buildDir, "poshi")
-
-task copyLocalPoshi(type: GradleBuild)
-task updateGradleCache
-
-copyLocalPoshi {
-	configure(startParameter) {
-		configureOnDemand = true
-		gradleUserHomeDir = file("../.gradle")
-		projectProperties = ["destinationDir": localPoshiDir]
-	}
-
-	dir = file("../modules/test/poshi-runner")
-	tasks = ["deployWithDependencies"]
-}
-
 runPoshi {
 	jvmArgs "-Dfile.encoding=UTF-8"
 }
@@ -83,10 +69,13 @@ updateGradleCache << {
 }
 
 if (GradleUtil.getProperty(project, "local", false)) {
+	File localPoshiDir = file("../tools/sdk/tmp/portal-tools/poshi-runner")
+
 	dependencies {
-		poshiRunner fileTree(localPoshiDir) {
-			builtBy copyLocalPoshi
-			include "*.jar"
-		}
+		poshiRunner fileTree(dir: localPoshiDir, include: "*.jar")
+	}
+
+	expandPoshiRunner {
+		from zipTree(new File(localPoshiDir, "com.liferay.poshi.runner.jar"))
 	}
 }

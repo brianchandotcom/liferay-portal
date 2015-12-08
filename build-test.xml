@@ -960,6 +960,25 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="poshi-execute">
+		<attribute name="task" />
+
+		<sequential>
+			<if>
+				<equals arg1="${test.poshi.runner.local.release}" arg2="true" />
+				<then>
+					<gradle-execute dir="modules/test/poshi-runner" task="deploy" />
+				</then>
+			</if>
+
+			<gradle-execute failonerror="false" task="@{task}">
+				<arg value="--build-file=portal-web/build-test.gradle" />
+				<arg value="-Plocal=${test.poshi.runner.local.release}" />
+				<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
+			</gradle-execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
 			<get-testcase-property property.name="app.server.bundles.size" />
@@ -6247,11 +6266,7 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
-		<gradle-execute failonerror="false" task="writePoshiProperties">
-			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-		</gradle-execute>
+		<poshi-execute task="writePoshiProperties" />
 
 		<move file="portal-web/test.case.method.names.properties" tofile="test.case.method.names.properties" />
 
@@ -6322,11 +6337,7 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
-		<gradle-execute failonerror="false" task="writePoshiProperties">
-			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-		</gradle-execute>
+		<poshi-execute task="writePoshiProperties" />
 
 		<move file="portal-web/test.generated.properties" tofile="test.generated.properties" />
 
@@ -6618,19 +6629,11 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
-		<gradle-execute failonerror="false" task="evaluatePoshiConsole">
-			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-		</gradle-execute>
+		<poshi-execute task="evaluatePoshiConsole" />
 	</target>
 
 	<target name="run-poshi-runner">
-		<gradle-execute failonerror="false" task="runPoshi">
-			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-		</gradle-execute>
+		<poshi-execute task="runPoshi" />
 	</target>
 
 	<target name="run-poshi-validation">
@@ -6648,11 +6651,7 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
-		<gradle-execute failonerror="false" task="validatePoshi">
-			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-		</gradle-execute>
+		<poshi-execute task="validatePoshi" />
 	</target>
 
 	<target name="run-selenium-smoke-test">

@@ -54,9 +54,9 @@ sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
 afterEvaluate {
-	project.ext.set("app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir))
-	project.ext.set("app.server.portal.dir", project.relativePath(liferay.appServerPortalDir))
-	project.ext.set("plugin.full.version", project.version.toString())
+	project.ext.set "app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir)
+	project.ext.set "app.server.portal.dir", project.relativePath(liferay.appServerPortalDir)
+	project.ext.set "plugin.full.version", project.version.toString()
 
 	if (project.hasProperty("snapshot") && !project.version.endsWith("-SNAPSHOT")) {
 		project.version = project.version + "-SNAPSHOT"

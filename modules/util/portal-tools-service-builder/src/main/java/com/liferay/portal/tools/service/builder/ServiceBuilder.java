@@ -195,6 +195,7 @@ public class ServiceBuilder {
 		String sqlDirName = arguments.get("service.sql.dir");
 		String sqlFileName = arguments.get("service.sql.file");
 		String sqlIndexesFileName = arguments.get("service.sql.indexes.file");
+		String sqlRulesFileName = arguments.get("service.sql.rules.file");
 		String sqlSequencesFileName = arguments.get(
 			"service.sql.sequences.file");
 		String targetEntityName = arguments.get("service.target.entity.name");
@@ -220,8 +221,8 @@ public class ServiceBuilder {
 				implDirName, inputFileName, modelHintsFileName, osgiModule,
 				pluginName, propsUtil, readOnlyPrefixes, resourceActionModels,
 				resourcesDirName, springFileName, springNamespaces, sqlDirName,
-				sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
-				targetEntityName, testDirName, true);
+				sqlFileName, sqlIndexesFileName, sqlRulesFileName,
+				sqlSequencesFileName, targetEntityName, testDirName, true);
 
 			String modifiedFileNames = StringUtil.merge(
 				serviceBuilder.getModifiedFileNames());
@@ -256,6 +257,7 @@ public class ServiceBuilder {
 				"\tservice.sql.dir=${basedir}/../sql\n" +
 				"\tservice.sql.file=portal-tables.sql\n" +
 				"\tservice.sql.indexes.file=indexes.sql\n" +
+				"\tservice.sql.rules.file=rules.sql\n" +
 				"\tservice.sql.sequences.file=sequences.sql\n" +
 				"\tservice.target.entity.name=${service.target.entity.name}\n" +
 				"\tservice.test.dir=${basedir}/test/integration\n" +
@@ -438,8 +440,9 @@ public class ServiceBuilder {
 			String[] readOnlyPrefixes, Set<String> resourceActionModels,
 			String resourcesDirName, String springFileName,
 			String[] springNamespaces, String sqlDirName, String sqlFileName,
-			String sqlIndexesFileName, String sqlSequencesFileName,
-			String targetEntityName, String testDirName, boolean build)
+			String sqlIndexesFileName, String sqlRulesFileName,
+			String sqlSequencesFileName, String targetEntityName,
+			String testDirName, boolean build)
 		throws Exception {
 
 		_tplBadAliasNames = _getTplProperty(
@@ -528,6 +531,7 @@ public class ServiceBuilder {
 			_sqlDirName = sqlDirName;
 			_sqlFileName = sqlFileName;
 			_sqlIndexesFileName = sqlIndexesFileName;
+			_sqlRulesFileName = sqlRulesFileName;
 			_sqlSequencesFileName = sqlSequencesFileName;
 			_targetEntityName = targetEntityName;
 			_testDirName = testDirName;
@@ -790,6 +794,7 @@ public class ServiceBuilder {
 				_createServicePropsUtil();
 
 				_createSQLIndexes();
+				_createSQLRules();
 				_createSQLTables();
 				_createSQLSequences();
 
@@ -813,8 +818,8 @@ public class ServiceBuilder {
 			Set<String> resourceActionModels, String resourcesDir,
 			String springFileName, String[] springNamespaces, String sqlDir,
 			String sqlFileName, String sqlIndexesFileName,
-			String sqlSequencesFileName, String targetEntityName,
-			String testDir)
+			String sqlRulesFileName, String sqlSequencesFileName,
+			String targetEntityName, String testDir)
 		throws Exception {
 
 		this(
@@ -823,8 +828,8 @@ public class ServiceBuilder {
 			modelHintsFileName, osgiModule, pluginName, propsUtil,
 			readOnlyPrefixes, resourceActionModels, resourcesDir,
 			springFileName, springNamespaces, sqlDir, sqlFileName,
-			sqlIndexesFileName, sqlSequencesFileName, targetEntityName, testDir,
-			true);
+			sqlIndexesFileName, sqlRulesFileName, sqlSequencesFileName,
+			targetEntityName, testDir, true);
 	}
 
 	public String annotationToString(Annotation annotation) {
@@ -1084,7 +1089,8 @@ public class ServiceBuilder {
 			_osgiModule, _pluginName, _propsUtil, _readOnlyPrefixes,
 			_resourceActionModels, _resourcesDirName, _springFileName,
 			_springNamespaces, _sqlDirName, _sqlFileName, _sqlIndexesFileName,
-			_sqlSequencesFileName, _targetEntityName, _testDirName, false);
+			_sqlRulesFileName, _sqlSequencesFileName, _targetEntityName,
+			_testDirName, false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -3406,6 +3412,108 @@ public class ServiceBuilder {
 		}
 	}
 
+	private void _createSQLRules() throws Exception {
+		File sqlDir = new File(_sqlDirName);
+
+		if (!sqlDir.exists()) {
+			_mkdir(sqlDir);
+		}
+
+		File sqlFile = new File(_sqlDirName + "/" + _sqlRulesFileName);
+
+		if (!sqlFile.exists()) {
+			_touch(sqlFile);
+		}
+
+		for (int i = 0; i < _ejbList.size(); i++) {
+			Entity entity = _ejbList.get(i);
+
+			List<EntityRule> ruleList = entity.getRuleList();
+
+			for (int j = 0; j < ruleList.size(); j++) {
+				EntityRule rule = ruleList.get(j);
+
+				String createRuleSQL = _getCreateRuleSQL(rule);
+
+				if (Validator.isNotNull(createRuleSQL)) {
+					_createSQLRules(sqlFile, createRuleSQL, rule, true);
+				}
+			}
+		}
+
+		String content = _read(sqlFile);
+
+		ToolsUtil.writeFileRaw(sqlFile, content.trim(), _modifiedFileNames);
+	}
+
+	private void _createSQLRules(
+			File sqlFile, String newCreateRuleString, EntityRule rule,
+			boolean addMissingRules)
+		throws IOException {
+
+		if (!sqlFile.exists()) {
+			_touch(sqlFile);
+		}
+
+		String content = _read(sqlFile);
+
+		String name = rule.getName();
+		String definition = rule.getDefinition();
+
+		int x = content.indexOf(_SQL_CREATE_RULE + name);
+		int y =
+			x + _SQL_CREATE_RULE.length() + name.length() + definition.length();
+
+		if (x != -1) {
+			String oldCreateTableString = content.substring(x, y);
+
+			if (!oldCreateTableString.equals(newCreateRuleString)) {
+				content =
+					content.substring(0, x) + newCreateRuleString +
+						content.substring(y);
+
+				_write(sqlFile, content);
+			}
+		}
+		else if (addMissingRules) {
+			try (UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+				StringBundler sb = new StringBundler();
+
+				String line = null;
+				boolean appendNewRule = true;
+
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					if (appendNewRule && line.startsWith(_SQL_CREATE_RULE)) {
+						x = _SQL_CREATE_RULE.length();
+						y = line.indexOf(" ", x);
+
+						String ruleName = line.substring(x, y);
+
+						if (ruleName.compareTo(rule.getName()) > 0) {
+							sb.append(newCreateRuleString);
+							sb.append("\n\n");
+
+							appendNewRule = false;
+						}
+					}
+
+					sb.append(line);
+					sb.append("\n");
+				}
+
+				if (appendNewRule) {
+					sb.append("\n");
+					sb.append(newCreateRuleString);
+				}
+
+				ToolsUtil.writeFileRaw(
+					sqlFile, sb.toString(), _modifiedFileNames);
+			}
+		}
+	}
+
 	private void _createSQLSequences() throws IOException {
 		File sqlDir = new File(_sqlDirName);
 
@@ -4031,6 +4139,18 @@ public class ServiceBuilder {
 
 		sb.append(")\n");
 		sb.append(");");
+
+		return sb.toString();
+	}
+
+	private String _getCreateRuleSQL(EntityRule rule) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_SQL_CREATE_RULE);
+		sb.append(rule.getName());
+		sb.append(" ");
+		sb.append(rule.getDefinition());
+		sb.append("\n");
 
 		return sb.toString();
 	}
@@ -5046,6 +5166,19 @@ public class ServiceBuilder {
 			}
 		}
 
+		List<EntityRule> ruleList = new ArrayList<>();
+
+		List<Element> ruleElements = entityElement.elements("rule");
+
+		for (Element ruleElement : ruleElements) {
+			String ruleName = ruleElement.attributeValue("name");
+			String ruleDefinition = ruleElement.attributeValue("definition");
+
+			EntityRule rule = new EntityRule(ruleName, ruleDefinition);
+
+			ruleList.add(rule);
+		}
+
 		List<String> txRequiredList = new ArrayList<>();
 
 		List<Element> txRequiredElements = entityElement.elements(
@@ -5068,7 +5201,7 @@ public class ServiceBuilder {
 				sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
 				jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkList,
 				regularColList, blobList, collectionList, columnList, order,
-				finderList, referenceList, unresolvedReferenceList,
+				finderList, referenceList, unresolvedReferenceList, ruleList,
 				txRequiredList, resourceActionModel));
 	}
 
@@ -5219,6 +5352,8 @@ public class ServiceBuilder {
 
 	private static final String _SPRING_NAMESPACE_BEANS = "beans";
 
+	private static final String _SQL_CREATE_RULE = "create or replace rule ";
+
 	private static final String _SQL_CREATE_TABLE = "create table ";
 
 	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
@@ -5271,6 +5406,7 @@ public class ServiceBuilder {
 	private String _sqlDirName;
 	private String _sqlFileName;
 	private String _sqlIndexesFileName;
+	private String _sqlRulesFileName;
 	private String _sqlSequencesFileName;
 	private String _targetEntityName;
 	private String _testDirName;

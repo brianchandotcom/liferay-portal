@@ -1,4 +1,6 @@
 <definition>
+	<var name="dmDocumentTypeName" value="Basic Document" />
+
 	<command name="gotoAddDocumentType">
 		<execute function="Click" locator1="Button#PLUS" />
 

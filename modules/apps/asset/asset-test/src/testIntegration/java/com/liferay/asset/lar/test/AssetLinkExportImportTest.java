@@ -31,12 +31,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.lar.test.BaseExportImportTestCase;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.adapter.StagedAssetLink;
@@ -82,27 +80,25 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 		super.setUp();
 
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		_journalArticle = JournalTestUtil.addArticle(
+			group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_bookmarksEntry = BookmarksTestUtil.addEntry(group.getGroupId(), true);
+
+		addAssetLink(_journalArticle, _bookmarksEntry, 1);
 	}
 
 	@Test
 	public void testBothAssetsExported() throws Exception {
-		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		BookmarksEntry bookmarksEntry = BookmarksTestUtil.addEntry(
-			group.getGroupId(), true);
-
-		addAssetLink(article, bookmarksEntry, 1);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
-
 		long[] layoutIds = new long[] {layout.getLayoutId()};
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			importedGroup.getGroupId(), article.getArticleResourceUuid());
+			importedGroup.getGroupId(),
+			_journalArticle.getArticleResourceUuid());
 
 		List<AssetLink> links = AssetLinkLocalServiceUtil.getLinks(
 			assetEntry.getEntryId());
@@ -113,17 +109,6 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 
 	@Test
 	public void testOnlyAssetLinkExported() throws Exception {
-		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		BookmarksEntry bookmarksEntry = BookmarksTestUtil.addEntry(
-			group.getGroupId(), true);
-
-		addAssetLink(article, bookmarksEntry, 1);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
-
 		long[] layoutIds = new long[] {layout.getLayoutId()};
 
 		Map<String, String[]> exportParameterMap = getExportParameterMap();
@@ -137,40 +122,31 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 
 		exportLayouts(layoutIds, exportParameterMap);
 
-		checkAssetLinksInLar(article.getArticleResourceUuid());
+		checkAssetLinksInLar(_journalArticle.getArticleResourceUuid());
 
 		// JournalArticle should not be in the LAR
 
 		PortletDataContext portletDataContext = getPortletDataContext();
 
-		article = (JournalArticle)portletDataContext.getZipEntryAsObject(
-			ExportImportPathUtil.getModelPath(article));
+		_journalArticle =
+			(JournalArticle)portletDataContext.getZipEntryAsObject(
+				ExportImportPathUtil.getModelPath(_journalArticle));
 
-		Assert.assertNull(article);
+		Assert.assertNull(_journalArticle);
 
 		// BookmarksEntry should not be in the LAR
 
-		bookmarksEntry = (BookmarksEntry)portletDataContext.getZipEntryAsObject(
-			ExportImportPathUtil.getModelPath(bookmarksEntry));
+		_bookmarksEntry =
+			(BookmarksEntry)portletDataContext.getZipEntryAsObject(
+				ExportImportPathUtil.getModelPath(_bookmarksEntry));
 
-		Assert.assertNull(bookmarksEntry);
+		Assert.assertNull(_bookmarksEntry);
 
 		importLayouts(getImportParameterMap());
 	}
 
 	@Test
 	public void testOnlyOneEntityExported() throws Exception {
-		JournalArticle article = JournalTestUtil.addArticle(
-			group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		BookmarksEntry bookmarksEntry = BookmarksTestUtil.addEntry(
-			group.getGroupId(), true);
-
-		addAssetLink(article, bookmarksEntry, 1);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
-
 		long[] layoutIds = new long[] {layout.getLayoutId()};
 
 		Map<String, String[]> exportParameterMap = getExportParameterMap();
@@ -188,23 +164,25 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 
 		exportLayouts(layoutIds, exportParameterMap);
 
-		checkAssetLinksInLar(article.getArticleResourceUuid());
+		checkAssetLinksInLar(_journalArticle.getArticleResourceUuid());
 
 		// JournalArticle should be in the LAR
 
 		PortletDataContext portletDataContext = getPortletDataContext();
 
-		article = (JournalArticle)portletDataContext.getZipEntryAsObject(
-			ExportImportPathUtil.getModelPath(article));
+		_journalArticle =
+			(JournalArticle)portletDataContext.getZipEntryAsObject(
+				ExportImportPathUtil.getModelPath(_journalArticle));
 
-		Assert.assertNotNull(article);
+		Assert.assertNotNull(_journalArticle);
 
 		// BookmarksEntry should not be in the LAR
 
-		bookmarksEntry = (BookmarksEntry)portletDataContext.getZipEntryAsObject(
-			ExportImportPathUtil.getModelPath(bookmarksEntry));
+		_bookmarksEntry =
+			(BookmarksEntry)portletDataContext.getZipEntryAsObject(
+				ExportImportPathUtil.getModelPath(_bookmarksEntry));
 
-		Assert.assertNull(bookmarksEntry);
+		Assert.assertNull(_bookmarksEntry);
 
 		importLayouts(getImportParameterMap());
 	}
@@ -312,5 +290,8 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 			group.getCompanyId(), importedGroup.getGroupId(), parameterMap,
 			userIdStrategy, ZipReaderFactoryUtil.getZipReader(larFile));
 	}
+
+	private BookmarksEntry _bookmarksEntry;
+	private JournalArticle _journalArticle;
 
 }

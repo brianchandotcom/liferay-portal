@@ -1,5 +1,4 @@
 import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
@@ -355,38 +354,6 @@ if (gradle.hasProperty("testClassGroupIndex")) {
 }
 
 if (System.getenv("JENKINS_HOME")) {
-	autoUpdateXml {
-		doFirst {
-			File webXmlFile = file("docroot/WEB-INF/web.xml")
-
-			if (webXmlFile.exists()) {
-				println "Found web.xml before running ${path}:\n${webXmlFile.text}."
-			}
-			else {
-				println "Unable to find web.xml before running ${path}."
-			}
-		}
-
-		doLast {
-			File webXmlFile = new File(buildDir, "updated-web.xml")
-
-			delete webXmlFile
-
-			copy {
-				eachFile new StripPathSegmentsAction(1)
-				from zipTree(jar.archivePath)
-				include "WEB-INF/web.xml"
-				into webXmlFile.parentFile
-
-				rename {
-					webXmlFile.name
-				}
-			}
-
-			println "Found web.xml after running ${path}:\n${webXmlFile.text}."
-		}
-	}
-
 	pluginManager.withPlugin("com.liferay.cache") {
 		cache {
 			forcedCache = true

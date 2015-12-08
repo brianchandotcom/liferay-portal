@@ -139,7 +139,7 @@
 
 			textSearchEntry.setAlign(rowChecker.getAlign());
 			textSearchEntry.setColspan(rowChecker.getColspan());
-			textSearchEntry.setCssClass("checkbox-cell");
+			textSearchEntry.setCssClass("checkbox-cell list-group-item-field");
 			textSearchEntry.setName(rowChecker.getRowCheckBox(request, rowIsChecked, rowIsDisabled, row.getPrimaryKey()));
 			textSearchEntry.setValign(rowChecker.getValign());
 

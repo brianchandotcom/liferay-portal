@@ -719,6 +719,23 @@
 		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_END_DATE" />
 	</command>
 
+	<command name="viewPreviewCategories">
+		<if>
+			<condition function="IsElementPresent" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_HEADER_COLLAPSED" />
+			<then>
+				<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_HEADER_COLLAPSED" value1="More Details" />
+			</then>
+		</if>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_VOCABULARY" value1="${vocabularyName}:" />
+
+		<for list="${categoryNameList}" param="categoryName">
+			<var name="key_categoryName" value="${categoryName}" />
+
+			<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_CATEGORY" value1="${categoryName}" />
+		</for>
+	</command>
+
 	<command name="viewRejectedTask">
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="Update" />

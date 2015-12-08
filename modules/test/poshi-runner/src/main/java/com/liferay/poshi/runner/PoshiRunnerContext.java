@@ -261,28 +261,6 @@ public class PoshiRunnerContext {
 		_componentClassCommandNames.put(componentName, classCommandNames);
 	}
 
-	private static Map<Integer, List<String>> _getClassCommandNameGroups(
-		List<String> classCommandNames) {
-
-		int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
-		double totalTestCount = classCommandNames.size();
-
-		double totalGroupCount = Math.ceil(totalTestCount / maxGroupSize);
-
-		int groupSize = (int)Math.ceil(totalTestCount / totalGroupCount);
-
-		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
-
-		List<List<String>> partitions = Lists.partition(
-			classCommandNames, groupSize);
-
-		for (int i = 0; i < partitions.size(); i++) {
-			classCommandNameGroups.put(i, partitions.get(i));
-		}
-
-		return classCommandNameGroups;
-	}
-
 	private static List<String> _getCommandReturns(Element commandElement) {
 		String returns = commandElement.attributeValue("returns");
 
@@ -437,6 +415,28 @@ public class PoshiRunnerContext {
 		}
 
 		return runTestClassCommandNames;
+	}
+
+	private static Map<Integer, List<String>> _getTestBatchSingleGroupsMap(
+		List<String> classCommandNames) {
+
+		int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+		double totalTestCount = classCommandNames.size();
+
+		double totalGroupCount = Math.ceil(totalTestCount / maxGroupSize);
+
+		int groupSize = (int)Math.ceil(totalTestCount / totalGroupCount);
+
+		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
+
+		List<List<String>> partitions = Lists.partition(
+			classCommandNames, groupSize);
+
+		for (int i = 0; i < partitions.size(); i++) {
+			classCommandNameGroups.put(i, partitions.get(i));
+		}
+
+		return classCommandNameGroups;
 	}
 
 	private static List<String> _getTestCaseClassProperties(String className)
@@ -885,7 +885,7 @@ public class PoshiRunnerContext {
 			}
 
 			Map<Integer, List<String>> classCommandNameGroups =
-				_getClassCommandNameGroups(classCommandNames);
+				_getTestBatchSingleGroupsMap(classCommandNames);
 
 			for (int i = 0; i < classCommandNameGroups.size(); i++) {
 				sb.append("RUN_TEST_CASE_METHOD_GROUP_");

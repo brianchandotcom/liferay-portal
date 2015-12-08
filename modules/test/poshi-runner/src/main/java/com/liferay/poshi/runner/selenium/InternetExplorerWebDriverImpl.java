@@ -31,7 +31,7 @@ public class InternetExplorerWebDriverImpl extends BaseWebDriverImpl {
 
 	@Override
 	public void javaScriptMouseDown(String locator) {
-		if (PropsValues.SELENIUM_DESIRED_CAPABILITIES_VERSION.equals("11.0")) {
+		if (PropsValues.BROWSER_VERSION.equals("11.0")) {
 			WebDriverHelper.executeJavaScriptMouseEvent(
 				this, locator, "pointerdown");
 		}
@@ -42,7 +42,7 @@ public class InternetExplorerWebDriverImpl extends BaseWebDriverImpl {
 
 	@Override
 	public void javaScriptMouseUp(String locator) {
-		if (PropsValues.SELENIUM_DESIRED_CAPABILITIES_VERSION.equals("11.0")) {
+		if (PropsValues.BROWSER_VERSION.equals("11.0")) {
 			WebDriverHelper.executeJavaScriptMouseEvent(
 				this, locator, "pointerup");
 		}

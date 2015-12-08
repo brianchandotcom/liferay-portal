@@ -200,7 +200,7 @@ public class WebDriverUtil extends PropsValues {
 		desiredCapabilities.setCapability(
 			"platform", PropsValues.SELENIUM_DESIRED_CAPABILITIES_PLATFORM);
 		desiredCapabilities.setCapability(
-			"version", PropsValues.SELENIUM_DESIRED_CAPABILITIES_VERSION);
+			"version", PropsValues.BROWSER_VERSION);
 
 		URL url = null;
 

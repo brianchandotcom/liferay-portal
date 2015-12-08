@@ -214,10 +214,15 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute function="Type#typeAceEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+
+		<execute macro="BlogsEntry#addContent">
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
+
+		<execute macro="BlogsEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 

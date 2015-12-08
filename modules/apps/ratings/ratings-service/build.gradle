@@ -1,4 +1,5 @@
 dependencies {
+	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:ratings:ratings-api")
 }

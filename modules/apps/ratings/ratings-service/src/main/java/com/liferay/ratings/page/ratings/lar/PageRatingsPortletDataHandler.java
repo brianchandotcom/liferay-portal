@@ -24,7 +24,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalService;
 import com.liferay.ratings.page.ratings.constants.PageRatingsPortletKeys;
@@ -61,8 +60,6 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 				StagedModelType.REFERRER_CLASS_NAME_ALL));
 		setImportControls(getExportControls());
 		setPublishToLiveByDefault(true);
-
-		XStreamAliasRegistryUtil.register(RatingsEntry.class, "RatingsEntry");
 	}
 
 	@Override

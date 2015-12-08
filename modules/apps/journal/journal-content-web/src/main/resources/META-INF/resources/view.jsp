@@ -237,7 +237,6 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 						<liferay-ui:icon
 							cssClass="lfr-icon-action lfr-icon-action-add"
 							data="<%= data %>"
-							iconCssClass="<%= assetRendererFactory.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= ddmStructure.getName(locale) %>"
 							method="get"

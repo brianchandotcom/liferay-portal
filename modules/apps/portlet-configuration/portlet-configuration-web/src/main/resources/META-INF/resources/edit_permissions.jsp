@@ -296,13 +296,8 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 				<liferay-ui:search-container-column-text
 					href="<%= definePermissionsHREF %>"
 					name="role"
-				>
-					<liferay-ui:icon
-						iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
-						label="<%= true %>"
-						message="<%= role.getTitle(locale) %>"
-					/>
-				</liferay-ui:search-container-column-text>
+					value="<%= role.getTitle(locale) %>"
+				/>
 
 				<%
 

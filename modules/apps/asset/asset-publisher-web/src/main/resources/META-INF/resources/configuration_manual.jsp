@@ -67,8 +67,6 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 					%>
 
 					<liferay-ui:search-container-column-text name="title">
-						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
-
 						<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 
 						<c:if test="<%= !assetEntry.isVisible() %>">
@@ -119,8 +117,8 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 						<liferay-ui:icon-menu
 							cssClass="select-existing-selector"
 							direction="right"
-							icon="../aui/plus"
 							message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>'
+							showArrow="<%= false %>"
 							showWhenSingleIcon="<%= true %>"
 						>
 
@@ -158,7 +156,6 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 									<liferay-ui:icon
 										cssClass="asset-selector"
 										data="<%= data %>"
-										iconCssClass="<%= curRendererFactory.getIconCssClass() %>"
 										id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
 										message="<%= type %>"
 										url="javascript:;"
@@ -185,7 +182,6 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 										<liferay-ui:icon
 											cssClass="asset-selector"
 											data="<%= data %>"
-											iconCssClass="<%= curRendererFactory.getIconCssClass() %>"
 											id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
 											message="<%= type %>"
 											url="javascript:;"

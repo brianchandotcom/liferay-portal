@@ -58,21 +58,23 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 
 	<aui:model-context bean="<%= userGroup %>" model="<%= UserGroup.class %>" />
 
-	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" disabled="<%= !hasUserGroupUpdatePermission %>" label='<%= (userGroup != null) ? "new-name" : "name" %>' name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" disabled="<%= !hasUserGroupUpdatePermission %>" label='<%= (userGroup != null) ? "new-name" : "name" %>' name="name" />
 
-		<aui:input disabled="<%= !hasUserGroupUpdatePermission %>" name="description" />
+			<aui:input disabled="<%= !hasUserGroupUpdatePermission %>" name="description" />
 
-		<liferay-ui:custom-attributes-available className="<%= UserGroup.class.getName() %>">
-			<liferay-ui:custom-attribute-list
-				className="<%= UserGroup.class.getName() %>"
-				classPK="<%= userGroupId %>"
-				editable="<%= true %>"
-				label="<%= true %>"
-			/>
-		</liferay-ui:custom-attributes-available>
+			<liferay-ui:custom-attributes-available className="<%= UserGroup.class.getName() %>">
+				<liferay-ui:custom-attribute-list
+					className="<%= UserGroup.class.getName() %>"
+					classPK="<%= userGroupId %>"
+					editable="<%= true %>"
+					label="<%= true %>"
+				/>
+			</liferay-ui:custom-attributes-available>
 
-	</aui:fieldset>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<%
 	Group userGroupGroup = null;
@@ -127,156 +129,158 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 	%>
 
 	<c:if test="<%= (userGroupGroup != null) || !layoutSetPrototypes.isEmpty() %>">
-		<aui:fieldset cssClass="text-muted">
-			<h5>
-				<liferay-ui:message key="the-site-of-a-user-group-cannot-be-accessed-directly-by-end-users" />
-			</h5>
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset cssClass="text-muted">
+				<h5>
+					<liferay-ui:message key="the-site-of-a-user-group-cannot-be-accessed-directly-by-end-users" />
+				</h5>
 
-			<%
-			boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
+				<%
+				boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
 
-			boolean hasUpdateSitePermission = false;
+				boolean hasUpdateSitePermission = false;
 
-			if (userGroupGroup != null) {
-				hasUpdateSitePermission = GroupPermissionUtil.contains(permissionChecker, userGroupGroup, ActionKeys.UPDATE);
-			}
-			else {
-				for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-					if (GroupPermissionUtil.contains(permissionChecker, layoutSetPrototype.getGroup(), ActionKeys.UPDATE)) {
-						hasUpdateSitePermission = true;
+				if (userGroupGroup != null) {
+					hasUpdateSitePermission = GroupPermissionUtil.contains(permissionChecker, userGroupGroup, ActionKeys.UPDATE);
+				}
+				else {
+					for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+						if (GroupPermissionUtil.contains(permissionChecker, layoutSetPrototype.getGroup(), ActionKeys.UPDATE)) {
+							hasUpdateSitePermission = true;
+						}
 					}
 				}
-			}
-			%>
+				%>
 
-			<c:choose>
-				<c:when test="<%= ((userGroupGroup == null) || ((publicLayoutSetPrototype == null) && (userGroupGroup.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select disabled="<%= !hasUpdateSitePermission || !hasUserGroupUpdatePermission %>" label="my-profile" name="publicLayoutSetPrototypeId">
-						<aui:option label="none" selected="<%= true %>" value="" />
+				<c:choose>
+					<c:when test="<%= ((userGroupGroup == null) || ((publicLayoutSetPrototype == null) && (userGroupGroup.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
+						<aui:select disabled="<%= !hasUpdateSitePermission || !hasUserGroupUpdatePermission %>" label="my-profile" name="publicLayoutSetPrototypeId">
+							<aui:option label="none" selected="<%= true %>" value="" />
 
-						<%
-						for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-						%>
+							<%
+							for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+							%>
 
-							<aui:option value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %></aui:option>
+								<aui:option value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %></aui:option>
 
-						<%
-						}
-						%>
+							<%
+							}
+							%>
 
-					</aui:select>
+						</aui:select>
 
-					<c:choose>
-						<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-							<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
-								<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
-							</div>
-						</c:when>
-						<c:otherwise>
-							<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<aui:field-wrapper label="my-profile">
 						<c:choose>
-							<c:when test="<%= userGroupGroup != null %>">
-								<c:choose>
-									<c:when test="<%= userGroupGroup.getPublicLayoutsPageCount() > 0 %>">
-										<liferay-ui:icon
-											iconCssClass="icon-search"
-											label="<%= true %>"
-											message="open-pages"
-											method="get"
-											target="_blank"
-											url="<%= userGroupGroup.getDisplayURL(themeDisplay, false) %>"
-										/>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message key="this-user-group-does-not-have-any-public-pages" />
-									</c:otherwise>
-								</c:choose>
-
-								<c:choose>
-									<c:when test="<%= (publicLayoutSetPrototype != null) && hasUnlinkLayoutSetPrototypePermission %>">
-										<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)), false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
-									</c:when>
-									<c:when test="<%= publicLayoutSetPrototype != null %>">
-										<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(publicLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
-
-										<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
-									</c:when>
-								</c:choose>
+							<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+								<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
+									<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+								</div>
 							</c:when>
+							<c:otherwise>
+								<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+							</c:otherwise>
 						</c:choose>
-					</aui:field-wrapper>
-				</c:otherwise>
-			</c:choose>
+					</c:when>
+					<c:otherwise>
+						<aui:field-wrapper label="my-profile">
+							<c:choose>
+								<c:when test="<%= userGroupGroup != null %>">
+									<c:choose>
+										<c:when test="<%= userGroupGroup.getPublicLayoutsPageCount() > 0 %>">
+											<liferay-ui:icon
+												iconCssClass="icon-search"
+												label="<%= true %>"
+												message="open-pages"
+												method="get"
+												target="_blank"
+												url="<%= userGroupGroup.getDisplayURL(themeDisplay, false) %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="this-user-group-does-not-have-any-public-pages" />
+										</c:otherwise>
+									</c:choose>
 
-			<c:choose>
-				<c:when test="<%= ((userGroup == null) || ((privateLayoutSetPrototype == null) && (userGroupGroup.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-					<aui:select disabled="<%= !hasUpdateSitePermission || !hasUserGroupUpdatePermission %>" label="my-dashboard" name="privateLayoutSetPrototypeId">
-						<aui:option label="none" selected="<%= true %>" value="" />
+									<c:choose>
+										<c:when test="<%= (publicLayoutSetPrototype != null) && hasUnlinkLayoutSetPrototypePermission %>">
+											<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)), false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+										</c:when>
+										<c:when test="<%= publicLayoutSetPrototype != null %>">
+											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(publicLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
 
-						<%
-						for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-						%>
+											<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+										</c:when>
+									</c:choose>
+								</c:when>
+							</c:choose>
+						</aui:field-wrapper>
+					</c:otherwise>
+				</c:choose>
 
-							<aui:option value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %></aui:option>
+				<c:choose>
+					<c:when test="<%= ((userGroup == null) || ((privateLayoutSetPrototype == null) && (userGroupGroup.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
+						<aui:select disabled="<%= !hasUpdateSitePermission || !hasUserGroupUpdatePermission %>" label="my-dashboard" name="privateLayoutSetPrototypeId">
+							<aui:option label="none" selected="<%= true %>" value="" />
 
-						<%
-						}
-						%>
+							<%
+							for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+							%>
 
-					</aui:select>
+								<aui:option value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>"><%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %></aui:option>
 
-					<c:choose>
-						<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-							<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
-								<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
-							</div>
-						</c:when>
-						<c:otherwise>
-							<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<aui:field-wrapper label="my-dashboard">
+							<%
+							}
+							%>
+
+						</aui:select>
+
 						<c:choose>
-							<c:when test="<%= userGroupGroup != null %>">
-								<c:choose>
-									<c:when test="<%= userGroupGroup.getPrivateLayoutsPageCount() > 0 %>">
-										<liferay-ui:icon
-											iconCssClass="icon-search"
-											label="<%= true %>"
-											message="open-pages"
-											method="get"
-											target="_blank"
-											url="<%= userGroupGroup.getDisplayURL(themeDisplay, true) %>"
-										/>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message key="this-user-group-does-not-have-any-private-pages" />
-									</c:otherwise>
-								</c:choose>
-
-								<c:choose>
-									<c:when test="<%= (privateLayoutSetPrototype != null) && hasUnlinkLayoutSetPrototypePermission %>">
-										<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
-									</c:when>
-									<c:when test="<%= privateLayoutSetPrototype != null %>">
-										<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
-
-										<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
-									</c:when>
-								</c:choose>
+							<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+								<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
+									<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+								</div>
 							</c:when>
+							<c:otherwise>
+								<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+							</c:otherwise>
 						</c:choose>
-					</aui:field-wrapper>
-				</c:otherwise>
-			</c:choose>
-		</aui:fieldset>
+					</c:when>
+					<c:otherwise>
+						<aui:field-wrapper label="my-dashboard">
+							<c:choose>
+								<c:when test="<%= userGroupGroup != null %>">
+									<c:choose>
+										<c:when test="<%= userGroupGroup.getPrivateLayoutsPageCount() > 0 %>">
+											<liferay-ui:icon
+												iconCssClass="icon-search"
+												label="<%= true %>"
+												message="open-pages"
+												method="get"
+												target="_blank"
+												url="<%= userGroupGroup.getDisplayURL(themeDisplay, true) %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="this-user-group-does-not-have-any-private-pages" />
+										</c:otherwise>
+									</c:choose>
+
+									<c:choose>
+										<c:when test="<%= (privateLayoutSetPrototype != null) && hasUnlinkLayoutSetPrototypePermission %>">
+											<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+										</c:when>
+										<c:when test="<%= privateLayoutSetPrototype != null %>">
+											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
+
+											<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+										</c:when>
+									</c:choose>
+								</c:when>
+							</c:choose>
+						</aui:field-wrapper>
+					</c:otherwise>
+				</c:choose>
+			</aui:fieldset>
+		</aui:fieldset-group>
 	</c:if>
 
 	<aui:button-row>

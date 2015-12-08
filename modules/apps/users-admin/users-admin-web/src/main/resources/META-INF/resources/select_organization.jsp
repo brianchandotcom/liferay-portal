@@ -40,7 +40,7 @@ if (Validator.isNotNull(target)) {
 renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="selectOrganizationFm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectOrganizationFm">
 	<liferay-ui:search-container
 		searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 		var="organizationSearchContainer"

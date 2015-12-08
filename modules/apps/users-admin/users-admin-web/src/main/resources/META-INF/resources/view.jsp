@@ -52,7 +52,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 <%@ include file="/toolbar.jspf" %>
 
-<aui:form action="<%= portletURLString %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
+<aui:form action="<%= portletURLString %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />

@@ -34,7 +34,7 @@ portletURL.setParameter("eventName", eventName);
 renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="selectUserGroupFm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectUserGroupFm">
 	<liferay-ui:search-container
 		searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 	>

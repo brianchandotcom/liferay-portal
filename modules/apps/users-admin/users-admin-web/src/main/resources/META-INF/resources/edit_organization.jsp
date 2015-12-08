@@ -66,7 +66,7 @@ renderResponse.setTitle(headerTitle);
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= editOrganizationActionURL %>" method="post" name="fm">
+<aui:form action="<%= editOrganizationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= editOrganizationRenderURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />

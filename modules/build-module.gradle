@@ -41,6 +41,7 @@ if (FileUtil.exists(project, "xsd")) {
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
+File sdkDir = rootProject.file("../tools/sdk")
 
 distsDirName = FileUtil.relativize(rootProject.file("../tools/sdk/dist"), buildDir)
 group = "com.liferay"
@@ -101,9 +102,6 @@ configurations {
 				if (dependencyResolveDetails.requested.group == "com.liferay.portal") {
 					dependencyResolveDetails.useVersion liferay.portalVersion
 				}
-				else if ((dependencyResolveDetails.requested.version == "default") && project.hasProperty(dependencyResolveDetails.requested.name + ".version")) {
-					dependencyResolveDetails.useVersion project.properties[dependencyResolveDetails.requested.name + ".version"]
-				}
 			}
 		}
 	}
@@ -128,10 +126,12 @@ if (FileUtil.exists(project, "docroot")) {
 
 dependencies {
 	alloyTaglib rootProject.files("../lib/development/alloy-taglib.jar", "../lib/development/org.freemarker-2.3.17.LIFERAY-PATCHED-1.jar")
-	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "default"
-	javadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "default"
-	langBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "default"
-	pmd group: "com.liferay", name: "com.liferay.pmd", version: "default"
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "1.0.11"
+	javadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "1.0.8"
+	jspCTool group: "com.liferay", name: "com.liferay.jasper.jspc", version: "1.0.4"
+	jspCTool group: "org.apache.ant", name: "ant", version: "1.9.4"
+	langBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "1.0.2"
+	pmd group: "com.liferay", name: "com.liferay.pmd", version: "1.0.1"
 
 	portal files(appServerClassesPortalDir)
 	portal fileTree(dir: appServerLibPortalDir, include: "*.jar")
@@ -145,15 +145,16 @@ dependencies {
 	portalTest group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion
 	portalTest group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
 
-	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
+	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.95"
 
 	testCompile group: "org.powermock", name: "powermock-api-mockito", version: "1.6.1"
 	testCompile group: "org.powermock", name: "powermock-core", version: "1.6.1"
 	testCompile group: "org.powermock", name: "powermock-module-junit4", version: "1.6.1"
 	testCompile group: "org.springframework", name: "spring-test", version: "3.2.10.RELEASE"
 
-	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
-	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "default"
+	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "1.0.0"
+	whip group: "com.liferay", name: "com.liferay.whip", version: "1.0.0"
+	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "1.0.0"
 	xmltask rootProject.files("../lib/development/xmltask.jar")
 }
 
@@ -207,10 +208,6 @@ idea {
 
 		scopes.TEST.plus += [configurations.portalTest]
 	}
-}
-
-jspC {
-	jspCVersion = project.properties["com.liferay.jasper.jspc.version"]
 }
 
 node {
@@ -282,10 +279,6 @@ testIntegration {
 	reports.junitXml.destination = testIntegrationResultsDir
 }
 
-whip {
-	version = project.properties["com.liferay.whip.version"]
-}
-
 pluginManager.withPlugin("com.liferay.alloy.taglib") {
 	buildTaglibs {
 		classpath = configurations.alloyTaglib
@@ -310,19 +303,24 @@ pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 
 pluginManager.withPlugin("com.liferay.portal.tools.service.builder") {
 	dependencies {
-		serviceBuilder fileTree(dir: rootProject.file("../tools/sdk/tmp/portal-tools/portal-tools-service-builder"), include: "*.jar")
+		if (sdkDir.exists()) {
+			serviceBuilder fileTree(dir: new File(sdkDir, "tmp/portal-tools/portal-tools-service-builder"), include: "*.jar")
+		}
+		else {
+			serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.61"
+		}
 	}
 }
 
 pluginManager.withPlugin("com.liferay.portal.tools.upgrade.table.builder") {
 	dependencies {
-		upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
+		upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "1.0.2"
 	}
 }
 
 pluginManager.withPlugin("com.liferay.portal.tools.wsdd.builder") {
 	dependencies {
-		wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
+		wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "1.0.4"
 	}
 }
 

@@ -1,6 +1,8 @@
 import com.liferay.gradle.util.StringUtil
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
+import java.util.regex.Matcher
+
 buildscript {
 	repositories {
 		mavenLocal()
@@ -19,6 +21,7 @@ task setUpPortalTools
 task wrapper(type: Wrapper)
 
 File portalToolsDir = rootProject.file("../tools/sdk/tmp/portal-tools")
+Map<String, String> portalToolVersions = _getPortalToolVersions(rootProject.file("build-module.gradle"))
 
 configurations {
 	all {
@@ -26,8 +29,8 @@ configurations {
 			eachDependency {
 				DependencyResolveDetails dependencyResolveDetails ->
 
-				if ((dependencyResolveDetails.requested.version == "default") && project.hasProperty(dependencyResolveDetails.requested.name + ".version")) {
-					dependencyResolveDetails.useVersion project.properties[dependencyResolveDetails.requested.name + ".version"]
+				if (dependencyResolveDetails.requested.version == "default") {
+					dependencyResolveDetails.useVersion portalToolVersions[dependencyResolveDetails.requested.name]
 				}
 			}
 		}
@@ -119,4 +122,19 @@ portalToolsConfigurations.each {
 	}
 
 	setUpPortalTools.dependsOn configurationTask
+}
+
+private Map<String, String> _getPortalToolVersions(File buildGradleFile) {
+	Map<String, String> portalToolVersions = [:]
+
+	Matcher matcher = (buildGradleFile.text =~ /group: "com\.liferay", name: "(.+)", version: "(.+)"/)
+
+	matcher.each {
+		String name = it[1]
+		String version = it[2]
+
+		portalToolVersions[name] = version
+	}
+
+	portalToolVersions
 }

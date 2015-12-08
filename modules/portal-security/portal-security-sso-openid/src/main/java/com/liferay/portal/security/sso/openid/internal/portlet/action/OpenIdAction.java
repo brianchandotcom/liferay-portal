@@ -92,8 +92,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.security.sso.openid.module.configuration.OpenIdConfiguration",
 	immediate = true,
 	property = {
-		"path=/login/open_id", "portlet.login.login=portlet.login.login",
-		"portlet.login.open_id=portlet.login.open_id"
+		"path=/login/openid", "portlet.login.login=portlet.login.login",
+		"portlet.login.openid=portlet.login.openid"
 	},
 	service = StrutsPortletAction.class
 )
@@ -179,9 +179,9 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 			return _forwards.get("portlet.login.login");
 		}
 
-		renderResponse.setTitle(themeDisplay.translate("open-id"));
+		renderResponse.setTitle(themeDisplay.translate("openid"));
 
-		return _forwards.get("portlet.login.open_id");
+		return _forwards.get("portlet.login.openid");
 	}
 
 	@Reference(unbind = "-")
@@ -201,8 +201,8 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 			"portlet.login.login",
 			GetterUtil.getString(properties, "portlet.login.login"));
 		_forwards.put(
-			"portlet.login.open_id",
-			GetterUtil.getString(properties, "portlet.login.open_id"));
+			"portlet.login.openid",
+			GetterUtil.getString(properties, "portlet.login.openid"));
 
 		try {
 			_consumerManager = new ConsumerManager();
@@ -458,7 +458,7 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setParameter(Constants.CMD, Constants.READ);
-		portletURL.setParameter("struts_action", "/login/open_id");
+		portletURL.setParameter("struts_action", "/login/openid");
 
 		List<DiscoveryInformation> discoveryInformationList =
 			_consumerManager.discover(openId);

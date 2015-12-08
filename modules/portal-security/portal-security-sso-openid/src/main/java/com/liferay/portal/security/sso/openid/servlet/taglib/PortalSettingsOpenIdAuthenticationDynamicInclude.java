@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=open-id"},
+	property = {"portal.settings.authentication.tabs.name=openid"},
 	service = DynamicInclude.class
 )
 public class PortalSettingsOpenIdAuthenticationDynamicInclude
@@ -37,7 +37,7 @@ public class PortalSettingsOpenIdAuthenticationDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/open_id.jsp";
+		return "/com.liferay.portal.settings.web/openid.jsp";
 	}
 
 	@Override

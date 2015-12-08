@@ -59,7 +59,7 @@ public class OpenIdLoginDynamicInclude extends BaseDynamicInclude {
 	public void register(
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
-		dynamicIncludeRegistry.register("/html/portlet/login/open_id.jsp#pre");
+		dynamicIncludeRegistry.register("/html/portlet/login/openid.jsp#pre");
 	}
 
 	@Reference(
@@ -70,7 +70,7 @@ public class OpenIdLoginDynamicInclude extends BaseDynamicInclude {
 		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH = "/html/portlet/login/open_id.jsp";
+	private static final String _JSP_PATH = "/html/portlet/login/openid.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdLoginDynamicInclude.class);

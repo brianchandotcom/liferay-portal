@@ -51,7 +51,7 @@ public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (strutsAction.startsWith("/login/open_id") ||
+		if (strutsAction.startsWith("/login/openid") ||
 			!_openId.isEnabled(themeDisplay.getCompanyId())) {
 
 			return;
@@ -92,7 +92,7 @@ public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private static final String _JSP_PATH =
-		"/html/portlet/login/navigation/open_id.jsp";
+		"/html/portlet/login/navigation/openid.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdNavigationPreDynamicInclude.class);

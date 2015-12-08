@@ -17,11 +17,11 @@
 <%@ include file="/html/portlet/login/navigation/init.jsp" %>
 
 <portlet:renderURL var="openIdURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="struts_action" value="/login/open_id" />
+	<portlet:param name="struts_action" value="/login/openid" />
 </portlet:renderURL>
 
 <liferay-ui:icon
-	message="open-id"
+	message="openid"
 	src='<%= themeDisplay.getPathThemeImages() + "/common/openid.gif" %>'
 	url="<%= openIdURL %>"
 />

@@ -24,9 +24,9 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
-<h3><liferay-ui:message key="open-id" /></h3>
+<h3><liferay-ui:message key="openid" /></h3>
 
-<liferay-ui:error exception="<%= DuplicateOpenIdException.class %>" message="a-user-with-that-open-id-already-exists" />
+<liferay-ui:error exception="<%= DuplicateOpenIdException.class %>" message="a-user-with-that-openid-already-exists" />
 
 <aui:fieldset>
 	<aui:input label="" name="openId" />

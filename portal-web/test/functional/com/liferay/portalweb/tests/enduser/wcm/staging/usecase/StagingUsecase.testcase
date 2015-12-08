@@ -1414,22 +1414,24 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Home" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="site" value="Community Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Home" />
 		</execute>
 
 		<execute macro="Page#editPageLayoutColumn">
 			<var name="columnName" value="1_column" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Home" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="site" value="Community Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Home" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">

@@ -158,7 +158,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_TITLE</td>
-	<td>//li[@data-title='${key_dmDocumentTitle}']//a</td>
+	<td>//li[@data-title='${key_dmDocumentTitle}']//a/div</td>
 	<td></td>
 </tr>
 <tr>

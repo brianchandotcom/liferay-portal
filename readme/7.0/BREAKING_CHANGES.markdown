@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `127b66e`.*
+*This document has been reviewed through commit `e0e50e2`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2983,94 +2983,83 @@ logic belongs to wiki-web module.
 
 ---------------------------------------
 
-### Custom AUI Validators no longer, implicitly, required
-- **Date:** 2015-12-02
+### Custom AUI Validators Are No Longer Implicitly Required
+- **Date:** 2015-Dec-02
 - **JIRA Ticket:** LPS-60995
 
 #### What changed?
 
-The AUI Validator taglib no longer forces custom validators (`name="custom"`)
+The AUI Validator tag no longer forces custom validators (e.g., `name="custom"`)
 to be required, and are now optional by default.
 
 #### Who is affected?
 
-Developers using custom validators. Especially ones which relied on the field
-being implicitly required, via the custom validator.
+This affects developers using custom validators, especially ones who relied on
+the field being implicitly required via the custom validator.
 
 #### How should I update my code?
 
-##### Blank value checking is no longer necessary.
+There are several cases where you should update your code to compensate for this
+change. First, blank value checking is no longer necessary, so places where
+blank values are checked should be updated.
 
-```diff
- <aui:input name="privateVirtualHost">
-     <aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom">
-         function(val, fieldNode, ruleValue) {
--            return !val || val != A.one('#<portlet:namespace />publicVirtualHost').val();
-+            return val != A.one('#<portlet:namespace />publicVirtualHost').val();
-         }
-     </aui:validator>
- </aui:input>
+Old Code:
 
- <aui:input name="publicVirtualHost">
-     <aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom">
-         function(val, fieldNode, ruleValue) {
--            return !val || val != A.one('#<portlet:namespace />privateVirtualHost').val();
-+            return val != A.one('#<portlet:namespace />privateVirtualHost').val();
-         }
-     </aui:validator>
- </aui:input>
-```
+    return !val || val != A.one('#<portlet:namespace />publicVirtualHost').val();
 
-##### Instead of using a custom validator, to determine if a field is required, use a conditional `required` validator.
+New Code:
 
-```diff
- <aui:input name="file" type="file" />
+    return val != A.one('#<portlet:namespace />publicVirtualHost').val();
 
- <aui:input name="title">
--    <aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">
--        function(val, fieldNode, ruleValue) {
--            return !!val || !!A.one('#<portlet:namespace />file').val();
-+    <aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="required">
-+        function(fieldNode) {
-+            return !A.one('#<portlet:namespace />file').val();
-         }
-     </aui:validator>
- </aui:input>
-```
+Also, instead of using custom validators to determine if a field is required,
+you should now use a conditional `required` validator.
 
-##### Custom validators that assumed validation would always run, must now explicitly pass the `required` validator.
+Old Code:
 
-```diff
- <aui:input name="vowelsOnly">
-     <aui:validator errorMessage="must-contain-only-the-following-characters" name="custom">
-         function(val, fieldNode, ruleValue) {
-             var allowedCharacters = 'aeiouy';
+    <aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">
+        function(val, fieldNode, ruleValue) {
+            return !!val || !!A.one('#<portlet:namespace />file').val();
+    }
 
-             var regex = new RegExp('[^' + allowedCharacters + ']');
+New Code:
 
-             return !regex.test(val);
-         }
-     </aui:validator>
-+    <aui:validator name="required" />
- </aui:input>
-```
+    <aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="required">
+        function(fieldNode) {
+            return !A.one('#<portlet:namespace />file').val();
+    }
+
+Lastly, custom validators that assumed validation would always run must now
+explicitly pass the `required` validator. This is done by passing in the
+`<aui:validator name="required" />` element. The `<aui:input>` tag listed below
+is an example of how to explicity pass the `required` validator:
+
+    <aui:input name="vowelsOnly">
+        <aui:validator errorMessage="must-contain-only-the-following-characters" name="custom">
+            function(val, fieldNode, ruleValue) {
+                var allowedCharacters = 'aeiouy';
+                var regex = new RegExp('[^' + allowedCharacters + ']');
+
+                return !regex.test(val);
+            }
+        </aui:validator>
+        <aui:validator name="required" />
+    </aui:input>
 
 #### Why was this change made?
 
 A custom validator caused the field to be implicitly required. This meant that
-all validators on the field would be evaluated. This created a condition where
-you could not combine custom validators with another validator on an optional
+all validators for the field would be evaluated. This created a condition where
+you could not combine custom validators with another validator for an optional
 field.
 
 For example, imagine an optional field which has an email validator, plus a
-custom validator which checks for email addresses within a specific domain,
-eg. `example.com`. There was no way for this optional field to pass validation.
-Even if you handled blank values in your custom validator, that blank value
-would fail the email validator.
+custom validator which checks for email addresses within a specific domain
+(e.g., `example.com`). There was no way for this optional field to pass
+validation. Even if you handled blank values in your custom validator, that
+blank value would fail the email validator.
 
-This change will required most custom validators to be refactored, but allows
-<<<<<<< HEAD
-greater flexibility for all developers.
+This change requires most custom validators to be refactored, but allows greater
+flexibility for all developers.
 
 ---------------------------------------
 
@@ -3101,6 +3090,3 @@ responsible of exposing the Recycle Bin logic, delegating into another
 components; problem was, those components depended themselves on
 `DLAppService` to implement their logic. Breaking the service in two
 was the only sensible solution to this circularity.
-=======
-greater flexibility for all developers.
->>>>>>> 7951f82... LPS-60843 Edit breaking change

@@ -166,6 +166,12 @@ public class SearchEngineUtil {
 		}
 	}
 
+	public static void commit(String searchEngineId) throws SearchException {
+		for (long companyId : _companyIds.keySet()) {
+			commit(searchEngineId, companyId);
+		}
+	}
+
 	public static void commit(String searchEngineId, long companyId)
 		throws SearchException {
 

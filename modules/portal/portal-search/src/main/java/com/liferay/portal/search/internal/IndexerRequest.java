@@ -33,7 +33,7 @@ public class IndexerRequest {
 
 		_method = method;
 		_classedModel = classedModel;
-		_indexer = indexer;
+		_indexer = new NoAutoCommitIndexer<>(indexer);
 
 		_modelClassName = classedModel.getModelClassName();
 		_modelPrimaryKey = (Long)_classedModel.getPrimaryKeyObj();
@@ -44,7 +44,7 @@ public class IndexerRequest {
 		Long modelPrimaryKey) {
 
 		_method = method;
-		_indexer = indexer;
+		_indexer = new NoAutoCommitIndexer<>(indexer);
 		_modelClassName = modelClassName;
 		_modelPrimaryKey = modelPrimaryKey;
 
@@ -84,6 +84,10 @@ public class IndexerRequest {
 		else {
 			_method.invoke(_indexer, _modelClassName, _modelPrimaryKey);
 		}
+	}
+
+	public String getSearchEngineId() {
+		return _indexer.getSearchEngineId();
 	}
 
 	@Override

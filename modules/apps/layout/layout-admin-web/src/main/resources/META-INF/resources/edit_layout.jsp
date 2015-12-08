@@ -74,7 +74,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav" id="layoutsNav">
 			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.DELETE) %>">
-				<aui:nav-item cssClass="remove-layout" iconCssClass="icon-remove" label="delete" />
+				<aui:nav-item cssClass="remove-layout" label="delete" />
 			</c:if>
 		</aui:nav>
 	</aui:nav-bar>

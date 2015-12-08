@@ -254,14 +254,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 								<c:if test="<%= group != null %>">
 									<c:choose>
 										<c:when test="<%= group.getPublicLayoutsPageCount() > 0 %>">
-											<liferay-ui:icon
-												iconCssClass="icon-search"
-												label="<%= true %>"
-												message="open-public-pages"
-												method="get"
-												target="_blank"
-												url="<%= group.getDisplayURL(themeDisplay, false) %>"
-											/>
+											<aui:a href="<%= group.getDisplayURL(themeDisplay, false) %>" label="open-public-pages" target="_blank" />
 										</c:when>
 										<c:otherwise>
 											<liferay-ui:message key="this-site-does-not-have-any-public-pages" />
@@ -350,14 +343,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 								<c:if test="<%= group != null %>">
 									<c:choose>
 										<c:when test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
-											<liferay-ui:icon
-												iconCssClass="icon-search"
-												label="<%= true %>"
-												message="open-private-pages"
-												method="get"
-												target="_blank"
-												url="<%= group.getDisplayURL(themeDisplay, true) %>"
-											/>
+											<aui:a href="<%= group.getDisplayURL(themeDisplay, true) %>" label="open-private-pages" target="_blank" />
 										</c:when>
 										<c:otherwise>
 											<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
@@ -536,17 +522,9 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 	</liferay-ui:search-container>
 
-	<liferay-ui:icon
-		cssClass="modify-link"
-		iconCssClass="icon-search"
-		id="selectParentSiteLink"
-		label="<%= true %>"
-		linkCssClass="btn btn-default"
-		message="select"
-		url="javascript:;"
-	/>
-
-	<br />
+	<aui:button-row>
+		<aui:button cssClass="modify-link" id="selectParentSiteLink" value="select" />
+	</aui:button-row>
 
 	<div class="<%= parentGroups.isEmpty() ? "membership-restriction-container hide" : "membership-restriction-container" %>" id="<portlet:namespace />membershipRestrictionContainer">
 

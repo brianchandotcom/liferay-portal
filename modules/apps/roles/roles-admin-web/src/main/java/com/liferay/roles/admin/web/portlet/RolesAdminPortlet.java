@@ -175,6 +175,18 @@ public class RolesAdminPortlet extends MVCPortlet {
 		_roleService.deleteRole(roleId);
 	}
 
+	public void deleteRoles(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] deleteRoleIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "deleteRoleIds"), 0L);
+
+		for (long roleId : deleteRoleIds) {
+			_roleService.deleteRole(roleId);
+		}
+	}
+
 	public Role editRole(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

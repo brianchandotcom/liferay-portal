@@ -29,12 +29,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 <aui:input name="addGroupIds" type="hidden" />
 <aui:input name="removeGroupIds" type="hidden" />
 
-<liferay-ui:tabs
-	names="current,available"
-	param="tabs3"
-	url="<%= portletURL.toString() %>"
-/>
-
 <liferay-ui:search-container
 	rowChecker="<%= new GroupRoleChecker(renderResponse, role) %>"
 	searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
@@ -59,10 +53,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	<liferay-ui:search-container-results
 		results="<%= GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 	/>
-
-	<liferay-ui:input-search />
-
-	<div class="separator"><!-- --></div>
 
 	<%
 	portletURL.setParameter("cur", String.valueOf(cur));
@@ -91,5 +81,5 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -71,6 +72,12 @@ public class RoleSearch extends SearchContainer<Role> {
 			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
 		RoleDisplayTerms displayTerms = (RoleDisplayTerms)getDisplayTerms();
+		RoleSearchTerms searchTerms = (RoleSearchTerms)getSearchTerms();
+
+		if (ParamUtil.getInteger(portletRequest, "type") == 0) {
+			displayTerms.setType(RoleConstants.TYPE_REGULAR);
+			searchTerms.setType(RoleConstants.TYPE_REGULAR);
+		}
 
 		iteratorURL.setParameter(
 			RoleDisplayTerms.DESCRIPTION, displayTerms.getDescription());

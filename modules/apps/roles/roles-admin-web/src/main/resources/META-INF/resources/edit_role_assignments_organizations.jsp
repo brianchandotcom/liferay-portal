@@ -29,18 +29,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 <aui:input name="addGroupIds" type="hidden" />
 <aui:input name="removeGroupIds" type="hidden" />
 
-<liferay-ui:tabs
-	names="current,available"
-	param="tabs3"
-	url="<%= portletURL.toString() %>"
-/>
-
 <liferay-ui:search-container
 	rowChecker="<%= new OrganizationRoleChecker(renderResponse, role) %>"
 	searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 	var="organizationSearchContainer"
 >
-	<liferay-ui:organization-search-form />
 
 	<%
 	OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
@@ -95,13 +88,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 		/>
 	</liferay-ui:search-container-row>
 
-	<div class="separator"><!-- --></div>
-
 	<%
 	String taglibOnClick = renderResponse.getNamespace() + "updateRoleGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 	%>
 
 	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

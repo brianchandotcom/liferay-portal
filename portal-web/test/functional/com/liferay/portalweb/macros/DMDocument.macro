@@ -1705,6 +1705,14 @@
 		<execute function="AssertElementNotPresent" locator1="HOME_MENULIST_ADD_REPOSITORY" />
 	</command>
 
+	<command name="viewCategories">
+		<execute macro="DMDocument#showCategorization" />
+
+		<for list="${categoryNameList}" param="categoryName">
+			<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES" value1="Topic: ${categoryName}" />
+		</for>
+	</command>
+
 	<command name="viewCheckedinCP">
 		<execute function="AssertVisible" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" />
 		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" />

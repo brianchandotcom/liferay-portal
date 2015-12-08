@@ -57,14 +57,12 @@ afterEvaluate {
 		project.version = project.version + "-SNAPSHOT"
 	}
 
-	Iterable<Task> publishNodeModuleTasks = tasks.matching {
-		it.class.name.startsWith "com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask"
-	}
+	if (!project.version.endsWith("-SNAPSHOT")) {
+		Iterable<Task> publishNodeModuleTasks = tasks.matching {
+			it.class.name.startsWith "com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask"
+		}
 
-	publishNodeModuleTasks.each {
-		it.dependsOn jar
-
-		if (!project.version.endsWith("-SNAPSHOT")) {
+		publishNodeModuleTasks.each {
 			uploadArchives.dependsOn it
 		}
 	}

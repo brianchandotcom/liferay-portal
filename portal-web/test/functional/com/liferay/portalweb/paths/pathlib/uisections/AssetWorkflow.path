@@ -18,6 +18,12 @@
 	<td>//span[@class='workflow-status']/span</td>
 	<td></td>
 </tr>
+<!--WEB_CONTENT_FOLDER-->
+<tr>
+	<td>WEB_CONTENT_FOLDER_STRUCTURE_RESTRICTIONS_TOGGLE</td>
+	<td>//a[contains(.,'Structure Restrictions and Workflow')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

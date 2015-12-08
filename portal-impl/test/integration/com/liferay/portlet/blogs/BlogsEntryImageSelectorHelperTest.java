@@ -211,7 +211,7 @@ public class BlogsEntryImageSelectorHelperTest {
 				imageSelector.getImageMimeType());
 			Assert.assertEquals(
 				_IMAGE_CROP_REGION, imageSelector.getImageCropRegion());
-			Assert.assertEquals(_IMAGE_URL, imageSelector.getImageURL());
+			Assert.assertEquals(StringPool.BLANK, imageSelector.getImageURL());
 			Assert.assertTrue(
 				blogsEntryImageSelectorHelper.isFileEntryTempFile());
 		}

@@ -27,7 +27,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalService;
-import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
+import com.liferay.ratings.page.ratings.constants.PageRatingsPortletKeys;
 
 import java.util.List;
 import java.util.concurrent.Callable;

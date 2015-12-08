@@ -32,6 +32,24 @@ public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
 	@NotPrivileged
 	@Override
 	public Template getTemplate(
+		List<TemplateResource> templateResources, boolean restricted) {
+
+		return getTemplate(templateResources, null, restricted);
+	}
+
+	@NotPrivileged
+	@Override
+	public Template getTemplate(
+		List<TemplateResource> templateResources,
+		TemplateResource errorTemplateResource, boolean restricted) {
+
+		throw new UnsupportedOperationException(
+			"Template type does not support multi templates");
+	}
+
+	@NotPrivileged
+	@Override
+	public Template getTemplate(
 		TemplateResource templateResource, boolean restricted) {
 
 		return getTemplate(templateResource, null, restricted);
@@ -63,24 +81,6 @@ public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
 				helperUtilities));
 
 		return new PrivilegedTemplateWrapper(accessControlContext, template);
-	}
-
-	@NotPrivileged
-	@Override
-	public Template getTemplates(
-		List<TemplateResource> templateResources, boolean restricted) {
-
-		return getTemplates(templateResources, null, restricted);
-	}
-
-	@NotPrivileged
-	@Override
-	public Template getTemplates(
-		List<TemplateResource> templateResources,
-		TemplateResource errorTemplateResource, boolean restricted) {
-
-		throw new UnsupportedOperationException(
-			"Template type does not support multi templates");
 	}
 
 	protected abstract Template doGetTemplate(

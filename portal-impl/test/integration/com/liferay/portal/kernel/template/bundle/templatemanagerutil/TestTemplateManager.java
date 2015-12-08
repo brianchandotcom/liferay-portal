@@ -111,6 +111,21 @@ public class TestTemplateManager implements TemplateManager {
 
 	@Override
 	public Template getTemplate(
+		List<TemplateResource> templateResources, boolean restricted) {
+
+		return this.getTemplate(templateResources.get(0), restricted);
+	}
+
+	@Override
+	public Template getTemplate(
+		List<TemplateResource> templateResources,
+		TemplateResource errorTemplateResource, boolean restricted) {
+
+		return this.getTemplate(templateResources, restricted);
+	}
+
+	@Override
+	public Template getTemplate(
 		TemplateResource templateResource, boolean restricted) {
 
 		String templateId = templateResource.getTemplateId();
@@ -130,21 +145,6 @@ public class TestTemplateManager implements TemplateManager {
 		TemplateResource errorTemplateResource, boolean restricted) {
 
 		return getTemplate(templateResource, restricted);
-	}
-
-	@Override
-	public Template getTemplates(
-		List<TemplateResource> templateResources, boolean restricted) {
-
-		return this.getTemplate(templateResources.get(0), restricted);
-	}
-
-	@Override
-	public Template getTemplates(
-		List<TemplateResource> templateResources,
-		TemplateResource errorTemplateResource, boolean restricted) {
-
-		return this.getTemplates(templateResources, restricted);
 	}
 
 	@Override

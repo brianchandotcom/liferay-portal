@@ -29,20 +29,20 @@ import java.util.List;
  */
 public class SoyManagerTestHelper {
 
-	public Template getTemplate(String fileName) {
-		TemplateResource templateResource = getTemplateResource(fileName);
-
-		return _soyManager.getTemplate(templateResource, false);
-	}
-
-	public Template getTemplates(List<String> fileNames) {
+	public Template getTemplate(List<String> fileNames) {
 		List<TemplateResource> templateResources = new ArrayList<>();
 
 		for (String fileName : fileNames) {
 			templateResources.add(getTemplateResource(fileName));
 		}
 
-		return _soyManager.getTemplates(templateResources, false);
+		return _soyManager.getTemplate(templateResources, false);
+	}
+
+	public Template getTemplate(String fileName) {
+		TemplateResource templateResource = getTemplateResource(fileName);
+
+		return _soyManager.getTemplate(templateResource, false);
 	}
 
 	public void setUp() throws Exception {

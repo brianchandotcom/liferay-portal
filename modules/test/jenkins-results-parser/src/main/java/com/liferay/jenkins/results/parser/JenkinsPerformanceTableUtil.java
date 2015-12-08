@@ -14,9 +14,15 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.CharArrayWriter;
+import java.io.IOException;
+import java.io.Writer;
+
 import java.util.List;
 
 import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
 
 /**
@@ -24,7 +30,7 @@ import org.dom4j.tree.DefaultElement;
  */
 public class JenkinsPerformanceTableUtil {
 
-	public static String generateHTML() {
+	public static String generateHTML() throws IOException {
 		List<JenkinsPerformanceDataUtil.Result> results =
 			JenkinsPerformanceDataUtil.getSlowestResults();
 
@@ -60,7 +66,14 @@ public class JenkinsPerformanceTableUtil {
 		sb.append(" }\n");
 		sb.append("</style>\n");
 
-		sb.append(tableElement.asXML());
+		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
+		Writer writer = new CharArrayWriter();
+
+		XMLWriter xmlWriter = new XMLWriter(writer, outputFormat);
+		
+		xmlWriter.write(tableElement);
+		
+		sb.append(writer.toString());
 
 		return sb.toString();
 	}

@@ -53,7 +53,8 @@ public class ExportImportPortletConfigurationIcon
 
 		StringBundler sb = new StringBundler(11);
 
-		sb.append("Liferay.Portlet.openWindow({namespace: '");
+		sb.append("Liferay.Portlet.openWindow({");
+		sb.append("bodyCssClass: 'dialog-with-footer', namespace: '");
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', portlet: '#p_p_id_");
 		sb.append(portletDisplay.getId());

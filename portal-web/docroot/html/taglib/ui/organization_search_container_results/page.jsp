@@ -26,7 +26,7 @@ boolean useIndexer = GetterUtil.getBoolean(request.getAttribute("liferay-ui:orga
 Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 %>
 
-<liferay-ui:search-container id="<%= organizationSearchContainer.getId(request, namespace) %>" searchContainer='<%= organizationSearchContainer %>'>
+<liferay-ui:search-container id="<%= organizationSearchContainer.getId(request, namespace) %>" searchContainer="<%= organizationSearchContainer %>">
 	<liferay-ui:search-container-results>
 		<c:choose>
 			<c:when test="<%= useIndexer && indexer.isIndexerEnabled() && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">

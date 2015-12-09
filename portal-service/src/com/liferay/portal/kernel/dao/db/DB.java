@@ -36,25 +36,6 @@ public interface DB {
 
 	public static final int DEFAULT = 1;
 
-	public static final String[] TYPE_ALL = {
-		DB.TYPE_DB2, DB.TYPE_HYPERSONIC, DB.TYPE_MYSQL, DB.TYPE_ORACLE,
-		DB.TYPE_POSTGRESQL, DB.TYPE_SQLSERVER, DB.TYPE_SYBASE
-	};
-
-	public static final String TYPE_DB2 = "db2";
-
-	public static final String TYPE_HYPERSONIC = "hypersonic";
-
-	public static final String TYPE_MYSQL = "mysql";
-
-	public static final String TYPE_ORACLE = "oracle";
-
-	public static final String TYPE_POSTGRESQL = "postgresql";
-
-	public static final String TYPE_SQLSERVER = "sqlserver";
-
-	public static final String TYPE_SYBASE = "sybase";
-
 	public void addIndexes(
 			Connection con, String indexesSQL, Set<String> validIndexNames)
 		throws IOException;

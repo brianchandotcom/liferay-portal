@@ -76,7 +76,7 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
 		try {
 			Class<?> hikariDataSourceClazz = contextClassLoader.loadClass(
-				_HIKARICP_DATASOURCE_CLASS_NAME);
+				"com.zaxxer.hikari.HikariDataSource");
 
 			Method poolNameMethod = hikariDataSourceClazz.getMethod(
 				"getPoolName");
@@ -85,7 +85,7 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(e.getMessage(), e);
 			}
 		}
 
@@ -119,9 +119,6 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
 		super.initializeConnectionPool();
 	}
-
-	private static final String _HIKARICP_DATASOURCE_CLASS_NAME =
-		"com.zaxxer.hikari.HikariDataSource";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HikariConnectionPoolMetrics.class);

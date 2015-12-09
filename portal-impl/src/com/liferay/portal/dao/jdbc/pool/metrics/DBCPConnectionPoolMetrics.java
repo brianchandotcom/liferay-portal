@@ -21,28 +21,28 @@ import org.apache.commons.dbcp.BasicDataSource;
  */
 public class DBCPConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
-	public DBCPConnectionPoolMetrics(BasicDataSource connectionPool) {
-		_connectionPool = connectionPool;
+	public DBCPConnectionPoolMetrics(BasicDataSource basicDataSource) {
+		_basicDataSource = basicDataSource;
 	}
 
 	public int getNumActive() {
-		return _connectionPool.getNumActive();
+		return _basicDataSource.getNumActive();
 	}
 
 	public int getNumIdle() {
-		return _connectionPool.getNumIdle();
+		return _basicDataSource.getNumIdle();
 	}
 
 	@Override
 	protected Object getDataSource() {
-		return _connectionPool;
+		return _basicDataSource;
 	}
 
 	@Override
 	protected String getPoolName() {
-		return _connectionPool.toString();
+		return _basicDataSource.toString();
 	}
 
-	private final BasicDataSource _connectionPool;
+	private final BasicDataSource _basicDataSource;
 
 }

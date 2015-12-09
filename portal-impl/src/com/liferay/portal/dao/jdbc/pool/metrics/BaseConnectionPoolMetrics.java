@@ -16,6 +16,8 @@ package com.liferay.portal.dao.jdbc.pool.metrics;
 
 import com.liferay.portal.dao.jdbc.aop.DefaultDynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.springframework.aop.framework.Advised;
 import org.springframework.aop.support.AopUtils;
@@ -69,8 +71,9 @@ public abstract class BaseConnectionPoolMetrics
 			_name = "liferayDataSource";
 
 			return;
-		} else if (AopUtils.isAopProxy(targetDataSource) &&
-			(targetDataSource instanceof Advised)) {
+		}
+		else if (AopUtils.isAopProxy(targetDataSource) &&
+				 (targetDataSource instanceof Advised)) {
 
 			Advised advised = (Advised)targetDataSource;
 
@@ -101,12 +104,18 @@ public abstract class BaseConnectionPoolMetrics
 					}
 				}
 				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(e.getMessage());
+					}
 				}
 			}
 		}
 
 		_name = getPoolName();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseConnectionPoolMetrics.class);
 
 	private String _name;
 

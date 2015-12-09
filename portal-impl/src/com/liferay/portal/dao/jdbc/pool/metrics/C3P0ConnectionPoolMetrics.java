@@ -14,6 +14,9 @@
 
 package com.liferay.portal.dao.jdbc.pool.metrics;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource;
 
 import java.sql.SQLException;
@@ -24,39 +27,50 @@ import java.sql.SQLException;
 public class C3P0ConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
 	public C3P0ConnectionPoolMetrics(
-		AbstractPoolBackedDataSource connectionPool) {
+		AbstractPoolBackedDataSource abstractPoolBackedDataSource) {
 
-		_connectionPool = connectionPool;
+		_abstractPoolBackedDataSource = abstractPoolBackedDataSource;
 	}
 
 	public int getNumActive() {
 		try {
-			return _connectionPool.getNumBusyConnections();
+			return _abstractPoolBackedDataSource.getNumBusyConnections();
 		}
-		catch (SQLException e) {
+		catch (SQLException sqle) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(sqle.getMessage());
+			}
+
 			return -1;
 		}
 	}
 
 	public int getNumIdle() {
 		try {
-			return _connectionPool.getNumIdleConnections();
+			return _abstractPoolBackedDataSource.getNumIdleConnections();
 		}
-		catch (SQLException e) {
+		catch (SQLException sqle) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(sqle.getMessage());
+			}
+
 			return -1;
 		}
 	}
 
 	@Override
 	protected Object getDataSource() {
-		return _connectionPool;
+		return _abstractPoolBackedDataSource;
 	}
 
 	@Override
 	protected String getPoolName() {
-		return _connectionPool.getDataSourceName();
+		return _abstractPoolBackedDataSource.getDataSourceName();
 	}
 
-	private final AbstractPoolBackedDataSource _connectionPool;
+	private static final Log _log = LogFactoryUtil.getLog(
+		C3P0ConnectionPoolMetrics.class);
+
+	private final AbstractPoolBackedDataSource _abstractPoolBackedDataSource;
 
 }

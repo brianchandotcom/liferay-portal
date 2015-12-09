@@ -663,8 +663,10 @@
 			<var name="userLoginFullName" value="${userFirstName2} ${userLastName2}" />
 		</execute>
 
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="My Workflow Tasks" />
+		<execute macro="UserBar#gotoMyAccount" />
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
@@ -673,8 +675,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="My Workflow Tasks" />
+		<execute macro="UserBar#gotoMyAccount" />
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
@@ -716,8 +720,10 @@
 			<var name="userLoginFullName" value="${userFirstName2} ${userLastName2}" />
 		</execute>
 
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="My Workflow Tasks" />
+		<execute macro="UserBar#gotoMyAccount" />
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
@@ -726,8 +732,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="My Workflow Tasks" />
+		<execute macro="UserBar#gotoMyAccount" />
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -41,7 +42,7 @@ import java.util.Set;
 public class DB2DB extends BaseDB {
 
 	public DB2DB(int majorVersion, int minorVersion) {
-		super(TYPE_DB2, majorVersion, minorVersion);
+		super(DBType.DB2, majorVersion, minorVersion);
 	}
 
 	@Override

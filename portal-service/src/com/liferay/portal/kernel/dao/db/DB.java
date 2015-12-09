@@ -70,6 +70,8 @@ public interface DB {
 
 	public void buildSQLFile(String sqlDir, String fileName) throws IOException;
 
+	public DBType getDBType();
+
 	public List<Index> getIndexes(Connection con) throws SQLException;
 
 	public int getMajorVersion();
@@ -79,8 +81,6 @@ public interface DB {
 	public String getTemplateFalse();
 
 	public String getTemplateTrue();
-
-	public String getType();
 
 	public String getVersionString();
 

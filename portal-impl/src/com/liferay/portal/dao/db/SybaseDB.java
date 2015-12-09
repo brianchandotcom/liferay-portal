@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -31,7 +32,7 @@ import java.io.IOException;
 public class SybaseDB extends BaseDB {
 
 	public SybaseDB(int majorVersion, int minorVersion) {
-		super(TYPE_SYBASE, majorVersion, minorVersion);
+		super(DBType.SYBASE, majorVersion, minorVersion);
 	}
 
 	@Override

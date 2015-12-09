@@ -47,7 +47,7 @@
 <!--DESCRIPTIVE-->
 <tr>
 	<td>DESCRIPTIVE_SITE_ENTRY</td>
-	<td>//div[@class='entry-metadata']/span/span[contains(.,'${key_siteName}')]</td>
+	<td>//div[contains(@class,'list-group-item-content')]/h5/span[contains(.,'${key_siteName}')] | //div[contains(@class,'list-group-item-content')]/h5/a[contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -164,6 +164,8 @@ eclipse {
 				}
 			}
 		}
+
+		plusConfigurations += [configurations.portalTest]
 	}
 }
 
@@ -200,6 +202,8 @@ idea {
 				}
 			}
 		}
+
+		scopes.TEST.plus += [configurations.portalTest]
 	}
 }
 

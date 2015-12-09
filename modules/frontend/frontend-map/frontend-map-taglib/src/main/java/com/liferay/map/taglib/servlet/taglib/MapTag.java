@@ -15,8 +15,10 @@
 package com.liferay.map.taglib.servlet.taglib;
 
 import com.liferay.frontend.map.api.MapProvider;
+import com.liferay.frontend.map.api.util.MapProviderHelper;
 import com.liferay.frontend.map.api.util.MapProviderTracker;
 import com.liferay.map.taglib.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -102,7 +104,17 @@ public class MapTag extends IncludeTag {
 	private MapProvider _getMapProvider() {
 		MapProviderTracker mapProviderTracker =
 			ServletContextUtil.getMapProviderTracker();
+
 		return mapProviderTracker.getMapProvider(_provider);
+	}
+
+	private String _getMapProviderKey(long companyId, long groupId) {
+		MapProviderHelper mapProviderHelper =
+			ServletContextUtil.getMapProviderHelper();
+
+		return GetterUtil.getString(
+				mapProviderHelper.getMapProviderKey(companyId, groupId),
+				_DEFAULT_PROVIDER_KEY);
 	}
 
 	private void validate(HttpServletRequest request) {
@@ -129,19 +141,20 @@ public class MapTag extends IncludeTag {
 
 			if (Validator.isNull(_apiKey)) {
 				_apiKey = groupTypeSettings.getProperty(
-					"googleMapsAPIKey",
-					companyPortletPreferences.getValue(
-						"googleMapsAPIKey", null));
+					_DEFAULT_API_KEY,
+					companyPortletPreferences.getValue(_DEFAULT_API_KEY, null));
 			}
 
 			if (Validator.isNull(_provider)) {
-				_provider = groupTypeSettings.getProperty(
-					"mapsAPIProvider",
-					companyPortletPreferences.getValue(
-						"mapsAPIProvider", "Google"));
+				_provider = _getMapProviderKey(
+					company.getCompanyId(), group.getGroupId());
 			}
 		}
 	}
+
+	private static final String _DEFAULT_API_KEY = "googleMapsAPIKey";
+
+	private static final String _DEFAULT_PROVIDER_KEY = "Google";
 
 	private static final String _PAGE = "/map/page.jsp";
 

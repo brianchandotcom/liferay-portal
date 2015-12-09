@@ -879,7 +879,18 @@ AUI.add(
 				A.each(
 					schedulerEvents,
 					function(schedulerEvent) {
-						schedulerEvent.set('status', calendarBooking.status);
+						if (calendarBooking.status === CalendarWorkflow.STATUS_DENIED) {
+							var scheduler = schedulerEvent.get('scheduler');
+
+							var eventRecorder = scheduler.get('eventRecorder');
+
+							eventRecorder.hidePopover();
+
+							CalendarUtil.destroyEvent(schedulerEvent);
+						}
+						else {
+							schedulerEvent.set('status', calendarBooking.status);
+						}
 					}
 				);
 			}

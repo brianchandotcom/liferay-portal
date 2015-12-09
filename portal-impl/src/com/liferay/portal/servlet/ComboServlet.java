@@ -177,11 +177,6 @@ public class ComboServlet extends HttpServlet {
 		if (!PropsValues.COMBO_CHECK_TIMESTAMP) {
 			modulePathsString = Arrays.toString(modulePaths);
 
-			if (minifierType.equals("css") &&
-				PortalUtil.isRightToLeft(request)) {
-
-				modulePathsString += ".rtl";
-			}
 			else if (minifierType.equals("js")) {
 				modulePathsString +=
 					StringPool.POUND + LanguageUtil.getLanguageId(request);

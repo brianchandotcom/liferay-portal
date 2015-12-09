@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<project name="portal-db" basedir="." default="compile">
+	<import file="../build-common-java.xml" />
+
+	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
+	<property name="jar.file" value="${ant.project.name}" />
+	<property name="manifest.bundle.name" value="Liferay Portal DB" />
+	<property name="manifest.bundle.symbolic.name" value="portal-db" />
+</project>

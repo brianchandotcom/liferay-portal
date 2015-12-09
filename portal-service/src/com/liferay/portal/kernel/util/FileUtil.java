@@ -32,6 +32,10 @@ import java.util.Properties;
  */
 public class FileUtil {
 
+	public static String append(String fileName, String suffix) {
+		return getFile().append(fileName, suffix);
+	}
+
 	public static String appendParentheticalSuffix(
 		String fileName, String suffix) {
 

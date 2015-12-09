@@ -25,7 +25,6 @@ import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
@@ -72,23 +71,15 @@ public class WikiPageAssetRendererFactory
 		if (page == null) {
 			if (type == TYPE_LATEST_APPROVED) {
 				try {
-					page = _wikiPageLocalService.getPage(classPK);
+					page = _wikiPageLocalService.getPage(classPK, Boolean.TRUE);
 				}
 				catch (NoSuchPageException nspe) {
-					WikiPageResource pageResource =
-						_wikiPageResourceLocalService.getPageResource(classPK);
-
 					page = _wikiPageLocalService.getPage(
-						pageResource.getNodeId(), pageResource.getTitle(),
-						null);
+						classPK, (Boolean)null);
 				}
 			}
 			else if (type == TYPE_LATEST) {
-				WikiPageResource pageResource =
-					_wikiPageResourceLocalService.getPageResource(classPK);
-
-				page = _wikiPageLocalService.getPage(
-					pageResource.getNodeId(), pageResource.getTitle(), null);
+				page = _wikiPageLocalService.getPage(classPK, (Boolean)null);
 			}
 			else {
 				throw new IllegalArgumentException(

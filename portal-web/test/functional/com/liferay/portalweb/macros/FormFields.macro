@@ -91,6 +91,16 @@
 		<execute function="Click" locator1="FormFields#TEXT_FIELD_LINE_OPTION" />
 	</command>
 
+	<command name="setCustomValidation">
+		<execute function="Select" locator1="FormFields#CUSTOM_VALIDATION_FIELD_TYPE" value1="${customValidationFieldType}" />
+
+		<execute function="Type" locator1="FormFields#CUSTOM_VALIDATION_TEXT_INPUT" value1="${customValidationTextInput}" />
+
+		<execute function="Select" locator1="FormFields#CUSTOM_VALIDATION_VALIDATION_TYPE" value1="${customValidationValidationType}" />
+
+		<execute function="Type" locator1="FormFields#CUSTOM_VALIDATION_ERROR_MESSAGE" value1="${customValidationErrorMessage}" />
+	</command>
+
 	<command name="viewCheckboxLabel">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -140,14 +150,4 @@
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL" value1="${fieldLabel}" />
 	</command>
-
-	<command name="setCustomValidation">
-		<execute function="Select" locator1="FormFields#CUSTOM_VALIDATION_FIELD_TYPE" value1="${customValidationFieldType}" />
-
-		<execute function="Type" locator1="FormFields#CUSTOM_VALIDATION_TEXT_INPUT" value1="${customValidationTextInput}" />
-
-		<execute function="Select" locator1="FormFields#CUSTOM_VALIDATION_VALIDATION_TYPE" value1="${customValidationValidationType}" />
-
-		<execute function="Type" locator1="FormFields#CUSTOM_VALIDATION_ERROR_MESSAGE" value1="${customValidationErrorMessage}" />
-	</command> 
 </definition>

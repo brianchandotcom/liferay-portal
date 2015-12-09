@@ -15,7 +15,6 @@
 package com.liferay.background.task.portlet.web.action;
 
 import com.liferay.portal.NoSuchBackgroundTaskException;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -36,8 +35,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=*",
-		"mvc.command.name=deleteBackgroundTask"
+		"javax.portlet.name=*", "mvc.command.name=deleteBackgroundTask"
 	},
 	service = MVCActionCommand.class
 )

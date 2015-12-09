@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>Dropdown</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Dropdown</td></tr>
+</thead>
+<tbody>
+<!--FILTER-->
+<tr>
+	<td>FILTER</td>
+	<td>//*[@data-qa-id='filter']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_STATUS</td>
+	<td>//*[@data-qa-id='filterstatus']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_ORDER</td>
+	<td>//*[@data-qa-id='orderBy']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

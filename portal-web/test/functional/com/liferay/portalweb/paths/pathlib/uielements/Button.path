@@ -109,11 +109,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_USER</td>
-	<td>//button[contains(.,'Add Users')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_WIKI</td>
 	<td>//a[contains(@id,'addNodeButton') and contains(.,'Add Wiki')]</td>
 	<td></td>
@@ -420,7 +415,7 @@
 </tr>
 <tr>
 	<td>PLUS</td>
-	<td>//a[contains(@class,'btn') and span[contains(@class,'icon-plus')]] | //button[span[contains(@class,'icon-plus')]]</td>
+	<td>//*[@data-qa-id='addButton']</td>
 	<td></td>
 </tr>
 <tr>
@@ -525,7 +520,7 @@
 </tr>
 <tr>
 	<td>SEARCH</td>
-	<td>//button[contains(.,'Search')]</td>
+	<td>//*[@data-qa-id='searchButton']</td>
 	<td></td>
 </tr>
 <tr>

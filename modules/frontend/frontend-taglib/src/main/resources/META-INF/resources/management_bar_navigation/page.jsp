@@ -29,12 +29,12 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:manag
 	%>
 
 	<li class="dropdown">
-		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter" data-toggle="dropdown" href="javascript:;">
 			<span class="management-bar-item-title"><liferay-ui:message key="<%= navigationKey %>" /></span>
 			<span class="icon-sort"></span>
 		</a>
 
-		<ul class="dropdown-menu">
+		<ul class="dropdown-menu" data-qa-id="filterValues">
 
 			<%
 			PortletURL navigationURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);

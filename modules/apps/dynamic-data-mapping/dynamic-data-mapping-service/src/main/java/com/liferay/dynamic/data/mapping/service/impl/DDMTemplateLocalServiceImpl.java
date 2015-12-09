@@ -811,8 +811,8 @@ public class DDMTemplateLocalServiceImpl
 	 * @param  structureClassNameId the primary key of the class name for the
 	 *         template's related structure
 	 * @param  status the template's workflow status. For more information see
-	 *         WorkflowConstants for constants starting with the "STATUS_"
-	 *         prefix.
+	 *         {@link WorkflowConstants} for constants starting with the
+	 *         "STATUS_" prefix.
 	 * @param  start the lower bound of the range of templates to return
 	 * @param  end the upper bound of the range of templates to return (not
 	 *         inclusive)
@@ -838,8 +838,8 @@ public class DDMTemplateLocalServiceImpl
 	 * @param  structureClassNameId the primary key of the class name for the
 	 *         template's related structure
 	 * @param  status the template's workflow status. For more information see
-	 *         WorkflowConstants for constants starting with the "STATUS_"
-	 *         prefix.
+	 *         {@link WorkflowConstants} for constants starting with the
+	 *         "STATUS_" prefix.
 	 * @return the number of matching templates
 	 */
 	@Override
@@ -951,8 +951,8 @@ public class DDMTemplateLocalServiceImpl
 	 *         information, see DDMTemplateConstants in the
 	 *         dynamic-data-mapping-api module.
 	 * @param  status the template's workflow status. For more information see
-	 *         WorkflowConstants for constants starting with the "STATUS_"
-	 *         prefix.
+	 *         {@link WorkflowConstants} for constants starting with the
+	 *         "STATUS_" prefix.
 	 * @param  start the lower bound of the range of templates to return
 	 * @param  end the upper bound of the range of templates to return (not
 	 *         inclusive)
@@ -1007,8 +1007,8 @@ public class DDMTemplateLocalServiceImpl
 	 *         <code>null</code>). For more information, see
 	 *         DDMTemplateConstants in the dynamic-data-mapping-api module.
 	 * @param  status the template's workflow status. For more information see
-	 *         WorkflowConstants for constants starting with the "STATUS_"
-	 *         prefix.
+	 *         {@link WorkflowConstants} for constants starting with the
+	 *         "STATUS_" prefix.
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field
 	 * @param  start the lower bound of the range of templates to return
@@ -1062,8 +1062,8 @@ public class DDMTemplateLocalServiceImpl
 	 *         information, see DDMTemplateConstants in the
 	 *         dynamic-data-mapping-api module.
 	 * @param  status the template's workflow status. For more information see
-	 *         WorkflowConstants for constants starting with the "STATUS_"
-	 *         prefix.
+	 *         {@link WorkflowConstants} for constants starting with the
+	 *         "STATUS_" prefix.
 	 * @param  start the lower bound of the range of templates to return
 	 * @param  end the upper bound of the range of templates to return (not
 	 *         inclusive)
@@ -1118,8 +1118,8 @@ public class DDMTemplateLocalServiceImpl
 	 *         <code>null</code>). For more information, see
 	 *         DDMTemplateConstants in the dynamic-data-mapping-api module.
 	 * @param  status the template's workflow status. For more information see
-	 *         WorkflowConstants for constants starting with the "STATUS_"
-	 *         prefix.
+	 *         {@link WorkflowConstants} for constants starting with the
+	 *         "STATUS_" prefix.
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field.
 	 * @param  start the lower bound of the range of templates to return
@@ -1163,8 +1163,8 @@ public class DDMTemplateLocalServiceImpl
 	 *         information, see DDMTemplateConstants in the
 	 *         dynamic-data-mapping-api module.
 	 * @param  status the template's workflow status. For more information see
-	 *         WorkflowConstants for constants starting with the "STATUS_"
-	 *         prefix.
+	 *         {@link WorkflowConstants} for constants starting with the
+	 *         "STATUS_" prefix.
 	 * @return the number of matching templates
 	 */
 	@Override
@@ -1202,8 +1202,8 @@ public class DDMTemplateLocalServiceImpl
 	 *         <code>null</code>). For more information, see
 	 *         DDMTemplateConstants in the dynamic-data-mapping-api module.
 	 * @param  status the template's workflow status. For more information see
-	 *         WorkflowConstants for constants starting with the "STATUS_"
-	 *         prefix.
+	 *         {@link WorkflowConstants} for constants starting with the
+	 *         "STATUS_" prefix.
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field.
 	 * @return the number of matching templates
@@ -1240,8 +1240,8 @@ public class DDMTemplateLocalServiceImpl
 	 *         information, see DDMTemplateConstants in the
 	 *         dynamic-data-mapping-api module.
 	 * @param  status the template's workflow status. For more information see
-	 *         WorkflowConstants for constants starting with the "STATUS_"
-	 *         prefix.
+	 *         {@link WorkflowConstants} for constants starting with the
+	 *         "STATUS_" prefix.
 	 * @return the number of matching templates
 	 */
 	@Override
@@ -1280,8 +1280,8 @@ public class DDMTemplateLocalServiceImpl
 	 *         <code>null</code>). For more information, see
 	 *         DDMTemplateConstants in the dynamic-data-mapping-api module.
 	 * @param  status the template's workflow status. For more information see
-	 *         WorkflowConstants for constants starting with the "STATUS_"
-	 *         prefix.
+	 *         {@link WorkflowConstants} for constants starting with the
+	 *         "STATUS_" prefix.
 	 * @param  andOperator whether every field must match its keywords, or just
 	 *         one field.
 	 * @return the number of matching templates

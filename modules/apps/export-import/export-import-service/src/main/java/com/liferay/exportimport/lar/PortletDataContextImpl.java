@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
@@ -67,6 +68,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
+import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
@@ -2129,6 +2131,25 @@ public class PortletDataContextImpl implements PortletDataContext {
 				if (_log.isDebugEnabled()) {
 					_log.debug(e, e);
 				}
+			}
+		}
+
+		// Workflow
+
+		if (classedModel instanceof WorkflowedModel) {
+			WorkflowedModel workflowedModel = (WorkflowedModel)classedModel;
+
+			if (workflowedModel.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_PUBLISH);
+			}
+			else if (workflowedModel.getStatus() ==
+						WorkflowConstants.STATUS_DRAFT) {
+
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
 			}
 		}
 

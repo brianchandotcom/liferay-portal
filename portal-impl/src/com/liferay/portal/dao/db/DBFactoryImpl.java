@@ -17,6 +17,7 @@ package com.liferay.portal.dao.db;
 import com.liferay.portal.dao.orm.hibernate.DialectImpl;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactory;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -74,52 +75,7 @@ public class DBFactoryImpl implements DBFactory {
 	}
 
 	@Override
-	public DB getDB(Object dialect, DataSource dataSource) {
-		if (dialect instanceof DialectImpl) {
-			DialectImpl dialectImpl = (DialectImpl)dialect;
-
-			dialect = dialectImpl.getWrappedDialect();
-		}
-
-		if (dialect instanceof DB2Dialect) {
-			return getDB(DB.TYPE_DB2, dataSource);
-		}
-
-		if (dialect instanceof HSQLDialect) {
-			return getDB(DB.TYPE_HYPERSONIC, dataSource);
-		}
-
-		if (dialect instanceof MySQLDialect) {
-			return getDB(DB.TYPE_MYSQL, dataSource);
-		}
-
-		if (dialect instanceof Oracle8iDialect ||
-			dialect instanceof Oracle9Dialect) {
-
-			return getDB(DB.TYPE_ORACLE, dataSource);
-		}
-
-		if (dialect instanceof PostgreSQLDialect) {
-			return getDB(DB.TYPE_POSTGRESQL, dataSource);
-		}
-
-		if (dialect instanceof SQLServerDialect) {
-			return getDB(DB.TYPE_SQLSERVER, dataSource);
-		}
-
-		if (dialect instanceof SybaseDialect ||
-			dialect instanceof Sybase11Dialect ||
-			dialect instanceof SybaseAnywhereDialect ||
-			dialect instanceof SybaseASE15Dialect) {
-
-			return getDB(DB.TYPE_SYBASE, dataSource);
-		}
-
-		throw new IllegalArgumentException("Unknown dialect type " + dialect);
-	}
-
-	@Override
-	public DB getDB(String type, DataSource dataSource) {
+	public DB getDB(DBType dbType, DataSource dataSource) {
 		int dbMajorVersion = 0;
 		int dbMinorVersion = 0;
 
@@ -135,35 +91,93 @@ public class DBFactoryImpl implements DBFactory {
 			}
 		}
 
-		if (type.equals(DB.TYPE_DB2)) {
+		if (dbType == DBType.DB2) {
 			return new DB2DB(dbMajorVersion, dbMinorVersion);
 		}
 
-		if (type.equals(DB.TYPE_HYPERSONIC)) {
+		if (dbType == DBType.HYPERSONIC) {
 			return new HypersonicDB(dbMajorVersion, dbMinorVersion);
 		}
 
-		if (type.equals(DB.TYPE_MYSQL)) {
+		if (dbType == DBType.MYSQL) {
 			return new MySQLDB(dbMajorVersion, dbMinorVersion);
 		}
 
-		if (type.equals(DB.TYPE_ORACLE)) {
+		if (dbType == DBType.ORACLE) {
 			return new OracleDB(dbMajorVersion, dbMinorVersion);
 		}
 
-		if (type.equals(DB.TYPE_POSTGRESQL)) {
+		if (dbType == DBType.POSTGRESQL) {
 			return new PostgreSQLDB(dbMajorVersion, dbMinorVersion);
 		}
 
-		if (type.equals(DB.TYPE_SQLSERVER)) {
+		if (dbType == DBType.SQLSERVER) {
 			return new SQLServerDB(dbMajorVersion, dbMinorVersion);
 		}
 
-		if (type.equals(DB.TYPE_SYBASE)) {
+		if (dbType == DBType.SYBASE) {
 			return new SybaseDB(dbMajorVersion, dbMinorVersion);
 		}
 
-		throw new IllegalArgumentException("Unknown database type " + type);
+		throw new IllegalArgumentException("Unknown database type " + dbType);
+	}
+
+	@Override
+	public DB getDB(Object dialect, DataSource dataSource) {
+		if (dialect instanceof DialectImpl) {
+			DialectImpl dialectImpl = (DialectImpl)dialect;
+
+			dialect = dialectImpl.getWrappedDialect();
+		}
+
+		if (dialect instanceof DB2Dialect) {
+			return getDB(DBType.DB2, dataSource);
+		}
+
+		if (dialect instanceof HSQLDialect) {
+			return getDB(DBType.HYPERSONIC, dataSource);
+		}
+
+		if (dialect instanceof MySQLDialect) {
+			return getDB(DBType.MYSQL, dataSource);
+		}
+
+		if (dialect instanceof Oracle8iDialect ||
+			dialect instanceof Oracle9Dialect) {
+
+			return getDB(DBType.ORACLE, dataSource);
+		}
+
+		if (dialect instanceof PostgreSQLDialect) {
+			return getDB(DBType.POSTGRESQL, dataSource);
+		}
+
+		if (dialect instanceof SQLServerDialect) {
+			return getDB(DBType.SQLSERVER, dataSource);
+		}
+
+		if (dialect instanceof SybaseDialect ||
+			dialect instanceof Sybase11Dialect ||
+			dialect instanceof SybaseAnywhereDialect ||
+			dialect instanceof SybaseASE15Dialect) {
+
+			return getDB(DBType.SYBASE, dataSource);
+		}
+
+		throw new IllegalArgumentException("Unknown dialect type " + dialect);
+	}
+
+	@Override
+	public void setDB(DBType dbType, DataSource dataSource) {
+		_db = getDB(dbType, dataSource);
+
+		if (_log.isDebugEnabled()) {
+			Class<?> clazz = _db.getClass();
+
+			_log.debug(
+				"Using DB implementation " + clazz.getName() + " for " +
+					dbType);
+		}
 	}
 
 	@Override
@@ -177,18 +191,6 @@ public class DBFactoryImpl implements DBFactory {
 			_log.debug(
 				"Using DB implementation " + dbClazz.getName() + " for " +
 					dialectClazz.getName());
-		}
-	}
-
-	@Override
-	public void setDB(String type, DataSource dataSource) {
-		_db = getDB(type, dataSource);
-
-		if (_log.isDebugEnabled()) {
-			Class<?> clazz = _db.getClass();
-
-			_log.debug(
-				"Using DB implementation " + clazz.getName() + " for " + type);
 		}
 	}
 

@@ -27,12 +27,12 @@ public class DBFactoryUtil {
 		return getDBFactory().getDB();
 	}
 
-	public static DB getDB(Object dialect, DataSource dataSource) {
-		return getDBFactory().getDB(dialect, dataSource);
+	public static DB getDB(DBType dbType, DataSource dataSource) {
+		return getDBFactory().getDB(dbType, dataSource);
 	}
 
-	public static DB getDB(String type, DataSource dataSource) {
-		return getDBFactory().getDB(type, dataSource);
+	public static DB getDB(Object dialect, DataSource dataSource) {
+		return getDBFactory().getDB(dialect, dataSource);
 	}
 
 	public static DBFactory getDBFactory() {
@@ -45,12 +45,12 @@ public class DBFactoryUtil {
 		setDBFactory(null);
 	}
 
-	public static void setDB(Object dialect, DataSource dataSource) {
-		getDBFactory().setDB(dialect, dataSource);
+	public static void setDB(DBType dbType, DataSource dataSource) {
+		getDBFactory().setDB(dbType, dataSource);
 	}
 
-	public static void setDB(String type, DataSource dataSource) {
-		getDBFactory().setDB(type, dataSource);
+	public static void setDB(Object dialect, DataSource dataSource) {
+		getDBFactory().setDB(dialect, dataSource);
 	}
 
 	public static void setDBFactory(DBFactory dbFactory) {

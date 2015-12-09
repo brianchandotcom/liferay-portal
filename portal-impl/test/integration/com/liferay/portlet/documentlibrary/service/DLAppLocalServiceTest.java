@@ -203,7 +203,7 @@ public class DLAppLocalServiceTest {
 		public void shouldDeleteTrashedFolders() throws Exception {
 			Folder folder = addFolder(_group.getGroupId(), true);
 
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 			DLAppLocalServiceUtil.deleteAllRepositories(_group.getGroupId());
 

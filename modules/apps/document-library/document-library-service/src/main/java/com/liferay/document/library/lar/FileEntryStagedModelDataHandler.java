@@ -48,6 +48,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
+import com.liferay.portlet.documentlibrary.service.DLTrashService;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorThreadLocal;
 import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
@@ -415,7 +416,7 @@ public class FileEntryStagedModelDataHandler
 					fileEntry.getSize(), serviceContext);
 
 				if (fileEntry.isInTrash()) {
-					importedFileEntry = _dlAppService.moveFileEntryToTrash(
+					importedFileEntry = _dlTrashService.moveFileEntryToTrash(
 						importedFileEntry.getFileEntryId());
 				}
 			}
@@ -732,6 +733,11 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
+	protected void setDLTrashService(DLTrashService dlTrashService) {
+		_dlTrashService = dlTrashService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setRepositoryLocalService(
 		RepositoryLocalService repositoryLocalService) {
 
@@ -805,6 +811,7 @@ public class FileEntryStagedModelDataHandler
 		_dlFileEntryMetadataLocalService;
 	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
+	private volatile DLTrashService _dlTrashService;
 	private volatile RepositoryLocalService _repositoryLocalService;
 
 }

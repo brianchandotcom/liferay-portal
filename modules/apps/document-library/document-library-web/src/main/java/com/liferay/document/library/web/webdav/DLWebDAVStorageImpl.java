@@ -63,6 +63,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
+import com.liferay.portlet.documentlibrary.service.DLTrashService;
 import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.documentlibrary.webdav.DLFileEntryResourceImpl;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
@@ -303,7 +304,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				if ((folder.getModel() instanceof DLFolder) &&
 					TrashUtil.isTrashEnabled(folder.getGroupId())) {
 
-					_dlAppService.moveFolderToTrash(folderId);
+					_dlTrashService.moveFolderToTrash(folderId);
 				}
 				else {
 					_dlAppService.deleteFolder(folderId);
@@ -323,7 +324,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				if ((fileEntry.getModel() instanceof DLFileEntry) &&
 					TrashUtil.isTrashEnabled(fileEntry.getGroupId())) {
 
-					_dlAppService.moveFileEntryToTrash(fileEntryId);
+					_dlTrashService.moveFileEntryToTrash(fileEntryId);
 				}
 				else {
 					_dlAppService.deleteFileEntry(fileEntryId);
@@ -1225,6 +1226,11 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		_dlAppService = dlAppService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLTrashService(DLTrashService dlTrashService) {
+		_dlTrashService = dlTrashService;
+	}
+
 	protected Resource toResource(
 		WebDAVRequest webDAVRequest, FileEntry fileEntry, boolean appendPath) {
 
@@ -1262,5 +1268,6 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	private volatile AssetLinkLocalService _assetLinkLocalService;
 	private volatile AssetTagLocalService _assetTagLocalService;
 	private volatile DLAppService _dlAppService;
+	private volatile DLTrashService _dlTrashService;
 
 }

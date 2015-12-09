@@ -63,6 +63,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
@@ -441,14 +442,14 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		DLAppServiceUtil.moveFileEntryToTrash(primaryKey);
+		DLTrashServiceUtil.moveFileEntryToTrash(primaryKey);
 	}
 
 	@Override
 	protected void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 
-		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+		DLTrashServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
 	@Override

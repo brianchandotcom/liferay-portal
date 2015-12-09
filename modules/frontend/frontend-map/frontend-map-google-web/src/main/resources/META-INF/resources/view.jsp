@@ -53,7 +53,7 @@ name = namespace + name;
 
 <div class="lfr-map" id="<%= name %>Map"></div>
 
-<aui:script use='<%= "liferay-map-" + StringUtil.toLowerCase(GoogleMapConstants.GOOGLE_MAP_PROVIDER) %>'>
+<aui:script use="liferay-map-google">
 	var MapControls = Liferay.MapBase.CONTROLS;
 
 	var mapConfig = {
@@ -95,7 +95,7 @@ name = namespace + name;
 	};
 
 	var createMap = function() {
-		var map = new Liferay['<%= GoogleMapConstants.GOOGLE_MAP_PROVIDER %>Map'](mapConfig).render();
+		var map = new Liferay['GoogleMap'](mapConfig).render();
 
 		Liferay.MapBase.register('<%= name %>', map);
 

@@ -185,6 +185,6 @@ public class DBFactoryImpl implements DBFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(DBFactoryImpl.class);
 
-	private static DB _db;
+	private DB _db;
 
 }

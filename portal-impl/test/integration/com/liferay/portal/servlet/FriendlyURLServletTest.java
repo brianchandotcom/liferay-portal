@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
@@ -31,7 +32,10 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -61,6 +65,11 @@ public class FriendlyURLServletTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		_group = GroupTestUtil.addGroup();
+
+		List<Locale> availableLocales = Arrays.asList(LocaleUtil.US);
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(), availableLocales, LocaleUtil.US);
 	}
 
 	@After
@@ -81,7 +90,7 @@ public class FriendlyURLServletTest {
 	public void testGetRedirectWithInvalidI18nPath() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
-		_mockHttpServletRequest.setAttribute(WebKeys.I18N_LANGUAGE_CODE, "fr");
+		_mockHttpServletRequest.setAttribute(WebKeys.I18N_PATH, "/fr");
 		_mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
 		String requestURI =

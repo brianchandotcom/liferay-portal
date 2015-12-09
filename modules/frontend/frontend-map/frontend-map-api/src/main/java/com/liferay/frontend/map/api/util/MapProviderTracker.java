@@ -16,8 +16,8 @@ package com.liferay.frontend.map.api.util;
 
 import com.liferay.frontend.map.api.MapProvider;
 
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,12 +32,12 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = MapProviderTracker.class)
 public class MapProviderTracker {
 
-	public MapProvider getMapProvider(String provider) {
-		return _mapProvidersMap.get(provider);
+	public MapProvider getMapProvider(String mapProviderKey) {
+		return _mapProvidersMap.get(mapProviderKey);
 	}
 
-	public Set<String> getMapProviders() {
-		return _mapProvidersMap.keySet();
+	public Collection<MapProvider> getMapProviders() {
+		return _mapProvidersMap.values();
 	}
 
 	@Reference(

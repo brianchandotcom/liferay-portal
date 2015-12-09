@@ -16,6 +16,11 @@ package com.liferay.frontend.map.google.web;
 
 import com.liferay.frontend.map.api.BaseJSPMapProvider;
 import com.liferay.frontend.map.api.MapProvider;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 
@@ -49,8 +54,11 @@ public class GoogleMapProvider extends BaseJSPMapProvider {
 	}
 
 	@Override
-	public String getLabel() {
-		return "google-maps";
+	public String getLabel(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "google-maps");
 	}
 
 	@Override

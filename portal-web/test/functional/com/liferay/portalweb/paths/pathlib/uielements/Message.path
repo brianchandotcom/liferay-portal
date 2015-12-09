@@ -159,11 +159,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STATUS</td>
-	<td>//span[contains(@class,'workflow-status')]/strong</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
@@ -206,6 +201,11 @@
 <tr>
 	<td>USER_BLOCKED</td>
 	<td>//div[contains(@class,'alert-block')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//span[contains(@class,'workflow-status')]/strong | //span[contains(@class,'workflow-status')]/span</td>
 	<td></td>
 </tr>
 <tr>

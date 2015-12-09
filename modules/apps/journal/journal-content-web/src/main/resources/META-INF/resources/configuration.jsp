@@ -119,9 +119,9 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 	</div>
 
 	<aui:button-row cssClass="dialog-footer">
-		<aui:button name="saveButton" type="submit" />
+		<aui:button cssClass="btn-lg" name="saveButton" type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

@@ -144,8 +144,8 @@
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 
-	<aui:button-row>
-		<aui:button type="submit" />
+	<aui:button-row cssClass="dialog-footer">
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 

@@ -169,8 +169,6 @@ public class JspResourceResolver implements ResourceResolver {
 			if (index > -1) {
 				fileName = fileName.substring(0, index);
 			}
-
-			fileName = decodePath(fileName);
 		}
 		else if (Validator.equals(url.getProtocol(), "zip")) {
 
@@ -184,6 +182,8 @@ public class JspResourceResolver implements ResourceResolver {
 				fileName = fileName.substring(0, index);
 			}
 		}
+
+		fileName = decodePath(fileName);
 
 		return new JarFile(fileName);
 	}

@@ -21,7 +21,7 @@ import java.io.Writer;
  * @author Brian Wing Shun Chan
  */
 @SuppressWarnings("rawtypes")
-public interface JSONArray extends Externalizable, Iterable {
+public interface JSONArray extends JSONSerializable, Externalizable, Iterable {
 
 	public Object get(int index);
 

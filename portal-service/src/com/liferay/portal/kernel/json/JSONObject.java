@@ -23,7 +23,7 @@ import java.util.Iterator;
 /**
  * @author Brian Wing Shun Chan
  */
-public interface JSONObject extends Externalizable {
+public interface JSONObject extends JSONSerializable, Externalizable {
 
 	public Object get(String key);
 

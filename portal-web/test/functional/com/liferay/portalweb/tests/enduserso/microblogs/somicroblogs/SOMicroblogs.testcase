@@ -1714,7 +1714,7 @@
 			<var name="statusUpdateEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
@@ -1934,7 +1934,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
@@ -2019,7 +2019,7 @@
 			<var name="statusUpdateEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
@@ -2520,7 +2520,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
@@ -2884,7 +2884,7 @@
 			<var name="statusUpdateEntryContent" value="${microblogsEntryContentEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
@@ -2943,7 +2943,7 @@
 			<var name="statusUpdateEntryContent" value="${microblogsEntryContentEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
@@ -3066,7 +3066,7 @@
 			<var name="statusUpdateEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
@@ -3234,7 +3234,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
@@ -3666,7 +3666,7 @@
 			<var name="microblogsEntryViewableBy" value="Connections" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 
@@ -3715,7 +3715,7 @@
 			<var name="microblogsEntryViewableBy" value="Followers" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 

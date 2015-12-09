@@ -806,7 +806,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoMyDashboard" />
+		<execute macro="UserBar#gotoMyDashboard" />
 
 		<execute function="AssertLocation" value1="http://localhost:8080/user/usersn" />
 

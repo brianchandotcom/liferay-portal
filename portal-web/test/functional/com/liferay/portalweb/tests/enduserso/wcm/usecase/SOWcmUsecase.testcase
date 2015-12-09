@@ -92,18 +92,18 @@
 	<command name="ResetChangesViaProfile" priority="4">
 		<var name="portletName" value="Hello World" />
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="Profile" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOUserBar#resetChanges" />
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<var name="key_portletName" value="${portletName}" />
 
@@ -134,18 +134,18 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="Profile" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOUserBar#resetChanges" />
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<var name="key_portletName" value="${portletName}" />
 

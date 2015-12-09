@@ -166,7 +166,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoMyDashboard" />
+		<execute macro="UserBar#gotoMyDashboard" />
 
 		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
 		<execute function="AssertTextEquals" locator1="Home#PAGE_2" value1="Test User Group Page 1" />
@@ -452,7 +452,7 @@
 			<var name="userGroupSite" value="Community Site" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<var name="key_pageName" value="Welcome" />
 
@@ -460,7 +460,7 @@
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
 
-		<execute macro="Page#gotoMyDashboard" />
+		<execute macro="UserBar#gotoMyDashboard" />
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
@@ -473,7 +473,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<var name="key_pageName" value="Welcome" />
 
@@ -481,7 +481,7 @@
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
 
-		<execute macro="Page#gotoMyDashboard" />
+		<execute macro="UserBar#gotoMyDashboard" />
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
@@ -510,7 +510,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<var name="key_pageName" value="Welcome" />
 
@@ -518,7 +518,7 @@
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_3" value1="Wiki" />
 
-		<execute macro="Page#gotoMyDashboard" />
+		<execute macro="UserBar#gotoMyDashboard" />
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="Welcome" />
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE_TEMPLATE_2" value1="Home" />

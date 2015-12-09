@@ -15,13 +15,15 @@
 package com.liferay.site.admin.web.servlet.taglib.ui;
 
 import com.liferay.frontend.map.api.constants.MapProviderWebKeys;
-import com.liferay.frontend.map.api.util.MapAPIHelperUtil;
+import com.liferay.frontend.map.api.util.MapProviderHelper;
 import com.liferay.frontend.map.api.util.MapProviderTracker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -63,9 +65,15 @@ public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+
 		request.setAttribute(
-			MapProviderWebKeys.GROUP_MAPS_API_PROVIDER,
-			_mapAPIHelperUtil.getGroupMapsAPIProvider(request));
+			MapProviderWebKeys.MAP_PROVIDER_KEY,
+			_mapProviderHelper.getMapProviderKey(
+				themeDisplay.getCompanyId(), liveGroup.getGroupId()));
 
 		request.setAttribute(
 			MapProviderWebKeys.MAP_PROVIDER_TRACKER, _mapProviderTracker);
@@ -97,8 +105,8 @@ public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 	}
 
 	@Reference(unbind = "-")
-	protected void setMapAPIHelperUtil(MapAPIHelperUtil mapAPIHelperUtil) {
-		_mapAPIHelperUtil = mapAPIHelperUtil;
+	protected void setMapProviderHelper(MapProviderHelper mapProviderHelper) {
+		_mapProviderHelper = mapProviderHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -108,7 +116,7 @@ public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 		_mapProviderTracker = mapProviderTracker;
 	}
 
-	private volatile MapAPIHelperUtil _mapAPIHelperUtil;
+	private volatile MapProviderHelper _mapProviderHelper;
 	private volatile MapProviderTracker _mapProviderTracker;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.frontend.map.google.web;
 
 import com.liferay.frontend.map.api.BaseJSPMapProvider;
 import com.liferay.frontend.map.api.MapProvider;
-import com.liferay.frontend.map.google.web.constants.GoogleMapConstants;
 
 import javax.servlet.ServletContext;
 
@@ -36,7 +35,7 @@ public class GoogleMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	public String getHelpMessage() {
-		return "use-google-maps-as-the-maps-api-provider";
+		return null;
 	}
 
 	@Override
@@ -46,7 +45,7 @@ public class GoogleMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	public String getKey() {
-		return GoogleMapConstants.GOOGLE_MAP_PROVIDER;
+		return "Google";
 	}
 
 	@Override

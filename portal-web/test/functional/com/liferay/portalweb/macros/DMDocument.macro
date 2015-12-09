@@ -101,7 +101,7 @@
 	<command name="addDMMarketingBannerCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="NavBar#ADD" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 		<execute function="AssertClick" locator1="MenuItem#MARKETING_BANNER" value1="Marketing Banner" />
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />

@@ -28,6 +28,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
@@ -71,9 +72,9 @@ public class DLFolderActivityInterpreterTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 
-		DLAppServiceUtil.moveFolderToTrash(_folder.getFolderId());
+		DLTrashServiceUtil.moveFolderToTrash(_folder.getFolderId());
 
-		DLAppServiceUtil.restoreFolderFromTrash(_folder.getFolderId());
+		DLTrashServiceUtil.restoreFolderFromTrash(_folder.getFolderId());
 	}
 
 	@Override
@@ -91,7 +92,7 @@ public class DLFolderActivityInterpreterTest
 
 	@Override
 	protected void moveModelsToTrash() throws Exception {
-		DLAppServiceUtil.moveFolderToTrash(_folder.getFolderId());
+		DLTrashServiceUtil.moveFolderToTrash(_folder.getFolderId());
 	}
 
 	@Override
@@ -103,7 +104,7 @@ public class DLFolderActivityInterpreterTest
 
 	@Override
 	protected void restoreModelsFromTrash() throws Exception {
-		DLAppServiceUtil.restoreFolderFromTrash(_folder.getFolderId());
+		DLTrashServiceUtil.restoreFolderFromTrash(_folder.getFolderId());
 	}
 
 	private Folder _folder;

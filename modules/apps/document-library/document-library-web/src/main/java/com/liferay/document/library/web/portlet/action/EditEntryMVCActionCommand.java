@@ -44,6 +44,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
+import com.liferay.portlet.documentlibrary.service.DLTrashService;
 import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -131,7 +132,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			long deleteFolderId = deleteFolderIds[i];
 
 			if (moveToTrash) {
-				Folder folder = _dlAppService.moveFolderToTrash(deleteFolderId);
+				Folder folder = _dlTrashService.moveFolderToTrash(
+					deleteFolderId);
 
 				if (folder.getModel() instanceof TrashedModel) {
 					trashedModels.add((TrashedModel)folder.getModel());
@@ -152,7 +154,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (moveToTrash) {
 				FileShortcut fileShortcut =
-					_dlAppService.moveFileShortcutToTrash(deleteFileShortcutId);
+					_dlTrashService.moveFileShortcutToTrash(
+						deleteFileShortcutId);
 
 				if (fileShortcut.getModel() instanceof TrashedModel) {
 					trashedModels.add((TrashedModel)fileShortcut.getModel());
@@ -168,7 +171,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteFileEntryId : deleteFileEntryIds) {
 			if (moveToTrash) {
-				FileEntry fileEntry = _dlAppService.moveFileEntryToTrash(
+				FileEntry fileEntry = _dlTrashService.moveFileEntryToTrash(
 					deleteFileEntryId);
 
 				if (fileEntry.getModel() instanceof TrashedModel) {
@@ -321,11 +324,17 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDLTrashService(DLTrashService dlTrashService) {
+		_dlTrashService = dlTrashService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;
 	}
 
 	private volatile DLAppService _dlAppService;
+	private volatile DLTrashService _dlTrashService;
 	private volatile TrashEntryService _trashEntryService;
 
 }

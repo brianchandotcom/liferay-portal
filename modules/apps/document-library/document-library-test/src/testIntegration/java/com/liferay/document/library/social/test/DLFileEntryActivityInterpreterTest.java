@@ -33,6 +33,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -97,7 +98,7 @@ public class DLFileEntryActivityInterpreterTest
 
 	@Override
 	protected void moveModelsToTrash() throws Exception {
-		DLAppServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
+		DLTrashServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
 	}
 
 	@Override
@@ -116,7 +117,8 @@ public class DLFileEntryActivityInterpreterTest
 
 	@Override
 	protected void restoreModelsFromTrash() throws Exception {
-		DLAppServiceUtil.restoreFileEntryFromTrash(_fileEntry.getFileEntryId());
+		DLTrashServiceUtil.restoreFileEntryFromTrash(
+			_fileEntry.getFileEntryId());
 	}
 
 	private FileEntry _fileEntry;

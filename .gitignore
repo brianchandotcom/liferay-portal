@@ -54,6 +54,8 @@
 /portal-client/portal-client*.asc
 /portal-client/portal-client*.jar
 /portal-client/src
+/portal-db/classes
+/portal-db/portal-db*.jar
 /portal-impl/*.iml
 /portal-impl/*.ipr
 /portal-impl/*.iws

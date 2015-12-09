@@ -32,6 +32,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import java.util.EnumMap;
+import java.util.ServiceLoader;
 
 import javax.sql.DataSource;
 
@@ -57,13 +58,12 @@ import org.hibernate.dialect.SybaseDialect;
 public class DBFactoryImpl implements DBFactory {
 
 	public DBFactoryImpl() {
-		_dbCreators.put(DBType.DB2, new DB2DBCreator());
-		_dbCreators.put(DBType.HYPERSONIC, new HypersonicDBCreator());
-		_dbCreators.put(DBType.MYSQL, new MySQLDBCreator());
-		_dbCreators.put(DBType.ORACLE, new OracleDBCreator());
-		_dbCreators.put(DBType.POSTGRESQL, new PostgreSQLDBCreator());
-		_dbCreators.put(DBType.SQLSERVER, new SQLServerDBCreator());
-		_dbCreators.put(DBType.SYBASE, new SybaseDBCreator());
+		for (DBCreator dbCreator :
+				ServiceLoader.load(
+					DBCreator.class, DBFactoryImpl.class.getClassLoader())) {
+
+			_dbCreators.put(dbCreator.getDBType(), dbCreator);
+		}
 	}
 
 	@Override

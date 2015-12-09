@@ -157,8 +157,6 @@ public class OutputStreamContainerFactoryTracker {
 				ServiceTrackerMapFactory.openSingleValueMap(
 					bundleContext, OutputStreamContainerFactory.class, "name");
 
-			//Add default OutputStreamContainerFactory
-
 			OutputStreamContainerFactory
 				consoleOutputStreamContainerFactory =
 					new ConsoleOutputStreamContainerFactory();

@@ -226,8 +226,8 @@ public class DDLFormPortlet extends MVCPortlet {
 			renderResponse, ddmStructure, requireCaptcha);
 
 		DDMFormRenderingContext ddmFormRenderingContext =
-				createDDMFormRenderingContext(
-					renderRequest, renderResponse, ddmForm);
+			createDDMFormRenderingContext(
+				renderRequest, renderResponse, ddmForm);
 
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(
 			ddmStructure, requireCaptcha);

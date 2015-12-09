@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
 import com.liferay.portal.kernel.dao.db.DB;
 
@@ -22,19 +22,20 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Miguel Pastor
+ * @author Shinn Lok
  */
-public class DB2DBTest extends BaseDBTestCase {
+public class OracleDBTest extends BaseDBTestCase {
 
 	@Test
-	public void testRewordRenameTable() throws IOException {
+	public void testRewordAlterColumnType() throws IOException {
 		Assert.assertEquals(
-			"alter table a to b;\n", buildSQL(RENAME_TABLE_QUERY));
+			"alter table DLFolder modify name VARCHAR2(255 CHAR);\n",
+			buildSQL("alter_column_type DLFolder name VARCHAR(255) null;"));
 	}
 
 	@Override
 	protected DB getDB() {
-		return new DB2DB(0, 0);
+		return new OracleDB(0, 0);
 	}
 
 }

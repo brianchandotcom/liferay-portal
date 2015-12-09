@@ -388,7 +388,8 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	public void updateAsset(long userId,
 		com.liferay.bookmarks.model.BookmarksFolder folder,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds) throws PortalException;
+		long[] assetLinkEntryIds, java.lang.Double priority)
+		throws PortalException;
 
 	/**
 	* Updates the bookmarks folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

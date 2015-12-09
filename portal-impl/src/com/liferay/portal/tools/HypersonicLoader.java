@@ -14,8 +14,9 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.dao.db.HypersonicDB;
+import com.liferay.portal.dao.db.DBFactoryImpl;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactory;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -57,7 +58,9 @@ public class HypersonicLoader {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		DB db = new HypersonicDB(0, 0);
+		DBFactory dbFactory = new DBFactoryImpl();
+
+		DB db = dbFactory.getDB(DBType.HYPERSONIC, null);
 
 		db.runSQLTemplateString(con, sb.toString(), false, true);
 	}

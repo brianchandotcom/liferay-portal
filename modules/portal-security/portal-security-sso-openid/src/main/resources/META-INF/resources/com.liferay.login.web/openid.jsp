@@ -35,7 +35,7 @@ String openId = ParamUtil.getString(request, "openId");
 	<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBeDuplicate.class %>" message="the-email-address-associated-with-your-openid-account-is-already-being-used" />
 
 	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="openid-login" name="openId" title="openid" type="text" value="<%= openId %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="openid-login" name="openId" label="openid" title="openid" type="text" value="<%= openId %>" />
 
 		<aui:button-row>
 			<aui:button type="submit" value="sign-in" />

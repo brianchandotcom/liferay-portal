@@ -19,8 +19,7 @@ package com.liferay.frontend.map.api.constants;
  */
 public class MapProviderWebKeys {
 
-	public static final String GROUP_MAPS_API_PROVIDER =
-		"GROUP_MAPS_API_PROVIDER";
+	public static final String MAP_PROVIDER_KEY = "MAP_PROVIDER_KEY";
 
 	public static final String MAP_PROVIDER_TRACKER = "MAP_PROVIDER_TRACKER";
 

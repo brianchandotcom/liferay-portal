@@ -16,6 +16,7 @@ package com.liferay.portal.dao.db;
 
 import com.liferay.portal.dao.orm.hibernate.DialectImpl;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBCreator;
 import com.liferay.portal.kernel.dao.db.DBFactory;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
@@ -29,6 +30,8 @@ import com.liferay.portal.util.PropsValues;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+
+import java.util.EnumMap;
 
 import javax.sql.DataSource;
 
@@ -52,6 +55,16 @@ import org.hibernate.dialect.SybaseDialect;
 @DoPrivileged
 @SuppressWarnings("deprecation")
 public class DBFactoryImpl implements DBFactory {
+
+	public DBFactoryImpl() {
+		_dbCreators.put(DBType.DB2, new DB2DBCreator());
+		_dbCreators.put(DBType.HYPERSONIC, new HypersonicDBCreator());
+		_dbCreators.put(DBType.MYSQL, new MySQLDBCreator());
+		_dbCreators.put(DBType.ORACLE, new OracleDBCreator());
+		_dbCreators.put(DBType.POSTGRESQL, new PostgreSQLDBCreator());
+		_dbCreators.put(DBType.SQLSERVER, new SQLServerDBCreator());
+		_dbCreators.put(DBType.SYBASE, new SybaseDBCreator());
+	}
 
 	@Override
 	public DB getDB() {
@@ -94,35 +107,14 @@ public class DBFactoryImpl implements DBFactory {
 			}
 		}
 
-		if (dbType == DBType.DB2) {
-			return new DB2DB(dbMajorVersion, dbMinorVersion);
+		DBCreator dbCreator = _dbCreators.get(dbType);
+
+		if (dbCreator == null) {
+			throw new IllegalArgumentException(
+				"Unsupported database type " + dbType);
 		}
 
-		if (dbType == DBType.HYPERSONIC) {
-			return new HypersonicDB(dbMajorVersion, dbMinorVersion);
-		}
-
-		if (dbType == DBType.MYSQL) {
-			return new MySQLDB(dbMajorVersion, dbMinorVersion);
-		}
-
-		if (dbType == DBType.ORACLE) {
-			return new OracleDB(dbMajorVersion, dbMinorVersion);
-		}
-
-		if (dbType == DBType.POSTGRESQL) {
-			return new PostgreSQLDB(dbMajorVersion, dbMinorVersion);
-		}
-
-		if (dbType == DBType.SQLSERVER) {
-			return new SQLServerDB(dbMajorVersion, dbMinorVersion);
-		}
-
-		if (dbType == DBType.SYBASE) {
-			return new SybaseDB(dbMajorVersion, dbMinorVersion);
-		}
-
-		throw new IllegalArgumentException("Unknown database type " + dbType);
+		return dbCreator.create(dbMajorVersion, dbMinorVersion);
 	}
 
 	@Override
@@ -186,5 +178,7 @@ public class DBFactoryImpl implements DBFactory {
 	private static final Log _log = LogFactoryUtil.getLog(DBFactoryImpl.class);
 
 	private DB _db;
+	private final EnumMap<DBType, DBCreator> _dbCreators = new EnumMap<>(
+		DBType.class);
 
 }

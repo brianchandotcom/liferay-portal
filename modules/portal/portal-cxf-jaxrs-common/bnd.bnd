@@ -11,8 +11,8 @@ Bundle-Name: Liferay Portal CXF JAX-RS Common
 Bundle-SymbolicName: com.liferay.portal.cxf.jaxrs.common
 Bundle-Version: 1.0.0
 Export-Package:\
-	javax.json.*,\
-	javax.ws.rs.*,\
+	javax.json.*;version="1.0",\
+	javax.ws.rs.*;version="2.0.1",\
 	org.apache.cxf.*;version="3.0.3"
 Import-Package:\
 	!com.sun.*,\

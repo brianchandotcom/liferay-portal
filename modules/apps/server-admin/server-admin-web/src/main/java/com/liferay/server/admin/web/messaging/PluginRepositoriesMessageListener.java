@@ -14,17 +14,20 @@
 
 package com.liferay.server.admin.web.messaging;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.plugin.PluginPackageUtil;
+import com.liferay.server.admin.web.configuration.PluginRepositoriesConfiguration;
 
 import java.util.Map;
 
@@ -45,10 +48,19 @@ public class PluginRepositoriesMessageListener
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		PluginRepositoriesConfiguration pluginRepositoriesConfiguration =
+			Configurable.createConfigurable(
+				PluginRepositoriesConfiguration.class, properties);
+
+		if (!pluginRepositoriesConfiguration.enabled()) {
+			return;
+		}
+
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(), 1,
-				TimeUnit.DAY));
+				getEventListenerClass(), getEventListenerClass(),
+				pluginRepositoriesConfiguration.interval(),
+				pluginRepositoriesConfiguration.timeUnit()));
 
 		_schedulerEngineHelper.register(
 			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);

@@ -32,7 +32,7 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editSupportedClientsURL %>" method="post" name=">fm">
+<aui:form action="<%= editSupportedClientsURL %>" cssClass="container-fluid-1280" method="post" name=">fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />

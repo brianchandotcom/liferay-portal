@@ -46,7 +46,7 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editPublicRenderParametersURL %>" method="post" name="fm">
+<aui:form action="<%= editPublicRenderParametersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= editPublicRenderParameterURL.toString() %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />

@@ -57,7 +57,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 	<liferay-util:param name="tabs1" value="scope" />
 </liferay-util:include>
 
-<aui:fieldset>
+<aui:fieldset cssClass="container-fluid-1280">
 	<aui:field-wrapper label="scope" name="scopeId">
 		<liferay-ui:icon-menu direction="down" icon="<%= group.getIconURL(themeDisplay) %>" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" showWhenSingleIcon="<%= true %>">
 

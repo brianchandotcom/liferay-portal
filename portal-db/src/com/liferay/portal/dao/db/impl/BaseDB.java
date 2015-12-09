@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.dao.orm.common.SQLTransformer;

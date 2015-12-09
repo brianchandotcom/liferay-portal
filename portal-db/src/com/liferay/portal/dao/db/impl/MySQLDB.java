@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -37,10 +39,10 @@ import java.util.List;
  * @author Sandeep Soni
  * @author Ganesh Ram
  */
-public class PostgreSQLDB extends BaseDB {
+public class MySQLDB extends BaseDB {
 
-	public PostgreSQLDB(int majorVersion, int minorVersion) {
-		super(DBType.POSTGRESQL, majorVersion, minorVersion);
+	public MySQLDB(int majorVersion, int minorVersion) {
+		super(DBType.MYSQL, majorVersion, minorVersion);
 	}
 
 	@Override
@@ -49,6 +51,7 @@ public class PostgreSQLDB extends BaseDB {
 		template = replaceTemplate(template, getTemplate());
 
 		template = reword(template);
+		template = StringUtil.replace(template, "\\'", "''");
 
 		return template;
 	}
@@ -61,11 +64,12 @@ public class PostgreSQLDB extends BaseDB {
 		ResultSet rs = null;
 
 		try {
-			StringBundler sb = new StringBundler(3);
+			StringBundler sb = new StringBundler(4);
 
-			sb.append("select indexname, tablename, indexdef from pg_indexes ");
-			sb.append("where indexname like 'liferay_%' or indexname like ");
-			sb.append("'ix_%'");
+			sb.append("select distinct(index_name), table_name, non_unique ");
+			sb.append("from information_schema.statistics where ");
+			sb.append("index_schema = database() and (index_name like ");
+			sb.append("'LIFERAY_%' or index_name like 'IX_%')");
 
 			String sql = sb.toString();
 
@@ -74,16 +78,9 @@ public class PostgreSQLDB extends BaseDB {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				String indexName = rs.getString("indexname");
-				String tableName = rs.getString("tablename");
-				String indexSQL = StringUtil.toLowerCase(
-					rs.getString("indexdef").trim());
-
-				boolean unique = true;
-
-				if (indexSQL.startsWith("create index ")) {
-					unique = false;
-				}
+				String indexName = rs.getString("index_name");
+				String tableName = rs.getString("table_name");
+				boolean unique = !rs.getBoolean("non_unique");
 
 				indexes.add(new Index(indexName, tableName, unique));
 			}
@@ -96,8 +93,8 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsQueryingAfterException() {
-		return _SUPPORTS_QUERYING_AFTER_EXCEPTION;
+	public boolean isSupportsUpdateWithInnerJoin() {
+		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
 	}
 
 	@Override
@@ -105,26 +102,27 @@ public class PostgreSQLDB extends BaseDB {
 			String sqlDir, String databaseName, int population)
 		throws IOException {
 
-		String suffix = getSuffix(population);
-
 		StringBundler sb = new StringBundler(14);
 
-		sb.append("drop database ");
+		sb.append("drop database if exists ");
 		sb.append(databaseName);
 		sb.append(";\n");
 		sb.append("create database ");
 		sb.append(databaseName);
-		sb.append(" encoding = 'UNICODE';\n");
+		sb.append(" character set utf8;\n");
 
 		if (population != BARE) {
-			sb.append("\\c ");
+			sb.append("use ");
 			sb.append(databaseName);
 			sb.append(";\n\n");
+
+			String suffix = getSuffix(population);
+
 			sb.append(getCreateTablesContent(sqlDir, suffix));
 			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/indexes/indexes-postgresql.sql"));
+			sb.append(readFile(sqlDir + "/indexes/indexes-mysql.sql"));
 			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/sequences/sequences-postgresql.sql"));
+			sb.append(readFile(sqlDir + "/sequences/sequences-mysql.sql"));
 		}
 
 		return sb.toString();
@@ -132,12 +130,16 @@ public class PostgreSQLDB extends BaseDB {
 
 	@Override
 	protected String getServerName() {
-		return "postgresql";
+		return "mysql";
 	}
 
 	@Override
 	protected String[] getTemplate() {
-		return _POSTGRESQL;
+		if (GetterUtil.getFloat(getVersionString()) >= 5.6F) {
+			_MYSQL[8] = " datetime(6)";
+		}
+
+		return _MYSQL;
 	}
 
 	@Override
@@ -147,47 +149,45 @@ public class PostgreSQLDB extends BaseDB {
 
 			StringBundler sb = new StringBundler();
 
+			boolean createTable = false;
+
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.startsWith(ALTER_COLUMN_NAME)) {
+				if (StringUtil.startsWith(line, "create table")) {
+					createTable = true;
+				}
+				else if (line.startsWith(ALTER_COLUMN_NAME)) {
 					String[] template = buildColumnNameTokens(line);
 
 					line = StringUtil.replace(
-						"alter table @table@ rename @old-column@ to " +
-							"@new-column@;",
+						"alter table @table@ change column @old-column@ " +
+							"@new-column@ @type@;",
 						REWORD_TEMPLATE, template);
 				}
 				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
 					String[] template = buildColumnTypeTokens(line);
 
 					line = StringUtil.replace(
-						"alter table @table@ alter @old-column@ type @type@ " +
-							"using @old-column@::@type@;",
+						"alter table @table@ modify @old-column@ @type@;",
 						REWORD_TEMPLATE, template);
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
 					String[] template = buildTableNameTokens(line);
 
 					line = StringUtil.replace(
-						"alter table @old-table@ rename to @new-table@;",
+						"rename table @old-table@ to @new-table@;",
 						RENAME_TABLE_TEMPLATE, template);
 				}
-				else if (line.contains(DROP_INDEX)) {
-					String[] tokens = StringUtil.split(line, ' ');
 
-					line = StringUtil.replace(
-						"drop index @index@;", "@index@", tokens[2]);
-				}
-				else if (line.contains(DROP_PRIMARY_KEY)) {
-					String[] tokens = StringUtil.split(line, ' ');
+				int pos = line.indexOf(";");
 
-					line = StringUtil.replace(
-						"alter table @table@ drop constraint @table@_pkey;",
-						"@table@", tokens[2]);
-				}
-				else if (line.contains("\\\'")) {
-					line = StringUtil.replace(line, "\\\'", "\'\'");
+				if (createTable && (pos != -1)) {
+					createTable = false;
+
+					line =
+						line.substring(0, pos) + " engine " +
+						PropsValues.DATABASE_MYSQL_ENGINE + line.substring(pos);
 				}
 
 				sb.append(line);
@@ -198,12 +198,12 @@ public class PostgreSQLDB extends BaseDB {
 		}
 	}
 
-	private static final String[] _POSTGRESQL = {
-		"--", "true", "false", "'01/01/1970'", "current_timestamp", " oid",
-		" bytea", " bool", " timestamp", " double precision", " integer",
-		" bigint", " text", " text", " varchar", "", "commit"
+	private static final String[] _MYSQL = {
+		"##", "1", "0", "'1970-01-01'", "now()", " longblob", " longblob",
+		" tinyint", " datetime", " double", " integer", " bigint", " longtext",
+		" longtext", " varchar", "  auto_increment", "commit"
 	};
 
-	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = false;
+	private static final boolean _SUPPORTS_UPDATE_WITH_INNER_JOIN = true;
 
 }

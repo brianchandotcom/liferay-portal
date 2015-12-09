@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;

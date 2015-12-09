@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBCreator;
@@ -21,16 +21,16 @@ import com.liferay.portal.kernel.dao.db.DBType;
 /**
  * @author Shuyang Zhou
  */
-public class MySQLDBCreator implements DBCreator {
+public class DB2DBCreator implements DBCreator {
 
 	@Override
 	public DB create(int dbMajorVersion, int dbMinorVersion) {
-		return new MySQLDB(dbMajorVersion, dbMinorVersion);
+		return new DB2DB(dbMajorVersion, dbMinorVersion);
 	}
 
 	@Override
 	public DBType getDBType() {
-		return DBType.MYSQL;
+		return DBType.DB2;
 	}
 
 }

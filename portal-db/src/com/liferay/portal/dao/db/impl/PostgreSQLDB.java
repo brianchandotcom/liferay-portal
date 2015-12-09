@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
@@ -20,13 +20,11 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,10 +37,10 @@ import java.util.List;
  * @author Sandeep Soni
  * @author Ganesh Ram
  */
-public class SQLServerDB extends BaseDB {
+public class PostgreSQLDB extends BaseDB {
 
-	public SQLServerDB(int majorVersion, int minorVersion) {
-		super(DBType.SQLSERVER, majorVersion, minorVersion);
+	public PostgreSQLDB(int majorVersion, int minorVersion) {
+		super(DBType.POSTGRESQL, majorVersion, minorVersion);
 	}
 
 	@Override
@@ -51,11 +49,6 @@ public class SQLServerDB extends BaseDB {
 		template = replaceTemplate(template, getTemplate());
 
 		template = reword(template);
-		template = StringUtil.replace(template, "\ngo;\n", "\ngo\n");
-		template = StringUtil.replace(
-			template,
-			new String[] {"\\\\", "\\'", "\\\"", "\\n", "\\r"},
-			new String[] {"\\", "''", "\"", "\n", "\r"});
 
 		return template;
 	}
@@ -68,22 +61,11 @@ public class SQLServerDB extends BaseDB {
 		ResultSet rs = null;
 
 		try {
-			DatabaseMetaData databaseMetaData = con.getMetaData();
+			StringBundler sb = new StringBundler(3);
 
-			if (databaseMetaData.getDatabaseMajorVersion() <=
-					_SQL_SERVER_2000) {
-
-				return indexes;
-			}
-
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("select sys.tables.name as table_name, ");
-			sb.append("sys.indexes.name as index_name, is_unique from ");
-			sb.append("sys.indexes inner join sys.tables on ");
-			sb.append("sys.tables.object_id = sys.indexes.object_id where ");
-			sb.append("sys.indexes.name like 'LIFERAY_%' or sys.indexes.name ");
-			sb.append("like 'IX_%'");
+			sb.append("select indexname, tablename, indexdef from pg_indexes ");
+			sb.append("where indexname like 'liferay_%' or indexname like ");
+			sb.append("'ix_%'");
 
 			String sql = sb.toString();
 
@@ -92,9 +74,16 @@ public class SQLServerDB extends BaseDB {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				String indexName = rs.getString("index_name");
-				String tableName = rs.getString("table_name");
-				boolean unique = !rs.getBoolean("is_unique");
+				String indexName = rs.getString("indexname");
+				String tableName = rs.getString("tablename");
+				String indexSQL = StringUtil.toLowerCase(
+					rs.getString("indexdef").trim());
+
+				boolean unique = true;
+
+				if (indexSQL.startsWith("create index ")) {
+					unique = false;
+				}
 
 				indexes.add(new Index(indexName, tableName, unique));
 			}
@@ -107,8 +96,8 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsAlterColumnType() {
-		return _SUPPORTS_ALTER_COLUMN_TYPE;
+	public boolean isSupportsQueryingAfterException() {
+		return _SUPPORTS_QUERYING_AFTER_EXCEPTION;
 	}
 
 	@Override
@@ -118,27 +107,24 @@ public class SQLServerDB extends BaseDB {
 
 		String suffix = getSuffix(population);
 
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(14);
 
 		sb.append("drop database ");
 		sb.append(databaseName);
 		sb.append(";\n");
 		sb.append("create database ");
 		sb.append(databaseName);
-		sb.append(";\n");
-		sb.append("\n");
-		sb.append("go\n");
-		sb.append("\n");
+		sb.append(" encoding = 'UNICODE';\n");
 
 		if (population != BARE) {
-			sb.append("use ");
+			sb.append("\\c ");
 			sb.append(databaseName);
 			sb.append(";\n\n");
 			sb.append(getCreateTablesContent(sqlDir, suffix));
 			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/indexes/indexes-sql-server.sql"));
+			sb.append(readFile(sqlDir + "/indexes/indexes-postgresql.sql"));
 			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/sequences/sequences-sql-server.sql"));
+			sb.append(readFile(sqlDir + "/sequences/sequences-postgresql.sql"));
 		}
 
 		return sb.toString();
@@ -146,12 +132,12 @@ public class SQLServerDB extends BaseDB {
 
 	@Override
 	protected String getServerName() {
-		return "sql-server";
+		return "postgresql";
 	}
 
 	@Override
 	protected String[] getTemplate() {
-		return _SQL_SERVER;
+		return _POSTGRESQL;
 	}
 
 	@Override
@@ -168,37 +154,40 @@ public class SQLServerDB extends BaseDB {
 					String[] template = buildColumnNameTokens(line);
 
 					line = StringUtil.replace(
-						"exec sp_rename '@table@.@old-column@', " +
-							"'@new-column@', 'column';",
+						"alter table @table@ rename @old-column@ to " +
+							"@new-column@;",
 						REWORD_TEMPLATE, template);
 				}
 				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
 					String[] template = buildColumnTypeTokens(line);
 
 					line = StringUtil.replace(
-						"alter table @table@ alter column @old-column@ @type@;",
+						"alter table @table@ alter @old-column@ type @type@ " +
+							"using @old-column@::@type@;",
 						REWORD_TEMPLATE, template);
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
 					String[] template = buildTableNameTokens(line);
 
 					line = StringUtil.replace(
-						"exec sp_rename '@old-table@', '@new-table@';",
+						"alter table @old-table@ rename to @new-table@;",
 						RENAME_TABLE_TEMPLATE, template);
 				}
 				else if (line.contains(DROP_INDEX)) {
 					String[] tokens = StringUtil.split(line, ' ');
 
-					String tableName = tokens[4];
-
-					if (tableName.endsWith(StringPool.SEMICOLON)) {
-						tableName = tableName.substring(
-							0, tableName.length() - 1);
-					}
+					line = StringUtil.replace(
+						"drop index @index@;", "@index@", tokens[2]);
+				}
+				else if (line.contains(DROP_PRIMARY_KEY)) {
+					String[] tokens = StringUtil.split(line, ' ');
 
 					line = StringUtil.replace(
-						"drop index @table@.@index@;", "@table@", tableName);
-					line = StringUtil.replace(line, "@index@", tokens[2]);
+						"alter table @table@ drop constraint @table@_pkey;",
+						"@table@", tokens[2]);
+				}
+				else if (line.contains("\\\'")) {
+					line = StringUtil.replace(line, "\\\'", "\'\'");
 				}
 
 				sb.append(line);
@@ -209,14 +198,12 @@ public class SQLServerDB extends BaseDB {
 		}
 	}
 
-	private static final String[] _SQL_SERVER = {
-		"--", "1", "0", "'19700101'", "GetDate()", " image", " image", " bit",
-		" datetime", " float", " int", " bigint", " nvarchar(2000)",
-		" nvarchar(max)", " nvarchar", "  identity(1,1)", "go"
+	private static final String[] _POSTGRESQL = {
+		"--", "true", "false", "'01/01/1970'", "current_timestamp", " oid",
+		" bytea", " bool", " timestamp", " double precision", " integer",
+		" bigint", " text", " text", " varchar", "", "commit"
 	};
 
-	private static final int _SQL_SERVER_2000 = 8;
-
-	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = false;
+	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = false;
 
 }

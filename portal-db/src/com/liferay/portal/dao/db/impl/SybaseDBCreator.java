@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBCreator;
@@ -21,16 +21,16 @@ import com.liferay.portal.kernel.dao.db.DBType;
 /**
  * @author Shuyang Zhou
  */
-public class SQLServerDBCreator implements DBCreator {
+public class SybaseDBCreator implements DBCreator {
 
 	@Override
 	public DB create(int dbMajorVersion, int dbMinorVersion) {
-		return new SQLServerDB(dbMajorVersion, dbMinorVersion);
+		return new SybaseDB(dbMajorVersion, dbMinorVersion);
 	}
 
 	@Override
 	public DBType getDBType() {
-		return DBType.SQLSERVER;
+		return DBType.SYBASE;
 	}
 
 }

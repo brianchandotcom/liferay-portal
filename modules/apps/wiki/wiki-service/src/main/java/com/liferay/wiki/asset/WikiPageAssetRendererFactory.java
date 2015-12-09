@@ -23,8 +23,8 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
@@ -70,14 +70,20 @@ public class WikiPageAssetRendererFactory
 
 		if (page == null) {
 			if (type == TYPE_LATEST_APPROVED) {
-				page = _wikiPageLocalService.getPage(classPK);
+				try {
+					page = _wikiPageLocalService.getPage(classPK, Boolean.TRUE);
+				}
+				catch (NoSuchPageException nspe) {
+					page = _wikiPageLocalService.getPage(
+						classPK, (Boolean)null);
+				}
+			}
+			else if (type == TYPE_LATEST) {
+				page = _wikiPageLocalService.getPage(classPK, (Boolean)null);
 			}
 			else {
-				WikiPageResource pageResource =
-					_wikiPageResourceLocalService.getPageResource(classPK);
-
-				page = _wikiPageLocalService.getPage(
-					pageResource.getNodeId(), pageResource.getTitle(), null);
+				throw new IllegalArgumentException(
+					"Unknown asset renderer type " + type);
 			}
 		}
 

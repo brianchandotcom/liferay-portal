@@ -100,9 +100,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		boolean isLocked = LockManagerUtil.isLocked(
 			DLFileEntry.class.getName(), fileEntryId);
 
-		if (isLocked && !hasFileEntryLock(fileEntryId) &&
-			!_hasOverrideCheckoutPermission(fileEntryId)) {
-
+		if (isLocked && !hasFileEntryLock(fileEntryId)) {
 			throw new PrincipalException.MustHavePermission(
 				getUserId(), DLFileEntry.class.getName(), fileEntryId,
 				ActionKeys.OVERRIDE_CHECKOUT);
@@ -129,9 +127,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!hasFileEntryLock(fileEntryId) &&
-			!_hasOverrideCheckoutPermission(fileEntryId)) {
-
+		if (!hasFileEntryLock(fileEntryId)) {
 			throw new PrincipalException.MustHavePermission(
 				getUserId(), DLFileEntry.class.getName(), fileEntryId,
 				ActionKeys.OVERRIDE_CHECKOUT);

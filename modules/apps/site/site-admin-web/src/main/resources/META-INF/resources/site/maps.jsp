@@ -17,11 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String groupMapsAPIProvider = (String)request.getAttribute(MapProviderWebKeys.GROUP_MAPS_API_PROVIDER);
-
+String mapProviderKey = (String)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_KEY);
 MapProviderTracker mapProviderTracker = (MapProviderTracker)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_TRACKER);
-
-Set<String> mapProviders = mapProviderTracker.getMapProviders();
 %>
 
 <liferay-ui:error-marker key="errorSection" value="maps" />
@@ -29,26 +26,29 @@ Set<String> mapProviders = mapProviderTracker.getMapProviders();
 <p><liferay-ui:message key="select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets" /></p>
 
 <%
-for (String provider : mapProviders) {
-	MapProvider mapProvider = mapProviderTracker.getMapProvider(provider);
+for (MapProvider mapProvider : mapProviderTracker.getMapProviders()) {
 %>
 
-<aui:input checked='<%= groupMapsAPIProvider.equals(mapProvider.getKey()) %>'
-	helpMessage='<%= mapProvider.getHelpMessage() %>'
-	id='<%= mapProvider.getKey() + "Enabled" %>'
-	label='<%= mapProvider.getLabel() %>'
-	name='TypeSettingsProperties--mapsAPIProvider--'
-	type='radio'
-	value='<%= mapProvider.getKey() %>'
-/>
+	<aui:input checked='<%= Validator.equals(mapProviderKey, mapProvider.getKey()) %>'
+		helpMessage='<%= mapProvider.getHelpMessage() %>'
+		id='<%= mapProvider.getKey() + "Enabled" %>'
+		label='<%= mapProvider.getLabel() %>'
+		name='TypeSettingsProperties--mapsAPIProvider--'
+		type='radio'
+		value='<%= mapProvider.getKey() %>'
+	/>
 
-<div id="<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>">
-	<c:if test="<%= !mapProvider.includeConfiguration(request, new PipingServletResponse(pageContext)) %>" />
-</div>
+	<div id="<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>">
 
-<aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace /><%= mapProvider.getKey() %>Enabled', '<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>', '');
-</aui:script>
+		<%
+		mapProvider.includeConfiguration(request, new PipingServletResponse(pageContext));
+		%>
+
+	</div>
+
+	<aui:script>
+		Liferay.Util.toggleRadio('<portlet:namespace /><%= mapProvider.getKey() %>Enabled', '<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>', '');
+	</aui:script>
 
 <%
 }

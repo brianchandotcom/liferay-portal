@@ -64,9 +64,4 @@ Provide-Capability:\
 	@lib/javax.servlet.jsp.jar,\
 	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringPool.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringURLCodec.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	classes

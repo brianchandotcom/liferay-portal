@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.service.LockLocalServiceUtil;
+import com.liferay.portal.test.rule.ExpectedDBType;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedType;
@@ -67,39 +68,40 @@ public class LockLocalServiceTest {
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
-				dbType = DB.TYPE_DB2, expectedLog = "Error for batch element",
+				expectedDBType = ExpectedDBType.DB2,
+				expectedLog = "Error for batch element",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				dbType = DB.TYPE_DB2,
+				expectedDBType = ExpectedDBType.DB2,
 				expectedLog = "[jcc][t4][102][10040][4.16.53] Batch failure.",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				dbType = DB.TYPE_MYSQL,
+				expectedDBType = ExpectedDBType.MYSQL,
 				expectedLog =
 					"Deadlock found when trying to get lock; try restarting " +
 						"transaction",
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
-				dbType = DB.TYPE_ORACLE,
+				expectedDBType = ExpectedDBType.ORACLE,
 				expectedLog = "ORA-00001: unique constraint",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				dbType = DB.TYPE_POSTGRESQL,
+				expectedDBType = ExpectedDBType.POSTGRESQL,
 				expectedLog = "Batch entry 0 insert into Lock_ ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				dbType = DB.TYPE_POSTGRESQL,
+				expectedDBType = ExpectedDBType.POSTGRESQL,
 				expectedLog =
 					"ERROR: duplicate key value violates unique constraint ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				dbType = DB.TYPE_SYBASE,
+				expectedDBType = ExpectedDBType.SYBASE,
 				expectedLog = "Attempt to insert duplicate key row",
 				expectedType = ExpectedType.CONTAINS
 			)

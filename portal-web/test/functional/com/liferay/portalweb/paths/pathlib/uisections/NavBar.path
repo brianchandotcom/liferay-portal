@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'navbar-nav')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_TOGGLE_ADVANCED</td>
 	<td>//a[contains(@id,'searchtoggleAdvanced')]</td>
 	<td></td>

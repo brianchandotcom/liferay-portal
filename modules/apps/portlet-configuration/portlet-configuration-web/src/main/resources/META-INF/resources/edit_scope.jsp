@@ -57,72 +57,51 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 	<liferay-util:param name="tabs1" value="scope" />
 </liferay-util:include>
 
-<aui:fieldset cssClass="container-fluid-1280">
-	<aui:field-wrapper label="scope" name="scopeId">
-		<liferay-ui:icon-menu direction="down" icon="<%= group.getIconURL(themeDisplay) %>" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" showWhenSingleIcon="<%= true %>">
+<liferay-portlet:actionURL name="editScope" var="setScopeURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="portletResource" value="<%= portletResource %>" />
+	<portlet:param name="mvcPath" value="/edit_scope.jsp" />
+	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
+</liferay-portlet:actionURL>
 
-			<%
-			for (Group availableGroup : availableGroups) {
-				String availableGroupScopeType = StringPool.BLANK;
-				String availableGroupScopeLayoutUuid = StringPool.BLANK;
+<aui:form action="<%= setScopeURL %>" cssClass="container-fluid-1280">
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:select label="scope" name="scope">
 
-				if (availableGroup.isCompany()) {
-					availableGroupScopeType = "company";
+				<%
+				for (Group availableGroup : availableGroups) {
+					String availableGroupScopeType = StringPool.BLANK;
+					String availableGroupScopeLayoutUuid = StringPool.BLANK;
+
+					if (availableGroup.isCompany()) {
+						availableGroupScopeType = "company";
+					}
+					else if (availableGroup.isLayout()) {
+						availableGroupScopeType = "layout";
+
+						Layout availableGroupLayout = LayoutLocalServiceUtil.getLayout(availableGroup.getClassPK());
+
+						availableGroupScopeLayoutUuid = availableGroupLayout.getUuid();
+					}
+
+					String value = availableGroupScopeType + "," + availableGroupScopeLayoutUuid;
+				%>
+
+					<aui:option label="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>" value="<%= value %>" />
+
+				<%
 				}
-				else if (availableGroup.isLayout()) {
-					availableGroupScopeType = "layout";
+				%>
 
-					Layout availableGroupLayout = LayoutLocalServiceUtil.getLayout(availableGroup.getClassPK());
+				<c:if test="<%= !layout.hasScopeGroup() %>">
+					<aui:option label='<%= HtmlUtil.escape(layout.getName(locale)) + " (" + LanguageUtil.get(request, "create-new") + ")" %>' value='<%= "layout," + layout.getUuid() %>' />
+				</c:if>
+			</aui:select>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
-					availableGroupScopeLayoutUuid = availableGroupLayout.getUuid();
-				}
-			%>
-
-				<liferay-portlet:actionURL name="editScope" var="setScopeURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="portletResource" value="<%= portletResource %>" />
-					<portlet:param name="mvcPath" value="/edit_scope.jsp" />
-					<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
-					<portlet:param name="scopeType" value="<%= availableGroupScopeType %>" />
-					<portlet:param name="scopeLayoutUuid" value="<%= availableGroupScopeLayoutUuid %>" />
-				</liferay-portlet:actionURL>
-
-				<liferay-ui:icon
-					id='<%= "scope" + availableGroup.getGroupId() %>'
-					localizeMessage="<%= false %>"
-					message="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>"
-					method="post"
-					onClick='<%= renderResponse.getNamespace() + "changeScope();" %>'
-					url="<%= setScopeURL %>"
-				/>
-
-			<%
-			}
-			%>
-
-			<c:if test="<%= !layout.hasScopeGroup() %>">
-				<liferay-portlet:actionURL name="editScope" var="createNewScopeURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="portletResource" value="<%= portletResource %>" />
-					<portlet:param name="mvcPath" value="/edit_scope.jsp" />
-					<portlet:param name="scopeType" value="layout" />
-					<portlet:param name="scopeLayoutUuid" value="<%= layout.getUuid() %>" />
-				</liferay-portlet:actionURL>
-
-				<liferay-ui:icon
-					id="scopeCurLayout"
-					message='<%= HtmlUtil.escape(layout.getName(locale)) + " (" + LanguageUtil.get(request, "create-new") + ")" %>'
-					method="post"
-					onClick='<%= renderResponse.getNamespace() + "changeScope();" %>'
-					url="<%= createNewScopeURL %>"
-				/>
-			</c:if>
-		</liferay-ui:icon-menu>
-	</aui:field-wrapper>
-</aui:fieldset>
-
-<aui:script>
-	function <portlet:namespace />changeScope() {
-		Liferay.Util.getTop().Liferay.fire('changeScope');
-	}
-</aui:script>
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+	</aui:button-row>
+</aui:form>

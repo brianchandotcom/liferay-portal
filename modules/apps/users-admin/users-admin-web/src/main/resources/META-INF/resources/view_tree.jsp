@@ -245,7 +245,7 @@ if (organization != null) {
 
 						</liferay-util:buffer>
 
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" persistState="<%= true %>" title="<%= organizationsPanelTitle %>">
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="usersAdminOrganizationsPanel" markupView="lexicon" persistState="<%= true %>" title="<%= organizationsPanelTitle %>">
 
 							<%
 							SearchContainer searchContainer = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
@@ -394,7 +394,7 @@ if (organization != null) {
 							boolean organizationContextView = true;
 							%>
 
-							<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
+							<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="usersAdminUsersPanel" markupView="lexicon" persistState="<%= true %>" title="<%= usersPanelTitle %>">
 								<%@ include file="/view_flat_users.jspf" %>
 							</liferay-ui:panel>
 						</c:if>

@@ -25,6 +25,11 @@
 </tr>
 <!--WORKFLOW -->
 <tr>
+	<td>WORKFLOW_STRUCTURE_RESTRICTIONS_TOGGLE</td>
+	<td>//a[contains(.,'Structure Restrictions and Workflow')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_PARENT_FOLDER_RADIO</td>
 	<td>//input[contains(@id,'restrictionTypeInherit')]</td>
 	<td></td>

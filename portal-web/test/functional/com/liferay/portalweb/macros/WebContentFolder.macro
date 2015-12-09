@@ -51,7 +51,7 @@
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="WCEditFolder#WORKFLOW_PARENT_FOLDER_RADIO" />
 			<then>
-				<execute function="Click" locator1="AssetWorkflow#WEB_CONTENT_FOLDER_STRUCTURE_RESTRICTIONS_TOGGLE" />
+				<execute function="Click" locator1="WCEditFolder#WORKFLOW_STRUCTURE_RESTRICTIONS_TOGGLE" />
 			</then>
 		</if>
 

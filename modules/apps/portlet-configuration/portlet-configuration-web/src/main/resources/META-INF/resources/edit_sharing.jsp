@@ -41,7 +41,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editSharingURL %>" method="post" name="fm">
+<aui:form action="<%= editSharingURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SAVE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />

@@ -16,6 +16,10 @@ package com.liferay.portlet.blogs.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -27,12 +31,17 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
@@ -43,9 +52,12 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryTitleException;
 import com.liferay.portlet.blogs.NoSuchEntryException;
+import com.liferay.portlet.blogs.constants.BlogsConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+
+import java.io.InputStream;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -118,6 +130,38 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntryLocalServiceUtil.addEntry(
 			_user.getUserId(), title, RandomTestUtil.randomString(), new Date(),
 			serviceContext);
+	}
+
+	@Test
+	public void testAddOriginalImageInVisibleImageFolder() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), serviceContext);
+
+		FileEntry tempFileEntry = getTempFileEntry(
+			_user.getUserId(), _group.getGroupId(), "image.jpg");
+
+		ImageSelector imageSelector = new ImageSelector(
+			FileUtil.getBytes(tempFileEntry.getContentStream()),
+			tempFileEntry.getTitle(), tempFileEntry.getMimeType(),
+			StringPool.BLANK);
+
+		long originalImageFileEntryId =
+			BlogsEntryLocalServiceUtil.addOriginalImageFileEntry(
+				_user.getUserId(), _group.getGroupId(), blogsEntry.getEntryId(),
+				imageSelector);
+
+		FileEntry portletFileEntry =
+			PortletFileRepositoryUtil.getPortletFileEntry(
+				originalImageFileEntryId);
+
+		Folder folder = portletFileEntry.getFolder();
+
+		Assert.assertEquals(BlogsConstants.SERVICE_NAME, folder.getName());
 	}
 
 	@Test(expected = NoSuchEntryException.class)
@@ -508,6 +552,22 @@ public class BlogsEntryLocalServiceTest {
 					WorkflowConstants.STATUS_IN_TRASH, entry.getStatus());
 			}
 		}
+	}
+
+	protected FileEntry getTempFileEntry(
+			long userId, long groupId, String title)
+		throws PortalException {
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portal/util/dependencies/test.jpg");
+
+		return TempFileEntryUtil.addTempFileEntry(
+			groupId, userId, BlogsEntry.class.getName(), title, inputStream,
+			MimeTypesUtil.getContentType(title));
 	}
 
 	protected void testGetCompanyEntries(boolean statusInTrash)

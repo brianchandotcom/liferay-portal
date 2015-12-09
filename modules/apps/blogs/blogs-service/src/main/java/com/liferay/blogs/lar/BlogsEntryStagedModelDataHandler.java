@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -293,19 +292,6 @@ public class BlogsEntryStagedModelDataHandler
 			}
 		}
 
-		ImageSelector coverImageImageSelector = new ImageSelector(
-			smallImageFileEntryId, entry.getCoverImageURL(), null);
-
-		ImageSelector smallImageImageSelector = null;
-
-		if (!entry.isSmallImage()) {
-			smallImageImageSelector = new ImageSelector(0);
-		}
-		else {
-			smallImageImageSelector = new ImageSelector(
-				smallImageFileEntryId, entry.getSmallImageURL(), null);
-		}
-
 		BlogsEntry importedEntry = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
@@ -323,8 +309,7 @@ public class BlogsEntryStagedModelDataHandler
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,
 					allowTrackbacks, trackbacks, entry.getCoverImageCaption(),
-					coverImageImageSelector, smallImageImageSelector,
-					serviceContext);
+					null, null, serviceContext);
 			}
 			else {
 				importedEntry = _blogsEntryLocalService.updateEntry(
@@ -333,8 +318,7 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getContent(), displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					allowPingbacks, allowTrackbacks, trackbacks,
-					entry.getCoverImageCaption(), coverImageImageSelector,
-					smallImageImageSelector, serviceContext);
+					entry.getCoverImageCaption(), null, null, serviceContext);
 			}
 		}
 		else {
@@ -343,9 +327,16 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getDescription(), entry.getContent(), displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				entry.getCoverImageCaption(), coverImageImageSelector,
-				smallImageImageSelector, serviceContext);
+				entry.getCoverImageCaption(), null, null, serviceContext);
 		}
+
+		importedEntry.setSmallImageId(smallImageFileEntryId);
+		importedEntry.setSmallImageURL(entry.getSmallImageURL());
+		importedEntry.setCoverImageFileEntryId(
+			entry.getCoverImageFileEntryId());
+		importedEntry.setCoverImageURL(entry.getCoverImageURL());
+
+		_blogsEntryLocalService.updateBlogsEntry(importedEntry);
 
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}

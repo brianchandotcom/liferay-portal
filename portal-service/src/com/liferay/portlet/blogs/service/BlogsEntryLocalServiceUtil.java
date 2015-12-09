@@ -162,6 +162,15 @@ public class BlogsEntryLocalServiceUtil {
 		getService().addEntryResources(entryId, modelPermissions);
 	}
 
+	public static long addOriginalImageFileEntry(long userId, long groupId,
+		long entryId,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addOriginalImageFileEntry(userId, groupId, entryId,
+			imageSelector);
+	}
+
 	public static void checkEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkEntries();

@@ -68,6 +68,19 @@ public class BlogsEntryAttachmentFileEntryHelper {
 
 	public FileEntry addBlogsEntryAttachmentFileEntry(
 			long groupId, long userId, long blogsEntryId, long folderId,
+			String fileName, String mimeType, byte[] bytes)
+		throws PortalException {
+
+		String uniqueFileName = getUniqueFileName(groupId, fileName, folderId);
+
+		return PortletFileRepositoryUtil.addPortletFileEntry(
+			groupId, userId, BlogsEntry.class.getName(), blogsEntryId,
+			BlogsConstants.SERVICE_NAME, folderId, bytes, uniqueFileName,
+			mimeType, true);
+	}
+
+	public FileEntry addBlogsEntryAttachmentFileEntry(
+			long groupId, long userId, long blogsEntryId, long folderId,
 			String fileName, String mimeType, File file)
 		throws PortalException {
 

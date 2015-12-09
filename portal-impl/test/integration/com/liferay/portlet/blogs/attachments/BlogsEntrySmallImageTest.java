@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -77,7 +78,8 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 			user.getUserId(), imageTitle, serviceContext);
 
 		ImageSelector imageSelector = new ImageSelector(
-			fileEntry.getFileEntryId());
+			FileUtil.getBytes(fileEntry.getContentStream()),
+			fileEntry.getTitle(), fileEntry.getMimeType(), StringPool.BLANK);
 
 		return addBlogsEntry(imageSelector);
 	}
@@ -117,7 +119,8 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 			user.getUserId(), coverImageTitle, serviceContext);
 
 		ImageSelector imageSelector = new ImageSelector(
-			fileEntry.getFileEntryId());
+			FileUtil.getBytes(fileEntry.getContentStream()),
+			fileEntry.getTitle(), fileEntry.getMimeType(), StringPool.BLANK);
 
 		return updateBlogsEntry(blogsEntryId, imageSelector);
 	}

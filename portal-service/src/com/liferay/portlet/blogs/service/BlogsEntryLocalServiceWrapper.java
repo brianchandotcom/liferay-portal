@@ -165,6 +165,15 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public long addOriginalImageFileEntry(long userId, long groupId,
+		long entryId,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.addOriginalImageFileEntry(userId,
+			groupId, entryId, imageSelector);
+	}
+
+	@Override
 	public void checkEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryLocalService.checkEntries();

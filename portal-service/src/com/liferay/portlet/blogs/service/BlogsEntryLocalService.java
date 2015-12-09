@@ -131,6 +131,11 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws PortalException;
 
+	public long addOriginalImageFileEntry(long userId, long groupId,
+		long entryId,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
+		throws PortalException;
+
 	public void checkEntries() throws PortalException;
 
 	/**

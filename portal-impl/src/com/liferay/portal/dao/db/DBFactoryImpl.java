@@ -64,7 +64,10 @@ public class DBFactoryImpl implements DBFactory {
 				Dialect dialect = (Dialect)InstanceFactory.newInstance(
 					PropsValues.HIBERNATE_DIALECT);
 
-				setDB(dialect, InfrastructureUtil.getDataSource());
+				setDB(
+					getDB(
+						getDBType(dialect),
+						InfrastructureUtil.getDataSource()));
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -123,7 +126,7 @@ public class DBFactoryImpl implements DBFactory {
 	}
 
 	@Override
-	public DB getDB(Object dialect, DataSource dataSource) {
+	public DBType getDBType(Object dialect) {
 		if (dialect instanceof DialectImpl) {
 			DialectImpl dialectImpl = (DialectImpl)dialect;
 
@@ -131,29 +134,29 @@ public class DBFactoryImpl implements DBFactory {
 		}
 
 		if (dialect instanceof DB2Dialect) {
-			return getDB(DBType.DB2, dataSource);
+			return DBType.DB2;
 		}
 
 		if (dialect instanceof HSQLDialect) {
-			return getDB(DBType.HYPERSONIC, dataSource);
+			return DBType.HYPERSONIC;
 		}
 
 		if (dialect instanceof MySQLDialect) {
-			return getDB(DBType.MYSQL, dataSource);
+			return DBType.MYSQL;
 		}
 
 		if (dialect instanceof Oracle8iDialect ||
 			dialect instanceof Oracle9Dialect) {
 
-			return getDB(DBType.ORACLE, dataSource);
+			return DBType.ORACLE;
 		}
 
 		if (dialect instanceof PostgreSQLDialect) {
-			return getDB(DBType.POSTGRESQL, dataSource);
+			return DBType.POSTGRESQL;
 		}
 
 		if (dialect instanceof SQLServerDialect) {
-			return getDB(DBType.SQLSERVER, dataSource);
+			return DBType.SQLSERVER;
 		}
 
 		if (dialect instanceof SybaseDialect ||
@@ -161,36 +164,22 @@ public class DBFactoryImpl implements DBFactory {
 			dialect instanceof SybaseAnywhereDialect ||
 			dialect instanceof SybaseASE15Dialect) {
 
-			return getDB(DBType.SYBASE, dataSource);
+			return DBType.SYBASE;
 		}
 
 		throw new IllegalArgumentException("Unknown dialect type " + dialect);
 	}
 
 	@Override
-	public void setDB(DBType dbType, DataSource dataSource) {
-		_db = getDB(dbType, dataSource);
+	public void setDB(DB db) {
+		_db = db;
 
 		if (_log.isDebugEnabled()) {
 			Class<?> clazz = _db.getClass();
 
 			_log.debug(
 				"Using DB implementation " + clazz.getName() + " for " +
-					dbType);
-		}
-	}
-
-	@Override
-	public void setDB(Object dialect, DataSource dataSource) {
-		_db = getDB(dialect, dataSource);
-
-		if (_log.isDebugEnabled()) {
-			Class<?> dbClazz = _db.getClass();
-			Class<?> dialectClazz = dialect.getClass();
-
-			_log.debug(
-				"Using DB implementation " + dbClazz.getName() + " for " +
-					dialectClazz.getName());
+					db.getDBType());
 		}
 	}
 

@@ -25,10 +25,8 @@ public interface DBFactory {
 
 	public DB getDB(DBType dbType, DataSource dataSource);
 
-	public DB getDB(Object dialect, DataSource dataSource);
+	public DBType getDBType(Object dialect);
 
-	public void setDB(DBType dbType, DataSource dataSource);
-
-	public void setDB(Object dialect, DataSource dataSource);
+	public void setDB(DB db);
 
 }

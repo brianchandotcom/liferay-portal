@@ -17,118 +17,86 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String tabs1 = ParamUtil.getString(request, "tabs1");
 String redirect = ParamUtil.getString(request, "redirect");
 String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
-
-// Configuration
-
-PortletURL configurationURL = renderResponse.createRenderURL();
-
-configurationURL.setParameter("mvcPath", "/edit_configuration.jsp");
-configurationURL.setParameter("redirect", redirect);
-configurationURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-configurationURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
-configurationURL.setParameter("portletResource", portletResource);
-
-// Supported clients
-
-PortletURL supportedClientsURL = renderResponse.createRenderURL();
-
-supportedClientsURL.setParameter("mvcPath", "/edit_supported_clients.jsp");
-supportedClientsURL.setParameter("redirect", redirect);
-supportedClientsURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-supportedClientsURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
-supportedClientsURL.setParameter("portletResource", portletResource);
-
-// Permissions
-
-PortletURL permissionsURL = renderResponse.createRenderURL();
-
-permissionsURL.setParameter("mvcPath", "/edit_permissions.jsp");
-permissionsURL.setParameter("redirect", redirect);
-permissionsURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-permissionsURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
-permissionsURL.setParameter("portletResource", portletResource);
-permissionsURL.setParameter("resourcePrimKey", PortletPermissionUtil.getPrimaryKey(layout.getPlid(), portletResource));
-
-// Public render parameters
-
-PortletURL publicRenderParametersURL = renderResponse.createRenderURL();
-
-publicRenderParametersURL.setParameter("mvcPath", "/edit_public_render_parameters.jsp");
-publicRenderParametersURL.setParameter("redirect", redirect);
-publicRenderParametersURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-publicRenderParametersURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
-publicRenderParametersURL.setParameter("portletResource", portletResource);
-
-// Sharing
-
-PortletURL sharingURL = renderResponse.createRenderURL();
-
-sharingURL.setParameter("mvcPath", "/edit_sharing.jsp");
-sharingURL.setParameter("redirect", redirect);
-sharingURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-sharingURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
-sharingURL.setParameter("portletResource", portletResource);
-
-// Scope
-
-PortletURL scopeURL = renderResponse.createRenderURL();
-
-scopeURL.setParameter("mvcPath", "/edit_scope.jsp");
-scopeURL.setParameter("redirect", redirect);
-scopeURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-scopeURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
-scopeURL.setParameter("portletResource", portletResource);
-
-int pos = 0;
-
-String tabs1Names = StringPool.BLANK;
-String[] tabs1URLs = new String[0];
-
-if (selPortlet.getConfigurationActionInstance() != null) {
-	tabs1Names += ",setup";
-
-	tabs1URLs = ArrayUtil.append(tabs1URLs, configurationURL.toString());
-}
-
-if (selPortlet.hasMultipleMimeTypes()) {
-	tabs1Names += ",supported-clients";
-
-	tabs1URLs = ArrayUtil.append(tabs1URLs, supportedClientsURL.toString());
-}
-
-if (PortletPermissionUtil.contains(permissionChecker, layout, portletResource, ActionKeys.PERMISSIONS)) {
-	tabs1Names += ",permissions";
-
-	tabs1URLs = ArrayUtil.append(tabs1URLs, permissionsURL.toString());
-}
-
-if (!selPortlet.getPublicRenderParameters().isEmpty()) {
-	tabs1Names += ",communication";
-
-	tabs1URLs = ArrayUtil.append(tabs1URLs, publicRenderParametersURL.toString());
-}
-
-tabs1Names += ",sharing";
-
-tabs1URLs = ArrayUtil.append(tabs1URLs, sharingURL.toString());
-
-if (selPortlet.isScopeable()) {
-	tabs1Names += ",scope";
-
-	tabs1URLs = ArrayUtil.append(tabs1URLs, scopeURL.toString());
-}
-
-if (tabs1Names.startsWith(",")) {
-	tabs1Names = tabs1Names.substring(1);
-}
-
-String tabs1 = ParamUtil.getString(request, "tabs1");
 
 PortalUtil.addPortletBreadcrumbEntry(request, PortalUtil.getPortletTitle(renderResponse), null);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "configuration"), null);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs1), currentURL);
 %>
 
-<liferay-ui:tabs names="<%= tabs1Names %>" type="pills" urls="<%= tabs1URLs %>" />
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<c:if test="<%= selPortlet.getConfigurationActionInstance() != null %>">
+			<portlet:renderURL var="configurationURL">
+				<portlet:param name="mvcPath" value="/edit_configuration.jsp" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+				<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="portletResource" value="<%= portletResource %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= configurationURL %>" label="setup" selected='<%= tabs1.equals("setup") %>' />
+		</c:if>
+
+		<c:if test="<%= selPortlet.hasMultipleMimeTypes() %>">
+			<portlet:renderURL var="supportedClientsURL">
+				<portlet:param name="mvcPath" value="/edit_supported_clients.jsp" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+				<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="portletResource" value="<%= portletResource %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= supportedClientsURL %>" label="supported-clients" selected='<%= tabs1.equals("supported-clients") %>' />
+		</c:if>
+
+		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, portletResource, ActionKeys.PERMISSIONS) %>">
+			<portlet:renderURL var="permissionsURL">
+				<portlet:param name="mvcPath" value="/edit_permissions.jsp" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+				<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="portletResource" value="<%= portletResource %>" />
+				<portlet:param name="resourcePrimKey" value="<%= PortletPermissionUtil.getPrimaryKey(layout.getPlid(), portletResource) %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= permissionsURL %>" label="permissions" selected='<%= tabs1.equals("permissions") %>' />
+		</c:if>
+
+		<c:if test="<%= !selPortlet.getPublicRenderParameters().isEmpty() %>">
+			<portlet:renderURL var="publicRenderParametersURL">
+				<portlet:param name="mvcPath" value="/edit_public_render_parameters.jsp" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+				<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="portletResource" value="<%= portletResource %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= publicRenderParametersURL.toString() %>" label="communication" selected='<%= tabs1.equals("communication") %>' />
+		</c:if>
+
+		<portlet:renderURL var="sharingURL">
+			<portlet:param name="mvcPath" value="/edit_sharing.jsp" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+			<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
+			<portlet:param name="portletResource" value="<%= portletResource %>" />
+		</portlet:renderURL>
+
+		<aui:nav-item href="<%= sharingURL %>" label="sharing" selected='<%= tabs1.equals("sharing") %>' />
+
+		<c:if test="<%= selPortlet.isScopeable() %>">
+			<portlet:renderURL var="scopeURL">
+				<portlet:param name="mvcPath" value="/edit_scope.jsp" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+				<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
+				<portlet:param name="portletResource" value="<%= portletResource %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item href="<%= scopeURL %>" label="scope" selected='<%= tabs1.equals("scope") %>' />
+		</c:if>
+	</aui:nav>
+</aui:nav-bar>

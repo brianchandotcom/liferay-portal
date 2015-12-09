@@ -37,12 +37,7 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 	</portlet:renderURL>
 
 	<div class="archived-setups">
-		<liferay-ui:icon
-			iconCssClass="icon-save"
-			label="<%= true %>"
-			message="archive-restore-setup"
-			url="<%= archivedSetupsURL %>"
-		/>
+		<aui:a href="archivedSetupsURL" label="archive-restore-setup" />
 	</div>
 </c:if>
 

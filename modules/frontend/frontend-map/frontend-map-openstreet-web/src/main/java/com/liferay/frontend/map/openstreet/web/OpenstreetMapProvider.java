@@ -16,7 +16,6 @@ package com.liferay.frontend.map.openstreet.web;
 
 import com.liferay.frontend.map.api.BaseJSPMapProvider;
 import com.liferay.frontend.map.api.MapProvider;
-import com.liferay.frontend.map.openstreet.web.constants.OpenstreetMapConstants;
 
 import javax.servlet.ServletContext;
 
@@ -31,12 +30,12 @@ public class OpenstreetMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/configuration.jsp";
+		return null;
 	}
 
 	@Override
 	public String getHelpMessage() {
-		return "use-openstreetmap-as-the-maps-api-provider";
+		return null;
 	}
 
 	@Override
@@ -46,7 +45,7 @@ public class OpenstreetMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	public String getKey() {
-		return OpenstreetMapConstants.OPENSTREET_MAP_PROVIDER;
+		return "OpenStreet";
 	}
 
 	@Override

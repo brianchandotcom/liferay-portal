@@ -27,7 +27,11 @@ public interface DynamicDataSourceTargetSource {
 
 	public Operation getOperation();
 
+	public DataSource getReadDataSource();
+
 	public Object getTarget() throws Exception;
+
+	public DataSource getWriteDataSource();
 
 	public String popMethod();
 

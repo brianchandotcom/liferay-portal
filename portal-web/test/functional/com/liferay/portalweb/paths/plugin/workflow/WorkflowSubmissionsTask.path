@@ -81,6 +81,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_MORE_DETAILS_HEADER_COLLAPSED</td>
+	<td>//div[contains(@class,'asset-metadata-panel')]/div[contains(@class,'toggler-header-collapsed')]//span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_MORE_DETAILS_VOCABULARY</td>
+	<td>//span[@class='taglib-asset-categories-summary']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_MORE_DETAILS_CATEGORY</td>
+	<td>//span[@class='taglib-asset-categories-summary']/span[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -3,8 +3,6 @@ FileTree fileTree = fileTree(rootDir) {
 	exclude "sdk/*/samples/build.gradle"
 
 	if (Boolean.getBoolean("portal.build")) {
-		exclude "apps/journal/journal-content-asset-addon-entry/build.gradle"
-		exclude "apps/mentions/mentions-editor-config/build.gradle"
 		exclude "portal/portal-scripting-beanshell/build.gradle"
 		exclude "portal/portal-scripting-javascript/build.gradle"
 		exclude "portal/portal-scripting-python/build.gradle"

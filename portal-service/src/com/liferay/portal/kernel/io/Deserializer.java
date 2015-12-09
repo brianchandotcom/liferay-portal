@@ -150,7 +150,8 @@ public class Deserializer {
 			case SerializationConstants.TC_OBJECT:
 				try {
 					ObjectInputStream objectInpputStream =
-						new AnnotatedObjectInputStream(new BufferInputStream());
+						new ProtectedAnnotatedObjectInputStream(
+							new BufferInputStream());
 
 					return (T)objectInpputStream.readObject();
 				}

@@ -52,7 +52,7 @@ public class DeserializerTest {
 
 			@Override
 			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.add(AnnotatedObjectInputStream.class);
+				assertClasses.add(ProtectedAnnotatedObjectInputStream.class);
 				assertClasses.add(AnnotatedObjectOutputStream.class);
 			}
 

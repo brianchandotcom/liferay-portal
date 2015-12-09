@@ -340,6 +340,19 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Override
 	public List<BackgroundTask> getBackgroundTasks(
+		long[] groupIds, String name, String taskExecutorClassName, int start,
+		int end, OrderByComparator<BackgroundTask> orderByComparator) {
+
+		List<com.liferay.portal.background.task.model.BackgroundTask>
+			backgroundTasks = _backgroundTaskLocalService.getBackgroundTasks(
+				groupIds, name, taskExecutorClassName, start, end,
+				translate(orderByComparator));
+
+		return translate(backgroundTasks);
+	}
+
+	@Override
+	public List<BackgroundTask> getBackgroundTasks(
 		String taskExecutorClassName, int status) {
 
 		List<com.liferay.portal.background.task.model.BackgroundTask>
@@ -433,6 +446,23 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 		return _backgroundTaskLocalService.getBackgroundTasksCount(
 			groupId, taskExecutorClassNames, completed);
+	}
+
+	@Override
+	public int getBackgroundTasksCount(
+		long[] groupIds, String name, String taskExecutorClassName) {
+
+		return _backgroundTaskLocalService.getBackgroundTasksCount(
+			groupIds, name, taskExecutorClassName);
+	}
+
+	@Override
+	public int getBackgroundTasksCount(
+		long[] groupIds, String name, String taskExecutorClassName,
+		boolean completed) {
+
+		return _backgroundTaskLocalService.getBackgroundTasksCount(
+			groupIds, name, taskExecutorClassName, completed);
 	}
 
 	@Override

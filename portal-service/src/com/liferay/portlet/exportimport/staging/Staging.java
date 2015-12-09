@@ -256,6 +256,8 @@ public interface Staging {
 
 	public String getStagedPortletId(String portletId);
 
+	public long[] getStagingAndLiveGroupId(long groupId) throws PortalException;
+
 	public Group getStagingGroup(long groupId);
 
 	/**

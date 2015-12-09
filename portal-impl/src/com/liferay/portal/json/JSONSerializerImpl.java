@@ -22,6 +22,9 @@ import jodd.json.JsonContext;
 import jodd.json.JsonSerializer;
 import jodd.json.TypeJsonSerializer;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * @author Igor Spasic
  */
@@ -93,12 +96,36 @@ public class JSONSerializerImpl implements JSONSerializer {
 
 	static {
 		JoddJson.defaultSerializers.register(
+			JSONArray.class, new JSONArrayTypeJSONSerializer());
+		JoddJson.defaultSerializers.register(
+			JSONObject.class, new JSONObjectTypeJSONSerializer());
+		JoddJson.defaultSerializers.register(
 			Long.TYPE, new LongToStringTypeJSONSerializer());
 		JoddJson.defaultSerializers.register(
 			Long.class, new LongToStringTypeJSONSerializer());
 	}
 
 	private final JsonSerializer _jsonSerializer;
+
+	private static class JSONArrayTypeJSONSerializer
+		implements TypeJsonSerializer<JSONArray> {
+
+		@Override
+		public void serialize(JsonContext jsonContext, JSONArray value) {
+			jsonContext.write(value.toString());
+		}
+
+	}
+
+	private static class JSONObjectTypeJSONSerializer
+		implements TypeJsonSerializer<JSONObject> {
+
+		@Override
+		public void serialize(JsonContext jsonContext, JSONObject value) {
+			jsonContext.write(value.toString());
+		}
+
+	}
 
 	private static class LongToStringTypeJSONSerializer
 		implements TypeJsonSerializer<Long> {

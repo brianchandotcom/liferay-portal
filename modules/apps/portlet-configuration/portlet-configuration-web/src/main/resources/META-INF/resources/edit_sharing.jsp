@@ -72,7 +72,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					<textarea class="field form-control lfr-textarea" id="<portlet:namespace />widgetScript" onClick="this.select();" readonly="true"><%= HtmlUtil.escape(textAreaContent) %></textarea>
 				</aui:field-wrapper>
 
-				<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-any-website", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="widgetShowAddAppLink" type="checkbox" value="<%= widgetShowAddAppLink %>" />
+				<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-any-website", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="widgetShowAddAppLink" type="toggle-switch" value="<%= widgetShowAddAppLink %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 
@@ -117,7 +117,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 
 					<aui:input name="callbackURL" type="resource" value="<%= callbackURL %>" />
 
-					<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-facebook", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="facebookShowAddAppLink" type="checkbox" value="<%= facebookShowAddAppLink %>" />
+					<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-facebook", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="facebookShowAddAppLink" type="toggle-switch" value="<%= facebookShowAddAppLink %>" />
 				</c:if>
 			</aui:fieldset>
 		</liferay-ui:section>
@@ -135,7 +135,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 
 				<aui:input name="opensocialGadgetURL" type="resource" value="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
 
-				<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-igoogle", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="iGoogleShowAddAppLink" type="checkbox" value="<%= iGoogleShowAddAppLink %>" />
+				<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-igoogle", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="iGoogleShowAddAppLink" type="toggle-switch" value="<%= iGoogleShowAddAppLink %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 
@@ -152,7 +152,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 
 				<aui:input name="netvibesWidgetURL" type="resource" value="<%= PortalUtil.getNetvibesURL(portlet, themeDisplay) %>" />
 
-				<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-netvibes-pages", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="netvibesShowAddAppLink" type="checkbox" value="<%= netvibesShowAddAppLink %>" />
+				<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-netvibes-pages", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="netvibesShowAddAppLink" type="toggle-switch" value="<%= netvibesShowAddAppLink %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

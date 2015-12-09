@@ -46,9 +46,9 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 	%>
 
 		<aui:fieldset label='<%= LanguageUtil.get(request, "portlet-mode") + ": " + LanguageUtil.get(request, curPortletMode) %>'>
-			<aui:input disabled="<%= true %>" label="regular-browsers" name='<%= "regularBrowsersEnabled" + curPortletMode %>' type="checkbox" value="<%= true %>" />
+			<aui:input disabled="<%= true %>" label="regular-browsers" name='<%= "regularBrowsersEnabled" + curPortletMode %>' type="toggle-switch" value="<%= true %>" />
 
-			<aui:input label="mobile-devices" name="<%= mobileDevicesParam %>" type="checkbox" value="<%= mobileDevices %>" />
+			<aui:input label="mobile-devices" name="<%= mobileDevicesParam %>" type="toggle-switch" value="<%= mobileDevices %>" />
 		</aui:fieldset>
 
 	<%

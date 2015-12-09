@@ -17,8 +17,6 @@ AUI.add(
 
 		var STR_SEMICOLON = ';';
 
-		var STR_ZERO = '0';
-
 		var WEEKLY = 'WEEKLY';
 
 		var padNumber = A.rbind('padNumber', A.Lang.String, 2);

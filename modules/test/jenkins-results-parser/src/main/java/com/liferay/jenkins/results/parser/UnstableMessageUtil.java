@@ -14,9 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,89 +22,7 @@ import org.json.JSONObject;
  */
 public class UnstableMessageUtil {
 
-	public static String getUnstableMessage(String buildURL) throws Exception {
-		StringBuilder sb = new StringBuilder();
-
-		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(
-				buildURL + "testReport/api/json"));
-
-		int failCount = testReportJSONObject.getInt("failCount");
-		int totalCount = testReportJSONObject.getInt("totalCount");
-
-		int passCount = totalCount - failCount;
-
-		sb.append("<h6>Job Results:</h6>");
-		sb.append("<p>");
-		sb.append(passCount);
-		sb.append(" Test");
-
-		if (passCount != 1) {
-			sb.append("s");
-		}
-
-		sb.append(" Passed.<br />");
-		sb.append(failCount);
-		sb.append(" Test");
-
-		if (failCount != 1) {
-			sb.append("s");
-		}
-
-		sb.append(" Failed.</p>");
-
-		sb.append("<ol>");
-
-		List<String> runBuildURLs = new ArrayList<>();
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(buildURL + "api/json"));
-
-		if (jsonObject.has("runs")) {
-			JSONArray runsJSONArray = jsonObject.getJSONArray("runs");
-
-			for (int i = 0; i < runsJSONArray.length(); i++) {
-				JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
-
-				String runBuildURL = runJSONObject.getString("url");
-
-				if (!runBuildURL.endsWith(
-						"/" + jsonObject.getInt("number") + "/")) {
-
-					continue;
-				}
-
-				JSONObject runBuildURLJSONObject =
-					JenkinsResultsParserUtil.toJSONObject(
-						JenkinsResultsParserUtil.getLocalURL(
-							runBuildURL + "api/json"));
-
-				String result = runBuildURLJSONObject.getString("result");
-
-				if (!result.equals("SUCCESS")) {
-					runBuildURLs.add(runBuildURL);
-				}
-			}
-		}
-		else {
-			runBuildURLs.add(buildURL);
-		}
-
-		int failureCount = _getUnstableMessage(sb, runBuildURLs);
-
-		sb.append("</ol>");
-
-		if (failureCount > 3) {
-			sb.append("<p><strong>Click <a href=\\\"");
-			sb.append(buildURL);
-			sb.append("/testReport/\\\">here</a> for more failures.</strong>");
-			sb.append("</p>");
-		}
-
-		return sb.toString();
-	}
-	
-	public static String _getUnstableMessage(String runBuildURL) 
+	public static String getUnstableMessage(String runBuildURL) 
 		throws Exception {
 		
 		StringBuilder sb = new StringBuilder();
@@ -148,7 +63,7 @@ public class UnstableMessageUtil {
 					return sb.toString();
 				}
 
-				sb.append("<li><a href=\\\"");
+				sb.append("<li><a href=\"");
 
 				String runBuildHREF = runBuildURL;
 
@@ -191,7 +106,7 @@ public class UnstableMessageUtil {
 
 				sb.append(testMethodNameURL);
 
-				sb.append("\\\">");
+				sb.append("\">");
 				sb.append(testSimpleClassName);
 				sb.append(".");
 				sb.append(testMethodName);
@@ -233,14 +148,13 @@ public class UnstableMessageUtil {
 						sb.append(" - ");
 					}
 
-					sb.append("<a href=\\\"");
+					sb.append("<a href=\"");
 					sb.append(runBuildURL);
-					sb.append("/console\\\">Console Output</a>");
+					sb.append("/console\">Console Output</a>");
 				}
 				
 				sb.append("<pre>");
-				sb.append(truncate(
-					(2500/_MAX_MESSAGE_COUNT), caseJSONObject.getString("errorDetails")));
+				sb.append(_truncate((2500/_MAX_MESSAGE_COUNT), caseJSONObject.getString("errorStackTrace")));
 				sb.append("</pre>");
 
 				sb.append("</li>");
@@ -252,7 +166,7 @@ public class UnstableMessageUtil {
 	
 	private static final int _MAX_MESSAGE_COUNT = 3;
 	
-	private static String truncate(int maxLength, String message) {
+	private static String _truncate(int maxLength, String message) {
 		if (message.length() <= maxLength) {
 			return message;
 		}
@@ -268,27 +182,5 @@ public class UnstableMessageUtil {
 	}
 
 
-	private static int _getUnstableMessage(
-			StringBuilder sb, List<String> runBuildURLs)
-		throws Exception {
-
-		int failureCount = 0;
-
-		for (String runBuildURL : runBuildURLs) {
-			if (failureCount == 3) {
-				sb.append("<li>...</li>");
-			}
-			
-			if (failureCount > 3) {
-				return failureCount;
-			}
-			
-			sb.append(_getUnstableMessage(runBuildURL));
-			
-			failureCount++;
-		}
-
-		return failureCount;
-	}
 
 }

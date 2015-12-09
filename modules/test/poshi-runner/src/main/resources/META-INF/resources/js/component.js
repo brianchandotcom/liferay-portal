@@ -665,11 +665,10 @@ YUI.add(
 
 								if (scopeType === 'macro' || scopeType === 'function') {
 									var increment = 2;
-									var paramCollection = parameters;
+									var paramCollection = currentScope.all('> .line-container .child-container .name');;
 									var start = 0;
 									var valueIncrement = 1;
 
-									var limit = paramCollection.size() - 1;
 
 									if (scopeType === 'function') {
 										increment = 1;
@@ -678,7 +677,9 @@ YUI.add(
 										valueIncrement = 0;
 									}
 
-									for (var i = start; i <= limit; i += increment) {
+									var limit = paramCollection.size();
+
+									for (var i = start; i < limit; i += increment) {
 										buffer.push(
 											A.Lang.sub(
 												TPL_PARAMETER,

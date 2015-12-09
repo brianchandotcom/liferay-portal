@@ -227,9 +227,37 @@ public class CalendarBookingAssetRenderer
 	}
 
 	@Override
+	public boolean isCommentable() {
+		try {
+			Calendar calendar = _calendarBooking.getCalendar();
+
+			return calendar.isEnableComments();
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isPrintable() {
 		return true;
 	}
+
+	@Override
+	public boolean isRatable() {
+		try {
+			Calendar calendar = _calendarBooking.getCalendar();
+
+			return calendar.isEnableRatings();
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
+		return false;
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingAssetRenderer.class);

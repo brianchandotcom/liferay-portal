@@ -15,46 +15,33 @@
 package com.liferay.exportimport.web.upgrade;
 
 import com.liferay.exportimport.web.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
  */
-@Component(immediate = true, service = ExportImportWebUpgrade.class)
-public class ExportImportWebUpgrade {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class ExportImportWebUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.exportimport.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.exportimport.web", "0.0.1", "1.0.0",
+			new UpgradePortletId());
+	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new UpgradePortletId());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.exportimport.web", upgradeProcesses, 1, 1, false);
-	}
-
-	private volatile ReleaseLocalService _releaseLocalService;
 
 }

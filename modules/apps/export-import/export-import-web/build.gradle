@@ -15,6 +15,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:staging:staging-lang")
 	compile project(":portal:portal-background-task-api")
+	compile project(":portal:portal-upgrade")
 }
 
 liferay {

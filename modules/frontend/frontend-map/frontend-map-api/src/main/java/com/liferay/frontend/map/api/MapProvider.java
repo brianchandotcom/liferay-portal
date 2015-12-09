@@ -16,6 +16,8 @@ package com.liferay.frontend.map.api;
 
 import java.io.IOException;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,7 +30,7 @@ public interface MapProvider {
 
 	public String getKey();
 
-	public String getLabel();
+	public String getLabel(Locale locale);
 
 	public boolean include(
 			HttpServletRequest request, HttpServletResponse response)

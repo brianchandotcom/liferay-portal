@@ -32,7 +32,7 @@ for (MapProvider mapProvider : mapProviderTracker.getMapProviders()) {
 	<aui:input checked='<%= Validator.equals(mapProviderKey, mapProvider.getKey()) %>'
 		helpMessage='<%= mapProvider.getHelpMessage() %>'
 		id='<%= mapProvider.getKey() + "Enabled" %>'
-		label='<%= mapProvider.getLabel() %>'
+		label='<%= mapProvider.getLabel(locale) %>'
 		name='TypeSettingsProperties--mapsAPIProvider--'
 		type='radio'
 		value='<%= mapProvider.getKey() %>'

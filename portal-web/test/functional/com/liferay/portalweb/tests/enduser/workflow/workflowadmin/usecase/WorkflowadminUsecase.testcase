@@ -1057,8 +1057,10 @@
 			<var name="wikiPageUsername" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="My Submissions" />
+		<execute macro="UserBar#gotoMyAccount" />
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Submissions" />
 		</execute>
 
 		<var name="key_workflowAssetTitle" value="${wikiPageTitle}" />

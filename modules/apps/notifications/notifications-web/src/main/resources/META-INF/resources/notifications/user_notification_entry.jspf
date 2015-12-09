@@ -29,72 +29,29 @@ JSONObject jsonObject = JSONFactoryUtil.createJSONObject(userNotificationEvent.g
 
 long userNotificationEventUserId = jsonObject.getLong("userId");
 
-String userNotificationEventUserFullName = HtmlUtil.escape(PortalUtil.getUserName(userNotificationEventUserId, StringPool.BLANK));
-
-User userNotificationEventUser = UserLocalServiceUtil.fetchUser(userNotificationEventUserId);
-
-String userNotificationEventUserPortraitURL = StringPool.BLANK;
-
-if (userNotificationEventUser != null) {
-	userNotificationEventUserPortraitURL = userNotificationEventUser.getPortraitURL(themeDisplay);
-}
-
 if (userNotificationEvent.isArchived()) {
 	row.setCssClass("archived");
 }
 %>
 
+<liferay-ui:search-container-column-user
+	showDetails="<%= false %>"
+	userId="<%= userNotificationEventUserId %>"
+/>
+
 <c:choose>
 	<c:when test="<%= userNotificationFeedEntry == null %>">
-		<liferay-ui:search-container-column-text>
-			<div class="clearfix">
-				<div class="left-container">
-					<div class="sender">
-						<span class="user-thumbnail">
-							<img alt="<%= userNotificationEventUserFullName %>" src="<%= userNotificationEventUserPortraitURL %>" />
-						</span>
-					</div>
-
-					<div class="content">
-						<div class="body-container">
-							<div class="title">
-								<liferay-ui:message key="unable-to-display-notification-for-x" />
-							</div>
-
-							<div class="body">
-								<liferay-ui:message key="notification-no-longer-applies" />
-							</div>
-						</div>
-
-						<div class="timestamp">
-							<span class="portlet-icon">
-								<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= portlet.getDisplayName() %>')">
-									<img src="<%= portletIcon %>">
-									<span class="hide-accessible taglib-text"><%= portlet.getDisplayName() %></span>
-								</span>
-							</span>
-
-							<span title="<%= timeTitle %>">
-								<%= timestamp %>
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+			<liferay-ui:message key="notification-no-longer-applies" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:search-container-column-user
-			showDetails="<%= false %>"
-			userId="<%= userNotificationEventUserId %>"
-		/>
-
 		<portlet:actionURL name="markAsRead" var="markAsReadURL">
 			<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
 			<portlet:param name="redirect" value="<%= userNotificationFeedEntry.getLink() %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<a data-navigation="<%= Boolean.TRUE.toString() %>" href="<%= markAsReadURL.toString() %>">
 				<div class="body-container">
 					<%= userNotificationFeedEntry.getBody() %>

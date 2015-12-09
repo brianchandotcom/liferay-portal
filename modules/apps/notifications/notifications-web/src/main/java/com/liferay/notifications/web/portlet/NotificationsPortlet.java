@@ -79,7 +79,7 @@ public class NotificationsPortlet extends MVCPortlet {
 		throws Exception {
 
 		long[] userNotificationEventIds = ParamUtil.getLongValues(
-			actionRequest, "userNotificationEventIds");
+			actionRequest, "rowIds");
 
 		for (long userNotificationEventId : userNotificationEventIds) {
 			updateArchived(userNotificationEventId);

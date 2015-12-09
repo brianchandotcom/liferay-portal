@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `e0e50e2`.*
+*This document has been reviewed through commit `5b13a9e`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3064,29 +3064,28 @@ flexibility for all developers.
 ---------------------------------------
 
 ### Moved Recycle Bin logic into a new `DLTrashService` interface
-- **Date:** 2015-12-2
+- **Date:** 2015-Dec-02
 - **JIRA Ticket:** LPS-60810
 
 #### What changed?
 
 All Recycle Bin logic in Documents and Media services was moved from
-`DLAppService` into the new `DLTrashService` service interface. All
-moved methods have the same name and signatures.
+`DLAppService` into the new `DLTrashService` service interface. All moved
+methods have the same name and signatures.
 
 #### Who is affected?
 
-Any local or remote caller of `DLAppService`.
+This affects any local or remote caller of `DLAppService`.
 
 #### How should I update my code?
 
-As all methods have been simply moved into the new service, calling
-the equivalent method on `DLTrashService` will suffice.
+As all methods have been simply moved into the new service, calling the
+equivalent method on `DLTrashService` suffices.
 
 #### Why was this change made?
 
-Documents and Media services have complex interdependencies that
-result in circular dependencies. Until now, `DLAppService` was
-responsible of exposing the Recycle Bin logic, delegating into another
-components; problem was, those components depended themselves on
-`DLAppService` to implement their logic. Breaking the service in two
-was the only sensible solution to this circularity.
+Documents and Media services have complex interdependencies that result in
+circular dependencies. Until now, `DLAppService` was responsible for exposing
+the Recycle Bin logic, delegating it to other components. The problem was, the
+components depended on `DLAppService` to implement their logic. Extracting the
+services from `DLAppService` was the only sensible solution to this circularity.

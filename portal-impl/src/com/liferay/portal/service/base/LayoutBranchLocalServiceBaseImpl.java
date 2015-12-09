@@ -41,6 +41,7 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.LayoutBranchPersistence;
 import com.liferay.portal.service.persistence.LayoutRevisionPersistence;
 import com.liferay.portal.service.persistence.LayoutSetBranchPersistence;
+import com.liferay.portal.service.persistence.RecentLayoutBranchPersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
@@ -448,6 +449,44 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the recent layout branch local service.
+	 *
+	 * @return the recent layout branch local service
+	 */
+	public com.liferay.portal.service.RecentLayoutBranchLocalService getRecentLayoutBranchLocalService() {
+		return recentLayoutBranchLocalService;
+	}
+
+	/**
+	 * Sets the recent layout branch local service.
+	 *
+	 * @param recentLayoutBranchLocalService the recent layout branch local service
+	 */
+	public void setRecentLayoutBranchLocalService(
+		com.liferay.portal.service.RecentLayoutBranchLocalService recentLayoutBranchLocalService) {
+		this.recentLayoutBranchLocalService = recentLayoutBranchLocalService;
+	}
+
+	/**
+	 * Returns the recent layout branch persistence.
+	 *
+	 * @return the recent layout branch persistence
+	 */
+	public RecentLayoutBranchPersistence getRecentLayoutBranchPersistence() {
+		return recentLayoutBranchPersistence;
+	}
+
+	/**
+	 * Sets the recent layout branch persistence.
+	 *
+	 * @param recentLayoutBranchPersistence the recent layout branch persistence
+	 */
+	public void setRecentLayoutBranchPersistence(
+		RecentLayoutBranchPersistence recentLayoutBranchPersistence) {
+		this.recentLayoutBranchPersistence = recentLayoutBranchPersistence;
+	}
+
+	/**
 	 * Returns the user local service.
 	 *
 	 * @return the user local service
@@ -568,6 +607,10 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	protected com.liferay.portal.service.LayoutSetBranchLocalService layoutSetBranchLocalService;
 	@BeanReference(type = LayoutSetBranchPersistence.class)
 	protected LayoutSetBranchPersistence layoutSetBranchPersistence;
+	@BeanReference(type = com.liferay.portal.service.RecentLayoutBranchLocalService.class)
+	protected com.liferay.portal.service.RecentLayoutBranchLocalService recentLayoutBranchLocalService;
+	@BeanReference(type = RecentLayoutBranchPersistence.class)
+	protected RecentLayoutBranchPersistence recentLayoutBranchPersistence;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
 	@BeanReference(type = UserPersistence.class)

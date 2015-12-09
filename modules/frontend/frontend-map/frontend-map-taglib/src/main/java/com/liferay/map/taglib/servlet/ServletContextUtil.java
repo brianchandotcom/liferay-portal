@@ -14,6 +14,7 @@
 
 package com.liferay.map.taglib.servlet;
 
+import com.liferay.frontend.map.api.util.MapProviderHelper;
 import com.liferay.frontend.map.api.util.MapProviderTracker;
 
 import javax.servlet.ServletContext;
@@ -28,6 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class ServletContextUtil {
+
+	public static final MapProviderHelper getMapProviderHelper() {
+		return _instance._getMapProviderHelper();
+	}
 
 	public static final MapProviderTracker getMapProviderTracker() {
 		return _instance._getMapProviderTracker();
@@ -48,6 +53,11 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setMapProviderHelper(MapProviderHelper mapProviderHelper) {
+		_mapProviderHelper = mapProviderHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setMapProviderTracker(
 		MapProviderTracker mapProviderTracker) {
 
@@ -61,6 +71,10 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
+	private MapProviderHelper _getMapProviderHelper() {
+		return _mapProviderHelper;
+	}
+
 	private MapProviderTracker _getMapProviderTracker() {
 		return _mapProviderTracker;
 	}
@@ -71,6 +85,7 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _instance;
 
+	private volatile MapProviderHelper _mapProviderHelper;
 	private volatile MapProviderTracker _mapProviderTracker;
 	private volatile ServletContext _servletContext;
 

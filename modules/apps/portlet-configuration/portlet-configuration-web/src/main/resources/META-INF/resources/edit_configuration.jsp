@@ -41,10 +41,14 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 	</div>
 </c:if>
 
-<%
-ConfigurationAction configurationAction = (ConfigurationAction)request.getAttribute(WebKeys.CONFIGURATION_ACTION);
+<div class="container-fluid-1280">
 
-if (configurationAction != null) {
-	configurationAction.include(portletConfig, request, new PipingServletResponse(pageContext));
-}
-%>
+	<%
+	ConfigurationAction configurationAction = (ConfigurationAction)request.getAttribute(WebKeys.CONFIGURATION_ACTION);
+
+	if (configurationAction != null) {
+		configurationAction.include(portletConfig, request, new PipingServletResponse(pageContext));
+	}
+	%>
+
+</div>

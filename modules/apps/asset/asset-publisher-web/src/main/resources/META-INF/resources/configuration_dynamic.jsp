@@ -535,7 +535,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 </liferay-ui:tabs>
 
 <aui:button-row>
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
+	<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 </aui:button-row>
 
 <aui:script sandbox="<%= true %>">

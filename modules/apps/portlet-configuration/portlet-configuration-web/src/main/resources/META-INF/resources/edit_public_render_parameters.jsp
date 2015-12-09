@@ -37,19 +37,19 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 
 <liferay-ui:error key="duplicateMapping" message="several-shared-parameters-are-mapped-to-the-same-parameter" />
 
-<div class="alert alert-info">
-	<liferay-ui:message arguments='<%= "http://www.liferay.com/community/wiki/-/wiki/Main/Portlet+Communication+Configuration" %>' key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" translateArguments="<%= false %>" />
-</div>
-
 <portlet:actionURL name="editPublicRenderParameters" var="editPublicRenderParametersURL">
 	<portlet:param name="mvcPath" value="/edit_public_render_parameters.jsp" />
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editPublicRenderParametersURL %>" method="post" name="fm">
+<aui:form action="<%= editPublicRenderParametersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= editPublicRenderParameterURL.toString() %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
+
+	<div class="alert alert-info">
+		<liferay-ui:message arguments='<%= "http://www.liferay.com/community/wiki/-/wiki/Main/Portlet+Communication+Configuration" %>' key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" translateArguments="<%= false %>" />
+	</div>
 
 	<liferay-ui:search-container
 		total="<%= publicRenderParameterConfigurations.size() %>"
@@ -98,11 +98,11 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator paginate="<%= false %>" />
+		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 	</liferay-ui:search-container>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 

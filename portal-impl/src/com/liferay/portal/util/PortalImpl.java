@@ -6472,10 +6472,42 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public boolean isSkipPortletContentProcessing(
+			Group group, HttpServletRequest httpServletRequest,
+			LayoutTypePortlet layoutTypePortlet, PortletDisplay portletDisplay,
+			String portletName)
+		throws Exception {
+
+		long companyId = getCompanyId(httpServletRequest);
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletDisplay.getId());
+
+		boolean strutsPortlet = false;
+
+		ServletContext servletContext =
+			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
+
+		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
+			portlet, servletContext);
+
+		if (invokerPortlet.isStrutsPortlet() ||
+			invokerPortlet.isStrutsBridgePortlet()) {
+
+			strutsPortlet = true;
+		}
+
+		return (group.isLayoutPrototype() &&
+				layoutTypePortlet.hasPortletId(portletDisplay.getId()) &&
+				!portletName.equals(PortletKeys.NESTED_PORTLETS) &&
+				portletDisplay.isModeView() && !portlet.isSystem() &&
+				!strutsPortlet);
+	}
+
+	@Override
 	public boolean isSkipPortletContentRendering(
 			Group group, LayoutTypePortlet layoutTypePortlet,
 			PortletDisplay portletDisplay, String portletName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return (group.isLayoutPrototype() &&
 				layoutTypePortlet.hasPortletId(portletDisplay.getId()) &&

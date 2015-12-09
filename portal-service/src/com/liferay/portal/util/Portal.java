@@ -1330,10 +1330,16 @@ public interface Portal {
 
 	public boolean isSecure(HttpServletRequest request);
 
+	public boolean isSkipPortletContentProcessing(
+			Group group, HttpServletRequest httpServletRequest,
+			LayoutTypePortlet layoutTypePortlet, PortletDisplay portletDisplay,
+			String portletName)
+		throws Exception;
+
 	public boolean isSkipPortletContentRendering(
 			Group group, LayoutTypePortlet layoutTypePortlet,
 			PortletDisplay portletDisplay, String portletName)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean isSystemGroup(String groupName);
 

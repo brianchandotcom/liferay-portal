@@ -2206,13 +2206,24 @@ public class PortalUtil {
 		return getPortal().isSecure(request);
 	}
 
+	public static boolean isSkipPortletContentProcesssing(
+			Group group, HttpServletRequest htpServletRequest,
+			LayoutTypePortlet layoutTypePortlet, PortletDisplay portletDisplay,
+			String portletName)
+		throws Exception {
+
+		return getPortal().isSkipPortletContentProcessing(
+				group, htpServletRequest, layoutTypePortlet, portletDisplay,
+				portletName);
+	}
+
 	public static boolean isSkipPortletContentRendering(
 			Group group, LayoutTypePortlet layoutTypePortlet,
 			PortletDisplay portletDisplay, String portletName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getPortal().isSkipPortletContentRendering(
-				group, layoutTypePortlet, portletDisplay, portletName);
+			group, layoutTypePortlet, portletDisplay, portletName);
 	}
 
 	public static boolean isSystemGroup(String groupName) {

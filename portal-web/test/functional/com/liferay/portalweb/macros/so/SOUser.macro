@@ -148,7 +148,7 @@
 		<execute function="AssertTextNotPresent" value1="Dashboard" />
 
 		<execute function="AssertClick" locator1="ControlMenu#USER_NAME" value1="${userName}" />
-		<execute function="AssertClick" locator1="ControlMenu#USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="AssertClick" locator1="UserBar#USER_MY_DASHBOARD" value1="My Dashboard" />
 
 		<execute function="AssertElementNotPresent" locator1="SODashboard#NAVIGATION_DASHBOARD" />
 		<execute function="AssertElementNotPresent" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" />
@@ -158,7 +158,7 @@
 		<execute function="AssertElementNotPresent" locator1="SODashboard#NAVIGATION_TASKS" />
 
 		<execute function="AssertClick" locator1="ControlMenu#USER_NAME" value1="${userName}" />
-		<execute function="AssertClick" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="AssertClick" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="AssertElementNotPresent" locator1="SOProfile#USER_NAME" />
 		<execute function="AssertElementNotPresent" locator1="SOProfile#USER_EMAIL" />
@@ -235,7 +235,7 @@
 		<execute function="AssertElementPresent" locator1="SOUserBar#GO_TO_SITE_LIST" />
 
 		<execute function="AssertClick" locator1="ControlMenu#USER_NAME" value1="${userName}" />
-		<execute function="AssertClick" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="AssertClick" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="AssertTextEquals" locator1="SOProfile#USER_NAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="SOProfile#USER_EMAIL" value1="${userEmailAddress}" />

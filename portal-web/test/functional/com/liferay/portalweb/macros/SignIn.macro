@@ -34,7 +34,7 @@
 	</command>
 
 	<command name="_signInViaDockbar">
-		<execute function="AssertClick" locator1="ControlMenu#USER_SIGN_IN" value1="Sign In" />
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
 		<execute macro="SignIn#_signIn">
 			<var name="rememberMe" value="${rememberMe}" />

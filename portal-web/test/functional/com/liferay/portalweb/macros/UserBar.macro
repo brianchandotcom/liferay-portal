@@ -13,8 +13,8 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-		<execute function="AssertClick" locator1="ControlMenu#USER_MY_ACCOUNT" value1="My Account" />
+		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+		<execute function="AssertClick" locator1="UserBar#USER_MY_ACCOUNT" value1="My Account" />
 	</command>
 
 	<command name="gotoMyDashboard">
@@ -31,8 +31,8 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-		<execute function="AssertClick" locator1="ControlMenu#USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+		<execute function="AssertClick" locator1="UserBar#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
 
 	<command name="gotoMyProfile">
@@ -49,17 +49,17 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-		<execute function="AssertClick" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+		<execute function="AssertClick" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 	</command>
 
 	<command name="signOut">
 		<if>
-			<condition function="IsElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+			<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 			<then>
-				<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+				<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
-				<execute function="Click" locator1="ControlMenu#USER_SIGN_OUT" />
+				<execute function="Click" locator1="UserBar#USER_SIGN_OUT" />
 			</then>
 		</if>
 	</command>
@@ -76,8 +76,8 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-		<execute function="AssertTextNotPresent" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
-		<execute function="AssertTextNotPresent" locator1="ControlMenu#USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+		<execute function="AssertTextNotPresent" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="AssertTextNotPresent" locator1="UserBar#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
 </definition>

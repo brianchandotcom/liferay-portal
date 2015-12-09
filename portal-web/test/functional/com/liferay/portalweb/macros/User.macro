@@ -1373,12 +1373,12 @@
 		<if>
 			<isset var="loginViaDockbar" />
 			<then>
-				<execute function="AssertClick" locator1="ControlMenu#USER_SIGN_IN" value1="Sign In" />
+				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+			<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 			<then>
 				<execute macro="User#logoutPG" />
 				<execute macro="User#loginPG">
@@ -1429,8 +1429,8 @@
 
 		<execute function="SelectWindow" locator1="title=Welcome - Liferay" />
 
-		<execute function="AssertElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-		<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 		<execute function="AssertElementPresent" locator1="Message#INFO" />
 	</command>
 
@@ -1457,7 +1457,7 @@
 		<if>
 			<isset var="loginViaDockbar" />
 			<then>
-				<execute function="AssertClick" locator1="ControlMenu#USER_SIGN_IN" value1="Sign In" />
+				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 			</then>
 		</if>
 
@@ -1644,7 +1644,7 @@
 	</command>
 
 	<command name="signInPG">
-		<execute function="AssertClick" locator1="ControlMenu#USER_SIGN_IN" value1="Sign In" />
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="${emailPassword}" />

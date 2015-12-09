@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>UserBar</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">UserBar</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>USER_AVATAR_IMAGE</td>
+	<td>//span[@class='user-avatar-image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MY_PROFILE</td>
+	<td>//a/span[contains(.,'My Profile')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MY_DASHBOARD</td>
+	<td>//a/span[contains(.,'My Dashboard')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MY_ACCOUNT</td>
+	<td>//a[@title='My Account']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MY_ACCOUNT_LOCALIZED</td>
+	<td>//a[@title='${key_myAccount}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SIGN_OUT</td>
+	<td>//li[contains(@class,'sign-out')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SIGN_IN</td>
+	<td>//li[contains(@class,'sign-in')]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -205,6 +205,7 @@ public class DDLFormPortlet extends MVCPortlet {
 			DDMFormField captchaDDMFormField = new DDMFormField(
 				_DDM_FORM_FIELD_NAME_CAPTCHA, "captcha");
 
+			captchaDDMFormField.setDataType("string");
 			captchaDDMFormField.setProperty(
 				"url", createCaptchaResourceURL(renderResponse));
 

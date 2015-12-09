@@ -42,9 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 public class PluginRepositoriesMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
-	public static final String PLUGIN_REPOSITORIES =
-		"liferay/plugin_repositories";
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -54,7 +51,7 @@ public class PluginRepositoriesMessageListener
 				TimeUnit.DAY));
 
 		_schedulerEngineHelper.register(
-			this, schedulerEntryImpl, PLUGIN_REPOSITORIES);
+			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
@@ -70,7 +67,8 @@ public class PluginRepositoriesMessageListener
 	}
 
 	@Reference(
-		target = "(destination.name=" + PLUGIN_REPOSITORIES + ")", unbind = "-"
+		target = "(destination.name=" + DestinationNames.SCHEDULER_DISPATCH + ")",
+		unbind = "-"
 	)
 	protected void setDestination(Destination destination) {
 	}

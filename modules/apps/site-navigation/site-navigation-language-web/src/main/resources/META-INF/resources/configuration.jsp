@@ -51,8 +51,8 @@
 
 	<aui:input name="preferences--displayCurrentLocale--" type="checkbox" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
 
-	<aui:button-row>
-		<aui:button type="submit" />
+	<aui:button-row cssClass="dialog-footer">
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 

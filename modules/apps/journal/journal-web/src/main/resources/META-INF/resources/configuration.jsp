@@ -154,7 +154,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		</c:if>
 	</liferay-ui:tabs>
 
-	<aui:button-row>
-		<aui:button type="submit" />
+	<aui:button-row cssClass="dialog-footer">
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>

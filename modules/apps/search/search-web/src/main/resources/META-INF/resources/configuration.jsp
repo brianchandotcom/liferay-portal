@@ -48,7 +48,7 @@ String tabs2 = ParamUtil.getString(request, "tabs2");
 		</liferay-ui:section>
 	</liferay-ui:tabs>
 
-	<aui:button-row>
-		<aui:button type="submit" />
+	<aui:button-row cssClass="dialog-footer">
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>

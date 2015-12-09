@@ -1780,7 +1780,7 @@
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS" value1="${dmDocumentStatus}" />
-				<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+				<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 				<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
 			</else>

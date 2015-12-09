@@ -17,6 +17,7 @@ package com.liferay.portal.dao.orm.hibernate;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -49,9 +50,7 @@ public class DB2DialectTest {
 	public void setUp() throws Exception {
 		DB db = DBFactoryUtil.getDB();
 
-		String dbType = db.getType();
-
-		Assume.assumeTrue(dbType.equals(DB.TYPE_DB2));
+		Assume.assumeTrue(db.getDBType() == DBType.DB2);
 	}
 
 	@Test

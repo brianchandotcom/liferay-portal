@@ -16,6 +16,7 @@ package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -59,9 +60,7 @@ public class SQLTransformerOracleCastClobTextTest {
 	public static void setUpClass() throws Exception {
 		_db = DBFactoryUtil.getDB();
 
-		String dbType = _db.getType();
-
-		if (!dbType.equals(DB.TYPE_ORACLE)) {
+		if (_db.getDBType() != DBType.ORACLE) {
 			return;
 		}
 
@@ -115,9 +114,7 @@ public class SQLTransformerOracleCastClobTextTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		String dbType = _db.getType();
-
-		if (!dbType.equals(DB.TYPE_ORACLE)) {
+		if (_db.getDBType() != DBType.ORACLE) {
 			return;
 		}
 
@@ -126,9 +123,7 @@ public class SQLTransformerOracleCastClobTextTest {
 
 	@Before
 	public void setUp() {
-		String dbType = _db.getType();
-
-		Assume.assumeTrue(dbType.equals(DB.TYPE_ORACLE));
+		Assume.assumeTrue(_db.getDBType() == DBType.ORACLE);
 	}
 
 	@Test

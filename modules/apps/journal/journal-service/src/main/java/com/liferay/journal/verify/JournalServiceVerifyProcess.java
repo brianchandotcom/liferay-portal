@@ -31,6 +31,7 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -823,9 +824,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	protected void verifyOracleNewLine() throws Exception {
 		DB db = DBFactoryUtil.getDB();
 
-		String dbType = db.getType();
-
-		if (!dbType.equals(DB.TYPE_ORACLE)) {
+		if (db.getDBType() != DBType.ORACLE) {
 			return;
 		}
 

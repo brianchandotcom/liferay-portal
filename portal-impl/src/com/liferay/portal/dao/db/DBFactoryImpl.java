@@ -14,13 +14,6 @@
 
 package com.liferay.portal.dao.db;
 
-import com.liferay.portal.dao.db.impl.DB2DBCreator;
-import com.liferay.portal.dao.db.impl.HypersonicDBCreator;
-import com.liferay.portal.dao.db.impl.MySQLDBCreator;
-import com.liferay.portal.dao.db.impl.OracleDBCreator;
-import com.liferay.portal.dao.db.impl.PostgreSQLDBCreator;
-import com.liferay.portal.dao.db.impl.SQLServerDBCreator;
-import com.liferay.portal.dao.db.impl.SybaseDBCreator;
 import com.liferay.portal.dao.orm.hibernate.DialectImpl;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBCreator;
@@ -39,6 +32,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import java.util.EnumMap;
+import java.util.ServiceLoader;
 
 import javax.sql.DataSource;
 
@@ -64,13 +58,12 @@ import org.hibernate.dialect.SybaseDialect;
 public class DBFactoryImpl implements DBFactory {
 
 	public DBFactoryImpl() {
-		_dbCreators.put(DBType.DB2, new DB2DBCreator());
-		_dbCreators.put(DBType.HYPERSONIC, new HypersonicDBCreator());
-		_dbCreators.put(DBType.MYSQL, new MySQLDBCreator());
-		_dbCreators.put(DBType.ORACLE, new OracleDBCreator());
-		_dbCreators.put(DBType.POSTGRESQL, new PostgreSQLDBCreator());
-		_dbCreators.put(DBType.SQLSERVER, new SQLServerDBCreator());
-		_dbCreators.put(DBType.SYBASE, new SybaseDBCreator());
+		for (DBCreator dbCreator :
+				ServiceLoader.load(
+					DBCreator.class, DBFactoryImpl.class.getClassLoader())) {
+
+			_dbCreators.put(dbCreator.getDBType(), dbCreator);
+		}
 	}
 
 	@Override

@@ -46,8 +46,8 @@ boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences
 </aui:fieldset>
 
 <aui:script sandbox="<%= true %>">
-	var enableEmailSubscription = $('#<portlet:namespace />enableEmailSubscription');
 	var emailSubscriptionSettings = $('#<portlet:namespace />emailSubscriptionSettings');
+	var enableEmailSubscription = $('#<portlet:namespace />enableEmailSubscription');
 
 	enableEmailSubscription.on(
 		'change',

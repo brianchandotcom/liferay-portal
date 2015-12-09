@@ -337,8 +337,8 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 
 					if (<portlet:namespace />prioritiesChanged && (<portlet:namespace />prioritiesLastLanguageId != '<%= defaultLanguageId %>')) {
 						for (var i = 0; i < 10; i++) {
-							var priorityName = form.fm('priorityName' + i + '_temp').val();
 							var priorityImage = form.fm('priorityImage' + i + '_temp').val();
+							var priorityName = form.fm('priorityName' + i + '_temp').val();
 							var priorityValue = form.fm('priorityValue' + i + '_temp').val();
 
 							form.fm('priorityName' + i + '_' + <portlet:namespace />prioritiesLastLanguageId).val(priorityName);
@@ -365,16 +365,16 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 
 					if (lang != '<%= defaultLanguageId %>') {
 						for (var i = 0; i < 10; i++) {
-							var defaultName = form.fm('priorityName' + i + '_' + '<%= defaultLanguageId %>').val();
 							var defaultImage = form.fm('priorityImage' + i + '_' + '<%= defaultLanguageId %>').val();
+							var defaultName = form.fm('priorityName' + i + '_' + '<%= defaultLanguageId %>').val();
 							var defaultValue = form.fm('priorityValue' + i + '_' + '<%= defaultLanguageId %>').val();
 
-							var priorityName = form.fm('priorityName' + i + '_' + lang).val();
 							var priorityImage = form.fm('priorityImage' + i + '_' + lang).val();
+							var priorityName = form.fm('priorityName' + i + '_' + lang).val();
 							var priorityValue = form.fm('priorityValue' + i + '_' + lang).val();
 
-							var name = priorityName || defaultName;
 							var image = priorityImage || defaultImage;
+							var name = priorityName || defaultName;
 							var value = priorityValue || defaultValue;
 
 							form.fm('priorityName' + i + '_temp').val(name);

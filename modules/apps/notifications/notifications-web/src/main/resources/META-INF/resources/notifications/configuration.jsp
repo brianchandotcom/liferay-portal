@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="manage-notifications-content">
+<div class="container-fluid-1280 manage-notifications-content">
 	<div class="manage-notifications" id="<portlet:namespace />manageNotifications">
 		<portlet:actionURL name="updateUserNotificationDelivery" var="updateUserNotificationDeliveryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

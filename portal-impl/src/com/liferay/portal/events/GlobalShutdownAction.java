@@ -18,6 +18,7 @@ import com.liferay.portal.deploy.RequiredPluginsUtil;
 import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
@@ -157,9 +158,7 @@ public class GlobalShutdownAction extends SimpleAction {
 
 		DB db = DBFactoryUtil.getDB();
 
-		String dbType = db.getType();
-
-		if (dbType.equals(DB.TYPE_HYPERSONIC)) {
+		if (db.getDBType() == DBType.HYPERSONIC) {
 			Connection connection = null;
 			Statement statement = null;
 

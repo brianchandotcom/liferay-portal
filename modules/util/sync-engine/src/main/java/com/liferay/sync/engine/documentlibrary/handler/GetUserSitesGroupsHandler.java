@@ -79,10 +79,10 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 				remoteSyncSiteIds.add(remoteSyncSite.getSyncSiteId());
 
 				SyncFileService.addSyncFile(
-					null, null, null, remoteSyncSite.getFilePathName(), null,
-					remoteSyncSite.getName(), 0, remoteSyncSite.getGroupId(),
-					SyncFile.STATE_SYNCED, remoteSyncSite.getSyncAccountId(),
-					SyncFile.TYPE_SYSTEM, false);
+					null, null, false, null, remoteSyncSite.getFilePathName(),
+					null, remoteSyncSite.getName(), 0,
+					remoteSyncSite.getGroupId(), 0, SyncFile.STATE_SYNCED,
+					remoteSyncSite.getSyncAccountId(), SyncFile.TYPE_SYSTEM);
 			}
 			else {
 				String localSyncSiteName = localSyncSite.getName();

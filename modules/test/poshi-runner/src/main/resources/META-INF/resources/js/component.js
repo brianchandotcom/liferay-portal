@@ -665,16 +665,17 @@ YUI.add(
 
 								if (scopeType === 'macro' || scopeType === 'function') {
 									var increment = 2;
-									var paramCollection = currentScope.all('> .line-container .child-container .name');;
 									var start = 0;
 									var valueIncrement = 1;
 
+									var paramCollection = currentScope.all('> .line-container .child-container .name');
 
 									if (scopeType === 'function') {
 										increment = 1;
-										paramCollection = scopeNames;
 										start = 1;
 										valueIncrement = 0;
+
+										paramCollection = scopeNames;
 									}
 
 									var limit = paramCollection.size();

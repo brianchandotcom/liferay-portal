@@ -60,7 +60,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= updateArchivedSetupURL %>" method="post" name="fm">
+<aui:form action="<%= updateArchivedSetupURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
@@ -99,7 +99,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 	<aui:input label="archive-name-for-current-setup" name="name" size="20" type="text" />
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 

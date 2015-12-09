@@ -666,7 +666,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		Layout layout = themeDisplay.getLayout();
 
-		String scopeType = ParamUtil.getString(actionRequest, "scopeType");
+		String[] scope = StringUtil.split(
+			ParamUtil.getString(actionRequest, "scope"));
+
+		String scopeType = scope[0];
 
 		long scopeGroupId = 0;
 		String scopeName = null;
@@ -679,8 +682,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			scopeName = themeDisplay.translate("global");
 		}
 		else if (scopeType.equals("layout")) {
-			String scopeLayoutUuid = ParamUtil.getString(
-				actionRequest, "scopeLayoutUuid");
+			String scopeLayoutUuid = scope[1];
 
 			Layout scopeLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 				scopeLayoutUuid, layout.getGroupId(), layout.isPrivateLayout());
@@ -944,12 +946,14 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
-		String scopeType = ParamUtil.getString(actionRequest, "scopeType");
+		String[] scope = StringUtil.split(
+			ParamUtil.getString(actionRequest, "scope"));
+
+		String scopeType = scope[0];
 
 		portletPreferences.setValue("lfrScopeType", scopeType);
 
-		String scopeLayoutUuid = ParamUtil.getString(
-			actionRequest, "scopeLayoutUuid");
+		String scopeLayoutUuid = scope[1];
 
 		if (!scopeType.equals("layout")) {
 			scopeLayoutUuid = StringPool.BLANK;

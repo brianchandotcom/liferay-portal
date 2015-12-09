@@ -216,7 +216,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 </liferay-ui:tabs>
 
 <aui:button-row>
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
+	<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 </aui:button-row>
 
 <aui:script>

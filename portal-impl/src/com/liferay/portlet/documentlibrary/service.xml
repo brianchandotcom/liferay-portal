@@ -720,6 +720,7 @@
 		<exception>DuplicateFileEntryType</exception>
 		<exception>DuplicateFolderName</exception>
 		<exception>DuplicateRepositoryName</exception>
+		<exception>FileEntryLock</exception>
 		<exception>FileExtension</exception>
 		<exception>FileMimeType</exception>
 		<exception>FileName</exception>

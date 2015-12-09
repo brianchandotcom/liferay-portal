@@ -237,7 +237,7 @@
 		max-height: 100%;
 		overflow-x: hidden;
 		overflow-y: auto;
-		padding-bottom: 0;
+		padding: 0;
 	}
 
 	.modal-content.form-builder-field-settings-content {
@@ -285,6 +285,8 @@
 	}
 
 	.form-builder-field-settings-content {
+		$horizontal-spacing: 35px;
+
 		.has-error .key-value-editor {
 			display: none
 		}
@@ -416,17 +418,19 @@
 			}
 
 			.lfr-ddm-form-page {
-				&.active {
-					&.advanced {
-						display: block;
-					}
+				&.active,
+				&.basic {
+					padding: 25px $horizontal-spacing;
+				}
+
+				&.active.advanced {
+					display: block;
 				}
 
 				&.advanced {
 					background-color: #F5F8FA;
 					display: none;
-					margin: 0 -50px;
-					padding: 20px 50px;
+					padding: 20px $horizontal-spacing;
 				}
 			}
 		}
@@ -437,8 +441,7 @@
 			color: #879CB5;
 			display: block;
 			font-weight: 500;
-			margin: 0 -50px;
-			padding: 18px 50px;
+			padding: 18px $horizontal-spacing;
 			position: static;
 			text-decoration: none;
 			width: auto;

@@ -14,12 +14,9 @@
 
 package com.liferay.frontend.map.google.web.display.context;
 
-import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -36,48 +33,35 @@ public class GoogleMapDisplayContext {
 	}
 
 	public String getCompanyGoogleMapsAPIKey() {
-		if (_companyGoogleMapsAPIKey != null) {
-			return _companyGoogleMapsAPIKey;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Company company = themeDisplay.getCompany();
-
 		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(company.getCompanyId());
+			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId());
 
-		_companyGoogleMapsAPIKey = PrefsParamUtil.getString(
-			companyPortletPreferences, _request, "googleMapsAPIKey", "");
-
-		return _companyGoogleMapsAPIKey;
+		return companyPortletPreferences.getValue("googleMapsAPIKey", null);
 	}
 
-	public String getGroupsGoogleMapsAPIKey() {
+	public String getGoogleMapsAPIKey() {
 		if (_groupGoogleMapsAPIKey != null) {
 			return _groupGoogleMapsAPIKey;
 		}
 
 		Group liveGroup = (Group)_request.getAttribute("site.liveGroup");
 
-		UnicodeProperties groupTypeSettings = null;
+		if (liveGroup == null) {
+			_groupGoogleMapsAPIKey = getCompanyGoogleMapsAPIKey();
 
-		if (liveGroup != null) {
-			groupTypeSettings = liveGroup.getTypeSettingsProperties();
-		}
-		else {
-			groupTypeSettings = new UnicodeProperties();
+			return _groupGoogleMapsAPIKey;
 		}
 
-		_groupGoogleMapsAPIKey = PropertiesParamUtil.getString(
-			groupTypeSettings, _request, "googleMapsAPIKey",
+		_groupGoogleMapsAPIKey = GetterUtil.getString(
+			liveGroup.getTypeSettingsProperty("googleMapsAPIKey"),
 			getCompanyGoogleMapsAPIKey());
 
 		return _groupGoogleMapsAPIKey;
 	}
 
-	private String _companyGoogleMapsAPIKey;
 	private String _groupGoogleMapsAPIKey;
 	private final PortletRequest _request;
 

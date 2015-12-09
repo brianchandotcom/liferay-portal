@@ -20,4 +20,4 @@
 GoogleMapDisplayContext googleMapDisplayContext = new GoogleMapDisplayContext(renderRequest);
 %>
 
-<aui:input helpMessage="set-the-google-maps-api-key-that-is-used-for-this-set-of-pages" label='<%= LanguageUtil.get(request, "google-maps-api-key") + " (" + LanguageUtil.get(request, "optional") + ")" %>' name="TypeSettingsProperties--googleMapsAPIKey--" size="40" type="text" value="<%= googleMapDisplayContext.getGroupsGoogleMapsAPIKey() %>" />
+<aui:input helpMessage="set-the-google-maps-api-key-that-is-used-for-this-set-of-pages" label='<%= LanguageUtil.get(request, "google-maps-api-key") + " (" + LanguageUtil.get(request, "optional") + ")" %>' name="TypeSettingsProperties--googleMapsAPIKey--" size="40" type="text" value="<%= googleMapDisplayContext.getGoogleMapsAPIKey() %>" />

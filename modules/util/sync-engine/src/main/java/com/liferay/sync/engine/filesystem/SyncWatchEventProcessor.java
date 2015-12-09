@@ -15,8 +15,10 @@
 package com.liferay.sync.engine.filesystem;
 
 import com.liferay.sync.engine.SyncEngine;
+import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.util.BatchEvent;
 import com.liferay.sync.engine.documentlibrary.util.BatchEventManager;
+import com.liferay.sync.engine.documentlibrary.util.FileEventManager;
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
@@ -399,10 +401,17 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncFile syncFile = SyncFileService.fetchSyncFile(filePath.toString());
 
 		if ((syncFile == null) ||
-			(syncFile.getState() == SyncFile.STATE_IN_PROGRESS) ||
 			!Files.notExists(Paths.get(syncFile.getFilePathName()))) {
 
 			return;
+		}
+		else if (syncFile.getState() == SyncFile.STATE_IN_PROGRESS) {
+			Set<Event> events = FileEventManager.getEvents(
+				syncFile.getSyncFileId());
+
+			for (Event event : events) {
+				event.cancel();
+			}
 		}
 		else if ((syncFile.getState() == SyncFile.STATE_ERROR) ||
 				 (syncFile.getState() == SyncFile.STATE_UNSYNCED)) {

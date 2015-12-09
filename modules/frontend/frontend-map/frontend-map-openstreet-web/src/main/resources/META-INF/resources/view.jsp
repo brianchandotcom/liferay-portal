@@ -35,7 +35,7 @@ name = namespace + name;
 	<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 </liferay-util:html-top>
 
-<aui:script use='<%= "liferay-map-" + StringUtil.toLowerCase(OpenstreetMapConstants.OPENSTREET_MAP_PROVIDER) %>'>
+<aui:script use="liferay-map-openstreet">
 	var MapControls = Liferay.MapBase.CONTROLS;
 
 	var mapConfig = {
@@ -77,7 +77,7 @@ name = namespace + name;
 	};
 
 	var createMap = function() {
-		var map = new Liferay['<%= OpenstreetMapConstants.OPENSTREET_MAP_PROVIDER %>Map'](mapConfig).render();
+		var map = new Liferay['OpenStreetMap'](mapConfig).render();
 
 		Liferay.MapBase.register('<%= name %>', map);
 

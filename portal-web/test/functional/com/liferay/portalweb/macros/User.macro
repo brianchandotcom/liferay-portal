@@ -1617,13 +1617,7 @@
 			</else>
 		</if>
 
-		<if>
-			<condition function="IsElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-			<then>
-				<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-				<execute function="Click" locator1="ControlMenu#USER_SIGN_OUT" />
-			</then>
-		</if>
+		<execute macro="UserBar#signOut" />
 	</command>
 
 	<command name="logoutUserPG">
@@ -1640,13 +1634,7 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<if>
-			<condition function="IsElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-			<then>
-				<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-				<execute function="Click" locator1="ControlMenu#USER_SIGN_OUT" />
-			</then>
-		</if>
+		<execute macro="UserBar#signOut" />
 	</command>
 
 	<command name="searchCP">

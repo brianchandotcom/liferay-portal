@@ -70,7 +70,7 @@ public class OpenIdLoginDynamicInclude extends BaseDynamicInclude {
 		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH = "/html/portlet/login/openid.jsp";
+	private static final String _JSP_PATH = "/com.liferay.login.web/openid.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdLoginDynamicInclude.class);

@@ -1,0 +1,19 @@
+<definition>
+	<command name="gotoMyAccount">
+		<description message="Navigate to My Account Via the User Bar." />
+
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
+
+		<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+		<execute function="AssertClick" locator1="ControlMenu#USER_MY_ACCOUNT" value1="My Account" />
+	</command>
+</definition>

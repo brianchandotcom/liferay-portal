@@ -16,6 +16,7 @@ package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -40,30 +41,34 @@ public class DBBuilder {
 
 		String databaseTypesString = arguments.get("db.database.types");
 
-		String[] databaseTypes = null;
+		DBType[] dbTypes = DBType.values();
 
-		if (databaseTypesString == null) {
-			databaseTypes = DB.TYPE_ALL;
-		}
-		else {
-			databaseTypes = StringUtil.split(databaseTypesString);
+		if (databaseTypesString != null) {
+			String[] databaseTypeValues = StringUtil.split(databaseTypesString);
+
+			dbTypes = new DBType[databaseTypeValues.length];
+
+			for (int i = 0; i < dbTypes.length; i++) {
+				dbTypes[i] = DBType.valueOf(
+					StringUtil.toUpperCase(databaseTypeValues[i]));
+			}
 		}
 
 		String sqlDir = arguments.get("db.sql.dir");
 
 		try {
-			new DBBuilder(databaseName, databaseTypes, sqlDir);
+			new DBBuilder(databaseName, dbTypes, sqlDir);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
 		}
 	}
 
-	public DBBuilder(String databaseName, String[] databaseTypes, String sqlDir)
+	public DBBuilder(String databaseName, DBType[] dbTypes, String sqlDir)
 		throws Exception {
 
 		_databaseName = databaseName;
-		_databaseTypes = databaseTypes;
+		_dbTypes = dbTypes;
 
 		if (!sqlDir.endsWith("/META-INF/sql") &&
 			!sqlDir.endsWith("/WEB-INF/sql")) {
@@ -100,12 +105,12 @@ public class DBBuilder {
 	}
 
 	private void _buildCreateFile(String sqlDir) throws IOException {
-		for (String databaseType : _databaseTypes) {
-			if (databaseType.equals(DB.TYPE_HYPERSONIC)) {
+		for (DBType dbType : _dbTypes) {
+			if (dbType == DBType.HYPERSONIC) {
 				continue;
 			}
 
-			DB db = DBFactoryUtil.getDB(databaseType, null);
+			DB db = DBFactoryUtil.getDB(dbType, null);
 
 			if (db != null) {
 				if (!sqlDir.endsWith("/WEB-INF/sql")) {
@@ -125,8 +130,8 @@ public class DBBuilder {
 			return;
 		}
 
-		for (String _databaseType : _databaseTypes) {
-			DB db = DBFactoryUtil.getDB(_databaseType, null);
+		for (DBType dbType : _dbTypes) {
+			DB db = DBFactoryUtil.getDB(dbType, null);
 
 			if (db != null) {
 				db.buildSQLFile(sqlDir, fileName);
@@ -135,6 +140,6 @@ public class DBBuilder {
 	}
 
 	private final String _databaseName;
-	private final String[] _databaseTypes;
+	private final DBType[] _dbTypes;
 
 }

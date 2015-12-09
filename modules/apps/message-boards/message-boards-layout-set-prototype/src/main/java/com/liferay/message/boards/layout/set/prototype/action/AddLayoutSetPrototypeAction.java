@@ -36,8 +36,6 @@ import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPort
 
 import java.util.List;
 
-import javax.servlet.Servlet;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -148,11 +146,8 @@ public class AddLayoutSetPrototypeAction {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(
-		target = "(&(objectClass=javax.servlet.Servlet)(osgi.http.whiteboard.servlet.name=59 Servlet))",
-		unbind = "-"
-		)
-	protected void setPollsServlet(Servlet servlet) {
+	@Reference(target = "(javax.portlet.name=59)", unbind = "-")
+	protected void setPollsPortlet(Portlet portlet) {
 	}
 
 	@Reference(

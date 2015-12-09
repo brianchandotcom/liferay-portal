@@ -729,15 +729,16 @@ public class SubscriptionSender implements Serializable {
 		String portletTitle = portletName;
 
 		if (localizedPortletTitleMap != null) {
-			portletTitle = localizedPortletTitleMap.get(locale);
-
-			if (Validator.isNull(portletTitle)) {
+			if (Validator.isNotNull(localizedPortletTitleMap.get(locale))) {
+				portletTitle = localizedPortletTitleMap.get(locale);
+			}
+			else {
 				Locale defaultLocale = LocaleUtil.getDefault();
 
-				portletTitle = localizedPortletTitleMap.get(defaultLocale);
+				if (Validator.isNotNull(
+						localizedPortletTitleMap.get(defaultLocale))) {
 
-				if (Validator.isNull(portletTitle)) {
-					portletTitle = portletName;
+					portletTitle = localizedPortletTitleMap.get(defaultLocale);
 				}
 			}
 		}

@@ -1464,10 +1464,12 @@
 	</command>
 
 	<command name="viewNoEditLinkPG">
-		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryContent" value="${entryContent}" />
+
 		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 		<execute function="AssertElementNotPresent" locator1="Link#EDIT" />
 	</command>

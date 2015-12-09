@@ -101,8 +101,8 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 		<liferay-ui:search-iterator paginate="<%= false %>" />
 	</liferay-ui:search-container>
 
-	<aui:button-row>
-		<aui:button type="submit" />
+	<aui:button-row cssClass="dialog-footer">
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 

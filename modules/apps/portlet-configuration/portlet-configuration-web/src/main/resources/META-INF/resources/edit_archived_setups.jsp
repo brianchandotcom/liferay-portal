@@ -98,8 +98,8 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 	<aui:input label="archive-name-for-current-setup" name="name" size="20" type="text" />
 
-	<aui:button-row>
-		<aui:button type="submit" />
+	<aui:button-row cssClass="dialog-footer">
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 

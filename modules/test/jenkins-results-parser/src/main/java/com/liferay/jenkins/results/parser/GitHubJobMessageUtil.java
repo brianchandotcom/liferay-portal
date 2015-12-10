@@ -48,24 +48,38 @@ public class GitHubJobMessageUtil {
 				return ("<pre>Build was aborted</pre>");
 			}
 			
-			
+
 			StringBuilder sb = new StringBuilder();
+
 			sb.append("<li><strong>");
 			sb.append(_result);
 			sb.append(" ");
-			sb.append("<a href=\'");
+			sb.append("<a href=\"");
 			sb.append(_url);
-			sb.append("\'>");
+			sb.append("\">");
 			sb.append(_name);
 			sb.append("</a></strong>");
-			
 			
 			if (_result.equals("FAILURE")) {
 				sb.append(FailureMessageUtil.getFailureMessage(_project, _url));
 			}
 			
 			if (_result.equals("UNSTABLE")) {
-				sb.append(UnstableMessageUtil._getUnstableMessage(_url));
+				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(_url + "/testReport/api/json"));
+				int failCount = jsonObject.getInt("failCount");
+				int skipCount = jsonObject.getInt("skipCount");
+				int passCount = jsonObject.getInt("passCount");
+				int totalCount = failCount + skipCount + passCount;
+				sb.append(" (");
+				sb.append(passCount);
+				sb.append(" Passed, ");
+				sb.append(failCount);
+				sb.append(" Failed, ");
+				sb.append(skipCount);
+				sb.append(" Skipped, ");
+				sb.append(totalCount);
+				sb.append(" Total)");
+				sb.append(UnstableMessageUtil.getUnstableMessage(_url));
 			}
 
 			sb.append("</li>");

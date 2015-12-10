@@ -42,12 +42,12 @@ boolean systemSAPEntry = false;
 if (sapEntry != null) {
 	systemSAPEntry = sapEntry.isSystem();
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= (sapEntry != null) ? sapEntry.getTitle(locale) : "new-service-access-policy" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-service-access-policy") : sapEntry.getTitle(locale));
+%>
 
 <portlet:actionURL name="updateSAPEntry" var="updateSAPEntryURL">
 	<portlet:param name="mvcPath" value="/edit_entry.jsp" />

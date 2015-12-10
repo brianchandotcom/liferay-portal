@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/portal_settings/init.jsp" %>
+<%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
 long ldapServerId = ParamUtil.getLong(request, "ldapServerId", 0);

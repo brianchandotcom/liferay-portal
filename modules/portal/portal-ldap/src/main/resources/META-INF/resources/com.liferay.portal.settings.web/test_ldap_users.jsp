@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/portal_settings/init.jsp" %>
+<%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
 long ldapServerId = ParamUtil.getLong(request, "ldapServerId", 0);
@@ -162,7 +162,7 @@ portletURL.setWindowState(LiferayWindowState.POP_UP);
 			value="<%= HtmlUtil.escape(emailAddress) %>"
 		/>
 
-		<%@ include file="/portal_settings/test_ldap_users_user_name.jspf" %>
+		<%@ include file="/com.liferay.portal.settings.web/test_ldap_users_user_name.jspf" %>
 
 		<liferay-ui:search-container-column-text
 			name="password"

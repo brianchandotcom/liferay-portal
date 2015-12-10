@@ -123,12 +123,14 @@
     
 	<target name="taglibdoc">
         <path>
-            <fileset id="files" dir="${project.dir}" casesensitive="no">
-                <include name="**/liferay-*.tld"/>
-                <exclude name="**/classes/**/liferay-*.tld"/>
-                <exclude name="**/portal-web/**/liferay-*.tld"/>
-                <exclude name="**/bin/**/liferay-*.tld"/>
-                <exclude name="**/build/**/liferay-*.tld"/>
+            <fileset id="files" dir="${project.dir}" >
+                <include name="**/liferay-*.tld" />
+                <exclude name="**/bin/**" />
+                <exclude name="**/build/**" />
+                <exclude name="**/classes/**" />
+                <exclude name="**/portal-web/**" />
+                <exclude name="**/sdk/**" />
+                <exclude name="**/test/**" />
             </fileset>
         </path>
         <pathconvert property="Paths" refid="files" pathsep=" "/>
@@ -139,10 +141,15 @@
 
 	<target name="validate-tld">
 		<schemavalidate>
-			<fileset
-				dir="${project.dir}/util-taglib/src/META-INF"
-				includes="*.tld"
-			/>
+			<fileset dir="${project.dir}" >
+                <include name="**/liferay-*.tld" />
+                <exclude name="**/bin/**" />
+                <exclude name="**/build/**" />
+                <exclude name="**/classes/**" />
+                <exclude name="**/portal-web/**" />
+                <exclude name="**/sdk/**" />
+                <exclude name="**/test/**" />
+            </fileset>
 		</schemavalidate>
 	</target>
 </project>

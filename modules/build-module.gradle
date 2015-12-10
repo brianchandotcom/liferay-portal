@@ -48,11 +48,14 @@ if (FileUtil.exists(project, "xsd")) {
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
-File sdkDir = rootProject.file("../tools/sdk")
+File portalRootDir = _getPortalRootDir(project)
 
-distsDirName = FileUtil.relativize(rootProject.file("../tools/sdk/dist"), buildDir)
+if (portalRootDir) {
+	distsDirName = FileUtil.relativize(new File(portalRootDir, "tools/sdk/dist"), buildDir)
+	libsDirName = distsDirName
+}
+
 group = "com.liferay"
-libsDirName = distsDirName
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
@@ -124,7 +127,9 @@ configurations {
 }
 
 dependencies {
-	alloyTaglib rootProject.files("../lib/development/alloy-taglib.jar", "../lib/development/org.freemarker-2.3.17.LIFERAY-PATCHED-1.jar")
+	alloyTaglib files(new File(portalRootDir, "lib/development/alloy-taglib.jar"))
+	alloyTaglib group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "1.0.11"
 	javadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "1.0.8"
 	jspCTool group: "com.liferay", name: "com.liferay.jasper.jspc", version: "1.0.4"
@@ -154,7 +159,7 @@ dependencies {
 	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "1.0.0"
 	whip group: "com.liferay", name: "com.liferay.whip", version: "1.0.0"
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "1.0.0"
-	xmltask rootProject.files("../lib/development/xmltask.jar")
+	xmltask files(new File(portalRootDir, "lib/development/xmltask.jar"))
 }
 
 eclipse {
@@ -219,7 +224,7 @@ jsTranspiler {
 }
 
 pmd {
-	ruleSetFiles = rootProject.files("../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml")
+	ruleSetFiles = files(new File(portalRootDir, "tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml"))
 	ruleSets = []
 }
 
@@ -305,8 +310,8 @@ pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 
 pluginManager.withPlugin("com.liferay.portal.tools.service.builder") {
 	dependencies {
-		if (sdkDir.exists()) {
-			serviceBuilder fileTree(dir: new File(sdkDir, "tmp/portal-tools/portal-tools-service-builder"), include: "*.jar")
+		if (portalRootDir) {
+			serviceBuilder fileTree(dir: new File(portalRootDir, "tools/sdk/tmp/portal-tools/portal-tools-service-builder"), include: "*.jar")
 		}
 		else {
 			serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.61"
@@ -362,6 +367,24 @@ if (System.getenv("JENKINS_HOME")) {
 
 	startTestableTomcat {
 		deleteLiferayHome = false
+	}
+}
+
+private File _getPortalRootDir(Project project) {
+	File dir = project.rootDir.parentFile
+
+	while (true) {
+		File portalImplDir = new File(dir, "portal-impl")
+
+		if (portalImplDir.exists()) {
+			return dir
+		}
+
+		dir = dir.parentFile
+
+		if (!dir) {
+			return null
+		}
 	}
 }
 

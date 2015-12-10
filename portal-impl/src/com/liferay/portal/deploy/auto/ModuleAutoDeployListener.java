@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import java.util.Iterator;
 import java.util.Set;
 import java.util.jar.Attributes;
@@ -76,7 +75,7 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 	}
 
 	protected boolean isModule(File file) throws AutoDeployException {
-		if (!isJarFile(file)) {
+		if (!isMatchingFileExtension(file, "jar", "war")) {
 			return false;
 		}
 

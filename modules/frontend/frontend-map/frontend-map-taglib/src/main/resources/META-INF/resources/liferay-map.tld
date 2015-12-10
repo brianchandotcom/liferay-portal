@@ -14,11 +14,6 @@
 		<tag-class>com.liferay.map.taglib.servlet.taglib.MapTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>apiKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>geolocation</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

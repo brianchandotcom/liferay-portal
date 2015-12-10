@@ -16,7 +16,7 @@
 
 <%@ include file="/map_provider_selector/init.jsp" %>
 
-<p><liferay-ui:message key="select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets" /></p>
+<p><%= LanguageUtil.get(resourceBundle, "select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets") %></p>
 
 <%
 for (MapProvider mapProvider : mapProviders) {

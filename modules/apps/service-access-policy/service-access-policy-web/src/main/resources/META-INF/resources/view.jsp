@@ -20,7 +20,16 @@
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+
+boolean orderByAsc = false;
+
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator<SAPEntry> orderByComparator = new SAPEntryNameComparator(orderByAsc);
 
 int sapEntriesCount = SAPEntryServiceUtil.getCompanySAPEntriesCount(company.getCompanyId());
 
@@ -72,7 +81,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		total="<%= sapEntriesCount %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= SAPEntryServiceUtil.getCompanySAPEntries(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= SAPEntryServiceUtil.getCompanySAPEntries(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
 		/>
 
 		<liferay-ui:search-container-row

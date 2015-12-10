@@ -22,27 +22,24 @@ import org.json.JSONObject;
  */
 public class UnstableMessageUtil {
 
-	public static String getUnstableMessage(String runBuildURL) 
+	public static String getUnstableMessage(String runBuildURL)
 		throws Exception {
-		
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("<ul>");
-		
-		JSONObject testReportJSONObject =
-			JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(
-					runBuildURL + "testReport/api/json"));
 
-		JSONArray suitesJSONArray = testReportJSONObject.getJSONArray(
-			"suites");
-		
+		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(
+				runBuildURL + "testReport/api/json"));
+
+		JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
+
 		int messageCount = 0;
 
 		for (int i = 0; i < suitesJSONArray.length(); i++) {
 			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
 
-			JSONArray casesJSONArray = suiteJSONObject.getJSONArray(
-				"cases");
+			JSONArray casesJSONArray = suiteJSONObject.getJSONArray("cases");
 
 			for (int j = 0; j < casesJSONArray.length(); j++) {
 				JSONObject caseJSONObject = casesJSONArray.getJSONObject(j);
@@ -54,12 +51,12 @@ public class UnstableMessageUtil {
 
 					continue;
 				}
-				
+
 				messageCount++;
-				
+
 				if (messageCount == _MAX_MESSAGE_COUNT) {
 					sb.append("<li>...</li></ul>");
-					
+
 					return sb.toString();
 				}
 
@@ -75,8 +72,7 @@ public class UnstableMessageUtil {
 
 				sb.append("/testReport/");
 
-				String testClassName = caseJSONObject.getString(
-					"className");
+				String testClassName = caseJSONObject.getString("className");
 
 				int x = testClassName.lastIndexOf(".");
 
@@ -152,27 +148,31 @@ public class UnstableMessageUtil {
 					sb.append(runBuildURL);
 					sb.append("/console\">Console Output</a>");
 				}
-				
+
 				sb.append("<pre>");
-				sb.append(_truncate((2500/_MAX_MESSAGE_COUNT), caseJSONObject.getString("errorStackTrace")));
+				sb.append(
+					_truncate(
+						(2500/_MAX_MESSAGE_COUNT),
+						caseJSONObject.getString("errorStackTrace")));
 				sb.append("</pre>");
 
 				sb.append("</li>");
 			}
 		}
+
 		sb.append("</ul>");
 		return sb.toString();
 	}
-	
-	private static final int _MAX_MESSAGE_COUNT = 3;
-	
+
 	private static String _truncate(int maxLength, String message) {
 		if (message.length() <= maxLength) {
 			return message;
 		}
 
 		if (message.contains("\n")) {
-			String newMessage = message.substring(0, message.lastIndexOf("\n", maxLength));
+			String newMessage = message.substring(
+				0, message.lastIndexOf("\n", maxLength));
+
 			if (newMessage.length() > (.75 * maxLength)) {
 				return newMessage;
 			}
@@ -181,6 +181,6 @@ public class UnstableMessageUtil {
 		return message.substring(0, maxLength);
 	}
 
-
+	private static final int _MAX_MESSAGE_COUNT = 3;
 
 }

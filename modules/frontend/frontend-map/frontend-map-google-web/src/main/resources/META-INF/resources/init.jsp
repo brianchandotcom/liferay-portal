@@ -36,3 +36,7 @@ page import="com.liferay.taglib.aui.AUIUtil" %>
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<%
+GoogleMapDisplayContext googleMapDisplayContext = new GoogleMapDisplayContext(renderRequest);
+%>

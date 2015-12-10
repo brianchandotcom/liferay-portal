@@ -43,26 +43,45 @@ public class GoogleMapDisplayContext {
 	}
 
 	public String getGoogleMapsAPIKey() {
-		if (_groupGoogleMapsAPIKey != null) {
-			return _groupGoogleMapsAPIKey;
+		if (_googleMapsAPIKey != null) {
+			return _googleMapsAPIKey;
 		}
 
-		Group liveGroup = (Group)_request.getAttribute("site.liveGroup");
+		Group group = getGroup();
 
-		if (liveGroup == null) {
-			_groupGoogleMapsAPIKey = getCompanyGoogleMapsAPIKey();
+		if (group == null) {
+			_googleMapsAPIKey = getCompanyGoogleMapsAPIKey();
 
-			return _groupGoogleMapsAPIKey;
+			return _googleMapsAPIKey;
 		}
 
-		_groupGoogleMapsAPIKey = GetterUtil.getString(
-			liveGroup.getTypeSettingsProperty("googleMapsAPIKey"),
+		_googleMapsAPIKey = GetterUtil.getString(
+			group.getTypeSettingsProperty("googleMapsAPIKey"),
 			getCompanyGoogleMapsAPIKey());
 
-		return _groupGoogleMapsAPIKey;
+		return _googleMapsAPIKey;
 	}
 
-	private String _groupGoogleMapsAPIKey;
+	protected Group getGroup() {
+		Group group = (Group)_request.getAttribute("site.liveGroup");
+
+		if (group != null) {
+			return group;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		group = themeDisplay.getScopeGroup();
+
+		if (!group.isControlPanel()) {
+			return group;
+		}
+
+		return null;
+	}
+
+	private String _googleMapsAPIKey;
 	private final PortletRequest _request;
 
 }

@@ -36,7 +36,7 @@ for (int i = 0; i < resultRowsList.size(); i++) {
 	List<com.liferay.portal.kernel.dao.search.ResultRow> curResultRows = resultRowsList.get(i);
 %>
 
-	<ul class="list-unstyled row">
+	<ul class="list-unstyled row" data-qa-id="rows<%= i %>">
 
 		<%
 		for (int j = 0; j < curResultRows.size(); j++) {
@@ -83,7 +83,7 @@ for (int i = 0; i < resultRowsList.size(); i++) {
 			}
 		%>
 
-			<li class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+			<li class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
 
 				<%
 				for (int k = 0; k < entries.size(); k++) {

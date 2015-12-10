@@ -22,9 +22,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:manag
 String selectedDisplayStyle = (String)request.getAttribute("liferay-frontend:management-bar-display-buttons:selectedDisplayStyle");
 
 PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-%>
 
-<%
 for (String displayStyle : displayViews) {
 	displayStyleURL.setParameter("displayStyle", displayStyle);
 

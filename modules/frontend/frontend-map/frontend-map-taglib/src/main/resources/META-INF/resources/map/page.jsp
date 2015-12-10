@@ -17,10 +17,19 @@
 
 <%@ include file="/map/init.jsp" %>
 
-<div class="lfr-map" id="<%= name %>Map">
+<c:choose>
+	<c:when test="<%= mapProvider != null %>">
+		<div class="lfr-map" id="<%= name %>Map">
 
-	<%
-	mapProvider.include(request, new PipingServletResponse(pageContext))
-	%>
+			<%
+			mapProvider.include(request, new PipingServletResponse(pageContext));
+			%>
 
-</div>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-danger">
+			<%= LanguageUtil.get(resourceBundle, "a-map-should-be-shown-here") %>
+		</div>
+	</c:otherwise>
+</c:choose>

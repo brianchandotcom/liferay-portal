@@ -89,7 +89,7 @@
 	<command name="gotoConfiguration">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Calendar" />
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

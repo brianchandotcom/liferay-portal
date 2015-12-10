@@ -45,12 +45,12 @@
 
 				<execute macro="Blogs#tearDownConfigurationDisplaySettingsPG">
 					<var name="pageName" value="${pageName}" />
-					<var name="portletNameBorderless" value="Blogs" />
+					<var name="portletName" value="Blogs" />
 				</execute>
 
 				<execute macro="Blogs#tearDownConfigurationScopePG">
 					<var name="pageName" value="${pageName}" />
-					<var name="portletNameBorderless" value="Blogs" />
+					<var name="portletName" value="Blogs" />
 				</execute>
 
 				<execute macro="Page#tearDownPG" />
@@ -1956,7 +1956,7 @@
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
 
 		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG">
-			<var name="portletNameBorderless" value="Blogs" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -1988,7 +1988,7 @@
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
 
 		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG">
-			<var name="portletNameBorderless" value="Blogs" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="PermissionsInline#viewPermissionsRemoved">

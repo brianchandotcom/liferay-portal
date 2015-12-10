@@ -15,7 +15,7 @@
 	<command name="configureDisplayStylePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Tags Navigation" />
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -35,7 +35,7 @@
 	<command name="configureFlaggableSettingsPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Tags Navigation" />
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -83,7 +83,7 @@
 	<command name="viewTagCloudConfiguration">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Tag Cloud" />
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

@@ -1,7 +1,7 @@
 <definition>
 	<command name="configureAdvancedSearchPG">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="Search" />
+			<var name="portletName" value="Search" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -15,7 +15,7 @@
 
 	<command name="configureAssetType">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="Search" />
+			<var name="portletName" value="Search" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

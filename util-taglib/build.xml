@@ -103,9 +103,25 @@
 		</java>
 	</target>
 
-	<target name="generate" depends="validate-tld">
+	<target name="taglibdoc" depends="validate-tld">
 		<property name="doc.taglibs.dir" value="${doc.dir}/taglibs" />
+
 		<mkdir dir="${doc.taglibs.dir}" />
+
+		<pathconvert property="tld.files" pathsep=" ">
+			<path>
+				<fileset dir="${project.dir}">
+					<include name="**/liferay-*.tld" />
+					<exclude name="**/bin/**" />
+					<exclude name="**/build/**" />
+					<exclude name="**/classes/**" />
+					<exclude name="**/portal-web/**" />
+					<exclude name="**/sdk/**" />
+					<exclude name="**/test/**" />
+				</fileset>
+			</path>
+		</pathconvert>
+
 		<java
 			classname="com.sun.tlddoc.TLDDoc"
 			classpathref="project.classpath"
@@ -114,42 +130,21 @@
 			maxmemory="256m"
 		>
 			<arg line="-d ${doc.taglibs.dir}" />
-
-            	<arg line="${Files}"/>
-
+			<arg line="${tld.files}" />
 		</java>
-        
-	</target>
-    
-	<target name="taglibdoc">
-        <path>
-            <fileset id="files" dir="${project.dir}" >
-                <include name="**/liferay-*.tld" />
-                <exclude name="**/bin/**" />
-                <exclude name="**/build/**" />
-                <exclude name="**/classes/**" />
-                <exclude name="**/portal-web/**" />
-                <exclude name="**/sdk/**" />
-                <exclude name="**/test/**" />
-            </fileset>
-        </path>
-        <pathconvert property="Paths" refid="files" pathsep=" "/>
-        <antcall target="generate">
-            <param name="Files" value="${Paths}"/>
-        </antcall>
 	</target>
 
 	<target name="validate-tld">
 		<schemavalidate>
 			<fileset dir="${project.dir}" >
-                <include name="**/liferay-*.tld" />
-                <exclude name="**/bin/**" />
-                <exclude name="**/build/**" />
-                <exclude name="**/classes/**" />
-                <exclude name="**/portal-web/**" />
-                <exclude name="**/sdk/**" />
-                <exclude name="**/test/**" />
-            </fileset>
+				<include name="**/liferay-*.tld" />
+				<exclude name="**/bin/**" />
+				<exclude name="**/build/**" />
+				<exclude name="**/classes/**" />
+				<exclude name="**/portal-web/**" />
+				<exclude name="**/sdk/**" />
+				<exclude name="**/test/**" />
+			</fileset>
 		</schemavalidate>
 	</target>
 </project>

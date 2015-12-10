@@ -2630,6 +2630,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		dlFileRank.setNew(true);
 		dlFileRank.setPrimaryKey(fileRankId);
 
+		dlFileRank.setCompanyId(companyProvider.getCompanyId());
+
 		return dlFileRank;
 	}
 

@@ -4773,6 +4773,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 		assetVocabulary.setUuid(uuid);
 
+		assetVocabulary.setCompanyId(companyProvider.getCompanyId());
+
 		return assetVocabulary;
 	}
 

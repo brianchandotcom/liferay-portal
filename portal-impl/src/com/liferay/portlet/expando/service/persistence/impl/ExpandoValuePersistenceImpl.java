@@ -5061,6 +5061,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		expandoValue.setNew(true);
 		expandoValue.setPrimaryKey(valueId);
 
+		expandoValue.setCompanyId(companyProvider.getCompanyId());
+
 		return expandoValue;
 	}
 

@@ -13073,6 +13073,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		mbThread.setUuid(uuid);
 
+		mbThread.setCompanyId(companyProvider.getCompanyId());
+
 		return mbThread;
 	}
 

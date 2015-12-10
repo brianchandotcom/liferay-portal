@@ -8903,6 +8903,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		ddmStructure.setUuid(uuid);
 
+		ddmStructure.setCompanyId(companyProvider.getCompanyId());
+
 		return ddmStructure;
 	}
 

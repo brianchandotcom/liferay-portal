@@ -686,6 +686,8 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingItemField.setNew(true);
 		shoppingItemField.setPrimaryKey(itemFieldId);
 
+		shoppingItemField.setCompanyId(companyProvider.getCompanyId());
+
 		return shoppingItemField;
 	}
 

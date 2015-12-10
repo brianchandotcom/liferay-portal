@@ -12067,6 +12067,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 		dlFileEntry.setUuid(uuid);
 
+		dlFileEntry.setCompanyId(companyProvider.getCompanyId());
+
 		return dlFileEntry;
 	}
 

@@ -2773,6 +2773,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		userGroupRole.setNew(true);
 		userGroupRole.setPrimaryKey(userGroupRolePK);
 
+		userGroupRole.setCompanyId(companyProvider.getCompanyId());
+
 		return userGroupRole;
 	}
 

@@ -2468,6 +2468,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 		journalArticleResource.setUuid(uuid);
 
+		journalArticleResource.setCompanyId(companyProvider.getCompanyId());
+
 		return journalArticleResource;
 	}
 

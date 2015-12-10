@@ -1889,6 +1889,8 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 
 		ddmStructureLayout.setUuid(uuid);
 
+		ddmStructureLayout.setCompanyId(companyProvider.getCompanyId());
+
 		return ddmStructureLayout;
 	}
 

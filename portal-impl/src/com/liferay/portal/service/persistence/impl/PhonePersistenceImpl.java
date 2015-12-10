@@ -4036,6 +4036,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 		phone.setUuid(uuid);
 
+		phone.setCompanyId(companyProvider.getCompanyId());
+
 		return phone;
 	}
 

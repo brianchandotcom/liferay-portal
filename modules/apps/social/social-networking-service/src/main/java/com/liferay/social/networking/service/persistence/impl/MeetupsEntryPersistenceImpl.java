@@ -1185,6 +1185,8 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 		meetupsEntry.setNew(true);
 		meetupsEntry.setPrimaryKey(meetupsEntryId);
 
+		meetupsEntry.setCompanyId(companyProvider.getCompanyId());
+
 		return meetupsEntry;
 	}
 

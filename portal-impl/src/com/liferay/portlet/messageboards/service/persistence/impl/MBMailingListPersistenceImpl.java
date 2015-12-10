@@ -2406,6 +2406,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		mbMailingList.setUuid(uuid);
 
+		mbMailingList.setCompanyId(companyProvider.getCompanyId());
+
 		return mbMailingList;
 	}
 

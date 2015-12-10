@@ -89,6 +89,7 @@ public class AggregateTestRule implements ArquillianClassRuleHandler, TestRule {
 		AssumeTestRule.class.getName(),
 		"com.liferay.portal.test.rule.LiferayIntegrationTestRule",
 		"com.liferay.portal.test.rule.MainServletTestRule",
+		CompanyProviderTestRule.class.getName(),
 		"com.liferay.portal.test.rule.HypersonicServerTestRule",
 		"com.liferay.portal.test.rule.PersistenceTestRule",
 		TransactionalTestRule.class.getName(),

@@ -2078,6 +2078,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 		ddmStorageLink.setUuid(uuid);
 
+		ddmStorageLink.setCompanyId(companyProvider.getCompanyId());
+
 		return ddmStorageLink;
 	}
 

@@ -1717,6 +1717,8 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 		wallEntry.setNew(true);
 		wallEntry.setPrimaryKey(wallEntryId);
 
+		wallEntry.setCompanyId(companyProvider.getCompanyId());
+
 		return wallEntry;
 	}
 

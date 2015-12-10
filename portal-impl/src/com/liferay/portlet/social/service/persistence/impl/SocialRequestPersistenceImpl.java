@@ -6474,6 +6474,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 		socialRequest.setUuid(uuid);
 
+		socialRequest.setCompanyId(companyProvider.getCompanyId());
+
 		return socialRequest;
 	}
 

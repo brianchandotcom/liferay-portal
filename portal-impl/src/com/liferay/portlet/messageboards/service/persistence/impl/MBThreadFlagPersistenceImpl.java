@@ -2900,6 +2900,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 		mbThreadFlag.setUuid(uuid);
 
+		mbThreadFlag.setCompanyId(companyProvider.getCompanyId());
+
 		return mbThreadFlag;
 	}
 

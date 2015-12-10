@@ -989,6 +989,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		portlet.setNew(true);
 		portlet.setPrimaryKey(id);
 
+		portlet.setCompanyId(companyProvider.getCompanyId());
+
 		return portlet;
 	}
 

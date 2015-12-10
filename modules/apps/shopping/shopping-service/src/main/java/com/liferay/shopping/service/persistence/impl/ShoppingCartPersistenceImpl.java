@@ -1462,6 +1462,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		shoppingCart.setNew(true);
 		shoppingCart.setPrimaryKey(cartId);
 
+		shoppingCart.setCompanyId(companyProvider.getCompanyId());
+
 		return shoppingCart;
 	}
 

@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.test.rule;
+package com.liferay.portal.kernel.test.rule;
 
-import com.liferay.portal.kernel.test.rule.BaseTestRule;
-import com.liferay.portal.test.rule.callback.MainServletTestCallback;
+import com.liferay.portal.kernel.test.rule.callback.CompanyProviderTestCallback;
 
 /**
- * @author Miguel Pastor
- * @author Shuyang Zhou
+ * @author Cristina González
  */
-public class MainServletTestRule extends BaseTestRule<Long, Long> {
+public class CompanyProviderTestRule extends BaseTestRule<Long, Long> {
 
-	public static final MainServletTestRule INSTANCE =
-		new MainServletTestRule();
+	public static final CompanyProviderTestRule INSTANCE =
+		new CompanyProviderTestRule();
 
-	protected MainServletTestRule() {
-		super(MainServletTestCallback.INSTANCE);
+	public CompanyProviderTestRule() {
+		super(CompanyProviderTestCallback.INSTANCE);
 	}
 
 }

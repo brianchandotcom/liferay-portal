@@ -2300,6 +2300,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		shoppingCategory.setNew(true);
 		shoppingCategory.setPrimaryKey(categoryId);
 
+		shoppingCategory.setCompanyId(companyProvider.getCompanyId());
+
 		return shoppingCategory;
 	}
 

@@ -2498,6 +2498,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		pollsQuestion.setUuid(uuid);
 
+		pollsQuestion.setCompanyId(companyProvider.getCompanyId());
+
 		return pollsQuestion;
 	}
 

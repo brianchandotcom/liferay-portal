@@ -2063,6 +2063,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		ddmStructureLink.setNew(true);
 		ddmStructureLink.setPrimaryKey(structureLinkId);
 
+		ddmStructureLink.setCompanyId(companyProvider.getCompanyId());
+
 		return ddmStructureLink;
 	}
 

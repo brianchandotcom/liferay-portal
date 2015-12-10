@@ -461,6 +461,8 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		ratingsStats.setNew(true);
 		ratingsStats.setPrimaryKey(statsId);
 
+		ratingsStats.setCompanyId(companyProvider.getCompanyId());
+
 		return ratingsStats;
 	}
 

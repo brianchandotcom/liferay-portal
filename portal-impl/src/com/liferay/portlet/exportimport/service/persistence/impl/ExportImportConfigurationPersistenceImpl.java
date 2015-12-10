@@ -2911,6 +2911,8 @@ public class ExportImportConfigurationPersistenceImpl
 		exportImportConfiguration.setNew(true);
 		exportImportConfiguration.setPrimaryKey(exportImportConfigurationId);
 
+		exportImportConfiguration.setCompanyId(companyProvider.getCompanyId());
+
 		return exportImportConfiguration;
 	}
 

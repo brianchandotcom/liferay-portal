@@ -4684,6 +4684,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 		address.setUuid(uuid);
 
+		address.setCompanyId(companyProvider.getCompanyId());
+
 		return address;
 	}
 

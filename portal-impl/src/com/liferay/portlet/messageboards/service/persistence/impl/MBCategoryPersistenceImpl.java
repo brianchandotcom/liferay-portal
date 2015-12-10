@@ -9949,6 +9949,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		mbCategory.setUuid(uuid);
 
+		mbCategory.setCompanyId(companyProvider.getCompanyId());
+
 		return mbCategory;
 	}
 

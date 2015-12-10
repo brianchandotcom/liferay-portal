@@ -16,6 +16,7 @@ package com.liferay.portal.store.file.system.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.module.framework.test.ModuleFrameworkTestUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -40,7 +41,8 @@ public class AdvancedFileSystemStoreTest extends BaseStoreTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), CompanyProviderTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

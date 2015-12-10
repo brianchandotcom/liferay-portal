@@ -164,6 +164,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		dlFileEntryType = _dlFileEntryTypeLocalService.createDLFileEntryType(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
+		dlFileEntryType.setCompanyId(
+			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT);
 		dlFileEntryType.setFileEntryTypeKey(
 			StringUtil.toUpperCase(
 				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));

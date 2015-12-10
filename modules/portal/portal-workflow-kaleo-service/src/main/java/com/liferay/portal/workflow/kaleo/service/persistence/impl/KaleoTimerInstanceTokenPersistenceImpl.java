@@ -2170,6 +2170,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		kaleoTimerInstanceToken.setNew(true);
 		kaleoTimerInstanceToken.setPrimaryKey(kaleoTimerInstanceTokenId);
 
+		kaleoTimerInstanceToken.setCompanyId(companyProvider.getCompanyId());
+
 		return kaleoTimerInstanceToken;
 	}
 

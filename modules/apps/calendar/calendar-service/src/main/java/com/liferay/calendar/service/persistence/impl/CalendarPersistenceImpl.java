@@ -3923,6 +3923,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 		calendar.setUuid(uuid);
 
+		calendar.setCompanyId(companyProvider.getCompanyId());
+
 		return calendar;
 	}
 

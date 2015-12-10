@@ -2423,6 +2423,8 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		systemEvent.setNew(true);
 		systemEvent.setPrimaryKey(systemEventId);
 
+		systemEvent.setCompanyId(companyProvider.getCompanyId());
+
 		return systemEvent;
 	}
 

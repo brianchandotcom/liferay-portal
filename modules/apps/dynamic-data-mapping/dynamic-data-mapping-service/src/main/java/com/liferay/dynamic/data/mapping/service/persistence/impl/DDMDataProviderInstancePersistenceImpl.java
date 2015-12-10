@@ -3521,6 +3521,8 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 
 		ddmDataProviderInstance.setUuid(uuid);
 
+		ddmDataProviderInstance.setCompanyId(companyProvider.getCompanyId());
+
 		return ddmDataProviderInstance;
 	}
 

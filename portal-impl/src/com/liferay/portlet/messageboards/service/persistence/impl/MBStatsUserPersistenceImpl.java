@@ -2028,6 +2028,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		mbStatsUser.setNew(true);
 		mbStatsUser.setPrimaryKey(statsUserId);
 
+		mbStatsUser.setCompanyId(companyProvider.getCompanyId());
+
 		return mbStatsUser;
 	}
 

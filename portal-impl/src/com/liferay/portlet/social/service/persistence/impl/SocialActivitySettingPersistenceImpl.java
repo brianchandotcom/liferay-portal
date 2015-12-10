@@ -2776,6 +2776,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		socialActivitySetting.setNew(true);
 		socialActivitySetting.setPrimaryKey(activitySettingId);
 
+		socialActivitySetting.setCompanyId(companyProvider.getCompanyId());
+
 		return socialActivitySetting;
 	}
 

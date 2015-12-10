@@ -16,7 +16,9 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
@@ -43,6 +45,8 @@ public abstract class DoAsUserThread extends Thread {
 	public void run() {
 		for (int i = 0; i < _retries; i++) {
 			try {
+				CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
 				PrincipalThreadLocal.setName(_userId);
 
 				User user = UserLocalServiceUtil.getUserById(_userId);

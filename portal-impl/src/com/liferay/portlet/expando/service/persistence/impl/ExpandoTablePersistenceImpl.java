@@ -1065,6 +1065,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		expandoTable.setNew(true);
 		expandoTable.setPrimaryKey(tableId);
 
+		expandoTable.setCompanyId(companyProvider.getCompanyId());
+
 		return expandoTable;
 	}
 

@@ -2750,6 +2750,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 
 		ratingsEntry.setUuid(uuid);
 
+		ratingsEntry.setCompanyId(companyProvider.getCompanyId());
+
 		return ratingsEntry;
 	}
 

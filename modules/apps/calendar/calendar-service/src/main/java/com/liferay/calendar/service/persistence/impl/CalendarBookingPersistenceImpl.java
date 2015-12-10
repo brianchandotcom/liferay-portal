@@ -5683,6 +5683,8 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 
 		calendarBooking.setUuid(uuid);
 
+		calendarBooking.setCompanyId(companyProvider.getCompanyId());
+
 		return calendarBooking;
 	}
 

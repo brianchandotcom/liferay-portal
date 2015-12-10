@@ -1533,6 +1533,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSet.setNew(true);
 		layoutSet.setPrimaryKey(layoutSetId);
 
+		layoutSet.setCompanyId(companyProvider.getCompanyId());
+
 		return layoutSet;
 	}
 

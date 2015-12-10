@@ -2371,6 +2371,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		journalArticleImage.setNew(true);
 		journalArticleImage.setPrimaryKey(articleImageId);
 
+		journalArticleImage.setCompanyId(companyProvider.getCompanyId());
+
 		return journalArticleImage;
 	}
 

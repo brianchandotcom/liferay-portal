@@ -1938,6 +1938,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 		wikiPageResource.setUuid(uuid);
 
+		wikiPageResource.setCompanyId(companyProvider.getCompanyId());
+
 		return wikiPageResource;
 	}
 

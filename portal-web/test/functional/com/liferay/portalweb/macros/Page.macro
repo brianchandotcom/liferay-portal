@@ -1124,7 +1124,7 @@
 		<execute function="Pause" locator1="1073" />
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertTextEquals" locator1="Message#STATUS" value1="${workflowStatus}" />
+		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="${workflowStatus}" />
 		<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
 
 		<var name="key_pageName" value="${pageName}" />

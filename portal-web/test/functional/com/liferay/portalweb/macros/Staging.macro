@@ -784,19 +784,19 @@
 	</command>
 
 	<command name="submitForPublicationPageRevision">
-		<execute function="AssertTextEquals" locator1="Message#STATUS" value1="Draft" />
+		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Draft" />
 
 		<execute function="AssertClick" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" />
 
 		<if>
-			<condition function="IsTextEqual" locator1="Message#STATUS" value1="Pending (Created)" />
+			<condition function="IsTextEqual" locator1="Message#WORKFLOW_STATUS" value1="Pending (Created)" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#STATUS" value1="Pending (Created)" />
+				<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Pending (Created)" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#STATUS" value1="Pending (Review)" />
+				<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Pending (Review)" />
 			</else>
 		</if>
 	</command>
@@ -918,7 +918,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#STATUS" value1="${stagingWorkflowStatus}" />
+		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="${stagingWorkflowStatus}" />
 	</command>
 
 	<command name="viewValidationError">

@@ -538,7 +538,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Organization Name" />
-			<var name="sitePageName" value="Public Page" />
+			<var name="sitePageName" value="Organization Page" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 

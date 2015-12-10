@@ -178,6 +178,11 @@
 </tr>
 <!--DESCRIPTIVE_LIST_FOLDER-->
 <tr>
+	<td>DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS</td>
+	<td>//li[contains(@data-title,'${key_dmFolderName}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTIVE_LIST_FOLDER_CHECKBOX</td>
 	<td>//li[@data-title='${key_dmFolderName}']//input[@type='checkbox']</td>
 	<td></td>
@@ -190,6 +195,11 @@
 <tr>
 	<td>DESCRIPTIVE_LIST_FOLDER_TITLE</td>
 	<td>//li[@data-title='${key_dmFolderName}']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_LIST_FOLDER_EDITED_TITLE</td>
+	<td>//li[@data-title='${key_dmFolderNameEdit}']//a</td>
 	<td></td>
 </tr>
 <tr>

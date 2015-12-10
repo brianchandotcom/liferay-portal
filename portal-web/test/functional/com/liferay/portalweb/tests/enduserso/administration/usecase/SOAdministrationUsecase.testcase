@@ -402,7 +402,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -417,7 +417,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -858,7 +858,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -876,7 +876,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 

@@ -144,7 +144,7 @@
 			<var name="dmSubFolderName" value="DM Folder2 Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
@@ -163,7 +163,7 @@
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
@@ -325,7 +325,7 @@
 			<var name="dmSubFolderName" value="DM Folder3 Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder3 Name" />
 		</execute>
 
@@ -344,7 +344,7 @@
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder3 Name" />
 		</execute>
 
@@ -359,7 +359,7 @@
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder3 Name" />
 		</execute>
 

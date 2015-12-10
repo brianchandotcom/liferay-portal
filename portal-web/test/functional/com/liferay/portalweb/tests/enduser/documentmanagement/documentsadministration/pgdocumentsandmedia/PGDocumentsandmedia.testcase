@@ -359,6 +359,10 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
+		<execute macro="DMNavigator#gotoFolderPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
 		<execute macro="DMFolder#viewPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
@@ -374,7 +378,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -400,7 +404,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -435,7 +439,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -462,7 +466,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -474,7 +478,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -493,7 +497,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -519,7 +523,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -551,7 +555,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -582,7 +586,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -595,7 +599,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -633,6 +637,10 @@
 			<var name="dmFolderName" value="Folder1 Name" />
 		</execute>
 
+		<execute macro="DMNavigator#gotoFolderPG">
+			<var name="dmFolderName" value="Folder1 Name" />
+		</execute>
+
 		<execute macro="DMFolder#viewPG">
 			<var name="dmFolderDescription" value="DM Folder1 Description" />
 			<var name="dmFolderName" value="Folder1 Name" />
@@ -647,6 +655,10 @@
 			<var name="dmFolderName" value="Folder2 Name" />
 		</execute>
 
+		<execute macro="DMNavigator#gotoFolderPG">
+			<var name="dmFolderName" value="Folder2 Name" />
+		</execute>
+
 		<execute macro="DMFolder#viewPG">
 			<var name="dmFolderDescription" value="DM Folder2 Description" />
 			<var name="dmFolderName" value="Folder2 Name" />
@@ -658,6 +670,10 @@
 
 		<execute macro="DMFolder#addPG">
 			<var name="dmFolderDescription" value="DM Folder3 Description" />
+			<var name="dmFolderName" value="Folder3 Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="Folder3 Name" />
 		</execute>
 
@@ -677,7 +693,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -686,7 +702,7 @@
 			<var name="dmSubFolderName" value="DM SubFolder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 
@@ -712,7 +728,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -721,7 +737,7 @@
 			<var name="dmSubFolderName" value="DM SubFolder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 
@@ -747,7 +763,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -755,6 +771,14 @@
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.doc" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPG">
+			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
@@ -774,14 +798,30 @@
 			<var name="dmFolderName" value="Folder Name" />
 		</execute>
 
+		<execute macro="DMNavigator#gotoFolderPG">
+			<var name="dmFolderName" value="Folder Name" />
+		</execute>
+
 		<execute macro="DMFolder#viewPG">
 			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="Folder Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="Folder Name" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
 			<var name="dmSubFolderDescription" value="DM Subfolder1 Description" />
 			<var name="dmSubFolderName" value="Subfolder1 Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPG">
+			<var name="dmFolderName" value="Subfolder1 Name" />
 		</execute>
 
 		<execute macro="DMFolder#viewPG">
@@ -792,13 +832,17 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="Folder Name" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
 			<var name="dmSubFolderDescription" value="DM Subfolder2 Description" />
 			<var name="dmSubFolderName" value="Subfolder2 Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPG">
+			<var name="dmFolderName" value="Subfolder2 Name" />
 		</execute>
 
 		<execute macro="DMFolder#viewPG">
@@ -809,13 +853,17 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="Folder Name" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderPG">
 			<var name="dmSubFolderDescription" value="DM Subfolder3 Description" />
 			<var name="dmSubFolderName" value="Subfolder3 Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPG">
+			<var name="dmFolderName" value="Subfolder3 Name" />
 		</execute>
 
 		<execute macro="DMFolder#viewPG">
@@ -956,7 +1004,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -981,7 +1029,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1006,7 +1054,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1019,7 +1067,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1038,7 +1086,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1047,7 +1095,7 @@
 			<var name="dmSubFolderName" value="DM SubFolder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 
@@ -1168,7 +1216,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1187,7 +1235,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1208,7 +1256,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1228,7 +1276,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1249,7 +1297,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1268,7 +1316,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1289,7 +1337,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1315,7 +1363,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1324,7 +1372,7 @@
 			<var name="dmSubFolderName" value="DM SubFolder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 
@@ -1343,11 +1391,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 
@@ -1368,7 +1416,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1386,7 +1434,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1416,7 +1464,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1441,7 +1489,7 @@
 			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder1 Name" />
 		</execute>
 
@@ -1455,7 +1503,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
@@ -1465,9 +1513,9 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="DMDocument#navigateBackViaDocumentViewPG" />
+		<execute macro="DMDocument#navigateHomeViaDocumentViewPG" />
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder1 Name" />
 		</execute>
 
@@ -1493,7 +1541,7 @@
 			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder1 Name" />
 		</execute>
 
@@ -1512,7 +1560,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
@@ -1546,7 +1594,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1566,7 +1614,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1580,7 +1628,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1593,7 +1641,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1615,9 +1663,14 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="DMDocument#searchPG">
-			<var name="dmDocumentKeyword" value="This is a *.doc file." />
-			<var name="dmDocumentTitle" value="DM Document Title" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="This is a *.doc file." />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetSummary" value="This is a *.doc file." />
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 	</command>
 
@@ -1632,9 +1685,13 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="DMDocument#searchPG">
-			<var name="dmDocumentKeyword" value="DM Document Title" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 	</command>
 
@@ -1648,7 +1705,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1658,9 +1715,13 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="DMDocument#searchPG">
-			<var name="dmDocumentKeyword" value="DM Document Title" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 	</command>
 
@@ -1674,7 +1735,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1684,9 +1745,13 @@
 			<var name="dmDocumentTitle" value="DM Image Title" />
 		</execute>
 
-		<execute macro="DMDocument#searchPG">
-			<var name="dmDocumentKeyword" value="DM Image Title" />
-			<var name="dmDocumentTitle" value="DM Image Title" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="DM Image Title" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Image Title" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 	</command>
 
@@ -1700,7 +1765,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1709,7 +1774,7 @@
 			<var name="dmSubFolderName" value="DM SubFolder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 
@@ -1719,9 +1784,13 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="DMDocument#searchPG">
-			<var name="dmDocumentKeyword" value="DM Document Title" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
 		</execute>
 	</command>
 
@@ -1735,7 +1804,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1745,7 +1814,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1764,7 +1833,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1782,7 +1851,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1794,7 +1863,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -1806,7 +1875,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 

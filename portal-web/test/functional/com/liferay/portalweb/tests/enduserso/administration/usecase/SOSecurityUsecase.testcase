@@ -401,7 +401,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -422,7 +422,7 @@
 
 		<execute function="AssertAlertNotPresent" />
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -442,7 +442,7 @@
 
 		<execute function="AssertAlertNotPresent" />
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1111,7 +1111,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1135,7 +1135,7 @@
 
 		<execute function="AssertAlertNotPresent" />
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 

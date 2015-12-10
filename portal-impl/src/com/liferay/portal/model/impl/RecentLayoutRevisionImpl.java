@@ -21,8 +21,4 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class RecentLayoutRevisionImpl extends RecentLayoutRevisionBaseImpl {
-
-	public RecentLayoutRevisionImpl() {
-	}
-
 }

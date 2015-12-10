@@ -149,7 +149,7 @@
 		<if>
 			<isset var="searchAssetSummary" />
 			<then>
-				<execute function="AssertTextEquals" locator1="SearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
 			</then>
 		</if>
 	</command>

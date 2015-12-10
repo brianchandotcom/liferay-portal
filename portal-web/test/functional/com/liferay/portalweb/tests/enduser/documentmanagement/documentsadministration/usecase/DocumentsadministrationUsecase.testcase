@@ -248,6 +248,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
 		<execute macro="DMDocument#viewDocumentToolbarCmdAsGuestPG">
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
@@ -446,6 +448,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -456,7 +460,7 @@
 
 		<var name="key_dmFolderName" value="Folder1" />
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="Folder1" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="Folder1" />
 
 		<var name="key_assetName" value="Zero Document File" />
 
@@ -470,7 +474,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
@@ -483,7 +487,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
@@ -496,7 +500,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
@@ -509,7 +513,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#gotoCP">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
@@ -1051,7 +1055,7 @@
 			<var name="pageName" value="Documents and Media Page - Global" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 
@@ -1140,7 +1144,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 
@@ -1190,6 +1194,8 @@
 		</execute>
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1249,6 +1255,8 @@
 			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Documents and Media" />
 		</execute>
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents and Media Page" />

@@ -200,11 +200,11 @@
 	<command name="deletePG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
-		<execute function="Check" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute function="Check" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_CHECKBOX" />
 		<execute function="Click" locator1="Icon#DELETE" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${dmFolderName} was moved to the Recycle Bin. Undo" />
-		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
+		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_ICON" />
 	</command>
 
 	<command name="editCP">
@@ -231,16 +231,18 @@
 	<command name="editPG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="PGDocumentsandmediaEditfolder#NAME_FIELD" value1="${dmFolderNameEdit}" />
-		<execute function="Type" locator1="PGDocumentsandmediaEditfolder#DESCRIPTION_FIELD" value1="${dmFolderDescriptionEdit}" />
-		<execute function="AssertClick" locator1="PGDocumentsandmediaEditfolder#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${dmFolderNameEdit}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${dmFolderDescriptionEdit}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<var name="key_dmFolderNameEdit" value="${dmFolderNameEdit}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderNameEdit}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_EDITED_TITLE" value1="${dmFolderNameEdit}" />
 	</command>
 
 	<command name="editPGViaMG">
@@ -273,12 +275,6 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${folderName}" />
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-	</command>
-
-	<command name="gotoPG">
-		<var name="key_dmFolderName" value="${dmFolderName}" />
-
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />
 	</command>
 
 	<command name="gotoPGViaMG">
@@ -505,8 +501,6 @@
 
 	<command name="viewPG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
-
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
 
 		<var method="StringUtil#upperCase('${dmFolderName}')" name="dmFolderNameUpperCase" />
 

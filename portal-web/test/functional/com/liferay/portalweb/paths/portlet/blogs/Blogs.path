@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>ICON_VIEW_ENTRY_STATUS</td>
-	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//div[@class='status']</td>
+	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//span[contains(@class,'status')]</td>
 	<td></td>
 </tr>
 <tr>

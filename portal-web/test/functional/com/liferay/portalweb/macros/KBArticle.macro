@@ -821,6 +821,8 @@
 
 		<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
 
+		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

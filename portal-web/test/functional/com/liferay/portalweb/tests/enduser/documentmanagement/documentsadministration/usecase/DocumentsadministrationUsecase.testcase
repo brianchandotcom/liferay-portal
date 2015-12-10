@@ -1338,6 +1338,6 @@
 			<var name="dmDocumentTitle" value="DM Document2 Title" />
 		</execute>
 
-		<execute function="AssertChecked" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
+		<execute function="AssertChecked" locator1="Checkbox#LEXICON_SELECT_ALL" />
 	</command>
 </definition>

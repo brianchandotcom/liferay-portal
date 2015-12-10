@@ -199,6 +199,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LEXICON_SELECT_ALL</td>
+	<td>//div[contains(@class,'collapse on')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAILING</td>
 	<td>//label[contains(.,'Mailing')]/input[@type='checkbox']</td>
 	<td></td>

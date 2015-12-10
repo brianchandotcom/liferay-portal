@@ -851,7 +851,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingMonthly2Times" priority="4">
+	<command name="AddCalendarEventRepeatingMonthly2Times" priority="5">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -867,35 +867,6 @@
 			<var name="frequency" value="Monthly" />
 			<var name="numberOfOccurrences" value="2" />
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-	</command>
-
-	<command name="AddCalendarEventRepeatingMonthlyThirdWednesday2Times" priority="5">
-		<var name="eventTitle" value="Calendar Event Repeating Title" />
-		<var name="eventType" value="Repeating" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
-			<var name="frequency" value="Monthly" />
-			<var name="numberOfOccurrences" value="2" />
-			<var name="pageName" value="${pageName}" />
-			<var name="position" value="Third" />
-			<var name="weekday" value="Wednesday" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1178,11 +1149,9 @@
 			<var name="startDateTime" value="01:00 AM" />
 		</execute>
 
-		<execute macro="CalendarEvent#setRepeating">
+		<execute macro="CalendarEvent#setRepeatingYearly">
 			<var name="frequency" value="Yearly" />
-			<var name="month" value="February" />
-			<var name="position" value="First" />
-			<var name="weekday" value="Tuesday" />
+			<var name="yearlyRecurrenceSummary" value="Yearly, On The Third Sunday Of February" />
 		</execute>
 
 		<execute macro="CalendarEvent#publish" />

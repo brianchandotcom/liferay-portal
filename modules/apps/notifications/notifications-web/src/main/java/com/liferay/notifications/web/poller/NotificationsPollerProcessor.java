@@ -30,12 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + NotificationsPortletKeys.DOCKBAR_NOTIFICATIONS
-	},
+	property = {"javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS},
 	service = PollerProcessor.class
 )
-public class DockbarNotificationsPollerProcessor extends BasePollerProcessor {
+public class NotificationsPollerProcessor extends BasePollerProcessor {
 
 	@Override
 	protected PollerResponse doReceive(PollerRequest pollerRequest)

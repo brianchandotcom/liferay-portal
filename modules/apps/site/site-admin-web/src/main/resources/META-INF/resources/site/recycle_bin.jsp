@@ -33,7 +33,7 @@ boolean groupTrashEnabled = PropertiesParamUtil.getBoolean(groupTypeSettings, re
 int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, request, "trashEntriesMaxAge", PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE));
 %>
 
-<aui:input id="trashEnabled" label="enable-recycle-bin" name="trashEnabled" type="checkbox" value="<%= groupTrashEnabled %>" />
+<aui:input id="trashEnabled" label="enable-recycle-bin" name="trashEnabled" type="toggle-switch" value="<%= groupTrashEnabled %>" />
 
 <div class="trash-entries-max-age">
 	<aui:input disabled="<%= !groupTrashEnabled %>" helpMessage="trash-entries-max-age-help" label="trash-entries-max-age" name="trashEntriesMaxAge" type="text" value="<%= (trashEntriesMaxAge % 1 == 0) ? GetterUtil.getInteger(trashEntriesMaxAge) : String.valueOf(trashEntriesMaxAge) %>">

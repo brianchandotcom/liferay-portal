@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Alloy Taglib
 Bundle-SymbolicName: com.liferay.alloy.taglib
-Bundle-Version: 1.1.5
+Bundle-Version: 1.1.6
 Include-Resource: @../../../lib/development/alloy-taglib.jar

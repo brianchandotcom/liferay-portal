@@ -16,7 +16,37 @@
 
 <%@ include file="/html/taglib/ui/form_navigator/init.jsp" %>
 
-<%@include file="/html/taglib/ui/form_navigator/lexicon/sections.jspf" %>
+<c:choose>
+	<c:when test="<%= categoryKeys.length > 1 %>">
+		<liferay-ui:tabs
+			names="<%= StringUtil.merge(categoryKeys) %>"
+			refresh="<%= false %>"
+			type="tabs nav-tabs-default"
+		>
+
+			<%
+			for (String categoryKey : categoryKeys) {
+			%>
+
+				<liferay-ui:section>
+					<%@ include file="/html/taglib/ui/form_navigator/lexicon/sections.jspf" %>
+				</liferay-ui:section>
+
+			<%
+			}
+			%>
+
+		</liferay-ui:tabs>
+	</c:when>
+	<c:otherwise>
+
+		<%
+		String categoryKey = StringPool.BLANK;
+		%>
+
+		<%@ include file="/html/taglib/ui/form_navigator/lexicon/sections.jspf" %>
+	</c:otherwise>
+</c:choose>
 
 <c:if test="<%= showButtons %>">
 	<aui:button-row>

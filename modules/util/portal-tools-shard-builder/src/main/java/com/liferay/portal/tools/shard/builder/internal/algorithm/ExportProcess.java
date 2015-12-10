@@ -42,13 +42,15 @@ public class ExportProcess {
 		List<Long> companyIds = exportContext.getCompanyIds();
 
 		for (Long companyId : companyIds) {
-			_exportCompany(companyId, partitionedTableNames, exportContext);
-			_exportCompany(companyId, controlTableNames, exportContext);
+			_exportCompany(
+				companyId, partitionedTableNames, exportContext, true);
+			_exportCompany(companyId, controlTableNames, exportContext, false);
 		}
 	}
 
 	private void _exportCompany(
-			long companyId, List<String> tableNames, ExportContext exportContext)
+			long companyId, List<String> tableNames,
+			ExportContext exportContext, boolean filterByCompanyId)
 		throws IOException {
 
 		for (String tableName : tableNames) {
@@ -62,7 +64,12 @@ public class ExportProcess {
 			OutputStream outputStream = new BufferedOutputStream(
 				new FileOutputStream(outputFile));
 
-			_dbExporter.write(tableName, outputStream);
+			if (filterByCompanyId) {
+				_dbExporter.write(companyId, tableName, outputStream);
+			}
+			else {
+				_dbExporter.write(tableName, outputStream);
+			}
 
 			outputStream.flush();
 			outputStream.close();

@@ -27,6 +27,9 @@ public interface DBExporter {
 
 	public List<String> getPartitionedTableNames(String schemaName);
 
+	public void write(
+		long companyId, String tableName, OutputStream outputStream);
+
 	public void write(String tableName, OutputStream outputStream);
 
 }

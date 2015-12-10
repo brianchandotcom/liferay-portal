@@ -144,45 +144,15 @@ public abstract class BaseDBProvider
 	}
 
 	@Override
+	public void write(
+		long companyId, String tableName, OutputStream outputStream) {
+
+		_write(companyId, tableName, outputStream);
+	}
+
+	@Override
 	public void write(String tableName, OutputStream outputStream) {
-		String sql = "SELECT * FROM " + tableName;
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			DataSource dataSource = getDataSource();
-
-			con = dataSource.getConnection();
-
-			ps = con.prepareStatement(
-				sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-
-			setFetchSize(ps);
-
-			rs = ps.executeQuery();
-
-			ResultSetMetaData metaData = rs.getMetaData();
-
-			int columnCount = metaData.getColumnCount();
-
-			while (rs.next()) {
-				String[] fields = new String[columnCount];
-
-				for (int i = 0; i < columnCount; i++) {
-					fields[i] = serializeTableField(rs.getObject(i + 1));
-				}
-
-				generateInsert(outputStream, tableName, fields);
-			}
-		}
-		catch (IOException | SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			_dbManager.cleanUp(con, ps, rs);
-		}
+		_write(0, tableName, outputStream);
 	}
 
 	protected String formatDateTime(Object date) {
@@ -221,6 +191,57 @@ public abstract class BaseDBProvider
 		}
 
 		return tableNames;
+	}
+
+	private void _write(
+		long companyId, String tableName, OutputStream outputStream) {
+
+		String sql = "SELECT * FROM " + tableName;
+
+		if (companyId > 0) {
+			sql += " WHERE companyId = ?";
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			DataSource dataSource = getDataSource();
+
+			con = dataSource.getConnection();
+
+			ps = con.prepareStatement(
+				sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
+			setFetchSize(ps);
+
+			if (companyId > 0) {
+				ps.setLong(1, companyId);
+			}
+
+			rs = ps.executeQuery();
+
+			ResultSetMetaData metaData = rs.getMetaData();
+
+			int columnCount = metaData.getColumnCount();
+
+			while (rs.next()) {
+				String[] fields = new String[columnCount];
+
+				for (int i = 0; i < columnCount; i++) {
+					fields[i] = serializeTableField(rs.getObject(i + 1));
+				}
+
+				generateInsert(outputStream, tableName, fields);
+			}
+		}
+		catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			_dbManager.cleanUp(con, ps, rs);
+		}
 	}
 
 	private final DataSource _dataSource;

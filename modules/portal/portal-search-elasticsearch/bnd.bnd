@@ -1,14 +1,14 @@
 Bundle-ClassPath: \
 	.,\
+	lib/analysis-icu.jar,\
+	lib/analysis-kuromoji.jar,\
+	lib/analysis-smartcn.jar,\
+	lib/analysis-stempel.jar,\
 	lib/antlr-runtime.jar,\
 	lib/asm-commons.jar,\
 	lib/asm.jar,\
 	lib/commons-lang.jar,\
 	lib/compress-lzf.jar,\
-	lib/analysis-icu.jar,\
-	lib/analysis-kuromoji.jar,\
-	lib/analysis-smartcn.jar,\
-	lib/analysis-stempel.jar,\
 	lib/elasticsearch.jar,\
 	lib/guava.jar,\
 	lib/hppc.jar,\
@@ -87,15 +87,15 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
+	lib/analysis-icu.jar=lib/analysis-icu.jar,\
+	lib/analysis-kuromoji.jar=lib/analysis-kuromoji.jar,\
+	lib/analysis-smartcn.jar=lib/analysis-smartcn.jar,\
+	lib/analysis-stempel.jar=lib/analysis-stempel.jar,\
 	lib/antlr-runtime.jar=lib/antlr-runtime.jar,\
 	lib/asm-commons.jar=lib/asm-commons.jar,\
 	lib/asm.jar=lib/asm.jar,\
 	lib/commons-lang.jar=lib/commons-lang.jar,\
 	lib/compress-lzf.jar=lib/compress-lzf.jar,\
-	lib/analysis-icu.jar=lib/analysis-icu.jar,\
-	lib/analysis-kuromoji.jar=lib/analysis-kuromoji.jar,\
-	lib/analysis-smartcn.jar=lib/analysis-smartcn.jar,\
-	lib/analysis-stempel.jar=lib/analysis-stempel.jar,\
 	lib/elasticsearch.jar=lib/elasticsearch.jar,\
 	lib/guava.jar=lib/guava.jar,\
 	lib/hppc.jar=lib/hppc.jar,\

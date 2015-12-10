@@ -146,6 +146,7 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 		backURL="<%= backURL %>"
 		formModelBean="<%= group %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES %>"
+		markupView="lexicon"
 		showButtons="<%= true %>"
 	/>
 </aui:form>

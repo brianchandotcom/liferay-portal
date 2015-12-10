@@ -31,7 +31,7 @@ MapProviderTracker mapProviderTracker = (MapProviderTracker)request.getAttribute
 for (MapProvider mapProvider : mapProviderTracker.getMapProviders()) {
 %>
 
-	<aui:input checked="<%= Validator.equals(mapProviderKey, mapProvider.getKey()) %>" helpMessage="<%= mapProvider.getHelpMessage() %>" id='<%= mapProvider.getKey() + "Enabled" %>' label="<%= mapProvider.getLabel(locale) %>" name='<%= "TypeSettingsProperties--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>' type="radio" value="<%= mapProvider.getKey() %>" />
+	<aui:input checked="<%= Validator.equals(mapProviderKey, mapProvider.getKey()) %>" helpMessage="<%= mapProvider.getHelpMessage() %>" id='<%= mapProvider.getKey() + "Enabled" %>' label="<%= mapProvider.getLabel(locale) %>" name='<%= "settings--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>' type="radio" value="<%= mapProvider.getKey() %>" />
 
 	<div id="<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>">
 

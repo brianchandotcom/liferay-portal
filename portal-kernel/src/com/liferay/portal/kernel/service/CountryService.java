@@ -62,6 +62,7 @@ public interface CountryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country fetchCountryByA3(java.lang.String a3);
 
+	@AccessControlled(guestAccessEnabled = true)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountry(long countryId) throws PortalException;
 

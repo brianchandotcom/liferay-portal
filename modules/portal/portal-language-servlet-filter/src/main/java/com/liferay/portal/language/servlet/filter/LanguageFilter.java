@@ -23,11 +23,13 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import java.net.URL;
 
@@ -83,7 +85,10 @@ public class LanguageFilter extends BasePortalFilter {
 					}
 
 					try {
-						return new PropertyResourceBundle(url.openStream());
+						InputStreamReader reader = new InputStreamReader(
+							url.openStream(), StringPool.UTF8);
+
+						return new PropertyResourceBundle(reader);
 					}
 					catch (IOException ioe) {
 						return null;

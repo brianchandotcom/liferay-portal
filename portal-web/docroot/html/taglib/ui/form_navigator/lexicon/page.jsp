@@ -16,19 +16,31 @@
 
 <%@ include file="/html/taglib/ui/form_navigator/init.jsp" %>
 
+<%
+List<String> filterCategoryKeys = new ArrayList<String>();
+
+for (String categoryKey : categoryKeys) {
+	List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
+
+	if (ListUtil.isNotEmpty(formNavigatorEntries)) {
+		filterCategoryKeys.add(categoryKey);
+	}
+}
+%>
+
 <c:choose>
 	<c:when test="<%= deprecatedCategorySections.length > 0 %>">
 		<%@ include file="/html/taglib/ui/form_navigator/lexicon/deprecated_sections.jspf" %>
 	</c:when>
-	<c:when test="<%= categoryKeys.length > 1 %>">
+	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
 		<liferay-ui:tabs
-			names="<%= StringUtil.merge(categoryKeys) %>"
+			names="<%= StringUtil.merge(filterCategoryKeys) %>"
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"
 		>
 
 			<%
-			for (String categoryKey : categoryKeys) {
+			for (String categoryKey : filterCategoryKeys) {
 				List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
 			%>
 

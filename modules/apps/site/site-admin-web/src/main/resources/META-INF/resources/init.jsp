@@ -28,9 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
-page import="com.liferay.frontend.map.api.MapProvider" %><%@
 page import="com.liferay.frontend.map.api.constants.MapProviderWebKeys" %><%@
-page import="com.liferay.frontend.map.api.util.MapProviderTracker" %><%@
 page import="com.liferay.portal.DuplicateGroupException" %><%@
 page import="com.liferay.portal.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.GroupInheritContentException" %><%@
@@ -124,7 +122,6 @@ page import="com.liferay.portlet.sitesadmin.search.SiteChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %><%@
 page import="com.liferay.site.admin.web.constants.SiteAdminPortletKeys" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
 page import="com.liferay.util.PKParser" %>
 
 <%@ page import="java.util.ArrayList" %><%@

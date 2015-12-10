@@ -28,7 +28,8 @@ else {
 	portalPreferences.setValue(BlogsPortletKeys.BLOGS_ADMIN, "images-display-style", displayStyle);
 }
 
-int delta = ParamUtil.getInteger(request, "delta");
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
@@ -36,9 +37,18 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 portletURL.setParameter("navigation", "images");
-portletURL.setParameter("delta", String.valueOf(delta));
 portletURL.setParameter("orderBycol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
+
+if (delta > 0) {
+	portletURL.setParameter("delta", String.valueOf(delta));
+}
+
+PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+if (cur > 0) {
+	displayStyleURL.setParameter("cur", String.valueOf(cur));
+}
 
 request.setAttribute("view_images.jsp-portletURL", portletURL);
 
@@ -53,7 +63,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= portletURL %>"
+				portletURL="<%= displayStyleURL %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>

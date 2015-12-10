@@ -18,8 +18,7 @@
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(portraitURL) %>">
-		<div class="<%= cssClass %> user-icon">
-			<img alt="thumbnail" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(portraitURL) %>">
+		<div class="<%= cssClass %> aspect-ratio-bg-cover user-icon" style="background-image:url(<%= HtmlUtil.escape(portraitURL) %>)">
 		</div>
 	</c:when>
 	<c:otherwise>

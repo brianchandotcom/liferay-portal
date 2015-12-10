@@ -32,12 +32,12 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			"junit-exception-1", "4,label_exp=!master", "6890",
 			"test-portal-acceptance-pullrequest-batch(master)", "test-1-19");
 		downloadSample(
-			"sourceformat-1", "0,label_exp=!master", "17503",
-			"test-portal-acceptance-pullrequest-batch(master)", "test-1-5");
-		downloadSample(
 			"poshi-1", "UIInfrastructureUsecase#Smoke,label_exp=!master",
 			"9616", "test-portal-acceptance-pullrequest-batch(master)",
 			"test-1-13");
+		downloadSample(
+			"sourceformat-1", "0,label_exp=!master", "17503",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-5");
 	}
 
 	@Test

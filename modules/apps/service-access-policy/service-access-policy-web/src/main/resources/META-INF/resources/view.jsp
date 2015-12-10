@@ -17,6 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
@@ -25,6 +30,36 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<aui:nav-item label="policies" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<%
+	PortletURL iteratorURL = renderResponse.createRenderURL();
+
+	iteratorURL.setParameter("displayStyle", displayStyle);
+	%>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name"} %>'
+			portletURL="<%= iteratorURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container

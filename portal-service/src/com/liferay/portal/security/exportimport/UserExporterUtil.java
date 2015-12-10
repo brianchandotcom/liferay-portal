@@ -14,11 +14,9 @@
 
 package com.liferay.portal.security.exportimport;
 
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.io.Serializable;
 
@@ -55,19 +53,10 @@ public class UserExporterUtil {
 	}
 
 	private static UserExporter _getInstance() {
-		return _instance._serviceTracker.getService();
+		return _instance;
 	}
 
-	private UserExporterUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(UserExporter.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final UserExporterUtil _instance = new UserExporterUtil();
-
-	private final ServiceTracker<UserExporter, UserExporter> _serviceTracker;
+	private static final UserExporter _instance =
+		ProxyFactory.newServiceTrackedInstance(UserExporter.class);
 
 }

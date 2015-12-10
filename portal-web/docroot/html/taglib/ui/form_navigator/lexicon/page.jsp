@@ -17,6 +17,9 @@
 <%@ include file="/html/taglib/ui/form_navigator/init.jsp" %>
 
 <c:choose>
+	<c:when test="<%= deprecatedCategorySections.length > 0 %>">
+		<%@ include file="/html/taglib/ui/form_navigator/lexicon/deprecated_sections.jspf" %>
+	</c:when>
 	<c:when test="<%= categoryKeys.length > 1 %>">
 		<liferay-ui:tabs
 			names="<%= StringUtil.merge(categoryKeys) %>"
@@ -26,6 +29,7 @@
 
 			<%
 			for (String categoryKey : categoryKeys) {
+				List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
 			%>
 
 				<liferay-ui:section>
@@ -41,7 +45,7 @@
 	<c:otherwise>
 
 		<%
-		String categoryKey = StringPool.BLANK;
+		List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
 		%>
 
 		<%@ include file="/html/taglib/ui/form_navigator/lexicon/sections.jspf" %>

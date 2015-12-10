@@ -420,6 +420,20 @@ public class SyncWatchEventProcessor implements Runnable {
 
 			return;
 		}
+		else if (syncFile.getState() == SyncFile.STATE_IN_PROGRESS) {
+			Set<Event> events = FileEventManager.getEvents(
+				syncFile.getSyncFileId());
+
+			for (Event event : events) {
+				event.cancel();
+			}
+
+			if (isPendingTypePK(syncFile)) {
+				SyncFileService.deleteSyncFile(syncFile, false);
+
+				return;
+			}
+		}
 		else if (isPendingTypePK(syncFile)) {
 			queueSyncWatchEvent(syncFile.getFilePathName(), syncWatchEvent);
 

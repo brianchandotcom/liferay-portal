@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.Locale;
 
@@ -55,6 +59,26 @@ public class SiteCustomFieldsFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, Group group) {
 		if ((group == null) || group.isCompany()) {
+			return false;
+		}
+
+		boolean hasCustomAttributesAvailable = false;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			hasCustomAttributesAvailable =
+				CustomAttributesUtil.hasCustomAttributes(
+					themeDisplay.getCompanyId(), Group.class.getName(),
+					group.getGroupId(), null);
+		}
+		catch (Exception e) {
+		}
+
+		if (!hasCustomAttributesAvailable) {
 			return false;
 		}
 

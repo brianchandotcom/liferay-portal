@@ -142,7 +142,7 @@ public class GitHubJobMessageUtil {
 		sb.append(generateCountLine(failedCount, "Failed"));
 		sb.append(generateCountLine(unstableCount, "Unstable"));
 
-		sb.append("<ol>");
+		sb.append("</p><ol>");
 
 		return sb.toString();
 	}
@@ -186,6 +186,9 @@ public class GitHubJobMessageUtil {
 
 				jobResults.add(jobResult);
 			}
+		}
+		else {
+			jobResults.add(jobResult);
 		}
 
 		return jobResults;

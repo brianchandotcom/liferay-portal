@@ -286,7 +286,8 @@ public class DataFactory {
 		lines.clear();
 
 		StringUtil.readLines(
-			getResourceInputStream("ddm_structure_layout_basic_web_content.json"),
+			getResourceInputStream(
+				"ddm_structure_layout_basic_web_content.json"),
 			lines);
 
 		_journalDDMStructureLayout = StringUtil.merge(lines, StringPool.SPACE);
@@ -482,30 +483,30 @@ public class DataFactory {
 		return _defaultDLDDMStructureLayoutModel;
 	}
 
-	public DDMStructureVersionModel getDefaultDLDDMStructureVersionModel() {
-		return _defaultDLDDMStructureVersionModel;
-	}
-
 	public DDMStructureModel getDefaultDLDDMStructureModel() {
 		return _defaultDLDDMStructureModel;
+	}
+
+	public DDMStructureVersionModel getDefaultDLDDMStructureVersionModel() {
+		return _defaultDLDDMStructureVersionModel;
 	}
 
 	public DLFileEntryTypeModel getDefaultDLFileEntryTypeModel() {
 		return _defaultDLFileEntryTypeModel;
 	}
 
+	public DDMStructureLayoutModel getDefaultJournalDDMStructureLayoutModel() {
+		return _defaultJournalDDMStructureLayoutModel;
+	}
+
 	public DDMStructureModel getDefaultJournalDDMStructureModel() {
 		return _defaultJournalDDMStructureModel;
 	}
 
-	public DDMStructureVersionModel getDefaultJournalDDMStructureVersionModel(
-	) {
+	public DDMStructureVersionModel
+		getDefaultJournalDDMStructureVersionModel() {
 
 		return _defaultJournalDDMStructureVersionModel;
-	}
-
-	public DDMStructureLayoutModel getDefaultJournalDDMStructureLayoutModel() {
-		return _defaultJournalDDMStructureLayoutModel;
 	}
 
 	public DDMTemplateModel getDefaultJournalDDMTemplateModel() {
@@ -2601,6 +2602,26 @@ public class DataFactory {
 		return ddmContentModel;
 	}
 
+	protected DDMStructureLayoutModel newDDMStructureLayoutModel(
+		long groupId, long userId, long structureVersionId, String definition) {
+
+		DDMStructureLayoutModel ddmStructureLayoutModel =
+			new DDMStructureLayoutModelImpl();
+
+		ddmStructureLayoutModel.setUuid(SequentialUUID.generate());
+		ddmStructureLayoutModel.setStructureLayoutId(_counter.get());
+		ddmStructureLayoutModel.setGroupId(groupId);
+		ddmStructureLayoutModel.setCompanyId(_companyId);
+		ddmStructureLayoutModel.setUserId(userId);
+		ddmStructureLayoutModel.setUserName(_SAMPLE_USER_NAME);
+		ddmStructureLayoutModel.setCreateDate(nextFutureDate());
+		ddmStructureLayoutModel.setModifiedDate(nextFutureDate());
+		ddmStructureLayoutModel.setStructureVersionId(structureVersionId);
+		ddmStructureLayoutModel.setDefinition(definition);
+
+		return ddmStructureLayoutModel;
+	}
+
 	protected DDMStructureLinkModel newDDMStructureLinkModel(
 		long classNameId, long classPK, long structureId) {
 
@@ -2650,26 +2671,6 @@ public class DataFactory {
 		ddmStructureModel.setLastPublishDate(nextFutureDate());
 
 		return ddmStructureModel;
-	}
-
-	protected DDMStructureLayoutModel newDDMStructureLayoutModel(
-		long groupId, long userId, long structureVersionId, String definition) {
-
-		DDMStructureLayoutModel ddmStructureLayoutModel =
-			new DDMStructureLayoutModelImpl();
-
-		ddmStructureLayoutModel.setUuid(SequentialUUID.generate());
-		ddmStructureLayoutModel.setStructureLayoutId(_counter.get());
-		ddmStructureLayoutModel.setGroupId(groupId);
-		ddmStructureLayoutModel.setCompanyId(_companyId);
-		ddmStructureLayoutModel.setUserId(userId);
-		ddmStructureLayoutModel.setUserName(_SAMPLE_USER_NAME);
-		ddmStructureLayoutModel.setCreateDate(nextFutureDate());
-		ddmStructureLayoutModel.setModifiedDate(nextFutureDate());
-		ddmStructureLayoutModel.setStructureVersionId(structureVersionId);
-		ddmStructureLayoutModel.setDefinition(definition);
-
-		return ddmStructureLayoutModel;
 	}
 
 	protected DDMStructureVersionModel newDDMStructureVersionModel(
@@ -3177,19 +3178,18 @@ public class DataFactory {
 	private final PortletPreferencesImpl
 		_defaultAssetPublisherPortletPreference;
 	private AssetVocabularyModel _defaultAssetVocabularyModel;
+	private DDMStructureLayoutModel _defaultDLDDMStructureLayoutModel;
 	private DDMStructureModel _defaultDLDDMStructureModel;
 	private DDMStructureVersionModel _defaultDLDDMStructureVersionModel;
-	private DDMStructureLayoutModel _defaultDLDDMStructureLayoutModel;
 	private DLFileEntryTypeModel _defaultDLFileEntryTypeModel;
+	private DDMStructureLayoutModel _defaultJournalDDMStructureLayoutModel;
 	private DDMStructureModel _defaultJournalDDMStructureModel;
 	private DDMStructureVersionModel _defaultJournalDDMStructureVersionModel;
-	private DDMStructureLayoutModel _defaultJournalDDMStructureLayoutModel;
 	private DDMTemplateModel _defaultJournalDDMTemplateModel;
 	private final long _defaultUserId;
 	private UserModel _defaultUserModel;
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayout;
-	private final String _journalDDMStructureLayout;
 	private List<String> _firstNames;
 	private final SimpleCounter _futureDateCounter;
 	private final long _globalGroupId;
@@ -3203,6 +3203,7 @@ public class DataFactory {
 	private final Map<Long, String> _journalArticleResourceUUIDs =
 		new HashMap<>();
 	private final String _journalDDMStructureContent;
+	private final String _journalDDMStructureLayout;
 	private List<String> _lastNames;
 	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
 	private int _maxAssetCategoryCount;

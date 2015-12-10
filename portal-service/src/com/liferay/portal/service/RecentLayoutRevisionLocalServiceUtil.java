@@ -40,6 +40,13 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.model.RecentLayoutRevision addRecentLayoutRevision(
+		long companyId, long groupId, long userId, long layoutRevisionId,
+		long layoutSetBranchId, long plid) {
+		return getService()
+				   .addRecentLayoutRevision(companyId, groupId, userId,
+			layoutRevisionId, layoutSetBranchId, plid);
+	}
 
 	/**
 	* Adds the recent layout revision to the database. Also notifies the appropriate model listeners.
@@ -94,6 +101,16 @@ public class RecentLayoutRevisionLocalServiceUtil {
 		long recentLayoutRevisionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRecentLayoutRevision(recentLayoutRevisionId);
+	}
+
+	public static void deleteRecentLayoutRevisions(
+		com.liferay.portal.model.LayoutRevision layoutRevision) {
+		getService().deleteRecentLayoutRevisions(layoutRevision);
+	}
+
+	public static void deleteRecentLayoutRevisions(
+		com.liferay.portal.model.User user) {
+		getService().deleteRecentLayoutRevisions(user);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -177,6 +194,12 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	public static com.liferay.portal.model.RecentLayoutRevision fetchRecentLayoutRevision(
 		long recentLayoutRevisionId) {
 		return getService().fetchRecentLayoutRevision(recentLayoutRevisionId);
+	}
+
+	public static com.liferay.portal.model.RecentLayoutRevision fetchRecentLayoutRevision(
+		long userId, long layoutSetBranchId, long plid) {
+		return getService()
+				   .fetchRecentLayoutRevision(userId, layoutSetBranchId, plid);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

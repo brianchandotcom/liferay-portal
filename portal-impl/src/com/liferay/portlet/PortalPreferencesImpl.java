@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
@@ -35,6 +36,7 @@ import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ReadOnlyException;
@@ -177,6 +179,12 @@ public class PortalPreferencesImpl
 			throw new ReadOnlyException(key);
 		}
 
+		String[] values = super.getValues(key, null);
+
+		if (values == null) {
+			return;
+		}
+
 		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
@@ -233,26 +241,33 @@ public class PortalPreferencesImpl
 	}
 
 	@Override
-	public void setValue(
-		final String namespace, final String key, final String value) {
-
+	public void setValue(String namespace, String key, final String value) {
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
 		}
 
+		final String encodedKey = _encodeKey(namespace, key);
+
 		try {
+			if (value == null) {
+				reset(encodedKey);
+
+				return;
+			}
+
+			String[] oldValues = super.getValues(encodedKey, null);
+
+			if ((oldValues != null) && (oldValues.length == 1) &&
+				value.equals(oldValues[0])) {
+
+				return;
+			}
+
 			Callable<Void> callable = new Callable<Void>() {
 
 				@Override
 				public Void call() throws ReadOnlyException {
-					String encodedKey = _encodeKey(namespace, key);
-
-					if (value != null) {
-						PortalPreferencesImpl.super.setValue(encodedKey, value);
-					}
-					else {
-						reset(encodedKey);
-					}
+					PortalPreferencesImpl.super.setValue(encodedKey, value);
 
 					return null;
 				}
@@ -260,7 +275,7 @@ public class PortalPreferencesImpl
 			};
 
 			if (_signedIn) {
-				retryableStore(callable, _encodeKey(namespace, key));
+				retryableStore(callable, encodedKey);
 			}
 			else {
 				callable.call();
@@ -275,27 +290,42 @@ public class PortalPreferencesImpl
 	}
 
 	@Override
-	public void setValues(
-		final String namespace, final String key, final String[] values) {
-
+	public void setValues(String namespace, String key, final String[] values) {
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
 		}
 
+		final String encodedKey = _encodeKey(namespace, key);
+
 		try {
+			if (values == null) {
+				reset(encodedKey);
+
+				return;
+			}
+
+			if (values.length == 1) {
+				setValue(namespace, key, values[0]);
+
+				return;
+			}
+
+			String[] oldValues = super.getValues(encodedKey, null);
+
+			if (oldValues != null) {
+				Set<String> valuesSet = SetUtil.fromArray(values);
+				Set<String> oldValuesSet = SetUtil.fromArray(oldValues);
+
+				if (valuesSet.equals(oldValuesSet)) {
+					return;
+				}
+			}
+
 			Callable<Void> callable = new Callable<Void>() {
 
 				@Override
 				public Void call() throws ReadOnlyException {
-					String encodedKey = _encodeKey(namespace, key);
-
-					if (values != null) {
-						PortalPreferencesImpl.super.setValues(
-							encodedKey, values);
-					}
-					else {
-						reset(encodedKey);
-					}
+					PortalPreferencesImpl.super.setValues(encodedKey, values);
 
 					return null;
 				}
@@ -303,7 +333,7 @@ public class PortalPreferencesImpl
 			};
 
 			if (_signedIn) {
-				retryableStore(callable, _encodeKey(namespace, key));
+				retryableStore(callable, encodedKey);
 			}
 			else {
 				callable.call();

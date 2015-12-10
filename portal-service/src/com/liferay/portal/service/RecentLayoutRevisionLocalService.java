@@ -45,6 +45,9 @@ public interface RecentLayoutRevisionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RecentLayoutRevisionLocalServiceUtil} to access the recent layout revision local service. Add custom service methods to {@link com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portal.model.RecentLayoutRevision addRecentLayoutRevision(
+		long companyId, long groupId, long userId, long layoutRevisionId,
+		long layoutSetBranchId, long plid);
 
 	/**
 	* Adds the recent layout revision to the database. Also notifies the appropriate model listeners.
@@ -93,6 +96,11 @@ public interface RecentLayoutRevisionLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.RecentLayoutRevision deleteRecentLayoutRevision(
 		long recentLayoutRevisionId) throws PortalException;
+
+	public void deleteRecentLayoutRevisions(
+		com.liferay.portal.model.LayoutRevision layoutRevision);
+
+	public void deleteRecentLayoutRevisions(com.liferay.portal.model.User user);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -162,6 +170,10 @@ public interface RecentLayoutRevisionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.RecentLayoutRevision fetchRecentLayoutRevision(
 		long recentLayoutRevisionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.RecentLayoutRevision fetchRecentLayoutRevision(
+		long userId, long layoutSetBranchId, long plid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();

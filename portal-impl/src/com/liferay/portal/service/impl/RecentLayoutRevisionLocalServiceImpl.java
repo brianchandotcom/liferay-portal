@@ -16,12 +16,56 @@ package com.liferay.portal.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.RecentLayoutRevision;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.RecentLayoutRevisionLocalServiceBaseImpl;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Preston Crary
  */
 @ProviderType
 public class RecentLayoutRevisionLocalServiceImpl
 	extends RecentLayoutRevisionLocalServiceBaseImpl {
+
+	@Override
+	public RecentLayoutRevision addRecentLayoutRevision(
+		long companyId, long groupId, long userId, long layoutRevisionId,
+		long layoutSetBranchId, long plid) {
+
+		long recentLayoutRevisionId = counterLocalService.increment();
+
+		RecentLayoutRevision recentLayoutRevision =
+			recentLayoutRevisionPersistence.create(recentLayoutRevisionId);
+
+		recentLayoutRevision.setGroupId(groupId);
+		recentLayoutRevision.setCompanyId(companyId);
+		recentLayoutRevision.setUserId(userId);
+		recentLayoutRevision.setLayoutRevisionId(layoutRevisionId);
+		recentLayoutRevision.setLayoutSetBranchId(layoutSetBranchId);
+		recentLayoutRevision.setPlid(plid);
+
+		return recentLayoutRevisionPersistence.update(recentLayoutRevision);
+	}
+
+	@Override
+	public void deleteRecentLayoutRevisions(LayoutRevision layoutRevision) {
+		recentLayoutRevisionPersistence.removeByLayoutRevisionId(
+			layoutRevision.getLayoutRevisionId());
+	}
+
+	@Override
+	public void deleteRecentLayoutRevisions(User user) {
+		recentLayoutRevisionPersistence.removeByUserId(user.getUserId());
+	}
+
+	@Override
+	public RecentLayoutRevision fetchRecentLayoutRevision(
+		long userId, long layoutSetBranchId, long plid) {
+
+		return recentLayoutRevisionPersistence.fetchByU_L_P(
+			userId, layoutSetBranchId, plid);
+	}
+
 }

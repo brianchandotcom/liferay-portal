@@ -23,12 +23,10 @@ public interface DBFactory {
 
 	public DB getDB();
 
-	public DB getDB(Object dialect, DataSource dataSource);
+	public DB getDB(DBType dbType, DataSource dataSource);
 
-	public DB getDB(String type, DataSource dataSource);
+	public DBType getDBType(Object dialect);
 
-	public void setDB(Object dialect, DataSource dataSource);
-
-	public void setDB(String type, DataSource dataSource);
+	public void setDB(DB db);
 
 }

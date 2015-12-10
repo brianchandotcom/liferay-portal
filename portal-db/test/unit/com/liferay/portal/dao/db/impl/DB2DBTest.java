@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
 import com.liferay.portal.kernel.dao.db.DB;
 
@@ -24,17 +24,17 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class MySQLDBTest extends BaseDBTestCase {
+public class DB2DBTest extends BaseDBTestCase {
 
 	@Test
 	public void testRewordRenameTable() throws IOException {
 		Assert.assertEquals(
-			"rename table a to b;\n", buildSQL(RENAME_TABLE_QUERY));
+			"alter table a to b;\n", buildSQL(RENAME_TABLE_QUERY));
 	}
 
 	@Override
 	protected DB getDB() {
-		return new MySQLDB(0, 0);
+		return new DB2DB(0, 0);
 	}
 
 }

@@ -1,4 +1,5 @@
 dependencies {
+	compile group: "com.liferay.portal", name: "portal-db", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 	compile project(":apps:blogs:blogs-web")
 	compile project(":apps:document-library:document-library-web")

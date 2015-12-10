@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.portal.dao.db.MySQLDB;
+import com.liferay.portal.dao.db.impl.MySQLDB;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**

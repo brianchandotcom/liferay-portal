@@ -83,6 +83,7 @@
 			<ant dir="util-taglib" target="clean" inheritAll="false" />
 
 			<ant dir="portal-impl" target="clean" inheritAll="false" />
+			<ant dir="portal-db" target="clean" inheritAll="false" />
 			<ant dir="portal-test" target="clean" inheritAll="false" />
 			<ant dir="portal-test-internal" target="clean" inheritAll="false" />
 
@@ -226,6 +227,7 @@
 		</parallel>
 
 		<ant dir="portal-impl" target="compile" inheritAll="false" />
+		<ant dir="portal-db" target="compile" inheritAll="false" />
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="portal-test-internal" target="compile" inheritAll="false" />
@@ -286,6 +288,7 @@
 		<ant dir="util-taglib" target="deploy" inheritAll="false" />
 
 		<ant dir="portal-impl" target="deploy" inheritAll="false" />
+		<ant dir="portal-db" target="deploy" inheritAll="false" />
 		<ant dir="portal-test" target="deploy" inheritAll="false" />
 		<ant dir="portal-test-internal" target="deploy" inheritAll="false" />
 
@@ -543,6 +546,7 @@
 
 	<target name="install-portal-snapshots">
 		<install-portal-snapshot artifact.dir="portal-impl" artifact.name="portal-impl" />
+		<install-portal-snapshot artifact.dir="portal-db" artifact.name="portal-db" />
 		<install-portal-snapshot artifact.dir="portal-service" artifact.name="portal-service" />
 		<install-portal-snapshot artifact.dir="portal-test" artifact.name="portal-test" />
 		<install-portal-snapshot artifact.dir="portal-test-internal" artifact.name="portal-test-internal" />

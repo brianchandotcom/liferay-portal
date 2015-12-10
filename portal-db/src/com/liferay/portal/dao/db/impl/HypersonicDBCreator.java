@@ -12,29 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
 import com.liferay.portal.kernel.dao.db.DB;
-
-import java.io.IOException;
-
-import org.junit.Assert;
-import org.junit.Test;
+import com.liferay.portal.kernel.dao.db.DBCreator;
+import com.liferay.portal.kernel.dao.db.DBType;
 
 /**
- * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
-public class PostgresDBTest extends BaseDBTestCase {
+public class HypersonicDBCreator implements DBCreator {
 
-	@Test
-	public void testRewordRenameTable() throws IOException {
-		Assert.assertEquals(
-			"alter table a rename to b;\n", buildSQL(RENAME_TABLE_QUERY));
+	@Override
+	public DB create(int dbMajorVersion, int dbMinorVersion) {
+		return new HypersonicDB(dbMajorVersion, dbMinorVersion);
 	}
 
 	@Override
-	protected DB getDB() {
-		return new PostgreSQLDB(0, 0);
+	public DBType getDBType() {
+		return DBType.HYPERSONIC;
 	}
 
 }

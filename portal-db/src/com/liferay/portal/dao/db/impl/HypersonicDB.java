@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -29,7 +30,7 @@ import java.io.IOException;
 public class HypersonicDB extends BaseDB {
 
 	public HypersonicDB(int majorVersion, int minorVersion) {
-		super(TYPE_HYPERSONIC, majorVersion, minorVersion);
+		super(DBType.HYPERSONIC, majorVersion, minorVersion);
 	}
 
 	@Override

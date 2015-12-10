@@ -14,10 +14,10 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.portal.dao.db.MySQLDB;
 import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.CharPipe;
 import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -88,7 +88,9 @@ public class SampleSQLBuilder {
 	public SampleSQLBuilder(Properties properties, DataFactory dataFactory)
 		throws Exception {
 
-		_dbType = properties.getProperty("sample.sql.db.type");
+		_dbType = DBType.valueOf(
+			StringUtil.toUpperCase(
+				properties.getProperty("sample.sql.db.type")));
 
 		_csvFileNames = StringUtil.split(
 			properties.getProperty("sample.sql.output.csv.file.names"));
@@ -207,7 +209,7 @@ public class SampleSQLBuilder {
 	protected void compressSQL(Reader reader, File dir) throws Exception {
 		DB db = DBFactoryUtil.getDB(_dbType, null);
 
-		if (db instanceof MySQLDB) {
+		if (_dbType == DBType.MYSQL) {
 			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
 		}
 
@@ -450,7 +452,7 @@ public class SampleSQLBuilder {
 
 	private final String[] _csvFileNames;
 	private final DataFactory _dataFactory;
-	private final String _dbType;
+	private final DBType _dbType;
 	private volatile Throwable _freeMarkerThrowable;
 	private final int _optimizeBufferSize;
 	private final String _outputDir;

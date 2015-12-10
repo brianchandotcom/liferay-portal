@@ -16,6 +16,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,9 +40,7 @@ public class VerifyMySQL extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		DB db = DBFactoryUtil.getDB();
 
-		String dbType = db.getType();
-
-		if (!dbType.equals(DB.TYPE_MYSQL)) {
+		if (db.getDBType() != DBType.MYSQL) {
 			return;
 		}
 

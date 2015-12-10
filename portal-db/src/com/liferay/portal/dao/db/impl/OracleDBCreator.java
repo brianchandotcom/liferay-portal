@@ -12,29 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.db.impl;
 
 import com.liferay.portal.kernel.dao.db.DB;
-
-import java.io.IOException;
-
-import org.junit.Assert;
-import org.junit.Test;
+import com.liferay.portal.kernel.dao.db.DBCreator;
+import com.liferay.portal.kernel.dao.db.DBType;
 
 /**
- * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
-public class SybaseDBTest extends BaseDBTestCase {
+public class OracleDBCreator implements DBCreator {
 
-	@Test
-	public void testRewordRenameTable() throws IOException {
-		Assert.assertEquals(
-			"exec sp_rename a, b;\n", buildSQL(RENAME_TABLE_QUERY));
+	@Override
+	public DB create(int dbMajorVersion, int dbMinorVersion) {
+		return new OracleDB(dbMajorVersion, dbMinorVersion);
 	}
 
 	@Override
-	protected DB getDB() {
-		return new SybaseDB(0, 0);
+	public DBType getDBType() {
+		return DBType.ORACLE;
 	}
 
 }

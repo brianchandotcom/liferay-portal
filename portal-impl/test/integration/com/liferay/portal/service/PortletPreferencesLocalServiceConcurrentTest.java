@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
@@ -30,6 +29,7 @@ import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
+import com.liferay.portal.test.rule.ExpectedDBType;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedMultipleLogs;
@@ -135,41 +135,42 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 			@ExpectedLogs(
 				expectedLogs = {
 					@ExpectedLog(
-						dbType = DB.TYPE_DB2, expectedLog = "Batch failure",
+						expectedDBType = ExpectedDBType.DB2,
+						expectedLog = "Batch failure",
 						expectedType = ExpectedType.CONTAINS
 					),
 					@ExpectedLog(
-						dbType = DB.TYPE_DB2,
+						expectedDBType = ExpectedDBType.DB2,
 						expectedLog = "DB2 SQL Error: SQLCODE=-803",
 						expectedType = ExpectedType.CONTAINS
 					),
 					@ExpectedLog(
-						dbType = DB.TYPE_HYPERSONIC,
+						expectedDBType = ExpectedDBType.HYPERSONIC,
 						expectedLog = "integrity constraint violation",
 						expectedType = ExpectedType.PREFIX
 					),
 					@ExpectedLog(
-						dbType = DB.TYPE_MYSQL,
+						expectedDBType = ExpectedDBType.MYSQL,
 						expectedLog = "Duplicate entry '",
 						expectedType = ExpectedType.PREFIX
 					),
 					@ExpectedLog(
-						dbType = DB.TYPE_ORACLE,
+						expectedDBType = ExpectedDBType.ORACLE,
 						expectedLog = "ORA-00001: unique constraint",
 						expectedType = ExpectedType.PREFIX
 					),
 					@ExpectedLog(
-						dbType = DB.TYPE_POSTGRESQL,
+						expectedDBType = ExpectedDBType.POSTGRESQL,
 						expectedLog = "Batch entry",
 						expectedType = ExpectedType.PREFIX
 					),
 					@ExpectedLog(
-						dbType = DB.TYPE_POSTGRESQL,
+						expectedDBType = ExpectedDBType.POSTGRESQL,
 						expectedLog = "duplicate key",
 						expectedType = ExpectedType.CONTAINS
 					),
 					@ExpectedLog(
-						dbType = DB.TYPE_SYBASE,
+						expectedDBType = ExpectedDBType.SYBASE,
 						expectedLog = "Attempt to insert duplicate key row",
 						expectedType = ExpectedType.CONTAINS
 					)

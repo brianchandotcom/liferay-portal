@@ -28,21 +28,25 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.ContextUserReplacer;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.FileEntryLockException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
@@ -104,8 +108,99 @@ public class DLCheckInCheckOutTest {
 	}
 
 	@Test
+	public void testCancelCheckoutVersion() throws Exception {
+		FileEntry fileEntry = createFileEntry(StringUtil.randomString());
+
+		DLAppServiceUtil.checkOutFileEntry(
+			fileEntry.getFileEntryId(), _serviceContext);
+
+		DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+		fileEntry = DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId());
+
+		Assert.assertEquals(
+			fileEntry.getVersion(), DLFileEntryConstants.VERSION_DEFAULT);
+	}
+
+	@Test
+	public void testCancelCheckout() throws Exception {
+		FileEntry fileEntry = createFileEntry(StringUtil.randomString());
+
+		DLAppServiceUtil.checkOutFileEntry(
+			fileEntry.getFileEntryId(), _serviceContext);
+
+		DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+		fileEntry = DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId());
+
+		Assert.assertFalse(fileEntry.isCheckedOut());
+	}
+
+	@Test
+	public void testAdminCancelCheckout() throws Exception {
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				TestPropsValues.getUser())) {
+
+			DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+			fileEntry = DLAppServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			Assert.assertFalse(fileEntry.isCheckedOut());
+		}
+	}
+
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
 	public void testAdminOverrideCheckout() throws Exception {
-		overrideCheckout(_authorUser, TestPropsValues.getUser(), true);
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				TestPropsValues.getUser())) {
+
+			DLAppServiceUtil.checkInFileEntry(
+				fileEntry.getFileEntryId(), false, StringPool.NULL,
+				_serviceContext);
+		}
+	}
+
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
+	public void testAdminUpdateCheckedOutFile() throws Exception {
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				TestPropsValues.getUser())) {
+
+			updateFileEntry(fileEntry.getFileEntryId());
+		}
 	}
 
 	@Test

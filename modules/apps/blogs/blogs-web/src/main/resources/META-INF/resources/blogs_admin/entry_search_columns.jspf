@@ -23,27 +23,26 @@
 		/>
 
 		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-			<liferay-ui:app-view-entry
-				actionJsp="/blogs_admin/entry_action.jsp"
-				actionJspServletContext="<%= application %>"
-				assetCategoryClassName="<%= BlogsEntry.class.getName() %>"
-				assetCategoryClassPK="<%= entry.getEntryId() %>"
-				assetTagClassName="<%= BlogsEntry.class.getName() %>"
-				assetTagClassPK="<%= entry.getEntryId() %>"
-				author="<%= entry.getUserName() %>"
-				createDate="<%= entry.getCreateDate() %>"
-				description="<%= entry.getDescription() %>"
-				displayDate="<%= entry.getDisplayDate() %>"
-				displayStyle="descriptive"
-				markupView="lexicon"
-				modifiedDate="<%= entry.getModifiedDate() %>"
-				rowCheckerId="<%= String.valueOf(entry.getEntryId()) %>"
-				rowCheckerName="<%= BlogsEntry.class.getSimpleName() %>"
-				showCheckbox="<%= true %>"
-				status="<%= entry.getStatus() %>"
-				title="<%= entry.getTitle() %>"
-				url="<%= rowURL.toString() %>"
-			/>
+
+			<%
+			Date modifiedDate = entry.getModifiedDate();
+
+			String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+			%>
+
+			<h5 class="text-default">
+				<liferay-ui:message arguments="<%= new String[] {entry.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+			</h5>
+
+			<h4>
+				<aui:a href="<%= rowURL.toString() %>">
+					<%= entry.getTitle() %>
+				</aui:a>
+			</h4>
+
+			<h5 class="text-default">
+				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+			</h5>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp

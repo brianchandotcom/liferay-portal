@@ -46,14 +46,14 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			"jspc-1", "1672", "test-portal-acceptance-pullrequest(master)",
 			"test-1-5");
 		downloadSample(
-			"max-combo-1", "597", "test-portal-acceptance-pullrequest(master)",
-			"test-1-12");
-		downloadSample(
-			"max-unstable-1", "1740",
-			"test-portal-acceptance-pullrequest(master)", "test-1-6");
+			"max-fails-1", "672", "test-portal-acceptance-pullrequest(master)",
+			"test-1-9");
 		downloadSample(
 			"rebase-1", "330", "test-portal-acceptance-pullrequest(ee-6.2.x)",
 			"test-1-1");
+		downloadSample(
+			"unstable-1", "1790", "test-portal-acceptance-pullrequest(master)",
+			"test-1-4");
 	}
 
 	@Test
@@ -129,10 +129,11 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 			JenkinsResultsParserUtil.write(
 				reportFile,
-				"<h5 job-result=\\\"" + jsonObject.getString("result") +
-					"\\\"><a href=\"" + urlString + "\">" +
-						jobNameMatcher.group("jobName") + "</a></h5>" +
-				project.getProperty("report.html.content"));
+				formatXML(
+					"<div><h5 job-result=\"" + jsonObject.getString("result") +
+					"\"><a href=\"" + urlString + "\">" +
+					jobNameMatcher.group("jobName") + "</a></h5>" +
+					project.getProperty("report.html.content") + "</div>"));
 
 			if (reportFilesSB.length() > 0) {
 				reportFilesSB.append(" ");
@@ -168,7 +169,9 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		GitHubMessageUtil.getGitHubMessage(project);
 
-		return project.getProperty("github.post.comment.body");
+		return formatXML(
+			"<html>" + project.getProperty("github.post.comment.body") +
+			"</html>");
 	}
 
 	protected Project getProject(

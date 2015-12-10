@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -210,6 +211,10 @@ public class Field implements Serializable {
 		return _boost;
 	}
 
+	public Date[] getDates() {
+		return _dates;
+	}
+
 	public List<Field> getFields() {
 		return _fields;
 	}
@@ -255,6 +260,15 @@ public class Field implements Serializable {
 		return false;
 	}
 
+	public boolean isDate() {
+		if (_dates != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isLocalized() {
 		if (_localizedValues != null) {
 			return true;
@@ -290,6 +304,10 @@ public class Field implements Serializable {
 	@Deprecated
 	public void setBoost(float boost) {
 		_boost = boost;
+	}
+
+	public void setDates(Date[] dates) {
+		_dates = dates;
 	}
 
 	public void setGeoLocationPoint(GeoLocationPoint geoLocationPoint) {
@@ -404,6 +422,7 @@ public class Field implements Serializable {
 	}
 
 	private float _boost = 1;
+	private Date[] _dates;
 	private final List<Field> _fields = new ArrayList<>();
 	private GeoLocationPoint _geoLocationPoint;
 	private Map<Locale, String> _localizedValues;

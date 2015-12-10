@@ -16,14 +16,14 @@ package com.liferay.portal.search.elasticsearch.filter;
 
 import com.liferay.portal.kernel.search.filter.GeoDistanceRangeFilter;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface GeoDistanceRangeFilterTranslator {
 
-	public FilterBuilder translate(
+	public QueryBuilder translate(
 		GeoDistanceRangeFilter geoDistanceRangeFilter);
 
 }

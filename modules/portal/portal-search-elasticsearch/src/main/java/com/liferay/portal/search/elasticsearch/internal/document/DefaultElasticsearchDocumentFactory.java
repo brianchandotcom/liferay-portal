@@ -27,9 +27,12 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.apache.commons.lang.time.FastDateFormat;
 
 import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -44,6 +47,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ElasticsearchDocumentFactory.class)
 public class DefaultElasticsearchDocumentFactory
 	implements ElasticsearchDocumentFactory {
+
+	public static final FastDateFormat DATE_FORMAT = FastDateFormat.getInstance(
+		"yyyyMMddHHmmss");
+
+	public static final String DATE_MAX_VALUE = "99950812133000";
 
 	@Override
 	public String getElasticsearchDocument(Document document)
@@ -60,6 +68,23 @@ public class DefaultElasticsearchDocumentFactory
 		xContentBuilder.endObject();
 
 		return xContentBuilder.string();
+	}
+
+	protected void addDates(XContentBuilder xContentBuilder, Field field)
+		throws IOException {
+
+		for (Date date : field.getDates()) {
+			String value;
+
+			if (date.getTime() == Long.MAX_VALUE) {
+				value = DATE_MAX_VALUE;
+			}
+			else {
+				value = DATE_FORMAT.format(date);
+			}
+
+			xContentBuilder.value(value);
+		}
 	}
 
 	protected void addField(XContentBuilder xContentBuilder, Field field)
@@ -155,6 +180,9 @@ public class DefaultElasticsearchDocumentFactory
 				geoLocationPoint.getLongitude());
 
 			xContentBuilder.value(geoPoint);
+		}
+		else if (field.isDate()) {
+			addDates(xContentBuilder, field);
 		}
 		else {
 			for (String value : values) {

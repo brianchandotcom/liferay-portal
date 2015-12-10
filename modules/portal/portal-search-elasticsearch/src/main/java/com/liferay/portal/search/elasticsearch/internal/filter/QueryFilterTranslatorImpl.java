@@ -18,10 +18,7 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.elasticsearch.filter.QueryFilterTranslator;
 
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryFilterBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,18 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 public class QueryFilterTranslatorImpl implements QueryFilterTranslator {
 
 	@Override
-	public FilterBuilder translate(QueryFilter queryFilter) {
-		QueryBuilder queryBuilder = _queryTranslator.translate(
-			queryFilter.getQuery(), null);
-
-		QueryFilterBuilder queryFilterBuilder = FilterBuilders.queryFilter(
-			queryBuilder);
-
-		if (queryFilter.isCached() != null) {
-			queryFilterBuilder.cache(queryFilter.isCached());
-		}
-
-		return queryFilterBuilder;
+	public QueryBuilder translate(QueryFilter queryFilter) {
+		return _queryTranslator.translate(queryFilter.getQuery(), null);
 	}
 
 	@Reference(unbind = "-")

@@ -17,9 +17,8 @@ package com.liferay.portal.search.elasticsearch.internal.filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.search.elasticsearch.filter.TermFilterTranslator;
 
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.FilterBuilders;
-import org.elasticsearch.index.query.TermFilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,15 +29,9 @@ import org.osgi.service.component.annotations.Component;
 public class TermFilterTranslatorImpl implements TermFilterTranslator {
 
 	@Override
-	public FilterBuilder translate(TermFilter termFilter) {
-		TermFilterBuilder termFilterBuilder = FilterBuilders.termFilter(
+	public QueryBuilder translate(TermFilter termFilter) {
+		return QueryBuilders.termQuery(
 			termFilter.getField(), termFilter.getValue());
-
-		if (termFilter.isCached() != null) {
-			termFilterBuilder.cache(termFilter.isCached());
-		}
-
-		return termFilterBuilder;
 	}
 
 }

@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
 import org.elasticsearch.search.aggregations.bucket.range.Range;
@@ -86,7 +85,7 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 
 		for (Range.Bucket bucket : range.getBuckets()) {
 			String key = StringUtil.replace(
-				bucket.getKey(), StringPool.DASH, _TO_STRING);
+				bucket.getKeyAsString(), StringPool.DASH, _TO_STRING);
 
 			key = StringPool.OPEN_BRACKET.concat(key).concat(
 				StringPool.CLOSE_BRACKET);
@@ -101,9 +100,7 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 		for (MultiBucketsAggregation.Bucket bucket :
 				multiBucketsAggregation.getBuckets()) {
 
-			Text term = bucket.getKeyAsText();
-
-			_counts.put(term.string(), (int)bucket.getDocCount());
+			_counts.put(bucket.getKeyAsString(), (int)bucket.getDocCount());
 		}
 	}
 

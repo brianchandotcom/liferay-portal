@@ -112,17 +112,9 @@ public class MapTag extends IncludeTag {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			Company company = themeDisplay.getCompany();
-
-			Group group = themeDisplay.getSiteGroup();
-
-			if (group.isStagingGroup()) {
-				group = group.getLiveGroup();
-			}
-
 			if (Validator.isNull(_provider)) {
 				_provider = _getMapProviderKey(
-					company.getCompanyId(), group.getGroupId());
+					themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId());
 			}
 		}
 	}

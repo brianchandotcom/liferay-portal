@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -66,8 +67,20 @@ public class UpgradeSubscription extends UpgradeProcess {
 		}
 	}
 
+	protected void deleteOrphanedSubscriptions() throws Exception {
+		long classNameId = PortalUtil.getClassNameId(
+			PortletPreferences.class.getName());
+
+		runSQL(
+			"delete from Subscription where classNameId = " + classNameId +
+			" and classPK not in (select portletPreferencesId" +
+			" from PortletPreferences)");
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
+		deleteOrphanedSubscriptions();
+
 		updateSubscriptionClassNames(
 			Folder.class.getName(), DLFolder.class.getName());
 		updateSubscriptionClassNames(

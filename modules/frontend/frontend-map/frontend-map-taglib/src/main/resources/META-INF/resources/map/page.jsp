@@ -17,6 +17,10 @@
 
 <%@ include file="/map/init.jsp" %>
 
-<c:if test="<%= !mapProvider.include(request, new PipingServletResponse(pageContext)) %>" />
+<div class="lfr-map" id="<%= name %>Map">
 
-<div class="lfr-map" id="<%= name %>Map"></div>
+	<%
+	mapProvider.include(request, new PipingServletResponse(pageContext))
+	%>
+
+</div>

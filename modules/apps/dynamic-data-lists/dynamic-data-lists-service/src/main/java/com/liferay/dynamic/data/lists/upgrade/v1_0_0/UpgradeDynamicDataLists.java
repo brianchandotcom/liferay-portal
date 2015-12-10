@@ -156,9 +156,6 @@ public class UpgradeDynamicDataLists extends UpgradeProcess {
 				throw pe;
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	@Override

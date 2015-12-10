@@ -28,6 +28,8 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
+import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
@@ -681,13 +683,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected void upgradeStructuresAndAddStructureVersionsAndLayouts()
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = connection.prepareStatement("select * from DDMStructure");
 
 			rs = ps.executeQuery();
@@ -741,19 +740,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void upgradeStructuresPermissions() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select * from DDMStructure");
+			ps = connection.prepareStatement("select * from DDMStructure");
 
 			rs = ps.executeQuery();
 
@@ -765,7 +761,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -822,8 +818,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = connection.prepareStatement("select * from DDMTemplate");
 
 			rs = ps.executeQuery();
@@ -884,12 +878,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected void upgradeTemplateScript(long templateId, String script)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			ps = connection.prepareStatement(
 				"update DDMTemplate set language = ?, script = ? where " +
 					"templateId = ?");
@@ -913,14 +904,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected void upgradeTemplatesPermissions() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select * from DDMTemplate");
+			ps = connection.prepareStatement("select * from DDMTemplate");
 
 			rs = ps.executeQuery();
 
@@ -932,18 +920,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void upgradeXMLStorageAdapter() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("select DDMStorageLink.classPK, DDMStorageLink.");

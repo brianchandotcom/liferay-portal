@@ -19,7 +19,8 @@
 <%
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
-int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
+int curEntry = ParamUtil.getInteger(request, "curEntry");
+int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
@@ -42,8 +43,12 @@ else {
 
 displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
 
-if (delta > 0) {
-	displayStyleURL.setParameter("delta", String.valueOf(delta));
+if (curEntry > 0) {
+	displayStyleURL.setParameter("curEntry", String.valueOf(curEntry));
+}
+
+if (deltaEntry > 0) {
+	displayStyleURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
 }
 
 displayStyleURL.setParameter("folderId", String.valueOf(folderId));

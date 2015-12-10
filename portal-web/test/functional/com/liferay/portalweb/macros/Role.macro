@@ -132,7 +132,7 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="NavTab#AVAILABLE" value1="Available" />
+		<execute function="AssertClick#assertTextClickAtWaitForLastScript" locator1="NavTab#AVAILABLE" value1="Available" />
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 		<execute function="AssertTextEquals" locator1="RolesAssignMembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />

@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>MEMBERSHIP_TYPE</td>
-	<td>//div[@class='site-membership-type']/span/span</td>
+	<td>//div[contains(@class,'site-membership-type')]/span/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REQUEST_MESSAGE</td>
-	<td>//div[@class='site-membership-type']/span[3]/a/span</td>
+	<td>//div[contains(@class,'site-membership-type')]/span[contains(@class,'alert-link')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

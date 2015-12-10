@@ -115,7 +115,7 @@
 
 		<execute macro="SitePage#addCP">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Public Page" />
+			<var name="sitePageName" value="Test Public Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -131,13 +131,13 @@
 
 		<execute macro="Page#openURL">
 			<var name="portletName" value="Site Settings" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080/public-page" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080/test-public-page" />
 		</execute>
 
 		<execute macro="Site#viewVirtualHostsURLPG">
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Public Page" />
-			<var name="sitePageURL" value="http://www.able.com:8080/public-page" />
+			<var name="sitePageName" value="Test Public Page" />
+			<var name="sitePageURL" value="http://www.able.com:8080/test-public-page" />
 		</execute>
 	</command>
 
@@ -337,7 +337,7 @@
 
 		<execute macro="SitePage#addCP">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Public Page" />
+			<var name="sitePageName" value="Test Public Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -347,7 +347,7 @@
 
 		<execute macro="SitePage#addCP">
 			<var name="page" value="Private Pages" />
-			<var name="sitePageName" value="Private Page" />
+			<var name="sitePageName" value="Test Private Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

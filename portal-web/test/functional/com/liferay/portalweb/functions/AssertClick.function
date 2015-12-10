@@ -166,6 +166,18 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
+	<command name="assertTextClickAtWaitForLastScript">
+		<execute selenium="waitForVisible" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+
+		<execute argument1="xpath=(//script)[last()]" selenium="waitForElementPresent" />
+	</command>
+
 	<command name="assertTextClickNoMouseOver">
 		<execute function="AssertTextEquals#assertText" />
 

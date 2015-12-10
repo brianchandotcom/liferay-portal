@@ -40,13 +40,14 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:vertical-card
+			<liferay-frontend:user-vertical-card
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
 				resultRow="<%= row %>"
 				rowChecker="<%= rowChecker %>"
 				subtitle="<%= user2.getScreenName() %>"
 				title="<%= user2.getFullName() %>"
+				userId="<%= user2.getUserId() %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>

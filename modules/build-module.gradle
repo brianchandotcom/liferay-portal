@@ -127,7 +127,7 @@ configurations {
 }
 
 dependencies {
-	alloyTaglib files(new File(portalRootDir, "lib/development/alloy-taglib.jar"))
+	alloyTaglib group: "com.liferay", name: "com.liferay.alloy.taglib", version: "1.1.6"
 	alloyTaglib group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
 
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "1.0.11"

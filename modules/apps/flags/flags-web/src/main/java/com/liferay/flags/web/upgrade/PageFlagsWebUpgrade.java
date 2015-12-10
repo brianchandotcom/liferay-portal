@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.flags.page.flags.web.upgrade;
+package com.liferay.flags.web.upgrade;
 
-import com.liferay.flags.page.flags.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.flags.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -31,7 +31,7 @@ public class PageFlagsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.flags.page.flags.web", "0.0.1", "1.0.0",
+			"com.liferay.flags.web", "0.0.1", "1.0.0",
 			new UpgradePortletId());
 	}
 

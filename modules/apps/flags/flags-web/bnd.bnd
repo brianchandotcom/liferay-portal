@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Flags Page Flags Web
-Bundle-SymbolicName: com.liferay.flags.page.flags.web
+Bundle-Name: Liferay Flags Web
+Bundle-SymbolicName: com.liferay.flags.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\

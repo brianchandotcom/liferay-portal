@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.flags.page.flags.web.upgrade.v1_0_0;
+package com.liferay.flags.web.upgrade.v1_0_0;
 
-import com.liferay.flags.page.flags.web.constants.PageFlagsPortletKeys;
+import com.liferay.flags.web.constants.PageFlagsPortletKeys;
 
 /**
  * @author Peter Fellwock

@@ -370,7 +370,9 @@ public class DLCheckInCheckOutTest {
 	}
 
 	@Test
-	public void testWithPermissionOverrideCheckout() throws Exception {
+	public void testCancelCheckoutWithPermissionOverrideCheckout()
+		throws Exception {
+
 		Role role = RoleTestUtil.addRole(
 			"Overrider", RoleConstants.TYPE_REGULAR,
 			DLFileEntryConstants.getClassName(),
@@ -382,7 +384,64 @@ public class DLCheckInCheckOutTest {
 			UserLocalServiceUtil.setRoleUsers(
 				role.getRoleId(), new long[] {_overriderUser.getUserId()});
 
-			overrideCheckout(_authorUser, _overriderUser, true);
+			FileEntry fileEntry = null;
+
+			try (ContextUserReplacer contextUserReplacer =
+					new ContextUserReplacer(_authorUser)) {
+
+				fileEntry = createFileEntry(StringUtil.randomString());
+
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntry.getFileEntryId(), _serviceContext);
+			}
+
+			try (ContextUserReplacer contextUserReplacer =
+					new ContextUserReplacer(_overriderUser)) {
+
+				DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+				fileEntry = DLAppServiceUtil.getFileEntry(
+					fileEntry.getFileEntryId());
+
+				Assert.assertFalse(fileEntry.isCheckedOut());
+			}
+		}
+		finally {
+			RoleLocalServiceUtil.deleteRole(role.getRoleId());
+		}
+	}
+
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
+	public void testCheckInWithPermissionOverrideCheckout() throws Exception {
+		Role role = RoleTestUtil.addRole(
+			"Overrider", RoleConstants.TYPE_REGULAR,
+			DLFileEntryConstants.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			ActionKeys.OVERRIDE_CHECKOUT);
+
+		try {
+			UserLocalServiceUtil.setRoleUsers(
+				role.getRoleId(), new long[] {_overriderUser.getUserId()});
+
+			FileEntry fileEntry = null;
+
+			try (ContextUserReplacer contextUserReplacer =
+					new ContextUserReplacer(_authorUser)) {
+
+				fileEntry = createFileEntry(StringUtil.randomString());
+
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntry.getFileEntryId(), _serviceContext);
+			}
+
+			try (ContextUserReplacer contextUserReplacer =
+					new ContextUserReplacer(_overriderUser)) {
+
+				DLAppServiceUtil.checkInFileEntry(
+					fileEntry.getFileEntryId(), false, StringPool.NULL,
+					_serviceContext);
+			}
 		}
 		finally {
 			RoleLocalServiceUtil.deleteRole(role.getRoleId());
@@ -440,77 +499,6 @@ public class DLCheckInCheckOutTest {
 		}
 
 		return assetEntry;
-	}
-
-	protected void overrideCheckout(
-			User authorUser, User overriderUser, boolean expectOverride)
-		throws Exception {
-
-		ServiceTestUtil.setUser(authorUser);
-
-		try {
-			Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
-
-			Date lastPostDate = folder.getLastPostDate();
-
-			String fileName = "OverrideCheckoutTest.txt";
-
-			FileEntry fileEntry = createFileEntry(fileName);
-
-			long fileEntryId = fileEntry.getFileEntryId();
-
-			DLAppServiceUtil.checkOutFileEntry(fileEntryId, _serviceContext);
-
-			ServiceTestUtil.setUser(overriderUser);
-
-			try {
-				DLAppServiceUtil.cancelCheckOut(fileEntryId);
-
-				Assert.assertTrue(
-					"Should not have succeeded cancel check out",
-					expectOverride);
-			}
-			catch (Exception e) {
-				Assert.assertFalse(
-					"Should not have failed cancel check out " + e,
-					expectOverride);
-			}
-
-			if (expectOverride) {
-				ServiceTestUtil.setUser(authorUser);
-
-				DLAppServiceUtil.checkOutFileEntry(
-					fileEntryId, _serviceContext);
-
-				updateFileEntry(fileEntryId, fileName);
-
-				ServiceTestUtil.setUser(overriderUser);
-			}
-
-			try {
-				DLAppServiceUtil.checkInFileEntry(
-					fileEntryId, false, StringPool.NULL, _serviceContext);
-
-				Assert.assertTrue(
-					"Should not have succeeded check in", expectOverride);
-
-				folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
-
-				Assert.assertFalse(
-					lastPostDate.after(folder.getLastPostDate()));
-
-				fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
-
-				Assert.assertEquals("1.1", fileEntry.getVersion());
-			}
-			catch (Exception e) {
-				Assert.assertFalse(
-					"Should not have failed check in " + e, expectOverride);
-			}
-		}
-		finally {
-			ServiceTestUtil.setUser(TestPropsValues.getUser());
-		}
 	}
 
 	protected FileEntry updateFileEntry(long fileEntryId) throws Exception {

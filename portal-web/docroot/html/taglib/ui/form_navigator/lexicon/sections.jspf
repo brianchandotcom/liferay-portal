@@ -14,6 +14,17 @@
  */
 --%>
 
+<%
+List<FormNavigatorEntry<Object>> formNavigatorEntries = null;
+
+if (Validator.isNotNull(categoryKey)) {
+	formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
+}
+else {
+	formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
+}
+%>
+
 <aui:fieldset-group markupView="lexicon">
 	<c:choose>
 		<c:when test="<%= deprecatedCategorySections.length > 0 %>">
@@ -54,10 +65,6 @@
 			%>
 
 		</c:when>
-
-		<%
-		List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
-		%>
 
 		<c:when test="<%= ListUtil.isNotEmpty(formNavigatorEntries) %>">
 

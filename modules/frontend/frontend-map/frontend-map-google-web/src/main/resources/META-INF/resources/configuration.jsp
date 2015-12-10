@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-GoogleMapDisplayContext googleMapDisplayContext = new GoogleMapDisplayContext(renderRequest);
-
 ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
 %>
 

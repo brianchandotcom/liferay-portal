@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(immediate = true)
-public class AddDefaultSharedPortletLayoutAction extends SimpleAction {
+public class AddDefaultSharedFormLayoutAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {

@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -185,7 +184,7 @@ public class DDLFormAdminDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(4);
 
 		ThemeDisplay themeDisplay =
 			_ddlFormAdminRequestHelper.getThemeDisplay();
@@ -194,9 +193,7 @@ public class DDLFormAdminDisplayContext {
 
 		sb.append(themeDisplay.getPortalURL());
 		sb.append(group.getPathFriendlyURL(false, themeDisplay));
-		sb.append(GroupConstants.FORMS_FRIENDLY_URL);
-		sb.append("/shared");
-		sb.append("/-/form/");
+		sb.append("/forms/shared/-/form/");
 		sb.append(_recordSet.getRecordSetId());
 
 		return sb.toString();

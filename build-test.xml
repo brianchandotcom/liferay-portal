@@ -88,12 +88,12 @@
 						<equals arg1="${database.type}" arg2="mysql" />
 						<equals arg1="${database.type}" arg2="oracle" />
 						<equals arg1="${database.type}" arg2="postgresql" />
-						<equals arg1="${database.type}" arg2="sql.server" />
+						<equals arg1="${database.type}" arg2="sqlserver" />
 						<equals arg1="${database.type}" arg2="sybase" />
 					</or>
 				</not>
 				<then>
-					<fail>Please set "database.type" to one of the following:${line.separator}db2, hypersonic, mysql, oracle, postgresql, sql.server, sybase.</fail>
+					<fail>Please set "database.type" to one of the following:${line.separator}db2, hypersonic, mysql, oracle, postgresql, sqlserver, sybase.</fail>
 				</then>
 			</if>
 		</sequential>

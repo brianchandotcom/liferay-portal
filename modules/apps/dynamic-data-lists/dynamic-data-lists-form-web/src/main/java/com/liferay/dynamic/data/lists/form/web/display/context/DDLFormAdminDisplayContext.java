@@ -180,20 +180,7 @@ public class DDLFormAdminDisplayContext {
 		return portletURL;
 	}
 
-	public DDLRecordSet getRecordSet() throws PortalException {
-		if (_recordSet != null) {
-			return _recordSet;
-		}
-
-		long recordSetId = ParamUtil.getLong(_renderRequest, "recordSetId");
-
-		_recordSet = DDLRecordSetLocalServiceUtil.fetchDDLRecordSet(
-			recordSetId);
-
-		return _recordSet;
-	}
-
-	public String getRecordSetLayoutURL() throws PortalException {
+	public String getPublishedFormURL() throws PortalException {
 		if (_recordSet == null) {
 			return StringPool.BLANK;
 		}
@@ -213,6 +200,19 @@ public class DDLFormAdminDisplayContext {
 		sb.append(_recordSet.getRecordSetId());
 
 		return sb.toString();
+	}
+
+	public DDLRecordSet getRecordSet() throws PortalException {
+		if (_recordSet != null) {
+			return _recordSet;
+		}
+
+		long recordSetId = ParamUtil.getLong(_renderRequest, "recordSetId");
+
+		_recordSet = DDLRecordSetLocalServiceUtil.fetchDDLRecordSet(
+			recordSetId);
+
+		return _recordSet;
 	}
 
 	public List<DDLRecordSet> getSearchContainerResults(

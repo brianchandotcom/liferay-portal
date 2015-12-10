@@ -350,7 +350,7 @@ public class DLCheckInCheckOutTest {
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testWithoutPermissionOverrideCheckout() throws Exception {
+	public void testCancelCheckOutWithoutPermissionOverrideCheckout() throws Exception {
 		FileEntry fileEntry = null;
 
 		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(

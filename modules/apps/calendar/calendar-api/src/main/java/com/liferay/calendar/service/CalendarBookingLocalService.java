@@ -397,7 +397,8 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 	public void updateAsset(long userId,
 		com.liferay.calendar.model.CalendarBooking calendarBooking,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds) throws PortalException;
+		long[] assetLinkEntryIds, java.lang.Double priority)
+		throws PortalException;
 
 	/**
 	* Updates the calendar booking in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -375,11 +375,12 @@ public class CalendarResourceLocalServiceUtil {
 
 	public static void updateAsset(long userId,
 		com.liferay.calendar.model.CalendarResource calendarResource,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames)
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateAsset(userId, calendarResource, assetCategoryIds,
-			assetTagNames);
+			assetTagNames, priority);
 	}
 
 	/**

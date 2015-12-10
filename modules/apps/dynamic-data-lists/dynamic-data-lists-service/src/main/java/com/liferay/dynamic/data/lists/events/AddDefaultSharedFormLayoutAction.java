@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.events;
 
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -75,49 +76,58 @@ public class AddDefaultSharedFormLayoutAction extends SimpleAction {
 		}
 	}
 
-	protected void doRun(long companyId) throws Exception {
-		Group group = _groupLocalService.fetchGroup(
-			companyId, GroupConstants.FORMS);
-
+	protected Group addFormsGroup(long companyId) throws PortalException {
 		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getDefault(), "Forms");
+
+		return _groupLocalService.addGroup(
+			defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null,
+			GroupConstants.TYPE_SITE_PRIVATE, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/forms", true,
+			false, true, new ServiceContext());
+	}
+
+	protected void addSharedLayout(long companyId, long groupId)
+		throws PortalException {
+
 		ServiceContext serviceContext = new ServiceContext();
-
-		if (group == null) {
-			Map<Locale, String> nameMap = new HashMap<>();
-
-			nameMap.put(LocaleUtil.getDefault(), GroupConstants.FORMS);
-
-			group = _groupLocalService.addGroup(
-				defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null,
-				GroupConstants.TYPE_SITE_OPEN, true,
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-				GroupConstants.FORMS_FRIENDLY_URL, true, false, true,
-				serviceContext);
-		}
-
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			group.getGroupId(), false, "/shared");
-
-		if (layout != null) {
-			return;
-		}
 
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
 
-		serviceContext.setScopeGroupId(group.getGroupId());
+		serviceContext.setScopeGroupId(groupId);
+
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
 		serviceContext.setUserId(defaultUserId);
 
 		_layoutLocalService.addLayout(
-			defaultUserId, group.getGroupId(), false,
+			defaultUserId, groupId, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
 			StringPool.BLANK, StringPool.BLANK,
 			LayoutConstants.TYPE_SHARED_PORTLET, true, "/shared",
 			serviceContext);
+	}
+
+	protected void doRun(long companyId) throws Exception {
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			companyId, "/forms");
+
+		if (group == null) {
+			group = addFormsGroup(companyId);
+		}
+
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			group.getGroupId(), false, "/shared");
+
+		if (layout == null) {
+			addSharedLayout(companyId, group.getGroupId());
+		}
 	}
 
 	@Reference(unbind = "-")

@@ -1168,13 +1168,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (Validator.isNotNull(annotation) &&
 					annotation.contains(StringPool.OPEN_PARENTHESIS)) {
 
-					Matcher matcher = _annotationPattern.matcher(
-						"\n" + annotation);
+					Matcher matcher = _annotationPattern.matcher(annotation);
 
 					if (matcher.find()) {
 						String match = matcher.group();
-
-						match = match.substring(1);
 
 						if (!match.endsWith("\n)\n") &&
 							!match.endsWith("\t)\n")) {
@@ -3580,7 +3577,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static final int _MAX_LINE_LENGTH = 80;
 
 	private static Pattern _annotationPattern = Pattern.compile(
-		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
+		"(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;

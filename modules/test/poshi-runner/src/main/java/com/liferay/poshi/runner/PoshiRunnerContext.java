@@ -441,11 +441,26 @@ public class PoshiRunnerContext {
 					propertyNames[i], propertyValues[i]));
 		}
 
-		Map<Integer, List<String>> classCommandNameGroups =
-			_getTestBatchSingleGroupsMap(classCommandNames);
+		String testBatchGroups;
 
-		String testBatchGroups = _getTestBatchSingleGroups(
-			classCommandNameGroups);
+		if (PropsValues.TEST_BATCH_RUN_TYPE.equals("sequential")) {
+			Map<Integer, List<String>> classCommandNameGroups =
+				_getTestBatchSequentialGroupsMap(classCommandNames);
+
+			testBatchGroups = _getTestBatchSequentialGroups(
+				classCommandNameGroups);
+		}
+		else if (PropsValues.TEST_BATCH_RUN_TYPE.equals("single")) {
+			Map<Integer, List<String>> classCommandNameGroups =
+				_getTestBatchSingleGroupsMap(classCommandNames);
+
+			testBatchGroups = _getTestBatchSingleGroups(classCommandNameGroups);
+		}
+		else {
+			throw new Exception(
+				"test.batch.run.type must be set to 'single' or " +
+					"'sequential'");
+		}
 
 		sb.append(testBatchGroups);
 

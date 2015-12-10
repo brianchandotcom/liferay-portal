@@ -26,6 +26,8 @@ if (Validator.isNull(displayStyle)) {
 }
 else {
 	portalPreferences.setValue(BlogsPortletKeys.BLOGS_ADMIN, "images-display-style", displayStyle);
+
+	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);

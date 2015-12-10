@@ -225,8 +225,7 @@ public class StagedModelDataHandlerUtil {
 			stagedModelClassName, classPK);
 
 		doImportReferenceStagedModel(
-			portletDataContext, referenceElement, stagedModelClassName,
-			classPK);
+			portletDataContext, referenceElement, stagedModelClassName);
 	}
 
 	/**
@@ -278,8 +277,7 @@ public class StagedModelDataHandlerUtil {
 			referrerStagedModel, stagedModelClassName, classPK);
 
 		doImportReferenceStagedModel(
-			portletDataContext, referenceElement, stagedModelClassName,
-			classPK);
+			portletDataContext, referenceElement, stagedModelClassName);
 	}
 
 	public static void importReferenceStagedModels(
@@ -374,7 +372,7 @@ public class StagedModelDataHandlerUtil {
 
 	protected static void doImportReferenceStagedModel(
 			PortletDataContext portletDataContext, Element referenceElement,
-			String stagedModelClassName, long classPK)
+			String stagedModelClassName)
 		throws PortletDataException {
 
 		if (referenceElement == null) {
@@ -399,26 +397,7 @@ public class StagedModelDataHandlerUtil {
 			return;
 		}
 
-		if (referenceElement != null) {
-			importStagedModel(portletDataContext, referenceElement);
-
-			return;
-		}
-
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("group-id"),
-			portletDataContext.getSourceGroupId());
-
-		String stagedModelPath = ExportImportPathUtil.getModelPath(
-			groupId, stagedModelClassName, classPK);
-
-		StagedModel stagedModel =
-			(StagedModel)portletDataContext.getZipEntryAsObject(
-				stagedModelPath);
-
-		if (stagedModel != null) {
-			importStagedModel(portletDataContext, stagedModel);
-		}
+		importStagedModel(portletDataContext, referenceElement);
 	}
 
 	private static StagedModel _getReferenceStagedModel(

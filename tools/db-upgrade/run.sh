@@ -19,7 +19,7 @@ showUsage() {
 
 CLASSPATH=""
 DEBUG="false"
-DEBUG_OPTS="-agentlib:address=9009,jdwp=transport=dt_socket,server=y,suspend=n"
+DEBUG_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=9009"
 JAVA_BIN="$(whereis java)"
 JAVA_OPTS="-Xmx1024m -XX:MaxPermSize=512m"
 STD_IN=0

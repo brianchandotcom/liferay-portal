@@ -17,6 +17,7 @@
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<liferay-ui:search-container-column-user
+			cssClass="user-icon-lg"
 			showDetails="<%= false %>"
 			userId="<%= entry.getUserId() %>"
 		/>
@@ -77,7 +78,7 @@
 			>
 				<liferay-frontend:vertical-card-sticker-bottom>
 					<liferay-ui:user-portrait
-						cssClass="sticker sticker-bottom"
+						cssClass="sticker sticker-bottom user-icon-xl"
 						userId="<%= entry.getUserId() %>"
 					/>
 				</liferay-frontend:vertical-card-sticker-bottom>

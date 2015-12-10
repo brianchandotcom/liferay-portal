@@ -24,12 +24,12 @@ String value = (String)request.getAttribute("liferay-frontend:management-bar-fil
 
 <c:if test="<%= managementBarFilterItems.size() > 0 %>">
 	<li class="dropdown">
-		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter<%= label %>" data-toggle="dropdown" href="javascript:;">
 			<span class="management-bar-item-title"><liferay-ui:message key="<%= label %>" />: <liferay-ui:message key="<%= value %>" /></span>
 			<span class="icon-sort"></span>
 		</a>
 
-		<ul class="dropdown-menu">
+		<ul class="dropdown-menu" data-qa-id="filter<%= label %>Values">
 
 			<%
 			for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems) {

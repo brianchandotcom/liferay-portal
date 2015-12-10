@@ -420,7 +420,7 @@
 </tr>
 <tr>
 	<td>PLUS</td>
-	<td>//a[contains(@class,'btn') and span[contains(@class,'icon-plus')]] | //button[span[contains(@class,'icon-plus')]]</td>
+	<td>//*[@data-qa-id='addButton'] | //a[contains(@class,'btn') and span[contains(@class,'icon-plus')]] | //button[span[contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -525,7 +525,7 @@
 </tr>
 <tr>
 	<td>SEARCH</td>
-	<td>//button[contains(.,'Search')]</td>
+	<td>//*[@data-qa-id='searchButton'] | //button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

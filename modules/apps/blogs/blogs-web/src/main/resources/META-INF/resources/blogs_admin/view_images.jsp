@@ -40,6 +40,8 @@ portletURL.setParameter("delta", String.valueOf(delta));
 portletURL.setParameter("orderBycol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
 
+request.setAttribute("view_images.jsp-portletURL", portletURL);
+
 String keywords = ParamUtil.getString(request, "keywords");
 %>
 

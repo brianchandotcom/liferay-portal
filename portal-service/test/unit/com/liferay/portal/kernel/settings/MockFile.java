@@ -30,6 +30,11 @@ import java.util.Properties;
 public class MockFile implements com.liferay.portal.kernel.util.File {
 
 	@Override
+	public String append(String fileName, String suffix) {
+		return null;
+	}
+
+	@Override
 	public String appendParentheticalSuffix(String fileName, String suffix) {
 		return null;
 	}

@@ -27,6 +27,8 @@ import java.util.Properties;
  */
 public interface File {
 
+	public String append(String fileName, String suffix);
+
 	public String appendParentheticalSuffix(String fileName, String suffix);
 
 	public void copyDirectory(java.io.File source, java.io.File destination)

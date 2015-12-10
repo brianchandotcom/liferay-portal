@@ -3,3 +3,7 @@ dependencies {
 	provided group: "com.helger", name: "ph-css", version: "4.0.0"
 	provided group: "org.slf4j", name: "slf4j-api", version: "1.7.10"
 }
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

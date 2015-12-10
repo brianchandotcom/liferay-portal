@@ -48,6 +48,10 @@ public class MapProviderHelper {
 			return companyMapProviderKey;
 		}
 		else {
+			if (group.isStagingGroup()) {
+				group = group.getLiveGroup();
+			}
+
 			return GetterUtil.getString(
 					group.getTypeSettingsProperty(
 							MapProviderWebKeys.MAP_PROVIDER_KEY),

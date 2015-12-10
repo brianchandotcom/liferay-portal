@@ -22,7 +22,6 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
@@ -34,35 +33,17 @@ public class FormatTLDTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExecSpec args(Iterable<?> args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec args(Object... args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public JavaExec classpath(Object... paths) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void exec() {
-		super.setArgs(getArgs());
+		setArgs(getCompleteArgs());
+
 		super.setClasspath(getClasspath());
 
 		super.exec();
-	}
-
-	@Override
-	public List<String> getArgs() {
-		List<String> args = new ArrayList<>();
-
-		args.add("tld.plugin=" + isPlugin());
-
-		return args;
 	}
 
 	@Override
@@ -82,17 +63,20 @@ public class FormatTLDTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExec setArgs(Iterable<?> applicationArgs) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public JavaExec setClasspath(FileCollection classpath) {
 		throw new UnsupportedOperationException();
 	}
 
 	public void setPlugin(boolean plugin) {
 		_plugin = plugin;
+	}
+
+	protected List<String> getCompleteArgs() {
+		List<String> args = new ArrayList<>(getArgs());
+
+		args.add("tld.plugin=" + isPlugin());
+
+		return args;
 	}
 
 	private boolean _plugin = true;

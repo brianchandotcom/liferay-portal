@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ClassNameLocalService;
@@ -64,11 +65,14 @@ public class GoogleDocsDLFileEntryTypeHelper {
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
-		nameMap.put(LocaleUtil.getDefault(), "Google Docs Metadata");
-
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
-		descriptionMap.put(LocaleUtil.getDefault(), "Google Docs Metadata");
+		for (Locale curLocale :
+				LanguageUtil.getAvailableLocales(_company.getCompanyId())) {
+
+			nameMap.put(curLocale, "Google Docs Metadata");
+			descriptionMap.put(curLocale, "Google Docs Metadata");
+		}
 
 		String definition = ResourceUtil.get(
 			this, "dependencies/ddm_structure_google_docs.xml");

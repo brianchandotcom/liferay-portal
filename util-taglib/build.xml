@@ -128,6 +128,7 @@
                 <exclude name="**/classes/**/liferay-*.tld"/>
                 <exclude name="**/portal-web/**/liferay-*.tld"/>
                 <exclude name="**/bin/**/liferay-*.tld"/>
+                <exclude name="**/build/**/liferay-*.tld"/>
             </fileset>
         </path>
         <pathconvert property="Paths" refid="files" pathsep=" "/>

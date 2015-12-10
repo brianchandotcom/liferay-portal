@@ -150,8 +150,17 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 				<liferay-ui:search-container-row
 					className="com.liferay.wiki.model.WikiNode"
 					keyProperty="nodeId"
-					modelVar="result"
+					modelVar="node"
 				>
+
+					<%
+					PortletURL rowURL = renderResponse.createRenderURL();
+
+					rowURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
+					rowURL.setParameter("redirect", currentURL);
+					rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+					%>
+
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("descriptive") %>'>
 							<liferay-ui:search-container-column-icon
@@ -159,28 +168,23 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 								toggleRowChecker="<%= true %>"
 							/>
 
-							<liferay-ui:search-container-column-jsp
-								colspan="2"
-								path="/wiki_admin/view_node_descriptive.jsp"
-							/>
+							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+								<h4>
+									<aui:a href="<%= rowURL.toString() %>">
+										<%= node.getName() %>
+									</aui:a>
+								</h4>
+
+								<h5 class="text-default">
+									<liferay-ui:message arguments="<%= String.valueOf(WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true)) %>" key="x-pages" />
+								</h5>
+							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action"
 								path="/wiki/node_action.jsp"
 							/>
 						</c:when>
 						<c:otherwise>
-
-							<%
-							WikiNode node = (WikiNode)result;
-
-							PortletURL rowURL = renderResponse.createRenderURL();
-
-							rowURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
-							rowURL.setParameter("redirect", currentURL);
-							rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-							%>
-
 							<liferay-ui:search-container-column-text
 								href="<%= rowURL %>"
 								name="wiki"
@@ -207,7 +211,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

@@ -21,24 +21,20 @@
 		/>
 
 		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-			<liferay-ui:app-view-entry
-				actionJsp="/blogs_admin/image_action.jsp"
-				actionJspServletContext="<%= application %>"
-				assetCategoryClassName="<%= DLFileEntry.class.getName() %>"
-				assetCategoryClassPK="<%= fileEntry.getFileEntryId() %>"
-				assetTagClassName="<%= DLFileEntry.class.getName() %>"
-				assetTagClassPK="<%= fileEntry.getFileEntryId() %>"
-				author="<%= fileEntry.getUserName() %>"
-				createDate="<%= fileEntry.getCreateDate() %>"
-				description="<%= fileEntry.getDescription() %>"
-				displayStyle="descriptive"
-				markupView="lexicon"
-				modifiedDate="<%= fileEntry.getModifiedDate() %>"
-				rowCheckerId="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
-				rowCheckerName="<%= FileEntry.class.getSimpleName() %>"
-				showCheckbox="<%= true %>"
-				title="<%= fileEntry.getTitle() %>"
-			/>
+
+			<%
+			Date createDate = fileEntry.getCreateDate();
+
+			String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+			%>
+
+			<h5 class="text-default">
+				<liferay-ui:message arguments="<%= new String[] {fileEntry.getUserName(), createDateDescription} %>" key="x-created-x-ago" />
+			</h5>
+
+			<h4>
+				<%= fileEntry.getTitle() %>
+			</h4>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp

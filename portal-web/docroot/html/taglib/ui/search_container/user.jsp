@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/ui/search_container/init.jsp" %>
 
 <%
+String cssClass = GetterUtil.getString(request.getAttribute("liferay-ui:search-container-column-user:cssClass"));
 Date date = GetterUtil.getDate(request.getAttribute("liferay-ui:search-container-column-user:date"), DateFormatFactoryUtil.getDate(locale), null);
 boolean showDetails = GetterUtil.getBoolean(request.getAttribute("liferay-ui:search-container-column-user:showDetails"));
 long userId = GetterUtil.getLong(request.getAttribute("liferay-ui:search-container-column-user:userId"));
@@ -25,11 +26,10 @@ User user2 = UserLocalServiceUtil.fetchUser(userId);
 %>
 
 <div class="user-info">
-	<div class="user-icon user-icon-lg">
-		<liferay-ui:user-portrait
-			userId="<%= (user2 != null) ? user2.getUserId() : 0 %>"
-		/>
-	</div>
+	<liferay-ui:user-portrait
+		cssClass="<%= cssClass %>"
+		userId="<%= (user2 != null) ? user2.getUserId() : 0 %>"
+	/>
 
 	<c:if test="<%= showDetails %>">
 		<div class="user-details">

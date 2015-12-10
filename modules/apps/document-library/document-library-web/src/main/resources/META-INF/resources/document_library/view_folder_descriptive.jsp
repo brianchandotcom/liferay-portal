@@ -28,17 +28,18 @@ PortletURL rowURL = liferayPortletResponse.createRenderURL();
 rowURL.setParameter("mvcRenderCommandName", "/document_library/view");
 rowURL.setParameter("redirect", currentURL);
 rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
+
+Date modifiedDate = folder.getModifiedDate();
+
+String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 %>
 
-<liferay-ui:app-view-entry
-	author="<%= folder.getUserName() %>"
-	createDate="<%= folder.getCreateDate() %>"
-	description="<%= folder.getDescription() %>"
-	displayStyle="descriptive"
-	folder="<%= true %>"
-	markupView="lexicon"
-	modifiedDate="<%= folder.getModifiedDate() %>"
-	showCheckbox="<%= DLFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>"
-	title="<%= folder.getName() %>"
-	url="<%= (rowURL != null) ? rowURL.toString() : null %>"
-/>
+<h5 class="text-default">
+	<liferay-ui:message arguments="<%= new String[] {folder.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+</h5>
+
+<h4>
+	<aui:a href="<%= rowURL.toString() %>">
+		<%= folder.getName() %>
+	</aui:a>
+</h4>

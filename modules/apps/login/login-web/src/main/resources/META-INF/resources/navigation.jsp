@@ -18,7 +18,7 @@
 
 <liferay-util:buffer var="navigation">
 	<liferay-ui:icon-list>
-		<liferay-util:dynamic-include key="/navigation.jsp#pre" />
+		<liferay-util:dynamic-include key="com.liferay.login.web:/navigation.jsp#pre" />
 
 		<%
 		for (String section : PropsValues.LOGIN_FORM_NAVIGATION_PRE) {
@@ -38,7 +38,7 @@
 		}
 		%>
 
-		<liferay-util:dynamic-include key="/navigation.jsp#post" />
+		<liferay-util:dynamic-include key="com.liferay.login.web:/navigation.jsp#post" />
 	</liferay-ui:icon-list>
 </liferay-util:buffer>
 

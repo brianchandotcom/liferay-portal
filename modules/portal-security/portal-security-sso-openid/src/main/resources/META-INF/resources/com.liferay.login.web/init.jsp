@@ -17,13 +17,15 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.DuplicateOpenIdException" %><%@
 page import="com.liferay.portal.UserEmailAddressException" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
-<%@ page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.ActionRequest" %><%@
+page import="javax.portlet.WindowState" %>
 
 <%@ page import="org.openid4java.association.AssociationException" %><%@
 page import="org.openid4java.consumer.ConsumerException" %><%@
@@ -31,6 +33,8 @@ page import="org.openid4java.discovery.DiscoveryException" %><%@
 page import="org.openid4java.message.MessageException" %>
 
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();

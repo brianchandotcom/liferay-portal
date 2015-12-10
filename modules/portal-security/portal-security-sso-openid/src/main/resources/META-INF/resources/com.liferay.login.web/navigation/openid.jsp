@@ -14,11 +14,14 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ include file="/com.liferay.login.web/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<portlet:renderURL var="openIdURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/login/openid" />
+</portlet:renderURL>
 
-<%@ page import="javax.portlet.WindowState" %>
-
-<liferay-theme:defineObjects />
+<liferay-ui:icon
+	message="openid"
+	src='<%= themeDisplay.getPathThemeImages() + "/common/openid.gif" %>'
+	url="<%= openIdURL %>"
+/>

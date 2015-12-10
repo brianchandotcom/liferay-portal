@@ -18,31 +18,11 @@
 
 <%
 String mapProviderKey = (String)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_KEY);
-MapProviderTracker mapProviderTracker = (MapProviderTracker)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_TRACKER);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="maps" />
 
-<p><liferay-ui:message key="select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets" /></p>
-
-<%
-for (MapProvider mapProvider : mapProviderTracker.getMapProviders()) {
-%>
-
-	<aui:input checked="<%= Validator.equals(mapProviderKey, mapProvider.getKey()) %>" helpMessage="<%= mapProvider.getHelpMessage() %>" id='<%= mapProvider.getKey() + "Enabled" %>' label="<%= mapProvider.getLabel(locale) %>" name='<%= "TypeSettingsProperties--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>' type="radio" value="<%= mapProvider.getKey() %>" />
-
-	<div id="<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>">
-
-		<%
-		mapProvider.includeConfiguration(request, new PipingServletResponse(pageContext));
-		%>
-
-	</div>
-
-	<aui:script>
-		Liferay.Util.toggleRadio('<portlet:namespace /><%= mapProvider.getKey() %>Enabled', '<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>', '');
-	</aui:script>
-
-<%
-}
-%>
+<liferay-map:map-provider-selector
+	mapProviderKey="<%= mapProviderKey %>"
+	name='<%= "TypeSettingsProperties--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>'
+/>

@@ -22,7 +22,10 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 /**
  * @author Tomas Polesovsky
  */
-@ConfigurationAdmin(category = "platform")
+@ConfigurationAdmin(
+	category = "platform",
+	factoryInstanceLabelAttribute = "urlsIncludes"
+)
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.security.auth.verifier.digest.authentication.module.configuration.DigestAuthenticationAuthVerifierConfiguration"

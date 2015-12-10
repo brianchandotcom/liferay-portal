@@ -22,7 +22,10 @@ import com.liferay.portal.ldap.configuration.CompanyScopedConfiguration;
 /**
  * @author Michael C. Han
  */
-@ConfigurationAdmin(category = "platform")
+@ConfigurationAdmin(
+	category = "platform",
+	factoryInstanceLabelAttribute = "companyId"
+)
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration",

@@ -21,7 +21,10 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 /**
  * @author Michael C. Han
  */
-@ConfigurationAdmin(category = "platform")
+@ConfigurationAdmin(
+	category = "platform",
+	factoryInstanceLabelAttribute = "companyId"
+)
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.ldap.configuration.LDAPServerConfiguration",

@@ -12,29 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.common;
+package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.dao.db.DBType;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 /**
- * @author Alberto Chaparro
- * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
-public class OracleSQLTransformerTest extends BaseSQLTransformerTestCase {
+public enum ExpectedDBType {
 
-	@Test
-	public void testReplaceNotEqualsBlankStringComparison() {
-		Assert.assertEquals(
-			"SELECT * FROM User_ WHERE emailAddress IS NOT NULL",
-			transformSQL("SELECT * FROM User_ WHERE emailAddress != ''"));
+	DB2(DBType.DB2), HYPERSONIC(DBType.HYPERSONIC), MYSQL(DBType.MYSQL),
+	NONE(null), ORACLE(DBType.ORACLE), POSTGRESQL(DBType.POSTGRESQL),
+	SQLSERVER(DBType.SQLSERVER), SYBASE(DBType.SYBASE);
+
+	public DBType getDBType() {
+		return _dbType;
 	}
 
-	@Override
-	protected DBType getDBType() {
-		return DBType.ORACLE;
+	private ExpectedDBType(DBType dbType) {
+		_dbType = dbType;
 	}
+
+	private final DBType _dbType;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
@@ -163,6 +164,11 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public DBType getDBType() {
+		return _dbType;
+	}
+
+	@Override
 	@SuppressWarnings("unused")
 	public List<Index> getIndexes(Connection con) throws SQLException {
 		return Collections.emptyList();
@@ -186,11 +192,6 @@ public abstract class BaseDB implements DB {
 	@Override
 	public String getTemplateTrue() {
 		return getTemplate()[1];
-	}
-
-	@Override
-	public String getType() {
-		return _type;
 	}
 
 	@Override
@@ -522,8 +523,8 @@ public abstract class BaseDB implements DB {
 		addIndexes(con, indexesSQL, validIndexNames);
 	}
 
-	protected BaseDB(String type, int majorVersion, int minorVersion) {
-		_type = type;
+	protected BaseDB(DBType dbType, int majorVersion, int minorVersion) {
+		_dbType = dbType;
 		_majorVersion = majorVersion;
 		_minorVersion = minorVersion;
 
@@ -535,10 +536,12 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected String applyMaxStringIndexLengthLimitation(Matcher matcher) {
+		DBType dbType = getDBType();
+
 		int stringIndexMaxLength = GetterUtil.getInteger(
 			PropsUtil.get(
 				PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH,
-				new Filter(getType())),
+				new Filter(dbType.getName())),
 			-1);
 
 		if (stringIndexMaxLength < 0) {
@@ -881,7 +884,7 @@ public abstract class BaseDB implements DB {
 			sb.append("\nSQL state: ");
 			sb.append(sqle.getSQLState());
 			sb.append("\nVendor: ");
-			sb.append(getType());
+			sb.append(getDBType());
 			sb.append("\nVendor error code: ");
 			sb.append(sqle.getErrorCode());
 			sb.append("\nVendor error message: ");
@@ -1157,10 +1160,10 @@ public abstract class BaseDB implements DB {
 		_templatePattern = Pattern.compile(sb.toString());
 	}
 
+	private final DBType _dbType;
 	private final int _majorVersion;
 	private final int _minorVersion;
 	private boolean _supportsStringCaseSensitiveQuery;
 	private final Map<String, String> _templateMap = new HashMap<>();
-	private final String _type;
 
 }

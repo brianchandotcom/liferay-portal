@@ -15,6 +15,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.CustomSQLParam;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -169,9 +170,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			DB db = getDB();
 
-			String dbType = db.getType();
-
-			boolean sybase = dbType.equals(DB.TYPE_SYBASE);
+			boolean sybase = db.getDBType() == DBType.SYBASE;
 
 			if (sybase) {
 				sb = new StringBundler(19);

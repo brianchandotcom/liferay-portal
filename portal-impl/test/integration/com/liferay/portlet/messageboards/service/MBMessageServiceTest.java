@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.service;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -148,9 +149,7 @@ public class MBMessageServiceTest {
 
 			DB db = DBFactoryUtil.getDB();
 
-			String dbType = db.getType();
-
-			if (dbType.equals(DB.TYPE_SYBASE)) {
+			if (db.getDBType() == DBType.SYBASE) {
 				for (LoggingEvent loggingEvent :
 						captureAppender1.getLoggingEvents()) {
 

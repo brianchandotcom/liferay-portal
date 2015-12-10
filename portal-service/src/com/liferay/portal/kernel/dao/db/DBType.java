@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
-
-import java.io.IOException;
-
-import java.sql.SQLException;
-
-import javax.naming.NamingException;
+package com.liferay.portal.kernel.dao.db;
 
 /**
- * @author     Ganesh Ram
- * @author     Brian Wing Shun Chan
- * @deprecated As of 6.1.0, replaced by {@link
- *             com.liferay.portal.kernel.dao.db.DB}
+ * @author Shuyang Zhou
  */
-@Deprecated
-public interface Database {
+public enum DBType {
 
-	public String getType();
+	DB2("db2"), HYPERSONIC("hypersonic"), MYSQL("mysql"), ORACLE("oracle"),
+	POSTGRESQL("postgresql"), SQLSERVER("sqlserver"), SYBASE("sybase");
 
-	public void runSQLTemplate(String path)
-		throws IOException, NamingException, SQLException;
+	public String getName() {
+		return _name;
+	}
 
-	public void runSQLTemplate(String path, boolean failOnError)
-		throws IOException, NamingException, SQLException;
+	@Override
+	public String toString() {
+		return _name;
+	}
+
+	private DBType(String name) {
+		_name = name;
+	}
+
+	private final String _name;
 
 }

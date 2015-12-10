@@ -16,6 +16,7 @@ package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -689,9 +690,9 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		if (useQuartzCluster) {
 			DB db = DBFactoryUtil.getDB();
 
-			String dbType = db.getType();
+			DBType dbType = db.getDBType();
 
-			if (dbType.equals(DB.TYPE_SQLSERVER)) {
+			if (dbType == DBType.SQLSERVER) {
 				String lockHandlerClassName = properties.getProperty(
 					"org.quartz.jobStore.lockHandler.class");
 
@@ -705,7 +706,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			if (GetterUtil.getBoolean(
 					_props.get(PropsKeys.CLUSTER_LINK_ENABLED))) {
 
-				if (dbType.equals(DB.TYPE_HYPERSONIC)) {
+				if (dbType == DBType.HYPERSONIC) {
 					_log.error("Unable to cluster scheduler on Hypersonic");
 				}
 				else {

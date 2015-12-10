@@ -16,6 +16,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -197,8 +198,6 @@ public class VerifyPermission extends VerifyProcess {
 
 		DB db = DBFactoryUtil.getDB();
 
-		String dbType = db.getType();
-
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		for (long companyId : companyIds) {
@@ -249,7 +248,7 @@ public class VerifyPermission extends VerifyProcess {
 
 			StringBundler sb = new StringBundler(8);
 
-			if (dbType.equals(DB.TYPE_MYSQL)) {
+			if (db.getDBType() == DBType.MYSQL) {
 				sb.append("update ");
 				sb.append(joinSB.toString());
 				sb.append(" set resourcePermission1.roleId = ");

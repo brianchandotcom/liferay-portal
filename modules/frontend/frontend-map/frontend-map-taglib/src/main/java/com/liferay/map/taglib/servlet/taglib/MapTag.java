@@ -18,13 +18,13 @@ import com.liferay.frontend.map.api.MapProvider;
 import com.liferay.frontend.map.api.util.MapProviderHelper;
 import com.liferay.frontend.map.api.util.MapProviderTracker;
 import com.liferay.map.taglib.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -82,7 +82,6 @@ public class MapTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		validate(request);
 		request.setAttribute("liferay-map:map:geolocation", _geolocation);
 		request.setAttribute("liferay-map:map:latitude", _latitude);
 		request.setAttribute("liferay-map:map:longitude", _longitude);
@@ -95,31 +94,42 @@ public class MapTag extends IncludeTag {
 		MapProviderTracker mapProviderTracker =
 			ServletContextUtil.getMapProviderTracker();
 
-		return mapProviderTracker.getMapProvider(_provider);
+		String mapProviderKey = _getMapProviderKey();
+
+		MapProvider mapProvider = null;
+
+		if (Validator.isNotNull(mapProviderKey)) {
+			mapProvider = mapProviderTracker.getMapProvider(mapProviderKey);
+		}
+
+		if (mapProvider == null) {
+			List<MapProvider> mapProviders = new ArrayList(
+				mapProviderTracker.getMapProviders());
+
+			if (!mapProviders.isEmpty()) {
+				mapProvider = mapProviders.get(0);
+			}
+		}
+
+		return mapProvider;
 	}
 
-	private String _getMapProviderKey(long companyId, long groupId) {
-		MapProviderHelper mapProviderHelper =
-			ServletContextUtil.getMapProviderHelper();
+	private String _getMapProviderKey() {
+		String mapProdiverKey = _provider;
 
-		return GetterUtil.getString(
-				mapProviderHelper.getMapProviderKey(companyId, groupId),
-				_DEFAULT_PROVIDER_KEY);
-	}
-
-	private void validate(HttpServletRequest request) {
-		if (Validator.isNull(_provider)) {
+		if (Validator.isNull(mapProdiverKey)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			if (Validator.isNull(_provider)) {
-				_provider = _getMapProviderKey(
-					themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId());
-			}
-		}
-	}
+			MapProviderHelper mapProviderHelper =
+				ServletContextUtil.getMapProviderHelper();
 
-	private static final String _DEFAULT_PROVIDER_KEY = "Google";
+			mapProdiverKey = mapProviderHelper.getMapProviderKey(
+				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId());
+		}
+
+		return mapProdiverKey;
+	}
 
 	private static final String _PAGE = "/map/page.jsp";
 

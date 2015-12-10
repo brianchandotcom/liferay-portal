@@ -12,7 +12,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "1.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.soy", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.test.integration", version: "1.0.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.1"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.upgrade.table.builder", version: "1.0.2"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.2"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdd.builder", version: "1.0.7"

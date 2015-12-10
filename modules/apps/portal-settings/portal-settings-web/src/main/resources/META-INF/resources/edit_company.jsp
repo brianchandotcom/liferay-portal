@@ -34,7 +34,7 @@ request.setAttribute("websites.classPK", company.getAccountId());
 
 <portlet:actionURL name="/portal_settings/edit_company" var="editCompanyURL" />
 
-<aui:form action="<%= editCompanyURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
+<aui:form action="<%= editCompanyURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
@@ -52,6 +52,7 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		formModelBean="<%= company %>"
 		htmlTop="<%= htmlTop %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS %>"
+		markupView="lexicon"
 		showButtons="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>"
 	/>
 </aui:form>

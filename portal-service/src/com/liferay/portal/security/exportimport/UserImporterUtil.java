@@ -14,10 +14,8 @@
 
 package com.liferay.portal.security.exportimport;
 
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.model.User;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Edward Han
@@ -68,19 +66,10 @@ public class UserImporterUtil {
 	}
 
 	private static UserImporter _getInstance() {
-		return _instance._serviceTracker.getService();
+		return _instance;
 	}
 
-	private UserImporterUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(UserImporter.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final UserImporterUtil _instance = new UserImporterUtil();
-
-	private final ServiceTracker<UserImporter, UserImporter> _serviceTracker;
+	private static final UserImporter _instance =
+		ProxyFactory.newServiceTrackedInstance(UserImporter.class);
 
 }

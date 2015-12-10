@@ -1,3 +1,15 @@
+buildscript {
+	ext.gradleScriptsPath = "https://raw.githubusercontent.com/liferay/liferay-portal/master/modules"
+
+	if (!project.parent) {
+		apply from: "${gradleScriptsPath}/build-buildscript.gradle", to: buildscript
+	}
+}
+
+if (!project.parent) {
+	apply from: "${gradleScriptsPath}/build-module.gradle"
+}
+
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 

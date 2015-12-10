@@ -63,7 +63,8 @@ public class UpdateRecordSetMVCActionCommand
 		DDLRecordSet recordSet = updateRecordSet(
 			actionRequest, ddmStructure.getStructureId());
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsProperties =
+			recordSet.getSettingsProperties();
 
 		boolean publish = ParamUtil.getBoolean(actionRequest, "publish");
 

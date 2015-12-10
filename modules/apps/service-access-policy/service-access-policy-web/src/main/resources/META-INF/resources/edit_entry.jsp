@@ -79,9 +79,9 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 				</aui:validator>
 			</aui:input>
 
-			<aui:input name="enabled" />
+			<aui:input name="enabled" type="toggle-switch" value="<%= (sapEntry != null) ? sapEntry.isEnabled() : false %>" />
 
-			<aui:input disabled="<%= systemSAPEntry %>" helpMessage="default-sap-entry-help" label="default" name="defaultSAPEntry" />
+			<aui:input disabled="<%= systemSAPEntry %>" helpMessage="default-sap-entry-help" label="default" name="defaultSAPEntry" type="toggle-switch" value="<%= (sapEntry != null) ? sapEntry.isDefaultSAPEntry() : false %>" />
 
 			<aui:input name="title" required="<%= true %>" />
 

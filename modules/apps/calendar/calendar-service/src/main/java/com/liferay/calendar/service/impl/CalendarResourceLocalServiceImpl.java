@@ -130,7 +130,8 @@ public class CalendarResourceLocalServiceImpl
 		updateAsset(
 			calendarResource.getUserId(), calendarResource,
 			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames());
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetPriority());
 
 		return calendarResource;
 	}
@@ -274,7 +275,7 @@ public class CalendarResourceLocalServiceImpl
 	@Override
 	public void updateAsset(
 			long userId, CalendarResource calendarResource,
-			long[] assetCategoryIds, String[] assetTagNames)
+			long[] assetCategoryIds, String[] assetTagNames, Double priority)
 		throws PortalException {
 
 		assetEntryLocalService.updateEntry(
@@ -286,7 +287,7 @@ public class CalendarResourceLocalServiceImpl
 			calendarResource.getUuid(), 0, assetCategoryIds, assetTagNames,
 			true, null, null, null, ContentTypes.TEXT,
 			calendarResource.getName(), calendarResource.getDescription(), null,
-			null, null, 0, 0, null);
+			null, null, 0, 0, priority);
 	}
 
 	@Override
@@ -315,7 +316,8 @@ public class CalendarResourceLocalServiceImpl
 		updateAsset(
 			calendarResource.getUserId(), calendarResource,
 			serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames());
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetPriority());
 
 		return calendarResource;
 	}

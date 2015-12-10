@@ -202,7 +202,8 @@ public class CalendarBookingLocalServiceImpl
 		updateAsset(
 			userId, calendarBooking, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority());
 
 		// Social
 
@@ -756,7 +757,7 @@ public class CalendarBookingLocalServiceImpl
 	public void updateAsset(
 			long userId, CalendarBooking calendarBooking,
 			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds)
+			long[] assetLinkEntryIds, Double priority)
 		throws PortalException {
 
 		boolean visible = false;
@@ -775,7 +776,8 @@ public class CalendarBookingLocalServiceImpl
 			calendarBooking.getCalendarBookingId(), calendarBooking.getUuid(),
 			0, assetCategoryIds, assetTagNames, visible, null, null, null,
 			ContentTypes.TEXT_HTML, calendarBooking.getTitle(),
-			calendarBooking.getDescription(), summary, null, null, 0, 0, null);
+			calendarBooking.getDescription(), summary, null, null, 0, 0,
+			priority);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,
@@ -873,7 +875,8 @@ public class CalendarBookingLocalServiceImpl
 		updateAsset(
 			userId, calendarBooking, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority());
 
 		// Social
 

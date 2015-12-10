@@ -51,22 +51,22 @@ public class ExportProcess {
 			long companyId, List<String> tableNames, ExportContext exportContext)
 		throws IOException {
 
-		String outputFileName =
-			exportContext.getSchemaName() + "-" + companyId + ".sql";
-
-		File outputFile = new File(
-			exportContext.getOutputDirName(), outputFileName);
-
-		OutputStream outputStream = new BufferedOutputStream(
-			new FileOutputStream(outputFile));
-
 		for (String tableName : tableNames) {
+			String outputFileName =
+				exportContext.getSchemaName() + "-" + companyId + "-" + tableName +
+					".sql";
+
+			File outputFile = new File(
+				exportContext.getOutputDirName(), outputFileName);
+
+			OutputStream outputStream = new BufferedOutputStream(
+				new FileOutputStream(outputFile));
+
 			_dbExporter.write(tableName, outputStream);
 
 			outputStream.flush();
+			outputStream.close();
 		}
-
-		outputStream.close();
 	}
 
 	private final DBExporter _dbExporter;

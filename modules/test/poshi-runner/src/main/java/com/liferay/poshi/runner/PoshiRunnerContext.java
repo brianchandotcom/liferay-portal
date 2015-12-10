@@ -14,7 +14,9 @@
 
 package com.liferay.poshi.runner;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.util.FileUtil;
@@ -27,6 +29,8 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -446,6 +450,82 @@ public class PoshiRunnerContext {
 		sb.append(testBatchGroups);
 
 		return sb.toString();
+
+	private static Map<Integer, List<String>> _getTestBatchSequentialGroupsMap(
+			List<String> classCommandNames)
+		throws Exception {
+
+		Map<String, Set<String>> classCommandNameMap = new HashMap<>();
+
+		for (String classCommandName : classCommandNames) {
+			Set<String> classCommandProperties = new TreeSet<>();
+			String className =
+				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+					classCommandName);
+
+			List<String> properties = new ArrayList<>();
+
+			properties.addAll(_getTestCaseClassProperties(className));
+			properties.addAll(_getTestCaseCommandProperties(classCommandName));
+
+			List<String> ignoreProperties = Arrays.asList(
+				PropsValues.TEST_BATCH_GROUP_IGNORE_PROPERTIES);
+
+			for (String property : properties) {
+				boolean ignore = false;
+
+				for (String ignoreProperty : ignoreProperties) {
+					if (property.contains(ignoreProperty)) {
+						ignore = true;
+
+						break;
+					}
+				}
+
+				if (!ignore) {
+					classCommandProperties.add(property);
+				}
+			}
+
+			classCommandNameMap.put(classCommandName, classCommandProperties);
+		}
+
+		Multimap<Set<String>, String> multimap = HashMultimap.create();
+
+		for (Map.Entry<String, Set<String>> entry :
+				classCommandNameMap.entrySet()) {
+
+			multimap.put(entry.getValue(), entry.getKey());
+		}
+
+		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
+		int classCommandNameIndex = 0;
+		int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+
+		for (Map.Entry<Set<String>, Collection<String>> entry :
+				multimap.asMap().entrySet()) {
+
+			List<String> classCommandNameGroup = new ArrayList(
+				entry.getValue());
+
+			Collections.sort(classCommandNameGroup);
+
+			double groupTestCount = classCommandNameGroup.size();
+
+			double groupCount = Math.ceil(groupTestCount / maxGroupSize);
+
+			int groupSize = (int)Math.ceil(groupTestCount / groupCount);
+
+			for (List<String> partition : Lists.partition(
+					classCommandNameGroup, groupSize)) {
+
+				classCommandNameGroups.put(classCommandNameIndex, partition);
+				classCommandNameIndex++;
+			}
+		}
+
+		return classCommandNameGroups;
+	}
 
 	private static String _getTestBatchSingleGroups(
 		Map<Integer, List<String>> classCommandNameGroups) {

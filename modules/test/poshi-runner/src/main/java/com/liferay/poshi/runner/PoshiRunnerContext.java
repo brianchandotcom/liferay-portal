@@ -450,6 +450,73 @@ public class PoshiRunnerContext {
 		sb.append(testBatchGroups);
 
 		return sb.toString();
+	}
+
+	private static String _getTestBatchSequentialGroups(
+		Map<Integer, List<String>> classCommandNameGroups) {
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < classCommandNameGroups.size(); i++) {
+			List<String> classCommandNameGroup = classCommandNameGroups.get(i);
+			int subGroupSize = PropsValues.TEST_BATCH_MAX_SUBGROUP_SIZE;
+
+			int subGroupCount =
+				(classCommandNameGroup.size() / subGroupSize) + 1;
+
+			sb.append("RUN_TEST_CASE_METHOD_GROUP_");
+			sb.append(i);
+			sb.append("=");
+
+			for (int j = 0; j < subGroupCount; j++) {
+				sb.append(i);
+				sb.append("_");
+				sb.append(j);
+
+				if (j < (subGroupCount - 1)) {
+					sb.append(" ");
+				}
+			}
+
+			sb.append("\n");
+
+			for (int j = 0; j < classCommandNameGroup.size(); j++) {
+				String testCaseClassCommandName = classCommandNameGroup.get(j);
+
+				if ((j % subGroupSize) == 0) {
+					sb.append("RUN_TEST_CASE_METHOD_GROUP_");
+					sb.append(i);
+					sb.append("_");
+					sb.append(j / subGroupSize);
+					sb.append("=");
+					sb.append(testCaseClassCommandName);
+				}
+				else if (((j + 1) % subGroupSize) == 0) {
+					sb.append(",");
+					sb.append(testCaseClassCommandName);
+					sb.append("\n");
+				}
+				else {
+					sb.append(",");
+					sb.append(testCaseClassCommandName);
+				}
+			}
+
+			sb.append("\n");
+		}
+
+		sb.append("RUN_TEST_CASE_METHOD_GROUPS=");
+
+		for (int i = 0; i < classCommandNameGroups.size(); i++) {
+			sb.append(i);
+
+			if (i < (classCommandNameGroups.size() - 1)) {
+				sb.append(" ");
+			}
+		}
+
+		return sb.toString();
+	}
 
 	private static Map<Integer, List<String>> _getTestBatchSequentialGroupsMap(
 			List<String> classCommandNames)

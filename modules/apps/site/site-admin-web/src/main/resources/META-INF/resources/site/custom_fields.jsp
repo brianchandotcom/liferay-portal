@@ -20,13 +20,9 @@
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 %>
 
-<h3><liferay-ui:message key="custom-fields" /></h3>
-
-<aui:fieldset>
-	<liferay-ui:custom-attribute-list
-		className="<%= Group.class.getName() %>"
-		classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>"
-		editable="<%= true %>"
-		label="<%= true %>"
-	/>
-</aui:fieldset>
+<liferay-ui:custom-attribute-list
+	className="<%= Group.class.getName() %>"
+	classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>"
+	editable="<%= true %>"
+	label="<%= true %>"
+/>

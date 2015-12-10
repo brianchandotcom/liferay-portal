@@ -21,8 +21,6 @@ boolean groupMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(Mentio
 boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(MentionsWebKeys.COMPANY_MENTIONS_ENABLED));
 %>
 
-<h3><liferay-ui:message key="mentions" /></h3>
-
 <c:choose>
 	<c:when test="<%= companyMentionsEnabled %>">
 		<aui:input checked="<%= groupMentionsEnabled %>" label='<%= LanguageUtil.get(resourceBundle, "allow-users-to-mention-other-users") %>' name="TypeSettingsProperties--mentionsEnabled--" type="checkbox" value="<%= groupMentionsEnabled %>" />

@@ -16,6 +16,22 @@
 
 <%@ include file="/html/taglib/ui/form_navigator/init.jsp" %>
 
+<%
+for (int i = 0; i < categoryLabels.length; i++) {
+	String category = categoryLabels[i];
+	String[] sectionKeys = categorySectionKeys[i];
+	String[] sectionLabels = categorySectionLabels[i];
+
+	if (sectionKeys.length > 0) {
+%>
+
+		<p><%= category %></p>
+
+<%
+	}
+}
+%>
+
 <aui:fieldset-group markupView="lexicon">
 	<aui:fieldset>
 		<c:if test="<%= deprecatedCategorySections.length > 0 %>">

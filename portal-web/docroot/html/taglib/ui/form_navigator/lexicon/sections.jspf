@@ -14,117 +14,63 @@
  */
 --%>
 
-<%
-List<FormNavigatorEntry<Object>> formNavigatorEntries = null;
-
-if (Validator.isNotNull(categoryKey)) {
-	formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
-}
-else {
-	formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
-}
-%>
-
 <aui:fieldset-group markupView="lexicon">
-	<c:choose>
-		<c:when test="<%= deprecatedCategorySections.length > 0 %>">
+
+	<%
+	final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
+
+	String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
+	%>
+
+	<!-- Begin fragment <%= sectionId %> -->
+
+	<aui:fieldset>
+
+		<%
+		PortalIncludeUtil.include(
+			pageContext,
+			new PortalIncludeUtil.HTMLRenderer() {
+
+				public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+					formNavigatorEntry.include(request, response);
+				}
+
+			});
+		%>
+
+	</aui:fieldset>
+
+	<!-- End fragment <%= sectionId %> -->
+
+	<%
+	for (int i = 1; i < formNavigatorEntries.size(); i++) {
+		final FormNavigatorEntry curFormNavigatorEntry = formNavigatorEntries.get(i);
+
+		sectionId = namespace + _getSectionId(curFormNavigatorEntry.getKey());
+	%>
+
+		<!-- Begin fragment <%= sectionId %> -->
+
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
 
 			<%
-			String section = deprecatedCategorySections[0];
+			PortalIncludeUtil.include(
+				pageContext,
+				new PortalIncludeUtil.HTMLRenderer() {
 
-			String sectionId = namespace + _getSectionId(section);
-			String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
+				public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+					curFormNavigatorEntry.include(request, response);
+				}
+
+			});
 			%>
 
-			<!-- Begin fragment <%= sectionId %> -->
+		</aui:fieldset>
 
-			<aui:fieldset>
-				<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
-			</aui:fieldset>
+		<!-- End fragment <%= sectionId %> -->
 
-			<!-- End fragment <%= sectionId %> -->
+	<%
+	}
+	%>
 
-			<%
-			for (int i = 1; i < deprecatedCategorySections.length; i++) {
-				section = deprecatedCategorySections[i];
-
-				sectionId = namespace + _getSectionId(section);
-				sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
-			%>
-
-				<!-- Begin fragment <%= sectionId %> -->
-
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= section %>">
-					<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
-				</aui:fieldset>
-
-				<!-- End fragment <%= sectionId %> -->
-
-			<%
-			}
-			%>
-
-		</c:when>
-
-		<c:when test="<%= ListUtil.isNotEmpty(formNavigatorEntries) %>">
-
-			<%
-			final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
-
-			String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
-			%>
-
-			<!-- Begin fragment <%= sectionId %> -->
-
-			<aui:fieldset>
-
-				<%
-				PortalIncludeUtil.include(
-					pageContext,
-					new PortalIncludeUtil.HTMLRenderer() {
-
-						public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-							formNavigatorEntry.include(request, response);
-						}
-
-					});
-				%>
-
-			</aui:fieldset>
-
-			<!-- End fragment <%= sectionId %> -->
-
-			<%
-			for (int i = 1; i < formNavigatorEntries.size(); i++) {
-				final FormNavigatorEntry curFormNavigatorEntry = formNavigatorEntries.get(i);
-
-				sectionId = namespace + _getSectionId(curFormNavigatorEntry.getKey());
-			%>
-
-				<!-- Begin fragment <%= sectionId %> -->
-
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
-
-					<%
-					PortalIncludeUtil.include(
-						pageContext,
-						new PortalIncludeUtil.HTMLRenderer() {
-
-						public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-							curFormNavigatorEntry.include(request, response);
-						}
-
-					});
-					%>
-
-				</aui:fieldset>
-
-				<!-- End fragment <%= sectionId %> -->
-
-			<%
-			}
-			%>
-
-		</c:when>
-	</c:choose>
 </aui:fieldset-group>

@@ -209,6 +209,8 @@ public class FormNavigatorTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:form-navigator:backURL", _backURL);
 		request.setAttribute(
+			"liferay-ui:form-navigator:categoryKeys", getCategoryKeys());
+		request.setAttribute(
 			"liferay-ui:form-navigator:categoryLabels", getCategoryLabels());
 		request.setAttribute(
 			"liferay-ui:form-navigator:categorySectionKeys",

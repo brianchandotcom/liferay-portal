@@ -349,9 +349,24 @@ public class DLCheckInCheckOutTest {
 		getAssetEntry(fileVersion.getFileVersionId(), false);
 	}
 
-	@Test
+	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testWithoutPermissionOverrideCheckout() throws Exception {
-		overrideCheckout(_authorUser, _overriderUser, false);
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				_overriderUser)) {
+
+			DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+		}
 	}
 
 	@Test

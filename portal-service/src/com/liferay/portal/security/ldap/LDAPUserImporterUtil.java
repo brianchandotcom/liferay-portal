@@ -14,10 +14,8 @@
 
 package com.liferay.portal.security.ldap;
 
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.model.User;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import javax.naming.directory.Attributes;
 import javax.naming.ldap.LdapContext;
@@ -37,21 +35,10 @@ public class LDAPUserImporterUtil {
 	}
 
 	private static LDAPUserImporter _getInstance() {
-		return _instance._serviceTracker.getService();
+		return _instance;
 	}
 
-	private LDAPUserImporterUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(LDAPUserImporter.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final LDAPUserImporterUtil _instance =
-		new LDAPUserImporterUtil();
-
-	private final ServiceTracker<LDAPUserImporter, LDAPUserImporter>
-		_serviceTracker;
+	private static final LDAPUserImporter _instance =
+		ProxyFactory.newServiceTrackedInstance(LDAPUserImporter.class);
 
 }

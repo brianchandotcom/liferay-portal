@@ -44,18 +44,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_TYPES</td>
+	<td>//*[@data-qa-id='navigation']//a[contains(.,'Document Types')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDERS</td>
+	<td>//*[@data-qa-id='navigation']//a[contains(.,'Folders')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HOME</td>
 	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECENT</td>
-	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Recent')]</td>
+	<td>//*[@data-qa-id='navigation']//a[contains(.,'Recent')] | //div[contains(@class,'navbar-default')]//a/span[contains(.,'Recent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MINE</td>
-	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Mine')]</td>
+	<td>//*[@data-qa-id='navigation']//a[contains(.,'Mine')] | //div[contains(@class,'navbar-default')]//a/span[contains(.,'Mine')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,6 +81,11 @@
 <tr>
 	<td>SEARCH_TOGGLE_ADVANCED</td>
 	<td>//a[contains(@id,'searchtoggleAdvanced')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURES</td>
+	<td>//*[@data-qa-id='navigation']//a[contains(.,'Structures')]</td>
 	<td></td>
 </tr>
 <tr>

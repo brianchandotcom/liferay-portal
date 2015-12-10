@@ -64,6 +64,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARET_ASCENDING</td>
+	<td>//*[@data-qa-id='ascendingButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARET_DESCENDING</td>
+	<td>//*[@data-qa-id='descendingButton']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLEAR_SEARCH</td>
 	<td>//input[@type='image' and @title='Clear Search']</td>
 	<td></td>
@@ -100,17 +110,17 @@
 </tr>
 <tr>
 	<td>DISPLAY_STYLE_DESCRIPTIVE</td>
-	<td>//a[contains(@href,'=descriptive')]/span</td>
+	<td>//*[@data-qa-id='descriptiveButton']/span | //a[@title='Descriptive']/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_STYLE_ICON</td>
-	<td>//a[contains(@href,'=icon')]/span</td>
+	<td>//*[@data-qa-id='iconButton']/span | //a[@title='Icon']/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_STYLE_LIST</td>
-	<td>//a[contains(@href,'=list')]/span</td>
+	<td>//*[@data-qa-id='listButton']/span | //a[@title='List']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -145,12 +155,12 @@
 </tr>
 <tr>
 	<td>HEADER_VERTICAL_ELLIPSIS</td>
-	<td>//header//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//*[@data-qa-id='headerOptions']//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO</td>
-	<td>//div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')]</td>
+	<td>//*[@data-qa-id='infoButton'] | //div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')]</td>
 	<td></td>
 </tr>
 <tr>

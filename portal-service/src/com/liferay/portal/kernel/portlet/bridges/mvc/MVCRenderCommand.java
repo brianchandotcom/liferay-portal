@@ -72,6 +72,9 @@ import javax.portlet.RenderResponse;
  */
 public interface MVCRenderCommand extends MVCCommand {
 
+	public static final String DONT_DISPATCH_PATH =
+		MVCRenderCommand.class.getName() + "#DONT_DISPATCH_PATH";
+
 	public static final MVCRenderCommand EMPTY = new MVCRenderCommand() {
 
 		@Override

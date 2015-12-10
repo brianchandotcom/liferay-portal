@@ -369,6 +369,28 @@ public class DLCheckInCheckOutTest {
 		}
 	}
 
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
+	public void testCheckInWithoutPermissionOverrideCheckout() throws Exception {
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplacer contextUserReplacer = new ContextUserReplacer(
+				_overriderUser)) {
+
+			DLAppServiceUtil.checkInFileEntry(
+				fileEntry.getFileEntryId(), false, StringUtil.randomString(),
+				_serviceContext);
+		}
+	}
+
 	@Test
 	public void testCancelCheckoutWithPermissionOverrideCheckout()
 		throws Exception {
@@ -441,6 +463,47 @@ public class DLCheckInCheckOutTest {
 				DLAppServiceUtil.checkInFileEntry(
 					fileEntry.getFileEntryId(), false, StringPool.NULL,
 					_serviceContext);
+			}
+		}
+		finally {
+			RoleLocalServiceUtil.deleteRole(role.getRoleId());
+		}
+	}
+
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
+	public void testUpdateWithPermissionOverrideCheckout() throws Exception {
+		Role role = RoleTestUtil.addRole(
+			"Overrider", RoleConstants.TYPE_REGULAR,
+			DLFileEntryConstants.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			ActionKeys.OVERRIDE_CHECKOUT);
+
+		RoleTestUtil.addResourcePermission(
+			role, DLFileEntryConstants.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			ActionKeys.UPDATE);
+
+		try {
+			UserLocalServiceUtil.setRoleUsers(
+				role.getRoleId(), new long[] {_overriderUser.getUserId()});
+
+			FileEntry fileEntry = null;
+
+			try (ContextUserReplacer contextUserReplacer =
+					new ContextUserReplacer(_authorUser)) {
+
+				fileEntry = createFileEntry(StringUtil.randomString());
+
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntry.getFileEntryId(), _serviceContext);
+			}
+
+			try (ContextUserReplacer contextUserReplacer =
+					new ContextUserReplacer(_overriderUser)) {
+
+				updateFileEntry(fileEntry.getFileEntryId());
 			}
 		}
 		finally {

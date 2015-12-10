@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -32,7 +32,10 @@ import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -73,8 +76,26 @@ public class AddDefaultSharedFormLayoutAction extends SimpleAction {
 	}
 
 	protected void doRun(long companyId) throws Exception {
-		Group group = _groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
+		Group group = _groupLocalService.fetchGroup(
+			companyId, GroupConstants.FORMS);
+
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		if (group == null) {
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(LocaleUtil.getDefault(), GroupConstants.FORMS);
+
+			group = _groupLocalService.addGroup(
+				defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
+				GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null,
+				GroupConstants.TYPE_SITE_OPEN, true,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+				GroupConstants.FORMS_FRIENDLY_URL, true, false, true,
+				serviceContext);
+		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			group.getGroupId(), false, "/shared");
@@ -83,35 +104,20 @@ public class AddDefaultSharedFormLayoutAction extends SimpleAction {
 			return;
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
-
 		serviceContext.setUserId(defaultUserId);
 
-		layout = _layoutLocalService.addLayout(
+		_layoutLocalService.addLayout(
 			defaultUserId, group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "shared",
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
 			StringPool.BLANK, StringPool.BLANK,
 			LayoutConstants.TYPE_SHARED_PORTLET, true, "/shared",
 			serviceContext);
-
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty("hide", Boolean.TRUE.toString());
-
-		_layoutLocalService.updateLayout(
-			group.getGroupId(), false, layout.getLayoutId(),
-			typeSettingsProperties.toString());
 	}
 
 	@Reference(unbind = "-")

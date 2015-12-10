@@ -32,22 +32,12 @@ public class TLDFormatterPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addTLDFormatterConfiguration(project);
+		addConfigurationTLDFormatter(project);
 
-		addFormatTLDTask(project);
+		addTaskFormatTLD(project);
 	}
 
-	protected FormatTLDTask addFormatTLDTask(Project project) {
-		FormatTLDTask formatTLDTask = GradleUtil.addTask(
-			project, FORMAT_TLD_TASK_NAME, FormatTLDTask.class);
-
-		formatTLDTask.setDescription(
-			"Runs Liferay TLD Formatter to format files.");
-
-		return formatTLDTask;
-	}
-
-	protected Configuration addTLDFormatterConfiguration(
+	protected Configuration addConfigurationTLDFormatter(
 		final Project project) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -63,7 +53,7 @@ public class TLDFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Configuration configuration) {
-					addTLDFormatterDependencies(project);
+					addDependenciesTLDFormatter(project);
 				}
 
 			});
@@ -71,10 +61,20 @@ public class TLDFormatterPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addTLDFormatterDependencies(Project project) {
+	protected void addDependenciesTLDFormatter(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.tld.formatter", "latest.release");
+	}
+
+	protected FormatTLDTask addTaskFormatTLD(Project project) {
+		FormatTLDTask formatTLDTask = GradleUtil.addTask(
+			project, FORMAT_TLD_TASK_NAME, FormatTLDTask.class);
+
+		formatTLDTask.setDescription(
+			"Runs Liferay TLD Formatter to format files.");
+
+		return formatTLDTask;
 	}
 
 }

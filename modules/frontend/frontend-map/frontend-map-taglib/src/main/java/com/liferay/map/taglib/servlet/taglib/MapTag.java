@@ -19,16 +19,12 @@ import com.liferay.frontend.map.api.util.MapProviderHelper;
 import com.liferay.frontend.map.api.util.MapProviderTracker;
 import com.liferay.map.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
-
-import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -37,10 +33,6 @@ import javax.servlet.jsp.PageContext;
  * @author Chema Balsas
  */
 public class MapTag extends IncludeTag {
-
-	public void setApiKey(String apiKey) {
-		_apiKey = apiKey;
-	}
 
 	public void setGeolocation(boolean geolocation) {
 		_geolocation = geolocation;
@@ -75,7 +67,6 @@ public class MapTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_apiKey = null;
 		_geolocation = false;
 		_latitude = 0;
 		_longitude = 0;
@@ -92,7 +83,6 @@ public class MapTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		validate(request);
-		request.setAttribute("liferay-map:map:apiKey", _apiKey);
 		request.setAttribute("liferay-map:map:geolocation", _geolocation);
 		request.setAttribute("liferay-map:map:latitude", _latitude);
 		request.setAttribute("liferay-map:map:longitude", _longitude);
@@ -118,7 +108,7 @@ public class MapTag extends IncludeTag {
 	}
 
 	private void validate(HttpServletRequest request) {
-		if (Validator.isNull(_apiKey) || Validator.isNull(_provider)) {
+		if (Validator.isNull(_provider)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
@@ -130,21 +120,6 @@ public class MapTag extends IncludeTag {
 				group = group.getLiveGroup();
 			}
 
-			UnicodeProperties groupTypeSettings = new UnicodeProperties();
-
-			if (group != null) {
-				groupTypeSettings = group.getTypeSettingsProperties();
-			}
-
-			PortletPreferences companyPortletPreferences =
-				PrefsPropsUtil.getPreferences(company.getCompanyId());
-
-			if (Validator.isNull(_apiKey)) {
-				_apiKey = groupTypeSettings.getProperty(
-					_DEFAULT_API_KEY,
-					companyPortletPreferences.getValue(_DEFAULT_API_KEY, null));
-			}
-
 			if (Validator.isNull(_provider)) {
 				_provider = _getMapProviderKey(
 					company.getCompanyId(), group.getGroupId());
@@ -152,13 +127,10 @@ public class MapTag extends IncludeTag {
 		}
 	}
 
-	private static final String _DEFAULT_API_KEY = "googleMapsAPIKey";
-
 	private static final String _DEFAULT_PROVIDER_KEY = "Google";
 
 	private static final String _PAGE = "/map/page.jsp";
 
-	private String _apiKey;
 	private boolean _geolocation;
 	private double _latitude;
 	private double _longitude;

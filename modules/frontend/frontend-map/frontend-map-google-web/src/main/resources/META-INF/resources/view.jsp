@@ -21,7 +21,6 @@ String namespace = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletRes
 
 String protocol = HttpUtil.getProtocol(request);
 
-String apiKey = GetterUtil.getString(request.getAttribute("liferay-map:map:apiKey"));
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-map:map:geolocation"));
 double latitude = (Double)request.getAttribute("liferay-map:map:latitude");
 double longitude = (Double)request.getAttribute("liferay-map:map:longitude");
@@ -43,8 +42,8 @@ name = namespace + name;
 	<%
 		String apiURL = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
 
-		if (Validator.isNotNull(apiKey)) {
-			apiURL += "&key=" + apiKey;
+		if (Validator.isNotNull(googleMapDisplayContext.getGoogleMapsAPIKey())) {
+			apiURL += "&key=" + googleMapDisplayContext.getGoogleMapsAPIKey();
 		}
 	%>
 

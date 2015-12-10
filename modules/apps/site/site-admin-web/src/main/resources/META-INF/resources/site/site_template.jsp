@@ -47,12 +47,6 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 
 <h3><liferay-ui:message key="site-template" /></h3>
 
-<c:if test="<%= (publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null) %>">
-	<div class="alert alert-info">
-		<liferay-ui:message key="this-site-is-not-related-to-a-site-template" />
-	</div>
-</c:if>
-
 <aui:fieldset>
 	<c:if test="<%= publicLayoutSetPrototype != null %>">
 		<aui:fieldset label="public-site-template">

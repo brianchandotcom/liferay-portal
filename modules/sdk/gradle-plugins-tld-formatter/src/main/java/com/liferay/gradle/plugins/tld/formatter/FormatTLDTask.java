@@ -20,6 +20,7 @@ import java.util.List;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.process.JavaExecSpec;
 
@@ -76,6 +77,7 @@ public class FormatTLDTask extends JavaExec {
 		return "com.liferay.tld.formatter.TLDFormatter";
 	}
 
+	@Input
 	public boolean isPlugin() {
 		return _plugin;
 	}

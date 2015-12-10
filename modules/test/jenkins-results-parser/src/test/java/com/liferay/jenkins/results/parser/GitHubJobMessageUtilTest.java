@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import java.net.URL;
 import java.net.URLDecoder;
@@ -35,14 +36,23 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Before
 	public void setUp() throws Exception {
 		downloadSample(
-			"23-of-46", "2251",
-			"test-portal-acceptance-pullrequest-batch(master)", "test-1-17");
+			"combo-fail-unstable-1", "18061",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-1");
 		downloadSample(
-			"2-of-3888", "3415",
-			"test-portal-acceptance-pullrequest-batch(master)", "test-1-18");
+			"junit-exception-1", "18035",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-1");
 		downloadSample(
-			"6-of-6", "1287",
-			"test-portal-acceptance-pullrequest-batch(master)", "test-1-19");
+			"multiple-fail-1", "18062",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-1");
+		downloadSample(
+			"multiple-unstable-1", "10881",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-9");
+		downloadSample(
+			"rebase-1", "63",
+			"test-portal-acceptance-pullrequest-source(ee-6.2.x)", "test-1-20");
+		downloadSample(
+			"sourceformat-1", "17503",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-5");
 	}
 
 	@Test
@@ -107,7 +117,12 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 			downloadSampleURL(runDir, runURL, "/api/json");
 			downloadSampleURL(runDir, runURL, "/logText/progressiveText");
-			downloadSampleURL(runDir, runURL, "/testReport/api/json");
+
+			try {
+				downloadSampleURL(runDir, runURL, "/testReport/api/json");
+			}
+			catch (FileNotFoundException fnfe) {
+			}
 
 			runJSONObject.put("url", toURLString(runDir));
 		}

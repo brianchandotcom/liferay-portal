@@ -17,9 +17,6 @@ package com.liferay.gradle.plugins.tld.formatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.Project;
-import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.JavaExec;
 
@@ -33,38 +30,15 @@ public class FormatTLDTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExec classpath(Object... paths) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void exec() {
 		setArgs(getCompleteArgs());
 
-		super.setClasspath(getClasspath());
-
 		super.exec();
-	}
-
-	@Override
-	public FileCollection getClasspath() {
-		Project project = getProject();
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		return configurationContainer.getByName(
-			TLDFormatterPlugin.CONFIGURATION_NAME);
 	}
 
 	@Input
 	public boolean isPlugin() {
 		return _plugin;
-	}
-
-	@Override
-	public JavaExec setClasspath(FileCollection classpath) {
-		throw new UnsupportedOperationException();
 	}
 
 	public void setPlugin(boolean plugin) {

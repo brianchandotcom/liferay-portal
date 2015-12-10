@@ -20,6 +20,8 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -32,9 +34,12 @@ public class TLDFormatterPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addConfigurationTLDFormatter(project);
+		Configuration tldFormatterConfiguration = addConfigurationTLDFormatter(
+			project);
 
 		addTaskFormatTLD(project);
+
+		configureTasksFormatTLD(project, tldFormatterConfiguration);
 	}
 
 	protected Configuration addConfigurationTLDFormatter(
@@ -75,6 +80,30 @@ public class TLDFormatterPlugin implements Plugin<Project> {
 			"Runs Liferay TLD Formatter to format files.");
 
 		return formatTLDTask;
+	}
+
+	protected void configureTaskFormatTLDClasspath(
+		FormatTLDTask formatTLDTask, FileCollection fileCollection) {
+
+		formatTLDTask.setClasspath(fileCollection);
+	}
+
+	protected void configureTasksFormatTLD(
+		Project project, final Configuration tldFormatterConfiguration) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			FormatTLDTask.class,
+			new Action<FormatTLDTask>() {
+
+				@Override
+				public void execute(FormatTLDTask formatTLDTask) {
+					configureTaskFormatTLDClasspath(
+						formatTLDTask, tldFormatterConfiguration);
+				}
+
+			});
 	}
 
 }

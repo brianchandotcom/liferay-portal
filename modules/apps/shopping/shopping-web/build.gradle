@@ -5,6 +5,8 @@ dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:shopping:shopping-service")
 	compile project(":portal:portal-upgrade")
+
+	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }
 
 liferay {

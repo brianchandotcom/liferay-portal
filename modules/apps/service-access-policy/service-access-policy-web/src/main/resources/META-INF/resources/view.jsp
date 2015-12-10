@@ -20,6 +20,12 @@
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="policies" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
+
 <liferay-ui:search-container
 	emptyResultsMessage="there-are-no-service-access-policies"
 	headerNames="name"

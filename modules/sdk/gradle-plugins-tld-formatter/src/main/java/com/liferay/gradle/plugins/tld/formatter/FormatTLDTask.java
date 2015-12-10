@@ -14,10 +14,6 @@
 
 package com.liferay.gradle.plugins.tld.formatter;
 
-import com.liferay.tld.formatter.TLDFormatterArgs;
-
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +47,6 @@ public class FormatTLDTask extends JavaExec {
 	public void exec() {
 		super.setArgs(getArgs());
 		super.setClasspath(getClasspath());
-		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
 	}
@@ -60,14 +55,9 @@ public class FormatTLDTask extends JavaExec {
 	public List<String> getArgs() {
 		List<String> args = new ArrayList<>();
 
-		args.add("tld.base.dir=" + getBaseDirName());
 		args.add("tld.plugin=" + isPlugin());
 
 		return args;
-	}
-
-	public String getBaseDirName() {
-		return _tldFormatterArgs.getBaseDirName();
 	}
 
 	@Override
@@ -86,24 +76,13 @@ public class FormatTLDTask extends JavaExec {
 		return "com.liferay.tld.formatter.TLDFormatter";
 	}
 
-	@Override
-	public File getWorkingDir() {
-		Project project = getProject();
-
-		return project.getProjectDir();
-	}
-
 	public boolean isPlugin() {
-		return _tldFormatterArgs.isPlugin();
+		return _plugin;
 	}
 
 	@Override
 	public JavaExec setArgs(Iterable<?> applicationArgs) {
 		throw new UnsupportedOperationException();
-	}
-
-	public void setBaseDirName(String baseDirName) {
-		_tldFormatterArgs.setBaseDirName(baseDirName);
 	}
 
 	@Override
@@ -112,14 +91,9 @@ public class FormatTLDTask extends JavaExec {
 	}
 
 	public void setPlugin(boolean plugin) {
-		_tldFormatterArgs.setPlugin(plugin);
+		_plugin = plugin;
 	}
 
-	@Override
-	public void setWorkingDir(Object dir) {
-		throw new UnsupportedOperationException();
-	}
-
-	private final TLDFormatterArgs _tldFormatterArgs = new TLDFormatterArgs();
+	private boolean _plugin = true;
 
 }

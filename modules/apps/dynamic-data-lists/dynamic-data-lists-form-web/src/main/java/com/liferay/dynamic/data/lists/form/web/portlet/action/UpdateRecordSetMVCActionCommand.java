@@ -63,16 +63,15 @@ public class UpdateRecordSetMVCActionCommand
 		DDLRecordSet recordSet = updateRecordSet(
 			actionRequest, ddmStructure.getStructureId());
 
-		UnicodeProperties typeSettingsProperties =
+		UnicodeProperties settingsProperties =
 			recordSet.getSettingsProperties();
 
 		boolean publish = ParamUtil.getBoolean(actionRequest, "publish");
 
-		typeSettingsProperties.setProperty(
-			"published", String.valueOf(publish));
+		settingsProperties.setProperty("published", String.valueOf(publish));
 
 		ddlRecordSetService.updateRecordSet(
-			recordSet.getRecordSetId(), typeSettingsProperties.toString());
+			recordSet.getRecordSetId(), settingsProperties.toString());
 	}
 
 	@Reference(unbind = "-")

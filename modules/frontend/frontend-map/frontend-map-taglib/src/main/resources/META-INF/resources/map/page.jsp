@@ -17,19 +17,6 @@
 
 <%@ include file="/map/init.jsp" %>
 
-<%
-String namespace = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse);
-
-boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-map:map:geolocation"));
-double latitude = (Double)request.getAttribute("liferay-map:map:latitude");
-double longitude = (Double)request.getAttribute("liferay-map:map:longitude");
-String name = (String)request.getAttribute("liferay-map:map:name");
-String points =(String)request.getAttribute("liferay-map:map:points");
-MapProvider mapProvider = (MapProvider)request.getAttribute("liferay-map:map:mapProvider");
-
-name = namespace + name;
-%>
-
 <c:if test="<%= !mapProvider.include(request, new PipingServletResponse(pageContext)) %>" />
 
 <div class="lfr-map" id="<%= name %>Map"></div>

@@ -26,58 +26,59 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</aui:nav>
 </aui:nav-bar>
 
-<liferay-ui:search-container
-	emptyResultsMessage="there-are-no-service-access-policies"
-	headerNames="name"
-	iteratorURL="<%= portletURL %>"
-	total="<%= SAPEntryServiceUtil.getCompanySAPEntriesCount(company.getCompanyId()) %>"
->
-	<liferay-ui:search-container-results
-		results="<%= SAPEntryServiceUtil.getCompanySAPEntries(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.service.access.policy.model.SAPEntry"
-		escapedModel="<%= true %>"
-		keyProperty="sapEntryId"
-		modelVar="sapEntry"
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		emptyResultsMessage="there-are-no-service-access-policies"
+		iteratorURL="<%= portletURL %>"
+		total="<%= SAPEntryServiceUtil.getCompanySAPEntriesCount(company.getCompanyId()) %>"
 	>
-		<portlet:renderURL var="rowURL">
-			<portlet:param name="mvcPath" value="/edit_entry.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="sapEntryId" value="<%= String.valueOf(sapEntry.getSapEntryId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="name"
-			property="name"
+		<liferay-ui:search-container-results
+			results="<%= SAPEntryServiceUtil.getCompanySAPEntries(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="title"
-			value="<%= sapEntry.getTitle(locale) %>"
-		/>
+		<liferay-ui:search-container-row
+			className="com.liferay.service.access.policy.model.SAPEntry"
+			escapedModel="<%= true %>"
+			keyProperty="sapEntryId"
+			modelVar="sapEntry"
+		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/edit_entry.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="sapEntryId" value="<%= String.valueOf(sapEntry.getSapEntryId()) %>" />
+			</portlet:renderURL>
 
-		<liferay-ui:search-container-column-text name="enabled">
-			<liferay-ui:icon cssClass='<%= sapEntry.isEnabled() ? "icon-check" : "icon-check-empty" %>' />
-		</liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="name"
+			>
+				<strong><%= sapEntry.getName() %></strong>
+			</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text name="default">
-			<liferay-ui:icon cssClass='<%= sapEntry.isDefaultSAPEntry() ? "icon-check" : "icon-check-empty" %>' />
-		</liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text
+				name="title"
+				value="<%= sapEntry.getTitle(locale) %>"
+			/>
 
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			cssClass="entry-action"
-			path="/entry_action.jsp"
-			valign="top"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-text
+				name="enabled"
+				value='<%= LanguageUtil.get(request, sapEntry.isEnabled() ? "yes" : "no") %>'
+			/>
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			<liferay-ui:search-container-column-text
+				name="default"
+				value='<%= LanguageUtil.get(request, sapEntry.isDefaultSAPEntry() ? "yes" : "no") %>'
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
+				path="/entry_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>
 
 <c:if test="<%= PortletPermissionUtil.contains(permissionChecker, SAPConstants.SERVICE_NAME, SAPActionKeys.ACTION_ADD_SAP_ENTRY) %>">
 	<portlet:renderURL var="addSAPEntryURL">

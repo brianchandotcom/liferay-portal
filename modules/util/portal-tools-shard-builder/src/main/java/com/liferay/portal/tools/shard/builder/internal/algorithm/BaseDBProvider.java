@@ -140,6 +140,10 @@ public abstract class BaseDBProvider
 	}
 
 	@Override
+	public void setFetchSize(PreparedStatement ps) throws SQLException {
+	}
+
+	@Override
 	public void write(String tableName, OutputStream outputStream) {
 		String sql = "SELECT * FROM " + tableName;
 
@@ -152,7 +156,10 @@ public abstract class BaseDBProvider
 
 			con = dataSource.getConnection();
 
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(
+				sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
+			setFetchSize(ps);
 
 			rs = ps.executeQuery();
 

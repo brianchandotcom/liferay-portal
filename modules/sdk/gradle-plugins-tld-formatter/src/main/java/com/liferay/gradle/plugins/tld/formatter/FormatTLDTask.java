@@ -29,6 +29,10 @@ import org.gradle.process.JavaExecSpec;
  */
 public class FormatTLDTask extends JavaExec {
 
+	public FormatTLDTask() {
+		setMain("com.liferay.tld.formatter.TLDFormatter");
+	}
+
 	@Override
 	public JavaExecSpec args(Iterable<?> args) {
 		throw new UnsupportedOperationException();
@@ -70,11 +74,6 @@ public class FormatTLDTask extends JavaExec {
 
 		return configurationContainer.getByName(
 			TLDFormatterPlugin.CONFIGURATION_NAME);
-	}
-
-	@Override
-	public String getMain() {
-		return "com.liferay.tld.formatter.TLDFormatter";
 	}
 
 	@Input

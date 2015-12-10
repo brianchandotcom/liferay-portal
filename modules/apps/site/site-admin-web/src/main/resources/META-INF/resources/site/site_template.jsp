@@ -45,12 +45,6 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 
 <liferay-ui:error-marker key="errorSection" value="siteTempate" />
 
-<c:if test="<%= (publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null) %>">
-	<div class="alert alert-info">
-		<liferay-ui:message key="this-site-is-not-related-to-a-site-template" />
-	</div>
-</c:if>
-
 <c:if test="<%= publicLayoutSetPrototype != null %>">
 	<aui:fieldset label="public-site-template">
 		<c:choose>

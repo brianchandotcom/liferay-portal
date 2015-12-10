@@ -14,11 +14,20 @@
 
 package com.liferay.site.admin.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.LayoutSetLocalService;
+import com.liferay.portal.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
 
@@ -58,6 +67,54 @@ public class SiteSiteTemplateFormNavigatorEntry
 			return false;
 		}
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		LayoutSet privateLayoutSet = null;
+		LayoutSet publicLayoutSet = null;
+
+		try {
+			privateLayoutSet = _layoutSetLocalService.getLayoutSet(
+				group.getGroupId(), true);
+			publicLayoutSet = _layoutSetLocalService.getLayoutSet(
+				group.getGroupId(), false);
+		}
+		catch (PortalException e) {
+			return false;
+		}
+
+		if ((privateLayoutSet == null) && (publicLayoutSet == null)) {
+			return false;
+		}
+
+		LayoutSetPrototype privateLayoutSetPrototype = null;
+
+		LayoutSetPrototype publicLayoutSetPrototype = null;
+
+		if (Validator.isNotNull(privateLayoutSet.getLayoutSetPrototypeUuid())) {
+			privateLayoutSetPrototype =
+				_layoutSetPrototypeLocalService.
+					fetchLayoutSetPrototypeByUuidAndCompanyId(
+						privateLayoutSet.getLayoutSetPrototypeUuid(),
+						themeDisplay.getCompanyId());
+		}
+
+		if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
+			publicLayoutSetPrototype =
+				_layoutSetPrototypeLocalService.
+					fetchLayoutSetPrototypeByUuidAndCompanyId(
+						publicLayoutSet.getLayoutSetPrototypeUuid(),
+						themeDisplay.getCompanyId());
+		}
+
+		if ((publicLayoutSetPrototype == null) &&
+			(privateLayoutSetPrototype == null)) {
+
+			return false;
+		}
+
 		return true;
 	}
 
@@ -74,5 +131,23 @@ public class SiteSiteTemplateFormNavigatorEntry
 	protected String getJspPath() {
 		return "/site/site_template.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetPrototypeLocalService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+
+		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+	}
+
+	private volatile LayoutSetLocalService _layoutSetLocalService;
+	private volatile LayoutSetPrototypeLocalService
+		_layoutSetPrototypeLocalService;
 
 }

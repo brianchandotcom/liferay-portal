@@ -1230,7 +1230,7 @@
 		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
 
 		<execute macro="CalendarEvent#selectRepeatFrequency">
-			<var name="frequency" value="${frequency}" />
+			<var name="frequency" value="Yearly" />
 		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="CalendarEditEvent#REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />

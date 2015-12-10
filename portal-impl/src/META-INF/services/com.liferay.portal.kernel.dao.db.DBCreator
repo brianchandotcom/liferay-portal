@@ -1,0 +1,7 @@
+com.liferay.portal.dao.db.DB2DBCreator
+com.liferay.portal.dao.db.HypersonicDBCreator
+com.liferay.portal.dao.db.MySQLDBCreator
+com.liferay.portal.dao.db.OracleDBCreator
+com.liferay.portal.dao.db.PostgreSQLDBCreator
+com.liferay.portal.dao.db.SQLServerDBCreator
+com.liferay.portal.dao.db.SybaseDBCreator

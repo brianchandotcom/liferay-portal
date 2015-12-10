@@ -128,22 +128,21 @@ public class FriendlyURLServletTest {
 
 		_mockHttpServletRequest.setRequestURI(requestURI);
 
-		String actualURL = getURL(_layout);
-
-		boolean redirect = false;
+		Object[] expectedRedirectArray = null;
 
 		if (!Validator.equals(i18nPath, expectedI18nPath)) {
-			actualURL = expectedI18nPath + requestURI;
-
-			redirect = true;
+			expectedRedirectArray = new Object[] {
+				expectedI18nPath + requestURI, true
+			};
+		}
+		else {
+			expectedRedirectArray = new Object[] {getURL(_layout), false};
 		}
 
 		testGetRedirect(
-			_group.getFriendlyURL(), Portal.PATH_MAIN,
-			new Object[] {actualURL, redirect});
+			_group.getFriendlyURL(), Portal.PATH_MAIN, expectedRedirectArray);
 		testGetRedirect(
-			getPath(_group, _layout), Portal.PATH_MAIN,
-			new Object[] {actualURL, redirect});
+			getPath(_group, _layout), Portal.PATH_MAIN, expectedRedirectArray);
 	}
 
 	protected void testGetRedirect(

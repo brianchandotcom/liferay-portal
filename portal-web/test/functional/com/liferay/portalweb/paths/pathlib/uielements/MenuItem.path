@@ -24,8 +24,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_BOOKMARK</td>
-	<td>//a[contains(.,'Add Bookmark')]</td>
+	<td>BOOKMARK</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(@id,'menu') and contains(.,'Bookmark')]</td>
 	<td></td>
 </tr>
 <tr>

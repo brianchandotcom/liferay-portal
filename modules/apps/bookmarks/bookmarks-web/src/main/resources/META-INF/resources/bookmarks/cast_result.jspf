@@ -16,11 +16,20 @@
 
 <%
 BookmarksEntry entry = null;
+BookmarksFolder curFolder = null;
 
 if (result instanceof AssetEntry) {
 	AssetEntry assetEntry = (AssetEntry)result;
 
-	entry = BookmarksEntryServiceUtil.getEntry(assetEntry.getClassPK());
+	if (assetEntry.getClassName().equals(BookmarksFolder.class.getName())) {
+		curFolder = BookmarksFolderServiceUtil.getFolder(assetEntry.getClassPK());
+	}
+	else {
+		entry = BookmarksEntryServiceUtil.getEntry(assetEntry.getClassPK());
+	}
+}
+else if (result instanceof BookmarksFolder) {
+	curFolder = (BookmarksFolder)result;
 }
 else {
 	entry = (BookmarksEntry)result;

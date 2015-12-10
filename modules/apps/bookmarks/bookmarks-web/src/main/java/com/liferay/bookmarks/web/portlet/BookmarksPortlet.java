@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.struts-path=bookmarks",
 		"javax.portlet.display-name=Bookmarks",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.portlet-title-based-navigation=false",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/bookmarks/view.jsp",
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,

@@ -32,35 +32,44 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(BookmarksEntry
 request.setAttribute("view_entry.jsp-entry", entry);
 
 BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(entry.getName());
+}
 %>
 
-<div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-util:include page="/bookmarks/top_links.jsp" servletContext="<%= application %>" />
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<c:if test="<%= !portletTitleBasedNavigation %>">
+		<c:choose>
+			<c:when test="<%= Validator.isNull(redirect) %>">
+				<portlet:renderURL var="backURL">
+					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+					<portlet:param name="folderId" value="<%= (folder != null) ? String.valueOf(folder.getFolderId()) : String.valueOf(BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				</portlet:renderURL>
 
-	<c:choose>
-		<c:when test="<%= Validator.isNull(redirect) %>">
-			<portlet:renderURL var="backURL">
-				<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
-				<portlet:param name="folderId" value="<%= (folder != null) ? String.valueOf(folder.getFolderId()) : String.valueOf(BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:header
-				backLabel='<%= (folder != null) ? folder.getName() : "home" %>'
-				backURL="<%= backURL.toString() %>"
-				escapeXml="<%= false %>"
-				localizeTitle="<%= false %>"
-				title="<%= entry.getName() %>"
-			/>
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				escapeXml="<%= false %>"
-				localizeTitle="<%= false %>"
-				title="<%= entry.getName() %>"
-			/>
-		</c:otherwise>
-	</c:choose>
+				<liferay-ui:header
+					backLabel='<%= (folder != null) ? folder.getName() : "home" %>'
+					backURL="<%= backURL.toString() %>"
+					escapeXml="<%= false %>"
+					localizeTitle="<%= false %>"
+					title="<%= entry.getName() %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:header
+					backURL="<%= redirect %>"
+					escapeXml="<%= false %>"
+					localizeTitle="<%= false %>"
+					title="<%= entry.getName() %>"
+				/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
 
 	<aui:row>
 		<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">

@@ -36,9 +36,11 @@ categoryIdsArray = StringUtil.split(StringUtil.merge(categoryIds), 0L);
 
 long threadId = ParamUtil.getLong(request, "threadId");
 String keywords = ParamUtil.getString(request, "keywords");
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 %>
 
-<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<liferay-portlet:renderURL varImpl="searchURL">
 		<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
 	</liferay-portlet:renderURL>

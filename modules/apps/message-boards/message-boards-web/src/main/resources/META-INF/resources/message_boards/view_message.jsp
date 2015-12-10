@@ -34,9 +34,11 @@ if ((message != null) && layout.isTypeControlPanel()) {
 }
 
 AssetEntryServiceUtil.incrementViewCounter(MBMessage.class.getName(), message.getMessageId());
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 %>
 
-<div <%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 
 	<div class="displayStyle-<%= displayStyle %>">

@@ -19,7 +19,9 @@ import com.liferay.bookmarks.exception.EntryURLException;
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryService;
+import com.liferay.bookmarks.service.BookmarksFolderService;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -77,8 +79,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			deleteEntryIds = new long[] {entryId};
 		}
 		else {
-			deleteEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
+			deleteEntryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIdsBookmarksEntry");
 		}
 
 		List<TrashedModel> trashedModels = new ArrayList<>();
@@ -92,6 +94,23 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else {
 				_bookmarksEntryService.deleteEntry(deleteEntryId);
+			}
+		}
+
+		long[] deleteFolderIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsBookmarksFolder");
+
+		for (int i = 0; i < deleteFolderIds.length; i++) {
+			long deleteFolderId = deleteFolderIds[i];
+
+			if (moveToTrash) {
+				BookmarksFolder folder =
+					_bookmarksFolderService.moveFolderToTrash(deleteFolderId);
+
+				trashedModels.add(folder);
+			}
+			else {
+				_bookmarksFolderService.deleteFolder(deleteFolderId);
 			}
 		}
 
@@ -201,6 +220,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setBookmarksFolderService(
+		BookmarksFolderService bookmarksFolderService) {
+
+		_bookmarksFolderService = bookmarksFolderService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;
 	}
@@ -260,6 +286,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private volatile BookmarksEntryService _bookmarksEntryService;
+	private volatile BookmarksFolderService _bookmarksFolderService;
 	private volatile TrashEntryService _trashEntryService;
 
 }

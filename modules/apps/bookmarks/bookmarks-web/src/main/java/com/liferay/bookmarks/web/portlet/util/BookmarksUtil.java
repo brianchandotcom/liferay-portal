@@ -89,24 +89,28 @@ public class BookmarksUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String mvcRenderCommandName = ParamUtil.getString(
 			request, "mvcRenderCommandName");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		if (mvcRenderCommandName.equals("/bookmarks/select_folder")) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/bookmarks/select_folder");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), portletURL.toString());
 		}
 		else {
 			portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+		}
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, themeDisplay.translate("home"), portletURL.toString());
+
+		if (folder == null) {
+			return;
 		}
 
 		List<BookmarksFolder> ancestorFolders = folder.getAncestors();

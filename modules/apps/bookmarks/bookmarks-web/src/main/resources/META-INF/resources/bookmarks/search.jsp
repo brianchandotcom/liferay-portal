@@ -30,9 +30,20 @@ if (searchFolderId > 0) {
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search") + ": " + keywords, currentURL);
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+String headerTitle = LanguageUtil.get(request, "search");
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
-<div <%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<liferay-portlet:renderURL varImpl="searchURL">
 		<portlet:param name="mvcPath" value="/bookmarks/search.jsp" />
 	</liferay-portlet:renderURL>
@@ -43,10 +54,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 		<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= breadcrumbsFolderId %>" />
 		<aui:input name="searchFolderId" type="hidden" value="<%= searchFolderId %>" />
 
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			title="search"
-		/>
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				title="<%= headerTitle %>"
+			/>
+		</c:if>
 
 		<%
 		PortletURL portletURL = renderResponse.createRenderURL();

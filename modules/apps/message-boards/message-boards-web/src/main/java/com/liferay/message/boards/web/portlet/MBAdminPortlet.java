@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Message Boards",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.config-template=/message_boards_admin/configuration.jsp",
+		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/message_boards/view",
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,

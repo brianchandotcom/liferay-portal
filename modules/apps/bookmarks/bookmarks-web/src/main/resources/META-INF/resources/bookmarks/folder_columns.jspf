@@ -19,29 +19,21 @@ List subfolderIds = new ArrayList();
 
 subfolderIds.add(Long.valueOf(curFolder.getFolderId()));
 
-if (ArrayUtil.contains(folderColumns, "num-of-entries") || ArrayUtil.contains(folderColumns, "num-of-folders")) {
+if (ArrayUtil.contains(entryColumns, "num-of-entries") || ArrayUtil.contains(entryColumns, "num-of-folders")) {
 	BookmarksFolderServiceUtil.getSubfolderIds(subfolderIds, scopeGroupId, curFolder.getFolderId(), true);
 }
 
-int curFoldersCount = subfolderIds.size() - 1;
-
-int curEntriesCount = 0;
-
-if (ArrayUtil.contains(folderColumns, "num-of-entries")) {
-	curEntriesCount = BookmarksEntryServiceUtil.getFoldersEntriesCount(scopeGroupId, subfolderIds);
-}
-
-for (int j = 0; j < folderColumns.length; j++) {
-	String folderColumn = folderColumns[j];
+for (int j = 0; j < entryColumns.length; j++) {
+	String curEntryColumn = entryColumns[j];
 %>
 
 	<c:choose>
-		<c:when test='<%= folderColumn.equals("action") %>'>
+		<c:when test='<%= curEntryColumn.equals("action") %>'>
 
 			<%
 			String align = SearchEntry.DEFAULT_ALIGN;
 
-			if ((j + 1) == folderColumns.length) {
+			if ((j + 1) == entryColumns.length) {
 				align = "right";
 			}
 			%>
@@ -52,82 +44,45 @@ for (int j = 0; j < folderColumns.length; j++) {
 				path="/bookmarks/folder_action.jsp"
 			/>
 		</c:when>
-		<c:when test='<%= folderColumn.equals("folder") %>'>
-			<liferay-ui:search-container-column-text
-				name="folder"
-			>
-
-				<%
-				AssetRendererFactory<BookmarksFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksFolder.class);
-
-				AssetRenderer<BookmarksFolder> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
-				%>
-
-				<a class="<%= assetRenderer.getIconCssClass() %>" href="<%= rowURL %>">
-					<strong><%= curFolder.getName() %></strong>
-
-					<c:if test="<%= Validator.isNotNull(curFolder.getDescription()) %>">
-						<br />
-						<%= curFolder.getDescription() %>
-					</c:if>
-				</a>
-
-				<c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.showSubfolders() %>">
-
-					<%
-					List<BookmarksFolder> subfolders = BookmarksFolderServiceUtil.getFolders(scopeGroupId, curFolder.getFolderId(), 0, 5);
-					%>
-
-					<c:if test="<%= !subfolders.isEmpty() %>">
-						<br />
-						<span style="text-decoration: underline;"><liferay-ui:message key="subfolders" /></span>:
-
-						<%
-						int subfoldersCount = BookmarksFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId());
-
-						for (int k = 0; k < subfolders.size(); k++) {
-							BookmarksFolder subfolder = subfolders.get(k);
-
-							subfolder = subfolder.toEscapedModel();
-
-							rowURL.setParameter("folderId", String.valueOf(subfolder.getFolderId()));
-						%>
-
-							<a href="<%= rowURL %>"><%= subfolder.getName() %></a><%= ((k + 1) < subfolders.size()) ? "," : StringPool.BLANK %>
-
-						<%
-						}
-						%>
-
-						<c:if test="<%= subfoldersCount > subfolders.size() %>">
-
-							<%
-							rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-							%>
-
-							<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
-						</c:if>
-
-						<%
-						rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-						%>
-
-					</c:if>
-				</c:if>
-			</liferay-ui:search-container-column-text>
-		</c:when>
-		<c:when test='<%= folderColumn.equals("num-of-entries") %>'>
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="num-of-entries"
-				value="<%= String.valueOf(curEntriesCount) %>"
+		<c:when test='<%= curEntryColumn.equals("modified-date") %>'>
+			<liferay-ui:search-container-column-date
+				href="<%= rowURL.toString() %>"
+				name="<%= curEntryColumn %>"
+				value="<%= curFolder.getModifiedDate() %>"
 			/>
 		</c:when>
-		<c:when test='<%= folderColumn.equals("num-of-folders") %>'>
+		<c:when test='<%= curEntryColumn.equals("name") %>'>
+
+			<%
+			AssetRendererFactory<BookmarksFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksFolder.class);
+
+			AssetRenderer<BookmarksFolder> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+			%>
+
 			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="num-of-folders"
-				value="<%= String.valueOf(curFoldersCount) %>"
+				name="<%= curEntryColumn %>"
+			>
+
+				<liferay-ui:app-view-entry
+					displayStyle="list"
+					folder="<%= true %>"
+					iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+					showCheckbox="<%= false %>"
+					title="<%= curFolder.getName() %>"
+					url="<%= rowURL.toString() %>"
+				/>
+			</liferay-ui:search-container-column-text>
+		</c:when>
+		<c:when test='<%= curEntryColumn.equals("url") %>'>
+			<liferay-ui:search-container-column-text
+				name="<%= curEntryColumn %>"
+				value="--"
+			/>
+		</c:when>
+		<c:when test='<%= curEntryColumn.equals("visits") %>'>
+			<liferay-ui:search-container-column-text
+				name="<%= curEntryColumn %>"
+				value="--"
 			/>
 		</c:when>
 	</c:choose>

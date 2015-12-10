@@ -70,16 +70,16 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		/>
 	</liferay-ui:search-container-row>
 
-	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, SAPConstants.SERVICE_NAME, SAPActionKeys.ACTION_ADD_SAP_ENTRY) %>">
-		<portlet:renderURL var="addSAPEntryURL">
-			<portlet:param name="mvcPath" value="/edit_entry.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</portlet:renderURL>
-
-		<aui:button-row>
-			<aui:button href="<%= addSAPEntryURL %>" value="add" />
-		</aui:button-row>
-	</c:if>
-
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
+
+<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, SAPConstants.SERVICE_NAME, SAPActionKeys.ACTION_ADD_SAP_ENTRY) %>">
+	<portlet:renderURL var="addSAPEntryURL">
+		<portlet:param name="mvcPath" value="/edit_entry.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSAPEntryURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>

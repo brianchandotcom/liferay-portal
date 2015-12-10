@@ -28,12 +28,14 @@ MapProviderTracker mapProviderTracker = (MapProviderTracker)request.getAttribute
 <p><liferay-ui:message key="select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets" /></p>
 
 <%
-for (MapProvider mapProvider : mapProviderTracker.getMapProviders()) {
+List<MapProvider> mapProviders = (List<MapProvider>)mapProviderTracker.getMapProviders();
+
+for (MapProvider mapProvider : mapProviders) {
 %>
 
 	<aui:input checked="<%= Validator.equals(mapProviderKey, mapProvider.getKey()) %>" helpMessage="<%= mapProvider.getHelpMessage() %>" id='<%= mapProvider.getKey() + "Enabled" %>' label="<%= mapProvider.getLabel(locale) %>" name='<%= "settings--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>' type="radio" value="<%= mapProvider.getKey() %>" />
 
-	<div id="<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>">
+	<div id="<portlet:namespace /><%= mapProvider.getKey() %>Options">
 
 		<%
 		mapProvider.includeConfiguration(request, new PipingServletResponse(pageContext));
@@ -41,10 +43,32 @@ for (MapProvider mapProvider : mapProviderTracker.getMapProviders()) {
 
 	</div>
 
+
+	<%
+	StringBundler sb = new StringBundler((mapProviders.size() - 1) * 6 - 1);
+
+	for (MapProvider curMapProvider : mapProviders) {
+		if (Validator.equals(mapProvider.getKey(), curMapProvider.getKey())) {
+			continue;
+		}
+
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(renderResponse.getNamespace());
+		sb.append(curMapProvider.getKey());
+		sb.append("Options");
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(StringPool.COMMA);
+	}
+
+	if (mapProviders.size() > 1) {
+		sb.setIndex(sb.index() - 1);
+	}
+	%>
+
 	<aui:script>
-		Liferay.Util.toggleRadio('<portlet:namespace /><%= mapProvider.getKey() %>Enabled', '<portlet:namespace />mapsProvider<%= mapProvider.getKey() %>', '');
+		Liferay.Util.toggleRadio('<portlet:namespace /><%= mapProvider.getKey() %>Enabled', '<portlet:namespace /><%= mapProvider.getKey() %>Options', [<%= sb.toString() %>]);
 	</aui:script>
 
 <%
-	}
+}
 %>

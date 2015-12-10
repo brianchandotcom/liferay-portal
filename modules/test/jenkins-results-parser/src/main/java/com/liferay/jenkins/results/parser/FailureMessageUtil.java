@@ -38,13 +38,13 @@ public class FailureMessageUtil {
 		if (consoleOutput.indexOf("--abort") != -1) {
 			sb.append("<p>Please fix <strong>rebase errors</strong> on ");
 
-			sb.append("<strong><a href=\\\"https://github.com/");
+			sb.append("<strong><a href=\"https://github.com/");
 			sb.append(project.getProperty("github.pull.request.head.username"));
 			sb.append("/");
 			sb.append(project.getProperty("repository"));
 			sb.append("/tree/");
 			sb.append(project.getProperty("github.pull.request.head.branch"));
-			sb.append("\\\">");
+			sb.append("\">");
 			sb.append(project.getProperty("github.pull.request.head.username"));
 			sb.append("/");
 			sb.append(project.getProperty("github.pull.request.head.branch"));
@@ -55,23 +55,23 @@ public class FailureMessageUtil {
 		else if (consoleOutput.indexOf("fatal: Could not parse object") != -1) {
 			sb.append("<p>Please update ");
 
-			sb.append("<strong><a href=\\\"https://github.com/");
+			sb.append("<strong><a href=\"https://github.com/");
 			sb.append(project.getProperty("github.pull.request.head.username"));
 			sb.append("/");
 			sb.append(project.getProperty("portal.repository"));
 			sb.append("/blob/");
 			sb.append(project.getProperty("github.pull.request.head.branch"));
-			sb.append("/git-commit-plugins\\\">");
+			sb.append("/git-commit-plugins\">");
 			sb.append("git-commit-plugins");
 			sb.append("</a></strong>");
 
 			sb.append(" to an existing git id from ");
 
-			sb.append("<strong><a href=\\\"https://github.com/liferay/");
+			sb.append("<strong><a href=\"https://github.com/liferay/");
 			sb.append(project.getProperty("plugins.repository"));
 			sb.append("/commits/");
 			sb.append(project.getProperty("plugins.branch.name"));
-			sb.append("\\\">");
+			sb.append("\">");
 			sb.append(project.getProperty("plugins.repository"));
 			sb.append("/");
 			sb.append(project.getProperty("plugins.branch.name"));
@@ -90,7 +90,7 @@ public class FailureMessageUtil {
 				jobVariant.contains("plugins")) {
 
 				sb.append("<p>To include a plugin fix for this pull request, ");
-				sb.append("please edit your <a href=\\\"https://github.com/");
+				sb.append("please edit your <a href=\"https://github.com/");
 				sb.append(
 					project.getProperty("github.pull.request.head.username"));
 				sb.append("/");
@@ -98,11 +98,11 @@ public class FailureMessageUtil {
 				sb.append("/blob/");
 				sb.append(
 					project.getProperty("github.pull.request.head.branch"));
-				sb.append("/git-commit-plugins\\\">git-commit-plugins</a>. ");
+				sb.append("/git-commit-plugins\">git-commit-plugins</a>. ");
 
-				sb.append("Click <a href=\\\"https://in.liferay.com/web/");
+				sb.append("Click <a href=\"https://in.liferay.com/web/");
 				sb.append("global.engineering/blog/-/blogs/new-tests-for-the-");
-				sb.append("pull-request-tester-\\\">here</a> for more details");
+				sb.append("pull-request-tester-\">here</a> for more details");
 				sb.append(".</p>");
 			}
 		}

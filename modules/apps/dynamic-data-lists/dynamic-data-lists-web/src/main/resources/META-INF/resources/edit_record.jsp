@@ -26,15 +26,6 @@ long recordId = BeanParamUtil.getLong(record, request, "recordId");
 long groupId = BeanParamUtil.getLong(record, request, "groupId", scopeGroupId);
 long recordSetId = BeanParamUtil.getLong(record, request, "recordSetId");
 
-if (Validator.isNull(redirect)) {
-	PortletURL redirectURL = renderResponse.createRenderURL();
-
-	redirectURL.setParameter("mvcPath", "/view_record_set.jsp");
-	redirectURL.setParameter("recordSetId", String.valueOf(recordSetId));
-
-	redirect = redirectURL.toString();
-}
-
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 DDLRecordVersion recordVersion = null;

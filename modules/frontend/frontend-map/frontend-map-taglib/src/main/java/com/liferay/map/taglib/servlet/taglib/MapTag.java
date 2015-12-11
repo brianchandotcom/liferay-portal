@@ -46,6 +46,10 @@ public class MapTag extends IncludeTag {
 		_longitude = longitude;
 	}
 
+	public void setMapProviderKey(String mapProviderKey) {
+		_mapProviderKey = mapProviderKey;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -61,18 +65,14 @@ public class MapTag extends IncludeTag {
 		_points = points;
 	}
 
-	public void setProvider(String provider) {
-		_provider = provider;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_geolocation = false;
 		_latitude = 0;
 		_longitude = 0;
+		_mapProviderKey = null;
 		_name = null;
 		_points = null;
-		_provider = null;
 	}
 
 	@Override
@@ -85,9 +85,9 @@ public class MapTag extends IncludeTag {
 		request.setAttribute("liferay-map:map:geolocation", _geolocation);
 		request.setAttribute("liferay-map:map:latitude", _latitude);
 		request.setAttribute("liferay-map:map:longitude", _longitude);
+		request.setAttribute("liferay-map:map:mapProvider", _getMapProvider());
 		request.setAttribute("liferay-map:map:name", _name);
 		request.setAttribute("liferay-map:map:points", _points);
-		request.setAttribute("liferay-map:map:mapProvider", _getMapProvider());
 	}
 
 	private MapProvider _getMapProvider() {
@@ -115,7 +115,7 @@ public class MapTag extends IncludeTag {
 	}
 
 	private String _getMapProviderKey() {
-		String mapProdiverKey = _provider;
+		String mapProdiverKey = _mapProviderKey;
 
 		if (Validator.isNull(mapProdiverKey)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -136,8 +136,8 @@ public class MapTag extends IncludeTag {
 	private boolean _geolocation;
 	private double _latitude;
 	private double _longitude;
+	private String _mapProviderKey;
 	private String _name;
 	private String _points;
-	private String _provider;
 
 }

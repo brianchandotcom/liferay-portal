@@ -30,7 +30,6 @@ apply plugin: "com.liferay.plugin"
 apply plugin: "eclipse"
 apply plugin: "findbugs"
 apply plugin: "idea"
-apply plugin: "pmd"
 
 if (FileUtil.exists(project, "service.xml")) {
 	apply plugin: "com.liferay.portal.tools.service.builder"
@@ -118,7 +117,6 @@ configurations {
 
 	portal
 	portalTest
-	xmltask
 
 	alloyTaglib {
 		extendsFrom configurations.runtime
@@ -135,7 +133,6 @@ dependencies {
 	jspCTool group: "com.liferay", name: "com.liferay.jasper.jspc", version: "1.0.4"
 	jspCTool group: "org.apache.ant", name: "ant", version: "1.9.4"
 	langBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "1.0.2"
-	pmd group: "com.liferay", name: "com.liferay.pmd", version: "1.0.1"
 
 	portal files(appServerClassesPortalDir)
 	portal fileTree(dir: appServerLibPortalDir, include: "*.jar")
@@ -159,7 +156,6 @@ dependencies {
 	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "1.0.0"
 	whip group: "com.liferay", name: "com.liferay.whip", version: "1.0.0"
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "1.0.0"
-	xmltask files(new File(portalRootDir, "lib/development/xmltask.jar"))
 }
 
 eclipse {
@@ -223,11 +219,6 @@ jsTranspiler {
 	lfrAmdLoaderVersion = "1.3.5"
 }
 
-pmd {
-	ruleSetFiles = files(new File(portalRootDir, "tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml"))
-	ruleSets = []
-}
-
 repositories {
 	if (!Boolean.getBoolean("maven.local.ignore")) {
 		mavenLocal()
@@ -258,31 +249,6 @@ testIntegration {
 	File testIntegrationResultsDir = file("test-results/integration")
 
 	binResultsDir = new File(testIntegrationResultsDir, "binary/testIntegration")
-
-	doLast {
-		String databaseType = System.properties["database.type"]
-
-		if (!databaseType) {
-			return
-		}
-
-		FileTree fileTree = fileTree(dir: reports.junitXml.destination, exclude: "TEST-*-*.xml", include: "TEST-*.xml")
-
-		ant.taskdef classname: "com.oopsconsultancy.xmltask.ant.XmlTask", classpath: configurations.xmltask.asPath, name: "xmltask"
-
-		fileTree.each {
-			File file ->
-
-			String fileTitle = FileUtil.stripExtension(file.name)
-
-			ant.xmltask(dest: new File(file.parentFile, "${fileTitle}-${databaseType}.xml"), source: file) {
-				replace path: "/testsuite/@name", withText: "${fileTitle}-${databaseType}"
-			}
-
-			delete file
-		}
-	}
-
 	reports.junitXml.destination = testIntegrationResultsDir
 }
 
@@ -343,31 +309,6 @@ tasks.withType(FindBugs) {
 tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
 	options.warnings = false
-}
-
-tasks.withType(Pmd) {
-	classpath = null
-}
-
-if (gradle.hasProperty("testClassGroupIndex")) {
-	configure([test, testIntegration]) {
-		include gradle.testClasses
-
-		jvmArgs "-Dtest.class.group.index=" + gradle.testClassGroupIndex
-		jvmArgs "-Dtest.class.groups=" + gradle.testClassGroups
-	}
-}
-
-if (System.getenv("JENKINS_HOME")) {
-	pluginManager.withPlugin("com.liferay.cache") {
-		cache {
-			forcedCache = true
-		}
-	}
-
-	startTestableTomcat {
-		deleteLiferayHome = false
-	}
 }
 
 private File _getPortalRootDir(Project project) {

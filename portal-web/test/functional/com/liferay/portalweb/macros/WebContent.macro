@@ -5,7 +5,7 @@
 	</command>
 
 	<command name="addCategoryPGViaWCD">
-		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Categorization" />
+		<execute function="Click" locator1="NavListItem#METADATA" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -239,7 +239,7 @@
 
 	<command name="addTagPGViaWCD">
 		<execute function="AssertElementPresent" locator1="Button#BASIC_PREVIEW" />
-		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Categorization" />
+		<execute function="Click" locator1="NavListItem#METADATA" />
 
 		<var name="key_tagName" value="${tagName}" />
 
@@ -435,7 +435,7 @@
 	<command name="addWithMultipleCategories">
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Categorization" />
+		<execute function="Click" locator1="NavListItem#METADATA" />
 
 		<execute macro="AssetCategorization#addMultipleCategories">
 			<var name="categoryNameList" value="${categoryNameList}" />
@@ -593,7 +593,7 @@
 	<command name="addWithTagCP">
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Metadata" />
+		<execute function="Click" locator1="NavListItem#METADATA" />
 
 		<for list="${tagNameList}" param="tagName">
 			<execute function="Click" locator1="AssetCategorization#TAGS_ADD_BUTTON" />
@@ -1061,7 +1061,7 @@
 	</command>
 
 	<command name="selectCategory">
-		<execute function="AssertClick" locator1="NavListItem#METADATA" value1="Metadata" />
+		<execute function="Click" locator1="NavListItem#METADATA" />
 
 		<if>
 			<isset var="userSegmentDetailTitle" />

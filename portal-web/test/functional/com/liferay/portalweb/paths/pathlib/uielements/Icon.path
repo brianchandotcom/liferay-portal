@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ADD</td>
-	<td>//a[contains(@id,'addPanel') and i[contains(@class,'icon-plus')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADVANCED_SEARCH</td>
 	<td>//a[contains(@class,'toggle-advanced') and i[@class='caret']]</td>
 	<td></td>
@@ -80,7 +75,7 @@
 </tr>
 <tr>
 	<td>CLOSE</td>
-	<td>//button[contains(@class,'close')]</td>
+	<td>//button[contains(@class,'close')] | //a[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,7 +120,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a[contains(@id,'ControlMenuPortlet') and i[contains(@class,'icon-cog')]]</td>
+	<td>//i[@class='icon-edit-sign']</td>
 	<td></td>
 </tr>
 <tr>
@@ -191,11 +186,6 @@
 <tr>
 	<td>PENCIL</td>
 	<td>//a[contains(@class,'btn icon-monospaced btn-default')]/i[contains(@class,'icon-pencil')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW</td>
-	<td>//a[contains(@id,'previewPanel') and i[contains(@class,'icon-desktop')]]</td>
 	<td></td>
 </tr>
 <tr>

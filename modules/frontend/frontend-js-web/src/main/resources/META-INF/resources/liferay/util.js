@@ -7,6 +7,19 @@
 
 	var EVENT_CLICK = 'click';
 
+	var MAP_TOGGLE_STATE = {
+		false: {
+			cssClass: 'controls-hidden',
+			iconCssClass: 'hidden',
+			state: 'hidden'
+		},
+		true: {
+			cssClass: 'controls-visible',
+			iconCssClass: 'view',
+			state: 'visible'
+		}
+	};
+
 	var REGEX_PORTLET_ID = /^(?:p_p_id)?_(.*)_.*$/;
 
 	var SRC_HIDE_LINK = {
@@ -16,6 +29,10 @@
 	var STR_CHECKED = 'checked';
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
+
+	var TPL_LEXICON_ICON = '<svg class="lexicon-icon lexicon-icon-{0}" role="image">' +
+			'<use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#{0}" />' +
+		'</svg>';
 
 	var Window = {
 		_map: {}
@@ -386,6 +403,12 @@
 			else if (fallback) {
 				fallback();
 			}
+		},
+
+		getLexiconIcon: function(icon) {
+			var instance = this;
+
+			return $(_.sub(TPL_LEXICON_ICON, icon))[0];
 		},
 
 		getOpener: function() {
@@ -1482,53 +1505,64 @@
 			var trigger = node.one('.toggle-controls');
 
 			if (trigger) {
-				var hiddenClass = 'controls-hidden';
-				var iconHiddenClass = 'icon-eye-close';
-				var iconVisibleClass = 'icon-eye-open';
-				var visibleClass = 'controls-visible';
+				var controlsVisible = Liferay._editControlsState === 'visible';
 
-				var currentClass = visibleClass;
-				var currentIconClass = iconVisibleClass;
+				var currentState = MAP_TOGGLE_STATE[controlsVisible];
 
-				if (Liferay._editControlsState != 'visible') {
-					currentClass = hiddenClass;
-					currentIconClass = iconHiddenClass;
-				}
-
-				var icon = trigger.one('.controls-state-icon');
+				var icon = trigger.one('.lexicon-icon');
 
 				if (icon) {
-					icon.addClass(currentIconClass);
+					currentState.icon = icon;
 				}
 
-				docBody.addClass(currentClass);
+				docBody.addClass(currentState.cssClass);
 
 				Liferay.fire(
 					'toggleControls',
 					{
-						enabled: Liferay._editControlsState === 'visible'
+						enabled: controlsVisible
 					}
 				);
 
 				trigger.on(
 					'tap',
 					function(event) {
+						controlsVisible = !controlsVisible;
+
+						var prevState = currentState;
+
+						currentState = MAP_TOGGLE_STATE[controlsVisible];
+
+						docBody.toggleClass(prevState.cssClass);
+						docBody.toggleClass(currentState.cssClass);
+
+						var editControlsIconClass = currentState.iconCssClass;
+						var editControlsState = currentState.state;
+
 						if (icon) {
-							icon.toggleClass(iconVisibleClass);
-							icon.toggleClass(iconHiddenClass);
+							var newIcon = currentState.icon;
+
+							if (!newIcon) {
+								newIcon = Util.getLexiconIcon(editControlsIconClass);
+
+								newIcon = A.one(newIcon);
+
+								currentState.icon = newIcon;
+							}
+
+							icon.replace(newIcon);
+
+							icon = newIcon;
 						}
 
-						docBody.toggleClass(visibleClass);
-						docBody.toggleClass(hiddenClass);
+						Liferay._editControlsState = editControlsState;
 
-						Liferay._editControlsState = docBody.hasClass(visibleClass) ? 'visible' : 'hidden';
-
-						Liferay.Store('com.liferay.frontend.js.web_toggleControls', Liferay._editControlsState);
+						Liferay.Store('com.liferay.frontend.js.web_toggleControls', editControlsState);
 
 						Liferay.fire(
 							'toggleControls',
 							{
-								enabled: Liferay._editControlsState === 'visible',
+								enabled: controlsVisible,
 								src: 'ui'
 							}
 						);

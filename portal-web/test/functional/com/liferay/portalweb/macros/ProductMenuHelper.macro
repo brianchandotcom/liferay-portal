@@ -100,7 +100,7 @@
 				<condition function="IsVisible" locator1="DockbarAddpanelcontent#CONTENT_TAB" />
 			</and>
 			<then>
-				<execute function="Click#clickAt" locator1="Dockbar#ADD_ICON" />
+				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
 			</then>
 		</if>
 

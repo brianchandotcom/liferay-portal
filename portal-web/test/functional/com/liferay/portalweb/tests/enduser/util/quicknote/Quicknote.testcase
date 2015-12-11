@@ -36,7 +36,7 @@
 	<command name="AddQuickNote" priority="2">
 		<var name="portletName" value="Quick Note" />
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" value1="Add" />
 
 		<execute function="AssertClick" locator1="NavPill#APPLICATIONS" value1="Applications" />
 		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />

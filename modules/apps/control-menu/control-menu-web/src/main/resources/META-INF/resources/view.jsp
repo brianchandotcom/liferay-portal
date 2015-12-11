@@ -28,7 +28,7 @@ if (layout != null) {
 %>
 
 <c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() && !controlMenuCategories.isEmpty() %>">
-	<div class="control-menu">
+	<div class="control-menu" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
 		<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && themeDisplay.isShowStagingIcon() %>">
 			<div class="control-menu-level-2">
 				<div class="container-fluid-1280">
@@ -64,13 +64,13 @@ if (layout != null) {
 					%>
 
 							<li>
-								<liferay-ui:icon
-									iconCssClass='<%= controlMenuEntry.getIconCssClass(request) + " icon-monospaced" %>'
-									label="<%= false %>"
-									linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
-									message="<%= controlMenuEntry.getLabel(locale) %>"
+								<aui:icon
+									cssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
+									data="<%= controlMenuEntry.getData(request) %>"
+									image="<%= controlMenuEntry.getIconCssClass(request) %>"
+									label="<%= controlMenuEntry.getLabel(locale) %>"
+									markupView="lexicon"
 									url="<%= controlMenuEntry.getURL(request) %>"
-									useDialog="<%= controlMenuEntry.isUseDialog() %>"
 								/>
 							</li>
 
@@ -83,8 +83,22 @@ if (layout != null) {
 			</div>
 		</div>
 	</div>
-</c:if>
 
-<aui:script position="inline" use="liferay-control-menu">
-	Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
-</aui:script>
+	<aui:script position="inline" use="liferay-control-menu">
+		var controlMenu = A.one('#<portlet:namespace/>ControlMenu');
+
+		controlMenu.delegate(
+			'mouseover',
+			function(event) {
+				var title = event.currentTarget.attr('data-title');
+
+				if (title) {
+					Liferay.Portal.ToolTip.show(this, title);
+				}
+			},
+			'.control-menu-icon'
+		);
+
+		Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
+	</aui:script>
+</c:if>

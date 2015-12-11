@@ -278,7 +278,7 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="ControlMenu#EDIT_COG" />
+		<execute function="Click" locator1="ControlMenu#EDIT" />
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 

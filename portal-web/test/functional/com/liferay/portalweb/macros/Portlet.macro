@@ -109,12 +109,12 @@
 		<if>
 			<equals arg1="${browserType}" arg2="internetexplorer" />
 			<then>
-				<execute function="MouseDown#javaScriptMouseDown" locator1="Dockbar#ADD_ICON" />
+				<execute function="MouseDown#javaScriptMouseDown" locator1="ControlMenu#ADD" />
 
-				<execute function="MouseUp#javaScriptMouseUp" locator1="Dockbar#ADD_ICON" />
+				<execute function="MouseUp#javaScriptMouseUp" locator1="ControlMenu#ADD" />
 			</then>
 			<else>
-				<execute function="Click#clickAt" locator1="Dockbar#ADD_ICON" />
+				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
 			</else>
 		</if>
 
@@ -343,7 +343,7 @@
 			</elseif>
 		</if>
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" value1="Add" />
 
 		<execute function="AssertClick" locator1="NavPill#APPLICATIONS" value1="Applications" />
 		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />

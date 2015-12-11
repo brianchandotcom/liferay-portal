@@ -24,16 +24,18 @@
 Map<String, Object> data = new HashMap<String, Object>();
 
 data.put("panelURL", previewContentURL);
+data.put("qa-id", "simulation");
+data.put("title", HtmlUtil.escape(LanguageUtil.get(request, "simulation")));
 %>
 
 <li>
-	<liferay-ui:icon
+	<aui:icon
+		cssClass="control-menu-icon"
 		data="<%= data %>"
-		iconCssClass="icon-desktop icon-monospaced"
 		id="previewPanel"
-		label="<%= false %>"
-		linkCssClass="control-menu-icon"
-		message="simulation"
+		image="simulation-menu-closed"
+		label="simulation"
+		markupView="lexicon"
 		url="javascript:;"
 	/>
 </li>

@@ -173,7 +173,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute function="Click" locator1="ControlMenu#PAGE_INFO_MESSAGE_ICON" />
+		<execute function="Click" locator1="ControlMenu#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page has been changed since the last update from the site template." />
 		<execute function="AssertClick" locator1="Button#RESET_CHANGES" value1="Reset Changes" />

@@ -1,3 +1,4 @@
+@import "bourbon";
 @import "mixins";
 
 body {
@@ -176,5 +177,51 @@ body {
 		.site-logo-container {
 			padding: 2em;
 		}
+	}
+}
+
+/* Icon Animation */
+
+.toast-animation {
+	height: 20px;
+	margin: 10px 4px 0 4px;
+	position: relative;
+	width: 20px;
+
+	.pm {
+		border-left: 1px solid #FFF;
+		border-radius: 1px;
+		height: 16px;
+		left: 0;
+		position: absolute;
+		top: 1px;
+		@include transition(all .6s $ease-out-quart);
+		@include transition-delay(.2s);
+	}
+
+	.cn {
+		border: 1px solid #FFF;
+		border-radius: 1px;
+		content: "";
+		height: 18px;
+		position: absolute;
+		right: 0;
+		width: 15px;
+		@include transition(all .3s $ease-out-quart);
+		@include transition-delay(.2s);
+	}
+}
+
+body.open .toast-animation {
+	.pm {
+		border-left-width: 6px;
+		height: 18px;
+		left: 4px;
+		top: 0;
+	}
+
+	.cn {
+		border-left-width: 5px;
+		width: 19px;
 	}
 }

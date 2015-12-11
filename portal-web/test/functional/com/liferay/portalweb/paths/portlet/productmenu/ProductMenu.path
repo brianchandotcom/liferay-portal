@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>TOGGLE</td>
-	<td>//a[contains(@class,'sidenav-toggler')]/span</td>
+	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='productMenu']</td>
 	<td></td>
 </tr>
 <tr>

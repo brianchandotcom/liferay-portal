@@ -373,6 +373,19 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 			jar.from(sourceSet.getAllSource());
+
+			if (isTestProject(project)) {
+				sourceSet = GradleUtil.getSourceSet(
+					project, SourceSet.TEST_SOURCE_SET_NAME);
+
+				jar.from(sourceSet.getAllSource());
+
+				sourceSet = GradleUtil.getSourceSet(
+					project,
+					TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
+
+				jar.from(sourceSet.getAllSource());
+			}
 		}
 
 		TaskContainer taskContainer = project.getTasks();

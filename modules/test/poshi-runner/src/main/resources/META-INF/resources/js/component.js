@@ -19,6 +19,8 @@ YUI.add(
 
 		var CSS_HIDDEN = 'hidden';
 
+		var CSS_RUNNING = 'running';
+
 		var CSS_TOGGLE = 'toggle';
 
 		var CSS_TRANSITIONING = 'transitioning';
@@ -46,6 +48,8 @@ YUI.add(
 		var STR_SRC = 'src';
 
 		var STR_STATUS = 'status';
+
+		var STR_TRANSITIONING = 'transitioning';
 
 		var STR_XML_LOG = 'xmlLog';
 
@@ -85,7 +89,7 @@ YUI.add(
 					},
 
 					running: {
-						value: null
+						value: true
 					},
 
 					sidebar: {
@@ -97,6 +101,10 @@ YUI.add(
 						value: ['fail', 'pass', 'pending']
 					},
 
+					transitioning: {
+						value: null
+					},
+
 					xmlLog: {
 						setter: A.one
 					}
@@ -105,21 +113,24 @@ YUI.add(
 				NAME: 'poshilogger',
 
 				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						var xmlLog = instance.get(STR_XML_LOG);
+
+						if (!xmlLog.hasClass(CSS_RUNNING)) {
+							instance.set(STR_RUNNING, false);
+						}
+					},
+
 					renderUI: function() {
 						var instance = this;
 
 						var sidebar = instance.get(STR_SIDEBAR);
-						var xmlLog = instance.get(STR_XML_LOG);
-
-						xmlLog.toggleClass(STR_RUNNING);
 
 						var commandLog = sidebar.one('.command-log');
 
 						instance._toggleCommandLog(commandLog);
-
-						if (!xmlLog.hasClass(STR_RUNNING)) {
-							instance._minimizeSidebar();
-						}
 					},
 
 					bindUI: function() {
@@ -139,13 +150,9 @@ YUI.add(
 						var latestCommand = commandLog.one('.line-group:last-child');
 
 						if (latestCommand) {
-							instance._parseCommandLog(latestCommand);
-
 							var linkedFunction = instance.get(STR_XML_LOG).one('#' + id);
 
 							instance._displayNode(linkedFunction);
-
-							instance._selectCurrentScope(linkedFunction);
 
 							instance._setXmlNodeClass(linkedFunction);
 
@@ -175,6 +182,8 @@ YUI.add(
 
 							instance._displayNode(linkedFunction);
 
+							instance._scrollToNode(linkedFunction);
+
 							instance._selectCurrentScope(linkedFunction);
 						}
 					},
@@ -190,6 +199,8 @@ YUI.add(
 							}
 
 							instance._displayNode(currentTargetAncestor);
+
+							instance._scrollToNode(currentTargetAncestor);
 
 							instance._selectCurrentScope(currentTargetAncestor);
 						}
@@ -242,7 +253,31 @@ YUI.add(
 					handleGoToErrorBtn: function(event) {
 						var instance = this;
 
-						instance._displayNode();
+						var failNodes = instance.get(STR_FAILS);
+
+						var currentScope = instance.get(STR_CURRENT_SCOPE);
+
+						var lastIndex = failNodes.size() - 1;
+
+						var newIndex = lastIndex;
+
+						if (currentScope) {
+							var index = failNodes.indexOf(currentScope);
+
+							if (index > -1) {
+								if (index < lastIndex) {
+									newIndex = index + 1;
+								}
+								else {
+									newIndex = 0;
+								}
+							}
+						}
+
+						var failure = failNodes.item(newIndex);
+
+						instance._selectCurrentScope(failure);
+						instance._scrollToNode(failure);
 					},
 
 					handleLineTrigger: function(id, starting) {
@@ -257,10 +292,8 @@ YUI.add(
 						if (container) {
 							if (starting && container.hasClass(CSS_COLLAPSE)) {
 								instance._toggleContainer(container, false);
-								instance._scrollToNode(linkedLine);
 							}
-
-							else if (!starting && !container.hasClass(CSS_COLLAPSE)) {
+							else if (linkedLine.hasClass('conditional-fail')) {
 								instance._toggleContainer(container, false);
 							}
 						}
@@ -398,9 +431,9 @@ YUI.add(
 
 						var returnVal = false;
 
-						var running = instance.get(STR_RUNNING);
+						var transitioning = instance.get(STR_TRANSITIONING);
 
-						if (targetNode && (!running || !running.contains(targetNode))) {
+						if (targetNode && (!transitioning || !transitioning.contains(targetNode))) {
 							var height;
 
 							var collapsing = targetNode.getStyle(STR_HEIGHT) != '0px';
@@ -410,7 +443,7 @@ YUI.add(
 
 								targetNode.height(height);
 
-								instance.set(STR_RUNNING, targetNode);
+								instance.set(STR_TRANSITIONING, targetNode);
 
 								targetNode.addClass(CSS_TRANSITIONING);
 							}
@@ -462,9 +495,7 @@ YUI.add(
 						if (container.hasClass(CSS_COLLAPSE)) {
 							instance._toggleContainer(container, false);
 
-							instance._scrollToNode(container.one('.line-group'));
-
-							timeout = 200;
+							timeout = 50;
 						}
 
 						if (parentContainers.size()) {
@@ -472,9 +503,6 @@ YUI.add(
 								A.bind('_expandParentContainers', instance, parentContainers, node),
 								timeout
 							);
-						}
-						else {
-							instance._scrollToNode(node);
 						}
 					},
 
@@ -491,7 +519,7 @@ YUI.add(
 					_getTransition: function(targetNode, height, collapsing) {
 						var instance = this;
 
-						var duration = Math.pow(height, 0.35) / 15;
+						var duration = Math.pow(height, 0.3) / 15;
 
 						var ease = 'ease-in';
 
@@ -541,7 +569,7 @@ YUI.add(
 									targetNode.height('auto');
 								}
 
-								instance.set(STR_RUNNING, null);
+								instance.set(STR_TRANSITIONING, null);
 
 								targetNode.removeClass(CSS_TRANSITIONING);
 							}
@@ -760,7 +788,7 @@ YUI.add(
 
 								new A.Anim(
 									{
-										duration: 2,
+										duration: 0.075,
 										easing: 'easeOutStrong',
 										node: scrollNode,
 										to: {
@@ -859,10 +887,11 @@ YUI.add(
 
 						instance._transitionCommandLog(commandLog);
 
-						if (failNodes.size()) {
+						if (failNodes.size() > 0) {
 							failNodes.each(instance._displayNode, instance);
 
-							instance._selectCurrentScope(failNodes.first());
+							instance._selectCurrentScope(failNodes.last());
+							instance._scrollToNode(failNodes.last());
 						}
 					},
 

@@ -9,8 +9,78 @@ buildDir = new File(rootDir.parentFile, "build")
 gradle.beforeProject {
 	Project project ->
 
-	if (FileUtil.exists(project, "bnd.bnd") && FileUtil.exists(project, "build.gradle") && project.parent) {
-		project.apply from: rootProject.file("build-module.gradle")
+	if (!FileUtil.exists(project, "bnd.bnd") || !FileUtil.exists(project, "build.gradle") || !project.parent) {
+		return
+	}
+
+	configure(project) {
+		apply from: rootProject.file("build-module.gradle")
+		apply plugin: "pmd"
+
+		configurations {
+			xmltask
+		}
+
+		dependencies {
+			pmd group: "com.liferay", name: "com.liferay.pmd", version: "1.0.1"
+			xmltask rootProject.files("../lib/development/xmltask.jar")
+		}
+
+		pmd {
+			ruleSetFiles = rootProject.files("../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml")
+			ruleSets = []
+		}
+
+		testIntegration {
+			doLast {
+				String databaseType = System.properties["database.type"]
+
+				if (!databaseType) {
+					return
+				}
+
+				FileTree fileTree = fileTree(dir: reports.junitXml.destination, exclude: "TEST-*-*.xml", include: "TEST-*.xml")
+
+				ant.taskdef classname: "com.oopsconsultancy.xmltask.ant.XmlTask", classpath: configurations.xmltask.asPath, name: "xmltask"
+
+				fileTree.each {
+					File file ->
+
+					String fileTitle = FileUtil.stripExtension(file.name)
+
+					ant.xmltask(dest: new File(file.parentFile, "${fileTitle}-${databaseType}.xml"), source: file) {
+						replace path: "/testsuite/@name", withText: "${fileTitle}-${databaseType}"
+					}
+
+					delete file
+				}
+			}
+
+			tasks.withType(Pmd) {
+				classpath = null
+			}
+
+			if (gradle.hasProperty("testClassGroupIndex")) {
+				configure([test, testIntegration]) {
+					include gradle.testClasses
+
+					jvmArgs "-Dtest.class.group.index=" + gradle.testClassGroupIndex
+					jvmArgs "-Dtest.class.groups=" + gradle.testClassGroups
+				}
+			}
+
+			if (System.getenv("JENKINS_HOME")) {
+				pluginManager.withPlugin("com.liferay.cache") {
+					cache {
+						forcedCache = true
+					}
+				}
+
+				startTestableTomcat {
+					deleteLiferayHome = false
+				}
+			}
+		}
 	}
 }
 

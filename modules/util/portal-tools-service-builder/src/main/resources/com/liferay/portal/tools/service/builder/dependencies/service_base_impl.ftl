@@ -38,6 +38,7 @@ import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.Base${sessionTypeName}ServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
@@ -1140,7 +1141,11 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 
 	<#list referenceList as tempEntity>
 		<#if tempEntity.hasLocalService()>
-			@BeanReference(type = ${tempEntity.packagePath}.service.${tempEntity.name}LocalService.class)
+			<#if osgiModule && (tempEntity.packagePath != packagePath)>
+				@ServiceReference(type = ${tempEntity.packagePath}.service.${tempEntity.name}LocalService.class)
+			<#else>
+				@BeanReference(type = ${tempEntity.packagePath}.service.${tempEntity.name}LocalService.class)
+			</#if>
 
 			<#if !classDeprecated && tempEntity.isDeprecated()>
 				@SuppressWarnings("deprecation")
@@ -1150,7 +1155,11 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		</#if>
 
 		<#if (sessionTypeName != "Local") && tempEntity.hasRemoteService()>
-			@BeanReference(type = ${tempEntity.packagePath}.service.${tempEntity.name}Service.class)
+			<#if osgiModule && (tempEntity.packagePath != packagePath)>
+				@ServiceReference(type = ${tempEntity.packagePath}.service.${tempEntity.name}Service.class)
+			<#else>
+				@BeanReference(type = ${tempEntity.packagePath}.service.${tempEntity.name}Service.class)
+			</#if>
 
 			<#if !classDeprecated && tempEntity.isDeprecated()>
 				@SuppressWarnings("deprecation")
@@ -1160,12 +1169,20 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		</#if>
 
 		<#if tempEntity.hasColumns() && (entity.name == "Counter" || tempEntity.name != "Counter")>
-			@BeanReference(type = ${tempEntity.name}Persistence.class)
+			<#if osgiModule && (tempEntity.packagePath != packagePath)>
+				@ServiceReference(type = ${tempEntity.name}Persistence.class)
+			<#else>
+				@BeanReference(type = ${tempEntity.name}Persistence.class)
+			</#if>
 			protected ${tempEntity.name}Persistence ${tempEntity.varName}Persistence;
 		</#if>
 
 		<#if tempEntity.hasFinderClass() && (entity.name == "Counter" || tempEntity.name != "Counter")>
-			@BeanReference(type = ${tempEntity.name}Finder.class)
+			<#if osgiModule && (tempEntity.packagePath != packagePath)>
+				@ServiceReference(type = ${tempEntity.name}Finder.class)
+			<#else>
+				@BeanReference(type = ${tempEntity.name}Finder.class)
+			</#if>
 			protected ${tempEntity.name}Finder ${tempEntity.varName}Finder;
 		</#if>
 	</#list>

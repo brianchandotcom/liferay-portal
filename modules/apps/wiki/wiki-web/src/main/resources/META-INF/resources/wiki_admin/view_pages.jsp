@@ -20,7 +20,7 @@
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
-String type = ParamUtil.getString(request, "type");
+String type = ParamUtil.getString(request, "type", "all_pages");
 long categoryId = ParamUtil.getLong(request, "categoryId");
 String tagName = ParamUtil.getString(request, "tag");
 

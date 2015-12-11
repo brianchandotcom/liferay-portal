@@ -508,11 +508,11 @@ public class DDLRecordLocalServiceUtil {
 		com.liferay.dynamic.data.lists.model.DDLRecord record,
 		com.liferay.dynamic.data.lists.model.DDLRecordVersion recordVersion,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		java.util.Locale locale)
+		java.util.Locale locale, java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateAsset(userId, record, recordVersion, assetCategoryIds,
-			assetTagNames, locale);
+			assetTagNames, locale, priority);
 	}
 
 	/**

@@ -42,6 +42,9 @@ if (type.equals("all_pages")) {
 else if (type.equals("draft_pages")) {
 	emptyResultsMessage = "there-are-no-drafts";
 }
+else if (type.equals("frontpage")) {
+	emptyResultsMessage = LanguageUtil.format(request, "there-is-no-x", new String[] {wikiGroupServiceConfiguration.frontPageName()}, false);
+}
 else if (type.equals("orphan_pages")) {
 	emptyResultsMessage = "there-are-no-orphan-pages";
 }
@@ -94,6 +97,14 @@ else if (type.equals("draft_pages")) {
 	searchContainer.setTotal(total);
 
 	results = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status, searchContainer.getStart(), searchContainer.getEnd());
+}
+else if (type.equals("frontpage")) {
+
+	WikiPage wikiPage = WikiPageServiceUtil.getPage(scopeGroupId, node.getNodeId(), wikiGroupServiceConfiguration.frontPageName());
+
+	searchContainer.setTotal(1);
+
+	results.add(wikiPage);
 }
 else if (type.equals("orphan_pages")) {
 	List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(themeDisplay.getScopeGroupId(), node.getNodeId());

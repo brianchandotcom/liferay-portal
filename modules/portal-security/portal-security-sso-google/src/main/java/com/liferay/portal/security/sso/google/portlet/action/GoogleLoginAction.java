@@ -24,9 +24,11 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfoplus;
+
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -51,21 +53,29 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 
-import javax.portlet.PortletMode;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  * @author Federico Budassi
  */
+@Component(
+	immediate = true, property = {"path=/portal/google_login"},
+	service = StrutsAction.class
+)
 public class GoogleLoginAction extends BaseStrutsAction {
 
 	@Override
@@ -175,7 +185,8 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		user = UserLocalServiceUtil.updateEmailAddressVerified(
 			user.getUserId(), true);
 
-		session.setAttribute(GoogleWebKeys.GOOGLE_USER_EMAIL_ADDRESS, emailAddress);
+		session.setAttribute(
+			GoogleWebKeys.GOOGLE_USER_EMAIL_ADDRESS, emailAddress);
 
 		return user;
 	}

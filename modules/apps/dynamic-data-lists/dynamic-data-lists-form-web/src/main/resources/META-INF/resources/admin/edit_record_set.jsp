@@ -133,7 +133,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			<aui:input name="layout" type="hidden" />
 
 			<div id="<portlet:namespace />formBuilder">
-				<span class="icon-refresh icon-spin" id="<portlet:namespace />loader"></span>
+				<span class="ddl-loader icon-refresh icon-spin" id="<portlet:namespace />loader"></span>
 			</div>
 		</aui:fieldset>
 

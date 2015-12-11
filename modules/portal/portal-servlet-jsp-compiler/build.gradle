@@ -9,8 +9,8 @@ classes {
 }
 
 dependencies {
-	compile group: "com.github.rotty3000", name: "phidias", version: "0.3.7"
 	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.4"
+	compile group: "com.liferay", name: "org.phidias", version: "0.3.7.LIFERAY-PATCHED-1"
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "org.glassfish", name: "javax.el", transitive: false, version: "3.0.1-b05"
 	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
@@ -29,7 +29,7 @@ deploy {
 		include "javax.el.jar"
 		include "javax.servlet.jsp-api.jar"
 		include "javax.servlet.jsp.jstl-api.jar"
-		include "phidias.jar"
+		include "org.phidias.jar"
 	}
 }
 

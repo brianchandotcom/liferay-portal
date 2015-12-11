@@ -8,7 +8,7 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "com.github.rotty3000", name: "phidias", optional, version: "0.3.6"
+	compile group: "com.github.rotty3000", name: "phidias", optional, version: "0.3.7"
 }
 
 liferay {
@@ -20,7 +20,9 @@ patch {
 		autoClean = false
 	}
 
+	fileNames "**/org/phidias/compile/BundleJavaFileObject.java"
 	fileNames "**/org/phidias/compile/BundleJavaManager.java"
+	fileNames "**/org/phidias/compile/JarJavaFileObject.java"
 
 	originalLibModuleName = "phidias"
 }

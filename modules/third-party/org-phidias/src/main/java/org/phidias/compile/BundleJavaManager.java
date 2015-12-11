@@ -278,7 +278,7 @@ public class BundleJavaManager
 
 		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
 			try {
-				return new BundleJavaFileObject(uri, className);
+				return new BundleJavaFileObject(uri, className, resourceURL);
 			}
 			catch (Exception e) {
 				_log.log(e);

@@ -8,10 +8,8 @@ body {
 	}
 
 	&.open, &.sidenav-transition {
-		#wrapper {
-			@include sm() {
-				overflow-x: hidden;
-			}
+		@include sm() {
+			overflow-x: hidden;
 		}
 	}
 }

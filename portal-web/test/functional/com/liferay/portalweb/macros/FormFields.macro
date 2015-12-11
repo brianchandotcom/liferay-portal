@@ -9,10 +9,6 @@
 		<execute function="Click" locator1="FormFields#FIELD_ADD" />
 	</command>
 
-	<command name="removeRepeatableField">
-		<execute function="Click" locator1="FormFields#FIELD_REMOVE" />
-	</command>
-
 	<command name="disableCheckbox">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -66,6 +62,10 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Click" locator1="FormFields#SWITCHER" />
+	</command>
+
+	<command name="removeRepeatableField">
+		<execute function="Click" locator1="FormFields#FIELD_REMOVE" />
 	</command>
 
 	<command name="save">

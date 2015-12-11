@@ -1,10 +1,10 @@
 <definition>
-	<command name="clickDelete">
-		<execute function="AssertClick" locator1="Button#DELETE" value1="Delete" />
-	</command>
-
 	<command name="clickCancel">
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
+	</command>
+
+	<command name="clickDelete">
+		<execute function="AssertClick" locator1="Button#DELETE" value1="Delete" />
 	</command>
 
 	<command name="clickPublish">

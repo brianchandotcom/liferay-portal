@@ -1,12 +1,4 @@
 <definition>
-	<command name="editConfiguration">
-		<var name="key_assetEntry" value="${configurationName}" />
-
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-	</command>
-
 	<command name="deleteConfiguration">
 		<execute macro="SystemSettings#gotoCategory">
 			<var name="category" value="${category}" />
@@ -19,6 +11,14 @@
 		<execute macro="Button#clickDelete" />
 
 		<execute macro="Alert#viewSuccess" />
+	</command>
+
+	<command name="editConfiguration">
+		<var name="key_assetEntry" value="${configurationName}" />
+
+		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
 	<command name="gotoCategory">

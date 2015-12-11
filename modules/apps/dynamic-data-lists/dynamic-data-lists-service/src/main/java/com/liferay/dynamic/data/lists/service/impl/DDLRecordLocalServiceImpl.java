@@ -122,7 +122,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		updateAsset(
 			userId, record, recordVersion, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(), locale);
+			serviceContext.getAssetTagNames(), locale,
+			serviceContext.getAssetPriority());
 
 		// Workflow
 
@@ -459,7 +460,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public void updateAsset(
 			long userId, DDLRecord record, DDLRecordVersion recordVersion,
-			long[] assetCategoryIds, String[] assetTagNames, Locale locale)
+			long[] assetCategoryIds, String[] assetTagNames, Locale locale,
+			Double priority)
 		throws PortalException {
 
 		DDLRecordSet recordSet = record.getRecordSet();
@@ -509,7 +511,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				recordVersion.getRecordVersionId(), record.getUuid(), 0,
 				assetCategoryIds, assetTagNames, false, null, null, null,
 				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-				null, 0, 0, null);
+				null, 0, 0, priority);
 		}
 		else {
 			assetEntryLocalService.updateEntry(
@@ -518,7 +520,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				record.getRecordId(), record.getUuid(), 0, assetCategoryIds,
 				assetTagNames, visible, null, null, null,
 				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-				null, 0, 0, null);
+				null, 0, 0, priority);
 		}
 	}
 
@@ -715,7 +717,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		updateAsset(
 			userId, record, recordVersion, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(), locale);
+			serviceContext.getAssetTagNames(), locale,
+			serviceContext.getAssetPriority());
 
 		return record;
 	}

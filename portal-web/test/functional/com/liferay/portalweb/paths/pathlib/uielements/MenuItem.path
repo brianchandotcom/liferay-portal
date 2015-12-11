@@ -344,6 +344,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>JOIN</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Join')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LEAVE</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Leave')]</td>
 	<td></td>
@@ -536,6 +541,11 @@
 <tr>
 	<td>REPOSITORY</td>
 	<td>//li[contains(@class,'open')]//a[contains(.,'Repository')] | //div[contains(@class,'open')]//a[contains(.,'Repository')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUEST_MEMBERSHIP</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Request Membership')]</td>
 	<td></td>
 </tr>
 <tr>

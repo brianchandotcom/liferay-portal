@@ -24,6 +24,11 @@
 	<td>Application Search Field</td>
 </tr>
 <tr>
+	<td>AVAILABLE_SITES</td>
+	<td>//div[contains(@class,'navbar-default')]//a[contains(@title,'Available Sites')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BASIC_SEARCH_FIELD</td>
 	<td>//div[contains(@class,'navbar-default')]//input[contains(@id,'keywords')]</td>
 	<td></td>
@@ -66,6 +71,11 @@
 <tr>
 	<td>MINE</td>
 	<td>//*[@data-qa-id='navigation']//a[contains(.,'Mine')] | //div[contains(@class,'navbar-default')]//a/span[contains(.,'Mine')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_SITES</td>
+	<td>//div[contains(@class,'navbar-default')]//a[contains(@title,'My Sites')]</td>
 	<td></td>
 </tr>
 <tr>

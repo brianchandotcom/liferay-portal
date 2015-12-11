@@ -39,7 +39,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= postMembershipRequestURL %>" method="post" name="fm">
+<aui:form action="<%= postMembershipRequestURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<c:if test="<%= !layout.isTypeControlPanel() %>">
@@ -56,18 +56,20 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 	<aui:model-context bean="<%= membershipRequest %>" model="<%= MembershipRequest.class %>" />
 
 	<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
-		<aui:field-wrapper label="description">
-			<p>
-				<%= HtmlUtil.escape(group.getDescription()) %>
-			</p>
-		</aui:field-wrapper>
+		<div class="alert alert-info">
+			<%= HtmlUtil.escape(group.getDescription(locale)) %>
+		</div>
 	</c:if>
 
-	<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="comments" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="comments" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

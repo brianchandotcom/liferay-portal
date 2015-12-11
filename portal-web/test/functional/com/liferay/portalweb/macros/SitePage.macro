@@ -186,12 +186,12 @@
 
 	<command name="addSitePageTypeEmbeddedCP">
 		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD" value1="${pageTypeURL}" />
-		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD" value1="Show content from another website." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD" value1="Show content from another website." />
 	</command>
 
 	<command name="addSitePageTypeLinkToURLCP">
 		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_URL_URL_FIELD" value1="${pageTypeURL}" />
-		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD" value1="Link to another website." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD" value1="Link to another website." />
 	</command>
 
 	<command name="addSitePageTypePanelCP">
@@ -259,11 +259,17 @@
 	</command>
 
 	<command name="copyApplicationsFromPageToPagePG">
-		<execute function="Click" locator1="DockbarEditpanel#EDIT" />
+		<execute function="Click" locator1="ControlMenu#EDIT_COG" />
+
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#COPY_APPLICATIONS" value1="Copy Applications" />
+
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#COPY_APPLICATIONS_MESSAGE_INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL" value1="Copy from Page" />
+
 		<execute function="Click" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT" value1="${sitePageName}" />
+
 		<execute function="AssertClick" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_BUTTON" value1="Copy" />
 
 		<execute function="AssertTextNotPresent" locator1="CPBlogs#PORTLET_TITLE" value1="Blogs" />
@@ -833,9 +839,11 @@
 	</command>
 
 	<command name="viewPanelPortletListCP">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
 
 		<var name="key_componentName" value="${componentName}" />
 

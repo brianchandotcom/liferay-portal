@@ -230,12 +230,17 @@ public class BundleJavaManager
 		return resourceName.replace('/', '.');
 	}
 
-	private URI getURI(URL url) {
-		String protocol = url.getProtocol();
+	private JavaFileObject getJavaFileObject(
+		URL resourceURL, String resourceName) {
+
+		String protocol = resourceURL.getProtocol();
+
+		String className = getClassNameFromPath(resourceName);
 
 		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
 			try {
-				return url.toURI();
+				return new BundleJavaFileObject(
+					resourceURL.toURI(), className, resourceURL);
 			}
 			catch (Exception e) {
 				_log.log(e);
@@ -244,52 +249,31 @@ public class BundleJavaManager
 		else if (protocol.equals("jar")) {
 			try {
 				JarURLConnection jarUrlConnection =
-					(JarURLConnection)url.openConnection();
+					(JarURLConnection)resourceURL.openConnection();
 
-				return jarUrlConnection.getJarFileURL().toURI();
+				URL url = jarUrlConnection.getJarFileURL();
+
+				return new JarJavaFileObject(
+					url.toURI(), className, resourceURL, resourceName);
 			}
 			catch (Exception e) {
 				_log.log(e);
 			}
 		}
 		else if (protocol.equals("vfs")) {
-			String file = url.getFile();
-
-			int indexOf = file.indexOf(".jar") + 4;
-
-			file =
-				file.substring(0, indexOf) + "!" +
-					url.getFile().substring(indexOf, url.getFile().length());
-
-			return new File(file).toURI();
-		}
-
-		return null;
-	}
-
-	private JavaFileObject getJavaFileObject(
-		URL resourceURL, String resourceName) {
-
-		String protocol = resourceURL.getProtocol();
-
-		String className = getClassNameFromPath(resourceName);
-
-		URI uri = getURI(resourceURL);
-
-		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
 			try {
-				return new BundleJavaFileObject(uri, className, resourceURL);
-			}
-			catch (Exception e) {
-				_log.log(e);
-			}
-		}
-		else if (protocol.equals("jar")) {
-			return new JarJavaFileObject(
-				uri, className, resourceURL, resourceName);
-		}
-		else if (protocol.equals("vfs")) {
-			try {
+				String filePath = resourceURL.getFile();
+
+				int indexOf = filePath.indexOf(".jar") + 4;
+
+				filePath =
+					filePath.substring(0, indexOf) + "!" +
+						filePath.substring(indexOf, filePath.length());
+
+				File file = new File(filePath);
+
+				URI uri = file.toURI();
+
 				return new JarJavaFileObject(
 					uri, className,
 					new URL("jar:" + uri.toString()),

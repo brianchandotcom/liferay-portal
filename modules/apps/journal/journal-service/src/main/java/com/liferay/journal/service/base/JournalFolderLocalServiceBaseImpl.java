@@ -56,6 +56,7 @@ import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
@@ -1140,7 +1141,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	protected JournalFolderPersistence journalFolderPersistence;
 	@BeanReference(type = JournalFolderFinder.class)
 	protected JournalFolderFinder journalFolderFinder;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.journal.service.JournalArticleLocalService.class)
 	protected com.liferay.journal.service.JournalArticleLocalService journalArticleLocalService;
@@ -1148,55 +1149,55 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	protected JournalArticlePersistence journalArticlePersistence;
 	@BeanReference(type = JournalArticleFinder.class)
 	protected JournalArticleFinder journalArticleFinder;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
-	@BeanReference(type = GroupPersistence.class)
+	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.SubscriptionLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.SubscriptionLocalService.class)
 	protected com.liferay.portal.service.SubscriptionLocalService subscriptionLocalService;
-	@BeanReference(type = SubscriptionPersistence.class)
+	@ServiceReference(type = SubscriptionPersistence.class)
 	protected SubscriptionPersistence subscriptionPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = com.liferay.portal.service.WorkflowDefinitionLinkLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.WorkflowDefinitionLinkLocalService.class)
 	protected com.liferay.portal.service.WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService;
-	@BeanReference(type = WorkflowDefinitionLinkPersistence.class)
+	@ServiceReference(type = WorkflowDefinitionLinkPersistence.class)
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
-	@BeanReference(type = com.liferay.portal.service.WorkflowInstanceLinkLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.WorkflowInstanceLinkLocalService.class)
 	protected com.liferay.portal.service.WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService;
-	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
+	@ServiceReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
-	@BeanReference(type = com.liferay.portlet.asset.service.AssetEntryLocalService.class)
+	@ServiceReference(type = com.liferay.portlet.asset.service.AssetEntryLocalService.class)
 	protected com.liferay.portlet.asset.service.AssetEntryLocalService assetEntryLocalService;
-	@BeanReference(type = AssetEntryPersistence.class)
+	@ServiceReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
-	@BeanReference(type = com.liferay.portlet.asset.service.AssetLinkLocalService.class)
+	@ServiceReference(type = com.liferay.portlet.asset.service.AssetLinkLocalService.class)
 	protected com.liferay.portlet.asset.service.AssetLinkLocalService assetLinkLocalService;
-	@BeanReference(type = AssetLinkPersistence.class)
+	@ServiceReference(type = AssetLinkPersistence.class)
 	protected AssetLinkPersistence assetLinkPersistence;
-	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoValueLocalService.class)
+	@ServiceReference(type = com.liferay.portlet.expando.service.ExpandoValueLocalService.class)
 	protected com.liferay.portlet.expando.service.ExpandoValueLocalService expandoValueLocalService;
-	@BeanReference(type = ExpandoValuePersistence.class)
+	@ServiceReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
-	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsStatsLocalService.class)
+	@ServiceReference(type = com.liferay.portlet.ratings.service.RatingsStatsLocalService.class)
 	protected com.liferay.portlet.ratings.service.RatingsStatsLocalService ratingsStatsLocalService;
-	@BeanReference(type = RatingsStatsPersistence.class)
+	@ServiceReference(type = RatingsStatsPersistence.class)
 	protected RatingsStatsPersistence ratingsStatsPersistence;
-	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
+	@ServiceReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
 	protected com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService;
-	@BeanReference(type = TrashEntryPersistence.class)
+	@ServiceReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
-	@BeanReference(type = com.liferay.portlet.trash.service.TrashVersionLocalService.class)
+	@ServiceReference(type = com.liferay.portlet.trash.service.TrashVersionLocalService.class)
 	protected com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService;
-	@BeanReference(type = TrashVersionPersistence.class)
+	@ServiceReference(type = TrashVersionPersistence.class)
 	protected TrashVersionPersistence trashVersionPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.service.BaseServiceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.sql.DataSource;
@@ -180,6 +181,6 @@ public abstract class DDLRecordVersionServiceBaseImpl extends BaseServiceImpl
 	protected DDLRecordVersionService ddlRecordVersionService;
 	@BeanReference(type = DDLRecordVersionPersistence.class)
 	protected DDLRecordVersionPersistence ddlRecordVersionPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 }

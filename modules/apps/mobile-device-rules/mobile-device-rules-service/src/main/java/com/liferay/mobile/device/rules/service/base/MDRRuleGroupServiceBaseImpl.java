@@ -32,6 +32,7 @@ import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.sql.DataSource;
@@ -468,7 +469,7 @@ public abstract class MDRRuleGroupServiceBaseImpl extends BaseServiceImpl
 	protected MDRRuleGroupPersistence mdrRuleGroupPersistence;
 	@BeanReference(type = MDRRuleGroupFinder.class)
 	protected MDRRuleGroupFinder mdrRuleGroupFinder;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRRuleLocalService.class)
 	protected com.liferay.mobile.device.rules.service.MDRRuleLocalService mdrRuleLocalService;
@@ -476,21 +477,21 @@ public abstract class MDRRuleGroupServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.mobile.device.rules.service.MDRRuleService mdrRuleService;
 	@BeanReference(type = MDRRulePersistence.class)
 	protected MDRRulePersistence mdrRulePersistence;
-	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupService.class)
+	@ServiceReference(type = com.liferay.portal.service.GroupService.class)
 	protected com.liferay.portal.service.GroupService groupService;
-	@BeanReference(type = GroupPersistence.class)
+	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = com.liferay.portal.service.SystemEventLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.SystemEventLocalService.class)
 	protected com.liferay.portal.service.SystemEventLocalService systemEventLocalService;
-	@BeanReference(type = SystemEventPersistence.class)
+	@ServiceReference(type = SystemEventPersistence.class)
 	protected SystemEventPersistence systemEventPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserService.class)
 	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService.class)
 	protected com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService;

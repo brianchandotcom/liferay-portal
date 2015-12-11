@@ -44,6 +44,7 @@ import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
@@ -653,7 +654,7 @@ public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected PollsVoteLocalService pollsVoteLocalService;
 	@BeanReference(type = PollsVotePersistence.class)
 	protected PollsVotePersistence pollsVotePersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.polls.service.PollsChoiceLocalService.class)
 	protected com.liferay.polls.service.PollsChoiceLocalService pollsChoiceLocalService;
@@ -663,9 +664,9 @@ public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.polls.service.PollsQuestionLocalService pollsQuestionLocalService;
 	@BeanReference(type = PollsQuestionPersistence.class)
 	protected PollsQuestionPersistence pollsQuestionPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;

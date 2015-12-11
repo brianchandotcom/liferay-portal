@@ -39,6 +39,7 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.shopping.model.ShoppingOrder;
@@ -695,19 +696,19 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 	protected ShoppingOrderPersistence shoppingOrderPersistence;
 	@BeanReference(type = ShoppingOrderFinder.class)
 	protected ShoppingOrderFinder shoppingOrderFinder;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.CompanyLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.CompanyLocalService.class)
 	protected com.liferay.portal.service.CompanyLocalService companyLocalService;
-	@BeanReference(type = CompanyPersistence.class)
+	@ServiceReference(type = CompanyPersistence.class)
 	protected CompanyPersistence companyPersistence;
-	@BeanReference(type = com.liferay.portal.service.SubscriptionLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.SubscriptionLocalService.class)
 	protected com.liferay.portal.service.SubscriptionLocalService subscriptionLocalService;
-	@BeanReference(type = SubscriptionPersistence.class)
+	@ServiceReference(type = SubscriptionPersistence.class)
 	protected SubscriptionPersistence subscriptionPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = com.liferay.shopping.service.ShoppingItemLocalService.class)
 	protected com.liferay.shopping.service.ShoppingItemLocalService shoppingItemLocalService;

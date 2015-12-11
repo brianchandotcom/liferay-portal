@@ -26,6 +26,7 @@ import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.service.persistence.RolePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.service.access.policy.model.SAPEntry;
@@ -427,32 +428,32 @@ public abstract class SAPEntryServiceBaseImpl extends BaseServiceImpl
 	protected SAPEntryService sapEntryService;
 	@BeanReference(type = SAPEntryPersistence.class)
 	protected SAPEntryPersistence sapEntryPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameService.class)
 	protected com.liferay.portal.service.ClassNameService classNameService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourcePermissionLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourcePermissionLocalService.class)
 	protected com.liferay.portal.service.ResourcePermissionLocalService resourcePermissionLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourcePermissionService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourcePermissionService.class)
 	protected com.liferay.portal.service.ResourcePermissionService resourcePermissionService;
-	@BeanReference(type = ResourcePermissionPersistence.class)
+	@ServiceReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
-	@BeanReference(type = com.liferay.portal.service.RoleLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.RoleLocalService.class)
 	protected com.liferay.portal.service.RoleLocalService roleLocalService;
-	@BeanReference(type = com.liferay.portal.service.RoleService.class)
+	@ServiceReference(type = com.liferay.portal.service.RoleService.class)
 	protected com.liferay.portal.service.RoleService roleService;
-	@BeanReference(type = RolePersistence.class)
+	@ServiceReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserService.class)
 	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 }

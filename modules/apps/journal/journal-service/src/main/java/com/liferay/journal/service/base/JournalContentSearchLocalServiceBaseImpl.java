@@ -43,6 +43,7 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
@@ -543,19 +544,19 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	protected JournalContentSearchLocalService journalContentSearchLocalService;
 	@BeanReference(type = JournalContentSearchPersistence.class)
 	protected JournalContentSearchPersistence journalContentSearchPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
-	@BeanReference(type = GroupPersistence.class)
+	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = com.liferay.portal.service.LayoutLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.LayoutLocalService.class)
 	protected com.liferay.portal.service.LayoutLocalService layoutLocalService;
-	@BeanReference(type = LayoutPersistence.class)
+	@ServiceReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
-	@BeanReference(type = com.liferay.portal.service.PortletPreferencesLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.PortletPreferencesLocalService.class)
 	protected com.liferay.portal.service.PortletPreferencesLocalService portletPreferencesLocalService;
-	@BeanReference(type = PortletPreferencesPersistence.class)
+	@ServiceReference(type = PortletPreferencesPersistence.class)
 	protected PortletPreferencesPersistence portletPreferencesPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;

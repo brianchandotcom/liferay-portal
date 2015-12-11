@@ -51,6 +51,7 @@ import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
@@ -858,7 +859,7 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 	protected MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService;
 	@BeanReference(type = MDRRuleGroupInstancePersistence.class)
 	protected MDRRuleGroupInstancePersistence mdrRuleGroupInstancePersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRActionLocalService.class)
 	protected com.liferay.mobile.device.rules.service.MDRActionLocalService mdrActionLocalService;
@@ -870,25 +871,25 @@ public abstract class MDRRuleGroupInstanceLocalServiceBaseImpl
 	protected MDRRuleGroupPersistence mdrRuleGroupPersistence;
 	@BeanReference(type = MDRRuleGroupFinder.class)
 	protected MDRRuleGroupFinder mdrRuleGroupFinder;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.service.LayoutLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.LayoutLocalService.class)
 	protected com.liferay.portal.service.LayoutLocalService layoutLocalService;
-	@BeanReference(type = LayoutPersistence.class)
+	@ServiceReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
-	@BeanReference(type = com.liferay.portal.service.LayoutSetLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.LayoutSetLocalService.class)
 	protected com.liferay.portal.service.LayoutSetLocalService layoutSetLocalService;
-	@BeanReference(type = LayoutSetPersistence.class)
+	@ServiceReference(type = LayoutSetPersistence.class)
 	protected LayoutSetPersistence layoutSetPersistence;
-	@BeanReference(type = com.liferay.portal.service.SystemEventLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.SystemEventLocalService.class)
 	protected com.liferay.portal.service.SystemEventLocalService systemEventLocalService;
-	@BeanReference(type = SystemEventPersistence.class)
+	@ServiceReference(type = SystemEventPersistence.class)
 	protected SystemEventPersistence systemEventPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;

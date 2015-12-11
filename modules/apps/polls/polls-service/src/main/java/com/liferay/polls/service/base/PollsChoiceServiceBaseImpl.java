@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.sql.DataSource;
@@ -294,13 +295,13 @@ public abstract class PollsChoiceServiceBaseImpl extends BaseServiceImpl
 	protected PollsChoiceService pollsChoiceService;
 	@BeanReference(type = PollsChoicePersistence.class)
 	protected PollsChoicePersistence pollsChoicePersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserService.class)
 	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = com.liferay.polls.service.PollsQuestionLocalService.class)
 	protected com.liferay.polls.service.PollsQuestionLocalService pollsQuestionLocalService;

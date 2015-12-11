@@ -95,7 +95,7 @@ public class DDLFormDisplayContext {
 			return _showConfigurationIcon;
 		}
 
-		if (isSharedURL() && isPublished() && isFormShared()) {
+		if (isSharedURL() && isFormShared()) {
 			_showConfigurationIcon = false;
 
 			return _showConfigurationIcon;

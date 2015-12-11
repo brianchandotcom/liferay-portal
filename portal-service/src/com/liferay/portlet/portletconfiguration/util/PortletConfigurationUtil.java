@@ -15,13 +15,16 @@
 package com.liferay.portlet.portletconfiguration.util;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletSetupUtil;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -57,51 +60,45 @@ public class PortletConfigurationUtil {
 	public static String getPortletTitle(
 		PortletPreferences portletSetup, String languageId) {
 
-		String useCustomTitle = GetterUtil.getString(
-			portletSetup.getValue(
-				"portletSetupUseCustomTitle", StringPool.BLANK));
-
-		if (!useCustomTitle.equals("true")) {
+		if (!isUseCustomTitle(portletSetup)) {
 			return null;
 		}
 
-		String portletTitle = portletSetup.getValue(
-			"portletSetupTitle_" + languageId, null);
-
-		if (Validator.isNotNull(portletTitle)) {
-			return portletTitle;
-		}
-
-		// For backwards compatibility
-
-		String oldPortletTitle = portletSetup.getValue(
-			"portletSetupTitle", null);
-
-		if (Validator.isNull(useCustomTitle) &&
-			Validator.isNotNull(oldPortletTitle)) {
-
-			portletTitle = oldPortletTitle;
-
-			try {
-				String defaultLanguageId = LocaleUtil.toLanguageId(
-					LocaleUtil.getSiteDefault());
-
-				portletSetup.setValue(
-					"portletSetupTitle_" + defaultLanguageId, portletTitle);
-				portletSetup.setValue(
-					"portletSetupUseCustomTitle", Boolean.TRUE.toString());
-
-				portletSetup.store();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		return portletTitle;
+		return portletSetup.getValue("portletSetupTitle_" + languageId, null);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletConfigurationUtil.class);
+	public static Map<Locale, String> getPortletTitleMap(
+		PortletPreferences portletSetup) {
+
+		if (!isUseCustomTitle(portletSetup)) {
+			return null;
+		}
+
+		Map<Locale, String> map = new HashMap<>();
+
+		boolean empty = true;
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			String portletTitle = GetterUtil.getString(
+				getPortletTitle(portletSetup, LocaleUtil.toLanguageId(locale)));
+
+			map.put(locale, portletTitle);
+
+			if (Validator.isNotNull(portletTitle)) {
+				empty = false;
+			}
+		}
+
+		if (!empty) {
+			return map;
+		}
+
+		return null;
+	}
+
+	protected static boolean isUseCustomTitle(PortletPreferences portletSetup) {
+		return GetterUtil.getBoolean(
+			portletSetup.getValue("portletSetupUseCustomTitle", null));
+	}
 
 }

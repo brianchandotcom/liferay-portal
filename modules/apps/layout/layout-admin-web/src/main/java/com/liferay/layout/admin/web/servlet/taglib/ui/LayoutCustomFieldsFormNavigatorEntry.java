@@ -15,6 +15,12 @@
 package com.liferay.layout.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import javax.servlet.ServletContext;
 
@@ -34,6 +40,33 @@ public class LayoutCustomFieldsFormNavigatorEntry
 	@Override
 	public String getKey() {
 		return "custom-fields";
+	}
+
+	@Override
+	public boolean isVisible(User user, Layout layout) {
+		boolean hasCustomAttributesAvailable = false;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			long classPK = 0;
+
+			if (layout != null) {
+				classPK = layout.getPlid();
+			}
+
+			hasCustomAttributesAvailable =
+				CustomAttributesUtil.hasCustomAttributes(
+					themeDisplay.getCompanyId(), Layout.class.getName(),
+					classPK, null);
+		}
+		catch (Exception e) {
+		}
+
+		return hasCustomAttributesAvailable;
 	}
 
 	@Override

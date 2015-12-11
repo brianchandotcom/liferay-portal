@@ -106,8 +106,6 @@ else if (group != null) {
 
 <liferay-ui:error-marker key="errorSection" value="details" />
 
-<h3><liferay-ui:message key="details" /></h3>
-
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
@@ -133,59 +131,57 @@ else if (group != null) {
 
 <liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 
-<aui:fieldset>
-	<c:choose>
-		<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
-			<aui:input helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" name="name" type="resource" value="<%= liveGroup.getDescriptiveName(locale) %>" />
-		</c:when>
-		<c:when test="<%= (liveGroup == null) || (!liveGroup.isCompany() && !PortalUtil.isSystemGroup(liveGroup.getGroupKey())) %>">
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
-		</c:when>
-	</c:choose>
+<c:choose>
+	<c:when test="<%= (liveGroup != null) && liveGroup.isOrganization() %>">
+		<aui:input helpMessage="the-name-of-this-site-cannot-be-edited-because-it-belongs-to-an-organization" name="name" type="resource" value="<%= liveGroup.getDescriptiveName(locale) %>" />
+	</c:when>
+	<c:when test="<%= (liveGroup == null) || (!liveGroup.isCompany() && !PortalUtil.isSystemGroup(liveGroup.getGroupKey())) %>">
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+	</c:when>
+</c:choose>
 
-	<aui:input name="description" />
+<aui:input name="description" />
 
-	<c:if test="<%= liveGroup != null %>">
-		<aui:input name="siteId" type="resource" value="<%= String.valueOf(liveGroup.getGroupId()) %>" />
-	</c:if>
+<c:if test="<%= liveGroup != null %>">
+	<aui:input name="siteId" type="resource" value="<%= String.valueOf(liveGroup.getGroupId()) %>" />
+</c:if>
 
-	<c:if test="<%= (group == null) || !group.isCompany() %>">
-		<aui:input name="active" value="<%= true %>" />
-	</c:if>
+<c:if test="<%= (group == null) || !group.isCompany() %>">
+	<aui:input name="active" type="toggle-switch" value="<%= true %>" />
+</c:if>
 
-	<c:if test="<%= (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) && PropsValues.SITES_SHOW_INHERIT_CONTENT_SCOPE_FROM_PARENT_SITE %>">
+<c:if test="<%= (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) && PropsValues.SITES_SHOW_INHERIT_CONTENT_SCOPE_FROM_PARENT_SITE %>">
 
-		<%
-		boolean disabled = false;
+	<%
+	boolean disabled = false;
 
-		if ((parentGroup != null) && parentGroup.isInheritContent()) {
-			disabled = true;
-		}
-		%>
+	if ((parentGroup != null) && parentGroup.isInheritContent()) {
+		disabled = true;
+	}
+	%>
 
-		<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "this-site-cannot-inherit-the-content-from-its-parent-site-since-the-parent-site-is-already-inheriting-the-content-from-its-parent" : StringPool.BLANK %>' name="inheritContent" value="<%= false %>" />
-	</c:if>
+	<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "this-site-cannot-inherit-the-content-from-its-parent-site-since-the-parent-site-is-already-inheriting-the-content-from-its-parent" : StringPool.BLANK %>' name="inheritContent" value="<%= false %>" />
+</c:if>
 
-	<h3><liferay-ui:message key="membership-options" /></h3>
+<h3><liferay-ui:message key="membership-options" /></h3>
 
-	<c:if test="<%= (group == null) || !group.isCompany() %>">
-		<aui:select label="membership-type" name="type">
-			<aui:option label="open" value="<%= GroupConstants.TYPE_SITE_OPEN %>" />
-			<aui:option label="restricted" value="<%= GroupConstants.TYPE_SITE_RESTRICTED %>" />
-			<aui:option label="private" value="<%= GroupConstants.TYPE_SITE_PRIVATE %>" />
-		</aui:select>
+<c:if test="<%= (group == null) || !group.isCompany() %>">
+	<aui:select label="membership-type" name="type">
+		<aui:option label="open" value="<%= GroupConstants.TYPE_SITE_OPEN %>" />
+		<aui:option label="restricted" value="<%= GroupConstants.TYPE_SITE_RESTRICTED %>" />
+		<aui:option label="private" value="<%= GroupConstants.TYPE_SITE_PRIVATE %>" />
+	</aui:select>
 
-		<%
-		boolean manualMembership = true;
+	<%
+	boolean manualMembership = true;
 
-		if (liveGroup != null) {
-			manualMembership = GetterUtil.getBoolean(liveGroup.isManualMembership(), true);
-		}
-		%>
+	if (liveGroup != null) {
+		manualMembership = GetterUtil.getBoolean(liveGroup.isManualMembership(), true);
+	}
+	%>
 
-		<aui:input label="allow-manual-membership-management" name="manualMembership" value="<%= manualMembership %>" />
-	</c:if>
-</aui:fieldset>
+	<aui:input label="allow-manual-membership-management" name="manualMembership" type="toggle-switch" value="<%= manualMembership %>" />
+</c:if>
 
 <%
 boolean disableLayoutSetPrototypeInput = false;
@@ -241,7 +237,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 													</div>
 												</c:if>
 
-												<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+												<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 											</div>
 										</c:when>
 										<c:otherwise>
@@ -269,7 +265,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 												</div>
 											</c:if>
 
-											<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)), false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+											<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)), false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 
 											<div class='<%= publicLayoutSetPrototypeLinkEnabled ? "" : "hide" %>' id="<portlet:namespace/>publicLayoutSetPrototypeMergeAlert">
 
@@ -330,7 +326,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 													</div>
 												</c:if>
 
-												<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+												<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 											</div>
 										</c:when>
 										<c:otherwise>
@@ -358,7 +354,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 												</div>
 											</c:if>
 
-											<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+											<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 
 											<div class='<%= privateLayoutSetPrototypeLinkEnabled ? "" : "hide" %>' id="<portlet:namespace/>privateLayoutSetPrototypeMergeAlert">
 
@@ -453,7 +449,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 					<c:choose>
 						<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-							<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="layoutSetPrototypeLinkEnabled" type="checkbox" value="<%= true %>" />
+							<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="layoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= true %>" />
 						</c:when>
 						<c:otherwise>
 							<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
@@ -536,7 +532,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		}
 		%>
 
-		<aui:input label="limit-membership-to-members-of-the-parent-site" name="membershipRestriction" type="checkbox" value="<%= membershipRestriction %>" />
+		<aui:input label="limit-membership-to-members-of-the-parent-site" name="membershipRestriction" type="toggle-switch" value="<%= membershipRestriction %>" />
 
 		<%
 		boolean breadcrumbShowParentGroups = true;
@@ -546,7 +542,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		}
 		%>
 
-		<aui:input label="show-parent-sites-in-the-breadcrumb" name="TypeSettingsProperties--breadcrumbShowParentGroups--" type="checkbox" value="<%= breadcrumbShowParentGroups %>" />
+		<aui:input label="show-parent-sites-in-the-breadcrumb" name="TypeSettingsProperties--breadcrumbShowParentGroups--" type="toggle-switch" value="<%= breadcrumbShowParentGroups %>" />
 	</div>
 
 	<aui:script>

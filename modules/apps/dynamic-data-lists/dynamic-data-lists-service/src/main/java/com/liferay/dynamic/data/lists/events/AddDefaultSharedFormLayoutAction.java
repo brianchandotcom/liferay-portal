@@ -122,12 +122,12 @@ public class AddDefaultSharedFormLayoutAction extends SimpleAction {
 			group = addFormsGroup(companyId);
 		}
 
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			group.getGroupId(), false, "/shared");
-
-		if (layout == null) {
-			addSharedLayout(companyId, group.getGroupId());
-		}
+//		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+//			group.getGroupId(), false, "/shared");
+//
+//		if (layout == null) {
+//			addSharedLayout(companyId, group.getGroupId());
+//		}
 	}
 
 	@Reference(unbind = "-")

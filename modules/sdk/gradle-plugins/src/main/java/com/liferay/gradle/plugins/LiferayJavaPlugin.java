@@ -62,7 +62,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -88,7 +87,7 @@ import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
-import org.gradle.api.file.FileTree;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -103,6 +102,7 @@ import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.Zip;
@@ -150,7 +150,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		applyConfigScripts(project);
 
-		configureArtifacts(project);
 		configureJSModuleConfigGenerator(project);
 		configureJSTranspiler(project);
 		configureTestIntegrationTomcat(project, liferayExtension);
@@ -174,6 +173,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				public void execute(Project project) {
 					addDependenciesJspC(project, liferayExtension);
 
+					configureArtifacts(project);
 					configureVersion(project, liferayExtension);
 
 					configureTasks(project, liferayExtension);
@@ -508,16 +508,45 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Task jarSourcesTask = GradleUtil.getTask(
 			project, JAR_SOURCES_TASK_NAME);
 
-		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
+		Spec<File> spec = new Spec<File>() {
 
-		Map<String, Object> args = new HashMap<>();
+			@Override
+			public boolean isSatisfiedBy(File file) {
+				String fileName = file.getName();
 
-		args.put("dir", project.getProjectDir());
-		args.put("include", "**/*.java");
+				if (fileName.equals("MANIFEST.MF")) {
+					return false;
+				}
 
-		FileTree javaFileTree = project.fileTree(args);
+				return true;
+			}
 
-		if (!javaFileTree.isEmpty()) {
+		};
+
+		if (hasInputFiles(jarSourcesTask, spec)) {
+			artifactHandler.add(
+				Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
+		}
+
+		Task javadocTask = GradleUtil.getTask(
+			project, JavaPlugin.JAVADOC_TASK_NAME);
+
+		spec = new Spec<File>() {
+
+			@Override
+			public boolean isSatisfiedBy(File file) {
+				String fileName = file.getName();
+
+				if (fileName.endsWith(".java")) {
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		if (hasInputFiles(javadocTask, spec)) {
 			Task zipJavadocTask = GradleUtil.getTask(
 				project, ZIP_JAVADOC_TASK_NAME);
 
@@ -1552,6 +1581,20 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Iterator<File> iterator = srcDirs.iterator();
 
 		return iterator.next();
+	}
+
+	protected boolean hasInputFiles(Task task, Spec<File> spec) {
+		TaskInputs taskInputs = task.getInputs();
+
+		FileCollection fileCollection = taskInputs.getFiles();
+
+		fileCollection = fileCollection.filter(spec);
+
+		if (fileCollection.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean isCleanDeployed(Delete delete) {

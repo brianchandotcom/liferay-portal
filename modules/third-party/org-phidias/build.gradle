@@ -22,7 +22,9 @@ patch {
 
 	fileNames "**/org/phidias/compile/BundleJavaFileObject.java"
 	fileNames "**/org/phidias/compile/BundleJavaManager.java"
+	fileNames "**/org/phidias/compile/ClassLoaderJavaManager.java"
 	fileNames "**/org/phidias/compile/JarJavaFileObject.java"
+	fileNames "**/org/phidias/compile/TPhLog.java"
 
 	originalLibModuleName = "phidias"
 }

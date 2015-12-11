@@ -78,11 +78,9 @@ public class BundleJavaManager
 
 		_strict = strict;
 
-		if (_log.isEnabled()) {
-			_log.log(
-				"Initializing compilation in OSGi for bundle " +
-					_bundle.getSymbolicName() + "-" + _bundle.getVersion());
-		}
+		_log.log(
+			"Initializing compilation in OSGi for bundle " +
+				_bundle.getSymbolicName() + "-" + _bundle.getVersion());
 
 		_bundleWiring = _bundle.adapt(BundleWiring.class);
 
@@ -93,11 +91,9 @@ public class BundleJavaManager
 
 		List<BundleWire> providedWires = _bundleWiring.getRequiredWires(null);
 
-		if (_log.isEnabled()) {
-			_log.log(
-				"Dependent BundleWirings included in this BundleJavaManager " +
-					"context: ");
-		}
+		_log.log(
+			"Dependent BundleWirings included in this BundleJavaManager " +
+				"context: ");
 
 		_bundleWirings = new ArrayList<BundleWiring>();
 
@@ -114,11 +110,9 @@ public class BundleJavaManager
 				_systemBundleWiring = providerWiring;
 			}
 
-			if (_log.isEnabled()) {
-				_log.log(
-					"\t" + curBundle.getSymbolicName() + "-" +
-						curBundle.getVersion());
-			}
+			_log.log(
+				"\t" + curBundle.getSymbolicName() + "-" +
+					curBundle.getVersion());
 
 			_bundleWirings.add(providerWiring);
 		}
@@ -166,9 +160,7 @@ public class BundleJavaManager
 			BundleJavaFileObject bundleJavaFileObject =
 				(BundleJavaFileObject)file;
 
-			if (_log.isEnabled()) {
-				_log.log("Infering binary name from " + bundleJavaFileObject);
-			}
+			_log.log("Infering binary name from " + bundleJavaFileObject);
 
 			return bundleJavaFileObject.inferBinaryName();
 		}
@@ -184,7 +176,7 @@ public class BundleJavaManager
 
 		List<JavaFileObject> javaFileObjects = new ArrayList<JavaFileObject>();
 
-		if ((location == StandardLocation.CLASS_PATH) && _log.isEnabled()) {
+		if (location == StandardLocation.CLASS_PATH) {
 			_log.log(
 				"List available sources for {location=" + location +
 					", packageName=" + packageName + ", kinds=" + kinds +
@@ -215,9 +207,7 @@ public class BundleJavaManager
 				_javaFileManager.list(location, packagePath, kinds, recurse);
 
 			for (JavaFileObject javaFileObject : localJavaFileObjects) {
-				if ((location == StandardLocation.CLASS_PATH) &&
-						_log.isEnabled()) {
-
+				if (location == StandardLocation.CLASS_PATH) {
 					_log.log("\t" + javaFileObject);
 				}
 
@@ -253,9 +243,7 @@ public class BundleJavaManager
 					resourceURL.toURI(), className, resourceURL);
 			}
 			catch (Exception e) {
-				if (_log.isEnabled()) {
-					_log.log(e);
-				}
+				_log.log(e);
 			}
 		}
 		else if (protocol.equals("jar")) {
@@ -269,9 +257,7 @@ public class BundleJavaManager
 					url.toURI(), className, resourceURL, resourceName);
 			}
 			catch (Exception e) {
-				if (_log.isEnabled()) {
-					_log.log(e);
-				}
+				_log.log(e);
 			}
 		}
 		else if (protocol.equals("vfs")) {
@@ -294,9 +280,7 @@ public class BundleJavaManager
 					resourceName);
 			}
 			catch (IOException e) {
-				if (_log.isEnabled()) {
-					_log.log(e);
-				}
+				_log.log(e);
 			}
 		}
 
@@ -366,18 +350,14 @@ public class BundleJavaManager
 				resourceURL, resourceName);
 
 			if (javaFileObject == null) {
-				if (_log.isEnabled()) {
-					_log.log(
-						"\tCould not create JavaFileObject for {" + resourceURL +
-							"}");
-				}
+				_log.log(
+					"\tCould not create JavaFileObject for {" + resourceURL +
+						"}");
 
 				continue;
 			}
 
-			if (_log.isEnabled()) {
-				_log.log("\t" + javaFileObject);
-			}
+			_log.log("\t" + javaFileObject);
 
 			javaFileObjects.add(javaFileObject);
 		}

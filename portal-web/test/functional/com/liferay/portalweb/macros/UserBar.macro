@@ -2,16 +2,7 @@
 	<command name="gotoMyAccount">
 		<description message="Navigate to My Account Via the User Bar." />
 
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 		<execute function="AssertClick" locator1="UserBar#USER_MY_ACCOUNT" value1="My Account" />
@@ -20,16 +11,7 @@
 	<command name="gotoMyDashboard">
 		<description message="Navigate to My Dashboard." />
 
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 		<execute function="AssertClick" locator1="UserBar#USER_MY_DASHBOARD" value1="My Dashboard" />
@@ -38,16 +20,7 @@
 	<command name="gotoMyProfile">
 		<description message="Navigate to My Profile." />
 
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 		<execute function="AssertClick" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
@@ -65,16 +38,7 @@
 	</command>
 
 	<command name="viewUserPageLayoutPG">
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 		<execute function="AssertTextNotPresent" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />

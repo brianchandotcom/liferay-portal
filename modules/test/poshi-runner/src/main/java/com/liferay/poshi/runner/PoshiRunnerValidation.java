@@ -1428,9 +1428,24 @@ public class PoshiRunnerValidation {
 			}
 		}
 
-		List<String> possibleAttributeNames = Arrays.asList(
-			"attribute", "group", "input", "line-number", "locator", "method",
-			"name", "pattern", "property-value", "value");
+		List<String> possibleAttributeNames = new ArrayList<>();
+
+		possibleAttributeNames.addAll(
+			Arrays.asList(
+				"attribute", "group", "input", "line-number", "locator",
+				"method", "name", "pattern", "property-value", "value"));
+
+		Element parentElement = element.getParent();
+
+		if (parentElement != null) {
+			String parentElementName = parentElement.getName();
+
+			if (filePath.contains(".testcase") &&
+				parentElementName.equals("definition")) {
+
+				possibleAttributeNames.add("static");
+			}
+		}
 
 		validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);

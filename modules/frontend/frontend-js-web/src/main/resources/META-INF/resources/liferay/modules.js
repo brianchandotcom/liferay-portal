@@ -725,6 +725,14 @@
 							'liferay-alert'
 						]
 					},
+					'liferay-sidebar-panel': {
+						path: 'sidebar_panel.js',
+						requires: [
+							'aui-base',
+							'aui-io-request',
+							'liferay-portlet-base'
+						]
+					},
 					'liferay-sign-in-modal': {
 						path: 'sign_in_modal.js',
 						requires: [

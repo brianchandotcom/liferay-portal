@@ -27,25 +27,22 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
-if (Validator.isNull(redirect)) {
-	PortletURL redirectURL = renderResponse.createRenderURL();
+PortletURL redirectURL = renderResponse.createRenderURL();
 
-	redirectURL.setParameter("mvcPath", "/edit_record.jsp");
-	redirectURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
-	redirectURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
-
-	redirect = redirectURL.toString();
-}
+redirectURL.setParameter("mvcPath", "/edit_record.jsp");
+redirectURL.setParameter("redirect", redirect);
+redirectURL.setParameter("recordId", String.valueOf(record.getRecordId()));
+redirectURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_record_history.jsp");
-portletURL.setParameter("redirect", redirect);
+portletURL.setParameter("redirect", redirectURL.toString());
 portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 
 if (ddlDisplayContext.isAdminPortlet()) {
 	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
+	portletDisplay.setURLBack(redirectURL.toString());
 
 	renderResponse.setTitle(LanguageUtil.format(request, "x-history", ddmStructure.getName(locale), false));
 }

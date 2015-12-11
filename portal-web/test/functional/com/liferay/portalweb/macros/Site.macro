@@ -626,7 +626,7 @@
 	<command name="gotoSiteViaMySitesPG">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
+		<execute function="AssertClick" locator1="MySites#SITE_TABLE_SITE_NAME_LINK" value1="${siteName}" />
 	</command>
 
 	<command name="importSite">

@@ -36,7 +36,7 @@
 		</if>
 	</tear-down>
 
-	<command name="EditDDLFormConfigurationViaConfigAdmin">
+	<command name="EditDDLFormConfigurationViaSystemSettings">
 		<description message="This is a use case for LPS-59749" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

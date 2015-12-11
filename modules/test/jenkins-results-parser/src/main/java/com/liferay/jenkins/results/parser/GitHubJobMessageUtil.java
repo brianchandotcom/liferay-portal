@@ -42,6 +42,7 @@ public class GitHubJobMessageUtil {
 
 		if (jobResults.size() > 0) {
 			JobResult firstJobResult = jobResults.get(0);
+			int failureAndUnstableCount = 0;
 
 			if (firstJobResult._result.equals("ABORTED")) {
 				sb.append(firstJobResult._getMessage());
@@ -50,7 +51,6 @@ public class GitHubJobMessageUtil {
 				sb.append(
 					generateHeaderText(
 						failureCount, successCount, unstableCount));
-				int failureAndUnstableCount = 0;
 
 				for (JobResult jobResult : jobResults) {
 					if (!jobResult._result.equals("FAILURE") &&
@@ -71,6 +71,14 @@ public class GitHubJobMessageUtil {
 				}
 
 				sb.append("</ol>");
+
+				if (failureAndUnstableCount == (_MAX_MESSAGE_COUNT + 1)) {
+					sb.append("<p><strong>Click <a href=\"");
+					sb.append(buildURL);
+					sb.append(
+						"/testReport/\">here</a> for more failures.</strong>");
+					sb.append("</p>");
+				}
 			}
 		}
 
@@ -120,10 +128,13 @@ public class GitHubJobMessageUtil {
 		return count;
 	}
 
-	private static String generateCountLine(int count, String description) {
+	private static String generateCountLine(
+		int count, String description, String type) {
+
 		StringBuilder sb = new StringBuilder();
 		sb.append(count);
-		sb.append(" Test");
+		sb.append(" ");
+		sb.append(type);
 		sb.append(count == 1 ? " " : "s ");
 		sb.append(description);
 		sb.append(".");
@@ -138,9 +149,9 @@ public class GitHubJobMessageUtil {
 
 		sb.append("<h6>Job Results:</h6><p>");
 
-		sb.append(generateCountLine(passedCount, "Passed"));
-		sb.append(generateCountLine(failedCount, "Failed"));
-		sb.append(generateCountLine(unstableCount, "Unstable"));
+		sb.append(generateCountLine(passedCount, "Passed", "Test"));
+		sb.append(generateCountLine(failedCount, "Failed", "Test"));
+		sb.append(generateCountLine(unstableCount, "Unstable", "Test"));
 
 		sb.append("</p><ol>");
 
@@ -240,16 +251,12 @@ public class GitHubJobMessageUtil {
 				int failCount = jsonObject.getInt("failCount");
 				int skipCount = jsonObject.getInt("skipCount");
 				int passCount = jsonObject.getInt("passCount");
-				int totalCount = failCount + skipCount + passCount;
-				sb.append(" (");
-				sb.append(passCount);
-				sb.append(" Passed, ");
-				sb.append(failCount);
-				sb.append(" Failed, ");
-				sb.append(skipCount);
-				sb.append(" Skipped, ");
-				sb.append(totalCount);
-				sb.append(" Total)");
+
+				sb.append("<p>");
+				sb.append(generateCountLine(passCount, "Passed", "Case"));
+				sb.append(generateCountLine(failCount, "Failed", "Case"));
+				sb.append(generateCountLine(skipCount, "Skipped", "Case"));
+				sb.append("</p>");
 				sb.append(UnstableMessageUtil.getUnstableMessage(_url));
 			}
 

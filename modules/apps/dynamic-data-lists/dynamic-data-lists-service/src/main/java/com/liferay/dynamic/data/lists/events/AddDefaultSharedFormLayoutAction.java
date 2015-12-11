@@ -87,7 +87,7 @@ public class AddDefaultSharedFormLayoutAction extends SimpleAction {
 			defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null,
 			GroupConstants.TYPE_SITE_PRIVATE, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/forms", true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/forms", false,
 			false, true, new ServiceContext());
 	}
 

@@ -422,7 +422,8 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public void updateAsset(long userId,
 		com.liferay.journal.model.JournalFolder folder,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds) throws PortalException;
+		long[] assetLinkEntryIds, java.lang.Double priority)
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.journal.model.JournalFolder updateFolder(long userId,

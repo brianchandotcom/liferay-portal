@@ -582,10 +582,10 @@ public class JournalFolderLocalServiceWrapper
 	public void updateAsset(long userId,
 		com.liferay.journal.model.JournalFolder folder,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
+		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_journalFolderLocalService.updateAsset(userId, folder,
-			assetCategoryIds, assetTagNames, assetLinkEntryIds);
+			assetCategoryIds, assetTagNames, assetLinkEntryIds, priority);
 	}
 
 	@Override

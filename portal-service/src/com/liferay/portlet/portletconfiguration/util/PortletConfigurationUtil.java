@@ -62,11 +62,7 @@ public class PortletConfigurationUtil {
 	public static String getPortletTitle(
 		PortletPreferences portletSetup, String languageId) {
 
-		String useCustomTitle = GetterUtil.getString(
-			portletSetup.getValue(
-				"portletSetupUseCustomTitle", StringPool.BLANK));
-
-		if (!useCustomTitle.equals("true")) {
+		if (!isUseCustomTitle(portletSetup)) {
 			return null;
 		}
 
@@ -82,7 +78,7 @@ public class PortletConfigurationUtil {
 		String oldPortletTitle = portletSetup.getValue(
 			"portletSetupTitle", null);
 
-		if (Validator.isNull(useCustomTitle) &&
+		if (!isUseCustomTitle(portletSetup) &&
 			Validator.isNotNull(oldPortletTitle)) {
 
 			portletTitle = oldPortletTitle;
@@ -109,11 +105,7 @@ public class PortletConfigurationUtil {
 	public static Map<Locale, String> getPortletTitleMap(
 		PortletPreferences portletSetup) {
 
-		String useCustomTitle = GetterUtil.getString(
-			portletSetup.getValue(
-				"portletSetupUseCustomTitle", StringPool.BLANK));
-
-		if (!useCustomTitle.equals("true")) {
+		if (!isUseCustomTitle(portletSetup)) {
 			return null;
 		}
 
@@ -122,17 +114,14 @@ public class PortletConfigurationUtil {
 		boolean empty = true;
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			String portletTitle = getPortletTitle(
-				portletSetup, LocaleUtil.toLanguageId(locale));
+			String portletTitle = GetterUtil.getString(
+				getPortletTitle(portletSetup, LocaleUtil.toLanguageId(locale)));
+
+			map.put(locale, portletTitle);
 
 			if (Validator.isNotNull(portletTitle)) {
 				empty = false;
 			}
-			else {
-				portletTitle = StringPool.BLANK;
-			}
-
-			map.put(locale, portletTitle);
 		}
 
 		if (!empty) {
@@ -140,6 +129,11 @@ public class PortletConfigurationUtil {
 		}
 
 		return null;
+	}
+
+	protected static boolean isUseCustomTitle(PortletPreferences portletSetup) {
+		return GetterUtil.getBoolean(
+			portletSetup.getValue("portletSetupUseCustomTitle", null));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

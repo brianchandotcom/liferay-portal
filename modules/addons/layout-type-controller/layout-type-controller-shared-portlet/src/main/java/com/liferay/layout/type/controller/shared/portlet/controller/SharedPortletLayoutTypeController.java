@@ -57,7 +57,7 @@ public class SharedPortletLayoutTypeController
 
 	@Override
 	public boolean isFirstPageable() {
-		return false;
+		return true;
 	}
 
 	@Override

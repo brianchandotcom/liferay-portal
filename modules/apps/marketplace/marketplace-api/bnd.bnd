@@ -1,5 +1,9 @@
 Bundle-Name: Liferay Marketplace API
 Bundle-SymbolicName: com.liferay.marketplace.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.marketplace.*
+Export-Package:\
+	com.liferay.marketplace.exception,\
+	com.liferay.marketplace.model,\
+	com.liferay.marketplace.service,\
+	com.liferay.marketplace.service.persistence
 Include-Resource: classes

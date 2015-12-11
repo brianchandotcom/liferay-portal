@@ -1,7 +1,23 @@
 Bundle-Name: Liferay Sync Engine
 Bundle-SymbolicName: com.liferay.sync.engine
 Bundle-Version: 3.0.10
-Export-Package: com.liferay.sync.engine.*
+Export-Package:\
+	com.liferay.sync.engine,\
+	com.liferay.sync.engine.documentlibrary.event,\
+	com.liferay.sync.engine.documentlibrary.handler,\
+	com.liferay.sync.engine.documentlibrary.model,\
+	com.liferay.sync.engine.documentlibrary.util,\
+	com.liferay.sync.engine.documentlibrary.util.comparator,\
+	com.liferay.sync.engine.filesystem,\
+	com.liferay.sync.engine.filesystem.listener,\
+	com.liferay.sync.engine.filesystem.util,\
+	com.liferay.sync.engine.listener,\
+	com.liferay.sync.engine.model,\
+	com.liferay.sync.engine.service,\
+	com.liferay.sync.engine.service.persistence,\
+	com.liferay.sync.engine.session,\
+	com.liferay.sync.engine.upgrade.*,\
+	com.liferay.sync.engine.util
 Include-Resource:\
 	sync-logback.xml=src/main/resources/sync-logback.xml,\
 	sync.properties=src/main/resources/sync.properties

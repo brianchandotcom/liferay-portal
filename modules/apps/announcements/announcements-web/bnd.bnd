@@ -2,9 +2,6 @@ Bundle-Name: Liferay Announcements Web
 Bundle-SymbolicName: com.liferay.announcements.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.announcements.web.constants
-Import-Package:\
-	com.liferay.portal.kernel.exception,\
-	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources

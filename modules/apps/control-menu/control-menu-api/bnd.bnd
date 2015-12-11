@@ -1,5 +1,10 @@
 Bundle-Name: Liferay Control Menu API
 Bundle-SymbolicName: com.liferay.control.menu.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.control.menu.*
+Export-Package:\
+	com.liferay.control.menu,\
+	com.liferay.control.menu.application.list,\
+	com.liferay.control.menu.categories,\
+	com.liferay.control.menu.constants,\
+	com.liferay.control.menu.util
 Include-Resource: classes

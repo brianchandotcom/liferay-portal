@@ -1,5 +1,11 @@
 Bundle-Name: Liferay Service Access Policy API
 Bundle-SymbolicName: com.liferay.service.access.policy.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.service.access.policy.*
+Export-Package:\
+	com.liferay.service.access.policy.configuration,\
+	com.liferay.service.access.policy.constants,\
+	com.liferay.service.access.policy.exception,\
+	com.liferay.service.access.policy.model,\
+	com.liferay.service.access.policy.service,\
+	com.liferay.service.access.policy.service.persistence
 Include-Resource: classes

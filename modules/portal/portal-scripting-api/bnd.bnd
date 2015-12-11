@@ -2,5 +2,5 @@ Bundle-Name: Liferay Portal Scripting
 Bundle-SymbolicName: com.liferay.portal.scripting
 Bundle-Version: 1.0.0
 DynamicImport-Package: *
-Export-Package: com.liferay.portal.scripting.*;version=${plugin.full.version}
+Export-Package: com.liferay.portal.scripting
 Include-Resource: classes

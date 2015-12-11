@@ -18,8 +18,9 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.tools.deploy.BaseDeployer;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.PropsUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,7 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * @author Miguel Pastor
+ * @author Gregory Amerson
  */
 public class ModuleAutoDeployer extends BaseDeployer {
 
@@ -35,7 +37,16 @@ public class ModuleAutoDeployer extends BaseDeployer {
 	public int deployFile(AutoDeploymentContext autoDeploymentContext)
 		throws Exception {
 
-		String destDir = PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS[0];
+		String[] moduleFrameworkAutoDeployDirs = PropsUtil.getArray(
+			PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
+
+		String destDir = null;
+
+		for (String dir : moduleFrameworkAutoDeployDirs) {
+			if (dir.endsWith("modules")) {
+				destDir = dir;
+			}
+		}
 
 		FileUtil.mkdirs(destDir);
 

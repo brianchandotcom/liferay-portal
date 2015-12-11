@@ -69,9 +69,6 @@ int total = 0;
 List<WikiPage> results = null;
 
 if (type.equals("all_pages")) {
-	orderableHeaders.put("page", "title");
-	orderableHeaders.put("date", "modifiedDate");
-
 	total = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED);
 
 	searchContainer.setTotal(total);
@@ -192,7 +189,21 @@ for (int i = 0; i < results.size(); i++) {
 
 	resultRows.add(row);
 }
+
+WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiPortletInstanceSettingsHelper, wikiGroupServiceConfiguration);
+WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
 %>
+
+<c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">
+
+	<%
+	PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
+	%>
+
+	<liferay-ui:trash-undo portletURL="<%= undoTrashURL.toString() %>" />
+</c:if>
+
+<liferay-util:include page="/wiki_admin/pages_navigation.jsp" servletContext="<%= application %>" />
 
 <liferay-ui:search-iterator paginate='<%= type.equals("history") ? false : true %>' searchContainer="<%= searchContainer %>" />
 

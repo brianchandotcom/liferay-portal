@@ -578,7 +578,7 @@
 			</then>
 			<else>
 				<execute function="Click" locator1="ControlMenu#USER_NAME" />
-				<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+				<execute function="Click" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 			</else>
 		</if>
 
@@ -1020,7 +1020,7 @@
 			</then>
 			<else>
 				<execute function="Click" locator1="ControlMenu#USER_NAME" />
-				<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+				<execute function="Click" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 			</else>
 		</if>
 
@@ -1431,7 +1431,7 @@
 			</then>
 			<else>
 				<execute function="Click" locator1="ControlMenu#USER_NAME" />
-				<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+				<execute function="Click" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 			</else>
 		</if>
 

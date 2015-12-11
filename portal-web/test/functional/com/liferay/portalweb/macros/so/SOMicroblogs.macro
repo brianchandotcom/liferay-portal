@@ -360,7 +360,7 @@
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
 		<execute function="Click" locator1="ControlMenu#USER_NAME" />
-		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -381,7 +381,7 @@
 
 	<command name="deleteMicroblogsEntryViaProfile">
 		<execute function="Click" locator1="ControlMenu#USER_NAME" />
-		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -462,7 +462,7 @@
 
 	<command name="editMicroblogsEntryViaProfile">
 		<execute function="Click" locator1="ControlMenu#USER_NAME" />
-		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -883,7 +883,7 @@
 		<var name="microblogsEntryContent" value="${microblogsEntryContent} ${mentionUserName}" />
 
 		<execute function="Click" locator1="ControlMenu#USER_NAME" />
-		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -904,7 +904,7 @@
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
 		<execute function="Click" locator1="ControlMenu#USER_NAME" />
-		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -995,7 +995,7 @@
 		<var name="microblogsEntryContent" value="${microblogsEntryContent} ${mentionUserName}" />
 
 		<execute function="Click" locator1="ControlMenu#USER_NAME" />
-		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 

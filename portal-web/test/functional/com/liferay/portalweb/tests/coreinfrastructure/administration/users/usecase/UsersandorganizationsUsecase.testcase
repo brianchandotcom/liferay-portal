@@ -492,7 +492,7 @@
 			<var name="site" value="Organization Name 2" />
 		</execute>
 
-		<execute macro="Page#gotoMyDashboard" />
+		<execute macro="UserBar#gotoMyDashboard" />
 
 		<execute macro="Site#viewNoMySitesViaMySitesPG">
 			<var name="siteName" value="Organization Name 1" />
@@ -513,7 +513,7 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute macro="Page#gotoMyDashboard" />
+		<execute macro="UserBar#gotoMyDashboard" />
 
 		<execute macro="Site#viewNoMySitesViaMySitesPG">
 			<var name="siteName" value="Organization Name 1" />

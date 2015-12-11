@@ -81,7 +81,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick" locator1="ControlMenu#USER_SIGN_IN" value1="Sign In" />
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
 		<execute function="Type" locator1="CAS#NETID_FIELD" value1="${userScreenName}" />
 		<execute function="Type" locator1="CAS#PASSWORD_FIELD" value1="${userScreenName}" />

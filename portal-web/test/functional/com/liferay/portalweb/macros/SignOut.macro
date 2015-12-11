@@ -1,19 +1,8 @@
 <definition>
-	<command name="_signOut">
-		<if>
-			<condition function="IsElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-			<then>
-				<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
-
-				<execute function="Click" locator1="ControlMenu#USER_SIGN_OUT" />
-			</then>
-		</if>
-	</command>
-
 	<command name="signOut">
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SignOut#_signOut" />
+		<execute macro="UserBar#signOut" />
 	</command>
 
 	<command name="signOutOfSite">
@@ -22,7 +11,7 @@
 			<var name="siteNameURL" value="${siteNameURL}" />
 		</execute>
 
-		<execute macro="SignOut#_signOut" />
+		<execute macro="UserBar#signOut" />
 	</command>
 
 	<command name="signOutOfSpecificURL">
@@ -30,6 +19,6 @@
 			<var name="url" value="${url}" />
 		</execute>
 
-		<execute macro="SignOut#_signOut" />
+		<execute macro="UserBar#signOut" />
 	</command>
 </definition>

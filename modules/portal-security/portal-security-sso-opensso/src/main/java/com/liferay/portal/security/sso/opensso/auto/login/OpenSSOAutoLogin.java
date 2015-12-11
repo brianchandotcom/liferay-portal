@@ -53,6 +53,23 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Participates in every unauthenticated HTTP request to Liferay Portal.
+ * 
+ * <p>
+ * This class queries the OpenSSO server for the name of the OpenSSO token
+ * cookie and any additional cookies. These are then extracted from the HTTP
+ * request and forwarded to the OpenSSO server to validate the user's
+ * authentication status.
+ * </p>
+ * 
+ * <p>
+ * If the cookies are validated, another request is made to the OpenSSO server
+ * to retrieve all the user's attributes. These are mapped to Liferay Portal
+ * user attributes using the configured mappings. If Import from LDAP is
+ * enabled, then the user is imported and logged in. Otherwise a new user is
+ * created and logged in.
+ * </p>
+ * 
  * @author Brian Wing Shun Chan
  * @author Prashant Dighe
  */

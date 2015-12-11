@@ -25,6 +25,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Adds an OpenSSO tab to the Authentication section of the Portal Settings user
+ * interface in the Control Panel.
+ * 
  * @author Philip Jones
  */
 @Component(

@@ -35,7 +35,7 @@
 			<then>
 				<execute function="Select" locator1="ServerAdministrationExternalServices#XUGGLER_JAR_FILE_SELECT" value1="${xugglerJarFile}" />
 				<execute function="AssertClick" locator1="ServerAdministrationExternalServices#XUGGLER_INSTALL_BUTTON" value1="Install" />
-				<execute function="AssertTextEquals" locator1="CPServeradministrationExternalservices#SUCCESS_MESSAGE" value1="Xuggler has been installed. You need to reboot your server to apply changes." />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Xuggler has been installed. You need to reboot your server to apply changes." />
 			</then>
 		</if>
 

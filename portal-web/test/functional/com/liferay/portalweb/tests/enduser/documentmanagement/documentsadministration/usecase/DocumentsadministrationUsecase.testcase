@@ -230,6 +230,10 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 
 		<execute macro="Page#gotoPG">
@@ -448,6 +452,10 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 
 		<execute macro="Page#gotoPG">
@@ -575,6 +583,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -587,9 +597,15 @@
 
 		<execute function="Pause" locator1="180000" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
 		<execute macro="DMNavigator#gotoDocumentPG">
 			<var name="dmDocumentTitle" value="Document_1.mp4" />
 		</execute>
+
+		<execute function="Pause" locator1="30000" />
 
 		<while>
 			<and>
@@ -877,6 +893,15 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="Site#assignUserSitesCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#assignRegularRoleCP">
 			<var name="roleName" value="Technical Writer" />
 			<var name="userScreenName" value="usersn" />
@@ -921,6 +946,28 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
@@ -928,8 +975,8 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Documents and Media Page" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoDocumentType" />
@@ -952,8 +999,8 @@
 
 		<execute macro="DMDocument#viewCannotAddRepository" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Documents and Media Page" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMDocumentType#viewNoAvailableActionsViaDocumentTypesPG" />
@@ -1195,6 +1242,10 @@
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 
 		<execute macro="Page#gotoPG">
@@ -1256,6 +1307,10 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 
 		<execute macro="Page#gotoPG">
@@ -1276,10 +1331,13 @@
 		</execute>
 
 		<execute function="Type" locator1="DocumentsAndMediaEditDocument#TITLE_FIELD" value1="DM Document 2 Title" />
+
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="Pause" locator1="1000" />
+
 		<execute function="AssertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
 
 		<execute macro="Page#gotoPG">
@@ -1287,6 +1345,7 @@
 		</execute>
 
 		<execute function="Pause" locator1="1000" />
+
 		<execute function="AssertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
 
 		<execute macro="DMDocument#viewPG">

@@ -36,6 +36,10 @@
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 	</set-up>
 
@@ -1090,6 +1094,8 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
+		<execute function="Pause" locator1="1000" />
+
 		<execute macro="DMFolder#addSubfolderPG">
 			<var name="dmSubFolderDescription" value="DM SubFolder Description" />
 			<var name="dmSubFolderName" value="DM SubFolder Name" />
@@ -1098,6 +1104,8 @@
 		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Image Description" />

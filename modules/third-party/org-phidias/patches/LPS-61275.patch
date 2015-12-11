@@ -1,0 +1,186 @@
+diff --git a/org/phidias/compile/BundleJavaManager.java b/org/phidias/compile/BundleJavaManager.java
+index 8bf7a42..f8adf8c 100644
+--- a/org/phidias/compile/BundleJavaManager.java
++++ b/org/phidias/compile/BundleJavaManager.java
+@@ -77,9 +77,11 @@ public class BundleJavaManager
+ 
+ 		_strict = strict;
+ 
+-		_log.log(
+-			"Initializing compilation in OSGi for bundle " +
+-				_bundle.getSymbolicName() + "-" + _bundle.getVersion());
++		if (_log.isEnabled()) {
++			_log.log(
++				"Initializing compilation in OSGi for bundle " +
++					_bundle.getSymbolicName() + "-" + _bundle.getVersion());
++		}
+ 
+ 		_bundleWiring = _bundle.adapt(BundleWiring.class);
+ 
+@@ -90,9 +92,11 @@ public class BundleJavaManager
+ 
+ 		List<BundleWire> providedWires = _bundleWiring.getRequiredWires(null);
+ 
+-		_log.log(
+-			"Dependent BundleWirings included in this BundleJavaManager " +
+-				"context: ");
++		if (_log.isEnabled()) {
++			_log.log(
++				"Dependent BundleWirings included in this BundleJavaManager " +
++					"context: ");
++		}
+ 
+ 		_bundleWirings = new ArrayList<BundleWiring>();
+ 
+@@ -109,9 +113,11 @@ public class BundleJavaManager
+ 				_systemBundleWiring = providerWiring;
+ 			}
+ 
+-			_log.log(
+-				"\t" + curBundle.getSymbolicName() + "-" +
+-					curBundle.getVersion());
++			if (_log.isEnabled()) {
++				_log.log(
++					"\t" + curBundle.getSymbolicName() + "-" +
++						curBundle.getVersion());
++			}
+ 
+ 			_bundleWirings.add(providerWiring);
+ 		}
+@@ -159,7 +165,9 @@ public class BundleJavaManager
+ 			BundleJavaFileObject bundleJavaFileObject =
+ 				(BundleJavaFileObject)file;
+ 
+-			_log.log("Infering binary name from " + bundleJavaFileObject);
++			if (_log.isEnabled()) {
++				_log.log("Infering binary name from " + bundleJavaFileObject);
++			}
+ 
+ 			return bundleJavaFileObject.inferBinaryName();
+ 		}
+@@ -175,7 +183,7 @@ public class BundleJavaManager
+ 
+ 		List<JavaFileObject> javaFileObjects = new ArrayList<JavaFileObject>();
+ 
+-		if (location == StandardLocation.CLASS_PATH) {
++		if ((location == StandardLocation.CLASS_PATH) && _log.isEnabled()) {
+ 			_log.log(
+ 				"List available sources for {location=" + location +
+ 					", packageName=" + packageName + ", kinds=" + kinds +
+@@ -206,7 +214,9 @@ public class BundleJavaManager
+ 				_javaFileManager.list(location, packagePath, kinds, recurse);
+ 
+ 			for (JavaFileObject javaFileObject : localJavaFileObjects) {
+-				if (location == StandardLocation.CLASS_PATH) {
++				if ((location == StandardLocation.CLASS_PATH) &&
++						_log.isEnabled()) {
++
+ 					_log.log("\t" + javaFileObject);
+ 				}
+ 
+@@ -242,7 +252,9 @@ public class BundleJavaManager
+ 					resourceURL.toURI(), className, resourceURL);
+ 			}
+ 			catch (Exception e) {
+-				_log.log(e);
++				if (_log.isEnabled()) {
++					_log.log(e);
++				}
+ 			}
+ 		}
+ 		else if (protocol.equals("jar")) {
+@@ -256,7 +268,9 @@ public class BundleJavaManager
+ 					url.toURI(), className, resourceURL, resourceName);
+ 			}
+ 			catch (Exception e) {
+-				_log.log(e);
++				if (_log.isEnabled()) {
++					_log.log(e);
++				}
+ 			}
+ 		}
+ 		else if (protocol.equals("vfs")) {
+@@ -279,7 +293,9 @@ public class BundleJavaManager
+ 					resourceName);
+ 			}
+ 			catch (IOException e) {
+-				_log.log(e);
++				if (_log.isEnabled()) {
++					_log.log(e);
++				}
+ 			}
+ 		}
+ 
+@@ -349,14 +365,18 @@ public class BundleJavaManager
+ 				resourceURL, resourceName);
+ 
+ 			if (javaFileObject == null) {
+-				_log.log(
+-					"\tCould not create JavaFileObject for {" + resourceURL +
+-						"}");
++				if (_log.isEnabled()) {
++					_log.log(
++						"\tCould not create JavaFileObject for {" + resourceURL +
++							"}");
++				}
+ 
+ 				continue;
+ 			}
+ 
+-			_log.log("\t" + javaFileObject);
++			if (_log.isEnabled()) {
++				_log.log("\t" + javaFileObject);
++			}
+ 
+ 			javaFileObjects.add(javaFileObject);
+ 		}
+diff --git a/org/phidias/compile/ClassLoaderJavaManager.java b/org/phidias/compile/ClassLoaderJavaManager.java
+index e784eef..8679c2e 100644
+--- a/org/phidias/compile/ClassLoaderJavaManager.java
++++ b/org/phidias/compile/ClassLoaderJavaManager.java
+@@ -125,7 +125,9 @@ public class ClassLoaderJavaManager
+ 			BundleJavaFileObject bundleJavaFileObject =
+ 				(BundleJavaFileObject)file;
+ 
+-			_log.log("Infering binary name from " + bundleJavaFileObject);
++			if (_log.isEnabled()) {
++				_log.log("Infering binary name from " + bundleJavaFileObject);
++			}
+ 
+ 			return bundleJavaFileObject.inferBinaryName();
+ 		}
+@@ -141,7 +143,7 @@ public class ClassLoaderJavaManager
+ 
+ 		List<JavaFileObject> javaFileObjects = new ArrayList<JavaFileObject>();
+ 
+-		if (location == StandardLocation.CLASS_PATH) {
++		if ((location == StandardLocation.CLASS_PATH) && _log.isEnabled()) {
+ 			_log.log(
+ 				"List available sources for {location=" + location +
+ 					", packageName=" + packageName + ", kinds=" + kinds +
+@@ -172,7 +174,9 @@ public class ClassLoaderJavaManager
+ 			for (JavaFileObject javaFileObject : _javaFileManager.list(
+ 					location, packagePath, kinds, recurse)) {
+ 
+-				if (location == StandardLocation.CLASS_PATH) {
++				if ((location == StandardLocation.CLASS_PATH) &&
++						_log.isEnabled()) {
++
+ 					_log.log("\t" + javaFileObject);
+ 				}
+ 
+diff --git a/org/phidias/compile/TPhLog.java b/org/phidias/compile/TPhLog.java
+index d3c8d53..c17e00c 100644
+--- a/org/phidias/compile/TPhLog.java
++++ b/org/phidias/compile/TPhLog.java
+@@ -30,6 +30,10 @@ public class TPhLog {
+ 	public PrintStream out;
+ 	public String pattern = "%1$tH:%1$tM:%1$tS,%1$tL [%2$s:%3$d] %4$s %5$s\n";
+ 
++	public boolean isEnabled() {
++		return out != null;
++	}
++
+ 	public void log(Object... input) {
+ 		if (out == null) {
+ 			return;

@@ -16,36 +16,18 @@ package com.liferay.portal.cluster.internal;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.SocketException;
 
 /**
  * @author Tina Tian
  */
-public class TestClusterChannelFactory implements ClusterChannelFactory {
+public interface ClusterChannelFactory {
 
-	@Override
 	public ClusterChannel createClusterChannel(
 		String channelProperties, String clusterName,
-		ClusterReceiver clusterReceiver) {
+		ClusterReceiver clusterReceiver);
 
-		return new TestClusterChannel(
-			channelProperties, clusterName, clusterReceiver);
-	}
+	public InetAddress getBindInetAddress();
 
-	@Override
-	public InetAddress getBindInetAddress() {
-		return InetAddress.getLoopbackAddress();
-	}
-
-	@Override
-	public NetworkInterface getBindNetworkInterface() {
-		try {
-			return NetworkInterface.getByInetAddress(
-				InetAddress.getLoopbackAddress());
-		}
-		catch (SocketException se) {
-			throw new IllegalStateException(se);
-		}
-	}
+	public NetworkInterface getBindNetworkInterface();
 
 }

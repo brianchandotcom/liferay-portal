@@ -12,22 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
+package com.liferay.portal.cluster.internal;
+
+import com.liferay.portal.kernel.cluster.Address;
+
+import java.io.Serializable;
 
 import java.net.InetAddress;
-import java.net.NetworkInterface;
 
 /**
  * @author Tina Tian
  */
-public interface ClusterChannelFactory {
+public interface ClusterChannel {
 
-	public ClusterChannel createClusterChannel(
-		String channelProperties, String clusterName,
-		ClusterReceiver clusterReceiver);
+	public void close();
 
 	public InetAddress getBindInetAddress();
 
-	public NetworkInterface getBindNetworkInterface();
+	public String getClusterName();
+
+	public ClusterReceiver getClusterReceiver();
+
+	public Address getLocalAddress();
+
+	public void sendMulticastMessage(Serializable message);
+
+	public void sendUnicastMessage(Serializable message, Address address);
 
 }

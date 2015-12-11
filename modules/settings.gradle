@@ -4,6 +4,7 @@ FileTree fileTree = fileTree(rootDir) {
 
 	if (Boolean.getBoolean("portal.build")) {
 		exclude "portal-cache/portal-cache-memory/build.gradle"
+		exclude "portal/portal-cluster/build.gradle"
 		exclude "portal/portal-scripting-beanshell/build.gradle"
 		exclude "portal/portal-scripting-javascript/build.gradle"
 		exclude "portal/portal-scripting-python/build.gradle"

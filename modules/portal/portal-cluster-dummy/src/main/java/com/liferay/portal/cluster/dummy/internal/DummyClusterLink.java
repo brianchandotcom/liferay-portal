@@ -12,31 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
+package com.liferay.portal.cluster.dummy.internal;
 
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.ClusterLink;
+import com.liferay.portal.kernel.cluster.Priority;
+import com.liferay.portal.kernel.messaging.Message;
 
-import java.io.Serializable;
-
-import java.net.InetAddress;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Tina Tian
+ * @author Shuyang Zhou
  */
-public interface ClusterChannel {
+@Component(immediate = true, service = ClusterLink.class)
+public class DummyClusterLink implements ClusterLink {
 
-	public void close();
+	@Override
+	public boolean isEnabled() {
+		return false;
+	}
 
-	public InetAddress getBindInetAddress();
+	@Override
+	public void sendMulticastMessage(Message message, Priority priority) {
+	}
 
-	public String getClusterName();
-
-	public ClusterReceiver getClusterReceiver();
-
-	public Address getLocalAddress();
-
-	public void sendMulticastMessage(Serializable message);
-
-	public void sendUnicastMessage(Serializable message, Address address);
+	@Override
+	public void sendUnicastMessage(
+		Address address, Message message, Priority priority) {
+	}
 
 }

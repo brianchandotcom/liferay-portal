@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Cluster Dummy
+Bundle-SymbolicName: com.liferay.portal.cluster.dummy
+Bundle-Version: 1.0.0
+Include-Resource: classes

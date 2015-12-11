@@ -1026,10 +1026,10 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	@Override
 	public void updateAsset(long userId, com.liferay.wiki.model.WikiPage page,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
+		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiPageLocalService.updateAsset(userId, page, assetCategoryIds,
-			assetTagNames, assetLinkEntryIds);
+			assetTagNames, assetLinkEntryIds, priority);
 	}
 
 	@Override

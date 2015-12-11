@@ -48,7 +48,7 @@ public class ViewPagesMVCRenderCommand implements MVCRenderCommand {
 			WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR,
 			_wikiPortletToolbarContributor);
 
-		return ActionUtil.viewNode(renderRequest, "/wiki/view_pages.jsp");
+		return ActionUtil.viewNode(renderRequest, "/wiki_admin/view_pages.jsp");
 	}
 
 	@Reference(unbind = "-")

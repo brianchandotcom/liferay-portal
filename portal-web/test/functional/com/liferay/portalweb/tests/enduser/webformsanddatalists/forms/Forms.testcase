@@ -43,8 +43,8 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdmin#assertVisibleDisplayStyle">
-			<var name="displayStyle" value="DESCRIPTIVE,ICON,LIST" />
+		<execute macro="Portlet#viewDisplayStyles">
+			<var name="displayStyleList" value="Descriptive,Icon,List" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSystem">
@@ -59,18 +59,22 @@
 			<var name="configurationName" value="Dynamic Data Lists Form Configuration" />
 		</execute>
 
-		<execute macro="FormsAdmin#removeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+		<execute macro="FormFields#removeRepeatableField" />
 
-		<execute macro="FormsAdmin#saveFormConfiguration" />
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccess" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdmin#assertVisibleDisplayStyle">
-			<var name="displayStyle" value="DESCRIPTIVE,ICON" />
+		<execute macro="Portlet#viewDisplayStyles">
+			<var name="displayStyleList" value="Icon,List" />
+		</execute>
+
+		<execute macro="Portlet#viewDisplayStylesNotPresent">
+			<var name="displayStyleList" value="Descriptive" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSystem">
@@ -85,18 +89,12 @@
 			<var name="configurationName" value="Dynamic Data Lists Form Configuration" />
 		</execute>
 
-		<execute macro="FormsAdmin#addDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
-
-		<execute macro="FormsAdmin#saveFormConfiguration" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdmin#assertVisibleDisplayStyle">
-			<var name="displayStyle" value="DESCRIPTIVE,ICON,LIST" />
+		<execute macro="Portlet#viewDisplayStyles">
+			<var name="displayStyleList" value="Icon,Descriptive,List" />
 		</execute>
 	</command>
 

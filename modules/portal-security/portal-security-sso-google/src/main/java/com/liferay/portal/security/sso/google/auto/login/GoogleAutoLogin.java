@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.google.auto.login;
 
+import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -27,9 +28,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
 * @author Sergio González
 */
+@Component(immediate = true, service = AutoLogin.class)
 public class GoogleAutoLogin extends BaseAutoLogin {
 
 	@Override

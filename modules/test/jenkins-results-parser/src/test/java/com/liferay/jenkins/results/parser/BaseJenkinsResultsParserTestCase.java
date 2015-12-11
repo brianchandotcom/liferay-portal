@@ -42,7 +42,11 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		String expectedMessage = read(expectedMessageFile);
 
+		expectedMessage = expectedMessage.replace(" \n", "\n");
+
 		String actualMessage = getMessage(toURLString(caseDir));
+
+		actualMessage = actualMessage.replace(" \n", "\n");
 
 		boolean value = expectedMessage.equals(actualMessage);
 

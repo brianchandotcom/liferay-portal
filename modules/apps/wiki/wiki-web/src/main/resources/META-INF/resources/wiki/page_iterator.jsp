@@ -377,39 +377,6 @@ for (int i = 0; i < results.size(); i++) {
 	</aui:button-row>
 </c:if>
 
-<c:if test='<%= type.equals("all_pages") && WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_PAGE) %>'>
-	<liferay-ui:app-view-toolbar>
-		<aui:button-row cssClass="wiki-page-toolbar" id='<%= renderResponse.getNamespace() + "wikiPageToolbar" %>' />
-	</liferay-ui:app-view-toolbar>
-
-	<aui:script use="aui-toolbar">
-		var buttonRow = A.one('#<portlet:namespace />wikiPageToolbar');
-
-		var wikiPageButtonGroup = [];
-
-		<%
-		WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, node);
-
-		for (ToolbarItem toolbarItem : wikiListPagesDisplayContext.getToolbarItems()) {
-		%>
-
-			<liferay-ui:toolbar-item toolbarItem="<%= toolbarItem %>" var="wikiPageButtonGroup" />
-
-		<%
-		}
-		%>
-
-		var wikiPageToolbar = new A.Toolbar(
-			{
-				boundingBox: buttonRow,
-				children: [wikiPageButtonGroup]
-			}
-		).render();
-
-		buttonRow.setData('wikiPageToolbar', wikiPageToolbar);
-	</aui:script>
-</c:if>
-
 <liferay-ui:categorization-filter
 	assetType="pages"
 	portletURL="<%= portletURL %>"

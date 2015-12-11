@@ -2,7 +2,9 @@ Bundle-Name: Liferay Portal Cluster
 Bundle-SymbolicName: com.liferay.portal.cluster
 Bundle-Version: 1.0.0
 DynamicImport-Package: *
-Export-Package: com.liferay.portal.cluster.*;version=${plugin.full.version}
+Export-Package:\
+	com.liferay.portal.cluster,\
+	com.liferay.portal.cluster.configuration
 Import-Package:\
 	!bsf.*,\
 	!bsh.*,\

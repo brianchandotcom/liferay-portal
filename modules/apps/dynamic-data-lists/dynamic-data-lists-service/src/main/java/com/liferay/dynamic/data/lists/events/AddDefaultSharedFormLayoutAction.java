@@ -81,14 +81,14 @@ public class AddDefaultSharedFormLayoutAction extends SimpleAction {
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
-		nameMap.put(LocaleUtil.getDefault(), "Forms");
+		nameMap.put(LocaleUtil.getDefault(), GroupConstants.FORMS);
 
 		return _groupLocalService.addGroup(
 			defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null,
 			GroupConstants.TYPE_SITE_PRIVATE, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/forms", false,
-			false, true, null);
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			GroupConstants.FORMS_FRIENDLY_URL, false, false, true, null);
 	}
 
 	protected void addSharedLayout(long companyId, long groupId)

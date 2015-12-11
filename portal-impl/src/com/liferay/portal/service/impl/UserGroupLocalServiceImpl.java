@@ -349,10 +349,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		expandoRowLocalService.deleteRows(userGroup.getUserGroupId());
 
-		// Users
-
-		clearUserUserGroups(userGroup.getUserId());
-
 		// Group
 
 		Group group = userGroup.getGroup();

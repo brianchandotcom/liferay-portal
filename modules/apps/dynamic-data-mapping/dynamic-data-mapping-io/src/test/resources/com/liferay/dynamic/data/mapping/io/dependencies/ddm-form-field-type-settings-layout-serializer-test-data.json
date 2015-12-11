@@ -6,25 +6,33 @@
 					"columns": [
 						{
 							"fieldNames": ["c", "b", "a"],
-							"size": 4
+							"size": 12
 						}
 					]
 				}
 			],
-			"title": {"en_US":"basic"}
+			"title": {
+				"en_US": "basic"
+			}
 		},
 		{
 			"rows": [
 				{
 					"columns":[
 						{
-							"fieldNames": ["e", "d"],
+							"fieldNames": ["e"],
+							"size": 6
+						},
+						{
+							"fieldNames": ["d"],
 							"size": 6
 						}
 					]
 				}
 			],
-			"title": {"en_US":"advanced"}
+			"title": {
+				"en_US": "advanced"
+			}
 		}
 	]
 }

@@ -20,6 +20,8 @@ import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -616,6 +618,10 @@ public class PoshiRunnerValidation {
 				validateVarElement(varElement, filePath);
 			}
 		}
+
+		if (primaryAttributeName.equals("method")) {
+			validateMethodExecuteElement(element, filePath);
+		}
 	}
 
 	protected static void validateExecuteReturnMacroElement(
@@ -991,6 +997,67 @@ public class PoshiRunnerValidation {
 				new Exception(
 					"Missing message attribute\n" + filePath + ":" +
 						element.attributeValue("line-number")));
+		}
+	}
+
+	protected static void validateMethodExecuteElement(
+		Element element, String filePath) {
+
+		String className = element.attributeValue("class");
+
+		Class<?> clazz = null;
+
+		try {
+			clazz = Class.forName(className);
+		}
+		catch (Exception e) {
+			_exceptions.add(
+				new Exception(
+					"Cannot find class " + className + "\n" + filePath + ":" +
+						element.attributeValue("line-number")));
+
+			return;
+		}
+
+		String methodName = element.attributeValue("method");
+
+		List<Method> completeMethodsList = Arrays.asList(clazz.getMethods());
+		List<Method> possibleMethodsList = new ArrayList<>();
+
+		for (Method possibleMethod : completeMethodsList) {
+			String possibleMethodName = possibleMethod.getName();
+
+			if (methodName.equals(possibleMethodName)) {
+				possibleMethodsList.add(possibleMethod);
+			}
+		}
+
+		if (possibleMethodsList.isEmpty()) {
+			_exceptions.add(
+				new Exception(
+					"Cannot find method " + className + "." + methodName +
+						"\n" + filePath + ":" +
+							element.attributeValue("line-number")));
+
+			return;
+		}
+
+		List<Element> argElements = new ArrayList<>(element.elements("arg"));
+		Class<?>[] parameterTypes = new Class<?>[argElements.size()];
+
+		for (int i = 0; i < argElements.size(); i++) {
+			parameterTypes[i] = String.class;
+		}
+
+		try {
+			clazz.getMethod(methodName, parameterTypes);
+		}
+		catch (Exception e) {
+			_exceptions.add(
+				new Exception(
+					"Argument mismatch in method " + className + "." +
+						methodName + "\n" + filePath + ":" +
+							element.attributeValue("line-number")));
 		}
 	}
 

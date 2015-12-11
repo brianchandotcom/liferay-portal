@@ -16,8 +16,6 @@ package com.liferay.portlet.portletconfiguration.util;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -66,40 +64,7 @@ public class PortletConfigurationUtil {
 			return null;
 		}
 
-		String portletTitle = portletSetup.getValue(
-			"portletSetupTitle_" + languageId, null);
-
-		if (Validator.isNotNull(portletTitle)) {
-			return portletTitle;
-		}
-
-		// For backwards compatibility
-
-		String oldPortletTitle = portletSetup.getValue(
-			"portletSetupTitle", null);
-
-		if (!isUseCustomTitle(portletSetup) &&
-			Validator.isNotNull(oldPortletTitle)) {
-
-			portletTitle = oldPortletTitle;
-
-			try {
-				String defaultLanguageId = LocaleUtil.toLanguageId(
-					LocaleUtil.getSiteDefault());
-
-				portletSetup.setValue(
-					"portletSetupTitle_" + defaultLanguageId, portletTitle);
-				portletSetup.setValue(
-					"portletSetupUseCustomTitle", Boolean.TRUE.toString());
-
-				portletSetup.store();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		return portletTitle;
+		return portletSetup.getValue("portletSetupTitle_" + languageId, null);
 	}
 
 	public static Map<Locale, String> getPortletTitleMap(
@@ -135,8 +100,5 @@ public class PortletConfigurationUtil {
 		return GetterUtil.getBoolean(
 			portletSetup.getValue("portletSetupUseCustomTitle", null));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletConfigurationUtil.class);
 
 }

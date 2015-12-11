@@ -14,15 +14,12 @@
 
 package com.liferay.configuration.admin.web.portlet.action;
 
-import com.liferay.configuration.admin.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
-import com.liferay.configuration.admin.web.util.ConfigurationHelper;
+import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -30,10 +27,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,9 +50,6 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String pid = ParamUtil.getString(actionRequest, "pid");
 
 		if (_log.isDebugEnabled()) {
@@ -66,12 +57,8 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 
 		try {
-			ConfigurationHelper configurationHelper = new ConfigurationHelper(
-				bundleContext, configurationAdmin, extendedMetaTypeService,
-				themeDisplay.getLanguageId());
-
-			Configuration configuration = configurationHelper.getConfiguration(
-				pid);
+			Configuration configuration =
+				_configurationModelRetriever.getConfiguration(pid);
 
 			configuration.delete();
 		}
@@ -82,30 +69,16 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 		return true;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		this.bundleContext = bundleContext;
-	}
-
 	@Reference(unbind = "-")
-	protected void setConfigAdminService(
-		ConfigurationAdmin configurationAdmin) {
+	protected void setConfigurationModelRetriever(
+		ConfigurationModelRetriever configurationModelRetriever) {
 
-		this.configurationAdmin = configurationAdmin;
+		_configurationModelRetriever = configurationModelRetriever;
 	}
-
-	@Reference(unbind = "-")
-	protected void setExtendedMetaTypeService(
-		ExtendedMetaTypeService extendedMetaTypeService) {
-
-		this.extendedMetaTypeService = extendedMetaTypeService;
-	}
-
-	protected BundleContext bundleContext;
-	protected ConfigurationAdmin configurationAdmin;
-	protected ExtendedMetaTypeService extendedMetaTypeService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteConfigurationMVCActionCommand.class);
+
+	private volatile ConfigurationModelRetriever _configurationModelRetriever;
 
 }

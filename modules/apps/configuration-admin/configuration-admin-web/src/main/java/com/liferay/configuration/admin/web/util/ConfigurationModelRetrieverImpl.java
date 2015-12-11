@@ -24,9 +24,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,30 +39,48 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Kamesh Sampath
- * @author Raymond Augé
+ * @author Michael C. Han
  */
-public class ConfigurationHelper {
+@Component(immediate = true, service = ConfigurationModelRetriever.class)
+public class ConfigurationModelRetrieverImpl
+	implements ConfigurationModelRetriever {
 
-	public ConfigurationHelper(
-		BundleContext bundleContext, ConfigurationAdmin configurationAdmin,
-		ExtendedMetaTypeService extendedMetaTypeService, String languageId) {
+	public Map<String, Set<ConfigurationModel>> categorizeConfigurationModels(
+		Map<String, ConfigurationModel> configurationModels) {
 
-		_bundleContext = bundleContext;
-		_configurationAdmin = configurationAdmin;
-		_extendedMetaTypeService = extendedMetaTypeService;
+		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels =
+			new HashMap<>();
 
-		_configurationModels = _getConfigurationModels(languageId);
+		for (ConfigurationModel configurationModel :
+				configurationModels.values()) {
 
-		_categorizedConfigurationModels = _getCategorizedConfigurationModels(
-			_configurationModels);
+			String configurationCategory = configurationModel.getCategory();
+
+			Set<ConfigurationModel> curConfigurationModels =
+				categorizedConfigurationModels.get(configurationCategory);
+
+			if (curConfigurationModels == null) {
+				curConfigurationModels = new TreeSet<>(
+					getConfigurationModelComparator());
+
+				categorizedConfigurationModels.put(
+					configurationCategory, curConfigurationModels);
+			}
+
+			curConfigurationModels.add(configurationModel);
+		}
+
+		return categorizedConfigurationModels;
 	}
 
 	public Configuration getConfiguration(String pid) {
 		try {
-			String pidFilter = _getPidFilterString(pid, false);
+			String pidFilter = getPidFilterString(pid, false);
 
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(pidFilter);
@@ -77,46 +96,54 @@ public class ConfigurationHelper {
 		return null;
 	}
 
-	public List<String> getConfigurationCategories() {
-		Set<String> configurationCategories = new TreeSet(
+	public List<String> getConfigurationCategories(
+		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels) {
+
+		Set<String> configurationCategories = new TreeSet<>(
 			getConfigurationCategoryComparator());
 
-		configurationCategories.addAll(
-			_categorizedConfigurationModels.keySet());
+		configurationCategories.addAll(categorizedConfigurationModels.keySet());
 
 		return new ArrayList<>(configurationCategories);
 	}
 
-	public ConfigurationModel getConfigurationModel(String pid) {
-		return _configurationModels.get(pid);
+	public Map<String, ConfigurationModel> getConfigurationModels() {
+		return getConfigurationModels((String)null);
 	}
 
-	public List<ConfigurationModel> getConfigurationModels() {
-		Set<ConfigurationModel> configurationModels = new TreeSet(
-			getConfigurationModelComparator());
+	public Map<String, ConfigurationModel> getConfigurationModels(
+		Bundle bundle) {
 
-		configurationModels.addAll(_configurationModels.values());
+		Map<String, ConfigurationModel> configurationModels = new HashMap<>();
 
-		return new ArrayList<>(configurationModels);
+		collectConfigurationModels(bundle, configurationModels, true, null);
+		collectConfigurationModels(bundle, configurationModels, false, null);
+
+		return configurationModels;
 	}
 
-	public List<ConfigurationModel> getConfigurationModels(
-		String configurationCategory) {
+	public Map<String, ConfigurationModel> getConfigurationModels(
+		String locale) {
 
-		Set<ConfigurationModel> configurationModels = new TreeSet(
-			new ConfigurationModelComparator());
+		Map<String, ConfigurationModel> configurationModels = new HashMap<>();
 
-		configurationModels.addAll(
-			_categorizedConfigurationModels.get(configurationCategory));
+		Bundle[] bundles = _bundleContext.getBundles();
 
-		return new ArrayList<>(configurationModels);
+		for (Bundle bundle : bundles) {
+			collectConfigurationModels(
+				bundle, configurationModels, true, locale);
+
+			collectConfigurationModels(
+				bundle, configurationModels, false, locale);
+		}
+
+		return configurationModels;
 	}
 
 	public List<ConfigurationModel> getFactoryInstances(
-			String languageId, String factoryPid)
+			Map<String, ConfigurationModel> configurationModels,
+			String factoryPid)
 		throws IOException {
-
-		List<ConfigurationModel> configurationModels = new ArrayList<>();
 
 		StringBundler filter = new StringBundler(5);
 
@@ -137,34 +164,33 @@ public class ConfigurationHelper {
 		}
 
 		if (configurations == null) {
-			return configurationModels;
+			return Collections.emptyList();
 		}
 
-		ConfigurationModel configurationModel = getConfigurationModel(
+		ConfigurationModel configurationModel = configurationModels.get(
 			factoryPid);
+
+		List<ConfigurationModel> factoryInstances = new ArrayList<>();
 
 		for (Configuration configuration : configurations) {
 			ConfigurationModel curConfigurationModel = new ConfigurationModel(
 				configurationModel, configuration,
 				configuration.getBundleLocation(), false);
 
-			configurationModels.add(curConfigurationModel);
+			factoryInstances.add(curConfigurationModel);
 		}
 
-		return configurationModels;
+		return factoryInstances;
 	}
 
-	protected Comparator<String> getConfigurationCategoryComparator() {
-		return new ConfigurationCategoryComparator();
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 	}
 
-	protected Comparator<ConfigurationModel> getConfigurationModelComparator() {
-		return new ConfigurationModelComparator();
-	}
-
-	private void _collectConfigurationModels(
-		Bundle bundle, Map<String, ConfigurationModel> modelMap, String locale,
-		boolean factory) {
+	protected void collectConfigurationModels(
+		Bundle bundle, Map<String, ConfigurationModel> configurationModels,
+		boolean factory, String locale) {
 
 		ExtendedMetaTypeInformation extendedMetaTypeInformation =
 			_extendedMetaTypeService.getMetaTypeInformation(bundle);
@@ -173,56 +199,29 @@ public class ConfigurationHelper {
 			return;
 		}
 
-		String[] pids = null;
+		List<String> pids = new ArrayList<>();
 
-		if (factory) {
-			pids = extendedMetaTypeInformation.getFactoryPids();
-		}
-		else {
-			pids = extendedMetaTypeInformation.getPids();
-		}
+		pids.addAll(
+			Arrays.asList(extendedMetaTypeInformation.getFactoryPids()));
+		pids.addAll(Arrays.asList(extendedMetaTypeInformation.getPids()));
 
 		for (String pid : pids) {
-			ConfigurationModel configurationModel = _getConfigurationModel(
+			ConfigurationModel configurationModel = getConfigurationModel(
 				bundle, pid, factory, locale);
 
 			if (configurationModel == null) {
 				continue;
 			}
 
-			modelMap.put(pid, configurationModel);
+			configurationModels.put(pid, configurationModel);
 		}
 	}
 
-	private Map<String, Set<ConfigurationModel>>
-		_getCategorizedConfigurationModels(
-			Map<String, ConfigurationModel> configurationModels) {
-
-		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels =
-			new HashMap<>();
-
-		for (ConfigurationModel configurationModel :
-				configurationModels.values()) {
-
-			String configurationCategory = configurationModel.getCategory();
-
-			Set<ConfigurationModel> curConfigurationModels =
-				categorizedConfigurationModels.get(configurationCategory);
-
-			if (curConfigurationModels == null) {
-				curConfigurationModels = new HashSet<>();
-
-				categorizedConfigurationModels.put(
-					configurationCategory, curConfigurationModels);
-			}
-
-			curConfigurationModels.add(configurationModel);
-		}
-
-		return categorizedConfigurationModels;
+	protected Comparator<String> getConfigurationCategoryComparator() {
+		return new ConfigurationCategoryComparator();
 	}
 
-	private ConfigurationModel _getConfigurationModel(
+	protected ConfigurationModel getConfigurationModel(
 		Bundle bundle, String pid, boolean factory, String locale) {
 
 		ExtendedMetaTypeInformation metaTypeInformation =
@@ -237,24 +236,11 @@ public class ConfigurationHelper {
 			getConfiguration(pid), StringPool.QUESTION, factory);
 	}
 
-	private Map<String, ConfigurationModel> _getConfigurationModels(
-		String locale) {
-
-		Map<String, ConfigurationModel> configurationModelMap = new HashMap<>();
-
-		Bundle[] bundles = _bundleContext.getBundles();
-
-		for (Bundle bundle : bundles) {
-			_collectConfigurationModels(
-				bundle, configurationModelMap, locale, false);
-			_collectConfigurationModels(
-				bundle, configurationModelMap, locale, true);
-		}
-
-		return configurationModelMap;
+	protected Comparator<ConfigurationModel> getConfigurationModelComparator() {
+		return new ConfigurationModelComparator();
 	}
 
-	private String _getPidFilterString(String pid, boolean factory) {
+	protected String getPidFilterString(String pid, boolean factory) {
 		StringBundler filter = new StringBundler(5);
 
 		filter.append(StringPool.OPEN_PARENTHESIS);
@@ -273,12 +259,23 @@ public class ConfigurationHelper {
 		return filter.toString();
 	}
 
-	private final BundleContext _bundleContext;
-	private final Map<String, Set<ConfigurationModel>>
-		_categorizedConfigurationModels;
-	private final ConfigurationAdmin _configurationAdmin;
-	private final Map<String, ConfigurationModel> _configurationModels;
-	private final ExtendedMetaTypeService _extendedMetaTypeService;
+	@Reference(unbind = "-")
+	protected void setConfigAdminService(
+		ConfigurationAdmin configurationAdmin) {
+
+		_configurationAdmin = configurationAdmin;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExtendedMetaTypeService(
+		ExtendedMetaTypeService extendedMetaTypeService) {
+
+		_extendedMetaTypeService = extendedMetaTypeService;
+	}
+
+	private BundleContext _bundleContext;
+	private volatile ConfigurationAdmin _configurationAdmin;
+	private volatile ExtendedMetaTypeService _extendedMetaTypeService;
 
 	private class ConfigurationCategoryComparator
 		implements Comparator<String> {

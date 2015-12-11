@@ -18,38 +18,12 @@
 
 <%
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
-WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 String type = ParamUtil.getString(request, "type", "all_pages");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL portletURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 
-portletURL.setParameter("nodeName", node.getName());
-
-if (wikiPage != null) {
-	portletURL.setParameter("title", wikiPage.getTitle());
-}
-
-if (type.equals("all_pages")) {
-	portletURL.setParameter("type", "all_pages");
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-pages"), portletURL.toString());
-}
-else if (type.equals("draft_pages")) {
-	portletURL.setParameter("type", "draft_pages");
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "draft-pages"), portletURL.toString());
-}
-else if (type.equals("orphan_pages")) {
-	portletURL.setParameter("type", "orphan_pages");
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "orphan-pages"), portletURL.toString());
-}
-else if (type.equals("recent_changes")) {
-	portletURL.setParameter("type", "recent_changes");
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recent-changes"), portletURL.toString());
-}
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, type), portletURL.toString());
 
 List<String> headerNames = new ArrayList<String>();
 

@@ -14,6 +14,14 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-captcha',
 
 				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						instance._eventHandlers.push(
+							instance.bindContainerEvent('click', instance._onClickRefresh, '.icon-refresh')
+						);
+					},
+
 					getTemplateRenderer: function() {
 						var instance = this;
 
@@ -28,6 +36,20 @@ AUI.add(
 						var instance = this;
 
 						return instance._valueContainer().html();
+					},
+
+					_onClickRefresh: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var captchaNode = container.one('.captcha');
+
+						var baseURL = captchaNode.attr('src');
+
+						var url = Liferay.Util.addParams('t=' + (new Date()).getTime(), baseURL);
+
+						captchaNode.attr('src', url);
 					}
 				}
 			}

@@ -16,10 +16,11 @@ package com.liferay.dynamic.data.lists.events;
 
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -32,7 +33,10 @@ import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(immediate = true)
-public class AddDefaultSharedPortletLayoutAction extends SimpleAction {
+public class AddDefaultSharedFormLayoutAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -72,46 +76,58 @@ public class AddDefaultSharedPortletLayoutAction extends SimpleAction {
 		}
 	}
 
-	protected void doRun(long companyId) throws Exception {
-		Group group = _groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
+	protected Group addFormsGroup(long companyId) throws PortalException {
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			group.getGroupId(), false, "/shared");
+		Map<Locale, String> nameMap = new HashMap<>();
 
-		if (layout != null) {
-			return;
-		}
+		nameMap.put(LocaleUtil.getDefault(), "Forms");
+
+		return _groupLocalService.addGroup(
+			defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null,
+			GroupConstants.TYPE_SITE_PRIVATE, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, "/forms", false,
+			false, true, new ServiceContext());
+	}
+
+	protected void addSharedLayout(long companyId, long groupId)
+		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
 
-		serviceContext.setScopeGroupId(group.getGroupId());
+		serviceContext.setScopeGroupId(groupId);
 
 		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
 		serviceContext.setUserId(defaultUserId);
 
-		layout = _layoutLocalService.addLayout(
-			defaultUserId, group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "shared",
+		_layoutLocalService.addLayout(
+			defaultUserId, groupId, false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
 			StringPool.BLANK, StringPool.BLANK,
 			LayoutConstants.TYPE_SHARED_PORTLET, true, "/shared",
 			serviceContext);
+	}
 
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
+	protected void doRun(long companyId) throws Exception {
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			companyId, "/forms");
 
-		typeSettingsProperties.setProperty("hide", Boolean.TRUE.toString());
+		if (group == null) {
+			group = addFormsGroup(companyId);
+		}
 
-		_layoutLocalService.updateLayout(
-			group.getGroupId(), false, layout.getLayoutId(),
-			typeSettingsProperties.toString());
+//		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+//			group.getGroupId(), false, "/shared");
+//
+//		if (layout == null) {
+//			addSharedLayout(companyId, group.getGroupId());
+//		}
 	}
 
 	@Reference(unbind = "-")

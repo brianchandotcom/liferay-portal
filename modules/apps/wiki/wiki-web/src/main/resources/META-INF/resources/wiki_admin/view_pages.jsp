@@ -123,7 +123,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	PortletURL rowURL = renderResponse.createRenderURL();
 
-	if (!curWikiPage.isNew() && !type.equals("draft_pages")) {
+	if (!type.equals("draft_pages")) {
 		rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
 		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("nodeName", curWikiPage.getNode().getName());
@@ -146,36 +146,21 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Revision
 
-	if (!curWikiPage.isNew()) {
-		String revision = String.valueOf(curWikiPage.getVersion());
+	String revision = String.valueOf(curWikiPage.getVersion());
 
-		if (curWikiPage.isMinorEdit()) {
-			revision += " (" + LanguageUtil.get(request, "minor-edit") + ")";
-		}
+	if (curWikiPage.isMinorEdit()) {
+		revision += " (" + LanguageUtil.get(request, "minor-edit") + ")";
+	}
 
-		row.addText(revision, rowURL);
-	}
-	else {
-		row.addText(StringPool.BLANK);
-	}
+	row.addText(revision, rowURL);
 
 	// User
 
-	if (!curWikiPage.isNew()) {
-		row.addText(HtmlUtil.escape(PortalUtil.getUserName(curWikiPage)), rowURL);
-	}
-	else {
-		row.addText(StringPool.BLANK);
-	}
+	row.addText(HtmlUtil.escape(PortalUtil.getUserName(curWikiPage)), rowURL);
 
 	// Date
 
-	if (!curWikiPage.isNew()) {
-		row.addDate(curWikiPage.getCreateDate(), rowURL);
-	}
-	else {
-		row.addText(StringPool.BLANK);
-	}
+	row.addDate(curWikiPage.getModifiedDate(), rowURL);
 
 	// Summary
 

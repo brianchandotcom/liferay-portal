@@ -805,7 +805,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		for (JournalFolder folder : folders) {
 			try {
 				_journalFolderLocalService.updateAsset(
-					folder.getUserId(), folder, null, null, null);
+					folder.getUserId(), folder, null, null, null, null);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

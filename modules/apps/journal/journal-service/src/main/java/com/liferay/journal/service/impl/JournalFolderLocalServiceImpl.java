@@ -118,7 +118,8 @@ public class JournalFolderLocalServiceImpl
 		updateAsset(
 			userId, folder, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority());
 
 		return folder;
 	}
@@ -778,7 +779,7 @@ public class JournalFolderLocalServiceImpl
 	@Override
 	public void updateAsset(
 			long userId, JournalFolder folder, long[] assetCategoryIds,
-			String[] assetTagNames, long[] assetLinkEntryIds)
+			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
 		throws PortalException {
 
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
@@ -787,7 +788,7 @@ public class JournalFolderLocalServiceImpl
 			folder.getFolderId(), folder.getUuid(), 0, assetCategoryIds,
 			assetTagNames, true, null, null, null, ContentTypes.TEXT_PLAIN,
 			folder.getName(), folder.getDescription(), null, null, null, 0, 0,
-			null);
+			priority);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,
@@ -1050,7 +1051,8 @@ public class JournalFolderLocalServiceImpl
 		updateAsset(
 			userId, folder, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority());
 
 		// Dynamic data mapping
 

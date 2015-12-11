@@ -27,7 +27,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="NavPill#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="NavBar#PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="configureScopePG">

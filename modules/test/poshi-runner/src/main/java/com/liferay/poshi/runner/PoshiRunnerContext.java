@@ -422,16 +422,14 @@ public class PoshiRunnerContext {
 	}
 
 	private static String _getTestBatchGroups() throws Exception {
-		StringBuilder sb = new StringBuilder();
-
-		String[] propertyNames = PropsValues.TEST_BATCH_FILTER_PROPERTY_NAMES;
-		String[] propertyValues = PropsValues.TEST_BATCH_FILTER_PROPERTY_VALUES;
+		String[] propertyNames = PropsValues.TEST_BATCH_PROPERTY_NAMES;
+		String[] propertyValues = PropsValues.TEST_BATCH_PROPERTY_VALUES;
 
 		List<String> classCommandNames = new ArrayList<>();
 
 		if (propertyNames.length != propertyValues.length) {
 			throw new Exception(
-				"test.batch.property.names/test.batch.property.values " +
+				"'test.batch.property.names'/'test.batch.property.values' " +
 					"must have matching amounts of entries!");
 		}
 
@@ -441,30 +439,21 @@ public class PoshiRunnerContext {
 					propertyNames[i], propertyValues[i]));
 		}
 
-		String testBatchGroups;
-
 		if (PropsValues.TEST_BATCH_RUN_TYPE.equals("sequential")) {
 			Map<Integer, List<String>> classCommandNameGroups =
 				_getTestBatchSequentialGroupsMap(classCommandNames);
 
-			testBatchGroups = _getTestBatchSequentialGroups(
-				classCommandNameGroups);
+			return _getTestBatchSequentialGroups(classCommandNameGroups);
 		}
 		else if (PropsValues.TEST_BATCH_RUN_TYPE.equals("single")) {
 			Map<Integer, List<String>> classCommandNameGroups =
 				_getTestBatchSingleGroupsMap(classCommandNames);
 
-			testBatchGroups = _getTestBatchSingleGroups(classCommandNameGroups);
-		}
-		else {
-			throw new Exception(
-				"test.batch.run.type must be set to 'single' or " +
-					"'sequential'");
+			return _getTestBatchSingleGroups(classCommandNameGroups);
 		}
 
-		sb.append(testBatchGroups);
-
-		return sb.toString();
+		throw new Exception(
+			"'test.batch.run.type' must be set to 'single' or 'sequential'");
 	}
 
 	private static String _getTestBatchSequentialGroups(
@@ -602,6 +591,7 @@ public class PoshiRunnerContext {
 					classCommandNameGroup, groupSize)) {
 
 				classCommandNameGroups.put(classCommandNameIndex, partition);
+
 				classCommandNameIndex++;
 			}
 		}
@@ -1091,13 +1081,11 @@ public class PoshiRunnerContext {
 			sb.append("\n");
 		}
 
-		if ((PropsValues.TEST_BATCH_FILTER_PROPERTY_NAMES != null) &&
-			(PropsValues.TEST_BATCH_FILTER_PROPERTY_VALUES != null) &&
-			(PropsValues.TEST_BATCH_MAX_GROUP_SIZE > 0)) {
+		if ((PropsValues.TEST_BATCH_MAX_GROUP_SIZE > 0) &&
+			(PropsValues.TEST_BATCH_PROPERTY_NAMES != null) &&
+			(PropsValues.TEST_BATCH_PROPERTY_VALUES != null)) {
 
-			String testBatchGroups = _getTestBatchGroups();
-
-			sb.append(testBatchGroups);
+			sb.append(_getTestBatchGroups());
 		}
 
 		FileUtil.write("test.case.method.names.properties", sb.toString());

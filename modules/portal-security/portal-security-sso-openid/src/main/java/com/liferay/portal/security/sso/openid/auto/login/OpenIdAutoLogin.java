@@ -30,6 +30,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Participates in every unauthenticated HTTP request to Liferay Portal.
+ *
+ * <p>
+ * This class looks for the OPENID_ID_LOGIN HTTP session attribute. If this
+ * attribute is found and if the attribute's value matches the ID of an existing
+ * Liferay Portal user, then this user is logged in without any further
+ * challenge.
+ * </p>
+ * 
  * @author Jorge Ferrer
  */
 @Component(immediate = true, service = AutoLogin.class)

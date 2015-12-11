@@ -19,6 +19,12 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.configuration.admin.ConfigurationAdmin;
 
 /**
+ * Defines the configuration property keys and sensible default values.
+ * 
+ * This class also defines the identity of the configuration schema which, among
+ * other things, defines the filename (minus the .cfg extension) for setting
+ * values via a file.
+ * 
  * @author Michael C. Han
  */
 @ConfigurationAdmin(category = "platform")

@@ -7,6 +7,20 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
+	<command name="deleteConfiguration">
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="${category}" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="${configurationName}" />
+		</execute>
+
+		<execute macro="Button#clickDelete" />
+
+		<execute macro="Alert#viewSuccess" />
+	</command>
+
 	<command name="gotoCategory">
 		<var name="key_category" value="${category}" />
 

@@ -81,11 +81,8 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SystemSettings#gotoCategory">
+		<execute macro="SystemSettings#deleteConfiguration">
 			<var name="category" value="Productivity" />
-		</execute>
-
-		<execute macro="SystemSettings#editProductivityConfiguration">
 			<var name="configurationName" value="Dynamic Data Lists Form Configuration" />
 		</execute>
 

@@ -144,6 +144,7 @@ public abstract class BasePortalToolsTask extends JavaExec {
 	protected void doExec(List<String> args) {
 		super.setArgs(args);
 		super.setClasspath(FileUtil.shrinkClasspath(project, getClasspath()));
+		super.setErrorOutput(System.err);
 
 		super.exec();
 	}

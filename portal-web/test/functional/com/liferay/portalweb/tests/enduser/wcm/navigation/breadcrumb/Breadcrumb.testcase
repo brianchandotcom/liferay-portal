@@ -367,6 +367,8 @@
 	</command>
 
 	<command name="DisableShowPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoSitesPages">
 			<var name="page" value="Public Pages" />
 		</execute>

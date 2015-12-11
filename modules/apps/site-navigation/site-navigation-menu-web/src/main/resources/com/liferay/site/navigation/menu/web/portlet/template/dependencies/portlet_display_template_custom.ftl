@@ -17,7 +17,7 @@
 		<#assign rootNavigationItem = entries[layoutLevel-1] />
 	</#if>
 
-	<div class="nav-menu nav-menu-style-${bulletStyle}">
+	<div class="nav-menu nav-menu-style-${htmlUtil.escapeAttribute(bulletStyle)}">
 		<#if headerType == "root-layout" && rootNavigationItem?has_content>
 			<h2><a href="${rootNavigationItem.getRegularURL()}" ${rootNavigationItem.getTarget()}>${rootNavigationItem.getName()}</a></h2>
 		<#elseif headerType == "portlet-title">

@@ -61,12 +61,6 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		}
 	}
 
-	protected URL createURL(String urlString) throws Exception {
-		URL url = new URL(urlString);
-
-		return encode(url);
-	}
-
 	protected void deleteFile(File file) {
 		if (!file.exists()) {
 			return;
@@ -98,14 +92,18 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		File sampleDir = new File(sampleDirName);
 
-		if (sampleDir.exists()) {
+		File expectedMessageFile = new File(sampleDir, "expected_message.html");
+
+		if (expectedMessageFile.exists()) {
 			return;
 		}
 
-		System.out.println("Downloading sample " + sampleKey);
-
 		try {
-			downloadSample(sampleDir, url);
+			if (!sampleDir.exists()) {
+				System.out.println("Downloading sample " + sampleKey);
+
+				downloadSample(sampleDir, url);
+			}
 
 			writeExpectedMessage(sampleDir);
 		}
@@ -131,16 +129,6 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			new File(dir, urlSuffix),
 			JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.getLocalURL(urlString)));
-	}
-
-	protected URL encode(URL url) throws Exception {
-		URI uri = new URI(
-			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
-			url.getPath(), url.getQuery(), url.getRef());
-
-		String uriASCIIString = uri.toASCIIString();
-
-		return new URL(uriASCIIString.replace("#", "%23"));
 	}
 
 	protected abstract String getMessage(String urlString) throws Exception;

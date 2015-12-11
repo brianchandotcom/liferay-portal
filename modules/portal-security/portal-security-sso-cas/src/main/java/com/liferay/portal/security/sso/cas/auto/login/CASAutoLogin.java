@@ -44,6 +44,21 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Participates in every unauthenticated HTTP request to Liferay Portal.
+ * 
+ * <p>
+ * CASAutoLogin looks for the CAS_LOGIN HTTP session attribute. If this
+ * attribute is found and if the attribute's value matches the ID of an existing
+ * Liferay Portal user, then this user is logged in without any further
+ * challenge.
+ * </p>
+ * 
+ * <p>
+ * When identifying a user and Import from LDAP is enabled, then CASAutoLogin
+ * always attempts to import or re-import the user from LDAP instead of
+ * searching for an existing Liferay Portal user.
+ * </p>
+ * 
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Wesley Gong

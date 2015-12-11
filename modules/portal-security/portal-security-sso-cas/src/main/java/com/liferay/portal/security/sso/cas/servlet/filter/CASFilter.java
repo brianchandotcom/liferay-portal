@@ -47,6 +47,32 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Participates in every login and logout that triggers an HTTP request to
+ * Liferay Portal.
+ * 
+ * <p>
+ * This class checks if the HTTP session attribute CAS_FORCE_LOGOUT is set by
+ * CASAutoLogin and, if so, redirects the browser to the configured CAS Logout
+ * URL.
+ * </p>
+ * 
+ * <p>
+ * Next, if the session attribute CAS_LOGIN has not already been set and no
+ * ticket parameter is received via the HttpServletRequest, the CAS server login
+ * URL is constructed based on the configuration of the Login URL, the Server
+ * name, and the Service URL and the browser is redirected to this URL. If a
+ * ticket parameter was received, it will be validated.
+ * </p>
+ * 
+ * <p>
+ * Validation includes sending a SAML request containing the ticket to the CAS
+ * server, and in return receiving an assertion of user attributes. However,
+ * only the principal attribute is used and it is set as the session attribute
+ * CAS_LOGIN as mentioned earlier. It is important that the CAS server issues a
+ * principal of the same type that the portal instance is configured to use
+ * (e.g., screen name vs. email address).
+ * </p>
+ * 
  * @author Michael Young
  * @author Brian Wing Shun Chan
  * @author Raymond Augé

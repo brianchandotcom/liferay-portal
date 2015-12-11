@@ -585,7 +585,7 @@ public class PluginsSummaryBuilder {
 		sb.append(value);
 	}
 
-	private static final String[] _TICKET_ID_PREFIXES = {"LPS", "SOS"};
+	private static final String[] _TICKET_ID_PREFIXES = {"CLDSVCS", "LPS", "SOS", "SYNC"};
 
 	private Set<String> _distinctAuthors = new TreeSet<String>();
 	private Set<String> _distinctLicenses = new TreeSet<String>();

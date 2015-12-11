@@ -196,7 +196,14 @@ public class SyncWatchEventProcessor implements Runnable {
 							parentSyncFile.getRepositoryId(), _syncAccountId);
 					}
 					catch (Exception e) {
-						if (_logger.isTraceEnabled()) {
+						Throwable throwable = e.getCause();
+
+						String message = throwable.getMessage();
+
+						if (!message.contains(
+								"Unique index or primary key violation") &&
+							_logger.isTraceEnabled()) {
+
 							_logger.trace(e.getMessage(), e);
 						}
 					}
@@ -404,14 +411,6 @@ public class SyncWatchEventProcessor implements Runnable {
 			!Files.notExists(Paths.get(syncFile.getFilePathName()))) {
 
 			return;
-		}
-		else if (syncFile.getState() == SyncFile.STATE_IN_PROGRESS) {
-			Set<Event> events = FileEventManager.getEvents(
-				syncFile.getSyncFileId());
-
-			for (Event event : events) {
-				event.cancel();
-			}
 		}
 		else if ((syncFile.getState() == SyncFile.STATE_ERROR) ||
 				 (syncFile.getState() == SyncFile.STATE_UNSYNCED)) {

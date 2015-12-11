@@ -26,7 +26,7 @@ public class UnstableMessageUtil {
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("<ul>");
+		sb.append("<ol>");
 
 		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(
@@ -55,7 +55,7 @@ public class UnstableMessageUtil {
 				messageCount++;
 
 				if (messageCount == _MAX_MESSAGE_COUNT) {
-					sb.append("<li>...</li></ul>");
+					sb.append("<li>...</li></ol>");
 
 					return sb.toString();
 				}
@@ -107,7 +107,7 @@ public class UnstableMessageUtil {
 			}
 		}
 
-		sb.append("</ul>");
+		sb.append("</ol>");
 		return sb.toString();
 	}
 

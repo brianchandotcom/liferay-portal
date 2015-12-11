@@ -55,7 +55,7 @@
 			<var name="category" value="Productivity" />
 		</execute>
 
-		<execute macro="SystemSettings#editProductivityConfiguration">
+		<execute macro="SystemSettings#editConfiguration">
 			<var name="configurationName" value="Dynamic Data Lists Form Configuration" />
 		</execute>
 

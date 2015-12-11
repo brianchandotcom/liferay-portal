@@ -1,5 +1,5 @@
 <definition>
-	<command name="editProductivityConfiguration">
+	<command name="editConfiguration">
 		<var name="key_assetEntry" value="${configurationName}" />
 
 		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />

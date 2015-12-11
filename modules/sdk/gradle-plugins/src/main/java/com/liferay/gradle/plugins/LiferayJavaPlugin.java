@@ -451,7 +451,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, JavaPlugin.JAVADOC_TASK_NAME);
 
 		zip.dependsOn(javadoc);
-		zip.from(javadoc.getDestinationDir());
+		zip.from(javadoc);
 
 		return zip;
 	}

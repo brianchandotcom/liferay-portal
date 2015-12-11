@@ -1676,6 +1676,88 @@
 		</execute>
 	</command>
 
+	<command name="ViewFormWithDefaultHiddenVisibility" priority="3">
+		<description message="This is a use case for LPS-59604." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAdd" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddFirstField">
+			<var name="fieldType" value="Text" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="label" />
+			<var name="fieldValue" value="Visible Field" />
+		</execute>
+
+		<execute macro="FormFields#viewFormName">
+			<var name="fieldName" value="VisibleField" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#gotoAddAdditionalField">
+			<var name="fieldType" value="Text" />
+			<var name="previousFieldName" value="VisibleField" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="label" />
+			<var name="fieldValue" value="Hidden Field" />
+		</execute>
+
+		<execute macro="FormFields#viewFormName">
+			<var name="fieldName" value="HiddenField" />
+		</execute>
+
+		<execute macro="FormFields#enableAdvancedOptions" />
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="visibility" />
+			<var name="fieldValue" value="VisibleField.equals(&quot;test&quot;)" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Form Page" />
+			<var name="portletName" value="Form" />
+		</execute>
+
+		<execute macro="FormPortletNavigator#gotoSelectForm" />
+
+		<execute macro="FormPortletConfiguration#selectForm" />
+
+		<execute macro="FormPortletConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="FormFields#viewConditionalFields">
+			<var name="fieldLabelHidden" value="Hidden Field" />
+			<var name="fieldLabelVisible" value="Visible Field" />
+			<var name="fieldNameVisible" value="VisibleField" />
+			<var name="fieldValue" value="test" />
+		</execute>
+	</command>
+
 	<command name="ViewRepeatableTextFieldLabel" priority="4">
 		<execute macro="Navigator#openURL" />
 

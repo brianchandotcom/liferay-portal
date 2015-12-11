@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.wiki.display.context;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.wiki.model.WikiPage;
+package com.liferay.wiki.model;
 
 /**
- * @author Iván Zaera
+ * @author Roberto Díaz
  */
-public interface WikiListPagesDisplayContext extends WikiDisplayContext {
+public class WikiNodeConstants {
 
-	public Menu getMenu(WikiPage wikiPage) throws PortalException;
+	public static final String INITIAL_NODE_NAME = "Main";
 
 }

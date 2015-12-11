@@ -16,15 +16,19 @@ package com.liferay.wiki.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.web.portlet.toolbar.item.WikiPortletToolbarContributor;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
@@ -43,7 +47,21 @@ public class ViewAllPagesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		renderRequest.setAttribute(
+			WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR,
+			_wikiPortletToolbarContributor);
+
 		return ActionUtil.viewNode(renderRequest, "/wiki/view_all_pages.jsp");
 	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPortletToolbarContributor(
+		WikiPortletToolbarContributor wikiPortletToolbarContributor) {
+
+		_wikiPortletToolbarContributor = wikiPortletToolbarContributor;
+	}
+
+	private volatile WikiPortletToolbarContributor
+		_wikiPortletToolbarContributor;
 
 }

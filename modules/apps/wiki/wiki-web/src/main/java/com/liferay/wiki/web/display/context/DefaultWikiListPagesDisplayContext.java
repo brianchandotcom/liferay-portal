@@ -16,15 +16,12 @@ package com.liferay.wiki.web.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -92,39 +89,8 @@ public class DefaultWikiListPagesDisplayContext
 	}
 
 	@Override
-	public List<ToolbarItem> getToolbarItems() {
-		List<ToolbarItem> toolbarItems = new ArrayList<>();
-
-		addAddPageToolbarItem(toolbarItems);
-
-		return toolbarItems;
-	}
-
-	@Override
 	public UUID getUuid() {
 		return _UUID;
-	}
-
-	protected void addAddPageToolbarItem(List<ToolbarItem> toolbarItems) {
-		LiferayPortletResponse liferayPortletResponse =
-			_wikiRequestHelper.getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		portletURL.setParameter("redirect", _wikiRequestHelper.getCurrentURL());
-		portletURL.setParameter(
-			"nodeId", String.valueOf(_wikiNode.getNodeId()));
-		portletURL.setParameter("title", StringPool.BLANK);
-		portletURL.setParameter("editTitle", "1");
-
-		URLToolbarItem addPageURLToolbarItem = new URLToolbarItem();
-
-		addPageURLToolbarItem.setKey(WikiUIItemKeys.ADD_PAGE);
-		addPageURLToolbarItem.setLabel(LanguageUtil.get(_request, "add-page"));
-		addPageURLToolbarItem.setURL(portletURL.toString());
-
-		toolbarItems.add(addPageURLToolbarItem);
 	}
 
 	protected void addCopyMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)

@@ -183,6 +183,13 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	protected static void validateArgElement(Element element, String filePath) {
+		List<String> attributes = Arrays.asList("line-number", "value");
+
+		validatePossibleAttributeNames(element, attributes, filePath);
+		validateRequiredAttributeNames(element, attributes, filePath);
+	}
+
 	protected static void validateClassCommandName(
 		Element element, String classCommandName, String classType,
 		String filePath) {
@@ -583,10 +590,10 @@ public class PoshiRunnerValidation {
 				}
 			}
 
-			List<Element> varElements = element.elements("var");
+			List<Element> argElements = element.elements("arg");
 
-			for (Element varElement : varElements) {
-				validateVarElement(varElement, filePath);
+			for (Element argElement : argElements) {
+				validateArgElement(argElement, filePath);
 			}
 
 			List<Element> returnElements = element.elements("return");
@@ -598,6 +605,12 @@ public class PoshiRunnerValidation {
 					validateMacroReturns(
 						element, "macro", returnElement, filePath);
 				}
+			}
+
+			List<Element> varElements = element.elements("var");
+
+			for (Element varElement : varElements) {
+				validateVarElement(varElement, filePath);
 			}
 		}
 	}

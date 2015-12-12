@@ -937,9 +937,17 @@ public class PoshiRunnerExecutor {
 			return;
 		}
 
+		String staticValue = element.attributeValue("static");
+
 		if (commandVar) {
 			PoshiRunnerVariablesUtil.putIntoCommandMap(
 				varName, replacedVarValue);
+		}
+		else if (staticValue != null && staticValue.equals("true")) {
+			if (!PoshiRunnerVariablesUtil.containsKeyInStaticMap(varName)) {
+				PoshiRunnerVariablesUtil.putIntoStaticMap(
+					varName, replacedVarValue);
+			}
 		}
 		else {
 			PoshiRunnerVariablesUtil.putIntoExecuteMap(

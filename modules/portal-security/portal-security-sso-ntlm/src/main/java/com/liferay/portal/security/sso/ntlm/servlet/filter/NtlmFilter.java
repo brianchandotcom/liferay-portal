@@ -57,27 +57,23 @@ import org.osgi.service.component.annotations.Reference;
  * Participates in every login that triggers an HTTP request to Liferay Portal.
  * It carries out one of the following tasks:
  * 
- * <p>
- * 1. The filter looks for an Authorization request header with a value starting
- * with the string <code>NTLM</code>. If found, and the 9th byte (
+ * <ol>
+ * <li>The filter looks for an Authorization request header with a value
+ * starting with the string <code>NTLM</code>. If found, and the 9th byte (
  * <code>NTLM message type</code>) of the header value is <code>1</code> then
  * this is a type 1 message from the client. The filter then prepares and
  * returns a type 2 message which contains a nonce (a.k.a. challenge), and the
  * configured Domain for which clients should provide credentials. The type 2
  * message is placed into the WWW-Authenticate response header and HTTP response
- * code 401 is issued. The nonce is associated with the HTTP session.
- * </p>
+ * code 401 is issued. The nonce is associated with the HTTP session.</li>
  * 
- * <p>
- * 2. If no nonce is found associated with the HTTP session, a simple value of
+ * <li>If no nonce is found associated with the HTTP session, a simple value of
  * <code>NTLM</code> is placed into the WWW-Authenticate response header and
  * HTTP response code 401 is issued. This simulates case 1 when the client
- * responds.
- * </p>
+ * responds.</li>
  * 
- * <p>
- * 3. At this stage, the Authorization request header has been received, but the
- * 8th byte is not equal to <code>1</code>, and a nonce was previously
+ * <li>At this stage, the Authorization request header has been received, but
+ * the 8th byte is not equal to <code>1</code>, and a nonce was previously
  * associated with the HTTP session (see case 1). This means that the client has
  * now sent its username, domain, workstation name and the result of encrypting
  * the hashed password with the NONCE. This is sent in the Authorization header.
@@ -90,8 +86,7 @@ import org.osgi.service.component.annotations.Reference;
  * <code>NTLM_REMOTE_USER</code> is set equal to the username (known as screen
  * name in Liferay terminology), in preparation for the
  * {@link com.liferay.portal.security.sso.ntlm.auto.login.NTLMAutoLogin} class
- * to log the user in (see above).
- * </p>
+ * to log the user in (see above).</li>
  * 
  * @author Bruno Farache
  * @author Marcus Schmidke

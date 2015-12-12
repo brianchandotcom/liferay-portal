@@ -25,15 +25,6 @@ PortletURL portletURL = PortletURLUtil.clone(currentURLObj, liferayPortletRespon
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, type), portletURL.toString());
 
-List<String> headerNames = new ArrayList<String>();
-
-headerNames.add("page");
-headerNames.add("status");
-headerNames.add("revision");
-headerNames.add("user");
-headerNames.add("date");
-headerNames.add(StringPool.BLANK);
-
 String emptyResultsMessage = null;
 
 if (type.equals("all_pages")) {
@@ -46,7 +37,7 @@ else if (type.equals("frontpage")) {
 	emptyResultsMessage = LanguageUtil.format(request, "there-is-no-x", new String[] {wikiGroupServiceConfiguration.frontPageName()}, false);
 }
 else if (type.equals("orphan_pages")) {
-	emptyResultsMessage = "there-are-no-orphan-pages";
+	emptyResultsMessage = "there-are-no-orphan-changes";
 }
 else if (type.equals("recent_changes")) {
 	emptyResultsMessage = "there-are-no-recent-changes";
@@ -55,27 +46,20 @@ else if (type.equals("recent_changes")) {
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
-OrderByComparator<WikiPage> orderByComparator = WikiPortletUtil.getPageOrderByComparator(orderByCol, orderByType);
+SearchContainer wikiPagesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, emptyResultsMessage);
 
-Map orderableHeaders = new HashMap();
+wikiPagesSearchContainer.setOrderByType(orderByType);
+wikiPagesSearchContainer.setOrderByCol(orderByCol);
+wikiPagesSearchContainer.setOrderByComparator(WikiPortletUtil.getPageOrderByComparator(orderByCol, orderByType));
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, headerNames, emptyResultsMessage);
-
-searchContainer.setOrderableHeaders(orderableHeaders);
-searchContainer.setOrderByCol(orderByCol);
-searchContainer.setOrderByType(orderByType);
-
-int total = 0;
-List<WikiPage> results = null;
+int pagesCount = 0;
+List<WikiPage> pages = null;
 
 if (type.equals("all_pages")) {
-	total = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED);
+	pagesCount = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED);
 
-	searchContainer.setTotal(total);
-
-	results = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
+	pages = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED, wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd(), wikiPagesSearchContainer.getOrderByComparator());
 }
-
 else if (type.equals("draft_pages")) {
 	long draftUserId = user.getUserId();
 
@@ -85,126 +69,125 @@ else if (type.equals("draft_pages")) {
 
 	int status = WorkflowConstants.STATUS_DRAFT;
 
-	if (type.equals("pending_pages")) {
-		status = WorkflowConstants.STATUS_PENDING;
-	}
+	pagesCount = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status);
 
-	total = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status);
-
-	searchContainer.setTotal(total);
-
-	results = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status, searchContainer.getStart(), searchContainer.getEnd());
+	pages = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status, wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd());
 }
 else if (type.equals("frontpage")) {
 
 	WikiPage wikiPage = WikiPageServiceUtil.getPage(scopeGroupId, node.getNodeId(), wikiGroupServiceConfiguration.frontPageName());
 
-	searchContainer.setTotal(1);
+	pagesCount = 1;
 
-	results.add(wikiPage);
+	pages.add(wikiPage);
 }
 else if (type.equals("orphan_pages")) {
 	List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(themeDisplay.getScopeGroupId(), node.getNodeId());
 
-	total = orphans.size();
+	pagesCount = orphans.size();
 
-	searchContainer.setTotal(total);
-
-	results = ListUtil.subList(orphans, searchContainer.getStart(), searchContainer.getEnd());
+	pages = ListUtil.subList(orphans, wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd());
 }
 else if (type.equals("recent_changes")) {
-	total = WikiPageServiceUtil.getRecentChangesCount(themeDisplay.getScopeGroupId(), node.getNodeId());
+	pagesCount = WikiPageServiceUtil.getRecentChangesCount(themeDisplay.getScopeGroupId(), node.getNodeId());
 
-	searchContainer.setTotal(total);
-
-	results = WikiPageServiceUtil.getRecentChanges(themeDisplay.getScopeGroupId(), node.getNodeId(), searchContainer.getStart(), searchContainer.getEnd());
-}
-
-searchContainer.setResults(results);
-
-List resultRows = searchContainer.getResultRows();
-
-for (int i = 0; i < results.size(); i++) {
-	WikiPage curWikiPage = results.get(i);
-
-	ResultRow row = new ResultRow(curWikiPage, String.valueOf(curWikiPage.getVersion()), i);
-
-	PortletURL rowURL = renderResponse.createRenderURL();
-
-	if (!type.equals("draft_pages")) {
-		rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("nodeName", curWikiPage.getNode().getName());
-	}
-	else {
-		rowURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("nodeId", String.valueOf(curWikiPage.getNodeId()));
-	}
-
-	rowURL.setParameter("title", curWikiPage.getTitle());
-
-	// Title
-
-	row.addText(HtmlUtil.escape(curWikiPage.getTitle()), rowURL);
-
-	// Status
-
-	row.addStatus(curWikiPage.getStatus(), curWikiPage.getStatusByUserId(), curWikiPage.getStatusDate(), rowURL);
-
-	// Revision
-
-	String revision = String.valueOf(curWikiPage.getVersion());
-
-	if (curWikiPage.isMinorEdit()) {
-		revision += " (" + LanguageUtil.get(request, "minor-edit") + ")";
-	}
-
-	row.addText(revision, rowURL);
-
-	// User
-
-	row.addText(HtmlUtil.escape(PortalUtil.getUserName(curWikiPage)), rowURL);
-
-	// Date
-
-	row.addDate(curWikiPage.getModifiedDate(), rowURL);
-
-	// Summary
-
-	if (type.equals("recent_changes")) {
-		if (Validator.isNotNull(curWikiPage.getSummary())) {
-			row.addText(HtmlUtil.escape(curWikiPage.getSummary()));
-		}
-		else {
-			row.addText(StringPool.BLANK);
-		}
-	}
-
-	// Action
-
-	row.addJSP("/wiki/page_action.jsp", "entry-action", application, request, response);
-
-	// Add result row
-
-	resultRows.add(row);
+	pages = WikiPageServiceUtil.getRecentChanges(themeDisplay.getScopeGroupId(), node.getNodeId(), wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd());
 }
 
 WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiPortletInstanceSettingsHelper, wikiGroupServiceConfiguration);
 WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
 %>
 
-<c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">
-
-	<%
-	PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
-	%>
-
-	<liferay-ui:trash-undo portletURL="<%= undoTrashURL.toString() %>" />
-</c:if>
-
 <liferay-util:include page="/wiki_admin/pages_navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-ui:search-iterator paginate='<%= type.equals("history") ? false : true %>' searchContainer="<%= searchContainer %>" />
+<div class="container-fluid-1280">
+	<c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">
+
+		<%
+		PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
+		%>
+
+		<liferay-ui:trash-undo portletURL="<%= undoTrashURL.toString() %>" />
+	</c:if>
+
+	<liferay-ui:search-container
+		id="wikiPages"
+		searchContainer="<%= wikiPagesSearchContainer %>"
+		total="<%= pagesCount %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= pages %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.wiki.model.WikiPage"
+			keyProperty="pageId"
+			modelVar="curPage"
+		>
+
+			<%
+			PortletURL rowURL = renderResponse.createRenderURL();
+
+			if (!type.equals("draft_pages")) {
+				rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("nodeName", curPage.getNode().getName());
+			}
+			else {
+				rowURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("nodeId", String.valueOf(curPage.getNodeId()));
+			}
+
+			rowURL.setParameter("title", curPage.getTitle());
+			%>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="title"
+				value="<%= curPage.getTitle() %>"
+			/>
+
+			<liferay-ui:search-container-column-status
+				href="<%= rowURL %>"
+				name="status"
+				status="<%= curPage.getStatus() %>"
+			/>
+
+			<%
+			String revision = String.valueOf(curPage.getVersion());
+
+			if (curPage.isMinorEdit()) {
+				revision += " (" + LanguageUtil.get(request, "minor-edit") + ")";
+			}
+			%>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="revision"
+				value="<%= revision %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="user"
+				value="<%= PortalUtil.getUserName(curPage) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				href="<%= rowURL %>"
+				name="date"
+				value="<%= curPage.getModifiedDate() %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action"
+				path="/wiki_admin/page_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>
 
 <liferay-util:include page="/wiki_admin/add_page_button.jsp" servletContext="<%= application %>" />

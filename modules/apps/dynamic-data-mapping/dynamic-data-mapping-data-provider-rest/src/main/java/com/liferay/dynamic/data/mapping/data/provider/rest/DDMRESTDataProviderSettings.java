@@ -16,11 +16,27 @@ package com.liferay.dynamic.data.mapping.data.provider.rest;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 
 /**
  * @author Marcellus Tavares
  */
 @DDMForm
+@DDMFormLayout( {
+	@DDMFormLayoutPage( {
+		@DDMFormLayoutRow(
+			{
+				@DDMFormLayoutColumn(
+					size = 12,
+					value = {"url", "username", "password", "key", "value"}
+				)
+			}
+		)
+	})
+})
 public interface DDMRESTDataProviderSettings {
 
 	@DDMFormField

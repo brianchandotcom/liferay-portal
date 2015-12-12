@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormFieldTypesJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -100,7 +101,7 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		DDMFormFieldType ddmFormFieldType = mock(DDMFormFieldType.class);
 
 		whenDDMFormFieldTypeGetDDMFormFieldTypeSettings(
-			ddmFormFieldType, DDMFormFieldTypeSettings.class);
+			ddmFormFieldType, DDMFormFieldTypeSettingsTestUtil.getSettings());
 		whenDDMFormFieldTypeGetName(ddmFormFieldType, "Text");
 
 		return ddmFormFieldType;

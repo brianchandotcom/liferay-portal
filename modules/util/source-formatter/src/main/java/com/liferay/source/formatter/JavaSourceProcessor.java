@@ -170,6 +170,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String parameterName = StringUtil.trim(
 				annotationParameters.substring(y + 1, x));
 
+			if (parameterName.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+				break;
+			}
+
 			if (Validator.isNull(previousParameterName) ||
 				(previousParameterName.compareToIgnoreCase(parameterName) <=
 					0)) {

@@ -16,6 +16,10 @@ package com.liferay.dynamic.data.mapping.test.util;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -30,6 +34,23 @@ public class DDMFormFieldTypeSettingsTestUtil {
 	}
 
 	@DDMForm
+	@DDMFormLayout( {
+		@DDMFormLayoutPage( {
+			@DDMFormLayoutRow(
+				{
+					@DDMFormLayoutColumn(
+							{
+								"dataType", "fieldNamespace", "indexType",
+								"label", "localizable", "name", "multiple",
+								"options", "predefinedValue", "readOnly",
+								"repeatable", "required", "showLabel", "tip",
+								"type", "validation", "visibilityExpression"
+							}
+						)
+				}
+			)
+		})
+	})
 	private interface AllBasicPropertiesSettings
 		extends DefaultDDMFormFieldTypeSettings {
 

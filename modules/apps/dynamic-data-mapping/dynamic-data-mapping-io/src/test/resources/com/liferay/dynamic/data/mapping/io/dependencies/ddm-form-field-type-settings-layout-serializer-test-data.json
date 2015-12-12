@@ -10,19 +10,29 @@
 						}
 					]
 				}
-			]
+			],
+			"title": {
+				"en_US": "basic"
+			}
 		},
 		{
 			"rows": [
 				{
 					"columns":[
 						{
-							"fieldNames": ["e", "d"],
-							"size": 12
+							"fieldNames": ["e"],
+							"size": 6
+						},
+						{
+							"fieldNames": ["d"],
+							"size": 6
 						}
 					]
 				}
-			]
+			],
+			"title": {
+				"en_US": "advanced"
+			}
 		}
 	]
 }

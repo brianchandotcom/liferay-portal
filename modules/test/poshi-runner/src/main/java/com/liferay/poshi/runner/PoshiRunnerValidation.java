@@ -599,11 +599,14 @@ public class PoshiRunnerValidation {
 			List<Element> returnElements = element.elements("return");
 
 			for (Element returnElement : returnElements) {
-				validateExecuteReturnElement(returnElement, filePath);
-
 				if (primaryAttributeName.equals("macro")) {
+					validateExecuteReturnMacroElement(returnElement, filePath);
+
 					validateMacroReturnsAttribute(
 						element, "macro", returnElement, filePath);
+				}
+				else if (primaryAttributeName.equals("method")) {
+					validateExecuteReturnMethodElement(returnElement, filePath);
 				}
 			}
 
@@ -615,11 +618,21 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	protected static void validateExecuteReturnElement(
+	protected static void validateExecuteReturnMacroElement(
 		Element element, String filePath) {
 
 		List<String> attributeNames = Arrays.asList(
 			"from", "line-number", "name");
+
+		validateHasNoChildElements(element, filePath);
+		validatePossibleAttributeNames(element, attributeNames, filePath);
+		validateRequiredAttributeNames(element, attributeNames, filePath);
+	}
+
+	protected static void validateExecuteReturnMethodElement(
+		Element element, String filePath) {
+
+		List<String> attributeNames = Arrays.asList("line-number", "name");
 
 		validateHasNoChildElements(element, filePath);
 		validatePossibleAttributeNames(element, attributeNames, filePath);

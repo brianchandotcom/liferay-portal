@@ -184,3 +184,5 @@ for (int i = 0; i < results.size(); i++) {
 %>
 
 <liferay-ui:search-iterator paginate='<%= type.equals("history") ? false : true %>' searchContainer="<%= searchContainer %>" />
+
+<liferay-util:include page="/wiki_admin/add_page_button.jsp" servletContext="<%= application %>" />

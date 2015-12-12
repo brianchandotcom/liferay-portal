@@ -602,7 +602,7 @@ public class PoshiRunnerValidation {
 				validateExecuteReturnElement(returnElement, filePath);
 
 				if (primaryAttributeName.equals("macro")) {
-					validateMacroReturns(
+					validateMacroReturnsAttribute(
 						element, "macro", returnElement, filePath);
 				}
 			}
@@ -941,7 +941,7 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	protected static void validateMacroReturns(
+	protected static void validateMacroReturnsAttribute(
 		Element element, String macroType, Element returnElement,
 		String filePath) {
 

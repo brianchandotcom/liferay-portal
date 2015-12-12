@@ -29,6 +29,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		<portlet:actionURL name="/login/create_anonymous_account" var="updateIncompleteUserURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 			<portlet:param name="emailAddress" value="<%= emailAddress %>" />
+			<portlet:param name="mvcRenderCommandName" value="/login/create_anonymous_account" />
 		</portlet:actionURL>
 
 		<aui:form action="<%= updateIncompleteUserURL %>" method="post" name="fm">

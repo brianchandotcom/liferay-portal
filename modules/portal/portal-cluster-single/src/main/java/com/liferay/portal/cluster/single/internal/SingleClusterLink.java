@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cluster.dummy.internal;
+package com.liferay.portal.cluster.single.internal;
 
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterLink;
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Shuyang Zhou
  */
 @Component(immediate = true, service = ClusterLink.class)
-public class DummyClusterLink implements ClusterLink {
+public class SingleClusterLink implements ClusterLink {
 
 	@Override
 	public boolean isEnabled() {

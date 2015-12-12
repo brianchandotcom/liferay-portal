@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cluster.dummy.internal;
+package com.liferay.portal.cluster.single.internal;
 
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Tina Tian
  */
 @Component(immediate = true, service = ClusterExecutor.class)
-public class DummyClusterExecutor implements ClusterExecutor {
+public class SingleClusterExecutor implements ClusterExecutor {
 
 	@Override
 	public void addClusterEventListener(

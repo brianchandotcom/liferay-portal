@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cluster.dummy.internal;
+package com.liferay.portal.cluster.single.internal;
 
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(immediate = true, service = ClusterMasterExecutor.class)
-public class DummyClusterMasterExecutor implements ClusterMasterExecutor {
+public class SingleClusterMasterExecutor implements ClusterMasterExecutor {
 
 	@Override
 	public void addClusterMasterTokenTransitionListener(

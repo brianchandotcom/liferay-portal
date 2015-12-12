@@ -205,4 +205,5 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		new String[][] {{"&raquo;", "[raquo]"}, {"<pre>", "<pre><![CDATA["},
 			{"</pre>", "]]></pre>"}
 		};
+
 }

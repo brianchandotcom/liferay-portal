@@ -15,11 +15,13 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+
 import java.net.URL;
 import java.net.URLDecoder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -95,10 +97,10 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 			downloadSampleURL(
 				runDir, JenkinsResultsParserUtil.createURL(runURLString),
-					"/api/json");
+				"/api/json");
 			downloadSampleURL(
 				runDir, JenkinsResultsParserUtil.createURL(runURLString),
-					"/testReport/api/json");
+				"/testReport/api/json");
 
 			runJSONObject.put("url", toURLString(runDir));
 		}

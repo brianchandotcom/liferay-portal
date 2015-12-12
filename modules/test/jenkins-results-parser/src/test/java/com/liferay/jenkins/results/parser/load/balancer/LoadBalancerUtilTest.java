@@ -18,10 +18,13 @@ import com.liferay.jenkins.results.parser.BaseJenkinsResultsParserTestCase;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
+
 import java.net.URL;
+
 import java.util.Map;
 
 import org.apache.tools.ant.Project;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

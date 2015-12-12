@@ -518,37 +518,37 @@
 </tr>
 <tr>
 	<td>NODE_TABLE_WIKI_NAME</td>
-	<td>//tr[contains(.,'${key_wikiNodeName}')]/td[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_TABLE_WIKI_GENERIC</td>
-	<td>//tr[1]/td[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_TABLE_WIKI_GENERIC_2</td>
-	<td>//tr[2]/td[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_TABLE_NUMBER_OF_PAGES</td>
 	<td>//tr[contains(.,'${key_wikiNodeName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_TABLE_WIKI_GENERIC</td>
+	<td>//tr[1]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_TABLE_WIKI_GENERIC_2</td>
+	<td>//tr[2]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_TABLE_NUMBER_OF_PAGES</td>
+	<td>//tr[contains(.,'${key_wikiNodeName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NODE_TABLE_ACTIONS_DROPDOWN</td>
-	<td>//tr[contains(.,'${key_wikiNodeName}')]/td[4]/div/a</td>
+	<td>//tr[contains(.,'${key_wikiNodeName}')]/td[5]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NODE_TABLE_ACTIONS_GENERIC_DROPDOWN</td>
-	<td>//tr[1]/td[4]/div/a</td>
+	<td>//tr[1]/td[5]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2</td>
-	<td>//tr[2]/td[4]/div/a</td>
+	<td>//tr[2]/td[5]/div/a</td>
 	<td></td>
 </tr>
 <tr>

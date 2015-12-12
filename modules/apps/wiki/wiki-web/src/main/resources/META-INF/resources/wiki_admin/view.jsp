@@ -159,7 +159,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 					rowURL.setParameter("mvcRenderCommandName", "/wiki_admin/view_pages");
 					rowURL.setParameter("redirect", currentURL);
 					rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-					rowURL.setParameter("type", "all_pages");
+					rowURL.setParameter("type", "all-pages");
 					%>
 
 					<c:choose>

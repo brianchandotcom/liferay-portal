@@ -25,7 +25,3 @@
 <liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="type" value="all_pages" />
 </liferay-util:include>
-
-<c:if test="<%= portletName.equals(WikiPortletKeys.WIKI_ADMIN) %>">
-	<liferay-util:include page="/wiki_admin/add_page_button.jsp" servletContext="<%= application %>" />
-</c:if>

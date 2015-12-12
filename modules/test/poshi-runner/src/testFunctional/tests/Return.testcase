@@ -2,8 +2,12 @@
 	<property name="poshi.runner.acceptance" value="true" />
 	<property name="testray.main.component.name" value="Smoke" />
 
-	<command name="ReturnExample" priority="5">
-		<execute macro="Return#returnMacro">
+	<command name="ReturnInMacro" priority="5">
+		<execute macro="Return#returnInMacro" />
+	</command>
+
+	<command name="ReturnInTestCase" priority="5">
+		<execute macro="Return#returnValue">
 			<return from="variable" name="actual" />
 		</execute>
 

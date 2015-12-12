@@ -1,3 +1,4 @@
+/* @generated */
 /**
  * Copyright 2012 Liferay Inc.
  *

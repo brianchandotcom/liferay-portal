@@ -135,10 +135,15 @@ index 8bf7a42..f8adf8c 100644
  			javaFileObjects.add(javaFileObject);
  		}
 diff --git a/org/phidias/compile/ClassLoaderJavaManager.java b/org/phidias/compile/ClassLoaderJavaManager.java
-index e784eef..8679c2e 100644
+index e784eef..78810e7 100644
 --- a/org/phidias/compile/ClassLoaderJavaManager.java
 +++ b/org/phidias/compile/ClassLoaderJavaManager.java
-@@ -125,7 +125,9 @@ public class ClassLoaderJavaManager
+@@ -1,3 +1,4 @@
++/* @generated */
+ /**
+  * Copyright 2012 Liferay Inc.
+  *
+@@ -125,7 +126,9 @@ public class ClassLoaderJavaManager
  			BundleJavaFileObject bundleJavaFileObject =
  				(BundleJavaFileObject)file;
  
@@ -149,7 +154,7 @@ index e784eef..8679c2e 100644
  
  			return bundleJavaFileObject.inferBinaryName();
  		}
-@@ -141,7 +143,7 @@ public class ClassLoaderJavaManager
+@@ -141,7 +144,7 @@ public class ClassLoaderJavaManager
  
  		List<JavaFileObject> javaFileObjects = new ArrayList<JavaFileObject>();
  
@@ -158,7 +163,7 @@ index e784eef..8679c2e 100644
  			_log.log(
  				"List available sources for {location=" + location +
  					", packageName=" + packageName + ", kinds=" + kinds +
-@@ -172,7 +174,9 @@ public class ClassLoaderJavaManager
+@@ -172,7 +175,9 @@ public class ClassLoaderJavaManager
  			for (JavaFileObject javaFileObject : _javaFileManager.list(
  					location, packagePath, kinds, recurse)) {
  
@@ -170,10 +175,15 @@ index e784eef..8679c2e 100644
  				}
  
 diff --git a/org/phidias/compile/TPhLog.java b/org/phidias/compile/TPhLog.java
-index d3c8d53..c17e00c 100644
+index d3c8d53..aa559c6 100644
 --- a/org/phidias/compile/TPhLog.java
 +++ b/org/phidias/compile/TPhLog.java
-@@ -30,6 +30,10 @@ public class TPhLog {
+@@ -1,3 +1,4 @@
++/* @generated */
+ /**
+  * Copyright 2012 Liferay Inc.
+  *
+@@ -30,6 +31,10 @@ public class TPhLog {
  	public PrintStream out;
  	public String pattern = "%1$tH:%1$tM:%1$tS,%1$tL [%2$s:%3$d] %4$s %5$s\n";
  

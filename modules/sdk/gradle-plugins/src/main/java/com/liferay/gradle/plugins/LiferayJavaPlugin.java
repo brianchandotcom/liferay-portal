@@ -523,7 +523,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		};
 
-		if (hasInputFiles(jarSourcesTask, spec)) {
+		if (hasSourceFiles(jarSourcesTask, spec)) {
 			artifactHandler.add(
 				Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
 		}
@@ -546,7 +546,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		};
 
-		if (hasInputFiles(javadocTask, spec)) {
+		if (hasSourceFiles(javadocTask, spec)) {
 			Task zipJavadocTask = GradleUtil.getTask(
 				project, ZIP_JAVADOC_TASK_NAME);
 
@@ -1583,10 +1583,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return iterator.next();
 	}
 
-	protected boolean hasInputFiles(Task task, Spec<File> spec) {
+	protected boolean hasSourceFiles(Task task, Spec<File> spec) {
 		TaskInputs taskInputs = task.getInputs();
 
-		FileCollection fileCollection = taskInputs.getFiles();
+		FileCollection fileCollection = taskInputs.getSourceFiles();
 
 		fileCollection = fileCollection.filter(spec);
 

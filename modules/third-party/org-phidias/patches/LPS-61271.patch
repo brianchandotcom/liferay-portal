@@ -2,7 +2,7 @@ diff --git a/org/phidias/compile/BundleJavaManager.java b/org/phidias/compile/Bu
 index 44b7206..74052d5 100644
 --- a/org/phidias/compile/BundleJavaManager.java
 +++ b/org/phidias/compile/BundleJavaManager.java
-@@ -230,12 +230,17 @@ public class BundleJavaManager
+@@ -230,12 +230,17 @@ public class BundleJavaManager/* @generated */
  		return resourceName.replace('/', '.');
  	}
  

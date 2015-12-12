@@ -26,6 +26,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -70,21 +71,22 @@ public class BundleJavaManager
 
 		super(javaFileManager);
 
-		_bundle = bundle;
 		_javaFileManager = javaFileManager;
 		_log = new TPhLog();
 
-		setOptions(options);
+		if ((options != null) && options.contains(OPT_VERBOSE)) {
+			_log.out = System.err;
+		}
 
 		_strict = strict;
 
 		if (_log.isEnabled()) {
 			_log.log(
 				"Initializing compilation in OSGi for bundle " +
-					_bundle.getSymbolicName() + "-" + _bundle.getVersion());
+					bundle.getSymbolicName() + "-" + bundle.getVersion());
 		}
 
-		_bundleWiring = _bundle.adapt(BundleWiring.class);
+		_bundleWiring = bundle.adapt(BundleWiring.class);
 
 		_classLoader = _bundleWiring.getClassLoader();
 
@@ -111,7 +113,21 @@ public class BundleJavaManager
 			Bundle curBundle = providerWiring.getBundle();
 
 			if (_strict && (curBundle.getBundleId() == 0)) {
-				_systemBundleWiring = providerWiring;
+				List<BundleCapability> bundleCapabilities =
+					providerWiring.getCapabilities(
+						BundleRevision.PACKAGE_NAMESPACE);
+
+				for (BundleCapability bundleCapability : bundleCapabilities) {
+					Map<String, Object> attributes =
+						bundleCapability.getAttributes();
+
+					Object packageNamespace = attributes.get(
+						BundleRevision.PACKAGE_NAMESPACE);
+
+					if (packageNamespace != null) {
+						_systemCapabilities.add(packageNamespace);
+					}
+				}
 			}
 
 			if (_log.isEnabled()) {
@@ -121,11 +137,6 @@ public class BundleJavaManager
 			}
 
 			_bundleWirings.add(providerWiring);
-		}
-
-		if (_strict && (_systemBundleWiring != null)) {
-			_systemCapabilities = _systemBundleWiring.getCapabilities(
-				BundleRevision.PACKAGE_NAMESPACE);
 		}
 	}
 
@@ -322,27 +333,7 @@ public class BundleJavaManager
 		// if mode is strict. Otherwise, allow loading classes from the defined
 		// classpath.
 
-		return (_systemBundleWiring != null) &&
-			hasPackageCapability(_systemCapabilities, packageName);
-	}
-
-	private boolean hasPackageCapability(
-		List<BundleCapability> capabilities, String packageName) {
-
-		for (BundleCapability capability : capabilities) {
-			Map<String, Object> attributes = capability.getAttributes();
-
-			Object packageAttribute = attributes.get(
-				BundleRevision.PACKAGE_NAMESPACE);
-
-			if ((packageAttribute != null) &&
-				packageAttribute.equals(packageName)) {
-
-				return true;
-			}
-		}
-
-		return false;
+		return _systemCapabilities.contains(packageName);
 	}
 
 	private void list(
@@ -405,29 +396,14 @@ public class BundleJavaManager
 		}
 	}
 
-	private void setOptions(List<String> options) {
-		if (options == null) {
-			return;
-		}
-
-		_options.addAll(options);
-
-		if (_options.contains(OPT_VERBOSE)) {
-			_log.out = System.err;
-		}
-	}
-
-	private Bundle _bundle;
 	private BundleWiring _bundleWiring;
 	private ArrayList<BundleWiring> _bundleWirings;
 	private ClassLoader _classLoader;
 	private JavaFileManager _javaFileManager;
 	private TPhLog _log;
-	private List<String> _options = new ArrayList<String>();
 	private List<BundleRequirement> _packageRequirements;
 	private ResourceResolver _resourceResolver;
 	private boolean _strict;
-	private BundleWiring _systemBundleWiring;
-	private List<BundleCapability> _systemCapabilities;
+	private final Set<Object> _systemCapabilities = new HashSet<Object>();
 
 }

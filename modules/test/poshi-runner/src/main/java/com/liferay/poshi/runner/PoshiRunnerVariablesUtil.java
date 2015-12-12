@@ -28,6 +28,14 @@ import java.util.regex.Pattern;
  */
 public class PoshiRunnerVariablesUtil {
 
+	public static void clear() {
+		_commandMap.clear();
+		_commandMapStack.clear();
+		_executeMap.clear();
+		_returnMap.clear();
+		_staticMap.clear();
+	}
+
 	public static boolean containsKeyInCommandMap(String key) throws Exception {
 		return _commandMap.containsKey(replaceCommandVars(key));
 	}
@@ -38,6 +46,10 @@ public class PoshiRunnerVariablesUtil {
 
 	public static boolean containsKeyInReturnMap(String key) throws Exception {
 		return _returnMap.containsKey(replaceCommandVars(key));
+	}
+
+	public static boolean containsKeyInStaticMap(String key) throws Exception {
+		return _staticMap.containsKey(replaceCommandVars(key));
 	}
 
 	public static String getValueFromCommandMap(String key) throws Exception {
@@ -60,9 +72,17 @@ public class PoshiRunnerVariablesUtil {
 	}
 
 	public static void pushCommandMap() {
+		pushCommandMap(false);
+	}
+
+	public static void pushCommandMap(boolean staticMap) {
 		_commandMapStack.push(_commandMap);
 
 		_commandMap = _executeMap;
+
+		if (staticMap) {
+			_commandMap.putAll(_staticMap);
+		}
 
 		_executeMap = new HashMap<>();
 		_returnMap = new HashMap<>();
@@ -84,6 +104,12 @@ public class PoshiRunnerVariablesUtil {
 		throws Exception {
 
 		_returnMap.put(replaceCommandVars(key), replaceCommandVars(value));
+	}
+
+	public static void putIntoStaticMap(String key, String value)
+		throws Exception {
+
+		_staticMap.put(replaceCommandVars(key), replaceCommandVars(value));
 	}
 
 	public static String replaceCommandVars(String token) throws Exception {
@@ -116,5 +142,6 @@ public class PoshiRunnerVariablesUtil {
 	private static Map<String, String> _executeMap = new HashMap<>();
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 	private static Map<String, String> _returnMap = new HashMap<>();
+	private static final Map<String, String> _staticMap = new HashMap<>();
 
 }

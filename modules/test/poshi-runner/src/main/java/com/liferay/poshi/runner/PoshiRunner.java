@@ -89,6 +89,8 @@ public class PoshiRunner {
 		PoshiRunnerContext.setTestCaseCommandName(_testClassCommandName);
 		PoshiRunnerContext.setTestCaseName(_testClassName);
 
+		PoshiRunnerVariablesUtil.clear();
+
 		XMLLoggerHandler.generateXMLLog(classCommandName);
 
 		CommandLoggerHandler.startRunning();
@@ -155,7 +157,7 @@ public class PoshiRunner {
 			PoshiRunnerExecutor.runVarElement(varElement, false, false);
 		}
 
-		PoshiRunnerVariablesUtil.pushCommandMap();
+		PoshiRunnerVariablesUtil.pushCommandMap(true);
 
 		Element commandElement = PoshiRunnerContext.getTestCaseCommandElement(
 			classCommandName);

@@ -433,13 +433,6 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	public boolean isInTrashImplicitly();
 
 	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	 */
-	@Deprecated
-	@Override
-	public boolean getApproved();
-
-	/**
 	 * Returns <code>true</code> if this journal folder is approved.
 	 *
 	 * @return <code>true</code> if this journal folder is approved; <code>false</code> otherwise

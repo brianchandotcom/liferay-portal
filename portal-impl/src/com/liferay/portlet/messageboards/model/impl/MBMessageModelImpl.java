@@ -1117,15 +1117,6 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return true;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #isApproved}
-	 */
-	@Deprecated
-	@Override
-	public boolean getApproved() {
-		return isApproved();
-	}
-
 	@Override
 	public boolean isApproved() {
 		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {

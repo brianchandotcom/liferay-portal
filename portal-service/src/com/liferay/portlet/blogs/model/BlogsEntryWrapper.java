@@ -297,15 +297,6 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
-	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	*/
-	@Deprecated
-	@Override
-	public boolean getApproved() {
-		return _blogsEntry.getApproved();
-	}
-
-	/**
 	* Returns the company ID of this blogs entry.
 	*
 	* @return the company ID of this blogs entry

@@ -554,13 +554,6 @@ public interface DDMTemplateVersionModel extends AttachedModel,
 	public void setStatusDate(Date statusDate);
 
 	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	 */
-	@Deprecated
-	@Override
-	public boolean getApproved();
-
-	/**
 	 * Returns <code>true</code> if this d d m template version is approved.
 	 *
 	 * @return <code>true</code> if this d d m template version is approved; <code>false</code> otherwise

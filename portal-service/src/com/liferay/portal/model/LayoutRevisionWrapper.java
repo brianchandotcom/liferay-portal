@@ -287,15 +287,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		return _layoutRevision.compareTo(layoutRevision);
 	}
 
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	*/
-	@Deprecated
-	@Override
-	public boolean getApproved() {
-		return _layoutRevision.getApproved();
-	}
-
 	@Override
 	public java.lang.String[] getAvailableLanguageIds() {
 		return _layoutRevision.getAvailableLanguageIds();

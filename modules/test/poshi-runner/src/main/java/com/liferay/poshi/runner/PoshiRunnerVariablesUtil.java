@@ -142,6 +142,6 @@ public class PoshiRunnerVariablesUtil {
 	private static Map<String, String> _executeMap = new HashMap<>();
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 	private static Map<String, String> _returnMap = new HashMap<>();
-	private static Map<String, String> _staticMap = new HashMap<>();
+	private static final Map<String, String> _staticMap = new HashMap<>();
 
 }

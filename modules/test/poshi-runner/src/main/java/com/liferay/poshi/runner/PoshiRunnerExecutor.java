@@ -943,7 +943,7 @@ public class PoshiRunnerExecutor {
 			PoshiRunnerVariablesUtil.putIntoCommandMap(
 				varName, replacedVarValue);
 		}
-		else if (staticValue != null && staticValue.equals("true")) {
+		else if ((staticValue != null) && staticValue.equals("true")) {
 			if (!PoshiRunnerVariablesUtil.containsKeyInStaticMap(varName)) {
 				PoshiRunnerVariablesUtil.putIntoStaticMap(
 					varName, replacedVarValue);

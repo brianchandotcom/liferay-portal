@@ -41,6 +41,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * A fix for LPS-3795 relating to IE6 (Internet Explorer 6) handling of HTTP
+ * POSTs and NTLM authentication.
+ * 
  * @author Brian Wing Shun Chan
  */
 @Component(

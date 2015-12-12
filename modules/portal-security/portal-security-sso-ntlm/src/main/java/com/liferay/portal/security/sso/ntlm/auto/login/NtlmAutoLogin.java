@@ -32,6 +32,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Participates in every unauthenticated HTTP request to Liferay Portal.
+ * 
+ * <p>
+ * This class looks for the NTLM_REMOTE_USER request attribute which contains
+ * the user's screen name if authentication took place via NTLM. If found, the
+ * user is imported from LDAP and logged in.
+ * </p>
+ * 
  * @author Bruno Farache
  */
 @Component(

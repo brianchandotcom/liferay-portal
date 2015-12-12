@@ -27,6 +27,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Enables the NTLM module to participate in significant portal session
+ * lifecycle changes.
+ * 
  * @author Michael C. Han
  */
 @Component(

@@ -28,6 +28,14 @@ import java.util.regex.Pattern;
  */
 public class PoshiRunnerVariablesUtil {
 
+	public static void clear() {
+		_commandMap.clear();
+		_commandMapStack.clear();
+		_executeMap.clear();
+		_returnMap.clear();
+		_staticMap.clear();
+	}
+
 	public static boolean containsKeyInCommandMap(String key) throws Exception {
 		return _commandMap.containsKey(replaceCommandVars(key));
 	}

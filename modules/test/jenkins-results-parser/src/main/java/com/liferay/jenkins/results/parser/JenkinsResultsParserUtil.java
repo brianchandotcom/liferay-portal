@@ -15,19 +15,28 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.BufferedReader;
+import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Writer;
+
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -135,6 +144,17 @@ public class JenkinsResultsParserUtil {
 		url = url.replace("]", "%5D");
 
 		return url;
+	}
+
+	public static String format(Element element) throws IOException {
+		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
+		Writer writer = new CharArrayWriter();
+
+		XMLWriter xmlWriter = new XMLWriter(writer, outputFormat);
+
+		xmlWriter.write(element);
+
+		return writer.toString();
 	}
 
 	public static String getAxisVariable(JSONObject jsonObject)

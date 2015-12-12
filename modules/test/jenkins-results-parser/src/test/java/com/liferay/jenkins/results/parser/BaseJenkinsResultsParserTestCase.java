@@ -16,12 +16,17 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 
 import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 
 import org.junit.Assert;
 
@@ -127,6 +132,31 @@ public abstract class BaseJenkinsResultsParserTestCase {
 				JenkinsResultsParserUtil.getLocalURL(urlString)));
 	}
 
+	protected String formatXML(String xml)
+		throws DocumentException, IOException {
+
+		SAXReader saxReader = new SAXReader();
+
+		for (int i = 0; i < _HTML_XML_REPLACEMENTS.length; i++) {
+			xml = xml.replace(
+				_HTML_XML_REPLACEMENTS[i][0], _HTML_XML_REPLACEMENTS[i][1]);
+		}
+
+		Document document = null;
+
+		document = saxReader.read(new StringReader(xml));
+
+		String formattedXML = JenkinsResultsParserUtil.format(
+			document.getRootElement());
+
+		for (int i = 0; i < _HTML_XML_REPLACEMENTS.length; i++) {
+			formattedXML = formattedXML.replace(
+				_HTML_XML_REPLACEMENTS[i][1], _HTML_XML_REPLACEMENTS[i][0]);
+		}
+
+		return formattedXML;
+	}
+
 	protected abstract String getMessage(String urlString) throws Exception;
 
 	protected String getSimpleClassName() {
@@ -171,4 +201,8 @@ public abstract class BaseJenkinsResultsParserTestCase {
 	protected File dependenciesDir = new File(
 		"src/test/resources/dependencies/" + getSimpleClassName());
 
+	private static final String[][] _HTML_XML_REPLACEMENTS =
+		new String[][] {{"&raquo;", "[raquo]"}, {"<pre>", "<pre><![CDATA["},
+			{"</pre>", "]]></pre>"}
+		};
 }

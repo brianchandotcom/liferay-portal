@@ -424,7 +424,7 @@ public class PoshiRunnerGetterUtil {
 		"('([^'\\\\]|\\\\.)*'|[^',\\s]+)");
 	private static final List<String> _reservedTags = Arrays.asList(
 		new String[] {
-			"and", "body", "case", "command", "condition", "contains",
+			"and", "arg", "body", "case", "command", "condition", "contains",
 			"default", "definition", "description", "echo", "else", "elseif",
 			"equals", "execute", "fail", "for", "if", "head", "html", "isset",
 			"not", "or", "property", "return", "set-up", "table",

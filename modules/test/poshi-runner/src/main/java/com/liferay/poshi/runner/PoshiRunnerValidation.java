@@ -474,8 +474,8 @@ public class PoshiRunnerValidation {
 		List<String> multiplePrimaryAttributeNames = null;
 
 		List<String> primaryAttributeNames = Arrays.asList(
-			"function", "macro", "macro-desktop", "macro-mobile", "selenium",
-			"test-case");
+			"function", "macro", "macro-desktop", "macro-mobile", "method",
+			"selenium", "test-case");
 
 		if (filePath.endsWith(".function")) {
 			primaryAttributeNames = Arrays.asList("function", "selenium");
@@ -492,7 +492,7 @@ public class PoshiRunnerValidation {
 				"macro-desktop", "macro-mobile");
 
 			primaryAttributeNames = Arrays.asList(
-				"function", "macro", "macro-desktop", "macro-mobile",
+				"function", "macro", "macro-desktop", "macro-mobile", "method",
 				"test-case");
 		}
 
@@ -562,7 +562,7 @@ public class PoshiRunnerValidation {
 
 		if (!childElements.isEmpty()) {
 			primaryAttributeNames = Arrays.asList(
-				"function", "macro", "macro-desktop", "macro-mobile",
+				"function", "macro", "macro-desktop", "macro-mobile", "method",
 				"selenium", "test-case");
 
 			validateHasPrimaryAttributeName(
@@ -570,7 +570,7 @@ public class PoshiRunnerValidation {
 				filePath);
 
 			List<String> possibleChildElementNames = Arrays.asList(
-				"var", "return");
+				"arg", "return", "var");
 
 			for (Element childElement : childElements) {
 				String childElementName = childElement.getName();

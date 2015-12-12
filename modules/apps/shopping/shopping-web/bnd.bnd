@@ -2,7 +2,6 @@ Bundle-Name: Liferay Shopping Web
 Bundle-SymbolicName: com.liferay.shopping.web
 Bundle-Version: 1.0.0
 Import-Package:\
-	com.liferay.frontend.taglib.servlet.taglib,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.exception,\

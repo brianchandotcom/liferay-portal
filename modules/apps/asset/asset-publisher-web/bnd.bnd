@@ -5,9 +5,6 @@ Export-Package:\
 	com.liferay.asset.publisher.web,\
 	com.liferay.asset.publisher.web.constants,\
 	com.liferay.asset.publisher.web.util
-Import-Package:\
-	com.liferay.frontend.taglib.servlet.taglib,\
-	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\

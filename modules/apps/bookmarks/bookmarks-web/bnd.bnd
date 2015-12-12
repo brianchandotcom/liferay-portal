@@ -17,7 +17,6 @@ Import-Package:\
 	com.liferay.bookmarks.trash,\
 	com.liferay.bookmarks.util,\
 	com.liferay.bookmarks.*,\
-	com.liferay.frontend.taglib.servlet.taglib,\
 	\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\

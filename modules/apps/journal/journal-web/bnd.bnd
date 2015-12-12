@@ -8,7 +8,6 @@ Export-Package:\
 	com.liferay.journal.web.social,\
 	com.liferay.journal.web.util
 Import-Package:\
-	com.liferay.frontend.taglib.servlet.taglib,\
 	javax.servlet;version='[2.3.0,4.0.0)',\
 	*
 Include-Resource:\

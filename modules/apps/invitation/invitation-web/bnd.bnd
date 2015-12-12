@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Invitation Web
 Bundle-SymbolicName: com.liferay.invitation.web
 Bundle-Version: 1.0.0
-Import-Package:\
-	com.liferay.frontend.taglib.servlet.taglib,\
-	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\

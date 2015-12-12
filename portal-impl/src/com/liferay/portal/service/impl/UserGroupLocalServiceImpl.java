@@ -213,10 +213,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * Clears all associations between the user and its user groups and clears
 	 * the permissions cache.
 	 *
-	 * <p>
-	 * This method is called from {@link #deleteUserGroup(UserGroup)}.
-	 * </p>
-	 *
 	 * @param userId the primary key of the user
 	 */
 	@Override

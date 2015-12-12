@@ -954,6 +954,15 @@ public class PoshiRunnerExecutor {
 				varName, replacedVarValue);
 		}
 
+		String currentFilePath = PoshiRunnerStackTraceUtil.getCurrentFilePath();
+
+		if (commandVar && currentFilePath.contains(".testcase")) {
+			if (PoshiRunnerVariablesUtil.containsKeyInStaticMap(varName)) {
+				PoshiRunnerVariablesUtil.putIntoStaticMap(
+					varName, replacedVarValue);
+			}
+		}
+
 		if (updateLoggerStatus) {
 			XMLLoggerHandler.updateStatus(element, "pass");
 		}

@@ -29,18 +29,7 @@ portletURL.setParameter("eventName", eventName);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
-		<liferay-portlet:renderURL var="addRuleGroupURL">
-			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		</liferay-portlet:renderURL>
-
-		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item href="<%= addRuleGroupURL %>" iconCssClass="icon-plus" label="add-device-family" />
-		</aui:nav>
-	</c:if>
+	<aui:nav-item label="device-families" selected="<%= true %>" />
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURL.toString() %>" name="searchFm">

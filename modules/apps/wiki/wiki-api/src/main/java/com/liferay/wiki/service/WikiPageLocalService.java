@@ -684,7 +684,8 @@ public interface WikiPageLocalService extends BaseLocalService,
 
 	public void updateAsset(long userId, com.liferay.wiki.model.WikiPage page,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds) throws PortalException;
+		long[] assetLinkEntryIds, java.lang.Double priority)
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage updatePage(long userId, long nodeId,
 		java.lang.String title, double version, java.lang.String content,

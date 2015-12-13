@@ -28,6 +28,27 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("eventName", eventName);
 %>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+		<liferay-portlet:renderURL var="addRuleGroupURL">
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		</liferay-portlet:renderURL>
+
+		<aui:nav cssClass="navbar-nav">
+			<aui:nav-item href="<%= addRuleGroupURL %>" iconCssClass="icon-plus" label="add-device-family" />
+		</aui:nav>
+	</c:if>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
 <aui:form action="<%= portletURL.toString() %>" method="post" name="selectRuleGroupFm">
 
 	<%
@@ -37,24 +58,6 @@ portletURL.setParameter("eventName", eventName);
 	<liferay-ui:search-container
 		searchContainer="<%= ruleGroupSearch %>"
 	>
-		<aui:nav-bar>
-			<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
-				<liferay-portlet:renderURL var="addRuleGroupURL">
-					<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				</liferay-portlet:renderURL>
-
-				<aui:nav cssClass="navbar-nav" searchContainer="<%= ruleGroupSearch %>">
-					<aui:nav-item href="<%= addRuleGroupURL %>" iconCssClass="icon-plus" label="add-device-family" />
-				</aui:nav>
-			</c:if>
-
-			<aui:nav-bar-search>
-				<liferay-ui:input-search />
-			</aui:nav-bar-search>
-		</aui:nav-bar>
 
 		<%
 		RuleGroupDisplayTerms displayTerms = (RuleGroupDisplayTerms)searchContainer.getDisplayTerms();

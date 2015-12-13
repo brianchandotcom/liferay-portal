@@ -72,7 +72,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= hasPermissionsPermission %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Group.class.getName() %>"
-			modelResourceDescription='<%= LanguageUtil.format(request, "site-for-user-group-x", userGroup.getName(), false) %>'
+			modelResourceDescription='<%= LanguageUtil.format(request, "pages-for-user-group-x", userGroup.getName(), false) %>'
 			resourcePrimKey="<%= String.valueOf(userGroup.getGroup().getGroupId()) %>"
 			var="permissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
@@ -80,7 +80,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 
 		<liferay-ui:icon
 			iconCssClass="icon-lock"
-			message="site-permissions"
+			message="user-group-pages-permissions"
 			method="get"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
@@ -93,14 +93,12 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, userGroupGroup, Layout.class.getName(), PortletProvider.Action.EDIT);
 
 		managePagesURL.setParameter("redirect", redirect);
-		managePagesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
 		<liferay-ui:icon
 			iconCssClass="icon-copy"
-			message="manage-site-pages"
+			message="manage-pages"
 			url="<%= managePagesURL.toString() %>"
-			useDialog="<%= true %>"
 		/>
 	</c:if>
 
@@ -111,7 +109,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= hasViewPermission && (userGroupGroup.getPublicLayoutsPageCount() > 0) %>">
 		<liferay-ui:icon
 			iconCssClass="icon-search"
-			message="go-to-the-site's-public-pages"
+			message="go-to-profile-pages"
 			target="_blank"
 			url="<%= userGroupGroup.getDisplayURL(themeDisplay, false) %>"
 		/>
@@ -120,7 +118,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= hasViewPermission && (userGroupGroup.getPrivateLayoutsPageCount() > 0) %>">
 		<liferay-ui:icon
 			iconCssClass="icon-search"
-			message="go-to-the-site's-private-pages"
+			message="go-to-dashboard-pages"
 			target="_blank"
 			url="<%= userGroupGroup.getDisplayURL(themeDisplay, true) %>"
 		/>

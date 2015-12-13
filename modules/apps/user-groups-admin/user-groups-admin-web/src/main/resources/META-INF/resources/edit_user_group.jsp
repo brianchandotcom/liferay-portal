@@ -132,7 +132,7 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset cssClass="text-muted">
 				<h5>
-					<liferay-ui:message key="the-site-of-a-user-group-cannot-be-accessed-directly-by-end-users" />
+					<liferay-ui:message key="the-pages-of-a-user-group-cannot-be-accessed-directly-by-end-users" />
 				</h5>
 
 				<%
@@ -196,7 +196,7 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 											/>
 										</c:when>
 										<c:otherwise>
-											<liferay-ui:message key="this-user-group-does-not-have-any-public-pages" />
+											<liferay-ui:message key="this-user-group-does-not-have-any-profile-pages" />
 										</c:otherwise>
 									</c:choose>
 
@@ -260,7 +260,7 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 											/>
 										</c:when>
 										<c:otherwise>
-											<liferay-ui:message key="this-user-group-does-not-have-any-private-pages" />
+											<liferay-ui:message key="this-user-group-does-not-have-any-dashboard-pages" />
 										</c:otherwise>
 									</c:choose>
 

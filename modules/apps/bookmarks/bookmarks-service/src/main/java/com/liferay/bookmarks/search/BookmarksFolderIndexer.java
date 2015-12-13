@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -89,13 +88,8 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 
 	@Override
 	protected void doDelete(BookmarksFolder bookmarksFolder) throws Exception {
-		Document document = new DocumentImpl();
-
-		document.addUID(CLASS_NAME, bookmarksFolder.getFolderId());
-
-		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), bookmarksFolder.getCompanyId(),
-			document.get(Field.UID), isCommitImmediately());
+		deleteDocument(
+			bookmarksFolder.getCompanyId(), bookmarksFolder.getFolderId());
 	}
 
 	@Override
@@ -138,17 +132,11 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 
 	@Override
 	protected void doReindex(BookmarksFolder bookmarksFolder) throws Exception {
-		Document document = getDocument(bookmarksFolder);
-
 		if (!bookmarksFolder.isApproved() && !bookmarksFolder.isInTrash()) {
 			return;
 		}
 
-		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), bookmarksFolder.getCompanyId(), document,
-				isCommitImmediately());
-		}
+		Document document = getDocument(bookmarksFolder);
 
 		SearchEngineUtil.updateDocument(
 			getSearchEngineId(), bookmarksFolder.getCompanyId(), document,

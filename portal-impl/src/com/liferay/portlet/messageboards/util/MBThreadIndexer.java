@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -116,13 +115,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 		searchContext.setSearchEngineId(getSearchEngineId());
 
-		Document document = new DocumentImpl();
-
-		document.addUID(CLASS_NAME, mbThread.getThreadId());
-
-		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), mbThread.getCompanyId(),
-			document.get(Field.UID), isCommitImmediately());
+		deleteDocument(mbThread.getCompanyId(), mbThread.getThreadId());
 	}
 
 	@Override

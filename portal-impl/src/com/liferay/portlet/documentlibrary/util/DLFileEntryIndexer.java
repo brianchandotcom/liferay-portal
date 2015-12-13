@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentHelper;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -340,13 +339,8 @@ public class DLFileEntryIndexer
 
 	@Override
 	protected void doDelete(DLFileEntry dlFileEntry) throws Exception {
-		Document document = new DocumentImpl();
-
-		document.addUID(CLASS_NAME, dlFileEntry.getFileEntryId());
-
-		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), dlFileEntry.getCompanyId(),
-			document.get(Field.UID), isCommitImmediately());
+		deleteDocument(
+			dlFileEntry.getCompanyId(), dlFileEntry.getFileEntryId());
 	}
 
 	@Override
@@ -506,11 +500,9 @@ public class DLFileEntryIndexer
 
 		Document document = getDocument(dlFileEntry);
 
-		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), dlFileEntry.getCompanyId(), document,
-				isCommitImmediately());
-		}
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), dlFileEntry.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override
@@ -601,10 +593,7 @@ public class DLFileEntryIndexer
 					try {
 						Document document = getDocument(dlFileEntry);
 
-						if (document != null) {
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

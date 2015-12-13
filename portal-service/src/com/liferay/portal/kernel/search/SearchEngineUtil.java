@@ -71,7 +71,7 @@ public class SearchEngineUtil {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (isIndexReadOnly()) {
+		if (isIndexReadOnly() || (document == null)) {
 			return;
 		}
 
@@ -603,7 +603,7 @@ public class SearchEngineUtil {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (isIndexReadOnly()) {
+		if (isIndexReadOnly() || (document == null)) {
 			return;
 		}
 
@@ -904,7 +904,7 @@ public class SearchEngineUtil {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (isIndexReadOnly()) {
+		if (isIndexReadOnly() || (document == null)) {
 			return;
 		}
 

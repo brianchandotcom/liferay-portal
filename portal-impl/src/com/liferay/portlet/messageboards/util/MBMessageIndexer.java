@@ -296,11 +296,9 @@ public class MBMessageIndexer
 
 	@Override
 	protected void doReindex(MBMessage mbMessage) throws Exception {
-		if (!mbMessage.isApproved() && !mbMessage.isInTrash()) {
-			return;
-		}
+		if ((!mbMessage.isApproved() && !mbMessage.isInTrash()) ||
+			(mbMessage.isDiscussion() && mbMessage.isRoot())) {
 
-		if (mbMessage.isDiscussion() && mbMessage.isRoot()) {
 			return;
 		}
 

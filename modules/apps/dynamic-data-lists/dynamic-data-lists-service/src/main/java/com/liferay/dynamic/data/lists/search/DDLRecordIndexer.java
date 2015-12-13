@@ -216,11 +216,9 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			return;
 		}
 
-		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), ddlRecord.getCompanyId(), document,
-				isCommitImmediately());
-		}
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), ddlRecord.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override

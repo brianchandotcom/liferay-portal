@@ -51,8 +51,6 @@ import org.apache.jasper.compiler.Jsr199JavaCompiler;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.wiring.BundleRequirement;
-import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 
@@ -115,13 +113,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
 
 			bundleJavaManager.addBundleWiring(providedBundleWiring);
-		}
-
-		List<BundleRequirement> bundleRequirements =
-			bundleWiring.getRequirements(BundleRevision.PACKAGE_NAMESPACE);
-
-		for (BundleRequirement bundleRequirement : bundleRequirements) {
-			bundleJavaManager.addBundleRequirement(bundleRequirement);
 		}
 	}
 

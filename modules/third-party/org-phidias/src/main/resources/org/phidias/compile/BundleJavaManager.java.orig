@@ -71,21 +71,22 @@ public class BundleJavaManager
 
 		super(javaFileManager);
 
-		_bundle = bundle;
 		_javaFileManager = javaFileManager;
 		_log = new TPhLog();
 
-		setOptions(options);
+		if ((options != null) && options.contains(OPT_VERBOSE)) {
+			_log.out = System.err;
+		}
 
 		_strict = strict;
 
 		if (_log.isEnabled()) {
 			_log.log(
 				"Initializing compilation in OSGi for bundle " +
-					_bundle.getSymbolicName() + "-" + _bundle.getVersion());
+					bundle.getSymbolicName() + "-" + bundle.getVersion());
 		}
 
-		_bundleWiring = _bundle.adapt(BundleWiring.class);
+		_bundleWiring = bundle.adapt(BundleWiring.class);
 
 		_classLoader = _bundleWiring.getClassLoader();
 
@@ -395,25 +396,11 @@ public class BundleJavaManager
 		}
 	}
 
-	private void setOptions(List<String> options) {
-		if (options == null) {
-			return;
-		}
-
-		_options.addAll(options);
-
-		if (_options.contains(OPT_VERBOSE)) {
-			_log.out = System.err;
-		}
-	}
-
-	private Bundle _bundle;
 	private BundleWiring _bundleWiring;
 	private ArrayList<BundleWiring> _bundleWirings;
 	private ClassLoader _classLoader;
 	private JavaFileManager _javaFileManager;
 	private TPhLog _log;
-	private List<String> _options = new ArrayList<String>();
 	private List<BundleRequirement> _packageRequirements;
 	private ResourceResolver _resourceResolver;
 	private boolean _strict;

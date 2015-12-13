@@ -23,7 +23,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/view.jsp");
+portletURL.setParameter("mvcPath", "/select_rule_group.jsp");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("eventName", eventName);
 %>

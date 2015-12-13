@@ -38,7 +38,7 @@ portletURL.setParameter("eventName", eventName);
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="selectRuleGroupFm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectRuleGroupFm">
 
 	<%
 	RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, portletURL);
@@ -117,7 +117,7 @@ portletURL.setParameter("eventName", eventName);
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator type="more" />
+		<liferay-ui:search-iterator markupView="lexicon" type="more" />
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -50,7 +50,7 @@ if (Validator.isNotNull(keywords)) {
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="entries" />
+		<aui:nav-item label="entries" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>

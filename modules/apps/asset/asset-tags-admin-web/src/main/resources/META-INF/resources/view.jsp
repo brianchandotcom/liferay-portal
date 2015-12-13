@@ -67,7 +67,7 @@ tagsSearchContainer.setResults(tags);
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="tags" />
+		<aui:nav-item label="tags" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= Validator.isNotNull(keywords) || (tagsCount > 0) %>">

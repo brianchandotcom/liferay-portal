@@ -26,7 +26,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("configurationCategory", configurationCategory);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+<aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
 		<%

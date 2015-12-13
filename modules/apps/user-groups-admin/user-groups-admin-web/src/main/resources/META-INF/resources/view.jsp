@@ -56,7 +56,7 @@ if (filterManageableUserGroups) {
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="user-groups" />
+		<aui:nav-item label="user-groups" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>

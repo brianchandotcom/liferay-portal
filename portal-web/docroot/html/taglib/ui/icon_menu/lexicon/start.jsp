@@ -25,7 +25,7 @@ String triggerCssClass = GetterUtil.getString((String)request.getAttribute("life
 
 <div class="dropdown <%= cssClass %>">
 	<a aria-expanded="false" class="dropdown-toggle <%= triggerCssClass %>" data-toggle="dropdown" href="#1" title="<%= message %>">
-		<span class="icon-ellipsis-vertical icon-monospaced"></span>
+		<aui:icon image="ellipsis-v" markupView="lexicon" />
 	</a>
 
 	<c:choose>

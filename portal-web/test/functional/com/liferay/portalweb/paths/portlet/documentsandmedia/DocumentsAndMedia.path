@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>ICON_FOLDER_ACTIONS</td>
-	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]//span[contains(@class,'ellipsis-vertical')]</td>
+	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>

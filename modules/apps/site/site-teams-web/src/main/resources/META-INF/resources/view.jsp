@@ -38,7 +38,7 @@ teamSearchContainer.setTotal(teamsCount);
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="teams" />
+		<aui:nav-item label="teams" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= teamsCount > 0 %>">

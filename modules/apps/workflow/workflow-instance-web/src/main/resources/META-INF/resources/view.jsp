@@ -29,7 +29,7 @@ else {
 }
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+<aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewPendingURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />

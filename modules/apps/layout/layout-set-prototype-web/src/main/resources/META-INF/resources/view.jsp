@@ -39,7 +39,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <liferay-ui:error exception="<%= RequiredLayoutSetPrototypeException.class %>" message="you-cannot-delete-site-templates-that-are-used-by-a-site" />
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+<aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item label="templates" selected="<%= true %>" />
 	</aui:nav>

@@ -581,7 +581,6 @@
 
 	<command name="publishToLive">
 		<execute function="AssertClickNoError#assertPartialTextClickAt" locator1="Button#SUBMIT" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute function="Pause" locator1="5000" />

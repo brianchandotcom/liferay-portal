@@ -764,7 +764,6 @@ AUI.add(
 							}
 							else {
 								portletURL.setParameter('mvcRenderCommandName', 'editPublishConfiguration');
-								portletURL.setParameter('tabs2', 'new-publication-process');
 								portletURL.setParameter('publishConfigurationButtons', 'custom');
 							}
 

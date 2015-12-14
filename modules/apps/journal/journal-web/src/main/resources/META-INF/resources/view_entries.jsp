@@ -25,32 +25,14 @@ request.setAttribute("view.jsp-total", String.valueOf(articleSearchContainer.get
 
 request.setAttribute("view_entries.jsp-entryStart", String.valueOf(articleSearchContainer.getStart()));
 request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchContainer.getEnd()));
-%>
 
-<c:if test="<%= ListUtil.isEmpty(articleSearchContainer.getResults()) %>">
-	<div class="alert alert-info entries-empty">
-		<c:choose>
-			<c:when test="<%= Validator.isNotNull(journalDisplayContext.getDDMStructureKey()) %>">
-				<c:if test="<%= articleSearchContainer.getTotal() == 0 %>">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(journalDisplayContext.getDdmStructureName()) %>" key="there-is-no-web-content-with-structure-x" translateArguments="<%= false %>" />
-				</c:if>
-			</c:when>
-			<c:otherwise>
-				<c:if test="<%= articleSearchContainer.getTotal() == 0 %>">
-					<liferay-ui:message key="no-web-content-was-found" />
-				</c:if>
-			</c:otherwise>
-		</c:choose>
-	</div>
-</c:if>
-
-<%
 String displayStyle = journalDisplayContext.getDisplayStyle();
 
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <liferay-ui:search-container
+	emptyResultsMessage="no-web-content-was-found"
 	id="<%= searchContainerId %>"
 	searchContainer="<%= articleSearchContainer %>"
 >

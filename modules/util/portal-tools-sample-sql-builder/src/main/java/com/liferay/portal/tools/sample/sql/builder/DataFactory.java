@@ -890,26 +890,32 @@ public class DataFactory {
 		_defaultDLDDMStructureModel = newDDMStructureModel(
 			_globalGroupId, _defaultUserId, getDLFileEntryClassNameId(),
 			RawMetadataProcessor.TIKA_RAW_METADATA, _dlDDMStructureContent);
+
 		_defaultDLDDMStructureVersionModel = newDDMStructureVersionModel(
 			_globalGroupId, _defaultUserId,
 			RawMetadataProcessor.TIKA_RAW_METADATA,
 			_defaultDLDDMStructureModel.getStructureId(),
 			_dlDDMStructureContent);
+
 		_defaultDLDDMStructureLayoutModel = newDDMStructureLayoutModel(
 			_globalGroupId, _defaultUserId,
 			_defaultDLDDMStructureVersionModel.getStructureVersionId(),
 			_dlDDMStructureLayoutContent);
+
 		_defaultJournalDDMStructureModel = newDDMStructureModel(
 			_globalGroupId, _defaultUserId, getJournalArticleClassNameId(),
 			"BASIC-WEB-CONTENT", _journalDDMStructureContent);
+
 		_defaultJournalDDMStructureVersionModel = newDDMStructureVersionModel(
 			_globalGroupId, _defaultUserId, "BASIC-WEB-CONTENT",
 			_defaultJournalDDMStructureModel.getStructureId(),
 			_journalDDMStructureContent);
+
 		_defaultJournalDDMStructureLayoutModel = newDDMStructureLayoutModel(
 			_globalGroupId, _defaultUserId,
 			_defaultJournalDDMStructureVersionModel.getStructureVersionId(),
 			_journalDDMStructureLayoutContent);
+
 		_defaultJournalDDMTemplateModel = newDDMTemplateModel(
 			_globalGroupId, _defaultUserId,
 			_defaultJournalDDMStructureModel.getStructureId(),

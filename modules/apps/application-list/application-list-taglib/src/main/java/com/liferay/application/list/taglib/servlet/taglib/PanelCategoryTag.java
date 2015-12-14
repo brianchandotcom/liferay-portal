@@ -38,6 +38,10 @@ public class PanelCategoryTag extends BasePanelTag {
 		_panelCategory = panelCategory;
 	}
 
+	public void setShowBody(boolean showBody) {
+		_showBody = showBody;
+	}
+
 	public void setShowHeader(boolean showHeader) {
 		_showHeader = showHeader;
 	}
@@ -51,6 +55,7 @@ public class PanelCategoryTag extends BasePanelTag {
 		super.cleanUp();
 
 		_panelCategory = null;
+		_showBody = true;
 		_showHeader = true;
 		_showOpen = false;
 	}
@@ -115,12 +120,15 @@ public class PanelCategoryTag extends BasePanelTag {
 			"liferay-application-list:panel-category:panelCategory",
 			_panelCategory);
 		request.setAttribute(
+			"liferay-application-list:panel-category:showBody", _showBody);
+		request.setAttribute(
 			"liferay-application-list:panel-category:showHeader", _showHeader);
 		request.setAttribute(
 			"liferay-application-list:panel-category:showOpen", _showOpen);
 	}
 
 	private PanelCategory _panelCategory;
+	private boolean _showBody = true;
 	private boolean _showHeader = true;
 	private boolean _showOpen;
 

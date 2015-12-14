@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -40,7 +41,6 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiNodeConstants;
 import com.liferay.wiki.service.WikiNodeService;
 
 import java.util.ArrayList;
@@ -179,32 +179,35 @@ public class WikiPortletToolbarContributor
 		WikiNode node = (WikiNode)portletRequest.getAttribute(
 			WikiWebKeys.WIKI_NODE);
 
-		if (node == null) {
+		if (node != null) {
+			return node;
+		}
+
+		String initialNodeName = StringPool.BLANK;
+
+		try {
+			WikiGroupServiceOverriddenConfiguration
+				wikiGroupServiceOverriddenConfiguration =
+					ConfigurationFactoryUtil.getConfiguration(
+						WikiGroupServiceOverriddenConfiguration.class,
+						new GroupServiceSettingsLocator(
+							themeDisplay.getScopeGroupId(),
+							WikiConstants.SERVICE_NAME));
+
+			initialNodeName =
+				wikiGroupServiceOverriddenConfiguration.initialNodeName();
+		}
+		catch (ConfigurationException ce) {
+			_log.error(
+				"Cannot obtain initial node name for group id " +
+					themeDisplay.getScopeGroupId());
+		}
+
+		String name = BeanParamUtil.getString(
+			node, portletRequest, "name", initialNodeName);
+
+		if (Validator.isNotNull(name)) {
 			try {
-				String initialNodeName = WikiNodeConstants.INITIAL_NODE_NAME;
-
-				try {
-					WikiGroupServiceOverriddenConfiguration
-						wikiGroupServiceOverriddenConfiguration =
-							ConfigurationFactoryUtil.getConfiguration(
-								WikiGroupServiceOverriddenConfiguration.class,
-								new GroupServiceSettingsLocator(
-									themeDisplay.getScopeGroupId(),
-									WikiConstants.SERVICE_NAME));
-
-					initialNodeName =
-						wikiGroupServiceOverriddenConfiguration.
-							initialNodeName();
-				}
-				catch (ConfigurationException ce) {
-					_log.error(
-						"Cannot obtain initial node name for group id " +
-							themeDisplay.getScopeGroupId());
-				}
-
-				String name = BeanParamUtil.getString(
-					node, portletRequest, "name", initialNodeName);
-
 				node = _wikiNodeService.getNode(
 					themeDisplay.getScopeGroupId(), name);
 			}

@@ -448,6 +448,13 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 	private Folder _getFolder(
 		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
 
+		Folder folder = (Folder)portletRequest.getAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FOLDER);
+
+		if (folder != null) {
+			return folder;
+		}
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		long rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -463,15 +470,10 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			_log.error(pe, pe);
 		}
 
-		Folder folder = (Folder)portletRequest.getAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FOLDER);
-
 		long folderId = BeanParamUtil.getLong(
 			folder, portletRequest, "folderId", rootFolderId);
 
-		if ((folder == null) &&
-			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			try {
 				folder = _dlAppLocalService.getFolder(folderId);
 			}

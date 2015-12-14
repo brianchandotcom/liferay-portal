@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.gulp;
 
-import com.liferay.gradle.plugins.gulp.tasks.GulpTask;
+import com.liferay.gradle.plugins.gulp.tasks.ExecuteGulpTask;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.util.GradleUtil;
@@ -59,9 +59,9 @@ public class GulpPlugin implements Plugin<Project> {
 				@Override
 				public void apply(String taskName) {
 					if (taskName.startsWith( "gulp_")) {
-						GulpTask gulpTask = tasks.create(
-							taskName, GulpTask.class);
-						gulpTask.setGulpCommand(
+						ExecuteGulpTask executeGulpTask = tasks.create(
+							taskName, ExecuteGulpTask.class);
+						executeGulpTask.setGulpCommand(
 							taskName.substring("gulp_".length()));
 					}
 				}
@@ -90,13 +90,13 @@ public class GulpPlugin implements Plugin<Project> {
 		return downloadNodeModuleTask;
 	}
 
-	protected GulpTask addTaskExecuteGulp(
+	protected ExecuteGulpTask addTaskExecuteGulp(
 		Project project, final GulpExtension gulpExtension) {
 
-		GulpTask gulpTask = GradleUtil.addTask(
-			project, EXECUTE_GULP_TASK_NAME, GulpTask.class);
+		ExecuteGulpTask executeGulpTask = GradleUtil.addTask(
+			project, EXECUTE_GULP_TASK_NAME, ExecuteGulpTask.class);
 
-		return gulpTask;
+		return executeGulpTask;
 	}
 
 }

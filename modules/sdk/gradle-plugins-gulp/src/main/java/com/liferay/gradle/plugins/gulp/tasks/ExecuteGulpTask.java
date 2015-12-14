@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author David Truong
  */
-public class GulpTask extends ExecuteNodeTask {
+public class ExecuteGulpTask extends ExecuteNodeTask {
 
 	@Override
 	public void executeNode() {

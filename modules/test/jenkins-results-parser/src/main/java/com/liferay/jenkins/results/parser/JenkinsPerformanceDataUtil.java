@@ -38,7 +38,7 @@ public class JenkinsPerformanceDataUtil {
 			String job, String url, int size)
 		throws Exception {
 
-		JSONObject jsonObject = null;
+		JSONObject jsonObject;
 
 		if (url.contains("-source")) {
 			jsonObject = JenkinsResultsParserUtil.toJSONObject(
@@ -65,14 +65,14 @@ public class JenkinsPerformanceDataUtil {
 
 	public static class Result implements Comparable<Result> {
 
-		public Result(String job, JSONObject sourceJSON) throws Exception {
+		public Result(String job, JSONObject sourceJSONObject) throws Exception {
 			_axis = "";
 			_className = "";
-			_duration = sourceJSON.getInt("duration") / 1000;
+			_duration = sourceJSONObject.getInt("duration") / 1000;
 			_job = job;
-			_name = sourceJSON.getString("fullDisplayName");
-			_status = sourceJSON.getString("result");
-			_url = sourceJSON.getString("url");
+			_name = sourceJSONObject.getString("fullDisplayName");
+			_status = sourceJSONObject.getString("result");
+			_url = sourceJSONObject.getString("url");
 		}
 
 		public Result(

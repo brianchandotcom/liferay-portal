@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.ratings;
+package com.liferay.wiki.web.ratings.definition;
 
 import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;

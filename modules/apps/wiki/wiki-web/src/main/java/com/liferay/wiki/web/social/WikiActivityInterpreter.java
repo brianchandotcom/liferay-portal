@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.social;
+package com.liferay.wiki.web.social;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -35,6 +35,7 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
+import com.liferay.wiki.social.WikiActivityKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

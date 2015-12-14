@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.social;
+package com.liferay.wiki.web.social;
 
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;

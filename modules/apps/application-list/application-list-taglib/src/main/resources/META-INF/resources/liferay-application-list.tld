@@ -105,6 +105,21 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>panel-category-body</name>
+		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelCategoryBodyTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>panelApps</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>panelCategory</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>panel-category-content</name>
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelCategoryContentTag</tag-class>
 		<body-content>empty</body-content>

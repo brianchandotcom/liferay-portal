@@ -15,22 +15,22 @@
 </tr>
 <tr>
 	<td>FIRST_LINK</td>
-	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'First')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a/span[contains(@class,'icon-caret-left')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIOUS_LINK</td>
-	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'Previous')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'2')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEXT_LINK</td>
-	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'Next')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a/span[contains(@class,'icon-caret-right')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LAST_LINK</td>
-	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'Last')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'3')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>FIVE_ITEMS_PER_PAGE</td>
-	<td>//a[contains(@id,'5')]</td>
+	<td>//a[contains(.,'5')]</td>
 	<td></td>
 </tr>
 <tr>

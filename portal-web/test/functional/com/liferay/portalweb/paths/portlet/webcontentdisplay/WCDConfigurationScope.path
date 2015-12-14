@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SCOPE_MENULIST</td>
-	<td>//a[contains(@id,'_menu')]</td>
+	<td>//div[contains(@class,'form-group input-select')]/select[contains(@name,'scope')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -21,7 +21,7 @@
 <!--SCOPE_MENULIST-->
 <tr>
 	<td>SCOPE_MENULIST_SELECTION</td>
-	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_scopeSelection}')]</td>
+	<td>//div[contains(@class,'form-group input-select')]/select[contains(@name,'scope')]/option[contains(.,'${key_scopeSelection}')]</td>
 	<td></td>
 </tr>
 </tbody>

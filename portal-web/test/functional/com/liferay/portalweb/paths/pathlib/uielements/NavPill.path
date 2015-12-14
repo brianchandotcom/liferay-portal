@@ -30,22 +30,22 @@
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCOPE</td>
-	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Scope')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETUP</td>
-	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Setup')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHARING</td>
-	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Sharing')]</td>
 	<td></td>
 </tr>
 </tbody>

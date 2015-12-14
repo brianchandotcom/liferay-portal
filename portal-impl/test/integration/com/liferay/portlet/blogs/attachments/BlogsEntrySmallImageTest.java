@@ -85,6 +85,13 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 	}
 
 	@Override
+	protected void addImage(long entryId, ImageSelector imageSelector)
+		throws Exception {
+
+		BlogsEntryLocalServiceUtil.addSmallImage(entryId, imageSelector);
+	}
+
+	@Override
 	protected long getImageFileEntry(BlogsEntry blogsEntry) {
 		return blogsEntry.getSmallImageFileEntryId();
 	}

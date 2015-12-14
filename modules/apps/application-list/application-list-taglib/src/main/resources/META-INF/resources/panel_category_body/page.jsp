@@ -14,13 +14,22 @@
  */
 --%>
 
-<%@ include file="/panel_category/init.jsp" %>
+<%@ include file="/panel_category_body/init.jsp" %>
 
-<c:if test="<%= showBody %>">
-	<liferay-application-list:panel-category-body panelApps="<%= panelApps %>" panelCategory="<%= panelCategory %>" />
+<c:if test="<%= !panelApps.isEmpty() %>">
+	<ul aria-labelledby="<%= id %>" class="nav nav-equal-height" role="menu">
+
+		<%
+		for (PanelApp panelApp : panelApps) {
+		%>
+
+			<liferay-application-list:panel-app panelApp="<%= panelApp %>" />
+
+		<%
+		}
+		%>
+
+	</ul>
 </c:if>
 
-<c:if test="<%= !panelApps.isEmpty() && showHeader %>">
-		</div>
-	</div>
-</c:if>
+<liferay-application-list:panel panelCategory="<%= panelCategory %>" />

@@ -23,8 +23,8 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  *
  * <p>
  * This class also defines the identity of the configuration schema which, among
- * other things, defines the filename (minus the .cfg extension) for setting
- * values via a file.
+ * other things, defines the filename (minus the <code>.cfg</code> extension)
+ * for setting values via a file.
  * </p>
  *
  * @author Michael C. Han

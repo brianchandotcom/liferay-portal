@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * <p>
  * CASAutoLogin looks for the CAS_LOGIN HTTP session attribute. If this
  * attribute is found and if the attribute's value matches the ID of an existing
- * Liferay Portal user, then this user is logged in without any further
+ * Liferay Portal user, then the user is logged in without any further
  * challenge.
  * </p>
  *

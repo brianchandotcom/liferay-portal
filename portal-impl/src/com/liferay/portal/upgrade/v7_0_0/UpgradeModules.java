@@ -38,6 +38,62 @@ public class UpgradeModules extends UpgradeProcess {
 		_registerModulesConvertedFromLegacySDK();
 	}
 
+	private boolean _isInstalled(String buildNamespace, String portletId)
+		throws SQLException {
+
+		return _isServiceBuilderApplication(buildNamespace) ||
+			_isPortletInstalled(portletId);
+	}
+
+	private boolean _isPortletInstalled(String portletId) throws SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"select portletId from Portlet where portletId like ?");
+
+			ps.setString(1, portletId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return true;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+
+		return false;
+	}
+
+	private boolean _isServiceBuilderApplication(String buildNamespace)
+		throws SQLException {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"select serviceComponentId from ServiceComponent " +
+					"where buildNamespace = ?");
+
+			ps.setString(1, buildNamespace);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return true;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+
+		return false;
+	}
+
 	private void _registerModulesConvertedFromLegacySDK()
 		throws IOException, SQLException {
 
@@ -63,7 +119,7 @@ public class UpgradeModules extends UpgradeProcess {
 
 					// check it is been installed but never upgraded
 
-					if (isInstalled(buildNamespace, portletId)) {
+					if (_isInstalled(buildNamespace, portletId)) {
 						_registerStartVersion(newServletContextName);
 					}
 				}
@@ -140,66 +196,6 @@ public class UpgradeModules extends UpgradeProcess {
 				oldServletContextName + "\"");
 	}
 
-	private boolean isInstalled(String buildNamespace, String portletId)
-		throws SQLException {
-
-		return isInstalledInServiceComponent(buildNamespace) ||
-			isInstalledPortlet(portletId);
-	}
-
-	private boolean isInstalledInServiceComponent(String buildNamespace)
-		throws SQLException {
-
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		boolean isInstalledServiceComponent = false;
-
-		try {
-			ps = connection.prepareStatement(
-				"select serviceComponentId from ServiceComponent " +
-					"where buildNamespace = ?");
-
-			ps.setString(1, buildNamespace);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				isInstalledServiceComponent = true;
-			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
-
-		return isInstalledServiceComponent;
-	}
-
-	private boolean isInstalledPortlet(String portletId) throws SQLException {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		boolean isInstalledPortlet = false;
-
-		try {
-			ps = connection.prepareStatement(
-				"select portletId from Portlet where portletId like ?");
-
-			ps.setString(1, "\"" + portletId + "\"");
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				isInstalledPortlet = true;
-			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
-
-		return isInstalledPortlet;
-	}
-
 	private static final String[] _bundleSymbolicNames = new String[] {
 		"com.liferay.amazon.rankings.web", "com.liferay.announcements.web",
 		"com.liferay.asset.browser.web",
@@ -256,22 +252,28 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.wiki.service", "com.liferay.wiki.web",
 		"com.liferay.xsl.content.web"
 	};
-	private static final String[][] _convertedLegacyModules =
-		{{"calendar-portlet", "com.liferay.calendar.service", "Calendar",
+	private static final String[][] _convertedLegacyModules = {
+		{
+			"calendar-portlet", "com.liferay.calendar.service", "Calendar",
 			"%calendarportlet"
 		},
-		{"social-networking-portlet", "com.liferay.social.networking.service",
-			"SN", "%socialnetworkingportlet"
+		{
+			"social-networking-portlet",
+			"com.liferay.social.networking.service", "SN",
+			"%socialnetworkingportlet"
 		},
-		{"marketplace-portlet", "com.liferay.marketplace.service",
+		{
+			"marketplace-portlet", "com.liferay.marketplace.service",
 			"Marketplace", "%marketplace"
 		},
-		{"kaleo-web", "com.liferay.portal.workflow.kaleo.service", "Kaleo",
+		{
+			"kaleo-web", "com.liferay.portal.workflow.kaleo.service", "Kaleo",
 			"%kaleo%"
 		},
-		{"microblogs-portlet", "com.liferay.microblogs.service", "Microblogs",
-			"%microblogsportlet"
+		{
+			"microblogs-portlet", "com.liferay.microblogs.service",
+			"Microblogs", "%microblogsportlet"
 		}
-		};
+	};
 
 }

@@ -19,27 +19,27 @@
 <%
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
-String type = ParamUtil.getString(request, "type", "all-pages");
+String navigation = ParamUtil.getString(request, "navigation", "all-pages");
 
 PortletURL portletURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, type), portletURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, navigation), portletURL.toString());
 
 String emptyResultsMessage = null;
 
-if (type.equals("all-pages")) {
+if (navigation.equals("all-pages")) {
 	emptyResultsMessage = "there-are-no-pages";
 }
-else if (type.equals("draft-pages")) {
+else if (navigation.equals("draft-pages")) {
 	emptyResultsMessage = "there-are-no-drafts";
 }
-else if (type.equals("frontpage")) {
+else if (navigation.equals("frontpage")) {
 	emptyResultsMessage = LanguageUtil.format(request, "there-is-no-x", new String[] {wikiGroupServiceConfiguration.frontPageName()}, false);
 }
-else if (type.equals("orphan-pages")) {
+else if (navigation.equals("orphan-pages")) {
 	emptyResultsMessage = "there-are-no-orphan-changes";
 }
-else if (type.equals("recent-changes")) {
+else if (navigation.equals("recent-changes")) {
 	emptyResultsMessage = "there-are-no-recent-changes";
 }
 
@@ -68,12 +68,12 @@ wikiPagesSearchContainer.setRowChecker(new PagesChecker(liferayPortletRequest, l
 int pagesCount = 0;
 List<WikiPage> pages = new ArrayList<WikiPage>();
 
-if (type.equals("all-pages")) {
+if (navigation.equals("all-pages")) {
 	pagesCount = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED);
 
 	pages = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED, wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd(), wikiPagesSearchContainer.getOrderByComparator());
 }
-else if (type.equals("draft-pages")) {
+else if (navigation.equals("draft-pages")) {
 	long draftUserId = user.getUserId();
 
 	if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
@@ -86,7 +86,7 @@ else if (type.equals("draft-pages")) {
 
 	pages = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status, wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd());
 }
-else if (type.equals("frontpage")) {
+else if (navigation.equals("frontpage")) {
 
 	WikiPage wikiPage = WikiPageServiceUtil.getPage(scopeGroupId, node.getNodeId(), wikiGroupServiceConfiguration.frontPageName());
 
@@ -94,14 +94,14 @@ else if (type.equals("frontpage")) {
 
 	pages.add(wikiPage);
 }
-else if (type.equals("orphan-pages")) {
+else if (navigation.equals("orphan-pages")) {
 	List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(themeDisplay.getScopeGroupId(), node.getNodeId());
 
 	pagesCount = orphans.size();
 
 	pages = ListUtil.subList(orphans, wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd());
 }
-else if (type.equals("recent-changes")) {
+else if (navigation.equals("recent-changes")) {
 	pagesCount = WikiPageServiceUtil.getRecentChangesCount(themeDisplay.getScopeGroupId(), node.getNodeId());
 
 	pages = WikiPageServiceUtil.getRecentChanges(themeDisplay.getScopeGroupId(), node.getNodeId(), wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd());
@@ -200,7 +200,7 @@ else {
 				<%
 				PortletURL rowURL = renderResponse.createRenderURL();
 
-			if (!type.equals("draft_pages")) {
+			if (!navigation.equals("draft_pages")) {
 				rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("nodeName", curPage.getNode().getName());

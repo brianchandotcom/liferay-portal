@@ -27,7 +27,7 @@
 </liferay-util:include>
 
 <liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="type" value="history" />
+	<liferay-util:param name="navigation" value="history" />
 </liferay-util:include>
 
 <%

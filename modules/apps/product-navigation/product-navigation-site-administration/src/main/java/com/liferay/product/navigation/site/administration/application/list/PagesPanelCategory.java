@@ -17,9 +17,16 @@ package com.liferay.product.navigation.site.administration.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -49,6 +56,26 @@ public class PagesPanelCategory extends BasePanelCategory {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "category.site_administration.pages");
+	}
+
+	@Override
+	public boolean isActive(
+		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isControlPanel()) {
+			return false;
+		}
+
+		if (Validator.isNull(themeDisplay.getPpid())) {
+			return true;
+		}
+
+		return super.isActive(request, panelCategoryHelper);
 	}
 
 }

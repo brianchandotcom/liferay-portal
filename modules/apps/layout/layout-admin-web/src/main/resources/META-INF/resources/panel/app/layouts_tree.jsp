@@ -20,6 +20,10 @@
 long selPlid = ParamUtil.getLong(request, "selPlid");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
+if (selPlid <= 0) {
+	privateLayout = layout.isPrivateLayout();
+}
+
 Layout selLayout = LayoutLocalServiceUtil.fetchLayout(selPlid);
 
 Group selGroup = themeDisplay.getScopeGroup();
@@ -138,6 +142,17 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 	<a data-plid="{plid}" data-privateLayout="{privateLayout}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
 </liferay-util:buffer>
 
+<%
+Long curSelPlid = null;
+
+if (selPlid > 0) {
+	curSelPlid = selPlid;
+}
+else if (!layout.isTypeControlPanel()) {
+	curSelPlid = plid;
+}
+%>
+
 <c:if test="<%= !selGroup.isLayoutSetPrototype() && !selGroup.isLayoutPrototype() %>">
 
 	<%
@@ -157,7 +172,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 		rootNodeName="<%= liveGroup.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
 		rootPortletURL="<%= (selGroup.getPublicLayoutsPageCount() > 0) ? selGroup.getDisplayURL(themeDisplay, false) : StringPool.BLANK %>"
 		selectedLayoutIds="<%= selectedLayoutIds %>"
-		selPlid="<%= ((selPlid > 0) || !privateLayout) ? selPlid : null %>"
+		selPlid="<%= privateLayout ? null : curSelPlid %>"
 		treeId="publicLayoutsTree"
 	/>
 </c:if>
@@ -179,7 +194,7 @@ editPrivateLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 	rootNodeName="<%= liveGroup.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
 	rootPortletURL="<%= (selGroup.getPrivateLayoutsPageCount() > 0) ? selGroup.getDisplayURL(themeDisplay, true) : StringPool.BLANK %>"
 	selectedLayoutIds="<%= selectedLayoutIds %>"
-	selPlid="<%= ((selPlid > 0) || privateLayout) ? selPlid : null %>"
+	selPlid="<%= privateLayout ? curSelPlid : null %>"
 	treeId="privateLayoutsTree"
 />
 

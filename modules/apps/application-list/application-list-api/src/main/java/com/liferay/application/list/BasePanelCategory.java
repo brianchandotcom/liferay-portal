@@ -18,9 +18,11 @@ import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -87,6 +89,17 @@ public abstract class BasePanelCategory implements PanelCategory {
 		throws IOException {
 
 		return false;
+	}
+
+	@Override
+	public boolean isActive(
+		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return panelCategoryHelper.containsPortlet(
+			themeDisplay.getPpid(), this);
 	}
 
 }

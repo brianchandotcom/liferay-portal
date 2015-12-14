@@ -84,6 +84,13 @@ public class RootPanelCategory implements PanelCategory {
 		return false;
 	}
 
+	@Override
+	public boolean isActive(
+		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper) {
+
+		return false;
+	}
+
 	private RootPanelCategory() {
 	}
 

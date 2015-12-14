@@ -17,15 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2");
-%>
+String redirect = ParamUtil.getString(request, "redirect");
 
-<portlet:renderURL var="backURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-</portlet:renderURL>
-
-<%
 WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = null;
 
 if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
@@ -36,7 +29,7 @@ else {
 }
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL.toString());
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 %>

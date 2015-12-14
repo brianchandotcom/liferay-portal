@@ -19,10 +19,14 @@ import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeSchema;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.service.ResourceActionLocalService;
+import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,8 +42,40 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.dynamic.data.mapping.service", "0.0.1", "1.0.0",
 			new UpgradeSchema(), new UpgradeClassNames(),
-			new UpgradeCompanyId(), new UpgradeDynamicDataMapping(),
+			new UpgradeCompanyId(),
+			new UpgradeDynamicDataMapping(
+				_assetEntryLocalService, _dlFileEntryLocalService,
+				_dlFileVersionLocalService, _dlFolderLocalService,
+				_resourceActionLocalService, _resourcePermissionLocalService),
 			new UpgradeLastPublishDate());
+	}
+
+	@Reference(unbind = "-")
+	public void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDlFileVersionLocalService(
+		DLFileVersionLocalService dlFileVersionLocalService) {
+
+		_dlFileVersionLocalService = dlFileVersionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDlFolderLocalService(
+		DLFolderLocalService dlFolderLocalService) {
+
+		_dlFolderLocalService = dlFolderLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -47,7 +83,26 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMServiceUpgrade.class);
+	@Reference(unbind = "-")
+	protected void setResourceActionLocalService(
+		ResourceActionLocalService resourceActionLocalService) {
+
+		_resourceActionLocalService = resourceActionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
+	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
+	private volatile DLFolderLocalService _dlFolderLocalService;
+	private volatile ResourceActionLocalService _resourceActionLocalService;
+	private volatile ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 
 }

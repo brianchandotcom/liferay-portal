@@ -88,6 +88,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 
 	<liferay-ui:search-container
 		id="appDisplays"
+		iteratorURL="<%= portletURL %>"
 	>
 		<liferay-ui:search-container-results>
 

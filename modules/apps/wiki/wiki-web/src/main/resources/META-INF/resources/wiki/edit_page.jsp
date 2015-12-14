@@ -198,16 +198,6 @@ if (portletTitleBasedNavigation) {
 			<aui:input name="templateTitle" type="hidden" value="<%= templateTitle %>" />
 		</c:if>
 
-		<aui:model-context bean="<%= !newPage ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
-
-		<c:if test="<%= (wikiPage != null) && !wikiPage.isNew() %>">
-			<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
-		</c:if>
-
-		<c:if test="<%= !editTitle %>">
-			<aui:input name="title" type="hidden" value="<%= title %>" />
-		</c:if>
-
 		<liferay-ui:error exception="<%= DuplicatePageException.class %>" message="there-is-already-a-page-with-the-specified-title" />
 		<liferay-ui:error exception="<%= PageContentException.class %>" message="the-content-is-not-valid" />
 		<liferay-ui:error exception="<%= PageTitleException.class %>" message="please-enter-a-valid-title" />
@@ -222,8 +212,8 @@ if (portletTitleBasedNavigation) {
 				<c:when test="<%= editable %>">
 					<c:if test="<%= Validator.isNull(title) %>">
 						<liferay-ui:header
-							backURL="<%= redirect %>"
-							title="new-wiki-page"
+								backURL="<%= redirect %>"
+								title="new-wiki-page"
 						/>
 					</c:if>
 
@@ -239,6 +229,16 @@ if (portletTitleBasedNavigation) {
 					<aui:button href="<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>" value="cancel" />
 				</c:otherwise>
 			</c:choose>
+		</c:if>
+
+		<aui:model-context bean="<%= !newPage ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
+
+		<c:if test="<%= (wikiPage != null) && !wikiPage.isNew() %>">
+			<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+		</c:if>
+
+		<c:if test="<%= !editTitle %>">
+			<aui:input name="title" type="hidden" value="<%= title %>" />
 		</c:if>
 
 		<c:choose>

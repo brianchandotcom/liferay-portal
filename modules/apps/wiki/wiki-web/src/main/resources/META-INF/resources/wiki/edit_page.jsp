@@ -120,7 +120,7 @@ if (Validator.isNull(redirect)) {
 	redirect = viewPageURL.toString();
 }
 
-String headerTitle = (node == null) ? LanguageUtil.get(request, "new-wiki-node") : node.getName();
+String headerTitle = (node == null) ? LanguageUtil.get(request, "new-wiki-page") : wikiPage.getTitle();
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
@@ -134,16 +134,11 @@ if (portletTitleBasedNavigation) {
 
 <liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
-<c:choose>
-	<c:when test="<%= !newPage %>">
-		<liferay-util:include page="/wiki/page_tabs.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="tabs1" value="content" />
-		</liferay-util:include>
-	</c:when>
-	<c:otherwise>
-		<%@ include file="/wiki/page_name.jspf" %>
-	</c:otherwise>
-</c:choose>
+<c:if test="<%= !newPage %>">
+	<liferay-util:include page="/wiki/page_tabs.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="tabs1" value="content" />
+	</liferay-util:include>
+</c:if>
 
 <c:if test="<%= preview %>">
 
@@ -186,22 +181,13 @@ if (portletTitleBasedNavigation) {
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<aui:form action="<%= editPageActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="editTitle" type="hidden" value="<%= editTitle %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
 		<aui:input name="newPage" type="hidden" value="<%= newPage %>" />
-
-		<aui:model-context bean="<%= !newPage ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
-
-		<c:if test="<%= (wikiPage != null) && !wikiPage.isNew() %>">
-			<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
-		</c:if>
-
-		<c:if test="<%= !editTitle %>">
-			<aui:input name="title" type="hidden" value="<%= title %>" />
-		</c:if>
-
 		<aui:input name="parentTitle" type="hidden" value="<%= parentTitle %>" />
-		<aui:input name="editTitle" type="hidden" value="<%= editTitle %>" />
+		<aui:input name="preview" type="hidden" value="<%= preview %>" />
+		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
 		<c:if test="<%= wikiPage != null %>">
 			<aui:input name="version" type="hidden" value="<%= wikiPage.getVersion() %>" />
@@ -212,8 +198,15 @@ if (portletTitleBasedNavigation) {
 			<aui:input name="templateTitle" type="hidden" value="<%= templateTitle %>" />
 		</c:if>
 
-		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
-		<aui:input name="preview" type="hidden" value="<%= preview %>" />
+		<aui:model-context bean="<%= !newPage ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
+
+		<c:if test="<%= (wikiPage != null) && !wikiPage.isNew() %>">
+			<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+		</c:if>
+
+		<c:if test="<%= !editTitle %>">
+			<aui:input name="title" type="hidden" value="<%= title %>" />
+		</c:if>
 
 		<liferay-ui:error exception="<%= DuplicatePageException.class %>" message="there-is-already-a-page-with-the-specified-title" />
 		<liferay-ui:error exception="<%= PageContentException.class %>" message="the-content-is-not-valid" />

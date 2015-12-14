@@ -11,5 +11,4 @@ Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
-Require-SchemaVersion: 1.0.0
 Web-ContextPath: /asset-publisher-web

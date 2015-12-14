@@ -5,5 +5,4 @@ Export-Package: com.liferay.asset.categories.navigation.web.constants.*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
-Require-SchemaVersion: 1.0.0
 Web-ContextPath: /asset-categories-navigation-web

@@ -40,6 +40,11 @@
 </tr>
 <!--WORKFLOW -->
 <tr>
+	<td>WORKFLOW_DOCUMENT_TYPE_RESTRICTIONS_TOGGLE</td>
+	<td>//a[contains(.,'Document Type Restrictions and Workflow')]</td>
+	<td></td>
+</tr>
+<tr>
   <td>WORKFLOW_PARENT_FOLDER_RADIO</td>
   <td>//input[contains(@id,'restrictionTypeInherit')]</td>
   <td></td>

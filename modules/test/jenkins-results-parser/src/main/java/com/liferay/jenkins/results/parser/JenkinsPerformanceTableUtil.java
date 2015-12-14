@@ -86,9 +86,7 @@ public class JenkinsPerformanceTableUtil {
 		return cell.addText(text);
 	}
 
-	private static Element createJobCell(
-		String job, String tag, String width) {
-
+	private static Element createJobCell(String job, String tag, String width) {
 		String text = job;
 
 		if (job.contains("/")) {
@@ -121,14 +119,14 @@ public class JenkinsPerformanceTableUtil {
 
 	private static Element createRow(JenkinsPerformanceDataUtil.Result result) {
 		return createRow(
-			"td", result.getAxis(), result.getClassName(), Float.toString(result.getDuration()),
-			result.getJob(), result.getName(),
-			result.getStatus(), result.getUrl());
+			"td", result.getAxis(), result.getClassName(),
+			Float.toString(result.getDuration()), result.getJob(),
+			result.getName(), result.getStatus(), result.getUrl());
 	}
 
 	private static Element createRow(
-		String tag, String axis, String className, String duration,
-		String job, String name, String status, String url) {
+		String tag, String axis, String className, String duration, String job,
+		String name, String status, String url) {
 
 		Element row = new DefaultElement("tr");
 

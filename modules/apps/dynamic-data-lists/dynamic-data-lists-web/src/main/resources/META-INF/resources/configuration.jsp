@@ -79,21 +79,27 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 				%>
 
 				<liferay-ui:search-container-column-text
+					buffer="name"
 					href="<%= rowURL %>"
 					name="name"
 					orderable="<%= false %>"
-					property="name"
-				/>
+				>
+
+					<%
+					name.append(recordSet.getName(locale));
+					%>
+
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					buffer="buffer"
+					buffer="description"
 					href="<%= rowURL %>"
 					name="description"
 					orderable="<%= false %>"
 				>
 
 					<%
-					buffer.append(StringUtil.shorten(recordSet.getDescription(locale), 100));
+					description.append(StringUtil.shorten(recordSet.getDescription(locale), 100));
 					%>
 
 				</liferay-ui:search-container-column-text>

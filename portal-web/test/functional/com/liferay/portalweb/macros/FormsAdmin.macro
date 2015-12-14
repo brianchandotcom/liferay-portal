@@ -4,7 +4,7 @@
 	<command name="deleteForm">
 		<var name="key_formName" value="${formName}" />
 
-		<execute function="Click" locator1="FormsAdmin#FORMS_TABLE_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#DELETE" value1="Delete" />
 
@@ -46,7 +46,7 @@
 
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORMS_TABLE_NAME" value1="${formName}" />
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORMS_TABLE_DESCRIPTION" value1="${formDescription}" />
-		<execute function="AssertElementPresent" locator1="FormsAdmin#FORMS_TABLE_ELLIPSIS" />
+		<execute function="AssertElementPresent" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
 	</command>
 
 	<command name="viewFormEntry">

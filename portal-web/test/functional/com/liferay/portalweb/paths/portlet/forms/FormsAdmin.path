@@ -35,11 +35,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORMS_TABLE_ELLIPSIS</td>
-	<td>//li[contains(.,'${key_formName}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

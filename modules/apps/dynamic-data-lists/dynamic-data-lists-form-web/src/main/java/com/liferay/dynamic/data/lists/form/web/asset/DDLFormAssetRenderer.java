@@ -30,6 +30,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
 import java.util.Locale;
@@ -69,6 +70,11 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 	@Override
 	public DDLFormRecord getAssetObject() {
 		return _formRecord;
+	}
+
+	@Override
+	public AssetRendererFactory<DDLFormRecord> getAssetRendererFactory() {
+		return new DDLFormAssetRendererFactory();
 	}
 
 	@Override

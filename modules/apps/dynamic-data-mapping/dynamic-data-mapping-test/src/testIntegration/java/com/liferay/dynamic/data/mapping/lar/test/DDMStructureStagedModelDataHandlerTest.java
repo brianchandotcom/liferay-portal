@@ -117,6 +117,28 @@ public class DDMStructureStagedModelDataHandlerTest
 			ddmStructure.getUuid(), group.getGroupId());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		DDMStructure structure = (DDMStructure)stagedModel;
+		DDMStructure importedStructure = (DDMStructure)importedStagedModel;
+
+		Assert.assertEquals(
+			structure.getStructureKey(), importedStructure.getStructureKey());
+		Assert.assertEquals(structure.getName(), importedStructure.getName());
+		Assert.assertEquals(
+			structure.getDescription(), importedStructure.getDescription());
+		Assert.assertEquals(
+			structure.getStructureKey(), importedStructure.getStructureKey());
+		Assert.assertEquals(
+			structure.getStorageType(), importedStructure.getStorageType());
+		Assert.assertEquals(structure.getType(), importedStructure.getType());
+	}
+
 	private static final String _CLASS_NAME =
 		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
 

@@ -30,21 +30,18 @@
 
 <div id="<portlet:namespace />journalContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
+			<portlet:renderURL var="sidebarPanelURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+				<portlet:param name="mvcPath" value="/info_panel.jsp" />
+			</portlet:renderURL>
 
-		<%
-		PortletURL sidebarPortletUrl = journalDisplayContext.getPortletURL();
-		sidebarPortletUrl.setParameter("mvcPath", "/info_panel.jsp");
-		sidebarPortletUrl.setWindowState(LiferayWindowState.EXCLUSIVE);
-		%>
-
-		<liferay-frontend:sidebar-panel
-			resourceUrl="<%= sidebarPortletUrl.toString() %>"
-			searchContainerId="articles"
-		>
-			<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
+			<liferay-frontend:sidebar-panel
+				resourceURL="<%= sidebarPanelURL %>"
+				searchContainerId="articles"
+			>
 				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
-			</c:if>
-		</liferay-frontend:sidebar-panel>
+			</liferay-frontend:sidebar-panel>
+		</c:if>
 
 		<div class="sidenav-content">
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">

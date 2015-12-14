@@ -492,7 +492,7 @@
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>navigationKeys</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
@@ -502,7 +502,7 @@
 		</attribute>
 		<attribute>
 			<name>portletURL</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

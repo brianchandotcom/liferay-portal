@@ -17,15 +17,16 @@
 <%@ include file="/management_bar_navigation/init.jsp" %>
 
 <%
-String[] navigationKeys = (String[])request.getAttribute("liferay-frontend:management-bar-navigation:navigationKeys");
+List<FilterNavigationItem> filterNavigationItems = (List<FilterNavigationItem>)request.getAttribute("liferay-frontend:management-bar-navigation:filterNavigationItems");
 String navigationParam = (String)request.getAttribute("liferay-frontend:management-bar-navigation:navigationParam");
-PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:management-bar-navigation:portletURL");
 %>
 
-<c:if test="<%= ArrayUtil.isNotEmpty(navigationKeys) %>">
+<c:if test="<%= ListUtil.isNotEmpty(filterNavigationItems) %>">
 
 	<%
-	String navigationKey = ParamUtil.getString(request, navigationParam, navigationKeys[0]);
+	FilterNavigationItem filterNavigationItem = filterNavigationItems.get(0);
+
+	String navigationKey = ParamUtil.getString(request, navigationParam, filterNavigationItem.getLabel());
 	%>
 
 	<li class="dropdown">
@@ -37,14 +38,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:manag
 		<ul class="dropdown-menu" data-qa-id="filterValues">
 
 			<%
-			PortletURL navigationURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-			for (String curNavigationKey : navigationKeys) {
-				navigationURL.setParameter(navigationParam, curNavigationKey);
+			for (FilterNavigationItem curFilterNavigationItem : filterNavigationItems) {
 			%>
 
-				<li class="<%= curNavigationKey.equals(navigationKey) ? "active" : StringPool.BLANK %>">
-					<aui:a href="<%= navigationURL.toString() %>" label="<%= curNavigationKey %>" />
+				<li class="<%= curFilterNavigationItem.isActive() ? "active" : StringPool.BLANK %>">
+					<aui:a href="<%= curFilterNavigationItem.getUrl() %>" id="<%= Validator.isNotNull(curFilterNavigationItem.getId()) ? curFilterNavigationItem.getId() : StringPool.BLANK %>" label="<%= curFilterNavigationItem.getLabel() %>" />
 				</li>
 
 			<%

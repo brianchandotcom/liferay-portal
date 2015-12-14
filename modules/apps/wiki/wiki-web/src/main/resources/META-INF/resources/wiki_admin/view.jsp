@@ -23,13 +23,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/wiki_admin/view");
 
-List<String> headerNames = new ArrayList<String>();
-
-headerNames.add("wiki");
-headerNames.add("num-of-pages");
-headerNames.add("last-post-date");
-headerNames.add(StringPool.BLANK);
-
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
@@ -128,7 +121,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<%
-			SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-wikis");
+			SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-wikis");
 
 			NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
 

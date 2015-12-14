@@ -281,7 +281,7 @@ public class DataFactory {
 			getResourceInputStream("ddm_structure_layout_basic_document.json"),
 			lines);
 
-		_dlDDMStructureLayout = StringUtil.merge(lines, StringPool.SPACE);
+		_dlDDMStructureLayoutContent = StringUtil.merge(lines, StringPool.SPACE);
 
 		lines.clear();
 
@@ -290,7 +290,7 @@ public class DataFactory {
 				"ddm_structure_layout_basic_web_content.json"),
 			lines);
 
-		_journalDDMStructureLayout = StringUtil.merge(lines, StringPool.SPACE);
+		_journalDDMStructureLayoutContent = StringUtil.merge(lines, StringPool.SPACE);
 
 		lines.clear();
 
@@ -896,7 +896,7 @@ public class DataFactory {
 		_defaultDLDDMStructureLayoutModel = newDDMStructureLayoutModel(
 			_globalGroupId, _defaultUserId,
 			_defaultDLDDMStructureVersionModel.getStructureVersionId(),
-			_dlDDMStructureLayout);
+			_dlDDMStructureLayoutContent);
 		_defaultJournalDDMStructureModel = newDDMStructureModel(
 			_globalGroupId, _defaultUserId, getJournalArticleClassNameId(),
 			"BASIC-WEB-CONTENT", _journalDDMStructureContent);
@@ -907,7 +907,7 @@ public class DataFactory {
 		_defaultJournalDDMStructureLayoutModel = newDDMStructureLayoutModel(
 			_globalGroupId, _defaultUserId,
 			_defaultJournalDDMStructureVersionModel.getStructureVersionId(),
-			_journalDDMStructureLayout);
+			_journalDDMStructureLayoutContent);
 		_defaultJournalDDMTemplateModel = newDDMTemplateModel(
 			_globalGroupId, _defaultUserId,
 			_defaultJournalDDMStructureModel.getStructureId(),
@@ -3189,7 +3189,7 @@ public class DataFactory {
 	private final long _defaultUserId;
 	private UserModel _defaultUserModel;
 	private final String _dlDDMStructureContent;
-	private final String _dlDDMStructureLayout;
+	private final String _dlDDMStructureLayoutContent;
 	private List<String> _firstNames;
 	private final SimpleCounter _futureDateCounter;
 	private final long _globalGroupId;
@@ -3203,7 +3203,7 @@ public class DataFactory {
 	private final Map<Long, String> _journalArticleResourceUUIDs =
 		new HashMap<>();
 	private final String _journalDDMStructureContent;
-	private final String _journalDDMStructureLayout;
+	private final String _journalDDMStructureLayoutContent;
 	private List<String> _lastNames;
 	private final Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
 	private int _maxAssetCategoryCount;

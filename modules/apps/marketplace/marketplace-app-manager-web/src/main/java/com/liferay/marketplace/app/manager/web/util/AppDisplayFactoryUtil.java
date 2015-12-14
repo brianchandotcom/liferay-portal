@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -69,21 +70,16 @@ public class AppDisplayFactoryUtil {
 		AppDisplay appDisplay = null;
 
 		if (appTitle.equals(AppDisplay.APP_TITLE_UNCATEGORIZED)) {
-			appTitle = null;
+			appTitle = StringPool.BLANK;
 		}
 
 		for (Bundle bundle : bundles) {
 			Dictionary<String, String> headers = bundle.getHeaders();
 
-			String curAppTitle = headers.get(
-				BundleConstants.LIFERAY_RELENG_APP_TITLE);
+			String curAppTitle = GetterUtil.getString(
+				headers.get(BundleConstants.LIFERAY_RELENG_APP_TITLE));
 
-			if (Validator.isNotNull(appTitle) &&
-				!appTitle.equals(curAppTitle)) {
-
-				continue;
-			}
-			else if (curAppTitle == null) {
+			if (!appTitle.equals(curAppTitle)) {
 				continue;
 			}
 
@@ -100,7 +96,14 @@ public class AppDisplayFactoryUtil {
 			appDisplay.addBundle(bundle);
 		}
 
-		return appDisplay;
+		List<Bundle> appDisplayBundles = appDisplay.getBundles();
+
+		if (appDisplayBundles.isEmpty()) {
+			return null;
+		}
+		else {
+			return appDisplay;
+		}
 	}
 
 	public static List<AppDisplay> getAppDisplays(
@@ -190,12 +193,8 @@ public class AppDisplayFactoryUtil {
 				}
 			}
 
-			String appTitle = headers.get(
-				BundleConstants.LIFERAY_RELENG_APP_TITLE);
-
-			if (appTitle == null) {
-				appTitle = AppDisplay.APP_TITLE_UNCATEGORIZED;
-			}
+			String appTitle = GetterUtil.getString(
+				headers.get(BundleConstants.LIFERAY_RELENG_APP_TITLE));
 
 			AppDisplay appDisplay = appDisplaysMap.get(appTitle);
 

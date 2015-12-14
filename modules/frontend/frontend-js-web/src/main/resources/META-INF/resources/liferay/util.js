@@ -452,15 +452,11 @@
 						if (typeof parentWindow.location.href == 'undefined') {
 							break;
 						}
-					}
-					catch (e) {
-						break;
-					}
 
-					try {
 						parentThemeDisplay = parentWindow.themeDisplay;
 					}
 					catch (e) {
+						break;
 					}
 
 					if (!parentThemeDisplay || window.name === 'simulationDeviceIframe') {

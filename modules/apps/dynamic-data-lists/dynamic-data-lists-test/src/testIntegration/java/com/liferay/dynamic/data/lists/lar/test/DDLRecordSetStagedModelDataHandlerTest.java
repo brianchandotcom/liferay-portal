@@ -148,4 +148,27 @@ public class DDLRecordSetStagedModelDataHandlerTest
 		}
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		DDLRecordSet recordSet = (DDLRecordSet)stagedModel;
+		DDLRecordSet importedRecordSet = (DDLRecordSet)importedStagedModel;
+
+		Assert.assertEquals(
+			recordSet.getRecordSetKey(), importedRecordSet.getRecordSetKey());
+		Assert.assertEquals(recordSet.getName(), importedRecordSet.getName());
+		Assert.assertEquals(
+			recordSet.getDescription(), importedRecordSet.getDescription());
+		Assert.assertEquals(
+			recordSet.getMinDisplayRows(),
+			importedRecordSet.getMinDisplayRows());
+		Assert.assertEquals(recordSet.getScope(), importedRecordSet.getScope());
+		Assert.assertEquals(
+			recordSet.getSettings(), importedRecordSet.getSettings());
+	}
+
 }

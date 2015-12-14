@@ -2,6 +2,12 @@ Bundle-Name: Liferay RTL CSS
 Bundle-SymbolicName: com.liferay.rtl.css
 Bundle-Version: 1.0.3
 Export-Package: com.liferay.rtl.css
+Import-Package:\
+	!org.junit,\
+	!org.junit.*,\
+	!org.slf4j,\
+	!org.slf4j.*,\
+	*
 Include-Resource:\
 	classes,\
 	@lib/annotations.jar,\

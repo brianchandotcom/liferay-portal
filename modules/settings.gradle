@@ -28,7 +28,6 @@ FileTree fileTree = fileTree(rootDir) {
 		exclude "util/portal-tools-service-builder/build.gradle"
 		exclude "util/portal-tools-upgrade-table-builder/build.gradle"
 		exclude "util/portal-tools-wsdd-builder/build.gradle"
-		exclude "util/rtl-css/build.gradle"
 		exclude "util/ruby-gems/build.gradle"
 		exclude "util/sass-compiler-api/build.gradle"
 		exclude "util/sass-compiler-ruby/build.gradle"

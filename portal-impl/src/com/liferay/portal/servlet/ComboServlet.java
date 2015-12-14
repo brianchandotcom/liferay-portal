@@ -177,15 +177,8 @@ public class ComboServlet extends HttpServlet {
 		if (!PropsValues.COMBO_CHECK_TIMESTAMP) {
 			modulePathsString = Arrays.toString(modulePaths);
 
-			if (minifierType.equals("css") &&
-				PortalUtil.isRightToLeft(request)) {
-
-				modulePathsString += ".rtl";
-			}
-			else if (minifierType.equals("js")) {
-				modulePathsString +=
-					StringPool.POUND + LanguageUtil.getLanguageId(request);
-			}
+			modulePathsString +=
+				StringPool.POUND + LanguageUtil.getLanguageId(request);
 
 			bytesArray = _bytesArrayPortalCache.get(modulePathsString);
 		}
@@ -264,7 +257,8 @@ public class ComboServlet extends HttpServlet {
 		}
 
 		String fileContentKey = resourcePath.concat(StringPool.QUESTION).concat(
-			minifierType);
+			minifierType).concat("&languageId=").concat(
+				request.getParameter("languageId"));
 
 		FileContentBag fileContentBag = _fileContentBagPortalCache.get(
 			fileContentKey);

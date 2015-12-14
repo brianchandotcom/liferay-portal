@@ -1,7 +1,7 @@
 apply plugin: "com.liferay.maven.plugin.builder"
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.rtl.css", version: "1.0.2"
+	compile group: "com.liferay", name: "com.liferay.rtl.css", version: "1.0.3"
 	compile group: "com.liferay", name: "com.liferay.sass.compiler.jni", version: "2.0.1"
 	compile group: "com.liferay", name: "com.liferay.sass.compiler.ruby", version: "2.0.1"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"

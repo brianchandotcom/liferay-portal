@@ -146,9 +146,9 @@ else {
 		/>
 	</liferay-frontend:management-bar-buttons>
 
-		<liferay-frontend:management-bar-filters>
-			<liferay-util:include page="/wiki_admin/view_pages_filters.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:management-bar-filters>
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/wiki_admin/view_pages_filters.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
 
@@ -197,8 +197,8 @@ else {
 				modelVar="curPage"
 			>
 
-				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
+			<%
+			PortletURL rowURL = renderResponse.createRenderURL();
 
 			if (!navigation.equals("draft_pages")) {
 				rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
@@ -252,7 +252,7 @@ else {
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp
-								path="/wiki/page_action.jsp"
+							path="/wiki/page_action.jsp"
 						/>
 					</c:when>
 					<c:otherwise>

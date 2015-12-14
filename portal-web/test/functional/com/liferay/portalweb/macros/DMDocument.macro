@@ -3,7 +3,9 @@
 	<var name="dmDocumentTypeName" value="Basic Document" />
 
 	<command name="addCategories">
-		<execute macro="DMDocument#showCategorization" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Categorization" />
+		</execute>
 
 		<execute macro="AssetCategorization#addMultipleCategories">
 			<var name="categoryNameList" value="${categoryNameList}" />
@@ -63,7 +65,9 @@
 		<if>
 			<isset var="tagNameList" />
 			<then>
-				<execute macro="DMDocument#showCategorization" />
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Categorization" />
+				</execute>
 
 				<for list="${tagNameList}" param="tagName">
 					<execute function="Click#clickAt" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
@@ -352,7 +356,9 @@
 			<isset var="tagNameList" />
 			<then>
 				<for list="${tagNameList}" param="tagName">
-					<execute macro="DMDocument#showCategorization" />
+					<execute macro="Panel#expandPanel">
+						<var name="panelHeading" value="Categorization" />
+					</execute>
 
 					<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
 					<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
@@ -913,7 +919,9 @@
 				<contains string="${dmDocumentTagName}" substring="{dmDocumentTagName}" />
 			</not>
 			<then>
-				<execute macro="DMDocument#showCategorization" />
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Categorization" />
+				</execute>
 
 				<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${dmDocumentTagName}" />
 			</then>
@@ -1587,17 +1595,6 @@
 		</if>
 	</command>
 
-	<command name="showCategorization">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="AssetCategorization#TAGS_FIELD" />
-			<then>
-				<execute function="Click#clickAt" locator1="AssetCategorization#CATEGORIZATION_PANEL_COLLAPSED" value1="Categorization" />
-
-				<execute function="AssertVisible" locator1="AssetCategorization#CATEGORIZATION_PANEL_EXPANDED" value1="Categorization" />
-			</then>
-		</if>
-	</command>
-
 	<command name="tearDownCP">
 		<execute macro="Navigator#openURL" />
 
@@ -1710,7 +1707,9 @@
 	</command>
 
 	<command name="viewCategories">
-		<execute macro="DMDocument#showCategorization" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Categorization" />
+		</execute>
 
 		<for list="${categoryNameList}" param="categoryName">
 			<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES" value1="Topic: ${categoryName}" />

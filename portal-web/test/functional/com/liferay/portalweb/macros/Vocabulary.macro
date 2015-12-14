@@ -9,12 +9,9 @@
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Associated Asset Types" />
+		</execute>
 
 		<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_ADD_BUTTON" />
 		<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_2" value1="${vocabularyAssociatedAssetType2}" />
@@ -69,12 +66,9 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#PERMISSIONS_BAR_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CategoriesEditVocabulary#PERMISSIONS_BAR" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Permissions" />
+		</execute>
 
 		<execute function="Select" locator1="CategoriesEditVocabulary#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -98,12 +92,9 @@
 		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Associated Asset Types" />
+		</execute>
 
 		<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
 
@@ -132,12 +123,9 @@
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Associated Asset Types" />
+		</execute>
 
 		<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DELETE_BUTTON_2" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -328,12 +316,9 @@
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Associated Asset Types" />
+		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
 	</command>

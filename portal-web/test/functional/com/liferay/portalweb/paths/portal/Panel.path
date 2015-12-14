@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_HEADING_COLLAPSED</td>
+	<td>//div[contains(@class,'panel') and contains(@role,'group')]//a[contains(@class,'collapsed') and contains(.,'${key_panelHeading}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_HEADING_EXPANDED</td>
+	<td>//div[contains(@class,'panel') and contains(@role,'group')]//a[not(contains(@class,'collapsed')) and contains(.,'${key_panelHeading}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

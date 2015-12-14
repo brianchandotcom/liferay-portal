@@ -31,13 +31,9 @@
 	<command name="gotoBookmarksSelectionPG">
 		<execute function="AssertClick" locator1="NavListItem#ADD_BOOKMARK" value1="Add Bookmark" />
 
-		<if>
-			<condition function="IsElementPresent#waitForVisible" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
-				<execute function="AssertElementPresent" locator1="AssetRelatedAssets#HEADER_EXPANDED" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Related Assets" />
+		</execute>
 
 		<var name="key_assetType" value="${assetType}" />
 
@@ -51,7 +47,10 @@
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute function="AssertClick" locator1="WCEditWebContent#MENU_RELATED_ASSETS" value1="Related Assets" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Related Assets" />
+		</execute>
+
 		<execute function="AssertClick" locator1="WCEditWebContent#RELATED_ASSETS_SELECT" value1="Select" />
 
 		<var method="StringUtil#replace('${assetType}', ' ', '_')" name="assetTypeLocator" />

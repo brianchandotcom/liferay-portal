@@ -156,7 +156,10 @@
 	</command>
 
 	<command name="addJavaScript">
-		<execute function="AssertClick" locator1="SitePages#JAVASCRIPT_NAVIGATION" value1="JavaScript" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="JavaScript" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="SitePages#JAVASCRIPT_LABEL" value1="Paste JavaScript code that is executed at the bottom of every page." />
 		<execute function="Type" locator1="SitePages#JAVASCRIPT_TEXTAREA" value1="${javaScript}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -202,6 +205,10 @@
 	</command>
 
 	<command name="changeColorSchemesCP">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Look and Feel" />
+		</execute>
+
 		<if>
 			<equals arg1="${colorScheme}" arg2="Dark" />
 			<then>

@@ -878,7 +878,7 @@ public class DataFactory {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("<?xml version=\"1.0\"?><root ");
 		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
 		sb.append("<name language-id=\"en_US\">");
 		sb.append(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
@@ -1384,7 +1384,7 @@ public class DataFactory {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("<?xml version=\"1.0\"?><root ");
 		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
 		sb.append("<name language-id=\"en_US\">Test DDL Record Set ");
 		sb.append(currentIndex);
@@ -1621,7 +1621,7 @@ public class DataFactory {
 
 		sb = new StringBundler(5);
 
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("<?xml version=\"1.0\"?><root ");
 		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
 		sb.append("<Title language-id=\"en_US\">");
 		sb.append(urlTitle);
@@ -2480,7 +2480,7 @@ public class DataFactory {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("<?xml version=\"1.0\"?><root ");
 		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
 		sb.append("<Title language-id=\"en_US\">");
 		sb.append(name);
@@ -2554,7 +2554,7 @@ public class DataFactory {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("<?xml version=\"1.0\"?><root ");
 		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
 		sb.append("<Title language-id=\"en_US\">");
 		sb.append(name);
@@ -2666,7 +2666,7 @@ public class DataFactory {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("<?xml version=\"1.0\"?><root ");
 		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
 		sb.append("<name language-id=\"en_US\">");
 		sb.append(structureKey);
@@ -2700,7 +2700,7 @@ public class DataFactory {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("<?xml version=\"1.0\"?><root ");
 		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
 		sb.append("<name language-id=\"en_US\">");
 		sb.append(structureKey);
@@ -2739,7 +2739,7 @@ public class DataFactory {
 
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("<?xml version=\"1.0\"?><root ");
 		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
 		sb.append(
 			"<name language-id=\"en_US\">Basic Web Content</name></root>");

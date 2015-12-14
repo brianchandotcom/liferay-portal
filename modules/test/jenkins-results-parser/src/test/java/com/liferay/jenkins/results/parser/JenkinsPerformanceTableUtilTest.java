@@ -21,30 +21,33 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.tools.ant.Project;
-
-import org.json.JSONObject;
-
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Peter Yoo
  */
-public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTestCase {
+public class JenkinsPerformanceTableUtilTest
+	extends BaseJenkinsResultsParserTestCase {
 
 	@Before
 	public void setUp() throws Exception {
 		downloadSample(
-			"generic-1", "1609", "test-portal-acceptance-pullrequest(master)",
-			"test-1-1");
+			"master-success-1", "1682",
+			"test-portal-acceptance-pullrequest(master)", "test-1-1");
 		downloadSample(
-			"rebase-1", "58", "test-portal-acceptance-pullrequest(ee-6.2.x)",
-			"test-1-19");
+			"master-failure-1", "1697",
+			"test-portal-acceptance-pullrequest(master)", "test-1-1");
+		downloadSample(
+			"6.2.x-success-1", "317",
+			"test-portal-acceptance-pullrequest(ee-6.2.x)", "test-1-1");
+		downloadSample(
+			"6.2.x-failure-1", "313",
+			"test-portal-acceptance-pullrequest(ee-6.2.x)", "test-1-1");
 	}
 
 	@Test
-	public void testGetFailedJobsMessage() throws Exception {
+	public void testGenerateHTML() throws Exception {
 		assertSamples();
 	}
 
@@ -52,9 +55,6 @@ public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTes
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		downloadSampleJobMessages(
 			url.toString() + "/logText/progressiveText", sampleDir);
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(url.toString() + "/api/json"));
 	}
 
 	protected void downloadSample(
@@ -69,7 +69,7 @@ public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTes
 		urlString = replaceToken(urlString, "hostName", hostName);
 		urlString = replaceToken(urlString, "jobName", jobName);
 
-		URL url = createURL(urlString);
+		URL url = JenkinsResultsParserUtil.createURL(urlString);
 
 		downloadSample(sampleKey, url);
 	}
@@ -78,11 +78,7 @@ public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTes
 			String progressiveTextURL, File sampleDir)
 		throws Exception {
 
-		gitHubJobMessageUtilTest.dependenciesDir = sampleDir;
-
 		int jobCount = 0;
-		int passCount = 0;
-		StringBuilder reportFilesSB = new StringBuilder();
 
 		String content = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(progressiveTextURL));
@@ -90,97 +86,58 @@ public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTes
 		Matcher progressiveTextMatcher = _progressiveTextPattern.matcher(
 			content);
 
+		StringBuilder sb = new StringBuilder();
+
 		while (progressiveTextMatcher.find()) {
-			String urlString = progressiveTextMatcher.group("url");
+			String fileSuffix = null;
+			String url = progressiveTextMatcher.group("url");
+			String urlSuffix = null;
 
-			Matcher jobNameMatcher = _jobNamePattern.matcher(urlString);
-
-			jobNameMatcher.find();
-
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(urlString + "/api/json"));
-
-			Project project = getProject(null, urlString, sampleDir.getPath());
-
-			GitHubJobMessageUtil.getGitHubJobMessage(project);
-
-			File reportFile = new File(sampleDir, jobCount + "-report.html");
-
-			write(
-				reportFile,
-				"<h5 job-result=\\\"" + jsonObject.getString("result") +
-					"\\\"><a href=\"" + urlString + "\">" +
-						jobNameMatcher.group("jobName") + "</a></h5>" +
-				project.getProperty("report.html.content"));
-
-			if (reportFilesSB.length() > 0) {
-				reportFilesSB.append(" ");
+			if (url.contains("-source")) {
+				fileSuffix = "source-" + jobCount;
+				urlSuffix = "/api/json";
+			}
+			else {
+				fileSuffix = Integer.toString(jobCount);
+				urlSuffix = "/testReport/api/json";
 			}
 
-			reportFilesSB.append(reportFile.getPath());
+			JenkinsResultsParserUtil.write(
+				new File(sampleDir, "job-" + fileSuffix + urlSuffix),
+				JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.getLocalURL(
+						url + urlSuffix + "?pretty")));
 
-			String result = jsonObject.getString("result");
-
-			if (result.equals("SUCCESS")) {
-				passCount++;
+			if (sb.length() > 0) {
+				sb.append("|");
 			}
+
+			sb.append(toURLString(new File(sampleDir, "job-" + fileSuffix)));
 
 			jobCount++;
 		}
+
+		JenkinsResultsParserUtil.write(
+			new File(sampleDir, "urls.txt"), sb.toString());
 	}
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
-		String localURLString = JenkinsResultsParserUtil.getLocalURL(urlString);
+		String content = JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.getLocalURL(urlString + "/urls.txt"));
 
-		File sampleDir = new File(localURLString.substring("file:".length()));
+		if (content.length() == 0) {
+			return "";
+		}
 
-		Project project = getProject(
-			new File(sampleDir, "sample.properties"), "", sampleDir.getPath());
+		for (String url : content.split("\\|")) {
+			JenkinsPerformanceDataUtil.processPerformanceData(
+				"build", url.trim(), 100);
+		}
 
-		GitHubMessageUtil.getGitHubMessage(project);
-
-		return project.getProperty("github.post.comment.body");
+		return JenkinsPerformanceTableUtil.generateHTML();
 	}
 
-	protected Project getProject(
-			File samplePropertiesFile, String buildURLString,
-			String topLevelSharedDirName)
-		throws Exception {
-
-		Project project = new Project();
-
-		project.setProperty("branch.name", "junit-branch-name");
-		project.setProperty("build.url", buildURLString);
-		project.setProperty(
-			"github.pull.request.head.branch", "junit-pr-head-branch");
-		project.setProperty(
-			"github.pull.request.head.username", "junit-pr-head-username");
-		project.setProperty("plugins.branch.name", "junit-plugins-branch-name");
-		project.setProperty("plugins.repository", "junit-plugins-repository");
-		project.setProperty("portal.repository", "junit-portal-repository");
-		project.setProperty(
-			"rebase.branch.git.commit", "rebase-branch-git-commit");
-		project.setProperty("repository", "junit-repository");
-		project.setProperty(
-			"top.level.build.name", "junit-top-level-build-name");
-		project.setProperty(
-			"top.level.build.time", "junit-top-level-build-time");
-		project.setProperty(
-			"top.level.result.message", "junit-top-level-result-message");
-		project.setProperty("top.level.shared.dir", topLevelSharedDirName);
-		project.setProperty(
-			"top.level.shared.dir.url", "junit-top-level-shared-dir-url");
-
-		return project;
-	}
-
-	protected GitHubJobMessageUtilTest gitHubJobMessageUtilTest =
-		new GitHubJobMessageUtilTest();
-
-	private static final Pattern _jobNamePattern = Pattern.compile(
-		".+://(?<hostName>[^.]+).liferay.com/job/(?<jobName>[^/]+).*/" +
-			"(?<buildNumber>\\d+)/");
 	private static final Pattern _progressiveTextPattern = Pattern.compile(
 		"\\[echo\\] \\'.*\\' completed at (?<url>.+)\\.");
 

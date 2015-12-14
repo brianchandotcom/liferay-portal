@@ -47,7 +47,7 @@ AUI.add(
 
 						var baseURL = captchaNode.attr('src');
 
-						var url = Liferay.Util.addParams('t=' + (new Date()).getTime(), baseURL);
+						var url = Liferay.Util.addParams('t=' + Date.now(), baseURL);
 
 						captchaNode.attr('src', url);
 					}

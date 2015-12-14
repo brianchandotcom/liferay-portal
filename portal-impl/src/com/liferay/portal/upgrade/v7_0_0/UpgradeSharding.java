@@ -65,9 +65,22 @@ public class UpgradeSharding extends UpgradeProcess {
 		String defaultShardName = PropsUtil.get("shard.default.name");
 
 		if (Validator.isNull(defaultShardName)) {
+			StringBuilder sb = new StringBuilder(shardNames.size());
+
+			for (int i = 0; i < shardNames.size(); i++) {
+				String shardName = shardNames.get(i);
+
+				sb.append(shardName);
+
+				if (i < (shardNames.size() - 1)) {
+					sb.append(", ");
+				}
+			}
+
 			throw new RuntimeException(
 				"The property \"shard.default.name\" is not set in " +
-					"portal.properties");
+					"portal.properties. Please use your default shard name " +
+					"from this list: " + sb.toString());
 		}
 
 		for (String shardName : shardNames) {

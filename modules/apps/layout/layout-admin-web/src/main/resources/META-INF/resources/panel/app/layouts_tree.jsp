@@ -1,4 +1,3 @@
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -143,6 +142,17 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 	<a data-plid="{plid}" data-privateLayout="{privateLayout}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
 </liferay-util:buffer>
 
+<%
+Long curSelPlid = null;
+
+if (selPlid > 0) {
+	curSelPlid = selPlid;
+}
+else if (!layout.isTypeControlPanel()) {
+	curSelPlid = plid;
+}
+%>
+
 <c:if test="<%= !selGroup.isLayoutSetPrototype() && !selGroup.isLayoutPrototype() %>">
 
 	<%
@@ -151,17 +161,6 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 	editPublicLayoutURL.setParameter("privateLayout", Boolean.FALSE.toString());
 	editPublicLayoutURL.setParameter("groupId", String.valueOf(liveGroup.getGroupId()));
 	editPublicLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
-
-	Long curSelPlid = null;
-
-	if (!privateLayout) {
-		if (selPlid > 0) {
-			curSelPlid = selPlid;
-		}
-		else if (themeDisplay.getPlid() > 0) {
-			curSelPlid = themeDisplay.getPlid();
-		}
-	}
 	%>
 
 	<liferay-ui:layouts-tree
@@ -173,7 +172,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 		rootNodeName="<%= liveGroup.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
 		rootPortletURL="<%= (selGroup.getPublicLayoutsPageCount() > 0) ? selGroup.getDisplayURL(themeDisplay, false) : StringPool.BLANK %>"
 		selectedLayoutIds="<%= selectedLayoutIds %>"
-		selPlid="<%= curSelPlid %>"
+		selPlid="<%= privateLayout ? null : curSelPlid %>"
 		treeId="publicLayoutsTree"
 	/>
 </c:if>
@@ -184,17 +183,6 @@ PortletURL editPrivateLayoutURL = PortalUtil.getControlPanelPortletURL(request, 
 editPrivateLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
 editPrivateLayoutURL.setParameter("groupId", String.valueOf(liveGroup.getGroupId()));
 editPrivateLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
-
-Long curSelPlid = null;
-
-if (privateLayout) {
-	if (selPlid > 0) {
-		curSelPlid = selPlid;
-	}
-	else if (themeDisplay.getPlid() > 0) {
-		curSelPlid = themeDisplay.getPlid();
-	}
-}
 %>
 
 <liferay-ui:layouts-tree
@@ -206,7 +194,7 @@ if (privateLayout) {
 	rootNodeName="<%= liveGroup.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
 	rootPortletURL="<%= (selGroup.getPrivateLayoutsPageCount() > 0) ? selGroup.getDisplayURL(themeDisplay, true) : StringPool.BLANK %>"
 	selectedLayoutIds="<%= selectedLayoutIds %>"
-	selPlid="<%= curSelPlid %>"
+	selPlid="<%= privateLayout ? curSelPlid : null %>"
 	treeId="privateLayoutsTree"
 />
 

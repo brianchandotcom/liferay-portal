@@ -28,8 +28,7 @@ public enum LicenseManagerMessageType {
 	public static String MESSAGE_BUS_DESTINATION_REQUEST =
 		"liferay/lcs_request";
 
-	public static String MESSAGE_BUS_DESTINATION_STATUS =
-		"liferay/lcs_status";
+	public static String MESSAGE_BUS_DESTINATION_STATUS = "liferay/lcs_status";
 
 	public static JSONObject getMessagePayload(Message message) {
 		if (!(message.getPayload() instanceof String)) {

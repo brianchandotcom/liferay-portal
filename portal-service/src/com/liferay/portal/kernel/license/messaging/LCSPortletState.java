@@ -53,6 +53,6 @@ public enum LCSPortletState {
 		_state = state;
 	}
 
-	private int _state;
+	private final int _state;
 
 }

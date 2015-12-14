@@ -121,14 +121,7 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getSmallImageId());
 
 			if (Validator.isNotNull(entry.getSmallImageURL())) {
-				String smallImageURL =
-					_blogsEntryExportImportContentProcessor.
-						replaceExportContentReferences(
-							portletDataContext, entry,
-							entry.getSmallImageURL() + StringPool.SPACE, true,
-							true);
-
-				entry.setSmallImageURL(smallImageURL);
+				entry.setSmallImageURL(entry.getSmallImageURL());
 			}
 			else if (smallImage != null) {
 				String smallImagePath = ExportImportPathUtil.getModelPath(
@@ -289,7 +282,7 @@ public class BlogsEntryStagedModelDataHandler
 				entry, DLFileEntry.class,
 				PortletDataContext.REFERENCE_TYPE_WEAK);
 
-		// SmallImage
+		// Small Image
 
 		ImageSelector smallImageSelector = null;
 
@@ -298,13 +291,8 @@ public class BlogsEntryStagedModelDataHandler
 				"small-image-path");
 
 			if (Validator.isNotNull(entry.getSmallImageURL())) {
-				String smallImageURL =
-					_blogsEntryExportImportContentProcessor.
-						replaceImportContentReferences(
-							portletDataContext, entry,
-							entry.getSmallImageURL());
-
-				smallImageSelector = new ImageSelector(smallImageURL);
+				smallImageSelector = new ImageSelector(
+					entry.getSmallImageURL());
 			}
 			else if (Validator.isNotNull(smallImagePath)) {
 				String smallImageFileName =
@@ -326,7 +314,7 @@ public class BlogsEntryStagedModelDataHandler
 				}
 			}
 			else if (entry.getSmallImageFileEntryId() != 0) {
-				smallImageSelector = getImageSelector(
+				smallImageSelector = _getImageSelector(
 					portletDataContext, entry.getSmallImageFileEntryId(),
 					attachmentElements);
 			}
@@ -337,20 +325,15 @@ public class BlogsEntryStagedModelDataHandler
 				importedEntry.getEntryId(), smallImageSelector);
 		}
 
-		// CoverImage
+		// Cover Image
 
 		ImageSelector coverImageSelector = null;
 
 		if (Validator.isNotNull(entry.getCoverImageURL())) {
-			String coverImageURL =
-				_blogsEntryExportImportContentProcessor.
-					replaceImportContentReferences(
-						portletDataContext, entry, entry.getCoverImageURL());
-
-			coverImageSelector = new ImageSelector(coverImageURL);
+			coverImageSelector = new ImageSelector(entry.getCoverImageURL());
 		}
 		else if (entry.getCoverImageFileEntryId() != 0) {
-			coverImageSelector = getImageSelector(
+			coverImageSelector = _getImageSelector(
 				portletDataContext, entry.getCoverImageFileEntryId(),
 				attachmentElements);
 		}
@@ -446,7 +429,7 @@ public class BlogsEntryStagedModelDataHandler
 		_imageLocalService = imageLocalService;
 	}
 
-	private ImageSelector getImageSelector(
+	private ImageSelector _getImageSelector(
 			PortletDataContext portletDataContext, long fileEntryId,
 			List<Element> attachmentElements)
 		throws Exception {

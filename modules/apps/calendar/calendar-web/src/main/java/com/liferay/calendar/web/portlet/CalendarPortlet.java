@@ -359,8 +359,7 @@ public class CalendarPortlet extends MVCPortlet {
 		java.util.Calendar endTimeJCalendar = getJCalendar(
 			actionRequest, "endTime");
 		boolean allDay = ParamUtil.getBoolean(actionRequest, "allDay");
-		Recurrence recurrence = getRecurrence(
-			actionRequest, calendar.getTimeZone());
+		Recurrence recurrence = getRecurrence(actionRequest);
 		long[] reminders = getReminders(actionRequest);
 		String[] remindersType = getRemindersType(actionRequest);
 		int instanceIndex = ParamUtil.getInteger(
@@ -695,9 +694,7 @@ public class CalendarPortlet extends MVCPortlet {
 		return notificationTypeSettingsProperties.toString();
 	}
 
-	protected Recurrence getRecurrence(
-		ActionRequest actionRequest, TimeZone calendarTimeZone) {
-
+	protected Recurrence getRecurrence(ActionRequest actionRequest) {
 		boolean repeat = ParamUtil.getBoolean(actionRequest, "repeat");
 
 		if (!repeat) {
@@ -725,6 +722,10 @@ public class CalendarPortlet extends MVCPortlet {
 
 		recurrence.setInterval(interval);
 
+		TimeZone timeZone = getTimeZone(actionRequest);
+
+		recurrence.setTimeZone(timeZone);
+
 		if (ends.equals("on")) {
 			java.util.Calendar untilJCalendar = getJCalendar(
 				actionRequest, "untilDate");
@@ -733,10 +734,7 @@ public class CalendarPortlet extends MVCPortlet {
 				actionRequest, "startTime");
 
 			untilJCalendar = JCalendarUtil.mergeJCalendar(
-				untilJCalendar, startTimeJCalendar, getTimeZone(actionRequest));
-
-			untilJCalendar = JCalendarUtil.getJCalendar(
-				untilJCalendar, calendarTimeZone);
+				untilJCalendar, startTimeJCalendar, timeZone);
 
 			recurrence.setUntilJCalendar(untilJCalendar);
 		}
@@ -755,15 +753,11 @@ public class CalendarPortlet extends MVCPortlet {
 
 				java.util.Calendar weekdayJCalendar =
 					JCalendarUtil.getJCalendar(
-						startTimeJCalendar.getTimeInMillis(),
-						getTimeZone(actionRequest));
+						startTimeJCalendar.getTimeInMillis(), timeZone);
 
 				weekdayJCalendar.set(
 					java.util.Calendar.DAY_OF_WEEK,
 					weekday.getCalendarWeekday());
-
-				weekdayJCalendar = JCalendarUtil.getJCalendar(
-					weekdayJCalendar, calendarTimeZone);
 
 				weekday = Weekday.getWeekday(weekdayJCalendar);
 

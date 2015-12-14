@@ -48,6 +48,15 @@
 		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}" />
 	</command>
 
+	<command name="editValidation">
+		<execute function="Select" locator1="FormFields#VALIDATION_TYPE" value1="${validationType}" />
+
+		<execute function="Select" locator1="FormFields#VALIDATION_ARGUMENT" value1="${validationArgument}" />
+
+		<execute function="Type" locator1="FormFields#VALIDATION_INPUT" value1="${validationInput}" />
+		<execute function="Type" locator1="FormFields#VALIDATION_ERROR_MESSAGE" value1="${validationErrorMessage}" />
+	</command>
+
 	<command name="enableAdvancedOptions">
 		<execute function="AssertClick" locator1="FormFields#ADVANCED_FIELD_SETTINGS_TOGGLE" value1="show-more-options" />
 	</command>
@@ -89,16 +98,6 @@
 		<var name="key_textFieldLineOption" value="${textFieldLineOption}" />
 
 		<execute function="Click" locator1="FormFields#TEXT_FIELD_LINE_OPTION" />
-	</command>
-
-	<command name="setCustomValidation">
-		<execute function="Select" locator1="FormFields#CUSTOM_VALIDATION_FIELD_TYPE" value1="${customValidationFieldType}" />
-
-		<execute function="Type" locator1="FormFields#CUSTOM_VALIDATION_TEXT_INPUT" value1="${customValidationTextInput}" />
-
-		<execute function="Select" locator1="FormFields#CUSTOM_VALIDATION_VALIDATION_TYPE" value1="${customValidationValidationType}" />
-
-		<execute function="Type" locator1="FormFields#CUSTOM_VALIDATION_ERROR_MESSAGE" value1="${customValidationErrorMessage}" />
 	</command>
 
 	<command name="viewCheckboxLabel">

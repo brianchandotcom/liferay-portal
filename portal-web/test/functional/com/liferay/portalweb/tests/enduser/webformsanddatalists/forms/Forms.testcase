@@ -544,11 +544,11 @@
 			<var name="fieldName" value="validation" />
 		</execute>
 
-		<execute macro="FormFields#setCustomValidation">
-			<var name="customValidationErrorMessage" value="Text must contain &quot;Test&quot;" />
-			<var name="customValidationFieldType" value="Text" />
-			<var name="customValidationTextInput" value="Test" />
-			<var name="customValidationValidationType" value="Contains" />
+		<execute macro="FormFields#editValidation">
+			<var name="validationArgument" value="Contains" />
+			<var name="validationErrorMessage" value="Text must contain &quot;Test&quot;" />
+			<var name="validationInput" value="Test" />
+			<var name="validationType" value="Text" />
 		</execute>
 
 		<execute macro="FormFields#save" />
@@ -588,8 +588,8 @@
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
-		<execute macro="FormPortlet#submitWithCustomValidation">
-			<var name="customValidationErrorMessage" value="Text must contain &quot;Test&quot;" />
+		<execute macro="FormPortlet#submitWithValidationError">
+			<var name="validationErrorMessage" value="Text must contain &quot;Test&quot;" />
 		</execute>
 
 		<execute macro="FormFields#editText">

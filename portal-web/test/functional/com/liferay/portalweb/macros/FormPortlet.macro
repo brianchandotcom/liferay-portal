@@ -29,9 +29,9 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 
-	<command name="submitWithCustomValidation">
+	<command name="submitWithValidationError">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="${customValidationErrorMessage}" />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="${validationErrorMessage}" />
 	</command>
 </definition>

@@ -78,7 +78,9 @@ public class JenkinsPerformanceTableUtil {
 		return createCellElement(text, tag, width);
 	}
 
-	private static Element createCellElement(String text, String tag, String width) {
+	private static Element createCellElement(
+		String text, String tag, String width) {
+
 		Element cellElement = new DefaultElement(tag);
 
 		cellElement.addAttribute("width", width);
@@ -86,7 +88,9 @@ public class JenkinsPerformanceTableUtil {
 		return cellElement.addText(text);
 	}
 
-	private static Element createJobCellElement(String job, String tag, String width) {
+	private static Element createJobCellElement(
+		String job, String tag, String width) {
+
 		String text = job;
 
 		if (job.contains("/")) {
@@ -117,7 +121,9 @@ public class JenkinsPerformanceTableUtil {
 		return cellElement;
 	}
 
-	private static Element createRowElement(JenkinsPerformanceDataUtil.Result result) {
+	private static Element createRowElement(
+		JenkinsPerformanceDataUtil.Result result) {
+
 		return createRowElement(
 			"td", result.getAxis(), result.getClassName(),
 			Float.toString(result.getDuration()), result.getJob(),

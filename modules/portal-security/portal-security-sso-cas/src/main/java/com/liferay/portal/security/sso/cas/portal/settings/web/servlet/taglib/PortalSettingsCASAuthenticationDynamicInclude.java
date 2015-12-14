@@ -37,13 +37,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(immediate = true, property = {
-		"portal.settings.authentication.tabs.name=cas" }, service = DynamicInclude.class)
-public class PortalSettingsCASAuthenticationDynamicInclude extends BaseDynamicInclude {
+		"portal.settings.authentication.tabs.name=cas"
+	}, service = DynamicInclude.class)
+public class PortalSettingsCASAuthenticationDynamicInclude
+	extends BaseDynamicInclude {
 
 	@Override
-	public void include(HttpServletRequest request, HttpServletResponse response, String key) throws IOException {
+	public void include(
+			HttpServletRequest request, HttpServletResponse response,
+			String key)
+		throws IOException {
 
-		RequestDispatcher requestDispatcher = _servletContext.getRequestDispatcher(_JSP_PATH);
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(_JSP_PATH);
 
 		try {
 			requestDispatcher.include(request, response);
@@ -55,7 +61,8 @@ public class PortalSettingsCASAuthenticationDynamicInclude extends BaseDynamicIn
 	}
 
 	@Override
-	public void register(DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
+	public void register(
+		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 	}
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.cas)", unbind = "-")
@@ -65,7 +72,8 @@ public class PortalSettingsCASAuthenticationDynamicInclude extends BaseDynamicIn
 
 	private static final String _JSP_PATH = "/portal-settings/cas.jsp";
 
-	private static final Log _log = LogFactoryUtil.getLog(PortalSettingsCASAuthenticationDynamicInclude.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalSettingsCASAuthenticationDynamicInclude.class);
 
 	private volatile ServletContext _servletContext;
 

@@ -21,11 +21,6 @@ import com.liferay.portal.tools.shard.builder.exporter.ShardExporterFactory;
 import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
 import com.liferay.portal.tools.shard.builder.internal.util.PropsReader;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 
 /**
@@ -42,15 +37,7 @@ public class Main {
 		ShardExporter shardExporter = ShardExporterFactory.getShardExporter(
 			databaseProperties);
 
-		String schema = mainParameters.getSchemaName();
-
-		List<Long> companyIds = Arrays.asList(
-			new Long[] {Long.parseLong(mainParameters.getCompanies())});
-
-		String outputFolder = mainParameters.getOutputDir();
-
-		ExportContext exportContext = new ExportContext(
-			companyIds, outputFolder, schema);
+		ExportContext exportContext = mainParameters.toExportContext();
 
 		shardExporter.export(exportContext);
 	}
@@ -63,48 +50,6 @@ public class Main {
 		}
 
 		new JCommander(mainParameters, args);
-
-		String companies = mainParameters.getCompanies();
-		String databaseProperties = mainParameters.getDatabaseProperties();
-		String outputDir = mainParameters.getOutputDir();
-		String schemaName = mainParameters.getSchemaName();
-
-		if ((companies == null) || (databaseProperties == null) ||
-			(outputDir == null) || (schemaName == null)) {
-
-			throw new IllegalArgumentException(mainParameters.usage());
-		}
-
-		if (companies.isEmpty() || databaseProperties.isEmpty() ||
-			outputDir.isEmpty() || schemaName.isEmpty()) {
-
-			throw new IllegalArgumentException(mainParameters.usage());
-		}
-
-		File propertiesFile = new File(databaseProperties);
-
-		if (!propertiesFile.exists()) {
-			throw new FileNotFoundException(
-				"Database properties does not exist");
-		}
-
-		try {
-			Long.parseLong(companies);
-		}
-		catch (NumberFormatException nfe) {
-			throw new IllegalArgumentException(
-				"CompanyID is not a valid number");
-		}
-
-		File folder = new File(outputDir);
-
-		if (!folder.exists()) {
-			throw new FileNotFoundException("Output directory does not exist");
-		}
-
-		if (!folder.canRead() || !folder.canWrite()) {
-			throw new IllegalArgumentException("Output directory is read-only");
-		}
 
 		return mainParameters;
 	}

@@ -16,6 +16,15 @@ package com.liferay.portal.tools.shard.builder;
 
 import com.beust.jcommander.Parameter;
 
+import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
+import com.liferay.portal.tools.shard.builder.internal.validators.CompanyIdsParamValidator;
+import com.liferay.portal.tools.shard.builder.internal.validators.FileParamExistsValidator;
+import com.liferay.portal.tools.shard.builder.internal.validators.RequiredParamValidator;
+import com.liferay.portal.tools.shard.builder.internal.validators.WritableFileParamValidator;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Manuel de la Peña
  */
@@ -37,31 +46,47 @@ public class MainParameters {
 		return _schemaName;
 	}
 
-	public String usage() {
-		return "Only four argument can be passed: 1) database properties " +
-			"file, 2) name of the schema to export, 3) ID of the " +
-			"company to export, and 4) target folder where the " +
-			"inserts for a schema will be written";
+	public ExportContext toExportContext() {
+		return new ExportContext(
+			_getCompanyIds(), _outputDir, _schemaName);
+	}
+
+	private List<Long> _getCompanyIds() {
+		String[] companyIds = _companies.split(",");
+
+		List<Long> list = new ArrayList<>(companyIds.length);
+
+		for (String companyId : companyIds) {
+			list.add(Long.parseLong(companyId));
+		}
+
+		return list;
 	}
 
 	@Parameter(
 		description = "Comma-separated list of company Ids to be exported",
-		names = { "-C", "--companies" }
+		names = { "-C", "--companies" },
+		validateWith = CompanyIdsParamValidator.class
 	)
 	private String _companies;
 
 	@Parameter(
 		description = "Database properties configuration",
-		names = { "-P", "--properties" }
+		names = { "-P", "--properties" },
+		validateWith = FileParamExistsValidator.class
 	)
 	private String _databaseProperties;
 
 	@Parameter(
-		description = "Output directory", names = { "-O", "--output-dir" }
+		description = "Output directory", names = { "-O", "--output-dir" },
+		validateWith = WritableFileParamValidator.class
 	)
 	private String _outputDir;
 
-	@Parameter(description = "Schema name", names = { "-S", "--schema-name" })
+	@Parameter(
+		description = "Schema name", names = { "-S", "--schema-name" },
+		validateWith = RequiredParamValidator.class
+	)
 	private String _schemaName;
 
 }

@@ -14,9 +14,7 @@
 
 package com.liferay.portal.security.ldap;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.List;
 
@@ -260,19 +258,10 @@ public class PortalLDAPUtil {
 	}
 
 	private static PortalLDAP getInstance() {
-		return _instance._serviceTracker.getService();
+		return _instance;
 	}
 
-	private PortalLDAPUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(PortalLDAP.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final PortalLDAPUtil _instance = new PortalLDAPUtil();
-
-	private final ServiceTracker<PortalLDAP, PortalLDAP> _serviceTracker;
+	private static final PortalLDAP _instance =
+		ProxyFactory.newServiceTrackedInstance(PortalLDAP.class);
 
 }

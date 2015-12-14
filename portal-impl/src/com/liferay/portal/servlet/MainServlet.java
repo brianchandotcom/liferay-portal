@@ -65,6 +65,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.ldap.LDAPSettings;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.server.capabilities.ServerCapabilitiesUtil;
@@ -823,7 +824,8 @@ public class MainServlet extends ActionServlet {
 		Filter filter = registry.getFilter("(search.engine.id=SYSTEM_ENGINE)");
 
 		serviceDependencyManager.registerDependencies(
-			new Class[] {LDAPSettings.class}, new Filter[] {filter});
+			new Class[] {LDAPSettings.class, UserImporter.class},
+			new Filter[] {filter});
 	}
 
 	protected void initExt() throws Exception {

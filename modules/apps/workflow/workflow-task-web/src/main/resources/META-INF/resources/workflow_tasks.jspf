@@ -33,7 +33,6 @@
 
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
-			<portlet:param name="tabs1" value="<%= tabs1 %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 		</portlet:renderURL>

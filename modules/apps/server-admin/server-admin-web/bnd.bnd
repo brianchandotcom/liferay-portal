@@ -12,4 +12,3 @@ Include-Resource:\
 	@../../../../lib/portal/jfreechart.jar
 Provide-Capability:\
 	osgi.extender;osgi.extender="jsp.taglib";uri="http://struts.apache.org/tags-html";version:Version="1.0.0"
-Require-SchemaVersion: 1.0.0

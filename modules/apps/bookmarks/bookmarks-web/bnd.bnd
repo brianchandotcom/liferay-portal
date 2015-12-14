@@ -71,5 +71,4 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
-Require-SchemaVersion: 1.0.0
 Web-ContextPath: /bookmarks-web

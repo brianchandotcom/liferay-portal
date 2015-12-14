@@ -117,6 +117,31 @@ public class DDMTemplateStagedModelDataHandlerTest
 			structure.getUuid(), group.getGroupId());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		DDMTemplate template = (DDMTemplate)stagedModel;
+		DDMTemplate importedTemplate = (DDMTemplate)importedStagedModel;
+
+		Assert.assertEquals(
+			template.getTemplateKey(), importedTemplate.getTemplateKey());
+		Assert.assertEquals(template.getName(), importedTemplate.getName());
+		Assert.assertEquals(
+			template.getDescription(), importedTemplate.getDescription());
+		Assert.assertEquals(template.getMode(), importedTemplate.getMode());
+		Assert.assertEquals(
+			template.getLanguage(), importedTemplate.getLanguage());
+		Assert.assertEquals(template.getScript(), importedTemplate.getScript());
+		Assert.assertEquals(
+			template.isCacheable(), importedTemplate.isCacheable());
+		Assert.assertEquals(
+			template.isSmallImage(), importedTemplate.isSmallImage());
+	}
+
 	private static final String _CLASS_NAME =
 		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
 

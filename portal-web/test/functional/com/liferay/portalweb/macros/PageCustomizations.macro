@@ -1,8 +1,9 @@
 <definition>
 	<command name="enableSectionCustomizableCP">
 		<var name="key_columnId" value="${columnId}" />
+		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" value1="${sitePageName}" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
 
 		<execute function="AssertClick" locator1="NavListItem#CUSTOMIZATION_SETTINGS" value1="Customization Settings" />
 

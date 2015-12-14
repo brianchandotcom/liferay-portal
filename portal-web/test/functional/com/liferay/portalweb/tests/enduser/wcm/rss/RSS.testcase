@@ -431,9 +431,9 @@
 	</command>
 
 	<command name="EnableRSSFeedFromAssetpublisher" priority="3">
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePage#addCP">

@@ -462,12 +462,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 								</aui:select>
 							</aui:fieldset>
 						</c:if>
-
-						<aui:button-row>
-							<aui:button name="lfr-lookfeel-save" primary="<%= true %>" value="save" />
-
-							<aui:button name="lfr-lookfeel-reset" value="reset" />
-						</aui:button-row>
 					</div>
 				</aui:form>
 			</div>

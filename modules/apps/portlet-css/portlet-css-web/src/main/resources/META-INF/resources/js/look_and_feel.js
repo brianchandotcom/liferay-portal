@@ -121,6 +121,7 @@ AUI.add(
 					instance._portletBoundaryId = curPortletBoundaryId;
 					instance._newPanel = A.one('#portlet-set-properties');
 					instance._currentLanguage = themeDisplay.getLanguageId();
+					instance._randomId = A.guid();
 
 					if (instance._curPortlet) {
 						var content = instance._newPanel;
@@ -141,6 +142,20 @@ AUI.add(
 											visibleChange: function(event) {
 												instance._destroyColorPickers();
 											}
+										},
+										toolbars: {
+											footer: [
+												{
+													cssClass: 'btn-primary btn-lg',
+													id: instance._randomId + 'lfr-lookfeel-save',
+													label: Liferay.Language.get('save')
+												},
+												{
+													cssClass: 'btn-lg',
+													id: instance._randomId + 'lfr-lookfeel-reset',
+													label: Liferay.Language.get('reset')
+												}
+											]
 										}
 									},
 									title: Liferay.Language.get('look-and-feel')
@@ -1026,8 +1041,8 @@ AUI.add(
 					instance._customCSS = instance._getNodeById('lfr-custom-css');
 					instance._customCSSClassName = instance._getNodeById('lfr-custom-css-class-name');
 
-					instance._saveButton = instance._getNodeById('lfr-lookfeel-save');
-					instance._resetButton = instance._getNodeById('lfr-lookfeel-reset');
+					instance._saveButton = A.one('#' + instance._randomId + 'lfr-lookfeel-save');
+					instance._resetButton = A.one('#' + instance._randomId + 'lfr-lookfeel-reset');
 
 					// WAP styling
 

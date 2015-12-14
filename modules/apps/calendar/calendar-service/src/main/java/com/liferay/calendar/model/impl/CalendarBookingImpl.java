@@ -80,7 +80,8 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 	@Override
 	public Recurrence getRecurrenceObj() {
 		if ((_recurrenceObj == null) && isRecurring()) {
-			_recurrenceObj = RecurrenceSerializer.deserialize(getRecurrence());
+			_recurrenceObj = RecurrenceSerializer.deserialize(
+				getRecurrence(), getTimeZone());
 		}
 
 		return _recurrenceObj;

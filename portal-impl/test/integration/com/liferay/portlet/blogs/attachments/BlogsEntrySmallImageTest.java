@@ -92,7 +92,7 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 	}
 
 	@Override
-	protected long getImageFileEntry(BlogsEntry blogsEntry) {
+	protected long getImageFileEntryId(BlogsEntry blogsEntry) {
 		return blogsEntry.getSmallImageFileEntryId();
 	}
 

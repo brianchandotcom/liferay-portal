@@ -20,7 +20,7 @@
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
 %>
 
-<liferay-application-list:panel-category panelCategory="<%= panelCategory %>">
+<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showBody="<%= false %>">
 
 	<%
 	List<Layout> scopeLayouts = new ArrayList<Layout>();
@@ -31,64 +31,71 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 	scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), true));
 	%>
 
-	<c:if test="<%= !scopeLayouts.isEmpty() %>">
-		<ul class="nav nav-equal-height nav-nested">
-			<li>
-				<div class="nav-equal-height-heading">
+	<c:choose>
+		<c:when test="<%= scopeLayouts.isEmpty() %>">
+			<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+		</c:when>
+		<c:otherwise>
+			<ul class="nav nav-equal-height nav-nested">
+				<li>
+					<div class="nav-equal-height-heading">
 
-					<%
-					String scopeLabel = null;
+						<%
+						String scopeLabel = null;
 
-					Group curScopeGroup = themeDisplay.getScopeGroup();
+						Group curScopeGroup = themeDisplay.getScopeGroup();
 
-					if (curScopeGroup.isLayout()) {
-						scopeLabel = StringUtil.shorten(curScopeGroup.getDescriptiveName(locale), 20);
-					}
-					else {
-						scopeLabel = LanguageUtil.get(request, "default-scope");
-					}
-					%>
+						if (curScopeGroup.isLayout()) {
+							scopeLabel = StringUtil.shorten(curScopeGroup.getDescriptiveName(locale), 20);
+						}
+						else {
+							scopeLabel = LanguageUtil.get(request, "default-scope");
+						}
+						%>
 
-					<span><%= scopeLabel %></span>
+						<span><%= scopeLabel %></span>
 
-					<span class="nav-equal-height-heading-field">
-						<liferay-ui:icon-menu direction="down" icon="../aui/cog" message="" showArrow="<%= false %>">
+						<span class="nav-equal-height-heading-field">
+							<liferay-ui:icon-menu direction="down" icon="../aui/cog" message="" showArrow="<%= false %>">
 
-							<%
-							Map<String, Object> data = new HashMap<String, Object>();
+								<%
+								Map<String, Object> data = new HashMap<String, Object>();
 
-							data.put("navigation", Boolean.TRUE.toString());
+								data.put("navigation", Boolean.TRUE.toString());
 
-							PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, curSite, themeDisplay.getPpid(), 0, 0, PortletRequest.RENDER_PHASE);
-							%>
-
-							<liferay-ui:icon
-								data="<%= data %>"
-								message="default-scope"
-								url="<%= portletURL.toString() %>"
-							/>
-
-							<%
-							for (Layout curScopeLayout : scopeLayouts) {
-								Group scopeGroup = curScopeLayout.getScopeGroup();
-
-								portletURL = PortalUtil.getControlPanelPortletURL(request, scopeGroup, themeDisplay.getPpid(), 0, 0, PortletRequest.RENDER_PHASE);
-							%>
+								PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, curSite, themeDisplay.getPpid(), 0, 0, PortletRequest.RENDER_PHASE);
+								%>
 
 								<liferay-ui:icon
 									data="<%= data %>"
-									message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
+									message="default-scope"
 									url="<%= portletURL.toString() %>"
 								/>
 
-							<%
-							}
-							%>
+								<%
+								for (Layout curScopeLayout : scopeLayouts) {
+									Group scopeGroup = curScopeLayout.getScopeGroup();
 
-						</liferay-ui:icon-menu>
-					</span>
-				</div>
-			</li>
-		</ul>
-	</c:if>
+									portletURL = PortalUtil.getControlPanelPortletURL(request, scopeGroup, themeDisplay.getPpid(), 0, 0, PortletRequest.RENDER_PHASE);
+								%>
+
+									<liferay-ui:icon
+										data="<%= data %>"
+										message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
+										url="<%= portletURL.toString() %>"
+									/>
+
+								<%
+								}
+								%>
+
+							</liferay-ui:icon-menu>
+						</span>
+					</div>
+
+					<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+				</li>
+			</ul>
+		</c:otherwise>
+	</c:choose>
 </liferay-application-list:panel-category>

@@ -20,7 +20,7 @@
 <%
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
-String type = ParamUtil.getString(request, "type", "all-pages");
+String navigation = ParamUtil.getString(request, "navigation", "all-pages");
 
 String orderByCol = GetterUtil.getString((String)request.getAttribute("view_pages.jsp-orderByCol"));
 String orderByType = GetterUtil.getString((String)request.getAttribute("view_pages.jsp-orderByType"));
@@ -39,10 +39,10 @@ orderColumns.put("title", "title");
 
 <liferay-frontend:management-bar-navigation
 	navigationKeys='<%= new String[] {"all-pages", "draft-pages", "frontpage", "orphan-pages", "recent-changes"} %>'
-	navigationParam="type"
 	portletURL="<%= portletURL %>"
 />
-<c:if test='<%= type.equals("all-pages") %>'>
+
+<c:if test='<%= navigation.equals("all-pages") %>'>
 	<liferay-frontend:management-bar-sort
 		orderByCol="<%= orderByCol %>"
 		orderByType="<%= orderByType %>"

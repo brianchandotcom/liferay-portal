@@ -20,7 +20,7 @@
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
-String type = ParamUtil.getString(request, "type");
+String navigation = ParamUtil.getString(request, "navigation");
 long categoryId = ParamUtil.getLong(request, "categoryId");
 String tagName = ParamUtil.getString(request, "tag");
 
@@ -32,21 +32,21 @@ if (wikiPage != null) {
 	portletURL.setParameter("title", wikiPage.getTitle());
 }
 
-if (type.equals("all_pages")) {
+if (navigation.equals("all_pages")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-pages"), portletURL.toString());
 }
-else if (type.equals("categorized_pages")) {
+else if (navigation.equals("categorized_pages")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_categorized_pages");
 	portletURL.setParameter("categoryId", String.valueOf(categoryId));
 }
-else if (type.equals("draft_pages")) {
+else if (navigation.equals("draft_pages")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_draft_pages");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "draft-pages"), portletURL.toString());
 }
-else if (type.equals("history")) {
+else if (navigation.equals("history")) {
 	PortletURL viewPageHistoryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
 	if (wikiPage != null) {
@@ -59,7 +59,7 @@ else if (type.equals("history")) {
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "history"), viewPageHistoryURL.toString());
 }
-else if (type.equals("incoming_links")) {
+else if (navigation.equals("incoming_links")) {
 	if (wikiPage != null) {
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 
@@ -70,12 +70,12 @@ else if (type.equals("incoming_links")) {
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "incoming-links"), portletURL.toString());
 }
-else if (type.equals("orphan_pages")) {
+else if (navigation.equals("orphan_pages")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_orphan_pages");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "orphan-pages"), portletURL.toString());
 }
-else if (type.equals("outgoing_links")) {
+else if (navigation.equals("outgoing_links")) {
 	if (wikiPage != null) {
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 
@@ -86,12 +86,12 @@ else if (type.equals("outgoing_links")) {
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "outgoing-links"), portletURL.toString());
 }
-else if (type.equals("recent_changes")) {
+else if (navigation.equals("recent_changes")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_recent_changes");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recent-changes"), portletURL.toString());
 }
-else if (type.equals("tagged_pages")) {
+else if (navigation.equals("tagged_pages")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_tagged_pages");
 	portletURL.setParameter("tag", tagName);
 }
@@ -104,41 +104,41 @@ headerNames.add("revision");
 headerNames.add("user");
 headerNames.add("date");
 
-if (type.equals("history") || type.equals("recent_changes")) {
+if (navigation.equals("history") || navigation.equals("recent_changes")) {
 	headerNames.add("summary");
 }
 
-if (type.equals("all_pages") || type.equals("categorized_pages") || type.equals("draft_pages") || type.equals("history") || type.equals("orphan_pages") || type.equals("recent_changes") || type.equals("tagged_pages")) {
+if (navigation.equals("all_pages") || navigation.equals("categorized_pages") || navigation.equals("draft_pages") || navigation.equals("history") || navigation.equals("orphan_pages") || navigation.equals("recent_changes") || navigation.equals("tagged_pages")) {
 	headerNames.add(StringPool.BLANK);
 }
 
 String emptyResultsMessage = null;
 
-if (type.equals("all_pages")) {
+if (navigation.equals("all_pages")) {
 	emptyResultsMessage = "there-are-no-pages";
 }
-else if (type.equals("categorized_pages")) {
+else if (navigation.equals("categorized_pages")) {
 	emptyResultsMessage = "there-are-no-pages-with-this-category";
 }
-else if (type.equals("draft_pages")) {
+else if (navigation.equals("draft_pages")) {
 	emptyResultsMessage = "there-are-no-drafts";
 }
-else if (type.equals("incoming_links")) {
+else if (navigation.equals("incoming_links")) {
 	emptyResultsMessage = "there-are-no-pages-that-link-to-this-page";
 }
-else if (type.equals("orphan_pages")) {
+else if (navigation.equals("orphan_pages")) {
 	emptyResultsMessage = "there-are-no-orphan-pages";
 }
-else if (type.equals("outgoing_links")) {
+else if (navigation.equals("outgoing_links")) {
 	emptyResultsMessage = "this-page-has-no-links";
 }
-else if (type.equals("pending_pages")) {
+else if (navigation.equals("pending_pages")) {
 	emptyResultsMessage = "there-are-no-pages-submitted-by-you-pending-approval";
 }
-else if (type.equals("recent_changes")) {
+else if (navigation.equals("recent_changes")) {
 	emptyResultsMessage = "there-are-no-recent-changes";
 }
-else if (type.equals("tagged_pages")) {
+else if (navigation.equals("tagged_pages")) {
 	emptyResultsMessage = "there-are-no-pages-with-this-tag";
 }
 
@@ -155,7 +155,7 @@ searchContainer.setOrderableHeaders(orderableHeaders);
 searchContainer.setOrderByCol(orderByCol);
 searchContainer.setOrderByType(orderByType);
 
-if (type.equals("history")) {
+if (navigation.equals("history")) {
 	RowChecker rowChecker = new RowChecker(renderResponse);
 
 	rowChecker.setAllRowIds(null);
@@ -166,7 +166,7 @@ if (type.equals("history")) {
 int total = 0;
 List<WikiPage> results = null;
 
-if (type.equals("all_pages")) {
+if (navigation.equals("all_pages")) {
 	orderableHeaders.put("page", "title");
 	orderableHeaders.put("date", "modifiedDate");
 
@@ -176,7 +176,7 @@ if (type.equals("all_pages")) {
 
 	results = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
 }
-else if (type.equals("categorized_pages") || type.equals("tagged_pages")) {
+else if (navigation.equals("categorized_pages") || navigation.equals("tagged_pages")) {
 	orderableHeaders.put("page", "title");
 	orderableHeaders.put("date", "modifiedDate");
 
@@ -203,7 +203,7 @@ else if (type.equals("categorized_pages") || type.equals("tagged_pages")) {
 		results.add(assetPage);
 	}
 }
-else if (type.equals("draft_pages") || type.equals("pending_pages")) {
+else if (navigation.equals("draft_pages") || navigation.equals("pending_pages")) {
 	long draftUserId = user.getUserId();
 
 	if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
@@ -212,7 +212,7 @@ else if (type.equals("draft_pages") || type.equals("pending_pages")) {
 
 	int status = WorkflowConstants.STATUS_DRAFT;
 
-	if (type.equals("pending_pages")) {
+	if (navigation.equals("pending_pages")) {
 		status = WorkflowConstants.STATUS_PENDING;
 	}
 
@@ -222,7 +222,7 @@ else if (type.equals("draft_pages") || type.equals("pending_pages")) {
 
 	results = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status, searchContainer.getStart(), searchContainer.getEnd());
 }
-else if (type.equals("orphan_pages")) {
+else if (navigation.equals("orphan_pages")) {
 	List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(themeDisplay.getScopeGroupId(), node.getNodeId());
 
 	total = orphans.size();
@@ -231,14 +231,14 @@ else if (type.equals("orphan_pages")) {
 
 	results = ListUtil.subList(orphans, searchContainer.getStart(), searchContainer.getEnd());
 }
-else if (type.equals("history")) {
+else if (navigation.equals("history")) {
 	total = WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle());
 
 	searchContainer.setTotal(total);
 
 	results = WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new PageVersionComparator());
 }
-else if (type.equals("incoming_links")) {
+else if (navigation.equals("incoming_links")) {
 	List<WikiPage> links = WikiPageLocalServiceUtil.getIncomingLinks(wikiPage.getNodeId(), wikiPage.getTitle());
 
 	total = links.size();
@@ -247,7 +247,7 @@ else if (type.equals("incoming_links")) {
 
 	results = ListUtil.subList(links, searchContainer.getStart(), searchContainer.getEnd());
 }
-else if (type.equals("outgoing_links")) {
+else if (navigation.equals("outgoing_links")) {
 	List<WikiPage> links = WikiPageLocalServiceUtil.getOutgoingLinks(wikiPage.getNodeId(), wikiPage.getTitle());
 
 	total = links.size();
@@ -256,7 +256,7 @@ else if (type.equals("outgoing_links")) {
 
 	results = ListUtil.subList(links, searchContainer.getStart(), searchContainer.getEnd());
 }
-else if (type.equals("recent_changes")) {
+else if (navigation.equals("recent_changes")) {
 	total = WikiPageServiceUtil.getRecentChangesCount(themeDisplay.getScopeGroupId(), node.getNodeId());
 
 	searchContainer.setTotal(total);
@@ -275,7 +275,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	PortletURL rowURL = renderResponse.createRenderURL();
 
-	if (!curWikiPage.isNew() && !type.equals("draft_pages") && !type.equals("pending_pages")) {
+	if (!curWikiPage.isNew() && !navigation.equals("draft_pages") && !navigation.equals("pending_pages")) {
 		if (portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
 			rowURL.setParameter("mvcRenderCommandName", "/wiki/view_page");
 		}
@@ -294,7 +294,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	rowURL.setParameter("title", curWikiPage.getTitle());
 
-	if (type.equals("history")) {
+	if (navigation.equals("history")) {
 		rowURL.setParameter("version", String.valueOf(curWikiPage.getVersion()));
 	}
 
@@ -341,7 +341,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Summary
 
-	if (type.equals("history") || type.equals("recent_changes")) {
+	if (navigation.equals("history") || navigation.equals("recent_changes")) {
 		if (Validator.isNotNull(curWikiPage.getSummary())) {
 			row.addText(HtmlUtil.escape(curWikiPage.getSummary()));
 		}
@@ -352,7 +352,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Action
 
-	if (type.equals("history")) {
+	if (navigation.equals("history")) {
 		if (curWikiPage.isHead()) {
 			row.addText(StringPool.BLANK);
 		}
@@ -361,7 +361,7 @@ for (int i = 0; i < results.size(); i++) {
 		}
 	}
 
-	if (type.equals("all_pages") || type.equals("categorized_pages") || type.equals("draft_pages") || type.equals("orphan_pages") || type.equals("recent_changes") || type.equals("tagged_pages")) {
+	if (navigation.equals("all_pages") || navigation.equals("categorized_pages") || navigation.equals("draft_pages") || navigation.equals("orphan_pages") || navigation.equals("recent_changes") || navigation.equals("tagged_pages")) {
 		row.addJSP("/wiki/page_action.jsp", "entry-action", application, request, response);
 	}
 
@@ -371,7 +371,7 @@ for (int i = 0; i < results.size(); i++) {
 }
 %>
 
-<c:if test='<%= type.equals("history") && (results.size() > 1) %>'>
+<c:if test='<%= navigation.equals("history") && (results.size() > 1) %>'>
 	<aui:button-row>
 		<aui:button cssClass="btn-lg btn-primary" name="compare" value="compare-versions" />
 	</aui:button-row>
@@ -382,9 +382,9 @@ for (int i = 0; i < results.size(); i++) {
 	portletURL="<%= portletURL %>"
 />
 
-<liferay-ui:search-iterator paginate='<%= type.equals("history") ? false : true %>' searchContainer="<%= searchContainer %>" />
+<liferay-ui:search-iterator paginate='<%= navigation.equals("history") ? false : true %>' searchContainer="<%= searchContainer %>" />
 
-<c:if test='<%= type.equals("history") %>'>
+<c:if test='<%= navigation.equals("history") %>'>
 	<aui:script>
 		function <portlet:namespace />initRowsChecked() {
 			var $ = AUI.$;

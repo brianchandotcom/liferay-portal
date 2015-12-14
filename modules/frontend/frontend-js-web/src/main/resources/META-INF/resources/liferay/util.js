@@ -680,14 +680,14 @@
 			return value;
 		},
 
-		openInDialog: function(event) {
+		openInDialog: function(event, config) {
 			event.preventDefault();
 
 			var currentTarget = Util.getDOM(event.currentTarget);
 
 			currentTarget = $(currentTarget);
 
-			var config = currentTarget.data();
+			config = A.mix(currentTarget.data(), config);
 
 			if (!config.uri) {
 				config.uri = currentTarget.data('href') || currentTarget.attr('href');

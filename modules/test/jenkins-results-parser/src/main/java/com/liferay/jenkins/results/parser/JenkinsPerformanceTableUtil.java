@@ -78,24 +78,24 @@ public class JenkinsPerformanceTableUtil {
 		return createCell(text, tag, width);
 	}
 
-	private static Element createBatchCell(
-		String batch, String tag, String width) {
-
-		String text = batch;
-
-		if (batch.contains("/")) {
-			text = batch.substring(batch.indexOf("/") + 1);
-		}
-
-		return createCell(text, tag, width);
-	}
-
 	private static Element createCell(String text, String tag, String width) {
 		Element cell = new DefaultElement(tag);
 
 		cell.addAttribute("width", width);
 
 		return cell.addText(text);
+	}
+
+	private static Element createJobCell(
+		String job, String tag, String width) {
+
+		String text = job;
+
+		if (job.contains("/")) {
+			text = job.substring(job.indexOf("/") + 1);
+		}
+
+		return createCell(text, tag, width);
 	}
 
 	private static Element createNameCell(
@@ -121,18 +121,18 @@ public class JenkinsPerformanceTableUtil {
 
 	private static Element createRow(JenkinsPerformanceDataUtil.Result result) {
 		return createRow(
-			"td", result.getAxis(), result.getBatch(), result.getClassName(),
-			Float.toString(result.getDuration()), result.getName(),
+			"td", result.getAxis(), result.getClassName(), Float.toString(result.getDuration()),
+			result.getJob(), result.getName(),
 			result.getStatus(), result.getUrl());
 	}
 
 	private static Element createRow(
-		String tag, String axis, String batch, String className,
-		String duration, String name, String status, String url) {
+		String tag, String axis, String className, String duration,
+		String job, String name, String status, String url) {
 
 		Element row = new DefaultElement("tr");
 
-		row.add(createBatchCell(batch, tag, "16%"));
+		row.add(createJobCell(job, tag, "16%"));
 
 		row.add(createAxisCell(axis, tag, "12%"));
 
@@ -149,7 +149,7 @@ public class JenkinsPerformanceTableUtil {
 
 	private static Element createTableHeader() {
 		return createRow(
-			"th", "Axis", "Batch", "Class Name", "Duration (Seconds)", "Name",
+			"th", "Axis", "Class Name", "Duration (Seconds)", "Job", "Name",
 			"Status", null);
 	}
 

@@ -231,34 +231,36 @@ public class BookmarksPortletToolbarContributor
 		BookmarksFolder folder = (BookmarksFolder)portletRequest.getAttribute(
 			BookmarksWebKeys.BOOKMARKS_FOLDER);
 
-		if (folder == null) {
+		if (folder != null) {
+			return folder;
+		}
+
+		long rootFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		try {
+			BookmarksGroupServiceOverriddenConfiguration
+				bookmarksGroupServiceOverriddenConfiguration =
+					ConfigurationFactoryUtil.getConfiguration(
+						BookmarksGroupServiceOverriddenConfiguration.
+							class,
+						new GroupServiceSettingsLocator(
+							themeDisplay.getScopeGroupId(),
+							BookmarksConstants.SERVICE_NAME));
+
+			rootFolderId =
+				bookmarksGroupServiceOverriddenConfiguration.rootFolderId();
+		}
+		catch (ConfigurationException ce) {
+			_log.error(
+				"Unable to obtain bookmarks root folder ID for group " +
+					themeDisplay.getScopeGroupId());
+		}
+
+		long folderId = BeanParamUtil.getLong(
+			folder, portletRequest, "folderId", rootFolderId);
+
+		if (folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			try {
-				long rootFolderId =
-					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-				try {
-					BookmarksGroupServiceOverriddenConfiguration
-						bookmarksGroupServiceOverriddenConfiguration =
-							ConfigurationFactoryUtil.getConfiguration(
-								BookmarksGroupServiceOverriddenConfiguration.
-									class,
-								new GroupServiceSettingsLocator(
-									themeDisplay.getScopeGroupId(),
-									BookmarksConstants.SERVICE_NAME));
-
-					rootFolderId =
-						bookmarksGroupServiceOverriddenConfiguration.
-							rootFolderId();
-				}
-				catch (ConfigurationException ce) {
-					_log.error(
-						"Unable to obtain bookmarks root folder ID for group " +
-							themeDisplay.getScopeGroupId());
-				}
-
-				long folderId = BeanParamUtil.getLong(
-					folder, portletRequest, "folderId", rootFolderId);
-
 				folder = _bookmarksFolderService.getFolder(folderId);
 			}
 			catch (NoSuchFolderException nsfe) {

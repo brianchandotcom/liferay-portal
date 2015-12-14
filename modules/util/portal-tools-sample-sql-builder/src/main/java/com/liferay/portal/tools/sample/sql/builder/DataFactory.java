@@ -270,6 +270,15 @@ public class DataFactory {
 		lines.clear();
 
 		StringUtil.readLines(
+			getResourceInputStream("ddm_structure_layout_basic_document.json"),
+			lines);
+
+		_dlDDMStructureLayoutContent = StringUtil.merge(
+			lines, StringPool.SPACE);
+
+		lines.clear();
+
+		StringUtil.readLines(
 			getResourceInputStream("ddm_structure_basic_web_content.json"),
 			lines);
 
@@ -278,19 +287,12 @@ public class DataFactory {
 		lines.clear();
 
 		StringUtil.readLines(
-			getResourceInputStream("ddm_structure_layout_basic_document.json"),
-			lines);
-
-		_dlDDMStructureLayoutContent = StringUtil.merge(lines, StringPool.SPACE);
-
-		lines.clear();
-
-		StringUtil.readLines(
 			getResourceInputStream(
 				"ddm_structure_layout_basic_web_content.json"),
 			lines);
 
-		_journalDDMStructureLayoutContent = StringUtil.merge(lines, StringPool.SPACE);
+		_journalDDMStructureLayoutContent = StringUtil.merge(
+			lines, StringPool.SPACE);
 
 		lines.clear();
 

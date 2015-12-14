@@ -36,10 +36,10 @@ public class JenkinsPerformanceTableUtil {
 
 		Element tableElement = new DefaultElement("table");
 
-		tableElement.add(createTableHeader());
+		tableElement.add(createTableHeaderElement());
 
 		for (JenkinsPerformanceDataUtil.Result result : results) {
-			tableElement.add(createRow(result));
+			tableElement.add(createRowElement(result));
 		}
 
 		JenkinsPerformanceDataUtil.reset();
@@ -66,7 +66,7 @@ public class JenkinsPerformanceTableUtil {
 		return sb.toString();
 	}
 
-	private static Element createAxisCell(
+	private static Element createAxisCellElement(
 		String axis, String tag, String width) {
 
 		String text = axis;
@@ -75,78 +75,78 @@ public class JenkinsPerformanceTableUtil {
 			text = axis.substring(axis.indexOf("=") + 1);
 		}
 
-		return createCell(text, tag, width);
+		return createCellElement(text, tag, width);
 	}
 
-	private static Element createCell(String text, String tag, String width) {
-		Element cell = new DefaultElement(tag);
+	private static Element createCellElement(String text, String tag, String width) {
+		Element cellElement = new DefaultElement(tag);
 
-		cell.addAttribute("width", width);
+		cellElement.addAttribute("width", width);
 
-		return cell.addText(text);
+		return cellElement.addText(text);
 	}
 
-	private static Element createJobCell(String job, String tag, String width) {
+	private static Element createJobCellElement(String job, String tag, String width) {
 		String text = job;
 
 		if (job.contains("/")) {
 			text = job.substring(job.indexOf("/") + 1);
 		}
 
-		return createCell(text, tag, width);
+		return createCellElement(text, tag, width);
 	}
 
-	private static Element createNameCell(
+	private static Element createNameCellElement(
 		String name, String tag, String url, String width) {
 
 		if ((url == null) || (url.length() == 0)) {
-			return createCell(name, tag, width);
+			return createCellElement(name, tag, width);
 		}
 
-		Element cell = new DefaultElement(tag);
+		Element cellElement = new DefaultElement(tag);
 
-		cell.addAttribute("width", width);
+		cellElement.addAttribute("width", width);
 
-		Element anchor = new DefaultElement("a");
+		Element anchorElement = new DefaultElement("a");
 
-		anchor.addAttribute("href", url);
-		anchor.addText(name);
+		anchorElement.addAttribute("href", url);
+		anchorElement.addText(name);
 
-		cell.add(anchor);
+		cellElement.add(anchorElement);
 
-		return cell;
+		return cellElement;
 	}
 
-	private static Element createRow(JenkinsPerformanceDataUtil.Result result) {
-		return createRow(
+	private static Element createRowElement(JenkinsPerformanceDataUtil.Result result) {
+		return createRowElement(
 			"td", result.getAxis(), result.getClassName(),
 			Float.toString(result.getDuration()), result.getJob(),
 			result.getName(), result.getStatus(), result.getUrl());
 	}
 
-	private static Element createRow(
+	private static Element createRowElement(
 		String tag, String axis, String className, String duration, String job,
 		String name, String status, String url) {
 
-		Element row = new DefaultElement("tr");
+		Element rowElement = new DefaultElement("tr");
 
-		row.add(createJobCell(job, tag, "16%"));
+		rowElement.add(createJobCellElement(job, tag, "16%"));
 
-		row.add(createAxisCell(axis, tag, "12%"));
+		rowElement.add(createAxisCellElement(axis, tag, "12%"));
 
-		row.add(createCell(className, tag, "30%"));
+		rowElement.add(createCellElement(className, tag, "30%"));
 
-		row.add(createNameCell(name, tag, url, "30%"));
+		rowElement.add(createNameCellElement(name, tag, url, "30%"));
 
-		row.add(createCell(status, tag, "8%"));
+		rowElement.add(createCellElement(status, tag, "8%"));
 
-		row.add(createCell(duration, tag, "4%"));
+		rowElement.add(createCellElement(duration, tag, "4%"));
 
-		return row;
+		return rowElement;
 	}
 
-	private static Element createTableHeader() {
-		return createRow(
+	private static Element createTableHeaderElement() {
+		return createRowElement(
 			"th", "Axis", "Class Name", "Duration (Seconds)", "Job", "Name",
 			"Status", null);
 	}

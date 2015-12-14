@@ -17,24 +17,22 @@
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="name"
-	value="<%= rule.getName(locale) %>"
-/>
+>
+	<strong><%= rule.getName(locale) %></strong>
+</liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
 	name="description"
 	value="<%= rule.getDescription(locale) %>"
 />
 
 <liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
 	name="type"
 	translate="<%= true %>"
 	value="<%= rule.getType() %>"
 />
 
 <liferay-ui:search-container-column-jsp
-	align="right"
-	cssClass="entry-action"
+	cssClass="list-group-item-field"
 	path="/rule_actions.jsp"
 />

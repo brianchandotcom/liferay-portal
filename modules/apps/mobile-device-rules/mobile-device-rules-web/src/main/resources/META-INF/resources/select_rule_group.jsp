@@ -51,13 +51,8 @@ portletURL.setParameter("eventName", eventName);
 				</aui:nav>
 			</c:if>
 
-			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
-
-				<%
-				request.setAttribute("liferay-ui:search:searchContainer", searchContainer);
-				%>
-
-				<liferay-util:include page="/rule_group_search.jsp" servletContext="<%= application %>" />
+			<aui:nav-bar-search>
+				<liferay-ui:input-search />
 			</aui:nav-bar-search>
 		</aui:nav-bar>
 
@@ -72,7 +67,21 @@ portletURL.setParameter("eventName", eventName);
 		%>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/rule_group_search_results.jspf" %>
+
+			<%
+			LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+			params.put("includeGlobalScope", Boolean.TRUE);
+
+			total = MDRRuleGroupLocalServiceUtil.searchByKeywordsCount(searchTerms.getGroupId(), searchTerms.getKeywords(), params, searchTerms.isAndOperator());
+
+			searchContainer.setTotal(total);
+
+			results = MDRRuleGroupLocalServiceUtil.searchByKeywords(searchTerms.getGroupId(), searchTerms.getKeywords(), params, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+
+			searchContainer.setResults(results);
+			%>
+
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row

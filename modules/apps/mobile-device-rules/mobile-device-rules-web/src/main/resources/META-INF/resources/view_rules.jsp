@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL");
@@ -40,55 +42,87 @@ portletURL.setParameter("mvcPath", "/view_rules.jsp");
 portletURL.setParameter("ruleGroupId", String.valueOf(ruleGroupId));
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("redirect", redirect);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(LanguageUtil.format(request, "classification-rules-for-x", ruleGroup.getName(locale), false));
+
+int mdrRulesCount = MDRRuleLocalServiceUtil.getRulesCount(ruleGroupId);
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.format(request, "classification-rules-for-x", ruleGroup.getName(locale), false) %>'
-/>
-
-<aui:nav-bar>
+<aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<liferay-portlet:renderURL var="addURL">
-			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
-			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroupId) %>" />
-		</liferay-portlet:renderURL>
-
-		<aui:nav-item href="<%= addURL %>" iconCssClass="icon-plus" label="add-classification-rule" />
+		<aui:nav-item label="classification-rules" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
 
-<div class="separator"><!-- --></div>
+<c:if test="<%= mdrRulesCount > 0 %>">
+	<liferay-frontend:management-bar>
 
-<liferay-ui:search-container
-	delta="<%= 5 %>"
-	deltaConfigurable="<%= false %>"
-	emptyResultsMessage="no-classification-rules-are-configured-for-this-device-family"
-	headerNames="name,type"
-	iteratorURL="<%= portletURL %>"
-	total="<%= MDRRuleLocalServiceUtil.getRulesCount(ruleGroupId) %>"
->
-	<liferay-ui:search-container-results
-		results="<%= MDRRuleLocalServiceUtil.getRules(ruleGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
+		<%
+		PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, renderResponse);
+		%>
 
-	<liferay-ui:search-container-row
-		className="com.liferay.mobile.device.rules.model.MDRRule"
-		escapedModel="<%= true %>"
-		keyProperty="ruleId"
-		modelVar="rule"
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= displayStyleURL %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+
+		<%
+		PortletURL iteratorURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		iteratorURL.setParameter("displayStyle", displayStyle);
+		%>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= iteratorURL %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+	</liferay-frontend:management-bar>
+</c:if>
+
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		emptyResultsMessage="no-classification-rules-are-configured-for-this-device-family"
+		iteratorURL="<%= portletURL %>"
+		total="<%= mdrRulesCount %>"
 	>
-		<liferay-portlet:renderURL var="rowURL">
-			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="ruleId" value="<%= String.valueOf(rule.getRuleId()) %>" />
-		</liferay-portlet:renderURL>
+		<liferay-ui:search-container-results
+			results="<%= MDRRuleLocalServiceUtil.getRules(ruleGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+		/>
 
-		<%@ include file="/rule_columns.jspf" %>
-	</liferay-ui:search-container-row>
+		<liferay-ui:search-container-row
+			className="com.liferay.mobile.device.rules.model.MDRRule"
+			escapedModel="<%= true %>"
+			keyProperty="ruleId"
+			modelVar="rule"
+		>
+			<liferay-portlet:renderURL var="rowURL">
+				<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="ruleId" value="<%= String.valueOf(rule.getRuleId()) %>" />
+			</liferay-portlet:renderURL>
 
-	<liferay-ui:search-iterator type="more" />
-</liferay-ui:search-container>
+			<%@ include file="/rule_columns.jspf" %>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" type="more" />
+	</liferay-ui:search-container>
+</div>
+
+<liferay-portlet:renderURL var="addURL">
+	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
+	<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+	<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroupId) %>" />
+</liferay-portlet:renderURL>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-classification-rule") %>' url="<%= addURL.toString() %>" />
+</liferay-frontend:add-menu>

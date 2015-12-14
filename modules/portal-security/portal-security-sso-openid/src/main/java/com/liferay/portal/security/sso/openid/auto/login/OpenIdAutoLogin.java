@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * Liferay Portal user, then this user is logged in without any further
  * challenge.
  * </p>
- * 
+ *
  * @author Jorge Ferrer
  */
 @Component(immediate = true, service = AutoLogin.class)

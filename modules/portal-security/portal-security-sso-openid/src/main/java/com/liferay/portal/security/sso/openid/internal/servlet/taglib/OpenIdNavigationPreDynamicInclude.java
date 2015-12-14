@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * authentication has been enabled for the portal instance being accessed and,
  * if so, adds an Open ID link to the Sign In portlet for triggering the
  * authentication process.
- * 
+ *
  * @author Michael C. Han
  */
 @Component(immediate = true, service = DynamicInclude.class)

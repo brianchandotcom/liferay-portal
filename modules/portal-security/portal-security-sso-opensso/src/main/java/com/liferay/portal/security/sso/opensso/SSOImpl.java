@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
 /**
  * Enables the OpenSSO module to participate in significant portal session
  * lifecycle changes.
- * 
+ *
  * @author Michael C. Han
  */
 @Component(

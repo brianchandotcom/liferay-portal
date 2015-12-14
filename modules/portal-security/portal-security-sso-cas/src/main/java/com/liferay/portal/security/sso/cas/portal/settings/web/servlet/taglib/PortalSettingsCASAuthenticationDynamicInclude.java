@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Adds a CAS tab to the Authentication section of the Portal Settings user
  * interface in the Control Panel.
- * 
+ *
  * @author Tomas Polesovsky
  */
 @Component(immediate = true, property = {

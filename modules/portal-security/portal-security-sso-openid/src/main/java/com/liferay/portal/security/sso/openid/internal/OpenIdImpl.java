@@ -28,13 +28,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Serves as the core implementation of the OpenID protocol.
- * 
+ *
  * <p>
- * This class is utilized by many other classes via
- * {@link com.liferay.portal.util.OpenIdUtil} which exposes all of its methods
+ * This class is utilized by many other classes via {@link
+ * com.liferay.portal.util.OpenIdUtil} which exposes all of its methods
  * statically.
  * </p>
- * 
+ *
  * @author Michael C. Han
  */
 @Component(

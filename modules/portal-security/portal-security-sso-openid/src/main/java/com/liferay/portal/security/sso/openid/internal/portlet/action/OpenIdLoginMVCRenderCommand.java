@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Enables the Sign In portlet to render a prompt for users to enter their
  * OpenIDs.
- * 
+ *
  * @author Michael C. Han
  * @author Stian Sigvartsen
  */

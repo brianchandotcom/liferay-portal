@@ -41,26 +41,26 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Participates in every login and logout that triggers an HTTP request to
  * Liferay Portal.
- * 
+ *
  * <p>
  * For logout requests, this class invalidates the current session and redirects
  * the browser to the configured OpenSSO server Logout URL. For login requests,
  * it checks the token cookie to determine if the user is already authenticated
  * with the OpenSSO server.
  * </p>
- * 
+ *
  * <p>
  * If the token cookie validates, a new Liferay Portal session is started with
  * the same token. Otherwise, an OpenSSO server login URL is constructed subject
  * to whether or not the AUTH_FORWARD_BY_LAST_PATH system property is set.
  * </p>
- * 
+ *
  * <p>
  * If it is, this class looks for a redirect parameter on the current request
  * (falling back to the portal home URL). If the redirect parameter is not
  * found, the filter uses the configured OpenSSO Login URL unmodified.
  * </p>
- * 
+ *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Prashant Dighe

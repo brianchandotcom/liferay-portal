@@ -35,25 +35,30 @@ import org.osgi.service.component.annotations.Reference;
 public class PortalSettingsPortletResourceBundlePublisher
 	extends BaseResourceBundlePublisher {
 
+	@Override
 	@Activate
 	protected void activate(BundleContext bundleContext) throws IOException {
 		super.activate(bundleContext);
 	}
 
+	@Override
 	@Deactivate
 	protected void deactivate() {
 		super.deactivate();
 	}
 
+	@Override
 	protected String getPortletName() {
 		return PortalSettingsPortletKeys.PORTAL_SETTINGS;
 	}
 
+	@Override
 	@Modified
 	protected void modified(BundleContext bundleContext) throws IOException {
 		super.modified(bundleContext);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLanguageUtil(LanguageUtil languageUtil) {
 		super.setLanguageUtil(languageUtil);

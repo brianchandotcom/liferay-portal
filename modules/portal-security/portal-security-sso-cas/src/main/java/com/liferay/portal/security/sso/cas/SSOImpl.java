@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Enables the CAS module to participate in significant portal session lifecycle
  * changes.
- * 
+ *
  * @author Michael C. Han
  */
 @Component(

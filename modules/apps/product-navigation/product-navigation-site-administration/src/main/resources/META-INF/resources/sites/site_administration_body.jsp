@@ -30,4 +30,4 @@ ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language",
 	label='<%= LanguageUtil.get(resourceBundle, "go-to-site") %>'
 />
 
-<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showOpen="<%= true %>" />
+<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />

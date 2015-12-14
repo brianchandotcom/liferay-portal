@@ -35,7 +35,7 @@ public class JenkinsPerformanceDataUtil {
 	}
 
 	public static void processPerformanceData(
-			String batch, String url, int size)
+			String job, String url, int size)
 		throws Exception {
 
 		JSONObject jsonObject = null;
@@ -44,14 +44,14 @@ public class JenkinsPerformanceDataUtil {
 			jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(url + "/api/json"));
 
-			_results.add(new Result(batch, jsonObject));
+			_results.add(new Result(job, jsonObject));
 		}
 		else {
 			jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
 					url + "/testReport/api/json"));
 
-			_results.addAll(getSlowestResults(batch, jsonObject, size));
+			_results.addAll(getSlowestResults(job, jsonObject, size));
 		}
 
 		Collections.sort(_results);
@@ -65,22 +65,22 @@ public class JenkinsPerformanceDataUtil {
 
 	public static class Result implements Comparable<Result> {
 
-		public Result(String batch, JSONObject sourceJSON) throws Exception {
+		public Result(String job, JSONObject sourceJSON) throws Exception {
 			_axis = "";
-			_batch = batch;
 			_className = "";
 			_duration = sourceJSON.getInt("duration") / 1000;
+			_job = job;
 			_name = sourceJSON.getString("fullDisplayName");
 			_status = sourceJSON.getString("result");
 			_url = sourceJSON.getString("url");
 		}
 
 		public Result(
-				String batch, JSONObject caseJSONObject,
-				JSONObject childJSONObject)
+				JSONObject caseJSONObject, JSONObject childJSONObject,
+				String job)
 			throws Exception {
 
-			_batch = batch;
+			_job = job;
 			_className = caseJSONObject.getString("className");
 			_duration = caseJSONObject.getInt("duration");
 			_name = caseJSONObject.getString("name");
@@ -98,16 +98,16 @@ public class JenkinsPerformanceDataUtil {
 			return _axis;
 		}
 
-		public String getBatch() {
-			return _batch;
-		}
-
 		public String getClassName() {
 			return _className;
 		}
 
 		public float getDuration() {
 			return _duration;
+		}
+
+		public String getJob() {
+			return _job;
 		}
 
 		public String getName() {
@@ -173,9 +173,9 @@ public class JenkinsPerformanceDataUtil {
 		}
 
 		private String _axis;
-		private final String _batch;
 		private final String _className;
 		private final int _duration;
+		private final String _job;
 		private final String _name;
 		private final String _status;
 		private String _url;
@@ -213,7 +213,7 @@ public class JenkinsPerformanceDataUtil {
 					JSONObject caseJSONObject = casesJSONArray.getJSONObject(k);
 
 					Result result = new Result(
-						name, caseJSONObject, childJSONObject);
+						caseJSONObject, childJSONObject, name);
 
 					results.add(result);
 				}

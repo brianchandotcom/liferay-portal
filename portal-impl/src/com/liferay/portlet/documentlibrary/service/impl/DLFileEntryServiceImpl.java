@@ -685,8 +685,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 				DLFileEntryConstants.getClassName(), fileEntryId)) {
 
 			boolean hasLock = LockManagerUtil.hasLock(
-				getUserId(), DLFileEntry.class.getName(),
-				fileEntryId);
+				getUserId(), DLFileEntry.class.getName(), fileEntryId);
 
 			if (!hasLock) {
 				throw new FileEntryLockException.MustOwnLock();

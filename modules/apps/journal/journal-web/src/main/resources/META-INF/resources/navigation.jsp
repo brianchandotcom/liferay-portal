@@ -28,40 +28,7 @@ data.put("qa-id", "navigation");
 
 <aui:nav-bar cssClass="collapse-basic-search" data="<%= data %>" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewArticlesHomeURL">
-			<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-			<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewArticlesHomeURL %>"
-			label="folders"
-			selected="<%= (journalDisplayContext.isNavigationHome() && (journalDisplayContext.getFolderId() == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(ddmStructureKey) %>"
-		/>
-
-		<portlet:renderURL var="viewRecentArticlesURL">
-			<portlet:param name="navigation" value="recent" />
-			<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-			<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewRecentArticlesURL %>"
-			label="recent"
-			selected="<%= journalDisplayContext.isNavigationRecent() %>"
-		/>
-
-		<portlet:renderURL var="viewMyArticlesURL">
-			<portlet:param name="navigation" value="mine" />
-			<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-			<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewMyArticlesURL %>"
-			label="mine"
-			selected="<%= journalDisplayContext.isNavigationMine() %>"
-		/>
+		<aui:nav-item label="web-content" selected="<%= true %>" />
 
 		<aui:nav-item
 			dropdown="<%= true %>"

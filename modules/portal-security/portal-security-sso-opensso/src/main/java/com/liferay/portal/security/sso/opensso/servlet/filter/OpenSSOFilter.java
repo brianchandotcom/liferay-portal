@@ -52,7 +52,8 @@ import org.osgi.service.component.annotations.Reference;
  * <p>
  * If the token cookie validates, a new Liferay Portal session is started with
  * the same token. Otherwise, an OpenSSO server login URL is constructed subject
- * to whether or not the AUTH_FORWARD_BY_LAST_PATH system property is set.
+ * to whether or not the <code>AUTH_FORWARD_BY_LAST_PATH</code> system property
+ * is set.
  * </p>
  *
  * <p>

@@ -537,7 +537,7 @@
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.SidebarPanelTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>resourceUrl</name>
+			<name>resourceURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

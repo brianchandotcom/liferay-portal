@@ -17,4 +17,4 @@
 <%@ include file="/sidebar_panel/init.jsp" %>
 
 <div class="sidenav-menu-slider">
-	<div class="sidebar sidebar-default sidenav-menu" id="<%= namespace %>sidebar-panel">
+	<div class="sidebar sidebar-default sidenav-menu" id="<%= namespace %>sidebarPanel">

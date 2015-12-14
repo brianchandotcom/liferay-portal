@@ -23,9 +23,9 @@
 	new Liferay.SidebarPanel(
 		{
 			namespace: '<%= namespace %>',
-			resourceUrl: '<%= resourceUrl %>',
+			resourceUrl: '<%= resourceURL %>',
 			searchContainerId: '<%= namespace + searchContainerId %>',
-			targetNode: '#<%= namespace %>sidebar-panel'
+			targetNode: '#<%= namespace %>sidebarPanel'
 		}
 	);
 </aui:script>

@@ -17,6 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String resourceUrl = (String)request.getAttribute("liferay-frontend:sidebar-panel:resourceUrl");
+String resourceURL = (String)request.getAttribute("liferay-frontend:sidebar-panel:resourceURL");
 String searchContainerId = (String)request.getAttribute("liferay-frontend:sidebar-panel:searchContainerId");
 %>

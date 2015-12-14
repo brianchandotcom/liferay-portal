@@ -32,7 +32,7 @@ public class SidebarPanelTag extends IncludeTag {
 
 		setNamespacedAttribute(
 			request, "searchContainerId", _searchContainerId);
-		setNamespacedAttribute(request, "resourceUrl", _resourceUrl);
+		setNamespacedAttribute(request, "resourceURL", _resourceURL);
 
 		super.doEndTag();
 
@@ -55,10 +55,10 @@ public class SidebarPanelTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setResourceUrl(String resourceUrl) {
-		_resourceUrl = resourceUrl;
+	public void setResourceURL(String resourceURL) {
+		_resourceURL = resourceURL;
 
-		setScopedAttribute("resourceUrl", _resourceUrl);
+		setScopedAttribute("resourceURL", _resourceURL);
 	}
 
 	public void setSearchContainerId(String searchContainerId) {
@@ -71,7 +71,7 @@ public class SidebarPanelTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_resourceUrl = null;
+		_resourceURL = null;
 		_searchContainerId = null;
 	}
 
@@ -85,10 +85,6 @@ public class SidebarPanelTag extends IncludeTag {
 		return _START_PAGE;
 	}
 
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-	}
-
 	private static final String _ATTRIBUTE_NAMESPACE =
 		"liferay-frontend:sidebar-panel:";
 
@@ -96,7 +92,7 @@ public class SidebarPanelTag extends IncludeTag {
 
 	private static final String _START_PAGE = "/sidebar_panel/start.jsp";
 
-	private String _resourceUrl = null;
+	private String _resourceURL = null;
 	private String _searchContainerId = null;
 
 }

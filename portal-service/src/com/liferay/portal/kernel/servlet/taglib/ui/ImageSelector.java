@@ -37,10 +37,10 @@ public class ImageSelector {
 			StringPool.BLANK);
 	}
 
-	public ImageSelector(String coverImageURL) {
+	public ImageSelector(String imageURL) {
 		this(
 			null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			coverImageURL);
+			imageURL);
 	}
 
 	public byte[] getImageBytes() {

@@ -9,4 +9,7 @@ Include-Resource:\
 JS-Config: /META-INF/resources/config.js
 Provide-Capability:\
 	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/frontend";version:Version="1.0.0"
+Require-Capability:\
+	osgi.extender;\
+	filter:="(&(osgi.extender=liferay.js)(version>=1.0)(!(version>=2.0)))"
 Web-ContextPath: /frontend-taglib

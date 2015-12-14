@@ -19,8 +19,11 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.ReleaseConstants;
 
+import java.io.IOException;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
@@ -30,6 +33,62 @@ public class UpgradeModules extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_registerModulesExtractedFromCore();
+
+		_registerModulesConvertedFromLegacySDK();
+	}
+
+	private void _registerModulesConvertedFromLegacySDK()
+		throws IOException, SQLException {
+
+		for (String[] convertedLegacyModule : _convertedLegacyModules) {
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+
+			String oldServletContextName = convertedLegacyModule[0];
+			String newServletContextName = convertedLegacyModule[1];
+			String buildNamespace = convertedLegacyModule[2];
+			String portletId = convertedLegacyModule[3];
+
+			try {
+				ps = connection.prepareStatement(
+					"select servletContextName, buildNumber from Release_ " +
+						"where servletContextName = ?");
+
+				ps.setString(1, oldServletContextName);
+
+				rs = ps.executeQuery();
+
+				if (!rs.next()) {
+
+					// check it is been installed but never upgraded
+
+					if (isInstalled(buildNamespace, portletId)) {
+						_registerStartVersion(newServletContextName);
+					}
+				}
+				else {
+
+					// it's been installed, we just need to translate
+					// its servlet context name
+
+					_updateServletContextName(
+						oldServletContextName, newServletContextName);
+				}
+			}
+			finally {
+				DataAccess.cleanUp(ps, rs);
+			}
+		}
+	}
+
+	private void _registerModulesExtractedFromCore() throws SQLException {
+		_registerStartVersion(_bundleSymbolicNames);
+	}
+
+	private void _registerStartVersion(String... bundleSymbolicNames)
+		throws SQLException {
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -48,7 +107,7 @@ public class UpgradeModules extends UpgradeProcess {
 
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-			for (String bundleSymbolicName : _bundleSymbolicNames) {
+			for (String bundleSymbolicName : bundleSymbolicNames) {
 				ps.setLong(1, 0);
 				ps.setLong(2, increment());
 				ps.setTimestamp(3, timestamp);
@@ -69,6 +128,76 @@ public class UpgradeModules extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(ps, rs);
 		}
+	}
+
+	private void _updateServletContextName(
+			String oldServletContextName, String newServletContextName)
+		throws IOException, SQLException {
+
+		runSQL(
+			"update Release_ set servletContextName = \"" +
+				newServletContextName + "\" where servletContextName = \"" +
+				oldServletContextName + "\"");
+	}
+
+	private boolean isInstalled(String buildNamespace, String portletId)
+		throws SQLException {
+
+		return isInstalledInServiceComponent(buildNamespace) ||
+			isInstalledPortlet(portletId);
+	}
+
+	private boolean isInstalledInServiceComponent(String buildNamespace)
+		throws SQLException {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		boolean isInstalledServiceComponent = false;
+
+		try {
+			ps = connection.prepareStatement(
+				"select serviceComponentId from ServiceComponent " +
+					"where buildNamespace = ?");
+
+			ps.setString(1, buildNamespace);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				isInstalledServiceComponent = true;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+
+		return isInstalledServiceComponent;
+	}
+
+	private boolean isInstalledPortlet(String portletId) throws SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		boolean isInstalledPortlet = false;
+
+		try {
+			ps = connection.prepareStatement(
+				"select portletId from Portlet where portletId like ?");
+
+			ps.setString(1, "\"" + portletId + "\"");
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				isInstalledPortlet = true;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+
+		return isInstalledPortlet;
 	}
 
 	private static final String[] _bundleSymbolicNames = new String[] {
@@ -95,10 +224,9 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.journal.web", "com.liferay.layout.admin.web",
 		"com.liferay.layout.prototype.web",
 		"com.liferay.layout.set.prototype.web",
-		"com.liferay.loan.calculator.web", "com.liferay.marketplace.service",
-		"com.liferay.message.boards.web", "com.liferay.mobile.device.rules.web",
-		"com.liferay.my.account.web", "com.liferay.nested.portlets.web",
-		"com.liferay.network.utilities.web",
+		"com.liferay.loan.calculator.web", "com.liferay.message.boards.web",
+		"com.liferay.mobile.device.rules.web", "com.liferay.my.account.web",
+		"com.liferay.nested.portlets.web", "com.liferay.network.utilities.web",
 		"com.liferay.password.generator.web",
 		"com.liferay.password.policies.admin.web",
 		"com.liferay.plugins.admin.web", "com.liferay.polls.service",
@@ -128,5 +256,22 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.wiki.service", "com.liferay.wiki.web",
 		"com.liferay.xsl.content.web"
 	};
+	private static final String[][] _convertedLegacyModules =
+		{{"calendar-portlet", "com.liferay.calendar.service", "Calendar",
+			"%calendarportlet"
+		},
+		{"social-networking-portlet", "com.liferay.social.networking.service",
+			"SN", "%socialnetworkingportlet"
+		},
+		{"marketplace-portlet", "com.liferay.marketplace.service",
+			"Marketplace", "%marketplace"
+		},
+		{"kaleo-web", "com.liferay.portal.workflow.kaleo.service", "Kaleo",
+			"%kaleo%"
+		},
+		{"microblogs-portlet", "com.liferay.microblogs.service", "Microblogs",
+			"%microblogsportlet"
+		}
+		};
 
 }

@@ -248,7 +248,27 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof AddressCityException ||
+			if (e instanceof
+						UserEmailAddressException.MustNotBeDuplicate ||
+					 e instanceof UserScreenNameException.MustNotBeDuplicate) {
+
+				String emailAddress = ParamUtil.getString(
+					actionRequest, "emailAddress");
+
+				User user = _userLocalService.fetchUserByEmailAddress(
+					themeDisplay.getCompanyId(), emailAddress);
+
+				if ((user == null) ||
+					(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
+
+					SessionErrors.add(actionRequest, e.getClass(), e);
+				}
+				else {
+					actionResponse.setRenderParameter(
+						"mvcPath", "/update_account.jsp");
+				}
+			}
+			else if (e instanceof AddressCityException ||
 				e instanceof AddressStreetException ||
 				e instanceof AddressZipException ||
 				e instanceof CaptchaConfigurationException ||
@@ -277,26 +297,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				e instanceof WebsiteURLException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else if (e instanceof
-						UserEmailAddressException.MustNotBeDuplicate ||
-					 e instanceof UserScreenNameException.MustNotBeDuplicate) {
-
-				String emailAddress = ParamUtil.getString(
-					actionRequest, "emailAddress");
-
-				User user = _userLocalService.fetchUserByEmailAddress(
-					themeDisplay.getCompanyId(), emailAddress);
-
-				if ((user == null) ||
-					(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
-
-					SessionErrors.add(actionRequest, e.getClass(), e);
-				}
-				else {
-					actionResponse.setRenderParameter(
-						"mvcPath", "update_account.jsp");
-				}
 			}
 			else {
 				throw e;

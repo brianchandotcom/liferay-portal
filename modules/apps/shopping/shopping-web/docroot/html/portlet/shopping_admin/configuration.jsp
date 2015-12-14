@@ -224,7 +224,7 @@ shoppingGroupServiceOverriddenConfiguration = ConfigurationFactoryUtil.getConfig
 		%>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBody="<%= shoppingGroupServiceOverriddenConfiguration.getEmailOrderConfirmationBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= shoppingGroupServiceOverriddenConfiguration.isEmailOrderConfirmationEnabled() %>"
@@ -234,7 +234,7 @@ shoppingGroupServiceOverriddenConfiguration = ConfigurationFactoryUtil.getConfig
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBody="<%= shoppingGroupServiceOverriddenConfiguration.getEmailOrderShippingBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= shoppingGroupServiceOverriddenConfiguration.isEmailOrderShippingEnabled() %>"

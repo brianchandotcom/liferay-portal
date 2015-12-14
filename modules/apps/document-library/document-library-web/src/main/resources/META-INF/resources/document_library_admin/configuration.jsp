@@ -74,7 +74,7 @@
 		%>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBody="<%= dlGroupServiceSettings.getEmailFileEntryAddedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryAddedEnabled() %>"
@@ -84,7 +84,7 @@
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBody="<%= dlGroupServiceSettings.getEmailFileEntryUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled() %>"

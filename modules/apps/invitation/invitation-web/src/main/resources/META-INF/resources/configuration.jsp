@@ -29,7 +29,7 @@ String emailMessageSubject = portletPreferences.getValue("emailMessageSubject", 
 	<liferay-ui:error key="emailMessageBody" message="please-enter-a-valid-body" />
 	<liferay-ui:error key="emailMessageSubject" message="please-enter-a-valid-subject" />
 
-	<liferay-ui:email-notification-settings
+	<liferay-frontend:email-notification-settings
 		emailBody='<%= InvitationUtil.getEmailMessageBodyXml(portletPreferences, renderRequest, "preferences") %>'
 		emailDefinitionTerms="<%= InvitationUtil.getEmailDefinitionTerms(renderRequest) %>"
 		emailParam="emailMessage"

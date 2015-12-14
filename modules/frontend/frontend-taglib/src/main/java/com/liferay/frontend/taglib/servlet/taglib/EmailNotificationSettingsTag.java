@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,6 +23,7 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
@@ -83,6 +85,13 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		_helpMessage = helpMessage;
 	}
 
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
+	}
+
 	public void setShowEmailEnabled(boolean showEmailEnabled) {
 		_showEmailEnabled = showEmailEnabled;
 	}
@@ -131,7 +140,8 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:bodyLabel", _bodyLabel);
+			"liferay-frontend:email-notification-settings:bodyLabel",
+			_bodyLabel);
 
 		String emailBody = _emailBody;
 
@@ -143,16 +153,18 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailBody", emailBody);
+			"liferay-frontend:email-notification-settings:emailBody",
+			emailBody);
 
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailDefinitionTerms",
+			"liferay-frontend:email-notification-settings:emailDefinitionTerms",
 			_emailDefinitionTerms);
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailEnabled",
+			"liferay-frontend:email-notification-settings:emailEnabled",
 			String.valueOf(_emailEnabled));
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailParam", _emailParam);
+			"liferay-frontend:email-notification-settings:emailParam",
+			_emailParam);
 
 		String emailSubject = _emailSubject;
 
@@ -164,27 +176,29 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailSubject",
+			"liferay-frontend:email-notification-settings:emailSubject",
 			emailSubject);
 
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:fieldPrefix", _fieldPrefix);
+			"liferay-frontend:email-notification-settings:fieldPrefix",
+			_fieldPrefix);
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:fieldPrefixSeparator",
+			"liferay-frontend:email-notification-settings:fieldPrefixSeparator",
 			_fieldPrefixSeparator);
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:helpMessage", _helpMessage);
+			"liferay-frontend:email-notification-settings:helpMessage",
+			_helpMessage);
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:showEmailEnabled",
+			"liferay-frontend:email-notification-settings:showEmailEnabled",
 			_showEmailEnabled);
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:showSubject", _showSubject);
+			"liferay-frontend:email-notification-settings:showSubject",
+			_showSubject);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE =
-		"/html/taglib/ui/email_notification_settings/page.jsp";
+	private static final String _PAGE = "/email_notification_settings/page.jsp";
 
 	private String _bodyLabel;
 	private String _emailBody;

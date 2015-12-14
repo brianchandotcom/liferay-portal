@@ -94,6 +94,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>showBody</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>showHeader</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

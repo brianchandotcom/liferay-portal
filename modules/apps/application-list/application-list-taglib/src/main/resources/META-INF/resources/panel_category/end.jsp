@@ -16,7 +16,9 @@
 
 <%@ include file="/panel_category/init.jsp" %>
 
-<liferay-application-list:panel-category-body panelApps="<%= panelApps %>" panelCategory="<%= panelCategory %>" />
+<c:if test="<%= showBody %>">
+	<liferay-application-list:panel-category-body panelApps="<%= panelApps %>" panelCategory="<%= panelCategory %>" />
+</c:if>
 
 <c:if test="<%= !panelApps.isEmpty() && showHeader %>">
 		</div>

@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.net.URI;
+import java.net.URL;
 import java.net.URLDecoder;
 
 import java.util.ArrayList;
@@ -29,42 +30,63 @@ import org.json.JSONObject;
  */
 public class JenkinsPerformanceDataUtil {
 
+	public static List<Result> getSlowestResults() {
+		return _results;
+	}
+
 	public static void processPerformanceData(
-			String buildName, String jenkinsJobURL, int reportSize)
+			String batch, String url, int size)
 		throws Exception {
 
-		JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(
-				jenkinsJobURL + "testReport/api/json"));
+		JSONObject jsonObject = null;
 
-		if (jobJSONObject != null) {
-			List<Result> resultList = getLongestResults(
-				buildName, jobJSONObject, reportSize);
+		if (url.contains("-source")) {
+			jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(url + "/api/json"));
 
-			resultsList.addAll(resultList);
-
-			Collections.sort(resultsList);
-
-			truncateList(resultsList, reportSize);
+			_results.add(new Result(batch, jsonObject));
 		}
 		else {
-			System.out.println(
-				"JSON data could not be loaded. URL: " + jenkinsJobURL +
-					"testReport/api/json");
+			jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(
+					url + "/testReport/api/json"));
+
+			_results.addAll(getSlowestResults(batch, jsonObject, size));
 		}
+
+		Collections.sort(_results);
+
+		truncate(_results, size);
+	}
+
+	public static void reset() {
+		_results.clear();
 	}
 
 	public static class Result implements Comparable<Result> {
 
+		public Result(String batch, JSONObject sourceJSON) throws Exception {
+			_axis = "";
+			_batch = batch;
+			_className = "";
+			_duration = sourceJSON.getInt("duration") / 1000;
+			_name = sourceJSON.getString("fullDisplayName");
+			_status = sourceJSON.getString("result");
+			_url = sourceJSON.getString("url");
+		}
+
 		public Result(
-				String buildName, JSONObject caseJSONObject,
+				String batch, JSONObject caseJSONObject,
 				JSONObject childJSONObject)
 			throws Exception {
 
-			batch = buildName;
+			_batch = batch;
+			_className = caseJSONObject.getString("className");
+			_duration = caseJSONObject.getInt("duration");
+			_name = caseJSONObject.getString("name");
+			_status = caseJSONObject.getString("status");
 
 			setAxis(childJSONObject);
-			setCaseInfo(caseJSONObject);
 			setUrl(childJSONObject);
 		}
 
@@ -73,87 +95,64 @@ public class JenkinsPerformanceDataUtil {
 		}
 
 		public String getAxis() {
-			return axis;
+			return _axis;
 		}
 
 		public String getBatch() {
-			return batch;
+			return _batch;
 		}
 
 		public String getClassName() {
-			return className;
+			return _className;
 		}
 
 		public float getDuration() {
-			return duration;
+			return _duration;
 		}
 
 		public String getName() {
-			return name;
+			return _name;
 		}
 
 		public String getStatus() {
-			return status;
+			return _status;
 		}
 
 		public String getUrl() {
-			return url;
+			return _url;
 		}
 
-		public JSONObject toJSONObject() {
-			JSONObject jsonObject = new JSONObject();
+		private void setAxis(JSONObject childJSONObject) throws Exception {
+			String _url = childJSONObject.getString("url");
 
-			jsonObject.put("axis", axis);
-			jsonObject.put("batch", batch);
-			jsonObject.put("className", className);
-			jsonObject.put("duration", duration);
-			jsonObject.put("name", name);
-			jsonObject.put("status", status);
+			_url = URLDecoder.decode(_url, "UTF-8");
 
-			return jsonObject;
+			int x = _url.indexOf("AXIS_VARIABLE");
+
+			_url = _url.substring(x);
+
+			int y = _url.indexOf(",");
+
+			_axis = _url.substring(0, y);
 		}
 
-		public String toString() {
-			return toJSONObject().toString(4);
-		}
-
-		protected void setAxis(JSONObject childJSONObject) throws Exception {
-			String urlString = childJSONObject.getString("url");
-
-			urlString = URLDecoder.decode(urlString, "UTF-8");
-
-			int x = urlString.indexOf("AXIS_VARIABLE");
-
-			urlString = urlString.substring(x);
-
-			int y = urlString.indexOf(",");
-
-			axis = urlString.substring(0, y);
-		}
-
-		protected void setCaseInfo(JSONObject caseObject) {
-			className = caseObject.getString("className");
-			duration = caseObject.getLong("duration");
-			name = caseObject.getString("name");
-			status = caseObject.getString("status");
-		}
-
-		protected void setUrl(JSONObject childJSONObject) throws Exception {
-			String urlString = childJSONObject.getString("url");
+		private void setUrl(JSONObject childJSONObject) throws Exception {
+			String urlString = URLDecoder.decode(
+				childJSONObject.getString("url"), "UTF-8");
 
 			StringBuilder sb = new StringBuilder(urlString);
 
 			sb.append("testReport/");
 
-			int x = className.lastIndexOf(".");
+			int x = _className.lastIndexOf(".");
 
-			sb.append(className.substring(0, x));
+			sb.append(_className.substring(0, x));
 			sb.append("/");
-			sb.append(className.substring(x + 1));
+			sb.append(_className.substring(x + 1));
 			sb.append("/");
 
-			if (className.contains("poshi")) {
-				String poshiName = name;
+			if (_className.contains("poshi")) {
+				String poshiName = _name;
 
 				poshiName = poshiName.replaceAll("\\[", "_");
 				poshiName = poshiName.replaceAll("\\]", "_");
@@ -163,31 +162,33 @@ public class JenkinsPerformanceDataUtil {
 				sb.append("/");
 			}
 			else {
-				sb.append(name);
+				sb.append(_name);
 			}
 
-			URI uri = new URI(sb.toString());
+			URL urlObject = JenkinsResultsParserUtil.createURL(sb.toString());
 
-			url = uri.toASCIIString();
+			URI uri = urlObject.toURI();
+
+			_url = uri.toASCIIString();
 		}
 
-		protected String axis;
-		protected String batch;
-		protected String className;
-		protected float duration;
-		protected String name;
-		protected String status;
-		protected String url;
+		private String _axis;
+		private final String _batch;
+		private final String _className;
+		private final int _duration;
+		private final String _name;
+		private final String _status;
+		private String _url;
 
 	}
 
-	protected static List<Result> getLongestResults(
-			String buildName, JSONObject jobJSONObject, int resultCount)
+	private static List<Result> getSlowestResults(
+			String name, JSONObject jobJSONObject, int maxSize)
 		throws Exception {
 
 		JSONArray childReportsJSONArray = jobJSONObject.getJSONArray(
 			"childReports");
-		List<Result> resultList = new ArrayList<>();
+		List<Result> results = new ArrayList<>();
 
 		for (int i = 0; i < childReportsJSONArray.length(); i++) {
 			JSONObject childReportJSONObject =
@@ -196,10 +197,11 @@ public class JenkinsPerformanceDataUtil {
 			JSONObject childJSONObject = childReportJSONObject.getJSONObject(
 				"child");
 
-			JSONObject resultJSONObject = childReportJSONObject.getJSONObject(
-				"result");
+			JSONObject childResultJSONObject =
+				childReportJSONObject.getJSONObject("result");
 
-			JSONArray suitesJSONArray = resultJSONObject.getJSONArray("suites");
+			JSONArray suitesJSONArray = childResultJSONObject.getJSONArray(
+				"suites");
 
 			for (int j = 0; j < suitesJSONArray.length(); j++) {
 				JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(j);
@@ -211,26 +213,30 @@ public class JenkinsPerformanceDataUtil {
 					JSONObject caseJSONObject = casesJSONArray.getJSONObject(k);
 
 					Result result = new Result(
-						buildName, caseJSONObject, childJSONObject);
+						name, caseJSONObject, childJSONObject);
 
-					resultList.add(result);
+					results.add(result);
 				}
 			}
 		}
 
-		Collections.sort(resultList);
+		Collections.sort(results);
 
-		truncateList(resultList, resultCount);
+		truncate(results, maxSize);
 
-		return resultList;
+		return results;
 	}
 
-	protected static void truncateList(List<Result> list, int maxSize) {
-		while (list.size() > maxSize) {
-			list.remove(list.size() - 1);
+	private static void truncate(List<?> list, int maxSize) {
+		if (list.size() < maxSize) {
+			return;
 		}
+
+		List<?> subList = list.subList(maxSize, list.size());
+
+		subList.clear();
 	}
 
-	protected static final List<Result> resultsList = new ArrayList<>();
+	private static final List<Result> _results = new ArrayList<>();
 
 }

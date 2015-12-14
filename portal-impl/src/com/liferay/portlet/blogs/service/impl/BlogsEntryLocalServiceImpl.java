@@ -140,23 +140,23 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		BlogsEntry entry = getBlogsEntry(entryId);
+		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		String coverImageURL = StringPool.BLANK;
+		long coverImageFileEntryId = 0;
 
 		if (Validator.isNotNull(imageSelector.getImageURL())) {
-			entry.setSmallImageURL(imageSelector.getImageURL());
+			coverImageURL = imageSelector.getImageURL();
 		}
-		else if (ArrayUtil.isNotEmpty(imageSelector.getImageBytes())) {
-			long coverImageFileEntryId = addCoverImageFileEntry(
+		else if (imageSelector.getImageBytes() != null) {
+			coverImageFileEntryId = addCoverImageFileEntry(
 				entry.getUserId(), entry.getGroupId(), entryId, imageSelector);
-
-			entry.setCoverImageFileEntryId(coverImageFileEntryId);
-		}
-		else {
-			entry.setSmallImageURL(null);
-			entry.setCoverImageFileEntryId(0);
 		}
 
-		updateBlogsEntry(entry);
+		entry.setCoverImageURL(coverImageURL);
+		entry.setCoverImageFileEntryId(coverImageFileEntryId);
+
+		blogsEntryPersistence.update(entry);
 	}
 
 	@Override
@@ -459,26 +459,29 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		BlogsEntry entry = getBlogsEntry(entryId);
+		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		boolean smallImage = false;
+		long smallImageFileEntryId = 0;
+		String smallImageURL = StringPool.BLANK;
 
 		if (Validator.isNotNull(imageSelector.getImageURL())) {
-			entry.setSmallImage(true);
-			entry.setSmallImageURL(imageSelector.getImageURL());
+			smallImage = true;
+
+			smallImageURL = imageSelector.getImageURL();
 		}
-		else if (ArrayUtil.isNotEmpty(imageSelector.getImageBytes())) {
-			long smallImageFileEntryId = addSmallImageFileEntry(
+		else if (imageSelector.getImageBytes() != null) {
+			smallImage = true;
+
+			smallImageFileEntryId = addSmallImageFileEntry(
 				entry.getUserId(), entry.getGroupId(), entryId, imageSelector);
-
-			entry.setSmallImage(true);
-			entry.setSmallImageFileEntryId(smallImageFileEntryId);
-		}
-		else {
-			entry.setSmallImage(false);
-			entry.setSmallImageURL(StringPool.BLANK);
-			entry.setSmallImageFileEntryId(0);
 		}
 
-		updateBlogsEntry(entry);
+		entry.setSmallImage(smallImage);
+		entry.setSmallImageFileEntryId(smallImageFileEntryId);
+		entry.setSmallImageURL(smallImageURL);
+
+		blogsEntryPersistence.update(entry);
 	}
 
 	@Override

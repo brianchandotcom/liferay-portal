@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.wiki.notifications;
+package com.liferay.wiki.web.ratings.definition;
 
-import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
-import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+import com.liferay.portlet.ratings.RatingsType;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,15 +23,17 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Roberto Díaz
  */
-@Component(
-	immediate = true, property = {"javax.portlet.name=" + WikiPortletKeys.WIKI},
-	service = UserNotificationHandler.class
-)
-public class WikiUserNotificationHandler
-	extends BaseModelUserNotificationHandler {
+@Component(property = {"model.class.name=com.liferay.wiki.model.WikiPage"})
+public class WikiPortletRatingsDefinition implements PortletRatingsDefinition {
 
-	public WikiUserNotificationHandler() {
-		setPortletId(WikiPortletKeys.WIKI);
+	@Override
+	public RatingsType getDefaultRatingsType() {
+		return RatingsType.STARS;
+	}
+
+	@Override
+	public String getPortletId() {
+		return WikiPortletKeys.WIKI;
 	}
 
 }

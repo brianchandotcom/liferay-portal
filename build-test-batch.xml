@@ -1037,6 +1037,10 @@
 		</sequential>
 	</macrodef>
 
+	<target name="functional-jboss-eap-6.4-postgresql">
+		<run-functional-test app.server.type="jboss-eap-6.4" database.type="postgresql" />
+	</target>
+
 	<target name="functional-bundle-tomcat-mysql">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 

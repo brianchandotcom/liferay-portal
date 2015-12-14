@@ -24,10 +24,12 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
 %>
 
-<aui:a
-	cssClass="list-group-heading"
-	href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
-	label='<%= LanguageUtil.get(resourceBundle, "go-to-site") %>'
-/>
+<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isDisplaySiteLink() %>">
+	<aui:a
+		cssClass="list-group-heading"
+		href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
+		label='<%= LanguageUtil.get(resourceBundle, "go-to-site") %>'
+	/>
+</c:if>
 
 <liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />

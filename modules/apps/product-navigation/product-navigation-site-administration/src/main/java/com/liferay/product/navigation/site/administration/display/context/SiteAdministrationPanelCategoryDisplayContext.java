@@ -300,6 +300,16 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return _collapsedPanel;
 	}
 
+	public boolean isDisplaySiteLink() {
+		Group group = getGroup();
+
+		if (group.hasPrivateLayouts() || group.hasPublicLayouts()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSelectedSite() {
 		if (_selectedSite != null) {
 			return _selectedSite.booleanValue();

@@ -40,7 +40,7 @@ ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language",
 	</div>
 </div>
 
-<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler collapse-icon <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" role="button">
+<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler collapse-icon <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" role="button">
 	<div>
 		<div class="toolbar-group-field">
 			<c:choose>
@@ -89,8 +89,8 @@ ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language",
 	var popOver = new A.Popover(
 		{
 			align: {
-				node: trigger,
-				points:[A.WidgetPositionAlign.LC, A.WidgetPositionAlign.RC]
+				node: '#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler',
+				points:[A.WidgetPositionAlign.LT, A.WidgetPositionAlign.RT]
 			},
 			bodyContent: A.one('#<portlet:namespace/>siteSelectorContent'),
 			cssClass: 'product-menu',
@@ -107,16 +107,10 @@ ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language",
 				}
 			],
 			position: 'left',
+			trigger: trigger,
 			visible: false,
 			width: 300,
 			zIndex: Liferay.zIndex.TOOLTIP
 		}
 	).render();
-
-	trigger.on(
-		'click',
-		function() {
-			popOver.set('visible', !popOver.get('visible'));
-		}
-	);
 </aui:script>

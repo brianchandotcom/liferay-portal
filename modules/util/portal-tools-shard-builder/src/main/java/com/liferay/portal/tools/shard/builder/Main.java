@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.shard.builder;
 
+import com.beust.jcommander.JCommander;
+
 import com.liferay.portal.tools.shard.builder.exporter.ShardExporter;
 import com.liferay.portal.tools.shard.builder.exporter.ShardExporterFactory;
 import com.liferay.portal.tools.shard.builder.exporter.context.ExportContext;
@@ -32,19 +34,20 @@ import java.util.Properties;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		_validate(args);
+		MainParameters mainParameters = _validate(args);
 
-		Properties databaseProperties = PropsReader.read(args[0]);
+		Properties databaseProperties = PropsReader.read(
+			mainParameters.getDatabaseProperties());
 
 		ShardExporter shardExporter = ShardExporterFactory.getShardExporter(
 			databaseProperties);
 
-		String schema = args[1];
+		String schema = mainParameters.getSchemaName();
 
 		List<Long> companyIds = Arrays.asList(
-			new Long[] {Long.parseLong(args[2])});
+			new Long[] {Long.parseLong(mainParameters.getCompanies())});
 
-		String outputFolder = args[3];
+		String outputFolder = mainParameters.getOutputDir();
 
 		ExportContext exportContext = new ExportContext(
 			companyIds, outputFolder, schema);
@@ -52,20 +55,33 @@ public class Main {
 		shardExporter.export(exportContext);
 	}
 
-	private static void _validate(String[] args) throws Exception {
+	private static MainParameters _validate(String[] args) throws Exception {
+		MainParameters mainParameters = new MainParameters();
+
 		if ((args == null) || (args.length == 0)) {
 			throw new IllegalArgumentException("Arguments cannot be null");
 		}
 
-		if (args.length != 4) {
-			throw new IllegalArgumentException(
-				"Only four argument can be passed: 1) database properties " +
-					"file, 2) name of the schema to export, 3) ID of the " +
-					"company to export, and 4) target folder where the " +
-					"inserts for a schema will be written");
+		new JCommander(mainParameters, args);
+
+		String companies = mainParameters.getCompanies();
+		String databaseProperties = mainParameters.getDatabaseProperties();
+		String outputDir = mainParameters.getOutputDir();
+		String schemaName = mainParameters.getSchemaName();
+
+		if ((companies == null) || (databaseProperties == null) ||
+			(outputDir == null) || (schemaName == null)) {
+
+			throw new IllegalArgumentException(mainParameters.usage());
 		}
 
-		File propertiesFile = new File(args[0]);
+		if (companies.isEmpty() || databaseProperties.isEmpty() ||
+			outputDir.isEmpty() || schemaName.isEmpty()) {
+
+			throw new IllegalArgumentException(mainParameters.usage());
+		}
+
+		File propertiesFile = new File(databaseProperties);
 
 		if (!propertiesFile.exists()) {
 			throw new FileNotFoundException(
@@ -73,14 +89,14 @@ public class Main {
 		}
 
 		try {
-			Long.parseLong(args[2]);
+			Long.parseLong(companies);
 		}
 		catch (NumberFormatException nfe) {
 			throw new IllegalArgumentException(
 				"CompanyID is not a valid number");
 		}
 
-		File folder = new File(args[3]);
+		File folder = new File(outputDir);
 
 		if (!folder.exists()) {
 			throw new FileNotFoundException("Output directory does not exist");
@@ -89,6 +105,8 @@ public class Main {
 		if (!folder.canRead() || !folder.canWrite()) {
 			throw new IllegalArgumentException("Output directory is read-only");
 		}
+
+		return mainParameters;
 	}
 
 }

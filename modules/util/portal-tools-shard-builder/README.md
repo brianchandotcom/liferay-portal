@@ -18,12 +18,13 @@ Once classpath its satisfied, you must provide **four arguments** to the tool:
 So the command to execute the tool should be similar to this:
 
 ```
-java -classpath PATH-TO-LIBS -jar /PATH-TO-TOOL/com.liferay.portal.tools.shard.builder-1.0.0.jar PATH-TO-DB-PROPERTIES SCHEMA_NAME COMPANY_ID OUTPUT-DIR
+java -classpath PATH-TO-LIBS -jar /PATH-TO-TOOL/com.liferay.portal.tools.shard.builder-1.0.0.jar [-P|--properties] PATH-TO-DB-PROPERTIES [-S|--schema-name] SCHEMA_NAME [-C|--companies] COMMA-SEPARATED-COMPANY_IDS [-O|--output-dir] OUTPUT-DIR
 ```
 
 An example for the execution of the tool, using MySQL as DB provider, could be:
 ```
-java -classpath /opt/jdbc-drivers -jar com.liferay.portal.tools.shard.builder-1.0.0.jar ~/shardingTool/mysql.properties lportal 20156 /tmp
+java -classpath /opt/jdbc-drivers -jar com.liferay.portal.tools.shard.builder-1.0.0.jar -P ~/shardingTool/mysql.properties -S lportal -C 20156 -O /tmp
+java -classpath /opt/jdbc-drivers -jar com.liferay.portal.tools.shard.builder-1.0.0.jar --properties ~/shardingTool/mysql.properties --schema-name lportal --companies 20156 --output-dir /tmp
 ```
 
 ## Testing

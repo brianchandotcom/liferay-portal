@@ -45,8 +45,8 @@ public class MainTest {
 	@Test(expected = FileNotFoundException.class)
 	public void testValidateNonExistingDatabaseFile() throws Exception {
 		String[] args = {
-			"foobar.properties", _DEFAULT_SCHEMA_NAME, _DEFAULT_COMPANY_ID,
-			"neverMindPath"
+			"-P", "foobar.properties", "-S", _DEFAULT_SCHEMA_NAME, "-C",
+			_DEFAULT_COMPANY_ID, "-O", "neverMindPath"
 		};
 
 		Main.main(args);
@@ -57,7 +57,8 @@ public class MainTest {
 		URL url = getClass().getResource("/mysql.properties");
 
 		String[] args = {
-			url.getFile(), _DEFAULT_SCHEMA_NAME, _DEFAULT_COMPANY_ID, "foo"
+			"-P", url.getFile(), "-S", _DEFAULT_SCHEMA_NAME, "-C",
+			_DEFAULT_COMPANY_ID, "-O", "foo"
 		};
 
 		Main.main(args);
@@ -68,7 +69,8 @@ public class MainTest {
 		URL url = getClass().getResource("/mysql.properties");
 
 		String[] args = {
-			url.getFile(), _DEFAULT_SCHEMA_NAME, "foo", "neverMindPath"
+			"-P", url.getFile(), "-S", _DEFAULT_SCHEMA_NAME, "-C", "foo", "-O",
+			"neverMindPath"
 		};
 
 		try {
@@ -106,8 +108,8 @@ public class MainTest {
 		readOnlyFolder.setWritable(false);
 
 		String[] args = {
-			url.getFile(), _DEFAULT_SCHEMA_NAME, _DEFAULT_COMPANY_ID,
-			readOnlyFolder.getAbsolutePath()
+			"-P", url.getFile(), "-S", _DEFAULT_SCHEMA_NAME, "-C",
+			_DEFAULT_COMPANY_ID, "-O", readOnlyFolder.getAbsolutePath()
 		};
 
 		try {
@@ -118,24 +120,6 @@ public class MainTest {
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
 				"Output directory is read-only", iae.getMessage());
-		}
-	}
-
-	@Test
-	public void testValidateWrongNumberOfArguments() throws Exception {
-		String expectedMessage =
-			"Only four argument can be passed: 1) database properties " +
-			"file, 2) name of the schema to export, 3) ID of the " +
-			"company to export, and 4) target folder where the " +
-			"inserts for a schema will be written";
-
-		try {
-			Main.main(new String[5]);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals(expectedMessage, iae.getMessage());
 		}
 	}
 

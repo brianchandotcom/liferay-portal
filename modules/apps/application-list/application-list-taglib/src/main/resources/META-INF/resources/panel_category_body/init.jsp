@@ -14,11 +14,10 @@
  */
 --%>
 
-<%@ include file="/panel_category/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<liferay-application-list:panel-category-body panelApps="<%= panelApps %>" panelCategory="<%= panelCategory %>" />
-
-<c:if test="<%= !panelApps.isEmpty() && showHeader %>">
-		</div>
-	</div>
-</c:if>
+<%
+String id = (String)request.getAttribute("liferay-application-list:panel-category-body:id");
+List<PanelApp> panelApps = (List<PanelApp>)request.getAttribute("liferay-application-list:panel-category-body:panelApps");
+PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-application-list:panel-category-body:panelCategory");
+%>

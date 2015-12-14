@@ -29,12 +29,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.test.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import java.io.InputStream;
@@ -82,8 +82,9 @@ public class BlogsEntryStagedModelDataHandlerTest
 		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
 			entry.getUuid(), liveGroup);
 
-		FileEntry coverImageFileEntry = DLAppLocalServiceUtil.getFileEntry(
-			importedEntry.getCoverImageFileEntryId());
+		FileEntry coverImageFileEntry =
+			PortletFileRepositoryUtil.getPortletFileEntry(
+				importedEntry.getCoverImageFileEntryId());
 
 		Folder coverImageFileEntryFolder = coverImageFileEntry.getFolder();
 
@@ -113,8 +114,9 @@ public class BlogsEntryStagedModelDataHandlerTest
 		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
 			entry.getUuid(), liveGroup);
 
-		FileEntry smallImageFileEntry = DLAppLocalServiceUtil.getFileEntry(
-			importedEntry.getSmallImageFileEntryId());
+		FileEntry smallImageFileEntry =
+			PortletFileRepositoryUtil.getPortletFileEntry(
+				importedEntry.getSmallImageFileEntryId());
 
 		Folder smallImageFileEntryFolder = smallImageFileEntry.getFolder();
 
@@ -180,7 +182,9 @@ public class BlogsEntryStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group, TestPropsValues.getUserId());
 
-		return addBlogsEntry(null, null, serviceContext);
+		return BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override
@@ -193,7 +197,9 @@ public class BlogsEntryStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group, TestPropsValues.getUserId());
 
-		BlogsEntry approvedEntry = addBlogsEntry(null, null, serviceContext);
+		BlogsEntry approvedEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		stagedModels.add(approvedEntry);
 

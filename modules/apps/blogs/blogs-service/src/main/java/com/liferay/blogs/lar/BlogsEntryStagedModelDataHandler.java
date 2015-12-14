@@ -120,10 +120,7 @@ public class BlogsEntryStagedModelDataHandler
 			Image smallImage = _imageLocalService.fetchImage(
 				entry.getSmallImageId());
 
-			if (Validator.isNotNull(entry.getSmallImageURL())) {
-				entry.setSmallImageURL(entry.getSmallImageURL());
-			}
-			else if (smallImage != null) {
+			if (smallImage != null) {
 				String smallImagePath = ExportImportPathUtil.getModelPath(
 					entry,
 					smallImage.getImageId() + StringPool.PERIOD +

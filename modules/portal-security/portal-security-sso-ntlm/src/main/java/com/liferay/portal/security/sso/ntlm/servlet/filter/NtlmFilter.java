@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  * At this stage, the Authorization request header has been received, but
  * the 8th byte is not equal to <code>1</code>, and a nonce was previously
  * associated with the HTTP session (see case 1). This means that the client has
- * now sent its username, domain, workstation name and the result of encrypting
+ * now sent its username, domain, workstation name, and the result of encrypting
  * the hashed password with the NONCE. This is sent in the Authorization header.
  * This is known as a type 3 message. This is now authenticated against the
  * configured Domain Controller by passing it the type 3 message together with

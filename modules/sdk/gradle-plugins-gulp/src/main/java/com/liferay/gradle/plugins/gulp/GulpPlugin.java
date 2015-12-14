@@ -82,7 +82,7 @@ public class GulpPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return gulpExtension.getGulpVersion();
+					return gulpExtension.getVersion();
 				}
 
 			});

@@ -26,14 +26,14 @@ public class GulpExtension {
 	public GulpExtension(Project project) {
 	}
 
-	public String getGulpVersion() {
-		return GradleUtil.toString(_gulpVersion);
+	public String getVersion() {
+		return GradleUtil.toString(_version);
 	}
 
-	public void setGulpVersion(Object gulpVersion) {
-		_gulpVersion = gulpVersion;
+	public void setVersion(Object version) {
+		_version = version;
 	}
 
-	private Object _gulpVersion = "3.9.0";
+	private Object _version = "3.9.0";
 
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.v7_0_0.util.ClassNameTable;
 import com.liferay.portal.upgrade.v7_0_0.util.ClusterGroupTable;
@@ -65,22 +66,10 @@ public class UpgradeSharding extends UpgradeProcess {
 		String defaultShardName = PropsUtil.get("shard.default.name");
 
 		if (Validator.isNull(defaultShardName)) {
-			StringBuilder sb = new StringBuilder(shardNames.size());
-
-			for (int i = 0; i < shardNames.size(); i++) {
-				String shardName = shardNames.get(i);
-
-				sb.append(shardName);
-
-				if (i < (shardNames.size() - 1)) {
-					sb.append(", ");
-				}
-			}
-
 			throw new RuntimeException(
 				"The property \"shard.default.name\" is not set in " +
 					"portal.properties. Please use your default shard name " +
-					"from this list: " + sb.toString());
+					"from this list: " + StringUtil.merge(shardNames));
 		}
 
 		for (String shardName : shardNames) {

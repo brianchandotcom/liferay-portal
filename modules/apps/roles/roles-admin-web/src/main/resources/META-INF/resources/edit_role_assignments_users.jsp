@@ -26,63 +26,52 @@ Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
 %>
 
-<aui:input name="addGroupIds" type="hidden" />
-<aui:input name="removeGroupIds" type="hidden" />
+<aui:input name="addUserIds" type="hidden" />
+<aui:input name="removeUserIds" type="hidden" />
 
-<liferay-ui:tabs
-	names="current,available"
-	param="tabs3"
-	url="<%= portletURL.toString() %>"
-/>
+<liferay-ui:membership-policy-error />
 
 <liferay-ui:search-container
-	rowChecker="<%= new UserGroupRoleChecker(renderResponse, role) %>"
-	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
+	rowChecker="<%= new UserRoleChecker(renderResponse, role) %>"
+	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
+	var="userSearchContainer"
 >
-	<liferay-ui:input-search />
 
 	<%
-	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
+	UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
 
-	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
+	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	if (tabs3.equals("current")) {
-		userGroupParams.put("userGroupsRoles", Long.valueOf(role.getRoleId()));
+		userParams.put("usersRoles", Long.valueOf(role.getRoleId()));
 	}
 	%>
 
-	<liferay-ui:user-group-search-container-results
-		searchTerms="<%= searchTerms %>"
-		useIndexer="<%= false %>"
-		userGroupParams="<%= userGroupParams %>"
-	/>
+	<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.UserGroup"
+		className="com.liferay.portal.model.User"
 		escapedModel="<%= true %>"
-		keyProperty="group.groupId"
-		modelVar="userGroup"
+		keyProperty="userId"
+		modelVar="user2"
+		rowIdProperty="screenName"
 	>
 		<liferay-ui:search-container-column-text
 			name="name"
-			orderable="<%= true %>"
-			property="name"
+			property="fullName"
 		/>
 
 		<liferay-ui:search-container-column-text
-			name="description"
-			orderable="<%= true %>"
-			property="description"
+			name="screen-name"
+			property="screenName"
 		/>
 	</liferay-ui:search-container-row>
 
-	<div class="separator"><!-- --></div>
-
 	<%
-	String taglibOnClick = renderResponse.getNamespace() + "updateRoleGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+	String taglibOnClick = renderResponse.getNamespace() + "updateRoleUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 	%>
 
 	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

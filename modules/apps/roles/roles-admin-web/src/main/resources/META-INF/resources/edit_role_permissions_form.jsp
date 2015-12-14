@@ -122,7 +122,7 @@ if (Validator.isNotNull(portletResource)) {
 	<c:if test="<%= portletResource.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATE) %>">
 		<h4><liferay-ui:message key="related-application-permissions" /></h4>
 
-		<div>
+		<div class="related-permissions">
 
 			<%
 			Set<String> relatedPortletResources = new HashSet<String>();
@@ -202,7 +202,7 @@ if (Validator.isNotNull(portletResource)) {
 
 			<aui:input name="relatedPortletResources" type="hidden" value="<%= StringUtil.merge(relatedPortletResources) %>" />
 
-			<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 
 		</div>
 	</c:if>

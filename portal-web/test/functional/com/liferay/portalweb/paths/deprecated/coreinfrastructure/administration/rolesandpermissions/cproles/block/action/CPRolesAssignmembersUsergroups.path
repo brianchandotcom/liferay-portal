@@ -38,7 +38,32 @@
 	<td>//button[contains(.,'Update Associations')]</td>
 	<td></td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MANAGEMENT_BAR-->
+<tr>
+	<td>MANAGEMENT_BAR_STATUS_AVAILABLE</td>
+	<td>//div[contains(@class,'management-bar-container')]//ul[@class='dropdown-menu']//a[contains(.,'Available')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGEMENT_BAR_STATUS_CURRENT</td>
+	<td>//div[contains(@class,'management-bar-container')]//ul[@class='dropdown-menu']//a[contains(.,'Current')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGEMENT_BAR_STATUS_DROPDOWN</td>
+	<td>//div[contains(@class,'management-bar-container')]//a[contains(@class,'dropdown-toggle') and contains(.,'Current') or contains(.,'Available')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SEARCH-->
 <tr>
 	<td>SEARCH_FIELD</td>

@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="AssertClick" locator1="NavBar#ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />
@@ -126,18 +126,28 @@
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
+
 		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertClick#assertTextClickAtWaitForLastScript" locator1="NavTab#AVAILABLE" value1="Available" />
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsergroups#MANAGEMENT_BAR_STATUS_DROPDOWN" value1="Current" />
+
+		<execute function="AssertClick" locator1="CPRolesAssignmembersUsergroups#MANAGEMENT_BAR_STATUS_AVAILABLE" value1="Available" />
+
+		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
+
 		<execute function="AssertTextEquals" locator1="RolesAssignMembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="Check" locator1="RolesAssignMembers#USER_TABLE_CHECKBOX" />
+
 		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertChecked" locator1="RolesAssignMembers#USER_TABLE_CHECKBOX" />
 	</command>
@@ -153,6 +163,7 @@
 			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="remove" value="${remove}" />
 			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
 			<var name="roleUser" value="${roleUser}" />
 			<var name="siteNameScope" value="${siteNameScope}" />
 		</execute>
@@ -162,6 +173,7 @@
 		<execute macro="Role#definePermissionCmdCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
 			<var name="roleUser" value="${roleUser}" />
 		</execute>
 
@@ -194,7 +206,7 @@
 	<command name="deleteCP">
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Name" />
 
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_roleName" value="${roleName}" />
 
@@ -247,8 +259,25 @@
 	<command name="editPermissionCmdCP">
 		<var name="key_roleName" value="${roleName}" />
 
+		<if>
+			<equals arg1="${roleType}" arg2="Organization" />
+			<then>
+				<execute function="AssertClick" locator1="MenuItem#ORGANIZATION_ROLES" value1="Organization Roles" />
+			</then>
+			<elseif>
+				<equals arg1="${roleType}" arg2="Site" />
+				<then>
+					<execute function="AssertClick" locator1="MenuItem#SITE_ROLES" value1="Site Roles" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="AssertClick" locator1="MenuItem#REGULAR_ROLES" value1="Regular Roles" />
+			</else>
+		</if>
+
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<if>
 			<isset var="roleUser" />
@@ -681,6 +710,7 @@
 			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="remove" value="true" />
 			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
 			<var name="roleUser" value="${roleUser}" />
 			<var name="siteNameScope" value="${siteNameScope}" />
 		</execute>
@@ -815,23 +845,40 @@
 	</command>
 
 	<command name="viewCP">
+		<if>
+			<equals arg1="${roleType}" arg2="Organization" />
+			<then>
+				<execute function="AssertClick" locator1="MenuItem#ORGANIZATION_ROLES" value1="Organization Roles" />
+			</then>
+			<elseif>
+				<equals arg1="${roleType}" arg2="Site" />
+				<then>
+					<execute function="AssertClick" locator1="MenuItem#SITE_ROLES" value1="Site Roles" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="AssertClick" locator1="MenuItem#REGULAR_ROLES" value1="Regular Roles" />
+			</else>
+		</if>
+
 		<var name="key_roleName" value="${roleName}" />
 
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 		<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_TITLE" value1="${roleName}" />
 		<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_TYPE" value1="${roleType}" />
+
 		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${roleName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${roleName}" />
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${roleName}" />
 	</command>
 
 	<command name="viewDefaultCP">
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Name" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
-		<execute function="AssertTextEquals" locator1="CPRoles#INFO_MESSAGE" value1="No roles were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No roles were found." />
 	</command>
 
 	<command name="viewNoXSSCP">

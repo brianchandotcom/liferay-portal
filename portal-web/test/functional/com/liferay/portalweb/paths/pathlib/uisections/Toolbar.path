@@ -33,6 +33,11 @@
 	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Sort By']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MANAGEMENT_BAR-->
 <tr>
 	<td>MANAGEMENT_BAR_CANCEL_CHECKOUT_ICON_BUTTON</td>

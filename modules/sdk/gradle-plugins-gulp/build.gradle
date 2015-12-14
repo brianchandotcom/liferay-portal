@@ -1,0 +1,4 @@
+dependencies {
+	compile gradleApi()
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "1.0.8"
+}

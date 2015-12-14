@@ -1,0 +1,23 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "latest.release"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "java"
+
+apply plugin: "com.liferay.gulp"
+
+task gulpDeploy(type: 'GulpTask') {
+	dependsOn downloadGulp
+
+	gulpCommand = "deploy"
+}

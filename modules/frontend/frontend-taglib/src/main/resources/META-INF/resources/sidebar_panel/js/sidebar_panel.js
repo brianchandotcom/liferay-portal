@@ -63,12 +63,10 @@ AUI.add(
 					_onRowToggled: function(event) {
 						var instance = this;
 
-						var allSelectedElements = event.elements.allSelectedElements;
-
 						A.io.request(
 							instance.get('resourceUrl'),
 							{
-								data: allSelectedElements,
+								form: instance._searchContainer.getForm().getDOM(),
 								on: {
 									success: function(event, id, xhr) {
 										var response = xhr.responseText;

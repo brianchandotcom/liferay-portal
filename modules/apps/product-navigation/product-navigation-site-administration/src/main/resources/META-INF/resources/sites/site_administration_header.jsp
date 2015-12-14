@@ -20,9 +20,11 @@
 SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDisplayContext = new SiteAdministrationPanelCategoryDisplayContext(liferayPortletRequest, liferayPortletResponse, null);
 
 PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getPanelCategory();
+
+ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
 %>
 
-<aui:a cssClass="icon-monospaced icon-sites" href="javascript:;" id="manageSitesLink" title="go-to-other-site">
+<aui:a cssClass="icon-monospaced icon-sites" href="javascript:;" id="manageSitesLink" title='<%= LanguageUtil.get(resourceBundle, "go-to-other-site") %>'>
 	<aui:icon image="sites" markupView="lexicon" />
 </aui:a>
 
@@ -31,11 +33,6 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 		<liferay-util:include page="/sites/my_sites.jsp" servletContext="<%= application %>" />
 
 		<c:if test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getManageSitesURL()) %>">
-
-			<%
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
-			%>
-
 			<div class="manage-sites-link">
 				<aui:icon image="sites" label='<%= LanguageUtil.get(resourceBundle, "manage-sites") %>' markupView="lexicon" url="<%= siteAdministrationPanelCategoryDisplayContext.getManageSitesURL() %>" />
 			</div>

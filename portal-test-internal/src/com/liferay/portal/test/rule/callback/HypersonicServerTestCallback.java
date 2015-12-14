@@ -17,6 +17,8 @@ package com.liferay.portal.test.rule.callback;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -114,20 +116,13 @@ public class HypersonicServerTestCallback
 
 		};
 
-		Path hsqlHomePath = Paths.get(_HSQL_HOME);
+		try (Connection connection = DriverManager.getConnection(
+				PropsValues.JDBC_DEFAULT_URL, "sa", "");
+			Statement statement = connection.createStatement()) {
 
-		Files.createDirectories(hsqlHomePath);
-
-		Path hsqlHomeTempPath = Paths.get(_HSQL_TEMP);
-
-		deleteFolder(hsqlHomeTempPath);
-
-		copyFile(_databaseName.concat(".log"), hsqlHomePath, hsqlHomeTempPath);
-		copyFile(
-			_databaseName.concat(".properties"), hsqlHomePath,
-			hsqlHomeTempPath);
-		copyFile(
-			_databaseName.concat(".script"), hsqlHomePath, hsqlHomeTempPath);
+			statement.execute(
+				"BACKUP DATABASE TO '" + _HSQL_TEMP + "' BLOCKING AS FILES");
+		}
 
 		server.setErrWriter(
 			new UnsyncPrintWriter(

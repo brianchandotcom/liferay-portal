@@ -34,8 +34,7 @@ public class JenkinsPerformanceDataUtil {
 		return _results;
 	}
 
-	public static void processPerformanceData(
-			String job, String url, int size)
+	public static void processPerformanceData(String job, String url, int size)
 		throws Exception {
 
 		JSONObject jsonObject;
@@ -65,16 +64,6 @@ public class JenkinsPerformanceDataUtil {
 
 	public static class Result implements Comparable<Result> {
 
-		public Result(String job, JSONObject sourceJSONObject) throws Exception {
-			_axis = "";
-			_className = "";
-			_duration = sourceJSONObject.getInt("duration") / 1000;
-			_job = job;
-			_name = sourceJSONObject.getString("fullDisplayName");
-			_status = sourceJSONObject.getString("result");
-			_url = sourceJSONObject.getString("url");
-		}
-
 		public Result(
 				JSONObject caseJSONObject, JSONObject childJSONObject,
 				String job)
@@ -88,6 +77,18 @@ public class JenkinsPerformanceDataUtil {
 
 			setAxis(childJSONObject);
 			setUrl(childJSONObject);
+		}
+
+		public Result(String job, JSONObject sourceJSONObject)
+			throws Exception {
+
+			_axis = "";
+			_className = "";
+			_duration = sourceJSONObject.getInt("duration") / 1000;
+			_job = job;
+			_name = sourceJSONObject.getString("fullDisplayName");
+			_status = sourceJSONObject.getString("result");
+			_url = sourceJSONObject.getString("url");
 		}
 
 		public int compareTo(Result result) {

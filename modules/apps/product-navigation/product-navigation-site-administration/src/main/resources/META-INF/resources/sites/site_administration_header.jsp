@@ -24,7 +24,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
 %>
 
-<aui:a cssClass="icon-monospaced icon-sites" href="javascript:;" id="manageSitesLink" title='<%= LanguageUtil.get(resourceBundle, "go-to-other-site") %>'>
+<aui:a cssClass="icon-sites" href="javascript:;" id="manageSitesLink" title='<%= LanguageUtil.get(resourceBundle, "go-to-other-site") %>'>
 	<aui:icon image="sites" markupView="lexicon" />
 </aui:a>
 

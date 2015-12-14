@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Enables the Sign In portlet to process a OpenID login attempt. When invoked,
+ * Enables the Sign In portlet to process an OpenID login attempt. When invoked,
  * the following steps are carried out.
  *
  * <ol>
@@ -107,7 +107,7 @@ import org.osgi.service.component.annotations.Reference;
  * steps repeat. Otherwise, ...
  * </li>
  * <li>
- * Generate a valid Liferay Portal user screen name based on their OpenID
+ * Generate a valid Liferay Portal user screen name based on the OpenID
  * and search for an existing Liferay Portal user with a matching screen name.
  * If found, then update the Liferay Portal user’s OpenID to match and redirect
  * the browser to the OpenID authentication request URL. Otherwise, ...
@@ -132,7 +132,8 @@ import org.osgi.service.component.annotations.Reference;
  * </li>
  * <li>
  * The attributes are used to create a Liferay Portal user and the HTTP
- * session attribute OPEN_ID_LOGIN is set equal to the Liferay Portal user's ID.
+ * session attribute <code>OPEN_ID_LOGIN</code> is set equal to the Liferay
+ * Portal user's ID.
  * </li>
  * </ol>
  *

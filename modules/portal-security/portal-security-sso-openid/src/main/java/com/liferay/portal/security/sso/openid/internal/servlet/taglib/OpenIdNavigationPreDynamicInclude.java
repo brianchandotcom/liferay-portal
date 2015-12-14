@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * When Liferay's Sign In portlet is requested, this component checks if OpenID
  * authentication has been enabled for the portal instance being accessed and,
- * if so, adds an Open ID link to the Sign In portlet for triggering the
+ * if so, adds an OpenID link to the Sign In portlet for triggering the
  * authentication process.
  *
  * @author Michael C. Han

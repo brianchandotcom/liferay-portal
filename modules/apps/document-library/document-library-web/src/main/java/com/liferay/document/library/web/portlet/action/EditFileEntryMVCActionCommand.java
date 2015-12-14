@@ -66,6 +66,7 @@ import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
+import com.liferay.portlet.documentlibrary.FileEntryLockException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 import com.liferay.portlet.documentlibrary.FileNameException;
@@ -838,6 +839,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		else if (e instanceof DuplicateLockException ||
+				 e instanceof FileEntryLockException.MustOwnLock ||
 				 e instanceof InvalidFileVersionException ||
 				 e instanceof NoSuchFileEntryException ||
 				 e instanceof PrincipalException) {

@@ -30,9 +30,11 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -109,6 +111,47 @@ public class BlogsEntryStagedModelDataHandlerTest
 	@Override
 	protected boolean isCommentableStagedModel() {
 		return true;
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		BlogsEntry entry = (BlogsEntry)stagedModel;
+		BlogsEntry importedEntry = (BlogsEntry)importedStagedModel;
+
+		Assert.assertEquals(entry.getTitle(), importedEntry.getTitle());
+		Assert.assertEquals(entry.getSubtitle(), importedEntry.getSubtitle());
+		Assert.assertEquals(entry.getUrlTitle(), importedEntry.getUrlTitle());
+		Assert.assertEquals(
+			entry.getDescription(), importedEntry.getDescription());
+
+		Calendar displayDateCalendar = Calendar.getInstance();
+		Calendar importedDisplayDateCalendar = Calendar.getInstance();
+
+		displayDateCalendar.setTime(entry.getDisplayDate());
+		importedDisplayDateCalendar.setTime(importedEntry.getDisplayDate());
+
+		displayDateCalendar.set(Calendar.SECOND, 0);
+		displayDateCalendar.set(Calendar.MILLISECOND, 0);
+
+		importedDisplayDateCalendar.set(Calendar.SECOND, 0);
+		importedDisplayDateCalendar.set(Calendar.MILLISECOND, 0);
+
+		Assert.assertEquals(displayDateCalendar, importedDisplayDateCalendar);
+
+		Assert.assertEquals(
+			entry.isAllowPingbacks(), importedEntry.isAllowPingbacks());
+		Assert.assertEquals(
+			entry.isAllowTrackbacks(), importedEntry.isAllowTrackbacks());
+		Assert.assertEquals(
+			entry.getTrackbacks().trim(), importedEntry.getTrackbacks().trim());
+		Assert.assertEquals(
+			entry.getCoverImageCaption(), importedEntry.getCoverImageCaption());
+		Assert.assertEquals(entry.isSmallImage(), importedEntry.isSmallImage());
 	}
 
 }

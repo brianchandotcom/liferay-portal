@@ -69,7 +69,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		FileEntry imageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntry(blogsEntry));
+				getImageFileEntryId(blogsEntry));
 
 		Assert.assertEquals("image1.jpg", imageFileEntry.getTitle());
 	}
@@ -80,7 +80,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		FileEntry imageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntry(blogsEntry));
+				getImageFileEntryId(blogsEntry));
 
 		Assert.assertEquals("image1.jpg", imageFileEntry.getTitle());
 	}
@@ -91,7 +91,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		FileEntry imageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntry(blogsEntry));
+				getImageFileEntryId(blogsEntry));
 
 		BlogsEntryLocalServiceUtil.deleteEntry(blogsEntry);
 
@@ -107,14 +107,14 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		FileEntry imageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntry(blogsEntry));
+				getImageFileEntryId(blogsEntry));
 
 		ImageSelector imageSelector = new ImageSelector(
 			null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 
 		blogsEntry = updateBlogsEntry(blogsEntry.getEntryId(), imageSelector);
 
-		Assert.assertEquals(0, getImageFileEntry(blogsEntry));
+		Assert.assertEquals(0, getImageFileEntryId(blogsEntry));
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
 			imageFileEntry.getFileEntryId());
@@ -128,14 +128,14 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		FileEntry imageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntry(blogsEntry));
+				getImageFileEntryId(blogsEntry));
 
 		ImageSelector imageSelector = null;
 
 		blogsEntry = updateBlogsEntry(blogsEntry.getEntryId(), imageSelector);
 
 		Assert.assertEquals(
-			imageFileEntry.getFileEntryId(), getImageFileEntry(blogsEntry));
+			imageFileEntry.getFileEntryId(), getImageFileEntryId(blogsEntry));
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
 			imageFileEntry.getFileEntryId());
@@ -147,7 +147,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		FileEntry imageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntry(blogsEntry));
+				getImageFileEntryId(blogsEntry));
 
 		Repository repository = RepositoryLocalServiceUtil.getRepository(
 			imageFileEntry.getRepositoryId());
@@ -161,7 +161,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		FileEntry imageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntry(blogsEntry));
+				getImageFileEntryId(blogsEntry));
 
 		Folder imageFolder = imageFileEntry.getFolder();
 
@@ -175,7 +175,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		FileEntry imageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntry(blogsEntry));
+				getImageFileEntryId(blogsEntry));
 
 		updateBlogsEntry(blogsEntry.getEntryId(), "image2.jpg");
 
@@ -191,7 +191,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 
 		FileEntry imageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
-				getImageFileEntry(blogsEntry));
+				getImageFileEntryId(blogsEntry));
 
 		Assert.assertEquals("image2.jpg", imageFileEntry.getTitle());
 	}
@@ -223,7 +223,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 			MimeTypesUtil.getContentType(title), false);
 	}
 
-	protected abstract long getImageFileEntry(BlogsEntry blogsEntry);
+	protected abstract long getImageFileEntryId(BlogsEntry blogsEntry);
 
 	protected FileEntry getTempFileEntry(
 			long userId, String title, ServiceContext serviceContext)

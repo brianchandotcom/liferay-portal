@@ -88,8 +88,7 @@ public class PanelCategoryTag extends BasePanelTag {
 			panelAppRegistry, panelCategoryRegistry);
 
 		if (!_showOpen && !panelApps.isEmpty()) {
-			active = _panelCategory.isActive(
-				panelCategoryHelper, themeDisplay.getPpid());
+			active = _panelCategory.isActive(request, panelCategoryHelper);
 		}
 
 		request.setAttribute(

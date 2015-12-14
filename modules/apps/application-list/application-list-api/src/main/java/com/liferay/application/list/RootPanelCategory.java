@@ -86,7 +86,7 @@ public class RootPanelCategory implements PanelCategory {
 
 	@Override
 	public boolean isActive(
-		PanelCategoryHelper panelCategoryHelper, String ppid) {
+		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper) {
 
 		return false;
 	}

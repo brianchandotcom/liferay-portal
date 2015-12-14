@@ -44,6 +44,6 @@ public interface PanelCategory extends PanelEntry {
 		throws IOException;
 
 	public boolean isActive(
-		PanelCategoryHelper panelCategoryHelper, String ppid);
+		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper);
 
 }

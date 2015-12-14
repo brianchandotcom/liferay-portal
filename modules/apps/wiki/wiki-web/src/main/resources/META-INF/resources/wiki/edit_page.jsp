@@ -119,6 +119,17 @@ editPageURL.setParameter("title", title);
 if (Validator.isNull(redirect)) {
 	redirect = viewPageURL.toString();
 }
+
+String headerTitle = (node == null) ? LanguageUtil.get(request, "new-wiki-node") : node.getName();
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
 <liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
@@ -172,7 +183,7 @@ if (Validator.isNull(redirect)) {
 	<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 </portlet:renderURL>
 
-<div class="container-fluid-1280">
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<aui:form action="<%= editPageActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

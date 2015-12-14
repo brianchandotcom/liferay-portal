@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.calendar.upgrade.v1_0_0;
+package com.liferay.calendar.upgrade.v1_0_1;
 
-import com.liferay.calendar.upgrade.v1_0_0.util.CalendarBookingTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
-import java.sql.SQLException;
 
 /**
  * @author Bryan Engler
@@ -26,16 +23,13 @@ public class UpgradeCalendarBooking extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type CalendarBooking description TEXT null");
+		if (!tableHasColumn("CalendarBooking", "vEventUid")) {
+			runSQL("alter table CalendarBooking add vEventUid STRING null");
 		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				CalendarBookingTable.TABLE_NAME,
-				CalendarBookingTable.TABLE_COLUMNS,
-				CalendarBookingTable.TABLE_SQL_CREATE,
-				CalendarBookingTable.TABLE_SQL_ADD_INDEXES);
-		}
+
+		runSQL(
+			"update CalendarBooking set vEventUid = uuid_ where vEventUid is " +
+				"NULL or vEventUid = ''");
 	}
 
 }

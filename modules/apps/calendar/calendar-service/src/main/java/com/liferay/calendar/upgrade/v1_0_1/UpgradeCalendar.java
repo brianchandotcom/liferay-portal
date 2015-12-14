@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.upgrade.v1_0_0;
+package com.liferay.calendar.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -32,7 +32,7 @@ public class UpgradeCalendar extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!tableHasColumn("CalendarBooking", "vEventUid")) {
+		if (!tableHasColumn("Calendar", "timeZoneId")) {
 			runSQL("alter table Calendar add timeZoneId VARCHAR(75) null");
 		}
 

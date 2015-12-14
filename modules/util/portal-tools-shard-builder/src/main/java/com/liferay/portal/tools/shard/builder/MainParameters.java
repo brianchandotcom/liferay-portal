@@ -46,9 +46,13 @@ public class MainParameters {
 		return _schemaName;
 	}
 
+	public boolean isTableFiles() {
+		return _tableFiles;
+	}
+
 	public ExportContext toExportContext() {
 		return new ExportContext(
-			_getCompanyIds(), _outputDir, _schemaName);
+			_getCompanyIds(), _outputDir, _schemaName, _tableFiles);
 	}
 
 	private List<Long> _getCompanyIds() {
@@ -88,5 +92,11 @@ public class MainParameters {
 		validateWith = RequiredParamValidator.class
 	)
 	private String _schemaName;
+
+	@Parameter(
+		description = "Export tables to separated SQL files",
+		names = { "-T", "--tables" }
+	)
+	private boolean _tableFiles;
 
 }

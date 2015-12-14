@@ -53,16 +53,38 @@ public class ExportProcess {
 			ExportContext exportContext, boolean filterByCompanyId)
 		throws IOException {
 
-		for (String tableName : tableNames) {
-			String outputFileName =
-				exportContext.getSchemaName() + "-" + companyId + "-" + tableName +
-					".sql";
+		String tableType = "control";
 
-			File outputFile = new File(
-				exportContext.getOutputDirName(), outputFileName);
+		if (filterByCompanyId) {
+			tableType = "partitioned";
+		}
 
-			OutputStream outputStream = new BufferedOutputStream(
+		String outputFileName =
+			exportContext.getSchemaName() + "-" + companyId + "-" + tableType +
+				".sql";
+
+		File outputFile = new File(
+			exportContext.getOutputDirName(), outputFileName);
+
+		OutputStream outputStream = null;
+
+		if (!exportContext.isTableFiles()) {
+			outputStream = new BufferedOutputStream(
 				new FileOutputStream(outputFile));
+		}
+
+		for (String tableName : tableNames) {
+			if (exportContext.isTableFiles()) {
+				outputFileName =
+					exportContext.getSchemaName() + "-" + companyId + "-" +
+						tableName + ".sql";
+
+				outputFile = new File(
+					exportContext.getOutputDirName(), outputFileName);
+
+				outputStream = new BufferedOutputStream(
+					new FileOutputStream(outputFile));
+			}
 
 			if (filterByCompanyId) {
 				_dbExporter.write(companyId, tableName, outputStream);
@@ -72,6 +94,13 @@ public class ExportProcess {
 			}
 
 			outputStream.flush();
+
+			if (exportContext.isTableFiles()) {
+				outputStream.close();
+			}
+		}
+
+		if (!exportContext.isTableFiles()) {
 			outputStream.close();
 		}
 	}

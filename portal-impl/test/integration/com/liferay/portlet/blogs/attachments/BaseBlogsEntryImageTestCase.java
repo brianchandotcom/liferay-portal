@@ -223,7 +223,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 			MimeTypesUtil.getContentType(title), false);
 	}
 
-	protected abstract long getImageFileEntry(BlogsEntry blogsEntry);
+	protected abstract long getImageFileEntryId(BlogsEntry blogsEntry);
 
 	protected FileEntry getTempFileEntry(
 			long userId, String title, ServiceContext serviceContext)

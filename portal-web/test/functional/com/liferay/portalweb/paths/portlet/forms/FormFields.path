@@ -38,6 +38,11 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>HIDDEN_LABEL</td>
+	<td>xpath=(//div[contains(@class,'form-field-container')][2]//label[contains(.,'${key_fieldLabelHidden}')])</td>
+	<td></td>
+</tr>
 <!--CHECKBOX-->
 <tr>
 	<td>CHECKBOX</td>

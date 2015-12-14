@@ -103,7 +103,10 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 		showParentGroups="<%= false %>"
 	/>
 
-	<liferay-ui:search-container>
+	<liferay-ui:search-container
+		id="bundles"
+		iteratorURL="<%= portletURL %>"
+	>
 		<liferay-ui:search-container-results>
 
 			<%

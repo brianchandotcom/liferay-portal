@@ -38,12 +38,12 @@ String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "order-by-col", orderByCol);
-	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "order-by-type", orderByType);
+	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", orderByCol);
+	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", orderByType);
 }
 else {
-	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "order-by-col", "name");
-	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "order-by-type", "asc");
+	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", "name");
+	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", "asc");
 }
 
 request.setAttribute("view.jsp-orderByCol", orderByCol);

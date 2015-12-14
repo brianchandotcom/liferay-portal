@@ -36,9 +36,10 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Tomas Polesovsky
  */
-@Component(immediate = true, property = {
-		"portal.settings.authentication.tabs.name=cas"
-	}, service = DynamicInclude.class)
+@Component(
+	immediate = true, property = {"portal.settings.authentication.tabs.name=cas"},
+	service = DynamicInclude.class
+)
 public class PortalSettingsCASAuthenticationDynamicInclude
 	extends BaseDynamicInclude {
 
@@ -53,7 +54,8 @@ public class PortalSettingsCASAuthenticationDynamicInclude
 
 		try {
 			requestDispatcher.include(request, response);
-		} catch (ServletException se) {
+		}
+		catch (ServletException se) {
 			_log.error("Unable to include JSP " + _JSP_PATH, se);
 
 			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
@@ -65,7 +67,10 @@ public class PortalSettingsCASAuthenticationDynamicInclude
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 	}
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.cas)", unbind = "-")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.cas)",
+		unbind = "-"
+	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}

@@ -78,6 +78,8 @@ public class JenkinsPerformanceTableUtilTest
 			String progressiveTextURL, File sampleDir)
 		throws Exception {
 
+		StringBuilder sb = new StringBuilder();
+
 		int jobCount = 0;
 
 		String content = JenkinsResultsParserUtil.toString(
@@ -85,8 +87,6 @@ public class JenkinsPerformanceTableUtilTest
 
 		Matcher progressiveTextMatcher = _progressiveTextPattern.matcher(
 			content);
-
-		StringBuilder sb = new StringBuilder();
 
 		while (progressiveTextMatcher.find()) {
 			String fileSuffix = null;

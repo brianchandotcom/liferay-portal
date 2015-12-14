@@ -252,7 +252,7 @@ else {
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp
-								path="/wiki_admin/page_action.jsp"
+								path="/wiki/page_action.jsp"
 						/>
 					</c:when>
 					<c:otherwise>
@@ -296,7 +296,7 @@ else {
 
 						<liferay-ui:search-container-column-jsp
 							cssClass="entry-action"
-							path="/wiki_admin/page_action.jsp"
+							path="/wiki/page_action.jsp"
 						/>
 					</c:otherwise>
 				</c:choose>

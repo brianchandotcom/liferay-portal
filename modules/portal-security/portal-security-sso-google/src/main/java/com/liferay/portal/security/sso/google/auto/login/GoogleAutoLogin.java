@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.sso.google.constants.GoogleWebKeys;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
 * @author Sergio González
@@ -79,10 +80,17 @@ public class GoogleAutoLogin extends BaseAutoLogin {
 
 		session.removeAttribute(GoogleWebKeys.GOOGLE_USER_EMAIL_ADDRESS);
 
-		User user = UserLocalServiceUtil.getUserByEmailAddress(
+		User user = _userLocalService.getUserByEmailAddress(
 			companyId, emailAddress);
 
 		return user;
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private volatile UserLocalService _userLocalService;
 
 }

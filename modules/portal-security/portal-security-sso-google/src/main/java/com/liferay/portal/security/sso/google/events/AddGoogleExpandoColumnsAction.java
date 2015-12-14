@@ -27,8 +27,8 @@ import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
-import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
-import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
+import com.liferay.portlet.expando.service.ExpandoTableLocalService;
 
 import java.util.List;
 
@@ -75,17 +75,17 @@ public class AddGoogleExpandoColumnsAction extends SimpleAction {
 			UnicodeProperties properties)
 		throws Exception {
 
-		ExpandoColumn expandoColumn = ExpandoColumnLocalServiceUtil.getColumn(
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
 			expandoTable.getTableId(), name);
 
 		if (expandoColumn != null) {
 			return;
 		}
 
-		expandoColumn = ExpandoColumnLocalServiceUtil.addColumn(
+		expandoColumn = _expandoColumnLocalService.addColumn(
 			expandoTable.getTableId(), name, ExpandoColumnConstants.STRING);
 
-		ExpandoColumnLocalServiceUtil.updateTypeSettings(
+		_expandoColumnLocalService.updateTypeSettings(
 			expandoColumn.getColumnId(), properties.toString());
 	}
 
@@ -93,12 +93,12 @@ public class AddGoogleExpandoColumnsAction extends SimpleAction {
 		ExpandoTable expandoTable = null;
 
 		try {
-			expandoTable = ExpandoTableLocalServiceUtil.addTable(
+			expandoTable = _expandoTableLocalService.addTable(
 				companyId, User.class.getName(),
 				ExpandoTableConstants.DEFAULT_TABLE_NAME);
 		}
 		catch (Exception e) {
-			expandoTable = ExpandoTableLocalServiceUtil.getTable(
+			expandoTable = _expandoTableLocalService.getTable(
 				companyId, User.class.getName(),
 				ExpandoTableConstants.DEFAULT_TABLE_NAME);
 		}
@@ -120,11 +120,27 @@ public class AddGoogleExpandoColumnsAction extends SimpleAction {
 		_companyLocalService = companyLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setExpandoColumnLocalService(
+		ExpandoColumnLocalService expandoColumnLocalService) {
+
+		_expandoColumnLocalService = expandoColumnLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExpandoTableLocalService(
+		ExpandoTableLocalService expandoTableLocalService) {
+
+		_expandoTableLocalService = expandoTableLocalService;
+	}
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private volatile CompanyLocalService _companyLocalService;
+	private volatile ExpandoColumnLocalService _expandoColumnLocalService;
+	private volatile ExpandoTableLocalService _expandoTableLocalService;
 
 }

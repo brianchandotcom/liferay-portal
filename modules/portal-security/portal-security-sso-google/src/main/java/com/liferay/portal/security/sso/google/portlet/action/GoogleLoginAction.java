@@ -45,13 +45,13 @@ import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.sso.google.constants.GoogleWebKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
-import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -67,6 +67,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -169,20 +170,19 @@ public class GoogleLoginAction extends BaseStrutsAction {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		User user = UserLocalServiceUtil.addUser(
+		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, 0, openId, locale,
 			firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
-		user = UserLocalServiceUtil.updateLastLogin(
+		user = _userLocalService.updateLastLogin(
 			user.getUserId(), user.getLoginIP());
 
-		user = UserLocalServiceUtil.updatePasswordReset(
-			user.getUserId(), false);
+		user = _userLocalService.updatePasswordReset(user.getUserId(), false);
 
-		user = UserLocalServiceUtil.updateEmailAddressVerified(
+		user = _userLocalService.updateEmailAddressVerified(
 			user.getUserId(), true);
 
 		session.setAttribute(
@@ -347,7 +347,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		String emailAddress = userinfoplus.getEmail();
 
 		if ((user == null) && Validator.isNotNull(emailAddress)) {
-			user = UserLocalServiceUtil.fetchUserByEmailAddress(
+			user = _userLocalService.fetchUserByEmailAddress(
 				companyId, emailAddress);
 
 			if ((user != null) &&
@@ -386,22 +386,34 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		return user;
 	}
 
+	@Reference(unbind = "-")
+	protected void setExpandoValueLocalService(
+		ExpandoValueLocalService expandoValueLocalService) {
+
+		_expandoValueLocalService = expandoValueLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected void updateExpandoValues(
 			User user, Userinfoplus userinfoplus, String accessToken,
 			String refreshToken)
 		throws Exception {
 
-		ExpandoValueLocalServiceUtil.addValue(
+		_expandoValueLocalService.addValue(
 			user.getCompanyId(), User.class.getName(),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME, "googleAccessToken",
 			user.getUserId(), accessToken);
 
-		ExpandoValueLocalServiceUtil.addValue(
+		_expandoValueLocalService.addValue(
 			user.getCompanyId(), User.class.getName(),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME, "googleRefreshToken",
 			user.getUserId(), refreshToken);
 
-		ExpandoValueLocalServiceUtil.addValue(
+		_expandoValueLocalService.addValue(
 			user.getCompanyId(), User.class.getName(),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME, "googleUserId",
 			user.getUserId(), userinfoplus.getId());
@@ -443,13 +455,13 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		if (!StringUtil.equalsIgnoreCase(
 				emailAddress, user.getEmailAddress())) {
 
-			UserLocalServiceUtil.updateEmailAddress(
+			_userLocalService.updateEmailAddress(
 				user.getUserId(), StringPool.BLANK, emailAddress, emailAddress);
 		}
 
-		UserLocalServiceUtil.updateEmailAddressVerified(user.getUserId(), true);
+		_userLocalService.updateEmailAddressVerified(user.getUserId(), true);
 
-		return UserLocalServiceUtil.updateUser(
+		return _userLocalService.updateUser(
 			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, false, user.getReminderQueryQuestion(),
 			user.getReminderQueryAnswer(), user.getScreenName(), emailAddress,
@@ -473,5 +485,8 @@ public class GoogleLoginAction extends BaseStrutsAction {
 
 	private static final List<String> _SCOPES_LOGIN = Arrays.asList(
 		"email", "profile");
+
+	private volatile ExpandoValueLocalService _expandoValueLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

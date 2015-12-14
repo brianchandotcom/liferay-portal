@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -94,24 +93,14 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 			deletePageTitles = new String[] {title};
 		}
 		else {
-			long[] rowIdsWikiPages = ParamUtil.getLongValues(
+			deletePageTitles = ParamUtil.getStringValues(
 				actionRequest, "rowIdsWikiPage");
-
-			deletePageTitles = new String[rowIdsWikiPages.length];
-
-			for (long rowIdsWikiPage : rowIdsWikiPages) {
-				WikiPage rowPage = _wikiPageLocalService.getPageByPageId(
-					rowIdsWikiPage);
-
-				deletePageTitles = ArrayUtil.append(
-					deletePageTitles, rowPage.getTitle());
-			}
 		}
 
 		List<TrashedModel> trashedModels = new ArrayList<>();
 
-		if (moveToTrash) {
-			for (String deletePageTitle : deletePageTitles) {
+		for (String deletePageTitle : deletePageTitles) {
+			if (moveToTrash) {
 				WikiPage trashedWikiPage = null;
 
 				if (version > 0) {
@@ -125,9 +114,7 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 
 				trashedModels.add(trashedWikiPage);
 			}
-		}
-		else {
-			for (String deletePageTitle : deletePageTitles) {
+			else {
 				if (version > 0) {
 					_wikiPageService.discardDraft(
 						nodeId, deletePageTitle, version);

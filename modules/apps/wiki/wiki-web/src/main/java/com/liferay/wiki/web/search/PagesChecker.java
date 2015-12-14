@@ -109,7 +109,7 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 			request, checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
 				name + "",
-			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "'",
+			page.getTitle(), checkBoxRowIds, "'#" + getAllRowIds() + "'",
 			StringPool.BLANK);
 	}
 

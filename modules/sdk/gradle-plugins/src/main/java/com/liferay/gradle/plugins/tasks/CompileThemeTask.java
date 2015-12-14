@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.tasks;
 
-import com.liferay.gradle.plugins.LiferayThemePlugin;
 import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
@@ -271,9 +270,6 @@ public class CompileThemeTask extends DefaultTask {
 		else if (themeParent.equals("admin") || themeParent.equals("classic")) {
 			copyThemeParentPortal();
 		}
-		else if (!themeParent.equals("_unstyled")) {
-			copyThemeParentProject();
-		}
 	}
 
 	protected void copyThemeParentPortal() throws Exception {
@@ -291,34 +287,6 @@ public class CompileThemeTask extends DefaultTask {
 			themeTypes.toArray(new String[themeTypes.size()]), "templates/*.");
 
 		copyPortalThemeDir(themeParent, null, includes);
-	}
-
-	protected void copyThemeParentProject() {
-		Project themeParentProject = getThemeParentProject();
-
-		CompileThemeTask compileParentThemeTask =
-			(CompileThemeTask)GradleUtil.getTask(
-				themeParentProject, LiferayThemePlugin.COMPILE_THEME_TASK_NAME);
-
-		final File parentThemeRootDir =
-			compileParentThemeTask.getThemeRootDir();
-
-		Closure<Void> closure = new Closure<Void>(null) {
-
-			@SuppressWarnings("unused")
-			public void doCall(CopySpec copySpec) {
-				copySpec.from(parentThemeRootDir);
-
-				for (String dirName : _THEME_DIR_NAMES) {
-					copySpec.include(dirName + "/**");
-				}
-
-				copySpec.into(getThemeRootDir());
-			}
-
-		};
-
-		_project.copy(closure);
 	}
 
 	protected void copyThemeParentStyled() throws Exception {

@@ -81,14 +81,10 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 		String name = WikiPage.class.getSimpleName();
 		boolean showInput = false;
 
-		try {
-			if (WikiPagePermissionChecker.contains(
-					_permissionChecker, page, ActionKeys.DELETE)) {
+		if (WikiPagePermissionChecker.contains(
+				_permissionChecker, page, ActionKeys.DELETE)) {
 
-				showInput = true;
-			}
-		}
-		catch (Exception e) {
+			showInput = true;
 		}
 
 		if (!showInput) {

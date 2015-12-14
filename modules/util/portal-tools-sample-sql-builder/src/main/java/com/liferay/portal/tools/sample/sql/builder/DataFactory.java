@@ -2701,6 +2701,7 @@ public class DataFactory {
 		sb.append("</name></root>");
 
 		ddmStructureVersionModel.setName(sb.toString());
+
 		ddmStructureVersionModel.setDefinition(definition);
 		ddmStructureVersionModel.setStorageType(StorageType.JSON.toString());
 		ddmStructureVersionModel.setStatusByUserId(userId);

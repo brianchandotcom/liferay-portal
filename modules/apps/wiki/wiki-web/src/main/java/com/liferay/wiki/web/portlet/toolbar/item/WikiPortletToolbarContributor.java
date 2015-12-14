@@ -147,8 +147,10 @@ public class WikiPortletToolbarContributor
 		try {
 			WikiNode node = _getNode(themeDisplay, portletRequest);
 
-			addPortletTitleMenuItem(
-				menuItems, node, themeDisplay, portletRequest);
+			if (node != null) {
+				addPortletTitleMenuItem(
+					menuItems, node, themeDisplay, portletRequest);
+			}
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to add page menu item", pe);

@@ -12,6 +12,7 @@
 	</command>
 
 	<command name="gotoViewEntries">
+		<var name="key_cardEntry" value="${formName}" />
 		<var name="key_formName" value="${formName}" />
 
 		<execute function="Click" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />

@@ -2,7 +2,7 @@
 	<var name="formName" value="Created Form Name" />
 
 	<command name="deleteForm">
-		<var name="key_formName" value="${formName}" />
+		<var name="key_cardEntry" value="${formName}" />
 
 		<execute function="Click" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
 
@@ -46,6 +46,9 @@
 
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORMS_TABLE_NAME" value1="${formName}" />
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORMS_TABLE_DESCRIPTION" value1="${formDescription}" />
+
+		<var name="key_cardEntry" value="${formName}" />
+
 		<execute function="AssertElementPresent" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
 	</command>
 

@@ -201,7 +201,7 @@
 </tr>
 <tr>
 	<td>CARD_VERTICAL_ELLIPSIS</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${cardEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -49,8 +49,8 @@ public class PanelCategoryBodyTag extends BasePanelTag {
 	}
 
 	@Override
-	protected String getEndPage() {
-		return "/panel_category/end.jsp";
+	protected String getPage() {
+		return "/panel_category_body/page.jsp";
 	}
 
 	protected List<PanelApp> getPanelApps() {
@@ -64,11 +64,6 @@ public class PanelCategoryBodyTag extends BasePanelTag {
 		return panelAppRegistry.getPanelApps(
 			_panelCategory, themeDisplay.getPermissionChecker(),
 			themeDisplay.getScopeGroup());
-	}
-
-	@Override
-	protected String getStartPage() {
-		return "/panel_category/start.jsp";
 	}
 
 	@Override

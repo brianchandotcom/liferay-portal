@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Compound Session Id
+Bundle-SymbolicName: com.liferay.portal.compound.session.id
+Bundle-Version: 1.0.0
+Include-Resource: classes

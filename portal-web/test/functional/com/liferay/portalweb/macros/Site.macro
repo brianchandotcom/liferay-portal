@@ -86,7 +86,7 @@
 				<if>
 					<equals arg1="${uncheckPropagation}" arg2="true" />
 					<then>
-						<execute function="Uncheck" locator1="Checkbox#ENABLE_PROPAGATION" />
+						<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ENABLE_PROPAGATION" />
 					</then>
 				</if>
 			</then>
@@ -462,13 +462,12 @@
 		<var name="key_displaySettings" value="${displaySettings}" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="SitesEditSite#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+			<condition function="IsNotVisible" locator1="SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" />
 			<then>
-				<execute function="AssertClick" locator1="SitesEditSite#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+				<execute macro="Navigator#gotoTab">
+					<var name="tabName" value="Miscellaneous" />
+				</execute>
 			</then>
-			<else>
-				<execute function="AssertClick" locator1="SitesEditSite#MENU_MISCELLANEOUS_DISPLAY_SETTINGS_LOCALIZED" value1="${displaySettings}" />
-			</else>
 		</if>
 
 		<execute function="Check" locator1="SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" />
@@ -1054,7 +1053,14 @@
 	<command name="viewCurrentLanguagesCP">
 		<var name="key_displaySettings" value="${displaySettings}" />
 
-		<execute function="AssertClick" locator1="SitesEditSite#MENU_MISCELLANEOUS_DISPLAY_SETTINGS_LOCALIZED" value1="${displaySettings}" />
+		<if>
+			<condition function="IsNotVisible" locator1="SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" />
+			<then>
+				<execute macro="Navigator#gotoTab">
+					<var name="tabName" value="Miscellaneous" />
+				</execute>
+			</then>
+		</if>
 
 		<execute function="Check" locator1="SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" value1="Display Settings" />
 

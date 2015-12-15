@@ -1676,7 +1676,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewFormWithDefaultHiddenVisibility" priority="3">
+	<command name="ViewTextFieldWithConditionalVisibility" priority="3">
 		<description message="This is a use case for LPS-59604." />
 
 		<execute macro="Navigator#openURL" />

@@ -20,7 +20,6 @@ import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
-import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
@@ -550,18 +549,6 @@ public class InitGradleTask extends DefaultTask {
 				contents.add(
 					wrapProperty(1, "autoUpdateXml", false, autoUpdateXml));
 			}
-		}
-
-		if (_liferayExtension instanceof LiferayThemeExtension) {
-			String themeParent = getBuildXmlProperty("theme.parent");
-
-			if (Validator.isNotNull(themeParent)) {
-				contents.add(wrapProperty(1, "themeParent", themeParent));
-			}
-
-			String themeType = getBuildXmlProperty("theme.type", "vm");
-
-			contents.add(wrapProperty(1, "themeType", themeType));
 		}
 
 		if (!contents.isEmpty()) {

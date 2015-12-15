@@ -28,6 +28,7 @@ import com.liferay.wiki.util.test.WikiTestUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -68,6 +69,23 @@ public class WikiNodeStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return WikiNode.class;
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		WikiNode node = (WikiNode)stagedModel;
+		WikiNode importedNode = (WikiNode)importedStagedModel;
+
+		Assert.assertEquals(node.getName(), importedNode.getName());
+		Assert.assertEquals(
+			node.getDescription(), importedNode.getDescription());
+		Assert.assertEquals(
+			node.getLastPostDate(), importedNode.getLastPostDate());
 	}
 
 }

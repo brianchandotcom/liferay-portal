@@ -41,10 +41,7 @@ import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.BuildUpgradeTableTask;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
-import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
-import com.liferay.gradle.plugins.xml.formatter.FormatXMLTask;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
-import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
@@ -119,10 +116,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String CLEAN_DEPLOYED_PROPERTY_NAME = "cleanDeployed";
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
-
-	public static final String FORMAT_WSDL_TASK_NAME = "formatWSDL";
-
-	public static final String FORMAT_XSD_TASK_NAME = "formatXSD";
 
 	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
 
@@ -217,58 +210,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		copy.from(jar);
 
 		return copy;
-	}
-
-	protected FormatXMLTask addTaskFormatWSDL(
-		final BuildWSDLTask buildWSDLTask) {
-
-		Project project = buildWSDLTask.getProject();
-
-		TaskContainer taskContainer = project.getTasks();
-
-		FormatXMLTask formatXMLTask = taskContainer.maybeCreate(
-			FORMAT_WSDL_TASK_NAME, FormatXMLTask.class);
-
-		formatXMLTask.setDescription(
-			"Runs Liferay XML Formatter to format WSDL files.");
-		formatXMLTask.setIncludes(Collections.singleton("**/*.wsdl"));
-
-		formatXMLTask.source(
-			new Callable<File>() {
-
-			@Override
-			public File call() throws Exception {
-				return buildWSDLTask.getInputDir();
-			}
-
-		});
-
-		return formatXMLTask;
-	}
-
-	protected FormatXMLTask addTaskFormatXSD(final BuildXSDTask buildXSDTask) {
-		Project project = buildXSDTask.getProject();
-
-		TaskContainer taskContainer = project.getTasks();
-
-		FormatXMLTask formatXMLTask = taskContainer.maybeCreate(
-			FORMAT_XSD_TASK_NAME, FormatXMLTask.class);
-
-		formatXMLTask.setDescription(
-			"Runs Liferay XML Formatter to format XSD files.");
-		formatXMLTask.setIncludes(Collections.singleton("**/*.xsd"));
-
-		formatXMLTask.source(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return buildXSDTask.getInputDir();
-				}
-
-			});
-
-		return formatXMLTask;
 	}
 
 	protected InitGradleTask addTaskInitGradle(Project project) {
@@ -418,30 +359,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTaskInitGradle(project);
 		addTaskJarSources(project);
 		addTaskZipJavadoc(project);
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildWSDLTask.class,
-			new Action<BuildWSDLTask>() {
-
-				@Override
-				public void execute(BuildWSDLTask buildWSDLTask) {
-					addTaskFormatWSDL(buildWSDLTask);
-				}
-
-			});
-
-		taskContainer.withType(
-			BuildXSDTask.class,
-			new Action<BuildXSDTask>() {
-
-				@Override
-				public void execute(BuildXSDTask buildXSDTask) {
-					addTaskFormatXSD(buildXSDTask);
-				}
-
-			});
 	}
 
 	protected Zip addTaskZipJavadoc(Project project) {
@@ -498,6 +415,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
 		GradleUtil.applyPlugin(project, WhipDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
+		GradleUtil.applyPlugin(project, XMLFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 	}
 

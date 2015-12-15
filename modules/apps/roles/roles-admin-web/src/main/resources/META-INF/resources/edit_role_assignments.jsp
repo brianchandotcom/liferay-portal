@@ -57,6 +57,25 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(role.getTitle(locale));
+
+int type = role.getType();
+
+String rootBreadcrumbKey = null;
+
+if (type == RoleConstants.TYPE_SITE) {
+	rootBreadcrumbKey = "site-roles";
+}
+else if (type == RoleConstants.TYPE_ORGANIZATION) {
+	rootBreadcrumbKey = "organization-roles";
+}
+else {
+	rootBreadcrumbKey = "regular-roles";
+}
+
+String rootBreadcrumbEntry = LanguageUtil.get(request, rootBreadcrumbKey);
+
+PortalUtil.addPortletBreadcrumbEntry(request, rootBreadcrumbEntry, redirect);
+PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -119,6 +138,11 @@ renderResponse.setTitle(role.getTitle(locale));
 	<%
 	String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
 	%>
+
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+		showPortletBreadcrumb="<%= true %>"
+	/>
 
 	<c:choose>
 		<c:when test='<%= tabs2.equals("users") %>'>

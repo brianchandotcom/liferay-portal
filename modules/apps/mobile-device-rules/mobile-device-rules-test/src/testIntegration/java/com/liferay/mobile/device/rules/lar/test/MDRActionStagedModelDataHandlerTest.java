@@ -167,6 +167,22 @@ public class MDRActionStagedModelDataHandlerTest
 				ruleGroupInstance.getUuid(), group.getGroupId());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		MDRAction action = (MDRAction)stagedModel;
+		MDRAction importedAction = (MDRAction)importedStagedModel;
+
+		Assert.assertEquals(action.getName(), importedAction.getName());
+		Assert.assertEquals(
+			action.getDescription(), importedAction.getDescription());
+		Assert.assertEquals(action.getType(), importedAction.getType());
+	}
+
 	private Layout _layout;
 
 }

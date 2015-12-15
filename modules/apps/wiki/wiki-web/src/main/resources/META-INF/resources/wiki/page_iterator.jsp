@@ -112,44 +112,21 @@ if (navigation.equals("all_pages") || navigation.equals("categorized_pages") || 
 	headerNames.add(StringPool.BLANK);
 }
 
-String emptyResultsMessage = null;
+WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, node);
 
-if (navigation.equals("all_pages")) {
-	emptyResultsMessage = "there-are-no-pages";
-}
-else if (navigation.equals("categorized_pages")) {
-	emptyResultsMessage = "there-are-no-pages-with-this-category";
-}
-else if (navigation.equals("draft_pages")) {
-	emptyResultsMessage = "there-are-no-drafts";
-}
-else if (navigation.equals("incoming_links")) {
-	emptyResultsMessage = "there-are-no-pages-that-link-to-this-page";
-}
-else if (navigation.equals("orphan_pages")) {
-	emptyResultsMessage = "there-are-no-orphan-pages";
-}
-else if (navigation.equals("outgoing_links")) {
-	emptyResultsMessage = "this-page-has-no-links";
-}
-else if (navigation.equals("pending_pages")) {
-	emptyResultsMessage = "there-are-no-pages-submitted-by-you-pending-approval";
-}
-else if (navigation.equals("recent_changes")) {
-	emptyResultsMessage = "there-are-no-recent-changes";
-}
-else if (navigation.equals("tagged_pages")) {
-	emptyResultsMessage = "there-are-no-pages-with-this-tag";
-}
+String emptyResultsMessage = wikiListPagesDisplayContext.getEmptyResultsMessage();
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
-OrderByComparator<WikiPage> orderByComparator = WikiPortletUtil.getPageOrderByComparator(orderByCol, orderByType);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, headerNames, emptyResultsMessage);
 
 Map orderableHeaders = new HashMap();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, headerNames, emptyResultsMessage);
+if (navigation.equals("all_pages") || navigation.equals("categorized_pages") || navigation.equals("tagged_pages")) {
+	orderableHeaders.put("page", "title");
+	orderableHeaders.put("date", "modifiedDate");
+}
 
 searchContainer.setOrderableHeaders(orderableHeaders);
 searchContainer.setOrderByCol(orderByCol);
@@ -163,113 +140,14 @@ if (navigation.equals("history")) {
 	searchContainer.setRowChecker(rowChecker);
 }
 
-int total = 0;
-List<WikiPage> results = null;
+wikiListPagesDisplayContext.populateResultsAndTotal(searchContainer);
 
-if (navigation.equals("all_pages")) {
-	orderableHeaders.put("page", "title");
-	orderableHeaders.put("date", "modifiedDate");
-
-	total = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED);
-
-	searchContainer.setTotal(total);
-
-	results = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
-}
-else if (navigation.equals("categorized_pages") || navigation.equals("tagged_pages")) {
-	orderableHeaders.put("page", "title");
-	orderableHeaders.put("date", "modifiedDate");
-
-	AssetEntryQuery assetEntryQuery = new AssetEntryQuery(WikiPage.class.getName(), searchContainer);
-
-	assetEntryQuery.setEnablePermissions(true);
-
-	total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-	searchContainer.setTotal(total);
-
-	assetEntryQuery.setEnd(searchContainer.getEnd());
-	assetEntryQuery.setStart(searchContainer.getStart());
-
-	List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-
-	results = new ArrayList<WikiPage>();
-
-	for (AssetEntry assetEntry : assetEntries) {
-		WikiPageResource pageResource = WikiPageResourceLocalServiceUtil.getPageResource(assetEntry.getClassPK());
-
-		WikiPage assetPage = WikiPageLocalServiceUtil.getPage(pageResource.getNodeId(), pageResource.getTitle());
-
-		results.add(assetPage);
-	}
-}
-else if (navigation.equals("draft_pages") || navigation.equals("pending_pages")) {
-	long draftUserId = user.getUserId();
-
-	if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-		draftUserId = 0;
-	}
-
-	int status = WorkflowConstants.STATUS_DRAFT;
-
-	if (navigation.equals("pending_pages")) {
-		status = WorkflowConstants.STATUS_PENDING;
-	}
-
-	total = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status);
-
-	searchContainer.setTotal(total);
-
-	results = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status, searchContainer.getStart(), searchContainer.getEnd());
-}
-else if (navigation.equals("orphan_pages")) {
-	List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(themeDisplay.getScopeGroupId(), node.getNodeId());
-
-	total = orphans.size();
-
-	searchContainer.setTotal(total);
-
-	results = ListUtil.subList(orphans, searchContainer.getStart(), searchContainer.getEnd());
-}
-else if (navigation.equals("history")) {
-	total = WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle());
-
-	searchContainer.setTotal(total);
-
-	results = WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new PageVersionComparator());
-}
-else if (navigation.equals("incoming_links")) {
-	List<WikiPage> links = WikiPageLocalServiceUtil.getIncomingLinks(wikiPage.getNodeId(), wikiPage.getTitle());
-
-	total = links.size();
-
-	searchContainer.setTotal(total);
-
-	results = ListUtil.subList(links, searchContainer.getStart(), searchContainer.getEnd());
-}
-else if (navigation.equals("outgoing_links")) {
-	List<WikiPage> links = WikiPageLocalServiceUtil.getOutgoingLinks(wikiPage.getNodeId(), wikiPage.getTitle());
-
-	total = links.size();
-
-	searchContainer.setTotal(total);
-
-	results = ListUtil.subList(links, searchContainer.getStart(), searchContainer.getEnd());
-}
-else if (navigation.equals("recent_changes")) {
-	total = WikiPageServiceUtil.getRecentChangesCount(themeDisplay.getScopeGroupId(), node.getNodeId());
-
-	searchContainer.setTotal(total);
-
-	results = WikiPageServiceUtil.getRecentChanges(themeDisplay.getScopeGroupId(), node.getNodeId(), searchContainer.getStart(), searchContainer.getEnd());
-}
-
-searchContainer.setResults(results);
+List<WikiPage> pages = searchContainer.getResults();
 
 List resultRows = searchContainer.getResultRows();
 
-for (int i = 0; i < results.size(); i++) {
-	WikiPage curWikiPage = results.get(i);
+for (int i = 0; i < pages.size(); i++) {
+	WikiPage curWikiPage = pages.get(i);
 
 	ResultRow row = new ResultRow(curWikiPage, String.valueOf(curWikiPage.getVersion()), i);
 
@@ -371,7 +249,7 @@ for (int i = 0; i < results.size(); i++) {
 }
 %>
 
-<c:if test='<%= navigation.equals("history") && (results.size() > 1) %>'>
+<c:if test='<%= navigation.equals("history") && (pages.size() > 1) %>'>
 	<aui:button-row>
 		<aui:button cssClass="btn-lg btn-primary" name="compare" value="compare-versions" />
 	</aui:button-row>
@@ -410,10 +288,10 @@ for (int i = 0; i < results.size(); i++) {
 	</aui:script>
 
 	<aui:script sandbox="<%= true %>">
-		<c:if test="<%= results.size() > 1 %>">
+		<c:if test="<%= pages.size() > 1 %>">
 
 			<%
-			WikiPage latestWikiPage = (WikiPage)results.get(1);
+			WikiPage latestWikiPage = (WikiPage)pages.get(1);
 			%>
 
 			$('#<portlet:namespace />compare').on(

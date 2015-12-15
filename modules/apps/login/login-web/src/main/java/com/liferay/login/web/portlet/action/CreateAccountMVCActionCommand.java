@@ -248,39 +248,9 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof AddressCityException ||
-				e instanceof AddressStreetException ||
-				e instanceof AddressZipException ||
-				e instanceof CaptchaConfigurationException ||
-				e instanceof CaptchaMaxChallengesException ||
-				e instanceof CaptchaTextException ||
-				e instanceof CompanyMaxUsersException ||
-				e instanceof ContactBirthdayException ||
-				e instanceof ContactNameException ||
-				e instanceof DuplicateOpenIdException ||
-				e instanceof EmailAddressException ||
-				e instanceof GroupFriendlyURLException ||
-				e instanceof NoSuchCountryException ||
-				e instanceof NoSuchListTypeException ||
-				e instanceof NoSuchOrganizationException ||
-				e instanceof NoSuchRegionException ||
-				e instanceof OrganizationParentException ||
-				e instanceof PhoneNumberException ||
-				e instanceof RequiredFieldException ||
-				e instanceof RequiredUserException ||
-				e instanceof TermsOfUseException ||
-				e instanceof UserEmailAddressException ||
-				e instanceof UserIdException ||
-				e instanceof UserPasswordException ||
-				e instanceof UserScreenNameException ||
-				e instanceof UserSmsException ||
-				e instanceof WebsiteURLException) {
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else if (e instanceof
-						UserEmailAddressException.MustNotBeDuplicate ||
-					 e instanceof UserScreenNameException.MustNotBeDuplicate) {
+			if (e instanceof
+					UserEmailAddressException.MustNotBeDuplicate ||
+				e instanceof UserScreenNameException.MustNotBeDuplicate) {
 
 				String emailAddress = ParamUtil.getString(
 					actionRequest, "emailAddress");
@@ -295,8 +265,38 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				}
 				else {
 					actionResponse.setRenderParameter(
-						"mvcPath", "update_account.jsp");
+						"mvcPath", "/update_account.jsp");
 				}
+			}
+			else if (e instanceof AddressCityException ||
+					 e instanceof AddressStreetException ||
+					 e instanceof AddressZipException ||
+					 e instanceof CaptchaConfigurationException ||
+					 e instanceof CaptchaMaxChallengesException ||
+					 e instanceof CaptchaTextException ||
+					 e instanceof CompanyMaxUsersException ||
+					 e instanceof ContactBirthdayException ||
+					 e instanceof ContactNameException ||
+					 e instanceof DuplicateOpenIdException ||
+					 e instanceof EmailAddressException ||
+					 e instanceof GroupFriendlyURLException ||
+					 e instanceof NoSuchCountryException ||
+					 e instanceof NoSuchListTypeException ||
+					 e instanceof NoSuchOrganizationException ||
+					 e instanceof NoSuchRegionException ||
+					 e instanceof OrganizationParentException ||
+					 e instanceof PhoneNumberException ||
+					 e instanceof RequiredFieldException ||
+					 e instanceof RequiredUserException ||
+					 e instanceof TermsOfUseException ||
+					 e instanceof UserEmailAddressException ||
+					 e instanceof UserIdException ||
+					 e instanceof UserPasswordException ||
+					 e instanceof UserScreenNameException ||
+					 e instanceof UserSmsException ||
+					 e instanceof WebsiteURLException) {
+
+				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
 				throw e;

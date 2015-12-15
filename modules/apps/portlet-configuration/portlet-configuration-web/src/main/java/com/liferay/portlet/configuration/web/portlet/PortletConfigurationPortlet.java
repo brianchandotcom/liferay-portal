@@ -953,10 +953,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		portletPreferences.setValue("lfrScopeType", scopeType);
 
-		String scopeLayoutUuid = scopes[1];
+		String scopeLayoutUuid = StringPool.BLANK;
 
-		if (!scopeType.equals("layout")) {
-			scopeLayoutUuid = StringPool.BLANK;
+		if ((scopes.length > 1) && scopeType.equals("layout")) {
+			scopeLayoutUuid = scopes[1];
 		}
 
 		portletPreferences.setValue("lfrScopeLayoutUuid", scopeLayoutUuid);

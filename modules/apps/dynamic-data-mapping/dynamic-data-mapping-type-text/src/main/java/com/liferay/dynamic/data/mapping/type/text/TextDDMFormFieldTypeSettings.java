@@ -75,7 +75,12 @@ public interface TextDDMFormFieldTypeSettings
 	)
 	public String displayStyle();
 
-	@DDMFormField(dataType = "string", label = "%field-tip", type = "text")
+	@DDMFormField(
+		dataType = "string", label = "%placeholder-text",
+		properties = { "placeholder=%enter-placeholder-text" },
+		tip = "%text-that-assists-the-user-but-is-not-submitted-as-a-field-vaue",
+		type = "text"
+	)
 	public LocalizedValue placeholder();
 
 }

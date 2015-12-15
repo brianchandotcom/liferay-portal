@@ -20,6 +20,7 @@ import com.google.common.collect.Multimap;
 
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.MathUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
@@ -263,6 +264,13 @@ public class PoshiRunnerContext {
 		}
 
 		_componentClassCommandNames.put(componentName, classCommandNames);
+	}
+
+	private static int _getAllocatedTestGroupSize(int testCount) {
+		int groupCount = MathUtil.quotient(
+			testCount, PropsValues.TEST_BATCH_MAX_GROUP_SIZE, true);
+
+		return MathUtil.quotient(testCount, groupCount, true);
 	}
 
 	private static List<String> _getCommandReturns(Element commandElement) {

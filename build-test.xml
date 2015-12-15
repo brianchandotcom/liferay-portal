@@ -4936,6 +4936,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<antcall target="prepare-selenium-browser" />
 		<antcall target="prepare-selenium-database-properties" />
 		<antcall target="prepare-selenium-email-properties" />
+		<antcall target="prepare-selenium-google-properties" />
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
@@ -5693,6 +5694,35 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.5=${marketplace.email.password.5}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-google-properties">
+		<if>
+			<isset property="google.api.key" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.api.key=${google.api.key}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.id=${google.client.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.secret" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.secret=${google.client.secret}
 				</echo>
 			</then>
 		</if>

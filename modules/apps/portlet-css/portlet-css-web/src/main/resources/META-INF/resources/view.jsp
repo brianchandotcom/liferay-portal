@@ -465,7 +465,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 								</aui:fieldset>
 							</c:if>
 						</div>
-					</aui:fieldset-group>	
+					</aui:fieldset-group>
 				</aui:form>
 			</div>
 		</div>

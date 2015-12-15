@@ -136,7 +136,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	var form = $(document.<portlet:namespace />fm);
 
 	<portlet:renderURL var="viewDDMStructureArticlesURL">
-		<portlet:param name="browseBy" value="structure" />
 		<portlet:param name="navigation" value="structure" />
 		<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 		<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />

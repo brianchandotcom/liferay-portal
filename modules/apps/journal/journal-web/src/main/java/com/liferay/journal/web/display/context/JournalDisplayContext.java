@@ -368,7 +368,7 @@ public class JournalDisplayContext {
 
 		String ddmStructureKey = getDDMStructureKey();
 
-		if (!ddmStructureKey.equals("0")) {
+		if (isNavigationStructure()) {
 			portletURL.setParameter("ddmStructureKey", ddmStructureKey);
 		}
 
@@ -578,6 +578,14 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isNavigationStructure() {
+		if (Validator.equals(getNavigation(), "structure")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -587,9 +595,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isShowBreadcrumb() {
-		String browseBy = ParamUtil.getString(_request, "browseBy");
-
-		if (Validator.isNotNull(browseBy)) {
+		if (isNavigationStructure()) {
 			return false;
 		}
 

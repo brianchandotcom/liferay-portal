@@ -104,12 +104,7 @@
 			searchContainer.on(
 				'rowToggled',
 				function(event) {
-					if (event.elements.allSelectedElements.size()) {
-						sideNav.showSidenav(infoPanel);
-					}
-					else {
-						sideNav.hideSidenav(infoPanel);
-					}
+					sideNav.toggleNavigation(infoPanel);
 				}
 			);
 		}

@@ -45,8 +45,9 @@ public class ExecuteGulpTask extends ExecuteNodeTask {
 		super.executeNode();
 	}
 
+	@Input
 	public String getGulpCommand() {
-		return _gulpCommand;
+		return GradleUtil.toString(_gulpCommand);
 	}
 
 	@Input
@@ -54,7 +55,7 @@ public class ExecuteGulpTask extends ExecuteNodeTask {
 		return GradleUtil.toFile(getProject(), _scriptFile);
 	}
 
-	public void setGulpCommand(String gulpCommand) {
+	public void setGulpCommand(Object gulpCommand) {
 		_gulpCommand = gulpCommand;
 	}
 
@@ -62,7 +63,7 @@ public class ExecuteGulpTask extends ExecuteNodeTask {
 		_scriptFile = scriptFile;
 	}
 
-	private String _gulpCommand = "";
+	private Object _gulpCommand;
 	private Object _scriptFile = "node_modules/gulp/bin/gulp.js";
 
 }

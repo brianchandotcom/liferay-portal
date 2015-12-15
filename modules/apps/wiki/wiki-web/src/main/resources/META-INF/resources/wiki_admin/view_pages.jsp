@@ -145,7 +145,7 @@ else {
 			<%
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			if (!navigation.equals("draft_pages")) {
+			if (!navigation.equals("draft-pages")) {
 				rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("nodeName", curPage.getNode().getName());

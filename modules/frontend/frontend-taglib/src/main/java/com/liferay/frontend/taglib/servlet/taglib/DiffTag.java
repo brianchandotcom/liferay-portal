@@ -57,7 +57,7 @@ public class DiffTag extends IncludeTag {
 		request.setAttribute("liferay-ui:diff:targetName", _targetName);
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/diff/page.jsp";
+	private static final String _PAGE = "/diff/page.jsp";
 
 	private List<DiffResult>[] _diffResults;
 	private String _sourceName;

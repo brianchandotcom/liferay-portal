@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/diff/init.jsp" %>
+<%@ include file="/diff/init.jsp" %>
 
 <%
 String sourceName = (String)request.getAttribute("liferay-ui:diff:sourceName");

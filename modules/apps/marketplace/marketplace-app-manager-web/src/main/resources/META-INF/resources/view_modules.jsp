@@ -140,15 +140,21 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			className="org.osgi.framework.Bundle"
 			modelVar="bundle"
 		>
-
-			<%
-			Dictionary<String, String> headers = bundle.getHeaders();
-
-			String bundleName = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_NAME));
-			String bundleDescription = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_DESCRIPTION));
-			%>
+			<liferay-ui:search-container-column-text>
+				<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="iconURL" value='<%= PortalUtil.getPathContext(request) + "/images/icons.svg#modules" %>' />
+				</liferay-util:include>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+
+				<%
+				Dictionary<String, String> headers = bundle.getHeaders();
+
+				String bundleName = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_NAME));
+				String bundleDescription = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_DESCRIPTION));
+				%>
+
 				<h5>
 					<%= bundleName %>
 				</h5>

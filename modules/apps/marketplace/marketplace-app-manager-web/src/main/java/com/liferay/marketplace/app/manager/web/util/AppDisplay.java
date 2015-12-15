@@ -18,6 +18,8 @@ import java.util.List;
 
 import javax.portlet.MimeResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.framework.Bundle;
 
 /**
@@ -35,7 +37,7 @@ public interface AppDisplay extends Comparable<AppDisplay> {
 
 	public String getDisplayURL(MimeResponse mimeResponse);
 
-	public String getIconURL();
+	public String getIconURL(HttpServletRequest request);
 
 	public List<ModuleGroupDisplay> getModuleGroupDisplays();
 

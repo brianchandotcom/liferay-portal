@@ -221,7 +221,7 @@ if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
 	data.put("privateLayout", String.valueOf(privateLayout));
 	data.put("url", StringUtil.replace(addPagesURL.toString(), new String[] {HttpUtil.encodePath("{selPlid}"), HttpUtil.encodePath("{privateLayout}")}, new String[] {"{selPlid}", "{privateLayout}"}));
 
-	addPagesURL.setParameter("selPlid", (selLayout != null) ? String.valueOf(selLayout.getPlid()) : StringPool.BLANK);
+	addPagesURL.setParameter("selPlid", String.valueOf(curSelPlid));
 	addPagesURL.setParameter("privateLayout", String.valueOf(privateLayout));
 	%>
 

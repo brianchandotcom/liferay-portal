@@ -586,8 +586,17 @@ public class PoshiRunnerContext {
 	private static String _getTestBatchSingleGroups(
 		List<String> classCommandNames) {
 
-		Map<Integer, List<String>> classCommandNameGroups =
-			_getTestBatchSingleGroupsMap(classCommandNames);
+		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
+		int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+
+		int groupSize = _getAllocatedTestGroupSize(classCommandNames.size());
+
+		List<List<String>> partitions = Lists.partition(
+			classCommandNames, groupSize);
+
+		for (int i = 0; i < partitions.size(); i++) {
+			classCommandNameGroups.put(i, partitions.get(i));
+		}
 
 		StringBuilder sb = new StringBuilder();
 
@@ -622,24 +631,6 @@ public class PoshiRunnerContext {
 		}
 
 		return sb.toString();
-	}
-
-	private static Map<Integer, List<String>> _getTestBatchSingleGroupsMap(
-		List<String> classCommandNames) {
-
-		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
-		int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
-
-		int groupSize = _getAllocatedTestGroupSize(classCommandNames.size());
-
-		List<List<String>> partitions = Lists.partition(
-			classCommandNames, groupSize);
-
-		for (int i = 0; i < partitions.size(); i++) {
-			classCommandNameGroups.put(i, partitions.get(i));
-		}
-
-		return classCommandNameGroups;
 	}
 
 	private static List<String> _getTestCaseClassProperties(String className)

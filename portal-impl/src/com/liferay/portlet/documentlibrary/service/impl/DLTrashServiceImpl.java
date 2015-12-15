@@ -110,13 +110,25 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+		Repository repository = repositoryProvider.getFileShortcutRepository(
+			fileShortcutId);
+
+		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
 			getPermissionChecker(), fileShortcut, ActionKeys.UPDATE);
 
-		return dlAppHelperLocalService.moveFileShortcutFromTrash(
-			getUserId(), fileShortcut, newFolderId, serviceContext);
+		Folder destinationFolder = null;
+
+		if (newFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			destinationFolder = repository.getFolder(newFolderId);
+		}
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		return trashCapability.moveFileShortcutFromTrash(
+			getUserId(), fileShortcut, destinationFolder, serviceContext);
 	}
 
 	/**
@@ -233,13 +245,18 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 	public void restoreFileShortcutFromTrash(long fileShortcutId)
 		throws PortalException {
 
-		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+		Repository repository = repositoryProvider.getFileShortcutRepository(
+			fileShortcutId);
+
+		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
 			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
 
-		dlAppHelperLocalService.restoreFileShortcutFromTrash(
-			getUserId(), fileShortcut);
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		trashCapability.restoreFileShortcutFromTrash(getUserId(), fileShortcut);
 	}
 
 	/**
@@ -261,15 +278,6 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 			TrashCapability.class);
 
 		trashCapability.restoreFolderFromTrash(getUserId(), folder);
-	}
-
-	protected FileShortcut getFileShortcut(long fileShortcutId)
-		throws PortalException {
-
-		Repository repository = repositoryProvider.getFileShortcutRepository(
-			fileShortcutId);
-
-		return repository.getFileShortcut(fileShortcutId);
 	}
 
 	@BeanReference(type = RepositoryProvider.class)

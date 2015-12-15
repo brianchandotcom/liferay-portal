@@ -53,7 +53,7 @@
 		}
 	}
 
-	.lfr-has-device-preview {
+	.lfr-has-simulation-panel {
 		padding-right: $devicePreviewPanelWidth;
 
 		.control-menu {
@@ -70,7 +70,7 @@
 	}
 }
 
-.lfr-has-add-content, .lfr-has-device-preview, .lfr-has-edit-layout {
+.lfr-has-add-content, .lfr-has-simulation-panel, .lfr-has-edit-layout {
 	&.open {
 		padding-left: 0;
 

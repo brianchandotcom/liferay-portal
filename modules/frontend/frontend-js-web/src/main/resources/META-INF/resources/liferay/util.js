@@ -459,7 +459,7 @@
 
 					parentThemeDisplay = parentWindow.themeDisplay;
 
-					if (!parentThemeDisplay || window.name === 'devicePreviewIframe') {
+					if (!parentThemeDisplay || window.name === 'simulationDeviceIframe') {
 						break;
 					}
 					else if (!parentThemeDisplay.isStatePopUp() || parentWindow == parentWindow.parent) {

@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_MESSAGE</td>
-	<td>//div[contains(@id,'_devicePreviewContainer')]/div[contains(@class,'alert-warning')]</td>
+	<td>//div[contains(@id,'_simulationDeviceContainer')]/div[contains(@class,'alert-warning')]</td>
 	<td></td>
 </tr>
 </tbody>

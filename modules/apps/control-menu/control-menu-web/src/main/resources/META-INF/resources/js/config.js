@@ -78,17 +78,6 @@
 								'liferay-search-filter'
 							]
 						},
-						'liferay-control-menu-device-preview': {
-							path: 'control_menu_device_preview.js',
-							requires: [
-								'aui-dialog-iframe-deprecated',
-								'aui-event-input',
-								'aui-modal',
-								'liferay-portlet-base',
-								'liferay-util-window',
-								'liferay-widget-size-animation-plugin'
-							]
-						},
 						'liferay-control-menu-portlet-dd': {
 							condition: {
 								name: 'liferay-control-menu-portlet-dd',

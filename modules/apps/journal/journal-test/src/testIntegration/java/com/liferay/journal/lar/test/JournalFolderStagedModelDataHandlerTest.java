@@ -114,4 +114,19 @@ public class JournalFolderStagedModelDataHandlerTest
 			folder.getUuid(), group.getGroupId());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		JournalFolder folder = (JournalFolder)stagedModel;
+		JournalFolder importedFolder = (JournalFolder)importedStagedModel;
+
+		Assert.assertEquals(folder.getName(), importedFolder.getName());
+		Assert.assertEquals(
+			folder.getDescription(), importedFolder.getDescription());
+	}
+
 }

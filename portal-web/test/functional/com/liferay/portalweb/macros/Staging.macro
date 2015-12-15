@@ -812,6 +812,12 @@
 		<execute function="Confirm" value1="Are you sure you want to undo your last changes?" />
 	</command>
 
+	<command name="viewEditedSitePagesVariationPG">
+		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#EDITED_SITE_PAGES_VARIATION" value1="${sitePagesVariationName}" />
+	</command>
+
 	<command name="viewHistoryVersionPG">
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />

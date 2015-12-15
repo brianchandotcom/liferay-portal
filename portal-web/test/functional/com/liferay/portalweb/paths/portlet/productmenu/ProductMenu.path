@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+<td>EDIT_PAGE</td>
+	<td>//div[@class='list-group-item']//a[contains(@title,'Edit ${key_page}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET</td>
 	<td>//div[a[@aria-expanded='true']]//a[contains(@id,'Portlet') and contains(@data-title,'${key_portlet}')]</td>
 	<td></td>

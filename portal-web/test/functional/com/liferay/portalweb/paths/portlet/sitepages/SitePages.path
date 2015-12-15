@@ -266,7 +266,7 @@
 <!--STAGING-->
 <tr>
 	<td>STAGING_SITE_PAGES_VARIATION_BUTTON</td>
-	<td>//ul[@aria-label='Site Pages']/li/a/span</td>
+	<td>//a[contains(@id,'ProductMenuPortlet')]/i</td>
 	<td></td>
 </tr>
 <tr>

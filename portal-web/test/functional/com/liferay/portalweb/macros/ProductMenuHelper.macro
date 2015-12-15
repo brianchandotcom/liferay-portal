@@ -38,7 +38,7 @@
 
 		<var name="key_page" value="${page}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" value1="${page}" />
+		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" value1="${page}" />
 	</command>
 
 	<command name="gotoEditPublicPages">

@@ -167,6 +167,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>diff</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.DiffTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>diffResults</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sourceName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>targetName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>horizontal-card</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.HorizontalCardTag</tag-class>

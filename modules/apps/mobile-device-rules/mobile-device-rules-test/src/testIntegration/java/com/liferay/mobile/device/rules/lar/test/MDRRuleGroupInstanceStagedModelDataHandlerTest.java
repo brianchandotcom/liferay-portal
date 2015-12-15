@@ -143,6 +143,23 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 			ruleGroup.getUuid(), group.getGroupId());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		MDRRuleGroupInstance ruleGroupInstance =
+			(MDRRuleGroupInstance)stagedModel;
+		MDRRuleGroupInstance importedRuleGroupInstance =
+			(MDRRuleGroupInstance)importedStagedModel;
+
+		Assert.assertEquals(
+			ruleGroupInstance.getPriority(),
+			importedRuleGroupInstance.getPriority());
+	}
+
 	protected Layout layout;
 
 }

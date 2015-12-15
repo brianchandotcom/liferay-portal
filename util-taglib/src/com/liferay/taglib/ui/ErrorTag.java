@@ -39,11 +39,6 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		return super.doStartTag();
 	}
 
-	@Override
-	protected int processStartTag() throws Exception {
-		return EVAL_BODY_BUFFERED;
-	}
-
 	public void setException(Class<?> exception) {
 		_exception = exception;
 
@@ -100,6 +95,11 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	@Override
+	protected int processStartTag() throws Exception {
+		return EVAL_BODY_BUFFERED;
 	}
 
 	@Override

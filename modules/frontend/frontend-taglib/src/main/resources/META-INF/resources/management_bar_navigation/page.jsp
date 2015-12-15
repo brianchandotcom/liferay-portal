@@ -18,20 +18,13 @@
 
 <%
 List<FilterNavigationItem> filterNavigationItems = (List<FilterNavigationItem>)request.getAttribute("liferay-frontend:management-bar-navigation:filterNavigationItems");
-String navigationParam = (String)request.getAttribute("liferay-frontend:management-bar-navigation:navigationParam");
+String label = (String)request.getAttribute("liferay-frontend:management-bar-navigation:label");
 %>
 
 <c:if test="<%= ListUtil.isNotEmpty(filterNavigationItems) %>">
-
-	<%
-	FilterNavigationItem filterNavigationItem = filterNavigationItems.get(0);
-
-	String navigationKey = ParamUtil.getString(request, navigationParam, filterNavigationItem.getLabel());
-	%>
-
 	<li class="dropdown">
 		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter" data-toggle="dropdown" href="javascript:;">
-			<span class="management-bar-item-title"><liferay-ui:message key="<%= navigationKey %>" /></span>
+			<span class="management-bar-item-title"><liferay-ui:message key="<%= label %>" /></span>
 			<span class="icon-sort"></span>
 		</a>
 

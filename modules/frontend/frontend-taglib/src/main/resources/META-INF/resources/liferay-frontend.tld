@@ -491,6 +491,11 @@
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarNavigationTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>navigationKeys</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

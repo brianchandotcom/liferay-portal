@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 		return _filterNavigationItems;
 	}
 
+	public void setLabel(String label) {
+		_label = label;
+	}
+
 	public void setNavigationKeys(String[] navigationKeys) {
 		_navigationKeys = navigationKeys;
 	}
@@ -64,6 +69,7 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 	@Override
 	protected void cleanUp() {
 		_filterNavigationItems = new ArrayList<>();
+		_label = null;
 		_navigationKeys = null;
 		_navigationParam = "navigation";
 		_portletURL = null;
@@ -108,15 +114,17 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 		request.setAttribute(
 			"liferay-frontend:management-bar-navigation:filterNavigationItems",
 			_filterNavigationItems);
+
+		if (Validator.isNull(_label)) {
+			FilterNavigationItem filterNavigationItem =
+				_filterNavigationItems.get(0);
+
+			_label = ParamUtil.getString(
+				request, _navigationParam, filterNavigationItem.getLabel());
+		}
+
 		request.setAttribute(
-			"liferay-frontend:management-bar-navigation:navigationKeys",
-			_navigationKeys);
-		request.setAttribute(
-			"liferay-frontend:management-bar-navigation:navigationParam",
-			_navigationParam);
-		request.setAttribute(
-			"liferay-frontend:management-bar-navigation:portletURL",
-			_portletURL);
+			"liferay-frontend:management-bar-navigation:label", _label);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -125,6 +133,7 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 
 	private List<FilterNavigationItem> _filterNavigationItems =
 		new ArrayList<>();
+	private String _label;
 	private String[] _navigationKeys;
 	private String _navigationParam = "navigation";
 	private PortletURL _portletURL;

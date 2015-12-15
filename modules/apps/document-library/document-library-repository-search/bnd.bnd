@@ -16,3 +16,31 @@ Include-Resource:\
 	lib/lucene-queries.jar=lib/lucene-queries.jar,\
 	lib/lucene-queryparser.jar=lib/lucene-queryparser.jar,\
 	lib/lucene-sandbox.jar=lib/lucene-sandbox.jar
+Liferay-Releng-App-Description:
+Liferay-Releng-App-Title: Collaboration
+Liferay-Releng-Bundle: true
+Liferay-Releng-Category: Communication
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Dependent-Apps:\
+	com.liferay.message.boards.*,\
+	com.liferay.ratings.*,\
+	com.liferay.announcements.web,\
+	com.liferay.blogs.*,\
+	com.liferay.bookmarks.*,\
+	com.liferay.comment.*,\
+	com.liferay.document.library.*,\
+	com.liferay.flags.web,\
+	com.liferay.invitation.web,\
+	com.liferay.item.selector.*,\
+	com.liferay.mentions.*,\
+	com.liferay.microblogs.*,\
+	com.liferay.portal.parser.bbcode,\
+	com.liferay.social.*,\
+	com.liferay.wiki.*
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library
+Liferay-Releng-Public: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: false

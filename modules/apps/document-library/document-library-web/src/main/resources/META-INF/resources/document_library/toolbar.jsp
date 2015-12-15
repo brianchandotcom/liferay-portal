@@ -85,13 +85,13 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 		String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE_TO_TRASH + "'}); void(0);";
 		%>
 
-		<aui:a cssClass="btn" href="<%= taglibURL %>" icon="trash" id="moveToTrashAction" />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="trash" id="moveToTrashAction" label="delete" />
 
 		<%
 		taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
 		%>
 
-		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-remove" id="deleteAction" />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="trash" id="deleteAction" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

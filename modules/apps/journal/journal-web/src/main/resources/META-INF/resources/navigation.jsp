@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
-
-long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
-
 Map<String, Object> data = new HashMap<>();
 
 data.put("qa-id", "navigation");
@@ -29,37 +25,6 @@ data.put("qa-id", "navigation");
 <aui:nav-bar cssClass="collapse-basic-search" data="<%= data %>" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item label="web-content" selected="<%= true %>" />
-
-		<aui:nav-item
-			dropdown="<%= true %>"
-			label='<%= HtmlUtil.escape(LanguageUtil.get(request, "structures")) %>'
-		>
-
-			<%
-			List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(company.getCompanyId(), groupIds, PortalUtil.getClassNameId(JournalArticle.class), WorkflowConstants.STATUS_APPROVED);
-
-			for (DDMStructure ddmStructure : ddmStructures) {
-			%>
-
-				<portlet:renderURL var="viewDDMStructureArticlesURL">
-					<portlet:param name="browseBy" value="structure" />
-					<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-					<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
-					<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item
-					href="<%= viewDDMStructureArticlesURL %>"
-					label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
-					localizeLabel="<%= false %>"
-					selected="<%= ddmStructureKey.equals(ddmStructure.getStructureKey()) %>"
-				/>
-
-			<%
-			}
-			%>
-
-		</aui:nav-item>
 	</aui:nav>
 
 	<aui:nav-bar-search>

@@ -38,11 +38,39 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
+	<%
+	String navigation = ParamUtil.getString(request, "navigation");
+	%>
+
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "recent", "mine"} %>'
-			portletURL="<%= journalDisplayContext.getPortletURL() %>"
-		/>
+		<liferay-frontend:management-bar-navigation>
+
+			<%
+			PortletURL navigationAllURL = journalDisplayContext.getPortletURL();
+
+			navigationAllURL.setParameter("navigation", "all");
+			%>
+
+			<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("all") %>' label="all" url="<%= navigationAllURL.toString() %>" />
+
+			<%
+			PortletURL navigationRecentURL = journalDisplayContext.getPortletURL();
+
+			navigationRecentURL.setParameter("navigation", "recent");
+			%>
+
+			<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("recent") %>' label="recent" url="<%= navigationRecentURL.toString() %>" />
+
+			<%
+			PortletURL navigationMineURL = journalDisplayContext.getPortletURL();
+
+			navigationMineURL.setParameter("navigation", "mine");
+			%>
+
+			<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("mine") %>' label="mine" url="<%= navigationMineURL.toString() %>" />
+
+			<liferay-frontend:management-bar-navigation-item id="structures" label="structures" url="javascript:;" />
+		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-filter
 			label="status"
@@ -94,4 +122,46 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			);
 		}
 	}
+</aui:script>
+
+<aui:script use="liferay-item-selector-dialog">
+	var form = $(document.<portlet:namespace />fm);
+
+	<portlet:renderURL var="viewDDMStructureArticlesURL">
+		<portlet:param name="browseBy" value="structure" />
+		<portlet:param name="navigation" value="structure" />
+		<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+		<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
+	</portlet:renderURL>
+
+	$('#<portlet:namespace />structures').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectStructure',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							if (selectedItem) {
+								var uri = '<%= viewDDMStructureArticlesURL %>';
+
+								uri = Liferay.Util.addParams('<portlet:namespace />ddmStructureKey=' + selectedItem, uri);
+
+								location.href = uri;
+							}
+						}
+					},
+					'strings.add': '<liferay-ui:message key="done" />',
+					title: '<liferay-ui:message key="select-structure" />',
+					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /><portlet:param name="ddmStructureKey" value="<%= journalDisplayContext.getDDMStructureKey() %>" /></portlet:renderURL>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
 </aui:script>

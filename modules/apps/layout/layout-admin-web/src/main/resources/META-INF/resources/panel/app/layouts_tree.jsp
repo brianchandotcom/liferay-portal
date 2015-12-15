@@ -81,7 +81,7 @@ if (group == null) {
 						<span><%= HtmlUtil.escape(LanguageUtil.get(request, layoutSetBranch.getName())) %></span>
 
 						<span class="nav-equal-height-heading-field">
-							<liferay-ui:icon-menu direction="down" icon="../aui/cog" message="" showArrow="<%= false %>">
+							<liferay-ui:icon-menu direction="down" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
 
 								<%
 								Map<String, Object> data = new HashMap<String, Object>();

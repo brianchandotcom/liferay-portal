@@ -53,8 +53,6 @@ renderResponse.setTitle(configurationModel.getName());
 			<c:choose>
 				<c:when test="<%= configurationModel.getConfiguration() != null %>">
 					<aui:button type="submit" value="update" />
-
-					<aui:button onClick='<%= renderResponse.getNamespace() + "deleteConfiguration();" %>' value="delete" />
 				</c:when>
 				<c:otherwise>
 					<aui:button type="submit" value="save" />
@@ -65,11 +63,3 @@ renderResponse.setTitle(configurationModel.getName());
 		</aui:button-row>
 	</aui:form>
 </div>
-
-<aui:script>
-	function <portlet:namespace />deleteConfiguration() {
-		document.<portlet:namespace />fm.action = '<%= deleteConfigurationActionURL %>';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>

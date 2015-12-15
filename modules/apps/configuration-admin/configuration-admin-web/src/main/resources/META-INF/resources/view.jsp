@@ -122,7 +122,7 @@ portletURL.setParameter("configurationCategory", configurationCategory);
 								</portlet:actionURL>
 
 								<liferay-ui:icon
-									message="delete"
+									message='<%= configurationModel.isFactory() ? "delete" : "reset-default-values" %>'
 									method="post"
 									url="<%= deleteConfigActionURL %>"
 								/>

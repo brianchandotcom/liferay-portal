@@ -1,3 +1,5 @@
+import com.liferay.gradle.plugins.gulp.ExecuteGulpTask
+
 buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "latest.release"
@@ -12,12 +14,8 @@ buildscript {
 	}
 }
 
-apply plugin: "java"
-
 apply plugin: "com.liferay.gulp"
 
-task gulpDeploy(type: 'GulpTask') {
-	dependsOn downloadGulp
-
-	gulpCommand = "deploy"
+tasks.withType(ExecuteGulpTask) {
+	dependsOn npmInstall
 }

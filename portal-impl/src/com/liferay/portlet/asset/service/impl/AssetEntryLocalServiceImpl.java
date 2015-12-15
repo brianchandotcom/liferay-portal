@@ -46,6 +46,7 @@ import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.base.AssetEntryLocalServiceBaseImpl;
@@ -88,7 +89,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		// Tags
 
 		for (AssetTag tag : tags) {
-			if (entry.isVisible()) {
+			if (isModifyAssetCount(entry)) {
 				assetTagLocalService.decrementAssetCount(
 					tag.getTagId(), entry.getClassNameId());
 			}
@@ -728,7 +729,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			assetEntryPersistence.setAssetTags(entry.getEntryId(), tags);
 
-			if (entry.isVisible()) {
+			if (isModifyAssetCount(entry)) {
 				boolean isNew = entry.isNew();
 
 				assetEntryPersistence.updateImpl(entry);
@@ -1121,6 +1122,29 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 
 		return classNameIds;
+	}
+
+	protected boolean isModifyAssetCount(AssetEntry entry) throws PortalException {
+		if (entry.isVisible()) {
+			return true;
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(entry.getClassNameId());
+
+		if (assetRendererFactory == null) {
+			return true;
+		}
+
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
+			entry.getClassPK());
+
+		if (assetRenderer.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void reindex(AssetEntry entry) throws PortalException {

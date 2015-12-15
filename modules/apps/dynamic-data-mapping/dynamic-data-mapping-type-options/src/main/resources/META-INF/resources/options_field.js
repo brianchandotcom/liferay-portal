@@ -20,7 +20,7 @@ AUI.add(
 
 					strings: {
 						value: {
-							addAnOption: Liferay.Language.get('add-an-option')
+							addOptionMessage: Liferay.Language.get('enter-an-option-for-users-to-select')
 						}
 					},
 
@@ -298,7 +298,7 @@ AUI.add(
 						instance._mainField = new Liferay.DDM.Field.KeyValue(
 							{
 								enableEvaluations: false,
-								placeholder: strings.addAnOption,
+								placeholder: strings.addOptionMessage,
 								repeatable: true,
 								showLabel: false,
 								visibilityExpression: 'true'

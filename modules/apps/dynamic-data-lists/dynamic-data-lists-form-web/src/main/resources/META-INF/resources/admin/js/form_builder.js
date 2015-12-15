@@ -168,7 +168,10 @@ AUI.add(
 
 						instance.showFieldSettingsPanel(
 							instance.createField(fieldType),
-							fieldType.get('label')
+							Lang.sub(
+								Liferay.Language.get('add-x-field'),
+								[fieldType.get('label')]
+							)
 						);
 					},
 

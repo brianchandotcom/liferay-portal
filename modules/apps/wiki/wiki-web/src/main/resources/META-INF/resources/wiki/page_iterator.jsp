@@ -114,12 +114,10 @@ if (navigation.equals("all-pages") || navigation.equals("categorized-pages") || 
 
 WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, node);
 
-String emptyResultsMessage = wikiListPagesDisplayContext.getEmptyResultsMessage();
-
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, headerNames, emptyResultsMessage);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, headerNames, wikiListPagesDisplayContext.getEmptyResultsMessage());
 
 Map orderableHeaders = new HashMap();
 

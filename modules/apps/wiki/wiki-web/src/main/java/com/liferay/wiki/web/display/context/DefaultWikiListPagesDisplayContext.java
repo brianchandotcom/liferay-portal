@@ -229,15 +229,14 @@ public class DefaultWikiListPagesDisplayContext
 		else if (navigation.equals("draft-pages") ||
 				 navigation.equals("pending-pages")) {
 
-			User user = themeDisplay.getUser();
-
-			long draftUserId = user.getUserId();
+			long draftUserId = themeDisplay.getUserId();
 
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();
 
 			if (permissionChecker.isContentReviewer(
-					user.getCompanyId(), themeDisplay.getScopeGroupId())) {
+					themeDisplay.getCompanyId(),
+					themeDisplay.getScopeGroupId())) {
 
 				draftUserId = 0;
 			}
@@ -269,8 +268,6 @@ public class DefaultWikiListPagesDisplayContext
 			WikiPage wikiPage = WikiPageServiceUtil.getPage(
 				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(),
 				wikiGroupServiceConfiguration.frontPageName());
-
-			results = new ArrayList<>();
 
 			searchContainer.setTotal(1);
 

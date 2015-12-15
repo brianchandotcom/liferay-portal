@@ -4,3 +4,34 @@ Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
+Liferay-Releng-App-Description:
+Liferay-Releng-App-Title: Web Content Management
+Liferay-Releng-Bundle: true
+Liferay-Releng-Category: Productivity
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Dependent-Apps:\
+	com.liferay.application.list.*,\
+	com.liferay.asset.*,\
+	com.liferay.control.menu.*,\
+	com.liferay.iframe.web\
+	com.liferay.journal.*,\
+	com.liferay.layout.*,\
+	com.liferay.portal.portlet.configuration.icon.locator,\
+	com.liferay.portal.portlet.toolbar.contributor.locator,\
+	com.liferay.portlet.configuration.web,\
+	com.liferay.portlet.css.web,\
+	com.liferay.portlet.exportimport.*,\
+	com.liferay.portlet.staging.*,\
+	com.liferay.product.navigation.*,\
+	com.liferay.resources.importer,\
+	com.liferay.rss.web\
+	com.liferay.site.*,\
+	com.liferay.trash.web,\
+	com.liferay.xsl.content.web
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Asset
+Liferay-Releng-Public: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: false

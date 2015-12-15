@@ -209,7 +209,7 @@ public class RecurrenceSerializer {
 		}
 
 		return CalendarFactoryUtil.getCalendar(
-			dateValue.year(), dateValue.month()-1, dateValue.day(), hour,
+			dateValue.year(), dateValue.month() - 1, dateValue.day(), hour,
 			minute, second, 0, timeZone);
 	}
 

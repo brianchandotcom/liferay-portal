@@ -254,4 +254,26 @@ public class WikiPageStagedModelDataHandlerTest
 		validateImport(dependentStagedModelsMap, group);
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		WikiPage page = (WikiPage)stagedModel;
+		WikiPage importedPage = (WikiPage)importedStagedModel;
+
+		Assert.assertEquals(page.getTitle(), importedPage.getTitle());
+		Assert.assertEquals(page.getVersion(), importedPage.getVersion(), 0L);
+		Assert.assertEquals(page.isMinorEdit(), importedPage.isMinorEdit());
+		Assert.assertEquals(page.getSummary(), importedPage.getSummary());
+		Assert.assertEquals(page.getFormat(), importedPage.getFormat());
+		Assert.assertEquals(page.isHead(), importedPage.isHead());
+		Assert.assertEquals(
+			page.getParentTitle(), importedPage.getParentTitle());
+		Assert.assertEquals(
+			page.getRedirectTitle(), importedPage.getRedirectTitle());
+	}
+
 }

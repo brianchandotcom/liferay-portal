@@ -448,16 +448,10 @@ public class PoshiRunnerContext {
 		}
 
 		if (PropsValues.TEST_BATCH_RUN_TYPE.equals("sequential")) {
-			Map<Integer, List<String>> classCommandNameGroups =
-				_getTestBatchSequentialGroupsMap(classCommandNames);
-
-			return _getTestBatchSequentialGroups(classCommandNameGroups);
+			return _getTestBatchSequentialGroups(classCommandNames);
 		}
 		else if (PropsValues.TEST_BATCH_RUN_TYPE.equals("single")) {
-			Map<Integer, List<String>> classCommandNameGroups =
-				_getTestBatchSingleGroupsMap(classCommandNames);
-
-			return _getTestBatchSingleGroups(classCommandNameGroups);
+			return _getTestBatchSingleGroups(classCommandNames);
 		}
 
 		throw new Exception(
@@ -465,7 +459,11 @@ public class PoshiRunnerContext {
 	}
 
 	private static String _getTestBatchSequentialGroups(
-		Map<Integer, List<String>> classCommandNameGroups) {
+			List<String> classCommandNames)
+		throws Exception {
+
+		Map<Integer, List<String>> classCommandNameGroups =
+			_getTestBatchSequentialGroupsMap(classCommandNames);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -579,22 +577,22 @@ public class PoshiRunnerContext {
 
 		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
 		int classCommandNameIndex = 0;
+		Map<Set<String>, Collection<String>> map = multimap.asMap();
 
-		for (Map.Entry<Set<String>, Collection<String>> entry :
-				multimap.asMap().entrySet()) {
-
-			List<String> classCommandNameGroup = new ArrayList(
-				entry.getValue());
+		for (Set<String> key : map.keySet()) {
+			List<String> classCommandNameGroup = new ArrayList(map.get(key));
 
 			Collections.sort(classCommandNameGroup);
 
 			int groupSize = _getAllocatedTestGroupSize(
 				classCommandNameGroup.size());
 
-			for (List<String> partition : Lists.partition(
-					classCommandNameGroup, groupSize)) {
+			List<List<String>> partitions = Lists.partition(
+				classCommandNameGroup, groupSize);
 
-				classCommandNameGroups.put(classCommandNameIndex, partition);
+			for (int j = 0; j < partitions.size(); j++) {
+				classCommandNameGroups.put(
+					classCommandNameIndex, partitions.get(j));
 
 				classCommandNameIndex++;
 			}
@@ -604,7 +602,10 @@ public class PoshiRunnerContext {
 	}
 
 	private static String _getTestBatchSingleGroups(
-		Map<Integer, List<String>> classCommandNameGroups) {
+		List<String> classCommandNames) {
+
+		Map<Integer, List<String>> classCommandNameGroups =
+			_getTestBatchSingleGroupsMap(classCommandNames);
 
 		StringBuilder sb = new StringBuilder();
 

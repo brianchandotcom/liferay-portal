@@ -26,6 +26,7 @@ long roleId = ParamUtil.getLong(request, "roleId");
 Role role = RoleServiceUtil.fetchRole(roleId);
 
 int type = ParamUtil.getInteger(request, "type");
+
 String subtype = BeanParamUtil.getString(role, request, "subtype");
 
 portletDisplay.setShowBackIcon(true);

@@ -64,13 +64,11 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -102,7 +100,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -427,30 +424,19 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public boolean isIndexerEnabled() {
-		PortletPreferences portletPreferences =
-			PortalPreferencesLocalServiceUtil.getPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-
 		String className = getClassName();
 
-		String indexerEnabled = portletPreferences.getValue(
-			className.concat("_indexerEnabled"), null);
+		if (_indexerEnabled == null) {
+			String indexerEnabled = PropsUtil.get(
+				PropsKeys.INDEXER_ENABLED,
+				new com.liferay.portal.kernel.configuration.Filter(className));
 
-		if (indexerEnabled == null) {
-			if (_indexerEnabled == null) {
-				indexerEnabled = PropsUtil.get(
-					PropsKeys.INDEXER_ENABLED,
-					new com.liferay.portal.kernel.configuration.Filter(
-						className));
-
-				_indexerEnabled = GetterUtil.getBoolean(indexerEnabled, true);
-			}
+			_indexerEnabled = GetterUtil.getBoolean(indexerEnabled, true);
 
 			return _indexerEnabled;
 		}
 
-		return GetterUtil.getBoolean(indexerEnabled, true);
+		return _indexerEnabled;
 	}
 
 	@Override
@@ -712,23 +698,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public void setIndexerEnabled(boolean indexerEnabled) {
-		PortletPreferences portletPreferences =
-			PortalPreferencesLocalServiceUtil.getPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-
-		try {
-			String className = getClassName();
-
-			portletPreferences.setValue(
-				className.concat("_indexerEnabled"),
-				String.valueOf(indexerEnabled));
-
-			portletPreferences.store();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		_indexerEnabled = indexerEnabled;
 	}
 
 	public void setSelectAllLocales(boolean selectAllLocales) {

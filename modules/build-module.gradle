@@ -45,7 +45,6 @@ if (FileUtil.exists(project, "xsd")) {
 	apply plugin: "com.liferay.xsd.builder"
 }
 
-File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File portalRootDir = _getPortalRootDir(project)
 
@@ -115,47 +114,17 @@ configurations {
 		}
 	}
 
-	portal
 	portalTest
-
-	alloyTaglib {
-		extendsFrom configurations.runtime
-		extendsFrom portal
-	}
 }
 
 dependencies {
-	alloyTaglib group: "com.liferay", name: "com.liferay.alloy.taglib", version: "1.1.6"
-	alloyTaglib group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
-
-	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "1.0.13"
-	javadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "1.0.8"
-	jspCTool group: "com.liferay", name: "com.liferay.jasper.jspc", version: "1.0.4"
-	jspCTool group: "org.apache.ant", name: "ant", version: "1.9.4"
-	langBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "1.0.3"
-
-	portal files(appServerClassesPortalDir)
-	portal fileTree(dir: appServerLibPortalDir, include: "*.jar")
-	portal fileTree(dir: liferay.appServerLibGlobalDir, exclude: "mail.jar", include: "*.jar")
-	portal group: "com.liferay", name: "net.sf.jargs", version: "1.0"
-	portal group: "com.thoughtworks.qdox", name: "qdox", version: "1.12.1"
-	portal group: "javax.activation", name: "activation", version: "1.1"
-	portal group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	portal group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
-
 	portalTest group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion
 	portalTest group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
-
-	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.101"
 
 	testCompile group: "org.powermock", name: "powermock-api-mockito", version: "1.6.1"
 	testCompile group: "org.powermock", name: "powermock-core", version: "1.6.1"
 	testCompile group: "org.powermock", name: "powermock-module-junit4", version: "1.6.1"
 	testCompile group: "org.springframework", name: "spring-test", version: "3.2.15.RELEASE"
-
-	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "1.0.0"
-	whip group: "com.liferay", name: "com.liferay.whip", version: "1.0.0"
-	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "1.0.0"
 }
 
 eclipse {
@@ -300,12 +269,6 @@ testIntegration {
 	reports.junitXml.destination = testIntegrationResultsDir
 }
 
-pluginManager.withPlugin("com.liferay.alloy.taglib") {
-	buildTaglibs {
-		classpath = configurations.alloyTaglib
-	}
-}
-
 pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 	afterEvaluate {
 		buildPluginDescriptor {
@@ -322,26 +285,17 @@ pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 	}
 }
 
-pluginManager.withPlugin("com.liferay.portal.tools.service.builder") {
-	dependencies {
-		if (portalRootDir) {
+if (portalRootDir) {
+	pluginManager.withPlugin("com.liferay.portal.tools.service.builder") {
+		configurations {
+			serviceBuilder {
+				exclude group: "com.liferay", module: "com.liferay.portal.tools.service.builder"
+			}
+		}
+
+		dependencies {
 			serviceBuilder fileTree(dir: new File(portalRootDir, "tools/sdk/tmp/portal-tools/portal-tools-service-builder"), include: "*.jar")
 		}
-		else {
-			serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.66"
-		}
-	}
-}
-
-pluginManager.withPlugin("com.liferay.portal.tools.upgrade.table.builder") {
-	dependencies {
-		upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "1.0.2"
-	}
-}
-
-pluginManager.withPlugin("com.liferay.portal.tools.wsdd.builder") {
-	dependencies {
-		wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "1.0.4"
 	}
 }
 

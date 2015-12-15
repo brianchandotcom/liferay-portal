@@ -96,11 +96,15 @@ public class UnstableMessageUtil {
 					sb.append("/console\">Console Output</a>");
 				}
 
+				String errorDetails = caseJSONObject.isNull(
+					"errorDetails") ?
+						null : caseJSONObject.getString("errorDetails");
+				String errorStackTrace = caseJSONObject.isNull(
+					"errorStackTrace") ?
+						null : caseJSONObject.getString("errorStackTrace");
+
 				sb.append("<pre>");
-				sb.append(
-					_processError(
-						caseJSONObject.getString("errorDetails"),
-						caseJSONObject.getString("errorStackTrace")));
+				sb.append(_processError(errorDetails, errorStackTrace));
 				sb.append("</pre>");
 
 				sb.append("</li>");
@@ -186,6 +190,10 @@ public class UnstableMessageUtil {
 	private static String _processError(
 		String errorDetails, String errorStackTrace) {
 
+		if ((errorStackTrace == null) || (errorStackTrace.length() == 0)) {
+			return "";
+		}
+
 		String message = errorStackTrace;
 
 		int x = message.indexOf("Caused by:");
@@ -194,7 +202,7 @@ public class UnstableMessageUtil {
 			message = message.substring(message.lastIndexOf("\n", x));
 		}
 
-		if (!message.contains(errorDetails)) {
+		if ((errorDetails != null) && !message.contains(errorDetails)) {
 			message = errorDetails + "\n" + message;
 		}
 

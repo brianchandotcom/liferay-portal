@@ -579,7 +579,6 @@ public class PoshiRunnerContext {
 
 		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
 		int classCommandNameIndex = 0;
-		int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
 
 		for (Map.Entry<Set<String>, Collection<String>> entry :
 				multimap.asMap().entrySet()) {
@@ -589,11 +588,8 @@ public class PoshiRunnerContext {
 
 			Collections.sort(classCommandNameGroup);
 
-			double groupTestCount = classCommandNameGroup.size();
-
-			double groupCount = Math.ceil(groupTestCount / maxGroupSize);
-
-			int groupSize = (int)Math.ceil(groupTestCount / groupCount);
+			int groupSize = _getAllocatedTestGroupSize(
+				classCommandNameGroup.size());
 
 			for (List<String> partition : Lists.partition(
 					classCommandNameGroup, groupSize)) {
@@ -648,14 +644,10 @@ public class PoshiRunnerContext {
 	private static Map<Integer, List<String>> _getTestBatchSingleGroupsMap(
 		List<String> classCommandNames) {
 
-		int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
-		double totalTestCount = classCommandNames.size();
-
-		double totalGroupCount = Math.ceil(totalTestCount / maxGroupSize);
-
-		int groupSize = (int)Math.ceil(totalTestCount / totalGroupCount);
-
 		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
+		int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+
+		int groupSize = _getAllocatedTestGroupSize(classCommandNames.size());
 
 		List<List<String>> partitions = Lists.partition(
 			classCommandNames, groupSize);

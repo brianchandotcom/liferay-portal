@@ -462,8 +462,53 @@ public class PoshiRunnerContext {
 			List<String> classCommandNames)
 		throws Exception {
 
-		Map<Integer, List<String>> classCommandNameGroups =
-			_getTestBatchSequentialGroupsMap(classCommandNames);
+		Multimap<Set<String>, String> multimap = HashMultimap.create();
+
+		for (String classCommandName : classCommandNames) {
+			String className =
+				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+					classCommandName);
+
+			Set<String> properties = new TreeSet<>();
+
+			properties.addAll(_getTestCaseClassProperties(className));
+			properties.addAll(_getTestCaseCommandProperties(classCommandName));
+
+			for (Iterator<String> iterator = properties.iterator();
+					iterator.hasNext();) {
+
+				String next = iterator.next();
+
+				if (next.matches(PropsValues.TEST_BATCH_GROUP_IGNORE_REGEX)) {
+					iterator.remove();
+				}
+			}
+
+			multimap.put(properties, classCommandName);
+		}
+
+		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
+		int classCommandNameIndex = 0;
+		Map<Set<String>, Collection<String>> map = multimap.asMap();
+
+		for (Set<String> key : map.keySet()) {
+			List<String> classCommandNameGroup = new ArrayList(map.get(key));
+
+			Collections.sort(classCommandNameGroup);
+
+			int groupSize = _getAllocatedTestGroupSize(
+				classCommandNameGroup.size());
+
+			List<List<String>> partitions = Lists.partition(
+				classCommandNameGroup, groupSize);
+
+			for (int j = 0; j < partitions.size(); j++) {
+				classCommandNameGroups.put(
+					classCommandNameIndex, partitions.get(j));
+
+				classCommandNameIndex++;
+			}
+		}
 
 		StringBuilder sb = new StringBuilder();
 
@@ -526,61 +571,6 @@ public class PoshiRunnerContext {
 		}
 
 		return sb.toString();
-	}
-
-	private static Map<Integer, List<String>> _getTestBatchSequentialGroupsMap(
-			List<String> classCommandNames)
-		throws Exception {
-
-		Multimap<Set<String>, String> multimap = HashMultimap.create();
-
-		for (String classCommandName : classCommandNames) {
-			String className =
-				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-					classCommandName);
-
-			Set<String> properties = new TreeSet<>();
-
-			properties.addAll(_getTestCaseClassProperties(className));
-			properties.addAll(_getTestCaseCommandProperties(classCommandName));
-
-			for (Iterator<String> iterator = properties.iterator();
-					iterator.hasNext();) {
-
-				String next = iterator.next();
-
-				if (next.matches(PropsValues.TEST_BATCH_GROUP_IGNORE_REGEX)) {
-					iterator.remove();
-				}
-			}
-
-			multimap.put(properties, classCommandName);
-		}
-
-		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
-		int classCommandNameIndex = 0;
-		Map<Set<String>, Collection<String>> map = multimap.asMap();
-
-		for (Set<String> key : map.keySet()) {
-			List<String> classCommandNameGroup = new ArrayList(map.get(key));
-
-			Collections.sort(classCommandNameGroup);
-
-			int groupSize = _getAllocatedTestGroupSize(
-				classCommandNameGroup.size());
-
-			List<List<String>> partitions = Lists.partition(
-				classCommandNameGroup, groupSize);
-
-			for (int j = 0; j < partitions.size(); j++) {
-				classCommandNameGroups.put(
-					classCommandNameIndex, partitions.get(j));
-
-				classCommandNameIndex++;
-			}
-		}
-
-		return classCommandNameGroups;
 	}
 
 	private static String _getTestBatchSingleGroups(

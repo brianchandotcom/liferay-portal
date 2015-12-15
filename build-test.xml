@@ -3225,6 +3225,7 @@ go]]></replacevalue>
 				<or>
 					<equals arg1="${app.server.jboss.version}" arg2="6.0.1" />
 					<equals arg1="${app.server.jboss.version}" arg2="6.1.0" />
+					<equals arg1="${app.server.jboss.version}" arg2="6.4.0" />
 				</or>
 			</and>
 			<then>

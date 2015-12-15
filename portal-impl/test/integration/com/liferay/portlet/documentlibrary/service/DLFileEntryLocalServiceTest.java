@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -216,7 +215,7 @@ public class DLFileEntryLocalServiceTest {
 				RepositoryProviderUtil.getFileEntryLocalRepository(
 					fileEntry.getFileEntryId());
 
-			RepositoryTrashUtil.moveFileEntryToTrash(
+			DLTrashLocalServiceUtil.moveFileEntryToTrash(
 				TestPropsValues.getUserId(), localRepository.getRepositoryId(),
 				fileEntry.getFileEntryId());
 		}

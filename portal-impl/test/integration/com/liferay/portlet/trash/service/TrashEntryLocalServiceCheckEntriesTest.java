@@ -16,7 +16,6 @@ package com.liferay.portlet.trash.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -47,6 +46,7 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLTrashLocalServiceUtil;
 import com.liferay.portlet.exportimport.service.StagingLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -236,7 +236,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 
 		User user = UserTestUtil.getAdminUser(fileEntry.getCompanyId());
 
-		RepositoryTrashUtil.moveFileEntryToTrash(
+		DLTrashLocalServiceUtil.moveFileEntryToTrash(
 			user.getUserId(), fileEntry.getRepositoryId(),
 			fileEntry.getFileEntryId());
 

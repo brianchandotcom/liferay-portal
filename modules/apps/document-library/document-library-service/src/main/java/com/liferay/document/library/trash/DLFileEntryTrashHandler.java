@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.capabilities.UnsupportedCapabilityException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -46,6 +45,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
+import com.liferay.portlet.documentlibrary.service.DLTrashLocalService;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -273,7 +273,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		DocumentRepository documentRepository = getDocumentRepository(classPK);
 
-		RepositoryTrashUtil.moveFileEntryFromTrash(
+		_dlTrashLocalService.moveFileEntryFromTrash(
 			userId, documentRepository.getRepositoryId(), classPK,
 			containerModelId, serviceContext);
 	}
@@ -296,7 +296,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			return;
 		}
 
-		RepositoryTrashUtil.restoreFileEntryFromTrash(
+		_dlTrashLocalService.restoreFileEntryFromTrash(
 			userId, dlFileEntry.getRepositoryId(), classPK);
 	}
 
@@ -477,6 +477,13 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		_dlFolderLocalService = dlFolderLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLTrashLocalService(
+		DLTrashLocalService dlTrashLocalService) {
+
+		_dlTrashLocalService = dlTrashLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryTrashHandler.class);
 
@@ -484,5 +491,6 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
 	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
 	private volatile DLFolderLocalService _dlFolderLocalService;
+	private volatile DLTrashLocalService _dlTrashLocalService;
 
 }

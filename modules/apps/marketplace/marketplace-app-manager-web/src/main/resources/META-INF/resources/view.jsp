@@ -118,9 +118,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 			className="com.liferay.marketplace.app.manager.web.util.AppDisplay"
 			modelVar="appDisplay"
 		>
-			<liferay-ui:search-container-column-image
-				src="<%= appDisplay.getIconURL() %>"
-			/>
+			<liferay-ui:search-container-column-text>
+				<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="iconURL" value="<%= appDisplay.getIconURL(request) %>" />
+				</liferay-util:include>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5>

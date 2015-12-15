@@ -259,6 +259,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ALL_NOTIFICATIONS</td>
+	<td>//input[contains(@id,'notifications') and contains(@class,'select-all')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SET_AS_THE_DEFAULT_ASSET_PUBLISHER_FOR_THIS_PAGE</td>
 	<td>//label[contains(.,'Set as the Default Asset Publisher for This Page')]/input[@type='checkbox']</td>
 	<td></td>

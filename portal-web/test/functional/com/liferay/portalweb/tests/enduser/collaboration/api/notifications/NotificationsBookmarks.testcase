@@ -99,7 +99,7 @@
 			<var name="folderName" value="Bookmarks Folder Name" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -123,7 +123,7 @@
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -138,11 +138,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="bookmarks entry" />
@@ -159,7 +159,7 @@
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
@@ -192,7 +192,7 @@
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -218,7 +218,7 @@
 			<var name="bookmarkURLEdit" value="http://www.liferay.com" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -233,11 +233,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="bookmarks entry" />
@@ -254,7 +254,7 @@
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 	</command>

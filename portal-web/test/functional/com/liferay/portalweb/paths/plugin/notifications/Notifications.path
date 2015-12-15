@@ -9,34 +9,18 @@
 </thead>
 <tbody>
 <tr>
-	<td>RETURN_TO_FULL_PAGE</td>
-	<td>//menu[contains(@id,'notificationsportlet')]/a</td>
+	<td>PROFILE_BADGE_COUNT</td>
+	<td>//div[@class='panel-title']//span[contains(@class,'notifications-count')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>UNREAD_COUNT</td>
-	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[@class='count']</td>
+	<td>MY_ACCOUNT_BADGE_COUNT</td>
+	<td>//a[contains(@class,'list-group-heading') and (@aria-expanded='false')]//span[contains(@class,'badge')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_NOTIFICATIONS</td>
-	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[contains(.,'Notifications')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_REQUESTS</td>
-	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[contains(.,'Requests')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_NOTIFICATION_DELIVERY</td>
-	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[contains(.,'Notification Delivery')]</td>
+	<td>NOTIFICATIONS_BADGE_COUNT</td>
+	<td>//a[contains(@id,'NotificationsPortlet')]//span[contains(@class,'badge')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,37 +31,17 @@
 <!--NOTIFICATIONS-->
 <tr>
 	<td>MARK_AS_READ</td>
-	<td>//div/a[contains(.,'Mark as Read')]</td>
+	<td>//a[@title='Mark as Read']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_CONTENT_THUMBNAIL_1</td>
-	<td>xpath=(//li[contains(@class,'user-notification')]//span[@class='user-thumbnail'])[1]</td>
+	<td>NOTIFICATIONS_TITLE</td>
+	<td>//div[@class='title']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_CONTENT_THUMBNAIL_2</td>
-	<td>xpath=(//li[contains(@class,'user-notification')]//span[@class='user-thumbnail'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NOTIFICATIONS_CONTENT_THUMBNAIL_3</td>
-	<td>xpath=(//li[contains(@class,'user-notification')]//span[@class='user-thumbnail'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NOTIFICATIONS_CONTENT_1</td>
-	<td>xpath=(//li[contains(@class,'user-notification')]//div[@class='body'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NOTIFICATIONS_CONTENT_2</td>
-	<td>xpath=(//li[contains(@class,'user-notification')]//div[@class='body'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NOTIFICATIONS_CONTENT_3</td>
-	<td>xpath=(//li[contains(@class,'user-notification')]//div[@class='body'])[3]</td>
+	<td>NOTIFICATIONS_CONTENT</td>
+	<td>//div[@class='body']</td>
 	<td></td>
 </tr>
 <tr>

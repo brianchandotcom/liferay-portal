@@ -93,7 +93,7 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -115,7 +115,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -126,11 +126,11 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="wiki page" />
@@ -147,7 +147,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
@@ -174,7 +174,7 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -197,7 +197,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -208,11 +208,11 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="wiki page" />
@@ -229,7 +229,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 	</command>

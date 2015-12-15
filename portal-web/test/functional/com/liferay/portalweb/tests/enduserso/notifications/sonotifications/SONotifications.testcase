@@ -86,16 +86,16 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="2" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute function="Click" locator1="SOUserBar#NOTIFICATION_MENU_REQUEST_CONFIRM" />
 		<execute function="Click" locator1="SOUserBar#NOTIFICATION_MENU_REQUEST_CONFIRM" />
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -177,7 +177,7 @@
 			<var name="senderNameList" value="${userName2},${userName1}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -1195,11 +1195,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -1290,11 +1290,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -1374,11 +1374,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -1388,9 +1388,9 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
-		<execute macro="Notifications#navigateToViewAllNotifications" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute function="AssertTextEquals" locator1="SONotifications#NOTIFICATIONS_NONE_MESSAGE" value1="You do not have any notifications." />
 	</command>
@@ -1477,11 +1477,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="Blogs Entry" />
@@ -1496,7 +1496,7 @@
 		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -1522,11 +1522,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="Blogs Entry" />
@@ -1541,7 +1541,7 @@
 		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitleEdit}" />
 		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContentEdit}" />
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
@@ -1631,11 +1631,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="Message Boards Message" />
@@ -1733,11 +1733,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="Message Boards Message" />
@@ -1754,7 +1754,7 @@
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -1784,11 +1784,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="Message Boards Message" />
@@ -1805,7 +1805,7 @@
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_1" value1="${threadSubjectEdit}" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="${threadBodyEdit}" />
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
@@ -1845,7 +1845,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute function="AssertClick" locator1="SOUserBar#NOTIFICATION_MENU_REQUEST_ENTRY_SENDER" value1="${userName}" />
 
@@ -2288,7 +2288,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -2480,11 +2480,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="Document" />
@@ -2500,7 +2500,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -2531,11 +2531,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="Document" />
@@ -2551,7 +2551,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitleEdit}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
@@ -2984,11 +2984,11 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute function="SikuliAssertElementPresent" locator1="SONotifications#SCREENSHOTS_NOTIFICATIONS_LONG_MICROBLOGS_COMMENT_PNG" />
 
@@ -3082,11 +3082,11 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -3112,11 +3112,11 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -3149,11 +3149,11 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -3193,11 +3193,11 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -3206,11 +3206,11 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -4031,11 +4031,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -4061,11 +4061,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -4175,11 +4175,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -4209,11 +4209,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -4271,11 +4271,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -4392,11 +4392,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -4427,11 +4427,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -4653,11 +4653,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -4682,11 +4682,11 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -4722,11 +4722,11 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -4801,11 +4801,11 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -4871,11 +4871,11 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -4950,11 +4950,11 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -5026,11 +5026,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -5089,11 +5089,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -5167,9 +5167,9 @@
 			<var name="senderName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
-		<execute macro="Notifications#navigateToViewAllNotifications" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute function="SikuliAssertElementPresent" locator1="SONotifications#SCREENSHOTS_NOTIFICATIONS_PROFILE_PICTURE_PNG" />
 		<execute function="Click" locator1="SONotifications#REQUESTS_LIST_LINK" />
@@ -5280,11 +5280,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 
@@ -5317,11 +5317,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
@@ -5928,7 +5928,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute function="SikuliAssertElementPresent" locator1="SONotifications#SCREENSHOTS_NOTIFICATIONS_LONG_ANNOUNCEMENT_ENTRY_TITLE_PNG" />
 
@@ -6279,11 +6279,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="Wiki Page" />
@@ -6298,7 +6298,7 @@
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER_2" value1="${wikiPageTitle}" />
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -6331,11 +6331,11 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="Wiki Page" />
@@ -6350,7 +6350,7 @@
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER_2" value1="${wikiPageTitle}" />
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContentEdit}" />
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
 	</command>

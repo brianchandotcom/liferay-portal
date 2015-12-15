@@ -72,7 +72,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDLPortletToolbarContributor(
+	protected void setBookmarksPortletToolbarContributor(
 		BookmarksPortletToolbarContributor bookmarksPortletToolbarContributor) {
 
 		_bookmarksPortletToolbarContributor =

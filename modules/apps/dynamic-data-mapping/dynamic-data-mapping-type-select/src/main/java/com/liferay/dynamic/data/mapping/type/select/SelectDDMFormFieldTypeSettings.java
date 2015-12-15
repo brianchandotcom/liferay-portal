@@ -37,8 +37,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"label", "tip", "required", "options",
-								"dataSourceType", "ddmDataProviderInstanceId"
+								"label", "tip", "required", "dataSourceType",
+								"options", "ddmDataProviderInstanceId"
 							}
 						)
 					}
@@ -53,11 +53,10 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"validation", "showLabel", "repeatable",
-								"multiple", "predefinedValue",
-								"visibilityExpression", "fieldNamespace",
-								"indexType", "localizable", "readOnly",
-								"dataType", "type", "name"
+								"predefinedValue", "visibilityExpression",
+								"validation", "fieldNamespace", "indexType",
+								"localizable", "readOnly", "dataType", "type",
+								"name", "showLabel", "repeatable", "multiple"
 							}
 						)
 					}

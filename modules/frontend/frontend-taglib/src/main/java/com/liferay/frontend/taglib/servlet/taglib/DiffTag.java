@@ -54,9 +54,9 @@ public class DiffTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:diff:diffResults", _diffResults);
-		request.setAttribute("liferay-ui:diff:sourceName", _sourceName);
-		request.setAttribute("liferay-ui:diff:targetName", _targetName);
+		request.setAttribute("liferay-frontend:diff:diffResults", _diffResults);
+		request.setAttribute("liferay-frontend:diff:sourceName", _sourceName);
+		request.setAttribute("liferay-frontend:diff:targetName", _targetName);
 	}
 
 	@Override

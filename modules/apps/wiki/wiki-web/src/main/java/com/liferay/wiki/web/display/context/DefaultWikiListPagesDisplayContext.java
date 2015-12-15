@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
@@ -42,6 +43,7 @@ import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.display.context.WikiListPagesDisplayContext;
@@ -57,6 +59,7 @@ import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 import com.liferay.wiki.web.util.WikiPortletUtil;
+import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +96,18 @@ public class DefaultWikiListPagesDisplayContext
 		}
 		else if (navigation.equals("draft-pages")) {
 			return "there-are-no-drafts";
+		}
+		else if (navigation.equals("frontpage")) {
+			WikiWebComponentProvider wikiWebComponentProvider =
+				WikiWebComponentProvider.getWikiWebComponentProvider();
+
+			WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+				wikiWebComponentProvider.getWikiGroupServiceConfiguration();
+
+			return LanguageUtil.format(
+				_request, "there-is-no-x",
+				new String[] {wikiGroupServiceConfiguration.frontPageName()},
+				false);
 		}
 		else if (navigation.equals("incoming-links")) {
 			return "there-are-no-pages-that-link-to-this-page";
@@ -243,6 +258,23 @@ public class DefaultWikiListPagesDisplayContext
 				themeDisplay.getScopeGroupId(), draftUserId,
 				_wikiNode.getNodeId(), status, searchContainer.getStart(),
 				searchContainer.getEnd());
+		}
+		else if (navigation.equals("frontpage")) {
+			WikiWebComponentProvider wikiWebComponentProvider =
+				WikiWebComponentProvider.getWikiWebComponentProvider();
+
+			WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+				wikiWebComponentProvider.getWikiGroupServiceConfiguration();
+
+			WikiPage wikiPage = WikiPageServiceUtil.getPage(
+				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(),
+				wikiGroupServiceConfiguration.frontPageName());
+
+			results = new ArrayList<>();
+
+			searchContainer.setTotal(1);
+
+			results.add(wikiPage);
 		}
 		else if (navigation.equals("history")) {
 			total = WikiPageLocalServiceUtil.getPagesCount(

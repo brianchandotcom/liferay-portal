@@ -22,6 +22,7 @@ import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -109,6 +110,22 @@ public class PollsChoiceStagedModelDataHandlerTest
 
 		PollsQuestionLocalServiceUtil.getPollsQuestionByUuidAndGroupId(
 			question.getUuid(), group.getGroupId());
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		PollsChoice choice = (PollsChoice)stagedModel;
+		PollsChoice importedChoice = (PollsChoice)importedStagedModel;
+
+		Assert.assertEquals(choice.getName(), importedChoice.getName());
+		Assert.assertEquals(
+			choice.getDescription(LocaleUtil.getDefault()),
+			importedChoice.getDescription(LocaleUtil.getDefault()));
 	}
 
 }

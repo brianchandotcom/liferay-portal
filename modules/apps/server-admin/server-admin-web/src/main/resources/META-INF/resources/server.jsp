@@ -49,15 +49,12 @@ serverURL.setParameter("tabs3", tabs3);
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:tabs
-			names="resources,cache-statistics,log-levels,properties,captcha,data-migration,file-uploads,mail,external-services,script,shutdown"
+			names="resources,log-levels,properties,captcha,data-migration,file-uploads,mail,external-services,script,shutdown"
 			param="tabs2"
 			portletURL="<%= serverURL %>"
 		/>
 
 		<c:choose>
-			<c:when test='<%= tabs2.equals("cache-statistics") %>'>
-				<liferay-util:include page="/cache_statistics.jsp" servletContext="<%= application %>" />
-			</c:when>
 			<c:when test='<%= tabs2.equals("log-levels") %>'>
 				<liferay-util:include page="/log_levels.jsp" servletContext="<%= application %>" />
 			</c:when>

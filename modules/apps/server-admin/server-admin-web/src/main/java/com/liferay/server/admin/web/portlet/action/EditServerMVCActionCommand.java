@@ -211,9 +211,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals("threadDump")) {
 			threadDump();
 		}
-		else if (cmd.equals("toggleIndexerEnabled")) {
-			toggleIndexerEnabled(actionRequest);
-		}
 		else if (cmd.equals("updateCaptcha")) {
 			updateCaptcha(actionRequest, portletPreferences);
 		}
@@ -551,25 +548,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			_log.error(
 				"Thread dumps require the log level to be at least INFO for " +
 					clazz.getName());
-		}
-	}
-
-	protected void toggleIndexerEnabled(ActionRequest actionRequest)
-		throws Exception {
-
-		String className = ParamUtil.getString(actionRequest, "className");
-
-		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(className);
-
-		boolean indexerEnabled = indexer.isIndexerEnabled();
-
-		if (indexerEnabled) {
-			indexer.setIndexerEnabled(false);
-		}
-		else {
-			indexer.setIndexerEnabled(true);
-
-			reindex(actionRequest);
 		}
 	}
 

@@ -532,47 +532,29 @@ public class PoshiRunnerContext {
 			List<String> classCommandNames)
 		throws Exception {
 
-		Map<String, Set<String>> classCommandNameMap = new HashMap<>();
+		Multimap<Set<String>, String> multimap = HashMultimap.create();
 
 		for (String classCommandName : classCommandNames) {
-			Set<String> classCommandProperties = new TreeSet<>();
 			String className =
 				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 					classCommandName);
 
-			List<String> properties = new ArrayList<>();
+			Set<String> properties = new TreeSet<>();
 
 			properties.addAll(_getTestCaseClassProperties(className));
 			properties.addAll(_getTestCaseCommandProperties(classCommandName));
 
-			List<String> ignoreProperties = Arrays.asList(
-				PropsValues.TEST_BATCH_GROUP_IGNORE_PROPERTIES);
+			for (Iterator<String> iterator = properties.iterator();
+					iterator.hasNext();) {
 
-			for (String property : properties) {
-				boolean ignore = false;
+				String next = iterator.next();
 
-				for (String ignoreProperty : ignoreProperties) {
-					if (property.contains(ignoreProperty)) {
-						ignore = true;
-
-						break;
-					}
-				}
-
-				if (!ignore) {
-					classCommandProperties.add(property);
+				if (next.matches(PropsValues.TEST_BATCH_GROUP_IGNORE_REGEX)) {
+					iterator.remove();
 				}
 			}
 
-			classCommandNameMap.put(classCommandName, classCommandProperties);
-		}
-
-		Multimap<Set<String>, String> multimap = HashMultimap.create();
-
-		for (Map.Entry<String, Set<String>> entry :
-				classCommandNameMap.entrySet()) {
-
-			multimap.put(entry.getValue(), entry.getKey());
+			multimap.put(properties, classCommandName);
 		}
 
 		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();

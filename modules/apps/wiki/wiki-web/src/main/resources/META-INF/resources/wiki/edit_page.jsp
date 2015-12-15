@@ -178,6 +178,12 @@ if (portletTitleBasedNavigation) {
 	<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 </portlet:renderURL>
 
+<c:if test="<%= (wikiPage != null) && !wikiPage.isNew() %>">
+	<div class="panel text-center">
+		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+	</div>
+</c:if>
+
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<aui:form action="<%= editPageActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -212,8 +218,8 @@ if (portletTitleBasedNavigation) {
 				<c:when test="<%= editable %>">
 					<c:if test="<%= Validator.isNull(title) %>">
 						<liferay-ui:header
-								backURL="<%= redirect %>"
-								title="new-wiki-page"
+							backURL="<%= redirect %>"
+							title="new-wiki-page"
 						/>
 					</c:if>
 
@@ -233,87 +239,41 @@ if (portletTitleBasedNavigation) {
 
 		<aui:model-context bean="<%= !newPage ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
 
-		<c:if test="<%= (wikiPage != null) && !wikiPage.isNew() %>">
-			<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
-		</c:if>
-
-		<c:if test="<%= !editTitle %>">
-			<aui:input name="title" type="hidden" value="<%= title %>" />
-		</c:if>
-
 		<c:choose>
-			<c:when test="<%= editable %>">
-				<aui:fieldset>
-					<c:if test="<%= editTitle %>">
-						<aui:input autoFocus="<%= !preview %>" name="title" size="30" value="<%= title %>" />
-					</c:if>
+			<c:when test="<%= !editable %>">
+				<c:if test="<%= (wikiPage != null) && !wikiPage.isApproved() %>">
+					<div class="alert alert-info">
 
-					<c:if test="<%= Validator.isNotNull(parentTitle) %>">
-						<aui:input name="parent" type="resource" value="<%= parentTitle %>" />
-					</c:if>
+						<%
+						Format dateFormatDate = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+						%>
 
-					<%
-						Collection<String> formats = WikiUtil.getFormats();
-					%>
-
-					<c:choose>
-						<c:when test="<%= !formats.isEmpty() %>">
-							<aui:select changesContext="<%= true %>" name="format">
-
-								<%
-								for (String format : formats) {
-								%>
-
-									<aui:option label="<%= WikiUtil.getFormatLabel(format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
-
-								<%
-								}
-								%>
-
-							</aui:select>
-						</c:when>
-						<c:otherwise>
-							<aui:input name="format" type="hidden" value="<%= selectedFormat %>" />
-						</c:otherwise>
-					</c:choose>
-				</aui:fieldset>
-
-				<div>
-
-					<%
-					WikiUtil.renderEditPageHTML(selectedFormat, pageContext, wikiPage);
-					%>
-
-				</div>
-
-				<c:if test="<%= wikiPage != null %>">
-					<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
-						<aui:fieldset>
-
-							<%
-							long classPK = 0;
-
-							if (templatePage != null) {
-								classPK = templatePage.getPrimaryKey();
-							}
-							else if (page != null) {
-								classPK = wikiPage.getPrimaryKey();
-							}
-							%>
-
-							<liferay-ui:custom-attribute-list
-								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= classPK %>"
-								editable="<%= true %>"
-								label="<%= true %>"
-							/>
-						</aui:fieldset>
-					</liferay-ui:custom-attributes-available>
+						<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(wikiPage.getUserName()), dateFormatDate.format(wikiPage.getModifiedDate())} %>" key="this-page-cannot-be-edited-because-user-x-is-modifying-it-and-the-results-have-not-been-published-yet" translateArguments="<%= false %>" />
+					</div>
 				</c:if>
+			</c:when>
+			<c:otherwise>
+				<aui:fieldset-group markupView="lexicon">
+					<aui:fieldset>
+						<aui:input disabled="<%= !editTitle %>" name="title" required="<%= editTitle %>" value="<%= title %>" />
 
-				<aui:fieldset>
+						<c:if test="<%= Validator.isNotNull(parentTitle) %>">
+							<aui:input name="parent" type="resource" value="<%= parentTitle %>" />
+						</c:if>
+
+						<aui:field-wrapper label="content">
+							<div>
+
+								<%
+								WikiUtil.renderEditPageHTML(selectedFormat, pageContext, wikiPage);
+								%>
+
+							</div>
+						</aui:field-wrapper>
+					</aui:fieldset>
+
 					<c:if test="<%= ((attachmentsFileEntries != null) && !attachmentsFileEntries.isEmpty()) || ((templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0)) %>">
-						<aui:field-wrapper label="attachments">
+						<aui:fieldset collapsible="<%= true %>" label="attachments">
 							<c:if test="<%= (templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0) %>">
 
 								<%
@@ -337,111 +297,154 @@ if (portletTitleBasedNavigation) {
 								%>
 
 							</c:if>
-						</aui:field-wrapper>
-					</c:if>
-
-					<%
-					long resourcePrimKey = 0;
-
-					if (!newPage) {
-						resourcePrimKey = wikiPage.getResourcePrimKey();
-					}
-					else if (templatePage != null) {
-						resourcePrimKey = templatePage.getResourcePrimKey();
-					}
-
-					long assetEntryId = 0;
-					long classPK = resourcePrimKey;
-
-					if (!newPage && !wikiPage.isApproved() && (wikiPage.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {
-						AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());
-
-						if (assetEntry != null) {
-							assetEntryId = assetEntry.getEntryId();
-							classPK = wikiPage.getPrimaryKey();
-						}
-					}
-					%>
-
-					<c:if test="<%= newPage || wikiPage.isApproved() %>">
-						<aui:model-context bean="<%= new WikiPageImpl() %>" model="<%= WikiPage.class %>" />
-					</c:if>
-
-					<aui:input label="description-of-the-changes" name="summary" />
-
-					<c:if test="<%= !newPage %>">
-						<aui:input label="this-is-a-minor-edit" name="minorEdit" />
-					</c:if>
-
-					<c:if test="<%= newPage %>">
-						<aui:field-wrapper label="permissions">
-							<liferay-ui:input-permissions
-								modelName="<%= WikiPage.class.getName() %>"
-							/>
-						</aui:field-wrapper>
-					</c:if>
-
-					<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="wikiPageCategorizationPanel" persistState="<%= true %>" title="categorization">
-						<aui:fieldset>
-							<aui:input classPK="<%= classPK %>" name="categories" type="assetCategories" />
-
-							<aui:input classPK="<%= classPK %>" name="tags" type="assetTags" />
 						</aui:fieldset>
-					</liferay-ui:panel>
-
-					<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="wikiPageAssetLinksPanel" persistState="<%= true %>" title="related-assets">
-						<aui:fieldset>
-							<liferay-ui:input-asset-links
-								assetEntryId="<%= assetEntryId %>"
-								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= classPK %>"
-							/>
-						</aui:fieldset>
-					</liferay-ui:panel>
-
-					<%
-					boolean approved = false;
-					boolean pending = false;
-
-					if (wikiPage != null) {
-						approved = wikiPage.isApproved();
-						pending = wikiPage.isPending();
-					}
-					%>
-
-					<c:if test="<%= !newPage && approved %>">
-						<div class="alert alert-info">
-							<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
-						</div>
 					</c:if>
 
-					<c:if test="<%= pending %>">
-						<div class="alert alert-info">
-							<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-						</div>
-					</c:if>
-
-					<aui:button-row>
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="metadata">
 
 						<%
-						String saveButtonLabel = "save";
+						long resourcePrimKey = 0;
 
-						if ((wikiPage == null) || wikiPage.isDraft() || wikiPage.isApproved()) {
-							saveButtonLabel = "save-as-draft";
+						if (!newPage) {
+							resourcePrimKey = wikiPage.getResourcePrimKey();
+						}
+						else if (templatePage != null) {
+							resourcePrimKey = templatePage.getResourcePrimKey();
 						}
 
-						String publishButtonLabel = "publish";
+						long assetEntryId = 0;
+						long classPK = resourcePrimKey;
 
-						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName())) {
-							publishButtonLabel = "submit-for-publication";
+						if (!newPage && !wikiPage.isApproved() && (wikiPage.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {
+							AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());
+
+							if (assetEntry != null) {
+								assetEntryId = assetEntry.getEntryId();
+								classPK = wikiPage.getPrimaryKey();
+							}
 						}
 						%>
+
+						<aui:input classPK="<%= classPK %>" name="categories" type="assetCategories" />
+
+						<aui:input classPK="<%= classPK %>" name="tags" type="assetTags" />
+
+						<liferay-ui:input-asset-links
+							assetEntryId="<%= assetEntryId %>"
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= classPK %>"
+						/>
+					</aui:fieldset>
+
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+
+						<aui:input label="Summary" name="summary" />
+
+
+						<%
+						Collection<String> formats = WikiUtil.getFormats();
+						%>
+
+						<c:choose>
+							<c:when test="<%= !formats.isEmpty() %>">
+								<aui:select changesContext="<%= true %>" name="format">
+
+									<%
+									for (String format : formats) {
+									%>
+
+										<aui:option label="<%= WikiUtil.getFormatLabel(format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
+
+									<%
+									}
+									%>
+
+								</aui:select>
+
+							</c:when>
+							<c:otherwise>
+								<aui:input name="format" type="hidden" value="<%= selectedFormat %>" />
+							</c:otherwise>
+						</c:choose>
+
+						<c:if test="<%= newPage || wikiPage.isApproved() %>">
+							<aui:model-context bean="<%= new WikiPageImpl() %>" model="<%= WikiPage.class %>" />
+						</c:if>
+
+						<c:if test="<%= !newPage %>">
+							<aui:input label="this-is-a-minor-edit" name="minorEdit" />
+						</c:if>
+
+						<c:if test="<%= wikiPage != null %>">
+							<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+								<%
+									long classPK = 0;
+
+									if (templatePage != null) {
+										classPK = templatePage.getPrimaryKey();
+									}
+									else if (page != null) {
+										classPK = wikiPage.getPrimaryKey();
+									}
+								%>
+
+								<liferay-ui:custom-attribute-list
+									className="<%= WikiPage.class.getName() %>"
+									classPK="<%= classPK %>"
+									editable="<%= true %>"
+									label="<%= true %>"
+								/>
+							</liferay-ui:custom-attributes-available>
+						</c:if>
+
+						<liferay-ui:input-permissions
+							modelName="<%= WikiPage.class.getName() %>"
+						/>
+					</aui:fieldset>
+				</aui:fieldset-group>
+
+				<%
+				boolean approved = false;
+				boolean pending = false;
+
+				if (wikiPage != null) {
+					approved = wikiPage.isApproved();
+					pending = wikiPage.isPending();
+				}
+				%>
+
+				<c:if test="<%= !newPage && approved %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
+					</div>
+				</c:if>
+
+				<c:if test="<%= pending %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+					</div>
+				</c:if>
+
+				<%
+				String saveButtonLabel = "save";
+
+				if ((wikiPage == null) || wikiPage.isDraft() || wikiPage.isApproved()) {
+					saveButtonLabel = "save-as-draft";
+				}
+
+				String publishButtonLabel = "publish";
+
+				if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName())) {
+					publishButtonLabel = "submit-for-publication";
+				}
+				%>
+
+				<aui:button-row>
+					<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' primary="<%= true %>" value="<%= publishButtonLabel %>" />
 
 					<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
 					<aui:button cssClass="btn-lg" name="previewButton" onClick='<%= renderResponse.getNamespace() + "previewPage();" %>' value="preview" />
-
-					<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' primary="<%= true %>" value="<%= publishButtonLabel %>" />
 
 					<c:if test="<%= !newPage && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 						<c:choose>
@@ -456,19 +459,6 @@ if (portletTitleBasedNavigation) {
 
 					<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 				</aui:button-row>
-			</aui:fieldset>
-		</c:when>
-		<c:otherwise>
-			<c:if test="<%= (wikiPage != null) && !wikiPage.isApproved() %>">
-				<div class="alert alert-info">
-
-						<%
-						Format dateFormatDate = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-						%>
-
-						<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(wikiPage.getUserName()), dateFormatDate.format(wikiPage.getModifiedDate())} %>" key="this-page-cannot-be-edited-because-user-x-is-modifying-it-and-the-results-have-not-been-published-yet" translateArguments="<%= false %>" />
-					</div>
-				</c:if>
 			</c:otherwise>
 		</c:choose>
 	</aui:form>

@@ -16,47 +16,57 @@
 
 <%@ include file="/map_provider_selector/init.jsp" %>
 
-<p><%= LanguageUtil.get(resourceBundle, "select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets") %></p>
-
-<%
-for (MapProvider mapProvider : mapProviders) {
-%>
-
-	<aui:input checked="<%= Validator.equals(mapProviderKey, mapProvider.getKey()) %>" helpMessage="<%= mapProvider.getHelpMessage() %>" id='<%= mapProvider.getKey() + "Enabled" %>' label="<%= mapProvider.getLabel(locale) %>" name="<%= name %>" type="radio" value="<%= mapProvider.getKey() %>" />
-
-	<div id="<portlet:namespace /><%= mapProvider.getKey() %>Options">
+<c:choose>
+	<c:when test="<%= mapProviders == null || mapProviders.isEmpty() %>">
+		<div class="alert alert-danger">
+			<%= LanguageUtil.get(resourceBundle, "a-list-of-map-providers-should-be-shown-here") %>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<p><%= LanguageUtil.get(resourceBundle, "select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets") %></p>
 
 		<%
-		mapProvider.includeConfiguration(request, new PipingServletResponse(pageContext));
+		for (MapProvider mapProvider : mapProviders) {
 		%>
 
-	</div>
+			<aui:input checked="<%= Validator.equals(mapProviderKey, mapProvider.getKey()) %>" helpMessage="<%= mapProvider.getHelpMessage() %>" id='<%= mapProvider.getKey() + "Enabled" %>' label="<%= mapProvider.getLabel(locale) %>" name="<%= name %>" type="radio" value="<%= mapProvider.getKey() %>" />
 
-	<%
-	StringBundler sb = new StringBundler((mapProviders.size() - 1) * 6 - 1);
+			<div id="<portlet:namespace /><%= mapProvider.getKey() %>Options">
 
-	for (MapProvider curMapProvider : mapProviders) {
-		if (Validator.equals(mapProvider.getKey(), curMapProvider.getKey())) {
-			continue;
+				<%
+				mapProvider.includeConfiguration(request, new PipingServletResponse(pageContext));
+				%>
+
+			</div>
+
+			<%
+			StringBundler sb = new StringBundler((mapProviders.size() - 1) * 6 - 1);
+
+			for (MapProvider curMapProvider : mapProviders) {
+				if (Validator.equals(mapProvider.getKey(), curMapProvider.getKey())) {
+					continue;
+				}
+
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(namespace);
+				sb.append(curMapProvider.getKey());
+				sb.append("Options");
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(StringPool.COMMA);
+			}
+
+			if (mapProviders.size() > 1) {
+				sb.setIndex(sb.index() - 1);
+			}
+			%>
+
+			<aui:script>
+				Liferay.Util.toggleRadio('<%= namespace %><%= mapProvider.getKey() %>Enabled', '<%= namespace %><%= mapProvider.getKey() %>Options', [<%= sb.toString() %>]);
+			</aui:script>
+
+		<%
 		}
+		%>
 
-		sb.append(StringPool.APOSTROPHE);
-		sb.append(namespace);
-		sb.append(curMapProvider.getKey());
-		sb.append("Options");
-		sb.append(StringPool.APOSTROPHE);
-		sb.append(StringPool.COMMA);
-	}
-
-	if (mapProviders.size() > 1) {
-		sb.setIndex(sb.index() - 1);
-	}
-	%>
-
-	<aui:script>
-		Liferay.Util.toggleRadio('<%= namespace %><%= mapProvider.getKey() %>Enabled', '<%= namespace %><%= mapProvider.getKey() %>Options', [<%= sb.toString() %>]);
-	</aui:script>
-
-<%
-}
-%>
+	</c:otherwise>
+</c:choose>

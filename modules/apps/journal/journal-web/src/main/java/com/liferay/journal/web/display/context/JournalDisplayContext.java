@@ -303,7 +303,7 @@ public class JournalDisplayContext {
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(_request, "navigation", "home");
+		_navigation = ParamUtil.getString(_request, "navigation", "all");
 
 		return _navigation;
 	}
@@ -555,7 +555,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isNavigationHome() {
-		if (Validator.equals(getNavigation(), "home")) {
+		if (Validator.equals(getNavigation(), "all")) {
 			return true;
 		}
 

@@ -39,11 +39,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	</liferay-frontend:management-bar-buttons>
 
 	<%
-	String navigation = ParamUtil.getString(request, "navigation");
-
 	String label = null;
 
-	if (navigation.equals("structure")) {
+	if (journalDisplayContext.isNavigationStructure()) {
 		label = LanguageUtil.get(request, "structure") + StringPool.COLON + StringPool.SPACE + journalDisplayContext.getDdmStructureName();
 	}
 	%>
@@ -59,7 +57,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			navigationAllURL.setParameter("navigation", "all");
 			%>
 
-			<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("all") %>' label="all" url="<%= navigationAllURL.toString() %>" />
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationHome() %>" label="all" url="<%= navigationAllURL.toString() %>" />
 
 			<%
 			PortletURL navigationRecentURL = journalDisplayContext.getPortletURL();
@@ -67,7 +65,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			navigationRecentURL.setParameter("navigation", "recent");
 			%>
 
-			<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("recent") %>' label="recent" url="<%= navigationRecentURL.toString() %>" />
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationRecent() %>" label="recent" url="<%= navigationRecentURL.toString() %>" />
 
 			<%
 			PortletURL navigationMineURL = journalDisplayContext.getPortletURL();
@@ -75,9 +73,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			navigationMineURL.setParameter("navigation", "mine");
 			%>
 
-			<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("mine") %>' label="mine" url="<%= navigationMineURL.toString() %>" />
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationMine() %>" label="mine" url="<%= navigationMineURL.toString() %>" />
 
-			<liferay-frontend:management-bar-navigation-item id="structures" label="structures" url="javascript:;" />
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationStructure() %>" id="structures" label="structures" url="javascript:;" />
 		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-filter

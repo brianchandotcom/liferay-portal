@@ -10,6 +10,7 @@
 	<bean id="com.liferay.mail.util.DummyHook" class="com.liferay.mail.util.DummyHook" />
 	<bean class="com.liferay.portal.convert.ConvertDatabase" />
 	<bean class="com.liferay.portal.convert.ConvertDocumentLibrary" />
+	<bean class="com.liferay.portal.convert.PortalConvertDatabaseProcess" />
 	<bean class="com.liferay.portal.convert.ConvertDocumentLibraryExtraSettings" />
 	<bean id="com.liferay.portal.events.StartupHelperUtil" class="com.liferay.portal.events.StartupHelperUtil">
 		<property name="startupHelper">

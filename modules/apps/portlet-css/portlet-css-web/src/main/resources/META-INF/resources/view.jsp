@@ -37,11 +37,12 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 		decimalFormatSymbols.setDecimalSeparator('.');
 		%>
 
-		<div id="lfr-look-and-feel">
+		<div class="container-fluid-1280" id="lfr-look-and-feel">
 			<div class="tabbable-content" id="portlet-set-properties">
 				<liferay-ui:tabs
 					names="<%= tabs1Names %>"
 					refresh="<%= false %>"
+					type="tabs nav-tabs-default"
 					url="<%= portletURL.toString() %>"
 				/>
 
@@ -49,9 +50,10 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 					<input id="portlet-area" name="portlet-area" type="hidden" />
 					<input id="portlet-boundary-id" name="portlet-boundary-id" type="hidden" />
 
+					<aui:fieldset-group markupView="lexicon">
 					<div class="tab-pane">
 						<aui:fieldset id="portlet-config">
-							<aui:input name="use-custom-title" type="checkbox" />
+							<aui:input name="use-custom-title" type="toggle-switch" />
 
 							<span class="field-row">
 								<aui:input inlineField="<%= true %>" label="" name="custom-title" />
@@ -129,9 +131,9 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 										<aui:option label="Verdana" />
 									</aui:select>
 
-									<aui:input label="bold" name="lfr-font-bold" type="checkbox" />
+									<aui:input label="bold" name="lfr-font-bold" type="toggle-switch" />
 
-									<aui:input label="italic" name="lfr-font-italic" type="checkbox" />
+									<aui:input label="italic" name="lfr-font-italic" type="toggle-switch" />
 
 									<aui:select label="size" name="lfr-font-size" showEmptyOption="<%= true %>">
 
@@ -236,7 +238,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 							<aui:row>
 								<aui:col cssClass="lfr-border-width use-for-all-column" width="<%= 33 %>">
 									<aui:fieldset label="border-width">
-										<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="lfr-use-for-all-width" type="checkbox" />
+										<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="lfr-use-for-all-width" type="toggle-switch" />
 
 										<span class="field-row">
 											<aui:input inlineField="<%= true %>" label="top" name="lfr-border-width-top" />
@@ -282,7 +284,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 								<aui:col cssClass="lfr-border-style" width="<%= 33 %>">
 									<aui:fieldset label="border-style">
-										<aui:input checked="checked" cssClass="lfr-use-for-all use-for-all-column" label="same-for-all" name="lfr-use-for-all-style" type="checkbox" />
+										<aui:input checked="checked" cssClass="lfr-use-for-all use-for-all-column" label="same-for-all" name="lfr-use-for-all-style" type="toggle-switch" />
 
 										<aui:select label="top" name="lfr-border-style-top" showEmptyOption="<%= true %>">
 											<aui:option label="dashed" />
@@ -336,7 +338,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 								<aui:col cssClass="lfr-border-color" last="<%= true %>" width="<%= 33 %>">
 									<aui:fieldset label="border-color">
-										<aui:input checked="checked" cssClass="lfr-use-for-all use-for-all-column" label="same-for-all" name="lfr-use-for-all-color" type="checkbox" />
+										<aui:input checked="checked" cssClass="lfr-use-for-all use-for-all-column" label="same-for-all" name="lfr-use-for-all-color" type="toggle-switch" />
 
 										<aui:input label="top" name="lfr-border-color-top" />
 
@@ -354,7 +356,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 							<aui:row>
 								<aui:col cssClass="lfr-padding use-for-all-column" width="<%= 50 %>">
 									<aui:fieldset label="padding">
-										<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="lfr-use-for-all-padding" type="checkbox" />
+										<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="lfr-use-for-all-padding" type="toggle-switch" />
 
 										<span class="field-row">
 											<aui:input inlineField="<%= true %>" label="top" name="lfr-padding-top" />
@@ -400,7 +402,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 								<aui:col cssClass="lfr-margin use-for-all-column" last="<%= true %>" width="<%= 50 %>">
 									<aui:fieldset label="margin">
-										<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="lfr-use-for-all-margin" type="checkbox" />
+										<aui:input checked="checked" cssClass="lfr-use-for-all" label="same-for-all" name="lfr-use-for-all-margin" type="toggle-switch" />
 
 										<span class="field-row">
 											<aui:input inlineField="<%= true %>" label="top" name="lfr-margin-top" />
@@ -463,6 +465,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 							</aui:fieldset>
 						</c:if>
 					</div>
+					</aui:fieldset-group>	
 				</aui:form>
 			</div>
 		</div>

@@ -133,6 +133,32 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return doAddFolder(userId, groupId, BlogsConstants.SERVICE_NAME);
 	}
 
+	public void addCoverImage(long entryId, ImageSelector imageSelector)
+		throws PortalException {
+
+		if (imageSelector == null) {
+			return;
+		}
+
+		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		String coverImageURL = StringPool.BLANK;
+		long coverImageFileEntryId = 0;
+
+		if (Validator.isNotNull(imageSelector.getImageURL())) {
+			coverImageURL = imageSelector.getImageURL();
+		}
+		else if (imageSelector.getImageBytes() != null) {
+			coverImageFileEntryId = addCoverImageFileEntry(
+				entry.getUserId(), entry.getGroupId(), entryId, imageSelector);
+		}
+
+		entry.setCoverImageURL(coverImageURL);
+		entry.setCoverImageFileEntryId(coverImageFileEntryId);
+
+		blogsEntryPersistence.update(entry);
+	}
+
 	@Override
 	public BlogsEntry addEntry(
 			long userId, String title, String content, Date displayDate,
@@ -424,6 +450,38 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					imageSelector.getImageMimeType(), imageBytes);
 
 		return originalFileEntry.getFileEntryId();
+	}
+
+	public void addSmallImage(long entryId, ImageSelector imageSelector)
+		throws PortalException {
+
+		if (imageSelector == null) {
+			return;
+		}
+
+		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		boolean smallImage = false;
+		long smallImageFileEntryId = 0;
+		String smallImageURL = StringPool.BLANK;
+
+		if (Validator.isNotNull(imageSelector.getImageURL())) {
+			smallImage = true;
+
+			smallImageURL = imageSelector.getImageURL();
+		}
+		else if (imageSelector.getImageBytes() != null) {
+			smallImage = true;
+
+			smallImageFileEntryId = addSmallImageFileEntry(
+				entry.getUserId(), entry.getGroupId(), entryId, imageSelector);
+		}
+
+		entry.setSmallImage(smallImage);
+		entry.setSmallImageFileEntryId(smallImageFileEntryId);
+		entry.setSmallImageURL(smallImageURL);
+
+		blogsEntryPersistence.update(entry);
 	}
 
 	@Override

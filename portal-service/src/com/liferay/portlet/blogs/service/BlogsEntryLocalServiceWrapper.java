@@ -53,6 +53,13 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public void addCoverImage(long entryId,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.addCoverImage(entryId, imageSelector);
+	}
+
+	@Override
 	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(long userId,
 		java.lang.String title, java.lang.String content,
 		java.util.Date displayDate,
@@ -171,6 +178,13 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.addOriginalImageFileEntry(userId,
 			groupId, entryId, imageSelector);
+	}
+
+	@Override
+	public void addSmallImage(long entryId,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.addSmallImage(entryId, imageSelector);
 	}
 
 	@Override

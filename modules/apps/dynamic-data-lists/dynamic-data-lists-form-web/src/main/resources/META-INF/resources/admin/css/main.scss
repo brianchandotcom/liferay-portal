@@ -1,12 +1,14 @@
 @import "bourbon";
 @import "mixins";
 
+$horizontal-spacing: 35px;
+
 .portlet-forms {
 	.aspect-ratio img {
 		top: 0;
 	}
 
-    .ddl-form-alert {
+	.ddl-form-alert {
 		border-radius: 0;
 		position: absolute;
 		top: 0;
@@ -237,7 +239,7 @@
 		max-height: 100%;
 		overflow-x: hidden;
 		overflow-y: auto;
-		padding-bottom: 0;
+		padding: 0;
 	}
 
 	.modal-content.form-builder-field-settings-content {
@@ -280,7 +282,7 @@
 		}
 
 		.modal-header {
-			position: initial;
+			position: static;
 		}
 	}
 
@@ -416,17 +418,18 @@
 			}
 
 			.lfr-ddm-form-page {
-				&.active {
-					&.advanced {
-						display: block;
-					}
+				&.active, &.basic {
+					padding: 25px $horizontal-spacing;
+				}
+
+				&.active.advanced {
+					display: block;
 				}
 
 				&.advanced {
 					background-color: #F5F8FA;
 					display: none;
-					margin: 0 -50px;
-					padding: 20px 50px;
+					padding: 20px $horizontal-spacing;
 				}
 			}
 		}
@@ -437,8 +440,7 @@
 			color: #879CB5;
 			display: block;
 			font-weight: 500;
-			margin: 0 -50px;
-			padding: 18px 50px;
+			padding: 18px $horizontal-spacing;
 			position: static;
 			text-decoration: none;
 			width: auto;
@@ -557,7 +559,7 @@
 	}
 
 	.form-builder-field-list-empty .form-builder-field-list-add-container {
-		margin-top: initial;
+		margin-top: 0;
 	}
 
 	.form-builder-field-list-add-container,

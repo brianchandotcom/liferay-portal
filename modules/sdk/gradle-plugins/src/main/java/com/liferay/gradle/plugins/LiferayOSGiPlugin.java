@@ -23,9 +23,9 @@ import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
+import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
@@ -141,20 +141,20 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		super.addDependenciesJspC(project, liferayExtension);
 
-		FileTree fileTree = getJarsFileTree(
+		FileTree fileTree = FileUtil.getJarsFileTree(
 			project, liferayExtension.getAppServerLibGlobalDir());
 
 		GradleUtil.addDependency(
 			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
 
-		fileTree = getJarsFileTree(
+		fileTree = FileUtil.getJarsFileTree(
 			project,
 			new File(liferayExtension.getAppServerPortalDir(), "WEB-INF/lib"));
 
 		GradleUtil.addDependency(
 			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
 
-		fileTree = getJarsFileTree(
+		fileTree = FileUtil.getJarsFileTree(
 			project,
 			new File(liferayExtension.getLiferayHome(), "osgi/modules"));
 
@@ -790,15 +790,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return sourceFileName.replace(
 			"-" + project.getVersion() + "." + Jar.DEFAULT_EXTENSION,
 			"." + Jar.DEFAULT_EXTENSION);
-	}
-
-	protected FileTree getJarsFileTree(Project project, File dir) {
-		Map<String, Object> args = new HashMap<>();
-
-		args.put("dir", dir);
-		args.put("include", "*.jar");
-
-		return project.fileTree(args);
 	}
 
 	@Override

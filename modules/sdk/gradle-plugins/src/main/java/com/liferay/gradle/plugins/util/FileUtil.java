@@ -12,32 +12,38 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.util;
 
-import com.liferay.gradle.plugins.util.FileUtil;
+import com.liferay.gradle.util.ArrayUtil;
 
-import org.gradle.api.Plugin;
+import java.io.File;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.gradle.api.Project;
+import org.gradle.api.file.FileTree;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class LiferayPlugin implements Plugin<Project> {
+public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
-	public static final String PLUGIN_NAME = "liferay";
+	public static FileTree getJarsFileTree(
+		Project project, File dir, String ... excludes) {
 
-	@Override
-	public void apply(Project project) {
-		Plugin<Project> plugin = null;
+		Map<String, Object> args = new HashMap<>();
 
-		if (FileUtil.exists(project, "bnd.bnd")) {
-			plugin = new LiferayOSGiPlugin();
-		}
-		else {
-			plugin = new LiferayJavaPlugin();
+		args.put("dir", dir);
+
+		if (ArrayUtil.isNotEmpty(excludes)) {
+			args.put("excludes", Arrays.asList(excludes));
 		}
 
-		plugin.apply(project);
+		args.put("include", "*.jar");
+
+		return project.fileTree(args);
 	}
 
 }

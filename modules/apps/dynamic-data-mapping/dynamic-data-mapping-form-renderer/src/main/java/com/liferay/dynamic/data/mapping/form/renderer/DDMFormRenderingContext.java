@@ -26,6 +26,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DDMFormRenderingContext {
 
+	public String getContainerId() {
+		return _containerId;
+	}
+
 	public DDMFormValues getDDMFormValues() {
 		return _ddmFormValues;
 	}
@@ -48,6 +52,10 @@ public class DDMFormRenderingContext {
 
 	public boolean isReadOnly() {
 		return _readOnly;
+	}
+
+	public void setContainerId(String containerId) {
+		_containerId = containerId;
 	}
 
 	public void setDDMFormValues(DDMFormValues ddmFormValues) {
@@ -76,6 +84,7 @@ public class DDMFormRenderingContext {
 		_readOnly = readOnly;
 	}
 
+	private String _containerId;
 	private DDMFormValues _ddmFormValues;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;

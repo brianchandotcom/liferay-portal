@@ -70,10 +70,10 @@ public interface ParagraphDDMFormFieldTypeSettings
 	@DDMFormField(
 		label = "%title",
 		properties = {
-			"placeholder=%enter-title-sentence", "setting.category=basic",
+			"placeholder=%enter-title", "setting.category=basic",
 			"setting.weight=4"
 		},
-		required = true, tip = "%enter-title-sentence", type = "key-value"
+		required = true, tip = "%enter-title", type = "key-value"
 	)
 	public LocalizedValue label();
 

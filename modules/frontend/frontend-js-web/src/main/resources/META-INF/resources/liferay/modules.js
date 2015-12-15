@@ -24,15 +24,6 @@
 				('onpopstate' in WIN || A.UA.gecko >= 2);
 	};
 
-	var filterConfig = null;
-
-	if (!COMBINE) {
-		filterConfig = {
-			replaceStr: '.js' + LiferayAUI.getStaticResourceURLParams(),
-			searchExp: '\\.js$'
-		};
-	}
-
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',
 		combine: COMBINE,
@@ -53,7 +44,7 @@
 			liferay: {
 				base: PATH_JAVASCRIPT + '/liferay/',
 				combine: COMBINE,
-				filter: filterConfig,
+				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
 					'liferay-alert': {
 						path: 'alert.js',

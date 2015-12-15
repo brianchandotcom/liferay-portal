@@ -493,6 +493,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, SoyPlugin.class);
+		GradleUtil.applyPlugin(project, TLDFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
 		GradleUtil.applyPlugin(project, WhipDefaultsPlugin.class);

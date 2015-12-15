@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_MENU_ITEM</td>
+	<td>//li[contains(.,'${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BOOKMARK</td>
 	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(@id,'menu') and contains(.,'Bookmark')]</td>
 	<td></td>

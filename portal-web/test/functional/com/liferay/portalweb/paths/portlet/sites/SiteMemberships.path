@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>MEMBERSHIP_TYPE</td>
-	<td>//div[contains(@class,'site-membership-type')]/span/span</td>
+	<td>//div[contains(@class,'site-membership-type')]</td>
 	<td></td>
 </tr>
 <tr>

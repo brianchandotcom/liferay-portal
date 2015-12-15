@@ -195,11 +195,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BODY_VERTICAL_ELLIPSIS_2</td>
-	<td>xpath=(//div[contains(@class,'portlet') and contains(@class,'container')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')])[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CARD_VERTICAL_ELLIPSIS</td>
 	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>

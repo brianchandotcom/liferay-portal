@@ -278,12 +278,12 @@
 	<command name="approveJoinSiteRestrictedViaMySitesPG">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertTextEquals" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
-		<execute function="AssertTextEquals" locator1="SiteMemberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type, Restricted" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+		<execute function="Click" locator1="SiteMemberships#REQUEST_MESSAGE" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -692,7 +692,12 @@
 
 					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 					<execute function="AssertTextEquals" locator1="Message#SUCCESS_1" value1="Your request was sent. You will receive a reply by email." />
-					<execute function="AssertTextEquals" locator1="MySitesAvailableSites#SITE_TABLE_MEMBERSHIP_REQUESTED" value1="Membership Requested" />
+
+					<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS_2" />
+
+					<var name="key_menuItem" value="Membership Requested" />
+
+					<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Membership Requested" />
 				</then>
 			</elseif>
 			<else>
@@ -1152,7 +1157,6 @@
 		<execute function="AssertTextEquals" locator1="MySites#NAVIGATION_MY_SITES" value1="My Sites" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="${memberCount}" />
-		<execute function="AssertElementPresent" locator1="MySites#SITE_TABLE_SITE_ACTIONS" />
 	</command>
 
 	<command name="viewNoMySitesViaMySitesPG">

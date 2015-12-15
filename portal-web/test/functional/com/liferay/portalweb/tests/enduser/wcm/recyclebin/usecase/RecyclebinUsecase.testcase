@@ -650,8 +650,10 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Recycle Bin" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="RecycleBin#viewCP">

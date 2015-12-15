@@ -60,7 +60,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="times" label="delete" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="times" label="cancel-checkout[document]" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";

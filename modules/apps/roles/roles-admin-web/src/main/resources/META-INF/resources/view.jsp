@@ -36,6 +36,22 @@ String portletURLString = portletURL.toString();
 portletURL.setParameter("keywords", keywords);
 
 pageContext.setAttribute("portletURL", portletURL);
+
+String breadcrumbKey = null;
+
+if (type == RoleConstants.TYPE_SITE) {
+	breadcrumbKey = "site-roles";
+}
+else if (type == RoleConstants.TYPE_ORGANIZATION) {
+	breadcrumbKey = "organization-roles";
+}
+else {
+	breadcrumbKey = "regular-roles";
+}
+
+String breadcrumbEntry = LanguageUtil.get(request, breadcrumbKey);
+
+PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbEntry, currentURL);
 %>
 
 <liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />
@@ -137,6 +153,11 @@ pageContext.setAttribute("portletURL", portletURL);
 	<aui:input name="deleteRoleIds" type="hidden" />
 
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+		showPortletBreadcrumb="<%= true %>"
+	/>
 
 	<liferay-ui:search-container
 		id="roleSearch"

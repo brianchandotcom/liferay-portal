@@ -586,8 +586,7 @@ public class PoshiRunnerContext {
 	private static String _getTestBatchSingleGroups(
 		List<String> classCommandNames) {
 
-		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
-		int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+		StringBuilder sb = new StringBuilder();
 
 		int groupSize = _getAllocatedTestGroupSize(classCommandNames.size());
 
@@ -595,24 +594,16 @@ public class PoshiRunnerContext {
 			classCommandNames, groupSize);
 
 		for (int i = 0; i < partitions.size(); i++) {
-			classCommandNameGroups.put(i, partitions.get(i));
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < classCommandNameGroups.size(); i++) {
 			sb.append("RUN_TEST_CASE_METHOD_GROUP_");
 			sb.append(i);
 			sb.append("=");
 
-			List<String> classCommandNameGroup = classCommandNameGroups.get(i);
+			List<String> partition = partitions.get(i);
 
-			for (int j = 0; j < classCommandNameGroup.size(); j++) {
-				String testCaseClassCommandName = classCommandNameGroup.get(j);
+			for (int j = 0; j < partition.size(); j++) {
+				sb.append(partition.get(j));
 
-				sb.append(testCaseClassCommandName);
-
-				if (j < (classCommandNameGroup.size() - 1)) {
+				if (j < (partition.size() - 1)) {
 					sb.append(" ");
 				}
 			}
@@ -622,10 +613,10 @@ public class PoshiRunnerContext {
 
 		sb.append("RUN_TEST_CASE_METHOD_GROUPS=");
 
-		for (int i = 0; i < classCommandNameGroups.size(); i++) {
+		for (int i = 0; i < partitions.size(); i++) {
 			sb.append(i);
 
-			if (i < (classCommandNameGroups.size() - 1)) {
+			if (i < (partitions.size() - 1)) {
 				sb.append(" ");
 			}
 		}

@@ -140,7 +140,7 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="AssertClick" locator1="BasePortletConfiguration#NAVIGATION_PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="gotoDMDocumentCP">

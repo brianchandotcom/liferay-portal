@@ -490,7 +490,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//div[contains(@class,'open')]//a[contains(.,'Permissions')] | //li[contains(@class,'open')]//a[contains(.,'Permissions')] | //ul[contains(@class,'dropdown')]//a[contains(.,'Permissions')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Permissions')] | //li[contains(@class,'open')]//a[contains(.,'Permissions')] | //ul[contains(@class,'dropdown')]//a[contains(.,'Permissions')] | //a[@title='Permissions' and @role='menuitem']/span</td>
 	<td></td>
 </tr>
 <tr>

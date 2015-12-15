@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
@@ -158,7 +157,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskStopTestableTomcat(project, liferayExtension);
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
-		configureTasksBuildCSS(project);
 		configureTasksBuildUpgradeTable(project);
 
 		project.afterEvaluate(
@@ -483,6 +481,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
+		GradleUtil.applyPlugin(project, CSSBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
@@ -710,38 +709,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			classesDir, null);
 	}
 
-	protected void configureTaskBuildCSSGenerateSourceMap(
-		BuildCSSTask buildCSSTask) {
-
-		String generateSourceMap = GradleUtil.getProperty(
-			buildCSSTask.getProject(), "sass.generate.source.map",
-			(String)null);
-
-		if (Validator.isNotNull(generateSourceMap)) {
-			buildCSSTask.setGenerateSourceMap(
-				Boolean.parseBoolean(generateSourceMap));
-		}
-	}
-
-	protected void configureTaskBuildCSSPrecision(BuildCSSTask buildCSSTask) {
-		String precision = GradleUtil.getProperty(
-			buildCSSTask.getProject(), "sass.precision", (String)null);
-
-		if (Validator.isNotNull(precision)) {
-			buildCSSTask.setPrecision(precision);
-		}
-	}
-
-	protected void configureTaskBuildCSSSassCompilerClassName(
-		BuildCSSTask buildCSSTask) {
-
-		String sassCompilerClassName = GradleUtil.getProperty(
-			buildCSSTask.getProject(), "sass.compiler.class.name",
-			(String)null);
-
-		buildCSSTask.setSassCompilerClassName(sassCompilerClassName);
-	}
-
 	protected void configureTaskBuildUpgradeTableDir(
 		BuildUpgradeTableTask buildUpgradeTableTask) {
 
@@ -750,17 +717,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			(File)null);
 
 		buildUpgradeTableTask.setUpgradeTableDir(file);
-	}
-
-	protected void configureTaskClasses(Project project) {
-		Task classesTask = GradleUtil.getTask(
-			project, JavaPlugin.CLASSES_TASK_NAME);
-
-		configureTaskClassesDependsOn(classesTask);
-	}
-
-	protected void configureTaskClassesDependsOn(Task classesTask) {
-		classesTask.dependsOn(CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 	}
 
 	protected void configureTaskClean(Project project) {
@@ -1105,30 +1061,12 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
-		configureTaskClasses(project);
 		configureTaskDeploy(project, liferayExtension);
 		configureTaskInitGradle(project);
 		configureTaskJar(project);
 
 		configureTasksDirectDeploy(project);
 		configureTasksPublishNodeModule(project);
-	}
-
-	protected void configureTasksBuildCSS(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildCSSTask.class,
-			new Action<BuildCSSTask>() {
-
-				@Override
-				public void execute(BuildCSSTask buildCSSTask) {
-					configureTaskBuildCSSGenerateSourceMap(buildCSSTask);
-					configureTaskBuildCSSPrecision(buildCSSTask);
-					configureTaskBuildCSSSassCompilerClassName(buildCSSTask);
-				}
-
-			});
 	}
 
 	protected void configureTasksBuildUpgradeTable(Project project) {

@@ -16,8 +16,6 @@ package com.liferay.gradle.plugins;
 
 import aQute.bnd.osgi.Constants;
 
-import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
-import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCExtension;
@@ -92,7 +90,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		configureJspCExtension(project);
 
 		configureArchivesBaseName(project);
-		configureTaskBuildCSS(project);
 		configureTasksBuildService(project);
 		configureVersion(project);
 
@@ -639,35 +636,20 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
-	protected void configureTaskBuildCSS(Project project) {
-		Task task = GradleUtil.getTask(
-			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
-
-		if (task instanceof BuildCSSTask) {
-			configureTaskBuildCSSDocrootDir((BuildCSSTask)task);
-		}
-	}
-
-	protected void configureTaskBuildCSSDocrootDir(BuildCSSTask buildCSSTask) {
-		Project project = buildCSSTask.getProject();
-
-		File docrootDir = project.file("docroot");
-
-		if (docrootDir.exists()) {
-			buildCSSTask.setDocrootDir(docrootDir);
-		}
-	}
-
 	protected void configureTaskBuildServiceOsgiModule(
 		BuildServiceTask buildServiceTask) {
 
 		buildServiceTask.setOsgiModule(true);
 	}
 
-	@Override
-	protected void configureTaskClassesDependsOn(Task classesTask) {
-		super.configureTaskClassesDependsOn(classesTask);
+	protected void configureTaskClasses(Project project) {
+		Task classesTask = GradleUtil.getTask(
+			project, JavaPlugin.CLASSES_TASK_NAME);
 
+		configureTaskClassesDependsOn(classesTask);
+	}
+
+	protected void configureTaskClassesDependsOn(Task classesTask) {
 		classesTask.dependsOn(COPY_LIBS_TASK_NAME);
 	}
 
@@ -745,6 +727,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		super.configureTasks(project, liferayExtension);
 
+		configureTaskClasses(project);
 		configureTaskUnzipJar(project);
 	}
 

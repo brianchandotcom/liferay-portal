@@ -1073,7 +1073,7 @@ public class MBUtil {
 		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
-	protected static Object _getPartContent(Part part) throws Exception {
+	private static Object _getPartContent(Part part) throws Exception {
 
 		// See LPS-56173
 

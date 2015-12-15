@@ -276,6 +276,12 @@
 
 				portletBound = portletBound.one('> *');
 
+				if (!portletBound) {
+					placeHolder.remove();
+					
+					return;
+				}
+
 				var id = portletBound.attr('id');
 
 				var portletId = Util.getPortletId(id);

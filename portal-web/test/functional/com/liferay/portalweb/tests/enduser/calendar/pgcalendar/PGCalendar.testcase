@@ -1935,7 +1935,7 @@
 
 	<command name="DeleteCalendarEventRepeatingAllFollowing" priority="5">
 		<property name="portal.acceptance" value="true" />
-		
+
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 

@@ -2708,7 +2708,7 @@
 
 	<command name="DeleteListRecord" priority="5">
 		<property name="portal.acceptance" value="true" />
-		
+
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Text Field" />

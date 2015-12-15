@@ -51,29 +51,28 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			label="<%= label %>"
 		>
 
-			<%
-			PortletURL navigationAllURL = journalDisplayContext.getPortletURL();
+			<portlet:renderURL var="viewArticlesHomeURL">
+				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
+			</portlet:renderURL>
 
-			navigationAllURL.setParameter("navigation", "all");
-			%>
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationHome() %>" label="all" url="<%= viewArticlesHomeURL.toString() %>" />
 
-			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationHome() %>" label="all" url="<%= navigationAllURL.toString() %>" />
+			<portlet:renderURL var="viewRecentArticlesURL">
+				<portlet:param name="navigation" value="recent" />
+				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
+			</portlet:renderURL>
 
-			<%
-			PortletURL navigationRecentURL = journalDisplayContext.getPortletURL();
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationRecent() %>" label="recent" url="<%= viewRecentArticlesURL.toString() %>" />
 
-			navigationRecentURL.setParameter("navigation", "recent");
-			%>
+			<portlet:renderURL var="viewMyArticlesURL">
+				<portlet:param name="navigation" value="mine" />
+				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
+			</portlet:renderURL>
 
-			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationRecent() %>" label="recent" url="<%= navigationRecentURL.toString() %>" />
-
-			<%
-			PortletURL navigationMineURL = journalDisplayContext.getPortletURL();
-
-			navigationMineURL.setParameter("navigation", "mine");
-			%>
-
-			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationMine() %>" label="mine" url="<%= navigationMineURL.toString() %>" />
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationMine() %>" label="mine" url="<%= viewMyArticlesURL.toString() %>" />
 
 			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationStructure() %>" id="structures" label="structures" url="javascript:;" />
 		</liferay-frontend:management-bar-navigation>

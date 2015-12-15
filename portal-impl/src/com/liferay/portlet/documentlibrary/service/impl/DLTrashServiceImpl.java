@@ -59,7 +59,11 @@ public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 		DLFileEntryPermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.UPDATE);
 
-		Folder destinationFolder = repository.getFolder(newFolderId);
+		Folder destinationFolder = null;
+
+		if (newFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			destinationFolder = repository.getFolder(newFolderId);
+		}
 
 		TrashCapability trashCapability = repository.getCapability(
 			TrashCapability.class);

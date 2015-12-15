@@ -23,5 +23,5 @@
 />
 
 <liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="type" value="all_pages" />
+	<liferay-util:param name="navigation" value="all-pages" />
 </liferay-util:include>

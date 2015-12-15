@@ -26,18 +26,18 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeServiceUtil;
-import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-public class NodesChecker extends EmptyOnClickRowChecker {
+public class PagesChecker extends EmptyOnClickRowChecker {
 
-	public NodesChecker(
+	public PagesChecker(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -67,22 +67,22 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 		HttpServletRequest request, boolean checked, boolean disabled,
 		String primaryKey) {
 
-		long nodeId = GetterUtil.getLong(primaryKey);
+		long pageId = GetterUtil.getLong(primaryKey);
 
-		WikiNode node = null;
+		WikiPage page = null;
 
 		try {
-			node = WikiNodeServiceUtil.getNode(nodeId);
+			page = WikiPageLocalServiceUtil.getPageByPageId(pageId);
 		}
 		catch (PortalException pe) {
 			return StringPool.BLANK;
 		}
 
-		String name = WikiNode.class.getSimpleName();
+		String name = WikiPage.class.getSimpleName();
 		boolean showInput = false;
 
-		if (WikiNodePermissionChecker.contains(
-				_permissionChecker, node, ActionKeys.DELETE)) {
+		if (WikiPagePermissionChecker.contains(
+				_permissionChecker, page, ActionKeys.DELETE)) {
 
 			showInput = true;
 		}
@@ -96,7 +96,7 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 		sb.append("['");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append(RowChecker.ROW_IDS);
-		sb.append(WikiNode.class.getSimpleName());
+		sb.append(WikiPage.class.getSimpleName());
 		sb.append("']");
 
 		String checkBoxRowIds = sb.toString();
@@ -105,7 +105,7 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 			request, checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
 				name + "",
-			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "'",
+			page.getTitle(), checkBoxRowIds, "'#" + getAllRowIds() + "'",
 			StringPool.BLANK);
 	}
 

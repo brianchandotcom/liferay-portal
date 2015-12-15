@@ -23,13 +23,13 @@
 />
 
 <liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="type" value="draft_pages" />
+	<liferay-util:param name="navigation" value="draft-pages" />
 </liferay-util:include>
 
 <c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, WikiPage.class.getName()) %>">
 	<h2><liferay-ui:message key="pending-approval" /></h2>
 
 	<liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="type" value="pending_pages" />
+		<liferay-util:param name="navigation" value="pending-pages" />
 	</liferay-util:include>
 </c:if>

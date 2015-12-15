@@ -19,5 +19,5 @@
 <liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="type" value="tagged_pages" />
+	<liferay-util:param name="navigation" value="tagged-pages" />
 </liferay-util:include>

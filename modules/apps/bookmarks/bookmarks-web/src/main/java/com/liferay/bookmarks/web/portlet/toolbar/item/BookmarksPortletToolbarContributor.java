@@ -228,13 +228,21 @@ public class BookmarksPortletToolbarContributor
 	private BookmarksFolder _getFolder(
 		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
 
+		BookmarksFolder folder = (BookmarksFolder)portletRequest.getAttribute(
+			BookmarksWebKeys.BOOKMARKS_FOLDER);
+
+		if (folder != null) {
+			return folder;
+		}
+
 		long rootFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		try {
 			BookmarksGroupServiceOverriddenConfiguration
 				bookmarksGroupServiceOverriddenConfiguration =
 					ConfigurationFactoryUtil.getConfiguration(
-						BookmarksGroupServiceOverriddenConfiguration.class,
+						BookmarksGroupServiceOverriddenConfiguration.
+							class,
 						new GroupServiceSettingsLocator(
 							themeDisplay.getScopeGroupId(),
 							BookmarksConstants.SERVICE_NAME));
@@ -248,15 +256,10 @@ public class BookmarksPortletToolbarContributor
 					themeDisplay.getScopeGroupId());
 		}
 
-		BookmarksFolder folder = (BookmarksFolder)portletRequest.getAttribute(
-			BookmarksWebKeys.BOOKMARKS_FOLDER);
-
 		long folderId = BeanParamUtil.getLong(
 			folder, portletRequest, "folderId", rootFolderId);
 
-		if ((folder == null) &&
-			(folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
+		if (folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			try {
 				folder = _bookmarksFolderService.getFolder(folderId);
 			}

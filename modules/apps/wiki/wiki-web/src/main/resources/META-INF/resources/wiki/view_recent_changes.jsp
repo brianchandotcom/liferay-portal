@@ -27,7 +27,7 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 />
 
 <liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="type" value="recent_changes" />
+	<liferay-util:param name="navigation" value="recent-changes" />
 </liferay-util:include>
 
 <br />

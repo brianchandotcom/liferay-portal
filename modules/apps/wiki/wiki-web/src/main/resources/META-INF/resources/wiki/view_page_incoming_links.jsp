@@ -23,5 +23,5 @@
 </liferay-util:include>
 
 <liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="type" value="incoming_links" />
+	<liferay-util:param name="navigation" value="incoming-links" />
 </liferay-util:include>

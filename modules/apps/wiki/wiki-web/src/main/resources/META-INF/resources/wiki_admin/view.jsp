@@ -23,13 +23,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/wiki_admin/view");
 
-List<String> headerNames = new ArrayList<String>();
-
-headerNames.add("wiki");
-headerNames.add("num-of-pages");
-headerNames.add("last-post-date");
-headerNames.add(StringPool.BLANK);
-
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
@@ -45,12 +38,12 @@ String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "order-by-col", orderByCol);
-	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "order-by-type", orderByType);
+	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", orderByCol);
+	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", orderByType);
 }
 else {
-	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "order-by-col", "name");
-	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "order-by-type", "asc");
+	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", "name");
+	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", "asc");
 }
 
 request.setAttribute("view.jsp-orderByCol", orderByCol);
@@ -128,7 +121,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<%
-			SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-wikis");
+			SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-wikis");
 
 			NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
 
@@ -156,9 +149,10 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 					<%
 					PortletURL rowURL = renderResponse.createRenderURL();
 
-					rowURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
+					rowURL.setParameter("mvcRenderCommandName", "/wiki_admin/view_pages");
 					rowURL.setParameter("redirect", currentURL);
 					rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+					rowURL.setParameter("navigation", "all-pages");
 					%>
 
 					<c:choose>

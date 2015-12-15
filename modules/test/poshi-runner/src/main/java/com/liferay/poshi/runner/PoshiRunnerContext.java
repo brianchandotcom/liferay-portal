@@ -471,8 +471,8 @@ public class PoshiRunnerContext {
 			List<String> classCommandNameGroup = classCommandNameGroups.get(i);
 			int subGroupSize = PropsValues.TEST_BATCH_MAX_SUBGROUP_SIZE;
 
-			int subGroupCount =
-				(classCommandNameGroup.size() / subGroupSize) + 1;
+			int subGroupCount = MathUtil.quotient(
+				classCommandNameGroup.size(), subGroupSize, true);
 
 			sb.append("RUN_TEST_CASE_METHOD_GROUP_");
 			sb.append(i);

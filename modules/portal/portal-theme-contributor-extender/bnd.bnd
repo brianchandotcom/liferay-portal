@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Portal Theme Contributor Extender
+Bundle-SymbolicName: com.liferay.portal.theme.contributor.extender
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.theme,\
+	*
+Include-Resource:\
+	classes,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*

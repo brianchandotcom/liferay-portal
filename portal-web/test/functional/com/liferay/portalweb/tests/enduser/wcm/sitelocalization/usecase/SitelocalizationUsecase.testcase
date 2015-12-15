@@ -453,7 +453,6 @@
 
 		<execute macro="PortalSettings#viewCurrentDefaultPortalLanguageCP">
 			<var name="defaultPortalLanguage" value="English (United States)" />
-			<var name="displaySettings" value="Display Settings" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationLocalizedCP">

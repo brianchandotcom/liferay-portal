@@ -40,10 +40,18 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 	<%
 	String navigation = ParamUtil.getString(request, "navigation");
+
+	String label = null;
+
+	if (navigation.equals("structure")) {
+		label = LanguageUtil.get(request, "structure") + StringPool.COLON + StringPool.SPACE + journalDisplayContext.getDdmStructureName();
+	}
 	%>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation>
+		<liferay-frontend:management-bar-navigation
+			label="<%= label %>"
+		>
 
 			<%
 			PortletURL navigationAllURL = journalDisplayContext.getPortletURL();

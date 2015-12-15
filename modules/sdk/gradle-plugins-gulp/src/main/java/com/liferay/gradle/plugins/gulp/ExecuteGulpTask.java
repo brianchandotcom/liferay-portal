@@ -15,14 +15,18 @@
 package com.liferay.gradle.plugins.gulp;
 
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
+import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.Input;
+
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class ExecuteGulpTask extends ExecuteNodeTask {
 
@@ -30,9 +34,7 @@ public class ExecuteGulpTask extends ExecuteNodeTask {
 	public void executeNode() {
 		List<Object> args = new ArrayList<>();
 
-		File scriptFile = new File(getNodeDir(), getScriptFileName());
-
-		args.add(scriptFile);
+		args.add(getScriptFile());
 
 		args.add(getGulpCommand());
 
@@ -47,17 +49,20 @@ public class ExecuteGulpTask extends ExecuteNodeTask {
 		return _gulpCommand;
 	}
 
-	public String getScriptFileName() {
-		return _SCRIPT_FILE_NAME;
+	@Input
+	public File getScriptFile() {
+		return GradleUtil.toFile(getProject(), _scriptFile);
 	}
 
 	public void setGulpCommand(String gulpCommand) {
 		_gulpCommand = gulpCommand;
 	}
 
-	private static final String _SCRIPT_FILE_NAME =
-		"node_modules/gulp/bin/gulp.js";
+	public void setScriptFile(Object scriptFile) {
+		_scriptFile = scriptFile;
+	}
 
 	private String _gulpCommand = "";
+	private Object _scriptFile = "node_modules/gulp/bin/gulp.js";
 
 }

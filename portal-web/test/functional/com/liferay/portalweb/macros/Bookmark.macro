@@ -194,11 +194,15 @@
 	</command>
 
 	<command name="deletePG">
+		<var name="key_assetEntry" value="${bookmarkName}" />
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
-		<execute function="Click" locator1="PGBookmarksFolder#BOOKMARKS_TABLE_ACTIONS_BUTTON" />
-		<execute function="AssertClick" locator1="PGBookmarksFolder#BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${bookmarkName} was moved to the Recycle Bin. Undo" />
 
 		<execute macro="Navigator#openURL" />

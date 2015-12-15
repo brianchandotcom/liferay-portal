@@ -832,17 +832,23 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
+
+		<execute function="AssertVisible" locator1="ProductMenu#SITES_POPUP" />
 
 		<var name="key_site" value="www.able.com" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="www.able.com" />
+		<execute function="AssertClick" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="www.able.com" />
 
-		<execute macro="SitePage#viewPagesCP">
-			<var name="siteName" value="www.able.com" />
+		<var name="key_siteName" value="www.able.com" />
+
+		<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="www.able.com" />
+
+		<execute macro="ProductMenu#gotoPrivatePages">
+			<var name="page" value="Private Blogs Page" />
 		</execute>
-
-		<execute function="SelectWindow" locator1="title=Private Blogs Page - www.able.com" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
@@ -871,11 +877,19 @@
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
 		</execute>
 
-		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
+
+		<execute function="AssertVisible" locator1="ProductMenu#SITES_POPUP" />
 
 		<var name="key_site" value="www.able.com" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="www.able.com" />
+		<execute function="AssertClick" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="www.able.com" />
+
+		<var name="key_siteName" value="www.able.com" />
+
+		<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="www.able.com" />
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry2 Content" />

@@ -1377,8 +1377,11 @@
 	</command>
 
 	<command name="viewFrontPageCP">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${wikiNodeName}" />
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER_2" value1="FrontPage" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${wikiNodeName}" />
+
+		<var name="key_wikiPageTitle" value="FrontPage" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#PAGE_HEADER" value1="FrontPage" />
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiFrontPageContent}" />
 		<execute function="AssertElementNotPresent" locator1="Message#INFO_1" />
 		<execute function="AssertTextNotPresent" value1="This page is empty. Edit it to add some text." />

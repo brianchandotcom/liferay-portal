@@ -109,22 +109,6 @@ public class JCalendarUtil {
 		return timeZone.getOffset(System.currentTimeMillis());
 	}
 
-	public static int getWeekdayPosition(Calendar jCalendar) {
-		int weekOfMonth = jCalendar.get(Calendar.WEEK_OF_MONTH);
-
-		Calendar firstDayJCalendar = (Calendar)jCalendar.clone();
-
-		firstDayJCalendar.set(Calendar.DAY_OF_MONTH, 1);
-
-		if (firstDayJCalendar.get(Calendar.DAY_OF_WEEK) >
-				jCalendar.get(Calendar.DAY_OF_WEEK)) {
-
-			return weekOfMonth - 1;
-		}
-
-		return weekOfMonth;
-	}
-
 	public static Calendar mergeJCalendar(
 		Calendar dateJCalendar, Calendar timeJCalendar, TimeZone timeZone) {
 

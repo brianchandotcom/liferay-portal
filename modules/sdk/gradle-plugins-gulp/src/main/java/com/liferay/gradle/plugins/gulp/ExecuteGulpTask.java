@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.gulp;
 
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.tasks.Input;
+import org.gradle.util.GUtil;
 
 /**
  * @author David Truong
@@ -32,15 +34,7 @@ public class ExecuteGulpTask extends ExecuteNodeTask {
 
 	@Override
 	public void executeNode() {
-		List<Object> args = new ArrayList<>();
-
-		args.add(getScriptFile());
-
-		args.add(getGulpCommand());
-
-		setArgs(args);
-
-		super.setWorkingDir(getWorkingDir());
+		setArgs(getCompleteArgs());
 
 		super.executeNode();
 	}
@@ -61,6 +55,18 @@ public class ExecuteGulpTask extends ExecuteNodeTask {
 
 	public void setScriptFile(Object scriptFile) {
 		_scriptFile = scriptFile;
+	}
+
+	protected List<Object> getCompleteArgs() {
+		List<Object> completeArgs = new ArrayList<>();
+
+		completeArgs.add(FileUtil.getAbsolutePath(getScriptFile()));
+
+		completeArgs.add(getGulpCommand());
+
+		GUtil.addToCollection(completeArgs, getArgs());
+
+		return completeArgs;
 	}
 
 	private Object _gulpCommand;

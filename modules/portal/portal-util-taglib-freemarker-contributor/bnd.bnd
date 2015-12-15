@@ -1,0 +1,30 @@
+Bundle-Name: Liferay Portal Util Taglib FreeMarker Contributor
+Bundle-SymbolicName: com.liferay.portal.util.taglib.freemarker.contributor
+Fragment-Host: com.liferay.portal.template.freemarker
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.alloy.taglib.alloy;version='[7.0.0,8.0)',\
+	com.liferay.alloy.taglib.alloy.base;version='[7.0.0,8.0)',\
+	com.liferay.alloy.taglib.alloy_util;version='[7.0.0,8.0)',\
+	com.liferay.alloy.taglib.alloy_util.base;version='[7.0.0,8.0)',\
+	com.liferay.alloy.taglib.liferay;version='[7.0.0,8.0)',\
+	com.liferay.alloy.taglib.liferay.base;version='[7.0.0,8.0)',\
+	com.liferay.dynamic.data.mapping.taglib.servlet.taglib;version='[1.0.0,2.0)',\
+	com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;version='[1.0.0,2.0)',\
+	com.liferay.staging.taglib.servlet.taglib;version='[1.0.0,2.0)',\
+	com.liferay.taglib;version='[7.0.0,8.0)',\
+	com.liferay.taglib.aui;version='[7.0.0,8.0)',\
+	com.liferay.taglib.aui.base;version='[7.0.0,8.0)',\
+	com.liferay.taglib.core;version='[7.0.0,8.0)',\
+	com.liferay.taglib.portlet;version='[7.0.0,8.0)',\
+	com.liferay.taglib.portletext;version='[7.0.0,8.0)',\
+	com.liferay.taglib.search;version='[1.0.0,2.0)',\
+	com.liferay.taglib.security;version='[7.0.0,8.0)',\
+	com.liferay.taglib.servlet;version='[1.0.0,2.0)',\
+	com.liferay.taglib.theme;version='[7.0.0,8.0)',\
+	com.liferay.taglib.ui;version='[7.0.0,8.0)',\
+	com.liferay.taglib.ui.display.context;version='[1.0.0,2.0)',\
+	com.liferay.taglib.ui.util;version='[1.0.0,2.0)',\
+	com.liferay.taglib.util;version='[7.0.0,8.0)'
+Include-Resource:\
+	@lib/util-taglib.jar!/META-INF/*.tld

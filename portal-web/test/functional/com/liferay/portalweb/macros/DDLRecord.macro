@@ -108,6 +108,12 @@
 		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
 	</command>
 
+	<command name="gotoEditViaTaskAssignedToMeDetails">
+		<execute macro="Workflow#gotoPreviewEdit" />
+
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+	</command>
+
 	<command name="gotoRecordPreview">
 		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
 	</command>
@@ -337,10 +343,31 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="save">
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Alert#viewSuccess" />
+	</command>
+
 	<command name="saveAsDraftCP">
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewEditPreviewViaTaskAssignedToMeDetails">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute macro="DDLRecord#viewFieldLabel">
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DDLEditRecord#TEXT_FIELD" value1="${ddlRecordFieldDataEdit}" />
+
+		<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ENTRY" />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewFieldCP">

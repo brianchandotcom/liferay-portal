@@ -38,7 +38,45 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
+	<%
+	String label = null;
+
+	if (journalDisplayContext.isNavigationStructure()) {
+		label = LanguageUtil.get(request, "structure") + StringPool.COLON + StringPool.SPACE + journalDisplayContext.getDdmStructureName();
+	}
+	%>
+
 	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			label="<%= label %>"
+		>
+
+			<portlet:renderURL var="viewArticlesHomeURL">
+				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationHome() %>" label="all" url="<%= viewArticlesHomeURL.toString() %>" />
+
+			<portlet:renderURL var="viewRecentArticlesURL">
+				<portlet:param name="navigation" value="recent" />
+				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationRecent() %>" label="recent" url="<%= viewRecentArticlesURL.toString() %>" />
+
+			<portlet:renderURL var="viewMyArticlesURL">
+				<portlet:param name="navigation" value="mine" />
+				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationMine() %>" label="mine" url="<%= viewMyArticlesURL.toString() %>" />
+
+			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationStructure() %>" id="structures" label="structures" url="javascript:;" />
+		</liferay-frontend:management-bar-navigation>
+
 		<liferay-frontend:management-bar-filter
 			label="status"
 			managementBarFilterItems="<%= journalDisplayContext.getManagementBarStatusFilterItems() %>"
@@ -89,4 +127,45 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			);
 		}
 	}
+</aui:script>
+
+<aui:script use="liferay-item-selector-dialog">
+	var form = $(document.<portlet:namespace />fm);
+
+	<portlet:renderURL var="viewDDMStructureArticlesURL">
+		<portlet:param name="navigation" value="structure" />
+		<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+		<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
+	</portlet:renderURL>
+
+	$('#<portlet:namespace />structures').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectStructure',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							if (selectedItem) {
+								var uri = '<%= viewDDMStructureArticlesURL %>';
+
+								uri = Liferay.Util.addParams('<portlet:namespace />ddmStructureKey=' + selectedItem, uri);
+
+								location.href = uri;
+							}
+						}
+					},
+					'strings.add': '<liferay-ui:message key="done" />',
+					title: '<liferay-ui:message key="select-structure" />',
+					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_structure.jsp" /><portlet:param name="ddmStructureKey" value="<%= journalDisplayContext.getDDMStructureKey() %>" /></portlet:renderURL>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
 </aui:script>

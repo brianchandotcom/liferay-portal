@@ -15,19 +15,12 @@
 package com.liferay.portal.servlet.filters.weblogic;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
- * @author Minhchau Dang
+ * @author Shuyang Zhou
  */
-public class WebLogicIncludeServletResponse extends HttpServletResponseWrapper {
+public interface WebLogicIncludeServletResponseFactory {
 
-	public WebLogicIncludeServletResponse(HttpServletResponse response) {
-		super(response);
-	}
-
-	@Override
-	public void setBufferSize(int bufferSize) {
-	}
+	public HttpServletResponse create(HttpServletResponse response);
 
 }

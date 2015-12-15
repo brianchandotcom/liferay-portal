@@ -23,7 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Bruno Farache
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.frontend.taglib.servlet.taglib.DiffTag}
  */
+@Deprecated
 public class DiffTag extends IncludeTag {
 
 	public void setDiffResults(List<DiffResult>[] diffResults) {

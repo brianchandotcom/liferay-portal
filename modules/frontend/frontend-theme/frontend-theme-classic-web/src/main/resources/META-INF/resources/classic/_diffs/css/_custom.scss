@@ -49,6 +49,12 @@ body {
 			.input-container {
 				position: relative;
 			}
+
+			.portlet {
+				&, .portlet-body > .navbar {
+					margin-bottom: 0;
+				}
+			}
 		}
 
 		.nav > li > a {

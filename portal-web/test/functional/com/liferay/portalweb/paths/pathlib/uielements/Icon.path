@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//a[contains(@title,'Delete')]/span[contains(@class,'icon-monospaced')]</td>
+	<td>//*[@data-qa-id='recycle-binButton'] | //a[contains(@title,'Delete')]/span[contains(@class,'icon-monospaced')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>EXPIRE</td>
-	<td>//a[contains(@id,'expireArticle') or contains(@href,'editEntry')]/span[contains(@class,'icon-time')]</td>
+	<td>//*[@data-qa-id='expireButton'] | //a[contains(@id,'expireArticle') or contains(@href,'editEntry')]/span[contains(@class,'icon-time')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,12 +140,12 @@
 </tr>
 <tr>
 	<td>MERGE</td>
-	<td>//a[contains(@id,'merge')]//span[contains(@class,'icon-random')]</td>
+	<td>//*[@data-qa-id='mergeButton'] | //a[contains(@id,'merge')]//span[contains(@class,'icon-random')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE</td>
-	<td>//a[contains(@href,'editEntry')]/span[contains(@class,'icon-move')]</td>
+	<td>//*[@data-qa-id='moveButton'] | //a[contains(@href,'editEntry')]/span[contains(@class,'icon-move')]</td>
 	<td></td>
 </tr>
 <tr>

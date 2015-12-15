@@ -479,49 +479,12 @@ public class DLAppLocalServiceUtil {
 			serviceContext);
 	}
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	RepositoryTrashUtil#moveFileEntryFromTrash(long, long, long,
-	long, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
-		long userId, long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .moveFileEntryFromTrash(userId, fileEntryId, newFolderId,
-			serviceContext);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	RepositoryTrashUtil#moveFileEntryToTrash(long, long, long)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long userId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveFileEntryToTrash(userId, fileEntryId);
-	}
-
 	public static com.liferay.portal.kernel.repository.model.Folder moveFolder(
 		long userId, long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFolder(userId, folderId, parentFolderId, serviceContext);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	RepositoryTrashUtil#restoreFileEntryFromTrash(long, long,
-	long)}
-	*/
-	@Deprecated
-	public static void restoreFileEntryFromTrash(long userId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().restoreFileEntryFromTrash(userId, fileEntryId);
 	}
 
 	/**

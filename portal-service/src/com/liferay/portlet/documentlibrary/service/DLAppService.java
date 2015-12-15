@@ -1407,28 +1407,6 @@ public interface DLAppService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Moves the file entry from a trashed folder to the new folder.
-	*
-	* @param fileEntryId the primary key of the file entry
-	* @param newFolderId the primary key of the new folder
-	* @param serviceContext the service context to be applied
-	* @return the file entry
-	*/
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
-		long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Moves the file entry with the primary key to the trash portlet.
-	*
-	* @param fileEntryId the primary key of the file entry
-	* @return the file entry
-	*/
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long fileEntryId) throws PortalException;
-
-	/**
 	* Moves the folder to the new parent folder with the primary key.
 	*
 	* @param folderId the primary key of the folder
@@ -1440,15 +1418,6 @@ public interface DLAppService extends BaseService {
 		long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Moves the folder with the primary key to the trash portlet.
-	*
-	* @param folderId the primary key of the folder
-	* @return the file entry
-	*/
-	public com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
-		long folderId) throws PortalException;
 
 	/**
 	* Refreshes the lock for the file entry. This method is primarily used by
@@ -1479,21 +1448,6 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.lock.Lock refreshFolderLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws PortalException;
-
-	/**
-	* Restores the file entry with the primary key from the trash portlet.
-	*
-	* @param fileEntryId the primary key of the file entry
-	*/
-	public void restoreFileEntryFromTrash(long fileEntryId)
-		throws PortalException;
-
-	/**
-	* Restores the folder with the primary key from the trash portlet.
-	*
-	* @param folderId the primary key of the folder
-	*/
-	public void restoreFolderFromTrash(long folderId) throws PortalException;
 
 	/**
 	* Reverts the file entry to a previous version. A new version will be

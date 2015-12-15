@@ -409,37 +409,9 @@ public interface DLAppLocalService extends BaseLocalService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	RepositoryTrashUtil#moveFileEntryFromTrash(long, long, long,
-	long, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
-		long userId, long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	RepositoryTrashUtil#moveFileEntryToTrash(long, long, long)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long userId, long fileEntryId) throws PortalException;
-
 	public com.liferay.portal.kernel.repository.model.Folder moveFolder(
 		long userId, long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	RepositoryTrashUtil#restoreFileEntryFromTrash(long, long,
-	long)}
-	*/
-	@java.lang.Deprecated
-	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException;
 
 	/**

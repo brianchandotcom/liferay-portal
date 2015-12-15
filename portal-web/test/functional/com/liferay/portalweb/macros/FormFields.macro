@@ -106,21 +106,6 @@
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#CHECKBOX_LABEL" value1="${fieldLabel}" />
 	</command>
 
-	<command name="viewConditionalFields">
-		<var name="key_fieldLabel" value="${fieldLabelVisible}" />
-		<var name="key_fieldLabelHidden" value="${fieldLabelHidden}" />
-		<var name="key_fieldName" value="${fieldNameVisible}" />
-
-		<execute function="AssertElementPresent" locator1="FormFields#TEXT_LABEL" value1="${fieldLabelVisible}" />
-		<execute function="AssertNotVisible" locator1="FormFields#HIDDEN_LABEL" value1="${fieldLabelHidden}" />
-
-		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
-
-		<execute function="Click" locator1="FormPortlet#FORM_CONTENT" />
-
-		<execute function="AssertVisible" locator1="FormFields#HIDDEN_LABEL" value1="${fieldLabelHidden}" />
-	</command>
-
 	<command name="viewFormName">
 		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME" value1="Field Name:${fieldName}" />
 	</command>
@@ -156,6 +141,25 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#SWITCHER_LABEL" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewTextField">
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#TEXT_FIELD" />
+	</command>
+
+	<command name="viewTextFieldNotVisible">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertNotVisible" locator1="FormFields#TEXT_LABEL" />
+		<execute function="AssertNotVisible" locator1="FormFields#TEXT_FIELD" />
 	</command>
 
 	<command name="viewTextLabel">

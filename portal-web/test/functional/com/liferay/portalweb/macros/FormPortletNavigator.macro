@@ -1,4 +1,8 @@
 <definition>
+	<command name="clickFormContent">
+		<execute function="Click" locator1="FormPortlet#FORM_CONTENT" />
+	</command>
+
 	<command name="gotoSelectForm">
 		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="FormPortlet#SELECT_FORM" value1="Select Form" />
 

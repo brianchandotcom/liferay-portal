@@ -1750,11 +1750,28 @@
 			<var name="pageName" value="Form Page" />
 		</execute>
 
-		<execute macro="FormFields#viewConditionalFields">
-			<var name="fieldLabelHidden" value="Hidden Field" />
-			<var name="fieldLabelVisible" value="Visible Field" />
-			<var name="fieldNameVisible" value="VisibleField" />
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="VisibleField" />
+			<var name="fieldValue" value="quality test" />
+		</execute>
+
+		<execute macro="FormPortletNavigator#clickFormContent" />
+
+		<execute macro="FormFields#viewTextFieldNotVisible">
+			<var name="fieldLabel" value="Hidden Field" />
+			<var name="fieldName" value="HiddenField" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="VisibleField" />
 			<var name="fieldValue" value="test" />
+		</execute>
+
+		<execute macro="FormPortletNavigator#clickFormContent" />
+
+		<execute macro="FormFields#viewTextField">
+			<var name="fieldLabel" value="Hidden Field" />
+			<var name="fieldName" value="HiddenField" />
 		</execute>
 	</command>
 

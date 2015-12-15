@@ -1,12 +1,14 @@
 @import "bourbon";
 @import "mixins";
 
+$horizontal-spacing: 35px;
+
 .portlet-forms {
 	.aspect-ratio img {
 		top: 0;
 	}
 
-    .ddl-form-alert {
+	.ddl-form-alert {
 		border-radius: 0;
 		position: absolute;
 		top: 0;
@@ -285,8 +287,6 @@
 	}
 
 	.form-builder-field-settings-content {
-		$horizontal-spacing: 35px;
-
 		.has-error .key-value-editor {
 			display: none
 		}
@@ -418,8 +418,7 @@
 			}
 
 			.lfr-ddm-form-page {
-				&.active,
-				&.basic {
+				&.active, &.basic {
 					padding: 25px $horizontal-spacing;
 				}
 

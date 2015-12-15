@@ -35,7 +35,7 @@ AUI.add(
 							CheckboxField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								showAsSwitcher: instance.get('showAsSwitcher'),
-								status: value ? 'checked' : ''
+								status: A.DataType.Boolean.parse(value) ? 'checked' : ''
 							}
 						);
 					},

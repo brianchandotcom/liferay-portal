@@ -42,7 +42,6 @@ import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.BuildUpgradeTableTask;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
-import com.liferay.gradle.plugins.whip.WhipTaskExtension;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.plugins.xml.formatter.FormatXMLTask;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
@@ -496,6 +495,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, SoyPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
+		GradleUtil.applyPlugin(project, WhipDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 	}
@@ -1281,7 +1281,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskTestDefaultCharacterEncoding(test);
 		configureTaskTestIgnoreFailures(test);
 		configureTaskTestJvmArgs(test);
-		configureTaskTestWhip(test);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -1317,7 +1316,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskTestDefaultCharacterEncoding(test);
 		configureTaskTestIgnoreFailures(test);
 		configureTaskTestJvmArgs(test);
-		configureTaskTestWhip(test);
 	}
 
 	protected void configureTaskTestJvmArgs(Test test) {
@@ -1342,15 +1340,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		if (Validator.isNotNull(value)) {
 			test.jvmArgs((Object[])value.split("\\s+"));
 		}
-	}
-
-	protected void configureTaskTestWhip(Test test) {
-		WhipTaskExtension whipTaskExtension = GradleUtil.getExtension(
-			test, WhipTaskExtension.class);
-
-		whipTaskExtension.excludes(
-			".*Test", ".*Test\\$.*", ".*\\$Proxy.*", "com/liferay/whip/.*");
-		whipTaskExtension.includes("com/liferay/.*");
 	}
 
 	protected void configureTestIntegrationTomcat(

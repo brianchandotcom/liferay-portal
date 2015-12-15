@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
@@ -651,26 +650,26 @@ public abstract class CalendarResourceServiceBaseImpl extends BaseServiceImpl
 	protected CalendarResourcePersistence calendarResourcePersistence;
 	@BeanReference(type = CalendarResourceFinder.class)
 	protected CalendarResourceFinder calendarResourceFinder;
-	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@ServiceReference(type = com.liferay.portal.service.ClassNameService.class)
+	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
 	protected com.liferay.portal.service.ClassNameService classNameService;
-	@ServiceReference(type = ClassNamePersistence.class)
+	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@ServiceReference(type = com.liferay.portal.service.UserService.class)
+	@BeanReference(type = com.liferay.portal.service.UserService.class)
 	protected com.liferay.portal.service.UserService userService;
-	@ServiceReference(type = UserPersistence.class)
+	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@ServiceReference(type = com.liferay.portlet.asset.service.AssetEntryLocalService.class)
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetEntryLocalService.class)
 	protected com.liferay.portlet.asset.service.AssetEntryLocalService assetEntryLocalService;
-	@ServiceReference(type = com.liferay.portlet.asset.service.AssetEntryService.class)
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetEntryService.class)
 	protected com.liferay.portlet.asset.service.AssetEntryService assetEntryService;
-	@ServiceReference(type = AssetEntryPersistence.class)
+	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
 }

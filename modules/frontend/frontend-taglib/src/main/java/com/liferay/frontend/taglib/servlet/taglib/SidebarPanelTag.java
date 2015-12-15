@@ -17,7 +17,6 @@ package com.liferay.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 

@@ -86,31 +86,30 @@ public class DefaultWikiListPagesDisplayContext
 
 	@Override
 	public String getEmptyResultsMessage() {
-		String navigation = ParamUtil.getString(
-			_request, "navigation", "all_pages");
+		String navigation = ParamUtil.getString(_request, "navigation");
 
-		if (navigation.equals("categorized_pages")) {
+		if (navigation.equals("categorized-pages")) {
 			return "there-are-no-pages-with-this-category";
 		}
-		else if (navigation.equals("draft_pages")) {
+		else if (navigation.equals("draft-pages")) {
 			return "there-are-no-drafts";
 		}
-		else if (navigation.equals("incoming_links")) {
+		else if (navigation.equals("incoming-links")) {
 			return "there-are-no-pages-that-link-to-this-page";
 		}
-		else if (navigation.equals("orphan_pages")) {
+		else if (navigation.equals("orphan-pages")) {
 			return "there-are-no-orphan-pages";
 		}
-		else if (navigation.equals("outgoing_links")) {
+		else if (navigation.equals("outgoing-links")) {
 			return "this-page-has-no-links";
 		}
-		else if (navigation.equals("pending_pages")) {
+		else if (navigation.equals("pending-pages")) {
 			return "there-are-no-pages-submitted-by-you-pending-approval";
 		}
-		else if (navigation.equals("recent_changes")) {
+		else if (navigation.equals("recent-changes")) {
 			return "there-are-no-recent-changes";
 		}
-		else if (navigation.equals("tagged_pages")) {
+		else if (navigation.equals("tagged-pages")) {
 			return "there-are-no-pages-with-this-tag";
 		}
 
@@ -159,12 +158,12 @@ public class DefaultWikiListPagesDisplayContext
 			WebKeys.THEME_DISPLAY);
 
 		String navigation = ParamUtil.getString(
-			_request, "navigation", "all_pages");
+			_request, "navigation", "all-pages");
 
 		int total = 0;
 		List<WikiPage> results = new ArrayList<>();
 
-		if (navigation.equals("all_pages")) {
+		if (navigation.equals("all-pages")) {
 			total = WikiPageServiceUtil.getPagesCount(
 				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(), true,
 				themeDisplay.getUserId(), true,
@@ -183,8 +182,8 @@ public class DefaultWikiListPagesDisplayContext
 				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
 				searchContainer.getEnd(), obc);
 		}
-		else if (navigation.equals("categorized_pages") ||
-				 navigation.equals("tagged_pages")) {
+		else if (navigation.equals("categorized-pages") ||
+				 navigation.equals("tagged-pages")) {
 
 			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
 				WikiPage.class.getName(), searchContainer);
@@ -212,8 +211,8 @@ public class DefaultWikiListPagesDisplayContext
 				results.add(assetPage);
 			}
 		}
-		else if (navigation.equals("draft_pages") ||
-				 navigation.equals("pending_pages")) {
+		else if (navigation.equals("draft-pages") ||
+				 navigation.equals("pending-pages")) {
 
 			User user = themeDisplay.getUser();
 
@@ -230,7 +229,7 @@ public class DefaultWikiListPagesDisplayContext
 
 			int status = WorkflowConstants.STATUS_DRAFT;
 
-			if (navigation.equals("pending_pages")) {
+			if (navigation.equals("pending-pages")) {
 				status = WorkflowConstants.STATUS_PENDING;
 			}
 
@@ -255,7 +254,7 @@ public class DefaultWikiListPagesDisplayContext
 				page.getNodeId(), page.getTitle(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new PageVersionComparator());
 		}
-		else if (navigation.equals("incoming_links")) {
+		else if (navigation.equals("incoming-links")) {
 			List<WikiPage> links = WikiPageLocalServiceUtil.getIncomingLinks(
 				page.getNodeId(), page.getTitle());
 
@@ -266,7 +265,7 @@ public class DefaultWikiListPagesDisplayContext
 			results = ListUtil.subList(
 				links, searchContainer.getStart(), searchContainer.getEnd());
 		}
-		else if (navigation.equals("orphan_pages")) {
+		else if (navigation.equals("orphan-pages")) {
 			List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(
 				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId());
 
@@ -277,7 +276,7 @@ public class DefaultWikiListPagesDisplayContext
 			results = ListUtil.subList(
 				orphans, searchContainer.getStart(), searchContainer.getEnd());
 		}
-		else if (navigation.equals("outgoing_links")) {
+		else if (navigation.equals("outgoing-links")) {
 			List<WikiPage> links = WikiPageLocalServiceUtil.getOutgoingLinks(
 				page.getNodeId(), page.getTitle());
 
@@ -288,7 +287,7 @@ public class DefaultWikiListPagesDisplayContext
 			results = ListUtil.subList(
 				links, searchContainer.getStart(), searchContainer.getEnd());
 		}
-		else if (navigation.equals("recent_changes")) {
+		else if (navigation.equals("recent-changes")) {
 			total = WikiPageServiceUtil.getRecentChangesCount(
 				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId());
 

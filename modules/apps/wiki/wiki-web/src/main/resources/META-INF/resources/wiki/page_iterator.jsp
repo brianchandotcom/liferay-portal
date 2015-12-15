@@ -20,7 +20,7 @@
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
-String navigation = ParamUtil.getString(request, "navigation");
+String navigation = ParamUtil.getString(request, "navigation", "all-pages");
 long categoryId = ParamUtil.getLong(request, "categoryId");
 String tagName = ParamUtil.getString(request, "tag");
 
@@ -32,16 +32,16 @@ if (wikiPage != null) {
 	portletURL.setParameter("title", wikiPage.getTitle());
 }
 
-if (navigation.equals("all_pages")) {
+if (navigation.equals("all-pages")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-pages"), portletURL.toString());
 }
-else if (navigation.equals("categorized_pages")) {
+else if (navigation.equals("categorized-pages")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_categorized_pages");
 	portletURL.setParameter("categoryId", String.valueOf(categoryId));
 }
-else if (navigation.equals("draft_pages")) {
+else if (navigation.equals("draft-pages")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_draft_pages");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "draft-pages"), portletURL.toString());
@@ -59,7 +59,7 @@ else if (navigation.equals("history")) {
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "history"), viewPageHistoryURL.toString());
 }
-else if (navigation.equals("incoming_links")) {
+else if (navigation.equals("incoming-links")) {
 	if (wikiPage != null) {
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 
@@ -70,12 +70,12 @@ else if (navigation.equals("incoming_links")) {
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "incoming-links"), portletURL.toString());
 }
-else if (navigation.equals("orphan_pages")) {
+else if (navigation.equals("orphan-pages")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_orphan_pages");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "orphan-pages"), portletURL.toString());
 }
-else if (navigation.equals("outgoing_links")) {
+else if (navigation.equals("outgoing-links")) {
 	if (wikiPage != null) {
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
 
@@ -86,12 +86,12 @@ else if (navigation.equals("outgoing_links")) {
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "outgoing-links"), portletURL.toString());
 }
-else if (navigation.equals("recent_changes")) {
+else if (navigation.equals("recent-changes")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_recent_changes");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recent-changes"), portletURL.toString());
 }
-else if (navigation.equals("tagged_pages")) {
+else if (navigation.equals("tagged-pages")) {
 	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_tagged_pages");
 	portletURL.setParameter("tag", tagName);
 }
@@ -104,11 +104,11 @@ headerNames.add("revision");
 headerNames.add("user");
 headerNames.add("date");
 
-if (navigation.equals("history") || navigation.equals("recent_changes")) {
+if (navigation.equals("history") || navigation.equals("recent-changes")) {
 	headerNames.add("summary");
 }
 
-if (navigation.equals("all_pages") || navigation.equals("categorized_pages") || navigation.equals("draft_pages") || navigation.equals("history") || navigation.equals("orphan_pages") || navigation.equals("recent_changes") || navigation.equals("tagged_pages")) {
+if (navigation.equals("all-pages") || navigation.equals("categorized-pages") || navigation.equals("draft-pages") || navigation.equals("history") || navigation.equals("orphan-pages") || navigation.equals("recent-changes") || navigation.equals("tagged-pages")) {
 	headerNames.add(StringPool.BLANK);
 }
 
@@ -123,7 +123,7 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, null, null,
 
 Map orderableHeaders = new HashMap();
 
-if (navigation.equals("all_pages") || navigation.equals("categorized_pages") || navigation.equals("tagged_pages")) {
+if (navigation.equals("all-pages") || navigation.equals("categorized-pages") || navigation.equals("tagged-pages")) {
 	orderableHeaders.put("page", "title");
 	orderableHeaders.put("date", "modifiedDate");
 }
@@ -153,7 +153,7 @@ for (int i = 0; i < pages.size(); i++) {
 
 	PortletURL rowURL = renderResponse.createRenderURL();
 
-	if (!curWikiPage.isNew() && !navigation.equals("draft_pages") && !navigation.equals("pending_pages")) {
+	if (!curWikiPage.isNew() && !navigation.equals("draft-pages") && !navigation.equals("pending-pages")) {
 		if (portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
 			rowURL.setParameter("mvcRenderCommandName", "/wiki/view_page");
 		}
@@ -219,7 +219,7 @@ for (int i = 0; i < pages.size(); i++) {
 
 	// Summary
 
-	if (navigation.equals("history") || navigation.equals("recent_changes")) {
+	if (navigation.equals("history") || navigation.equals("recent-changes")) {
 		if (Validator.isNotNull(curWikiPage.getSummary())) {
 			row.addText(HtmlUtil.escape(curWikiPage.getSummary()));
 		}
@@ -239,7 +239,7 @@ for (int i = 0; i < pages.size(); i++) {
 		}
 	}
 
-	if (navigation.equals("all_pages") || navigation.equals("categorized_pages") || navigation.equals("draft_pages") || navigation.equals("orphan_pages") || navigation.equals("recent_changes") || navigation.equals("tagged_pages")) {
+	if (navigation.equals("all-pages") || navigation.equals("categorized-pages") || navigation.equals("draft-pages") || navigation.equals("orphan-pages") || navigation.equals("recent-changes") || navigation.equals("tagged-pages")) {
 		row.addJSP("/wiki/page_action.jsp", "entry-action", application, request, response);
 	}
 

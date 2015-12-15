@@ -1061,6 +1061,15 @@
 			<var name="webContentTitle" value="Targeted Web Content Title" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Targeted Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Male Users" />
+			<var name="vocabularyName" value="User Segment" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page Name" />
@@ -2217,6 +2226,15 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
 			<var name="pageStaging" value="true" />
@@ -2330,6 +2348,15 @@
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2695,6 +2722,15 @@
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Web Content targeted to a User Segment" />
 			<var name="webContentTitle" value="Targeted Web Content Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Targeted Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Female Users" />
+			<var name="vocabularyName" value="User Segment" />
 		</execute>
 	</command>
 
@@ -3910,6 +3946,15 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -4064,6 +4109,15 @@
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Male Users" />
+			<var name="vocabularyName" value="User Segment" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

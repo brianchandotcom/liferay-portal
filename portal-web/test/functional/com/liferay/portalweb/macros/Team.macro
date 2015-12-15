@@ -36,7 +36,7 @@
 		<if>
 			<equals arg1="${userNameIsNotFound}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 			</then>
 			<else>
 				<var name="key_cardText" value="${userScreenName}" />
@@ -73,9 +73,15 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#AVAILABLE" value1="Available" />
+		<execute function="AssertClick" locator1="Button#ADD_TEAM_MEMBERS" value1="Add Team Members" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<var name="key_cardText" value="${userGroupName}" />
+
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<if>
 			<equals arg1="${userGroupsNameIsNotAvailable}" arg2="true" />
@@ -83,12 +89,15 @@
 				<execute function="AssertTextNotPresent" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT" value1="${userGroupName}" />
+				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}" />
+
 				<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
-				<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
+
+				<execute function="SelectFrameTop" />
+
+				<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-				<execute function="AssertChecked" locator1="Card#SPECIFIC_CHECKBOX" />
 			</else>
 		</if>
 	</command>

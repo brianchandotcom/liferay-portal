@@ -103,6 +103,15 @@
 			<var name="webContentTitle" value="Web Content Title 2" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title 2" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Web Content" />

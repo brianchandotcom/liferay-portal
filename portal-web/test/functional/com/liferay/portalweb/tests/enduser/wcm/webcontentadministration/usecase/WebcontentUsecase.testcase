@@ -1570,9 +1570,12 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewCategoryDescriptiveCP">
-			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
+		<execute macro="WebContentNavigator#gotoEditCP">
 			<var name="webContentTitle" value="WC Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
 		</execute>
 	</command>
 

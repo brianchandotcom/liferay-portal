@@ -222,7 +222,7 @@
 	<command name="addMemberUserGroupCP">
 		<var name="key_cardText" value="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
+		<execute function="AssertClick#assertTextClickAtWaitForLastScript" locator1="NavBar#USER_GROUPS" value1="User Groups" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 

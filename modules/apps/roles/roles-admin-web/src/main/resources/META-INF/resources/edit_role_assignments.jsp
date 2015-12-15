@@ -85,26 +85,26 @@ renderResponse.setTitle(role.getTitle(locale));
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"users", "sites", "organizations", "user-groups"} %>'
 					navigationParam="tabs2"
-					portletURL="<%= portletURL %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				/>
 
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"current", "available"} %>'
 					navigationParam="tabs3"
-					portletURL="<%= portletURL %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				/>
 
 				<liferay-frontend:management-bar-sort
 					orderByCol="<%= orderByCol %>"
 					orderByType="<%= orderByType %>"
 					orderColumns='<%= new String[] {"name"} %>'
-					portletURL="<%= portletURL %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				/>
 			</liferay-frontend:management-bar-filters>
 
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= portletURL %>"
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>

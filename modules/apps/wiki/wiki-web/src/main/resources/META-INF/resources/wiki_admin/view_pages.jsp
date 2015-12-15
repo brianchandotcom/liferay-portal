@@ -25,23 +25,9 @@ PortletURL portletURL = PortletURLUtil.clone(currentURLObj, liferayPortletRespon
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, navigation), portletURL.toString());
 
-String emptyResultsMessage = null;
+WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, node);
 
-if (navigation.equals("all-pages")) {
-	emptyResultsMessage = "there-are-no-pages";
-}
-else if (navigation.equals("draft-pages")) {
-	emptyResultsMessage = "there-are-no-drafts";
-}
-else if (navigation.equals("frontpage")) {
-	emptyResultsMessage = LanguageUtil.format(request, "there-is-no-x", new String[] {wikiGroupServiceConfiguration.frontPageName()}, false);
-}
-else if (navigation.equals("orphan-pages")) {
-	emptyResultsMessage = "there-are-no-orphan-changes";
-}
-else if (navigation.equals("recent-changes")) {
-	emptyResultsMessage = "there-are-no-recent-changes";
-}
+SearchContainer wikiPagesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, wikiListPagesDisplayContext.getEmptyResultsMessage());
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -58,54 +44,13 @@ else {
 request.setAttribute("view_pages.jsp-orderByCol", orderByCol);
 request.setAttribute("view_pages.jsp-orderByType", orderByType);
 
-SearchContainer wikiPagesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, emptyResultsMessage);
-
 wikiPagesSearchContainer.setOrderByType(orderByType);
 wikiPagesSearchContainer.setOrderByCol(orderByCol);
-wikiPagesSearchContainer.setOrderByComparator(WikiPortletUtil.getPageOrderByComparator(orderByCol, orderByType));
 wikiPagesSearchContainer.setRowChecker(new PagesChecker(liferayPortletRequest, liferayPortletResponse));
 
-int pagesCount = 0;
-List<WikiPage> pages = new ArrayList<WikiPage>();
+wikiListPagesDisplayContext.populateResultsAndTotal(wikiPagesSearchContainer);
 
-if (navigation.equals("all-pages")) {
-	pagesCount = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED);
-
-	pages = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), node.getNodeId(), true, themeDisplay.getUserId(), true, WorkflowConstants.STATUS_APPROVED, wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd(), wikiPagesSearchContainer.getOrderByComparator());
-}
-else if (navigation.equals("draft-pages")) {
-	long draftUserId = user.getUserId();
-
-	if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-		draftUserId = 0;
-	}
-
-	int status = WorkflowConstants.STATUS_DRAFT;
-
-	pagesCount = WikiPageServiceUtil.getPagesCount(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status);
-
-	pages = WikiPageServiceUtil.getPages(themeDisplay.getScopeGroupId(), draftUserId, node.getNodeId(), status, wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd());
-}
-else if (navigation.equals("frontpage")) {
-
-	WikiPage wikiPage = WikiPageServiceUtil.getPage(scopeGroupId, node.getNodeId(), wikiGroupServiceConfiguration.frontPageName());
-
-	pagesCount = 1;
-
-	pages.add(wikiPage);
-}
-else if (navigation.equals("orphan-pages")) {
-	List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(themeDisplay.getScopeGroupId(), node.getNodeId());
-
-	pagesCount = orphans.size();
-
-	pages = ListUtil.subList(orphans, wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd());
-}
-else if (navigation.equals("recent-changes")) {
-	pagesCount = WikiPageServiceUtil.getRecentChangesCount(themeDisplay.getScopeGroupId(), node.getNodeId());
-
-	pages = WikiPageServiceUtil.getRecentChanges(themeDisplay.getScopeGroupId(), node.getNodeId(), wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd());
-}
+List<WikiPage> pages = wikiPagesSearchContainer.getResults();
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
@@ -185,10 +130,10 @@ else {
 		<liferay-ui:search-container
 			id="wikiPages"
 			searchContainer="<%= wikiPagesSearchContainer %>"
-			total="<%= pagesCount %>"
+			total="<%= wikiPagesSearchContainer.getTotal() %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= pages %>"
+				results="<%= wikiPagesSearchContainer.getResults() %>"
 			/>
 
 			<liferay-ui:search-container-row

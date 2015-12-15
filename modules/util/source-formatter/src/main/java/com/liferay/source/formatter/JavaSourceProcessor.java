@@ -488,6 +488,38 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkDeserializationSecurity(
+		String fileName, String content, boolean isRunOutsidePortalExclusion) {
+
+		for (Pattern vulnerabilityPattern :
+			_javaSerializationVulnerabilityPatterns) {
+
+			Matcher matcher = vulnerabilityPattern.matcher(content);
+
+			if (!matcher.matches()) {
+				continue;
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			if (isRunOutsidePortalExclusion) {
+				sb.append("Possible Java Serialization Remote Code Execution");
+				sb.append(" vulnerablity using ");
+			}
+			else {
+				sb.append("Use ProtectedObjectInputStream");
+				sb.append(" instead of ");
+			}
+
+			sb.append(matcher.group(1));
+			sb.append(": ");
+			sb.append(fileName);
+
+			processErrorMessage(fileName, sb.toString());
+		}
+
+	}
+
 	protected void checkXMLSecurity(
 		String fileName, String content, boolean isRunOutsidePortalExclusion) {
 
@@ -860,6 +892,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);
 		}
 
+		// LPS-60358
+
+		if (!fileName.contains("/test/") &&
+			!fileName.contains("/testIntegration/") &&
+			!isExcludedFile(
+				_secureDeserializationExclusionFiles, absolutePath)) {
+
+			checkDeserializationSecurity(
+				fileName, content, isRunOutsidePortalExclusion);
+		}
+
 		// LPS-55690
 
 		if (newContent.contains("org.testng.Assert")) {
@@ -978,6 +1021,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_lineLengthExclusionFiles = getPropertyList(
 			"line.length.excludes.files");
 		_proxyExclusionFiles = getPropertyList("proxy.excludes.files");
+		_secureDeserializationExclusionFiles = getPropertyList(
+			"secure.deserialization.excluded.files");
 		_secureRandomExclusionFiles = getPropertyList(
 			"secure.random.excludes.files");
 		_secureXmlExclusionFiles = getPropertyList("secure.xml.excludes.files");
@@ -3615,6 +3660,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private Pattern _incorrectLineBreakPattern2 = Pattern.compile(
 		"\\{\n\n\t*\\}");
+	private Pattern[] _javaSerializationVulnerabilityPatterns = new Pattern[]{
+		Pattern.compile(
+			".*(new [a-z\\.\\s]*ObjectInputStream).*",Pattern.DOTALL),
+		Pattern.compile(
+			".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
+	};
 	private List<String> _javaTermAccessLevelModifierExclusionFiles;
 	private List<String> _javaTermSortExclusionFiles;
 	private Pattern _lineBreakPattern = Pattern.compile("\\}(\\)+) \\{");
@@ -3628,6 +3679,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
+	private List<String> _secureDeserializationExclusionFiles;
 	private List<String> _secureRandomExclusionFiles;
 	private List<String> _secureXmlExclusionFiles;
 	private Pattern _serviceUtilImportPattern = Pattern.compile(

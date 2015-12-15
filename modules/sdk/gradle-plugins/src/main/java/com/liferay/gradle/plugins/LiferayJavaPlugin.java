@@ -73,6 +73,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencyResolveDetails;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
@@ -81,6 +82,7 @@ import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -121,11 +123,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
 
+	public static final String PORTAL_CONFIGURATION_NAME = "portal";
+
 	public static final String ZIP_JAVADOC_TASK_NAME = "zipJavadoc";
 
 	@Override
 	public void apply(Project project) {
 		final LiferayExtension liferayExtension = addLiferayExtension(project);
+
+		addConfigurations(project, liferayExtension);
 
 		applyPlugins(project);
 
@@ -134,7 +140,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureProperties(project);
 		configureSourceSets(project);
 
-		addConfigurations(project);
 		addTasks(project);
 
 		applyConfigScripts(project);
@@ -184,7 +189,33 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		delete.delete(deployedFile);
 	}
 
-	protected void addConfigurations(Project project) {
+	protected Configuration addConfigurationPortal(
+		final Project project, final LiferayExtension liferayExtension) {
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, PORTAL_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					addDependenciesPortal(project, liferayExtension);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures the classpath from the local Liferay bundle.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
+	protected void addConfigurations(
+		Project project, LiferayExtension liferayExtension) {
+
+		addConfigurationPortal(project, liferayExtension);
 	}
 
 	protected void addDependenciesJspC(
@@ -193,6 +224,47 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, JspCPlugin.CONFIGURATION_NAME,
 			liferayExtension.getAppServerLibGlobalDir());
+	}
+
+	protected void addDependenciesPortal(
+		Project project, LiferayExtension liferayExtension) {
+
+		File appServerClassesPortalDir = new File(
+			liferayExtension.getAppServerPortalDir(), "WEB-INF/classes");
+
+		GradleUtil.addDependency(
+			project, PORTAL_CONFIGURATION_NAME, appServerClassesPortalDir);
+
+		File appServerLibPortalDir = new File(
+			liferayExtension.getAppServerPortalDir(), "WEB-INF/lib");
+
+		FileTree appServerLibPortalDirJarFiles = FileUtil.getJarsFileTree(
+			project, appServerLibPortalDir);
+
+		GradleUtil.addDependency(
+			project, PORTAL_CONFIGURATION_NAME, appServerLibPortalDirJarFiles);
+
+		FileTree appServerLibGlobalDirJarFiles = FileUtil.getJarsFileTree(
+			project, liferayExtension.getAppServerLibGlobalDir(), "mail.jar");
+
+		GradleUtil.addDependency(
+			project, PORTAL_CONFIGURATION_NAME, appServerLibGlobalDirJarFiles);
+
+		GradleUtil.addDependency(
+			project, PORTAL_CONFIGURATION_NAME, "com.liferay", "net.sf.jargs",
+			"1.0");
+		GradleUtil.addDependency(
+			project, PORTAL_CONFIGURATION_NAME, "com.thoughtworks.qdox", "qdox",
+			"1.12.1");
+		GradleUtil.addDependency(
+			project, PORTAL_CONFIGURATION_NAME, "javax.activation",
+			"activation", "1.1");
+		GradleUtil.addDependency(
+			project, PORTAL_CONFIGURATION_NAME, "javax.servlet",
+			"javax.servlet-api", "3.0.1");
+		GradleUtil.addDependency(
+			project, PORTAL_CONFIGURATION_NAME, "javax.servlet.jsp", "jsp-api",
+			"2.1");
 	}
 
 	protected LiferayExtension addLiferayExtension(Project project) {

@@ -69,7 +69,7 @@ $horizontal-spacing: 35px;
 		@include animation(spin 1000ms infinite linear);
 	}
 
-	.form-builder-field-settings-save .icon-spinner {
+	.lfr-ddl-field-settings-save .icon-spinner {
 		display: inline-block;
 		margin: -2px 0 0 4px;
 	}
@@ -231,7 +231,7 @@ $horizontal-spacing: 35px;
 		max-height: 100%;
 		overflow-x: hidden;
 		overflow-y: auto;
-		padding: 0;
+		padding: 16px 50px 0 50px;
 	}
 
 	.modal-content.form-builder-field-settings-content {
@@ -247,6 +247,11 @@ $horizontal-spacing: 35px;
 
 		.btn {
 			width: auto;
+		}
+
+		.lfr-ddl-field-settings-confirmation-message {
+			float: left;
+			margin: 13px 20px 0 0;
 		}
 	}
 
@@ -279,6 +284,10 @@ $horizontal-spacing: 35px;
 	}
 
 	.form-builder-field-settings-content {
+		.form-group {
+			margin-bottom: 40px;
+		}
+
 		.has-error .key-value-editor {
 			display: none
 		}
@@ -324,9 +333,22 @@ $horizontal-spacing: 35px;
 			}
 		}
 
-		.liferay-ddm-form-field-key-value .help-block {
-			height: 22px;
-			position: relative;
+		.liferay-ddm-form-field-checkbox, .lfr-ddm-form-field-validation {
+			margin-bottom: 20px;
+
+			.form-group {
+				line-height: 0;
+				margin-bottom: 0;
+			}
+		}
+
+		.liferay-ddm-form-field-key-value {
+			margin-bottom: 20px;
+
+			.help-block {
+				height: 22px;
+				position: relative;
+			}
 		}
 
 		.liferay-ddm-form-field-options {

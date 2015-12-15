@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>FORM_CONTENT</td>
+	<td>//div[contains(@class,'form-container')]/div[contains(@class,'form-content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FORM</td>
 	<td>//span[contains(@class,'taglib-text') and contains(.,'Select Form')]</td>
 	<td></td>

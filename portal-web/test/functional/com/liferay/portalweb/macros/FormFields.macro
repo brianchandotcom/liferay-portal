@@ -48,6 +48,15 @@
 		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}" />
 	</command>
 
+	<command name="editValidation">
+		<execute function="Select" locator1="FormFields#VALIDATION_TYPE" value1="${validationType}" />
+
+		<execute function="Select" locator1="FormFields#VALIDATION_ARGUMENT" value1="${validationArgument}" />
+
+		<execute function="Type" locator1="FormFields#VALIDATION_INPUT" value1="${validationInput}" />
+		<execute function="Type" locator1="FormFields#VALIDATION_ERROR_MESSAGE" value1="${validationErrorMessage}" />
+	</command>
+
 	<command name="enableAdvancedOptions">
 		<execute function="AssertClick" locator1="FormFields#ADVANCED_FIELD_SETTINGS_TOGGLE" value1="show-more-options" />
 	</command>
@@ -62,6 +71,10 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Click" locator1="FormFields#SWITCHER" />
+	</command>
+
+	<command name="removeRepeatableField">
+		<execute function="Click" locator1="FormFields#FIELD_REMOVE" />
 	</command>
 
 	<command name="save">
@@ -128,6 +141,25 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#SWITCHER_LABEL" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewTextField">
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#TEXT_FIELD" />
+	</command>
+
+	<command name="viewTextFieldNotVisible">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertNotVisible" locator1="FormFields#TEXT_LABEL" />
+		<execute function="AssertNotVisible" locator1="FormFields#TEXT_FIELD" />
 	</command>
 
 	<command name="viewTextLabel">

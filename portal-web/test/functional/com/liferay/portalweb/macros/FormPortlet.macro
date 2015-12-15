@@ -1,4 +1,6 @@
 <definition>
+	<var name="validationErrorMessage" value="This field is required." />
+
 	<command name="gotoFormPage">
 		<var name="key_formPageName" value="${formPageName}" />
 
@@ -23,9 +25,9 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="submitBlankFormWithRequiredField">
+	<command name="submitWithValidationError">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="This field is required." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="${validationErrorMessage}" />
 	</command>
 </definition>

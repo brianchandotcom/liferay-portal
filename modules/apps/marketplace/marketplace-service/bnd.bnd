@@ -5,6 +5,19 @@ Export-Package:\
 	com.liferay.marketplace.bundle.*,\
 	com.liferay.marketplace.util.*
 Include-Resource: classes
+Liferay-Releng-App-Description: Liferay Marketplace is an integral part of the Liferay platform experience for all users. Enterprise subscribers also have exclusive access to Liferay Subscription Apps through the Liferay Marketplace. Log in with your Liferay account to browse hundreds of apps to help you build your business or technical solution.
+Liferay-Releng-App-Title: Marketplace
+Liferay-Releng-Bundle: true
+Liferay-Releng-Category: Utility
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Dependent-Apps: com.liferay.marketplace.*
+Liferay-Releng-Labs:false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Store
+Liferay-Releng-Public: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: false
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

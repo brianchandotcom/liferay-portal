@@ -81,10 +81,8 @@
 	<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<aui:script sandbox="<%= true %>">
-	var infoPanel = $('#<portlet:namespace />infoPanelId');
-
-	infoPanel.sideNavigation(
+<aui:script>
+	$('#<portlet:namespace />infoPanelId').sideNavigation(
 		{
 			gutter: 15,
 			position: 'right',
@@ -94,28 +92,6 @@
 			width: 320
 		}
 	);
-
-	var sideNav = infoPanel.data('lexicon.sidenav');
-
-	var onSearchContainerRegistered = function(event) {
-		var searchContainer = event.searchContainer;
-
-		if (searchContainer.get('id') === '<portlet:namespace />articles') {
-			searchContainer.on(
-				'rowToggled',
-				function(event) {
-					if (event.elements.allSelectedElements.size()) {
-						sideNav.showSidenav(infoPanel);
-					}
-					else {
-						sideNav.hideSidenav(infoPanel);
-					}
-				}
-			);
-		}
-	};
-
-	Liferay.on('search-container:registered', onSearchContainerRegistered);
 </aui:script>
 
 <aui:script use="liferay-journal-navigation">

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Gradle Plugins Gulp
+Bundle-SymbolicName: com.liferay.gradle.plugins.gulp
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.gradle.plugins.gulp
+Include-Resource: classes

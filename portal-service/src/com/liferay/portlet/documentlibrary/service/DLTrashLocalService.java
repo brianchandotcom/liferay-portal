@@ -50,4 +50,16 @@ public interface DLTrashLocalService extends BaseLocalService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
+		long userId, long repositoryId, long fileEntryId, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws PortalException;
+
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
+		long userId, long repositoryId, long fileEntryId)
+		throws PortalException;
+
+	public void restoreFileEntryFromTrash(long userId, long repositoryId,
+		long fileEntryId) throws PortalException;
 }

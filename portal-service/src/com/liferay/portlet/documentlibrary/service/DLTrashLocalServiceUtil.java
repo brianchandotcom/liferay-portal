@@ -50,6 +50,28 @@ public class DLTrashLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
+		long userId, long repositoryId, long fileEntryId, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .moveFileEntryFromTrash(userId, repositoryId, fileEntryId,
+			newFolderId, serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
+		long userId, long repositoryId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .moveFileEntryToTrash(userId, repositoryId, fileEntryId);
+	}
+
+	public static void restoreFileEntryFromTrash(long userId,
+		long repositoryId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().restoreFileEntryFromTrash(userId, repositoryId, fileEntryId);
+	}
+
 	public static DLTrashLocalService getService() {
 		if (_service == null) {
 			_service = (DLTrashLocalService)PortalBeanLocatorUtil.locate(DLTrashLocalService.class.getName());

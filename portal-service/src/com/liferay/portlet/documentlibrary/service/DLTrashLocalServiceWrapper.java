@@ -42,6 +42,31 @@ public class DLTrashLocalServiceWrapper implements DLTrashLocalService,
 		return _dlTrashLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
+		long userId, long repositoryId, long fileEntryId, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlTrashLocalService.moveFileEntryFromTrash(userId,
+			repositoryId, fileEntryId, newFolderId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
+		long userId, long repositoryId, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlTrashLocalService.moveFileEntryToTrash(userId, repositoryId,
+			fileEntryId);
+	}
+
+	@Override
+	public void restoreFileEntryFromTrash(long userId, long repositoryId,
+		long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlTrashLocalService.restoreFileEntryFromTrash(userId, repositoryId,
+			fileEntryId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -61,7 +61,9 @@
 	</command>
 
 	<command name="configureCurrentLanguagesCP">
-		<execute function="AssertClick" locator1="NavListItem#DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Miscellaneous" />
+		</execute>
 
 		<if>
 			<isset var="defaultPortalLanguage" />
@@ -109,7 +111,9 @@
 	</command>
 
 	<command name="configureTimeZone">
-		<execute function="AssertClick" locator1="NavListItem#DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Miscellaneous" />
+		</execute>
 
 		<execute function="Select" locator1="Select#TIME_ZONE" value1="${timeZone}" />
 
@@ -482,13 +486,17 @@
 	</command>
 
 	<command name="viewCurrentDefaultPortalLanguageCP">
-		<execute function="AssertClick" locator1="NavListItem#DISPLAY_SETTINGS" value1="${displaySettings}" />
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Miscellaneous" />
+		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
 	</command>
 
 	<command name="viewDefaultLanguageCP">
-		<execute function="AssertClick" locator1="NavListItem#DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Miscellaneous" />
+		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
 	</command>

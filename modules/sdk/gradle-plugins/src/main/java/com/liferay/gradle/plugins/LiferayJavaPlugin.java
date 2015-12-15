@@ -25,7 +25,6 @@ import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGener
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerExtension;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
-import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
@@ -161,7 +160,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
 		configureTasksBuildCSS(project);
-		configureTasksBuildLang(project);
 		configureTasksBuildUpgradeTable(project);
 
 		project.afterEvaluate(
@@ -491,6 +489,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
+		GradleUtil.applyPlugin(project, LangBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
@@ -740,26 +739,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			(String)null);
 
 		buildCSSTask.setSassCompilerClassName(sassCompilerClassName);
-	}
-
-	protected void configureTaskBuildLangTranslateClientId(
-		BuildLangTask buildLangTask) {
-
-		String translateClientId = GradleUtil.getProperty(
-			buildLangTask.getProject(), "microsoft.translator.client.id",
-			(String)null);
-
-		buildLangTask.setTranslateClientId(translateClientId);
-	}
-
-	protected void configureTaskBuildLangTranslateClientSecret(
-		BuildLangTask buildLangTask) {
-
-		String translateClientSecret = GradleUtil.getProperty(
-			buildLangTask.getProject(), "microsoft.translator.client.secret",
-			(String)null);
-
-		buildLangTask.setTranslateClientSecret(translateClientSecret);
 	}
 
 	protected void configureTaskBuildUpgradeTableDir(
@@ -1146,22 +1125,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 					configureTaskBuildCSSGenerateSourceMap(buildCSSTask);
 					configureTaskBuildCSSPrecision(buildCSSTask);
 					configureTaskBuildCSSSassCompilerClassName(buildCSSTask);
-				}
-
-			});
-	}
-
-	protected void configureTasksBuildLang(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildLangTask.class,
-			new Action<BuildLangTask>() {
-
-				@Override
-				public void execute(BuildLangTask buildLangTask) {
-					configureTaskBuildLangTranslateClientId(buildLangTask);
-					configureTaskBuildLangTranslateClientSecret(buildLangTask);
 				}
 
 			});

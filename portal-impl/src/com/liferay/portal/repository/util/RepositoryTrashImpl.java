@@ -15,14 +15,10 @@
 package com.liferay.portal.repository.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
-import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.util.RepositoryTrash;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLTrashLocalServiceUtil;
 
 /**
  * @author Adolfo Pérez
@@ -35,22 +31,8 @@ public class RepositoryTrashImpl implements RepositoryTrash {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LocalRepository localRepository =
-			RepositoryProviderUtil.getLocalRepository(repositoryId);
-
-		TrashCapability trashCapability = localRepository.getCapability(
-			TrashCapability.class);
-
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-
-		Folder newFolder = null;
-
-		if (newFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			newFolder = localRepository.getFolder(newFolderId);
-		}
-
-		return trashCapability.moveFileEntryFromTrash(
-			userId, fileEntry, newFolder, serviceContext);
+		return DLTrashLocalServiceUtil.moveFileEntryFromTrash(
+			userId, repositoryId, fileEntryId, newFolderId, serviceContext);
 	}
 
 	@Override
@@ -58,15 +40,8 @@ public class RepositoryTrashImpl implements RepositoryTrash {
 			long userId, long repositoryId, long fileEntryId)
 		throws PortalException {
 
-		LocalRepository localRepository =
-			RepositoryProviderUtil.getLocalRepository(repositoryId);
-
-		TrashCapability trashCapability = localRepository.getCapability(
-			TrashCapability.class);
-
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-
-		return trashCapability.moveFileEntryToTrash(userId, fileEntry);
+		return DLTrashLocalServiceUtil.moveFileEntryToTrash(
+			userId, repositoryId, fileEntryId);
 	}
 
 	@Override
@@ -74,15 +49,8 @@ public class RepositoryTrashImpl implements RepositoryTrash {
 			long userId, long repositoryId, long fileEntryId)
 		throws PortalException {
 
-		LocalRepository localRepository =
-			RepositoryProviderUtil.getLocalRepository(repositoryId);
-
-		TrashCapability trashCapability = localRepository.getCapability(
-			TrashCapability.class);
-
-		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-
-		trashCapability.restoreFileEntryFromTrash(userId, fileEntry);
+		DLTrashLocalServiceUtil.restoreFileEntryFromTrash(
+			userId, repositoryId, fileEntryId);
 	}
 
 }

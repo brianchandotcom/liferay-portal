@@ -16,27 +16,76 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLTrashLocalServiceBaseImpl;
 
 /**
- * The implementation of the d l trash local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portlet.documentlibrary.service.DLTrashLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see DLTrashLocalServiceBaseImpl
- * @see com.liferay.portlet.documentlibrary.service.DLTrashLocalServiceUtil
+ * @author Adolfo Pérez
  */
 @ProviderType
 public class DLTrashLocalServiceImpl extends DLTrashLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.portlet.documentlibrary.service.DLTrashLocalServiceUtil} to access the d l trash local service.
-	 */
+
+	@Override
+	public FileEntry moveFileEntryFromTrash(
+			long userId, long repositoryId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(repositoryId);
+
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		Folder newFolder = null;
+
+		if (newFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			newFolder = localRepository.getFolder(newFolderId);
+		}
+
+		return trashCapability.moveFileEntryFromTrash(
+			userId, fileEntry, newFolder, serviceContext);
+	}
+
+	@Override
+	public FileEntry moveFileEntryToTrash(
+			long userId, long repositoryId, long fileEntryId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(repositoryId);
+
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		return trashCapability.moveFileEntryToTrash(userId, fileEntry);
+	}
+
+	@Override
+	public void restoreFileEntryFromTrash(
+			long userId, long repositoryId, long fileEntryId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(repositoryId);
+
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		trashCapability.restoreFileEntryFromTrash(userId, fileEntry);
+	}
+
 }

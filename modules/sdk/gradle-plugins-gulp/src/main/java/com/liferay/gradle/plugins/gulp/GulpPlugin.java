@@ -15,10 +15,7 @@
 package com.liferay.gradle.plugins.gulp;
 
 import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.util.GradleUtil;
-
-import java.util.concurrent.Callable;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -31,40 +28,13 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class GulpPlugin implements Plugin<Project> {
 
-	public static final String DOWNLOAD_GULP_TASK_NAME = "downloadGulp";
-
 	public static final String EXTENSION_NAME = "gulp";
 
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
-		GulpExtension gulpExtension = GradleUtil.addExtension(
-			project, EXTENSION_NAME, GulpExtension.class);
-
-		addTaskDownloadGulp(project, gulpExtension);
 		addTaskRuleGulp(project);
-	}
-
-	protected DownloadNodeModuleTask addTaskDownloadGulp(
-		Project project, final GulpExtension gulpExtension) {
-
-		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
-			project, DOWNLOAD_GULP_TASK_NAME, DownloadNodeModuleTask.class);
-
-		downloadNodeModuleTask.setModuleName("gulp");
-
-		downloadNodeModuleTask.setModuleVersion(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return gulpExtension.getVersion();
-				}
-
-			});
-
-		return downloadNodeModuleTask;
 	}
 
 	protected ExecuteGulpTask addTaskExecuteGulp(

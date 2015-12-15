@@ -536,24 +536,22 @@ public class PoshiRunnerContext {
 			sb.append("\n");
 
 			for (int j = 0; j < classCommandNameGroup.size(); j++) {
-				String testCaseClassCommandName = classCommandNameGroup.get(j);
-
 				if ((j % subGroupSize) == 0) {
 					sb.append("RUN_TEST_CASE_METHOD_GROUP_");
 					sb.append(i);
 					sb.append("_");
 					sb.append(j / subGroupSize);
 					sb.append("=");
-					sb.append(testCaseClassCommandName);
+					sb.append(classCommandNameGroup.get(j));
 				}
 				else if (((j + 1) % subGroupSize) == 0) {
 					sb.append(",");
-					sb.append(testCaseClassCommandName);
+					sb.append(classCommandNameGroup.get(j));
 					sb.append("\n");
 				}
 				else {
 					sb.append(",");
-					sb.append(testCaseClassCommandName);
+					sb.append(classCommandNameGroup.get(j));
 				}
 			}
 

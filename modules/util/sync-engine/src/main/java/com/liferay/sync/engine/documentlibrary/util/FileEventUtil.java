@@ -209,19 +209,8 @@ public class FileEventUtil {
 	public static void downloadFile(
 		long syncAccountId, SyncFile syncFile, boolean batch) {
 
-		Set<Event> events = FileEventManager.getEvents(
-			syncFile.getSyncFileId());
-
-		for (Event event : events) {
-			if (event instanceof DownloadFileEvent) {
-				if (_logger.isDebugEnabled()) {
-					_logger.debug(
-						"Download already in progress {}",
-						syncFile.getFilePathName());
-				}
-
-				return;
-			}
+		if (isDownloadInProgress(syncFile)) {
+			return;
 		}
 
 		Map<String, Object> parameters = new HashMap<>();
@@ -240,19 +229,8 @@ public class FileEventUtil {
 		long sourceVersionId, long syncAccountId, SyncFile syncFile,
 		long targetVersionId) {
 
-		Set<Event> events = FileEventManager.getEvents(
-			syncFile.getSyncFileId());
-
-		for (Event event : events) {
-			if (event instanceof DownloadFileEvent) {
-				if (_logger.isDebugEnabled()) {
-					_logger.debug(
-						"Download already in progress {}",
-						syncFile.getFilePathName());
-				}
-
-				return;
-			}
+		if (isDownloadInProgress(syncFile)) {
+			return;
 		}
 
 		Map<String, Object> parameters = new HashMap<>();
@@ -517,6 +495,34 @@ public class FileEventUtil {
 			syncAccountId, parameters);
 
 		updateFolderEvent.run();
+	}
+
+	protected static boolean isDownloadInProgress(SyncFile syncFile) {
+		Set<Event> events = FileEventManager.getEvents(
+			syncFile.getSyncFileId());
+
+		for (Event event : events) {
+			if (event instanceof DownloadFileEvent) {
+				SyncFile downloadingSyncFile =
+					(SyncFile)event.getParameterValue("syncFile");
+
+				if (downloadingSyncFile.getVersionId() !=
+						syncFile.getVersionId()) {
+
+					continue;
+				}
+
+				if (_logger.isDebugEnabled()) {
+					_logger.debug(
+						"Download already in progress {}",
+						syncFile.getFilePathName());
+				}
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

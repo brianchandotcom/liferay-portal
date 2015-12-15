@@ -192,7 +192,7 @@
 
 		<execute function="Select" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#DETAILS_LANGUAGE_SELECT" value1="${ddlDisplayTemplateLanguage}" />
 		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScriptEdit}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 

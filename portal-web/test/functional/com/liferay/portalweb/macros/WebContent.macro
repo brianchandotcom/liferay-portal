@@ -608,7 +608,7 @@
 			<then>
 				<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-				<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Draft" />
+				<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="Draft" />
 			</then>
 		</if>
 	</command>
@@ -1533,7 +1533,7 @@
 	</command>
 
 	<command name="viewStatus">
-		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="${webContentStatus}" />
+		<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="${webContentStatus}" />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
 
@@ -1723,7 +1723,7 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="${webContentTitle} is not approved." />
 		<execute function="AssertClick" locator1="Message#ERROR_3_LINK" value1="${webContentTitle} is not approved." />
 
-		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
+		<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
 	</command>

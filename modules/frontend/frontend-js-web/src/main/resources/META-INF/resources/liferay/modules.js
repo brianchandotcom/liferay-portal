@@ -731,7 +731,7 @@
 							'aui-io-request',
 							'aui-timer',
 							'cookie',
-							'liferay-notice'
+							'liferay-alert'
 						]
 					},
 					'liferay-sign-in-modal': {

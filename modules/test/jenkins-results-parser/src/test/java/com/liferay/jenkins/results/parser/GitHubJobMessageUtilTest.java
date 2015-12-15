@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import java.net.URL;
 import java.net.URLDecoder;
@@ -113,15 +112,19 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			URL runURL = JenkinsResultsParserUtil.createURL(
 				URLDecoder.decode(runJSONObject.getString("url"), "UTF-8"));
 
+			JSONObject runResultJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(runURL + "/api/json"));
+
 			File runDir = new File(sampleDir, "run-" + i + "/" + number + "/");
 
 			downloadSampleURL(runDir, runURL, "/api/json");
 			downloadSampleURL(runDir, runURL, "/logText/progressiveText");
 
-			try {
+			String result = runResultJSONObject.getString("result");
+
+			if (result.equals("UNSTABLE")) {
 				downloadSampleURL(runDir, runURL, "/testReport/api/json");
-			}
-			catch (FileNotFoundException fnfe) {
 			}
 
 			runJSONObject.put("url", toURLString(runDir));

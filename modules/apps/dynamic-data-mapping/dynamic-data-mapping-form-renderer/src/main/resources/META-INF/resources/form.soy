@@ -47,22 +47,25 @@
 			function(A) {lb}
 				Liferay.DDM.Renderer.FieldTypes.register({$fieldTypes|noAutoescape});
 
-				new Liferay.DDM.Renderer.Form(
-					{lb}
-						container: '#{$containerId}',
-						definition: {$definition|noAutoescape},
-						evaluation: {$evaluation|noAutoescape},
+				Liferay.component(
+					'{$containerId}DDMForm',
+					new Liferay.DDM.Renderer.Form(
+						{lb}
+							container: '#{$containerId}',
+							definition: {$definition|noAutoescape},
+							evaluation: {$evaluation|noAutoescape},
 
-						{if $layout}
-							layout: {$layout|noAutoescape},
-						{/if}
+							{if $layout}
+								layout: {$layout|noAutoescape},
+							{/if}
 
-						portletNamespace: '{$portletNamespace}',
-						readOnly: {$readOnly},
-						templateNamespace: '{$templateNamespace}',
-						values: {$values|noAutoescape}
-					{rb}
-				).render();
+							portletNamespace: '{$portletNamespace}',
+							readOnly: {$readOnly},
+							templateNamespace: '{$templateNamespace}',
+							values: {$values|noAutoescape}
+						{rb}
+					).render()
+				);
 			{rb}
 		);
 	</script>

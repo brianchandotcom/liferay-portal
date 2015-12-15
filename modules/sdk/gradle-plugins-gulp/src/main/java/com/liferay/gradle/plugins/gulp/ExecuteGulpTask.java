@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.gulp.tasks;
+package com.liferay.gradle.plugins.gulp;
 
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 

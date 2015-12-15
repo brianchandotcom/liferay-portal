@@ -406,7 +406,6 @@ AUI.add(
 							};
 
 							instance._expiredText = Liferay.Language.get('warning-your-session-has-expired');
-							instance._extendText = Liferay.Language.get('extend');
 
 							instance._warningText = Liferay.Language.get('warning-your-session-will-expire');
 							instance._warningText = Lang.sub(
@@ -581,7 +580,7 @@ AUI.add(
 
 						banner.setAttrs(
 							{
-								bodyContent: instance._expiredText,
+								message: instance._expiredText,
 								title: Liferay.Language.get('danger'),
 								type: 'danger'
 							}
@@ -596,7 +595,7 @@ AUI.add(
 						var banner = instance._getBanner();
 
 						banner.set(
-							'bodyContent',
+							'message',
 							Lang.sub(
 								instance._warningText,
 								[

@@ -60,7 +60,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<liferay-ui:search-container
 				id="userNotificationEvents"
 				rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-				searchContainer='<%= new SearchContainer(renderRequest, null, null, "cur", SearchContainer.DEFAULT_DELTA, portletURL, null, "no-groups-were-found") %>'
+				searchContainer='<%= new SearchContainer(renderRequest, null, null, "cur", SearchContainer.DEFAULT_DELTA, portletURL, null, "you-do-not-have-any-notifications") %>'
 				total="<%= userNotificationEventsCount %>"
 			>
 				<liferay-ui:search-container-results

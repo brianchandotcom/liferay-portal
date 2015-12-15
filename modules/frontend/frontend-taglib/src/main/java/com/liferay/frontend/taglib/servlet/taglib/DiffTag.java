@@ -14,12 +14,14 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.diff.DiffResult;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Bruno Farache
@@ -55,6 +57,13 @@ public class DiffTag extends IncludeTag {
 		request.setAttribute("liferay-ui:diff:diffResults", _diffResults);
 		request.setAttribute("liferay-ui:diff:sourceName", _sourceName);
 		request.setAttribute("liferay-ui:diff:targetName", _targetName);
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	private static final String _PAGE = "/diff/page.jsp";

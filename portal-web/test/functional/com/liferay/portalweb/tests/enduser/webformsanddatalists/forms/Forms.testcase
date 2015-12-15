@@ -1245,6 +1245,8 @@
 	</command>
 
 	<command name="SubmitFormWithTextField" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1329,7 +1331,9 @@
 		</execute>
 	</command>
 
-	<command name="SubmitFormWithThreePages" priority="4">
+	<command name="SubmitFormWithThreePages" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

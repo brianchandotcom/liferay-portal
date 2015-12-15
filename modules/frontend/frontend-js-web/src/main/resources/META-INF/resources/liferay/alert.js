@@ -3,9 +3,9 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_ALERTS_CONTAINER = '<div class="lfr-alert-container"></div>';
-
 		var TPL_ALERT_NODE = '<div class="container-fluid-1280 lfr-alert-wrapper"></div>';
+
+		var TPL_ALERTS_CONTAINER = '<div class="lfr-alert-container"></div>';
 
 		var TPL_CONTENT = '<strong class="lead">{title}</strong>{message}';
 

@@ -27,12 +27,11 @@ import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class GulpPlugin implements Plugin<Project> {
 
 	public static final String DOWNLOAD_GULP_TASK_NAME = "downloadGulp";
-
-	public static final String EXECUTE_GULP_TASK_NAME = "executeGulp";
 
 	public static final String EXTENSION_NAME = "gulp";
 
@@ -44,28 +43,7 @@ public class GulpPlugin implements Plugin<Project> {
 			project, EXTENSION_NAME, GulpExtension.class);
 
 		addTaskDownloadGulp(project, gulpExtension);
-
-		final TaskContainer tasks = project.getTasks();
-
-		tasks.addRule(
-			new Rule() {
-				@Override
-				public String getDescription() {
-					return
-						"Pattern: 'gulp_<task>': Executes a named gulp task.";
-				}
-
-				@Override
-				public void apply(String taskName) {
-					if (taskName.startsWith( "gulp_")) {
-						ExecuteGulpTask executeGulpTask = tasks.create(
-							taskName, ExecuteGulpTask.class);
-						executeGulpTask.setGulpCommand(
-							taskName.substring("gulp_".length()));
-					}
-				}
-			}
-		);
+		addTaskRuleGulp(project);
 	}
 
 	protected DownloadNodeModuleTask addTaskDownloadGulp(
@@ -90,12 +68,40 @@ public class GulpPlugin implements Plugin<Project> {
 	}
 
 	protected ExecuteGulpTask addTaskExecuteGulp(
-		Project project, final GulpExtension gulpExtension) {
+		Project project, String taskName) {
 
 		ExecuteGulpTask executeGulpTask = GradleUtil.addTask(
-			project, EXECUTE_GULP_TASK_NAME, ExecuteGulpTask.class);
+			project, taskName, ExecuteGulpTask.class);
+
+		char gulpCommandFirstChar = taskName.charAt(4);
+
+		String gulpCommand =
+			Character.toLowerCase(gulpCommandFirstChar) + taskName.substring(5);
+
+		executeGulpTask.setGulpCommand(gulpCommand);
 
 		return executeGulpTask;
+	}
+
+	protected void addTaskRuleGulp(final Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.addRule(
+			new Rule() {
+
+				@Override
+				public void apply(String taskName) {
+					if (taskName.startsWith("gulp")) {
+						addTaskExecuteGulp(project, taskName);
+					}
+				}
+
+				@Override
+				public String getDescription() {
+					return "Pattern: gulp<Task>: Executes a named Gulp task.";
+				}
+
+			});
 	}
 
 }

@@ -239,6 +239,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAB_LINK</td>
+	<td>//ul[contains(@class,'nav-tabs')]//li[contains(.,'${key_tab}')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPDATE_CATEGORIES</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Update Categories')]</td>
 	<td></td>

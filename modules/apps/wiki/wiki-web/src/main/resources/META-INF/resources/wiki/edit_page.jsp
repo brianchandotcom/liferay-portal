@@ -38,13 +38,7 @@ if ((wikiPage == null) || wikiPage.isNew()) {
 
 boolean editable = false;
 
-boolean copyPageAttachments = ParamUtil.getBoolean(request, "copyPageAttachments", true);
-
-List<FileEntry> attachmentsFileEntries = null;
-
 if (wikiPage != null) {
-	attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
-
 	if (WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) {
 		editable = true;
 	}
@@ -226,31 +220,9 @@ if (portletTitleBasedNavigation) {
 						</aui:field-wrapper>
 					</aui:fieldset>
 
-					<c:if test="<%= ((attachmentsFileEntries != null) && !attachmentsFileEntries.isEmpty()) || ((templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0)) %>">
-						<aui:fieldset collapsible="<%= true %>" label="attachments">
-							<c:if test="<%= (templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0) %>">
-
-								<%
-								attachmentsFileEntries = templatePage.getAttachmentsFileEntries();
-								%>
-
-								<aui:input name="copyPageAttachments" type="checkbox" value="<%= copyPageAttachments %>" />
-							</c:if>
-
-							<c:if test="<%= attachmentsFileEntries != null %>">
-
-								<%
-								for (int i = 0; i < attachmentsFileEntries.size(); i++) {
-									FileEntry attachmentsFileEntry = attachmentsFileEntries.get(i);
-								%>
-
-									<aui:a href="<%= (templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0) ? PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, attachmentsFileEntry, StringPool.BLANK) : null %>"><%= attachmentsFileEntry.getTitle() %></aui:a> (<%= TextFormatter.formatStorageSize(attachmentsFileEntry.getSize(), locale) %>)<%= (i < (attachmentsFileEntries.size() - 1)) ? ", " : "" %>
-
-								<%
-								}
-								%>
-
-							</c:if>
+					<c:if test="<%= ((wikiPage != null) && wikiPage.getAttachmentsFileEntriesCount() > 0) || ((templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0)) %>">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
+							<liferay-util:include page="/wiki/view_attachments.jsp" servletContext="<%= application %>" />
 						</aui:fieldset>
 					</c:if>
 

@@ -347,6 +347,27 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			importedLayout);
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)stagedModel;
+		LayoutSetPrototype importedLayoutSetPrototype =
+			(LayoutSetPrototype)importedStagedModel;
+
+		Assert.assertEquals(
+			layoutSetPrototype.getName(), importedLayoutSetPrototype.getName());
+		Assert.assertEquals(
+			layoutSetPrototype.getDescription(),
+			importedLayoutSetPrototype.getDescription());
+		Assert.assertEquals(
+			layoutSetPrototype.isActive(),
+			importedLayoutSetPrototype.isActive());
+	}
+
 	protected void validateLayouts(
 			LayoutSetPrototype importedLayoutSetPrototype,
 			LayoutPrototype importedLayoutPrototype,

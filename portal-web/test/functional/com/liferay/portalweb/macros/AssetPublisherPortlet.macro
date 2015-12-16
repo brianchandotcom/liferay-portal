@@ -585,7 +585,6 @@
 
 		<execute function="AssertElementNotPresent" locator1="Link#READ_MORE" />
 		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${bookmarkDescription}" />
-		<execute function="AssertElementPresent" locator1="AP#ASSET_ABSTRACT_BOOKMARK_TITLE_LIST_DISPLAY_TEMPLATE_BOOKMARK_ICON" />
 	</command>
 
 	<command name="viewConfigureAPMoveToAvailablePG">
@@ -869,7 +868,6 @@
 			<isset var="relatedAssetTitle" />
 			<then>
 				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
-				<execute function="AssertElementPresent" locator1="AssetRelatedAssets#IMAGE" />
 				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#ASSET_TITLE" value1="${relatedAssetTitle}" />
 			</then>
 		</if>
@@ -878,7 +876,6 @@
 			<isset var="relatedAssetTitleHidden" />
 			<then>
 				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
-				<execute function="AssertElementNotPresent" locator1="AssetRelatedAssets#IMAGE" />
 				<execute function="AssertTextNotPresent" value1="${relatedAssetTitleHidden}" />
 			</then>
 		</if>

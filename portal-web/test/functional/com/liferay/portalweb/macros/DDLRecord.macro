@@ -315,18 +315,16 @@
 		</while>
 	</command>
 
-	<command name="publishCP">
-		<if>
-			<isset var="workflowDefinition" />
-			<then>
-				<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-			</else>
-		</if>
+	<command name="submitForPublication">
+		<execute macro="Button#clickSubmitForPublication" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewSuccess" />
+	</command>
+
+	<command name="publish">
+		<execute macro="Button#clickPublish" />
+
+		<execute macro="Alert#viewSuccess" />
 	</command>
 
 	<command name="publishViaDDLDisplayPG">

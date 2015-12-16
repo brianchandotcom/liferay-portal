@@ -45,6 +45,7 @@ public abstract class PortalSettingsBaseMVCRenderCommand
 		try {
 			HttpServletRequest httpServletRequest =
 				PortalUtil.getHttpServletRequest(renderRequest);
+
 			HttpServletResponse httpServletResponse =
 				PortalUtil.getHttpServletResponse(renderResponse);
 
@@ -59,12 +60,12 @@ public abstract class PortalSettingsBaseMVCRenderCommand
 				"Unable to include JSP " + getJSPPath(), se);
 		}
 
-		return DONT_DISPATCH_PATH;
+		return MVC_PATH_SKIP_DISPATCH;
 	}
 
 	protected abstract String getJSPPath();
 
-	protected ServletContext servletContext;
+	protected volatile ServletContext servletContext;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSettingsBaseMVCRenderCommand.class);

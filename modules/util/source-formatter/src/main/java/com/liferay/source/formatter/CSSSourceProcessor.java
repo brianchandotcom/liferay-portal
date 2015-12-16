@@ -51,10 +51,9 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = {
 			"**/.ivy/**", "**/.sass-cache/**", "**/__MACOSX/**",
-			"**/_partial.scss", "**/_unstyled/css/**", "**/admin/css/**",
-			"**/aui/**", "**/aui_deprecated.css", "**/bourbon/**",
-			"**/classic/css/**", "**/expected/**", "**/frontend-editors-web/**",
-			"**/tools/node**"
+			"**/_partial.scss", "**/_unstyled/css/**", "**/aui/**",
+			"**/aui_deprecated.css", "**/bourbon/**", "**/expected/**",
+			"**/frontend-editors-web/**", "**/tools/node**"
 		};
 
 		return getFileNames(excludes, getIncludes());

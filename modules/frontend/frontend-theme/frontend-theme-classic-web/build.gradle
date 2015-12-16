@@ -1,3 +1,4 @@
+import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
 import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask
 import com.liferay.gradle.plugins.tasks.CompileThemeTask
 import com.liferay.gradle.util.GradleUtil
@@ -9,6 +10,7 @@ configurations {
 task buildTheme(type: CompileThemeTask)
 task buildThumbnails(type: BuildThumbnailsTask)
 task copyFavicon(type: Copy)
+task publishNodeModule(type: PublishNodeModuleTask)
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/classic")
 
@@ -56,4 +58,9 @@ dependencies {
 
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+publishNodeModule {
+	dependsOn jar
+	workingDir = buildTheme.diffsDir
 }

@@ -25,6 +25,18 @@ ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language",
 %>
 
 <c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null %>">
+	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
+		<div class="pull-right staging-links">
+			<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL()) ? "active" : StringPool.BLANK %>">
+				<aui:a href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>" label="staging" /> /
+			</span>
+
+			<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL()) ? "active" : StringPool.BLANK %>">
+				<aui:a href="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL() %>" label="live" />
+			</span>
+		</div>
+	</c:if>
+
 	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isDisplaySiteLink() %>">
 		<aui:a
 			cssClass="list-group-heading"

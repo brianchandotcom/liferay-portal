@@ -60,21 +60,9 @@ ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language",
 				<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
 
 				<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
-					<span class="site-sub-name">(<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>)</span>
+					<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
 				</c:if>
 			</span>
-
-			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
-				<div class="site-subheader">
-					<div class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL()) ? "active" : StringPool.BLANK %>">
-						<aui:a cssClass="icon-fb-radio icon-monospaced" href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>" title="staging" />
-					</div>
-
-					<div class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL()) ? "active" : StringPool.BLANK %>">
-						<aui:a cssClass="icon-circle-blank icon-monospaced" href="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL() %>" title="live" />
-					</div>
-				</div>
-			</c:if>
 
 			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
 				<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>

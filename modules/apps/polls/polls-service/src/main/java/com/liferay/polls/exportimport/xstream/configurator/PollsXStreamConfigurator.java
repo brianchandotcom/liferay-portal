@@ -21,6 +21,7 @@ import com.liferay.polls.model.impl.PollsVoteImpl;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.exportimport.xstream.XStreamAlias;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
+import com.liferay.portlet.exportimport.xstream.XStreamType;
 
 import java.util.List;
 
@@ -32,6 +33,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = XStreamConfigurator.class)
 public class PollsXStreamConfigurator implements XStreamConfigurator {
+
+	@Override
+	public List<XStreamType> getAllowedXStreamTypes() {
+		return null;
+	}
 
 	@Override
 	public List<XStreamAlias> getXStreamAliases() {

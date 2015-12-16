@@ -260,8 +260,10 @@
 	<command name="changePageTypeLayoutPG">
 		<var name="key_columnName" value="${columnName}" />
 
-		<execute function="Click" locator1="DockbarEditpanel#EDIT" value1="Edit" />
+		<execute function="Click" locator1="ControlMenu#EDIT" value1="Edit" />
+
 		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
+
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 	</command>
 
@@ -389,7 +391,8 @@
 	</command>
 
 	<command name="editPG">
-		<execute function="Click" locator1="DockbarEditpanel#EDIT" value1="Edit" />
+		<execute function="Click" locator1="ControlMenu#EDIT" value1="Edit" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${sitePageNameEdit}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -402,8 +405,10 @@
 	</command>
 
 	<command name="embeddedPageTypePG">
-		<execute function="Click" locator1="DockbarEditpanel#EDIT" value1="Edit" />
+		<execute function="Click" locator1="ControlMenu#EDIT" value1="Edit" />
+
 		<execute function="AssertClick" locator1="SitePagesEditPage#TYPE_PAGE_OPTIONS" value1="Embedded" />
+
 		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD" value1="http://www.liferay.com" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 	</command>

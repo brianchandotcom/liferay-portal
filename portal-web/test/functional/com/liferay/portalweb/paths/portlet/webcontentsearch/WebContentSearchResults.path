@@ -8,25 +8,19 @@
 <tr><td rowspan="1" colspan="3">WebContentSearchResults</td></tr>
 </thead>
 <tbody>
-<!--RESULTS_TABLE-->
 <tr>
-	<td>RESULTS_TABLE_NUMBER</td>
-	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[1]</td>
+	<td>TITLE</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//h5</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RESULTS_TABLE_LANGUAGE</td>
-	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[2]/span/img</td>
+	<td>CONTENT</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//h6[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RESULTS_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESULTS_TABLE_CONTENT</td>
-	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[4]</td>
+	<td>LANGUAGE</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//h6[1]</td>
 	<td></td>
 </tr>
 </tbody>

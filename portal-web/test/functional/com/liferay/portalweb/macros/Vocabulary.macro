@@ -215,7 +215,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Categories#VOCABULARY_ENTRY_GENERIC" />
+			<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 			<then>
 				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 				<execute function="ClickNoError" locator1="Icon#DELETE" />

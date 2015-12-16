@@ -84,7 +84,8 @@
 
 	<command name="addCP">
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
+
+		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -282,7 +283,8 @@
 
 	<command name="addReservedEmailAddressCP">
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
+
+		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -296,7 +298,8 @@
 
 	<command name="addReservedScreenNameCP">
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
+
+		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -310,7 +313,8 @@
 
 	<command name="addScreenNameNumberSiteIdCP">
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
+
+		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
 
 		<execute function="Paste" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${siteID}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />

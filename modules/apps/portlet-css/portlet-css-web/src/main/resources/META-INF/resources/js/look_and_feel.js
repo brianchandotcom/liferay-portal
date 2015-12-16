@@ -65,6 +65,8 @@ AUI.add(
 
 		var LINE_HEIGHT = 'lineHeight';
 
+		var LOOK_AND_FEEL_NS = '_com_liferay_portlet_css_web_portlet_PortletCSSPortlet_';
+
 		var NORMAL = 'normal';
 
 		var OK = 'ok';
@@ -121,7 +123,6 @@ AUI.add(
 					instance._portletBoundaryId = curPortletBoundaryId;
 					instance._newPanel = A.one('#portlet-set-properties');
 					instance._currentLanguage = themeDisplay.getLanguageId();
-					instance._randomId = A.guid();
 
 					if (instance._curPortlet) {
 						var content = instance._newPanel;
@@ -147,12 +148,12 @@ AUI.add(
 											footer: [
 												{
 													cssClass: 'btn-primary btn-lg',
-													id: instance._randomId + 'lfr-lookfeel-save',
+													id: Liferay.Util.ns(LOOK_AND_FEEL_NS, 'lfr-lookfeel-save'),
 													label: Liferay.Language.get('save')
 												},
 												{
 													cssClass: 'btn-lg',
-													id: instance._randomId + 'lfr-lookfeel-reset',
+													id: Liferay.Util.ns(LOOK_AND_FEEL_NS, 'lfr-lookfeel-reset'),
 													label: Liferay.Language.get('reset')
 												}
 											]
@@ -907,7 +908,9 @@ AUI.add(
 			_getNodeById: function(id) {
 				var instance = this;
 
-				return A.one('#_com_liferay_portlet_css_web_portlet_PortletCSSPortlet_' + id);
+				var nsId = '#' + Liferay.Util.ns(LOOK_AND_FEEL_NS, id);
+
+				return A.one(nsId);
 			},
 
 			_getSafeInteger: function(input) {
@@ -1041,8 +1044,8 @@ AUI.add(
 					instance._customCSS = instance._getNodeById('lfr-custom-css');
 					instance._customCSSClassName = instance._getNodeById('lfr-custom-css-class-name');
 
-					instance._saveButton = A.one('#' + instance._randomId + 'lfr-lookfeel-save');
-					instance._resetButton = A.one('#' + instance._randomId + 'lfr-lookfeel-reset');
+					instance._saveButton = instance._getNodeById('lfr-lookfeel-save');
+					instance._resetButton = instance._getNodeById('lfr-lookfeel-reset');
 
 					// WAP styling
 

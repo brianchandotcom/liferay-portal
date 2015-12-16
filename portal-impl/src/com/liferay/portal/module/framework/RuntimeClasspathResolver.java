@@ -14,6 +14,8 @@
 
 package com.liferay.portal.module.framework;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -39,7 +41,20 @@ public class RuntimeClasspathResolver implements ClasspathResolver {
 		URL[] urls = new URL[files.length];
 
 		for (int i = 0; i < urls.length; i++) {
-			urls[i] = new URL("file", null, files[i].getAbsolutePath());
+
+			// Make sure we compose proper URLs when running in Windows based
+			// systems. Otherwise, if we refer to a class defined in this
+			// files from a JSP we run into unexpected errors
+
+			String path = StringUtil.replace(
+				files[i].getAbsolutePath(), StringPool.BACK_SLASH,
+				StringPool.SLASH);
+
+			if (!path.startsWith(StringPool.SLASH)) {
+				path = StringPool.SLASH + path;
+			}
+
+			urls[i] = new URL("file", null, path);
 		}
 
 		return urls;

@@ -170,6 +170,8 @@
 		<execute macro="DDLList#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
+
+		<execute macro="Portlet#viewPortletOptionsMenulist" />
 	</command>
 
 	<command name="AddListRecord" priority="4">

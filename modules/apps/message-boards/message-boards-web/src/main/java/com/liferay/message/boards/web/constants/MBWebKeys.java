@@ -19,6 +19,12 @@ package com.liferay.message.boards.web.constants;
  */
 public class MBWebKeys {
 
+	public static final String DYNAMIC_INCLUDE_VIEW_THREAD_MESSAGE_POST =
+		"com.liferay.message.boards#VIEW_THREAD_MESSAGE#post";
+
+	public static final String DYNAMIC_INCLUDE_VIEW_THREAD_MESSAGE_PRE =
+		"com.liferay.message.boards#VIEW_THREAD_MESSAGE#pre";
+
 	public static final String MESSAGE_BOARDS_PORTLET_TOOLBAR_CONTRIBUTOR =
 		"MESSAGE_BOARDS_PORTLET_TOOLBAR_CONTRIBUTOR";
 

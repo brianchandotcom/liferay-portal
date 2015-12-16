@@ -28,4 +28,10 @@ public class DDLWebKeys {
 	public static final String DYNAMIC_DATA_LISTS_RECORD_VERSION =
 		"DYNAMIC_DATA_LISTS_RECORD_VERSION";
 
+	public static final String DYNAMIC_INCLUDE_VIEW_RECORD_POST =
+		"com.liferay.dynamic.data.lists#VIEW_RECORD#post";
+
+	public static final String DYNAMIC_INCLUDE_VIEW_RECORD_PRE =
+		"com.liferay.dynamic.data.lists#VIEW_RECORD#pre";
+
 }

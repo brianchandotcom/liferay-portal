@@ -37,19 +37,11 @@ public class GitUtil {
 		throws Exception {
 
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git log " + _WORKING_BRANCH_NAME + "..HEAD");
+			"git merge-base HEAD " + _WORKING_BRANCH_NAME);
 
-		String line = null;
+		String mergeBaseCommitId = unsyncBufferedReader.readLine();
 
-		List<String> latestBranchCommitIds = new ArrayList<>();
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.startsWith("commit ")) {
-				latestBranchCommitIds.add(line.substring(7));
-			}
-		}
-
-		return getFileNames(baseDirName, latestBranchCommitIds);
+		return getFileNames(baseDirName, mergeBaseCommitId);
 	}
 
 	public static List<String> getLatestAuthorFileNames(String baseDirName)
@@ -60,13 +52,12 @@ public class GitUtil {
 
 		String line = null;
 
-		String commitId = null;
+		String firstDifferentAuthorCommitId = null;
 		String latestAuthor = null;
-		List<String> latestAuthorCommitIds = new ArrayList<>();
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if (line.startsWith("commit ")) {
-				commitId = line.substring(7);
+				firstDifferentAuthorCommitId = line.substring(7);
 			}
 			else if (line.startsWith("Author: ")) {
 				if (latestAuthor == null) {
@@ -74,19 +65,14 @@ public class GitUtil {
 					int y = line.lastIndexOf(CharPool.GREATER_THAN);
 
 					latestAuthor = line.substring(x + 1, y);
-
-					latestAuthorCommitIds.add(commitId);
 				}
-				else if (line.endsWith("<" + latestAuthor + ">")) {
-					latestAuthorCommitIds.add(commitId);
-				}
-				else {
+				else if (!line.endsWith("<" + latestAuthor + ">")) {
 					break;
 				}
 			}
 		}
 
-		return getFileNames(baseDirName, latestAuthorCommitIds);
+		return getFileNames(baseDirName, firstDifferentAuthorCommitId);
 	}
 
 	public static List<String> getLocalChangesFileNames(String baseDirName)
@@ -128,7 +114,7 @@ public class GitUtil {
 	}
 
 	protected static List<String> getFileNames(
-			String baseDirName, List<String> commitIds)
+			String baseDirName, String commitId)
 		throws Exception {
 
 		List<String> fileNames = new ArrayList<>();
@@ -137,21 +123,12 @@ public class GitUtil {
 
 		int gitLevel = getGitLevel(baseDirName);
 
-		for (String commitId : commitIds) {
-			UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-				"git diff-tree --no-commit-id --name-only -r " +
-					"--diff-filter=AM " + commitId);
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git diff --diff-filter=AM --name-only HEAD " + commitId);
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (StringUtil.count(line, StringPool.SLASH) < gitLevel) {
-					continue;
-				}
-
-				String fileName = getFileName(line, gitLevel);
-
-				if (!fileNames.contains(fileName)) {
-					fileNames.add(fileName);
-				}
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (StringUtil.count(line, StringPool.SLASH) >= gitLevel) {
+				fileNames.add(getFileName(line, gitLevel));
 			}
 		}
 

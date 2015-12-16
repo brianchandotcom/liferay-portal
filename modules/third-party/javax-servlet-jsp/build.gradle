@@ -1,0 +1,29 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+dependencies {
+	compile group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
+	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
+	compile group: "org.glassfish.web", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "**/org/apache/jasper/compiler/Jsr199JavaCompiler.java"
+	fileNames "**/org/apache/jasper/compiler/Node.java"
+
+	originalLibModuleName = "javax.servlet.jsp"
+}

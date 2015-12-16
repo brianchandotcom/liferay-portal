@@ -285,6 +285,26 @@ public class OrganizationStagedModelDataHandlerTest
 			organization.getOrganizationId(), importedWebsite.getClassPK());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		Organization organization = (Organization)stagedModel;
+		Organization importedOrganization = (Organization)importedStagedModel;
+
+		Assert.assertEquals(
+			organization.getName(), importedOrganization.getName());
+		Assert.assertEquals(
+			organization.getType(), importedOrganization.getType());
+		Assert.assertEquals(
+			organization.isRecursable(), importedOrganization.isRecursable());
+		Assert.assertEquals(
+			organization.getComments(), importedOrganization.getComments());
+	}
+
 	private Organization _organization;
 
 }

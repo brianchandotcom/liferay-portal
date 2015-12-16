@@ -1,5 +1,5 @@
 dependencies {
-	compile project(":site-navigation:site-navigation-taglib")
+	compile project(":apps:site-navigation:site-navigation-taglib")
 }
 
 liferay {

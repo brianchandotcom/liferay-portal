@@ -28,6 +28,9 @@ import java.io.OutputStream;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 import org.owasp.validator.html.AntiSamy;
 import org.owasp.validator.html.CleanResults;
 import org.owasp.validator.html.Policy;
@@ -37,6 +40,7 @@ import org.owasp.validator.html.PolicyException;
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true)
 public class AntiSamySanitizerImpl implements Sanitizer {
 
 	@Override
@@ -83,14 +87,6 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 			_log.debug("Sanitizing " + className + "#" + classPK);
 		}
 
-		if (!_initialized) {
-			_init();
-		}
-
-		if (_disabled) {
-			return s;
-		}
-
 		if (Validator.isNull(contentType) ||
 			!contentType.equals(ContentTypes.TEXT_HTML)) {
 
@@ -111,7 +107,8 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		}
 	}
 
-	private void _init() {
+	@Activate
+	protected void activate() {
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
@@ -120,28 +117,20 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 			"sanitizer-configuration.xml");
 
 		if (inputStream == null) {
-			_log.error("Configuration could not be found");
-
-			_disabled = true;
-
-			return;
+			throw new NullPointerException("Configuration could not be found");
 		}
 
 		try {
 			_policy = Policy.getInstance(inputStream);
 		}
 		catch (PolicyException pe) {
-			_log.error("Policy could not be initialized", pe);
-
-			_disabled = true;
+			throw new RuntimeException("Policy could not be initialized", pe);
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AntiSamySanitizerImpl.class);
 
-	private boolean _disabled;
-	private boolean _initialized;
 	private Policy _policy;
 
 }

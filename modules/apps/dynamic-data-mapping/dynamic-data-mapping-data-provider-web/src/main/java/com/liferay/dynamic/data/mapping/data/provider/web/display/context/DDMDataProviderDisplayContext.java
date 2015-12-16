@@ -24,11 +24,13 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.service.permission.DDMDataProviderInstancePermission;
 import com.liferay.dynamic.data.mapping.service.permission.DDMPermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -112,7 +114,12 @@ public class DDMDataProviderDisplayContext {
 			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 		}
 
-		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(clazz);
+
+		ddmFormLayout.setPaginationMode(DDMFormLayout.SINGLE_PAGE_MODE);
+
+		return _ddmFormRenderer.render(
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
 	public Set<String> getDDMDataProviderTypes() {

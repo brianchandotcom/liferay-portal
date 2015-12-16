@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
@@ -1113,24 +1112,8 @@ public class LayoutImportController implements ImportController {
 						scopeLayoutUuid, portletDataContext.getGroupId(),
 						portletDataContext.isPrivateLayout());
 
-				if (scopeLayout.hasScopeGroup()) {
-					scopeGroup = scopeLayout.getScopeGroup();
-				}
-				else {
-					Map<Locale, String> nameMap = new HashMap<>();
-
-					nameMap.put(
-						LocaleUtil.getDefault(),
-						String.valueOf(scopeLayout.getPlid()));
-
-					scopeGroup = _groupLocalService.addGroup(
-						portletDataContext.getUserId(null),
-						GroupConstants.DEFAULT_PARENT_GROUP_ID,
-						Layout.class.getName(), scopeLayout.getPlid(),
-						GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null, 0,
-						true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-						null, false, true, null);
-				}
+				scopeGroup = _layoutLocalService.checkScopeGroup(
+					scopeLayout, portletDataContext.getUserId(null));
 
 				Group group = scopeLayout.getGroup();
 

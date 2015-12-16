@@ -3089,3 +3089,30 @@ circular dependencies. Until now, `DLAppService` was responsible for exposing
 the Recycle Bin logic, delegating it to other components. The problem was, the
 components depended on `DLAppService` to implement their logic. Extracting the
 services from `DLAppService` was the only sensible solution to this circularity.
+
+---------------------------------------
+
+### The liferay-ui:navigation taglib has been removed and replaced with liferay-site-navigation:navigation taglib
+- **Date:** 2015-Nov-20
+- **JIRA Ticket:** LPS-60328
+
+#### What changed?
+
+The `liferay-ui:navigation` taglib has been removed and replaced with
+`liferay-site-navigation:navigation` taglib.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:navigation` tag need
+to update their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-site-navigation` tag library if it isn't already
+and update the tag namespace from `liferay-ui:navigation` to
+`liferay-site-navigation:navigation`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.

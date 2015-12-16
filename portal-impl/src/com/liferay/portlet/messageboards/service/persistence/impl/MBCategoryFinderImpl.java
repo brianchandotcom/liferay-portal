@@ -239,7 +239,7 @@ public class MBCategoryFinderImpl
 		try {
 			session = openSession();
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append("SELECT * FROM (");
 
@@ -279,7 +279,8 @@ public class MBCategoryFinderImpl
 			}
 
 			sb.append(sql);
-			sb.append(") TEMP_TABLE ORDER BY modelCategory ASC, priority DESC");
+			sb.append(") TEMP_TABLE ORDER BY modelCategory ASC, ");
+			sb.append("priority DESC, modelId ASC");
 
 			sql = sb.toString();
 

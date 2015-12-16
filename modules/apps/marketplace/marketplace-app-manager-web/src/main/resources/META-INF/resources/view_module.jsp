@@ -44,10 +44,6 @@ String version = ParamUtil.getString(request, "version");
 
 Bundle bundle = BundleManagerUtil.getBundle(symbolicName, version);
 
-BundleContext bundleContext = bundle.getBundleContext();
-
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_module.jsp");
@@ -83,15 +79,6 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			selectedDisplayStyle="descriptive"
 		/>
 	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-sort
-			orderByCol="title"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
@@ -106,9 +93,11 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 		<liferay-ui:search-container-results>
 
 			<%
-			Collection<ServiceReference<Portlet>> serviceReferences = bundleContext.getServiceReferences(Portlet.class, "(service.bundleid=" + bundle.getBundleId() + ")");
+			BundleContext bundleContext = bundle.getBundleContext();
 
-			List<ServiceReference<Portlet>> serviceReferenceList = new ArrayList<ServiceReference<Portlet>>(serviceReferences);
+			Collection<ServiceReference<Portlet>> serviceReferenceCollection = bundleContext.getServiceReferences(Portlet.class, "(service.bundleid=" + bundle.getBundleId() + ")");
+
+			List<ServiceReference<Portlet>> serviceReferences = new ArrayList<>(serviceReferenceCollection);
 
 			int end = searchContainer.getEnd();
 
@@ -116,7 +105,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 				end = serviceReferences.size();
 			}
 
-			searchContainer.setResults(serviceReferenceList.subList(searchContainer.getStart(), end));
+			searchContainer.setResults(serviceReferences.subList(searchContainer.getStart(), end));
 
 			searchContainer.setTotal(serviceReferences.size());
 			%>
@@ -124,7 +113,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="ServiceReference<Portlet>"
+			className="org.osgi.framework.ServiceReference"
 			modelVar="serviceReference"
 		>
 			<liferay-ui:search-container-column-text>
@@ -134,21 +123,23 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+
+				<%
+				String portletDescription = GetterUtil.getString(serviceReference.getProperty("javax.portlet.description"));
+				String portletDisplayName = GetterUtil.getString(serviceReference.getProperty("javax.portlet.display-name"));
+				String portletName = GetterUtil.getString(serviceReference.getProperty("javax.portlet.name"));
+				%>
+
 				<h5>
-					<%= serviceReference.getProperty("javax.portlet.display-name") %>
+					<%= portletDisplayName %>
 				</h5>
 
 				<h6 class="text-default">
+					<%= portletName %>
 
-					<%
-					String portletDescription = (String)serviceReference.getProperty("javax.portlet.name");
-
-					if (Validator.isNotNull(serviceReference.getProperty("javax.portlet.description"))) {
-						portletDescription += " - " + serviceReference.getProperty("javax.portlet.description");
-					}
-					%>
-
-					<%= portletDescription %>
+					<c:if test="<%= Validator.isNotNull(portletDescription) %>">
+					- <%= portletDescription %>
+					</c:if>
 				</h6>
 
 				<div class="additional-info text-default">

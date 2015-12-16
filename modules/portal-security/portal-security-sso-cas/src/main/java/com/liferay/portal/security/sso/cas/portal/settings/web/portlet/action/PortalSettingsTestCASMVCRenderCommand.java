@@ -52,22 +52,24 @@ public class PortalSettingsTestCASMVCRenderCommand implements MVCRenderCommand {
 			_servletContext.getRequestDispatcher(_JSP_PATH);
 
 		try {
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				renderRequest);
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(renderRequest);
 
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				renderResponse);
+			HttpServletResponse httpServletResponse =
+				PortalUtil.getHttpServletResponse(renderResponse);
 
-			requestDispatcher.include(request, response);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception se) {
-			_log.error("Unable to include JSP " + _JSP_PATH, se);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to include JSP " + _JSP_PATH, se);
+			}
 
 			throw new PortletException(
 				"Unable to include JSP " + _JSP_PATH, se);
 		}
 
-		return DONT_DISPATCH_PATH;
+		return MVC_PATH_SKIP_DISPATCH;
 	}
 
 	@Reference(

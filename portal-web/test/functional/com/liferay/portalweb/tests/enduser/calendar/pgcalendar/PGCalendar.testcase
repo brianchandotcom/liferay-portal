@@ -3906,13 +3906,12 @@
 	</command>
 
 	<command name="ViewCalendarTimeZoneDefaults" priority="5">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
+		<property name="portal.acceptance" value="true" />
 
-		<execute macro="User#editUserDisplaySettingsCP">
+		<execute macro="UserBar#gotoMyAccount" />
+
+		<execute macro="User#editUserDisplaySettingsTimeZonePacific">
 			<var name="displaySettingsGreeting" value="Welcome Test Test!" />
-			<var name="userScreenName" value="test" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

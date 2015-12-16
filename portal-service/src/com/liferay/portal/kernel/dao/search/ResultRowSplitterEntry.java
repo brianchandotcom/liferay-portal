@@ -17,10 +17,32 @@ package com.liferay.portal.kernel.dao.search;
 import java.util.List;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
-public interface ResultRowSplitter {
+public class ResultRowSplitterEntry {
 
-	public List<ResultRowSplitterEntry> split(List<ResultRow> resultRows);
+	public ResultRowSplitterEntry(String title, List<ResultRow> resultRows) {
+		_title = title;
+		_resultRows = resultRows;
+	}
+
+	public List<ResultRow> getResultRows() {
+		return _resultRows;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setResultRows(List<ResultRow> resultRows) {
+		_resultRows = resultRows;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
+	private List<ResultRow> _resultRows;
+	private String _title;
 
 }

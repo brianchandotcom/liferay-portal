@@ -162,8 +162,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					addDependenciesJspC(project, liferayExtension);
-
 					configureArtifacts(project);
 					configureVersion(project, liferayExtension);
 
@@ -216,14 +214,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		addConfigurationPortal(project, liferayExtension);
-	}
-
-	protected void addDependenciesJspC(
-		Project project, LiferayExtension liferayExtension) {
-
-		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME,
-			liferayExtension.getAppServerLibGlobalDir());
 	}
 
 	protected void addDependenciesPortal(
@@ -477,6 +467,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
+		GradleUtil.applyPlugin(project, JspCDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);

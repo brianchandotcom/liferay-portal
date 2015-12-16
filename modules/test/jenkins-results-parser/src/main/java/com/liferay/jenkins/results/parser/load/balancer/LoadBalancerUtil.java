@@ -160,8 +160,6 @@ public class LoadBalancerUtil {
 				return "http://" + hostNames.get(x);
 			}
 			finally {
-				JenkinsResultsParserUtil.write(semaphoreFile, "");
-
 				if (recentJobPeriod > 0) {
 					StringBuilder sb = new StringBuilder();
 
@@ -192,6 +190,8 @@ public class LoadBalancerUtil {
 					JenkinsResultsParserUtil.write(
 						recentJobFile, sb.toString());
 				}
+				
+				JenkinsResultsParserUtil.write(semaphoreFile, "");
 			}
 		}
 	}

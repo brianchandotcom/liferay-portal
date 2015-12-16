@@ -181,6 +181,26 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 			importedLayoutFriendlyURL.getFriendlyURL());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		LayoutPrototype layoutPrototype = (LayoutPrototype)stagedModel;
+		LayoutPrototype importedLayoutPrototype =
+			(LayoutPrototype)importedStagedModel;
+
+		Assert.assertEquals(
+			layoutPrototype.getName(), importedLayoutPrototype.getName());
+		Assert.assertEquals(
+			layoutPrototype.getDescription(),
+			importedLayoutPrototype.getDescription());
+		Assert.assertEquals(
+			layoutPrototype.isActive(), importedLayoutPrototype.isActive());
+	}
+
 	private LayoutPrototype _layoutPrototype;
 
 }

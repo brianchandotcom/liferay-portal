@@ -217,6 +217,13 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		_groupLocalService.checkCompanyGroup(companyId);
 	}
 
+	@Override
+	public com.liferay.portal.model.Group checkScopeGroup(
+		com.liferay.portal.model.Layout layout, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _groupLocalService.checkScopeGroup(layout, userId);
+	}
+
 	/**
 	* Creates systems groups and other related data needed by the system on the
 	* very first startup. Also takes care of creating the Control Panel groups

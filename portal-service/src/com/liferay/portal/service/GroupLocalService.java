@@ -163,6 +163,10 @@ public interface GroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkCompanyGroup(long companyId) throws PortalException;
 
+	public com.liferay.portal.model.Group checkScopeGroup(
+		com.liferay.portal.model.Layout layout, long userId)
+		throws PortalException;
+
 	/**
 	* Creates systems groups and other related data needed by the system on the
 	* very first startup. Also takes care of creating the Control Panel groups

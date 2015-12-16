@@ -28,6 +28,7 @@ import com.liferay.portlet.asset.util.test.AssetTestUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -67,6 +68,26 @@ public class AssetVocabularyStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return AssetVocabulary.class;
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		AssetVocabulary vocabulary = (AssetVocabulary)stagedModel;
+		AssetVocabulary importedVocabulary =
+			(AssetVocabulary)importedStagedModel;
+
+		Assert.assertEquals(vocabulary.getName(), importedVocabulary.getName());
+		Assert.assertEquals(
+			vocabulary.getTitle(), importedVocabulary.getTitle());
+		Assert.assertEquals(
+			vocabulary.getDescription(), importedVocabulary.getDescription());
+		Assert.assertEquals(
+			vocabulary.getSettings(), importedVocabulary.getSettings());
 	}
 
 }

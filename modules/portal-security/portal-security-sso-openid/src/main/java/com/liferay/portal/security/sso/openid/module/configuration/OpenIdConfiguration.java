@@ -36,7 +36,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 public interface OpenIdConfiguration {
 
 	@Meta.AD(
-		deflt = "true",
+		deflt = "false",
 		description = "Set this to true to enable OpenId authentication.",
 		required = false
 	)

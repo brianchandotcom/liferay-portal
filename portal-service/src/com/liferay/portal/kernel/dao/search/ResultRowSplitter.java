@@ -21,6 +21,6 @@ import java.util.List;
  */
 public interface ResultRowSplitter {
 
-	public List<List<ResultRow>> split(List<ResultRow> resultRows);
+	public List<ResultRowSplitterEntry> split(List<ResultRow> resultRows);
 
 }

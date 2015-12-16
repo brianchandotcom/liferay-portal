@@ -23,17 +23,19 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_CHECKER, rowChecker);
 
 boolean allRowsIsChecked = true;
 
-List<List<com.liferay.portal.kernel.dao.search.ResultRow>> resultRowsList = new ArrayList<List<com.liferay.portal.kernel.dao.search.ResultRow>>();
+List<ResultRowSplitterEntry> resultRowSplitterEntries = new ArrayList<ResultRowSplitterEntry>();
 
 if (resultRowSplitter != null) {
-	resultRowsList = resultRowSplitter.split(searchContainer.getResultRows());
+	resultRowSplitterEntries = resultRowSplitter.split(searchContainer.getResultRows());
 }
 else {
-	resultRowsList.add(resultRows);
+	resultRowSplitterEntries.add(new ResultRowSplitterEntry(StringPool.BLANK, resultRows));
 }
 
-for (int i = 0; i < resultRowsList.size(); i++) {
-	List<com.liferay.portal.kernel.dao.search.ResultRow> curResultRows = resultRowsList.get(i);
+for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
+	ResultRowSplitterEntry resultRowSplitterEntry = resultRowSplitterEntries.get(i);
+
+	List<com.liferay.portal.kernel.dao.search.ResultRow> curResultRows = resultRowSplitterEntry.getResultRows();
 %>
 
 	<ul class="list-unstyled row" data-qa-id="rows<%= i %>">
@@ -112,7 +114,7 @@ for (int i = 0; i < resultRowsList.size(); i++) {
 		}
 		%>
 
-		<c:if test="<%= i == (resultRowsList.size() - 1) %>">
+		<c:if test="<%= i == (resultRowSplitterEntries.size() - 1) %>">
 			<li></li>
 		</c:if>
 	</ul>

@@ -15,7 +15,7 @@
 package com.liferay.image.uploader.web.portlet.action;
 
 import com.liferay.image.uploader.web.constants.ImageUploaderPortletKeys;
-import com.liferay.image.uploader.web.upgrade.UploadImageUtil;
+import com.liferay.image.uploader.web.util.UploadImageUtil;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;

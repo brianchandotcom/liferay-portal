@@ -15,7 +15,7 @@
 package com.liferay.image.uploader.web.portlet.action;
 
 import com.liferay.image.uploader.web.constants.ImageUploaderPortletKeys;
-import com.liferay.image.uploader.web.upgrade.UploadImageUtil;
+import com.liferay.image.uploader.web.util.UploadImageUtil;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;

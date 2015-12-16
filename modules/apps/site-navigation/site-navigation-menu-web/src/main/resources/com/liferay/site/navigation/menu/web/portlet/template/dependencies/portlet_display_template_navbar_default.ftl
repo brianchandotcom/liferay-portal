@@ -6,8 +6,8 @@
 <#assign navbarId = "navbar_" + portletDisplay.getId() />
 
 <div class="navbar navbar-default" id="${navbarId}">
-	<ul aria-label="#language ("site-pages")" class="nav navbar-nav navbar-site" role="menubar">
-		<h1 class="hide-accessible">#language ("navigation")</h1>
+	<ul aria-label="<@liferay.language key="site-pages" />" class="nav navbar-nav navbar-site" role="menubar">
+		<h1 class="hide-accessible"><@liferay.language key="navigation" /></h1>
 
 		<#assign rootNavigationItems = entries />
 

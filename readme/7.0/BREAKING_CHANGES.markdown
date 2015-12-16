@@ -3119,25 +3119,22 @@ Portal by means of an OSGi container.
 
 ---------------------------------------
 
-### The liferay-ui:diff has been deprecated and replaced with liferay-frontend:diff
+### The liferay-ui:diff has been removed and replaced with liferay-frontend:diff
 - **Date:** 2015-Dec-14
 - **JIRA Ticket:** LPS-61326
 
 #### What changed?
 
-The `liferay-ui:diff` taglib has been deprecated and
-replaced with `liferay-frontend:diff` taglib.
+The `liferay-ui:diff` taglib has been removed and replaced with `liferay-frontend:diff` taglib.
 
 #### Who is affected?
 
-Plugins or templates that are using the `liferay-ui:diff`
-tag need to update their usage of the tag.
+Plugins or templates that are using the `liferay-ui:diff` tag need to update their usage of the tag.
 
 #### How should I update my code?
 
 You should import the `liferay-frontend` tag library if it isn't already and
-update the tag namespace from `liferay-ui:diff` to
-`liferay-frontend:diff`.
+update the tag namespace from `liferay-ui:diff` to `liferay-frontend:diff`.
 
 #### Why was this change made?
 

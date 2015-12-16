@@ -1241,27 +1241,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-frontend:diff</code>]]>.</description>
-		<name>diff</name>
-		<tag-class>com.liferay.taglib.ui.DiffTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>diffResults</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>sourceName</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>targetName</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>diff-html</name>
 		<tag-class>com.liferay.taglib.ui.DiffHtmlTag</tag-class>
 		<body-content>JSP</body-content>

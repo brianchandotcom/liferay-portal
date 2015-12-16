@@ -139,6 +139,21 @@ public class RepositoryStagedModelDataHandlerTest
 			repositoryEntry.getUuid(), group.getGroupId());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		Repository repository = (Repository)stagedModel;
+		Repository importedRepository = (Repository)importedStagedModel;
+
+		Assert.assertEquals(repository.getName(), importedRepository.getName());
+		Assert.assertEquals(
+			repository.getDescription(), importedRepository.getDescription());
+	}
+
 	private Repository _repository;
 
 }

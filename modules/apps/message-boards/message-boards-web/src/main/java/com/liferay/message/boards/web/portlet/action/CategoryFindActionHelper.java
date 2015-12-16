@@ -71,8 +71,7 @@ public class CategoryFindActionHelper extends BaseFindActionHelper {
 	protected void addRequiredParameters(
 		HttpServletRequest request, String portletId, PortletURL portletURL) {
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/view_message");
+		portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 	}
 
 }

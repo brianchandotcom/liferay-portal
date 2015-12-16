@@ -156,6 +156,20 @@ AUI.add(
 													id: Liferay.Util.ns(LOOK_AND_FEEL_NS, 'lfr-lookfeel-reset'),
 													label: Liferay.Language.get('reset')
 												}
+											],
+											header: [
+												{
+													cssClass: 'close',
+													discardDefaultButtonCssClasses: true,
+													labelHTML: '<span> \u00D7 </span>',
+													on: {
+														click: function(event) {
+															instance._currentPopup.hide();
+
+															event.domEvent.stopPropagation();
+														}
+													}
+												}
 											]
 										}
 									},

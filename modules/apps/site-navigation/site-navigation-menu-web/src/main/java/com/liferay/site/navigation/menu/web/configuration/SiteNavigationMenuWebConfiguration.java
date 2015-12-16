@@ -27,7 +27,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 )
 public interface SiteNavigationMenuWebConfiguration {
 
-	@Meta.AD(deflt = "blank-navigation-menu-ftl", required = false)
+	@Meta.AD(deflt = "navbar-blank-ftl", required = false)
 	public String ddmTemplateKeyDefault();
 
 }

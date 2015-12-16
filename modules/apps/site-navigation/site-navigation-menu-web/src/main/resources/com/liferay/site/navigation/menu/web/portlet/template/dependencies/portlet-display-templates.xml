@@ -2,14 +2,6 @@
 
 <root>
 	<template>
-		<template-key>blank-navigation-menu-ftl</template-key>
-		<name>portlet-display-template-name-blank-navigation-menu</name>
-		<description>portlet-display-template-description-blank-navigation-menu</description>
-		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_blank_navigation_menu.ftl</script-file>
-		<cacheable>false</cacheable>
-	</template>
-	<template>
 		<template-key>nav-pills-ftl</template-key>
 		<name>portlet-display-template-name-nav-pills</name>
 		<description>portlet-display-template-description-nav-pills</description>
@@ -47,6 +39,14 @@
 		<description>portlet-display-template-description-nav-tabs-justified</description>
 		<language>ftl</language>
 		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_tabs_justified.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+	<template>
+		<template-key>navbar-blank-ftl</template-key>
+		<name>portlet-display-template-name-navbar-blank</name>
+		<description>portlet-display-template-description-navbar-blank</description>
+		<language>ftl</language>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_navbar_blank.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>

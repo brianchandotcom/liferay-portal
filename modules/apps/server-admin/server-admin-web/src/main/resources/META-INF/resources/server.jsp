@@ -68,37 +68,39 @@ serverURL.setParameter("tabs3", tabs3);
 			</aui:nav>
 		</aui:nav-bar>
 
-		<c:choose>
-			<c:when test='<%= tabs2.equals("log-levels") %>'>
-				<liferay-util:include page="/log_levels.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("properties") %>'>
-				<liferay-util:include page="/properties.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("captcha") %>'>
-				<liferay-util:include page="/captcha.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("data-migration") %>'>
-				<liferay-util:include page="/data_migration.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("file-uploads") %>'>
-				<liferay-util:include page="/file_uploads.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("mail") %>'>
-				<liferay-util:include page="/mail.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("external-services") %>'>
-				<liferay-util:include page="/external_services.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("script") %>'>
-				<liferay-util:include page="/script.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("shutdown") %>'>
-				<liferay-util:include page="/shutdown.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:otherwise>
-				<liferay-util:include page="/resources.jsp" servletContext="<%= application %>" />
-			</c:otherwise>
-		</c:choose>
+		<div class="container-fluid-1280">
+			<c:choose>
+				<c:when test='<%= tabs2.equals("log-levels") %>'>
+					<liferay-util:include page="/log_levels.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:when test='<%= tabs2.equals("properties") %>'>
+					<liferay-util:include page="/properties.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:when test='<%= tabs2.equals("captcha") %>'>
+					<liferay-util:include page="/captcha.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:when test='<%= tabs2.equals("data-migration") %>'>
+					<liferay-util:include page="/data_migration.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:when test='<%= tabs2.equals("file-uploads") %>'>
+					<liferay-util:include page="/file_uploads.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:when test='<%= tabs2.equals("mail") %>'>
+					<liferay-util:include page="/mail.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:when test='<%= tabs2.equals("external-services") %>'>
+					<liferay-util:include page="/external_services.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:when test='<%= tabs2.equals("script") %>'>
+					<liferay-util:include page="/script.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:when test='<%= tabs2.equals("shutdown") %>'>
+					<liferay-util:include page="/shutdown.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:otherwise>
+					<liferay-util:include page="/resources.jsp" servletContext="<%= application %>" />
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</c:otherwise>
 </c:choose>

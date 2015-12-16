@@ -111,7 +111,16 @@ define("frontend-js-metal-web@1.0.0/metal/src/soy/SoyRenderer", ['exports', 'soy
 			});
 			var surface = component.getSurface(component.id);
 			var data = surface && surface.componentData ? surface.componentData : {};
-			return _object2.default.mixin(data, component.getAttrs(names));
+
+			var attrs = _object2.default.map(component.getAttrs(names), function (key, value) {
+				if (component.getAttrConfig(key).isHtml && _core2.default.isString(value)) {
+					return SoyRenderer.sanitizeHtml(value);
+				} else {
+					return value;
+				}
+			});
+
+			return _object2.default.mixin(data, attrs);
 		};
 
 		SoyRenderer.createComponentFromTemplate = function createComponentFromTemplate(templateFn, opt_element, opt_data) {

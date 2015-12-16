@@ -5,19 +5,10 @@
 
 'use strict';
 
-define("frontend-js-metal-web@1.0.0/metal/src/async/async", ['exports', 'metal/src/core'], function (exports, _core) {
+define("frontend-js-metal-web@1.0.0/metal/src/async/async", ['exports'], function (exports) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-
-	var _core2 = _interopRequireDefault(_core);
-
-	function _interopRequireDefault(obj) {
-		return obj && obj.__esModule ? obj : {
-			default: obj
-		};
-	}
-
 	var async = {};
 
 	async.throwException = function (exception) {
@@ -71,8 +62,8 @@ define("frontend-js-metal-web@1.0.0/metal/src/async/async", ['exports', 'metal/s
 
 		cb = async.nextTick.wrapCallback_(cb);
 
-		if (_core2.default.isFunction(window.setImmediate)) {
-			window.setImmediate(cb);
+		if (typeof setImmediate === 'function') {
+			setImmediate(cb);
 			return;
 		}
 
@@ -86,7 +77,11 @@ define("frontend-js-metal-web@1.0.0/metal/src/async/async", ['exports', 'metal/s
 	async.nextTick.setImmediate_ = null;
 
 	async.nextTick.getSetImmediateEmulator_ = function () {
-		var Channel = window.MessageChannel;
+		var Channel;
+
+		if (typeof MessageChannel === 'function') {
+			Channel = MessageChannel;
+		}
 
 		if (typeof Channel === 'undefined' && typeof window !== 'undefined' && window.postMessage && window.addEventListener) {
 			Channel = function () {

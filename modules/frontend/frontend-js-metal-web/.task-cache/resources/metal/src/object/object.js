@@ -54,6 +54,17 @@ define("frontend-js-metal-web@1.0.0/metal/src/object/object", ['exports', 'metal
 			return cur;
 		};
 
+		object.map = function map(obj, fn) {
+			var mappedObj = {};
+			var keys = Object.keys(obj);
+
+			for (var i = 0; i < keys.length; i++) {
+				mappedObj[keys[i]] = fn(keys[i], obj[keys[i]]);
+			}
+
+			return mappedObj;
+		};
+
 		return object;
 	})();
 

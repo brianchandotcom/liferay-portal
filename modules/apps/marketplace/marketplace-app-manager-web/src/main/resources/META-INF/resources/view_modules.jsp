@@ -151,7 +151,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 				<%
 				PortletURL viewModulePluginsURL = renderResponse.createRenderURL();
 
-				viewModulePluginsURL.setParameter("mvcPath", "/view_module_plugins.jsp");
+				viewModulePluginsURL.setParameter("mvcPath", "/view_module.jsp");
 				viewModulePluginsURL.setParameter("app", app);
 				viewModulePluginsURL.setParameter("moduleGroup", moduleGroup);
 				viewModulePluginsURL.setParameter("symbolicName", bundle.getSymbolicName());

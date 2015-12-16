@@ -50,7 +50,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/view_module_plugins.jsp");
+portletURL.setParameter("mvcPath", "/view_module.jsp");
 portletURL.setParameter("app", app);
 portletURL.setParameter("moduleGroup", moduleGroup);
 portletURL.setParameter("symbolicName", bundle.getSymbolicName());
@@ -62,7 +62,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewURL">
-			<portlet:param name="mvcPath" value="/view_module_plugins.jsp" />
+			<portlet:param name="mvcPath" value="/view_module.jsp" />
 		</portlet:renderURL>
 
 		<aui:nav-item

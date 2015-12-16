@@ -201,7 +201,7 @@ if (portletTitleBasedNavigation) {
 							}
 							%>
 
-							<liferay-ui:icon iconCssClass="icon-plus" label="<%= true %>" message='<%= LanguageUtil.format(request, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false) %>' />
+							<liferay-ui:icon iconCssClass="icon-plus" label="<%= true %>" message='<%= LanguageUtil.format(resourceBundle, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false) %>' />
 						</span>
 
 						<c:if test="<%= dlPortletInstanceSettings.isEnableRatings() && fileEntry.isSupportsSocial() %>">
@@ -309,7 +309,7 @@ if (portletTitleBasedNavigation) {
 								<liferay-ui:icon
 									iconCssClass="icon-download"
 									label="<%= true %>"
-									message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+									message='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
 									url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 								/>
 							</span>
@@ -324,7 +324,7 @@ if (portletTitleBasedNavigation) {
 									<liferay-ui:icon
 										iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
 										label="<%= true %>"
-										message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+										message='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
 										method="get"
 										url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 									/>
@@ -358,10 +358,10 @@ if (portletTitleBasedNavigation) {
 									String webDavHelpMessage = null;
 
 									if (BrowserSnifferUtil.isWindows(request)) {
-										webDavHelpMessage = LanguageUtil.format(request, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
+										webDavHelpMessage = LanguageUtil.format(resourceBundle, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
 									}
 									else {
-										webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
+										webDavHelpMessage = LanguageUtil.format(resourceBundle, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
 									}
 									%>
 

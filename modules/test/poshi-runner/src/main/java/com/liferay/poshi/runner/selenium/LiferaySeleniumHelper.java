@@ -31,6 +31,7 @@ import com.liferay.poshi.runner.util.Validator;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import java.io.BufferedReader;
@@ -1153,6 +1154,14 @@ public class LiferaySeleniumHelper {
 		captureScreen(
 			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
 				"ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
+	}
+
+	public static void selectAllText() {
+		Keyboard keyboard = new DesktopKeyboard();
+
+		keyboard.keyDown(KeyEvent.VK_CONTROL);
+		keyboard.type("a");
+		keyboard.keyUp(KeyEvent.VK_CONTROL);
 	}
 
 	public static void sendEmail(

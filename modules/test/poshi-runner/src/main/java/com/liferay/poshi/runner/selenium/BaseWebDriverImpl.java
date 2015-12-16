@@ -1841,6 +1841,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void robotSelectAllText(String locator) {
+		LiferaySeleniumHelper.selectAllText();
+	}
+
+	@Override
 	public void saveScreenshot() throws Exception {
 		if (!PropsValues.SAVE_SCREENSHOT) {
 			return;

@@ -1275,6 +1275,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void robotSelectAllText(String locator) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void saveScreenshot() throws Exception {
 		if (!PropsValues.SAVE_SCREENSHOT) {
 			return;

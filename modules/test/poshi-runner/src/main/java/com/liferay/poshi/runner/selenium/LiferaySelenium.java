@@ -466,6 +466,8 @@ public interface LiferaySelenium {
 
 	public String retrieveLastRemoteControlLogs();
 
+	public void robotSelectAllText(String locator);
+
 	public void rollup(String rollupName, String kwargs);
 
 	public void runScript(String script);

@@ -789,6 +789,10 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
 		<execute macro="FormsAdmin#viewFormEntry">

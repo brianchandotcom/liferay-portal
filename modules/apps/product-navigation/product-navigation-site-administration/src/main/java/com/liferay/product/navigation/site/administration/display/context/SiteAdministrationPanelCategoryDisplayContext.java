@@ -82,30 +82,32 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		_group = _themeDisplay.getScopeGroup();
 
+		if (!_group.isControlPanel()) {
+			updateLatentGroup(_group.getGroupId());
+
+			return _group;
+		}
+
 		HttpSession session = getSession();
 
-		Group latentGroup = LatentGroupManagerUtil.getLatentGroup(session);
-
-		if (_group.isControlPanel()) {
-			_group = latentGroup;
-		}
-		else if ((latentGroup == null) ||
-				 (_group.getGroupId() != latentGroup.getGroupId())) {
-
-			LatentGroupManagerUtil.setLatentGroup(session, _group);
-		}
+		_group = LatentGroupManagerUtil.getLatentGroup(session);
 
 		return _group;
 	}
 
 	public String getGroupName() throws PortalException {
-		if (Validator.isNotNull(_groupName)) {
+		if (_groupName != null) {
 			return _groupName;
 		}
 
 		Group group = getGroup();
 
-		_groupName = group.getDescriptiveName(_themeDisplay.getLocale());
+		if (group == null) {
+			_groupName = StringPool.BLANK;
+		}
+		else {
+			_groupName = group.getDescriptiveName(_themeDisplay.getLocale());
+		}
 
 		return _groupName;
 	}
@@ -168,7 +170,13 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return _logoURL;
 		}
 
+		_logoURL = StringPool.BLANK;
+
 		Group group = getGroup();
+
+		if (group == null) {
+			return _logoURL;
+		}
 
 		_logoURL = group.getLogoURL(_themeDisplay, false);
 
@@ -185,12 +193,10 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		String portletId = PortletProviderUtil.getPortletId(
 			Group.class.getName(), PortletProvider.Action.MANAGE);
 
-		Group group = getGroup();
-
 		if (Validator.isNotNull(portletId) &&
 			PortletPermissionUtil.hasControlPanelAccessPermission(
-				_themeDisplay.getPermissionChecker(), group.getGroupId(),
-				portletId)) {
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), portletId)) {
 
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
 				_portletRequest, Group.class.getName(),
@@ -222,6 +228,14 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	public int getNotificationsCount() {
 		if (_notificationsCount != null) {
 			return _notificationsCount.intValue();
+		}
+
+		_notificationsCount = 0;
+
+		Group group = getGroup();
+
+		if (group == null) {
+			return _notificationsCount;
 		}
 
 		SiteAdministrationPanelCategory siteAdministrationPanelCategory =
@@ -319,6 +333,10 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		Group group = getGroup();
 
+		if (group == null) {
+			return false;
+		}
+
 		Layout layout = _themeDisplay.getLayout();
 
 		if (layout != null) {
@@ -337,14 +355,31 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return _selectedSite;
 	}
 
+	public boolean isShowSiteAdministration() throws PortalException {
+		Group group = getGroup();
+
+		if ((group != null) && GroupPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(), group,
+				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowStagingInfo() throws PortalException {
 		if (_showStagingInfo != null) {
 			return _showStagingInfo.booleanValue();
 		}
 
+		_showStagingInfo = false;
+
 		Group group = getGroup();
 
-		_showStagingInfo = false;
+		if (group == null) {
+			return _showStagingInfo;
+		}
 
 		if (!group.isStaged() && !group.isStagingGroup()) {
 			return _showStagingInfo;
@@ -440,6 +475,20 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		}
 
 		return true;
+	}
+
+	protected void updateLatentGroup(long groupId) {
+		if (groupId <= 0) {
+			return;
+		}
+
+		HttpSession session = getSession();
+
+		Group latentGroup = LatentGroupManagerUtil.getLatentGroup(session);
+
+		if ((latentGroup == null) || (groupId != latentGroup.getGroupId())) {
+			LatentGroupManagerUtil.setLatentGroup(session, _group);
+		}
 	}
 
 	private Boolean _collapsedPanel;

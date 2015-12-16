@@ -14,9 +14,18 @@
 
 package com.liferay.portal.ldap.internal.portal.settings.web.servlet.taglib;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,20 +39,46 @@ import org.osgi.service.component.annotations.Reference;
 	service = DynamicInclude.class
 )
 public class PortalSettingsLDAPAuthenticationDynamicInclude
-	extends PortalSettingsBaseDynamicInclude {
+	extends BaseDynamicInclude {
 
 	@Override
-	protected String getJSPPath() {
-		return _JSP_PATH;
+	public void include(
+			HttpServletRequest request, HttpServletResponse response,
+			String key)
+		throws IOException {
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(_JSP_PATH);
+
+		try {
+			requestDispatcher.include(request, response);
+		}
+		catch (ServletException se) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to include JSP " + _JSP_PATH, se);
+			}
+
+			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
+		}
+	}
+
+	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 	}
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.ldap)", unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
-		super.servletContext = servletContext;
+		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH = "/portal_settings/ldap.jsp";
+	private static final String _JSP_PATH =
+		"/com.liferay.portal.settings.web/ldap.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalSettingsLDAPAuthenticationDynamicInclude.class);
+
+	private volatile ServletContext _servletContext;
 
 }

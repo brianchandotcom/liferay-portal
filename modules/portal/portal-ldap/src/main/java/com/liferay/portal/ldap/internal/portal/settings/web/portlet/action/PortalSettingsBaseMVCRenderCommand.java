@@ -12,56 +12,62 @@
  * details.
  */
 
-package com.liferay.portal.ldap.internal.portal.settings.web.servlet.taglib;
+package com.liferay.portal.ldap.internal.portal.settings.web.portlet.action;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.util.PortalUtil;
 
-import java.io.IOException;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Michael C. Han
+ * @author Tomas Polesovsky
  */
-public abstract class PortalSettingsBaseDynamicInclude
-	extends BaseDynamicInclude {
+public abstract class PortalSettingsBaseMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
-		throws IOException {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(getJSPPath());
 
 		try {
-			requestDispatcher.include(request, response);
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(renderRequest);
+
+			HttpServletResponse httpServletResponse =
+				PortalUtil.getHttpServletResponse(renderResponse);
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
+		catch (Exception se) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to include JSP " + getJSPPath(), se);
 			}
 
-			throw new IOException("Unable to include JSP " + getJSPPath(), se);
+			throw new PortletException(
+				"Unable to include JSP " + getJSPPath(), se);
 		}
-	}
 
-	@Override
-	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		return MVC_PATH_SKIP_DISPATCH;
 	}
 
 	protected abstract String getJSPPath();
 
-	protected ServletContext servletContext;
+	protected volatile ServletContext servletContext;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsBaseDynamicInclude.class);
+		PortalSettingsBaseMVCRenderCommand.class);
 
 }

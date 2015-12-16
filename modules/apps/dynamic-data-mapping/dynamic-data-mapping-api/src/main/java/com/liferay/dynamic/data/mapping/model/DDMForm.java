@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -104,6 +105,15 @@ public class DDMForm implements Serializable {
 
 	public Locale getDefaultLocale() {
 		return _defaultLocale;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _availableLocales);
+
+		hash = HashUtil.hash(hash, _defaultLocale);
+
+		return HashUtil.hash(hash, _ddmFormFields);
 	}
 
 	public void setAvailableLocales(Set<Locale> availableLocales) {

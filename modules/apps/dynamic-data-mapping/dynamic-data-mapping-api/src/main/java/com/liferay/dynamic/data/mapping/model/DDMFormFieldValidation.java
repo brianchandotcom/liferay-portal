@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -62,6 +63,13 @@ public class DDMFormFieldValidation implements Serializable {
 
 	public String getExpression() {
 		return _expression;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _errorMessage);
+
+		return HashUtil.hash(hash, _expression);
 	}
 
 	public void setErrorMessage(String errorMessage) {

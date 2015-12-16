@@ -38,6 +38,14 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 	List<com.liferay.portal.kernel.dao.search.ResultRow> curResultRows = resultRowSplitterEntry.getResultRows();
 %>
 
+	<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
+			</div>
+		</div>
+	</c:if>
+
 	<ul class="list-unstyled row" data-qa-id="rows<%= i %>">
 
 		<%

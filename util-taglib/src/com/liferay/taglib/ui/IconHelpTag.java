@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.FileAvailabilityUtil;
+import com.liferay.taglib.util.TagResourceBundleUtil;
+
+import java.util.ResourceBundle;
 
 import javax.servlet.jsp.JspWriter;
 
@@ -43,6 +46,9 @@ public class IconHelpTag extends IconTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			pageContext);
+
 		JspWriter jspWriter = pageContext.getOut();
 
 		String id = StringUtil.randomId();
@@ -62,7 +68,7 @@ public class IconHelpTag extends IconTag {
 		jspWriter.write("id=\"");
 		jspWriter.write(id);
 		jspWriter.write("\" >");
-		jspWriter.write(LanguageUtil.get(request, getMessage()));
+		jspWriter.write(LanguageUtil.get(resourceBundle, getMessage()));
 		jspWriter.write("</span></span>");
 
 		return EVAL_PAGE;

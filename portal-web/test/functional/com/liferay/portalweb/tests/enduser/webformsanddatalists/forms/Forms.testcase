@@ -47,7 +47,7 @@
 			<var name="displayStyleList" value="Descriptive,Icon,List" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSystem">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>
 
@@ -77,7 +77,7 @@
 			<var name="displayStyleList" value="Descriptive" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSystem">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>
 

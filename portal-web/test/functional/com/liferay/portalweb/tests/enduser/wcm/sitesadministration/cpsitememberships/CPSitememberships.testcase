@@ -686,7 +686,9 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Users" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="20 Entries" />
 

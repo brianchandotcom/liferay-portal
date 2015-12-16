@@ -123,7 +123,7 @@
 			</then>
 		</if>
 
-		<execute macro="ProductMenu#gotoControlPanelSystem">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Portal Instances" />
 		</execute>
 

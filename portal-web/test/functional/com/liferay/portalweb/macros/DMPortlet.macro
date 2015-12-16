@@ -119,11 +119,11 @@
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="AssertClick" locator1="NavPill#SCOPE" value1="Scope" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Scope" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MenuItem#SCOPE" value1="${currentScope}" />
-
-		<execute function="AssertClick" locator1="MenuItem#GLOBAL" value1="Global" />
+		<execute function="Select" locator1="Select#SCOPE" value1="Global" />
 	</command>
 
 	<command name="viewDefaultConfigurationDisplaySettingsPG">

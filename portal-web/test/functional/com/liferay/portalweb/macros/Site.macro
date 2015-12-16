@@ -3,7 +3,9 @@
 	<var name="siteType" value="Open" />
 
 	<command name="addAllMembersCP">
-		<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Users" />
+		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -172,7 +174,9 @@
 	<command name="addMemberCP">
 		<var name="key_cardText" value="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Users" />
+		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -202,7 +206,9 @@
 	<command name="addMemberOrganizationCP">
 		<var name="key_cardText" value="${orgName}" />
 
-		<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Organizations" />
+		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -222,7 +228,9 @@
 	<command name="addMemberUserGroupCP">
 		<var name="key_cardText" value="${userGroupName}" />
 
-		<execute function="AssertClick#assertTextClickAtWaitForLastScript" locator1="NavBar#USER_GROUPS" value1="User Groups" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Groups" />
+		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -385,7 +393,9 @@
 	<command name="assignSiteRolesSiteOwnerUserGroupsCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Groups" />
+		</execute>
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
 
@@ -660,7 +670,9 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
-		<execute function="AssertClick" locator1="NavBar#AVAILABLE_SITES" value1="Available Sites" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Available Sites" />
+		</execute>
 
 		<execute function="Pause" locator1="3000" />
 
@@ -725,7 +737,9 @@
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
 
-		<execute function="AssertClick" locator1="NavBar#AVAILABLE_SITES" value1="Available Sites" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Available Sites" />
+		</execute>
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
 
@@ -809,7 +823,10 @@
 	<command name="removeSiteRolesSiteOwnerUserGroupsCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Groups" />
+		</execute>
+
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userGroupName}" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
@@ -1100,7 +1117,9 @@
 	<command name="viewLimitMembershipParentSiteCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Users" />
+		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -1136,7 +1155,9 @@
 	<command name="viewMemberOrganizationCP">
 		<var name="key_cardText" value="${orgName}" />
 
-		<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Organizations" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${orgName}" />
 		<if>

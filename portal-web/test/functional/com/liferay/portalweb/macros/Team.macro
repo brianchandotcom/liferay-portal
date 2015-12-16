@@ -69,7 +69,9 @@
 
 		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
-		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Groups" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 

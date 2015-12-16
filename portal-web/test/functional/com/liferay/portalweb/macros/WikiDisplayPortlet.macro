@@ -15,14 +15,17 @@
 		</if>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-		<execute function="AssertClick" locator1="NavPill#SCOPE" value1="Scope" />
-		<execute function="Click" locator1="WikiConfiguration#SCOPE_SELECT" />
 
-		<var name="key_siteName" value="${siteName}" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Scope" />
+		</execute>
 
-		<execute function="AssertClick" locator1="WikiConfiguration#SCOPE_MENULIST_SITE_NAME" value1="${siteName}" />
+		<execute function="Select" locator1="Select#SCOPE" value1="${siteName}" />
+
 		<execute function="AssertTextEquals" locator1="PGWikidisplayConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#SCOPE_SELECT" value1="${siteName}" />
+
+		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${siteName}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

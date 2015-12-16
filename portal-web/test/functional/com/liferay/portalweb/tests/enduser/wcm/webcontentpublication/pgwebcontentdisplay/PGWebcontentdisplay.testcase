@@ -638,10 +638,6 @@
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
-
-		<execute macro="WebContent#tearDownCP">
-			<var name="siteScopeName" value="Global" />
-		</execute>
 	</command>
 
 	<command name="ViewAllFileTypesEnabled" priority="4">
@@ -654,7 +650,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSystem">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
 		</execute>
 

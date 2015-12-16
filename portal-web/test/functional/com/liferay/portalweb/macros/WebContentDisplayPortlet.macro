@@ -49,18 +49,18 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-		<execute function="AssertClick" locator1="NavPill#SCOPE" value1="Scope" />
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Scope" />
+		</execute>
 
 		<var name="key_scopeSelection" value="${scopeSelection}" />
 
-		<execute function="Click#pauseClickAt" locator1="WCDConfigurationScope#SCOPE_MENULIST" />
-
-		<execute function="Click" locator1="WCDConfigurationScope#SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
+		<execute function="Select" locator1="Select#SCOPE" value1="${scopeSelection}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="WCDConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 
 	<command name="configureSetupPG">
@@ -344,8 +344,11 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-		<execute function="AssertClick" locator1="NavPill#SCOPE" value1="Scope" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="WCDConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Scope" />
+		</execute>
+
+		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${scopeSelection}" />
 	</command>
 
 	<command name="viewContentPageBreak">

@@ -18,7 +18,7 @@
 
 <liferay-util:buffer var="userName">
 	<c:if test="<%= themeDisplay.isImpersonated() %>">
-		<b class="alert-icon icon-warning-sign"></b>
+		<aui:icon image="asterisk" markupView="lexicon" />
 	</c:if>
 
 	<span class="user-avatar-image">

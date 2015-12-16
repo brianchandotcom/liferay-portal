@@ -4,10 +4,10 @@
 
     <packaging>jar</packaging>
     <groupId>org.webjars.bower</groupId>
-    <artifactId>crystal-components</artifactId>
-    <version>1.0.0-rc.3</version>
-    <name>crystal-components</name>
-    <description>WebJar for crystal-components</description>
+    <artifactId>metal-components</artifactId>
+    <version>1.0.0-rc.5</version>
+    <name>metal-components</name>
+    <description>WebJar for metal-components</description>
     <url>http://webjars.org</url>
 
     <properties>
@@ -15,10 +15,10 @@
     </properties>
 
     <scm>
-        <url>https://github.com/metal/crystal-components</url>
-        <connection>git://github.com/metal/crystal-components.git</connection>
-        <developerConnection>git://github.com/metal/crystal-components.git</developerConnection>
-        <tag>v1.0.0-rc.3</tag>
+        <url>https://github.com/metal/metal-components</url>
+        <connection>git://github.com/metal/metal-components.git</connection>
+        <developerConnection>git://github.com/metal/metal-components.git</developerConnection>
+        <tag>v1.0.0-rc.5</tag>
     </scm>
 
     <developers>
@@ -42,55 +42,55 @@
         
         <dependency>
             <groupId>org.webjars.bower</groupId>
-            <artifactId>github-com-metal-crystal-modal</artifactId>
+            <artifactId>github-com-metal-metal-modal</artifactId>
             <version>master</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.bower</groupId>
-            <artifactId>github-com-metal-crystal-treeview</artifactId>
+            <artifactId>github-com-metal-metal-dropdown</artifactId>
             <version>master</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.bower</groupId>
-            <artifactId>github-com-metal-crystal-affix</artifactId>
+            <artifactId>github-com-metal-metal-affix</artifactId>
             <version>master</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.bower</groupId>
-            <artifactId>github-com-metal-crystal-scrollspy</artifactId>
+            <artifactId>github-com-metal-metal-scrollspy</artifactId>
             <version>master</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.bower</groupId>
-            <artifactId>github-com-metal-crystal-dropdown</artifactId>
+            <artifactId>github-com-metal-metal-slider</artifactId>
             <version>master</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.bower</groupId>
-            <artifactId>github-com-metal-crystal-popover</artifactId>
+            <artifactId>github-com-metal-metal-popover</artifactId>
             <version>master</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.bower</groupId>
-            <artifactId>github-com-metal-crystal-slider</artifactId>
+            <artifactId>github-com-metal-metal-progressbar</artifactId>
             <version>master</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.bower</groupId>
-            <artifactId>github-com-metal-crystal-progressbar</artifactId>
+            <artifactId>github-com-metal-metal-treeview</artifactId>
             <version>master</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.bower</groupId>
-            <artifactId>github-com-metal-crystal-tooltip</artifactId>
+            <artifactId>github-com-metal-metal-tooltip</artifactId>
             <version>master</version>
         </dependency>
         

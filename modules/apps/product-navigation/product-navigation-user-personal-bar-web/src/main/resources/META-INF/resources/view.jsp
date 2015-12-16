@@ -36,37 +36,6 @@
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<aui:nav-item anchorCssClass="user-avatar-link" cssClass='<%= "portlet-user-personal-bar " + (themeDisplay.isImpersonated() ? "user-avatar impersonating-user" : "user-avatar") %>' dropdown="<%= true %>" id="userAvatar" label="<%= userName %>" toggleTouch="<%= false %>">
-			<c:if test="<%= themeDisplay.isImpersonated() %>">
-				<liferay-util:buffer var="leaveImpersonationLabel">
-					<liferay-ui:message key="be-yourself-again" /> (<%= HtmlUtil.escape(realUser.getFullName()) %>)
-				</liferay-util:buffer>
-
-				<aui:nav-item href="<%= PortalUtil.getLayoutURL(layout, themeDisplay, false) %>" label="<%= leaveImpersonationLabel %>" />
-
-				<%
-				Locale realUserLocale = realUser.getLocale();
-				Locale userLocale = user.getLocale();
-				%>
-
-				<c:if test="<%= !realUserLocale.equals(userLocale) %>">
-
-					<%
-					String doAsUserLanguageId = null;
-					String changeLanguageMessage = null;
-
-					if (locale.getLanguage().equals(realUserLocale.getLanguage()) && locale.getCountry().equals(realUserLocale.getCountry())) {
-						doAsUserLanguageId = userLocale.getLanguage() + "_" + userLocale.getCountry();
-						changeLanguageMessage = LanguageUtil.format(realUserLocale, "use-x's-preferred-language-(x)", new String[] {HtmlUtil.escape(user.getFullName()), userLocale.getDisplayLanguage(realUserLocale)}, false);
-					}
-					else {
-						doAsUserLanguageId = realUserLocale.getLanguage() + "_" + realUserLocale.getCountry();
-						changeLanguageMessage = LanguageUtil.format(realUserLocale, "use-your-preferred-language-(x)", realUserLocale.getDisplayLanguage(realUserLocale), false);
-					}
-					%>
-
-					<aui:nav-item cssClass="current-user-language" href='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsUserLanguageId", doAsUserLanguageId) %>' label="<%= changeLanguageMessage %>" />
-				</c:if>
-			</c:if>
 			<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && (themeDisplay.getURLMyAccount() != null) %>">
 
 				<%

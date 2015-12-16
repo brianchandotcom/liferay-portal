@@ -45,7 +45,7 @@ public class UserPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getHeaderJspPath() {
-		return "/user.jsp";
+		return "/user_header.jsp";
 	}
 
 	@Override

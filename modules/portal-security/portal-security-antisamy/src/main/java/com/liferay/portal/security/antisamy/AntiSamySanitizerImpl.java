@@ -28,9 +28,6 @@ import java.io.OutputStream;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-
 import org.owasp.validator.html.AntiSamy;
 import org.owasp.validator.html.CleanResults;
 import org.owasp.validator.html.Policy;
@@ -40,7 +37,6 @@ import org.owasp.validator.html.PolicyException;
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true)
 public class AntiSamySanitizerImpl implements Sanitizer {
 
 	@Override
@@ -107,8 +103,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		}
 	}
 
-	@Activate
-	protected void activate() {
+	protected void init() {
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();

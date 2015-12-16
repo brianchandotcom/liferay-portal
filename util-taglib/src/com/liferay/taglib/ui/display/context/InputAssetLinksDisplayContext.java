@@ -44,12 +44,14 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -270,11 +272,12 @@ public class InputAssetLinksDisplayContext {
 		String typeName = assetRendererFactory.getTypeName(
 			_themeDisplay.getLocale());
 
-		HttpServletRequest request =
-			(HttpServletRequest)_pageContext.getRequest();
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			_pageContext);
 
 		selectorEntryData.put(
-			"title", LanguageUtil.format(request, "select-x", typeName, false));
+			"title",
+			LanguageUtil.format(resourceBundle, "select-x", typeName, false));
 
 		selectorEntryData.put("type", assetRendererFactory.getClassName());
 
@@ -387,13 +390,14 @@ public class InputAssetLinksDisplayContext {
 
 		selectorEntryData.put("href", portletURL.toString());
 
-		HttpServletRequest request =
-			(HttpServletRequest)_pageContext.getRequest();
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			_pageContext);
 
 		selectorEntryData.put(
 			"title",
 			LanguageUtil.format(
-				request, "select-x", classType.getName(), false));
+				resourceBundle, "select-x", classType.getName(), false));
+
 		selectorEntryData.put("type", classType.getName());
 
 		return selectorEntryData;

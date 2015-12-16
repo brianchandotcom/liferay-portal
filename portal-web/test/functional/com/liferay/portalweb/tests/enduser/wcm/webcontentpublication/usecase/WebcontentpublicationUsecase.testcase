@@ -222,7 +222,7 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="Icon#EDIT" value1="Edit" />
+		<execute function="Click" locator1="Icon#EDIT" />
 
 		<execute function="AssertElementNotPresent" locator1="PGSignin#PORTLET_TITLE" value1="Sign" />
 

@@ -82,18 +82,15 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		_group = _themeDisplay.getScopeGroup();
 
+		if (!_group.isControlPanel()) {
+			updateLatentGroup(_group.getGroupId());
+
+			return _group;
+		}
+
 		HttpSession session = getSession();
 
-		Group latentGroup = LatentGroupManagerUtil.getLatentGroup(session);
-
-		if (_group.isControlPanel()) {
-			_group = latentGroup;
-		}
-		else if ((latentGroup == null) ||
-				 (_group.getGroupId() != latentGroup.getGroupId())) {
-
-			LatentGroupManagerUtil.setLatentGroup(session, _group);
-		}
+		_group = LatentGroupManagerUtil.getLatentGroup(session);
 
 		return _group;
 	}
@@ -440,6 +437,20 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		}
 
 		return true;
+	}
+
+	protected void updateLatentGroup(long groupId) {
+		if (groupId <= 0) {
+			return;
+		}
+
+		HttpSession session = getSession();
+
+		Group latentGroup = LatentGroupManagerUtil.getLatentGroup(session);
+
+		if ((latentGroup == null) || (groupId != latentGroup.getGroupId())) {
+			LatentGroupManagerUtil.setLatentGroup(session, _group);
+		}
 	}
 
 	private Boolean _collapsedPanel;

@@ -15,7 +15,9 @@
 package com.liferay.wiki.engine.input.editor.common;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.SessionClicks;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -24,7 +26,6 @@ import com.liferay.wiki.engine.input.editor.common.util.WikiEngineInputEditorCom
 import com.liferay.wiki.model.WikiPage;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import javax.portlet.RenderResponse;
 
@@ -51,55 +52,18 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 
 	public abstract String getEditorName();
 
-	public abstract String getHelpURL();
-
-	public String getToggleId(PageContext pageContext) {
+	public String getHelpLinkId(PageContext pageContext) {
 		RenderResponse renderResponse =
 			(RenderResponse)pageContext.getAttribute("renderResponse");
 
-		return renderResponse.getNamespace() + "toggle_id_wiki_editor_help";
+		return renderResponse.getNamespace() + "syntax_help_link_id";
 	}
 
-	public boolean isHelpPageDefined() {
-		if ((getHelpPageServletContext() == null) ||
-			Validator.isNull(getHelpPageJSP())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean isSyntaxHelpVisible(PageContext pageContext) {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		String toggleValue = SessionClicks.get(
-			request, getToggleId(pageContext), null);
-
-		if ((toggleValue != null) && toggleValue.equals("block")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public void renderEditPage(
-			ServletRequest servletRequest, ServletResponse servletResponse,
-			WikiPage page)
-		throws IOException, ServletException {
-
-		servletRequest.setAttribute(_BASE_INPUT_EDITOR_WIKI_ENGINE, this);
-
-		super.renderEditPage(servletRequest, servletResponse, page);
-	}
-
-	public void renderHelpPage(PageContext pageContext)
+	public String getHelpPageHTML(PageContext pageContext)
 		throws IOException, ServletException {
 
 		if (!isHelpPageDefined()) {
-			return;
+			return StringPool.BLANK;
 		}
 
 		HttpServletResponse response =
@@ -118,11 +82,51 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 		requestDispatcher.include(
 			pageContext.getRequest(), pipingServletResponse);
 
-		Writer writer = pageContext.getOut();
-
 		StringBundler sb = unsyncStringWriter.getStringBundler();
 
-		writer.write(sb.toString());
+		return sb.toString();
+	}
+
+	public String getHelpPageTitle(HttpServletRequest request) {
+		return LanguageUtil.format(
+			request, "x-syntax-help", getFormat(), false);
+	}
+
+	public abstract String getHelpURL();
+
+	public boolean isHelpLinkVisible(PageContext pageContext) {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		String toggleValue = SessionClicks.get(
+			request, getHelpLinkId(pageContext), null);
+
+		if ((toggleValue != null) && toggleValue.equals("block")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isHelpPageDefined() {
+		if ((getHelpPageServletContext() == null) ||
+			Validator.isNull(getHelpPageJSP())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public void renderEditPage(
+			ServletRequest servletRequest, ServletResponse servletResponse,
+			WikiPage page)
+		throws IOException, ServletException {
+
+		servletRequest.setAttribute(_BASE_INPUT_EDITOR_WIKI_ENGINE, this);
+
+		super.renderEditPage(servletRequest, servletResponse, page);
 	}
 
 	@Override

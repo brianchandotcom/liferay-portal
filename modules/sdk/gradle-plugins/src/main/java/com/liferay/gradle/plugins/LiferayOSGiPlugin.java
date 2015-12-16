@@ -19,7 +19,6 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
-import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
@@ -83,7 +82,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.apply(project);
 
 		configureArchivesBaseName(project);
-		configureTasksBuildService(project);
 		configureVersion(project);
 
 		project.afterEvaluate(
@@ -544,12 +542,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
-	protected void configureTaskBuildServiceOsgiModule(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setOsgiModule(true);
-	}
-
 	protected void configureTaskClasses(Project project) {
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
@@ -636,21 +628,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.configureTasks(project, liferayExtension);
 
 		configureTaskClasses(project);
-	}
-
-	protected void configureTasksBuildService(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildServiceTask.class,
-			new Action<BuildServiceTask>() {
-
-				@Override
-				public void execute(BuildServiceTask buildServiceTask) {
-					configureTaskBuildServiceOsgiModule(buildServiceTask);
-				}
-
-			});
 	}
 
 	protected void configureVersion(Project project) {

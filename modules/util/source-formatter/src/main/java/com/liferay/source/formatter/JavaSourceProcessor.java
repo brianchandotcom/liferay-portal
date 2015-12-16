@@ -214,6 +214,36 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkDeserializationSecurity(
+		String fileName, String content, boolean isRunOutsidePortalExclusion) {
+
+		for (Pattern vulnerabilityPattern :
+				_javaSerializationVulnerabilityPatterns) {
+
+			Matcher matcher = vulnerabilityPattern.matcher(content);
+
+			if (!matcher.matches()) {
+				continue;
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			if (isRunOutsidePortalExclusion) {
+				sb.append("Possible Java Serialization Remote Code Execution ");
+				sb.append("vulnerablity using ");
+			}
+			else {
+				sb.append("Use ProtectedObjectInputStream instead of ");
+			}
+
+			sb.append(matcher.group(1));
+			sb.append(": ");
+			sb.append(fileName);
+
+			processErrorMessage(fileName, sb.toString());
+		}
+	}
+
 	protected void checkFinderCacheInterfaceMethod(
 		String fileName, String content) {
 
@@ -485,36 +515,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			content = content.substring(catchExceptionMatcher.start() + 1);
-		}
-	}
-
-	protected void checkDeserializationSecurity(
-		String fileName, String content, boolean isRunOutsidePortalExclusion) {
-
-		for (Pattern vulnerabilityPattern :
-				_javaSerializationVulnerabilityPatterns) {
-
-			Matcher matcher = vulnerabilityPattern.matcher(content);
-
-			if (!matcher.matches()) {
-				continue;
-			}
-
-			StringBundler sb = new StringBundler(5);
-
-			if (isRunOutsidePortalExclusion) {
-				sb.append("Possible Java Serialization Remote Code Execution ");
-				sb.append("vulnerablity using ");
-			}
-			else {
-				sb.append("Use ProtectedObjectInputStream instead of ");
-			}
-
-			sb.append(matcher.group(1));
-			sb.append(": ");
-			sb.append(fileName);
-
-			processErrorMessage(fileName, sb.toString());
 		}
 	}
 

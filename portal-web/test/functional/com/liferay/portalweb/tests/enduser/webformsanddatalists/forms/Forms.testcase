@@ -289,7 +289,7 @@
 			<var name="formName" value="Test Form" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries">
+		<execute macro="FormsAdminNavigator#gotoViewEntriesViaIcon">
 			<var name="formName" value="Test Form" />
 		</execute>
 
@@ -502,7 +502,7 @@
 
 		<execute macro="FormsAdmin#viewFormIcon" />
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		<execute macro="FormsAdminNavigator#gotoViewEntriesViaIcon" />
 
 		<for list="one,two,three,four,five" param="fieldLabel">
 			<execute macro="FormsAdmin#viewFormEntry">
@@ -916,7 +916,7 @@
 
 		<execute macro="FormsAdmin#viewFormIcon" />
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		<execute macro="FormsAdminNavigator#gotoViewEntriesViaIcon" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Checkbox Field" />
@@ -1017,7 +1017,7 @@
 
 		<execute macro="FormsAdmin#viewFormIcon" />
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		<execute macro="FormsAdminNavigator#gotoViewEntriesViaIcon" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Text Field" />
@@ -1121,7 +1121,7 @@
 
 		<execute macro="FormsAdmin#viewFormIcon" />
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		<execute macro="FormsAdminNavigator#gotoViewEntriesViaIcon" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Radio Field" />
@@ -1219,7 +1219,7 @@
 
 		<execute macro="FormsAdmin#viewFormIcon" />
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		<execute macro="FormsAdminNavigator#gotoViewEntriesViaIcon" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Text" />
@@ -1312,7 +1312,7 @@
 
 		<execute macro="FormsAdmin#viewFormIcon" />
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		<execute macro="FormsAdminNavigator#gotoViewEntriesViaIcon" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Text Field" />
@@ -1402,7 +1402,7 @@
 
 		<execute macro="FormsAdmin#viewFormIcon" />
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		<execute macro="FormsAdminNavigator#gotoViewEntriesViaIcon" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Checkbox Field" />
@@ -1489,7 +1489,7 @@
 
 		<execute macro="FormsAdmin#viewFormIcon" />
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		<execute macro="FormsAdminNavigator#gotoViewEntriesViaIcon" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Text Field" />
@@ -1662,7 +1662,7 @@
 
 		<execute macro="FormsAdmin#viewFormIcon" />
 
-		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+		<execute macro="FormsAdminNavigator#gotoViewEntriesViaIcon" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Text" />

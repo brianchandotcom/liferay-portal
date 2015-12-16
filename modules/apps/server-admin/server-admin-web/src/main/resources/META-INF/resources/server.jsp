@@ -48,11 +48,25 @@ serverURL.setParameter("tabs3", tabs3);
 		<html:link page="/server_admin/view?windowState=maximized&portletMode=view&actionURL=0"><liferay-ui:message key="more" /></html:link> &raquo;
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:tabs
-			names="resources,log-levels,properties,captcha,data-migration,file-uploads,mail,external-services,script,shutdown"
-			param="tabs2"
-			portletURL="<%= serverURL %>"
-		/>
+		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+			<aui:nav cssClass="navbar-nav">
+
+			<%
+			String[] navTabsNames = new String[] {"resources", "log-levels", "properties", "captcha", "data-migration", "file-uploads", "mail", "external-services", "script", "shutdown"};
+
+			for (String navTabName : navTabsNames) {
+
+				serverURL.setParameter("tabs2", navTabName);
+			%>
+
+				<aui:nav-item href="<%= serverURL.toString() %>" label="<%= navTabName %>" selected="<%= tabs2.equals(navTabName) %>" />
+
+			<%
+			}
+			%>
+
+			</aui:nav>
+		</aui:nav-bar>
 
 		<c:choose>
 			<c:when test='<%= tabs2.equals("log-levels") %>'>

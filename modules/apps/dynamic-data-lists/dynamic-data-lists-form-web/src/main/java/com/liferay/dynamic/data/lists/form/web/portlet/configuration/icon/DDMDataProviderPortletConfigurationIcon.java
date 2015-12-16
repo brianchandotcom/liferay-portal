@@ -58,7 +58,8 @@ public class DDMDataProviderPortletConfigurationIcon
 		catch (WindowStateException wse) {
 		}
 
-		return portletURL.toString();
+		return "javascript:Liferay.DDL.Portlet.openDDMDataProvider('" +
+			portletURL.toString() + "');";
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class DDMDataProviderPortletConfigurationIcon
 
 	@Override
 	public boolean isUseDialog() {
-		return true;
+		return false;
 	}
 
 }

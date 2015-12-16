@@ -111,3 +111,20 @@ ddmDataProviderSearch.setOrderByType(orderByType);
 
 	</liferay-frontend:add-menu>
 </c:if>
+
+<c:if test="<%= windowState.equals(LiferayWindowState.POP_UP) %>">
+	<aui:script>
+		var modal = Liferay.Util.getWindow();
+
+		if (modal) {
+			var footerNode = modal.footerNode;
+
+			if (footerNode) {
+				modal.removeToolbar('footer');
+				modal.setStdModContent('footer', null);
+
+				modal.fillHeight(modal.bodyNode);
+			}
+		}
+	</aui:script>
+</c:if>

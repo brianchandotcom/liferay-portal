@@ -165,10 +165,6 @@ AUI.add(
 				settingsForm.submit();
 			},
 
-			_onModalXYChange: function(event) {
-				event.newVal = FormBuilderUtil.normalizeModalXY(event.newVal);
-			},
-
 			_onModalVisibleChange: function(event) {
 				var instance = this;
 
@@ -183,6 +179,10 @@ AUI.add(
 
 					(new A.EventHandle(instance._modalEventHandlers)).detach();
 				}
+			},
+
+			_onModalXYChange: function(event) {
+				event.newVal = FormBuilderUtil.normalizeModalXY(event.newVal);
 			},
 
 			_renderFormBuilderField: function() {
@@ -292,6 +292,10 @@ AUI.add(
 					],
 					'footer'
 				);
+
+				var closeButton = settingsModal.toolbars.header.item(0);
+
+				closeButton.set('labelHTML', '<svg class="lexicon-icon"><use xlink:href="/o/frontend-theme-admin-web/admin/images/lexicon/icons.svg#times" /></svg>');
 			},
 
 			_updateSettingsFormValues: function() {

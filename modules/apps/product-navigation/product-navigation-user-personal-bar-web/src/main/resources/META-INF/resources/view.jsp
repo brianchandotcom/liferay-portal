@@ -37,17 +37,6 @@
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<aui:nav-item anchorCssClass="user-avatar-link" cssClass='<%= "portlet-user-personal-bar " + (themeDisplay.isImpersonated() ? "user-avatar impersonating-user" : "user-avatar") %>' dropdown="<%= true %>" id="userAvatar" label="<%= userName %>" toggleTouch="<%= false %>">
 			<c:if test="<%= themeDisplay.isImpersonated() %>">
-
-				<%
-				String impersonatingUserLabel = "you-are-impersonating-the-guest-user";
-
-				if (themeDisplay.isSignedIn()) {
-					impersonatingUserLabel = LanguageUtil.format(request, "you-are-impersonating-x", HtmlUtil.escape(user.getFullName()), false);
-				}
-				%>
-
-				<div class="alert alert-info"><%= impersonatingUserLabel %></div>
-
 				<liferay-util:buffer var="leaveImpersonationLabel">
 					<liferay-ui:message key="be-yourself-again" /> (<%= HtmlUtil.escape(realUser.getFullName()) %>)
 				</liferay-util:buffer>

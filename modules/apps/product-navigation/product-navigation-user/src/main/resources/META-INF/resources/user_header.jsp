@@ -34,6 +34,19 @@ ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayCont
 
 	<span>
 		<%= HtmlUtil.escape(user.getFirstName()) %>
+
+		<c:if test="<%= themeDisplay.isImpersonated() %>">
+
+			<%
+			String impersonatingUserLabel = "you-are-impersonating-the-guest-user";
+
+			if (themeDisplay.isSignedIn()) {
+				impersonatingUserLabel = LanguageUtil.format(request, "you-are-impersonating-x", HtmlUtil.escape(user.getFullName()), false);
+			}
+			%>
+
+			<small class="impersonation-message">(<%= impersonatingUserLabel %>)</small>
+		</c:if>
 	</span>
 
 	<c:if test="<%= notificationsCount > 0 %>">

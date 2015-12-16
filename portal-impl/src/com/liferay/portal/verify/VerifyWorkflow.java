@@ -35,7 +35,9 @@ public class VerifyWorkflow extends VerifyProcess {
 		for (String[] orphanedAttachedModel : getOrphanedAttachedModels()) {
 			String tableName = orphanedAttachedModel[0];
 
-			if (!tableHasData(tableName)) {
+			if (!hasTable(tableName) ||
+				!tableHasColumn(tableName, "classNameId")) {
+
 				continue;
 			}
 
@@ -63,7 +65,7 @@ public class VerifyWorkflow extends VerifyProcess {
 						String orphanedTableName = orphanedAttachedModel[2];
 						String orphanedColumnName = orphanedAttachedModel[3];
 
-						if (tableHasData(orphanedTableName)) {
+						if (hasTable(orphanedTableName)) {
 							deleteOrphaned(
 								tableName, orphanedTableName,
 								orphanedColumnName);

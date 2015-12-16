@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -62,6 +63,28 @@ public class DDMFormFieldOptions implements Serializable {
 		}
 
 		labels.addString(locale, label);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMFormFieldOptions)) {
+			return false;
+		}
+
+		DDMFormFieldOptions ddmFormFieldOptions = (DDMFormFieldOptions)obj;
+
+		if (Validator.equals(
+				_defaultLocale, ddmFormFieldOptions._defaultLocale) &&
+			Validator.equals(_options, ddmFormFieldOptions._options)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public Locale getDefaultLocale() {

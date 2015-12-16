@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -49,6 +51,30 @@ public class DDMForm implements Serializable {
 		ddmFormField.setDDMForm(this);
 
 		_ddmFormFields.add(ddmFormField);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMForm)) {
+			return false;
+		}
+
+		DDMForm ddmForm = (DDMForm)obj;
+
+		if (Validator.equals(
+				_availableLocales, ddmForm._availableLocales) &&
+			Validator.equals(_defaultLocale, ddmForm._defaultLocale) &&
+			Validator.equals(
+				_ddmFormFields, ddmForm._ddmFormFields)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public Set<Locale> getAvailableLocales() {

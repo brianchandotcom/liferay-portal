@@ -338,7 +338,7 @@ public class JournalDisplayContext {
 
 		_orderByType = ParamUtil.getString(_request, "orderByType");
 
-		if (Validator.isNull(_orderByCol)) {
+		if (Validator.isNull(_orderByType)) {
 			_orderByType = _portalPreferences.getValue(
 				JournalPortletKeys.JOURNAL, "order-by-type", "asc");
 		}

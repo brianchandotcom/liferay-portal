@@ -1,5 +1,4 @@
 <#assign aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
-<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 
 <#assign portletDisplay = themeDisplay.getPortletDisplay() />
 
@@ -20,7 +19,7 @@
 
 			<#if rootNavigationItem.hasBrowsableChildren() >
 				<#assign toggle_text>
-					<@liferay_ui.message key="toggle" />
+					<@liferay.language key="toggle" />
 				</#assign>
 
 				<#assign nav_item_caret = "<button aria-expanded='false' aria-haspopup='true' class='${nav_item_css_class} btn btn-default dropdown-toggle' data-toggle='dropdown' type='button'><span class='caret'></span><span class='sr-only'>${toggle_text}</span></button>" />

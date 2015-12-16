@@ -18,6 +18,7 @@ import com.liferay.marketplace.app.manager.web.constants.BundleConstants;
 import com.liferay.marketplace.model.App;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -53,6 +54,37 @@ public class MarketplaceAppManagerUtil {
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, appDisplay.getTitle(), null);
+	}
+
+	public static void addPortletBreadcrumbEntry(
+		AppDisplay appDisplay, ModuleGroupDisplay moduleGroupDisplay,
+		Bundle bundle, HttpServletRequest request,
+		RenderResponse renderResponse) {
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, LanguageUtil.get(request, "app-manager"),
+			portletURL.toString());
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, appDisplay.getTitle(),
+			appDisplay.getDisplayURL(renderResponse));
+
+		if (moduleGroupDisplay != null) {
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, moduleGroupDisplay.getTitle(),
+				moduleGroupDisplay.getDisplayURL(renderResponse));
+		}
+
+		Dictionary<String, String> headers = bundle.getHeaders();
+
+		String bundleName = GetterUtil.getString(
+			headers.get(BundleConstants.BUNDLE_NAME));
+
+		PortalUtil.addPortletBreadcrumbEntry(request, bundleName, null);
 	}
 
 	public static void addPortletBreadcrumbEntry(

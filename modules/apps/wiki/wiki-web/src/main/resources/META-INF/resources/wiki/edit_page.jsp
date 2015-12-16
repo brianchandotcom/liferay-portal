@@ -96,21 +96,12 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 	}
 }
 
-PortletURL viewPageURL = renderResponse.createRenderURL();
+WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
 
-viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
-viewPageURL.setParameter("nodeName", node.getName());
-viewPageURL.setParameter("title", title);
-
-PortletURL editPageURL = renderResponse.createRenderURL();
-
-editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-editPageURL.setParameter("redirect", currentURL);
-editPageURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-editPageURL.setParameter("title", title);
+PortletURL backToViewPagesURL = wikiURLHelper.getBackToViewPagesURL(node);
 
 if (Validator.isNull(redirect)) {
-	redirect = viewPageURL.toString();
+	redirect = backToViewPagesURL.toString();
 }
 
 String headerTitle = newPage ? LanguageUtil.get(request, "new-wiki-page") : wikiPage.getTitle();
@@ -119,23 +110,22 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
+	portletDisplay.setURLBack(backToViewPagesURL.toString());
 	renderResponse.setTitle(headerTitle);
 }
 %>
-
-<portlet:actionURL name="/wiki/edit_page" var="editPageActionURL" />
-
-<portlet:renderURL var="editPageRenderURL">
-	<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
-</portlet:renderURL>
 
 <c:if test="<%= portletTitleBasedNavigation && (wikiPage != null) && !newPage %>">
 	<div class="panel text-center">
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
 	</div>
 </c:if>
+
+<portlet:actionURL name="/wiki/edit_page" var="editPageActionURL" />
+
+<portlet:renderURL var="editPageRenderURL">
+	<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
+</portlet:renderURL>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<aui:form action="<%= editPageActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
@@ -456,6 +446,8 @@ if (portletTitleBasedNavigation) {
 
 <%
 if (!newPage) {
+	PortletURL viewPageURL = wikiURLHelper.getViewPageURL(node, title);
+
 	PortalUtil.addPortletBreadcrumbEntry(request, wikiPage.getTitle(), viewPageURL.toString());
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }

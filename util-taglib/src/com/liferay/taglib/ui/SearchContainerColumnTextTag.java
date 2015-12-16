@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.search.TextSearchEntry;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -71,7 +73,10 @@ public class SearchContainerColumnTextTag<R>
 			}
 
 			if (_translate) {
-				_value = LanguageUtil.get(request, _value);
+				ResourceBundle resourceBundle =
+					TagResourceBundleUtil.getResourceBundle(pageContext);
+
+				_value = LanguageUtil.get(resourceBundle, _value);
 			}
 
 			if (index <= -1) {

@@ -29,6 +29,9 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 import com.liferay.taglib.util.LexiconUtil;
+import com.liferay.taglib.util.TagResourceBundleUtil;
+
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -78,7 +81,10 @@ public class UserPortraitTag extends IncludeTag {
 		String userName = _userName;
 
 		if (Validator.isNull(userName)) {
-			userName = LanguageUtil.get(request, "user");
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
+			userName = LanguageUtil.get(resourceBundle, "user");
 		}
 
 		String[] userNames = StringUtil.split(userName, StringPool.SPACE);

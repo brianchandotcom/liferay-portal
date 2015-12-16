@@ -28,6 +28,9 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.aui.base.BaseNavTag;
+import com.liferay.taglib.util.TagResourceBundleUtil;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletResponse;
 
@@ -93,8 +96,11 @@ public class NavTag extends BaseNavTag implements BodyTag {
 				try {
 					User user = themeDisplay.getUser();
 
+					ResourceBundle resourceBundle =
+						TagResourceBundleUtil.getResourceBundle(pageContext);
+
 					sb.append("<img alt=\"");
-					sb.append(LanguageUtil.get(request, "my-account"));
+					sb.append(LanguageUtil.get(resourceBundle, "my-account"));
 					sb.append("\" class=\"user-avatar-image\" ");
 					sb.append("src=\"");
 					sb.append(user.getPortraitURL(themeDisplay));

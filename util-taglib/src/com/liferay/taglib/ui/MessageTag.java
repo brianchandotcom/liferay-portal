@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.ResourceBundle;
 
@@ -43,6 +44,13 @@ public class MessageTag extends TagSupport {
 			HttpServletRequest request =
 				(HttpServletRequest)pageContext.getRequest();
 
+			ResourceBundle resourceBundle = _resourceBundle;
+
+			if (resourceBundle == null) {
+				resourceBundle = TagResourceBundleUtil.getResourceBundle(
+					pageContext);
+			}
+
 			boolean unicode = GetterUtil.getBoolean(
 				request.getAttribute(WebKeys.JAVASCRIPT_CONTEXT));
 
@@ -55,64 +63,28 @@ public class MessageTag extends TagSupport {
 					value = _key;
 				}
 				else if (_escape) {
-					if (_resourceBundle != null) {
-						value = HtmlUtil.escape(
-							LanguageUtil.get(_resourceBundle, _key));
-					}
-					else {
-						value = HtmlUtil.escape(
-							LanguageUtil.get(request, _key));
-					}
+					value = HtmlUtil.escape(
+						LanguageUtil.get(resourceBundle, _key));
 				}
 				else if (_escapeAttribute) {
-					if (_resourceBundle != null) {
-						value = HtmlUtil.escapeAttribute(
-							LanguageUtil.get(_resourceBundle, _key));
-					}
-					else {
-						value = HtmlUtil.escapeAttribute(
-							LanguageUtil.get(request, _key));
-					}
+					value = HtmlUtil.escapeAttribute(
+						LanguageUtil.get(resourceBundle, _key));
 				}
 				else if (_unicode) {
-					if (_resourceBundle != null) {
-						value = UnicodeLanguageUtil.get(_resourceBundle, _key);
-					}
-					else {
-						value = UnicodeLanguageUtil.get(request, _key);
-					}
+					value = UnicodeLanguageUtil.get(resourceBundle, _key);
 				}
 				else {
-					if (_resourceBundle != null) {
-						value = LanguageUtil.get(_resourceBundle, _key);
-					}
-					else {
-						value = LanguageUtil.get(request, _key);
-					}
+					value = LanguageUtil.get(resourceBundle, _key);
 				}
 			}
 			else {
 				if (_unicode) {
-					if (_resourceBundle != null) {
-						value = UnicodeLanguageUtil.format(
-							_resourceBundle, _key, _arguments,
-							_translateArguments);
-					}
-					else {
-						value = UnicodeLanguageUtil.format(
-							request, _key, _arguments, _translateArguments);
-					}
+					value = UnicodeLanguageUtil.format(
+						resourceBundle, _key, _arguments, _translateArguments);
 				}
 				else {
-					if (_resourceBundle != null) {
-						value = LanguageUtil.format(
-							_resourceBundle, _key, _arguments,
-							_translateArguments);
-					}
-					else {
-						value = LanguageUtil.format(
-							request, _key, _arguments, _translateArguments);
-					}
+					value = LanguageUtil.format(
+						resourceBundle, _key, _arguments, _translateArguments);
 				}
 			}
 

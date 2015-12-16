@@ -18,14 +18,7 @@ import com.liferay.application.list.BaseJSPPanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.application.list.util.LatentGroupManagerUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
 
 import java.io.IOException;
 
@@ -34,7 +27,6 @@ import java.util.Locale;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,31 +67,6 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "site-administration");
-	}
-
-	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		if (group.isControlPanel()) {
-			HttpSession session = PortalSessionThreadLocal.getHttpSession();
-
-			group = LatentGroupManagerUtil.getLatentGroup(session);
-
-			if (group == null) {
-				return false;
-			}
-		}
-
-		if (GroupPermissionUtil.contains(
-				permissionChecker, group,
-				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

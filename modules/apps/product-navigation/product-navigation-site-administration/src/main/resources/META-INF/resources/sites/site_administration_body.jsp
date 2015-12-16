@@ -26,13 +26,24 @@ ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language",
 
 <c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null %>">
 	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
+
+		<%
+		Map<String, Object> data = new HashMap<String, Object>();
+
+		data.put("qa-id", "staging");
+		%>
+
 		<div class="pull-right staging-links">
 			<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL()) ? "active" : StringPool.BLANK %>">
-				<aui:a href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>" label="staging" /> /
+				<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>" label="staging" /> /
 			</span>
 
+			<%
+			data.put("qa-id", "live");
+			%>
+
 			<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL()) ? "active" : StringPool.BLANK %>">
-				<aui:a href="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL() %>" label="live" />
+				<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL() %>" label="live" />
 			</span>
 		</div>
 	</c:if>

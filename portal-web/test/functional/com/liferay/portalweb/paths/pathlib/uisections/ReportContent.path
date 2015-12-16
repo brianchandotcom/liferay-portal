@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>REASON_SELECT</td>
-	<td>//div[contains(.,'Reason for the Report')]/select[@id='_142_reason']</td>
+	<td>//div[contains(.,'Reason for the Report')]/select[contains(@id,'FlagsPortlet')]</td>
 	<td></td>
 </tr>
 <tr>

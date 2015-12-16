@@ -114,9 +114,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FLAG</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a[contains(.,'Flag')]</td>
-	<td>Vocabulary 1</td>
+	<td>FLAG_LINK</td>
+	<td>//div[contains(@class,'taglib-flags')]//span[contains(@class,'taglib-text') and contains(.,'Flag')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>RELATED_ASSETS_LINK_IMAGE</td>

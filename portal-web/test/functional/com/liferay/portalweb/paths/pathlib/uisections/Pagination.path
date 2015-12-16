@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>PREVIOUS_LINK</td>
-	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'2')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'2')] | //ul[contains(@class,'pagination')]/li/a[contains(.,'Previous')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEXT_LINK</td>
-	<td>//ul[contains(@class,'pagination')]/li/a/span[contains(@class,'icon-caret-right')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'Next')] | //ul[contains(@class,'pagination')]/li/a/span[contains(@class,'icon-caret-right')]</td>
 	<td></td>
 </tr>
 <tr>

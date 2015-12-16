@@ -191,8 +191,8 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<var name="key_entryContent" value="${entryContent}" />
-		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContent}" />
 
+		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="AssertNotVisible" locator1="Announcements#CARD_VIEW_ENTRY_SCOPE" value1="${distributionScope}" />
 	</command>
 
@@ -226,7 +226,10 @@
 
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_SCOPE" value1="${distributionScope}" />
-		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
+
+		<var name="key_entryContent" value="${entryContent}" />
+
+		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewViaManageEntriesPG">

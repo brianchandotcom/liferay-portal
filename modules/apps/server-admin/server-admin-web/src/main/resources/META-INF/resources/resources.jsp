@@ -75,7 +75,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 <br />
 
 <liferay-ui:panel-container extended="<%= true %>" id="adminServerAdministrationActionsPanelContainer" persistState="<%= true %>">
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminServerAdministrationActionsPanel" persistState="<%= true %>" title="actions">
+	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="adminServerAdministrationActionsPanel" markupView="lexicon" persistState="<%= true %>" title="actions">
 		<table class="table table-condensed table-hover">
 		<tr>
 			<td>

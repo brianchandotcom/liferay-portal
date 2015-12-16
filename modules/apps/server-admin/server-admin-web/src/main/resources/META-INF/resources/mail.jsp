@@ -18,7 +18,7 @@
 
 <aui:fieldset>
 	<liferay-ui:panel-container extended="<%= true %>" id="adminMailServerSettingsPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminMailServerSettingsPanel" persistState="<%= true %>" title="configure-the-mail-server-settings">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="adminMailServerSettingsPanel" markupView="lexicon" persistState="<%= true %>" title="configure-the-mail-server-settings">
 			<aui:input cssClass="lfr-input-text-container" label="incoming-pop-server" name="pop3Host" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_POP3_HOST) %>" />
 
 			<aui:input cssClass="lfr-input-text-container" label="incoming-port" name="pop3Port" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_POP3_PORT) %>" />

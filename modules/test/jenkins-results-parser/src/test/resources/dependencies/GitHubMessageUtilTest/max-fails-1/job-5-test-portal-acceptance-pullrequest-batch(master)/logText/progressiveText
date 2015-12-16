@@ -1,0 +1,62 @@
+Started by remote host 10.0.19.70
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-9/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/672/test-portal-acceptance-pullrequest-batch(master)/functional-tomcat-mysql/3/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-5
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-14-165 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering PGAnnouncements#HideAnnouncementsEntry,!master
+Triggering CPUsersandorganizations#DeleteOrganization,!master
+Triggering PGAnnouncements#AddAnnouncementsEntry,!master
+Triggering ExportImport#ImportCorruptedFile,!master
+Triggering CPUsersandorganizations#AddUser,!master
+Triggering PGBlogs#AddBlogsEntryComment,!master
+Triggering PGBlogs#AddBlogsEntry,!master
+Triggering CPUsergroups#DeleteUserGroup,!master
+Triggering CPUsersandorganizations#AddMember,!master
+Triggering CPUsergroups#EditUserGroup,!master
+Triggering CPUsersandorganizations#DeleteUser,!master
+Triggering CPUsersandorganizations#EditOrganizationSite,!master
+Triggering CPWebcontent#DeleteWebContent,!master
+Triggering PGAnnouncements#DeleteAnnouncementsEntry,!master
+Triggering CPUsersandorganizations#AddOrganization,!master
+Triggering PGAnnouncements#EditAnnouncementsEntry,!master
+Triggering CPWebcontent#AddWebContent,!master
+Triggering CPWebcontent#AddFolder,!master
+Triggering CPWebcontent#SearchWebContent,!master
+Triggering LanguageUsecase#AddWCWithTranslation,!master
+Triggering CPWebcontent#EditWebContent,!master
+Triggering PGAssetpublisher#ConfigureAPPortletSelectedWebContent,!master
+Triggering CPWebcontent#AddTemplateWithStructure,!master
+Triggering CPUsersandorganizations#EditUserSite,!master
+PGAnnouncements#HideAnnouncementsEntry,!master completed with result FAILURE
+CPUsersandorganizations#DeleteOrganization,!master completed with result FAILURE
+PGAnnouncements#AddAnnouncementsEntry,!master completed with result FAILURE
+ExportImport#ImportCorruptedFile,!master completed with result FAILURE
+CPUsersandorganizations#AddUser,!master completed with result FAILURE
+PGBlogs#AddBlogsEntryComment,!master completed with result FAILURE
+PGBlogs#AddBlogsEntry,!master completed with result FAILURE
+CPUsergroups#DeleteUserGroup,!master completed with result FAILURE
+CPUsersandorganizations#AddMember,!master completed with result FAILURE
+CPUsergroups#EditUserGroup,!master completed with result FAILURE
+CPUsersandorganizations#DeleteUser,!master completed with result FAILURE
+CPUsersandorganizations#EditOrganizationSite,!master completed with result FAILURE
+CPWebcontent#DeleteWebContent,!master completed with result FAILURE
+PGAnnouncements#DeleteAnnouncementsEntry,!master completed with result FAILURE
+CPUsersandorganizations#AddOrganization,!master completed with result FAILURE
+PGAnnouncements#EditAnnouncementsEntry,!master completed with result FAILURE
+CPWebcontent#AddWebContent,!master completed with result FAILURE
+CPWebcontent#AddFolder,!master completed with result FAILURE
+CPWebcontent#SearchWebContent,!master completed with result FAILURE
+LanguageUsecase#AddWCWithTranslation,!master completed with result FAILURE
+CPWebcontent#EditWebContent,!master completed with result FAILURE
+PGAssetpublisher#ConfigureAPPortletSelectedWebContent,!master completed with result FAILURE
+CPWebcontent#AddTemplateWithStructure,!master completed with result FAILURE
+CPUsersandorganizations#EditUserSite,!master completed with result FAILURE
+Finished: FAILURE

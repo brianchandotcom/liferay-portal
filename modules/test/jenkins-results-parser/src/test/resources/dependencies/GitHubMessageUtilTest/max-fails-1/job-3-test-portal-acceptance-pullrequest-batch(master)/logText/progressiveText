@@ -1,0 +1,62 @@
+Started by remote host 10.0.19.70
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-9/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/672/test-portal-acceptance-pullrequest-batch(master)/functional-tomcat-mysql/1/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-9
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-19-70 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering CPSitememberships#AddMembersSiteUser,!master
+Triggering CPSitememberships#AddMember,!master
+Triggering CPDynamicdatalists#EditSelectFieldOptions,!master
+Triggering CPRoles#AddRegularRole,!master
+Triggering CPMydashboard#JoinSiteOpen,!master
+Triggering CPMydashboard#JoinSitePrivateNo,!master
+Triggering CPDynamicdatalists#AddDisplayTemplateVelocity,!master
+Triggering CPDynamicdatalists#EditDataDefinition,!master
+Triggering CPRolesPGBlogs#AddBlogsEntrySiteRole,!master
+Triggering CPRoles#DeleteRegularRole,!master
+Triggering CPMydashboard#LeaveSite,!master
+Triggering CPRolesPGBlogs#AddBlogsEntryRegRole,!master
+Triggering CPDynamicdatalists#AddFormTemplate,!master
+Triggering CPRolesPGBlogs#AddBlogsEntryOrgRole,!master
+Triggering CPDynamicdatalists#AddListRecordWithHTMLField,!master
+Triggering CPRoles#AddOrganizationRole,!master
+Triggering CPPagetemplates#EditPageTemplate,!master
+Triggering CPPagetemplates#AddSitePageTemplate,!master
+Triggering CPCustomfields#EditCustomFieldUserBoolean,!master
+Triggering CPPagetemplates#AddPageTemplate,!master
+Triggering CPRoles#AddSiteRole,!master
+Triggering CPPagetemplates#DeletePageTemplate,!master
+Triggering CPDynamicdatalists#EditListRecord,!master
+Triggering CPDynamicdatalists#EditBooleanFieldFieldLabel,!master
+CPSitememberships#AddMembersSiteUser,!master completed with result FAILURE
+CPSitememberships#AddMember,!master completed with result FAILURE
+CPDynamicdatalists#EditSelectFieldOptions,!master completed with result FAILURE
+CPRoles#AddRegularRole,!master completed with result FAILURE
+CPMydashboard#JoinSiteOpen,!master completed with result FAILURE
+CPMydashboard#JoinSitePrivateNo,!master completed with result FAILURE
+CPDynamicdatalists#AddDisplayTemplateVelocity,!master completed with result FAILURE
+CPDynamicdatalists#EditDataDefinition,!master completed with result FAILURE
+CPRolesPGBlogs#AddBlogsEntrySiteRole,!master completed with result FAILURE
+CPRoles#DeleteRegularRole,!master completed with result FAILURE
+CPMydashboard#LeaveSite,!master completed with result FAILURE
+CPRolesPGBlogs#AddBlogsEntryRegRole,!master completed with result FAILURE
+CPDynamicdatalists#AddFormTemplate,!master completed with result FAILURE
+CPRolesPGBlogs#AddBlogsEntryOrgRole,!master completed with result FAILURE
+CPDynamicdatalists#AddListRecordWithHTMLField,!master completed with result FAILURE
+CPRoles#AddOrganizationRole,!master completed with result FAILURE
+CPPagetemplates#EditPageTemplate,!master completed with result FAILURE
+CPPagetemplates#AddSitePageTemplate,!master completed with result FAILURE
+CPCustomfields#EditCustomFieldUserBoolean,!master completed with result FAILURE
+CPPagetemplates#AddPageTemplate,!master completed with result FAILURE
+CPRoles#AddSiteRole,!master completed with result FAILURE
+CPPagetemplates#DeletePageTemplate,!master completed with result FAILURE
+CPDynamicdatalists#EditListRecord,!master completed with result FAILURE
+CPDynamicdatalists#EditBooleanFieldFieldLabel,!master completed with result FAILURE
+Finished: FAILURE

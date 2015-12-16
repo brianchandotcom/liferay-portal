@@ -1,0 +1,712 @@
+{
+  "failCount" : 22,
+  "skipCount" : 0,
+  "totalCount" : 22,
+  "urlName" : "testReport",
+  "childReports" : [
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizard%23HypersonicToMySQL,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=SetupWizard#HypersonicToMySQL,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=UIInfrastructureUsecase%23Smoke,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=UIInfrastructureUsecase#Smoke,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGTags%23DisplayTagCloud,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PGTags#DisplayTagCloud,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGTags%23ViewTagCloudDisplayConfiguration,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PGTags#ViewTagCloudDisplayConfiguration,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=WorkflowadminMyworkflowtasks%23ResubmitTaskByDetails,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=WorkflowadminMyworkflowtasks#ResubmitTaskByDetails,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SitelocalizationUsecase%23ViewSiteLocalizationAfterDeletingOriginalLocale,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=SitelocalizationUsecase#ViewSiteLocalizationAfterDeletingOriginalLocale,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGTags%23ViewTagCloudIncrease,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PGTags#ViewTagCloudIncrease,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGWebcontentdisplay%23AddWebContent,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PGWebcontentdisplay#AddWebContent,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=WorkflowadminCPWebcontent%23AddWebContentCP,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=WorkflowadminCPWebcontent#AddWebContentCP,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=WorkflowadminCPDynamicdatalists%23RejectDynamicdatalistCP,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=WorkflowadminCPDynamicdatalists#RejectDynamicdatalistCP,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SitelocalizationUsecase%23SiteTemplateLocalization,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=SitelocalizationUsecase#SiteTemplateLocalization,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SitelocalizationUsecase%23AvailableSiteLocalesSubsetOfAvailablePortalLocales,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=SitelocalizationUsecase#AvailableSiteLocalesSubsetOfAvailablePortalLocales,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PortalSmoke%23Smoke,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PortalSmoke#Smoke,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=WebcontentpublicationUsecase%23AssetPublisherSiteAndGlobalScopeAccessibility,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=WebcontentpublicationUsecase#AssetPublisherSiteAndGlobalScopeAccessibility,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGWebcontentdisplay%23RemoveWCDPortletSite,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PGWebcontentdisplay#RemoveWCDPortletSite,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PasswordpoliciesUsecase%23ViewUserAccountLockout,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PasswordpoliciesUsecase#ViewUserAccountLockout,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGTags%23RemoveTagViaBlogs,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PGTags#RemoveTagViaBlogs,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=RecyclebinUsecase%23RestoreDMDocumentFromFolderCP,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=RecyclebinUsecase#RestoreDMDocumentFromFolderCP,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGWebcontentdisplay%23SelectWebContent,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PGWebcontentdisplay#SelectWebContent,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=TestRuntimePortlet%23Smoke,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=TestRuntimePortlet#Smoke,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=RecyclebinWebcontent%23RestoreWebcontent,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=RecyclebinWebcontent#RestoreWebcontent,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 11121,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PortalconfigurationUsecase%23DefaultPortalLandingPage,label_exp=!master/11121/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 5,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 11117,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PortalconfigurationUsecase#DefaultPortalLandingPage,label_exp=!master_functional-tomcat-mysql/5",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    }
+  ]
+}

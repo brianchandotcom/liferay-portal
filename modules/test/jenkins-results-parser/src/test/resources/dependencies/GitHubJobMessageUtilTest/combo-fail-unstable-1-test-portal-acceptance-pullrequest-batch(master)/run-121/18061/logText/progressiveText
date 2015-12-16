@@ -1,0 +1,88 @@
+Started by upstream project "test-portal-acceptance-pullrequest-batch(master)" build number 18061
+originally caused by:
+ Started by remote host 10.0.113.51
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-19/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/503/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PGBookmarks#RemoveBookmarkPortlet,label_exp=!master/functional-tomcat-mysql/4/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-1
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-14-214 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+java.io.IOException: Failed to mkdirs: /opt/dev/projects/github/liferay-jenkins-ee
+	at hudson.FilePath.mkdirs(FilePath.java:1075)
+	at hudson.model.AbstractProject.checkout(AbstractProject.java:1245)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.defaultCheckout(AbstractBuild.java:615)
+	at jenkins.scm.SCMCheckoutStrategy.checkout(SCMCheckoutStrategy.java:86)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:524)
+	at hudson.model.Run.execute(Run.java:1706)
+	at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+	at hudson.model.ResourceController.execute(ResourceController.java:88)
+	at hudson.model.Executor.run(Executor.java:232)
+Recording test results
+Liferay patched class hudson.tasks.junit.JUnitResultArchiver
+ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+/opt/dev/projects/github/liferay-jenkins-ee does not exist.
+	at org.apache.tools.ant.types.AbstractFileSet.getDirectoryScanner(AbstractFileSet.java:483)
+	at org.apache.tools.ant.types.AbstractFileSet.getDirectoryScanner(AbstractFileSet.java:460)
+	at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:108)
+	at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:90)
+	at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2474)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:118)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:48)
+	at hudson.remoting.Request$2.run(Request.java:328)
+	at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:72)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at hudson.remoting.Engine$1$1.run(Engine.java:63)
+	at java.lang.Thread.run(Thread.java:745)
+[PostBuildScript] - Execution post build scripts.
+FATAL: Unable to produce a script file
+java.io.IOException: Failed to create a temp file on /opt/dev/projects/github/liferay-jenkins-ee
+	at hudson.FilePath.createTextTempFile(FilePath.java:1271)
+	at hudson.tasks.CommandInterpreter.createScriptFile(CommandInterpreter.java:144)
+	at hudson.tasks.CommandInterpreter.perform(CommandInterpreter.java:82)
+	at hudson.tasks.CommandInterpreter.perform(CommandInterpreter.java:66)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.processBuildSteps(PostBuildScript.java:205)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.processScripts(PostBuildScript.java:143)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript._perform(PostBuildScript.java:102)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.perform(PostBuildScript.java:79)
+	at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:756)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:720)
+	at hudson.model.Build$BuildExecution.post2(Build.java:182)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:669)
+	at hudson.model.Run.execute(Run.java:1731)
+	at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+	at hudson.model.ResourceController.execute(ResourceController.java:88)
+	at hudson.model.Executor.run(Executor.java:232)
+Caused by: java.io.IOException: remote file operation failed: /opt/dev/projects/github/liferay-jenkins-ee at hudson.remoting.Channel@470d7b82:cloud-10-0-14-214
+	at hudson.FilePath.act(FilePath.java:916)
+	at hudson.FilePath.act(FilePath.java:893)
+	at hudson.FilePath.createTextTempFile(FilePath.java:1245)
+	... 16 more
+Caused by: java.io.IOException: Failed to create a temporary directory in /tmp
+	at hudson.FilePath$15.invoke(FilePath.java:1257)
+	at hudson.FilePath$15.invoke(FilePath.java:1245)
+	at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2474)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:118)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:48)
+	at hudson.remoting.Request$2.run(Request.java:328)
+	at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:72)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at hudson.remoting.Engine$1$1.run(Engine.java:63)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.IOException: Read-only file system
+	at java.io.UnixFileSystem.createFileExclusively(Native Method)
+	at java.io.File.createTempFile(File.java:2001)
+	at hudson.FilePath$15.invoke(FilePath.java:1255)
+	... 11 more
+Build step 'Execute a set of scripts' marked build as failure
+Finished: FAILURE

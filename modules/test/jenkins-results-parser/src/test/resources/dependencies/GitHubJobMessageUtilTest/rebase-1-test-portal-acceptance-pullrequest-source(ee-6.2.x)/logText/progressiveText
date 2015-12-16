@@ -1,0 +1,235 @@
+Started by remote host 10.0.14.245
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/330/test-portal-acceptance-pullrequest-source(ee-6.2.x)//start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-20
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-113-176 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+[liferay-jenkins-ee] $ /bin/bash /tmp/hudson6193554963639279578.sh
+Update the workspace repository for build steps.
+No rebase in progress?
+Switched to branch 'master-temp-270580438'
+Switched to branch 'master'
+Deleted branch master-temp-270580438 (was 5a02f10).
+HEAD is now at 5a02f10 LRIS-17872 sort
+Rebase the workspace repository if needed for build steps.
+From github.com:michaelhashimoto/liferay-jenkins-ee
+ * [new branch]      master-qa-20095 -> master-temp-604786559
+Switched to branch 'master-temp-604786559'
+Already on 'master-temp-604786559'
+Current branch master-temp-604786559 is up to date.
+Removing rebase.log
+HEAD is now at 1583dad LRQA-20095 "build-and-merge-test-results" should run even if there is a build failure
+Exit shell.
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson7924132269467584010.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-source.sh start-current-job'
+Execute: test-portal-acceptance-pullrequest-source.sh start-current-job
++ commands/build-test-portal-acceptance-pullrequest-source.sh start-current-job
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-source.xml start-current-job
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-source.xml
+
+start-current-job:
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
++ echo 'Exit shell.'
+Exit shell.
+[EnvInject] - Injecting environment variables from a build step.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/330/test-portal-acceptance-pullrequest-source(ee-6.2.x)//start.properties'
+[EnvInject] - Variables injected successfully.
+[description-setter] Description set: <strong>michaelhashimoto</strong> - <a href="https://github.com/michaelhashimoto/liferay-portal-ee/pull/1695">PR#1695</a> - <a href="https://test-1-1.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/330/jenkins-report.html">Jenkins Report</a>
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson1253016392452507361.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-source.sh'
+Execute: test-portal-acceptance-pullrequest-source.sh
++ commands/build-test-portal-acceptance-pullrequest-source.sh
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-source.xml 
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-source.xml
+
+run-current-job:
+
+clean-up-browser-processes:
+     [exec] chrome: no process killedKilling chrome
+     [exec] Killing firefox
+     [exec] 
+     [exec] firefox: no process killed
+     [exec] Result: 1
+   [delete] Deleting: /opt/dev/projects/github/liferay-jenkins-ee/clean_up_browser_processes.sh
+
+clean-up-java-processes:
+   [delete] Deleting: /opt/dev/projects/github/liferay-jenkins-ee/clean_up_java_processes.sh
+
+clean-up-admin-portal-repository:
+     [exec] From github.com:brianchandotcom/liferay-portal-ee
+     [exec]    aed5e97..c755db4  ee-6.0.x   -> pr/ee-6.0.x
+     [exec] From github.com:brianchandotcom/liferay-portal-ee
+     [exec]    aed5e97..c755db4  ee-6.0.x   -> pr/ee-6.0.x
+     [exec]  * [new branch]      ee-6.1.10  -> pr/ee-6.1.10
+     [exec]  * [new branch]      ee-6.1.20  -> pr/ee-6.1.20
+     [exec]  * [new branch]      ee-6.1.30  -> pr/ee-6.1.30
+     [exec]  * [new branch]      ee-6.1.10  -> pr/ee-6.1.10
+     [exec]  * [new branch]      ee-6.1.20  -> pr/ee-6.1.20
+     [exec]  * [new branch]      ee-6.1.30  -> pr/ee-6.1.30
+     [exec]  * [new branch]      ee-6.1.x   -> pr/ee-6.1.x
+     [exec]  * [new branch]      ee-6.1.x-temp-20151208163549038 -> pr/ee-6.1.x-temp-20151208163549038
+     [exec]  * [new branch]      ee-6.1.x   -> pr/ee-6.1.x
+     [exec]  * [new branch]      ee-6.1.x-temp-20151208163549038 -> pr/ee-6.1.x-temp-20151208163549038
+     [exec]  * [new branch]      ee-6.1.x-temp-20151209080629277 -> pr/ee-6.1.x-temp-20151209080629277
+     [exec]  * [new branch]      ee-6.1.x-temp-20151209080629277 -> pr/ee-6.1.x-temp-20151209080629277
+     [exec]  * [new branch]      ee-6.1.x-temp-20151209082836109 -> pr/ee-6.1.x-temp-20151209082836109
+     [exec]  * [new branch]      ee-6.1.x-temp-20151209082836109 -> pr/ee-6.1.x-temp-20151209082836109
+     [exec]  * [new branch]      ee-6.1.x-temp-20151209101007802 -> pr/ee-6.1.x-temp-20151209101007802
+     [exec]  * [new branch]      ee-6.2.10  -> pr/ee-6.2.10
+     [exec]  * [new branch]      ee-6.2.x   -> pr/ee-6.2.x
+     [exec]  * [new branch]      ee-6.1.x-temp-20151209101007802 -> pr/ee-6.1.x-temp-20151209101007802
+     [exec]  * [new branch]      ee-6.2.10  -> pr/ee-6.2.10
+     [exec]  * [new branch]      ee-6.2.x   -> pr/ee-6.2.x
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208140237923 -> pr/ee-6.2.x-temp-20151208140237923
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208140237923 -> pr/ee-6.2.x-temp-20151208140237923
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208145725920 -> pr/ee-6.2.x-temp-20151208145725920
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208161948677 -> pr/ee-6.2.x-temp-20151208161948677
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208145725920 -> pr/ee-6.2.x-temp-20151208145725920
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208161948677 -> pr/ee-6.2.x-temp-20151208161948677
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208162513347 -> pr/ee-6.2.x-temp-20151208162513347
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208162513347 -> pr/ee-6.2.x-temp-20151208162513347
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208162513525 -> pr/ee-6.2.x-temp-20151208162513525
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208162513525 -> pr/ee-6.2.x-temp-20151208162513525
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208171047070 -> pr/ee-6.2.x-temp-20151208171047070
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208173417347 -> pr/ee-6.2.x-temp-20151208173417347
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208171047070 -> pr/ee-6.2.x-temp-20151208171047070
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208173417347 -> pr/ee-6.2.x-temp-20151208173417347
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208180155829 -> pr/ee-6.2.x-temp-20151208180155829
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208180155829 -> pr/ee-6.2.x-temp-20151208180155829
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208191536477 -> pr/ee-6.2.x-temp-20151208191536477
+     [exec]  * [new branch]      ee-6.2.x-temp-20151209012617568 -> pr/ee-6.2.x-temp-20151209012617568
+     [exec]  * [new branch]      ee-6.2.x-temp-20151208191536477 -> pr/ee-6.2.x-temp-20151208191536477
+     [exec]  * [new branch]      ee-6.2.x-temp-20151209012617568 -> pr/ee-6.2.x-temp-20151209012617568
+     [exec]  * [new branch]      ee-6.2.x-temp-20151209021009375 -> pr/ee-6.2.x-temp-20151209021009375
+     [exec]  * [new branch]      ee-6.2.x-temp-20151209021009375 -> pr/ee-6.2.x-temp-20151209021009375
+     [exec]  * [new branch]      ee-6.2.x-temp-20151209245151140 -> pr/ee-6.2.x-temp-20151209245151140
+     [exec]  * [new branch]      ee-7.0.x   -> pr/ee-7.0.x
+     [exec]  * [new branch]      ee-6.2.x-temp-20151209245151140 -> pr/ee-6.2.x-temp-20151209245151140
+     [exec]  * [new branch]      ee-7.0.x   -> pr/ee-7.0.x
+     [exec]  * [new branch]      master     -> pr/master
+     [exec]  * [new branch]      master     -> pr/master
+   [delete] Deleting: /opt/dev/projects/github/liferay-portal-ee-6.2.x/20151209103039800
+
+update-portal-repository:
+     [exec] From github.com:liferay/liferay-portal-ee
+     [exec]    43703ef..4097507  ee-6.2.x   -> ee-6.2.x
+     [exec] From github.com:liferay/liferay-portal-ee
+     [exec]    43703ef..4097507  ee-6.2.x   -> ee-6.2.x
+     [exec] Switched to branch 'ee-6.2.x'
+     [exec] Switched to branch 'ee-6.2.x'
+     [exec] commit 409750755916614440988a653c8d51e2c39072b8
+     [exec] Author: Ginson Ren <ginson.ren@liferay.com>
+     [exec] Date:   Mon Dec 7 10:48:50 2015 +0800
+     [exec] 
+     [exec]     LRQA-19740 Update sikuli screenshot to new browser type
+
+set-portal-release-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal-ee-6.2.x/release.cloud-10-0-113-176.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] lp.plugins.dir=/opt/dev/projects/github/liferay-plugins-ee-6.2.x
+
+update-plugins-repository:
+     [exec] Switched to a new branch 'temp-20151209103104852'
+     [exec] Switched to a new branch 'temp-20151209103104852'
+     [exec] From github.com:liferay/liferay-plugins-ee
+     [exec]    36e8564..f5fa8b0  ee-6.2.x   -> ee-6.2.x
+     [exec] From github.com:liferay/liferay-plugins-ee
+     [exec]    36e8564..f5fa8b0  ee-6.2.x   -> ee-6.2.x
+     [exec] Deleted branch temp-20151209103104852 (was 36e8564).
+     [exec] Switched to branch 'ee-6.2.x'
+     [exec] Switched to branch 'ee-6.2.x'
+     [exec] commit f5fa8b098f4d6273a27b33db20ed8512f4447af9
+     [exec] Author: Mladen Cikara <mladen.cikara@liferay.com>
+     [exec] Date:   Wed Dec 9 11:04:08 2015 +0100
+     [exec] 
+     [exec]     CLDSVCS-1825 - amazon-tools-shared - Correct bug when deleting aws alarms
+
+rebase-and-record-portal-pull-request-branch:
+     [exec] From github.com:michaelhashimoto/liferay-portal-ee
+     [exec] From github.com:michaelhashimoto/liferay-portal-ee
+     [exec]  * [new branch]      ee-6.2.x-qa-portal-rebase-error -> ee-6.2.x-temp-20151209103016296
+     [exec]  * [new branch]      ee-6.2.x-qa-portal-rebase-error -> ee-6.2.x-temp-20151209103016296
+     [exec] First, rewinding head to replay your work on top of it...
+     [exec] Applying: LRQA-TEST Portal rebase error
+     [exec] Using index info to reconstruct a base tree...
+     [exec] M	git-commit-plugins
+     [exec] Falling back to patching base and 3-way merge...
+     [exec] Failed to merge in the changes.
+     [exec] Failed to merge in the changes.
+     [exec] Auto-merging git-commit-plugins
+     [exec] CONFLICT (content): Merge conflict in git-commit-plugins
+     [exec] Patch failed at 0001 LRQA-TEST Portal rebase error
+     [exec] The copy of the patch that failed is found in:
+     [exec]    /opt/dev/projects/github/liferay-portal-ee-6.2.x/.git/rebase-apply/patch
+     [exec] 
+     [exec] When you have resolved this problem, run "git rebase --continue".
+     [exec] If you prefer to skip this patch, run "git rebase --skip" instead.
+     [exec] To check out the original branch and stop rebasing, run "git rebase --abort".
+     [exec] 
+     [exec] commit 409750755916614440988a653c8d51e2c39072b8
+     [exec] Author: Ginson Ren <ginson.ren@liferay.com>
+     [exec] Date:   Mon Dec 7 10:48:50 2015 +0800
+     [exec] 
+     [exec]     LRQA-19740 Update sikuli screenshot to new browser type
+     [exec] To git@github.com:brianchandotcom/liferay-portal-ee.git
+     [exec] To git@github.com:brianchandotcom/liferay-portal-ee.git
+     [exec]  * [new branch]      ee-6.2.x-temp-20151209103016296 -> ee-6.2.x-temp-20151209103016296
+     [exec]  * [new branch]      ee-6.2.x-temp-20151209103016296 -> ee-6.2.x-temp-20151209103016296
+   [delete] Deleting: /opt/dev/projects/github/liferay-portal-ee-6.2.x/20151209103114916
+
+BUILD FAILED
+/opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-source.xml:131: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-source.xml:103: The following error occurred while executing this line:
+/opt/dev/projects/github/liferay-jenkins-ee/commands/build-common.xml:2367: Error on rebase of 'michaelhashimoto/ee-6.2.x-qa-portal-rebase-error' against 'ee-6.2.x'.
+
+Total time: 1 minute 27 seconds
+Build step 'Execute shell' marked build as failure
+[PostBuildScript] - Execution post build scripts.
+[liferay-jenkins-ee] $ /bin/bash /tmp/hudson8326919121180500288.sh
+Update the workspace repository for post-build steps.
+No rebase in progress?
+Switched to branch 'master-temp-386411318'
+Switched to branch 'master'
+Deleted branch master-temp-386411318 (was 1583dad).
+Deleted branch master-temp-604786559 (was 1583dad).
+HEAD is now at 5a02f10 LRIS-17872 sort
+Rebase the workspace repository if needed for post-build steps.
+From github.com:michaelhashimoto/liferay-jenkins-ee
+ * [new branch]      master-qa-20095 -> master-temp-713164105
+Switched to branch 'master-temp-713164105'
+Already on 'master-temp-713164105'
+Current branch master-temp-713164105 is up to date.
+Removing rebase.log
+HEAD is now at 1583dad LRQA-20095 "build-and-merge-test-results" should run even if there is a build failure
+Exit shell.
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson1579546261408776155.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-source.sh stop-current-job'
+Execute: test-portal-acceptance-pullrequest-source.sh stop-current-job
++ commands/build-test-portal-acceptance-pullrequest-source.sh stop-current-job
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-source.xml stop-current-job
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-source.xml
+
+stop-current-job:
+   [delete] Deleting: /opt/dev/projects/github/liferay-portal-ee-6.2.x/20151209103210141
+
+BUILD SUCCESSFUL
+Total time: 1 second
++ echo 'Exit shell.'
+Exit shell.
+[EnvInject] - Injecting environment variables from a build step.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/330/test-portal-acceptance-pullrequest-source(ee-6.2.x)//stop.properties'
+[EnvInject] - Variables injected successfully.
+[description-setter] Description set: <strong>michaelhashimoto</strong> - <a href="https://github.com/michaelhashimoto/liferay-portal-ee/pull/1695">PR#1695</a> - <a href="https://test-1-1.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/330/jenkins-report.html">Jenkins Report</a>
+Finished: FAILURE

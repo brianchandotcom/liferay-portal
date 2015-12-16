@@ -1,0 +1,135 @@
+Started by upstream project "test-portal-acceptance-pullrequest-batch(master)" build number 18035
+originally caused by:
+ Started by remote host 10.0.113.119
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-20/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/511/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=3,label_exp=!master/integration-postgresql/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-1
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-14-215 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+FATAL: Unable to produce a script file
+java.io.IOException: Failed to create a temp file on /opt/dev/projects/github/liferay-jenkins-ee
+	at hudson.FilePath.createTextTempFile(FilePath.java:1271)
+	at hudson.tasks.CommandInterpreter.createScriptFile(CommandInterpreter.java:144)
+	at hudson.tasks.CommandInterpreter.perform(CommandInterpreter.java:82)
+	at hudson.tasks.CommandInterpreter.perform(CommandInterpreter.java:66)
+	at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:756)
+	at hudson.model.Build$BuildExecution.build(Build.java:198)
+	at hudson.model.Build$BuildExecution.doRun(Build.java:159)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:529)
+	at hudson.model.Run.execute(Run.java:1706)
+	at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+	at hudson.model.ResourceController.execute(ResourceController.java:88)
+	at hudson.model.Executor.run(Executor.java:232)
+Caused by: java.io.IOException: remote file operation failed: /opt/dev/projects/github/liferay-jenkins-ee at hudson.remoting.Channel@22d4a6c3:cloud-10-0-14-215
+	at hudson.FilePath.act(FilePath.java:916)
+	at hudson.FilePath.act(FilePath.java:893)
+	at hudson.FilePath.createTextTempFile(FilePath.java:1245)
+	... 12 more
+Caused by: java.io.IOException: Failed to create a temporary directory in /tmp
+	at hudson.FilePath$15.invoke(FilePath.java:1257)
+	at hudson.FilePath$15.invoke(FilePath.java:1245)
+	at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2474)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:118)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:48)
+	at hudson.remoting.Request$2.run(Request.java:328)
+	at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:72)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at hudson.remoting.Engine$1$1.run(Engine.java:63)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.IOException: Read-only file system
+	at java.io.UnixFileSystem.createFileExclusively(Native Method)
+	at java.io.File.createTempFile(File.java:2001)
+	at hudson.FilePath$15.invoke(FilePath.java:1255)
+	... 11 more
+Build step 'Execute shell' marked build as failure
+Recording test results
+Liferay patched class hudson.tasks.junit.JUnitResultArchiver
+ERROR: Publisher hudson.tasks.junit.JUnitResultArchiver aborted due to exception
+java.util.MissingResourceException: Unable to load resource jar:file:/root/.jenkins/cache/jars/B7/E45C2BCBAD67C68EC395F1C8345619.jar!/hudson/tasks/junit/Messages.properties
+	at org.jvnet.localizer.ResourceBundleHolder.get(ResourceBundleHolder.java:95)
+	at org.jvnet.localizer.ResourceBundleHolder.get(ResourceBundleHolder.java:102)
+	at org.jvnet.localizer.ResourceBundleHolder.get(ResourceBundleHolder.java:102)
+	at org.jvnet.localizer.ResourceBundleHolder.format(ResourceBundleHolder.java:139)
+	at hudson.tasks.junit.Messages.JUnitResultArchiver_NoTestReportFound(Messages.java:277)
+	at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:114)
+	at hudson.tasks.junit.JUnitParser$ParseResultCallable.invoke(JUnitParser.java:90)
+	at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2474)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:118)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:48)
+	at hudson.remoting.Request$2.run(Request.java:328)
+	at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:72)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at hudson.remoting.Engine$1$1.run(Engine.java:63)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.util.zip.ZipException: error reading zip file
+	at java.util.zip.ZipFile.read(Native Method)
+	at java.util.zip.ZipFile.access$1400(ZipFile.java:56)
+	at java.util.zip.ZipFile$ZipFileInputStream.read(ZipFile.java:679)
+	at java.util.zip.ZipFile$ZipFileInflaterInputStream.fill(ZipFile.java:415)
+	at java.util.zip.InflaterInputStream.read(InflaterInputStream.java:158)
+	at java.io.FilterInputStream.read(FilterInputStream.java:133)
+	at java.io.FilterInputStream.read(FilterInputStream.java:107)
+	at java.util.Properties$LineReader.readLine(Properties.java:434)
+	at java.util.Properties.load0(Properties.java:353)
+	at java.util.Properties.load(Properties.java:341)
+	at java.util.PropertyResourceBundle.<init>(PropertyResourceBundle.java:130)
+	at org.jvnet.localizer.ResourceBundleHolder$ResourceBundleImpl.<init>(ResourceBundleHolder.java:114)
+	at org.jvnet.localizer.ResourceBundleHolder.get(ResourceBundleHolder.java:88)
+	... 16 more
+[PostBuildScript] - Execution post build scripts.
+FATAL: Unable to produce a script file
+java.io.IOException: Failed to create a temp file on /opt/dev/projects/github/liferay-jenkins-ee
+	at hudson.FilePath.createTextTempFile(FilePath.java:1271)
+	at hudson.tasks.CommandInterpreter.createScriptFile(CommandInterpreter.java:144)
+	at hudson.tasks.CommandInterpreter.perform(CommandInterpreter.java:82)
+	at hudson.tasks.CommandInterpreter.perform(CommandInterpreter.java:66)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.processBuildSteps(PostBuildScript.java:205)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.processScripts(PostBuildScript.java:143)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript._perform(PostBuildScript.java:102)
+	at org.jenkinsci.plugins.postbuildscript.PostBuildScript.perform(PostBuildScript.java:79)
+	at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:756)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:720)
+	at hudson.model.Build$BuildExecution.post2(Build.java:182)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:669)
+	at hudson.model.Run.execute(Run.java:1731)
+	at hudson.matrix.MatrixRun.run(MatrixRun.java:146)
+	at hudson.model.ResourceController.execute(ResourceController.java:88)
+	at hudson.model.Executor.run(Executor.java:232)
+Caused by: java.io.IOException: remote file operation failed: /opt/dev/projects/github/liferay-jenkins-ee at hudson.remoting.Channel@22d4a6c3:cloud-10-0-14-215
+	at hudson.FilePath.act(FilePath.java:916)
+	at hudson.FilePath.act(FilePath.java:893)
+	at hudson.FilePath.createTextTempFile(FilePath.java:1245)
+	... 16 more
+Caused by: java.io.IOException: Failed to create a temporary directory in /tmp
+	at hudson.FilePath$15.invoke(FilePath.java:1257)
+	at hudson.FilePath$15.invoke(FilePath.java:1245)
+	at hudson.FilePath$FileCallableWrapper.call(FilePath.java:2474)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:118)
+	at hudson.remoting.UserRequest.perform(UserRequest.java:48)
+	at hudson.remoting.Request$2.run(Request.java:328)
+	at hudson.remoting.InterceptingExecutorService$1.call(InterceptingExecutorService.java:72)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at hudson.remoting.Engine$1$1.run(Engine.java:63)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.io.IOException: Read-only file system
+	at java.io.UnixFileSystem.createFileExclusively(Native Method)
+	at java.io.File.createTempFile(File.java:2001)
+	at hudson.FilePath$15.invoke(FilePath.java:1255)
+	... 11 more
+Build step 'Execute a set of scripts' marked build as failure
+Finished: FAILURE

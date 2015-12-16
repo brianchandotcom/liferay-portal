@@ -1,0 +1,62 @@
+Started by remote host 10.0.113.51
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-19/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/503/test-portal-acceptance-pullrequest-batch(master)/functional-tomcat-mysql/4/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-1
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-14-224 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering PGTags#RemoveTagViaBlogs,!master
+Triggering PGBookmarks#AddBookmark,!master
+Triggering PGStaging#ActivateRemoteStaging,!master
+Triggering PGBookmarks#AddFolder,!master
+Triggering PGCalendar#SearchForOtherCalendars,!master
+Triggering PGSitesdirectory#DisplayStyleOptions,!master
+Triggering PGBookmarks#RemoveBookmarkPortlet,!master
+Triggering PGBookmarks#AddFolderBookmarkURLInvalid,!master
+Triggering PGCalendar#AddCalendarEventRegular,!master
+Triggering PGCalendar#ViewWeekStartMonday,!master
+Triggering PGCalendar#AddCalendarResource,!master
+Triggering PGTags#AddTagViaBlogs,!master
+Triggering PGTags#DisplayTagCloud,!master
+Triggering PGBookmarks#EditFolderBookmark,!master
+Triggering PGTags#AddSelectTagViaBlogs,!master
+Triggering PGCalendar#ViewCalendarTimeZoneDefaults,!master
+Triggering PGBookmarks#DeleteFolder,!master
+Triggering PGStaging#AddPageVariation,!master
+Triggering PGCalendar#DeleteCalendarEventRegular,!master
+Triggering PGStaging#StagingPublishPortlet,!master
+Triggering PGStaging#AddSitePagesVariation,!master
+Triggering PGBookmarks#EditFolder,!master
+Triggering PGStaging#ActivateStaging,!master
+Triggering PGBookmarks#AddFolderBookmark,!master
+PGTags#RemoveTagViaBlogs,!master completed with result SUCCESS
+PGBookmarks#AddBookmark,!master completed with result SUCCESS
+PGStaging#ActivateRemoteStaging,!master completed with result SUCCESS
+PGBookmarks#AddFolder,!master completed with result SUCCESS
+PGCalendar#SearchForOtherCalendars,!master completed with result SUCCESS
+PGSitesdirectory#DisplayStyleOptions,!master completed with result SUCCESS
+PGBookmarks#RemoveBookmarkPortlet,!master completed with result FAILURE
+PGBookmarks#AddFolderBookmarkURLInvalid,!master completed with result SUCCESS
+PGCalendar#AddCalendarEventRegular,!master completed with result SUCCESS
+PGCalendar#ViewWeekStartMonday,!master completed with result SUCCESS
+PGCalendar#AddCalendarResource,!master completed with result SUCCESS
+PGTags#AddTagViaBlogs,!master completed with result SUCCESS
+PGTags#DisplayTagCloud,!master completed with result SUCCESS
+PGBookmarks#EditFolderBookmark,!master completed with result SUCCESS
+PGTags#AddSelectTagViaBlogs,!master completed with result SUCCESS
+PGCalendar#ViewCalendarTimeZoneDefaults,!master completed with result UNSTABLE
+PGBookmarks#DeleteFolder,!master completed with result SUCCESS
+PGStaging#AddPageVariation,!master completed with result SUCCESS
+PGCalendar#DeleteCalendarEventRegular,!master completed with result SUCCESS
+PGStaging#StagingPublishPortlet,!master completed with result SUCCESS
+PGStaging#AddSitePagesVariation,!master completed with result SUCCESS
+PGBookmarks#EditFolder,!master completed with result SUCCESS
+PGStaging#ActivateStaging,!master completed with result SUCCESS
+PGBookmarks#AddFolderBookmark,!master completed with result SUCCESS
+Finished: FAILURE

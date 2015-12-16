@@ -1,0 +1,62 @@
+Started by remote host 10.0.19.70
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-9/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/672/test-portal-acceptance-pullrequest-batch(master)/functional-tomcat-mysql/0/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-12
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-110-107 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering CPCustomfields#AddCustomFieldUserBoolean,!master
+Triggering CPBookmarks#MoveToRecycleBinFolder,!master
+Triggering ApplicationdisplaytemplatesUsecase#ADTTagsNavigationPortlet,!master
+Triggering CPBookmarks#AddBookmarks,!master
+Triggering CPCategories#EditCategory,!master
+Triggering CPCategories#AddCategory,!master
+Triggering CPCategories#DeleteSubcategoryViaMenu,!master
+Triggering CPCategories#AddSubcategory,!master
+Triggering CPBookmarks#AddBookmark,!master
+Triggering CPCategories#EditSubcategory,!master
+Triggering ApplicationdisplaytemplatesUsecase#ADTCategoriesNavigation,!master
+Triggering ApplicationdisplaytemplatesUsecase#AddRSSADTViaPortletConfiguration,!master
+Triggering CPBookmarks#AddNullFolder,!master
+Triggering CPCategories#AddVocabulary,!master
+Triggering Breadcrumb#DisableShowCurrentSite,!master
+Triggering CPBookmarks#AddFolder,!master
+Triggering Breadcrumb#DisableShowPage,!master
+Triggering ApplicationdisplaytemplatesUsecase#ADTBreadcrumb,!master
+Triggering CPCategories#DeleteVocabulary,!master
+Triggering CPBookmarks#DeleteBookmark,!master
+Triggering CPBookmarks#EditBookmark,!master
+Triggering CPCategories#EditVocabulary,!master
+Triggering BlogsUsecase#DeleteBlogsEntry,!master
+Triggering CPBookmarks#EditFolder,!master
+CPCustomfields#AddCustomFieldUserBoolean,!master completed with result FAILURE
+CPBookmarks#MoveToRecycleBinFolder,!master completed with result FAILURE
+ApplicationdisplaytemplatesUsecase#ADTTagsNavigationPortlet,!master completed with result FAILURE
+CPBookmarks#AddBookmarks,!master completed with result FAILURE
+CPCategories#EditCategory,!master completed with result FAILURE
+CPCategories#AddCategory,!master completed with result FAILURE
+CPCategories#DeleteSubcategoryViaMenu,!master completed with result FAILURE
+CPCategories#AddSubcategory,!master completed with result FAILURE
+CPBookmarks#AddBookmark,!master completed with result FAILURE
+CPCategories#EditSubcategory,!master completed with result FAILURE
+ApplicationdisplaytemplatesUsecase#ADTCategoriesNavigation,!master completed with result FAILURE
+ApplicationdisplaytemplatesUsecase#AddRSSADTViaPortletConfiguration,!master completed with result FAILURE
+CPBookmarks#AddNullFolder,!master completed with result FAILURE
+CPCategories#AddVocabulary,!master completed with result FAILURE
+Breadcrumb#DisableShowCurrentSite,!master completed with result FAILURE
+CPBookmarks#AddFolder,!master completed with result FAILURE
+Breadcrumb#DisableShowPage,!master completed with result FAILURE
+ApplicationdisplaytemplatesUsecase#ADTBreadcrumb,!master completed with result FAILURE
+CPCategories#DeleteVocabulary,!master completed with result FAILURE
+CPBookmarks#DeleteBookmark,!master completed with result FAILURE
+CPBookmarks#EditBookmark,!master completed with result FAILURE
+CPCategories#EditVocabulary,!master completed with result FAILURE
+BlogsUsecase#DeleteBlogsEntry,!master completed with result FAILURE
+CPBookmarks#EditFolder,!master completed with result FAILURE
+Finished: FAILURE

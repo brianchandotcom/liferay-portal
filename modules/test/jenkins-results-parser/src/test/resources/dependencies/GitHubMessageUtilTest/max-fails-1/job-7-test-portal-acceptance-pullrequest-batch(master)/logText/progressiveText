@@ -1,0 +1,58 @@
+Started by remote host 10.0.19.70
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-9/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/672/test-portal-acceptance-pullrequest-batch(master)/functional-tomcat-mysql/5/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-16
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-111-221 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering SetupWizard#HypersonicToMySQL,!master
+Triggering UIInfrastructureUsecase#Smoke,!master
+Triggering PGTags#DisplayTagCloud,!master
+Triggering PGTags#ViewTagCloudDisplayConfiguration,!master
+Triggering WorkflowadminMyworkflowtasks#ResubmitTaskByDetails,!master
+Triggering SitelocalizationUsecase#ViewSiteLocalizationAfterDeletingOriginalLocale,!master
+Triggering PGTags#ViewTagCloudIncrease,!master
+Triggering PGWebcontentdisplay#AddWebContent,!master
+Triggering WorkflowadminCPWebcontent#AddWebContentCP,!master
+Triggering WorkflowadminCPDynamicdatalists#RejectDynamicdatalistCP,!master
+Triggering SitelocalizationUsecase#SiteTemplateLocalization,!master
+Triggering SitelocalizationUsecase#AvailableSiteLocalesSubsetOfAvailablePortalLocales,!master
+Triggering PortalSmoke#Smoke,!master
+Triggering WebcontentpublicationUsecase#AssetPublisherSiteAndGlobalScopeAccessibility,!master
+Triggering PGWebcontentdisplay#RemoveWCDPortletSite,!master
+Triggering PasswordpoliciesUsecase#ViewUserAccountLockout,!master
+Triggering PGTags#RemoveTagViaBlogs,!master
+Triggering RecyclebinUsecase#RestoreDMDocumentFromFolderCP,!master
+Triggering PGWebcontentdisplay#SelectWebContent,!master
+Triggering TestRuntimePortlet#Smoke,!master
+Triggering RecyclebinWebcontent#RestoreWebcontent,!master
+Triggering PortalconfigurationUsecase#DefaultPortalLandingPage,!master
+SetupWizard#HypersonicToMySQL,!master completed with result FAILURE
+UIInfrastructureUsecase#Smoke,!master completed with result FAILURE
+PGTags#DisplayTagCloud,!master completed with result FAILURE
+PGTags#ViewTagCloudDisplayConfiguration,!master completed with result FAILURE
+WorkflowadminMyworkflowtasks#ResubmitTaskByDetails,!master completed with result FAILURE
+SitelocalizationUsecase#ViewSiteLocalizationAfterDeletingOriginalLocale,!master completed with result FAILURE
+PGTags#ViewTagCloudIncrease,!master completed with result FAILURE
+PGWebcontentdisplay#AddWebContent,!master completed with result FAILURE
+WorkflowadminCPWebcontent#AddWebContentCP,!master completed with result FAILURE
+WorkflowadminCPDynamicdatalists#RejectDynamicdatalistCP,!master completed with result FAILURE
+SitelocalizationUsecase#SiteTemplateLocalization,!master completed with result FAILURE
+SitelocalizationUsecase#AvailableSiteLocalesSubsetOfAvailablePortalLocales,!master completed with result FAILURE
+PortalSmoke#Smoke,!master completed with result FAILURE
+WebcontentpublicationUsecase#AssetPublisherSiteAndGlobalScopeAccessibility,!master completed with result FAILURE
+PGWebcontentdisplay#RemoveWCDPortletSite,!master completed with result FAILURE
+PasswordpoliciesUsecase#ViewUserAccountLockout,!master completed with result FAILURE
+PGTags#RemoveTagViaBlogs,!master completed with result FAILURE
+RecyclebinUsecase#RestoreDMDocumentFromFolderCP,!master completed with result FAILURE
+PGWebcontentdisplay#SelectWebContent,!master completed with result FAILURE
+TestRuntimePortlet#Smoke,!master completed with result FAILURE
+RecyclebinWebcontent#RestoreWebcontent,!master completed with result FAILURE
+PortalconfigurationUsecase#DefaultPortalLandingPage,!master completed with result FAILURE
+Finished: FAILURE

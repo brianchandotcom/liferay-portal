@@ -1,0 +1,872 @@
+{
+    "result": "SUCCESS",
+    "building": false,
+    "executor": null,
+    "number": 11276,
+    "builtOn": "cloud-10-0-111-221",
+    "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/11276/",
+    "artifacts": [],
+    "timestamp": 1450205559000,
+    "estimatedDuration": 1770187,
+    "id": "2015-12-15_10-52-39",
+    "duration": 1944136,
+    "fullDisplayName": "test-portal-acceptance-pullrequest-batch(master) #11276",
+    "keepLog": false,
+    "culprits": [],
+    "changeSet": {
+        "items": [],
+        "kind": null
+    },
+    "description": null,
+    "runs": [
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=0,label_exp=!master/11272/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=1,label_exp=!master/11272/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=10,label_exp=!master/11272/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=11,label_exp=!master/11272/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=12,label_exp=!master/11272/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=13,label_exp=!master/11272/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=14,label_exp=!master/11272/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=15,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=16,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=17,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=18,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=19,label_exp=!master/10507/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=2,label_exp=!master/11272/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=20,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=21,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=22,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=23,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=24,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=25,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=26,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=27,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=28,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=29,label_exp=!master/10507/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=3,label_exp=!master/11272/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=30,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=31,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=32,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=33,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=34,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=35,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=36,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=37,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=38,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=39,label_exp=!master/10507/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=4,label_exp=!master/11272/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=40,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=41,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=42,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=43,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=44,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=45,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=46,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=47,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=48,label_exp=!master/10507/"
+        },
+        {
+            "number": 10507,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=49,label_exp=!master/10507/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=5,label_exp=!master/11272/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=6,label_exp=!master/11272/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=7,label_exp=!master/11272/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=8,label_exp=!master/11272/"
+        },
+        {
+            "number": 11272,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=9,label_exp=!master/11272/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase%23ADTBreadcrumb,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase%23ADTCategoriesNavigation,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase%23ADTTagsNavigationPortlet,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase%23AddRSSADTViaPortletConfiguration,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=BlogsUsecase%23DeleteBlogsEntry,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=Breadcrumb%23DisableShowCurrentSite,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=Breadcrumb%23DisableShowPage,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23AddBookmark,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23AddBookmarks,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23AddFolder,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23AddNullFolder,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23DeleteBookmark,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23EditBookmark,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23EditFolder,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23MoveToRecycleBinFolder,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23AddCategory,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23AddSubcategory,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23AddVocabulary,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23DeleteSubcategoryViaMenu,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23DeleteVocabulary,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23EditCategory,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23EditSubcategory,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23EditVocabulary,label_exp=!master/11270/"
+        },
+        {
+            "number": 11270,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCustomfields%23AddCustomFieldUserBoolean,label_exp=!master/11270/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCustomfields%23EditCustomFieldUserBoolean,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23AddDisplayTemplateVelocity,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23AddFormTemplate,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23AddListRecordWithHTMLField,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23EditBooleanFieldFieldLabel,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23EditDataDefinition,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23EditListRecord,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23EditSelectFieldOptions,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPMydashboard%23JoinSiteOpen,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPMydashboard%23JoinSitePrivateNo,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPMydashboard%23LeaveSite,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPPagetemplates%23AddPageTemplate,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPPagetemplates%23AddSitePageTemplate,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPPagetemplates%23DeletePageTemplate,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPPagetemplates%23EditPageTemplate,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPRoles%23AddOrganizationRole,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPRoles%23AddRegularRole,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPRoles%23AddSiteRole,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPRoles%23DeleteRegularRole,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPRolesPGBlogs%23AddBlogsEntryOrgRole,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPRolesPGBlogs%23AddBlogsEntryRegRole,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPRolesPGBlogs%23AddBlogsEntrySiteRole,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitememberships%23AddMember,label_exp=!master/11252/"
+        },
+        {
+            "number": 11252,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitememberships%23AddMembersSiteUser,label_exp=!master/11252/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitememberships%23AddSiteTeam,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitememberships%23AddSiteTeams,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitememberships%23AssignMembersSiteTeamUser,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitememberships%23DeleteSiteTeam,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitememberships%23EditSiteTeam,label_exp=!master/11160/"
+        },
+        {
+            "number": 11119,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitememberships%23OrganizationsView,label_exp=!master/11119/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitememberships%23RemoveMember,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitepages%23AddSitePublicChildPage,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitepages%23AddSitePublicPage,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitepages%23DeleteSitePages,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitepages%23EditSitePage,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSites%23AddChildSite,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSites%23AddSite,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSites%23DeleteSite,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSites%23EditSite,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSites%23SearchSite,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitetemplates%23AddSiteTemplate,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitetemplates%23DeleteSiteTemplate,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPSitetemplates%23EditSiteTemplateStatus,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPTags%23AddTag,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPTags%23EditTag,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPTags%23SearchTag,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPUsergroups%23AddMember,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPUsergroups%23AddUserGroup,label_exp=!master/11160/"
+        },
+        {
+            "number": 11160,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPUsergroups%23DeleteUserGroup,label_exp=!master/11160/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-123/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-124/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-125/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-126/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-127/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-128/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-129/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-130/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-131/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-132/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-133/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-134/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-135/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-136/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-137/11276/"
+        },
+        {
+            "number": 11090,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=ExternalMethod%23ExecuteMethodStringArguments,label_exp=!master/11090/"
+        },
+        {
+            "number": 11090,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=ExternalMethod%23ExecuteMethodVariableArguments,label_exp=!master/11090/"
+        },
+        {
+            "number": 11090,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=JSONCurlUtil%23AvailablePhysicalMemory,label_exp=!master/11090/"
+        },
+        {
+            "number": 11090,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=JSONCurlUtil%23BusyExecutors,label_exp=!master/11090/"
+        },
+        {
+            "number": 11090,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=JSONCurlUtil%23DisplayName,label_exp=!master/11090/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-143/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-144/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-145/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-146/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-147/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-148/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-149/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-150/11276/"
+        },
+        {
+            "number": 11276,
+            "url": "file:${user.dir}/src/test/resources/dependencies/GitHubMessageUtilTest/jspc-1/job-5-test-portal-acceptance-pullrequest-batch(master)/run-151/11276/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGBlogs%23EditBlogsEntryComment,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGBookmarks%23AddBookmark,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGBookmarks%23AddFolder,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGBookmarks%23AddFolderBookmark,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGBookmarks%23AddFolderBookmarkURLInvalid,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGBookmarks%23DeleteFolder,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGBookmarks%23EditFolder,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGBookmarks%23EditFolderBookmark,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGBookmarks%23RemoveBookmarkPortlet,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGCalendar%23AddCalendarEventRegular,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGCalendar%23AddCalendarResource,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGCalendar%23DeleteCalendarEventRegular,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGCalendar%23SearchForOtherCalendars,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGCalendar%23ViewCalendarTimeZoneDefaults,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGCalendar%23ViewWeekStartMonday,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGSitesdirectory%23DisplayStyleOptions,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGStaging%23ActivateRemoteStaging,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGStaging%23ActivateStaging,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGStaging%23AddPageVariation,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGStaging%23AddSitePagesVariation,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGStaging%23StagingPublishPortlet,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGTags%23AddSelectTagViaBlogs,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGTags%23AddTagViaBlogs,label_exp=!master/11258/"
+        },
+        {
+            "number": 11258,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGTags%23DisplayTagCloud,label_exp=!master/11258/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGTags%23RemoveTagViaBlogs,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGTags%23ViewTagCloudDisplayConfiguration,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGTags%23ViewTagCloudIncrease,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGWebcontentdisplay%23AddWebContent,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGWebcontentdisplay%23RemoveWCDPortletSite,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGWebcontentdisplay%23SelectWebContent,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PasswordpoliciesUsecase%23ViewUserAccountLockout,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PortalSmoke%23Smoke,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PortalconfigurationUsecase%23DefaultPortalLandingPage,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=RecyclebinUsecase%23RestoreDMDocumentFromFolderCP,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=RecyclebinWebcontent%23RestoreWebcontent,label_exp=!master/11275/"
+        },
+        {
+            "number": 11090,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=Return%23ReturnInMacro,label_exp=!master/11090/"
+        },
+        {
+            "number": 11090,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=Return%23ReturnInTestCase,label_exp=!master/11090/"
+        },
+        {
+            "number": 11273,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizard%23HypersonicToHypersonic,label_exp=!master/11273/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizard%23HypersonicToMySQL,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SitelocalizationUsecase%23AvailableSiteLocalesSubsetOfAvailablePortalLocales,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SitelocalizationUsecase%23SiteTemplateLocalization,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SitelocalizationUsecase%23ViewSiteLocalizationAfterDeletingOriginalLocale,label_exp=!master/11275/"
+        },
+        {
+            "number": 11090,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=StaticVariables%23StaticVariables1,label_exp=!master/11090/"
+        },
+        {
+            "number": 11090,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=StaticVariables%23StaticVariables2,label_exp=!master/11090/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=TestRuntimePortlet%23Smoke,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=UIInfrastructureUsecase%23Smoke,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=WebcontentpublicationUsecase%23AssetPublisherSiteAndGlobalScopeAccessibility,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=WorkflowadminCPDynamicdatalists%23RejectDynamicdatalistCP,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=WorkflowadminCPWebcontent%23AddWebContentCP,label_exp=!master/11275/"
+        },
+        {
+            "number": 11275,
+            "url": "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=WorkflowadminMyworkflowtasks%23ResubmitTaskByDetails,label_exp=!master/11275/"
+        }
+    ],
+    "actions": [
+        {"parameters": [
+            {
+                "name": "AXIS_VARIABLES",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_NAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_BRANCH_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+                "value": ""
+            },
+            {
+                "name": "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+                "value": ""
+            },
+            {
+                "name": "JOB_VARIANT",
+                "value": "functional-tomcat-mysql/3"
+            },
+            {
+                "name": "TOP_LEVEL_SHARED_DIR",
+                "value": "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-4/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1799"
+            }
+        ]},
+        {"causes": [{"shortDescription": "Started by remote host 10.0.12.68"}]},
+        null,
+        {
+            "failCount": 0,
+            "totalCount": 24,
+            "urlName": "testReport",
+            "skipCount": 0
+        },
+        {}
+    ]
+}

@@ -428,7 +428,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			}
 
 			if (isPendingTypePK(syncFile)) {
-				SyncFileService.deleteSyncFile(syncFile, false);
+				SyncFileService.deleteSyncFile(syncFile);
 
 				return;
 			}

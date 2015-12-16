@@ -1,4 +1,3 @@
-/* @generated */
 package com.browseengine.bobo.sort;
 
 import java.io.IOException;
@@ -375,3 +374,4 @@ public abstract class DocComparatorSource {
 	
 	
 }
+/* @generated */

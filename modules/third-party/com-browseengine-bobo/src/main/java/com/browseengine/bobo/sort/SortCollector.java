@@ -1,4 +1,3 @@
-/* @generated */
 package com.browseengine.bobo.sort;
 
 import java.io.IOException;
@@ -307,3 +306,4 @@ public abstract class SortCollector extends Collector {
     }
   }
 }
+/* @generated */

@@ -40,7 +40,12 @@ public interface SAPConfiguration {
 	)
 	public String systemDefaultSAPEntryDescription();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(
+		deflt =
+			"com.liferay.portal.kernel.service.CountryService#getCountries\n" +
+				"com.liferay.portal.kernel.service.RegionService#getRegions",
+		required = false
+	)
 	public String systemDefaultSAPEntryServiceSignatures();
 
 	@Meta.AD(deflt = "SYSTEM_USER_PASSWORD", required = false)

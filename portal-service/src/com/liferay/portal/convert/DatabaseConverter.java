@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 /**
  * @author Cristina González
  */
-public interface ConvertDatabaseProcess {
+public interface DatabaseConverter {
 
 	public void convert(DataSource dataSource) throws Exception;
 

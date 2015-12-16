@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.convert;
+package com.liferay.portal.convert.database;
 
+import com.liferay.portal.convert.DatabaseConverter;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -52,7 +53,7 @@ import org.hibernate.dialect.Dialect;
 /**
  * @author Cristina González
  */
-public class PortalConvertDatabaseProcess implements ConvertDatabaseProcess {
+public class PortalDatabaseConverter implements DatabaseConverter {
 
 	@Override
 	public void convert(DataSource dataSource) throws Exception {
@@ -226,6 +227,6 @@ public class PortalConvertDatabaseProcess implements ConvertDatabaseProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalConvertDatabaseProcess.class);
+		PortalDatabaseConverter.class);
 
 }

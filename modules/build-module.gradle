@@ -210,6 +210,42 @@ idea {
 	}
 }
 
+javadoc {
+	String exportPackages = bundle.instructions["Export-Package"]
+
+	if (exportPackages == null) {
+		exclude "*"
+	}
+	else {
+		List exportPackagesList = exportPackages.split(",")
+
+		String classpathWildcard = ".*"
+		String dirWildcard = File.separator + "**"
+		String fileWildcard = File.separator + "*"
+
+		for (int i = 0; i < exportPackagesList.size(); i++) {
+			String expkg = exportPackagesList[i]
+
+			if (expkg.contains(";")) {
+				expkg = expkg.replaceFirst(";.*", "")
+			}
+
+			if (expkg.endsWith(classpathWildcard)) {
+				expkg = expkg.replace(classpathWildcard, dirWildcard + fileWildcard)
+			}
+			else {
+				expkg = expkg + fileWildcard
+			}
+
+			expkg = expkg.replace("." as char, File.separatorChar)
+
+			exportPackagesList[i] = expkg
+		}
+
+		include exportPackagesList
+	}
+}
+
 jsModuleConfigGenerator {
 	version = "1.1.7"
 }

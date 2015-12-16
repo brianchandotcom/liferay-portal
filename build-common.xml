@@ -1533,6 +1533,27 @@ rerun your task.
 				</then>
 			</if>
 
+			<if>
+				<matches pattern="\d\.\d\.\d\d" string="${lp.version}" />
+				<then>
+					<var name="liferay.releng.public" value="false" />
+					<var name="liferay.releng.supported" value="true" />
+				</then>
+				<elseif>
+					<matches pattern="\d\.\d\.\d" string="${lp.version}" />
+					<then>
+						<var name="liferay.releng.public" value="true" />
+						<var name="liferay.releng.supported" value="false" />
+					</then>
+				</elseif>
+				<else>
+					<echo>Please set valid lp.version in ${basedir}/release.properties.</echo>
+
+					<var name="liferay.releng.public" value="" />
+					<var name="liferay.releng.supported" value="" />
+				</else>
+			</if>
+
 			<echo
 				append="true"
 				file="${basedir}/.gradle/gradle.properties"
@@ -1543,6 +1564,8 @@ rerun your task.
 				junit.java.unit.gc=${junit.java.unit.gc}
 				liferay.home=${liferay.home}
 				liferay.portal.version=${lp.version}-SNAPSHOT
+				liferay.releng.public=${liferay.releng.public}
+				liferay.releng.supported=${liferay.releng.supported}
 				microsoft.translator.client.id=${microsoft.translator.client.id}
 				microsoft.translator.client.secret=${microsoft.translator.client.secret}
 				nodejs.npm.email=${nodejs.npm.email}

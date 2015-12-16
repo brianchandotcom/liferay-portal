@@ -213,36 +213,48 @@ idea {
 javadoc {
 	String exportPackages = bundle.instructions["Export-Package"]
 
-	if (exportPackages == null) {
-		exclude "*"
-	}
-	else {
-		List exportPackagesList = exportPackages.split(",")
+	if (exportPackages) {
+		List<String> exportPackagesList = exportPackages.tokenize("," as char)
 
-		String classpathWildcard = ".*"
-		String dirWildcard = File.separator + "**"
-		String fileWildcard = File.separator + "*"
+		exportPackagesList*.trim()
 
-		for (int i = 0; i < exportPackagesList.size(); i++) {
-			String expkg = exportPackagesList[i]
+		exportPackagesList.each {
+			String pattern ->
 
-			if (expkg.contains(";")) {
-				expkg = expkg.replaceFirst(";.*", "")
+			boolean excludePattern = false
+
+			int start = 0
+
+			if (pattern.startsWith("!")) {
+				excludePattern = true
+
+				start = 1
 			}
 
-			if (expkg.endsWith(classpathWildcard)) {
-				expkg = expkg.replace(classpathWildcard, dirWildcard + fileWildcard)
+			int end = pattern.indexOf(";")
+
+			if (end == -1) {
+				end = pattern.length()
+			}
+
+			pattern = pattern[start .. (end - 1)]
+
+			pattern = "**/" + pattern.replace("." as char, "/" as char)
+
+			if (pattern.endsWith("/*")) {
+				pattern = pattern[0 .. -2]
 			}
 			else {
-				expkg = expkg + fileWildcard
+				pattern += "/*"
 			}
 
-			expkg = expkg.replace("." as char, File.separatorChar)
-
-			exportPackagesList[i] = expkg
+			if (excludePattern) {
+				exclude pattern
+			}
+			else {
+				include pattern
+			}
 		}
-
-		include exportPackagesList
 	}
 }
 

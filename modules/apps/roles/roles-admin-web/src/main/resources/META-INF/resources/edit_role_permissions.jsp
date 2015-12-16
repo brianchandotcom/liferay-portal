@@ -352,6 +352,37 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		);
 	}
 
+	function updateTargets() {
+		var permissionContainerNode = A.one('#<portlet:namespace />permissionContainer');
+
+		permissionContainerNode.delegate(
+			'change',
+			function(event) {
+				var unselectedTargetsNode = permissionContainerNode.one('#<portlet:namespace />unselectedTargets');
+
+				var unselectedTargets = unselectedTargetsNode.val().split(',');
+
+				var checkbox = event.currentTarget;
+
+				var value = checkbox.val();
+
+				if (checkbox.get('checked')) {
+					var index = unselectedTargets.indexOf(value);
+
+					if (index != -1) {
+						unselectedTargets.splice(index, 1);
+					}
+				}
+				else {
+					unselectedTargets.push(value);
+				}
+
+				unselectedTargetsNode.val(unselectedTargets.join(','));
+			},
+			':checkbox'
+		);
+	}
+
 	Liferay.on(
 		'<portlet:namespace />selectGroup',
 		function(event) {
@@ -392,6 +423,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 			createLiveSearch();
 			processNavigationLinks();
+			updateTargets();
 		}
 	);
 </aui:script>
@@ -402,7 +434,6 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 		form.fm('redirect').val('<%= HtmlUtil.escapeJS(portletURL.toString()) %>');
 		form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('unselectedTargets').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 		submitForm(form);
 	}

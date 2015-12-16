@@ -74,7 +74,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="descriptive"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -83,14 +83,14 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
 			navigationParam="state"
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="title"
 			orderByType="<%= orderByType %>"
 			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
@@ -159,8 +159,8 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 				<%
 				Dictionary<String, String> headers = bundle.getHeaders();
 
-				String bundleName = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_NAME));
-				String bundleDescription = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_DESCRIPTION));
+				String bundleName = MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_NAME));
+				String bundleDescription = MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_DESCRIPTION));
 				%>
 
 				<h5>
@@ -183,7 +183,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 							<liferay-ui:message key="version" />:
 						</strong>
 
-						<%= String.valueOf(bundle.getVersion()) %>
+						<%= bundle.getVersion() %>
 					</div>
 
 					<div class="additional-info-item">

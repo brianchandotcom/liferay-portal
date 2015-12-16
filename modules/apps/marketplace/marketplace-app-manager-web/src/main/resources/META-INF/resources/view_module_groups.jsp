@@ -63,7 +63,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="descriptive"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -72,14 +72,14 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
 			navigationParam="state"
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="title"
 			orderByType="<%= orderByType %>"
 			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
@@ -127,14 +127,20 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+
+				<%
+				String moduleGroupDescription MarketplaceAppManagerUtil.getSearchContainerFieldText(moduleGroupDisplay.getDescription());
+				String moduleGroupTitle MarketplaceAppManagerUtil.getSearchContainerFieldText(moduleGroupDisplay.getTitle());
+				%>
+
 				<h5>
 					<a href="<%= HtmlUtil.escapeHREF(moduleGroupDisplay.getDisplayURL(renderResponse)) %>">
-						<%= moduleGroupDisplay.getTitle() %>
+						<%= moduleGroupTitle %>
 					</a>
 				</h5>
 
 				<h6 class="text-default">
-					<%= moduleGroupDisplay.getDescription() %>
+					<%= moduleGroupDescription %>
 				</h6>
 
 				<div class="additional-info text-default">

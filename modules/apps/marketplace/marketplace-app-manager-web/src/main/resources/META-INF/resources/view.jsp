@@ -51,7 +51,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="descriptive"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -60,20 +60,20 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 		<liferay-frontend:management-bar-navigation
 			navigationKeys="<%= MarketplaceAppManagerUtil.getCategories(apps, bundles) %>"
 			navigationParam="category"
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
 			navigationParam="state"
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="title"
 			orderByType="<%= orderByType %>"
 			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
@@ -125,14 +125,20 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+
+				<%
+				String appTitle = MarketplaceAppManagerUtil.getSearchContainerFieldText(appDisplay.getTitle());
+				String appDescription = MarketplaceAppManagerUtil.getSearchContainerFieldText(appDisplay.getDescription());
+				%>
+
 				<h5>
 					<a href="<%= HtmlUtil.escapeHREF(appDisplay.getDisplayURL(renderResponse)) %>">
-						<%= appDisplay.getTitle() %>
+						<%= appTitle %>
 					</a>
 				</h5>
 
 				<h6 class="text-default">
-					<%= appDisplay.getDescription() %>
+					<%= appDescription %>
 				</h6>
 
 				<div class="additional-info text-default">

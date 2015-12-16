@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.StringReader;
 
 import java.net.URL;
+import java.net.URLDecoder;
 
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -40,8 +41,8 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Before
 	public void setUp() throws Exception {
 		downloadSample(
-			"generic-1", "631", "test-portal-acceptance-pullrequest(master)",
-			"test-1-11");
+			"generic-1", "1792", "test-portal-acceptance-pullrequest(master)",
+			"test-1-3");
 		downloadSample(
 			"jspc-1", "1799", "test-portal-acceptance-pullrequest(master)",
 			"test-1-4");
@@ -95,6 +96,79 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		downloadSample(sampleKey, url);
 	}
 
+	@Override
+	protected void downloadSample(String sampleKey, URL url) throws Exception {
+		String sampleDirName = dependenciesDir.getPath() + "/" + sampleKey;
+
+		File sampleDir = new File(sampleDirName);
+
+		File expectedMessageFile = new File(sampleDir, "expected_message.html");
+
+		if (sampleDir.exists()) {
+			if (!expectedMessageFile.exists()) {
+				for (File jobDir : sampleDir.listFiles()) {
+					String jobDirName = jobDir.getName();
+
+					if (jobDir.isDirectory() && jobDirName.startsWith("job-")) {
+						File jobExpectedMessageFile = new File(
+							jobDir, "expected_message.html");
+
+						jobExpectedMessageFile.delete();
+					}
+				}
+			}
+
+			for (File jobDir : sampleDir.listFiles()) {
+				String jobDirName = jobDir.getName();
+
+				if (jobDir.isDirectory() && jobDirName.startsWith("job-")) {
+					File jobExpectedMessageFile = new File(
+						jobDir, "expected_message.html");
+
+					if (!jobExpectedMessageFile.exists()) {
+						downloadSampleJobExpectedMessage(jobDir);
+					}
+				}
+			}
+		}
+
+		super.downloadSample(sampleKey, url);
+	}
+
+	protected File downloadSampleJobExpectedMessage(File jobDir)
+		throws Exception {
+
+		File jsonFile = new File(jobDir, "api/json");
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(toURLString(jsonFile)));
+
+		String urlString = URLDecoder.decode(
+			jsonObject.getString("url"), "UTF-8");
+
+		Matcher jobNameMatcher = _jobNamePattern.matcher(urlString);
+
+		jobNameMatcher.find();
+
+		File jobExpectedMessageFile = new File(jobDir, "expected_message.html");
+
+		if (!jobExpectedMessageFile.exists()) {
+			gitHubJobMessageUtilTest.dependenciesDir = dependenciesDir;
+			gitHubJobMessageUtilTest.writeExpectedMessage(jobDir);
+		}
+
+		JenkinsResultsParserUtil.write(
+			jobExpectedMessageFile,
+			formatXML(
+				"<div><h5 job-result=\"" + jsonObject.getString("result") +
+				"\"><a href=\"" + urlString + "\">" +
+				jobNameMatcher.group("jobName") + "</a></h5>" +
+				JenkinsResultsParserUtil.read(
+					jobExpectedMessageFile) + "</div>"));
+
+		return jobExpectedMessageFile;
+	}
+
 	protected void downloadSampleJobMessages(
 			String progressiveTextURL, Properties properties, File sampleDir)
 		throws Exception {
@@ -103,7 +177,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		int jobCount = 0;
 		int passCount = 0;
-		StringBuilder reportFilesSB = new StringBuilder();
+		StringBuilder jobExpectedMessageFileNamesSB = new StringBuilder();
 
 		String content = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(progressiveTextURL));
@@ -116,30 +190,29 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 			Matcher jobNameMatcher = _jobNamePattern.matcher(urlString);
 
+			System.out.println("urlString: " + urlString);
+
 			jobNameMatcher.find();
 
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(urlString + "/api/json"));
 
-			Project project = getProject(null, urlString, sampleDir.getPath());
+			gitHubJobMessageUtilTest.downloadSample(
+				"job-" + jobCount, jobNameMatcher.group("buildNumber"),
+				jobNameMatcher.group("jobName"),
+				jobNameMatcher.group("hostName"));
 
-			GitHubJobMessageUtil.getGitHubJobMessage(project);
+			File jobExpectedMessageFile = downloadSampleJobExpectedMessage(
+				new File(
+					sampleDir,
+					"job-" + jobCount + "-" + jobNameMatcher.group("jobName")));
 
-			File reportFile = new File(sampleDir, jobCount + "-report.html");
-
-			JenkinsResultsParserUtil.write(
-				reportFile,
-				formatXML(
-					"<div><h5 job-result=\"" + jsonObject.getString("result") +
-					"\"><a href=\"" + urlString + "\">" +
-					jobNameMatcher.group("jobName") + "</a></h5>" +
-					project.getProperty("report.html.content") + "</div>"));
-
-			if (reportFilesSB.length() > 0) {
-				reportFilesSB.append(" ");
+			if (jobExpectedMessageFileNamesSB.length() > 0) {
+				jobExpectedMessageFileNamesSB.append(" ");
 			}
 
-			reportFilesSB.append(reportFile.getPath());
+			jobExpectedMessageFileNamesSB.append(
+				jobExpectedMessageFile.getPath());
 
 			String result = jsonObject.getString("result");
 
@@ -155,7 +228,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		properties.setProperty(
 			"top.level.pass.count", String.valueOf(passCount));
 		properties.setProperty(
-			"top.level.report.files", reportFilesSB.toString());
+			"top.level.report.files", jobExpectedMessageFileNamesSB.toString());
 	}
 
 	@Override

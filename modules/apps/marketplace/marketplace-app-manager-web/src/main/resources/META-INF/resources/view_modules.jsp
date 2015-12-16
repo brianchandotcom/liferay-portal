@@ -140,6 +140,14 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			className="org.osgi.framework.Bundle"
 			modelVar="bundle"
 		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/view_module.jsp" />
+				<portlet:param name="app" value="<%= app %>" />
+				<portlet:param name="moduleGroup" value="<%= moduleGroup %>" />
+				<portlet:param name="symbolicName" value="<%= bundle.getSymbolicName() %>" />
+				<portlet:param name="version" value="<%= String.valueOf(bundle.getVersion()) %>" />
+			</portlet:renderURL>
+
 			<liferay-ui:search-container-column-text>
 				<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
 					<liferay-util:param name="iconURL" value='<%= PortalUtil.getPathContext(request) + "/images/icons.svg#modules" %>' />
@@ -156,7 +164,9 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 				%>
 
 				<h5>
-					<%= bundleName %>
+					<a href="<%= HtmlUtil.escapeHREF(rowURL) %>">
+						<%= bundleName %>
+					</a>
 				</h5>
 
 				<h6 class="text-default">

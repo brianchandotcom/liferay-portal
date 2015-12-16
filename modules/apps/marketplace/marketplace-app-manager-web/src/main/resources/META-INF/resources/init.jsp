@@ -57,12 +57,17 @@ page import="com.liferay.portal.service.CompanyLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
-<%@ page import="java.util.Dictionary" %><%@
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Collection" %><%@
+page import="java.util.Dictionary" %><%@
 page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.Portlet" %><%@
+page import="javax.portlet.PortletURL" %>
 
-<%@ page import="org.osgi.framework.Bundle" %>
+<%@ page import="org.osgi.framework.Bundle" %><%@
+page import="org.osgi.framework.BundleContext" %><%@
+page import="org.osgi.framework.ServiceReference" %>
 
 <portlet:defineObjects />
 

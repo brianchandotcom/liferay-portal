@@ -226,35 +226,36 @@ if (portletTitleBasedNavigation) {
 						</aui:fieldset>
 					</c:if>
 
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="metadata">
+					<%
+					long resourcePrimKey = 0;
 
-						<%
-						long resourcePrimKey = 0;
+					if (!newPage) {
+						resourcePrimKey = wikiPage.getResourcePrimKey();
+					}
+					else if (templatePage != null) {
+						resourcePrimKey = templatePage.getResourcePrimKey();
+					}
 
-						if (!newPage) {
-							resourcePrimKey = wikiPage.getResourcePrimKey();
+					long assetEntryId = 0;
+					long classPK = resourcePrimKey;
+
+					if (!newPage && !wikiPage.isApproved() && (wikiPage.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {
+						AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());
+
+						if (assetEntry != null) {
+							assetEntryId = assetEntry.getEntryId();
+							classPK = wikiPage.getPrimaryKey();
 						}
-						else if (templatePage != null) {
-							resourcePrimKey = templatePage.getResourcePrimKey();
-						}
+					}
+					%>
 
-						long assetEntryId = 0;
-						long classPK = resourcePrimKey;
-
-						if (!newPage && !wikiPage.isApproved() && (wikiPage.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {
-							AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());
-
-							if (assetEntry != null) {
-								assetEntryId = assetEntry.getEntryId();
-								classPK = wikiPage.getPrimaryKey();
-							}
-						}
-						%>
-
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
 						<aui:input classPK="<%= classPK %>" name="categories" type="assetCategories" />
 
 						<aui:input classPK="<%= classPK %>" name="tags" type="assetTags" />
+					</aui:fieldset>
 
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
 						<liferay-ui:input-asset-links
 							assetEntryId="<%= assetEntryId %>"
 							className="<%= WikiPage.class.getName() %>"
@@ -304,14 +305,14 @@ if (portletTitleBasedNavigation) {
 							<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 
 								<%
-									long classPK = 0;
+								classPK = 0;
 
-									if (templatePage != null) {
-										classPK = templatePage.getPrimaryKey();
-									}
-									else if (page != null) {
-										classPK = wikiPage.getPrimaryKey();
-									}
+								if (templatePage != null) {
+									classPK = templatePage.getPrimaryKey();
+								}
+								else if (page != null) {
+									classPK = wikiPage.getPrimaryKey();
+								}
 								%>
 
 								<liferay-ui:custom-attribute-list

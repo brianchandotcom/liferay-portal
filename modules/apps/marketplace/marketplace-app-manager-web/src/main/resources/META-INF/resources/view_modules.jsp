@@ -140,6 +140,14 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			className="org.osgi.framework.Bundle"
 			modelVar="bundle"
 		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/view_module.jsp" />
+				<portlet:param name="app" value="<%= app %>" />
+				<portlet:param name="moduleGroup" value="<%= moduleGroup %>" />
+				<portlet:param name="symbolicName" value="<%= bundle.getSymbolicName() %>" />
+				<portlet:param name="version" value="<%= String.valueOf(bundle.getVersion()) %>" />
+			</portlet:renderURL>
+
 			<liferay-ui:search-container-column-text>
 				<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
 					<liferay-util:param name="iconURL" value='<%= PortalUtil.getPathContext(request) + "/images/icons.svg#modules" %>' />
@@ -149,14 +157,6 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 				<%
-				PortletURL viewModulePluginsURL = renderResponse.createRenderURL();
-
-				viewModulePluginsURL.setParameter("mvcPath", "/view_module.jsp");
-				viewModulePluginsURL.setParameter("app", app);
-				viewModulePluginsURL.setParameter("moduleGroup", moduleGroup);
-				viewModulePluginsURL.setParameter("symbolicName", bundle.getSymbolicName());
-				viewModulePluginsURL.setParameter("version", bundle.getVersion().toString());
-
 				Dictionary<String, String> headers = bundle.getHeaders();
 
 				String bundleName = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_NAME));
@@ -164,7 +164,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 				%>
 
 				<h5>
-					<a href="<%= HtmlUtil.escapeHREF(viewModulePluginsURL.toString()) %>">
+					<a href="<%= HtmlUtil.escapeHREF(rowURL) %>">
 						<%= bundleName %>
 					</a>
 				</h5>

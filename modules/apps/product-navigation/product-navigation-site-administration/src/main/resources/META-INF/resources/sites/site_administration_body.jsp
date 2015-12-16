@@ -32,4 +32,6 @@ ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language",
 	/>
 </c:if>
 
-<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteAdministration() %>">
+	<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+</c:if>

@@ -334,6 +334,19 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return _selectedSite;
 	}
 
+	public boolean isShowSiteAdministration() throws PortalException {
+		Group group = getGroup();
+
+		if ((group != null) && GroupPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(), group,
+				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowStagingInfo() throws PortalException {
 		if (_showStagingInfo != null) {
 			return _showStagingInfo.booleanValue();

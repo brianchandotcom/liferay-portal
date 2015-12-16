@@ -96,13 +96,18 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	}
 
 	public String getGroupName() throws PortalException {
-		if (Validator.isNotNull(_groupName)) {
+		if (_groupName != null) {
 			return _groupName;
 		}
 
 		Group group = getGroup();
 
-		_groupName = group.getDescriptiveName(_themeDisplay.getLocale());
+		if (group == null) {
+			_groupName = StringPool.BLANK;
+		}
+		else {
+			_groupName = group.getDescriptiveName(_themeDisplay.getLocale());
+		}
 
 		return _groupName;
 	}
@@ -165,7 +170,13 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return _logoURL;
 		}
 
+		_logoURL = StringPool.BLANK;
+
 		Group group = getGroup();
+
+		if (group == null) {
+			return _logoURL;
+		}
 
 		_logoURL = group.getLogoURL(_themeDisplay, false);
 
@@ -217,6 +228,14 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	public int getNotificationsCount() {
 		if (_notificationsCount != null) {
 			return _notificationsCount.intValue();
+		}
+
+		_notificationsCount = 0;
+
+		Group group = getGroup();
+
+		if (group == null) {
+			return _notificationsCount;
 		}
 
 		SiteAdministrationPanelCategory siteAdministrationPanelCategory =
@@ -314,6 +333,10 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 		Group group = getGroup();
 
+		if (group == null) {
+			return false;
+		}
+
 		Layout layout = _themeDisplay.getLayout();
 
 		if (layout != null) {
@@ -350,9 +373,13 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return _showStagingInfo.booleanValue();
 		}
 
+		_showStagingInfo = false;
+
 		Group group = getGroup();
 
-		_showStagingInfo = false;
+		if (group == null) {
+			return _showStagingInfo;
+		}
 
 		if (!group.isStaged() && !group.isStagingGroup()) {
 			return _showStagingInfo;

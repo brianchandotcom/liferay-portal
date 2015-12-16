@@ -24,14 +24,16 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
 %>
 
-<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isDisplaySiteLink() %>">
-	<aui:a
-		cssClass="list-group-heading"
-		href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
-		label='<%= LanguageUtil.get(resourceBundle, "go-to-site") %>'
-	/>
-</c:if>
+<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null %>">
+	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isDisplaySiteLink() %>">
+		<aui:a
+			cssClass="list-group-heading"
+			href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
+			label='<%= LanguageUtil.get(resourceBundle, "go-to-site") %>'
+		/>
+	</c:if>
 
-<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteAdministration() %>">
-	<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteAdministration() %>">
+		<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
+	</c:if>
 </c:if>

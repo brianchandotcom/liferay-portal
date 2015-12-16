@@ -359,6 +359,33 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
+	public java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status) {
+		return _mbCategoryLocalService.getCategoriesAndThreads(groupId,
+			categoryId, status);
+	}
+
+	@Override
+	public java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status, int start, int end) {
+		return _mbCategoryLocalService.getCategoriesAndThreads(groupId,
+			categoryId, status, start, end);
+	}
+
+	@Override
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId) {
+		return _mbCategoryLocalService.getCategoriesAndThreadsCount(groupId,
+			categoryId);
+	}
+
+	@Override
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
+		int status) {
+		return _mbCategoryLocalService.getCategoriesAndThreadsCount(groupId,
+			categoryId, status);
+	}
+
+	@Override
 	public int getCategoriesCount(long groupId) {
 		return _mbCategoryLocalService.getCategoriesCount(groupId);
 	}

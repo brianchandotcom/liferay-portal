@@ -1,6 +1,52 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.countT_ByG_C">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT MBThread.threadId) AS COUNT_VALUE
+			FROM
+				MBThread
+			WHERE
+				(MBThread.groupId = ?) AND
+				(MBThread.categoryId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.countC_ByG_P">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT MBCategory.categoryId) AS COUNT_VALUE
+			FROM
+				MBCategory
+			WHERE
+				(MBCategory.groupId = ?) AND
+				(MBCategory.parentCategoryId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.countT_ByG_C_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT MBThread.threadId) AS COUNT_VALUE
+			FROM
+				MBThread
+			WHERE
+				(MBThread.groupId = ?) AND
+				(MBThread.categoryId = ?) AND
+				(MBThread.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.countC_ByG_P_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT MBCategory.categoryId) AS COUNT_VALUE
+			FROM
+				MBCategory
+			WHERE
+				(MBCategory.groupId = ?) AND
+				(MBCategory.parentCategoryId = ?) AND
+				(MBCategory.status = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.countByS_G_U_P">
 		<![CDATA[
 			SELECT
@@ -16,6 +62,60 @@
 				(MBCategory.groupId = ?) AND
 				(MBCategory.parentCategoryId = ?) AND
 				(Subscription.userId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.findT_ByG_C">
+		<![CDATA[
+			SELECT
+				DISTINCT MBThread.threadId AS modelId,
+				MBThread.priority AS priority,
+				1 AS modelCategory
+			FROM
+				MBThread
+			WHERE
+				(MBThread.groupId = ?) AND
+				(MBThread.categoryId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.findC_ByG_P">
+		<![CDATA[
+			SELECT
+				DISTINCT MBCategory.categoryId AS modelId,
+				0 AS priority,
+				0 AS modelCategory
+			FROM
+				MBCategory
+			WHERE
+				(MBCategory.groupId = ?) AND
+				(MBCategory.parentCategoryId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.findT_ByG_C_S">
+		<![CDATA[
+			SELECT
+				DISTINCT MBThread.threadId AS modelId,
+				MBThread.priority AS priority,
+				1 AS modelCategory
+			FROM
+				MBThread
+			WHERE
+				(MBThread.groupId = ?) AND
+				(MBThread.categoryId = ?) AND
+				(MBThread.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.findC_ByG_P_S">
+		<![CDATA[
+			SELECT
+				DISTINCT MBCategory.categoryId AS modelId,
+				0 AS priority,
+				0 AS modelCategory
+			FROM
+				MBCategory
+			WHERE
+				(MBCategory.groupId = ?) AND
+				(MBCategory.parentCategoryId = ?) AND
+				(MBCategory.status = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBCategoryFinder.findByS_G_U_P">

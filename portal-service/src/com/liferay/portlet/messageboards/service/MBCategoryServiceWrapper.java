@@ -133,6 +133,39 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
+	public java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId) {
+		return _mbCategoryService.getCategoriesAndThreads(groupId, categoryId);
+	}
+
+	@Override
+	public java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status) {
+		return _mbCategoryService.getCategoriesAndThreads(groupId, categoryId,
+			status);
+	}
+
+	@Override
+	public java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status, int start, int end) {
+		return _mbCategoryService.getCategoriesAndThreads(groupId, categoryId,
+			status, start, end);
+	}
+
+	@Override
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId) {
+		return _mbCategoryService.getCategoriesAndThreadsCount(groupId,
+			categoryId);
+	}
+
+	@Override
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
+		int status) {
+		return _mbCategoryService.getCategoriesAndThreadsCount(groupId,
+			categoryId, status);
+	}
+
+	@Override
 	public int getCategoriesCount(long groupId, long excludedCategoryId,
 		long parentCategoryId, int status) {
 		return _mbCategoryService.getCategoriesCount(groupId,

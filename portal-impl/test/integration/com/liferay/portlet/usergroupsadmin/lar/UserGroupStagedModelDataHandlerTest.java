@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -81,6 +82,24 @@ public class UserGroupStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return UserGroup.class;
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		UserGroup userGroup = (UserGroup)stagedModel;
+		UserGroup importedUserGroup = (UserGroup)importedStagedModel;
+
+		Assert.assertEquals(userGroup.getName(), importedUserGroup.getName());
+		Assert.assertEquals(
+			userGroup.getDescription(), importedUserGroup.getDescription());
+		Assert.assertEquals(
+			userGroup.isAddedByLDAPImport(),
+			importedUserGroup.isAddedByLDAPImport());
 	}
 
 	@DeleteAfterTestRun

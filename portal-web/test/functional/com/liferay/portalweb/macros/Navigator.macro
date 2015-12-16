@@ -59,6 +59,12 @@
 		</execute>
 	</command>
 
+	<command name="gotoTab">
+		<var name="key_tab" value="${tab}" />
+
+		<execute function="AssertClick" locator1="NavTab#TAB_LINK" value1="${tab}" />
+	</command>
+
 	<command name="openSiteURL">
 		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
 		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />

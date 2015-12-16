@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SITE_ROLES_SELECT</td>
-	<td>//div[contains(.,'Site Roles')]//a[contains(@id,'selectSiteRoleLink')]</td>
+	<td>//div[contains(.,'Site Roles')]//button[contains(@id,'selectSiteRoleLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>TEAMS_SELECT</td>
-	<td>//div[contains(.,'Teams')]//a[contains(@id,'selectTeamLink')]</td>
+	<td>//div[contains(.,'Teams')]//button[contains(@id,'selectTeamLink')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -223,7 +223,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormIcon">
@@ -438,7 +438,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormIcon" />
@@ -749,7 +749,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormIcon" />
@@ -850,7 +850,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormIcon" />
@@ -954,7 +954,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormIcon" />
@@ -1052,7 +1052,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormIcon" />
@@ -1145,7 +1145,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormIcon" />
@@ -1235,7 +1235,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormIcon" />
@@ -1320,7 +1320,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormIcon" />
@@ -1491,7 +1491,7 @@
 		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="icon" />
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormIcon" />

@@ -29,6 +29,16 @@
 	<td>Application Search Field</td>
 </tr>
 <tr>
+	<td>ALL_ORGANIZATION</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a/span[contains(text(),'All Organizations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_USERS</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a/span[contains(text(),'All Users')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AVAILABLE_SITES</td>
 	<td>//div[contains(@class,'navbar-default')]//a[contains(@title,'Available Sites')]</td>
 	<td></td>

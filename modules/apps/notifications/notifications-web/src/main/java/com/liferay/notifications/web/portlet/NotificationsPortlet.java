@@ -214,8 +214,12 @@ public class NotificationsPortlet extends MVCPortlet {
 		throws Exception {
 
 		UserNotificationEvent userNotificationEvent =
-			_userNotificationEventLocalService.getUserNotificationEvent(
+			_userNotificationEventLocalService.fetchUserNotificationEvent(
 				userNotificationEventId);
+
+		if (userNotificationEvent == null) {
+			return;
+		}
 
 		userNotificationEvent.setArchived(true);
 

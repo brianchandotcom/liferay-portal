@@ -32,7 +32,7 @@ String parentTitle = BeanParamUtil.getString(wikiPage, request, "parentTitle");
 
 boolean newPage = ParamUtil.getBoolean(request, "newPage");
 
-if (wikiPage == null) {
+if ((wikiPage == null) || wikiPage.isNew()) {
 	newPage = true;
 }
 
@@ -83,7 +83,7 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 		if (Validator.isNull(parentTitle)) {
 			parentTitle = templatePage.getParentTitle();
 
-			if (wikiPage.isNew()) {
+			if (newPage) {
 				selectedFormat = templatePage.getFormat();
 
 				wikiPage.setContent(templatePage.getContent());
@@ -131,7 +131,7 @@ if (portletTitleBasedNavigation) {
 	<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 </portlet:renderURL>
 
-<c:if test="<%= (wikiPage != null) && !wikiPage.isNew() %>">
+<c:if test="<%= portletTitleBasedNavigation && (wikiPage != null) && !newPage %>">
 	<div class="panel text-center">
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
 	</div>
@@ -213,6 +213,12 @@ if (portletTitleBasedNavigation) {
 			<c:otherwise>
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
+						<c:if test="<%= !portletTitleBasedNavigation && (wikiPage != null) && !newPage %>">
+							<div class="text-center">
+								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
+							</div>
+						</c:if>
+
 						<aui:input disabled="<%= !editTitle %>" name="title" required="<%= editTitle %>" value="<%= title %>" />
 
 						<c:if test="<%= Validator.isNotNull(parentTitle) %>">

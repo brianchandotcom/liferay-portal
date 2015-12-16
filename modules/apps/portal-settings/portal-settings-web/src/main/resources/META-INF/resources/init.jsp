@@ -57,7 +57,6 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.*" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
-page import="com.liferay.portal.security.sso.OpenSSOUtil" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.settings.web.constants.PortalSettingsWebKeys" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@

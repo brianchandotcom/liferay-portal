@@ -1236,6 +1236,159 @@
 		</execute>
 	</command>
 
+	<command name="AddCalendarEventWithStaging">
+		<description message="This is a use case for LPS-52083." />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Staging Test Page" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="portletName" value="Calendar" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="page" value="Staging Test Page" />
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="eventTitle" value="Calendar Staged Event Title" />
+			<var name="eventType" value="Regular" />
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Staging Test Page" />
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Calendar Staged Event Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging Configuration" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="CalendarEvent#edit">
+			<var name="eventTitle" value="Calendar Staged Event Title" />
+			<var name="eventTitleEdit" value="Calendar Live Event Title" />
+			<var name="eventType" value="Regular" />
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectEvent">
+			<var name="eventTitle" value="Calendar Live Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#assertEventNotEditable" />
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Staging Test Page" />
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Not Visible Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewUnavailableCalendarsNotPresent">
+			<var name="calendarName" value="Site Name" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectCalendar">
+			<var name="calendarName" value="Site Name" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
+			<var name="eventTitle" value="Not Visible Event Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Staging Test Page" />
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<execute macro="CalendarScheduler#gotoAddViaDayView" />
+
+		<execute macro="CalendarEvent#viewUnavailableCalendarsNotPresent">
+			<var name="calendarName" value="Site Name" />
+		</execute>
+	</command>
+
 	<command name="AddCalendarResource" priority="5">
 		<property name="portal.acceptance" value="true" />
 

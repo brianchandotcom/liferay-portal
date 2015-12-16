@@ -75,7 +75,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="descriptive"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -125,9 +125,9 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 				<%
-				String portletDescription = GetterUtil.getString(serviceReference.getProperty("javax.portlet.description"));
-				String portletDisplayName = GetterUtil.getString(serviceReference.getProperty("javax.portlet.display-name"));
-				String portletName = GetterUtil.getString(serviceReference.getProperty("javax.portlet.name"));
+				String portletDescription = MarketplaceAppManagerUtil.getSearchContainerFieldText(serviceReference.getProperty("javax.portlet.description"));
+				String portletDisplayName = MarketplaceAppManagerUtil.getSearchContainerFieldText(serviceReference.getProperty("javax.portlet.display-name"));
+				String portletName = MarketplaceAppManagerUtil.getSearchContainerFieldText(serviceReference.getProperty("javax.portlet.name"));
 				%>
 
 				<h5>

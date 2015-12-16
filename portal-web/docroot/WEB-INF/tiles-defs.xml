@@ -140,14 +140,6 @@
 		<put name="portlet_content" value="/portlet/group_statistics/add_activity_counter.jsp" />
 	</definition>
 
-	<!-- Image Uploader -->
-
-	<definition name="portlet.image_uploader" extends="portlet" />
-
-	<definition name="portlet.image_uploader.view" extends="portlet.image_uploader">
-		<put name="portlet_content" value="/portlet/image_uploader/view.jsp" />
-	</definition>
-
 	<!-- Invitation -->
 
 	<definition name="portlet.invitation" extends="portlet" />

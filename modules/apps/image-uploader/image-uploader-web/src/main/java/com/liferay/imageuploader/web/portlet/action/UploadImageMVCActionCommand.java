@@ -12,19 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.imageuploader.action;
+package com.liferay.imageuploader.web.portlet.action;
 
+import com.liferay.imageuploader.web.constants.ImageUploaderPortletKeys;
+import com.liferay.imageuploader.web.upgrade.UploadImageUtil;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -45,7 +48,6 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -63,29 +65,68 @@ import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.MimeResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Tibor Lipusz
+ * @author Levente Hudák
  */
-public class UploadImageAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + ImageUploaderPortletKeys.IMAGE_UPLOADER,
+		"mvc.command.name=/image_uploader/view"
+	},
+	service = MVCActionCommand.class
+)
+public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
+
+	protected FileEntry addTempImageFileEntry(PortletRequest portletRequest)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(portletRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String contentType = uploadPortletRequest.getContentType("fileName");
+
+		String fileName = uploadPortletRequest.getFileName("fileName");
+
+		File file = uploadPortletRequest.getFile("fileName");
+
+		String mimeType = MimeTypesUtil.getContentType(file, fileName);
+
+		if (!StringUtil.equalsIgnoreCase(
+				ContentTypes.APPLICATION_OCTET_STREAM, mimeType)) {
+
+			contentType = mimeType;
+		}
+
+		if (!MimeTypesUtil.isWebImage(contentType)) {
+			throw new ImageTypeException();
+		}
+
+		try {
+			TempFileEntryUtil.deleteTempFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				UploadImageUtil.getTempImageFolderName(), fileName);
+		}
+		catch (Exception e) {
+		}
+
+		return TempFileEntryUtil.addTempFileEntry(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			UploadImageUtil.getTempImageFolderName(), fileName, file,
+			contentType);
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -119,7 +160,9 @@ public class UploadImageAction extends PortletAction {
 				jsonObject.put(
 					"tempImageFileName", tempImageFileEntry.getTitle());
 
-				writeJSON(actionRequest, actionResponse, jsonObject);
+				//writeJSON(actionRequest, actionResponse, jsonObject);
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
 			}
 			else {
 				FileEntry fileEntry = null;
@@ -146,109 +189,8 @@ public class UploadImageAction extends PortletAction {
 		}
 	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.image_uploader.view"));
-	}
-
-	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
-
-		try {
-			String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
-
-			if (cmd.equals(Constants.GET_TEMP)) {
-				FileEntry tempFileEntry = getTempImageFileEntry(
-					resourceRequest);
-
-				FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
-					FlashMagicBytesUtil.check(tempFileEntry.getContentStream());
-
-				if (flashMagicBytesUtilResult.isFlash()) {
-					return;
-				}
-
-				serveTempImageFile(
-					resourceResponse,
-					flashMagicBytesUtilResult.getInputStream());
-			}
-		}
-		catch (NoSuchFileEntryException nsfee) {
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-	}
-
-	protected FileEntry addTempImageFileEntry(PortletRequest portletRequest)
-		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(portletRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String contentType = uploadPortletRequest.getContentType("fileName");
-
-		String fileName = uploadPortletRequest.getFileName("fileName");
-
-		File file = uploadPortletRequest.getFile("fileName");
-
-		String mimeType = MimeTypesUtil.getContentType(file, fileName);
-
-		if (!StringUtil.equalsIgnoreCase(
-				ContentTypes.APPLICATION_OCTET_STREAM, mimeType)) {
-
-			contentType = mimeType;
-		}
-
-		if (!MimeTypesUtil.isWebImage(contentType)) {
-			throw new ImageTypeException();
-		}
-
-		try {
-			TempFileEntryUtil.deleteTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getTempImageFolderName(), fileName);
-		}
-		catch (Exception e) {
-		}
-
-		return TempFileEntryUtil.addTempFileEntry(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			getTempImageFolderName(), fileName, file, contentType);
-	}
-
-	protected FileEntry getTempImageFileEntry(PortletRequest portletRequest)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return TempFileEntryUtil.getTempFileEntry(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			getTempImageFolderName(), getTempImageFileName(portletRequest));
-	}
-
 	protected String getTempImageFileName(PortletRequest portletRequest) {
 		return ParamUtil.getString(portletRequest, "tempImageFileName");
-	}
-
-	protected String getTempImageFolderName() {
-		Class<?> clazz = getClass();
-
-		return clazz.getName();
 	}
 
 	protected void handleUploadException(
@@ -259,7 +201,7 @@ public class UploadImageAction extends PortletAction {
 		if (e instanceof PrincipalException) {
 			SessionErrors.add(actionRequest, e.getClass());
 
-			setForward(actionRequest, "portal.error");
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp" );
 		}
 		else if (e instanceof AntivirusScannerException ||
 				 e instanceof FileExtensionException ||
@@ -318,7 +260,9 @@ public class UploadImageAction extends PortletAction {
 
 				jsonObject.put("errorMessage", errorMessage);
 
-				writeJSON(actionRequest, actionResponse, jsonObject);
+				//writeJSON(actionRequest, actionResponse, jsonObject);
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
 			}
 			else {
 				SessionErrors.add(actionRequest, e.getClass(), e);
@@ -337,7 +281,8 @@ public class UploadImageAction extends PortletAction {
 		InputStream tempImageStream = null;
 
 		try {
-			tempFileEntry = getTempImageFileEntry(actionRequest);
+			tempFileEntry = UploadImageUtil.getTempImageFileEntry(
+				actionRequest);
 
 			tempImageStream = tempFileEntry.getContentStream();
 
@@ -387,7 +332,7 @@ public class UploadImageAction extends PortletAction {
 			try {
 				TempFileEntryUtil.deleteTempFileEntry(
 					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-					getTempImageFolderName(),
+					UploadImageUtil.getTempImageFolderName(),
 					getTempImageFileName(actionRequest));
 			}
 			catch (Exception e) {
@@ -395,8 +340,9 @@ public class UploadImageAction extends PortletAction {
 
 			return TempFileEntryUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getTempImageFolderName(), getTempImageFileName(actionRequest),
-				file, tempFileEntry.getMimeType());
+				UploadImageUtil.getTempImageFolderName(),
+				getTempImageFileName(actionRequest), file,
+				tempFileEntry.getMimeType());
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			throw new UploadException(nsfee);
@@ -409,24 +355,7 @@ public class UploadImageAction extends PortletAction {
 		}
 	}
 
-	protected void serveTempImageFile(
-			MimeResponse mimeResponse, InputStream tempImageStream)
-		throws Exception {
-
-		ImageBag imageBag = ImageToolUtil.read(tempImageStream);
-
-		byte[] bytes = ImageToolUtil.getBytes(
-			imageBag.getRenderedImage(), imageBag.getType());
-
-		String contentType = MimeTypesUtil.getExtensionContentType(
-			imageBag.getType());
-
-		mimeResponse.setContentType(contentType);
-
-		PortletResponseUtil.write(mimeResponse, bytes);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		UploadImageAction.class);
+		UploadImageMVCActionCommand.class);
 
 }

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String currentImageURL = ParamUtil.getString(request, "currentLogoURL");
@@ -23,8 +23,8 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 %>
 
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="previewURL">
-	<portlet:param name="struts_action" value="/image_uploader/view" />
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/image_uploader/view" var="previewURL">
+	<portlet:param name="mvcRenderCommandName" value="/image_uploader/view" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" />
 </liferay-portlet:resourceURL>
 
@@ -46,8 +46,8 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<portlet:actionURL var="uploadImageURL">
-			<portlet:param name="struts_action" value="/image_uploader/view" />
+		<portlet:actionURL name="/image_uploader/view" var="uploadImageURL">
+			<portlet:param name="mvcRenderCommandName" value="/image_uploader/view" />
 			<portlet:param name="maxFileSize" value="<%= String.valueOf(maxFileSize) %>" />
 		</portlet:actionURL>
 
@@ -94,8 +94,8 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 		</aui:form>
 
 		<aui:script use="liferay-logo-editor">
-			<portlet:actionURL var="addTempImageURL">
-				<portlet:param name="struts_action" value="/image_uploader/view" />
+			<portlet:actionURL name="/image_uploader/view" var="addTempImageURL">
+				<portlet:param name="mvcRenderCommandName" value="/image_uploader/view" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" />
 				<portlet:param name="maxFileSize" value="<%= String.valueOf(maxFileSize) %>" />
 			</portlet:actionURL>

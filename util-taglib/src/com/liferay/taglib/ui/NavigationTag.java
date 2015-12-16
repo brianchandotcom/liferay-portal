@@ -71,6 +71,27 @@ public class NavigationTag extends IncludeTag {
 		_rootLayoutType = "absolute";
 	}
 
+	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
+		throws PortalException {
+
+		List<NavItem> navItems = new ArrayList<>();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		NavItem navItem = new NavItem(request, layout, null);
+
+		navItems.add(navItem);
+
+		for (Layout ancestorLayout : layout.getAncestors()) {
+			navItems.add(0, new NavItem(request, ancestorLayout, null));
+		}
+
+		return navItems;
+	}
+
 	protected String getDisplayStyle() {
 		if (Validator.isNotNull(_ddmTemplateKey)) {
 			return PortletDisplayTemplateManagerUtil.getDisplayStyle(
@@ -91,28 +112,38 @@ public class NavigationTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	protected List<NavItem> getNavItems(HttpServletRequest request)
+	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
 		List<NavItem> navItems = new ArrayList<>();
 
-		List<NavItem> navItemsBranch = _getNavItemsBranch(request);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		int layoutLevel = _rootLayoutLevel;
+		NavItem rootNavItem = null;
 
 		if (_rootLayoutType.equals("relative")) {
-			layoutLevel = navItemsBranch.size() - _rootLayoutLevel;
+			if ((_rootLayoutLevel >= 0) &&
+				(_rootLayoutLevel < branchNavItems.size())) {
+
+				rootNavItem = branchNavItems.get(_rootLayoutLevel);
+			}
+		}
+		else if (_rootLayoutType.equals("absolute")) {
+			int ancestorIndex = branchNavItems.size() - _rootLayoutLevel;
+
+			if ((ancestorIndex >= 0) &&
+				(ancestorIndex < branchNavItems.size())) {
+
+				rootNavItem = branchNavItems.get(ancestorIndex);
+			}
+			else if (ancestorIndex == branchNavItems.size()) {
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				navItems = NavItem.fromLayouts(
+					request, themeDisplay.getLayouts(), null);
+			}
 		}
 
-		if (layoutLevel > 0) {
-			navItems = NavItem.fromLayouts(
-				request, themeDisplay.getLayouts(), null);
-		}
-		else if(layoutLevel > 0) {
-			NavItem rootNavItem = navItemsBranch.get(layoutLevel - 1);
+		if (rootNavItem != null) {
 			navItems = rootNavItem.getChildren();
 		}
 
@@ -135,9 +166,12 @@ public class NavigationTag extends IncludeTag {
 			"liferay-ui:navigation:includedLayouts", _includedLayouts);
 
 		try {
-			List<NavItem> navItems = getNavItems(request);
+			List<NavItem> branchNavItems = getBranchNavItems(request);
 
-			request.setAttribute("liferay-ui:navigation:navItems", navItems);
+			request.setAttribute(
+				"liferay-ui:navigation:branchNavItems", branchNavItems);
+			request.setAttribute(
+				"liferay-ui:navigation:navItems", getNavItems(branchNavItems));
 		}
 		catch (Exception e) {
 			_log.error(e);
@@ -150,27 +184,6 @@ public class NavigationTag extends IncludeTag {
 			String.valueOf(_rootLayoutLevel));
 		request.setAttribute(
 			"liferay-ui:navigation:rootLayoutType", _rootLayoutType);
-	}
-
-	private List<NavItem> _getNavItemsBranch(HttpServletRequest request)
-		throws PortalException {
-
-		List<NavItem> navItems = new ArrayList<>();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		NavItem navItem = new NavItem(request, layout, null);
-
-		navItems.add(navItem);
-
-		for (Layout ancestorLayout : layout.getAncestors()) {
-			navItems.add(0, new NavItem(request, ancestorLayout, null));
-		}
-
-		return navItems;
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/navigation/page.jsp";

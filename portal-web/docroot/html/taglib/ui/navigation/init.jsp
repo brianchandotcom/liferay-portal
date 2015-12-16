@@ -20,6 +20,7 @@
 page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
 
 <%
+List<NavItem> branchNavItems = (List)request.getAttribute("liferay-ui:navigation:branchNavItems");
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:navigation:displayStyle"));
 long displayStyleGroupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:navigation:displayStyleGroupId"));
 String includedLayouts = (String)request.getAttribute("liferay-ui:navigation:includedLayouts");

@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>SWITCH_TO_ADVANCED</td>
-	<td>//span[contains(.,'Switch to Advanced Publication')]/a</td>
+	<td>//span[contains(.,'Switch to Advanced Publication')]</td>
 	<td></td>
 </tr>
 <tr>

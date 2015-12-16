@@ -67,6 +67,15 @@ public class PropsValues {
 	public static final String[] FIXED_ISSUES = StringUtil.split(
 		PropsUtil.get("fixed.issues"));
 
+	public static final String GOOGLE_API_KEY = PropsUtil.get(
+		"google.api.key");
+
+	public static final String GOOGLE_CLIENT_ID = PropsUtil.get(
+		"google.client.id");
+
+	public static final String GOOGLE_CLIENT_SECRET = PropsUtil.get(
+		"google.client.secret");
+
 	public static final String IGNORE_ERRORS = PropsUtil.get("ignore.errors");
 
 	public static final String IGNORE_ERRORS_DELIMITER = PropsUtil.get(

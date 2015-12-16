@@ -219,6 +219,16 @@ public class DDMFormFactoryHelper {
 		return false;
 	}
 
+	public boolean isDDMFormFieldRepeatable() {
+		Class<?> returnType = _method.getReturnType();
+
+		if (returnType.isArray()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isDDMFormFieldRequired() {
 		return _ddmFormField.required();
 	}

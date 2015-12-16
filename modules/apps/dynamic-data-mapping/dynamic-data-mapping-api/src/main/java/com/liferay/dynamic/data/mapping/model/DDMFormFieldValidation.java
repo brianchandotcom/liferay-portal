@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.Serializable;
 
 /**
@@ -29,6 +31,29 @@ public class DDMFormFieldValidation implements Serializable {
 
 		_expression = ddmFormFieldValidation._expression;
 		_errorMessage = ddmFormFieldValidation._errorMessage;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMFormFieldValidation)) {
+			return false;
+		}
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			(DDMFormFieldValidation)obj;
+
+		if (Validator.equals(
+				_errorMessage, ddmFormFieldValidation._errorMessage) &&
+			Validator.equals(_expression, ddmFormFieldValidation._expression)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getErrorMessage() {

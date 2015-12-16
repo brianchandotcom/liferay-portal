@@ -79,6 +79,28 @@ public class DDMFormField implements Serializable {
 		_nestedDDMFormFields.add(nestedDDMFormField);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMFormField)) {
+			return false;
+		}
+
+		DDMFormField ddmFormField = (DDMFormField)obj;
+
+		if (Validator.equals(_properties, ddmFormField._properties) &&
+			Validator.equals(
+				_nestedDDMFormFields, ddmFormField._nestedDDMFormFields)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getDataType() {
 		return MapUtil.getString(_properties, "dataType");
 	}

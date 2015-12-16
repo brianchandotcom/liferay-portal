@@ -182,12 +182,10 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		String portletId = PortletProviderUtil.getPortletId(
 			Group.class.getName(), PortletProvider.Action.MANAGE);
 
-		Group group = getGroup();
-
 		if (Validator.isNotNull(portletId) &&
 			PortletPermissionUtil.hasControlPanelAccessPermission(
-				_themeDisplay.getPermissionChecker(), group.getGroupId(),
-				portletId)) {
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), portletId)) {
 
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
 				_portletRequest, Group.class.getName(),

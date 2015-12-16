@@ -184,7 +184,7 @@ pageContext.setAttribute("portletURL", portletURL);
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="title"
-				value="<%= role.getTitle(locale) %>"
+				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

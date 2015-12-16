@@ -15,6 +15,7 @@
 package com.liferay.exportimport.lar;
 
 import com.liferay.exportimport.xstream.ConverterAdapter;
+import com.liferay.exportimport.xstream.XStreamStagedModelTypeHierarchyPermission;
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.exportimport.xstream.configurator.XStreamConfiguratorRegistryUtil;
 import com.liferay.portal.NoSuchRoleException;
@@ -98,16 +99,20 @@ import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.xstream.XStreamAlias;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
+import com.liferay.portlet.exportimport.xstream.XStreamType;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.ClassLoaderReference;
 import com.thoughtworks.xstream.io.xml.XppDriver;
+import com.thoughtworks.xstream.security.NoTypePermission;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -115,6 +120,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -2539,6 +2545,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
+		List<String> allowedTypeNames = new ArrayList<>();
+
 		for (XStreamConfigurator xStreamConfigurator : xStreamConfigurators) {
 			List<XStreamAlias> xStreamAliases =
 				xStreamConfigurator.getXStreamAliases();
@@ -2560,7 +2568,37 @@ public class PortletDataContextImpl implements PortletDataContext {
 						XStream.PRIORITY_VERY_HIGH);
 				}
 			}
+
+			List<XStreamType> xStreamTypes =
+				xStreamConfigurator.getAllowedXStreamTypes();
+
+			if (ListUtil.isNotEmpty(xStreamTypes)) {
+				for (XStreamType xStreamType : xStreamTypes) {
+					allowedTypeNames.add(xStreamType.getTypeExpression());
+				}
+			}
 		}
+
+		// Default permissions - first wipe than add default
+
+		_xStream.addPermission(NoTypePermission.NONE);
+
+		_xStream.addPermission(
+			XStreamStagedModelTypeHierarchyPermission.STAGED_MODELS);
+
+		_xStream.allowTypeHierarchy(List.class);
+		_xStream.allowTypeHierarchy(Map.class);
+		_xStream.allowTypeHierarchy(Timestamp.class);
+		_xStream.allowTypeHierarchy(Set.class);
+
+		Class[] types = new Class[] {
+			Boolean.class, Date.class, Integer.class, String.class,
+			Locale.class, Long.class
+		};
+
+		_xStream.allowTypes(types);
+
+		_xStream.allowTypes(allowedTypeNames.toArray(new String[] {}));
 	}
 
 	protected boolean isResourceMain(ClassedModel classedModel) {

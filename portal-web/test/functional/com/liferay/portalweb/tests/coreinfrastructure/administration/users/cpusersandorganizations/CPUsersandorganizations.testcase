@@ -1544,9 +1544,17 @@
 			<var name="sitePageName" value="Public Page" />
 		</execute>
 
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Teams" />
-			<var name="siteScopeName" value="Organization Name" />
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Users" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="Site Teams" />
 		</execute>
 
 		<execute macro="Team#addCP">

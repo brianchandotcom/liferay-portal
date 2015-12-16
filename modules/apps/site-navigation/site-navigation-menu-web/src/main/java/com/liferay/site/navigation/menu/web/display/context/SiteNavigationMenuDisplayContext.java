@@ -16,7 +16,6 @@ package com.liferay.site.navigation.menu.web.display.context;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -76,11 +75,6 @@ public class SiteNavigationMenuDisplayContext {
 		_displayStyle = ParamUtil.getString(
 			_request, "displayStyle",
 			_siteNavigationMenuPortletInstanceConfiguration.displayStyle());
-
-		if (Validator.isNull(_displayStyle )) {
-			_displayStyle =
-				_siteNavigationMenuWebConfiguration.defaultDisplayStyle();
-		}
 
 		return _displayStyle;
 	}

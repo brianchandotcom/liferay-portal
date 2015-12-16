@@ -1,4 +1,3 @@
-/* @generated */
 /*
  * Hibernate, Relational Persistence for Idiomatic Java
  *
@@ -165,3 +164,4 @@ public class UpdateTimestampsCache {
 	}
 
 }
+/* @generated */

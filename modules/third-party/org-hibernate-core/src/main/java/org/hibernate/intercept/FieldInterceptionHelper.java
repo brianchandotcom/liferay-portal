@@ -1,4 +1,3 @@
-/* @generated */
 /*
  * Hibernate, Relational Persistence for Idiomatic Java
  *
@@ -125,3 +124,4 @@ public class FieldInterceptionHelper {
 	}
 	private static final Map<Class<?>, Boolean> _instrumentedCache = new ConcurrentHashMap<Class<?>, Boolean>();
 }
+/* @generated */

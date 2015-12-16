@@ -1,13 +1,8 @@
 diff --git a/org/hibernate/cache/UpdateTimestampsCache.java b/org/hibernate/cache/UpdateTimestampsCache.java
-index 31fd175..7d85cf2 100644
+index 31fd175..e4d3b73 100644
 --- a/org/hibernate/cache/UpdateTimestampsCache.java
 +++ b/org/hibernate/cache/UpdateTimestampsCache.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- /*
-  * Hibernate, Relational Persistence for Idiomatic Java
-  *
-@@ -60,6 +61,9 @@ public class UpdateTimestampsCache {
+@@ -60,6 +60,9 @@ public class UpdateTimestampsCache {
  
  	@SuppressWarnings({"UnnecessaryBoxing"})
  	public void preinvalidate(Serializable[] spaces) throws CacheException {
@@ -17,7 +12,7 @@ index 31fd175..7d85cf2 100644
  		// TODO: to handle concurrent writes correctly, this should return a Lock to the client
  
  		readWriteLock.writeLock().lock();
-@@ -83,6 +87,9 @@ public class UpdateTimestampsCache {
+@@ -83,6 +86,9 @@ public class UpdateTimestampsCache {
  
  	 @SuppressWarnings({"UnnecessaryBoxing"})
  	 public void invalidate(Serializable[] spaces) throws CacheException {
@@ -27,7 +22,7 @@ index 31fd175..7d85cf2 100644
  		//TODO: to handle concurrent writes correctly, the client should pass in a Lock
  
  		 readWriteLock.writeLock().lock();
-@@ -106,6 +113,9 @@ public class UpdateTimestampsCache {
+@@ -106,6 +112,9 @@ public class UpdateTimestampsCache {
  
  	@SuppressWarnings({"unchecked", "UnnecessaryUnboxing"})
  	public boolean isUpToDate(Set spaces, Long timestamp) throws HibernateException {
@@ -37,3 +32,9 @@ index 31fd175..7d85cf2 100644
  		readWriteLock.readLock().lock();
  
  		try {
+@@ -155,3 +164,4 @@ public class UpdateTimestampsCache {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

@@ -27,6 +27,7 @@ import com.liferay.portlet.asset.util.test.AssetTestUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -65,6 +66,19 @@ public class AssetTagStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return AssetTag.class;
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		AssetTag tag = (AssetTag)stagedModel;
+		AssetTag importedTag = (AssetTag)importedStagedModel;
+
+		Assert.assertEquals(tag.getName(), importedTag.getName());
 	}
 
 }

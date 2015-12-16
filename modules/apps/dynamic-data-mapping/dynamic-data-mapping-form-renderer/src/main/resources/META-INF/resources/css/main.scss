@@ -35,6 +35,10 @@
 			}
 		}
 
+		.icon-asterisk {
+			margin-left: 4px;
+		}
+
 		.icon-spinner {
 			@include animation(spin 1000ms infinite linear);
 		}

@@ -151,7 +151,7 @@
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userFacebookId" value="0" />
 			<var name="userFirstName" value="test1" />
-			<var name="userId" value="10205" />
+			<var name="userId" value="${userId}" />
 			<var name="userLastName" value="test1" />
 			<var name="userPrefixId" value="0" />
 			<var name="userScreenName" value="test1" />

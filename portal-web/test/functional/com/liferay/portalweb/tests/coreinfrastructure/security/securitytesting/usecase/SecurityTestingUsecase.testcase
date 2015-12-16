@@ -158,13 +158,15 @@
 			<var name="userSuffixId" value="0" />
 		</execute>
 
+		<execute macro="Page#openURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#viewCP">
-			<var name="userScreenName" value="test1" />
-		</execute>
+		<var name="key_userScreenName" value="test1" />
+
+		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="test1" />
 
 		<execute function="AssertValue" locator1="UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD" value1="${userId}" />
 		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="Male" />

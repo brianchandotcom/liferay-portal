@@ -223,10 +223,8 @@ public class LDAPAuth implements Authenticator {
 			if (userPassword != null) {
 				String ldapPassword = new String((byte[])userPassword.get());
 
-				int prefixEnd = ldapPassword.indexOf("}");
-				ldapPassword = ldapPassword.substring(prefixEnd + 1);
-
-				String encryptedPassword = password;
+				String encryptedPassword = removeEncryptionAlgorithm(
+					ldapPassword);
 
 				String algorithm =
 					ldapAuthConfiguration.passwordEncryptionAlgorithm();
@@ -610,6 +608,22 @@ public class LDAPAuth implements Authenticator {
 		}
 
 		return user.getLdapServerId();
+	}
+
+	protected String removeEncryptionAlgorithm(String ldapPassword) {
+		int openBrace = ldapPassword.indexOf(StringPool.OPEN_CURLY_BRACE);
+
+		if (openBrace == -1) {
+			return ldapPassword;
+		}
+
+		int closeBrace = ldapPassword.indexOf(StringPool.CLOSE_CURLY_BRACE);
+
+		if (closeBrace == -1) {
+			return ldapPassword;
+		}
+
+		return ldapPassword.substring(openBrace, closeBrace + 1);
 	}
 
 	@Reference(

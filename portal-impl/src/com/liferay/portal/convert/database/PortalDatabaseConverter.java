@@ -15,40 +15,18 @@
 package com.liferay.portal.convert.database;
 
 import com.liferay.portal.convert.DatabaseConverter;
-import com.liferay.portal.events.StartupHelperUtil;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.convert.util.ModelMigrator;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ModelHintsUtil;
-import com.liferay.portal.model.ServiceComponent;
-import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
-import com.liferay.portal.spring.hibernate.DialectDetector;
-import com.liferay.portal.upgrade.util.Table;
-import com.liferay.portal.util.MaintenanceUtil;
-import com.liferay.portal.util.ShutdownUtil;
 
-import java.lang.reflect.Field;
-
-import java.sql.Connection;
-
-import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 
 import javax.sql.DataSource;
-
-import org.hibernate.dialect.Dialect;
 
 /**
  * @author Cristina González
@@ -57,113 +35,24 @@ public class PortalDatabaseConverter implements DatabaseConverter {
 
 	@Override
 	public void convert(DataSource dataSource) throws Exception {
-		Dialect dialect = DialectDetector.getDialect(dataSource);
-
-		DB db = DBManagerUtil.getDB(dialect, dataSource);
-
-		List<String> modelNames = ModelHintsUtil.getModels();
-
-		Map<String, Tuple> tableDetails = new LinkedHashMap<>();
-
-		Connection connection = dataSource.getConnection();
-
-		try {
-			MaintenanceUtil.appendStatus(
-				"Collecting information for database tables to migration");
-
-			for (String modelName : modelNames) {
-				if (!modelName.contains(".model.")) {
-					continue;
-				}
-
-				String implClassName = modelName.replaceFirst(
-					"(\\.model\\.)(\\p{Upper}.*)", "$1impl.$2Impl");
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Loading class " + implClassName);
-				}
-
-				Class<?> implClass = getImplClass(implClassName);
-
-				if (implClass == null) {
-					_log.error("Unable to load class " + implClassName);
-
-					continue;
-				}
-
-				Field[] fields = implClass.getFields();
-
-				for (Field field : fields) {
-					Tuple tuple = null;
-
-					String fieldName = field.getName();
-
-					if (fieldName.equals("TABLE_NAME") ||
-						(fieldName.startsWith("MAPPING_TABLE_") &&
-						 fieldName.endsWith("_NAME"))) {
-
-						tuple = getTableDetails(implClass, field, fieldName);
-					}
-
-					if (tuple != null) {
-						String table = (String)tuple.getObject(0);
-
-						tableDetails.put(table, tuple);
-					}
-				}
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Migrating database tables");
-			}
-
-			int i = 0;
-
-			for (Tuple tuple : tableDetails.values()) {
-				if ((i > 0) && (i % (tableDetails.size() / 4) == 0)) {
-					MaintenanceUtil.appendStatus(
-						(i * 100 / tableDetails.size()) + "%");
-				}
-
-				String table = (String)tuple.getObject(0);
-				Object[][] columns = (Object[][])tuple.getObject(1);
-				String sqlCreate = (String)tuple.getObject(2);
-
-				migrateTable(db, connection, table, columns, sqlCreate);
-
-				i++;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Migrating database indexes");
-			}
-
-			StartupHelperUtil.updateIndexes(db, connection, false);
-
-			List<ServiceComponent> serviceComponents =
-				ServiceComponentLocalServiceUtil.getLatestServiceComponents();
-
-			Set<String> validIndexNames = new HashSet<>();
-
-			for (ServiceComponent serviceComponent : serviceComponents) {
-				String indexesSQL = serviceComponent.getIndexesSQL();
-
-				db.addIndexes(connection, indexesSQL, validIndexNames);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(connection);
-		}
+		_modelMigrator.migrate(dataSource, getModelClassesName("*"));
 	}
 
-	protected Class<?> getImplClass(String implClassName) throws Exception {
+	public void setModelMigrator(ModelMigrator modelMigrator) {
+		_modelMigrator = modelMigrator;
+	}
+
+	protected Class<? extends BaseModel<?>> getImplClass(String implClassName) {
 		try {
 			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
-			return classLoader.loadClass(implClassName);
+			return (Class<? extends BaseModel<?>>)classLoader.loadClass(
+				implClassName);
 		}
 		catch (Exception e) {
 		}
+
+		// Backward compatibility, so legacy plugins' tables get converted
 
 		for (String servletContextName : ServletContextPool.keySet()) {
 			try {
@@ -172,7 +61,8 @@ public class PortalDatabaseConverter implements DatabaseConverter {
 
 				ClassLoader classLoader = servletContext.getClassLoader();
 
-				return classLoader.loadClass(implClassName);
+				return (Class<? extends BaseModel<?>>)classLoader.loadClass(
+					implClassName);
 			}
 			catch (Exception e) {
 			}
@@ -181,52 +71,35 @@ public class PortalDatabaseConverter implements DatabaseConverter {
 		return null;
 	}
 
-	protected Tuple getTableDetails(
-		Class<?> implClass, Field tableField, String tableFieldVar) {
+	protected List<Class<? extends BaseModel<?>>> getModelClassesName(
+		String pattern) {
 
-		try {
-			String columnsFieldVar = StringUtil.replace(
-				tableFieldVar, "_NAME", "_COLUMNS");
-			String sqlCreateFieldVar = StringUtil.replace(
-				tableFieldVar, "_NAME", "_SQL_CREATE");
+		List<String> modelNames = ModelHintsUtil.getModels();
 
-			Field columnsField = implClass.getField(columnsFieldVar);
-			Field sqlCreateField = implClass.getField(sqlCreateFieldVar);
+		List<Class<? extends BaseModel<?>>> implClassesNames =
+			new ArrayList<>();
 
-			String table = (String)tableField.get(StringPool.BLANK);
-			Object[][] columns = (Object[][])columnsField.get(new Object[0][0]);
-			String sqlCreate = (String)sqlCreateField.get(StringPool.BLANK);
+		for (String modelName : modelNames) {
+			if (!modelName.contains(".model.")) {
+				continue;
+			}
 
-			return new Tuple(table, columns, sqlCreate);
+			String implClassName = modelName.replaceFirst(
+				"(\\.model\\.)(\\p{Upper}.*)", "$1impl.$2Impl");
+
+			if (implClassName.matches(pattern)) {
+				Class<? extends BaseModel<?>> implClass = getImplClass(
+					implClassName);
+
+				if (implClass != null) {
+					implClassesNames.add(implClass);
+				}
+			}
 		}
-		catch (Exception e) {
-		}
 
-		return null;
+		return implClassesNames;
 	}
 
-	protected void migrateTable(
-			DB db, Connection connection, String tableName, Object[][] columns,
-			String sqlCreate)
-		throws Exception {
-
-		Table table = new Table(tableName, columns);
-
-		try {
-			table.generateTempFile();
-
-			db.runSQL(connection, sqlCreate);
-
-			table.populateTable(connection);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			MaintenanceUtil.appendStatus(e.getMessage());
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortalDatabaseConverter.class);
+	private ModelMigrator _modelMigrator;
 
 }

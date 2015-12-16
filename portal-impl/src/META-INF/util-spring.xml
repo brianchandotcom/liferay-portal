@@ -11,7 +11,11 @@
 	<bean class="com.liferay.portal.convert.ConvertDatabase" />
 	<bean class="com.liferay.portal.convert.ConvertDocumentLibrary" />
 	<bean class="com.liferay.portal.convert.ConvertDocumentLibraryExtraSettings" />
-	<bean class="com.liferay.portal.convert.database.PortalDatabaseConverter" />
+	<bean id="com.liferay.portal.convert.util.ModelMigrator" class="com.liferay.portal.convert.util.ModelMigratorImpl" />
+	<bean class="com.liferay.portal.convert.database.PortalDatabaseConverter" >
+		<property name="modelMigrator" ref="com.liferay.portal.convert.util.ModelMigrator" />
+	</bean>
+
 	<bean id="com.liferay.portal.events.StartupHelperUtil" class="com.liferay.portal.events.StartupHelperUtil">
 		<property name="startupHelper">
 			<bean class="com.liferay.portal.events.StartupHelper" />

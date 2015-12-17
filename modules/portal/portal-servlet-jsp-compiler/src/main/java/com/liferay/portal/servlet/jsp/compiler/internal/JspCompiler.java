@@ -289,22 +289,20 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			try {
 				standardJavaFileManager.setLocation(
 					StandardLocation.CLASS_PATH, _classPath);
-
-				BundleJavaFileManager bundleJavaFileManager =
-					new BundleJavaFileManager(
-						_bundle, standardJavaFileManager,
-						_logger,
-						options.contains(
-							org.phidias.compile.Constants.OPT_VERBOSE),
-						_resourceResolver);
-
-				addBundleWirings(bundleJavaFileManager);
-
-				javaFileManager = bundleJavaFileManager;
 			}
 			catch (IOException ioe) {
 				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
 			}
+
+			BundleJavaFileManager bundleJavaFileManager =
+				new BundleJavaFileManager(
+					_bundle, standardJavaFileManager, _logger,
+					options.contains(org.phidias.compile.Constants.OPT_VERBOSE),
+					_resourceResolver);
+
+			addBundleWirings(bundleJavaFileManager);
+
+			javaFileManager = bundleJavaFileManager;
 		}
 
 		return super.getJavaFileManager(javaFileManager);

@@ -26,22 +26,22 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PUBLIC_PAGES</td>
-	<td>//li[contains(@id,'tabs')]/a[contains(.,'Public Pages')]</td>
+	<td>//a[contains(@title,'Public Pages')]/span[contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PRIVATE_PAGES</td>
-	<td>//li[contains(@id,'tabs')]/a[contains(.,'Private Pages')]</td>
+	<td>//a[contains(@title,'Private Pages')]/span[contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MY_PROFILE</td>
-	<td>//li[contains(@id,'tabs')]/a[contains(.,'My Profile')]</td>
+	<td>//a[contains(@title,'My Profile')]/span[contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MY_DASHBOARD</td>
-	<td>//li[contains(@id,'tabs')]/a[contains(.,'My Dashboard')]</td>
+	<td>//a[contains(@title,'My Dashboard')]/span[contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>

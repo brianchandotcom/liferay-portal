@@ -276,46 +276,47 @@
 
 				portletBound = portletBound.one('> *');
 
-				if (!portletBound) {
+				var portletId;
+
+				if (portletBound) {
+					var id = portletBound.attr('id');
+
+					portletId = Util.getPortletId(id);
+
+					portletBound.portletId = portletId;
+
+					placeHolder.hide();
+					placeHolder.placeAfter(portletBound);
+
 					placeHolder.remove();
-					
-					return;
-				}
 
-				var id = portletBound.attr('id');
+					instance.refreshLayout(portletBound);
 
-				var portletId = Util.getPortletId(id);
-
-				portletBound.portletId = portletId;
-
-				placeHolder.hide();
-				placeHolder.placeAfter(portletBound);
-
-				placeHolder.remove();
-
-				instance.refreshLayout(portletBound);
-
-				if (window.location.hash) {
-					window.location.hash = 'p_p_id_' + portletId + '_';
-				}
-
-				portletBoundary = portletBound;
-
-				var Layout = Liferay.Layout;
-
-				if (Layout && Layout.INITIALIZED) {
-					Layout.updateCurrentPortletInfo(portletBoundary);
-
-					if (container) {
-						Layout.syncEmptyColumnClassUI(container);
+					if (window.location.hash) {
+						window.location.hash = 'p_p_id_' + portletId + '_';
 					}
 
-					Layout.syncDraggableClassUI();
-					Layout.updatePortletDropZones(portletBoundary);
-				}
+					portletBoundary = portletBound;
 
-				if (onComplete) {
-					onComplete(portletBoundary, portletId);
+					var Layout = Liferay.Layout;
+
+					if (Layout && Layout.INITIALIZED) {
+						Layout.updateCurrentPortletInfo(portletBoundary);
+
+						if (container) {
+							Layout.syncEmptyColumnClassUI(container);
+						}
+
+						Layout.syncDraggableClassUI();
+						Layout.updatePortletDropZones(portletBoundary);
+					}
+
+					if (onComplete) {
+						onComplete(portletBoundary, portletId);
+					}
+				}
+				else {
+					placeHolder.remove();
 				}
 
 				return portletId;

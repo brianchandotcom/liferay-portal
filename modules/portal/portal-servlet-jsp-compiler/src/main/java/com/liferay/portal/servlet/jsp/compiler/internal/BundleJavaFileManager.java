@@ -132,17 +132,13 @@ public class BundleJavaFileManager
 		_bundleWirings.add(bundleWiring);
 	}
 
-	public ClassLoader getClassLoader() {
-		return _bundleWiring.getClassLoader();
-	}
-
 	@Override
 	public ClassLoader getClassLoader(JavaFileManager.Location location) {
 		if (location != StandardLocation.CLASS_PATH) {
 			return fileManager.getClassLoader(location);
 		}
 
-		return getClassLoader();
+		return _bundleWiring.getClassLoader();
 	}
 
 	@Override
@@ -196,7 +192,8 @@ public class BundleJavaFileManager
 
 		if (packageName.startsWith(JAVA_PACKAGE) ||
 			(location != StandardLocation.CLASS_PATH) ||
-			(javaFileObjects.isEmpty() && hasPackageCapability(packageName))) {
+			(javaFileObjects.isEmpty() &&
+				_systemCapabilities.contains(packageName))) {
 
 			Iterable<JavaFileObject> localJavaFileObjects =
 				fileManager.list(location, packagePath, kinds, recurse);
@@ -286,26 +283,11 @@ public class BundleJavaFileManager
 		return null;
 	}
 
-	private ResourceResolver getResourceResolver() {
-		return _resourceResolver;
-	}
-
-	private boolean hasPackageCapability(String packageName) {
-
-		// We only need to check if there is a matching system bundle capability
-		// if mode is strict. Otherwise, allow loading classes from the defined
-		// classpath.
-
-		return _systemCapabilities.contains(packageName);
-	}
-
 	private void list(
 		String packagePath, Kind kind, int options, BundleWiring bundleWiring,
 		List<JavaFileObject> javaFileObjects) {
 
-		ResourceResolver resourceResolver = getResourceResolver();
-
-		Collection<String> resources = resourceResolver.resolveResources(
+		Collection<String> resources = _resourceResolver.resolveResources(
 			bundleWiring, packagePath, STAR.concat(kind.extension), options);
 
 		if ((resources == null) || resources.isEmpty()) {
@@ -313,7 +295,7 @@ public class BundleJavaFileManager
 		}
 
 		for (String resourceName : resources) {
-			URL resourceURL = resourceResolver.getResource(
+			URL resourceURL = _resourceResolver.getResource(
 				bundleWiring, resourceName);
 
 			JavaFileObject javaFileObject = getJavaFileObject(

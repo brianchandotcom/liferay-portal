@@ -170,11 +170,18 @@ public class BundleJavaFileManager
 		throws IOException {
 
 		if ((location == StandardLocation.CLASS_PATH) && _verbose) {
-			_logger.log(
-				Logger.LOG_INFO,
-				"List available sources for {location=" + location +
-					", packageName=" + packageName + ", kinds=" + kinds +
-						", recurse=" + recurse + "}");
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("List for {location=");
+			sb.append(location);
+			sb.append(", packageName=");
+			sb.append(packageName);
+			sb.append(", kinds=");
+			sb.append(kinds);
+			sb.append(", recurse=");
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			_logger.log(Logger.LOG_INFO, sb.toString());
 		}
 
 		String packagePath = packageName.replace('.', '/');

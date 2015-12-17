@@ -793,6 +793,11 @@
 	</command>
 
 	<command name="edit">
+		<execute macro="CalendarNavigator#gotoEditEvent">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
 		<if>
 			<isset var="endDateTimeEdit" />
 			<then>
@@ -812,23 +817,6 @@
 				<var name="startDateTime" value="08:30 AM" />
 			</else>
 		</if>
-
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectEvent">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewEventTitleViaDialogBox">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
-
-		<execute function="SelectFrame" locator1="CalendarEditEvent#EDIT_EVENT_IFRAME" />
 
 		<if>
 			<equals arg1="${eventType}" arg2="All Day" />

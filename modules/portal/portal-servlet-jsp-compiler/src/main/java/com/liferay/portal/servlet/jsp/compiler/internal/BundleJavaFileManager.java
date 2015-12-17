@@ -14,6 +14,9 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import static org.phidias.compile.Constants.JAVA_PACKAGE;
+import static org.phidias.compile.Constants.STAR;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -38,6 +41,7 @@ import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardLocation;
 
 import org.apache.felix.utils.log.Logger;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleRevision;
@@ -48,20 +52,17 @@ import org.phidias.compile.BundleJavaFileObject;
 import org.phidias.compile.Constants;
 import org.phidias.compile.JarJavaFileObject;
 import org.phidias.compile.ResourceResolver;
-import static org.phidias.compile.Constants.JAVA_PACKAGE;
-import static org.phidias.compile.Constants.STAR;
 
 /**
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
 public class BundleJavaFileManager
-	extends ForwardingJavaFileManager<JavaFileManager>
-	implements Constants {
+	extends ForwardingJavaFileManager<JavaFileManager> implements Constants {
 
 	public BundleJavaFileManager(
-		Bundle bundle, JavaFileManager javaFileManager,
-		Logger logger, boolean verbose, ResourceResolver resourceResolver) {
+		Bundle bundle, JavaFileManager javaFileManager, Logger logger,
+		boolean verbose, ResourceResolver resourceResolver) {
 
 		super(javaFileManager);
 
@@ -148,7 +149,8 @@ public class BundleJavaFileManager
 
 			if (_verbose) {
 				_logger.log(
-					Logger.LOG_INFO, "Infering binary name from " + bundleJavaFileObject);
+					Logger.LOG_INFO,
+					"Infering binary name from " + bundleJavaFileObject);
 			}
 
 			return bundleJavaFileObject.inferBinaryName();
@@ -248,8 +250,7 @@ public class BundleJavaFileManager
 				URI uri = file.toURI();
 
 				return new JarJavaFileObject(
-					uri, className,
-					new URL("jar:" + uri.toString()),
+					uri, className, new URL("jar:" + uri.toString()),
 					resourceName);
 			}
 			catch (MalformedURLException murie) {
@@ -284,8 +285,8 @@ public class BundleJavaFileManager
 				if (_verbose) {
 					_logger.log(
 						Logger.LOG_INFO,
-						"\tCould not create JavaFileObject for {" + resourceURL +
-							"}");
+						"\tCould not create JavaFileObject for {" +
+							resourceURL + "}");
 				}
 
 				continue;

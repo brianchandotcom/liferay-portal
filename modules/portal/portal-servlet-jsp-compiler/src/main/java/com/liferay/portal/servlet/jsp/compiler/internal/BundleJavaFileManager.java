@@ -73,25 +73,7 @@ public class BundleJavaFileManager
 		_verbose = verbose;
 		_resourceResolver = resourceResolver;
 
-		if (_verbose) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("BundleJavaFileManager for bundle: ");
-			sb.append(bundle.getSymbolicName());
-			sb.append(StringPool.DASH);
-			sb.append(bundle.getVersion());
-
-			_logger.log(Logger.LOG_INFO, sb.toString());
-		}
-
 		_bundleWiring = bundle.adapt(BundleWiring.class);
-
-		if (_verbose) {
-			_logger.log(
-				Logger.LOG_INFO,
-				"Dependent BundleWirings included in this BundleJavaManager " +
-					"context: ");
-		}
 
 		for (BundleWire bundleWire : _bundleWiring.getRequiredWires(null)) {
 			BundleWiring bundleWiring = bundleWire.getProviderWiring();
@@ -118,13 +100,33 @@ public class BundleJavaFileManager
 					}
 				}
 			}
+		}
 
-			if (_verbose) {
-				_logger.log(
-					Logger.LOG_INFO,
-					"\t" + currentBundle.getSymbolicName() + "-" +
-						currentBundle.getVersion());
+		if (_verbose) {
+			StringBundler sb = new StringBundler(_bundleWirings.size() * 4 + 6);
+
+			sb.append("BundleJavaFileManager for bundle: ");
+			sb.append(bundle.getSymbolicName());
+			sb.append(StringPool.DASH);
+			sb.append(bundle.getVersion());
+			sb.append(", dependent BundleWirings: {");
+
+			for (BundleWiring bundleWiring : _bundleWirings) {
+				Bundle currentBundle = bundleWiring.getBundle();
+
+				sb.append(currentBundle.getSymbolicName());
+				sb.append(StringPool.DASH);
+				sb.append(currentBundle.getVersion());
+				sb.append(StringPool.COMMA_AND_SPACE);
 			}
+
+			if (!_bundleWirings.isEmpty()) {
+				sb.setIndex(sb.index() - 1);
+			}
+
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			_logger.log(Logger.LOG_INFO, sb.toString());
 		}
 	}
 

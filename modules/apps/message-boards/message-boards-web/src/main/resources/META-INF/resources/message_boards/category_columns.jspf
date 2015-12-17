@@ -63,7 +63,6 @@
 			<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
 		</c:if>
 	</c:if>
-
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text

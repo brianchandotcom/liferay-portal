@@ -72,7 +72,6 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 					label="<%= true %>"
 				/>
 			</liferay-ui:custom-attributes-available>
-
 		</aui:fieldset>
 	</aui:fieldset-group>
 

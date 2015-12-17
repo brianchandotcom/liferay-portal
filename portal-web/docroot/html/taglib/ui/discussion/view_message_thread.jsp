@@ -217,7 +217,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					<ul class="lfr-discussion-actions">
 						<c:if test="<%= index > 0 %>">
-
 							<c:if test="<%= commentTreeDisplayContext.isEditActionControlVisible() %>">
 
 								<%

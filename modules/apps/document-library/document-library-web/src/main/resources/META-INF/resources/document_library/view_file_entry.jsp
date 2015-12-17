@@ -401,7 +401,6 @@ if (portletTitleBasedNavigation) {
 											requestedLocale="<%= locale %>"
 											showEmptyFieldLabel="<%= false %>"
 										/>
-
 									</liferay-ui:panel>
 
 							<%
@@ -453,7 +452,6 @@ if (portletTitleBasedNavigation) {
 												requestedLocale="<%= locale %>"
 												showEmptyFieldLabel="<%= false %>"
 											/>
-
 										</liferay-ui:panel>
 
 							<%

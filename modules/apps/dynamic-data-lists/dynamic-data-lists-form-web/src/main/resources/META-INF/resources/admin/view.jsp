@@ -88,7 +88,6 @@ recordSetSearch.setOrderByType(orderByType);
 						<liferay-ui:search-container-column-jsp
 							path="/admin/record_set_action.jsp"
 						/>
-
 					</c:when>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -118,7 +117,6 @@ recordSetSearch.setOrderByType(orderByType);
 								</liferay-frontend:vertical-card-header>
 							</liferay-frontend:vertical-card>
 						</liferay-ui:search-container-column-text>
-
 					</c:when>
 					<c:otherwise>
 
@@ -143,10 +141,8 @@ recordSetSearch.setOrderByType(orderByType);
 							cssClass="checkbox-cell entry-action"
 							path="/admin/record_set_action.jsp"
 						/>
-
 					</c:otherwise>
 				</c:choose>
-
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

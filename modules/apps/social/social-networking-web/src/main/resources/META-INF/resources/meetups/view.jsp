@@ -117,7 +117,6 @@ for (int i = 0; i < meetupsEntries.size(); i++) {
 			</c:if>
 
 			<liferay-ui:icon-list>
-
 				<c:if test="<%= permissionChecker.isCompanyAdmin(company.getCompanyId()) %>">
 
 					<%

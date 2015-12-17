@@ -106,7 +106,6 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 						name="num-of-hits"
 						property="hits"
 					/>
-
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />

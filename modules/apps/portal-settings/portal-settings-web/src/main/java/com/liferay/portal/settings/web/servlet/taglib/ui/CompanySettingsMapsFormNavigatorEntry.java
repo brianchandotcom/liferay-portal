@@ -62,8 +62,8 @@ public class CompanySettingsMapsFormNavigatorEntry
 
 		request.setAttribute(
 			MapProviderWebKeys.MAP_PROVIDER_KEY,
-				_mapProviderHelper.getMapProviderKey(
-					themeDisplay.getCompanyId()));
+			_mapProviderHelper.getMapProviderKey(
+				themeDisplay.getCompanyId()));
 
 		super.include(request, response);
 	}

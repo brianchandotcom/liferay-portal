@@ -29,6 +29,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,7 +99,17 @@ public class LoadBalancerUtil {
 				for (int i = 0; i < futureTasks.size(); i++) {
 					FutureTask<Integer> futureTask = futureTasks.get(i);
 
-					Integer availableSlaveCount = futureTask.get();
+					Integer availableSlaveCount = null;
+
+					try {
+						availableSlaveCount = futureTask.get(
+							15, TimeUnit.SECONDS);
+					}
+					catch (TimeoutException te) {
+						System.out.println("Master availability assessment " +
+							"timed out. " + hostNames.get(i));
+						availableSlaveCount = null;
+					}
 
 					if (availableSlaveCount == null) {
 						badIndices.add(i);

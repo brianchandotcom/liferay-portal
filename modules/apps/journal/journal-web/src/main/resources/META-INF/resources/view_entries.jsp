@@ -112,7 +112,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 							<h5>
 								<aui:a href="<%= rowURL != null ? rowURL.toString() : null %>">
-									<%= curArticle.getTitle(locale) %>
+									<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>
 								</aui:a>
 							</h5>
 

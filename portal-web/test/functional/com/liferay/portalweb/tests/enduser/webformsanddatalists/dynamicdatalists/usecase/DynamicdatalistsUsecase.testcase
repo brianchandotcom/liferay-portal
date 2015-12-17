@@ -1618,7 +1618,7 @@
 			<var name="fieldName" value="Select" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 

@@ -1092,7 +1092,7 @@
 			<var name="fieldName" value="Description" />
 		</execute>
 
-		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="User#logoutPG" />
 

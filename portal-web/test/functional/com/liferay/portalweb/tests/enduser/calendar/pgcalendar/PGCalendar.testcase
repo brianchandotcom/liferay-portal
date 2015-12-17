@@ -1279,6 +1279,8 @@
 
 		<execute macro="CalendarEvent#publish" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="page" value="Staging Test Page" />
 			<var name="site" value="Site Name" />
@@ -1351,8 +1353,7 @@
 
 		<execute macro="CalendarEvent#assertEventNotEditable" />
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Staging Test Page" />
+		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
 
@@ -1366,8 +1367,7 @@
 			<var name="availableCalendarList" value="Test Test" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Staging Test Page" />
+		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
 

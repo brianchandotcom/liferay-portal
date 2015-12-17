@@ -95,6 +95,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 	/>
 
 	<liferay-ui:search-container
+		emptyResultsMessage="no-module-groups-were-found"
 		id="moduleGroupDisplays"
 		iteratorURL="<%= portletURL %>"
 	>

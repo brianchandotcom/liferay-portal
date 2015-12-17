@@ -343,6 +343,10 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 								permissionContentContainerNode.empty();
 
 								permissionContentContainerNode.setContent(responseData);
+
+								var checkedNodes = permissionContentContainerNode.all(':checked');
+
+								window.<portlet:namespace />originalSelectedValues = checkedNodes.val();
 							}
 						}
 					}
@@ -373,7 +377,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 						unselectedTargets.splice(index, 1);
 					}
 				}
-				else {
+				else if (window.<portlet:namespace />originalSelectedValues.indexOf(value) != -1) {
 					unselectedTargets.push(value);
 				}
 

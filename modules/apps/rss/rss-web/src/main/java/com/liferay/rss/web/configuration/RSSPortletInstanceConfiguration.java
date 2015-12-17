@@ -23,7 +23,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration"
+	id = "com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration",
+	localization = "content/Language",
+	name = "%rss.portlet.instance.configuration.name"
 )
 public interface RSSPortletInstanceConfiguration {
 

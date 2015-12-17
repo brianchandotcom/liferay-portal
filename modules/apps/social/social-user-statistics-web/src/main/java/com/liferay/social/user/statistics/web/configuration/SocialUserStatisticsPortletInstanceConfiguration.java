@@ -23,7 +23,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "collaboration")
 @Meta.OCD(
-	id = "com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration"
+	id = "com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration",
+	localization = "content/Language",
+	name = "%social.user.statistics.portlet.instance.configuration.name"
 )
 public interface SocialUserStatisticsPortletInstanceConfiguration {
 

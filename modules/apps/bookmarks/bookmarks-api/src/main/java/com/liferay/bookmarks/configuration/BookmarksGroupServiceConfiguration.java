@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  */
 @ConfigurationAdmin(category = "collaboration")
 @Meta.OCD(
-	id = "com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration"
+	id = "com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration",
+	localization = "content/Language",
+	name = "%bookmarks.group.service.configuration.name"
 )
 public interface BookmarksGroupServiceConfiguration {
 

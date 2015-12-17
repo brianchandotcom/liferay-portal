@@ -23,7 +23,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration"
+	id = "com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration",
+	localization = "content/Language",
+	name = "%solr.http.client.factory.configuration.name"
 )
 public interface SolrHttpClientFactoryConfiguration {
 

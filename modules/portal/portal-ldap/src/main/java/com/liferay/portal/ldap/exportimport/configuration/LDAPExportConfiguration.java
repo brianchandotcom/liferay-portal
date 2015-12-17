@@ -22,11 +22,13 @@ import com.liferay.portal.ldap.configuration.CompanyScopedConfiguration;
 /**
  * @author Michael C. Han
  */
-@ConfigurationAdmin(category = "platform")
+@ConfigurationAdmin(
+	category = "platform", factoryInstanceLabelAttribute = "companyId"
+)
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration",
-	localization = "content/Language"
+	localization = "content/Language", name = "%ldap.export.configuration.name"
 )
 public interface LDAPExportConfiguration extends CompanyScopedConfiguration {
 

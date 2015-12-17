@@ -26,7 +26,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.rest.extender.configuration.RestExtenderConfiguration"
+	id = "com.liferay.portal.rest.extender.configuration.RestExtenderConfiguration",
+	localization = "content/Language",
+	name = "%rest.extender.configuration.name"
 )
 public interface RestExtenderConfiguration {
 

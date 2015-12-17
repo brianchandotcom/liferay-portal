@@ -27,7 +27,9 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.security.auth.verifier.tunnel.module.configuration.TunnelAuthVerifierConfiguration"
+	id = "com.liferay.portal.security.auth.verifier.tunnel.module.configuration.TunnelAuthVerifierConfiguration",
+	localization = "content/Language",
+	name = "%tunnel.auth.verifier.configuration.name"
 )
 public interface TunnelAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {

@@ -27,7 +27,9 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.security.auth.verifier.digest.authentication.module.configuration.DigestAuthenticationAuthVerifierConfiguration"
+	id = "com.liferay.portal.security.auth.verifier.digest.authentication.module.configuration.DigestAuthenticationAuthVerifierConfiguration",
+	localization = "content/Language",
+	name = "%digest.authentication.auth.verifier.configuration.name"
 )
 public interface DigestAuthenticationAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {

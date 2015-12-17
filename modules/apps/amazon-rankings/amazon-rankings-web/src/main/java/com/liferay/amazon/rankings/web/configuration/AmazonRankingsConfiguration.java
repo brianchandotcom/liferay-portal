@@ -23,7 +23,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "other")
 @Meta.OCD(
-	id = "com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration"
+	id = "com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration",
+	localization = "content/Language",
+	name = "%amazon.rankings.configuration.name"
 )
 public interface AmazonRankingsConfiguration {
 

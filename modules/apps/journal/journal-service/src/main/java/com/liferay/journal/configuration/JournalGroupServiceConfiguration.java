@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.journal.configuration.JournalGroupServiceConfiguration"
+	id = "com.liferay.journal.configuration.JournalGroupServiceConfiguration",
+	localization = "content/Language",
+	name = "%journal.group.service.configuration.name"
 )
 public interface JournalGroupServiceConfiguration {
 

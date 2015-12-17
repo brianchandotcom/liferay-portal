@@ -22,7 +22,10 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  * @author Juergen Kappler
  */
 @ConfigurationAdmin(category = "web-experience-management")
-@Meta.OCD(id = "com.liferay.rss.web.configuration.RSSWebConfiguration")
+@Meta.OCD(
+	id = "com.liferay.rss.web.configuration.RSSWebConfiguration",
+	localization = "content/Language", name = "%rss.web.configuration.name"
+)
 public interface RSSWebConfiguration {
 
 	@Meta.AD(deflt = "20", required = false)

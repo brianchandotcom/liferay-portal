@@ -25,7 +25,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 @ConfigurationAdmin(category = "other")
 @Meta.OCD(
 	id = "com.liferay.translator.web.configuration.TranslatorConfiguration",
-	localization = "content/Language"
+	localization = "content/Language", name = "%translator.configuration.name"
 )
 public interface TranslatorConfiguration {
 

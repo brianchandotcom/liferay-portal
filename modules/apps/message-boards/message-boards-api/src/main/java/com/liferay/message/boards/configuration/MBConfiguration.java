@@ -22,7 +22,10 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  * @author Sergio González
  */
 @ConfigurationAdmin(category = "collaboration")
-@Meta.OCD(id = "com.liferay.message.boards.configuration.MBConfiguration")
+@Meta.OCD(
+	id = "com.liferay.message.boards.configuration.MBConfiguration",
+	localization = "content/Language", name = "%mb.configuration.name"
+)
 public interface MBConfiguration {
 
 	/**

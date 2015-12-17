@@ -32,7 +32,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration",
-	localization = "content/Language"
+	localization = "content/Language", name = "%open.sso.configuration.name"
 )
 public interface OpenSSOConfiguration {
 

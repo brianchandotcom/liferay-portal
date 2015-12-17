@@ -27,7 +27,9 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.security.auth.verifier.basic.auth.header.module.configuration.BasicAuthHeaderAuthVerifierConfiguration"
+	id = "com.liferay.portal.security.auth.verifier.basic.auth.header.module.configuration.BasicAuthHeaderAuthVerifierConfiguration",
+	localization = "content/Language",
+	name = "%basic.auth.header.auth.verifier.configuration.name"
 )
 public interface BasicAuthHeaderAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {

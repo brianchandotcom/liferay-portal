@@ -27,7 +27,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.ldap.configuration.LDAPServerConfiguration",
-	localization = "content/Language"
+	localization = "content/Language", name = "%ldap.server.configuration.name"
 )
 public interface LDAPServerConfiguration {
 

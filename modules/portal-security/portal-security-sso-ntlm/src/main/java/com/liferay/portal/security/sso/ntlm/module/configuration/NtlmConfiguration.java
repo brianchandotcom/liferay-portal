@@ -32,7 +32,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration",
-	localization = "content/Language"
+	localization = "content/Language", name = "%ntlm.configuration.name"
 )
 public interface NtlmConfiguration {
 

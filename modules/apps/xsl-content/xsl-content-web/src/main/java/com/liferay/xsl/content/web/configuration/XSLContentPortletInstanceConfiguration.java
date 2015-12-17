@@ -23,7 +23,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration"
+	id = "com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration",
+	localization = "content/Language",
+	name = "%xsl.content.portlet.instance.configuration.name"
 )
 public interface XSLContentPortletInstanceConfiguration {
 

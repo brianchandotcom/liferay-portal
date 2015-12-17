@@ -27,7 +27,9 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.security.auth.verifier.portal.session.module.configuration.PortalSessionAuthVerifierConfiguration"
+	id = "com.liferay.portal.security.auth.verifier.portal.session.module.configuration.PortalSessionAuthVerifierConfiguration",
+	localization = "content/Language",
+	name = "%portal.session.auth.verifier.configuration.name"
 )
 public interface PortalSessionAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {

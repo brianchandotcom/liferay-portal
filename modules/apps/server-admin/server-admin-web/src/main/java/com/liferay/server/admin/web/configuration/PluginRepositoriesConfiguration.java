@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.server.admin.web.configuration.PluginRepositoriesConfiguration"
+	id = "com.liferay.server.admin.web.configuration.PluginRepositoriesConfiguration",
+	localization = "content/Language",
+	name = "%plugin.repositories.configuration.name"
 )
 public interface PluginRepositoriesConfiguration {
 

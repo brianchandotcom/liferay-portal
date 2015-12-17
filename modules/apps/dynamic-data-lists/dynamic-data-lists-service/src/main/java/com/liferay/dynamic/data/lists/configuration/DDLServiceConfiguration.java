@@ -24,7 +24,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 @ConfigurationAdmin(category = "productivity")
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.lists.configuration.DDLServiceConfiguration",
-	name = "Dynamic Data Lists Service Configuration"
+	localization = "content/Language", name = "%ddl.service.configuration.name"
 )
 public interface DDLServiceConfiguration {
 

@@ -23,8 +23,11 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.security.auto.login.basic.auth.header.module.configuration.BasicAuthHeaderAutoLoginConfiguration"
-)public interface BasicAuthHeaderAutoLoginConfiguration {
+	id = "com.liferay.portal.security.auto.login.basic.auth.header.module.configuration.BasicAuthHeaderAutoLoginConfiguration",
+	localization = "content/Language",
+	name = "%basic.auth.header.auto.login.configuration.name"
+)
+public interface BasicAuthHeaderAutoLoginConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();

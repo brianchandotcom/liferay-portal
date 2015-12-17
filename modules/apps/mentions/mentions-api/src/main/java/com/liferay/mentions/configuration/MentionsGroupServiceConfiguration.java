@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  */
 @ConfigurationAdmin(category = "collaboration")
 @Meta.OCD(
-	id = "com.liferay.mentions.configuration.MentionsGroupServiceConfiguration"
+	id = "com.liferay.mentions.configuration.MentionsGroupServiceConfiguration",
+	localization = "content/Language",
+	name = "%mentions.group.service.configuration.name"
 )
 public interface MentionsGroupServiceConfiguration {
 

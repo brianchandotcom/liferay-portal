@@ -32,7 +32,8 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration",
-	localization = "content/Language"
+	localization = "content/Language",
+	name="%cas.configuration.name"
 )
 public interface CASConfiguration {
 

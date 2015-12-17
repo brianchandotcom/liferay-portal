@@ -23,7 +23,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration"
+	id = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
+	localization = "content/Language",
+	name = "%freemarker.engine.configuration.name"
 )
 public interface FreeMarkerEngineConfiguration {
 

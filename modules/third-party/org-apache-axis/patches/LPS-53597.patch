@@ -1,6 +1,8 @@
---- LPS-53597/JavaServiceDesc.java	2013-04-12 15:11:07.380006000 +0200
-+++ src/org/apache/axis/description/JavaServiceDesc.java	2015-02-15 00:06:00.000000000 -0800
-@@ -701,10 +707,10 @@
+diff --git a/org/apache/axis/description/JavaServiceDesc.java b/org/apache/axis/description/JavaServiceDesc.java
+index ba25268..dfb5f2f 100644
+--- a/org/apache/axis/description/JavaServiceDesc.java
++++ b/org/apache/axis/description/JavaServiceDesc.java
+@@ -707,10 +707,10 @@ public class JavaServiceDesc implements ServiceDesc {
                          }
                          if (paramClass == null) {
                              paramClass = getTypeMapping().getClassForQName(param.getTypeQName(),

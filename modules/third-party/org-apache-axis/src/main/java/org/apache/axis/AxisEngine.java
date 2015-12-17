@@ -1,4 +1,3 @@
-/* @generated */
 /*
  * Copyright 2001-2004 The Apache Software Foundation.
  * 
@@ -527,3 +526,4 @@ public abstract class AxisEngine extends BasicHandler
     }
 
 }
+/* @generated */

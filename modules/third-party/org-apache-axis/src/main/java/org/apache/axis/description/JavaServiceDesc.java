@@ -1,4 +1,3 @@
-/* @generated */
 /*
  * Copyright 2002-2004 The Apache Software Foundation.
  * 
@@ -1492,3 +1491,4 @@ public class JavaServiceDesc implements ServiceDesc {
         return implClass != null;
     }
 }
+/* @generated */

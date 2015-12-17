@@ -1,4 +1,3 @@
-/* @generated */
 /**
  * MapItem.java
  *
@@ -154,3 +153,4 @@ public class MapItem  implements java.io.Serializable {
     }
 
 }
+/* @generated */

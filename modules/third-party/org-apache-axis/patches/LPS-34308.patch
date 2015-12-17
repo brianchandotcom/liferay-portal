@@ -1,11 +1,8 @@
---- LPS-34308/AxisEngine.java	2006-04-22 18:57:28.000000000 +0200
-+++ src/org/apache/axis/AxisEngine.java	2013-04-12 15:10:15.266025300 +0200
-@@ -1,3 +1,4 @@
-+/* @generated */
- /*
-  * Copyright 2001-2004 The Apache Software Foundation.
-  * 
-@@ -518,6 +518,10 @@
+diff --git a/org/apache/axis/AxisEngine.java b/org/apache/axis/AxisEngine.java
+index 4cffe6c..56406ce 100644
+--- a/org/apache/axis/AxisEngine.java
++++ b/org/apache/axis/AxisEngine.java
+@@ -518,7 +518,12 @@ public abstract class AxisEngine extends BasicHandler
       * @return the class cache
       */
      public ClassCache getClassCache() {
@@ -16,14 +13,14 @@
          return classCache;
      }
  
---- LPS-34308/JavaServiceDesc.java	2006-04-22 18:57:26.000000000 +0200
-+++ src/org/apache/axis/description/JavaServiceDesc.java	2013-04-12 15:11:07.380006000 +0200
-@@ -1,3 +1,4 @@
+ }
 +/* @generated */
- /*
-  * Copyright 2002-2004 The Apache Software Foundation.
-  * 
-@@ -381,6 +381,7 @@
+\ No newline at end of file
+diff --git a/org/apache/axis/description/JavaServiceDesc.java b/org/apache/axis/description/JavaServiceDesc.java
+index b5c0b40..ba25268 100644
+--- a/org/apache/axis/description/JavaServiceDesc.java
++++ b/org/apache/axis/description/JavaServiceDesc.java
+@@ -381,6 +381,7 @@ public class JavaServiceDesc implements ServiceDesc {
      {
          operations.add(operation);
          operation.setParent(this);
@@ -31,7 +28,7 @@
          if (name2OperationsMap == null) {
              name2OperationsMap = new HashMap();
          }
-@@ -645,6 +646,11 @@
+@@ -645,6 +646,11 @@ public class JavaServiceDesc implements ServiceDesc {
          
          for (int i = 0; i < methods.length; i++) {
              Method method = methods[i];
@@ -43,3 +40,9 @@
              if (Modifier.isPublic(method.getModifiers()) &&
                      method.getName().equals(oper.getName()) &&
                      method2OperationMap.get(method) == null) {
+@@ -1485,3 +1491,4 @@ public class JavaServiceDesc implements ServiceDesc {
+         return implClass != null;
+     }
+ }
++/* @generated */
+\ No newline at end of file

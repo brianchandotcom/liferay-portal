@@ -4,7 +4,6 @@ index 0000000..43192a1
 --- /dev/null
 +++ b/org/apache/xml/xml_soap/MapItem.java
 @@ -0,0 +1,156 @@
-+/* @generated */
 +/**
 + * MapItem.java
 + *
@@ -160,3 +159,4 @@ index 0000000..43192a1
 +    }
 +
 +}
++/* @generated */

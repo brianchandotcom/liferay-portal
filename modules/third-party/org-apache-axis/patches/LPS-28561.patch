@@ -1,11 +1,8 @@
---- LPS-28561/EngineConfiguration.java	2006-04-22 18:57:26.000000000 +0200
-+++ src/org/apache/axis/EngineConfiguration.java	2012-07-19 12:54:48.000000000 +0200
-@@ -1,3 +1,4 @@
-+/* @generated */
- /*
-  * Copyright 2002-2004 The Apache Software Foundation.
-  * 
-@@ -38,7 +38,7 @@
+diff --git a/org/apache/axis/EngineConfiguration.java b/org/apache/axis/EngineConfiguration.java
+index e0e4af3..f2de259 100644
+--- a/org/apache/axis/EngineConfiguration.java
++++ b/org/apache/axis/EngineConfiguration.java
+@@ -38,7 +38,7 @@ import java.util.List;
   * @author Glyn Normington (glyn@apache.org)
   * @author Glen Daniels (gdaniels@apache.org)
   */
@@ -14,14 +11,17 @@
      /**
       * Property name used for setting an EngineConfiguration to be used
       * in creating engines.
---- LPS-28561/Session.java	2006-04-22 18:57:28.000000000 +0200
-+++ src/org/apache/axis/session/Session.java	2012-07-19 13:20:36.000000000 +0200
-@@ -1,3 +1,4 @@
+@@ -168,3 +168,4 @@ public interface EngineConfiguration {
+      */
+     List getRoles();
+ }
 +/* @generated */
- /*
-  * Copyright 2001-2004 The Apache Software Foundation.
-  * 
-@@ -25,7 +25,7 @@
+\ No newline at end of file
+diff --git a/org/apache/axis/session/Session.java b/org/apache/axis/session/Session.java
+index de78149..817a156 100644
+--- a/org/apache/axis/session/Session.java
++++ b/org/apache/axis/session/Session.java
+@@ -25,7 +25,7 @@ import java.util.Enumeration;
   *
   * @author Glen Daniels (gdaniels@apache.org)
   */
@@ -30,3 +30,9 @@
  {
      /** Get a property from the session
       *
+@@ -86,3 +86,4 @@ public interface Session
+      */ 
+     public Object getLockObject();
+ }
++/* @generated */
+\ No newline at end of file

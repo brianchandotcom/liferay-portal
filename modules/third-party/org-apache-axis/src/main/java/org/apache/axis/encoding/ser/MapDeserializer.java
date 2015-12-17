@@ -1,4 +1,3 @@
-/* @generated */
 /*
  * Copyright 2001-2004 The Apache Software Foundation.
  * 
@@ -278,3 +277,4 @@ public class MapDeserializer extends DeserializerImpl {
         }
     }
 }
+/* @generated */

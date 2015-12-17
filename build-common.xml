@@ -876,13 +876,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<isset property="env.JENKINS_HOME" />
 				<then>
 					<parallel>
-						<daemons>
-							<sequential>
-								<sleep hours="1" />
-
-								<print-thread-dump jps.name="GradleWrapperMain" />
-							</sequential>
-						</daemons>
 						<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 							<args />
 							<arg value="--no-daemon" />

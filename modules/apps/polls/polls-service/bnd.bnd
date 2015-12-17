@@ -4,7 +4,10 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.polls.lar,\
 	com.liferay.polls.service.configuration.configurator
+-include: ../../../../marketplace/business-productivity/bnd.bnd
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: PollsLiferay-Service: true
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

@@ -1273,21 +1273,19 @@
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Staged Event Title" />
-			<var name="eventType" value="Regular" />
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="ProductMenu#gotoSite">
 			<var name="page" value="Staging Test Page" />
 			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Staged Event Title" />
+			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
@@ -1309,14 +1307,25 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="CalendarEvent#edit">
-			<var name="eventTitle" value="Calendar Staged Event Title" />
-			<var name="eventTitleEdit" value="Calendar Live Event Title" />
-			<var name="eventType" value="Regular" />
+		<execute macro="CalendarNavigator#gotoEditEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event Title - Staged Edit" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Calendar Event Title - Staged Edit" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1337,7 +1346,7 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#selectEvent">
-			<var name="eventTitle" value="Calendar Live Event Title" />
+			<var name="eventTitle" value="Calendar Event Title - Staged Edit" />
 		</execute>
 
 		<execute macro="CalendarEvent#assertEventNotEditable" />

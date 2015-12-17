@@ -179,10 +179,12 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		super.init(jspCompilationContext, errorDispatcher, suppressLogging);
 	}
 
-	protected void addBundleWirings(BundleJavaManager bundleJavaManager) {
+	protected void addBundleWirings(
+		BundleJavaFileManager bundleJavaFileManager) {
+
 		BundleWiring bundleWiring = _jspBundle.adapt(BundleWiring.class);
 
-		bundleJavaManager.addBundleWiring(bundleWiring);
+		bundleJavaFileManager.addBundleWiring(bundleWiring);
 
 		List<BundleWire> requiredBundleWires = bundleWiring.getRequiredWires(
 			null);
@@ -190,7 +192,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		for (BundleWire bundleWire : requiredBundleWires) {
 			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
 
-			bundleJavaManager.addBundleWiring(providedBundleWiring);
+			bundleJavaFileManager.addBundleWiring(providedBundleWiring);
 		}
 	}
 
@@ -288,14 +290,15 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				standardJavaFileManager.setLocation(
 					StandardLocation.CLASS_PATH, _classPath);
 
-				BundleJavaManager bundleJavaManager = new BundleJavaManager(
-					_bundle, standardJavaFileManager, options, true);
+				BundleJavaFileManager bundleJavaFileManager =
+					new BundleJavaFileManager(
+						_bundle, standardJavaFileManager, options, true);
 
-				addBundleWirings(bundleJavaManager);
+				addBundleWirings(bundleJavaFileManager);
 
-				bundleJavaManager.setResourceResolver(_resourceResolver);
+				bundleJavaFileManager.setResourceResolver(_resourceResolver);
 
-				javaFileManager = bundleJavaManager;
+				javaFileManager = bundleJavaFileManager;
 			}
 			catch (IOException ioe) {
 				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);

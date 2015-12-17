@@ -52,17 +52,17 @@ import static org.phidias.compile.Constants.OPT_VERBOSE;
 import static org.phidias.compile.Constants.STAR;
 import org.phidias.compile.internal.BasicResourceResolver;
 
-public class BundleJavaManager
+public class BundleJavaFileManager
 	extends ForwardingJavaFileManager<JavaFileManager>
 	implements Constants {
 
-	public BundleJavaManager(Bundle bundle, JavaFileManager javaFileManager)
+	public BundleJavaFileManager(Bundle bundle, JavaFileManager javaFileManager)
 		throws IOException {
 
 		this(bundle, javaFileManager, null, false);
 	}
 
-	public BundleJavaManager(
+	public BundleJavaFileManager(
 			Bundle bundle, JavaFileManager javaFileManager,
 			List<String> options)
 		throws IOException {
@@ -70,7 +70,7 @@ public class BundleJavaManager
 		this(bundle, javaFileManager, options, false);
 	}
 
-	public BundleJavaManager(
+	public BundleJavaFileManager(
 			Bundle bundle, JavaFileManager javaFileManager,
 			List<String> options, boolean strict)
 		throws IOException {

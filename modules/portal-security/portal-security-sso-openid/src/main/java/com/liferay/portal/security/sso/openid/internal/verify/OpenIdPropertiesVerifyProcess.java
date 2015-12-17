@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.model.Company;
@@ -70,12 +70,17 @@ public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
 		_prefsProps = prefsProps;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
 	protected void storeSettings(
 			long companyId,
 			Dictionary<String, Object> dictionary)
 		throws IOException, SettingsException, ValidatorException {
 
-		Settings settings = SettingsFactoryUtil.getSettings(
+		Settings settings = _settingsFactory.getSettings(
 				new CompanyServiceSettingsLocator(
 					companyId, OpenIdConstants.SERVICE_NAME));
 
@@ -83,7 +88,7 @@ public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
 			settings.getModifiableSettings();
 
 		SettingsDescriptor settingsDescriptor =
-				SettingsFactoryUtil.getSettingsDescriptor(
+				_settingsFactory.getSettingsDescriptor(
 					OpenIdConstants.SERVICE_NAME);
 
 			for (String name : settingsDescriptor.getAllKeys()) {
@@ -146,5 +151,6 @@ public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
 
 	private volatile CompanyLocalService _companyLocalService;
 	private volatile PrefsProps _prefsProps;
+	private volatile SettingsFactory _settingsFactory;
 
 }

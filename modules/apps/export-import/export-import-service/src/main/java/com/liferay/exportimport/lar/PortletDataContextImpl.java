@@ -227,6 +227,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 					classedModel);
 
 				addAssetLinks(clazz, classPK);
+				addAssetPriority(element, clazz, classPK);
 				addExpando(element, path, classedModel, clazz);
 				addLocks(clazz, String.valueOf(classPK));
 				addPermissions(clazz, classPK);
@@ -2025,6 +2026,20 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _xStream.toXML(object);
 	}
 
+	protected void addAssetPriority(
+		Element element, Class<?> clazz, long classPK) {
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			clazz.getName(), classPK);
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		element.addAttribute(
+			"asset-priority", String.valueOf(assetEntry.getPriority()));
+	}
+
 	protected void addExpando(
 		Element element, String path, ClassedModel classedModel,
 		Class<?> clazz) {
@@ -2104,6 +2119,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 			String[] assetTagNames = getAssetTagNames(clazz, classPK);
 
 			serviceContext.setAssetTagNames(assetTagNames);
+		}
+
+		Attribute assetPriorityAttribute = element.attribute("asset-priority");
+
+		if (assetPriorityAttribute != null) {
+			double assetPriority = GetterUtil.getDouble(
+				assetPriorityAttribute.getValue());
+
+			serviceContext.setAssetPriority(assetPriority);
 		}
 
 		// Expando

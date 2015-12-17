@@ -19,6 +19,12 @@ package com.liferay.journal.content.web.constants;
  */
 public class JournalContentPortletKeys {
 
+	public static final String DYNAMIC_INCLUDE_VIEW_POST =
+		"com.liferay.journal.content#VIEW#post";
+
+	public static final String DYNAMIC_INCLUDE_VIEW_PRE =
+		"com.liferay.journal.content#VIEW#pre";
+
 	public static final String JOURNAL_CONTENT =
 		"com_liferay_journal_content_web_portlet_JournalContentPortlet";
 

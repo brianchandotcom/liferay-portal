@@ -26,4 +26,10 @@ public class BookmarksWebKeys {
 	public static final String BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR =
 		"BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR";
 
+	private static final String _DYNAMIC_INCLUDE_VIEW_ENTRY_POST =
+		"com.liferay.bookmarks#VIEW_ENTRY#post";
+
+	private static final String _DYNAMIC_INCLUDE_VIEW_ENTRY_PRE =
+		"com.liferay.bookmarks#VIEW_ENTRY#pre";
+
 }

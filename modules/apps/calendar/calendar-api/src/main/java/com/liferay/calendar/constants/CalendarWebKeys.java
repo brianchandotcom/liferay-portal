@@ -26,4 +26,10 @@ public class CalendarWebKeys {
 
 	public static final String CALENDAR_RESOURCE = "CALENDAR_RESOURCE";
 
+	public static final String DYNAMIC_INCLUDE_VIEW_CALENDAR_BOOKING_POST =
+		"com.liferay.calendar#VIEW_CALENDAR_BOOKING#post";
+
+	public static final String DYNAMIC_INCLUDE_VIEW_CALENDAR_BOOKING_PRE =
+		"com.liferay.calendar#VIEW_CALENDAR_BOOKING#pre";
+
 }

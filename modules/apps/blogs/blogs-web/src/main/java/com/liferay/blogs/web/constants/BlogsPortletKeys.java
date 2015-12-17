@@ -28,4 +28,10 @@ public class BlogsPortletKeys {
 	public static final String BLOGS_AGGREGATOR =
 		"com_liferay_blogs_web_portlet_BlogsAgreggatorPortlet";
 
+	public static final String DYNAMIC_INCLUDE_VIEW_ENTRY_POST =
+		"com.liferay.blogs#VIEW_ENTRY#post";
+
+	public static final String DYNAMIC_INCLUDE_VIEW_ENTRY_PRE =
+		"com.liferay.blogs#VIEW_ENTRY#pre";
+
 }

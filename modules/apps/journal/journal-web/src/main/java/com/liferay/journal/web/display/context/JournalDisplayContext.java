@@ -554,6 +554,16 @@ public class JournalDisplayContext {
 		return _status;
 	}
 
+	public boolean hasResults() throws PortalException {
+		ArticleSearch articleSearch = getSearchContainer();
+
+		if (articleSearch.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isNavigationHome() {
 		if (Validator.equals(getNavigation(), "all")) {
 			return true;
@@ -594,7 +604,7 @@ public class JournalDisplayContext {
 		return false;
 	}
 
-	public boolean isShowBreadcrumb() {
+	public boolean isShowBreadcrumb() throws PortalException {
 		if (isNavigationStructure()) {
 			return false;
 		}
@@ -608,6 +618,10 @@ public class JournalDisplayContext {
 		}
 
 		if (isSearch()) {
+			return false;
+		}
+
+		if (!hasResults()) {
 			return false;
 		}
 
@@ -643,6 +657,30 @@ public class JournalDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isShowManagementBar() throws PortalException {
+		if (hasResults()) {
+			return true;
+		}
+
+		if (isSearch()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowSearch() throws PortalException {
+		if (hasResults()) {
+			return true;
+		}
+
+		if (isSearch()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected String getDisplayStyle(

@@ -37,7 +37,7 @@ data.put("qa-id", "navigation");
 		<aui:nav-item label="web-content" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= (articleSearchContainer.getTotal() > 0) || journalDisplayContext.isSearch() %>">
+	<c:if test="<%= journalDisplayContext.isShowSearch() %>">
 		<aui:nav-bar-search>
 
 			<%
@@ -54,7 +54,7 @@ data.put("qa-id", "navigation");
 	</c:if>
 </aui:nav-bar>
 
-<c:if test="<%= (articleSearchContainer.getTotal() > 0) || journalDisplayContext.isSearch() %>">
+<c:if test="<%= journalDisplayContext.isShowManagementBar() %>">
 	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="searchContainerId" value="articles" />
 	</liferay-util:include>

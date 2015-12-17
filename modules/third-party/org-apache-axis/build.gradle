@@ -26,6 +26,7 @@ patch {
 	fileNames "org/apache/axis/EngineConfiguration.java"
 	fileNames "org/apache/axis/session/Session.java"
 	fileNames "org/apache/axis/wsdl/fromJava/Types.java"
+	fileNames "org/apache/xml/xml_soap/MapItem.java"
 
 	originalLibModuleName = "axis"
 }

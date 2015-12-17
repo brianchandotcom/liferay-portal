@@ -253,9 +253,8 @@ YUI.add(
 					handleGoToErrorBtn: function(event) {
 						var instance = this;
 
-						var failNodes = instance.get(STR_FAILS);
-
 						var currentScope = instance.get(STR_CURRENT_SCOPE);
+						var failNodes = instance.get(STR_FAILS);
 
 						var lastIndex = failNodes.size() - 1;
 

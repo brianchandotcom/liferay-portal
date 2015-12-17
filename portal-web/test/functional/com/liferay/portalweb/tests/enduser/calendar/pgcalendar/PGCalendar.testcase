@@ -1236,7 +1236,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventWithStaging">
+	<command name="AddCalendarEventWithStaging" priority="3">
 		<description message="This is a use case for LPS-52083." />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

@@ -56,20 +56,6 @@ public class BundleJavaFileManager
 	extends ForwardingJavaFileManager<JavaFileManager>
 	implements Constants {
 
-	public BundleJavaFileManager(Bundle bundle, JavaFileManager javaFileManager)
-		throws IOException {
-
-		this(bundle, javaFileManager, null, false);
-	}
-
-	public BundleJavaFileManager(
-			Bundle bundle, JavaFileManager javaFileManager,
-			List<String> options)
-		throws IOException {
-
-		this(bundle, javaFileManager, options, false);
-	}
-
 	public BundleJavaFileManager(
 			Bundle bundle, JavaFileManager javaFileManager,
 			List<String> options, boolean strict)

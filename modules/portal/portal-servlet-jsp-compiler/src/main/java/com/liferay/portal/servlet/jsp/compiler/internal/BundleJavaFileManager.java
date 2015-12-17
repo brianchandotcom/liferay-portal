@@ -63,7 +63,6 @@ public class BundleJavaFileManager
 
 		super(javaFileManager);
 
-		_javaFileManager = javaFileManager;
 		_log = new TPhLog();
 
 		if ((options != null) && options.contains(OPT_VERBOSE)) {
@@ -142,7 +141,7 @@ public class BundleJavaFileManager
 	@Override
 	public ClassLoader getClassLoader(JavaFileManager.Location location) {
 		if (location != StandardLocation.CLASS_PATH) {
-			return _javaFileManager.getClassLoader(location);
+			return fileManager.getClassLoader(location);
 		}
 
 		return getClassLoader();
@@ -163,7 +162,7 @@ public class BundleJavaFileManager
 			return bundleJavaFileObject.inferBinaryName();
 		}
 
-		return _javaFileManager.inferBinaryName(location, file);
+		return fileManager.inferBinaryName(location, file);
 	}
 
 	@Override
@@ -202,7 +201,7 @@ public class BundleJavaFileManager
 			(javaFileObjects.isEmpty() && hasPackageCapability(packageName))) {
 
 			Iterable<JavaFileObject> localJavaFileObjects =
-				_javaFileManager.list(location, packagePath, kinds, recurse);
+				fileManager.list(location, packagePath, kinds, recurse);
 
 			for (JavaFileObject javaFileObject : localJavaFileObjects) {
 				if ((location == StandardLocation.CLASS_PATH) &&
@@ -375,7 +374,6 @@ public class BundleJavaFileManager
 	private BundleWiring _bundleWiring;
 	private ArrayList<BundleWiring> _bundleWirings;
 	private ClassLoader _classLoader;
-	private JavaFileManager _javaFileManager;
 	private TPhLog _log;
 	private ResourceResolver _resourceResolver;
 	private final Set<Object> _systemCapabilities = new HashSet<Object>();

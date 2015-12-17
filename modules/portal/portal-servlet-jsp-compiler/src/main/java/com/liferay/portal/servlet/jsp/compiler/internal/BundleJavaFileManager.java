@@ -161,7 +161,7 @@ public class BundleJavaFileManager
 			boolean recurse)
 		throws IOException {
 
-		List<JavaFileObject> javaFileObjects = new ArrayList<JavaFileObject>();
+		List<JavaFileObject> javaFileObjects = new ArrayList<>();
 
 		if ((location == StandardLocation.CLASS_PATH) && _verbose) {
 			_logger.log(
@@ -341,7 +341,7 @@ public class BundleJavaFileManager
 	private final Set<BundleWiring> _bundleWirings;
 	private final Logger _logger;
 	private final ResourceResolver _resourceResolver;
-	private final Set<Object> _systemCapabilities = new HashSet<Object>();
+	private final Set<Object> _systemCapabilities = new HashSet<>();
 	private final boolean _verbose;
 
 }

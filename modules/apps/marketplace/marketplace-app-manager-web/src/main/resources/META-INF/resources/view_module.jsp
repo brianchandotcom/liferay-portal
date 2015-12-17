@@ -50,7 +50,7 @@ portletURL.setParameter("mvcPath", "/view_module.jsp");
 portletURL.setParameter("app", app);
 portletURL.setParameter("moduleGroup", moduleGroup);
 portletURL.setParameter("symbolicName", bundle.getSymbolicName());
-portletURL.setParameter("version", bundle.getVersion().toString());
+portletURL.setParameter("version", String.valueOf(bundle.getVersion()));
 
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, bundle, request, renderResponse);
 %>
@@ -75,7 +75,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="descriptive"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -124,14 +124,14 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5>
-					<%= GetterUtil.getString(serviceReference.getProperty("javax.portlet.display-name")) %>
+					<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(serviceReference.getProperty("javax.portlet.display-name")) %>
 				</h5>
 
 				<h6 class="text-default">
-					<%= GetterUtil.getString(serviceReference.getProperty("javax.portlet.name")) %>
+					<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(serviceReference.getProperty("javax.portlet.name")) %>
 
 					<%
-					String portletDescription = GetterUtil.getString(serviceReference.getProperty("javax.portlet.description"));
+					String portletDescription = MarketplaceAppManagerUtil.getSearchContainerFieldText(serviceReference.getProperty("javax.portlet.description"));
 					%>
 
 					<c:if test="<%= Validator.isNotNull(portletDescription) %>">

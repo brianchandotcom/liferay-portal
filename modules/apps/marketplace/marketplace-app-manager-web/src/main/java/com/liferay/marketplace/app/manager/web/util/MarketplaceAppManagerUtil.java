@@ -19,7 +19,9 @@ import com.liferay.marketplace.model.App;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
@@ -125,6 +127,16 @@ public class MarketplaceAppManagerUtil {
 		categories.add(0, "all-categories");
 
 		return ArrayUtil.toStringArray(categories);
+	}
+
+	public static String getSearchContainerFieldText(Object object) {
+		if (object == null) {
+			return StringPool.BLANK;
+		}
+
+		String string = GetterUtil.getString(object);
+
+		return HtmlUtil.escape(StringUtil.shorten(string, 400));
 	}
 
 	protected static List<String> getAppCategories(List<App> apps) {

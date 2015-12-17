@@ -111,6 +111,11 @@ public class DDLFormAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
+	@Override
+	public boolean isSelectable() {
+		return false;
+	}
+
 	@Reference(
 		target =
 			"(osgi.web.symbolicname=com.liferay.dynamic.data.lists.form.web)",

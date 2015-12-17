@@ -1,5 +1,4 @@
 ;(function(A, Liferay) {
-	var AArray = A.Array;
 	var Util = Liferay.Util;
 
 	var STR_HEAD = 'head';
@@ -151,7 +150,6 @@
 
 			var beforePortletLoaded = options.beforePortletLoaded;
 			var onCompleteFn = options.onComplete;
-			var positionOptions = options.positionOptions;
 
 			var onComplete = function(portlet, portletId) {
 				if (onCompleteFn) {
@@ -684,13 +682,12 @@
 		function(options) {
 			var instance = this;
 
-			var portlet = options.portlet;
-			var portletId = options.portletId;
-			var uri = options.uri;
-			var namespace = options.namespace;
-			var title = options.title;
-			var subTitle = options.subTitle;
 			var bodyCssClass = options.bodyCssClass;
+			var namespace = options.namespace;
+			var portlet = options.portlet;
+			var subTitle = options.subTitle;
+			var title = options.title;
+			var uri = options.uri;
 
 			portlet = A.one(portlet);
 

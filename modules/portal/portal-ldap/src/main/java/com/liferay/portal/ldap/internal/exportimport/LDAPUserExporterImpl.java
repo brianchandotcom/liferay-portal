@@ -17,7 +17,6 @@ package com.liferay.portal.ldap.internal.exportimport;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.ldap.GroupConverterKeys;
@@ -84,8 +83,9 @@ public class LDAPUserExporterImpl implements UserExporter {
 			stopWatch.start();
 
 			_log.trace(
-				"exportUser(Contact, Map): contactId = " + contact.getUserId() +
-				".  companyId = " + companyId + ".");
+				"exportUser(Contact, Map): userId = " + contact.getUserId() +
+					"contactId = " + contact.getContactId() +
+					", companyId = " + companyId + ".");
 		}
 
 		LDAPAuthConfiguration ldapAuthConfiguration =
@@ -161,8 +161,8 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 			if (_log.isTraceEnabled()) {
 				_log.trace(
-					"Completed export in : " +
-					(stopWatch.getTime() / Time.SECOND) + " seconds.");
+					"Completed export for userId " + contact.getUserId() +
+						" in " + (stopWatch.getTime()) + "ms.");
 			}
 		}
 	}
@@ -182,8 +182,10 @@ public class LDAPUserExporterImpl implements UserExporter {
 			stopWatch.start();
 
 			_log.trace(
-				"exportUser(long, long, UserOperation): userId = " + userId +
-				".  companyId = " + companyId + ".");
+				"exportUser(userId, userGroupId, UserOperation): " +
+					"userId = " + userId +
+					"userGroupId = " + userGroupId +
+					", companyId = " + companyId + ".");
 		}
 
 		LDAPAuthConfiguration ldapAuthConfiguration =
@@ -263,8 +265,8 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 			if (_log.isTraceEnabled()) {
 				_log.trace(
-					"Completed export in : " +
-					(stopWatch.getTime() / Time.SECOND) + " seconds.");
+					"Completed export for userId " + userId +
+						" in " + (stopWatch.getTime()) + "ms.");
 			}
 		}
 	}

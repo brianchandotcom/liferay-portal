@@ -95,9 +95,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-		</execute>
+		<execute macro="DDLRecord#submitForPublication" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
@@ -227,9 +225,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-		</execute>
+		<execute macro="DDLRecord#submitForPublication" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -247,9 +243,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-		</execute>
+		<execute macro="DDLRecord#submitForPublication" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
@@ -363,9 +357,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-		</execute>
+		<execute macro="DDLRecord#submitForPublication" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />

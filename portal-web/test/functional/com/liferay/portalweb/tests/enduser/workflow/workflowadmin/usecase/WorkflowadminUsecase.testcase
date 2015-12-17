@@ -382,9 +382,7 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP">
-			<var name="workflowDefinition" value="Legal and Marketing Approval (Version 1)" />
-		</execute>
+		<execute macro="DDLRecord#submitForPublication" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />

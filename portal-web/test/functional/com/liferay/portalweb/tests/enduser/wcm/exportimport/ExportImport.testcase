@@ -308,7 +308,7 @@
 			<var name="fieldName" value="TextName" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />

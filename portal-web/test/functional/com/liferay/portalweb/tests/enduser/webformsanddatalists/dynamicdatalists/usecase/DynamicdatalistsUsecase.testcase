@@ -181,7 +181,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -217,7 +217,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -305,7 +305,7 @@
 			<var name="fieldName" value="Date" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="DDLRecord#viewFieldCP">
 			<var name="ddlRecordFieldData" value="4/1/17" />
@@ -328,7 +328,7 @@
 			<var name="fieldName" value="Date" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="DDLRecord#viewFieldCP">
 			<var name="ddlRecordFieldData" value="4/1/17" />
@@ -432,7 +432,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -454,7 +454,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -554,7 +554,7 @@
 			<var name="fieldName" value="HTML" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -584,7 +584,7 @@
 
 		<execute macro="DDLRecord#addCP" />
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -878,7 +878,7 @@
 			<var name="fieldName" value="${fieldName2}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1191,7 +1191,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1393,9 +1393,7 @@
 			<var name="fieldName" value="title" />
 		</execute>
 
-		<execute macro="DDLRecord#publishViaDDLDisplayPG">
-			<var name="workflowDefinition" value="true" />
-		</execute>
+		<execute macro="DDLRecord#submitForPublication" />
 
 		<execute macro="User#logoutPG" />
 
@@ -1522,7 +1520,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1722,7 +1720,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1740,7 +1738,7 @@
 			<var name="fieldNumber" value="2" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1933,7 +1931,7 @@
 			<var name="fieldName" value="Integer" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2102,7 +2100,7 @@
 				<var name="fieldName" value="TextName" />
 			</execute>
 
-			<execute macro="DDLRecord#publishCP" />
+			<execute macro="DDLRecord#publish" />
 		</for>
 
 		<execute macro="Page#gotoPG">
@@ -2204,7 +2202,7 @@
 			<var name="fieldName" value="Integer" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2284,7 +2282,7 @@
 			<var name="fieldName" value="Integer" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP" />
+		<execute macro="DDLRecord#publish" />
 
 		<execute macro="Navigator#openURL" />
 

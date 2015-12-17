@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Marketplace App Manager Web
 Bundle-SymbolicName: com.liferay.marketplace.app.manager.web
 Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: App Manager
+-include: ../../../../marketplace/marketplace/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources

@@ -172,7 +172,7 @@
 	<command name="EditDDLRecordViaMyWorkflowTasks" priority="4">
 		<description message="This is a use case for LPS-61212." />
 
-		<execute macro="Navigator#openURL" />\
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />

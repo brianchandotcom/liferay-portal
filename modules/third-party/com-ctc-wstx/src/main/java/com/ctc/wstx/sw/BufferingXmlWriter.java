@@ -1,4 +1,3 @@
-/* @generated */
 /* Woodstox XML processor
  *
  * Copyright (c) 2004- Tatu Saloranta, tatu.saloranta@iki.fi
@@ -1392,3 +1391,4 @@ public final class BufferingXmlWriter
         mOutputPtr = ptr;
     }
 }
+/* @generated */

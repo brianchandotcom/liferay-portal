@@ -50,7 +50,6 @@ import org.phidias.compile.TPhLog;
 import static org.phidias.compile.Constants.JAVA_PACKAGE;
 import static org.phidias.compile.Constants.OPT_VERBOSE;
 import static org.phidias.compile.Constants.STAR;
-import org.phidias.compile.internal.BasicResourceResolver;
 
 public class BundleJavaFileManager
 	extends ForwardingJavaFileManager<JavaFileManager>
@@ -58,10 +57,12 @@ public class BundleJavaFileManager
 
 	public BundleJavaFileManager(
 			Bundle bundle, JavaFileManager javaFileManager,
-			List<String> options)
+			List<String> options, ResourceResolver resourceResolver)
 		throws IOException {
 
 		super(javaFileManager);
+
+		_resourceResolver = resourceResolver;
 
 		_log = new TPhLog();
 
@@ -217,10 +218,6 @@ public class BundleJavaFileManager
 		return javaFileObjects;
 	}
 
-	public void setResourceResolver(ResourceResolver resourceResolver) {
-		_resourceResolver = resourceResolver;
-	}
-
 	private String getClassNameFromPath(String resourceName) {
 		if (resourceName.endsWith(".class")) {
 			resourceName = resourceName.substring(0, resourceName.length() - 6);
@@ -293,12 +290,6 @@ public class BundleJavaFileManager
 	}
 
 	private ResourceResolver getResourceResolver() {
-		if (_resourceResolver != null) {
-			return _resourceResolver;
-		}
-
-		_resourceResolver = new BasicResourceResolver();
-
 		return _resourceResolver;
 	}
 

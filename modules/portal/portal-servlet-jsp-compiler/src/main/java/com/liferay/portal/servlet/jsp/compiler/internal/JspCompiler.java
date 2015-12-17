@@ -292,11 +292,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 				BundleJavaFileManager bundleJavaFileManager =
 					new BundleJavaFileManager(
-						_bundle, standardJavaFileManager, options);
+						_bundle, standardJavaFileManager, options,
+						_resourceResolver);
 
 				addBundleWirings(bundleJavaFileManager);
-
-				bundleJavaFileManager.setResourceResolver(_resourceResolver);
 
 				javaFileManager = bundleJavaFileManager;
 			}

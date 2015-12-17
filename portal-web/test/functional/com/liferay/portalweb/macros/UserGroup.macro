@@ -62,21 +62,20 @@
 		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#MANAGE_SITE_PAGES" value1="Manage Site Pages" />
+
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_PAGES" value1="Manage Pages" />
 
 		<execute function="Pause" locator1="5000" />
-
-		<execute function="SelectFrame" locator1="IFrame#MANAGE_SITE_PAGES" />
 
 		<if>
 			<equals arg1="${sitePagePrivacy}" arg2="Private" />
 			<then>
-				<execute function="AssertClick" locator1="SitePages#NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
+				<execute function="Click" locator1="SitePages#NAVIGATION_MY_DASHBOARD" />
 			</then>
 			<elseif>
 				<equals arg1="${sitePagePrivacy}" arg2="Public" />
 				<then>
-					<execute function="AssertClick" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
+					<execute function="Click" locator1="SitePages#NAVIGATION_MY_PROFILE" />
 				</then>
 			</elseif>
 			<else>
@@ -84,17 +83,17 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#PAGE_NAME_FIELD" value1="${sitePageName}" />
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
-		<execute macro="UserGroup#expandRootCP" />
+		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" value1="${sitePageName}" />
+		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
 	</command>
 
 	<command name="addSiteCP">

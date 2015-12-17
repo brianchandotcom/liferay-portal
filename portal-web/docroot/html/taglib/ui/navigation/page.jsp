@@ -22,10 +22,9 @@ DDMTemplate portletDisplayDDMTemplate = PortletDisplayTemplateManagerUtil.getDDM
 if (portletDisplayDDMTemplate != null) {
 	Map<String, Object> contextObjects = new HashMap<String, Object>();
 
-	contextObjects.put("bulletStyle", bulletStyle);
-	contextObjects.put("headerType", headerType);
+	contextObjects.put("branchNavItems", branchNavItems);
 	contextObjects.put("includedLayouts", includedLayouts);
-	contextObjects.put("nestedChildren", nestedChildren);
+	contextObjects.put("preview", preview);
 	contextObjects.put("rootLayoutLevel", rootLayoutLevel);
 	contextObjects.put("rootLayoutType", rootLayoutType);
 %>

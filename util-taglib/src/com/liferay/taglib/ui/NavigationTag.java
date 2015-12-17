@@ -37,10 +37,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NavigationTag extends IncludeTag {
 
-	public void setBulletStyle(String bulletStyle) {
-		_bulletStyle = bulletStyle;
-	}
-
 	public void setDdmTemplateGroupId(long ddmTemplateGroupId) {
 		_ddmTemplateGroupId = ddmTemplateGroupId;
 	}
@@ -49,16 +45,8 @@ public class NavigationTag extends IncludeTag {
 		_ddmTemplateKey = ddmTemplateKey;
 	}
 
-	public void setHeaderType(String headerType) {
-		_headerType = headerType;
-	}
-
 	public void setIncludedLayouts(String includedLayouts) {
 		_includedLayouts = includedLayouts;
-	}
-
-	public void setNestedChildren(boolean nestedChildren) {
-		_nestedChildren = nestedChildren;
 	}
 
 	public void setPreview(boolean preview) {
@@ -75,15 +63,33 @@ public class NavigationTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_bulletStyle = "1";
 		_ddmTemplateGroupId = 0;
 		_ddmTemplateKey = null;
-		_headerType = "none";
 		_includedLayouts = "auto";
-		_nestedChildren = true;
 		_preview = false;
 		_rootLayoutLevel = 1;
 		_rootLayoutType = "absolute";
+	}
+
+	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
+		throws PortalException {
+
+		List<NavItem> navItems = new ArrayList<>();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		NavItem navItem = new NavItem(request, layout, null);
+
+		navItems.add(navItem);
+
+		for (Layout ancestorLayout : layout.getAncestors()) {
+			navItems.add(0, new NavItem(request, ancestorLayout, null));
+		}
+
+		return navItems;
 	}
 
 	protected String getDisplayStyle() {
@@ -106,22 +112,39 @@ public class NavigationTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	protected List<NavItem> getNavItems(HttpServletRequest request)
-		throws PortalException {
+	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
+		throws Exception {
 
 		List<NavItem> navItems = new ArrayList<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		NavItem rootNavItem = null;
 
-		Layout layout = themeDisplay.getLayout();
+		if (_rootLayoutType.equals("relative")) {
+			if ((_rootLayoutLevel >= 0) &&
+				(_rootLayoutLevel < branchNavItems.size())) {
 
-		NavItem navItem = new NavItem(request, layout, null);
+				rootNavItem = branchNavItems.get(_rootLayoutLevel);
+			}
+		}
+		else if (_rootLayoutType.equals("absolute")) {
+			int ancestorIndex = branchNavItems.size() - _rootLayoutLevel;
 
-		navItems.add(navItem);
+			if ((ancestorIndex >= 0) &&
+				(ancestorIndex < branchNavItems.size())) {
 
-		for (Layout ancestorLayout : layout.getAncestors()) {
-			navItems.add(0, new NavItem(request, ancestorLayout, null));
+				rootNavItem = branchNavItems.get(ancestorIndex);
+			}
+			else if (ancestorIndex == branchNavItems.size()) {
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				navItems = NavItem.fromLayouts(
+					request, themeDisplay.getLayouts(), null);
+			}
+		}
+
+		if (rootNavItem != null) {
+			navItems = rootNavItem.getChildren();
 		}
 
 		return navItems;
@@ -134,28 +157,26 @@ public class NavigationTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:navigation:bulletStyle", _bulletStyle);
 		request.setAttribute(
 			"liferay-ui:navigation:displayStyle", getDisplayStyle());
 		request.setAttribute(
 			"liferay-ui:navigation:displayStyleGroupId",
 			String.valueOf(getDisplayStyleGroupId()));
-		request.setAttribute("liferay-ui:navigation:headerType", _headerType);
 		request.setAttribute(
 			"liferay-ui:navigation:includedLayouts", _includedLayouts);
 
 		try {
-			List<NavItem> navItems = getNavItems(request);
+			List<NavItem> branchNavItems = getBranchNavItems(request);
 
-			request.setAttribute("liferay-ui:navigation:navItems", navItems);
+			request.setAttribute(
+				"liferay-ui:navigation:branchNavItems", branchNavItems);
+			request.setAttribute(
+				"liferay-ui:navigation:navItems", getNavItems(branchNavItems));
 		}
-		catch (PortalException pe) {
-			_log.error(pe);
+		catch (Exception e) {
+			_log.error(e);
 		}
 
-		request.setAttribute(
-			"liferay-ui:navigation:nestedChildren",
-			String.valueOf(_nestedChildren));
 		request.setAttribute(
 			"liferay-ui:navigation:preview", String.valueOf(_preview));
 		request.setAttribute(
@@ -169,12 +190,9 @@ public class NavigationTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(NavigationTag.class);
 
-	private String _bulletStyle = "1";
 	private long _ddmTemplateGroupId;
 	private String _ddmTemplateKey;
-	private String _headerType = "none";
 	private String _includedLayouts = "auto";
-	private boolean _nestedChildren = true;
 	private boolean _preview;
 	private int _rootLayoutLevel = 1;
 	private String _rootLayoutType = "absolute";

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,15 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.site.navigation.menu.web.upgrade.v1_0_0;
 
-<liferay-ui:navigation
-	ddmTemplateGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
-	ddmTemplateKey="<%= siteNavigationMenuDisplayContext.getDDMTemplateKey() %>"
-	includedLayouts="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>"
-	preview="<%= siteNavigationMenuDisplayContext.isPreview() %>"
-	rootLayoutLevel="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() %>"
-	rootLayoutType="<%= siteNavigationMenuDisplayContext.getRootLayoutType() %>"
-/>
+import com.liferay.site.navigation.menu.web.constants.SiteNavigationMenuPortletKeys;
+
+/**
+ * @author Marcellus Tavares
+ */
+public class UpgradePortletId
+	extends com.liferay.portal.upgrade.util.UpgradePortletId {
+
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {
+				"71", SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU
+			}
+		};
+	}
+
+}

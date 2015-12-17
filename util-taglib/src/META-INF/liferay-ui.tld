@@ -3521,11 +3521,6 @@
 		<tag-class>com.liferay.taglib.ui.NavigationTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>bulletStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3536,17 +3531,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>headerType</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>includedLayouts</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>nestedChildren</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

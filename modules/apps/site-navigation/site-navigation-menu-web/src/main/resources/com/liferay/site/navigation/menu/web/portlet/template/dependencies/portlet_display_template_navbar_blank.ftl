@@ -12,16 +12,16 @@
 
 	<#assign navbarId = "navbar_" + portletDisplay.getId() />
 
-	<div id="${navbarId}">
-		<ul aria-label="<@liferay.language key="site-pages" />" class="nav nav-pills nav-stacked navbar-site" role="menubar">
+	<div class="navbar" id="${navbarId}">
+		<ul aria-label="<@liferay.language key="site-pages" />" class="nav navbar-blank navbar-nav navbar-site" role="menubar">
 			<h1 class="hide-accessible"><@liferay.language key="navigation" /></h1>
 
 			<#assign navItems = entries />
 
 			<#list navItems as navItem>
 				<#if navItem.isBrowsable() || navItem.hasBrowsableChildren() >
-					<#assign nav_item_attr_has_popup = "" />
 					<#assign nav_item_attr_selected = "" />
+					<#assign nav_item_attr_has_popup = "" />
 					<#assign nav_item_caret = "" />
 					<#assign nav_item_css_class = "lfr-nav-item" />
 					<#assign nav_item_href_link = "" />

@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.content.processor;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
@@ -32,5 +33,8 @@ public interface ExportImportContentProcessor {
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			String content)
 		throws Exception;
+
+	public void validateContentReferences(long groupId, String content)
+		throws PortalException;
 
 }

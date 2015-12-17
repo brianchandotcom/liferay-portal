@@ -15,6 +15,7 @@
 package com.liferay.exportimport.content.processor.base;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -107,6 +109,15 @@ public class BaseExportImportContentProcessor
 		return content;
 	}
 
+	@Override
+	public void validateContentReferences(long groupId, String content)
+		throws PortalException {
+
+		validateDLReferences(groupId, content);
+		validateLayoutReferences(groupId, content);
+		validateLinksToLayoutsReferences(groupId, content);
+	}
+
 	protected void deleteTimestampParameters(StringBuilder sb, int beginPos) {
 		beginPos = sb.indexOf(StringPool.CLOSE_BRACKET, beginPos);
 
@@ -131,8 +142,7 @@ public class BaseExportImportContentProcessor
 	}
 
 	protected Map<String, String[]> getDLReferenceParameters(
-		PortletDataContext portletDataContext, String content, int beginPos,
-		int endPos) {
+		long groupId, String content, int beginPos, int endPos) {
 
 		boolean legacyURL = true;
 		char[] stopChars = DL_REFERENCE_LEGACY_STOP_CHARS;
@@ -197,8 +207,7 @@ public class BaseExportImportContentProcessor
 		String groupIdString = MapUtil.getString(map, "groupId");
 
 		if (groupIdString.equals("@group_id@")) {
-			groupIdString = String.valueOf(
-				portletDataContext.getScopeGroupId());
+			groupIdString = String.valueOf(groupId);
 
 			map.put("groupId", new String[] {groupIdString});
 		}
@@ -306,7 +315,7 @@ public class BaseExportImportContentProcessor
 
 			Map<String, String[]> dlReferenceParameters =
 				getDLReferenceParameters(
-					portletDataContext, content,
+					portletDataContext.getScopeGroupId(), content,
 					beginPos + contextPath.length(), endPos);
 
 			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
@@ -365,8 +374,7 @@ public class BaseExportImportContentProcessor
 	}
 
 	protected String replaceExportHostname(
-			PortletDataContext portletDataContext, String url,
-			StringBundler urlSB)
+			long groupId, String url, StringBundler urlSB)
 		throws PortalException {
 
 		if (!HttpUtil.hasProtocol(url)) {
@@ -381,8 +389,7 @@ public class BaseExportImportContentProcessor
 			return url;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			portletDataContext.getScopeGroupId());
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
@@ -511,7 +518,8 @@ public class BaseExportImportContentProcessor
 			StringBundler urlSB = new StringBundler(5);
 
 			try {
-				url = replaceExportHostname(portletDataContext, url, urlSB);
+				url = replaceExportHostname(
+					portletDataContext.getScopeGroupId(), url, urlSB);
 
 				if (!url.startsWith(StringPool.SLASH)) {
 					continue;
@@ -1005,6 +1013,216 @@ public class BaseExportImportContentProcessor
 			ArrayUtil.toStringArray(newLinksToLayout.toArray()));
 
 		return content;
+	}
+
+	protected void validateDLReferences(long groupId, String content)
+		throws PortalException {
+
+		String contextPath = PortalUtil.getPathContext();
+
+		String[] patterns = {
+			contextPath.concat("/c/document_library/get_file?"),
+			contextPath.concat("/documents/"),
+			contextPath.concat("/image/image_gallery?")
+		};
+
+		int beginPos = -1;
+		int endPos = content.length();
+
+		while (true) {
+			beginPos = StringUtil.lastIndexOfAny(content, patterns, endPos);
+
+			if (beginPos == -1) {
+				break;
+			}
+
+			Map<String, String[]> dlReferenceParameters =
+				getDLReferenceParameters(
+					groupId, content, beginPos + contextPath.length(), endPos);
+
+			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
+
+			if (fileEntry == null) {
+				throw new NoSuchFileEntryException();
+			}
+
+			endPos = beginPos - 1;
+		}
+	}
+
+	protected void validateLayoutReferences(long groupId, String content)
+		throws PortalException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		String[] patterns = {"href=", "[["};
+
+		int beginPos = -1;
+		int endPos = content.length();
+		int offset = 0;
+
+		while (true) {
+			if (beginPos > -1) {
+				endPos = beginPos - 1;
+			}
+
+			beginPos = StringUtil.lastIndexOfAny(content, patterns, endPos);
+
+			if (beginPos == -1) {
+				break;
+			}
+
+			if (content.startsWith("href=", beginPos)) {
+				offset = 5;
+
+				char c = content.charAt(beginPos + offset);
+
+				if ((c == CharPool.APOSTROPHE) || (c == CharPool.QUOTE)) {
+					offset++;
+				}
+			}
+			else if (content.charAt(beginPos) == CharPool.OPEN_BRACKET) {
+				offset = 2;
+			}
+
+			endPos = StringUtil.indexOfAny(
+				content, LAYOUT_REFERENCE_STOP_CHARS, beginPos + offset,
+				endPos);
+
+			if (endPos == -1) {
+				continue;
+			}
+
+			String url = content.substring(beginPos + offset, endPos);
+
+			StringBundler urlSB = new StringBundler(5);
+
+			url = replaceExportHostname(groupId, url, urlSB);
+
+			if (!url.startsWith(StringPool.SLASH)) {
+				continue;
+			}
+
+			String pathContext = PortalUtil.getPathContext();
+
+			if (pathContext.length() > 1) {
+				if (!url.startsWith(pathContext)) {
+					continue;
+				}
+
+				url = url.substring(pathContext.length());
+			}
+
+			if (!url.startsWith(StringPool.SLASH)) {
+				continue;
+			}
+
+			int pos = url.indexOf(StringPool.SLASH, 1);
+
+			String localePath = StringPool.BLANK;
+
+			Locale locale = null;
+
+			if (pos != -1) {
+				localePath = url.substring(0, pos);
+
+				locale = LocaleUtil.fromLanguageId(
+					localePath.substring(1), true, false);
+			}
+
+			if (locale != null) {
+				String urlWithoutLocale = url.substring(localePath.length());
+
+				if (urlWithoutLocale.startsWith(
+						PRIVATE_GROUP_SERVLET_MAPPING) ||
+					urlWithoutLocale.startsWith(
+						PRIVATE_USER_SERVLET_MAPPING) ||
+					urlWithoutLocale.startsWith(
+						PUBLIC_GROUP_SERVLET_MAPPING)) {
+
+					url = urlWithoutLocale;
+				}
+			}
+
+			boolean privateLayout = false;
+
+			if (url.startsWith(PRIVATE_GROUP_SERVLET_MAPPING)) {
+				url = url.substring(PRIVATE_GROUP_SERVLET_MAPPING.length() - 1);
+
+				privateLayout = true;
+			}
+			else if (url.startsWith(PRIVATE_USER_SERVLET_MAPPING)) {
+				url = url.substring(PRIVATE_USER_SERVLET_MAPPING.length() - 1);
+
+				privateLayout = true;
+			}
+			else if (url.startsWith(PUBLIC_GROUP_SERVLET_MAPPING)) {
+				url = url.substring(PUBLIC_GROUP_SERVLET_MAPPING.length() - 1);
+			}
+			else {
+				String urlSBString = urlSB.toString();
+
+				LayoutSet layoutSet = null;
+
+				if (urlSBString.contains(
+						DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL) ||
+					urlSBString.contains(
+						DATA_HANDLER_PUBLIC_LAYOUT_SET_URL)) {
+
+					layoutSet = group.getPublicLayoutSet();
+				}
+				else if (urlSBString.contains(
+							DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
+						 urlSBString.contains(
+							 DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
+
+					layoutSet = group.getPrivateLayoutSet();
+				}
+
+				if (layoutSet == null) {
+					continue;
+				}
+
+				privateLayout = layoutSet.isPrivateLayout();
+			}
+
+			String groupFriendlyURL = group.getFriendlyURL();
+
+			if (url.equals(groupFriendlyURL) ||
+				url.startsWith(groupFriendlyURL + StringPool.SLASH)) {
+
+				url = url.substring(groupFriendlyURL.length());
+			}
+
+			Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+				groupId, privateLayout, url);
+
+			if (layout == null) {
+				throw new NoSuchLayoutException();
+			}
+		}
+	}
+
+	protected void validateLinksToLayoutsReferences(
+			long groupId, String content)
+		throws PortalException {
+
+		Matcher matcher = exportLinksToLayoutPattern.matcher(content);
+
+		while (matcher.find()) {
+			long layoutId = GetterUtil.getLong(matcher.group(1));
+
+			String type = matcher.group(2);
+
+			boolean privateLayout = type.startsWith("private");
+
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				groupId, privateLayout, layoutId);
+
+			if (layout == null) {
+				throw new NoSuchLayoutException();
+			}
+		}
 	}
 
 	protected static final String DATA_HANDLER_COMPANY_SECURE_URL =

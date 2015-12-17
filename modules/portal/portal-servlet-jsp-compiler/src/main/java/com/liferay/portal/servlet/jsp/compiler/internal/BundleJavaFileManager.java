@@ -178,21 +178,23 @@ public class BundleJavaFileManager
 			(location == StandardLocation.CLASS_PATH)) {
 
 			listFromDependencies(kinds, recurse, packagePath, javaFileObjects);
+
+			if (javaFileObjects.isEmpty() &&
+				_systemCapabilities.contains(packageName)) {
+
+				Iterable<JavaFileObject> localJavaFileObjects =
+					fileManager.list(location, packagePath, kinds, recurse);
+
+				for (JavaFileObject javaFileObject : localJavaFileObjects) {
+					if ((location == StandardLocation.CLASS_PATH) && _verbose) {
+						_logger.log(Logger.LOG_INFO, "\t" + javaFileObject);
+					}
+
+					javaFileObjects.add(javaFileObject);
+				}
+			}
 		}
-
-		// When not in strict mode, the following ensures that if a standard
-		// classpath location has been provided we include it. It allows the
-		// framework to compile against libraries not deployed as OSGi bundles.
-		// This is also needed in cases where the system.bundle exports extra
-		// packages via the property 'org.osgi.framework.system.packages.extra'
-		// or via extension bundles (fragments) which only supplement its
-		// 'Export-Package' directive.
-
-		if (packageName.startsWith(JAVA_PACKAGE) ||
-			(location != StandardLocation.CLASS_PATH) ||
-			(javaFileObjects.isEmpty() &&
-				_systemCapabilities.contains(packageName))) {
-
+		else {
 			Iterable<JavaFileObject> localJavaFileObjects =
 				fileManager.list(location, packagePath, kinds, recurse);
 

@@ -36,6 +36,7 @@ import javax.tools.JavaFileObject;
 import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardLocation;
 
+import org.apache.felix.utils.log.Logger;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleRevision;
@@ -56,21 +57,19 @@ public class BundleJavaFileManager
 
 	public BundleJavaFileManager(
 			Bundle bundle, JavaFileManager javaFileManager,
-			boolean verbose, ResourceResolver resourceResolver)
+			Logger logger, boolean verbose, ResourceResolver resourceResolver)
 		throws IOException {
 
 		super(javaFileManager);
 
 		_resourceResolver = resourceResolver;
 
-		_log = new TPhLog();
+		_logger = logger;
+		_verbose = verbose;
 
-		if (verbose) {
-			_log.out = System.err;
-		}
-
-		if (_log.isEnabled()) {
-			_log.log(
+		if (_verbose) {
+			_logger.log(
+				Logger.LOG_INFO,
 				"Initializing compilation in OSGi for bundle " +
 					bundle.getSymbolicName() + "-" + bundle.getVersion());
 		}
@@ -79,8 +78,9 @@ public class BundleJavaFileManager
 
 		List<BundleWire> providedWires = _bundleWiring.getRequiredWires(null);
 
-		if (_log.isEnabled()) {
-			_log.log(
+		if (_verbose) {
+			_logger.log(
+				Logger.LOG_INFO,
 				"Dependent BundleWirings included in this BundleJavaManager " +
 					"context: ");
 		}
@@ -114,8 +114,9 @@ public class BundleJavaFileManager
 				}
 			}
 
-			if (_log.isEnabled()) {
-				_log.log(
+			if (_verbose) {
+				_logger.log(
+					Logger.LOG_INFO,
 					"\t" + curBundle.getSymbolicName() + "-" +
 						curBundle.getVersion());
 			}
@@ -149,8 +150,9 @@ public class BundleJavaFileManager
 			BundleJavaFileObject bundleJavaFileObject =
 				(BundleJavaFileObject)file;
 
-			if (_log.isEnabled()) {
-				_log.log("Infering binary name from " + bundleJavaFileObject);
+			if (_verbose) {
+				_logger.log(
+					Logger.LOG_INFO, "Infering binary name from " + bundleJavaFileObject);
 			}
 
 			return bundleJavaFileObject.inferBinaryName();
@@ -167,8 +169,9 @@ public class BundleJavaFileManager
 
 		List<JavaFileObject> javaFileObjects = new ArrayList<JavaFileObject>();
 
-		if ((location == StandardLocation.CLASS_PATH) && _log.isEnabled()) {
-			_log.log(
+		if ((location == StandardLocation.CLASS_PATH) && _verbose) {
+			_logger.log(
+				Logger.LOG_INFO,
 				"List available sources for {location=" + location +
 					", packageName=" + packageName + ", kinds=" + kinds +
 						", recurse=" + recurse + "}");
@@ -199,10 +202,8 @@ public class BundleJavaFileManager
 				fileManager.list(location, packagePath, kinds, recurse);
 
 			for (JavaFileObject javaFileObject : localJavaFileObjects) {
-				if ((location == StandardLocation.CLASS_PATH) &&
-						_log.isEnabled()) {
-
-					_log.log("\t" + javaFileObject);
+				if ((location == StandardLocation.CLASS_PATH) && _verbose) {
+					_logger.log(Logger.LOG_INFO, "\t" + javaFileObject);
 				}
 
 				javaFileObjects.add(javaFileObject);
@@ -233,8 +234,8 @@ public class BundleJavaFileManager
 					resourceURL.toURI(), className, resourceURL);
 			}
 			catch (Exception e) {
-				if (_log.isEnabled()) {
-					_log.log(e);
+				if (_verbose) {
+					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 				}
 			}
 		}
@@ -249,8 +250,8 @@ public class BundleJavaFileManager
 					url.toURI(), className, resourceURL, resourceName);
 			}
 			catch (Exception e) {
-				if (_log.isEnabled()) {
-					_log.log(e);
+				if (_verbose) {
+					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 				}
 			}
 		}
@@ -274,8 +275,8 @@ public class BundleJavaFileManager
 					resourceName);
 			}
 			catch (IOException e) {
-				if (_log.isEnabled()) {
-					_log.log(e);
+				if (_verbose) {
+					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 				}
 			}
 		}
@@ -302,8 +303,9 @@ public class BundleJavaFileManager
 				resourceURL, resourceName);
 
 			if (javaFileObject == null) {
-				if (_log.isEnabled()) {
-					_log.log(
+				if (_verbose) {
+					_logger.log(
+						Logger.LOG_INFO,
 						"\tCould not create JavaFileObject for {" + resourceURL +
 							"}");
 				}
@@ -311,8 +313,8 @@ public class BundleJavaFileManager
 				continue;
 			}
 
-			if (_log.isEnabled()) {
-				_log.log("\t" + javaFileObject);
+			if (_verbose) {
+				_logger.log(Logger.LOG_INFO, "\t" + javaFileObject);
 			}
 
 			javaFileObjects.add(javaFileObject);
@@ -343,8 +345,9 @@ public class BundleJavaFileManager
 
 	private BundleWiring _bundleWiring;
 	private ArrayList<BundleWiring> _bundleWirings;
-	private TPhLog _log;
+	private Logger _logger;
 	private ResourceResolver _resourceResolver;
 	private final Set<Object> _systemCapabilities = new HashSet<Object>();
+	private boolean _verbose;
 
 }

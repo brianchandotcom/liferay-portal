@@ -56,9 +56,8 @@ public class BundleJavaFileManager
 	implements Constants {
 
 	public BundleJavaFileManager(
-			Bundle bundle, JavaFileManager javaFileManager,
-			Logger logger, boolean verbose, ResourceResolver resourceResolver)
-		throws IOException {
+		Bundle bundle, JavaFileManager javaFileManager,
+		Logger logger, boolean verbose, ResourceResolver resourceResolver) {
 
 		super(javaFileManager);
 

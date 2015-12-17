@@ -21,14 +21,10 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Vector;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.metatype.AttributeDefinition;
@@ -61,12 +57,11 @@ public class ConfigurationModelToDDMFormValuesConverter {
 	}
 
 	protected void addDDMFormFieldValue(
-		String name, Object value, DDMFormValues ddmFormValues) {
+		String name, String value, DDMFormValues ddmFormValues) {
 
 		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(name);
 
-		setDDMFormFieldValueLocalizedValue(
-			String.valueOf(value), ddmFormFieldValue);
+		setDDMFormFieldValueLocalizedValue(value, ddmFormFieldValue);
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 	}
@@ -76,17 +71,19 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		Configuration configuration = _configurationModel.getConfiguration();
 
+		String[] values;
+
 		if (configuration != null) {
-			addDDMFormFieldValues(
-				attributeDefinition.getID(),
-				attributeDefinition.getCardinality(), configuration,
-				ddmFormValues);
+			values = AttributeDefinitionUtil.getProperty(
+				attributeDefinition, configuration);
 		}
 		else {
-			addDDMFormFieldValues(
-				attributeDefinition.getID(),
-				attributeDefinition.getDefaultValue(), ddmFormValues);
+			values = AttributeDefinitionUtil.getDefaultValue(
+				attributeDefinition);
 		}
+
+		addDDMFormFieldValues(
+			attributeDefinition.getID(), values, ddmFormValues);
 	}
 
 	protected void addDDMFormFieldValues(
@@ -103,57 +100,10 @@ public class ConfigurationModelToDDMFormValuesConverter {
 	}
 
 	protected void addDDMFormFieldValues(
-		String name, int cardinality, Configuration configuration,
-		DDMFormValues ddmFormValues) {
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		Object property = properties.get(name);
-
-		if (property == null) {
-			return;
-		}
-
-		if (cardinality == 0) {
-			addDDMFormFieldValue(name, String.valueOf(property), ddmFormValues);
-		}
-		else if (cardinality > 0) {
-			addDDMFormFieldValues(name, (Object[])property, ddmFormValues);
-		}
-		else {
-			addDDMFormFieldValues(name, (Vector<?>)property, ddmFormValues);
-		}
-	}
-
-	protected void addDDMFormFieldValues(
-		String name, Object[] values, DDMFormValues ddmFormValues) {
+		String name, String[] values, DDMFormValues ddmFormValues) {
 
 		for (int i = 0; i < values.length; i++) {
 			addDDMFormFieldValue(name, values[i], ddmFormValues);
-		}
-	}
-
-	protected void addDDMFormFieldValues(
-		String name, String[] defaultValues, DDMFormValues ddmFormValues) {
-
-		if (ArrayUtil.isEmpty(defaultValues)) {
-			addDDMFormFieldValue(name, StringPool.BLANK, ddmFormValues);
-
-			return;
-		}
-
-		defaultValues = StringUtil.split(defaultValues[0], StringPool.PIPE);
-
-		for (String defaultValue : defaultValues) {
-			addDDMFormFieldValue(name, defaultValue, ddmFormValues);
-		}
-	}
-
-	protected void addDDMFormFieldValues(
-		String name, Vector<?> values, DDMFormValues ddmFormValues) {
-
-		for (Object value : values) {
-			addDDMFormFieldValue(name, value, ddmFormValues);
 		}
 	}
 

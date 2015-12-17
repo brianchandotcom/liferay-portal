@@ -17,6 +17,7 @@ package com.liferay.portal.servlet.jsp.compiler.internal;
 import static org.phidias.compile.Constants.JAVA_PACKAGE;
 import static org.phidias.compile.Constants.STAR;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -184,7 +185,8 @@ public class BundleJavaFileManager
 			_logger.log(Logger.LOG_INFO, sb.toString());
 		}
 
-		String packagePath = packageName.replace('.', '/');
+		String packagePath = packageName.replace(
+			CharPool.PERIOD, CharPool.SLASH);
 
 		if (!packageName.startsWith(JAVA_PACKAGE) &&
 			(location == StandardLocation.CLASS_PATH)) {
@@ -207,7 +209,7 @@ public class BundleJavaFileManager
 			resourceName = resourceName.substring(0, resourceName.length() - 6);
 		}
 
-		return resourceName.replace('/', '.');
+		return resourceName.replace(CharPool.SLASH, CharPool.PERIOD);
 	}
 
 	private JavaFileObject getJavaFileObject(

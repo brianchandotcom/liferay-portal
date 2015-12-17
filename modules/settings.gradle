@@ -38,18 +38,18 @@ FileTree fileTree = fileTree(rootDir) {
 	}
 
 	include "*/**/build.gradle"
+	include "themes/*/package.json"
 }
 
 URI rootURI = rootDir.toURI()
 
 fileTree.each {
-	File buildGradleFile ->
+	String dirName = rootURI.relativize(it.parentFile.toURI())
 
-	String moduleDirName = rootURI.relativize(buildGradleFile.toURI())
+	dirName = dirName[0 .. -2]
+	dirName = dirName.replace("/" as char, ":" as char)
 
-	moduleDirName = moduleDirName.replaceFirst("/build.gradle", "")
-
-	include ":" + moduleDirName.replaceAll("[\\/]", ":")
+	include ":" + dirName
 }
 
 String testClassGroupIndex = System.getProperty("test.class.group.index")

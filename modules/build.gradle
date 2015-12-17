@@ -9,75 +9,82 @@ buildDir = new File(rootDir.parentFile, "build")
 gradle.beforeProject {
 	Project project ->
 
-	if (!FileUtil.exists(project, "bnd.bnd") || !FileUtil.exists(project, "build.gradle") || !project.parent) {
+	if (!project.parent) {
 		return
 	}
 
-	configure(project) {
-		apply from: rootProject.file("build-module.gradle")
-		apply plugin: "pmd"
-
-		configurations {
-			xmltask
+	if (project.path.startsWith(":themes:")) {
+		configure(project) {
+			apply from: rootProject.file("build-theme.gradle")
 		}
+	}
+	else if (FileUtil.exists(project, "bnd.bnd") && FileUtil.exists(project, "build.gradle")) {
+		configure(project) {
+			apply from: rootProject.file("build-module.gradle")
+			apply plugin: "pmd"
 
-		dependencies {
-			pmd group: "com.liferay", name: "com.liferay.pmd", version: "1.0.1"
-			xmltask rootProject.files("../lib/development/xmltask.jar")
-		}
+			configurations {
+				xmltask
+			}
 
-		pmd {
-			ruleSetFiles = rootProject.files("../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml")
-			ruleSets = []
-		}
+			dependencies {
+				pmd group: "com.liferay", name: "com.liferay.pmd", version: "1.0.1"
+				xmltask rootProject.files("../lib/development/xmltask.jar")
+			}
 
-		testIntegration {
-			doLast {
-				String databaseType = System.properties["database.type"]
+			pmd {
+				ruleSetFiles = rootProject.files("../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml")
+				ruleSets = []
+			}
 
-				if (!databaseType) {
-					return
-				}
+			testIntegration {
+				doLast {
+					String databaseType = System.properties["database.type"]
 
-				FileTree fileTree = fileTree(dir: reports.junitXml.destination, exclude: "TEST-*-*.xml", include: "TEST-*.xml")
-
-				ant.taskdef classname: "com.oopsconsultancy.xmltask.ant.XmlTask", classpath: configurations.xmltask.asPath, name: "xmltask"
-
-				fileTree.each {
-					File file ->
-
-					String fileTitle = FileUtil.stripExtension(file.name)
-
-					ant.xmltask(dest: new File(file.parentFile, "${fileTitle}-${databaseType}.xml"), source: file) {
-						replace path: "/testsuite/@name", withText: "${fileTitle}-${databaseType}"
+					if (!databaseType) {
+						return
 					}
 
-					delete file
-				}
-			}
+					FileTree fileTree = fileTree(dir: reports.junitXml.destination, exclude: "TEST-*-*.xml", include: "TEST-*.xml")
 
-			tasks.withType(Pmd) {
-				classpath = null
-			}
+					ant.taskdef classname: "com.oopsconsultancy.xmltask.ant.XmlTask", classpath: configurations.xmltask.asPath, name: "xmltask"
 
-			if (gradle.hasProperty("testClassGroupIndex")) {
-				configure([test, testIntegration]) {
-					include gradle.testClasses
+					fileTree.each {
+						File file ->
 
-					jvmArgs "-Dtest.class.group.index=" + gradle.testClassGroupIndex
-					jvmArgs "-Dtest.class.groups=" + gradle.testClassGroups
-				}
-			}
+						String fileTitle = FileUtil.stripExtension(file.name)
 
-			if (System.getenv("JENKINS_HOME")) {
-				pluginManager.withPlugin("com.liferay.cache") {
-					cache {
-						forcedCache = true
+						ant.xmltask(dest: new File(file.parentFile, "${fileTitle}-${databaseType}.xml"), source: file) {
+							replace path: "/testsuite/@name", withText: "${fileTitle}-${databaseType}"
+						}
+
+						delete file
 					}
 				}
 
-				startTestableTomcat {
-					deleteLiferayHome = false
+				tasks.withType(Pmd) {
+					classpath = null
+				}
+
+				if (gradle.hasProperty("testClassGroupIndex")) {
+					configure([test, testIntegration]) {
+						include gradle.testClasses
+
+						jvmArgs "-Dtest.class.group.index=" + gradle.testClassGroupIndex
+						jvmArgs "-Dtest.class.groups=" + gradle.testClassGroups
+					}
+				}
+
+				if (System.getenv("JENKINS_HOME")) {
+					pluginManager.withPlugin("com.liferay.cache") {
+						cache {
+							forcedCache = true
+						}
+					}
+
+					startTestableTomcat {
+						deleteLiferayHome = false
+					}
 				}
 			}
 		}

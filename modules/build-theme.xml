@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="build-theme">
+	<import file="build-common.xml" />
+
+	<target name="deploy">
+		<print-gradle-alternative args="gulpDeploy" />
+	</target>
+
+	<target name="war">
+		<print-gradle-alternative args="gulpBuild" />
+	</target>
+</project>

@@ -5,4 +5,7 @@ Export-Package:\
 	com.liferay.wiki.*,\
 	!com.liferay.wiki.configuration.dependencies,\
 	!com.liferay.wiki.item.selector.handler
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Wiki

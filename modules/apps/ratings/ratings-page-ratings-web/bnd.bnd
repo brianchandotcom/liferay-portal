@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Ratings Page Ratings Web
 Bundle-SymbolicName: com.liferay.ratings.page.ratings.web
 Bundle-Version: 1.0.0
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Ratings

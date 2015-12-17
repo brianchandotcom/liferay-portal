@@ -6,8 +6,11 @@ Export-Package:\
 	com.liferay.blogs.web.constants,\
 	com.liferay.blogs.web.lar,\
 	com.liferay.blogs.web.social
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
 JS-Config: /META-INF/resources/blogs/js/config.js
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Blogs
 Web-ContextPath: /blogs-web

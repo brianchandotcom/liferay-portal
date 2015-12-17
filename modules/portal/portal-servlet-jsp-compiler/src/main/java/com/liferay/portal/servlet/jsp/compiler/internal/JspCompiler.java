@@ -46,8 +46,6 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
-import javax.tools.JavaFileObject.Kind;
-import javax.tools.SimpleJavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
@@ -96,21 +94,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			javaCompiler.getStandardFileManager(
 				diagnosticCollector, null, null);
 
-		String simpleName = className.substring(className.lastIndexOf('.') + 1);
-
-		JavaFileObject[] javaFileObjects = {
-			new SimpleJavaFileObject(
-				URI.create("string:///" + simpleName + Kind.SOURCE.extension),
-				Kind.SOURCE) {
-
-				@Override
-				public CharSequence getCharContent(boolean ignore) {
-					return charArrayWriter.toString();
-				}
-
-			}
-		};
-
 		try {
 			standardJavaFileManager.setLocation(
 				StandardLocation.CLASS_PATH, cpath);
@@ -124,7 +107,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 			CompilationTask compilationTask = javaCompiler.getTask(
 				null, javaFileManager, diagnosticCollector, options, null,
-				Arrays.asList(javaFileObjects));
+				Arrays.asList(
+					new StringJavaFileObject(
+						className.substring(className.lastIndexOf('.') + 1),
+						charArrayWriter.toString())));
 
 			if (compilationTask.call()) {
 				for (BytecodeFile bytecodeFile : classFiles) {

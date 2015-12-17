@@ -127,8 +127,15 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Workflow
 
+		String assetClassName = DDLRecord.class.getName();
+
+		if (serviceContext.getAttribute("assetClassName") != null) {
+			assetClassName = (String)serviceContext.getAttribute(
+				"assetClassName");
+		}
+
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId, DDLRecord.class.getName(),
+			user.getCompanyId(), groupId, userId, assetClassName,
 			recordVersion.getRecordVersionId(), recordVersion, serviceContext);
 
 		return record;

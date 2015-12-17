@@ -5,7 +5,10 @@ Import-Package:\
 	!com.liferay.util.xml,\
 	!org.junit.experimental.theories,\
 	*
+-include: ../../../../marketplace/web-content-management/bnd.bnd
 Include-Resource:\
 	classes,\
 	test-classes/integration/,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Web Content

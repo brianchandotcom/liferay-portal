@@ -1,4 +1,3 @@
-/* @generated */
 package com.browseengine.bobo.sort;
 
 import java.io.IOException;
@@ -78,3 +77,4 @@ public class ReverseDocComparatorSource extends DocComparatorSource {
 	}
 
 }
+/* @generated */

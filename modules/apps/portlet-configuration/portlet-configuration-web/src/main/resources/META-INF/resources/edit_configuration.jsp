@@ -37,7 +37,7 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 	</portlet:renderURL>
 
 	<div class="archived-setups">
-		<aui:a href="archivedSetupsURL" label="archive-restore-setup" />
+		<aui:a href="<%= archivedSetupsURL.toString() %>" label="archive-restore-setup" />
 	</div>
 </c:if>
 

@@ -44,6 +44,10 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 <liferay-ui:error exception="<%= ArticleVersionException.class %>" message="another-user-has-made-changes-since-you-started-editing-please-copy-your-changes-and-try-again" />
 <liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
 <liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="the-structure-you-selected-is-not-valid-for-this-folder" />
+<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-content-refers-to-a-non-existing-file-entry" />
+<liferay-ui:error exception="<%= NoSuchImageException.class %>" message="please-select-an-existing-small-image" />
+<liferay-ui:error exception="<%= NoSuchStructureException.class %>" message="please-select-an-existing-structure" />
+<liferay-ui:error exception="<%= NoSuchTemplateException.class %>" message="please-select-an-existing-template" />
 <liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
 <liferay-ui:error exception="<%= LocaleException.class %>">
@@ -55,6 +59,22 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 	<c:if test="<%= le.getType() == LocaleException.TYPE_CONTENT %>">
 		<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
 	</c:if>
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= NoSuchLayoutException.class %>">
+
+	<%
+	NoSuchLayoutException nsle = (NoSuchLayoutException)errorException;
+
+	String message = nsle.getMessage();
+	%>
+
+	<c:when test="<%= message.equals(JournalArticleConstants.DISPLAY_PAGE) %>">
+		<liferay-ui:message key="please-select-an-existing-display-page" />
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:message key="the-content-refers-to-a-non-existing-page" />
+	</c:otherwise>
 </liferay-ui:error>
 
 <aui:fieldset>

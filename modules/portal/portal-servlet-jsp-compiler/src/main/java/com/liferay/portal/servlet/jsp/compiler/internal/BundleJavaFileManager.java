@@ -77,8 +77,6 @@ public class BundleJavaFileManager
 
 		_bundleWiring = bundle.adapt(BundleWiring.class);
 
-		_classLoader = _bundleWiring.getClassLoader();
-
 		List<BundleWire> providedWires = _bundleWiring.getRequiredWires(null);
 
 		if (_log.isEnabled()) {
@@ -135,7 +133,7 @@ public class BundleJavaFileManager
 	}
 
 	public ClassLoader getClassLoader() {
-		return _classLoader;
+		return _bundleWiring.getClassLoader();
 	}
 
 	@Override
@@ -363,7 +361,6 @@ public class BundleJavaFileManager
 
 	private BundleWiring _bundleWiring;
 	private ArrayList<BundleWiring> _bundleWirings;
-	private ClassLoader _classLoader;
 	private TPhLog _log;
 	private ResourceResolver _resourceResolver;
 	private final Set<Object> _systemCapabilities = new HashSet<Object>();

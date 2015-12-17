@@ -36,16 +36,19 @@ public class JenkinsPerformanceTableUtil {
 
 		Element element = new DefaultElement("table");
 
+		element.addAttribute("border", "1");
+		element.addAttribute("cellspacing", "0");
+
 		element.add(
 			_createRowElement(
-				"th", "Axis", "Class Name", "Duration (Seconds)", "Job", "Name",
-				"Status", null));
+				"th", "Axis", "Class Name", "Duration (Seconds)", "Job Name",
+				"Name", "Status", null));
 
 		for (JenkinsPerformanceDataUtil.Result result : results) {
 			element.add(
 				_createRowElement(
 					"td", result.getAxis(), result.getClassName(),
-					Float.toString(result.getDuration()), result.getJob(),
+					Float.toString(result.getDuration()), result.getJobName(),
 					result.getName(), result.getStatus(), result.getUrl()));
 		}
 

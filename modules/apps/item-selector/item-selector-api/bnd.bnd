@@ -2,4 +2,7 @@ Bundle-Name: Liferay Item Selector API
 Bundle-SymbolicName: com.liferay.item.selector.api
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.item.selector
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Item Selector

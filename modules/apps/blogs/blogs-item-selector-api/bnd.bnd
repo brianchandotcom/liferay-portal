@@ -3,4 +3,7 @@ Bundle-SymbolicName: com.liferay.blogs.item.selector
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.blogs.item.selector.criterion
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Blogs

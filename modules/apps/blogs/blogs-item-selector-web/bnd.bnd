@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Blogs Item Selector Web
 Bundle-SymbolicName: com.liferay.blogs.item.selector.web
 Bundle-Version: 1.0.0
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Import-Package:\
 	com.liferay.blogs.item.selector.criterion,\
 	com.liferay.item.selector.taglib,\
@@ -9,4 +10,6 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Blogs
 Web-ContextPath: /blogs-item-selector-web

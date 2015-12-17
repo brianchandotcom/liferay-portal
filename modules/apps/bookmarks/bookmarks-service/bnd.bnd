@@ -15,11 +15,14 @@ Export-Package:\
 	com.liferay.bookmarks.trash,\
 	com.liferay.bookmarks.util,\
 	com.liferay.bookmarks.verify
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Bookmarks
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

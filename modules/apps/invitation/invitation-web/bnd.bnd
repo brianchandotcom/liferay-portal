@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Invitation Web
 Bundle-SymbolicName: com.liferay.invitation.web
 Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\

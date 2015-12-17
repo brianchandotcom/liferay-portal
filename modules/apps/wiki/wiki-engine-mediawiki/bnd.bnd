@@ -7,7 +7,10 @@ Import-Package:\
 	!org.apache.commons.pool.impl.*,\
 	!org.incava.util.diff.*,\
 	*
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/org.jamwiki.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-mediawiki

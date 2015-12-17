@@ -1,0 +1,56 @@
+Liferay-Releng-App-Description:
+Liferay-Releng-App-Title: Business Productivity
+Liferay-Releng-Bundle: true
+Liferay-Releng-Category: Productivity
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Dependent-Apps:\ 
+	com.liferay.calendar.api:1.0.0,\
+	com.liferay.calendar.service:1.0.0,\
+	com.liferay.calendar.test:1.0.0,\
+	com.liferay.calendar.web:1.0.0,\
+	com.liferay.dynamic.data.lists.api:1.0.0,\
+	com.liferay.dynamic.data.lists.form.web:1.0.0,\
+	com.liferay.dynamic.data.lists.service:1.0.0,\
+	com.liferay.dynamic.data.lists.test:1.0.0,\
+	com.liferay.dynamic.data.lists.web:1.0.0,\
+	com.liferay.dynamic.data.mapping.api:1.0.0,\
+	com.liferay.dynamic.data.mapping.data.provider:1.0.0,\
+	com.liferay.dynamic.data.mapping.data.provider.rest:1.0.0,\
+	com.liferay.dynamic.data.mapping.data.provider.web:1.0.0,\
+	com.liferay.dynamic.data.mapping.form.evaluator:1.0.0,\
+	com.liferay.dynamic.data.mapping.form.field.type:1.0.0,\
+	com.liferay.dynamic.data.mapping.form.renderer:1.0.0,\
+	com.liferay.dynamic.data.mapping.form.values.factory:1.0.0,\
+	com.liferay.dynamic.data.mapping.form.values.query:1.0.0,\
+	com.liferay.dynamic.data.mapping.io:1.0.0,\
+	com.liferay.dynamic.data.mapping.service:1.0.0,\
+	com.liferay.dynamic.data.mapping.taglib:1.0.0,\
+	com.liferay.dynamic.data.mapping.test:1.0.0,\
+	com.liferay.dynamic.data.mapping.test.util:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.captcha:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.checkbox:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.date:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.key.value:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.options:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.radio:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.select:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.text:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.validation:1.0.0,\
+	com.liferay.dynamic.data.mapping.validator:1.0.0,\
+	com.liferay.dynamic.data.mapping.validator:1.0.0,\
+	com.liferay.polls.api:1.0.0,\
+	com.liferay.polls.service:1.0.0,\
+	com.liferay.polls.test:1.0.0,\
+	com.liferay.polls.web:1.0.0,\
+	com.liferay.portal.workflow.kaleo.action.executor:1.0.0,\
+	com.liferay.portal.workflow.kaleo.api:1.0.0,\
+	com.liferay.portal.workflow.kaleo.service:1.0.0,\
+	com.liferay.workflow.definition.link.web:1.0.0,\
+	com.liferay.workflow.definition.web:1.0.0,\
+	com.liferay.workflow.instance.web:1.0.0,\
+	com.liferay.workflow.task.web:1.0.0
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

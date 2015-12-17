@@ -1,13 +1,8 @@
 diff --git a/org/apache/commons/fileupload/FileUploadBase.java b/org/apache/commons/fileupload/FileUploadBase.java
-index 4980ac1..2a14298 100644
+index 4980ac1..3463911 100644
 --- a/org/apache/commons/fileupload/FileUploadBase.java
 +++ b/org/apache/commons/fileupload/FileUploadBase.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- /*
-  * Licensed to the Apache Software Foundation (ASF) under one or more
-  * contributor license agreements.  See the NOTICE file distributed with
-@@ -958,7 +959,12 @@ public abstract class FileUploadBase {
+@@ -958,7 +958,12 @@ public abstract class FileUploadBase {
  
              notifier = new MultipartStream.ProgressNotifier(listener,
                      ctx.getContentLength());
@@ -21,7 +16,7 @@ index 4980ac1..2a14298 100644
              multi.setHeaderEncoding(charEncoding);
  
              skipPreamble = true;
-@@ -1129,7 +1135,7 @@ public abstract class FileUploadBase {
+@@ -1129,7 +1134,7 @@ public abstract class FileUploadBase {
           * detail message.
           */
          public InvalidContentTypeException() {
@@ -30,7 +25,7 @@ index 4980ac1..2a14298 100644
          }
  
          /**
-@@ -1141,6 +1147,10 @@ public abstract class FileUploadBase {
+@@ -1141,6 +1146,10 @@ public abstract class FileUploadBase {
          public InvalidContentTypeException(String message) {
              super(message);
          }
@@ -41,16 +36,17 @@ index 4980ac1..2a14298 100644
      }
  
      /**
+@@ -1377,3 +1386,4 @@ public abstract class FileUploadBase {
+         listener = pListener;
+     }
+ }
++/* @generated */
+\ No newline at end of file
 diff --git a/org/apache/commons/fileupload/MultipartStream.java b/org/apache/commons/fileupload/MultipartStream.java
-index cc2b7b2..a30cb9a 100644
+index cc2b7b2..390a06f 100644
 --- a/org/apache/commons/fileupload/MultipartStream.java
 +++ b/org/apache/commons/fileupload/MultipartStream.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- /*
-  * Licensed to the Apache Software Foundation (ASF) under one or more
-  * contributor license agreements.  See the NOTICE file distributed with
-@@ -319,8 +320,7 @@ public class MultipartStream {
+@@ -319,8 +319,7 @@ public class MultipartStream {
       * @param pNotifier The notifier, which is used for calling the
       *                  progress listener, if any.
       *
@@ -60,7 +56,7 @@ index cc2b7b2..a30cb9a 100644
       */
      MultipartStream(InputStream input,
              byte[] boundary,
-@@ -333,9 +333,14 @@ public class MultipartStream {
+@@ -333,9 +332,14 @@ public class MultipartStream {
  
          // We prepend CR/LF to the boundary to chop trailng CR/LF from
          // body-data tokens.
@@ -76,7 +72,7 @@ index cc2b7b2..a30cb9a 100644
          System.arraycopy(BOUNDARY_PREFIX, 0, this.boundary, 0,
                  BOUNDARY_PREFIX.length);
          System.arraycopy(boundary, 0, this.boundary, BOUNDARY_PREFIX.length,
-@@ -355,8 +360,7 @@ public class MultipartStream {
+@@ -355,8 +359,7 @@ public class MultipartStream {
       * @param pNotifier An object for calling the progress listener, if any.
       *
       *
@@ -86,3 +82,9 @@ index cc2b7b2..a30cb9a 100644
       */
      MultipartStream(InputStream input,
              byte[] boundary,
+@@ -1004,3 +1007,4 @@ public class MultipartStream {
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file

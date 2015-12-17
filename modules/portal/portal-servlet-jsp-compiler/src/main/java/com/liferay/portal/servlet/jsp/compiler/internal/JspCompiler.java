@@ -64,7 +64,6 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 
-import org.phidias.compile.BundleJavaManager;
 import org.phidias.compile.ResourceResolver;
 
 /**

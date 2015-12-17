@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.phidias.compile;
+package com.liferay.portal.servlet.jsp.compiler.internal;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +42,11 @@ import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 
+import org.phidias.compile.BundleJavaFileObject;
+import org.phidias.compile.Constants;
+import org.phidias.compile.JarJavaFileObject;
+import org.phidias.compile.ResourceResolver;
+import org.phidias.compile.TPhLog;
 import static org.phidias.compile.Constants.JAVA_PACKAGE;
 import static org.phidias.compile.Constants.OPT_VERBOSE;
 import static org.phidias.compile.Constants.STAR;

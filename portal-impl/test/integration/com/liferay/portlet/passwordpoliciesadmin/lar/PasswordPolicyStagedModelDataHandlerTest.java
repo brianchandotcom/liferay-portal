@@ -30,6 +30,7 @@ import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUti
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -73,6 +74,94 @@ public class PasswordPolicyStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return PasswordPolicy.class;
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		PasswordPolicy passwordPolicy = (PasswordPolicy)stagedModel;
+		PasswordPolicy importedPasswordPolicy =
+			(PasswordPolicy)importedStagedModel;
+
+		Assert.assertEquals(
+			passwordPolicy.isDefaultPolicy(),
+			importedPasswordPolicy.isDefaultPolicy());
+		Assert.assertEquals(
+			passwordPolicy.getName(), importedPasswordPolicy.getName());
+		Assert.assertEquals(
+			passwordPolicy.getDescription(),
+			importedPasswordPolicy.getDescription());
+		Assert.assertEquals(
+			passwordPolicy.isChangeable(),
+			importedPasswordPolicy.isChangeable());
+		Assert.assertEquals(
+			passwordPolicy.isChangeRequired(),
+			importedPasswordPolicy.isChangeRequired());
+		Assert.assertEquals(
+			passwordPolicy.getMinAge(), importedPasswordPolicy.getMinAge());
+		Assert.assertEquals(
+			passwordPolicy.isCheckSyntax(),
+			importedPasswordPolicy.isCheckSyntax());
+		Assert.assertEquals(
+			passwordPolicy.isAllowDictionaryWords(),
+			importedPasswordPolicy.isAllowDictionaryWords());
+		Assert.assertEquals(
+			passwordPolicy.getMinAlphanumeric(),
+			importedPasswordPolicy.getMinAlphanumeric());
+		Assert.assertEquals(
+			passwordPolicy.getMinLength(),
+			importedPasswordPolicy.getMinLength());
+		Assert.assertEquals(
+			passwordPolicy.getMinLowerCase(),
+			importedPasswordPolicy.getMinLowerCase());
+		Assert.assertEquals(
+			passwordPolicy.getMinNumbers(),
+			importedPasswordPolicy.getMinNumbers());
+		Assert.assertEquals(
+			passwordPolicy.getMinSymbols(),
+			importedPasswordPolicy.getMinSymbols());
+		Assert.assertEquals(
+			passwordPolicy.getMinUpperCase(),
+			importedPasswordPolicy.getMinUpperCase());
+		Assert.assertEquals(
+			passwordPolicy.getRegex(), importedPasswordPolicy.getRegex());
+		Assert.assertEquals(
+			passwordPolicy.isHistory(), importedPasswordPolicy.isHistory());
+		Assert.assertEquals(
+			passwordPolicy.getHistoryCount(),
+			importedPasswordPolicy.getHistoryCount());
+		Assert.assertEquals(
+			passwordPolicy.isExpireable(),
+			importedPasswordPolicy.isExpireable());
+		Assert.assertEquals(
+			passwordPolicy.getMaxAge(), importedPasswordPolicy.getMaxAge());
+		Assert.assertEquals(
+			passwordPolicy.getWarningTime(),
+			importedPasswordPolicy.getWarningTime());
+		Assert.assertEquals(
+			passwordPolicy.getGraceLimit(),
+			importedPasswordPolicy.getGraceLimit());
+		Assert.assertEquals(
+			passwordPolicy.isLockout(), importedPasswordPolicy.isLockout());
+		Assert.assertEquals(
+			passwordPolicy.getMaxFailure(),
+			importedPasswordPolicy.getMaxFailure());
+		Assert.assertEquals(
+			passwordPolicy.getLockoutDuration(),
+			importedPasswordPolicy.getLockoutDuration());
+		Assert.assertEquals(
+			passwordPolicy.isRequireUnlock(),
+			importedPasswordPolicy.isRequireUnlock());
+		Assert.assertEquals(
+			passwordPolicy.getResetFailureCount(),
+			importedPasswordPolicy.getResetFailureCount());
+		Assert.assertEquals(
+			passwordPolicy.getResetTicketMaxAge(),
+			importedPasswordPolicy.getResetTicketMaxAge());
 	}
 
 }

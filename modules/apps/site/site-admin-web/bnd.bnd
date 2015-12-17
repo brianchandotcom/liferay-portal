@@ -1,8 +1,11 @@
 Bundle-Name: Liferay Site Admin Web
 Bundle-SymbolicName: com.liferay.site.admin.web
 Bundle-Version: 1.0.0
+-include: ../../../../marketplace/web-content-management/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/PKParser.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management
 Web-ContextPath: /sites-admin-web

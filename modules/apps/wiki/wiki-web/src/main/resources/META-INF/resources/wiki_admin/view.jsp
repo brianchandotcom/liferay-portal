@@ -171,7 +171,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 								<h4>
 									<aui:a href="<%= rowURL.toString() %>">
-										<%= node.getName() %>
+										<%= HtmlUtil.escape(node.getName()) %>
 									</aui:a>
 								</h4>
 
@@ -188,7 +188,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 							<liferay-ui:search-container-column-text
 								href="<%= rowURL %>"
 								name="wiki"
-								value="<%= node.getName() %>"
+								value="<%= HtmlUtil.escape(node.getName()) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

@@ -17,6 +17,9 @@ package com.liferay.portal.servlet.jsp.compiler.internal;
 import static org.phidias.compile.Constants.JAVA_PACKAGE;
 import static org.phidias.compile.Constants.STAR;
 
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -71,10 +74,14 @@ public class BundleJavaFileManager
 		_resourceResolver = resourceResolver;
 
 		if (_verbose) {
-			_logger.log(
-				Logger.LOG_INFO,
-				"Initializing compilation in OSGi for bundle " +
-					bundle.getSymbolicName() + "-" + bundle.getVersion());
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("BundleJavaFileManager for bundle: ");
+			sb.append(bundle.getSymbolicName());
+			sb.append(StringPool.DASH);
+			sb.append(bundle.getVersion());
+
+			_logger.log(Logger.LOG_INFO, sb.toString());
 		}
 
 		_bundleWiring = bundle.adapt(BundleWiring.class);

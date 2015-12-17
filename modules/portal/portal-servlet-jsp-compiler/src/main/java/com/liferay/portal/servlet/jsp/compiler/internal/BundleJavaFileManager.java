@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.IOException;
 
 import java.net.JarURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -226,9 +228,9 @@ public class BundleJavaFileManager
 				return new BundleJavaFileObject(
 					resourceURL.toURI(), className, resourceURL);
 			}
-			catch (Exception e) {
+			catch (URISyntaxException urise) {
 				if (_verbose) {
-					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+					_logger.log(Logger.LOG_ERROR, urise.getMessage(), urise);
 				}
 			}
 		}
@@ -267,9 +269,9 @@ public class BundleJavaFileManager
 					new URL("jar:" + uri.toString()),
 					resourceName);
 			}
-			catch (IOException e) {
+			catch (MalformedURLException murie) {
 				if (_verbose) {
-					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+					_logger.log(Logger.LOG_ERROR, murie.getMessage(), murie);
 				}
 			}
 		}

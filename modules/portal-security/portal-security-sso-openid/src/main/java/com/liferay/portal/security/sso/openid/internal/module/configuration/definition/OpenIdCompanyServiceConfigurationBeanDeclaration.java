@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.module.configuration.definition;
+package com.liferay.portal.security.sso.openid.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.security.sso.openid.module.configuration.OpenIdConfiguration;

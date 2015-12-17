@@ -86,8 +86,6 @@ public class BundleJavaFileManager
 
 		_bundleWiring = bundle.adapt(BundleWiring.class);
 
-		List<BundleWire> providedWires = _bundleWiring.getRequiredWires(null);
-
 		if (_verbose) {
 			_logger.log(
 				Logger.LOG_INFO,
@@ -95,31 +93,28 @@ public class BundleJavaFileManager
 					"context: ");
 		}
 
-		_bundleWirings = new LinkedHashSet<>();
+		for (BundleWire bundleWire : _bundleWiring.getRequiredWires(null)) {
+			BundleWiring bundleWiring = bundleWire.getProviderWiring();
 
-		for (BundleWire bundleWire : providedWires) {
-			BundleWiring providerWiring = bundleWire.getProviderWiring();
-
-			if (!_bundleWirings.add(providerWiring)) {
+			if (!_bundleWirings.add(bundleWiring)) {
 				continue;
 			}
 
-			Bundle curBundle = providerWiring.getBundle();
+			Bundle currentBundle = bundleWiring.getBundle();
 
-			if (curBundle.getBundleId() == 0) {
-				List<BundleCapability> bundleCapabilities =
-					providerWiring.getCapabilities(
-						BundleRevision.PACKAGE_NAMESPACE);
+			if (currentBundle.getBundleId() == 0) {
+				for (BundleCapability bundleCapability :
+						bundleWiring.getCapabilities(
+							BundleRevision.PACKAGE_NAMESPACE)) {
 
-				for (BundleCapability bundleCapability : bundleCapabilities) {
 					Map<String, Object> attributes =
 						bundleCapability.getAttributes();
 
-					Object packageNamespace = attributes.get(
+					Object packageName = attributes.get(
 						BundleRevision.PACKAGE_NAMESPACE);
 
-					if (packageNamespace != null) {
-						_systemCapabilities.add(packageNamespace);
+					if (packageName != null) {
+						_systemPackageNames.add(packageName);
 					}
 				}
 			}
@@ -127,8 +122,8 @@ public class BundleJavaFileManager
 			if (_verbose) {
 				_logger.log(
 					Logger.LOG_INFO,
-					"\t" + curBundle.getSymbolicName() + "-" +
-						curBundle.getVersion());
+					"\t" + currentBundle.getSymbolicName() + "-" +
+						currentBundle.getVersion());
 			}
 		}
 	}
@@ -189,7 +184,7 @@ public class BundleJavaFileManager
 				kinds, recurse, packagePath);
 
 			if (javaFileObjects.isEmpty() &&
-				_systemCapabilities.contains(packageName)) {
+				_systemPackageNames.contains(packageName)) {
 
 				return fileManager.list(location, packagePath, kinds, recurse);
 			}
@@ -333,10 +328,10 @@ public class BundleJavaFileManager
 	}
 
 	private final BundleWiring _bundleWiring;
-	private final Set<BundleWiring> _bundleWirings;
+	private final Set<BundleWiring> _bundleWirings = new LinkedHashSet<>();
 	private final Logger _logger;
 	private final ResourceResolver _resourceResolver;
-	private final Set<Object> _systemCapabilities = new HashSet<>();
+	private final Set<Object> _systemPackageNames = new HashSet<>();
 	private final boolean _verbose;
 
 }

@@ -1,4 +1,3 @@
-/* @generated */
 /*
  * Copyright (c) 2003 The Visigoth Software Society. All rights
  * reserved.
@@ -96,3 +95,4 @@ public class DebugBreak extends TemplateElement
         return nestedBlock.getCanonicalForm();
     }
 }
+/* @generated */

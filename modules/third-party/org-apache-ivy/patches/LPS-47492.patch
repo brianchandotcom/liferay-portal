@@ -1,5 +1,5 @@
 diff --git a/org/apache/ivy/util/PropertiesFile.java b/org/apache/ivy/util/PropertiesFile.java
-index 69910c2..b25a2d8 100644
+index f4d2048..3327957 100644
 --- a/org/apache/ivy/util/PropertiesFile.java
 +++ b/org/apache/ivy/util/PropertiesFile.java
 @@ -1,3 +1,4 @@
@@ -23,7 +23,7 @@ index 69910c2..b25a2d8 100644
  
  /**
   * A simple Properties extension easing the loading and saving of data
-@@ -60,7 +65,27 @@ public class PropertiesFile extends Properties {
+@@ -59,7 +64,27 @@ public class PropertiesFile extends Properties {
                  file.getParentFile().mkdirs();
              }
              fos = new FileOutputStream(file);
@@ -50,9 +50,9 @@ index 69910c2..b25a2d8 100644
 +			}
 +			bw.flush();
          } catch (Exception ex) {
-             Message.warn("exception occurred while writing properties file " + file + ": "
-                     + ex.getMessage());
-@@ -74,4 +99,54 @@ public class PropertiesFile extends Properties {
+             Message.warn("exception occurred while writing properties file " + file, ex);
+         }
+@@ -72,4 +97,54 @@ public class PropertiesFile extends Properties {
          }
      }
  

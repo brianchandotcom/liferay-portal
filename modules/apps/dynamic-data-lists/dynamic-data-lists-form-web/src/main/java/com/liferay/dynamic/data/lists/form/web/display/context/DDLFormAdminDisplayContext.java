@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormAdmin
 import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormWebRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
 import com.liferay.dynamic.data.lists.form.web.util.DDLFormPortletUtil;
+import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
@@ -415,8 +416,15 @@ public class DDLFormAdminDisplayContext {
 		HttpServletRequest httpServletRequest =
 			_ddlFormAdminRequestHelper.getRequest();
 
-		return (DDLRecord)httpServletRequest.getAttribute(
+		Object record = httpServletRequest.getAttribute(
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
+
+		if (record instanceof DDLFormRecord) {
+			return ((DDLFormRecord)record).getDDLRecord();
+		}
+		else {
+			return (DDLRecord)record;
+		}
 	}
 
 	protected String serialize(

@@ -20,7 +20,7 @@ AUI.add(
 
 					strings: {
 						value: {
-							addOptionMessage: Liferay.Language.get('enter-an-option-for-users-to-select')
+							addOptionMessage: Liferay.Language.get('enter-an-option')
 						}
 					},
 

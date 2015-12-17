@@ -528,6 +528,7 @@
 	</command>
 
 	<command name="ExportImportSampleLARPortlet" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
 
 		<execute macro="Page#addPG">
@@ -606,6 +607,8 @@
 	</command>
 
 	<command name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />

@@ -34,7 +34,8 @@ public class JenkinsPerformanceDataUtil {
 		return _results;
 	}
 
-	public static void processPerformanceData(String job, String url, int size)
+	public static void processPerformanceData(
+			String jobName, String url, int size)
 		throws Exception {
 
 		JSONObject jsonObject = null;
@@ -43,14 +44,14 @@ public class JenkinsPerformanceDataUtil {
 			jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(url + "/api/json"));
 
-			_results.add(new Result(job, jsonObject));
+			_results.add(new Result(jobName, jsonObject));
 		}
 		else {
 			jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
 					url + "/testReport/api/json"));
 
-			_results.addAll(_getSlowestResults(job, jsonObject, size));
+			_results.addAll(_getSlowestResults(jobName, jsonObject, size));
 		}
 
 		Collections.sort(_results);
@@ -109,7 +110,7 @@ public class JenkinsPerformanceDataUtil {
 			return _duration;
 		}
 
-		public String getJob() {
+		public String getJobName() {
 			return _jobName;
 		}
 

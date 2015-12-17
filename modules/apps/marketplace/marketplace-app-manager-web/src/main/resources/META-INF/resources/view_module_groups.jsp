@@ -38,7 +38,9 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_module_groups.jsp");
+portletURL.setParameter("app", app);
 portletURL.setParameter("state", state);
+portletURL.setParameter("orderByType", orderByType);
 
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
 %>
@@ -63,7 +65,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="descriptive"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -72,14 +74,14 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
 			navigationParam="state"
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="title"
 			orderByType="<%= orderByType %>"
 			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
@@ -129,12 +131,12 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5>
 					<a href="<%= HtmlUtil.escapeHREF(moduleGroupDisplay.getDisplayURL(renderResponse)) %>">
-						<%= moduleGroupDisplay.getTitle() %>
+						<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(moduleGroupDisplay.getTitle()) %>
 					</a>
 				</h5>
 
 				<h6 class="text-default">
-					<%= moduleGroupDisplay.getDescription() %>
+					<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(moduleGroupDisplay.getDescription()) %>
 				</h6>
 
 				<div class="additional-info text-default">

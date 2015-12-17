@@ -129,7 +129,7 @@ public class BundleJavaFileManager
 	}
 
 	@Override
-	public ClassLoader getClassLoader(JavaFileManager.Location location) {
+	public ClassLoader getClassLoader(Location location) {
 		if (location != StandardLocation.CLASS_PATH) {
 			return fileManager.getClassLoader(location);
 		}
@@ -138,7 +138,7 @@ public class BundleJavaFileManager
 	}
 
 	@Override
-	public String inferBinaryName(JavaFileManager.Location location, JavaFileObject file) {
+	public String inferBinaryName(Location location, JavaFileObject file) {
 		if ((location == StandardLocation.CLASS_PATH) &&
 			(file instanceof BundleJavaFileObject)) {
 
@@ -158,7 +158,7 @@ public class BundleJavaFileManager
 
 	@Override
 	public Iterable<JavaFileObject> list(
-			JavaFileManager.Location location, String packageName, Set<Kind> kinds,
+			Location location, String packageName, Set<Kind> kinds,
 			boolean recurse)
 		throws IOException {
 

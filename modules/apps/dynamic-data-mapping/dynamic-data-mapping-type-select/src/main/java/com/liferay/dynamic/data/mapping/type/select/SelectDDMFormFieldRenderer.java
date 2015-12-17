@@ -75,8 +75,8 @@ public class SelectDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	protected DDMFormFieldOptions getDDMFormFieldOptions(
 		DDMFormField ddmFormField) {
 
-		String dataSourceType = (String)ddmFormField.getProperty(
-			"dataSourceType");
+		String dataSourceType = GetterUtil.getString(
+			ddmFormField.getProperty("dataSourceType"), "manual");
 
 		if (Validator.equals(dataSourceType, "manual")) {
 			return ddmFormField.getDDMFormFieldOptions();

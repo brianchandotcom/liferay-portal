@@ -1349,28 +1349,12 @@
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Not Visible Event Title" />
-		</execute>
-
 		<execute macro="CalendarEvent#viewUnavailableCalendarsNotPresent">
-			<var name="calendarName" value="Site Name" />
+			<var name="unavailableCalendarList" value="Site Name" />
 		</execute>
 
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="Site Name" />
-		</execute>
-
-		<execute macro="CalendarEvent#publish" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
-			<var name="eventTitle" value="Not Visible Event Title" />
+		<execute macro="CalendarEvent#viewAvailableCalendars">
+			<var name="availableCalendarList" value="Test Test" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
@@ -1385,7 +1369,11 @@
 		<execute macro="CalendarScheduler#gotoAddViaDayView" />
 
 		<execute macro="CalendarEvent#viewUnavailableCalendarsNotPresent">
-			<var name="calendarName" value="Site Name" />
+			<var name="unavailableCalendarList" value="Site Name" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewAvailableCalendars">
+			<var name="availableCalendarList" value="Test Test" />
 		</execute>
 	</command>
 

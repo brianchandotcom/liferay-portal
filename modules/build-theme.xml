@@ -4,6 +4,10 @@
 <project name="build-theme">
 	<import file="build-common.xml" />
 
+	<target name="clean">
+		<print-gradle-alternative args="clean" />
+	</target>
+
 	<target name="deploy">
 		<print-gradle-alternative args="gulpDeploy" />
 	</target>

@@ -1,10 +1,19 @@
 import groovy.json.JsonBuilder
 
+apply plugin: "base"
 apply plugin: "com.liferay.gulp"
 
 buildDir = file("build_gradle")
 
 task createLiferayThemeJson
+
+clean {
+	dependsOn cleanNpmInstall
+	dependsOn cleanCreateLiferayThemeJson
+
+	delete "build"
+	delete "dist"
+}
 
 createLiferayThemeJson {
 	File liferayThemeJsonFile = file("liferay-theme.json")
@@ -30,6 +39,8 @@ createLiferayThemeJson {
 	onlyIf {
 		!liferayThemeJsonFile.exists()
 	}
+
+	outputs.file liferayThemeJsonFile
 }
 
 tasks.whenTaskAdded {

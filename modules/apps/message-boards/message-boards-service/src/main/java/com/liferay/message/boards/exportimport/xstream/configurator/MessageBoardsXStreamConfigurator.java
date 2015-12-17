@@ -18,6 +18,7 @@ import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.exportimport.xstream.XStreamAlias;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
+import com.liferay.portlet.exportimport.xstream.XStreamType;
 import com.liferay.portlet.messageboards.model.impl.MBBanImpl;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
@@ -34,6 +35,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = XStreamConfigurator.class)
 public class MessageBoardsXStreamConfigurator implements XStreamConfigurator {
+
+	@Override
+	public List<XStreamType> getAllowedXStreamTypes() {
+		return null;
+	}
 
 	@Override
 	public List<XStreamAlias> getXStreamAliases() {

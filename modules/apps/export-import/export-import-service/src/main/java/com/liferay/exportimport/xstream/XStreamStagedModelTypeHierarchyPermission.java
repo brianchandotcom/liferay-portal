@@ -12,23 +12,28 @@
  * details.
  */
 
-package com.liferay.exportimport.xstream.configurator;
+package com.liferay.exportimport.xstream;
 
-import com.liferay.portlet.exportimport.xstream.XStreamAlias;
-import com.liferay.portlet.exportimport.xstream.XStreamConverter;
-import com.liferay.portlet.exportimport.xstream.XStreamType;
+import com.liferay.portal.model.StagedModel;
 
-import java.util.List;
+import com.thoughtworks.xstream.security.TypePermission;
 
 /**
  * @author Mate Thurzo
  */
-public interface XStreamConfigurator {
+public class XStreamStagedModelTypeHierarchyPermission
+	implements TypePermission {
 
-	public List<XStreamType> getAllowedXStreamTypes();
+	public static final TypePermission STAGED_MODELS =
+		new XStreamStagedModelTypeHierarchyPermission();
 
-	public List<XStreamAlias> getXStreamAliases();
+	@Override
+	public boolean allows(Class type) {
+		if (type == null) {
+			return false;
+		}
 
-	public List<XStreamConverter> getXStreamConverters();
+		return StagedModel.class.isAssignableFrom(type);
+	}
 
 }

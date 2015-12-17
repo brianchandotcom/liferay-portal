@@ -12,23 +12,25 @@
  * details.
  */
 
-package com.liferay.exportimport.xstream.configurator;
-
-import com.liferay.portlet.exportimport.xstream.XStreamAlias;
-import com.liferay.portlet.exportimport.xstream.XStreamConverter;
-import com.liferay.portlet.exportimport.xstream.XStreamType;
-
-import java.util.List;
+package com.liferay.portlet.exportimport.xstream;
 
 /**
  * @author Mate Thurzo
  */
-public interface XStreamConfigurator {
+public class XStreamType {
 
-	public List<XStreamType> getAllowedXStreamTypes();
+	public XStreamType(Class<?> clazz) {
+		this(clazz.getName());
+	}
 
-	public List<XStreamAlias> getXStreamAliases();
+	public XStreamType(String typeExpression) {
+		_typeExpression = typeExpression;
+	}
 
-	public List<XStreamConverter> getXStreamConverters();
+	public String getTypeExpression() {
+		return _typeExpression;
+	}
+
+	private final String _typeExpression;
 
 }

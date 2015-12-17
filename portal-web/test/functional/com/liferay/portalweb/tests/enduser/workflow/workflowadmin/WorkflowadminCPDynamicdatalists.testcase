@@ -273,7 +273,7 @@
 
 		<execute macro="DDLRecord#save" />
 
-		<execute macro="DDLRecord#viewEditPreviewViaTaskAssignedToMeDetails">
+		<execute macro="DDLRecord#viewEditPreview">
 			<var name="ddlRecordFieldDataEdit" value="DDL Record Edit" />
 			<var name="fieldFieldLabel" value="Text" />
 			<var name="fieldName" value="Text" />

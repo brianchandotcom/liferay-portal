@@ -353,7 +353,7 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="viewEditPreviewViaTaskAssignedToMeDetails">
+	<command name="viewEditPreview">
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute macro="DDLRecord#viewFieldLabel">

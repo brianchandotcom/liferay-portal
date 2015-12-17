@@ -36,6 +36,7 @@ page import="com.liferay.marketplace.app.manager.web.util.MarketplaceAppManagerU
 page import="com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplay" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplayComparator" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplayFactoryUtil" %><%@
+page import="com.liferay.marketplace.app.manager.web.util.ModuleServiceReferenceComparator" %><%@
 page import="com.liferay.marketplace.bundle.BundleManagerUtil" %><%@
 page import="com.liferay.marketplace.exception.FileExtensionException" %><%@
 page import="com.liferay.marketplace.model.App" %><%@
@@ -59,6 +60,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collection" %><%@
+page import="java.util.Collections" %><%@
 page import="java.util.Dictionary" %><%@
 page import="java.util.List" %>
 

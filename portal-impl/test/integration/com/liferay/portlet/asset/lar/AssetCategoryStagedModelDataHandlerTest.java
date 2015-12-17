@@ -137,4 +137,20 @@ public class AssetCategoryStagedModelDataHandlerTest
 			vocabulary.getUuid(), group.getGroupId());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		AssetCategory category = (AssetCategory)stagedModel;
+		AssetCategory importedCategory = (AssetCategory)importedStagedModel;
+
+		Assert.assertEquals(category.getName(), importedCategory.getName());
+		Assert.assertEquals(category.getTitle(), importedCategory.getTitle());
+		Assert.assertEquals(
+			category.getDescription(), importedCategory.getDescription());
+	}
+
 }

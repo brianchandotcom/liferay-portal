@@ -113,7 +113,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			orderByCol="title"
 			orderByType="<%= orderByType %>"
 			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>

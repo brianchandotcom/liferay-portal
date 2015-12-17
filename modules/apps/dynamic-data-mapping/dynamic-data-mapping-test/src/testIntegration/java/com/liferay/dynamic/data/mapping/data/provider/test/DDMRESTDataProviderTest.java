@@ -15,9 +15,13 @@
 package com.liferay.dynamic.data.mapping.data.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.annotations.DDMForm;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
@@ -57,17 +61,34 @@ public class DDMRESTDataProviderTest {
 
 	@Test
 	public void testGetCountries() throws Exception {
-		DDMFormField ddmFormField = new DDMFormField("test", "text");
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormFactory.create(DDMRESTDataProviderSettings.class);
 
-		ddmFormField.setProperty("key", "countryId");
-		ddmFormField.setProperty("password", "test");
-		ddmFormField.setProperty(
-			"url", "http://localhost:8080/api/jsonws/country/get-countries");
-		ddmFormField.setProperty("username", "test@liferay.com");
-		ddmFormField.setProperty("value", "nameCurrentValue");
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"cacheable", Boolean.FALSE.toString()));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"key", "countryId"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"password", "test"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"url",
+				"http://localhost:8080/api/jsonws/country/get-countries"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"username", "test@liferay.com"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"value", "nameCurrentValue"));
 
 		DDMDataProviderContext ddmDataProviderContext =
-			new DDMDataProviderContext(ddmFormField.getProperties());
+			new DDMDataProviderContext(ddmFormValues);
 
 		List<KeyValuePair> actualKeyValuePairs = _ddmDataProvider.getData(
 			ddmDataProviderContext);
@@ -95,5 +116,28 @@ public class DDMRESTDataProviderTest {
 	}
 
 	private DDMDataProvider _ddmDataProvider;
+
+	@DDMForm
+	private interface DDMRESTDataProviderSettings {
+
+		@DDMFormField
+		public boolean cacheable();
+
+		@DDMFormField
+		public String key();
+
+		@DDMFormField
+		public String password();
+
+		@DDMFormField
+		public String url();
+
+		@DDMFormField
+		public String username();
+
+		@DDMFormField
+		public String value();
+
+	}
 
 }

@@ -17,11 +17,15 @@ package com.liferay.dynamic.data.mapping.data.provider.rest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.KeyValuePair;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +76,15 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			ddmRESTDataProviderSettings.password());
 		httpRequest.query(ddmDataProviderContext.getParameters());
 
+		String cacheKey = getCacheKey(httpRequest);
+
+		DDMRESTDataProviderResult ddmRESTDataProviderResult = _portalCache.get(
+			cacheKey);
+
+		if (ddmRESTDataProviderResult != null) {
+			return ddmRESTDataProviderResult.getKeyValuePairs();
+		}
+
 		HttpResponse httpResponse = httpRequest.send();
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(httpResponse.body());
@@ -89,7 +102,15 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			results.add(new KeyValuePair(key, value));
 		}
 
+		if (ddmRESTDataProviderSettings.cacheable()) {
+			_portalCache.put(cacheKey, new DDMRESTDataProviderResult(results));
+		}
+
 		return results;
+	}
+
+	protected String getCacheKey(HttpRequest httpRequest) {
+		return httpRequest.url();
 	}
 
 	@Reference(unbind = "-")
@@ -98,5 +119,21 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	}
 
 	private volatile JSONFactory _jsonFactory;
+	private final PortalCache<String, DDMRESTDataProviderResult> _portalCache =
+		MultiVMPoolUtil.getPortalCache(DDMRESTDataProvider.class.getName());
+
+	private class DDMRESTDataProviderResult implements Serializable {
+
+		public DDMRESTDataProviderResult(List<KeyValuePair> keyValuePairs) {
+			_keyValuePairs = keyValuePairs;
+		}
+
+		public List<KeyValuePair> getKeyValuePairs() {
+			return _keyValuePairs;
+		}
+
+		private final List<KeyValuePair> _keyValuePairs;
+
+	}
 
 }

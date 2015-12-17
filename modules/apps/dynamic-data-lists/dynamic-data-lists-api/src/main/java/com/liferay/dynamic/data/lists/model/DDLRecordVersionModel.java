@@ -319,13 +319,6 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	public void setStatusDate(Date statusDate);
 
 	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	 */
-	@Deprecated
-	@Override
-	public boolean getApproved();
-
-	/**
 	 * Returns <code>true</code> if this d d l record version is approved.
 	 *
 	 * @return <code>true</code> if this d d l record version is approved; <code>false</code> otherwise

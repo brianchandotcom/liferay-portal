@@ -197,15 +197,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 		return _ddmStructureVersion.compareTo(ddmStructureVersion);
 	}
 
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	*/
-	@Deprecated
-	@Override
-	public boolean getApproved() {
-		return _ddmStructureVersion.getApproved();
-	}
-
 	@Override
 	public java.lang.String[] getAvailableLanguageIds() {
 		return _ddmStructureVersion.getAvailableLanguageIds();

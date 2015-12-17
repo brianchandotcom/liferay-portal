@@ -17,6 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
+long uptimeDiff = System.currentTimeMillis() - PortalUtil.getUptime().getTime();
+long days = uptimeDiff / Time.DAY;
+long hours = (uptimeDiff / Time.HOUR) % 24;
+long minutes = (uptimeDiff / Time.MINUTE) % 60;
+long seconds = (uptimeDiff / Time.SECOND) % 60;
+
 Runtime runtime = Runtime.getRuntime();
 
 numberFormat = NumberFormat.getInstance(locale);
@@ -27,6 +33,16 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 <liferay-ui:panel-container extended="<%= true %>" id="adminServerAdministrationActionsPanelContainer" persistState="<%= true %>">
 	<liferay-ui:panel collapsible="<%= false %>" extended="<%= false %>" id="adminServerInformationPanel" markupView="lexicon" title="">
+		<div class="alert alert-info">
+			<strong><liferay-ui:message key="info" /></strong>: <%= ReleaseInfo.getReleaseInfo() %>
+			<strong><liferay-ui:message key="uptime" /></strong>:
+
+			<c:if test="<%= days > 0 %>">
+				<%= days %> <%= LanguageUtil.get(request, ((days > 1) ? "days" : "day")) %>,
+			</c:if>
+
+			<%= numberFormat.format(hours) %>:<%= numberFormat.format(minutes) %>:<%= numberFormat.format(seconds) %>
+		</div>
 		<div>
 			<portlet:resourceURL id="/server_admin/view_chart" var="totalMemoryChartURL">
 				<portlet:param name="type" value="total" />

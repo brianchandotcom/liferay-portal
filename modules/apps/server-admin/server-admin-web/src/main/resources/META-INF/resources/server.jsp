@@ -16,15 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%= ReleaseInfo.getReleaseInfo() %><br />
-
 <%
-long uptimeDiff = System.currentTimeMillis() - PortalUtil.getUptime().getTime();
-long days = uptimeDiff / Time.DAY;
-long hours = (uptimeDiff / Time.HOUR) % 24;
-long minutes = (uptimeDiff / Time.MINUTE) % 60;
-long seconds = (uptimeDiff / Time.SECOND) % 60;
-
 PortletURL serverURL = renderResponse.createRenderURL();
 
 serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
@@ -32,16 +24,6 @@ serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
 serverURL.setParameter("tabs3", tabs3);
 %>
-
-<liferay-ui:message key="uptime" />:
-
-<c:if test="<%= days > 0 %>">
-	<%= days %> <%= LanguageUtil.get(request, ((days > 1) ? "days" : "day")) %>,
-</c:if>
-
-<%= numberFormat.format(hours) %>:<%= numberFormat.format(minutes) %>:<%= numberFormat.format(seconds) %>
-
-<br /><br />
 
 <c:choose>
 	<c:when test="<%= windowState.equals(WindowState.NORMAL) %>">

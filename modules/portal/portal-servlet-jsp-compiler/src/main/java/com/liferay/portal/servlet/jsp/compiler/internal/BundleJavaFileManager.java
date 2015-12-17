@@ -175,9 +175,8 @@ public class BundleJavaFileManager
 		if (!packageName.startsWith(JAVA_PACKAGE) &&
 			(location == StandardLocation.CLASS_PATH)) {
 
-			List<JavaFileObject> javaFileObjects = new ArrayList<>();
-
-			listFromDependencies(kinds, recurse, packagePath, javaFileObjects);
+			List<JavaFileObject> javaFileObjects = listFromDependencies(
+				kinds, recurse, packagePath);
 
 			if (javaFileObjects.isEmpty() &&
 				_systemCapabilities.contains(packageName)) {
@@ -299,9 +298,10 @@ public class BundleJavaFileManager
 		}
 	}
 
-	private void listFromDependencies(
-		Set<Kind> kinds, boolean recurse,
-		String packagePath, List<JavaFileObject> javaFileObjects) {
+	private List<JavaFileObject> listFromDependencies(
+		Set<Kind> kinds, boolean recurse, String packagePath) {
+
+		List<JavaFileObject> javaFileObjects = new ArrayList<>();
 
 		int options = recurse ? BundleWiring.LISTRESOURCES_RECURSE : 0;
 
@@ -319,6 +319,8 @@ public class BundleJavaFileManager
 					packagePath, kind, options, _bundleWiring, javaFileObjects);
 			}
 		}
+
+		return javaFileObjects;
 	}
 
 	private final BundleWiring _bundleWiring;

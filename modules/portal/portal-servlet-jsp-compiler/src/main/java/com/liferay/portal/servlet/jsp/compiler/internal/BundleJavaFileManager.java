@@ -185,13 +185,11 @@ public class BundleJavaFileManager
 			List<JavaFileObject> javaFileObjects = listFromDependencies(
 				kinds, recurse, packagePath);
 
-			if (javaFileObjects.isEmpty() &&
-				_systemPackageNames.contains(packageName)) {
+			if (!javaFileObjects.isEmpty() ||
+				!_systemPackageNames.contains(packageName)) {
 
-				return fileManager.list(location, packagePath, kinds, recurse);
+				return javaFileObjects;
 			}
-
-			return javaFileObjects;
 		}
 
 		return fileManager.list(location, packagePath, kinds, recurse);

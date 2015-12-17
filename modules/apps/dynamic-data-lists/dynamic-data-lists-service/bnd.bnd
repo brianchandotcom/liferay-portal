@@ -10,12 +10,15 @@ Export-Package:\
 	com.liferay.dynamic.data.lists.service.configuration.configurator,\
 	com.liferay.dynamic.data.lists.service.permission,\
 	com.liferay.dynamic.data.lists.workflow
+-include: ../../../../marketplace/business-productivity/bnd.bnd
 Include-Resource:\
 	classes,\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Dynamic Data Lists
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

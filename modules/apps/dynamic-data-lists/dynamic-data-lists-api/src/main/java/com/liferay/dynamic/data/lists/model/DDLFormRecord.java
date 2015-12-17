@@ -15,20 +15,10 @@
 package com.liferay.dynamic.data.lists.model;
 
 /**
- * @author Marcellus Tavares
+ * @author Leonardo Barros
  */
-public class DDLRecordConstants {
+public interface DDLFormRecord {
 
-	public static final int DISPLAY_INDEX_DEFAULT = 0;
-
-	public static final String VERSION_DEFAULT = "1.0";
-
-	public static String getClassName(int scope) {
-		if (scope == DDLRecordSetConstants.SCOPE_FORMS) {
-			return DDLFormRecord.class.getName();
-		}
-
-		return DDLRecord.class.getName();
-	}
+	public DDLRecord getDDLRecord();
 
 }

@@ -369,6 +369,11 @@ AUI.add(
 								elementName: name,
 								validator: {
 									rules: {}
+								},
+								strings: {
+									edit : Liferay.Language.get('edit'),
+									save : Liferay.Language.get('save'),
+									cancel : Liferay.Language.get('cancel')
 								}
 							};
 

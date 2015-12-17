@@ -337,11 +337,11 @@ public class BundleJavaFileManager
 		}
 	}
 
-	private BundleWiring _bundleWiring;
-	private Set<BundleWiring> _bundleWirings;
-	private Logger _logger;
-	private ResourceResolver _resourceResolver;
+	private final BundleWiring _bundleWiring;
+	private final Set<BundleWiring> _bundleWirings;
+	private final Logger _logger;
+	private final ResourceResolver _resourceResolver;
 	private final Set<Object> _systemCapabilities = new HashSet<Object>();
-	private boolean _verbose;
+	private final boolean _verbose;
 
 }

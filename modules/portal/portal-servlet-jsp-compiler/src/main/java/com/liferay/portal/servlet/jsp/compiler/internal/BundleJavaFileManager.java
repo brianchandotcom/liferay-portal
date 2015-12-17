@@ -53,6 +53,10 @@ import org.phidias.compile.ResourceResolver;
 import static org.phidias.compile.Constants.JAVA_PACKAGE;
 import static org.phidias.compile.Constants.STAR;
 
+/**
+ * @author Raymond Augé
+ * @author Shuyang Zhou
+ */
 public class BundleJavaFileManager
 	extends ForwardingJavaFileManager<JavaFileManager>
 	implements Constants {

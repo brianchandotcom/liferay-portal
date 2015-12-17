@@ -658,8 +658,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 		StagedModel stagedModel, Class<?> clazz) {
 
 		return createServiceContext(
-			null, ExportImportPathUtil.getModelPath(stagedModel), stagedModel,
-			clazz);
+			getImportDataStagedModelElement(stagedModel),
+			ExportImportPathUtil.getModelPath(stagedModel), stagedModel, clazz);
 	}
 
 	@Override
@@ -2121,13 +2121,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 			serviceContext.setAssetTagNames(assetTagNames);
 		}
 
-		Attribute assetPriorityAttribute = element.attribute("asset-priority");
+		if (element != null) {
+			Attribute assetPriorityAttribute = element.attribute(
+				"asset-priority");
 
-		if (assetPriorityAttribute != null) {
-			double assetPriority = GetterUtil.getDouble(
-				assetPriorityAttribute.getValue());
+			if (assetPriorityAttribute != null) {
+				double assetPriority = GetterUtil.getDouble(
+					assetPriorityAttribute.getValue());
 
-			serviceContext.setAssetPriority(assetPriority);
+				serviceContext.setAssetPriority(assetPriority);
+			}
 		}
 
 		// Expando

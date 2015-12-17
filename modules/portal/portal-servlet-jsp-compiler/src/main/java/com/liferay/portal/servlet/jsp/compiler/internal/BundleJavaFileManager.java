@@ -65,10 +65,9 @@ public class BundleJavaFileManager
 
 		super(javaFileManager);
 
-		_resourceResolver = resourceResolver;
-
 		_logger = logger;
 		_verbose = verbose;
+		_resourceResolver = resourceResolver;
 
 		if (_verbose) {
 			_logger.log(

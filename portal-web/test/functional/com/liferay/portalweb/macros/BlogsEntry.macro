@@ -1771,36 +1771,44 @@
 	</command>
 
 	<command name="viewViewCountPG">
-		<execute function="Click#clickAtNavigation" locator1="link=${pageName}" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
 
-		<execute function="Click#clickAtNavigation" locator1="link=${pageName}" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
 
-		<var locator="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" name="entryViewCount" />
-		<var method="selenium#getFirstNumber('${entryViewCount}')" name="entryViewCount" />
+		<var locator="BlogsEntry#ENTRY_VIEW_COUNT" name="entryViewCount" />
+
+		<var method="StringUtil#extractLast('${entryViewCount}',',')" name="entryViewCount" />
+		<var method="StringUtil#extractDigits('${entryViewCount}')" name="entryViewCount" />
 
 		<if>
 			<equals arg1="${entryViewCount}" arg2="1" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} View," />
+				<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#ENTRY_VIEW_COUNT" value1="${entryViewCount} View" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
+				<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#ENTRY_VIEW_COUNT" value1="${entryViewCount} Views" />
 			</else>
 		</if>
 
-		<execute function="Click#clickAtNavigation" locator1="link=${pageName}" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
 
 		<var method="MathUtil#sum('${entryViewCount}', '1')" name="entryViewCount" />
 
-		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#ENTRY_VIEW_COUNT" value1="${entryViewCount} Views" />
 	</command>
 
 	<command name="viewViewPermissionsPG">

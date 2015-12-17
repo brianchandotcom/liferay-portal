@@ -847,15 +847,16 @@
 	</command>
 
 	<command name="selectScopePG">
-		<var name="key_currentKBPageScope" value="${currentKBPageScope}" />
-		<var name="key_newKBPageScope" value="${newKBPageScope}" />
-
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
 		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SECTION_SCOPE" value1="Scope" />
-		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SCOPE_MENU_BUTTON" value1="${currentKBPageScope}" />
-		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SCOPE_SELECTION" value1="${newKBPageScope}" />
+
+		<execute function="Select" locator1="KnowledgeBaseConfiguration#SCOPE_SELECTION" value1="${newKBPageScope}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

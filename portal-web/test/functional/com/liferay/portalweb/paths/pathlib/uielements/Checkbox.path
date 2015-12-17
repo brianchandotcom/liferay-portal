@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_VIEW_COUNT</td>
+	<td>//label[contains(.,'Enable View Count')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_VIEW_COUNT_INCREMENT</td>
 	<td>//label[contains(.,'Enable View Count Increment')]/input[@type='checkbox']</td>
 	<td></td>

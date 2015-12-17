@@ -332,7 +332,13 @@
 			<then>
 				<var name="key_categoryName" value="${categoryName}" />
 
-				<execute macro="PGDocumentsandmediaEditdocument#showCategorization" />
+				<if>
+					<condition function="IsElementNotPresent#isNotVisible" locator1="AssetCategorization#TAGS_FIELD" />
+					<then>
+						<execute function="AssertClick" locator1="AssetCategorization#CATEGORIZATION_PANEL_COLLAPSED" value1="Categorization" />
+					</then>
+				</if>
+
 				<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 				<execute function="AssertClick" locator1="AssetCategorization#CATEGORIES_CATEGORY" value1="${categoryName}" />
@@ -1537,9 +1543,9 @@
 	</command>
 
 	<command name="searchCP">
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${dmDocumentKeyword}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${dmDocumentKeyword}" />
 
-		<execute function="Click" locator1="Search#SEARCH_BUTTON" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 	</command>
 
 	<command name="searchPG">

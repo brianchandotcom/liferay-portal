@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -47,7 +48,6 @@ import org.phidias.compile.BundleJavaFileObject;
 import org.phidias.compile.Constants;
 import org.phidias.compile.JarJavaFileObject;
 import org.phidias.compile.ResourceResolver;
-import org.phidias.compile.TPhLog;
 import static org.phidias.compile.Constants.JAVA_PACKAGE;
 import static org.phidias.compile.Constants.STAR;
 
@@ -85,12 +85,12 @@ public class BundleJavaFileManager
 					"context: ");
 		}
 
-		_bundleWirings = new ArrayList<BundleWiring>();
+		_bundleWirings = new LinkedHashSet<>();
 
 		for (BundleWire bundleWire : providedWires) {
 			BundleWiring providerWiring = bundleWire.getProviderWiring();
 
-			if (_bundleWirings.contains(providerWiring)) {
+			if (!_bundleWirings.add(providerWiring)) {
 				continue;
 			}
 
@@ -120,16 +120,10 @@ public class BundleJavaFileManager
 					"\t" + curBundle.getSymbolicName() + "-" +
 						curBundle.getVersion());
 			}
-
-			_bundleWirings.add(providerWiring);
 		}
 	}
 
 	public void addBundleWiring(BundleWiring bundleWiring) {
-		if (_bundleWirings.contains(bundleWiring)) {
-			return;
-		}
-
 		_bundleWirings.add(bundleWiring);
 	}
 
@@ -344,7 +338,7 @@ public class BundleJavaFileManager
 	}
 
 	private BundleWiring _bundleWiring;
-	private ArrayList<BundleWiring> _bundleWirings;
+	private Set<BundleWiring> _bundleWirings;
 	private Logger _logger;
 	private ResourceResolver _resourceResolver;
 	private final Set<Object> _systemCapabilities = new HashSet<Object>();

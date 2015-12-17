@@ -92,8 +92,9 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = {
-			"**/*.min.js", "**/*.nocsf.js", "**/aui/**", "**/jquery/**",
-			"**/lodash/**", "**/misc/**", "**/r2.js", "**/tools/**"
+			"**/*.min.js", "**/*.nocsf.js", "**/*.soy.js", "**/aui/**",
+			"**/jquery/**", "**/lodash/**", "**/misc/**", "**/r2.js",
+			"**/tools/**"
 		};
 
 		return getFileNames(excludes, getIncludes());

@@ -1460,19 +1460,33 @@ ${portal.legacy.file.content}</echo>
 						<![CDATA[
 tell application "System Events"
 	tell process "Safari"
-		set frontmost to true
-
-		repeat until (exists window 1) and subrole of window 1 is "AXDialog" -- wait until the dialog is displayed.
+		repeat until (exists window 1) and subrole of window 1 is "AXDialog"
 			delay 1
 		end repeat
 
-		click button 1 of front window -- install
+		click button 1 of front window
 	end tell
 end tell
 
 tell application "Safari" to quit
 						]]>
 					</echo>
+
+					<if>
+						<contains string="${os.version}" substring="10.11" />
+						<then>
+							<replace file="tools/selenium/safaridriver.scpt">
+								<replacefilter>
+									<replacetoken><![CDATA[repeat until (exists window 1) and subrole of window 1 is "AXDialog"]]></replacetoken>
+									<replacevalue><![CDATA[repeat until exists button 1 of sheet 1 of window 1]]></replacevalue>
+								</replacefilter>
+								<replacefilter>
+									<replacetoken><![CDATA[click button 1 of front window]]></replacetoken>
+									<replacevalue><![CDATA[click button 1 of sheet 1 of window 1]]></replacevalue>
+								</replacefilter>
+							</replace>
+						</then>
+					</if>
 
 					<execute>
 						osascript ${basedir.unix}/tools/selenium/safaridriver.scpt

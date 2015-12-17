@@ -70,7 +70,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteScopeName" value="Staging Site Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>

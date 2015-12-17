@@ -16,28 +16,35 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test="<%= !group.isStaged() && !group.hasLocalOrRemoteStagingGroup() %>">
+		<liferay-portlet:runtime portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>" />
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
-<div class="container-fluid-1280" id="<portlet:namespace />processesContainer">
-	<liferay-util:include page="/processes_list/view.jsp" servletContext="<%= application %>" />
-</div>
+		<div class="container-fluid-1280" id="<portlet:namespace />processesContainer">
+			<liferay-util:include page="/processes_list/view.jsp" servletContext="<%= application %>" />
+		</div>
 
-<liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= StagingProcessesPortletKeys.STAGING_PROCESSES %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<liferay-portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-	<liferay-portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
-	<liferay-portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<liferay-portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-</liferay-portlet:renderURL>
+		<liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= StagingProcessesPortletKeys.STAGING_PROCESSES %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<liferay-portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+			<liferay-portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
+			<liferay-portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			<liferay-portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+		</liferay-portlet:renderURL>
 
-<portlet:renderURL var="addNewProcessURL">
-	<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-</portlet:renderURL>
+		<portlet:renderURL var="addNewProcessURL">
+			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+		</portlet:renderURL>
 
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "publish-to-live") %>' url="<%= addNewProcessURL %>" />
-</liferay-frontend:add-menu>
+		<liferay-frontend:add-menu>
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "publish-to-live") %>' url="<%= addNewProcessURL %>" />
+		</liferay-frontend:add-menu>
+	</c:otherwise>
+</c:choose>
 
 <aui:script use="liferay-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishLayouts" var="publishProcessesURL">

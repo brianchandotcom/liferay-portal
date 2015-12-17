@@ -49,10 +49,6 @@ public class StagingProcessesPanelApp extends BasePanelApp {
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (!group.isStaged() && !group.hasLocalOrRemoteStagingGroup()) {
-			return false;
-		}
-
 		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
 			return false;
 		}

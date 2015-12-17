@@ -48,7 +48,6 @@ import org.phidias.compile.JarJavaFileObject;
 import org.phidias.compile.ResourceResolver;
 import org.phidias.compile.TPhLog;
 import static org.phidias.compile.Constants.JAVA_PACKAGE;
-import static org.phidias.compile.Constants.OPT_VERBOSE;
 import static org.phidias.compile.Constants.STAR;
 
 public class BundleJavaFileManager
@@ -57,7 +56,7 @@ public class BundleJavaFileManager
 
 	public BundleJavaFileManager(
 			Bundle bundle, JavaFileManager javaFileManager,
-			List<String> options, ResourceResolver resourceResolver)
+			boolean verbose, ResourceResolver resourceResolver)
 		throws IOException {
 
 		super(javaFileManager);
@@ -66,7 +65,7 @@ public class BundleJavaFileManager
 
 		_log = new TPhLog();
 
-		if ((options != null) && options.contains(OPT_VERBOSE)) {
+		if (verbose) {
 			_log.out = System.err;
 		}
 

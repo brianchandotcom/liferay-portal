@@ -292,7 +292,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 				BundleJavaFileManager bundleJavaFileManager =
 					new BundleJavaFileManager(
-						_bundle, standardJavaFileManager, options,
+						_bundle, standardJavaFileManager,
+						options.contains(
+							org.phidias.compile.Constants.OPT_VERBOSE),
 						_resourceResolver);
 
 				addBundleWirings(bundleJavaFileManager);

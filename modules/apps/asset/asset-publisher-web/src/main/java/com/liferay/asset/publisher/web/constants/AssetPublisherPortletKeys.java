@@ -22,6 +22,12 @@ public class AssetPublisherPortletKeys {
 	public static final String ASSET_PUBLISHER =
 		"com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet";
 
+	public static final String DYNAMIC_INCLUDE_VIEW_CONTENT_POST =
+		"com.liferay.asset.publisher#VIEW_CONTENT#post";
+
+	public static final String DYNAMIC_INCLUDE_VIEW_CONTENT_PRE =
+		"com.liferay.asset.publisher#VIEW_CONTENT#pre";
+
 	public static final String HIGHEST_RATED_ASSETS =
 		"com_liferay_asset_publisher_web_portlet_HighestRatedAssetsPortlet";
 

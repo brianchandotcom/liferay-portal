@@ -33,4 +33,10 @@ public class WikiWebKeys {
 	public static final String WIKI_TREE_WALKER_PARENT =
 		"WIKI_TREE_WALKER_PARENT";
 
+	private static final String _DYNAMIC_INCLUDE_VIEW_POST =
+		"com.liferay.wiki#VIEW#post";
+
+	private static final String _DYNAMIC_INCLUDE_VIEW_PRE =
+		"com.liferay.wiki#VIEW#pre";
+
 }

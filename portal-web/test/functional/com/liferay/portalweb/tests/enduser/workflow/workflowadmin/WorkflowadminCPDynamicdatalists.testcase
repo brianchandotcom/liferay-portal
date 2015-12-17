@@ -264,7 +264,7 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="DDLRecord#gotoEditViaTaskAssignedToMeDetails" />
+		<execute macro="Workflow#gotoPreviewEdit" />
 
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="DDL Record Edit" />

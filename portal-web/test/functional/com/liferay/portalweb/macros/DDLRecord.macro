@@ -108,12 +108,6 @@
 		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
 	</command>
 
-	<command name="gotoEditViaTaskAssignedToMeDetails">
-		<execute macro="Workflow#gotoPreviewEdit" />
-
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-	</command>
-
 	<command name="gotoRecordPreview">
 		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
 	</command>

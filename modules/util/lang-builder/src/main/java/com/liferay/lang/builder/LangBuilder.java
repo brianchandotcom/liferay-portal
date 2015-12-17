@@ -151,6 +151,10 @@ public class LangBuilder {
 
 		String content = _orderProperties(propertiesFile);
 
+		if (Validator.isNull(content)) {
+			return;
+		}
+
 		// Locales that are not invoked by _createProperties should still be
 		// rewritten to use the right line separator
 

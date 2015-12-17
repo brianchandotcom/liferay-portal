@@ -309,12 +309,6 @@
 		</while>
 	</command>
 
-	<command name="submitForPublication">
-		<execute macro="Button#clickSubmitForPublication" />
-
-		<execute macro="Alert#viewSuccess" />
-	</command>
-
 	<command name="publish">
 		<execute macro="Button#clickPublish" />
 
@@ -345,6 +339,12 @@
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="submitForPublication">
+		<execute macro="Button#clickSubmitForPublication" />
+
+		<execute macro="Alert#viewSuccess" />
 	</command>
 
 	<command name="viewEditPreview">

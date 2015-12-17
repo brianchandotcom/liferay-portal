@@ -44,7 +44,7 @@
 				<execute macro="Page#tearDownPG" />
 
 				<execute macro="Page#tearDownPG">
-					<var name="siteName" value="test" />
+					<var name="site" value="test" />
 					<var name="siteURL" value="true" />
 				</execute>
 			</else>

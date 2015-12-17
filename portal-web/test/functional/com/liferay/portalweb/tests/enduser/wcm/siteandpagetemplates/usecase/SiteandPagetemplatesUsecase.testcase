@@ -81,16 +81,12 @@
 
 		<execute macro="Site#addSiteTemplateCP">
 			<var name="siteName" value="Site Name" />
-			<var name="siteTemplateName" value="Site Template" />
-		</execute>
-
-		<execute macro="Page#gotoPagesCP">
-			<var name="page" value="Public Pages" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
 			<var name="page" value="Public Pages" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">
@@ -117,9 +113,9 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSiteTemplateCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="sitePageName" value="Home" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="page" value="Public Pages" />
+			<var name="site" value="Site Name" />
+			<var name="sitePageName" value="home" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -128,9 +124,9 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSiteTemplateCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="sitePageName" value="Home" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="page" value="Public Pages" />
+			<var name="site" value="Site Name" />
+			<var name="sitePageName" value="home" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">

@@ -97,7 +97,7 @@ public class OpenIdPropertiesVerifyProcessTest
 
 		UnicodeProperties properties = new UnicodeProperties();
 
-		properties.put(LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED, "false");
+		properties.put(LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED, "true");
 
 		List<Company> companies = _companyLocalService.getCompanies(false);
 
@@ -114,26 +114,28 @@ public class OpenIdPropertiesVerifyProcessTest
 		List<Company> companies = _companyLocalService.getCompanies(false);
 
 		for (Company company : companies) {
-			try {
-				Settings settings = getSettings(company.getCompanyId());
-				settings.getModifiableSettings().reset();
-			}
-			catch (SettingsException e) {
-				throw new IOException(e);
-			}
+			Settings settings = getSettings(company.getCompanyId());
+
+			ModifiableSettings modifiableSettings =
+				settings.getModifiableSettings();
+
+			modifiableSettings.reset();
 		}
 
 		_bundleContext = null;
 	}
 
-	protected static Settings getSettings(long companyId)
-		throws SettingsException {
-
-		Settings settings = _settingsFactory.getSettings(
+	protected static Settings getSettings(long companyId) {
+		try {
+			Settings settings = _settingsFactory.getSettings(
 				new CompanyServiceSettingsLocator(
 					companyId, OpenIdConstants.SERVICE_NAME));
 
-		return settings;
+			return settings;
+		}
+		catch (SettingsException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	protected void doVerify() throws VerifyException {
@@ -146,24 +148,17 @@ public class OpenIdPropertiesVerifyProcessTest
 				company.getCompanyId(), true);
 
 			Assert.assertTrue(
-					Validator.isNull(
-						portletPreferences.getValue(
-							LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED,
-							StringPool.BLANK)));
+				Validator.isNull(
+					portletPreferences.getValue(
+						LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED,
+						StringPool.BLANK)));
 
-			Settings settings;
-
-			try {
-				settings = getSettings(company.getCompanyId());
-			}
-			catch (SettingsException e) {
-				throw new VerifyException(e);
-			}
+			Settings settings = getSettings(company.getCompanyId());
 
 			Assert.assertEquals(
-					StringPool.FALSE,
-					settings.getValue(
-						OpenIdConstants.AUTH_ENABLED, StringPool.TRUE));
+				StringPool.TRUE,
+				settings.getValue(
+					OpenIdConstants.AUTH_ENABLED, StringPool.FALSE));
 		}
 	}
 
@@ -174,7 +169,8 @@ public class OpenIdPropertiesVerifyProcessTest
 				_bundleContext.getAllServiceReferences(
 					VerifyProcess.class.getName(),
 					"(&(objectClass=" + VerifyProcess.class.getName() +
-						")(verify.process.name=com.liferay.portal.openid))");
+						")(verify.process.name=" +
+						"com.liferay.portal.security.sso.openid))");
 
 			if (ArrayUtil.isEmpty(serviceReferences)) {
 				throw new IllegalStateException("Unable to get verify process");

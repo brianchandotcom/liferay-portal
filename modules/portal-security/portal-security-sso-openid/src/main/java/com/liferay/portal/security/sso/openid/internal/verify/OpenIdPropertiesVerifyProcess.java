@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.model.Company;
@@ -48,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"verify.process.name=com.liferay.portal.openid"},
+	property = {"verify.process.name=com.liferay.portal.security.sso.openid"},
 	service = VerifyProcess.class
 )
 public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
@@ -76,31 +77,31 @@ public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
 	}
 
 	protected void storeSettings(
-			long companyId,
-			Dictionary<String, Object> dictionary)
+			long companyId, Dictionary<String, Object> dictionary)
 		throws IOException, SettingsException, ValidatorException {
 
 		Settings settings = _settingsFactory.getSettings(
-				new CompanyServiceSettingsLocator(
-					companyId, OpenIdConstants.SERVICE_NAME));
+			new CompanyServiceSettingsLocator(
+				companyId, OpenIdConstants.SERVICE_NAME));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
 		SettingsDescriptor settingsDescriptor =
-				_settingsFactory.getSettingsDescriptor(
-					OpenIdConstants.SERVICE_NAME);
+			_settingsFactory.getSettingsDescriptor(
+				OpenIdConstants.SERVICE_NAME);
 
-			for (String name : settingsDescriptor.getAllKeys()) {
-				String value = dictionary.get(name).toString();
-				String oldValue = settings.getValue(name, null);
+		for (String name : settingsDescriptor.getAllKeys()) {
+			String value = GetterUtil.getString(dictionary.get(name));
 
-				if (!value.equals(oldValue)) {
-					modifiableSettings.setValue(name, value);
-				}
+			String oldValue = settings.getValue(name, null);
+
+			if (!value.equals(oldValue)) {
+				modifiableSettings.setValue(name, value);
 			}
+		}
 
-			modifiableSettings.store();
+		modifiableSettings.store();
 	}
 
 	protected void verifyOpenIdAuthProperties(long companyId)
@@ -111,7 +112,7 @@ public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
 		dictionary.put(
 			OpenIdConstants.AUTH_ENABLED,
 			_prefsProps.getBoolean(
-				companyId, LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED, true));
+				companyId, LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED, false));
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -132,8 +133,7 @@ public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
 
 			Set<String> keys = new HashSet<>();
 
-			keys.addAll(
-				Arrays.asList(LegacyOpenIdPropsKeys.NONPOSTFIXED_OPENID_KEYS));
+			keys.addAll(Arrays.asList(LegacyOpenIdPropsKeys.OPENID_KEYS));
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

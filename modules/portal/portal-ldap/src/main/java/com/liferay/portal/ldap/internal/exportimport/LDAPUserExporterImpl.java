@@ -52,6 +52,8 @@ import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SchemaViolationException;
 import javax.naming.ldap.LdapContext;
 
+import org.apache.commons.lang.time.StopWatch;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -74,6 +76,17 @@ public class LDAPUserExporterImpl implements UserExporter {
 		throws Exception {
 
 		long companyId = contact.getCompanyId();
+
+		StopWatch stopWatch = new StopWatch();
+
+		if (_log.isTraceEnabled()) {
+			stopWatch.start();
+
+			_log.trace(
+				"exportUser(Contact, Map): userId = " + contact.getUserId() +
+					"contactId = " + contact.getContactId() +
+					", companyId = " + companyId + ".");
+		}
 
 		LDAPAuthConfiguration ldapAuthConfiguration =
 			_ldapAuthConfigurationProvider.getConfiguration(companyId);
@@ -145,6 +158,12 @@ public class LDAPUserExporterImpl implements UserExporter {
 			if (ldapContext != null) {
 				ldapContext.close();
 			}
+
+			if (_log.isTraceEnabled()) {
+				_log.trace(
+					"Completed export for userId " + contact.getUserId() +
+						" in " + (stopWatch.getTime()) + "ms.");
+			}
 		}
 	}
 
@@ -156,6 +175,18 @@ public class LDAPUserExporterImpl implements UserExporter {
 		User user = _userLocalService.getUser(userId);
 
 		long companyId = user.getCompanyId();
+
+		StopWatch stopWatch = new StopWatch();
+
+		if (_log.isTraceEnabled()) {
+			stopWatch.start();
+
+			_log.trace(
+				"exportUser(userId, userGroupId, UserOperation): " +
+					"userId = " + userId +
+					"userGroupId = " + userGroupId +
+					", companyId = " + companyId + ".");
+		}
 
 		LDAPAuthConfiguration ldapAuthConfiguration =
 			_ldapAuthConfigurationProvider.getConfiguration(companyId);
@@ -230,6 +261,12 @@ public class LDAPUserExporterImpl implements UserExporter {
 		finally {
 			if (ldapContext != null) {
 				ldapContext.close();
+			}
+
+			if (_log.isTraceEnabled()) {
+				_log.trace(
+					"Completed export for userId " + userId +
+						" in " + (stopWatch.getTime()) + "ms.");
 			}
 		}
 	}

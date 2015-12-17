@@ -323,17 +323,18 @@
 	</command>
 
 	<command name="gotoSiteTemplateCP">
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="${portletName}" />
-			<var name="siteScopeName" value="${siteScopeName}" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="${page}" />
+			<var name="site" value="${site}" />
 		</execute>
 
 		<var name="key_sitePageName" value="${sitePageName}" />
 
 		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" value1="${sitePageName}" />
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_PERMISSIONS" value1="Permissions" />
 
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="gotoUserGroupSitePermissionsCP">

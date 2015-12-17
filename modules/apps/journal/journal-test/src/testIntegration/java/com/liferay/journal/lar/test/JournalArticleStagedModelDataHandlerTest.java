@@ -76,6 +76,11 @@ public class JournalArticleStagedModelDataHandlerTest
 			SynchronousDestinationTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
 
+	@Override
+	public boolean isAssetPrioritySupported() {
+		return true;
+	}
+
 	@Test
 	public void testCompanyScopeDependencies() throws Exception {
 		initExport();

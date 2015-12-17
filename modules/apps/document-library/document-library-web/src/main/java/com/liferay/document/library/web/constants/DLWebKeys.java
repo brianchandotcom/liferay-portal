@@ -22,10 +22,10 @@ public class DLWebKeys {
 	public static final String DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR =
 		"DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR";
 
-	private static final String DYNAMIC_INCLUDE_VIEW_FILE_ENTRY_POST =
+	private static final String _DYNAMIC_INCLUDE_VIEW_FILE_ENTRY_POST =
 		"com.liferay.document.library#VIEW_FILE_ENTRY#post";
 
-	private static final String DYNAMIC_INCLUDE_VIEW_FILE_ENTRY_PRE =
+	private static final String _DYNAMIC_INCLUDE_VIEW_FILE_ENTRY_PRE =
 		"com.liferay.document.library#VIEW_FILE_ENTRY#pre";
 
 }

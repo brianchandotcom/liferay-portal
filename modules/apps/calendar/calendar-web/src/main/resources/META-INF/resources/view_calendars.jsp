@@ -94,7 +94,6 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 				cssClass="entry-action"
 				path="/calendar_action.jsp"
 			/>
-
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" />

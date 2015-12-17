@@ -302,7 +302,6 @@ if (organization != null) {
 
 								<c:choose>
 									<c:when test="<%= !searchTerms.hasSearchTerms() && (parentOrganizationId <= 0) && (filterManageableOrganizations) %>">
-
 										<liferay-ui:search-container-results>
 
 											<%
@@ -316,7 +315,6 @@ if (organization != null) {
 											%>
 
 										</liferay-ui:search-container-results>
-
 									</c:when>
 									<c:otherwise>
 
@@ -444,7 +442,6 @@ if (organization != null) {
 
 					<liferay-util:include page="/organization_action.jsp" servletContext="<%= application %>" />
 				</aui:col>
-
 			</c:if>
 		</aui:row>
 	</c:when>

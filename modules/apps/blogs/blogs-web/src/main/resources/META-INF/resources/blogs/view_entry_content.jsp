@@ -227,7 +227,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 								label="<%= true %>"
 							/>
 						</liferay-ui:custom-attributes-available>
-
 					</c:when>
 				</c:choose>
 			</div>

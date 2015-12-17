@@ -114,7 +114,6 @@ if (Validator.isNotNull(keywords)) {
 		<c:if test="<%= tpe.getType() == TrashPermissionException.RESTORE_RENAME %>">
 			<liferay-ui:message key="you-do-not-have-permission-to-rename-this-item" />
 		</c:if>
-
 	</liferay-ui:error>
 
 	<c:if test="<%= group.isStagingGroup() %>">

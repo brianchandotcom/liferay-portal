@@ -91,7 +91,6 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicySyntaxPanel" persistState="<%= true %>" title="password-syntax-checking">
 			<aui:fieldset>
-
 				<aui:input helpMessage="enable-syntax-checking-help" label="enable-syntax-checking" name="checkSyntax" />
 
 				<div class="password-policy-options" id="<portlet:namespace />syntaxSettings">
@@ -120,7 +119,6 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyHistoryPanel" persistState="<%= true %>" title="password-history">
 			<aui:fieldset>
-
 				<aui:input helpMessage="enable-history-help" label="enable-history" name="history" />
 
 				<div class="password-policy-options" id="<portlet:namespace />historySettings">
@@ -143,7 +141,6 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyExpirationPanel" persistState="<%= true %>" title="password-expiration">
 			<aui:fieldset>
-
 				<aui:input helpMessage="enable-expiration-help" label="enable-expiration" name="expireable" />
 
 				<div class="password-policy-options" id="<portlet:namespace />expirationSettings">

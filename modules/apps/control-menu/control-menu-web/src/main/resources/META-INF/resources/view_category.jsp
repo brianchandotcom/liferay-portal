@@ -80,7 +80,6 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 	<div class="lfr-add-content">
 		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category list-unstyled panel-page-category" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" parentId="<%= panelContainerId %>" persistState="<%= true %>" title="<%= title %>">
-
 			<aui:nav collapsible="<%= false %>">
 
 				<%

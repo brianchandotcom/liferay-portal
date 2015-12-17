@@ -82,7 +82,6 @@ ddmDataProviderSearch.setOrderByType(orderByType);
 				<liferay-ui:search-container-column-jsp
 					path="/data_provider_action.jsp"
 				/>
-
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />

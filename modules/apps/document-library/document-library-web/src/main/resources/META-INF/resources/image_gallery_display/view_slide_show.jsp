@@ -54,7 +54,6 @@ int defaultSpeed = 3000;
 				%>
 
 			</aui:select>
-
 		</aui:col>
 	</aui:fieldset>
 </aui:form>

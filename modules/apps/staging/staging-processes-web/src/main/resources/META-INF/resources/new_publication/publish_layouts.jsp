@@ -244,7 +244,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 				<aui:fieldset cssClass="options-group" label="remote-live-connection-settings">
 					<%@ include file="/new_publication/publish_layouts_remote_options.jspf" %>
 				</aui:fieldset>
-
 			</c:if>
 		</div>
 

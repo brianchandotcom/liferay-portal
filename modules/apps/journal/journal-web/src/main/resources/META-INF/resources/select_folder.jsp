@@ -122,7 +122,6 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
 				</liferay-ui:search-container-column-text>
 			</c:if>
-
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" />

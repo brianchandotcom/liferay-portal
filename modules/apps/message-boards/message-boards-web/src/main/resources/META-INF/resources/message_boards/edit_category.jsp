@@ -158,7 +158,6 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 			<liferay-ui:panel-container extended="<%= true %>" id="messageBoardsCategoryPanelContainer" persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="messageBoardsMailingListPanel" persistState="<%= true %>" title="mailing-list">
-
 					<aui:model-context bean="<%= mailingList %>" model="<%= MBMailingList.class %>" />
 
 					<aui:input fieldParam="mailingListActive" name="active" />

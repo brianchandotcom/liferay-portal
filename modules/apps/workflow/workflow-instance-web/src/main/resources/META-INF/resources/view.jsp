@@ -52,7 +52,6 @@ else {
 			label="completed"
 			selected='<%= tabs2.equals("completed") %>'
 		/>
-
 	</aui:nav>
 </aui:nav-bar>
 

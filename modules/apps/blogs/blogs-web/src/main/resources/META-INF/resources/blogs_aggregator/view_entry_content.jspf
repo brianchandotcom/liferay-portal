@@ -84,7 +84,6 @@
 							<img alt="" class="asset-small-image" src="<%= HtmlUtil.escape(entry.getSmallImageURL(themeDisplay)) %>" width="150" />
 						</div>
 					</c:if>
-
 				</c:when>
 				<c:when test='<%= displayStyle.startsWith("quote") %>'>
 					<span class="quote">

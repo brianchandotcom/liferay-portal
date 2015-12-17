@@ -26,7 +26,6 @@ PortletURL portletURL = workflowTaskDisplayContext.getPortletURL();
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 			<aui:nav cssClass="navbar-nav">
-
 				<portlet:renderURL var="viewPendingURL">
 					<portlet:param name="mvcPath" value="/view.jsp" />
 					<portlet:param name="tabs1" value="pending" />
@@ -48,7 +47,6 @@ PortletURL portletURL = workflowTaskDisplayContext.getPortletURL();
 					label="completed"
 					selected='<%= tabs1.equals("completed") %>'
 				/>
-
 			</aui:nav>
 			<aui:nav-bar-search>
 

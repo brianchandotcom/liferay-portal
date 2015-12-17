@@ -133,7 +133,6 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 				</div>
 			</c:when>
 			<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.MANAGE_STAGING) %>">
-
 				<liferay-ui:error exception="<%= LocaleException.class %>">
 
 					<%

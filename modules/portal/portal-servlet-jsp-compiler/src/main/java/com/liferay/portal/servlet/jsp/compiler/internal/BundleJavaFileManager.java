@@ -162,8 +162,6 @@ public class BundleJavaFileManager
 			boolean recurse)
 		throws IOException {
 
-		List<JavaFileObject> javaFileObjects = new ArrayList<>();
-
 		if ((location == StandardLocation.CLASS_PATH) && _verbose) {
 			_logger.log(
 				Logger.LOG_INFO,
@@ -177,37 +175,20 @@ public class BundleJavaFileManager
 		if (!packageName.startsWith(JAVA_PACKAGE) &&
 			(location == StandardLocation.CLASS_PATH)) {
 
+			List<JavaFileObject> javaFileObjects = new ArrayList<>();
+
 			listFromDependencies(kinds, recurse, packagePath, javaFileObjects);
 
 			if (javaFileObjects.isEmpty() &&
 				_systemCapabilities.contains(packageName)) {
 
-				Iterable<JavaFileObject> localJavaFileObjects =
-					fileManager.list(location, packagePath, kinds, recurse);
-
-				for (JavaFileObject javaFileObject : localJavaFileObjects) {
-					if ((location == StandardLocation.CLASS_PATH) && _verbose) {
-						_logger.log(Logger.LOG_INFO, "\t" + javaFileObject);
-					}
-
-					javaFileObjects.add(javaFileObject);
-				}
+				return fileManager.list(location, packagePath, kinds, recurse);
 			}
-		}
-		else {
-			Iterable<JavaFileObject> localJavaFileObjects =
-				fileManager.list(location, packagePath, kinds, recurse);
 
-			for (JavaFileObject javaFileObject : localJavaFileObjects) {
-				if ((location == StandardLocation.CLASS_PATH) && _verbose) {
-					_logger.log(Logger.LOG_INFO, "\t" + javaFileObject);
-				}
-
-				javaFileObjects.add(javaFileObject);
-			}
+			return javaFileObjects;
 		}
 
-		return javaFileObjects;
+		return fileManager.list(location, packagePath, kinds, recurse);
 	}
 
 	private String getClassNameFromPath(String resourceName) {

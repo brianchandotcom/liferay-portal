@@ -58,7 +58,7 @@ public class BundleJavaFileManager
 
 	public BundleJavaFileManager(
 			Bundle bundle, JavaFileManager javaFileManager,
-			List<String> options, boolean strict)
+			List<String> options)
 		throws IOException {
 
 		super(javaFileManager);
@@ -69,8 +69,6 @@ public class BundleJavaFileManager
 		if ((options != null) && options.contains(OPT_VERBOSE)) {
 			_log.out = System.err;
 		}
-
-		_strict = strict;
 
 		if (_log.isEnabled()) {
 			_log.log(
@@ -101,7 +99,7 @@ public class BundleJavaFileManager
 
 			Bundle curBundle = providerWiring.getBundle();
 
-			if (_strict && (curBundle.getBundleId() == 0)) {
+			if (curBundle.getBundleId() == 0) {
 				List<BundleCapability> bundleCapabilities =
 					providerWiring.getCapabilities(
 						BundleRevision.PACKAGE_NAMESPACE);
@@ -306,9 +304,6 @@ public class BundleJavaFileManager
 	}
 
 	private boolean hasPackageCapability(String packageName) {
-		if (!_strict) {
-			return true;
-		}
 
 		// We only need to check if there is a matching system bundle capability
 		// if mode is strict. Otherwise, allow loading classes from the defined
@@ -383,7 +378,6 @@ public class BundleJavaFileManager
 	private JavaFileManager _javaFileManager;
 	private TPhLog _log;
 	private ResourceResolver _resourceResolver;
-	private boolean _strict;
 	private final Set<Object> _systemCapabilities = new HashSet<Object>();
 
 }

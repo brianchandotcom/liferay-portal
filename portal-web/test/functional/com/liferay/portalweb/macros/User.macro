@@ -931,9 +931,9 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userFirstName}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userFirstName}" />
 
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<if>
 			<equals arg1="${deactivateType}" arg2="Actions" />

@@ -88,6 +88,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 	/>
 
 	<liferay-ui:search-container
+		emptyResultsMessage="no-apps-were-found"
 		id="appDisplays"
 		iteratorURL="<%= portletURL %>"
 	>

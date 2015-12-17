@@ -105,6 +105,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 	/>
 
 	<liferay-ui:search-container
+		emptyResultsMessage="no-modules-were-found"
 		id="bundles"
 		iteratorURL="<%= portletURL %>"
 	>

@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+ArticleSearch articleSearchContainer = journalDisplayContext.getSearchContainer();
+%>
+
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
 
 <liferay-trash:undo
@@ -33,24 +37,28 @@ data.put("qa-id", "navigation");
 		<aui:nav-item label="web-content" selected="<%= true %>" />
 	</aui:nav>
 
-	<aui:nav-bar-search>
+	<c:if test="<%= (articleSearchContainer.getTotal() > 0) || journalDisplayContext.isSearch() %>">
+		<aui:nav-bar-search>
 
-		<%
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+			<%
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
-		portletURL.setParameter("showEditActions", String.valueOf(journalDisplayContext.isShowEditActions()));
-		%>
+			portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
+			portletURL.setParameter("showEditActions", String.valueOf(journalDisplayContext.isShowEditActions()));
+			%>
 
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="articles" />
-</liferay-util:include>
+<c:if test="<%= (articleSearchContainer.getTotal() > 0) || journalDisplayContext.isSearch() %>">
+	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="searchContainerId" value="articles" />
+	</liferay-util:include>
+</c:if>
 
 <div id="<portlet:namespace />journalContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

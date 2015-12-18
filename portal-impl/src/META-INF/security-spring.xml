@@ -70,6 +70,7 @@
 	<bean id="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" class="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameValidatorFactory" class="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.SessionAuthToken" class="com.liferay.portal.security.auth.SessionAuthToken" />
+	<bean id="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" class="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" />
 	<bean id="com.liferay.portal.security.auth.http.HttpAuthManager" class="com.liferay.portal.security.auth.http.HttpAuthManagerImpl" />
 	<bean id="com.liferay.portal.security.auth.session.AuthenticatedSessionManager" class="com.liferay.portal.security.auth.session.AuthenticatedSessionManagerImpl" />
 	<bean id="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" class="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" />

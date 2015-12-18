@@ -426,6 +426,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 					countDownLatch.countDown();
 				}
 			}
+
 		};
 
 		MessageBusUtil.registerMessageListener(

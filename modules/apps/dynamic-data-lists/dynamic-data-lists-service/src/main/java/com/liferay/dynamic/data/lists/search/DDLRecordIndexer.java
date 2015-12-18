@@ -319,6 +319,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 					dynamicQuery.add(
 						recordSetProperty.in(recordSetDynamicQuery));
 				}
+
 		});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(

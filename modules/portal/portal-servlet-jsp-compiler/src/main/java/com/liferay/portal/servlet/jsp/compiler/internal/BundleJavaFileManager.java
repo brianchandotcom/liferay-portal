@@ -296,15 +296,14 @@ public class BundleJavaFileManager
 				if (_verbose) {
 					_logger.log(
 						Logger.LOG_INFO,
-						"\tCould not create JavaFileObject for {" +
-							resourceURL + "}");
+						"Could not create JavaFileObject for " + resourceURL);
 				}
 
 				continue;
 			}
 
 			if (_verbose) {
-				_logger.log(Logger.LOG_INFO, "\t" + javaFileObject);
+				_logger.log(Logger.LOG_INFO, "Created " + javaFileObject);
 			}
 
 			javaFileObjects.add(javaFileObject);

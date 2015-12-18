@@ -162,7 +162,7 @@ public class FailureMessageUtil {
 		}
 
 		sb.append("<pre>");
-		sb.append(JenkinsResultsParserUtil.fixJSON(consoleOutput));
+		sb.append(consoleOutput);
 		sb.append("</pre>");
 
 		return sb.toString();

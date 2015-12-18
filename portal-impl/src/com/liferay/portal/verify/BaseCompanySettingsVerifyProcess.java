@@ -36,8 +36,7 @@ import javax.portlet.ValidatorException;
 /**
  * @author Michael C. Han
  */
-public abstract class AbstractCompanySettingsVerifyProcess
-	extends VerifyProcess {
+public abstract class BaseCompanySettingsVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {

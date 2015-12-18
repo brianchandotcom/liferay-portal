@@ -314,7 +314,7 @@ public class InputTag extends BaseInputTag {
 		}
 
 		List<String> checkboxNames = (List<String>)request.getAttribute(
-			"aui:form:checkboxNames");
+			WebKeys.CHECKBOX_NAMES);
 
 		if (checkboxNames != null) {
 			String inputName = getInputName();

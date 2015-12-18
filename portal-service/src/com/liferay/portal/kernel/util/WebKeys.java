@@ -81,6 +81,8 @@ public interface WebKeys {
 
 	public static final String CAS_NO_SUCH_USER_EXCEPTION = "CAS_NO_SUCH_USER_EXCEPTION";
 
+	public static final String CHECKBOX_NAMES = "LIFERAY_SHARED_CHECKBOX_NAMES";
+
 	public static final String CLP_MESSAGE_LISTENERS = "CLP_MESSAGE_LISTENERS";
 
 	public static final String COLOR_SCHEME = "COLOR_SCHEME";

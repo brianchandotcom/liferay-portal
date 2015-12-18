@@ -14,9 +14,6 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
-import static org.phidias.compile.Constants.JAVA_PACKAGE;
-import static org.phidias.compile.Constants.STAR;
-
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;

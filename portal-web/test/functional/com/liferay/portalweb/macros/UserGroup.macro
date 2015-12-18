@@ -60,39 +60,13 @@
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
 		<execute function="Click" locator1="Button#SUBMIT" />
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#MANAGE_SITE_PAGES" value1="Manage Site Pages" />
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_PAGES" value1="Manage Pages" />
 
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="SelectFrame" locator1="IFrame#MANAGE_SITE_PAGES" />
-
-		<if>
-			<equals arg1="${sitePagePrivacy}" arg2="Private" />
-			<then>
-				<execute function="AssertClick" locator1="SitePages#NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
-			</then>
-			<elseif>
-				<equals arg1="${sitePagePrivacy}" arg2="Public" />
-				<then>
-					<execute function="AssertClick" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var sitePagePrivacy. Must be (Private|Public)." />
-			</else>
-		</if>
-
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_PAGE" value1="Add Page" />
-
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#PAGE_NAME_FIELD" value1="${sitePageName}" />
-
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-
-		<execute macro="UserGroup#expandRootCP" />
-
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" value1="${sitePageName}" />
+		<execute macro="SitePage#addCP">
+			<var name="page" value="${page}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
 	</command>
 
 	<command name="addSiteCP">
@@ -258,11 +232,11 @@
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 	</command>
 
-	<command name="gotoManageSitePages">
+	<command name="gotoManagePages">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#MANAGE_SITE_PAGES" value1="Manage Site Pages" />
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_PAGES" value1="Manage Pages" />
 	</command>
 
 	<command name="removeMemberCP">
@@ -311,10 +285,10 @@
 		</execute>
 
 		<if>
-			<condition function="IsVisible" locator1="Checkbox#SELECT_ALL" />
+			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
 			<then>
-				<execute function="Check" locator1="Checkbox#SELECT_ALL" />
-				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+				<execute function="Click" locator1="Icon#DELETE" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No user groups were found." />

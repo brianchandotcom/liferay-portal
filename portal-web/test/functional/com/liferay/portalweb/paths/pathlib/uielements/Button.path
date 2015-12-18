@@ -119,11 +119,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BASIC_PREVIEW</td>
-	<td>//button[contains(.,'Basic Preview')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BACK</td>
 	<td>//a[@title='Back']</td>
 	<td></td>

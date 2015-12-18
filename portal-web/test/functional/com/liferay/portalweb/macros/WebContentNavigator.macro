@@ -62,6 +62,8 @@
 		<execute function="Click" locator1="WCD#EDIT_WEB_CONTENT" />
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+
+		<execute function="AssertVisible" locator1="TextInput#TITLE" />
 	</command>
 
 	<command name="gotoManageStructures">
@@ -80,11 +82,19 @@
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 	</command>
 
-	<command name="gotoPreviewCP">
+	<command name="gotoPreviewEntryCP">
 		<execute macro="WebContentNavigator#_openDescriptiveMenulistCP">
 			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentTitleEscapeCharacter" value="${webContentTitleEscapeCharacter}" />
 		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#PREVIEW" value1="Preview" />
+	</command>
+
+	<command name="gotoPreviewViaHeaderCP">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${webContentTitle}" />
+
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#PREVIEW" value1="Preview" />
 	</command>

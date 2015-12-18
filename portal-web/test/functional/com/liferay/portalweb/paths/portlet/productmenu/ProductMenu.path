@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GO_TO_SITES_LINK</td>
+	<td>//a[contains(.,'Go to Site')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_COLLAPSED</td>
 	<td>//div[div[@aria-expanded='true']]/../..//a[@aria-expanded='false' and contains(.,'${key_category}')]</td>
 	<td></td>
@@ -64,7 +69,7 @@
 	<td></td>
 </tr>
 <tr>
-<td>EDIT_PAGE</td>
+	<td>EDIT_PAGE</td>
 	<td>//div[@class='list-group-item']//a[contains(@title,'Edit ${key_page}')]</td>
 	<td></td>
 </tr>

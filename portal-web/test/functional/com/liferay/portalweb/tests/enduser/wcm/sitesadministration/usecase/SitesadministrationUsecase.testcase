@@ -765,7 +765,7 @@
 		</execute>
 
 		<execute macro="UserGroup#addPageCP">
-			<var name="page" value="Public Pages" />
+			<var name="page" value="My Profile" />
 			<var name="sitePageName" value="site Page Name" />
 			<var name="userGroupName" value="User Group Name" />
 		</execute>
@@ -798,8 +798,6 @@
 			<var name="userGroupName" value="User Group Name" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
-
-		<execute function="AssertConsoleTextNotPresent" value1="Error" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

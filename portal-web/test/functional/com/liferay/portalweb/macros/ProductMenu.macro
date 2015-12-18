@@ -205,6 +205,12 @@
 		</execute>
 	</command>
 
+	<command name="gotoSiteViaLink" summary="Navigate to ${site} via the 'Go to Site' link">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute function="AssertClick" locator1="ProductMenu#GO_TO_SITES_LINK" value1="Go to Site" />
+	</command>
+
 	<command name="gotoUserMyAccount" summary="Navigate to Product Menu > User > My Account > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoUser" />
 

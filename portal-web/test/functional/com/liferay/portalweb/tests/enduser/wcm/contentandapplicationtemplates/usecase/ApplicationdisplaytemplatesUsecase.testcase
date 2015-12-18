@@ -557,12 +557,14 @@
 			<var name="portletName" value="Site Map" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="page" value="Public Pages" />
-			<var name="pageStaging" value="true" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName}" />
-			<var name="siteScopeName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoStagingSite" />
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addChildCP">

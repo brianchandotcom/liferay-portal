@@ -94,6 +94,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIVE_LINK</td>
+	<td>//*[@data-qa-id='live']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_LINK</td>
+	<td>//*[@data-qa-id='staging']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_NAME_HEADER</td>
 	<td>//div[contains(@class,'sidebar-header')]//span[contains(.,'${key_siteName}')]</td>
 	<td></td>

@@ -455,12 +455,13 @@
 			<var name="defaultPortalLanguage" value="English (United States)" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationLocalizedCP">
-			<var name="localizedPortletCategoryName" value="Configuración" />
-			<var name="localizedPortletName" value="Ajustes del sitio" />
-			<var name="localizedTabName" value="Sitios Web" />
-			<var name="siteScopeName" value="Site Name" />
-			<var name="tabName" value="Sites" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
+			<var name="category" value="Configuración" />
+			<var name="portlet" value="Ajustes del sitio" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">
@@ -500,12 +501,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationLocalizedCP">
-			<var name="localizedPortletCategoryName" value="Configuración" />
-			<var name="localizedPortletName" value="Ajustes del sitio" />
-			<var name="localizedTabName" value="Sitios Web" />
-			<var name="siteScopeName" value="Site Name" />
-			<var name="tabName" value="Sites" />
+		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
+			<var name="category" value="Configuración" />
+			<var name="portlet" value="Ajustes del sitio" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">

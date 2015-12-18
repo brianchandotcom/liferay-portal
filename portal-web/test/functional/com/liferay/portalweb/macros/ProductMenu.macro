@@ -57,6 +57,12 @@
 		<execute macro="ProductMenuHelper#gotoEditPublicPages" />
 	</command>
 
+	<command name="gotoLiveSite" summary="Navigate to the Live site">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute function="AssertClick" locator1="ProductMenu#LIVE_LINK" value1="Live" />
+	</command>
+
 	<command name="gotoLocalizedControlPanel" summary="Navigate to Product Menu > Control Panel > ${category} > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 
@@ -71,8 +77,6 @@
 
 	<command name="gotoLocalizedSitesAdministration" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoSites" />
-
-		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="${category}" />
@@ -209,6 +213,12 @@
 		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<execute function="AssertClick" locator1="ProductMenu#GO_TO_SITES_LINK" value1="Go to Site" />
+	</command>
+
+	<command name="gotoStagingSite" summary="Navigate to the Staging site">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute function="AssertClick" locator1="ProductMenu#STAGING_LINK" value1="Staging" />
 	</command>
 
 	<command name="gotoUserMyAccount" summary="Navigate to Product Menu > User > My Account > ${portlet}">

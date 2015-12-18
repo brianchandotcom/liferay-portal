@@ -835,6 +835,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No sites were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
 	</command>
 </definition>

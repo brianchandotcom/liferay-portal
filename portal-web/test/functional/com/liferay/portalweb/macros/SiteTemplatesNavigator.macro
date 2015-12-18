@@ -5,14 +5,16 @@
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
 
 		<execute function="Click" locator1="MenuItem#MANAGE" />
+
+		<execute macro="ProductMenuHelper#openProductMenu" />
 	</command>
 
 	<command name="gotoSiteTemplatesPage">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#VIEW_PAGES" value1="View Pages" />
+		<execute function="SelectWindow" locator1="home - ${siteTemplateName} - Liferay" />
 
 		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="${pageName}" />

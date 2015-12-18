@@ -22,18 +22,16 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 MBBan ban = (MBBan)row.getObject();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
-		<portlet:actionURL name="/message_boards/ban_user" var="unbanUserURL">
-			<portlet:param name="<%= Constants.CMD %>" value="unban" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="banUserId" value="<%= String.valueOf(ban.getBanUserId()) %>" />
-		</portlet:actionURL>
+<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
+	<portlet:actionURL name="/message_boards/ban_user" var="unbanUserURL">
+		<portlet:param name="<%= Constants.CMD %>" value="unban" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="banUserId" value="<%= String.valueOf(ban.getBanUserId()) %>" />
+	</portlet:actionURL>
 
-		<liferay-ui:icon
-			iconCssClass="icon-ok-sign"
-			message="unban-this-user"
-			url="<%= unbanUserURL %>"
-		/>
-	</c:if>
-</liferay-ui:icon-menu>
+	<liferay-ui:icon
+		iconCssClass="icon-ok-sign"
+		message="unban-this-user"
+		url="<%= unbanUserURL %>"
+	/>
+</c:if>

@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 ShoppingCoupon coupon = (ShoppingCoupon)row.getObject();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="struts_action" value="/shopping/edit_coupon" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -30,7 +30,6 @@ ShoppingCoupon coupon = (ShoppingCoupon)row.getObject();
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-edit"
 		message="edit"
 		url="<%= editURL %>"
 	/>

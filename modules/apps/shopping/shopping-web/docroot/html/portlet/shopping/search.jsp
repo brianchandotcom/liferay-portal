@@ -176,7 +176,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button type="submit" value="search" />
+		<aui:button cssClass="btn-lg" type="submit" value="search" />
 	</aui:button-row>
 
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />

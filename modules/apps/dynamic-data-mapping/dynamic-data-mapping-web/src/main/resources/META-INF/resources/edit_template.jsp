@@ -436,14 +436,14 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
 		%>
 
-		<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
+		<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
 
-		<aui:button onClick='<%= renderResponse.getNamespace() + "saveAndContinueTemplate();" %>' value='<%= LanguageUtil.get(request, "save-and-continue") %>' />
+		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveAndContinueTemplate();" %>' value='<%= LanguageUtil.get(request, "save-and-continue") %>' />
 
 	<c:if test="<%= ddmDisplay.isVersioningEnabled() %>">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "saveDraftTemplate();" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
+		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveDraftTemplate();" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
 	</c:if>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </div>

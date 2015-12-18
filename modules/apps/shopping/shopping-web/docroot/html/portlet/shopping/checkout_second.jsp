@@ -315,14 +315,14 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	</div>
 
 	<aui:button-row>
-		<aui:button type="submit" value='<%= shoppingGroupServiceOverriddenConfiguration.usePayPal() ? "continue" : "finished" %>' />
+		<aui:button cssClass="btn-lg" type="submit" value='<%= shoppingGroupServiceOverriddenConfiguration.usePayPal() ? "continue" : "finished" %>' />
 
 		<portlet:actionURL var="checkoutURL">
 			<portlet:param name="struts_action" value="/shopping/checkout" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" />
 		</portlet:actionURL>
 
-		<aui:button href="<%= checkoutURL.toString() %>" value="back" />
+		<aui:button cssClass="btn-lg" href="<%= checkoutURL.toString() %>" value="back" />
 	</aui:button-row>
 </aui:form>
 

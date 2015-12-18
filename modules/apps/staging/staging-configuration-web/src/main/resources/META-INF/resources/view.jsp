@@ -288,7 +288,7 @@ boolean disableStagingOptions = GetterUtil.getBoolean(SessionMessages.get(lifera
 
 		<c:if test="<%= !privateLayoutSet.isLayoutSetPrototypeLinkActive() && !publicLayoutSet.isLayoutSetPrototypeLinkActive() && !disableStagingOptions %>">
 			<aui:button-row>
-				<aui:button cssClass="btn-primary" type="submit" />
+				<aui:button cssClass="btn-lg" cssClass="btn-primary" type="submit" />
 			</aui:button-row>
 		</c:if>
 	</aui:form>

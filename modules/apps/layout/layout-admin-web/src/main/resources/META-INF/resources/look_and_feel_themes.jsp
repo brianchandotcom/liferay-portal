@@ -208,7 +208,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 					%>
 
 					<aui:button-row>
-						<aui:button cssClass="manage-layout-set-branches-link" href="<%= marketplaceURL.toString() %>" id="installMore" value="install-more" />
+						<aui:button cssClass="btn-lg manage-layout-set-branches-link" href="<%= marketplaceURL.toString() %>" id="installMore" value="install-more" />
 					</aui:button-row>
 				</c:if>
 			</legend>

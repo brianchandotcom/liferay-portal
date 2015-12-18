@@ -316,9 +316,9 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 			</aui:fieldset>
 
 			<aui:button-row>
-				<aui:button name="back" value="back" />
+				<aui:button cssClass="btn-lg" name="back" value="back" />
 
-				<aui:button type="submit" value="import" />
+				<aui:button cssClass="btn-lg" type="submit" value="import" />
 			</aui:button-row>
 		</div>
 	</aui:form>

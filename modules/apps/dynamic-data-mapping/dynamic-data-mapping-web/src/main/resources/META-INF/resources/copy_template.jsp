@@ -58,8 +58,8 @@ DDMTemplateVersion templateVersion = template.getTemplateVersion();
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button type="submit" value="copy" />
+		<aui:button cssClass="btn-lg" type="submit" value="copy" />
 
-		<aui:button onClick="Liferay.Util.getWindow().hide();" value="close" />
+		<aui:button cssClass="btn-lg" onClick="Liferay.Util.getWindow().hide();" value="close" />
 	</aui:button-row>
 </aui:form>

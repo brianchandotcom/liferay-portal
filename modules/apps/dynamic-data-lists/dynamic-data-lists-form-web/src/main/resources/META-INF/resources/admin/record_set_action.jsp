@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= ddlFormAdminDisplayContext.isShowViewEntriesRecordSetIcon(recordSet) %>">
 		<portlet:renderURL var="viewEntriesURL">
 			<portlet:param name="mvcPath" value="/admin/view_records.jsp" />
@@ -31,7 +31,6 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-view"
 			message="view-entries"
 			url="<%= viewEntriesURL %>"
 		/>

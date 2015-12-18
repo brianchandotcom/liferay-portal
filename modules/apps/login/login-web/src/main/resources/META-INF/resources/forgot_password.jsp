@@ -99,7 +99,7 @@ if (reminderAttempts == null) {
 				</c:if>
 
 				<aui:button-row>
-					<aui:button type="submit" value='<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED ? "next" : "send-new-password" %>' />
+					<aui:button cssClass="btn-lg" type="submit" value='<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED ? "next" : "send-new-password" %>' />
 				</aui:button-row>
 			</c:when>
 			<c:when test="<%= (user2 != null) && Validator.isNotNull(user2.getEmailAddress()) %>">
@@ -143,7 +143,7 @@ if (reminderAttempts == null) {
 						</c:if>
 
 						<aui:button-row>
-							<aui:button type="submit" value='<%= company.isSendPasswordResetLink() ? "send-password-reset-link" : "send-new-password" %>' />
+							<aui:button cssClass="btn-lg" type="submit" value='<%= company.isSendPasswordResetLink() ? "send-password-reset-link" : "send-new-password" %>' />
 						</aui:button-row>
 					</c:otherwise>
 				</c:choose>

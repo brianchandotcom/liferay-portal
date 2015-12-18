@@ -174,7 +174,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 		</aui:field-wrapper>
 
 		<aui:button-row>
-			<aui:button onClick='<%= renderResponse.getNamespace() + "updateDefaultLdap();" %>' value="reset-values" />
+			<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "updateDefaultLdap();" %>' value="reset-values" />
 		</aui:button-row>
 	</aui:fieldset>
 
@@ -195,7 +195,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 			String taglibOnClick = renderResponse.getNamespace() + "testSettings('ldapConnection');";
 			%>
 
-			<aui:button onClick="<%= taglibOnClick %>" value="test-ldap-connection" />
+			<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="test-ldap-connection" />
 		</aui:button-row>
 	</aui:fieldset>
 
@@ -240,7 +240,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 			String taglibOnClick = renderResponse.getNamespace() + "testSettings('ldapUsers');";
 			%>
 
-			<aui:button onClick="<%= taglibOnClick %>" value="test-ldap-users" />
+			<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="test-ldap-users" />
 		</aui:button-row>
 	</aui:fieldset>
 
@@ -265,7 +265,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 			String taglibOnClick = renderResponse.getNamespace() + "testSettings('ldapGroups');";
 			%>
 
-			<aui:button onClick="<%= taglibOnClick %>" value="test-ldap-groups" />
+			<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="test-ldap-groups" />
 		</aui:button-row>
 	</aui:fieldset>
 
@@ -287,9 +287,9 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 		String taglibOnClick = renderResponse.getNamespace() + "saveLdap();";
 		%>
 
-		<aui:button name="saveButton" onClick="<%= taglibOnClick %>" value="save" />
+		<aui:button cssClass="btn-lg" name="saveButton" onClick="<%= taglibOnClick %>" value="save" />
 
-		<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

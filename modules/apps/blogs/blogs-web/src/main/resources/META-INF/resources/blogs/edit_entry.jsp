@@ -344,11 +344,11 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 					</div>
 				</c:if>
 
-				<aui:button disabled="<%= pending %>" name="publishButton"  type="submit" value="<%= publishButtonLabel %>" />
+				<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton"  type="submit" value="<%= publishButtonLabel %>" />
 
-				<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+				<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-				<aui:button cssClass="btn-link" href="<%= redirect %>" name="cancelButton" type="cancel" />
+				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
 		</aui:fieldset>
 	</aui:form>

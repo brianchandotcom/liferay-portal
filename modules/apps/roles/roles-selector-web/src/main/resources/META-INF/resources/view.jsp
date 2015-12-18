@@ -108,7 +108,7 @@ request.setAttribute("edit_roles.jsp-portletURL", portletURL);
 	</c:choose>
 
 	<aui:button-row>
-		<aui:button type="cancel" />
+		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

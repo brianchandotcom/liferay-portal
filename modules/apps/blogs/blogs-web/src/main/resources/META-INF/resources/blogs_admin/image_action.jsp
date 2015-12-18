@@ -25,13 +25,11 @@ FileEntry fileEntry = (FileEntry)row.getObject();
 %>
 
 <c:if test="<%= (fileEntry.getUserId() == themeDisplay.getUserId()) || BlogsPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.UPDATE) %>">
-	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-		<portlet:actionURL name="/blogs/edit_image" var="deleteImageURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-			<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-		</portlet:actionURL>
+	<portlet:actionURL name="/blogs/edit_image" var="deleteImageURL">
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+	</portlet:actionURL>
 
-		<liferay-ui:icon-delete trash="<%= false %>" url="<%= deleteImageURL %>" />
-	</liferay-ui:icon-menu>
+	<liferay-ui:icon-delete trash="<%= false %>" url="<%= deleteImageURL %>" />
 </c:if>

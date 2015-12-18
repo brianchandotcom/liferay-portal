@@ -82,7 +82,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", containerModelN
 		data.put("redirect", redirect);
 		%>
 
-		<aui:button cssClass="selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", containerModelName) %>' />
+		<aui:button cssClass="btn-lg selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", containerModelName) %>' />
 	</aui:button-row>
 
 	<br />

@@ -250,9 +250,9 @@ if (!roles.isEmpty()) {
 	</liferay-ui:panel-container>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button type="cancel" />
+		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

@@ -24,7 +24,7 @@ LayoutSetBranch layoutSetBranch = (LayoutSetBranch)row.getObject();
 long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId"));
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= LayoutSetBranchPermissionUtil.contains(permissionChecker, layoutSetBranch, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editLayoutSetBranchURL">
 			<portlet:param name="mvcRenderCommandName" value="editLayoutSetBranch" />
@@ -34,7 +34,6 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editLayoutSetBranchURL %>"
 		/>
@@ -50,7 +49,6 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
@@ -68,7 +66,6 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-copy"
 			message="merge"
 			url="<%= mergeLayoutSetBranchURL %>"
 		/>

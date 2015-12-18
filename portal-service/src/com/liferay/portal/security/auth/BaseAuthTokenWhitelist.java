@@ -15,9 +15,23 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Portlet;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.StringServiceRegistrationMap;
+import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
+import com.liferay.registry.util.StringPlus;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -124,6 +138,100 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	@Override
 	public Set<String> resetPortletInvocationWhitelistActions() {
 		return Collections.emptySet();
+	}
+
+	protected void destroy() {
+		for (ServiceRegistration<Object> serviceRegistration :
+				serviceRegistrations.values()) {
+
+			serviceRegistration.unregister();
+		}
+	}
+
+	protected void registerPortalProperty(String propertyName) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		String[] propertyValue = PropsUtil.getArray(propertyName);
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put(propertyName, propertyValue);
+		properties.put("objectClass", Object.class.getName());
+
+		ServiceRegistration<Object> serviceRegistration =
+			registry.registerService(Object.class, new Object(), properties);
+
+		serviceRegistrations.put(
+			StringUtil.merge(propertyValue), serviceRegistration);
+	}
+
+	protected ServiceTracker<Object, Object> trackWhitelistServices(
+		String whitelistName, Set whiteList) {
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceTracker<Object, Object> serviceTracker = registry.trackServices(
+			registry.getFilter(
+				"(&(" + whitelistName + "=*)" +
+					"(objectClass=java.lang.Object))"),
+			new TokenWhitelistTrackerCustomizer(whitelistName, whiteList));
+
+		serviceTracker.open();
+
+		return serviceTracker;
+	}
+
+	protected final StringServiceRegistrationMap<Object> serviceRegistrations =
+		new StringServiceRegistrationMapImpl<>();
+
+	private class TokenWhitelistTrackerCustomizer
+		implements ServiceTrackerCustomizer<Object, Object> {
+
+		public TokenWhitelistTrackerCustomizer(
+			String whitelistName, Set whitelist) {
+
+			_whitelistName = whitelistName;
+			_whitelist = whitelist;
+		}
+
+		@Override
+		public Object addingService(ServiceReference<Object> serviceReference) {
+			List<String> authTokenIgnoreActions = StringPlus.asList(
+				serviceReference.getProperty(_whitelistName));
+
+			_whitelist.addAll(authTokenIgnoreActions);
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			return registry.getService(serviceReference);
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Object> serviceReference, Object object) {
+
+			removedService(serviceReference, object);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Object> serviceReference, Object object) {
+
+			List<String> authTokenIgnoreActions = StringPlus.asList(
+				serviceReference.getProperty(_whitelistName));
+
+			_whitelist.removeAll(authTokenIgnoreActions);
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+
+		private final Set _whitelist;
+		private final String _whitelistName;
+
 	}
 
 }

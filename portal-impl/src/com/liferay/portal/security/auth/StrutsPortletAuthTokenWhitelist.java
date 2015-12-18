@@ -32,20 +32,9 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.StringServiceRegistrationMap;
-import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
-import com.liferay.registry.util.StringPlus;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,25 +48,14 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	public StrutsPortletAuthTokenWhitelist() {
 		resetPortletInvocationWhitelistActions();
 
-		Registry registry = RegistryUtil.getRegistry();
+		_serviceTracker = trackWhitelistServices(
+			PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, _portletCSRFWhitelistActions);
 
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(
-				"(&(" + PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS + "=*)" +
-					"(objectClass=java.lang.Object))"),
-			new AuthTokenIgnoreActionsServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-
-		registerPortalProperty();
+		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS);
 	}
 
 	public void destroy() {
-		for (ServiceRegistration<Object> serviceRegistration :
-				_serviceRegistrations.values()) {
-
-			serviceRegistration.unregister();
-		}
+		super.destroy();
 
 		_serviceTracker.close();
 	}
@@ -267,77 +245,12 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		return false;
 	}
 
-	protected void registerPortalProperty() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		for (String authTokenIgnoreAction :
-				PropsValues.AUTH_TOKEN_IGNORE_ACTIONS) {
-
-			Map<String, Object> properties = new HashMap<>();
-
-			properties.put(
-				PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, authTokenIgnoreAction);
-			properties.put("objectClass", Object.class.getName());
-
-			ServiceRegistration<Object> serviceRegistration =
-				registry.registerService(
-					Object.class, new Object(), properties);
-
-			_serviceRegistrations.put(
-				authTokenIgnoreAction, serviceRegistration);
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		StrutsPortletAuthTokenWhitelist.class);
 
 	private final Set<String> _portletCSRFWhitelistActions =
 		new ConcurrentHashSet<>();
 	private Set<String> _portletInvocationWhitelistActions;
-	private final StringServiceRegistrationMap<Object> _serviceRegistrations =
-		new StringServiceRegistrationMapImpl<>();
 	private final ServiceTracker<Object, Object> _serviceTracker;
-
-	private class AuthTokenIgnoreActionsServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, Object> {
-
-		@Override
-		public Object addingService(ServiceReference<Object> serviceReference) {
-			List<String> authTokenIgnoreActions = StringPlus.asList(
-				serviceReference.getProperty(
-					PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS));
-
-			_portletCSRFWhitelistActions.addAll(authTokenIgnoreActions);
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			return registry.getService(serviceReference);
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Object> serviceReference, Object object) {
-
-			removedService(serviceReference, object);
-
-			addingService(serviceReference);
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Object> serviceReference, Object object) {
-
-			List<String> authTokenIgnoreActions = StringPlus.asList(
-				serviceReference.getProperty(
-					PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS));
-
-			_portletCSRFWhitelistActions.removeAll(authTokenIgnoreActions);
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-		}
-
-	}
 
 }

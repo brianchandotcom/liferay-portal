@@ -25,7 +25,7 @@ import org.junit.Test;
 /**
  * @author Raymond Augé
  */
-public class SearchEngineTest {
+public class SearchEngineHelperUtilTest {
 
 	@ClassRule
 	@Rule

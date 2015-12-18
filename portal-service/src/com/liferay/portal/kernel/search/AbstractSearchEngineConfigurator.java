@@ -90,7 +90,8 @@ public abstract class AbstractSearchEngineConfigurator
 		_searchEngineRegistrations.clear();
 
 		if (Validator.isNotNull(_originalSearchEngineId)) {
-			SearchEngineUtil.setDefaultSearchEngineId(_originalSearchEngineId);
+			SearchEngineHelperUtil.setDefaultSearchEngineId(
+				_originalSearchEngineId);
 
 			_originalSearchEngineId = null;
 		}
@@ -188,7 +189,7 @@ public abstract class AbstractSearchEngineConfigurator
 		_messageBus.removeDestination(
 			searchEngineRegistration.getSearchWriterDestinationName());
 
-		SearchEngineUtil.removeSearchEngine(
+		SearchEngineHelperUtil.removeSearchEngine(
 			searchEngineRegistration.getSearchEngineId());
 
 		if (!searchEngineRegistration.isOverride()) {
@@ -212,7 +213,7 @@ public abstract class AbstractSearchEngineConfigurator
 			searchWriterDestination,
 			searchEngineRegistration.getOriginalSearchWriterMessageListeners());
 
-		SearchEngineUtil.setSearchEngine(
+		SearchEngineHelperUtil.setSearchEngine(
 			searchEngineRegistration.getSearchEngineId(),
 			originalSearchEngineProxy);
 	}
@@ -229,7 +230,8 @@ public abstract class AbstractSearchEngineConfigurator
 		MessageBus messageBus, String searchEngineId) {
 
 		String searchReaderDestinationName =
-			SearchEngineUtil.getSearchReaderDestinationName(searchEngineId);
+			SearchEngineHelperUtil.getSearchReaderDestinationName(
+				searchEngineId);
 
 		Destination searchReaderDestination = messageBus.getDestination(
 			searchReaderDestinationName);
@@ -248,7 +250,8 @@ public abstract class AbstractSearchEngineConfigurator
 		MessageBus messageBus, String searchEngineId) {
 
 		String searchWriterDestinationName =
-			SearchEngineUtil.getSearchWriterDestinationName(searchEngineId);
+			SearchEngineHelperUtil.getSearchWriterDestinationName(
+				searchEngineId);
 
 		Destination searchWriterDestination = messageBus.getDestination(
 			searchWriterDestinationName);
@@ -274,9 +277,10 @@ public abstract class AbstractSearchEngineConfigurator
 
 		if (Validator.isNotNull(defaultSearchEngineId)) {
 			_originalSearchEngineId =
-				SearchEngineUtil.getDefaultSearchEngineId();
+				SearchEngineHelperUtil.getDefaultSearchEngineId();
 
-			SearchEngineUtil.setDefaultSearchEngineId(defaultSearchEngineId);
+			SearchEngineHelperUtil.setDefaultSearchEngineId(
+				defaultSearchEngineId);
 		}
 
 		_searchEngines.clear();
@@ -303,7 +307,7 @@ public abstract class AbstractSearchEngineConfigurator
 			searchWriterDestination.getName());
 
 		SearchEngine originalSearchEngine =
-			SearchEngineUtil.getSearchEngineSilent(searchEngineId);
+			SearchEngineHelperUtil.getSearchEngineSilent(searchEngineId);
 
 		if (originalSearchEngine != null) {
 			searchEngineRegistration.setOverride(true);
@@ -336,7 +340,7 @@ public abstract class AbstractSearchEngineConfigurator
 			new SearchEngineProxyWrapper(
 				searchEngine, getIndexSearcher(), getIndexWriter());
 
-		SearchEngineUtil.setSearchEngine(
+		SearchEngineHelperUtil.setSearchEngine(
 			searchEngineId, searchEngineProxyWrapper);
 	}
 

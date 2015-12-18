@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -500,7 +500,7 @@ public class DLFileEntryIndexer
 
 		Document document = getDocument(dlFileEntry);
 
-		SearchEngineUtil.updateDocument(
+		SearchEngineHelperUtil.updateDocument(
 			getSearchEngineId(), dlFileEntry.getCompanyId(), document,
 			isCommitImmediately());
 	}

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -201,7 +201,7 @@ public class ServiceTestUtil {
 		// Search engine
 
 		try {
-			SearchEngineUtil.initialize(TestPropsValues.getCompanyId());
+			SearchEngineHelperUtil.initialize(TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);

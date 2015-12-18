@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
@@ -347,7 +347,7 @@ public class UserIndexer extends BaseIndexer<User> {
 
 		Document document = getDocument(user);
 
-		SearchEngineUtil.updateDocument(
+		SearchEngineHelperUtil.updateDocument(
 			getSearchEngineId(), user.getCompanyId(), document,
 			isCommitImmediately());
 

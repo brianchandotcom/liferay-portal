@@ -22,72 +22,39 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<if>
-			<equals arg1="${addGlobalSite}" arg2="true" />
+			<isset var="globalSite" />
 			<then>
-				<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
-				<execute function="AssertClick" locator1="MenuItem#GLOBAL" value1="Global" />
-
-				<var name="key_siteName" value="${globalSite}" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="Global" />
+				<execute function="Click" locator1="Configuration#SOURCE_SCOPE_SELECT" />
+				<execute function="Click" locator1="MenuItem#GLOBAL" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${addOtherSite}" arg2="true" />
+			<isset var="otherSite" />
 			<then>
-				<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
-				<execute function="AssertClick" locator1="MenuItem#OTHER_SITE" value1="Other Site..." />
-				<execute function="SelectFrame" value1="relative=top" />
+				<execute function="Click" locator1="Configuration#SOURCE_SCOPE_SELECT" />
+				<execute function="Click" locator1="MenuItem#OTHER_SITE" />
 
+				<execute function="SelectFrame" value1="relative=top" />
 				<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
 
-				<var name="key_siteName" value="${otherSiteName}" />
+				<var name="key_siteName" value="${otherSite}" />
 
 				<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
-
-				<execute function="SelectFrame" />
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="${otherSiteName}" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${addSite}" arg2="true" />
+			<isset var="defaultSite" />
 			<then>
-				<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
-				<execute function="AssertClick" locator1="MenuItem#OTHER_SITE" value1="Other Site..." />
-				<execute function="SelectFrame" value1="relative=top" />
+				<execute function="Click" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
 
-				<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
-
-				<var name="key_siteName" value="${siteName}" />
-
-				<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
-
-				<execute function="SelectFrame" />
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
+				<execute function="Click" locator1="APConfiguration#SOURCE_CURRENT_SCOPE_NAME" />
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${defaultSite}" arg2="true" />
-			<then>
-				<var name="key_siteName" value="Liferay" />
-
-				<execute function="AssertTextEquals" locator1="APConfiguration#SOURCE_CURRENT_SCOPE_NAME" value1="Current Site (Liferay)" />
-			</then>
-			<else>
-				<var name="key_siteName" value="${siteName}" />
-
-				<execute function="AssertTextEquals" locator1="APConfiguration#SOURCE_CURRENT_SCOPE_NAME" value1="Current Site (${siteName})" />
-
-				<var name="key_siteName" value="Liferay" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="Liferay" />
-			</else>
-		</if>
+		<execute function="SelectFrameTop" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
@@ -438,21 +405,6 @@
 		<execute function="AssertTextNotPresent" locator1="APConfiguration#SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
 	</command>
 
-	<command name="configureToggleSiteScope">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
-
-		<var name="key_siteName" value="${removeSite1Scope}" />
-
-		<execute function="Click" locator1="APConfiguration#SOURCE_SCOPE_DELETE" />
-
-		<var name="key_siteName" value="${removeSite2Scope}" />
-
-		<execute function="Click" locator1="APConfiguration#SOURCE_SCOPE_DELETE" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
-	</command>
-
 	<command name="deleteArchivedSetupPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
@@ -486,6 +438,19 @@
 
 	<command name="rate4StarsPG">
 		<execute function="Click#clickNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
+	</command>
+
+	<command name="removeSiteScope">
+		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<for list="${removeSiteScopes}" param="removeSiteScope">
+			<var name="key_siteName" value="${removeSiteScope}" />
+
+			<execute function="Click" locator1="APConfiguration#SOURCE_SCOPE_DELETE" />
+		</for>
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="restoreArchivedSetupPG">

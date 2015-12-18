@@ -569,6 +569,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESET_DEFAULT_VALUES</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Reset Default Values')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESUBMIT</td>
 	<td>//div[contains(@class,'open')]//a[contains(.,'Resubmit')]</td>
 	<td></td>

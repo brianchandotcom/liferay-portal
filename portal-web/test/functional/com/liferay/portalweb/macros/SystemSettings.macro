@@ -1,18 +1,4 @@
 <definition>
-	<command name="deleteConfiguration">
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="${category}" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
-			<var name="configurationName" value="${configurationName}" />
-		</execute>
-
-		<execute macro="Button#clickDelete" />
-
-		<execute macro="Alert#viewSuccess" />
-	</command>
-
 	<command name="editConfiguration">
 		<var name="key_assetEntry" value="${configurationName}" />
 
@@ -25,6 +11,20 @@
 		<var name="key_category" value="${category}" />
 
 		<execute function="AssertClick" locator1="SystemSettings#MENUBAR_CATEGORY" value1="${category}" />
+	</command>
+
+	<command name="resetConfiguration">
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="${category}" />
+		</execute>
+
+		<var name="key_assetEntry" value="${configurationName}" />
+
+		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#RESET_DEFAULT_VALUES" value1="Reset Default Values" />
+
+		<execute macro="Alert#viewSuccess" />
 	</command>
 
 	<command name="viewPlatformSettingCP">

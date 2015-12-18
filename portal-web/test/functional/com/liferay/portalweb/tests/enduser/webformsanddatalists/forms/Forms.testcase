@@ -81,7 +81,7 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SystemSettings#deleteConfiguration">
+		<execute macro="SystemSettings#resetConfiguration">
 			<var name="category" value="Productivity" />
 			<var name="configurationName" value="Forms Application" />
 		</execute>

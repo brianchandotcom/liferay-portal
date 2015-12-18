@@ -94,8 +94,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCOPE</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Scope')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_TOGGLE_ADVANCED</td>
 	<td>//a[contains(@id,'searchtoggleAdvanced')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARING</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Sharing')]</td>
 	<td></td>
 </tr>
 <tr>

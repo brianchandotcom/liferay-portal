@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.model.Portlet;
 
 import java.util.Collections;
@@ -73,6 +74,13 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	@Override
 	public boolean isPortletInvocationWhitelisted(long companyId, String
 		portletId, String strutsAction) {
+
+		return false;
+	}
+
+	@Override
+	public boolean isPortletURLCSRFWhitelisted(
+		LiferayPortletURL liferayPortletURL) {
 
 		return false;
 	}

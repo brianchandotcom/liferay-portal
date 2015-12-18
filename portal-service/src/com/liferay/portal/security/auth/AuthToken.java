@@ -15,6 +15,7 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Amos Fong
  */
 public interface AuthToken {
+
+	public void addCSRFToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL);
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link

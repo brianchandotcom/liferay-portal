@@ -64,6 +64,8 @@ public interface LiferayPortletURL
 	 */
 	public Set<String> getParametersIncludedInPath();
 
+	public long getPlid();
+
 	/**
 	 * Returns the ID of this URL's target portlet.
 	 *

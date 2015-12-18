@@ -468,17 +468,19 @@ public class IntrabandProxyUtilTest {
 		List<Method> copiedMethods = _getCopiedMethods(
 			TestGenerateStubFunction2.class);
 
-		Collections.sort(copiedMethods, new Comparator<Method>() {
+		Collections.sort(
+			copiedMethods,
+			new Comparator<Method>() {
 
-			@Override
-			public int compare(Method method1, Method method2) {
-				String name1 = method1.getName();
-				String name2 = method2.getName();
+				@Override
+				public int compare(Method method1, Method method2) {
+					String name1 = method1.getName();
+					String name2 = method2.getName();
 
-				return name1.compareTo(name2);
-			}
+					return name1.compareTo(name2);
+				}
 
-		});
+			});
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(

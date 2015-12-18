@@ -369,22 +369,24 @@ public class ConfiguratorExtensionTest {
 						namedConfigurationContent;
 
 				return new SingleConfigurationDescription(
-					ssncc._pid, new Supplier<Dictionary<String, Object>>() {
+					ssncc._pid,
+					new Supplier<Dictionary<String, Object>>() {
 
-					@Override
-					public Dictionary<String, Object> get() {
-						try {
-							Dictionary<?, ?> properties = PropertiesUtil.load(
-								ssncc.getInputStream(), "UTF-8");
+						@Override
+						public Dictionary<String, Object> get() {
+							try {
+								Dictionary<?, ?> properties =
+									PropertiesUtil.load(
+										ssncc.getInputStream(), "UTF-8");
 
-							return (Dictionary<String, Object>)properties;
+								return (Dictionary<String, Object>)properties;
+							}
+							catch (IOException e) {
+								throw new RuntimeException(e);
+							}
 						}
-						catch (IOException e) {
-							throw new RuntimeException(e);
-						}
-					}
 
-				});
+					});
 			}
 			else {
 				final StringFactoryNamedConfigurationContent sfncc =

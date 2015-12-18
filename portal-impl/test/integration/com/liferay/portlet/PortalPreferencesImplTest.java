@@ -484,7 +484,8 @@ public class PortalPreferencesImplTest {
 		}
 
 		private final CyclicBarrier _cyclicBarrier = new CyclicBarrier(
-			2, new Runnable() {
+			2,
+			new Runnable() {
 
 				@Override
 				public void run() {
@@ -513,7 +514,8 @@ public class PortalPreferencesImplTest {
 		}
 
 		private final CyclicBarrier _cyclicBarrier = new CyclicBarrier(
-			2, new Runnable() {
+			2,
+			new Runnable() {
 
 				@Override
 				public void run() {

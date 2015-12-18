@@ -64,21 +64,22 @@ public class TransactionalTestRule implements TestRule {
 			@Override
 			public void evaluate() throws Throwable {
 				TransactionInvokerUtil.invoke(
-					getTransactionAttribute(), new Callable<Void>() {
+					getTransactionAttribute(),
+					new Callable<Void>() {
 
-					@Override
-					public Void call() throws Exception {
-						try {
-							statement.evaluate();
+						@Override
+						public Void call() throws Exception {
+							try {
+								statement.evaluate();
+							}
+							catch (Throwable t) {
+								ReflectionUtil.throwException(t);
+							}
+
+							return null;
 						}
-						catch (Throwable t) {
-							ReflectionUtil.throwException(t);
-						}
 
-						return null;
-					}
-
-				});
+					});
 			}
 
 		};

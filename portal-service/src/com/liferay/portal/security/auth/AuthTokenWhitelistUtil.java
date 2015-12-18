@@ -15,11 +15,14 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.model.Portlet;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Tomas Polesovsky
@@ -104,6 +107,26 @@ public class AuthTokenWhitelistUtil {
 		return false;
 	}
 
+	public static boolean isPortletCSRFWhitelisted(
+		HttpServletRequest request, Portlet portlet) {
+
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			if (authTokenWhitelist.isPortletCSRFWhitelisted(request, portlet)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #isPortletCSRFWhitelisted(HttpServletRequest, Portlet)}
+	 */
+	@Deprecated
+	@SuppressWarnings("deprecation")
 	public static boolean isPortletCSRFWhitelisted(
 		long companyId, String portletId, String strutsAction) {
 

@@ -14,8 +14,12 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.model.Portlet;
+
 import java.util.Collections;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Tomas Polesovsky
@@ -49,6 +53,13 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
 	@Override
 	public boolean isOriginCSRFWhitelisted(long companyId, String origin) {
+		return false;
+	}
+
+	@Override
+	public boolean isPortletCSRFWhitelisted(
+		HttpServletRequest request, Portlet portlet) {
+
 		return false;
 	}
 

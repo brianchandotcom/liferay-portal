@@ -14,7 +14,11 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.model.Portlet;
+
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Tomas Polesovsky
@@ -34,6 +38,14 @@ public interface AuthTokenWhitelist {
 
 	public boolean isOriginCSRFWhitelisted(long companyId, String origin);
 
+	public boolean isPortletCSRFWhitelisted(
+		HttpServletRequest request, Portlet portlet);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #isPortletCSRFWhitelisted(HttpServletRequest, Portlet)}
+	 */
+	@Deprecated
 	public boolean isPortletCSRFWhitelisted(
 		long companyId, String portletId, String strutsAction);
 

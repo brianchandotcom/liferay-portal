@@ -119,7 +119,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				>
 					<liferay-ui:search-container-column-text
 						name="name"
-						value="<%= curDDMStructure.getName(locale) %>"
+						value="<%= HtmlUtil.escape(curDDMStructure.getName(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text>

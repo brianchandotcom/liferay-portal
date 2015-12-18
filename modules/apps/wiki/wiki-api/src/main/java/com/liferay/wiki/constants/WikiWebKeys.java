@@ -19,6 +19,12 @@ package com.liferay.wiki.constants;
  */
 public class WikiWebKeys {
 
+	public static final String DYNAMIC_INCLUDE_VIEW_POST =
+		"com.liferay.wiki#VIEW#post";
+
+	public static final String DYNAMIC_INCLUDE_VIEW_PRE =
+		"com.liferay.wiki#VIEW#pre";
+
 	public static final String WIKI_NODE = "WIKI_NODE";
 
 	public static final String WIKI_NODE_ID = "WIKI_NODE_ID";

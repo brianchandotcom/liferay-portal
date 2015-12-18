@@ -52,14 +52,15 @@ public class NamedConfigurationPathContentFactory
 
 		return ListUtil.fromEnumeration(
 			new MappingEnumeration<>(
-				entries, new Mapper<URL, NamedConfigurationContent>() {
+				entries,
+				new Mapper<URL, NamedConfigurationContent>() {
 
-				@Override
-				public NamedConfigurationContent map(URL url) {
-					return new PropertiesFileNamedConfigurationContent(url);
-				}
+					@Override
+					public NamedConfigurationContent map(URL url) {
+						return new PropertiesFileNamedConfigurationContent(url);
+					}
 
-			}));
+				}));
 	}
 
 }

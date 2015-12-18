@@ -16,6 +16,9 @@ package com.liferay.source.formatter.dependencies;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * @author Hugo Huijser
  */
@@ -95,6 +98,26 @@ public class IncorrectLineBreaks1 {
 		}
 	}
 
+	public void method5() {
+		String[] stringArray = new String[] {"One", "Two", "Three"};
+
+		Arrays.sort(
+			stringArray, new Comparator<String>() {
+
+				@Override
+				public int compare(String s1, String s2) {
+					return s1.compareTo(s2);
+				}
+
+			});
+
+		int i = StringUtil.lastIndexOfAny(
+			"Hello",
+			new String[] {
+				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"
+			}, 5);
+	}
+
 	public void methodWithASlightlyLongerName(
 		String test1, String test2, String[] testStringArray) throws Exception {
 
@@ -105,7 +128,7 @@ public class IncorrectLineBreaks1 {
 		}
 	}
 
-	private static final String _NUMBERS =
+	private static final String[] _NUMBERS =
 		new String[] {
 			"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
 			"Nine", "Ten"

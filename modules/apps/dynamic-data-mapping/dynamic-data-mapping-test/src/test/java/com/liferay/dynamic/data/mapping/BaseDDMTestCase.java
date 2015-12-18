@@ -685,6 +685,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 					return languageIds;
 				}
+
 			}
 		);
 	}

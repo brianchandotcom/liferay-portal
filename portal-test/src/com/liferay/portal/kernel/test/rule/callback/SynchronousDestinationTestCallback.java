@@ -299,16 +299,18 @@ public class SynchronousDestinationTestCallback
 		public void send(final Message message) {
 			try {
 				TransactionInvokerUtil.invoke(
-					_transactionAttribute, new Callable<Void>() {
+					_transactionAttribute,
+					new Callable<Void>() {
 
-					@Override
-					public Void call() throws Exception {
-						CleanTransactionSynchronousDestination.super.send(
-							message);
+						@Override
+						public Void call() throws Exception {
+							CleanTransactionSynchronousDestination.super.send(
+								message);
 
-						return null;
-					}
-				});
+							return null;
+						}
+
+					});
 			}
 			catch (Throwable t) {
 				throw new RuntimeException(t);

@@ -605,7 +605,8 @@ public class StagingImpl implements Staging {
 							ResourceActionsUtil.getModelResource(
 								locale, referrerClassName),
 							referrerDisplayName
-						}, false));
+						},
+						false));
 			}
 			else {
 				errorMessageJSONObject.put(
@@ -800,7 +801,8 @@ public class StagingImpl implements Staging {
 					StringUtil.merge(
 						le.getTargetAvailableLocales(),
 						StringPool.COMMA_AND_SPACE)
-				}, false);
+				},
+				false);
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
@@ -864,7 +866,8 @@ public class StagingImpl implements Staging {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),
 						referrerDisplayName
-					}, false);
+					},
+					false);
 			}
 			else if (pde.getType() == PortletDataException.MISSING_DEPENDENCY) {
 				errorMessage = LanguageUtil.format(
@@ -875,7 +878,8 @@ public class StagingImpl implements Staging {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),
 						referrerDisplayName
-					}, false);
+					},
+					false);
 			}
 			else if (pde.getType() == PortletDataException.STATUS_IN_TRASH) {
 				errorMessage = LanguageUtil.format(
@@ -886,7 +890,8 @@ public class StagingImpl implements Staging {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),
 						referrerDisplayName
-					}, false);
+					},
+					false);
 			}
 			else if (pde.getType() == PortletDataException.STATUS_UNAVAILABLE) {
 				errorMessage = LanguageUtil.format(
@@ -897,7 +902,8 @@ public class StagingImpl implements Staging {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),
 						referrerDisplayName
-					}, false);
+					},
+					false);
 			}
 			else {
 				errorMessage = e.getLocalizedMessage();

@@ -121,6 +121,7 @@ public class ThreadTest {
 			@Override
 			public void run() {
 			}
+
 		};
 
 		thread.start();
@@ -383,6 +384,7 @@ public class ThreadTest {
 				@Override
 				public void run() {
 				}
+
 			}
 		);
 

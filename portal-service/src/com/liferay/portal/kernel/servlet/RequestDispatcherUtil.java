@@ -79,7 +79,8 @@ public class RequestDispatcherUtil {
 					return HttpMethods.GET;
 				}
 
-			}, bufferCacheServletResponse);
+			},
+			bufferCacheServletResponse);
 
 		return new ObjectValuePair<>(
 			bufferCacheServletResponse.getString(),
@@ -119,7 +120,8 @@ public class RequestDispatcherUtil {
 					return HttpMethods.HEAD;
 				}
 
-			}, metaInfoCacheServletResponse);
+			},
+			metaInfoCacheServletResponse);
 
 		return GetterUtil.getLong(
 			metaInfoCacheServletResponse.getHeader(HttpHeaders.LAST_MODIFIED),

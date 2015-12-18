@@ -63,6 +63,7 @@ public class ThreadLocalCacheManager {
 				enable(Lifecycle.REQUEST);
 			}
 		}
+
 	};
 
 	public static void clearAll(Lifecycle lifecycle) {

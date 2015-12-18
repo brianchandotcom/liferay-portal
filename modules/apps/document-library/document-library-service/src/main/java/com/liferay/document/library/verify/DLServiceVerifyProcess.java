@@ -397,6 +397,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 						return;
 					}
 				}
+
 			});
 
 		actionableDynamicQuery.performActions();

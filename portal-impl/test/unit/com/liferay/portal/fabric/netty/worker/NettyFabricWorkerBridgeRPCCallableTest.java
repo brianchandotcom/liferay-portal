@@ -86,7 +86,8 @@ public class NettyFabricWorkerBridgeRPCCallableTest {
 							return null;
 						}
 
-					}, 0);
+					},
+					0);
 
 		NoticeableFuture<Serializable> noticeableFuture =
 			nettyFabricWorkerBridgeRPCCallable.call();
@@ -125,7 +126,8 @@ public class NettyFabricWorkerBridgeRPCCallableTest {
 							return null;
 						}
 
-					}, 0);
+					},
+					0);
 
 		NoticeableFuture<Serializable> noticeableFuture =
 			nettyFabricWorkerBridgeRPCCallable.call();
@@ -147,7 +149,8 @@ public class NettyFabricWorkerBridgeRPCCallableTest {
 							return null;
 						}
 
-					}, 0);
+					},
+					0);
 
 		try {
 			nettyFabricWorkerBridgeRPCCallable.call();

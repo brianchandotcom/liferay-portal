@@ -69,7 +69,8 @@ public class FinalizeManagerTest {
 					throw runtimeException;
 				}
 
-			}, FinalizeManager.PHANTOM_REFERENCE_FACTORY);
+			},
+			FinalizeManager.PHANTOM_REFERENCE_FACTORY);
 
 		Assert.assertNotNull(getReferent(reference));
 

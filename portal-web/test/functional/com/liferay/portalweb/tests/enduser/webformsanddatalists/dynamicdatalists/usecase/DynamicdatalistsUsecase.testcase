@@ -40,6 +40,8 @@
 				<execute macro="User#tearDownCP" />
 
 				<execute macro="Page#tearDownPG" />
+
+				<execute macro="Site#tearDownCP" />
 			</else>
 		</if>
 	</tear-down>
@@ -1456,6 +1458,36 @@
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
+	</command>
+
+	<command name="CreateSiteAndAssertDefaultDataDefinitions" priority="3">
+		<description message="This is a use case for LPS-50557." />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+
+		<execute macro="DDLDataDefinition#selectFrame" />
+
+		<for list="Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do" param="Name">
+			<execute macro="DDLDataDefinition#assertPresent">
+				<var name="Name" value="${Name}" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="DeleteStructure" priority="3">

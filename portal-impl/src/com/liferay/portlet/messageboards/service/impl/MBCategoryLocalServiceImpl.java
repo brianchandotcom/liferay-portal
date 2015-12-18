@@ -627,7 +627,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			User user = userPersistence.findByPrimaryKey(userId);
 
 			List<Object> categoriesAndThreads = getCategoriesAndThreads(
-				category.getGroupId(), categoryId);
+				category.getGroupId(), categoryId,
+				WorkflowConstants.STATUS_IN_TRASH);
 
 			restoreDependentsFromTrash(user, categoriesAndThreads);
 		}
@@ -681,7 +682,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		List<Object> categoriesAndThreads = getCategoriesAndThreads(
-			category.getGroupId(), categoryId);
+			category.getGroupId(), categoryId,
+			WorkflowConstants.STATUS_IN_TRASH);
 
 		restoreDependentsFromTrash(user, categoriesAndThreads);
 
@@ -1141,7 +1143,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				restoreDependentsFromTrash(
 					user,
 					getCategoriesAndThreads(
-						category.getGroupId(), category.getCategoryId()));
+						category.getGroupId(), category.getCategoryId(),
+						WorkflowConstants.STATUS_IN_TRASH));
 
 				// Trash
 

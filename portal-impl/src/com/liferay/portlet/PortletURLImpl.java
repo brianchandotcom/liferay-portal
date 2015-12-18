@@ -790,30 +790,7 @@ public class PortletURLImpl
 	}
 
 	protected void addPortalAuthToken(StringBundler sb, Key key) {
-		if (!PropsValues.AUTH_TOKEN_CHECK_ENABLED ||
-			!_lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-
-			return;
-		}
-
-		Portlet portlet = getPortlet();
-
-		if (portlet == null) {
-			return;
-		}
-
-		String strutsAction = getParameter("struts_action");
-
-		if (AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
-				portlet.getCompanyId(), _portletId, strutsAction)) {
-
-			return;
-		}
-
-		sb.append("p_auth");
-		sb.append(StringPool.EQUAL);
-		sb.append(processValue(key, AuthTokenUtil.getToken(_request)));
-		sb.append(StringPool.AMPERSAND);
+		AuthTokenUtil.addCSRFToken(_request, this);
 	}
 
 	protected void addPortletAuthToken(StringBundler sb, Key key) {

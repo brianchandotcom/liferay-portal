@@ -14,15 +14,19 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.Encryptor;
 
 import java.util.Collections;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Raymond Augé
@@ -67,9 +71,9 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 
 	@Override
 	public boolean isPortletCSRFWhitelisted(
-		long companyId, String portletId, String strutsAction) {
+		HttpServletRequest request, Portlet portlet) {
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = portlet.getRootPortletId();
 
 		Set<String> whitelist = getPortletCSRFWhitelist();
 
@@ -87,6 +91,23 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 		Set<String> whitelist = getPortletInvocationWhitelist();
 
 		if (whitelist.contains(portletId)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isPortletURLCSRFWhitelisted(
+		LiferayPortletURL liferayPortletURL) {
+
+		String portletId = liferayPortletURL.getPortletId();
+
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		Set<String> whitelist = getPortletCSRFWhitelist();
+
+		if (whitelist.contains(rootPortletId)) {
 			return true;
 		}
 

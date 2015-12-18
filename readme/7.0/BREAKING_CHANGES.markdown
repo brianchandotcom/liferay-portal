@@ -3063,7 +3063,7 @@ flexibility for all developers.
 
 ---------------------------------------
 
-### Moved Recycle Bin logic into a new `DLTrashService` interface
+### Moved Recycle Bin Logic Into a New DLTrashService Interface
 - **Date:** 2015-Dec-02
 - **JIRA Ticket:** LPS-60810
 

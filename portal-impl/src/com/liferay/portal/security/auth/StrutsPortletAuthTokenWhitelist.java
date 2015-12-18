@@ -121,7 +121,19 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 	@Override
 	public boolean isPortletInvocationWhitelisted(
-		long companyId, String portletId, String strutsAction) {
+		HttpServletRequest request, Portlet portlet) {
+
+		long companyId = portlet.getCompanyId();
+		String portletId = portlet.getPortletId();
+
+		String namespace = PortalUtil.getPortletNamespace(portletId);
+
+		String strutsAction = ParamUtil.getString(
+			request, namespace + "struts_action");
+
+		if (Validator.isNull(strutsAction)) {
+			strutsAction = ParamUtil.getString(request, "struts_action");
+		}
 
 		if (Validator.isNotNull(strutsAction)) {
 			Set<String> whitelistActions =
@@ -172,6 +184,46 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
 			if (isValidStrutsAction(companyId, rootPortletId, strutsAction)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isPortletURLPortletInvocationWhitelisted(
+		LiferayPortletURL liferayPortletURL) {
+
+		String strutsAction = liferayPortletURL.getParameter("struts_action");
+
+		if (Validator.isBlank(strutsAction)) {
+			return false;
+		}
+
+		Set<String> whitelistActions = getPortletInvocationWhitelistActions();
+
+		if (whitelistActions.contains(strutsAction)) {
+			long companyId = 0;
+
+			long plid = liferayPortletURL.getPlid();
+
+			try {
+				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+				companyId = layout.getCompanyId();
+			}
+			catch (PortalException e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to load layout " + plid, e);
+				}
+
+				return false;
+			}
+
+			String portletId = liferayPortletURL.getPortletId();
+
+			if (isValidStrutsAction(companyId, portletId, strutsAction)) {
 				return true;
 			}
 		}

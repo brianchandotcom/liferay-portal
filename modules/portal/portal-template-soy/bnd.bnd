@@ -6,6 +6,7 @@ Import-Package:\
 	!javax.microedition.io,\
 	!org.objectweb.asm.util,\
 	*
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/aopalliance.jar,\
@@ -20,3 +21,5 @@ Include-Resource:\
 	@lib/javax.inject.jar,\
 	@lib/jsr305.jar,\
 	@lib/soy.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Template Engines

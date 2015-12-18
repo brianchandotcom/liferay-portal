@@ -1,4 +1,7 @@
 Bundle-Name: Liferay Portal Verify Extender
 Bundle-SymbolicName: com.liferay.portal.verify.extender
 Bundle-Version: 1.0.0
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Upgrade and Verify

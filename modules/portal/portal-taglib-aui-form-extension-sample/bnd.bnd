@@ -1,4 +1,7 @@
 Bundle-Name: Liferay Portal Taglib AUI Form Extension Sample
 Bundle-SymbolicName: com.liferay.portal.taglib.aui.form.extension.sample
 Bundle-Version: 1.0.0
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Samples

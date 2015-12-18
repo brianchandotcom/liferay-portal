@@ -13,7 +13,7 @@
 	<command name="configureSharingAllowUsersToAddWikiToAnyWebsite">
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 
-		<execute function="AssertClick" locator1="NavPill#SHARING" value1="Sharing" />
+		<execute function="AssertClick" locator1="NavBar#SHARING" value1="Sharing" />
 
 		<if>
 			<equals arg1="${enabled}" arg2="true" />
@@ -76,7 +76,7 @@
 	<command name="viewConfigureSharingAllowUsersToAddWikiToAnyWebsite">
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 
-		<execute function="AssertClick" locator1="NavPill#SHARING" value1="Sharing" />
+		<execute function="AssertClick" locator1="NavBar#SHARING" value1="Sharing" />
 
 		<if>
 			<equals arg1="${enabled}" arg2="true" />

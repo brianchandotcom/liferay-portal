@@ -605,7 +605,7 @@
 </tr>
 <tr>
 	<td>SCOPE_SELECTION</td>
-	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_scopeSelection}')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_scopeSelection}')]</td>
 	<td></td>
 </tr>
 <tr>

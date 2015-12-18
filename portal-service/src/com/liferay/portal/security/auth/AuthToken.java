@@ -29,6 +29,9 @@ public interface AuthToken {
 	public void addCSRFToken(
 		HttpServletRequest request, LiferayPortletURL liferayPortletURL);
 
+	public void addPortletInvocationToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL);
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #checkCSRFToken(HttpServletRequest, String)}

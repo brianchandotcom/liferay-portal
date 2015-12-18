@@ -64,6 +64,9 @@ public interface AuthTokenWhitelist {
 	public boolean isPortletURLCSRFWhitelisted(
 		LiferayPortletURL liferayPortletURL);
 
+	public boolean isPortletURLPortletInvocationWhitelisted(
+		LiferayPortletURL liferayPortletURL);
+
 	public boolean isValidSharedSecret(String sharedSecret);
 
 	public Set<String> resetOriginCSRFWhitelist();

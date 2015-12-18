@@ -95,6 +95,13 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	@Override
+	public boolean isPortletURLPortletInvocationWhitelisted(
+		LiferayPortletURL liferayPortletURL) {
+
+		return false;
+	}
+
+	@Override
 	public boolean isValidSharedSecret(String sharedSecret) {
 		return false;
 	}

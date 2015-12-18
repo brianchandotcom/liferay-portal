@@ -145,6 +145,28 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	public static boolean isPortletInvocationWhitelisted(
+		HttpServletRequest request, Portlet portlet) {
+
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			if (authTokenWhitelist.isPortletInvocationWhitelisted(
+					request, portlet)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #isPortletInvocationWhitelisted(HttpServletRequest, Portlet)}
+	 */
+	@Deprecated
+	@SuppressWarnings("deprecation")
+	public static boolean isPortletInvocationWhitelisted(
 		long companyId, String portletId, String strutsAction) {
 
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);

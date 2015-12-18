@@ -45,11 +45,7 @@
 			<bean class="com.liferay.portal.security.auth.DefaultAuthenticatedUserUUIDStoreImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.security.auth.AuthTokenWhitelistUtil" class="com.liferay.portal.security.auth.AuthTokenWhitelistUtil">
-		<property name="authTokenWhitelist">
-			<bean class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" />
-		</property>
-	</bean>
+	<bean id="com.liferay.portal.security.auth.AuthTokenWhitelist" class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" />
 	<bean id="com.liferay.portal.security.auth.AuthTokenUtil" class="com.liferay.portal.security.auth.AuthTokenUtil" />
 	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" class="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" />
 	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressValidator" class="com.liferay.portal.security.auth.DefaultEmailAddressValidator" />

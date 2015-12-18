@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Tomas Polesovsky
  */
+@SuppressWarnings("deprecation")
 public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
 	@Override
@@ -64,9 +65,17 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		return false;
 	}
 
+	@Deprecated
 	@Override
 	public boolean isPortletCSRFWhitelisted(
 		long companyId, String portletId, String strutsAction) {
+
+		return false;
+	}
+
+	@Override
+	public boolean isPortletInvocationWhitelisted(
+		HttpServletRequest request, Portlet portlet) {
 
 		return false;
 	}

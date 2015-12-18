@@ -16,6 +16,8 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -62,6 +64,18 @@ public class AuthTokenUtil {
 		return _instance._getToken(request, plid, portletId);
 	}
 
+	public static boolean isValidPortletInvocationToken(
+		HttpServletRequest request, Layout layout, Portlet portlet) {
+
+		return _instance._isValidPortletInvocationToken(
+			request, layout, portlet);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #isValidPortletInvocationToken(HttpServletRequest, Layout, Portlet)}
+	 */
+	@Deprecated
 	public static boolean isValidPortletInvocationToken(
 		HttpServletRequest request, long plid, String portletId,
 		String strutsAction, String tokenValue) {
@@ -135,6 +149,20 @@ public class AuthTokenUtil {
 		return authToken.getToken(request, plid, portletId);
 	}
 
+	private boolean _isValidPortletInvocationToken(
+		HttpServletRequest request, Layout layout, Portlet portlet) {
+
+		if (_serviceTracker.isEmpty()) {
+			return false;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		return authToken.isValidPortletInvocationToken(
+			request, layout, portlet);
+	}
+
+	@SuppressWarnings("deprecation")
 	private boolean _isValidPortletInvocationToken(
 		HttpServletRequest request, long plid, String portletId,
 		String strutsAction, String tokenValue) {

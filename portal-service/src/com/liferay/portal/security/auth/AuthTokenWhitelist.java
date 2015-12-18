@@ -51,6 +51,14 @@ public interface AuthTokenWhitelist {
 		long companyId, String portletId, String strutsAction);
 
 	public boolean isPortletInvocationWhitelisted(
+		HttpServletRequest request, Portlet portlet);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #isPortletInvocationWhitelisted(HttpServletRequest, Portlet)}
+	 */
+	@Deprecated
+	public boolean isPortletInvocationWhitelisted(
 		long companyId, String portletId, String strutsAction);
 
 	public boolean isPortletURLCSRFWhitelisted(

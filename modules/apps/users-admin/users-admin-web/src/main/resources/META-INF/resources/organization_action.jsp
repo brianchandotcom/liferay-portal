@@ -53,7 +53,7 @@ if (row == null) {
 }
 %>
 
-<liferay-ui:icon-menu cssClass="<%= cssClass %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 
 	<%
 	boolean hasUpdatePermission = OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.UPDATE);
@@ -67,7 +67,6 @@ if (row == null) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editOrganizationURL %>"
 		/>
@@ -83,7 +82,6 @@ if (row == null) {
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= editOrganizationPermissionsURL %>"
@@ -100,7 +98,6 @@ if (row == null) {
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-cog"
 			message="manage-site"
 			url="<%= editSettingsURL.toString() %>"
 		/>
@@ -117,7 +114,6 @@ if (row == null) {
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-signin"
 			message="assign-organization-roles"
 			url="<%= assignUserRolesURL.toString() %>"
 			useDialog="<%= true %>"
@@ -132,7 +128,6 @@ if (row == null) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-signin"
 			message="assign-users"
 			url="<%= assignMembersURL %>"
 		/>
@@ -146,7 +141,6 @@ if (row == null) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-plus"
 			message="add-user"
 			url="<%= addUserURL %>"
 		/>
@@ -169,7 +163,6 @@ if (row == null) {
 				</portlet:renderURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-plus"
 					message='<%= LanguageUtil.format(request, "add-x", childrenType) %>'
 					url="<%= addSuborganizationURL %>"
 				/>
@@ -189,7 +182,6 @@ if (row == null) {
 
 		<liferay-ui:icon
 			cssClass="item-remove"
-			iconCssClass="icon-remove"
 			message="delete"
 			url="<%= taglibDeleteURL %>"
 		/>

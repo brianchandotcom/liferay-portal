@@ -72,6 +72,6 @@ if (displayActivityCounterNameIndexCount == 0) {
 	</liferay-ui:panel>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>

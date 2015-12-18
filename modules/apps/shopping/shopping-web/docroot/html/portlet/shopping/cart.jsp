@@ -507,9 +507,9 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	%>
 
 	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "updateCart();" %>' value="update-cart" />
+		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "updateCart();" %>' value="update-cart" />
 
-		<aui:button disabled="<%= items.isEmpty() %>" onClick='<%= renderResponse.getNamespace() + "checkout();" %>' type="submit" value="checkout" />
+		<aui:button cssClass="btn-lg" disabled="<%= items.isEmpty() %>" onClick='<%= renderResponse.getNamespace() + "checkout();" %>' type="submit" value="checkout" />
 	</aui:button-row>
 </aui:form>
 

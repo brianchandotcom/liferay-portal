@@ -65,7 +65,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 		</aui:fieldset>
 
 		<aui:button-row>
-			<aui:button name="flagsSubmit" type="submit" />
+			<aui:button cssClass="btn-lg" name="flagsSubmit" type="submit" />
 		</aui:button-row>
 	</aui:form>
 </div>

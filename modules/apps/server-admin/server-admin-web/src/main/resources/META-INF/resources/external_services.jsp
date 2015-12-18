@@ -139,7 +139,7 @@
 					</aui:select>
 
 					<aui:button-row>
-						<aui:button cssClass="save-server-button" data-cmd="installXuggler" name="installXugglerButton" value="install" />
+						<aui:button cssClass="btn-lg save-server-button" data-cmd="installXuggler" name="installXugglerButton" value="install" />
 					</aui:button-row>
 				</c:otherwise>
 			</c:choose>
@@ -148,7 +148,7 @@
 </aui:fieldset>
 
 <aui:button-row>
-	<aui:button cssClass="save-server-button" data-cmd="updateExternalServices" value="save" />
+	<aui:button cssClass="btn-lg save-server-button" data-cmd="updateExternalServices" value="save" />
 </aui:button-row>
 
 <%!

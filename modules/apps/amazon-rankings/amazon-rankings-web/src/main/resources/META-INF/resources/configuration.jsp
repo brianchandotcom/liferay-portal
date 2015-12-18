@@ -60,6 +60,6 @@ isbnsString = StringUtil.merge(isbns, StringPool.SPACE);
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>

@@ -30,7 +30,7 @@ User user2 = (User)row.getObject();
 long userId = user2.getUserId();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 
 	<%
 	boolean hasUpdatePermission = UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.UPDATE);
@@ -44,7 +44,6 @@ long userId = user2.getUserId();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editUserURL %>"
 		/>
@@ -60,7 +59,6 @@ long userId = user2.getUserId();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsUserURL %>"
@@ -77,7 +75,6 @@ long userId = user2.getUserId();
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-copy"
 			message="manage-pages"
 			url="<%= managePagesURL.toString() %>"
 		/>
@@ -90,7 +87,6 @@ long userId = user2.getUserId();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-user"
 			message="impersonate-user"
 			target="_blank"
 			url="<%= impersonateUserURL %>"
@@ -106,7 +102,6 @@ long userId = user2.getUserId();
 			</portlet:actionURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-ok-sign"
 				message="activate"
 				url="<%= restoreUserURL %>"
 			/>

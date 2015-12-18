@@ -95,7 +95,7 @@ catch (NoSuchFolderException nsfe) {
 	</liferay-ui:tabs>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 

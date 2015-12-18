@@ -133,7 +133,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			%>
 
 			<aui:button-row>
-				<aui:button cssClass="add-choice" onClick='<%= renderResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
+				<aui:button cssClass="add-choice btn-lg" onClick='<%= renderResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
 			</aui:button-row>
 		</aui:field-wrapper>
 
@@ -146,9 +146,9 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		</c:if>
 
 		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>

@@ -208,7 +208,7 @@ if (Validator.isNotNull(portletResource)) {
 	</c:if>
 
 	<aui:button-row>
-		<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "updateActions();" %>' value="save" />
+		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "updateActions();" %>' value="save" />
 	</aui:button-row>
 </aui:form>
 

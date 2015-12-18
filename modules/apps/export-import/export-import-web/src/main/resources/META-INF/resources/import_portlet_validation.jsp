@@ -40,7 +40,7 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 	%>
 
 	<aui:button-row>
-		<aui:button cssClass='<%= fileEntry == null ? "hide" : StringPool.BLANK %>' name="continueButton" type="submit" value="continue" />
+		<aui:button cssClass='<%= fileEntry == null ? "btn-lg hide" : "btn-lg" %>' name="continueButton" type="submit" value="continue" />
 	</aui:button-row>
 
 	<%

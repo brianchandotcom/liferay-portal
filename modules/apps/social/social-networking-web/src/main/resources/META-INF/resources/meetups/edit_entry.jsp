@@ -74,9 +74,9 @@ if (meetupsEntry != null) {
 	<aui:input label="thumbnail" name="fileName" type="file" />
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button href="<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>" value="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>" value="cancel" />
 	</aui:button-row>
 </aui:form>
 

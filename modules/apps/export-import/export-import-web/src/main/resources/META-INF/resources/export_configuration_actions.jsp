@@ -64,7 +64,6 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 </portlet:renderURL>
 
 <liferay-ui:icon
-	iconCssClass="icon-arrow-up"
 	message="export"
 	url="<%= exportByExportImportConfigurationURL %>"
 />

@@ -110,9 +110,9 @@ if (layoutSetBranch != null) {
 		</aui:fieldset>
 
 		<aui:button-row>
-			<aui:button type="submit" value='<%= (layoutSetBranch != null) ? "update" : "add" %>' />
+			<aui:button cssClass="btn-lg" type="submit" value='<%= (layoutSetBranch != null) ? "update" : "add" %>' />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

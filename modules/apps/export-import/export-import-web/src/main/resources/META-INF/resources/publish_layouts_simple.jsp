@@ -146,7 +146,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 			</aui:fieldset>
 
 			<aui:button-row>
-				<aui:button type="submit" value="<%= LanguageUtil.get(request, publishActionKey) %>" />
+				<aui:button cssClass="btn-lg" type="submit" value="<%= LanguageUtil.get(request, publishActionKey) %>" />
 			</aui:button-row>
 		</ul>
 	</div>

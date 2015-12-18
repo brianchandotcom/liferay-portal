@@ -432,24 +432,24 @@ if (Validator.isNull(redirect)) {
 					}
 					%>
 
-					<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+					<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-					<aui:button name="previewButton" onClick='<%= renderResponse.getNamespace() + "previewPage();" %>' value="preview" />
+					<aui:button cssClass="btn-lg" name="previewButton" onClick='<%= renderResponse.getNamespace() + "previewPage();" %>' value="preview" />
 
-					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' primary="<%= true %>" value="<%= publishButtonLabel %>" />
+					<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' primary="<%= true %>" value="<%= publishButtonLabel %>" />
 
 					<c:if test="<%= !newPage && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 						<c:choose>
 							<c:when test="<%= !wikiPage.isDraft() && TrashUtil.isTrashEnabled(scopeGroupId) %>">
-								<aui:button name="moveToTrashButton" onClick='<%= renderResponse.getNamespace() + "moveToTrashPage();" %>' value="move-to-the-recycle-bin" />
+								<aui:button cssClass="btn-lg" name="moveToTrashButton" onClick='<%= renderResponse.getNamespace() + "moveToTrashPage();" %>' value="move-to-the-recycle-bin" />
 							</c:when>
 							<c:when test="<%= wikiPage.isDraft() %>">
-								<aui:button name="discardDraftButton" onClick='<%= renderResponse.getNamespace() + "discardDraftPage();" %>' value="discard-draft" />
+								<aui:button cssClass="btn-lg" name="discardDraftButton" onClick='<%= renderResponse.getNamespace() + "discardDraftPage();" %>' value="discard-draft" />
 							</c:when>
 						</c:choose>
 					</c:if>
 
-					<aui:button href="<%= redirect %>" type="cancel" />
+					<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 				</aui:button-row>
 			</aui:fieldset>
 		</c:when>

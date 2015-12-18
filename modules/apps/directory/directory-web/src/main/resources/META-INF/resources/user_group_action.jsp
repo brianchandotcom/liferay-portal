@@ -26,18 +26,16 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 UserGroup userGroup = (UserGroup)row.getObject();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<portlet:renderURL var="viewUsersURL">
-		<portlet:param name="mvcRenderCommandName" value="/directory/view" />
-		<portlet:param name="tabs1" value="users" />
-		<portlet:param name="viewUsersRedirect" value="<%= currentURL %>" />
-		<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
-	</portlet:renderURL>
+<portlet:renderURL var="viewUsersURL">
+	<portlet:param name="mvcRenderCommandName" value="/directory/view" />
+	<portlet:param name="tabs1" value="users" />
+	<portlet:param name="viewUsersRedirect" value="<%= currentURL %>" />
+	<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
+</portlet:renderURL>
 
-	<liferay-ui:icon
-		iconCssClass="icon-search"
-		message="view-users"
-		method="get"
-		url="<%= viewUsersURL %>"
-	/>
-</liferay-ui:icon-menu>
+<liferay-ui:icon
+	iconCssClass="icon-search"
+	message="view-users"
+	method="get"
+	url="<%= viewUsersURL %>"
+/>

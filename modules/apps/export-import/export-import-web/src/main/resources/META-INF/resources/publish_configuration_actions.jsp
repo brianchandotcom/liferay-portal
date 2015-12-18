@@ -63,7 +63,6 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 </portlet:renderURL>
 
 <liferay-ui:icon
-	iconCssClass="icon-share-alt"
 	message='<%= localPublishing ? "publish-to-live" : "publish-to-remote" %>'
 	url="<%= publishByExportImportConfigurationURL %>"
 />

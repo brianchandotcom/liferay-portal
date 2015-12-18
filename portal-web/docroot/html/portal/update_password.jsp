@@ -143,7 +143,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 			</aui:fieldset>
 
 			<aui:button-row>
-				<aui:button type="submit" />
+				<aui:button cssClass="btn-lg" type="submit" />
 			</aui:button-row>
 		</aui:form>
 	</c:otherwise>

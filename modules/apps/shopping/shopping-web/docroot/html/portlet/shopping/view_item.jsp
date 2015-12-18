@@ -201,7 +201,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 							<portlet:param name="itemId" value="<%= String.valueOf(prevAndNext[0].getItemId()) %>" />
 						</portlet:renderURL>
 
-						<aui:button href="<%= viewPreviousPageURL %>" value="previous" />
+						<aui:button cssClass="btn-lg" href="<%= viewPreviousPageURL %>" value="previous" />
 					</c:if>
 
 					<c:if test="<%= prevAndNext[2] != null %>">
@@ -210,7 +210,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 							<portlet:param name="itemId" value="<%= String.valueOf(prevAndNext[2].getItemId()) %>" />
 						</portlet:renderURL>
 
-						<aui:button href="<%= viewNextPageURL %>" value="next" />
+						<aui:button cssClass="btn-lg" href="<%= viewNextPageURL %>" value="next" />
 					</c:if>
 				</c:if>
 			</aui:button-row>

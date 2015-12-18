@@ -66,6 +66,6 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 	</c:choose>
 
 	<aui:button-row>
-		<aui:button disabled="<%= questions.isEmpty() %>" type="submit" />
+		<aui:button cssClass="btn-lg" disabled="<%= questions.isEmpty() %>" type="submit" />
 	</aui:button-row>
 </aui:form>

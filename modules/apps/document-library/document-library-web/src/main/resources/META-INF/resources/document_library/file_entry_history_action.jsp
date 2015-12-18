@@ -26,9 +26,8 @@ FileVersion fileVersion = (FileVersion)row.getObject();
 FileEntry fileEntry = fileVersion.getFileEntry();
 %>
 
-<liferay-ui:icon-menu direction='<%= "down" %>' icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<liferay-ui:icon
-		iconCssClass="icon-download"
 		message="download"
 		method="get"
 		url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
@@ -42,7 +41,6 @@ FileEntry fileEntry = fileVersion.getFileEntry();
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-search"
 		message="view[action]"
 		url="<%= viewFileVersionURL %>"
 	/>
@@ -62,7 +60,6 @@ FileEntry fileEntry = fileVersion.getFileEntry();
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-undo"
 			message="revert"
 			url="<%= revertURL %>"
 		/>

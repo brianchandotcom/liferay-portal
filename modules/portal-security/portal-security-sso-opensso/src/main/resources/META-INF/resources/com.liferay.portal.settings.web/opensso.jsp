@@ -55,7 +55,7 @@ String lastNameAttr = openSSOConfiguration.lastNameAttr();
 		String taglibOnClick = renderResponse.getNamespace() + "testOpenSSOSettings();";
 		%>
 
-		<aui:button onClick="<%= taglibOnClick %>" value="test-opensso-configuration" />
+		<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="test-opensso-configuration" />
 	</aui:button-row>
 </aui:fieldset>
 

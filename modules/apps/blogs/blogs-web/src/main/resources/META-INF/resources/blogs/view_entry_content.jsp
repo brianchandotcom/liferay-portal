@@ -110,7 +110,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 													</portlet:renderURL>
 
 													<liferay-ui:icon
-														iconCssClass="icon-edit"
 														label="<%= true %>"
 														message="edit"
 														url="<%= editEntryURL %>"
@@ -128,7 +127,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 													/>
 
 													<liferay-ui:icon
-														iconCssClass="icon-lock"
 														label="<%= true %>"
 														message="permissions"
 														method="get"

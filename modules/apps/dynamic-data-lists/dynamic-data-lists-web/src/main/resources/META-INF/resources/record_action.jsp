@@ -38,7 +38,7 @@ if (hasUpdatePermission) {
 }
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.VIEW) %>">
 		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="viewRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcPath" value="/view_record.jsp" />

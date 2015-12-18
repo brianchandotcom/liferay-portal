@@ -31,7 +31,7 @@ WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.ge
 %>
 
 <c:if test="<%= socialActivityWikiPage != null %>">
-	<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 		<c:if test="<%= (version != wikiPage.getVersion()) && socialActivityWikiPage.isApproved() && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 			<portlet:actionURL name="/wiki/edit_page" var="revertURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
@@ -42,7 +42,6 @@ WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.ge
 			</portlet:actionURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-undo"
 				message='<%= LanguageUtil.get(request, "restore-version") + " " + String.valueOf(version) %>'
 				url="<%= revertURL %>"
 			/>
@@ -65,7 +64,6 @@ WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.ge
 		<liferay-ui:icon
 			cssClass="compare-to-link"
 			data="<%= data %>"
-			iconCssClass="icon-copy"
 			label="<%= true %>"
 			message="compare-to"
 			url="javascript:;"

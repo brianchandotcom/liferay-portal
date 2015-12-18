@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"verify.process.name=com.liferay.portal.security.sso.openid"},
 	service = VerifyProcess.class
 )
-public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
+public class OpenIdCompanySettingsVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -155,7 +155,7 @@ public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdPropertiesVerifyProcess.class);
+		OpenIdCompanySettingsVerifyProcess.class);
 
 	private volatile CompanyLocalService _companyLocalService;
 	private volatile PrefsProps _prefsProps;

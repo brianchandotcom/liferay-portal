@@ -1437,79 +1437,13 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Folder sourceFolder = sourceLocalRepository.getFolder(folderId);
+		Folder newFolder = copyFolder(
+			userId, folderId, parentFolderId, sourceLocalRepository,
+			destinationLocalRepository, serviceContext);
 
-		Folder destinationFolder = destinationLocalRepository.addFolder(
-			userId, parentFolderId, sourceFolder.getName(),
-			sourceFolder.getDescription(), serviceContext);
+		sourceLocalRepository.deleteFolder(folderId);
 
-		dlAppHelperLocalService.addFolder(
-			userId, destinationFolder, serviceContext);
-
-		List<RepositoryEntry> foldersAndFileEntriesAndFileShortcuts =
-			sourceLocalRepository.getFoldersAndFileEntriesAndFileShortcuts(
-				folderId, WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		try {
-			for (RepositoryEntry folderAndFileEntryAndFileShortcut :
-					foldersAndFileEntriesAndFileShortcuts) {
-
-				if (folderAndFileEntryAndFileShortcut instanceof FileEntry) {
-					FileEntry fileEntry =
-						(FileEntry)folderAndFileEntryAndFileShortcut;
-
-					moveFileEntry(
-						userId, fileEntry.getFileEntryId(),
-						destinationFolder.getFolderId(), serviceContext);
-				}
-				else if (folderAndFileEntryAndFileShortcut instanceof Folder) {
-					Folder folder = (Folder)folderAndFileEntryAndFileShortcut;
-
-					moveFolder(
-						userId, folder.getFolderId(),
-						destinationFolder.getFolderId(), sourceLocalRepository,
-						destinationLocalRepository, serviceContext);
-				}
-				else if (folderAndFileEntryAndFileShortcut
-							instanceof FileShortcut) {
-
-					if (destinationFolder.isSupportsShortcuts()) {
-						FileShortcut fileShortcut =
-							(FileShortcut)folderAndFileEntryAndFileShortcut;
-
-						destinationLocalRepository.addFileShortcut(
-							userId, destinationFolder.getFolderId(),
-							fileShortcut.getToFileEntryId(), serviceContext);
-					}
-				}
-			}
-		}
-		catch (PortalException pe) {
-			int fileEntriesAndFileShortcutsCount =
-				destinationLocalRepository.getFileEntriesAndFileShortcutsCount(
-					destinationFolder.getFolderId(),
-					WorkflowConstants.STATUS_ANY);
-
-			if (fileEntriesAndFileShortcutsCount == 0) {
-				destinationLocalRepository.deleteFolder(
-					destinationFolder.getFolderId());
-			}
-
-			throw pe;
-		}
-
-		try {
-			sourceLocalRepository.deleteFolder(folderId);
-		}
-		catch (PortalException pe) {
-			destinationLocalRepository.deleteFolder(
-				destinationFolder.getFolderId());
-
-			throw pe;
-		}
-
-		return destinationFolder;
+		return newFolder;
 	}
 
 	@BeanReference(type = RepositoryProvider.class)

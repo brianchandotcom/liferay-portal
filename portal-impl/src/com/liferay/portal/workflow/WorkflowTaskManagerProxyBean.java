@@ -173,7 +173,7 @@ public class WorkflowTaskManagerProxyBean
 
 	@Override
 	public List<WorkflowTask> search(
-		long companyId, long userId, String keywords, Boolean completed,
+		long companyId, long userId, String taskName, Boolean completed,
 		Boolean searchByUserRoles, int start, int end,
 		OrderByComparator<WorkflowTask> orderByComparator) {
 
@@ -182,19 +182,20 @@ public class WorkflowTaskManagerProxyBean
 
 	@Override
 	public List<WorkflowTask> search(
-		long companyId, long userId, String taskName, String assetType,
-		Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
-		Boolean completed, Boolean searchByUserRoles, boolean andOperator,
-		int start, int end, OrderByComparator<WorkflowTask> orderByComparator) {
+		long companyId, long userId, String keywords, String assetTitle,
+		String assetType, Long[] assetPrimaryKey, Date dueDateGT,
+		Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+		boolean andOperator, int start, int end,
+		OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public List<WorkflowTask> search(
-		long companyId, long userId, String keywords, String[] assetTypes,
-		Boolean completed, Boolean searchByUserRoles, int start, int end,
-		OrderByComparator<WorkflowTask> orderByComparator) {
+		long companyId, long userId, String keywords, String assetTitle,
+		String[] assetTypes, Boolean completed, Boolean searchByUserRoles,
+		int start, int end, OrderByComparator<WorkflowTask> orderByComparator) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -209,17 +210,18 @@ public class WorkflowTaskManagerProxyBean
 
 	@Override
 	public int searchCount(
-		long companyId, long userId, String taskName, String assetType,
-		Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
-		Boolean completed, Boolean searchByUserRoles, boolean andOperator) {
+		long companyId, long userId, String taskName, String assetTitle,
+		String assetType, Long[] assetPrimaryKey, Date dueDateGT,
+		Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+		boolean andOperator) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int searchCount(
-		long companyId, long userId, String keywords, String[] assetTypes,
-		Boolean completed, Boolean searchByUserRoles) {
+		long companyId, long userId, String keywords, String assetTitle,
+		String[] assetTypes, Boolean completed, Boolean searchByUserRoles) {
 
 		throw new UnsupportedOperationException();
 	}

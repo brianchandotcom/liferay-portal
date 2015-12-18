@@ -24,32 +24,34 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<aui:fieldset label="languages">
-		<aui:input name="preferences--languageIds--" type="hidden" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<div class="display-template">
+				<liferay-ddm:template-selector
+					className="<%= LanguageEntry.class.getName() %>"
+					displayStyle="<%= languagePortletInstanceConfiguration.displayStyle() %>"
+					displayStyleGroupId="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+				/>
+			</div>
 
-		<liferay-ui:input-move-boxes
-			leftBoxName="currentLanguageIds"
-			leftList="<%= siteNavigationLanguageDisplayContext.getCurrentLanguageIdKVPs() %>"
-			leftReorder="true"
-			leftTitle="current"
-			rightBoxName="availableLanguageIds"
-			rightList="<%= siteNavigationLanguageDisplayContext.getAvailableLanguageIdKVPs() %>"
-			rightTitle="available"
-		/>
-	</aui:fieldset>
+			<aui:input name="preferences--displayCurrentLocale--" type="toggle-switch" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
+		</aui:fieldset>
 
-	<aui:fieldset>
-		<div class="display-template">
-			<liferay-ddm:template-selector
-				className="<%= LanguageEntry.class.getName() %>"
-				displayStyle="<%= languagePortletInstanceConfiguration.displayStyle() %>"
-				displayStyleGroupId="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupId() %>"
-				refreshURL="<%= configurationRenderURL %>"
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="languages">
+			<aui:input name="preferences--languageIds--" type="hidden" />
+
+			<liferay-ui:input-move-boxes
+				leftBoxName="currentLanguageIds"
+				leftList="<%= siteNavigationLanguageDisplayContext.getCurrentLanguageIdKVPs() %>"
+				leftReorder="true"
+				leftTitle="current"
+				rightBoxName="availableLanguageIds"
+				rightList="<%= siteNavigationLanguageDisplayContext.getAvailableLanguageIdKVPs() %>"
+				rightTitle="available"
 			/>
-		</div>
-	</aui:fieldset>
-
-	<aui:input name="preferences--displayCurrentLocale--" type="checkbox" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/login/navigation/init.jsp" %>
 
 <portlet:renderURL var="loginRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/login/login_redirect" />
+	<portlet:param name="mvcRenderCommandName" value="/login/login_redirect" />
 </portlet:renderURL>
 
 <%

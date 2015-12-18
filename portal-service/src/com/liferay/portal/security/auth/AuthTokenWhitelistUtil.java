@@ -198,6 +198,22 @@ public class AuthTokenWhitelistUtil {
 		return false;
 	}
 
+	public static boolean isPortletURLPortletInvocationWhitelisted(
+		LiferayPortletURL liferayPortletURL) {
+
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			if (authTokenWhitelist.isPortletURLPortletInvocationWhitelisted(
+					liferayPortletURL)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean isValidSharedSecret(String sharedSecret) {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 

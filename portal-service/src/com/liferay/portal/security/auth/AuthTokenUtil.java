@@ -37,6 +37,12 @@ public class AuthTokenUtil {
 		_instance._addCSRFToken(request, liferayPortletURL);
 	}
 
+	public static void addPortletInvocationToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		_instance._addPortletInvocationToken(request, liferayPortletURL);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #checkCSRFToken(HttpServletRequest, String)}
@@ -102,6 +108,18 @@ public class AuthTokenUtil {
 		AuthToken authToken = _serviceTracker.getService();
 
 		authToken.addCSRFToken(request, liferayPortletURL);
+	}
+
+	private void _addPortletInvocationToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		if (_serviceTracker.isEmpty()) {
+			return;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		authToken.addPortletInvocationToken(request, liferayPortletURL);
 	}
 
 	@SuppressWarnings("deprecation")

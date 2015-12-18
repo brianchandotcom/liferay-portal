@@ -726,7 +726,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			// Move file entries between repositories
 
-			return moveFileEntries(
+			return moveFileEntry(
 				userId, fileEntryId, newFolderId, fromLocalRepository,
 				toLocalRepository, serviceContext);
 		}
@@ -1331,7 +1331,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 	}
 
-	protected FileEntry moveFileEntries(
+	protected FileEntry moveFileEntry(
 			long userId, long fileEntryId, long newFolderId,
 			LocalRepository fromLocalRepository,
 			LocalRepository toLocalRepository, ServiceContext serviceContext)

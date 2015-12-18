@@ -316,7 +316,11 @@ public class BundleJavaFileManager
 
 		List<JavaFileObject> javaFileObjects = new ArrayList<>();
 
-		int options = recurse ? BundleWiring.LISTRESOURCES_RECURSE : 0;
+		int options = 0;
+
+		if (recurse) {
+			options = BundleWiring.LISTRESOURCES_RECURSE;
+		}
 
 		for (Kind kind : kinds) {
 			if (kind.equals(Kind.CLASS)) {

@@ -110,6 +110,12 @@ public class IncorrectLineBreaks1 {
 				}
 
 			});
+
+		int i = StringUtil.lastIndexOfAny(
+			"Hello",
+			new String[] {
+				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"
+			}, 5);
 	}
 
 	public void methodWithASlightlyLongerName(

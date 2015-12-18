@@ -673,10 +673,30 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			break;
 		}
 
+		Matcher matcher = _incorrectLineBreakPattern3.matcher(newContent);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			int closeParenthesesCount = StringUtil.count(
+				match, StringPool.CLOSE_PARENTHESIS);
+			int openParenthesesCount = StringUtil.count(
+				match, StringPool.OPEN_PARENTHESIS);
+
+			if (closeParenthesesCount == openParenthesesCount) {
+				String beforeMatch = newContent.substring(0, matcher.start());
+
+				int lineCount = StringUtil.count(beforeMatch, "\n") + 1;
+
+				processErrorMessage(
+					fileName, "line break: " + fileName + " " + lineCount);
+			}
+		}
+
 		newContent = formatAnnotations(
 			fileName, StringPool.BLANK, newContent, StringPool.BLANK);
 
-		Matcher matcher = _logPattern.matcher(newContent);
+		matcher = _logPattern.matcher(newContent);
 
 		if (matcher.find()) {
 			String logClassName = matcher.group(1);
@@ -3703,6 +3723,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private Pattern _incorrectLineBreakPattern2 = Pattern.compile(
 		"\\{\n\n\t*\\}");
+	private Pattern _incorrectLineBreakPattern3 = Pattern.compile(
+		", new .*\\(.*\\) \\{\n");
 	private Pattern[] _javaSerializationVulnerabilityPatterns = new Pattern[] {
 		Pattern.compile(
 			".*(new [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL),

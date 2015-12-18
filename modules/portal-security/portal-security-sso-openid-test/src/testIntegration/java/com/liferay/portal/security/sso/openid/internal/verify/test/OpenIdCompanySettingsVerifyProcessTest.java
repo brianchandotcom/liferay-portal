@@ -61,7 +61,7 @@ import org.osgi.framework.ServiceReference;
  * @author Stian Sigvartsen
  */
 @RunWith(Arquillian.class)
-public class OpenIdPropertiesVerifyProcessTest
+public class OpenIdCompanySettingsVerifyProcessTest
 	extends BaseVerifyProcessTestCase {
 
 	@ClassRule

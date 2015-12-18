@@ -14,14 +14,17 @@
 	<command name="gotoViewEntries">
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
+		<var name="key_formName" value="${formName}" />
+
 		<execute function="AssertClick" locator1="MenuItem#VIEW_ENTRIES" value1="View Entries" />
 	</command>
 
 	<command name="gotoViewEntriesViaIcon">
 		<var name="key_cardEntry" value="${formName}" />
-		<var name="key_formName" value="${formName}" />
 
 		<execute function="Click" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
+
+		<var name="key_formName" value="${formName}" />
 
 		<execute function="AssertClick" locator1="MenuItem#VIEW_ENTRIES" value1="View Entries" />
 	</command>

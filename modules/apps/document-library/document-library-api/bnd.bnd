@@ -2,4 +2,7 @@ Bundle-Name: Liferay Document Library API
 Bundle-SymbolicName: com.liferay.document.library.api
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.document.library.*
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library

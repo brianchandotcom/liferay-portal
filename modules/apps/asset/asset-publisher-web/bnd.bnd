@@ -5,10 +5,13 @@ Export-Package:\
 	com.liferay.asset.publisher.web,\
 	com.liferay.asset.publisher.web.constants,\
 	com.liferay.asset.publisher.web.util
+-include: ../../../../marketplace/web-content-management/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Asset
 Web-ContextPath: /asset-publisher-web

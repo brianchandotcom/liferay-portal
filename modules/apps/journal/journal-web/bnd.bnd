@@ -10,6 +10,7 @@ Export-Package:\
 Import-Package:\
 	javax.servlet;version='[2.3.0,4.0.0)',\
 	*
+-include: ../../../../marketplace/web-content-management/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
@@ -18,4 +19,6 @@ Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
 JS-Config: /META-INF/resources/js/config.js
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Web Content
 Web-ContextPath: /journal-web

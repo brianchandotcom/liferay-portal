@@ -9,6 +9,7 @@ Import-Package:\
 	!org.json.simple.*,\
 	!org.relaxng.datatype.*,\
 	*
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/chemistry-opencmis-client-api.jar,\
@@ -18,3 +19,5 @@ Include-Resource:\
 	@lib/chemistry-opencmis-commons-impl.jar,\
 	@lib/stax2-api.jar,\
 	@lib/woodstox-core-asl.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Stores

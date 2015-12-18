@@ -5,7 +5,10 @@ Export-Package: com.liferay.announcements.web.constants
 Import-Package:\
 	com.liferay.portal.kernel.exception,\
 	*
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /announcements-web

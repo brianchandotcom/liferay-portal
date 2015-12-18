@@ -4,7 +4,10 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.kernel.backgroundtask,\
 	*
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Background Tasks
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

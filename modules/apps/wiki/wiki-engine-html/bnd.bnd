@@ -1,7 +1,10 @@
 Bundle-Name: Liferay Wiki Engine HTML
 Bundle-SymbolicName: com.liferay.wiki.engine.html
 Bundle-Version: 1.0.0
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	@../../../../lib/portal/jericho-html.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-html

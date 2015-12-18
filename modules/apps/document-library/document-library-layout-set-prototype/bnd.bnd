@@ -1,4 +1,7 @@
 Bundle-Name: Liferay Document Library Layout Set Prototype
 Bundle-SymbolicName: com.liferay.document.library.layout.set.prototype
 Bundle-Version: 1.0.0
+-include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library

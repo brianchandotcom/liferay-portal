@@ -5,9 +5,12 @@ Import-Package:\
 	!javax.microedition.*,\
 	!junit.*,\
 	*
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	@lib/cas-client-core.jar,\
 	@lib/opensaml.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Security Frameworks
 Web-ContextPath: /portal-security-sso-cas

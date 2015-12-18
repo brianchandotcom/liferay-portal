@@ -4,9 +4,12 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.kernel.servlet;resolution:="optional",\
 	*
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/json.jar,\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*,\
 	@../../../lib/portal/bnd.jar!/aQute/lib/base64/*,\
 	@../../../lib/portal/bnd.jar!/aQute/lib/converter/*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Frontend Infrastructure

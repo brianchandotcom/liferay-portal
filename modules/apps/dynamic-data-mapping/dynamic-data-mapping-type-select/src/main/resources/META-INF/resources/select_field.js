@@ -8,8 +8,16 @@ AUI.add(
 		var SelectField = A.Component.create(
 			{
 				ATTRS: {
+					dataSourceOptions: {
+						value: [],
+					},
+
 					dataSourceType: {
 						value: 'manual'
+					},
+
+					dataSourceURL: {
+						value: '/o/dynamic-data-mapping-data-provider'
 					},
 
 					ddmDataProviderInstanceId: {
@@ -67,8 +75,14 @@ AUI.add(
 					getOptions: function() {
 						var instance = this;
 
+						var options = instance.get('options');
+
+						if (instance.get('dataSourceType') !== 'manual') {
+							options = instance.get('dataSourceOptions');
+						}
+
 						return A.map(
-							instance.get('options'),
+							options,
 							function(item) {
 								var label = item.label;
 
@@ -98,18 +112,6 @@ AUI.add(
 						);
 					},
 
-					getTemplateRenderer: function() {
-						var instance = this;
-
-						var renderer = SelectField.superclass.getTemplateRenderer.apply(instance, arguments);
-
-						if (instance.get('dataSourceType') !== 'manual') {
-							renderer = A.bind('renderTemplate', instance, renderer);
-						}
-
-						return renderer;
-					},
-
 					render: function() {
 						var instance = this;
 
@@ -117,41 +119,65 @@ AUI.add(
 
 						SelectField.superclass.render.apply(instance, arguments);
 
-						if (dataSourceType !== 'manual' && instance.get('builder')) {
-							var inputNode = instance.getInputNode();
+						if (dataSourceType !== 'manual') {
+							if (instance.get('builder')) {
+								var inputNode = instance.getInputNode();
 
-							var strings = instance.get('strings');
+								var strings = instance.get('strings');
 
-							inputNode.attr('disabled', true);
+								inputNode.attr('disabled', true);
 
-							inputNode.html(
-								Lang.sub(
-									TPL_OPTION,
-									{
-										label: strings.dynamicallyLoadedData
+								inputNode.html(
+									Lang.sub(
+										TPL_OPTION,
+										{
+											label: strings.dynamicallyLoadedData
+										}
+									)
+								);
+							}
+							else {
+								var container = instance.get('container');
+
+								instance._getDataSourceData(
+									function(options) {
+										instance.set('dataSourceOptions', options);
+
+										container.html(instance.getTemplate());
 									}
-								)
-							);
+								);
+							}
 						}
 
 						return instance;
 					},
 
-					renderTemplate: function(renderer, context) {
+					_getDataSourceData: function(callback) {
 						var instance = this;
 
-						var container = instance.fetchContainer();
+						var form = instance.getRoot();
 
-						var template;
+						A.io.request(
+							instance.get('dataSourceURL'),
+							{
+								data: {
+									fieldName: instance.get('name'),
+									serializedDDMForm: JSON.stringify(form.get('definition'))
+								},
+								dataType: 'JSON',
+								method: 'GET',
+								on: {
+									failure: function() {
+										callback.call(instance, null);
+									},
+									success: function() {
+										var result = this.get('responseData');
 
-						if (container) {
-							template = container.html();
-						}
-						else {
-							template = renderer(context);
-						}
-
-						return template;
+										callback.call(instance, result);
+									}
+								}
+							}
+						);
 					},
 
 					_getOptionStatus: function(option) {

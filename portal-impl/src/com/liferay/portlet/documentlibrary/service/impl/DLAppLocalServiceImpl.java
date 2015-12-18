@@ -772,7 +772,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			// Move file entries between repositories
 
-			return moveFolders(
+			return moveFolder(
 				userId, folderId, parentFolderId, sourceLocalRepository,
 				destinationLocalRepository, serviceContext);
 		}
@@ -1351,7 +1351,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		return destinationFileEntry;
 	}
 
-	protected Folder moveFolders(
+	protected Folder moveFolder(
 			long userId, long folderId, long parentFolderId,
 			LocalRepository sourceLocalRepository,
 			LocalRepository destinationLocalRepository,
@@ -1387,7 +1387,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				else if (folderAndFileEntryAndFileShortcut instanceof Folder) {
 					Folder folder = (Folder)folderAndFileEntryAndFileShortcut;
 
-					moveFolders(
+					moveFolder(
 						userId, folder.getFolderId(),
 						destinationFolder.getFolderId(), sourceLocalRepository,
 						destinationLocalRepository, serviceContext);

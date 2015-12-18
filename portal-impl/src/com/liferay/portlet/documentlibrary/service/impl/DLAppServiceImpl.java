@@ -2148,7 +2148,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		// Move file entries between repositories
 
-		return moveFolders(
+		return moveFolder(
 			folderId, parentFolderId, fromRepository, toRepository,
 			serviceContext);
 	}
@@ -3007,7 +3007,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return destinationFileEntry;
 	}
 
-	protected Folder moveFolders(
+	protected Folder moveFolder(
 			long folderId, long parentFolderId, Repository fromRepository,
 			Repository toRepository, ServiceContext serviceContext)
 		throws PortalException {
@@ -3038,7 +3038,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				else if (repositoryEntry instanceof Folder) {
 					Folder currentFolder = (Folder)repositoryEntry;
 
-					moveFolders(
+					moveFolder(
 						currentFolder.getFolderId(), newFolder.getFolderId(),
 						fromRepository, toRepository, serviceContext);
 				}

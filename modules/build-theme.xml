@@ -9,7 +9,7 @@
 	</target>
 
 	<target name="deploy">
-		<print-gradle-alternative args="gulpDeploy" />
+		<print-gradle-alternative args="deploy" />
 	</target>
 
 	<target name="war">

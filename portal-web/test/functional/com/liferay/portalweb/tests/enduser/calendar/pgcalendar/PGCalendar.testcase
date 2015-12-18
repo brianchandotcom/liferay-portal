@@ -4017,13 +4017,10 @@
 	<command name="ViewCalendarEventDetailsAllDayWithModifiedUserTimeZone" priority="4">
 		<description message="This is a use case for LPS-51783." />
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<execute macro="UserBar#gotoMyAccount" />
 
-		<execute macro="User#editUserDisplaySettingsCP">
+		<execute macro="User#editUserDisplaySettingsTimeZonePacific">
 			<var name="displaySettingsGreeting" value="Welcome Test Test!" />
-			<var name="userScreenName" value="test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

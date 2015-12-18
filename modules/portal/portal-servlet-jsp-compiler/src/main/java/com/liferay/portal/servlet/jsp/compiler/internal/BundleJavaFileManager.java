@@ -45,7 +45,6 @@ import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 
-import org.phidias.compile.Constants;
 import org.phidias.compile.ResourceResolver;
 
 /**
@@ -53,7 +52,11 @@ import org.phidias.compile.ResourceResolver;
  * @author Shuyang Zhou
  */
 public class BundleJavaFileManager
-	extends ForwardingJavaFileManager<JavaFileManager> implements Constants {
+	extends ForwardingJavaFileManager<JavaFileManager> {
+
+	public static final String JAVA_PACKAGE = "java.";
+
+	public static final String OPT_VERBOSE = "-verbose";
 
 	public BundleJavaFileManager(
 		Bundle bundle, JavaFileManager javaFileManager, Logger logger,
@@ -243,7 +246,8 @@ public class BundleJavaFileManager
 		List<JavaFileObject> javaFileObjects) {
 
 		Collection<String> resources = _resourceResolver.resolveResources(
-			bundleWiring, packagePath, STAR.concat(kind.extension), options);
+			bundleWiring, packagePath, StringPool.STAR.concat(kind.extension),
+			options);
 
 		if ((resources == null) || resources.isEmpty()) {
 			return;

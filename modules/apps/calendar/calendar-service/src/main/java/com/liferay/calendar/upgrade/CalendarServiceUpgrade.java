@@ -15,6 +15,7 @@
 package com.liferay.calendar.upgrade;
 
 import com.liferay.calendar.upgrade.v1_0_1.UpgradeCalendar;
+import com.liferay.calendar.upgrade.v1_0_2.UpgradeCalendarResource;
 import com.liferay.calendar.upgrade.v1_0_2.UpgradeLastPublishDate;
 import com.liferay.calendar.upgrade.v1_0_2.UpgradePortletPreferences;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -43,7 +44,8 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.calendar.service", "1.0.1", "1.0.2",
-			new UpgradeLastPublishDate(), new UpgradePortletPreferences());
+			new UpgradeLastPublishDate(), new UpgradePortletPreferences(),
+			new UpgradeCalendarResource());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

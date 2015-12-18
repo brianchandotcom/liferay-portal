@@ -5,8 +5,9 @@
 	width: 96%;
 
 	&.toggle {
+		max-height: 0;
 		transform: translate(calc(-100% + 4%));
-		transition: transform 0.2s ease, visibility 0s 0.15s;
+		transition: transform 0.2s ease, visibility 0s 0.15s, max-height 0s 0.15s;
 		visibility: hidden;
 		will-change: initial;
 	}
@@ -22,9 +23,10 @@
 	font-size: 17px;
 	letter-spacing: 0.08em;
 	margin-top: 11px;
+	max-height: 100%;
 	padding: 14px 52px 56px;
 	transform-origin: top left;
-	transition: transform 0.15s ease, visibility 0s;
+	transition: transform 0.15s ease, visibility 0s, max-height 0s;
 	will-change: transform;
 	word-wrap: break-word;
 	z-index: 900;

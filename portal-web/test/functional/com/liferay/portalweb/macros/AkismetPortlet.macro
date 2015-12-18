@@ -25,8 +25,8 @@
 	</command>
 
 	<command name="tearDownConfiguration">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Akismet" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Akismet" />
 		</execute>
 
 		<execute function="Uncheck" locator1="Akismet#ENABLED_FOR_MESSAGE_BOARDS_CHECKBOX" />

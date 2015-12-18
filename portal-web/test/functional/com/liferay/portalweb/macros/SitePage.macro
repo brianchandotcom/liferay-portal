@@ -559,8 +559,8 @@
 	<command name="tearDownPrivateCP">
 		<description message="Delete all pages in the Private tab in Site Pages for Liferay." />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<var name="key_siteName" value="Liferay" />

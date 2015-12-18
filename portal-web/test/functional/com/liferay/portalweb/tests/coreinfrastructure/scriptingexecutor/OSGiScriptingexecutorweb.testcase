@@ -11,8 +11,8 @@
 
 		<var name="appName" value="Scripting Executor" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="App Manager" />
 		</execute>
 
 		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />

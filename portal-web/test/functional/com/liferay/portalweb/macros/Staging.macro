@@ -628,8 +628,8 @@
 	<command name="remoteStagingSetUp">
 		<var name="siteID" value="${siteID}" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">

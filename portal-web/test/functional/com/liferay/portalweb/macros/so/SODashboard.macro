@@ -53,8 +53,8 @@
 	</command>
 
 	<command name="tearDownSiteTemplateCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<var name="key_siteTemplateName" value="Social Office User Home" />

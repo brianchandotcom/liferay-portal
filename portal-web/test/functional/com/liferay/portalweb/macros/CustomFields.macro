@@ -47,8 +47,8 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Custom Fields" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Custom Fields" />
 		</execute>
 
 		<while>
@@ -66,8 +66,8 @@
 					</then>
 				</while>
 
-				<execute macro="Page#gotoCP">
-					<var name="portletName" value="Custom Fields" />
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Custom Fields" />
 				</execute>
 			</then>
 		</while>

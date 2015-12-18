@@ -138,8 +138,8 @@
 	<command name="ViewWikiFrontPageRightToLeft" priority="4">
 		<var name="currentPortalLanguages" value="English (United States),Arabic (Saudi Arabia)" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Portal Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#configureCurrentLanguagesCP">

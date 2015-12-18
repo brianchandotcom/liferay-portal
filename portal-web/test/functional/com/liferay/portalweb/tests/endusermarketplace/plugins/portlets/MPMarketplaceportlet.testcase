@@ -8,8 +8,8 @@
 	<command name="MarketplacePortletSmoke" priority="4">
 		<var name="appName" value="Marketplace" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="App Manager" />
 		</execute>
 
 		<execute macro="AppManager#viewAppCP">

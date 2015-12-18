@@ -107,8 +107,8 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Page Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
 		</execute>
 
 		<var name="key_pageTemplateName" value="Page Template Name" />

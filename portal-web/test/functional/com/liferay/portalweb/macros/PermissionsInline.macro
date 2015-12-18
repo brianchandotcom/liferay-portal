@@ -337,8 +337,8 @@
 	</command>
 
 	<command name="gotoUserGroupSitePermissionsCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="User Groups" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="User Groups" />
 		</execute>
 
 		<var name="key_userGroupName" value="${userGroupName}" />

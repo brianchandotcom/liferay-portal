@@ -367,6 +367,11 @@ AUI.add(
 
 							var config = {
 								elementName: name,
+								strings: {
+									cancel: Liferay.Language.get('cancel'),
+									edit: Liferay.Language.get('edit'),
+									save: Liferay.Language.get('save')
+								},
 								validator: {
 									rules: {}
 								}

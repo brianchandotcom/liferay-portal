@@ -25,6 +25,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -56,13 +57,13 @@ public class BundleJavaFileManager
 
 	public BundleJavaFileManager(
 		Bundle bundle, JavaFileManager javaFileManager, Logger logger,
-		boolean verbose, ResourceResolver resourceResolver) {
+		boolean verbose, ClassResolver classResolver) {
 
 		super(javaFileManager);
 
 		_logger = logger;
 		_verbose = verbose;
-		_resourceResolver = resourceResolver;
+		_classResolver = classResolver;
 
 		_bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -157,6 +158,10 @@ public class BundleJavaFileManager
 			boolean recurse)
 		throws IOException {
 
+		if (!kinds.contains(Kind.CLASS)) {
+			return Collections.emptyList();
+		}
+
 		if ((location == StandardLocation.CLASS_PATH) && _verbose) {
 			StringBundler sb = new StringBundler(9);
 
@@ -180,7 +185,7 @@ public class BundleJavaFileManager
 			(location == StandardLocation.CLASS_PATH)) {
 
 			List<JavaFileObject> javaFileObjects = listFromDependencies(
-				kinds, recurse, packagePath);
+				recurse, packagePath);
 
 			if (!javaFileObjects.isEmpty() ||
 				!_systemPackageNames.contains(packageName)) {
@@ -237,19 +242,18 @@ public class BundleJavaFileManager
 	}
 
 	protected void list(
-		String packagePath, Kind kind, int options, BundleWiring bundleWiring,
+		String packagePath, int options, BundleWiring bundleWiring,
 		List<JavaFileObject> javaFileObjects) {
 
-		Collection<String> resources = _resourceResolver.resolveResources(
-			bundleWiring, packagePath, StringPool.STAR.concat(kind.extension),
-			options);
+		Collection<String> resources = _classResolver.resolveClasses(
+			bundleWiring, packagePath, options);
 
 		if ((resources == null) || resources.isEmpty()) {
 			return;
 		}
 
 		for (String resourceName : resources) {
-			URL resourceURL = _resourceResolver.getResource(
+			URL resourceURL = _classResolver.getClassURL(
 				bundleWiring, resourceName);
 
 			JavaFileObject javaFileObject = getJavaFileObject(
@@ -274,7 +278,7 @@ public class BundleJavaFileManager
 	}
 
 	protected List<JavaFileObject> listFromDependencies(
-		Set<Kind> kinds, boolean recurse, String packagePath) {
+		boolean recurse, String packagePath) {
 
 		List<JavaFileObject> javaFileObjects = new ArrayList<>();
 
@@ -284,19 +288,12 @@ public class BundleJavaFileManager
 			options = BundleWiring.LISTRESOURCES_RECURSE;
 		}
 
-		for (Kind kind : kinds) {
-			if (kind.equals(Kind.CLASS)) {
-				for (BundleWiring bundleWiring : _bundleWirings) {
-					list(
-						packagePath, kind, options, bundleWiring,
-						javaFileObjects);
-				}
-			}
+		for (BundleWiring bundleWiring : _bundleWirings) {
+			list(packagePath, options, bundleWiring, javaFileObjects);
+		}
 
-			if (javaFileObjects.isEmpty()) {
-				list(
-					packagePath, kind, options, _bundleWiring, javaFileObjects);
-			}
+		if (javaFileObjects.isEmpty()) {
+			list(packagePath, options, _bundleWiring, javaFileObjects);
 		}
 
 		return javaFileObjects;
@@ -304,8 +301,8 @@ public class BundleJavaFileManager
 
 	private final BundleWiring _bundleWiring;
 	private final Set<BundleWiring> _bundleWirings = new LinkedHashSet<>();
+	private final ClassResolver _classResolver;
 	private final Logger _logger;
-	private final ResourceResolver _resourceResolver;
 	private final Set<Object> _systemPackageNames = new HashSet<>();
 	private final boolean _verbose;
 

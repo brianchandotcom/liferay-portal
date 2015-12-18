@@ -23,12 +23,11 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Raymond Augé
  */
-public interface ResourceResolver {
+public interface ClassResolver {
 
-	public URL getResource(BundleWiring bundleWiring, String name);
+	public URL getClassURL(BundleWiring bundleWiring, String name);
 
-	public Collection<String> resolveResources(
-		BundleWiring bundleWiring, String path, String filePattern,
-		int options);
+	public Collection<String> resolveClasses(
+		BundleWiring bundleWiring, String path, int options);
 
 }

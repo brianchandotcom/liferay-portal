@@ -953,6 +953,15 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 				<available file="poshi-warnings.xml" />
 				<then>
 					<loadfile property="testray.testcase.warnings" srcfile="poshi-warnings.xml" />
+
+					<propertyregex
+						global="true"
+						input="${testray.testcase.warnings}"
+						override="true"
+						property="testray.testcase.warnings"
+						regexp="]]>([\S]+)"
+						replace="&amp;#93;&amp;#93;&amp;gt;\1"
+					/>
 				</then>
 			</if>
 

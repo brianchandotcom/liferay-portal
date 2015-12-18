@@ -7,8 +7,11 @@ Export-Package:\
 	com.liferay.portal.ldap.configuration.*,\
 	com.liferay.portal.ldap.constants.*,\
 	com.liferay.portal.ldap.exportimport.*
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	content=src/main/resources/content
 	META-INF/resources=src/main/resources/META-INF/resources
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: LDAP
 Web-ContextPath: /portal-ldap

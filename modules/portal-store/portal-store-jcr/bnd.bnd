@@ -7,6 +7,7 @@ Import-Package:\
 	!org.apache.lucene.*,\
 	!org.apache.tika.*,\
 	*
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/concurrent.jar,\
@@ -16,3 +17,5 @@ Include-Resource:\
 	@lib/jackrabbit-spi.jar,\
 	@lib/jackrabbit-spi-commons.jar,\
 	@lib/jcr.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Stores

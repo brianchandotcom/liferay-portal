@@ -1,10 +1,13 @@
 Bundle-Name: Liferay Portal HTTP Tunnel Extender
 Bundle-SymbolicName: com.liferay.portal.http.tunnel.extender
 Bundle-Version: 1.0.0
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Remote Service Engines
 Provide-Capability:\
 	liferay.extender;\
 	liferay.extender="http.tunnel.extender";\

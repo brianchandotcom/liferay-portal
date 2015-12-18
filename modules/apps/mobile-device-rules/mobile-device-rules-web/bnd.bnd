@@ -4,8 +4,12 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	javax.servlet;version='[2.3.0,4.0.0)',\
 	*
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Mobile Device Rules
+-include: ../../../../marketplace/platform/bnd.bnd
 Web-ContextPath: /mdr-web

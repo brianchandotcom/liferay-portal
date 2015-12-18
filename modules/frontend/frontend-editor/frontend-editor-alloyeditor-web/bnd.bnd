@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Frontend Editor AlloyEditor Web
 Bundle-SymbolicName: com.liferay.frontend.editor.alloyeditor.web
 Bundle-Version: 1.0.0
+-include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	content=../frontend-editor-lang/src/main/resources/content,\
@@ -9,5 +10,7 @@ Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/EncryptorException.class
 JS-Config: /META-INF/resources/js/config.js
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Rich Text Editors
 Web-ContextPath: /frontend-editor-alloyeditor-web
 -donotcopy: (\.touch|.*_diffs.*|.*.properties)

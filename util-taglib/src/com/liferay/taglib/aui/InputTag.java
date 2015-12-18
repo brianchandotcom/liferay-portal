@@ -309,7 +309,7 @@ public class InputTag extends BaseInputTag {
 	}
 
 	protected void updateFormCheckboxNames() {
-		if (!Validator.equals(getType(), "checkbox")) {
+		if (!Validator.equals(getBaseType(), "checkbox")) {
 			return;
 		}
 

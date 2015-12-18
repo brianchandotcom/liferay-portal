@@ -102,6 +102,7 @@ public class ConfiguratorExtensionTest {
 					"test.pid", "key=value")),
 			Arrays.asList(
 				new ConfigurationDescriptionFactory() {
+
 					@Override
 					public ConfigurationDescription create(
 						NamedConfigurationContent namedConfigurationContent) {
@@ -115,8 +116,10 @@ public class ConfiguratorExtensionTest {
 									throw new RuntimeException(
 										"This should be handled");
 								}
+
 							});
 					}
+
 				},
 				new StringConfigurationDescriptionFactory()));
 
@@ -380,6 +383,7 @@ public class ConfiguratorExtensionTest {
 							throw new RuntimeException(e);
 						}
 					}
+
 				});
 			}
 			else {
@@ -403,6 +407,7 @@ public class ConfiguratorExtensionTest {
 							throw new RuntimeException(e);
 						}
 					}
+
 				});
 			}
 		}

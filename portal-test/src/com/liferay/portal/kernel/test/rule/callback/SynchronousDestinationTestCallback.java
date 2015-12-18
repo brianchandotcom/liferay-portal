@@ -308,6 +308,7 @@ public class SynchronousDestinationTestCallback
 
 						return null;
 					}
+
 				});
 			}
 			catch (Throwable t) {

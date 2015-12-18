@@ -155,6 +155,7 @@ public class LegacyGoogleDocsMigration {
 
 					legacyGoogleDocsMetadataHelper.delete();
 				}
+
 			}
 
 		);

@@ -121,6 +121,7 @@ public class FIFOWelderTest {
 						return (MockRegistrationReference)serverFifoWelder.weld(
 							new MockIntraband());
 					}
+
 				});
 
 		Thread serverWeldingThread = new Thread(serverWeldingTask);
@@ -136,6 +137,7 @@ public class FIFOWelderTest {
 						return (MockRegistrationReference)clientFIFOWelder.weld(
 							new MockIntraband());
 					}
+
 				});
 
 		Thread clientWeldingThread = new Thread(clientWeldingTask);

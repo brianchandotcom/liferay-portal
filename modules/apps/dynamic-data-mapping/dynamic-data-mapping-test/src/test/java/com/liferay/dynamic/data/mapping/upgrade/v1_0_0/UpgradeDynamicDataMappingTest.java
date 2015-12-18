@@ -578,6 +578,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 
 					return languageIds;
 				}
+
 			}
 		);
 	}

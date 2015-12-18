@@ -13,13 +13,11 @@ gradle.beforeProject {
 		return
 	}
 
-	if (project.path.startsWith(":themes:")) {
-		configure(project) {
+	configure(project) {
+		if (project.path.startsWith(":themes:")) {
 			apply from: rootProject.file("build-theme.gradle")
 		}
-	}
-	else if (FileUtil.exists(project, "bnd.bnd") && FileUtil.exists(project, "build.gradle")) {
-		configure(project) {
+		else if (FileUtil.exists(project, "bnd.bnd") && FileUtil.exists(project, "build.gradle")) {
 			apply from: rootProject.file("build-module.gradle")
 			apply plugin: "pmd"
 
@@ -61,30 +59,32 @@ gradle.beforeProject {
 						delete file
 					}
 				}
+			}
 
-				tasks.withType(Pmd) {
-					classpath = null
+			tasks.withType(Pmd) {
+				classpath = null
+			}
+
+			if (gradle.hasProperty("testClassGroupIndex")) {
+				configure([test, testIntegration]) {
+					include gradle.testClasses
+
+					jvmArgs "-Dtest.class.group.index=" + gradle.testClassGroupIndex
+					jvmArgs "-Dtest.class.groups=" + gradle.testClassGroups
 				}
+			}
 
-				if (gradle.hasProperty("testClassGroupIndex")) {
-					configure([test, testIntegration]) {
-						include gradle.testClasses
-
-						jvmArgs "-Dtest.class.group.index=" + gradle.testClassGroupIndex
-						jvmArgs "-Dtest.class.groups=" + gradle.testClassGroups
-					}
+			if (System.getenv("JENKINS_HOME")) {
+				startTestableTomcat {
+					deleteLiferayHome = false
 				}
+			}
+		}
 
-				if (System.getenv("JENKINS_HOME")) {
-					pluginManager.withPlugin("com.liferay.cache") {
-						cache {
-							forcedCache = true
-						}
-					}
-
-					startTestableTomcat {
-						deleteLiferayHome = false
-					}
+		if (System.getenv("JENKINS_HOME")) {
+			pluginManager.withPlugin("com.liferay.cache") {
+				cache {
+					forcedCache = true
 				}
 			}
 		}

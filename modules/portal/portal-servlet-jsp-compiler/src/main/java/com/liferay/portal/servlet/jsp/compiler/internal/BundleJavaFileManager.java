@@ -45,8 +45,6 @@ import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 
-import org.phidias.compile.ResourceResolver;
-
 /**
  * @author Raymond Augé
  * @author Shuyang Zhou

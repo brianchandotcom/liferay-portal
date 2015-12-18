@@ -744,37 +744,35 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		SystemEventHierarchyEntryThreadLocal.push(Folder.class);
 
 		try {
-			LocalRepository sourceLocalRepository =
+			LocalRepository fromLocalRepository =
 				repositoryProvider.getFolderLocalRepository(folderId);
 
-			LocalRepository destinationLocalRepository =
-				getFolderLocalRepository(
-					parentFolderId, serviceContext.getScopeGroupId());
+			LocalRepository toLocalRepository = getFolderLocalRepository(
+				parentFolderId, serviceContext.getScopeGroupId());
 
 			if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				Folder toFolder = destinationLocalRepository.getFolder(
-					parentFolderId);
+				Folder toFolder = toLocalRepository.getFolder(parentFolderId);
 
 				if (toFolder.isMountPoint()) {
-					destinationLocalRepository = getLocalRepository(
+					toLocalRepository = getLocalRepository(
 						toFolder.getRepositoryId());
 				}
 			}
 
-			if (sourceLocalRepository.getRepositoryId() ==
-					destinationLocalRepository.getRepositoryId()) {
+			if (fromLocalRepository.getRepositoryId() ==
+					toLocalRepository.getRepositoryId()) {
 
 				// Move file entries within repository
 
-				return sourceLocalRepository.moveFolder(
+				return fromLocalRepository.moveFolder(
 					userId, folderId, parentFolderId, serviceContext);
 			}
 
 			// Move file entries between repositories
 
 			return moveFolder(
-				userId, folderId, parentFolderId, sourceLocalRepository,
-				destinationLocalRepository, serviceContext);
+				userId, folderId, parentFolderId, fromLocalRepository,
+				toLocalRepository, serviceContext);
 		}
 		finally {
 			SystemEventHierarchyEntryThreadLocal.pop(Folder.class);
@@ -1432,16 +1430,15 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 	protected Folder moveFolder(
 			long userId, long folderId, long parentFolderId,
-			LocalRepository sourceLocalRepository,
-			LocalRepository destinationLocalRepository,
-			ServiceContext serviceContext)
+			LocalRepository fromLocalRepository,
+			LocalRepository toLocalRepository, ServiceContext serviceContext)
 		throws PortalException {
 
 		Folder newFolder = copyFolder(
-			userId, folderId, parentFolderId, sourceLocalRepository,
-			destinationLocalRepository, serviceContext);
+			userId, folderId, parentFolderId, fromLocalRepository,
+			toLocalRepository, serviceContext);
 
-		sourceLocalRepository.deleteFolder(folderId);
+		fromLocalRepository.deleteFolder(folderId);
 
 		return newFolder;
 	}

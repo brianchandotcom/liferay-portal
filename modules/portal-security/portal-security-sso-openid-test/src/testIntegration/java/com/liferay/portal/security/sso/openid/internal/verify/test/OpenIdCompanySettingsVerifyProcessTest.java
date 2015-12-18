@@ -171,7 +171,7 @@ public class OpenIdCompanySettingsVerifyProcessTest
 					VerifyProcess.class.getName(),
 					"(&(objectClass=" + VerifyProcess.class.getName() +
 						")(verify.process.name=" +
-						"com.liferay.portal.security.sso.openid))");
+							"com.liferay.portal.security.sso.openid))");
 
 			if (ArrayUtil.isEmpty(serviceReferences)) {
 				throw new IllegalStateException("Unable to get verify process");

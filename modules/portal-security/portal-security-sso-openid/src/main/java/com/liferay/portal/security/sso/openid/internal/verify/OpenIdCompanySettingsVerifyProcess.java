@@ -149,7 +149,7 @@ public class OpenIdCompanySettingsVerifyProcess extends VerifyProcess {
 						companyId);
 			}
 
-			getCompanyLocalService().removePreferences(
+			_companyLocalService.removePreferences(
 				companyId, keys.toArray(new String[keys.size()]));
 		}
 	}

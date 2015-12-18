@@ -21,13 +21,9 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.io.File;
 import java.io.IOException;
 
-import java.net.JarURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -52,9 +48,7 @@ import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 
-import org.phidias.compile.BundleJavaFileObject;
 import org.phidias.compile.Constants;
-import org.phidias.compile.JarJavaFileObject;
 import org.phidias.compile.ResourceResolver;
 
 /**
@@ -147,18 +141,17 @@ public class BundleJavaFileManager
 	@Override
 	public String inferBinaryName(Location location, JavaFileObject file) {
 		if ((location == StandardLocation.CLASS_PATH) &&
-			(file instanceof BundleJavaFileObject)) {
+			(file instanceof BaseJavaFileObject)) {
 
-			BundleJavaFileObject bundleJavaFileObject =
-				(BundleJavaFileObject)file;
+			BaseJavaFileObject baseJavaFileObject = (BaseJavaFileObject)file;
 
 			if (_verbose) {
 				_logger.log(
 					Logger.LOG_INFO,
-					"Infering binary name from " + bundleJavaFileObject);
+					"Infering binary name from " + baseJavaFileObject);
 			}
 
-			return bundleJavaFileObject.inferBinaryName();
+			return baseJavaFileObject.getClassName();
 		}
 
 		return fileManager.inferBinaryName(location, file);
@@ -220,49 +213,23 @@ public class BundleJavaFileManager
 		String className = getClassName(resourceName);
 
 		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
-			try {
-				return new BundleJavaFileObject(
-					resourceURL.toURI(), className, resourceURL);
-			}
-			catch (URISyntaxException urise) {
-				if (_verbose) {
-					_logger.log(Logger.LOG_ERROR, urise.getMessage(), urise);
-				}
-			}
+			return new BundleJavaFileObject(className, resourceURL);
 		}
 		else if (protocol.equals("jar")) {
 			try {
-				JarURLConnection jarUrlConnection =
-					(JarURLConnection)resourceURL.openConnection();
-
-				URL url = jarUrlConnection.getJarFileURL();
-
 				return new JarJavaFileObject(
-					url.toURI(), className, resourceURL, resourceName);
+					className, resourceURL, resourceName);
 			}
-			catch (Exception e) {
+			catch (IOException ioe) {
 				if (_verbose) {
-					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+					_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
 				}
 			}
 		}
 		else if (protocol.equals("vfs")) {
 			try {
-				String filePath = resourceURL.getFile();
-
-				int indexOf = filePath.indexOf(".jar") + 4;
-
-				filePath =
-					filePath.substring(0, indexOf) + "!" +
-						filePath.substring(indexOf, filePath.length());
-
-				File file = new File(filePath);
-
-				URI uri = file.toURI();
-
-				return new JarJavaFileObject(
-					uri, className, new URL("jar:" + uri.toString()),
-					resourceName);
+				return new VfsJavaFileObject(
+					className, resourceURL, resourceName);
 			}
 			catch (MalformedURLException murie) {
 				if (_verbose) {

@@ -51,6 +51,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -72,10 +73,11 @@ import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Leonardo Barros
@@ -83,19 +85,26 @@ import javax.portlet.WindowState;
 public class WorkflowTaskDisplayContext {
 
 	public WorkflowTaskDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		PortletPreferences portletPreferences) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
+		_request = request;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
+		_portletPreferences = portletPreferences;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-		_workflowTaskRequestHelper = new WorkflowTaskRequestHelper(
-			renderRequest);
+		_workflowTaskRequestHelper = new WorkflowTaskRequestHelper(request);
 	}
 
 	public String getActorName(long actorId) {
@@ -120,7 +129,8 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public AssetEntry getAssetEntry() throws PortalException {
-		long assetEntryId = ParamUtil.getLong(_renderRequest, "assetEntryId");
+		long assetEntryId = ParamUtil.getLong(
+			_liferayPortletRequest, "assetEntryId");
 
 		AssetRendererFactory<?> assetRendererFactory =
 			getAssetRendererFactory();
@@ -150,7 +160,7 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public AssetRendererFactory<?> getAssetRendererFactory() {
-		String type = ParamUtil.getString(_renderRequest, "type");
+		String type = ParamUtil.getString(_liferayPortletRequest, "type");
 
 		return AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(
 			type);
@@ -218,7 +228,7 @@ public class WorkflowTaskDisplayContext {
 
 	public String getCurrentURL() {
 		PortletURL portletURL = PortletURLUtil.getCurrent(
-			_renderRequest, _renderResponse);
+			_liferayPortletRequest, _liferayPortletResponse);
 
 		return portletURL.toString();
 	}
@@ -249,8 +259,7 @@ public class WorkflowTaskDisplayContext {
 		long classPK = getWorkflowContextEntryClassPK(workflowTask);
 
 		return workflowHandler.getURLEdit(
-			classPK, (LiferayPortletRequest)_renderRequest,
-			(LiferayPortletResponse)_renderResponse);
+			classPK, _liferayPortletRequest, _liferayPortletResponse);
 	}
 
 	public String getEditTaskName(WorkflowTask workflowTask) {
@@ -360,7 +369,7 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("tabs1", getTabs1());
 
@@ -425,7 +434,7 @@ public class WorkflowTaskDisplayContext {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("javascript:Liferay.Util.openWindow({id: '");
-		sb.append(_renderResponse.getNamespace());
+		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append("editAsset', title: '");
 
 		AssetRenderer<?> assetRenderer = getAssetRenderer(workflowTask);
@@ -463,7 +472,7 @@ public class WorkflowTaskDisplayContext {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("javascript:Liferay.Util.openWindow({id: '");
-		sb.append(_renderResponse.getNamespace());
+		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append("viewDiffs', title: '");
 
 		String title = LanguageUtil.get(
@@ -574,12 +583,11 @@ public class WorkflowTaskDisplayContext {
 		long classPK = getWorkflowContextEntryClassPK(workflowTask);
 
 		return workflowHandler.getURLViewDiffs(
-			classPK, (LiferayPortletRequest)_renderRequest,
-			(LiferayPortletResponse)_renderResponse);
+			classPK, _liferayPortletRequest, _liferayPortletResponse);
 	}
 
 	public WindowState getWindowState() {
-		return _renderRequest.getWindowState();
+		return _liferayPortletRequest.getWindowState();
 	}
 
 	public long getWorkflowCompanyId(WorkflowTask workflowTask)
@@ -689,14 +697,14 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public WorkflowTask getWorkflowTask() {
-		ResultRow resultRow = (ResultRow)_renderRequest.getAttribute(
+		ResultRow resultRow = (ResultRow)_liferayPortletRequest.getAttribute(
 			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 		if (Validator.isNotNull(resultRow)) {
 			return (WorkflowTask)resultRow.getParameter("workflowTask");
 		}
 		else {
-			return (WorkflowTask)_renderRequest.getAttribute(
+			return (WorkflowTask)_liferayPortletRequest.getAttribute(
 				WebKeys.WORKFLOW_TASK);
 		}
 	}
@@ -715,13 +723,13 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public WorkflowTaskDisplayTerms getWorkflowTaskDisplayTerms() {
-		return new WorkflowTaskDisplayTerms(_renderRequest);
+		return new WorkflowTaskDisplayTerms(_liferayPortletRequest);
 	}
 
 	public String getWorkflowTaskRandomId() {
 		String randomId = StringPool.BLANK;
 
-		ResultRow resultRow = (ResultRow)_renderRequest.getAttribute(
+		ResultRow resultRow = (ResultRow)_liferayPortletRequest.getAttribute(
 			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 		if (resultRow != null) {
@@ -996,8 +1004,11 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	private final Format _dateFormatDateTime;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
+	private final PortalPreferences _portalPreferences;
+	private final PortletPreferences _portletPreferences;
+	private final HttpServletRequest _request;
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();
 	private final WorkflowTaskRequestHelper _workflowTaskRequestHelper;

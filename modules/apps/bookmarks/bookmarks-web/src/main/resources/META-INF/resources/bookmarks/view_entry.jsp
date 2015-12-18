@@ -16,6 +16,8 @@
 
 <%@ include file="/bookmarks/init.jsp" %>
 
+<liferay-util:dynamic-include key="<%= BookmarksWebKeys.DYNAMIC_INCLUDE_VIEW_ENTRY_PRE %>" />
+
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -160,3 +162,5 @@ if (portletTitleBasedNavigation) {
 		</aui:col>
 	</aui:row>
 </div>
+
+<liferay-util:dynamic-include key="<%= BookmarksWebKeys.DYNAMIC_INCLUDE_VIEW_ENTRY_POST %>" />

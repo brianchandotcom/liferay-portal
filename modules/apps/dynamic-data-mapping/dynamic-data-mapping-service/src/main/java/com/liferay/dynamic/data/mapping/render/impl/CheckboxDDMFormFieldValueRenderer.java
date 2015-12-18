@@ -51,6 +51,7 @@ public class CheckboxDDMFormFieldValueRenderer
 
 				return LanguageUtil.get(locale, "no");
 			}
+
 		};
 	}
 

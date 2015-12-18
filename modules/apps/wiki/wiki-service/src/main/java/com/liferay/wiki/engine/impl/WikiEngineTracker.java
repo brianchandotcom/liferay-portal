@@ -76,6 +76,7 @@ public class WikiEngineTracker {
 						_bundleContext.ungetService(serviceReference);
 					}
 				}
+
 			});
 	}
 

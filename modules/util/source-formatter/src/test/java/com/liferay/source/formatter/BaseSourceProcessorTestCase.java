@@ -149,6 +149,12 @@ public class BaseSourceProcessorTestCase {
 		Collections.sort(errorMessages, new NaturalOrderStringComparator());
 
 		if (!errorMessages.isEmpty() || (expectedErrorMessages.length > 0)) {
+			if (expectedErrorMessages.length != errorMessages.size()) {
+				for (String s : errorMessages) {
+					System.out.println("AAAA: " + s);
+				}
+			}
+
 			Assert.assertEquals(
 				expectedErrorMessages.length, errorMessages.size());
 

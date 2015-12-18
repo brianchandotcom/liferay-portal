@@ -65,6 +65,7 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 		urls.addAll(_buildURLs(parentURLs));
 
 		return new Enumeration<URL>() {
+
 			final Iterator<URL> iterator = urls.iterator();
 
 			@Override

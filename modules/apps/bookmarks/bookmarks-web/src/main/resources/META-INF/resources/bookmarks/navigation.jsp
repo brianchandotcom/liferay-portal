@@ -17,39 +17,12 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "home");
-
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("categoryId", StringPool.BLANK);
-portletURL.setParameter("tag", StringPool.BLANK);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-
-		<%
-		portletURL.setParameter("navigation", "home");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="folders" selected='<%= navigation.equals("home") %>' />
-
-		<%
-		portletURL.setParameter("navigation", "recent");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="recent" selected='<%= navigation.equals("recent") %>' />
-
-		<c:if test="<%= themeDisplay.isSignedIn() %>">
-
-			<%
-			portletURL.setParameter("navigation", "mine");
-			%>
-
-			<aui:nav-item href="<%= portletURL.toString() %>" label="mine" selected='<%= navigation.equals("mine") %>' />
-		</c:if>
+		<aui:nav-item label="folders" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.showFoldersSearch() %>">

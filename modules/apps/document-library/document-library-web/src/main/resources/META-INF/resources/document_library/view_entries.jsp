@@ -185,6 +185,8 @@ else {
 
 dlSearchContainer.setResults(results);
 
+dlSearchContainer.setEmptyResultsMessage(fileEntryTypeId >= 0 ? LanguageUtil.format(request, "there-are-no-documents-or-media-files-of-type-x", HtmlUtil.escape(dlFileEntryTypeName)) : "there-are-no-documents-or-media-files-in-this-folder");
+
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != rootFolderId)) {
@@ -200,19 +202,6 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 	renderResponse.setTitle(folder.getName());
 }
 %>
-
-<c:if test="<%= results.isEmpty() %>">
-	<div class="alert alert-info entries-empty">
-		<c:choose>
-			<c:when test="<%= (fileEntryTypeId >= 0) %>">
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(dlFileEntryTypeName) %>" key="there-are-no-documents-or-media-files-of-type-x" translateArguments="<%= false %>" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
-			</c:otherwise>
-		</c:choose>
-	</div>
-</c:if>
 
 <div class="document-container" id="<portlet:namespace />entriesContainer">
 

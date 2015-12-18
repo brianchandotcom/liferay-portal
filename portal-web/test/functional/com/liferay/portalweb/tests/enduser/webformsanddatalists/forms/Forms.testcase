@@ -56,7 +56,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
-			<var name="configurationName" value="Dynamic Data Lists Form Configuration" />
+			<var name="configurationName" value="Forms Application" />
 		</execute>
 
 		<execute macro="FormFields#removeRepeatableField" />
@@ -83,7 +83,7 @@
 
 		<execute macro="SystemSettings#deleteConfiguration">
 			<var name="category" value="Productivity" />
-			<var name="configurationName" value="Dynamic Data Lists Form Configuration" />
+			<var name="configurationName" value="Forms Application" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">

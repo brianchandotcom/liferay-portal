@@ -17,8 +17,6 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "home");
-
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
@@ -32,42 +30,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	<aui:nav-bar cssClass='<%= dlPortletInstanceSettingsHelper.isShowSearch() ? "collapse-basic-search" : StringPool.BLANK %>' markupView="lexicon">
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() %>">
 			<aui:nav cssClass="navbar-nav">
-				<portlet:renderURL var="viewDocumentsHomeURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
-					<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item
-					href="<%= viewDocumentsHomeURL %>"
-					label="folders"
-					selected='<%= ((navigation.equals("home")) && (folderId == rootFolderId) && (fileEntryTypeId == -1)) %>'
-				/>
-
-				<portlet:renderURL var="viewRecentDocumentsURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
-					<portlet:param name="navigation" value="recent" />
-					<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item
-					href="<%= viewRecentDocumentsURL %>"
-					label="recent"
-					selected='<%= navigation.equals("recent") %>'
-				/>
-
-				<c:if test="<%= themeDisplay.isSignedIn() %>">
-					<portlet:renderURL var="viewMyDocumentsURL">
-						<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
-						<portlet:param name="navigation" value="mine" />
-						<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-					</portlet:renderURL>
-
-					<aui:nav-item
-						href="<%= viewMyDocumentsURL %>"
-						label="mine"
-						selected='<%= navigation.equals("mine") %>'
-					/>
-				</c:if>
 
 				<%
 				long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);

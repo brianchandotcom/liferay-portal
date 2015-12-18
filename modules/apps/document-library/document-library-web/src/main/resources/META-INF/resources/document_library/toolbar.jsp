@@ -25,6 +25,8 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
+long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 boolean search = mvcRenderCommandName.equals("/document_library/search");
@@ -42,11 +44,38 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
-	<c:if test='<%= !search && !navigation.equals("recent") %>'>
-		<liferay-frontend:management-bar-filters>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation>
+			<portlet:renderURL var="viewDocumentsHomeURL">
+				<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+				<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active='<%= ((navigation.equals("home")) && (folderId == rootFolderId) && (fileEntryTypeId == -1)) %>' label="all" url="<%= viewDocumentsHomeURL.toString() %>" />
+
+			<portlet:renderURL var="viewRecentDocumentsURL">
+				<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+				<portlet:param name="navigation" value="recent" />
+				<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("recent") %>' label="recent" url="<%= viewRecentDocumentsURL.toString() %>" />
+
+			<c:if test="<%= themeDisplay.isSignedIn() %>">
+				<portlet:renderURL var="viewMyDocumentsURL">
+					<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+					<portlet:param name="navigation" value="mine" />
+					<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+				</portlet:renderURL>
+
+				<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("mine") %>' label="mine" url="<%= viewMyDocumentsURL.toString() %>" />
+			</c:if>
+		</liferay-frontend:management-bar-navigation>
+
+		<c:if test='<%= !search && !navigation.equals("recent") %>'>
 			<liferay-util:include page="/document_library/sort_button.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:management-bar-filters>
-	</c:if>
+		</c:if>
+	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
 

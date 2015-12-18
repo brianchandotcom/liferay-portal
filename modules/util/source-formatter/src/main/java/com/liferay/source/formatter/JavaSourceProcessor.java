@@ -637,6 +637,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent, new String[] {";\n/**", "\t/*\n\t *", ";;\n"},
 			new String[] {";\n\n/**", "\t/**\n\t *", ";\n"});
 
+		newContent = fixMissingEmptyLines(newContent);
+
 		while (true) {
 			Matcher matcher = _incorrectLineBreakPattern1.matcher(newContent);
 
@@ -1141,6 +1143,49 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				return StringUtil.replaceFirst(
 					content, "\n\n" + tabs + "}\n", "\n" + tabs + "}\n", pos);
+			}
+		}
+
+		return content;
+	}
+
+	protected String fixMissingEmptyLines(String content) {
+		Matcher matcher = _missingEmptyLinePattern1.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			int closeParenthesesCount = StringUtil.count(
+				match, StringPool.CLOSE_PARENTHESIS);
+			int openParenthesesCount = StringUtil.count(
+				match, StringPool.OPEN_PARENTHESIS);
+
+			if (closeParenthesesCount == openParenthesesCount) {
+				content = StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start());
+			}
+		}
+
+		matcher = _missingEmptyLinePattern2.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			if (!match.contains(StringPool.OPEN_PARENTHESIS)) {
+				continue;
+			}
+
+			String whitespace = matcher.group(1);
+
+			int x = content.indexOf(
+				whitespace + StringPool.CLOSE_CURLY_BRACE + "\n",
+				matcher.end());
+			int y = content.indexOf(
+				whitespace + StringPool.CLOSE_CURLY_BRACE + "\n\n",
+				matcher.end());
+
+			if ((x != -1) && (x != y)) {
+				content = StringUtil.replaceFirst(content, "\n", "\n\n", x + 1);
 			}
 		}
 
@@ -3673,6 +3718,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
+	private Pattern _missingEmptyLinePattern1 = Pattern.compile(
+		"(\t| = |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
+	private Pattern _missingEmptyLinePattern2 = Pattern.compile(
+		"(\n\t*)(public|private|protected) [^;]+? \\{");
 	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;

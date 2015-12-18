@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `5b13a9e`.*
+*This document has been reviewed through commit `202b3b7`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2928,14 +2928,14 @@ the preference is no longer used.
 
 ---------------------------------------
 
-### The liferay-ui:navigation taglib has been removed and replaced with liferay-site-navigation:navigation taglib
+### Removed the liferay-ui:navigation Tag and Replaced with liferay-site-navigation:navigation Tag
 - **Date:** 2015-Nov-20
 - **JIRA Ticket:** LPS-60328
 
 #### What changed?
 
-The `liferay-ui:navigation` taglib has been removed and replaced with
-`liferay-site-navigation:navigation` taglib.
+The `liferay-ui:navigation` tag has been removed and replaced with the
+`liferay-site-navigation:navigation` tag.
 
 #### Who is affected?
 
@@ -2944,8 +2944,8 @@ to update their usage of the tag.
 
 #### How should I update my code?
 
-You should import the `liferay-site-navigation` tag library if it isn't already
-and update the tag namespace from `liferay-ui:navigation` to
+You should import the `liferay-site-navigation` tag library (if necessary) and
+update the tag namespace from `liferay-ui:navigation` to
 `liferay-site-navigation:navigation`.
 
 #### Why was this change made?

@@ -309,12 +309,12 @@ public class InputTag extends BaseInputTag {
 	}
 
 	protected void updateFormCheckboxNames() {
-		if (!Validator.equals(getType(), "checkbox")) {
+		if (!Validator.equals(getBaseType(), "checkbox")) {
 			return;
 		}
 
 		List<String> checkboxNames = (List<String>)request.getAttribute(
-			"aui:form:checkboxNames");
+			WebKeys.CHECKBOX_NAMES);
 
 		if (checkboxNames != null) {
 			String inputName = getInputName();

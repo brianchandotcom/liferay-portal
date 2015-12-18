@@ -1241,67 +1241,12 @@
 	</command>
 
 	<command name="AssetPublisherTogglingBetweenSites" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent1 Content" />
-			<var name="webContentTitle" value="WC WebContent1 Title" />
-		</execute>
-
-		<execute macro="WebContent#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent1 Title" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Global" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Global Content" />
-			<var name="webContentTitle" value="WC WebContent Global Title" />
-		</execute>
-
-		<execute macro="WebContent#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Global Title" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC WebContent Site Content" />
-			<var name="webContentTitle" value="WC WebContent Site Title" />
-		</execute>
-
-		<execute macro="WebContent#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Site Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -1314,110 +1259,88 @@
 			<var name="sitePageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<for list="Liferay,Site Name,Global" param="siteName">
+			<execute macro="ProductMenu#gotoSite">
+				<var name="site" value="${siteName}" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Web Content" />
+			</execute>
+
+			<execute macro="WebContentNavigator#gotoAddCP" />
+
+			<execute macro="WebContent#addCP">
+				<var name="webContentContent" value="${siteName} WC Content" />
+				<var name="webContentTitle" value="${siteName} WC Title" />
+			</execute>
+
+			<execute macro="WebContent#publish" />
+		</for>
+
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="addGlobalSite" value="true" />
-			<var name="addOtherSite" value="true" />
-			<var name="addSite" value="false" />
-			<var name="globalSite" value="Global" />
-			<var name="otherSiteName" value="Liferay" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteNameHidden" value="Site Name" />
-			<var name="sitePageName" value="Site Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureToggleSiteScope">
-			<var name="removeSite1Scope" value="Liferay" />
-			<var name="removeSite2Scope" value="Site Name" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="WC WebContent Global Content" />
-			<var name="assetTitle" value="WC WebContent Global Title" />
+			<var name="assetContent" value="Site Name WC Content" />
+			<var name="assetTitle" value="Site Name WC Title" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="addGlobalSite" value="false" />
-			<var name="addOtherSite" value="true" />
-			<var name="addSite" value="true" />
 			<var name="globalSite" value="Global" />
-			<var name="otherSiteName" value="Liferay" />
-			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureToggleSiteScope">
-			<var name="removeSite1Scope" value="Global" />
-			<var name="removeSite2Scope" value="Site Name" />
+		<execute macro="AssetPublisherPortlet#removeSiteScope">
+			<var name="removeSiteScopes" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="WC WebContent1 Content" />
-			<var name="assetTitle" value="WC WebContent1 Title" />
+			<var name="assetContent" value="Global WC Content" />
+			<var name="assetTitle" value="Global WC Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="addGlobalSite" value="true" />
-			<var name="addOtherSite" value="false" />
-			<var name="addSite" value="true" />
-			<var name="globalSite" value="Global" />
-			<var name="otherSiteName" value="Liferay" />
-			<var name="siteName" value="Site Name" />
+			<var name="otherSite" value="Liferay" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureToggleSiteScope">
-			<var name="removeSite1Scope" value="Global" />
-			<var name="removeSite2Scope" value="Liferay" />
+		<execute macro="AssetPublisherPortlet#removeSiteScope">
+			<var name="removeSiteScopes" value="Global" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="WC WebContent Site Content" />
-			<var name="assetTitle" value="WC WebContent Site Title" />
+			<var name="assetContent" value="Liferay WC Content" />
+			<var name="assetTitle" value="Liferay WC Title" />
 		</execute>
 	</command>
 

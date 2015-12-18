@@ -31,7 +31,6 @@ import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.soy.BuildSoyTask;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
-import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationTomcatExtension;
@@ -49,7 +48,6 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -83,8 +81,6 @@ import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
-import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
@@ -103,9 +99,6 @@ import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
-
-import org.zeroturnaround.exec.ProcessExecutor;
-import org.zeroturnaround.exec.ProcessResult;
 
 /**
  * @author Andrea Di Giorgi
@@ -272,81 +265,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return copy;
 	}
 
-	protected InitGradleTask addTaskInitGradle(Project project) {
-		InitGradleTask initGradleTask = GradleUtil.addTask(
-			project, INIT_GRADLE_TASK_NAME, InitGradleTask.class);
-
-		initGradleTask.setDescription(
-			"Initializes build.gradle by migrating information from legacy " +
-				"files.");
-
-		initGradleTask.onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					try {
-						Project project = task.getProject();
-
-						File buildGradleFile = project.file("build.gradle");
-
-						if (!buildGradleFile.exists() ||
-							(buildGradleFile.length() == 0)) {
-
-							return true;
-						}
-
-						long buildGradleLastModified = _getLastModified(
-							buildGradleFile);
-
-						for (String sourceFileName :
-								InitGradleTask.SOURCE_FILE_NAMES) {
-
-							File sourceFile = project.file(sourceFileName);
-
-							if (sourceFile.exists() &&
-								(buildGradleLastModified <
-									_getLastModified(sourceFile))) {
-
-								return true;
-							}
-						}
-
-						return false;
-					}
-					catch (IOException ioe) {
-					}
-					catch (Exception e) {
-						if (_logger.isWarnEnabled()) {
-							_logger.warn(e.getMessage(), e);
-						}
-					}
-
-					return true;
-				}
-
-				private long _getLastModified(File file) throws Exception {
-					ProcessExecutor processExecutor = new ProcessExecutor(
-						"git", "log", "--format=%at", "--max-count=1",
-						file.getName());
-
-					processExecutor.directory(file.getParentFile());
-					processExecutor.exitValueNormal();
-					processExecutor.readOutput(true);
-
-					ProcessResult processResult =
-						processExecutor.executeNoTimeout();
-
-					String output = processResult.outputUTF8();
-
-					return Long.parseLong(output.trim());
-				}
-
-			});
-
-		return initGradleTask;
-	}
-
 	protected Jar addTaskJarSources(Project project) {
 		final Jar jar = GradleUtil.addTask(
 			project, JAR_SOURCES_TASK_NAME, Jar.class);
@@ -416,7 +334,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void addTasks(Project project) {
 		addTaskDeploy(project);
-		addTaskInitGradle(project);
 		addTaskJarSources(project);
 		addTaskZipJavadoc(project);
 	}
@@ -853,37 +770,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskInitGradle(Project project) {
-		InitGradleTask initGradleTask = (InitGradleTask)GradleUtil.getTask(
-			project, INIT_GRADLE_TASK_NAME);
-
-		configureTaskInitGradleIgnoreMissingDependencies(initGradleTask);
-		configureTaskInitGradleOverwrite(initGradleTask);
-	}
-
-	protected void configureTaskInitGradleIgnoreMissingDependencies(
-		InitGradleTask initGradleTask) {
-
-		String value = GradleUtil.getTaskPrefixedProperty(
-			initGradleTask, "ignoreMissingDependencies");
-
-		if (Validator.isNotNull(value)) {
-			initGradleTask.setIgnoreMissingDependencies(
-				Boolean.parseBoolean(value));
-		}
-	}
-
-	protected void configureTaskInitGradleOverwrite(
-		InitGradleTask initGradleTask) {
-
-		String value = GradleUtil.getTaskPrefixedProperty(
-			initGradleTask, "overwrite");
-
-		if (Validator.isNotNull(value)) {
-			initGradleTask.setOverwrite(Boolean.parseBoolean(value));
-		}
-	}
-
 	protected void configureTaskJar(Project project) {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
@@ -1037,7 +923,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		configureTaskDeploy(project, liferayExtension);
-		configureTaskInitGradle(project);
 		configureTaskJar(project);
 
 		configureTasksDirectDeploy(project);
@@ -1388,8 +1273,5 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		return false;
 	}
-
-	private static final Logger _logger = Logging.getLogger(
-		LiferayJavaPlugin.class);
 
 }

@@ -55,7 +55,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 <aui:script use="liferay-portlet-dynamic-data-lists">
 	var structure = <%= DDMUtil.getDDMFormFieldsJSONArray(ddmStructure, ddmStructure.getDefinition()) %>;
 
-	var columns = Liferay.SpreadSheet.buildDataTableColumns(<%= DDLUtil.getRecordSetJSONArray(recordSet) %>, structure, <%= editable %>);
+	var columns = Liferay.SpreadSheet.buildDataTableColumns(<%= DDLUtil.getRecordSetJSONArray(recordSet, locale) %>, structure, <%= editable %>);
 
 	var ignoreEmptyRecordsNumericSort = function(recA, recB, desc, field) {
 		var a = recA.get(field);
@@ -123,7 +123,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(recordSet.getRecordSetId(), status, 0, 1000, null);
 	%>
 
-	var records = <%= DDLUtil.getRecordsJSONArray(records, !editable) %>;
+	var records = <%= DDLUtil.getRecordsJSONArray(records, !editable, locale) %>;
 
 	records.sort(
 		function(a, b) {

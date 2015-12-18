@@ -39,7 +39,6 @@ import com.liferay.gradle.plugins.test.integration.tasks.SetupTestableTomcatTask
 import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
-import com.liferay.gradle.plugins.upgrade.table.builder.BuildUpgradeTableTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
@@ -155,7 +154,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskStopTestableTomcat(project, liferayExtension);
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
-		configureTasksBuildUpgradeTable(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -478,6 +476,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, TLDFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
+		GradleUtil.applyPlugin(
+			project, UpgradeTableBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, WhipDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterDefaultsPlugin.class);
@@ -691,16 +691,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureSourceSet(
 			project, TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME,
 			classesDir, null);
-	}
-
-	protected void configureTaskBuildUpgradeTableDir(
-		BuildUpgradeTableTask buildUpgradeTableTask) {
-
-		File file = GradleUtil.getProperty(
-			buildUpgradeTableTask.getProject(), "upgrade.table.dir",
-			(File)null);
-
-		buildUpgradeTableTask.setUpgradeTableDir(file);
 	}
 
 	protected void configureTaskClean(Project project) {
@@ -1051,23 +1041,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureTasksDirectDeploy(project);
 		configureTasksPublishNodeModule(project);
-	}
-
-	protected void configureTasksBuildUpgradeTable(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildUpgradeTableTask.class,
-			new Action<BuildUpgradeTableTask>() {
-
-				@Override
-				public void execute(
-					BuildUpgradeTableTask buildUpgradeTableTask) {
-
-					configureTaskBuildUpgradeTableDir(buildUpgradeTableTask);
-				}
-
-			});
 	}
 
 	protected void configureTasksDirectDeploy(Project project) {

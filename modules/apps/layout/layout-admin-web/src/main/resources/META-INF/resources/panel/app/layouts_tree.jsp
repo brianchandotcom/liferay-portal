@@ -128,19 +128,19 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 <liferay-util:buffer var="linkTemplate">
 	<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
 
-	<a class="layout-tree-edit" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog"></span></a>
+	<a class="layout-tree-edit" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><aui:icon image="cog" markupView="lexicon" /></a>
 </liferay-util:buffer>
 
 <liferay-util:buffer var="rootLinkTemplate">
 	<span class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" id="{id}" title="{label}">{label}</span>
 
-	<a data-plid="{plid}" data-privateLayout="{privateLayout}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
+	<a data-plid="{plid}" data-privateLayout="{privateLayout}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><aui:icon image="cog" markupView="lexicon" /></a>
 </liferay-util:buffer>
 
 <liferay-util:buffer var="rootURLLinkTemplate">
 	<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
 
-	<a data-plid="{plid}" data-privateLayout="{privateLayout}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
+	<a data-plid="{plid}" data-privateLayout="{privateLayout}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><aui:icon image="cog" markupView="lexicon" /></a>
 </liferay-util:buffer>
 
 <%

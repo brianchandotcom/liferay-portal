@@ -125,7 +125,7 @@ public class SearchEngineHelperUtil {
 	}
 
 	public static SearchPermissionChecker getSearchPermissionChecker() {
-		return _searchEngineHelper.getSearchPermissionChecker();
+		return _searchPermissionChecker;
 	}
 
 	public static String getSearchReaderDestinationName(String searchEngineId) {
@@ -329,5 +329,7 @@ public class SearchEngineHelperUtil {
 
 	private static final SearchEngineHelper _searchEngineHelper =
 		ProxyFactory.newServiceTrackedInstance(SearchEngineHelper.class);
+	private static final SearchPermissionChecker _searchPermissionChecker =
+		ProxyFactory.newServiceTrackedInstance(SearchPermissionChecker.class);
 
 }

@@ -15,7 +15,10 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -24,75 +27,185 @@ import java.util.Set;
  */
 public class AuthTokenWhitelistUtil {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced with no direct replacement
+	 */
+	@Deprecated
 	public static AuthTokenWhitelist getAuthTokenWhitelist() {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		return _authTokenWhitelist;
+		if (_authTokenWhiteLists.size() > 0) {
+			return _authTokenWhiteLists.get(0);
+		}
+
+		return null;
 	}
 
 	public static Set<String> getPortletCSRFWhitelist() {
-		return getAuthTokenWhitelist().getPortletCSRFWhitelist();
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		Set<String> result = new HashSet<>();
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			result.addAll(authTokenWhitelist.getPortletCSRFWhitelist());
+		}
+
+		return result;
 	}
 
 	public static Set<String> getPortletCSRFWhitelistActions() {
-		return getAuthTokenWhitelist().getPortletCSRFWhitelistActions();
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		Set<String> result = new HashSet<>();
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			result.addAll(authTokenWhitelist.getPortletCSRFWhitelistActions());
+		}
+
+		return result;
 	}
 
 	public static Set<String> getPortletInvocationWhitelist() {
-		return getAuthTokenWhitelist().getPortletInvocationWhitelist();
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		Set<String> result = new HashSet<>();
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			result.addAll(authTokenWhitelist.getPortletInvocationWhitelist());
+		}
+
+		return result;
 	}
 
 	public static Set<String> getPortletInvocationWhitelistActions() {
-		return getAuthTokenWhitelist().getPortletInvocationWhitelistActions();
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		Set<String> result = new HashSet<>();
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			result.addAll(
+				authTokenWhitelist.getPortletInvocationWhitelistActions());
+		}
+
+		return result;
 	}
 
 	public static boolean isCSRFOrigintWhitelisted(
 		long companyId, String origin) {
 
-		return getAuthTokenWhitelist().isOriginCSRFWhitelisted(
-			companyId, origin);
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			if (authTokenWhitelist.isOriginCSRFWhitelisted(companyId, origin)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isPortletCSRFWhitelisted(
 		long companyId, String portletId, String strutsAction) {
 
-		return getAuthTokenWhitelist().isPortletCSRFWhitelisted(
-			companyId, portletId, strutsAction);
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			if (authTokenWhitelist.isPortletCSRFWhitelisted(
+					companyId, portletId, strutsAction)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isPortletInvocationWhitelisted(
 		long companyId, String portletId, String strutsAction) {
 
-		return getAuthTokenWhitelist().isPortletInvocationWhitelisted(
-			companyId, portletId, strutsAction);
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			if (authTokenWhitelist.isPortletInvocationWhitelisted(
+					companyId, portletId, strutsAction)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isValidSharedSecret(String sharedSecret) {
-		return getAuthTokenWhitelist().isValidSharedSecret(sharedSecret);
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			if (authTokenWhitelist.isValidSharedSecret(sharedSecret)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static Set<String> resetOriginCSRFWhitelist() {
-		return getAuthTokenWhitelist().resetOriginCSRFWhitelist();
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		Set<String> result = new HashSet<>();
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			result.addAll(authTokenWhitelist.resetOriginCSRFWhitelist());
+		}
+
+		return result;
 	}
 
 	public static Set<String> resetPortletCSRFWhitelist() {
-		return getAuthTokenWhitelist().resetPortletCSRFWhitelist();
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		Set<String> result = new HashSet<>();
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			result.addAll(authTokenWhitelist.resetPortletCSRFWhitelist());
+		}
+
+		return result;
 	}
 
 	public static Set<String> resetPortletInvocationWhitelist() {
-		return getAuthTokenWhitelist().resetPortletInvocationWhitelist();
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		Set<String> result = new HashSet<>();
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			result.addAll(authTokenWhitelist.resetPortletInvocationWhitelist());
+		}
+
+		return result;
 	}
 
 	public static Set<String> resetPortletInvocationWhitelistActions() {
-		return getAuthTokenWhitelist().resetPortletInvocationWhitelistActions();
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		Set<String> result = new HashSet<>();
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			result.addAll(
+				authTokenWhitelist.resetPortletInvocationWhitelistActions());
+		}
+
+		return result;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced with no direct replacement
+	 */
+	@Deprecated
 	public void setAuthTokenWhitelist(AuthTokenWhitelist authTokenWhitelist) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_authTokenWhitelist = authTokenWhitelist;
 	}
 
-	private static AuthTokenWhitelist _authTokenWhitelist;
+	private static final ServiceTrackerList<AuthTokenWhitelist>
+		_authTokenWhiteLists = ServiceTrackerCollections.openList(
+			AuthTokenWhitelist.class);
 
 }

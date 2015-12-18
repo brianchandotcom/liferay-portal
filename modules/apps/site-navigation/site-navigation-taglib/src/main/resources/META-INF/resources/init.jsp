@@ -14,13 +14,10 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.util.PortalUtil" %>
 
-<liferay-site-navigation:navigation
-	ddmTemplateGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
-	ddmTemplateKey="<%= siteNavigationMenuDisplayContext.getDDMTemplateKey() %>"
-	includedLayouts="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>"
-	preview="<%= siteNavigationMenuDisplayContext.isPreview() %>"
-	rootLayoutLevel="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() %>"
-	rootLayoutType="<%= siteNavigationMenuDisplayContext.getRootLayoutType() %>"
-/>
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>

@@ -111,7 +111,10 @@
 		<execute function="Click" locator1="Button#SAVE" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
-		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${scopeSelection}" />
+
+		<execute macro="BlogsConfiguration#viewScopeSelection">
+			<var name="scopeSelection" value="${scopeSelection}" />
+		</execute>
 	</command>
 
 	<command name="uncheckComments">

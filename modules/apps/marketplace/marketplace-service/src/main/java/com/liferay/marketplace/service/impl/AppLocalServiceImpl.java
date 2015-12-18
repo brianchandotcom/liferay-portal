@@ -50,10 +50,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -227,39 +226,17 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
 
 		for (Bundle bundle : bundles) {
-			InputStream inputStream = null;
+			Dictionary<String, String> headers = bundle.getHeaders();
 
-			try {
-				URL url = bundle.getResource(
-					"/META-INF/liferay-releng.changelog.md5");
+			boolean liferayRelengBundle = GetterUtil.getBoolean(
+				headers.get("Liferay-Releng-Bundle"));
 
-				if (url == null) {
-					url = bundle.getResource(
-						"/WEB-INF/liferay-releng.changelog.md5");
-				}
-
-				if (url == null) {
-					continue;
-				}
-
-				inputStream = url.openStream();
-
-				String relengHash = StringUtil.read(inputStream);
-
-				if (Validator.isNotNull(relengHash)) {
-					prepackagedApps.put(bundle.getSymbolicName(), relengHash);
-				}
+			if (!liferayRelengBundle) {
+				continue;
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to read plugin package MD5 checksum for " +
-							bundle.getSymbolicName());
-				}
-			}
-			finally {
-				StreamUtil.cleanUp(inputStream);
-			}
+
+			prepackagedApps.put(
+				bundle.getSymbolicName(), String.valueOf(bundle.getVersion()));
 		}
 
 		_prepackagedApps = prepackagedApps;

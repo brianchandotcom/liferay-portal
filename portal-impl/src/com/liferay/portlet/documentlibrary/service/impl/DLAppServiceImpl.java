@@ -2847,6 +2847,38 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return destinationFileEntry;
 	}
 
+	protected Folder copyFolder(
+			long folderId, long parentFolderId, Repository fromRepository,
+			Repository toRepository, ServiceContext serviceContext)
+		throws PortalException {
+
+		Folder newFolder = null;
+
+		try {
+			Folder folder = fromRepository.getFolder(folderId);
+
+			newFolder = toRepository.addFolder(
+				getUserId(), parentFolderId, folder.getName(),
+				folder.getDescription(), serviceContext);
+
+			dlAppHelperLocalService.addFolder(
+				getUserId(), newFolder, serviceContext);
+
+			copyFolderDependencies(
+				folder, newFolder, fromRepository, toRepository,
+				serviceContext);
+
+			return newFolder;
+		}
+		catch (PortalException pe) {
+			if (newFolder != null) {
+				toRepository.deleteFolder(newFolder.getFolderId());
+			}
+
+			throw pe;
+		}
+	}
+
 	protected void copyFolder(
 			Repository repository, Folder srcFolder, Folder destFolder,
 			ServiceContext serviceContext)
@@ -2917,6 +2949,52 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				}
 
 			});
+	}
+
+	protected void copyFolderDependencies(
+			Folder sourceFolder, Folder destinationFolder,
+			Repository fromRepository, Repository toRepository,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		List<RepositoryEntry> repositoryEntries =
+			fromRepository.getFoldersAndFileEntriesAndFileShortcuts(
+				sourceFolder.getFolderId(), WorkflowConstants.STATUS_ANY, true,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (RepositoryEntry repositoryEntry : repositoryEntries) {
+			if (repositoryEntry instanceof FileEntry) {
+				FileEntry fileEntry = (FileEntry)repositoryEntry;
+
+				copyFileEntry(
+					toRepository, fileEntry, destinationFolder.getFolderId(),
+					serviceContext);
+			}
+			else if (repositoryEntry instanceof Folder) {
+				Folder currentFolder = (Folder)repositoryEntry;
+
+				Folder newFolder = toRepository.addFolder(
+					getUserId(), destinationFolder.getFolderId(),
+					currentFolder.getName(), currentFolder.getDescription(),
+					serviceContext);
+
+				dlAppHelperLocalService.addFolder(
+					getUserId(), newFolder, serviceContext);
+
+				copyFolderDependencies(
+					currentFolder, newFolder, fromRepository, toRepository,
+					serviceContext);
+			}
+			else if (repositoryEntry instanceof FileShortcut) {
+				if (destinationFolder.isSupportsShortcuts()) {
+					FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
+
+					toRepository.addFileShortcut(
+						getUserId(), destinationFolder.getFolderId(),
+						fileShortcut.getToFileEntryId(), serviceContext);
+				}
+			}
+		}
 	}
 
 	protected void deleteFileEntry(

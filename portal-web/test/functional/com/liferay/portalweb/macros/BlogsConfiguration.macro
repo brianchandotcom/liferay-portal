@@ -26,7 +26,7 @@
 			</then>
 			<else>
 				<execute macro="Portlet#gotoPortletOptions">
-					<var name="portletNameBorderless" value="${portletNameBorderless}" />
+					<var name="portletName" value="${portletName}" />
 					<var name="portletOption" value="Configuration" />
 				</execute>
 			</else>
@@ -104,14 +104,17 @@
 	<command name="selectScopePG">
 		<var name="key_scopeSelection" value="${scopeSelection}" />
 
-		<execute function="Click#pauseClickAt" locator1="MenuItem#SCOPE" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#SCOPE_SELECTION" value1="${scopeSelection}" />
+		<execute function="Select" locator1="Select#SCOPE" value1="regexp:.*${scopeSelection}.*" />
 
 		<execute function="Pause" locator1="3000" />
 
+		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
-		<execute function="AssertTextEquals" locator1="MenuItem#SCOPE" value1="${scopeSelection}" />
+
+		<execute macro="BlogsConfiguration#viewScopeSelection">
+			<var name="scopeSelection" value="${scopeSelection}" />
+		</execute>
 	</command>
 
 	<command name="uncheckComments">
@@ -248,7 +251,7 @@
 			</then>
 			<else>
 				<execute macro="Portlet#gotoPortletOptions">
-					<var name="portletNameBorderless" value="${portletNameBorderless}" />
+					<var name="portletName" value="${portletName}" />
 					<var name="portletOption" value="Configuration" />
 				</execute>
 			</else>
@@ -261,7 +264,7 @@
 	</command>
 
 	<command name="viewScopeSelection">
-		<execute function="AssertTextEquals" locator1="MenuItem#SCOPE" value1="${scopeSelection}" />
+		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${scopeSelection}" />
 	</command>
 
 	<command name="viewSubscribePG">

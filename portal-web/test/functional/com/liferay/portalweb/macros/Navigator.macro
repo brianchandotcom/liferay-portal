@@ -19,6 +19,12 @@
 		<execute function="Click" locator1="Icon#BACK" />
 	</command>
 
+	<command name="gotoNavItem">
+		<var name="key_navItem" value="${navItem}" />
+
+		<execute function="AssertClick#assertTextClickAtWaitForLastScript" locator1="NavBar#NAV_ITEM_LINK" value1="${navItem}" />
+	</command>
+
 	<command name="gotoPage" summary="Navigate to the page named '${pageName}'">
 		<execute macro="Navigator#openURL" />
 
@@ -57,6 +63,12 @@
 		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
+	</command>
+
+	<command name="gotoTab">
+		<var name="key_tab" value="${tab}" />
+
+		<execute function="AssertClick" locator1="NavTab#TAB_LINK" value1="${tab}" />
 	</command>
 
 	<command name="openSiteURL">

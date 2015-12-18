@@ -24,7 +24,8 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
 	id = "com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration",
-	localization = "content/Language"
+	localization = "content/Language",
+	name = "%nested.portlets.configuration.name"
 )
 public interface NestedPortletsConfiguration {
 

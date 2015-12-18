@@ -1,0 +1,40 @@
+{
+  "failCount" : 0,
+  "skipCount" : 0,
+  "totalCount" : 1,
+  "urlName" : "testReport",
+  "childReports" : [
+    {
+      "child" : {
+        "number" : 306,
+        "url" : "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28ee-6.2.x%29/AXIS_VARIABLE=PortalSmoke%23Smoke,label_exp=!master/306/"
+      },
+      "result" : {
+        "duration" : 47.171,
+        "empty" : false,
+        "failCount" : 0,
+        "passCount" : 1,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 0,
+                "className" : "com.liferay.poshi.runner.PoshiRunner",
+                "duration" : 47.171,
+                "failedSince" : 0,
+                "name" : "test[PortalSmoke#Smoke]",
+                "skipped" : false,
+                "status" : "PASSED"
+              }
+            ],
+            "duration" : 47.171,
+            "id" : "0",
+            "name" : "com.liferay.poshi.runner.PoshiRunner",
+            "timestamp" : "2015-11-06T20:22:51"
+          }
+        ]
+      }
+    }
+  ]
+}

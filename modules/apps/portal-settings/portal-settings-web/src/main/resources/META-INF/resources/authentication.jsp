@@ -19,11 +19,11 @@
 <%
 Collection<DynamicInclude> dynamicIncludes = (Collection)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_DYNAMIC_INCLUDES);
 
-String tabsNames = (String)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_TABS_NAMES);
+String[] tabsNames = new String[] {"general"};
 
-tabsNames = (tabsNames.length() > 0) ? StringPool.COMMA + tabsNames : tabsNames;
+tabsNames = ArrayUtil.append(tabsNames, PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION);
 
-tabsNames = StringUtil.merge(PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) + tabsNames;
+tabsNames = ArrayUtil.append(tabsNames, (String)request.getAttribute(PortalSettingsWebKeys.AUTHENTICATION_TABS_NAMES));
 %>
 
 <liferay-ui:error-marker key="errorSection" value="authentication" />
@@ -31,16 +31,19 @@ tabsNames = StringUtil.merge(PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) +
 <h3><liferay-ui:message key="authentication" /></h3>
 
 <liferay-ui:tabs
-	names="<%= tabsNames %>"
+	names="<%= StringUtil.merge(tabsNames) %>"
 	refresh="<%= false %>"
 >
+	<liferay-ui:section>
+		<liferay-util:include page='<%= "/authentication/general.jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" />
+	</liferay-ui:section>
 
 	<%
 	for (String section : PropsValues.COMPANY_SETTINGS_FORM_AUTHENTICATION) {
 	%>
 
 		<liferay-ui:section>
-			<liferay-util:include page='<%= "/authentication/" + _getSectionJsp(section) + ".jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" />
+			<liferay-util:include page='<%= "/html/portlet/portal_settings/authentication/" + _getSectionJsp(section) + ".jsp" %>' portletId="<%= PortletKeys.PORTAL %>" />
 		</liferay-ui:section>
 
 	<%

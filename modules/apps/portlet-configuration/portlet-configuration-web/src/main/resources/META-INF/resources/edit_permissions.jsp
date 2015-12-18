@@ -112,7 +112,22 @@ definePermissionsURL.setRefererPlid(plid);
 definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
-<div class="edit-permissions">
+<c:choose>
+	<c:when test="<%= Validator.isNull(modelResource) %>">
+		<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="tabs1" value="permissions" />
+		</liferay-util:include>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= false %>"
+			title="<%= HtmlUtil.unescape(selResourceDescription) %>"
+		/>
+	</c:otherwise>
+</c:choose>
+
+<div class="container-fluid-1280 edit-permissions">
 	<portlet:actionURL name="updateRolePermissions" var="updateRolePermissionsURL">
 		<portlet:param name="mvcPath" value="/edit_permissions.jsp" />
 		<portlet:param name="tabs2" value="<%= tabs2 %>" />
@@ -128,21 +143,6 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 
 	<aui:form action="<%= updateRolePermissionsURL.toString() %>" method="post" name="fm">
 		<aui:input name="resourceId" type="hidden" value="<%= resource.getResourceId() %>" />
-
-		<c:choose>
-			<c:when test="<%= Validator.isNull(modelResource) %>">
-				<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="tabs1" value="permissions" />
-				</liferay-util:include>
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:header
-						backURL="<%= redirect %>"
-						localizeTitle="<%= false %>"
-						title="<%= HtmlUtil.unescape(selResourceDescription) %>"
-						/>
-			</c:otherwise>
-		</c:choose>
 
 		<%
 		boolean filterGroupRoles = !ResourceActionsUtil.isPortalModelResource(modelResource);
@@ -296,13 +296,8 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 				<liferay-ui:search-container-column-text
 					href="<%= definePermissionsHREF %>"
 					name="role"
-				>
-					<liferay-ui:icon
-						iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
-						label="<%= true %>"
-						message="<%= role.getTitle(locale) %>"
-					/>
-				</liferay-ui:search-container-column-text>
+					value="<%= role.getTitle(locale) %>"
+				/>
 
 				<%
 
@@ -380,11 +375,11 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 		</liferay-ui:search-container>
 
 		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button cssClass="btn-lg" type="submit" />
 		</aui:button-row>
 	</aui:form>
 </div>

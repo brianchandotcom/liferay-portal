@@ -14,10 +14,18 @@
 
 package com.liferay.calendar.recurrence;
 
+import java.util.Calendar;
+
 /**
  * @author Marcellus Tavares
  */
 public class PositionalWeekday {
+
+	public PositionalWeekday(Calendar calendar) {
+		this(
+			Weekday.getWeekday(calendar),
+			calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH));
+	}
 
 	public PositionalWeekday(Weekday weekday, int position) {
 		if ((position < -53) || (position > 53)) {

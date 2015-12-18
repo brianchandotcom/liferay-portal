@@ -73,6 +73,38 @@ alter table Organization_ add logoId LONG;
 
 alter table RatingsEntry add uuid_ VARCHAR(75) null;
 
+create table RecentLayoutBranch (
+	mvccVersion LONG default 0,
+	recentLayoutBranchId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	layoutBranchId LONG,
+	layoutSetBranchId LONG,
+	plid LONG
+);
+
+create table RecentLayoutRevision (
+	mvccVersion LONG default 0,
+	recentLayoutRevisionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	layoutRevisionId LONG,
+	layoutSetBranchId LONG,
+	plid LONG
+);
+
+create table RecentLayoutSetBranch (
+	mvccVersion LONG default 0,
+	recentLayoutSetBranchId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	layoutSetBranchId LONG,
+	layoutSetId LONG
+);
+
 insert into Region (regionId, countryId, regionCode, name, active_) values (33001, 33, 'AT-1', 'Burgenland', TRUE);
 insert into Region (regionId, countryId, regionCode, name, active_) values (33002, 33, 'AT-2', 'Kärnten', TRUE);
 insert into Region (regionId, countryId, regionCode, name, active_) values (33003, 33, 'AT-3', 'Niederösterreich', TRUE);

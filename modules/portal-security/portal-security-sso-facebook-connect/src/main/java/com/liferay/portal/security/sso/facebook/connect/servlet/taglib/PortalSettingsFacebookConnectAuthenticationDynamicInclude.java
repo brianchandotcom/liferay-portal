@@ -45,6 +45,7 @@ public class PortalSettingsFacebookConnectAuthenticationDynamicInclude
 		return _log;
 	}
 
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.facebook.connect)",
 		unbind = "-"

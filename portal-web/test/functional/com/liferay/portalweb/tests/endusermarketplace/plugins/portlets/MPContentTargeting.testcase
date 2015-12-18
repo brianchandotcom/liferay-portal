@@ -6,8 +6,8 @@
 	</set-up>
 
 	<command name="MarketplacePortletContentTargetingSmoke" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Store" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Store" />
 		</execute>
 
 		<execute macro="Marketplace#signIn">
@@ -19,16 +19,16 @@
 
 		<execute macro="Portlet#startServer" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Store" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Store" />
 		</execute>
 
 		<execute macro="Marketplace#downloadApp">
 			<var name="appName" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Purchased" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Purchased" />
 		</execute>
 
 		<execute macro="Marketplace#installApp">

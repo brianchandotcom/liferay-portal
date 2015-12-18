@@ -80,7 +80,6 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 	<div class="lfr-add-content">
 		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category list-unstyled panel-page-category" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" parentId="<%= panelContainerId %>" persistState="<%= true %>" title="<%= title %>">
-
 			<aui:nav collapsible="<%= false %>">
 
 				<%
@@ -145,11 +144,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 							%>
 
 							<aui:nav-item cssClass="lfr-content-item" href="">
-								<span <%= AUIUtil.buildData(data) %> class="<%= cssClass %>">
-									<i class="<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>"></i>
-
-									<liferay-ui:message key="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" />
-								</span>
+								<aui:icon cssClass="<%= cssClass %>" data="<%= data %>" image='<%= portletInstanceable ? "grid" : "live" %>' label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" markupView="lexicon" />
 
 								<%
 								data.remove("draggable");
@@ -191,7 +186,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 								<aui:nav-item cssClass="lfr-archived-setup lfr-content-item" href="">
 									<span <%= AUIUtil.buildData(portletItemData) %> class="<%= cssClass %>">
-										<i class="<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>"></i>
+										<aui:icon cssClass="<%= cssClass %>" data="<%= data %>" image='<%= portletInstanceable ? "grid" : "live" %>' label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" markupView="lexicon" />
 
 										<liferay-ui:message key="<%= HtmlUtil.escape(portletItem.getName()) %>" />
 									</span>

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>PORTLET_TITLE</td>
-	<td>//h1[@class='portlet-title']/span[contains(@class,'portlet-title-text')]</td>
+	<td>//div[contains(@class,'portlet-content')]/h2[contains(@class,'portlet-title-text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -251,11 +251,6 @@
 	<td>Vocabulary 1</td>
 </tr>
 <tr>
-	<td>ENTRY_FLAG</td>
-	<td>//div[contains(@class,'taglib-flags')]//span[contains(@class,'taglib-text') and contains(.,'Flag')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_TAG</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a[contains(.,'${key_tagName}')]</td>
 	<td></td>
@@ -350,42 +345,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--REPORT_INAPPROPRIATE_CONTENT-->
-<tr>
-	<td>REPORT_INAPPROPRIATE_CONTENT_HEADER</td>
-	<td>//h3[contains(.,'Report')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPORT_INAPPROPRIATE_CONTENT_WARNING</td>
-	<td>//p[contains(.,'You are about to report a violation')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPORT_INAPPROPRIATE_CONTENT_WARNING_TERMS_OF_USE_LINK</td>
-	<td>//a[@href='/c/portal/terms_of_use']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPORT_INAPPROPRIATE_CONTENT_REASON_SELECT</td>
-	<td>//div[contains(.,'Reason for the Report')]/select[@id='_142_reason']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPORT_INAPPROPRIATE_CONTENT_SAVE_BUTTON</td>
-	<td>//button[@id='_142_flagsSubmit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPORT_INAPPROPRIATE_CONTENT_SUCCESS_MESSAGE</td>
-	<td>//div[contains(.,'Thank you for your report')]/p[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPORT_INAPPROPRIATE_CONTENT_CLOSE_BUTTON</td>
-	<td>//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 </tbody>

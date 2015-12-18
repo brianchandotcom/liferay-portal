@@ -238,6 +238,12 @@ public class DDMTemplateStagedModelDataHandler
 			templateElement.addAttribute("preloaded", "true");
 		}
 
+		if (template.getResourceClassNameId() > 0) {
+			templateElement.addAttribute(
+				"resource-class-name",
+				PortalUtil.getClassName(template.getResourceClassNameId()));
+		}
+
 		portletDataContext.addClassedModel(
 			templateElement, ExportImportPathUtil.getModelPath(template),
 			template);
@@ -305,14 +311,13 @@ public class DDMTemplateStagedModelDataHandler
 			classPK = MapUtil.getLong(structureIds, classPK, classPK);
 		}
 
+		Element element = portletDataContext.getImportDataStagedModelElement(
+			template);
+
 		File smallFile = null;
 
 		try {
 			if (template.isSmallImage()) {
-				Element element =
-					portletDataContext.getImportDataStagedModelElement(
-						template);
-
 				String smallImagePath = element.attributeValue(
 					"small-image-path");
 
@@ -345,16 +350,24 @@ public class DDMTemplateStagedModelDataHandler
 
 			template.setScript(script);
 
+			long resourceClassNameId = 0L;
+
+			if (template.getResourceClassNameId() > 0) {
+				String resourceClassName = element.attributeValue(
+					"resource-class-name");
+
+				if (Validator.isNotNull(resourceClassName)) {
+					resourceClassNameId = PortalUtil.getClassNameId(
+						resourceClassName);
+				}
+			}
+
 			ServiceContext serviceContext =
 				portletDataContext.createServiceContext(template);
 
 			DDMTemplate importedTemplate = null;
 
 			if (portletDataContext.isDataStrategyMirror()) {
-				Element element =
-					portletDataContext.getImportDataStagedModelElement(
-						template);
-
 				boolean preloaded = GetterUtil.getBoolean(
 					element.attributeValue("preloaded"));
 
@@ -368,8 +381,7 @@ public class DDMTemplateStagedModelDataHandler
 
 					importedTemplate = _ddmTemplateLocalService.addTemplate(
 						userId, portletDataContext.getScopeGroupId(),
-						template.getClassNameId(), classPK,
-						template.getResourceClassNameId(),
+						template.getClassNameId(), classPK, resourceClassNameId,
 						template.getTemplateKey(), template.getNameMap(),
 						template.getDescriptionMap(), template.getType(),
 						template.getMode(), template.getLanguage(),
@@ -391,9 +403,8 @@ public class DDMTemplateStagedModelDataHandler
 			else {
 				importedTemplate = _ddmTemplateLocalService.addTemplate(
 					userId, portletDataContext.getScopeGroupId(),
-					template.getClassNameId(), classPK,
-					template.getResourceClassNameId(), null,
-					template.getNameMap(), template.getDescriptionMap(),
+					template.getClassNameId(), classPK, resourceClassNameId,
+					null, template.getNameMap(), template.getDescriptionMap(),
 					template.getType(), template.getMode(),
 					template.getLanguage(), template.getScript(),
 					template.isCacheable(), template.isSmallImage(),

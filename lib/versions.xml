@@ -1088,7 +1088,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/asm-debug-all.jar</file-name>
-				<version>5.0.1</version>
+				<version>5.0.4</version>
 				<project-name>ASM</project-name>
 				<project-url>http://asm.objectweb.org</project-url>
 				<licenses>
@@ -1401,7 +1401,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-beanutils.jar</file-name>
-				<version>1.8.2</version>
+				<version>1.9.2</version>
 				<project-name>Commons Beanutils</project-name>
 				<project-url>http://commons.apache.org/beanutils</project-url>
 				<licenses>
@@ -1437,7 +1437,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-collections.jar</file-name>
-				<version>3.2.1</version>
+				<version>3.2.2</version>
 				<project-name>Commons Collections</project-name>
 				<project-url>http://commons.apache.org/collections</project-url>
 				<licenses>
@@ -1485,7 +1485,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-digester.jar</file-name>
-				<version>1.8.0</version>
+				<version>1.8.1</version>
 				<project-name>Commons Digester</project-name>
 				<project-url>http://commons.apache.org/digester</project-url>
 				<licenses>
@@ -1573,7 +1573,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-logging.jar</file-name>
-				<version>1.1.3</version>
+				<version>1.2.0</version>
 				<project-name>Commons Logging</project-name>
 				<project-url>http://commons.apache.org/logging</project-url>
 				<licenses>
@@ -1609,14 +1609,14 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-validator.jar</file-name>
-				<version>1.3.1</version>
+				<version>1.5.0</version>
 				<project-name>Commons Validator</project-name>
 				<project-url>http://commons.apache.org/validator</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2001-2006 The Apache Software Foundation</copyright-notice>
+						<copyright-notice>Copyright (c) 2001-2015 The Apache Software Foundation</copyright-notice>
 					</license>
 				</licenses>
 			</library>
@@ -2836,7 +2836,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-aop.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2851,7 +2851,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-aspects.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2866,7 +2866,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-beans.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2882,7 +2882,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-context.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2897,7 +2897,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-context-support.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2912,7 +2912,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-core.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2927,7 +2927,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-expression.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2942,7 +2942,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-jdbc.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2957,7 +2957,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-jms.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2972,7 +2972,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-orm.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2987,7 +2987,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-oxm.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -3002,7 +3002,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-struts.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -3017,7 +3017,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-tx.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -3032,7 +3032,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-web.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -3047,7 +3047,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-webmvc.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -3062,7 +3062,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-webmvc-portlet.jar</file-name>
-				<version>3.2.10</version>
+				<version>3.2.15</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>

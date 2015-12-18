@@ -12,5 +12,6 @@ liferay {
 }
 
 publishNodeModule {
+	dependsOn jar
 	workingDir = "src/main/resources/META-INF/resources/_styled"
 }

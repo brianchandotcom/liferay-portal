@@ -417,6 +417,8 @@ public class LocaleUtil {
 
 			_locale = new Locale(userLanguage, userCountry, userVariant);
 		}
+
+		LocaleThreadLocal.setDefaultLocale(_locale);
 	}
 
 	private String _toBCP47LanguageId(Locale locale) {

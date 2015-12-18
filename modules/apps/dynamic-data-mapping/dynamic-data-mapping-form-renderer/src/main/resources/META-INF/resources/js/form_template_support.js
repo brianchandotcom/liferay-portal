@@ -110,7 +110,8 @@ AUI.add(
 				return A.merge(
 					column,
 					{
-						fields: column.fieldNames.map(A.bind('_renderFieldTemplate', instance))
+						fields: column.fieldNames.map(A.bind('_renderFieldTemplate', instance)),
+						size: column.size
 					}
 				);
 			},
@@ -174,7 +175,7 @@ AUI.add(
 							columns: [
 								{
 									fieldNames: [fieldName],
-									size: 12
+									size: instance.get('size')
 								}
 							]
 						};

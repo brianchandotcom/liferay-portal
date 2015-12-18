@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Tools Shard Builder
+Bundle-SymbolicName: com.liferay.portal.tools.shard.builder
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.tools.shard.builder.exporter
+Include-Resource:\
+	classes,\
+	@lib/HikariCP.jar,\
+	@lib/slf4j-api.jar

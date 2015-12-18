@@ -43,14 +43,9 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 	</c:if>
 
 	<li class="title-list <%= assetRendererFactory.getType() %>">
-		<liferay-ui:icon
-			iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-			label="<%= true %>"
-			localizeMessage="<%= false %>"
-			message="<%= HtmlUtil.escape(title) %>"
-			method="get"
-			url="<%= viewURL %>"
-		/>
+		<aui:a href="<%= viewURL %>">
+			<%= HtmlUtil.escape(title) %>
+		</aui:a>
 
 		<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
 

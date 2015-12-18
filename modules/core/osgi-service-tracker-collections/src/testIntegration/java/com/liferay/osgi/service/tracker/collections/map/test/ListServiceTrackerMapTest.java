@@ -156,17 +156,18 @@ public class ListServiceTrackerMapTest {
 	public void testGestServiceWithUnregisteringAndCustomComparator() {
 		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 			createServiceTrackerMap(
-				_bundleContext, new Comparator<ServiceReference<TrackedOne>>() {
+				_bundleContext,
+				new Comparator<ServiceReference<TrackedOne>>() {
 
-				@Override
-				public int compare(
-					ServiceReference<TrackedOne> serviceReference1,
-					ServiceReference<TrackedOne> serviceReference2) {
+					@Override
+					public int compare(
+						ServiceReference<TrackedOne> serviceReference1,
+						ServiceReference<TrackedOne> serviceReference2) {
 
-					return 0;
-				}
+						return 0;
+					}
 
-			});
+				});
 
 		TrackedOne trackedOne1 = new TrackedOne();
 

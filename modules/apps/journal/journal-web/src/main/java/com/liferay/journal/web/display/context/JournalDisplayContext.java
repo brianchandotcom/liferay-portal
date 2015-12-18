@@ -303,7 +303,7 @@ public class JournalDisplayContext {
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(_request, "navigation", "home");
+		_navigation = ParamUtil.getString(_request, "navigation", "all");
 
 		return _navigation;
 	}
@@ -338,7 +338,7 @@ public class JournalDisplayContext {
 
 		_orderByType = ParamUtil.getString(_request, "orderByType");
 
-		if (Validator.isNull(_orderByCol)) {
+		if (Validator.isNull(_orderByType)) {
 			_orderByType = _portalPreferences.getValue(
 				JournalPortletKeys.JOURNAL, "order-by-type", "asc");
 		}
@@ -368,7 +368,7 @@ public class JournalDisplayContext {
 
 		String ddmStructureKey = getDDMStructureKey();
 
-		if (!ddmStructureKey.equals("0")) {
+		if (isNavigationStructure()) {
 			portletURL.setParameter("ddmStructureKey", ddmStructureKey);
 		}
 
@@ -555,7 +555,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isNavigationHome() {
-		if (Validator.equals(getNavigation(), "home")) {
+		if (Validator.equals(getNavigation(), "all")) {
 			return true;
 		}
 
@@ -578,6 +578,14 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isNavigationStructure() {
+		if (Validator.equals(getNavigation(), "structure")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -587,9 +595,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isShowBreadcrumb() {
-		String browseBy = ParamUtil.getString(_request, "browseBy");
-
-		if (Validator.isNotNull(browseBy)) {
+		if (isNavigationStructure()) {
 			return false;
 		}
 

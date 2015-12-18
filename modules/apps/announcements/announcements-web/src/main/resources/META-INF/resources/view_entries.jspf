@@ -116,16 +116,19 @@ if ((hiddenMessagesCount == 0) && (visibleMessagesCount == 0) && portletName.equ
 
 	function <portlet:namespace />toggleContent(entry) {
 		var content = entry.find('.entry-content');
-		var control = entry.find('.control-entry a');
+		var scope = entry.find('.entry-scope');
 
 		var visible = entry.hasClass('visible');
 
 		entry.toggleClass('visible', !visible);
 
 		content.toggleClass('hide', visible);
+		scope.toggleClass('hide', visible);
 
 		var label = visible ? '<%= UnicodeLanguageUtil.get(request, "show") %>' : '<%= UnicodeLanguageUtil.get(request, "hide") %>';
 
-		control.html(label);
+		var showHideControl = entry.find('.control-entry li.visibility-control a');
+
+		showHideControl.html(label);
 	}
 </aui:script>

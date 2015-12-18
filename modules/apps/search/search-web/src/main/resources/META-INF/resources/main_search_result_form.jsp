@@ -81,7 +81,7 @@ else if (assetRenderer != null) {
 		</span>
 
 		<span class="asset-entry-title">
-			<a class="<%= (assetRenderer != null) ? assetRenderer.getIconCssClass() : StringPool.BLANK %>" href="<%= viewURL %>">
+			<a href="<%= viewURL %>">
 				<%= summary.getHighlightedTitle() %>
 			</a>
 

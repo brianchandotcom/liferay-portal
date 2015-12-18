@@ -1,0 +1,21 @@
+import com.liferay.gradle.plugins.gulp.ExecuteGulpTask
+
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "latest.release"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.gulp"
+
+tasks.withType(ExecuteGulpTask) {
+	dependsOn npmInstall
+}

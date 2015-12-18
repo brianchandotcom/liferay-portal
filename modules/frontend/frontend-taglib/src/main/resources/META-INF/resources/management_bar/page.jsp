@@ -16,14 +16,14 @@
 
 <%@ include file="/management_bar/init.jsp" %>
 
-<div class="management-bar-container" id="<%= namespace %>managementBarContainerId">
+<div class="management-bar-container" data-qa-id="managementBar" id="<%= namespace %>managementBarContainerId">
 	<div class="management-bar management-bar-default">
 		<div class="container-fluid-1280">
 			<div class="management-bar-header">
 				<c:if test="<%= includeCheckBox %>">
 					<div class="checkbox">
 						<label>
-							<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" title="select-all" type="checkbox" />
+							<aui:input cssClass="select-all-checkboxes" data-qa-id="selectAllCheckbox" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" title="select-all" type="checkbox" />
 						</label>
 					</div>
 				</c:if>
@@ -52,7 +52,7 @@
 					<c:if test="<%= includeCheckBox %>">
 						<div class="checkbox">
 							<label>
-								<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="actionsCheckBox" title="select-all" type="checkbox" />
+								<aui:input cssClass="select-all-checkboxes" data-qa-id="selectAllCheckbox" inline="<%= true %>" label="" name="actionsCheckBox" title="select-all" type="checkbox" />
 							</label>
 						</div>
 					</c:if>

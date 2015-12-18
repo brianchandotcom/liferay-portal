@@ -32,6 +32,10 @@ public final class PoshiRunnerStackTraceUtil {
 		}
 	}
 
+	public static String getCurrentFilePath() {
+		return _filePaths.peek();
+	}
+
 	public static String getSimpleStackTrace() {
 		StringBuilder sb = new StringBuilder();
 

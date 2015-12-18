@@ -1951,32 +1951,6 @@ public class DLAppServiceSoap {
 	}
 
 	/**
-	* Moves the folder with the primary key from the trash portlet to the new
-	* parent folder with the primary key.
-	*
-	* @param folderId the primary key of the folder
-	* @param parentFolderId the primary key of the new parent folder
-	* @param serviceContext the service context to be applied
-	* @return the file entry
-	*/
-	public static com.liferay.portal.kernel.repository.model.FolderSoap moveFolderFromTrash(
-		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.repository.model.Folder returnValue = DLAppServiceUtil.moveFolderFromTrash(folderId,
-					parentFolderId, serviceContext);
-
-			return com.liferay.portal.kernel.repository.model.FolderSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	* Moves the folder with the primary key to the trash portlet.
 	*
 	* @param folderId the primary key of the folder
@@ -2059,23 +2033,6 @@ public class DLAppServiceSoap {
 		throws RemoteException {
 		try {
 			DLAppServiceUtil.restoreFileEntryFromTrash(fileEntryId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* Restores the file shortcut with the primary key from the trash portlet.
-	*
-	* @param fileShortcutId the primary key of the file shortcut
-	*/
-	public static void restoreFileShortcutFromTrash(long fileShortcutId)
-		throws RemoteException {
-		try {
-			DLAppServiceUtil.restoreFileShortcutFromTrash(fileShortcutId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

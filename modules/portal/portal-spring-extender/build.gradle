@@ -3,9 +3,9 @@ dependencies {
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	compile group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
 	compile group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", version: "3.2.0"
-	compile group: "org.springframework", name: "spring-beans", version: "3.2.10.RELEASE"
-	compile group: "org.springframework", name: "spring-context", version: "3.2.10.RELEASE"
-	compile group: "org.springframework", name: "spring-orm", version: "3.2.10.RELEASE"
+	compile group: "org.springframework", name: "spring-beans", version: "3.2.15.RELEASE"
+	compile group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
+	compile group: "org.springframework", name: "spring-orm", version: "3.2.15.RELEASE"
 	compile project(":portal:portal-upgrade")
 
 	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"

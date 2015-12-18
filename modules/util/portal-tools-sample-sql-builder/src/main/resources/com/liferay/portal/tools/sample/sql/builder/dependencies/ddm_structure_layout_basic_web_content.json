@@ -1,0 +1,23 @@
+{
+	"defaultLanguageId": "en_US",
+	"pages": [
+		{
+			"rows": [
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"content"
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"title": {
+				"en_US": "Basic Web Content"
+			}
+		}
+	],
+	"paginationMode": ""
+}

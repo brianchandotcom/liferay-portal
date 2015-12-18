@@ -16,6 +16,10 @@ package com.liferay.dynamic.data.mapping.type.date;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -24,6 +28,42 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
  * @author Bruno Basto
  */
 @DDMForm
+@DDMFormLayout(
+	{
+		@DDMFormLayoutPage(
+			title = "basic",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {"label", "tip", "required"}
+						)
+					}
+				)
+			}
+		),
+		@DDMFormLayoutPage(
+			title = "advanced",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {
+								"showLabel", "repeatable",
+								"visibilityExpression", "predefinedValue",
+								"validation", "fieldNamespace", "indexType",
+								"localizable", "readOnly", "dataType", "type",
+								"name"
+							}
+						)
+					}
+				)
+			}
+		)
+	}
+)
 public interface DateDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 

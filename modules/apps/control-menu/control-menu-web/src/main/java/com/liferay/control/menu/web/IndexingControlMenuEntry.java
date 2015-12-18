@@ -19,11 +19,17 @@ import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.search.internal.background.task.ReindexPortalBackgroundTaskExecutor;
 import com.liferay.portal.search.internal.background.task.ReindexSingleIndexerBackgroundTaskExecutor;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,13 +52,31 @@ public class IndexingControlMenuEntry
 	extends BaseControlMenuEntry implements ControlMenuEntry {
 
 	@Override
+	public Map<String, Object> getData(HttpServletRequest request) {
+		Map<String, Object> data = super.getData(request);
+
+		data.put("qa-id", "indexing");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		data.put("title", getLabel(themeDisplay.getLocale()));
+
+		return data;
+	}
+
+	@Override
 	public String getIconCssClass(HttpServletRequest request) {
 		return "icon-refresh";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "the-portal-is-currently-reindexing";
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(
+			resourceBundle, "the-portal-is-currently-reindexing");
 	}
 
 	@Override

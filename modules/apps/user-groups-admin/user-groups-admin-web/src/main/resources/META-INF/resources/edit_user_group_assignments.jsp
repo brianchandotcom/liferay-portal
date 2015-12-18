@@ -67,7 +67,7 @@ renderResponse.setTitle(userGroup.getName());
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="users" />
+		<aui:nav-item label="users" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>
@@ -100,7 +100,7 @@ renderResponse.setTitle(userGroup.getName());
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-action-buttons>
-			<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="removeUsers" />
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="removeUsers" label="remove" />
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>

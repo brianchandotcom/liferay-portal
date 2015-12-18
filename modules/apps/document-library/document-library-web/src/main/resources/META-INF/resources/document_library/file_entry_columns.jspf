@@ -44,7 +44,6 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				index="<%= j %>"
 				path="/document_library/file_entry_action.jsp"
 			/>
-
 		</c:when>
 		<c:when test='<%= fileEntryColumn.equals("downloads") %>'>
 			<liferay-ui:search-container-column-text

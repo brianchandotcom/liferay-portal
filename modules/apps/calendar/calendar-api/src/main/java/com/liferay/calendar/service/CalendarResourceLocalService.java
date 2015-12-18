@@ -322,8 +322,8 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 
 	public void updateAsset(long userId,
 		com.liferay.calendar.model.CalendarResource calendarResource,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames)
-		throws PortalException;
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		java.lang.Double priority) throws PortalException;
 
 	/**
 	* Updates the calendar resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

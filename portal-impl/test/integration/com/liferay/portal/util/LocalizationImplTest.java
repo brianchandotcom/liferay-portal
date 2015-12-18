@@ -84,7 +84,7 @@ public class LocalizationImplTest {
 	public void setUp() throws Exception {
 		StringBundler sb = new StringBundler();
 
-		sb.append("<?xml version='1.0' encoding='UTF-8'?>");
+		sb.append("<?xml version=\"1.0\"?>");
 
 		sb.append("<root available-locales=\"en_US,es_ES\" ");
 		sb.append("default-locale=\"en_US\">");

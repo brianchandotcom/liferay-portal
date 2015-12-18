@@ -16,7 +16,9 @@ package com.liferay.calendar.recurrence;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * @author Marcellus Tavares
@@ -25,6 +27,29 @@ public class Recurrence {
 
 	public void addExceptionDate(Calendar calendar) {
 		_exceptionJCalendars.add(calendar);
+	}
+
+	public Recurrence clone() {
+		Recurrence recurrence = new Recurrence();
+
+		recurrence.setCount(_count);
+		recurrence.setExceptionJCalendars(
+			new ArrayList<>(_exceptionJCalendars));
+		recurrence.setFrequency(_frequency);
+		recurrence.setInterval(_interval);
+		recurrence.setMonths(new ArrayList<>(_months));
+		recurrence.setPositionalWeekdays(new ArrayList<>(_positionalWeekdays));
+		recurrence.setTimeZone(_timeZone);
+
+		Calendar untilJCalendar = null;
+
+		if (_untilJCalendar != null) {
+			untilJCalendar = (Calendar)_untilJCalendar.clone();
+		}
+
+		recurrence.setUntilJCalendar(untilJCalendar);
+
+		return recurrence;
 	}
 
 	public int getCount() {
@@ -47,12 +72,34 @@ public class Recurrence {
 		return _months;
 	}
 
+	public PositionalWeekday getPositionalWeekday() {
+		if (_positionalWeekdays.isEmpty()) {
+			return null;
+		}
+
+		return _positionalWeekdays.get(0);
+	}
+
 	public List<PositionalWeekday> getPositionalWeekdays() {
 		return _positionalWeekdays;
 	}
 
+	public TimeZone getTimeZone() {
+		return _timeZone;
+	}
+
 	public Calendar getUntilJCalendar() {
 		return _untilJCalendar;
+	}
+
+	public List<Weekday> getWeekdays() {
+		List<Weekday> weekdays = new ArrayList<>();
+
+		for (PositionalWeekday positionalWeekday : _positionalWeekdays) {
+			weekdays.add(positionalWeekday.getWeekday());
+		}
+
+		return weekdays;
 	}
 
 	public void setCount(int count) {
@@ -81,6 +128,10 @@ public class Recurrence {
 		_positionalWeekdays = positionalWeekdays;
 	}
 
+	public void setTimeZone(TimeZone timeZone) {
+		_timeZone = timeZone;
+	}
+
 	public void setUntilJCalendar(Calendar untilJCalendar) {
 		_untilJCalendar = untilJCalendar;
 	}
@@ -89,8 +140,10 @@ public class Recurrence {
 	private List<Calendar> _exceptionJCalendars = new ArrayList<>();
 	private Frequency _frequency;
 	private int _interval;
-	private List<Integer> _months;
-	private List<PositionalWeekday> _positionalWeekdays;
+	private List<Integer> _months = Collections.emptyList();
+	private List<PositionalWeekday> _positionalWeekdays =
+		Collections.emptyList();
+	private TimeZone _timeZone;
 	private Calendar _untilJCalendar;
 
 }

@@ -19,62 +19,71 @@
 <%
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectRuleGroup");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/view.jsp");
+portletURL.setParameter("mvcPath", "/select_rule_group.jsp");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("eventName", eventName);
+
+RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, portletURL);
+
+RuleGroupDisplayTerms displayTerms = (RuleGroupDisplayTerms)ruleGroupSearch.getDisplayTerms();
+RuleGroupSearchTerms searchTerms = (RuleGroupSearchTerms)ruleGroupSearch.getSearchTerms();
+
+if (displayTerms.getGroupId() == 0) {
+	displayTerms.setGroupId(groupId);
+	searchTerms.setGroupId(groupId);
+}
+
+LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+params.put("includeGlobalScope", Boolean.TRUE);
+
+int mdrRuleGroupsCount = MDRRuleGroupLocalServiceUtil.searchByKeywordsCount(searchTerms.getGroupId(), searchTerms.getKeywords(), params, searchTerms.isAndOperator());
+
+ruleGroupSearch.setTotal(mdrRuleGroupsCount);
+
+List<MDRRuleGroup> mdrRuleGroups = MDRRuleGroupLocalServiceUtil.searchByKeywords(searchTerms.getGroupId(), searchTerms.getKeywords(), params, searchTerms.isAndOperator(), ruleGroupSearch.getStart(), ruleGroupSearch.getEnd());
+
+ruleGroupSearch.setResults(mdrRuleGroups);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="selectRuleGroupFm">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav-item label="device-families" selected="<%= true %>" />
 
-	<%
-	RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, portletURL);
-	%>
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
+<c:if test="<%= (mdrRuleGroupsCount > 0) || searchTerms.isSearch() %>">
+	<liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+	</liferay-frontend:management-bar>
+</c:if>
+
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectRuleGroupFm">
 	<liferay-ui:search-container
 		searchContainer="<%= ruleGroupSearch %>"
 	>
-		<aui:nav-bar>
-			<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
-				<liferay-portlet:renderURL var="addRuleGroupURL">
-					<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				</liferay-portlet:renderURL>
-
-				<aui:nav cssClass="navbar-nav" searchContainer="<%= ruleGroupSearch %>">
-					<aui:nav-item href="<%= addRuleGroupURL %>" iconCssClass="icon-plus" label="add-device-family" />
-				</aui:nav>
-			</c:if>
-
-			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
-
-				<%
-				request.setAttribute("liferay-ui:search:searchContainer", searchContainer);
-				%>
-
-				<liferay-util:include page="/rule_group_search.jsp" servletContext="<%= application %>" />
-			</aui:nav-bar-search>
-		</aui:nav-bar>
-
-		<%
-		RuleGroupDisplayTerms displayTerms = (RuleGroupDisplayTerms)searchContainer.getDisplayTerms();
-		RuleGroupSearchTerms searchTerms = (RuleGroupSearchTerms)searchContainer.getSearchTerms();
-
-		if (displayTerms.getGroupId() == 0) {
-			displayTerms.setGroupId(groupId);
-			searchTerms.setGroupId(groupId);
-		}
-		%>
-
-		<liferay-ui:search-container-results>
-			<%@ include file="/rule_group_search_results.jspf" %>
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.mobile.device.rules.model.MDRRuleGroup"
 			escapedModel="<%= true %>"
@@ -84,35 +93,39 @@ portletURL.setParameter("eventName", eventName);
 
 			<liferay-ui:search-container-column-text
 				name="name"
-				value="<%= ruleGroup.getName(locale) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= ruleGroup.getDescription(locale) %>"
-			/>
-
-			<liferay-ui:search-container-column-text>
+			>
 
 				<%
 				MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(className, classPK, ruleGroup.getRuleGroupId());
 				%>
 
-				<c:if test="<%= ruleGroupInstance == null %>">
+				<c:choose>
+					<c:when test="<%= ruleGroupInstance == null %>">
 
-					<%
-					Map<String, Object> data = new HashMap<String, Object>();
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
 
-					data.put("rulegroupid", ruleGroup.getRuleGroupId());
-					data.put("rulegroupname", ruleGroup.getName());
-					%>
+						data.put("rulegroupid", ruleGroup.getRuleGroupId());
+						data.put("rulegroupname", ruleGroup.getName());
+						%>
 
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-				</c:if>
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<%= ruleGroup.getName(locale) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<%= ruleGroup.getName(locale) %>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				name="description"
+				value="<%= ruleGroup.getDescription(locale) %>"
+			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator type="more" />
+		<liferay-ui:search-iterator markupView="lexicon" type="more" />
 	</liferay-ui:search-container>
 </aui:form>
 

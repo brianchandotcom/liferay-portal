@@ -19,13 +19,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD</td>
+	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='add']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN</td>
 	<td>//li[@id='_145_adminLinks']/a</td>
 	<td>Admin Drop Down Button</td>
 </tr>
 <tr>
-	<td>EDIT_COG</td>
-	<td>//i[contains(@class,'icon-cog')]</td>
+	<td>EDIT</td>
+	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO</td>
+	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='info']</td>
 	<td></td>
 </tr>
 <tr>
@@ -44,18 +54,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_AVATAR_IMAGE</td>
-	<td>//span[@class='user-avatar-image']</td>
+	<td>SIMULATION</td>
+	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='simulation']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE_CONTROLS</td>
+	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='showControls']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_NAME</td>
 	<td>//span[@class='user-full-name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_INFO_MESSAGE_ICON</td>
-	<td>//a[contains(@id,'infoButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -138,42 +148,6 @@
 <tr>
 	<td>MY_SITES_SITE_NAME_2</td>
 	<td>//span[@class='site-name' and contains(.,'${key_siteName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--USER-->
-<tr>
-	<td>USER_MY_PROFILE</td>
-	<td>//a/span[contains(.,'My Profile')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_MY_DASHBOARD</td>
-	<td>//a/span[contains(.,'My Dashboard')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_MY_ACCOUNT</td>
-	<td>//a[@title='My Account']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_MY_ACCOUNT_LOCALIZED</td>
-	<td>//a[@title='${key_myAccount}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SIGN_OUT</td>
-	<td>//li[contains(@class,'sign-out')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SIGN_IN</td>
-	<td>//li[contains(@class,'sign-in')]/a</td>
 	<td></td>
 </tr>
 </tbody>

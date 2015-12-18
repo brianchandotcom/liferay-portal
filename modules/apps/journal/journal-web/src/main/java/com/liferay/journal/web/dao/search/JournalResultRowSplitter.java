@@ -17,6 +17,7 @@ package com.liferay.journal.web.dao.search;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
+import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,9 @@ import java.util.List;
 public class JournalResultRowSplitter implements ResultRowSplitter {
 
 	@Override
-	public List<List<ResultRow>> split(List<ResultRow> resultRows) {
-		List<List<ResultRow>> resultRowsList = new ArrayList<>();
+	public List<ResultRowSplitterEntry> split(List<ResultRow> resultRows) {
+		List<ResultRowSplitterEntry> resultRowSplitterEntries =
+			new ArrayList<>();
 
 		List<ResultRow> journalArticleResultRows = new ArrayList<>();
 		List<ResultRow> journalFolderResultRows = new ArrayList<>();
@@ -45,14 +47,17 @@ public class JournalResultRowSplitter implements ResultRowSplitter {
 		}
 
 		if (!journalFolderResultRows.isEmpty()) {
-			resultRowsList.add(journalFolderResultRows);
+			resultRowSplitterEntries.add(
+				new ResultRowSplitterEntry("folders", journalFolderResultRows));
 		}
 
 		if (!journalArticleResultRows.isEmpty()) {
-			resultRowsList.add(journalArticleResultRows);
+			resultRowSplitterEntries.add(
+				new ResultRowSplitterEntry(
+					"articles", journalArticleResultRows));
 		}
 
-		return resultRowsList;
+		return resultRowSplitterEntries;
 	}
 
 }

@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.elasticsearch.filter.GeoBoundingBoxFilterTranslator;
 
 import org.elasticsearch.common.geo.GeoPoint;
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.FilterBuilders;
-import org.elasticsearch.index.query.GeoBoundingBoxFilterBuilder;
+import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,10 +33,9 @@ public class GeoBoundingBoxFilterTranslatorImpl
 	implements GeoBoundingBoxFilterTranslator {
 
 	@Override
-	public FilterBuilder translate(GeoBoundingBoxFilter geoBoundingBoxFilter) {
-		GeoBoundingBoxFilterBuilder geoBoundingBoxFilterBuilder =
-			FilterBuilders.geoBoundingBoxFilter(
-				geoBoundingBoxFilter.getField());
+	public QueryBuilder translate(GeoBoundingBoxFilter geoBoundingBoxFilter) {
+		GeoBoundingBoxQueryBuilder geoBoundingBoxQueryBuilder =
+			QueryBuilders.geoBoundingBoxQuery(geoBoundingBoxFilter.getField());
 
 		GeoLocationPoint bottomRightGeoLocationPoint =
 			geoBoundingBoxFilter.getBottomRightGeoLocationPoint();
@@ -45,11 +44,7 @@ public class GeoBoundingBoxFilterTranslatorImpl
 			bottomRightGeoLocationPoint.getLatitude(),
 			bottomRightGeoLocationPoint.getLongitude());
 
-		geoBoundingBoxFilterBuilder.bottomRight(bottomRightGeoPoint);
-
-		if (geoBoundingBoxFilter.isCached() != null) {
-			geoBoundingBoxFilterBuilder.cache(geoBoundingBoxFilter.isCached());
-		}
+		geoBoundingBoxQueryBuilder.bottomRight(bottomRightGeoPoint);
 
 		GeoLocationPoint topLeftGeoLocationPoint =
 			geoBoundingBoxFilter.getTopLeftGeoLocationPoint();
@@ -58,9 +53,9 @@ public class GeoBoundingBoxFilterTranslatorImpl
 			topLeftGeoLocationPoint.getLatitude(),
 			topLeftGeoLocationPoint.getLongitude());
 
-		geoBoundingBoxFilterBuilder.topLeft(topLeftGeoPoint);
+		geoBoundingBoxQueryBuilder.topLeft(topLeftGeoPoint);
 
-		return geoBoundingBoxFilterBuilder;
+		return geoBoundingBoxQueryBuilder;
 	}
 
 }

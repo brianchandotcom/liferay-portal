@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
-import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendar;
+import com.liferay.calendar.upgrade.v1_0_1.UpgradeCalendar;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -68,7 +68,7 @@ public class UpgradeCalendarTest extends UpgradeCalendar {
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			connection = con;
 
-			Assert.assertTrue(tableHasColumn("Calendar", "timeZoneId"));
+			Assert.assertTrue(hasColumn("Calendar", "timeZoneId"));
 		}
 	}
 

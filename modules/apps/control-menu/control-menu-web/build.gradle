@@ -3,8 +3,6 @@ dependencies {
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
-	compile project(":apps:application-list:application-list-api")
-	compile project(":apps:application-list:application-list-taglib")
 	compile project(":apps:control-menu:control-menu-api")
 	compile project(":portal:portal-search")
 }

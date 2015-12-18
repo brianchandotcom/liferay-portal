@@ -268,6 +268,12 @@ public class BackgroundTaskPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_N_TArrayable() throws Exception {
+		_persistence.countByG_N_T(new long[] { RandomTestUtil.nextLong(), 0L },
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+	}
+
+	@Test
 	public void testCountByG_T_C() throws Exception {
 		_persistence.countByG_T_C(RandomTestUtil.nextLong(), StringPool.BLANK,
 			RandomTestUtil.randomBoolean());
@@ -316,6 +322,13 @@ public class BackgroundTaskPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_N_T_C(0L, (String)null, (String)null,
+			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_N_T_CArrayable() throws Exception {
+		_persistence.countByG_N_T_C(new long[] { RandomTestUtil.nextLong(), 0L },
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomBoolean());
 	}
 

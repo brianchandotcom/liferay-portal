@@ -14,10 +14,6 @@
 
 package com.liferay.portal.cluster.internal;
 
-import com.liferay.portal.cluster.ClusterChannel;
-import com.liferay.portal.cluster.ClusterChannelFactory;
-import com.liferay.portal.cluster.ClusterReceiver;
-
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;

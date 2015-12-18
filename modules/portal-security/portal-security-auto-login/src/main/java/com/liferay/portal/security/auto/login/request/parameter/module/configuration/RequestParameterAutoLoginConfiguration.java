@@ -23,8 +23,11 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration"
-)public interface RequestParameterAutoLoginConfiguration {
+	id = "com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration",
+	localization = "content/Language",
+	name = "%request.parameter.auto.login.configuration.name"
+)
+public interface RequestParameterAutoLoginConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();

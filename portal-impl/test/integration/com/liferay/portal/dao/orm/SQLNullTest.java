@@ -16,7 +16,8 @@ package com.liferay.portal.dao.orm;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.util.List;
 
@@ -501,8 +501,7 @@ public class SQLNullTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Test
 	public void testBlankStringEqualsNull() {
@@ -1026,26 +1025,26 @@ public class SQLNullTest {
 		}
 	}
 
-	protected boolean isDBType(String dBType) {
-		DB db = DBFactoryUtil.getDB();
+	protected boolean isDBType(DBType dbType) {
+		DB db = DBManagerUtil.getDB();
 
-		return dBType.equals(db.getType());
+		return dbType == db.getDBType();
 	}
 
 	protected boolean isHypersonic() {
-		return isDBType(DB.TYPE_HYPERSONIC);
+		return isDBType(DBType.HYPERSONIC);
 	}
 
 	protected boolean isOracle() {
-		return isDBType(DB.TYPE_ORACLE);
+		return isDBType(DBType.ORACLE);
 	}
 
 	protected boolean isPostgreSQL() {
-		return isDBType(DB.TYPE_POSTGRESQL);
+		return isDBType(DBType.POSTGRESQL);
 	}
 
 	protected boolean isSybase() {
-		return isDBType(DB.TYPE_SYBASE);
+		return isDBType(DBType.SYBASE);
 	}
 
 	protected String transformHypersonicSQL(String sql) {

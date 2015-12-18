@@ -16,7 +16,7 @@ package com.liferay.portal.spring.hibernate;
 
 import com.liferay.portal.dao.orm.hibernate.event.MVCCSynchronizerPostUpdateEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.NestableAutoFlushEventListener;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -132,7 +132,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		if (Validator.isNull(PropsValues.HIBERNATE_DIALECT)) {
 			Dialect dialect = DialectDetector.getDialect(getDataSource());
 
-			DBFactoryUtil.setDB(dialect, getDataSource());
+			DBManagerUtil.setDB(dialect, getDataSource());
 
 			Class<?> clazz = dialect.getClass();
 

@@ -87,11 +87,7 @@ refererURL.setParameter("updateLayout", "true");
 							%>
 
 							<aui:nav-item cssClass="lfr-content-item" href="">
-								<span <%= AUIUtil.buildData(data) %> class="<%= cssClass %>">
-									<i class="<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>"></i>
-
-									<liferay-ui:message key="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" />
-								</span>
+								<aui:icon cssClass="<%= cssClass %>" data="<%= data %>" image='<%= portletInstanceable ? "grid" : "live" %>' label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" markupView="lexicon" />
 
 								<%
 								data.remove("draggable");
@@ -148,10 +144,10 @@ refererURL.setParameter("updateLayout", "true");
 		<c:if test="<%= layout.isTypePortlet() %>">
 			<ul class="lfr-add-apps-legend list-unstyled">
 				<li>
-					<aui:icon image="stop" label="can-be-added-once" />
+					<aui:icon image="live" label="can-be-added-once" markupView="lexicon" />
 				</li>
 				<li>
-					<aui:icon image="th-large" label="can-be-added-several-times" />
+					<aui:icon image="grid" label="can-be-added-several-times" markupView="lexicon" />
 				</li>
 			</ul>
 

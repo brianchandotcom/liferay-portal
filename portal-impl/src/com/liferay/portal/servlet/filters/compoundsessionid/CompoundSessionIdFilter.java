@@ -15,13 +15,14 @@
 package com.liferay.portal.servlet.filters.compoundsessionid;
 
 import com.liferay.portal.kernel.servlet.WrapHttpServletRequestFilter;
-import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdServletRequest;
-import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
-import javax.servlet.FilterConfig;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -34,44 +35,90 @@ import javax.servlet.http.HttpServletResponse;
 public class CompoundSessionIdFilter
 	extends BasePortalFilter implements WrapHttpServletRequestFilter {
 
+	public CompoundSessionIdFilter() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			CompoundSessionIdServletRequestFactory.class,
+			new CompoundSessionIdServletRequestFactoryTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
 	@Override
 	public HttpServletRequest getWrappedHttpServletRequest(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		HttpServletRequest wrappedRequest = request;
+		CompoundSessionIdServletRequestFactory
+			compoundSessionIdServletRequestFactory =
+				_compoundSessionIdServletRequestFactory;
 
-		while (wrappedRequest instanceof HttpServletRequestWrapper) {
-			if (wrappedRequest instanceof CompoundSessionIdServletRequest) {
-				return request;
-			}
-
-			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)wrappedRequest;
-
-			wrappedRequest =
-				(HttpServletRequest)httpServletRequestWrapper.getRequest();
+		if (compoundSessionIdServletRequestFactory != null) {
+			return compoundSessionIdServletRequestFactory.create(request);
 		}
 
-		return new CompoundSessionIdServletRequest(request);
-	}
-
-	@Override
-	public void init(FilterConfig filterConfig) {
-		super.init(filterConfig);
-
-		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
-			_filterEnabled = true;
-		}
-		else {
-			_filterEnabled = false;
-		}
+		return request;
 	}
 
 	@Override
 	public boolean isFilterEnabled() {
-		return _filterEnabled;
+		if (_compoundSessionIdServletRequestFactory != null) {
+			return true;
+		}
+
+		return false;
 	}
 
-	private static boolean _filterEnabled;
+	private volatile CompoundSessionIdServletRequestFactory
+		_compoundSessionIdServletRequestFactory;
+	private final ServiceTracker
+		<CompoundSessionIdServletRequestFactory,
+			CompoundSessionIdServletRequestFactory> _serviceTracker;
+
+	private class CompoundSessionIdServletRequestFactoryTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<CompoundSessionIdServletRequestFactory,
+				CompoundSessionIdServletRequestFactory> {
+
+		@Override
+		public CompoundSessionIdServletRequestFactory addingService(
+			ServiceReference<CompoundSessionIdServletRequestFactory>
+				serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			CompoundSessionIdServletRequestFactory
+				compoundSessionIdServletRequestFactory = registry.getService(
+					serviceReference);
+
+			_compoundSessionIdServletRequestFactory =
+				compoundSessionIdServletRequestFactory;
+
+			return compoundSessionIdServletRequestFactory;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<CompoundSessionIdServletRequestFactory>
+				serviceReference,
+			CompoundSessionIdServletRequestFactory
+				compoundSessionIdServletRequestFactory) {
+
+			removedService(
+				serviceReference, compoundSessionIdServletRequestFactory);
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<CompoundSessionIdServletRequestFactory>
+				serviceReference,
+			CompoundSessionIdServletRequestFactory
+				compoundSessionIdServletRequestFactory) {
+
+			_compoundSessionIdServletRequestFactory = null;
+		}
+
+	}
 
 }

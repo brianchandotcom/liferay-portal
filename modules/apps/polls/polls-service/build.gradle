@@ -8,7 +8,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
 	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	compile group: "org.springframework", name: "spring-context", version: "3.2.10.RELEASE"
+	compile group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:polls:polls-api")

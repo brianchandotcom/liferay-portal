@@ -66,6 +66,9 @@ public class ModulesStructureTest {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
+					else if (Files.exists(dirPath.resolve("package.json"))) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
 
 					return FileVisitResult.CONTINUE;
 				}

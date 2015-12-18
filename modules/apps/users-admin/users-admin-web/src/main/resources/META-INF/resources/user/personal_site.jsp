@@ -82,7 +82,7 @@ if (selUser != null) {
 
 	<c:choose>
 		<c:when test="<%= PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED && hasGroupUpdatePermission && ((selUser == null) || ((publicLayoutSetPrototype == null) && (selUser.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-			<aui:select label="public-pages" name="publicLayoutSetPrototypeId">
+			<aui:select label="my-profile" name="publicLayoutSetPrototypeId">
 				<aui:option label="none" selected="<%= true %>" value="" />
 
 				<%
@@ -109,7 +109,7 @@ if (selUser != null) {
 			</c:choose>
 		</c:when>
 		<c:otherwise>
-			<aui:field-wrapper label="public-pages">
+			<aui:field-wrapper label="my-profile">
 				<c:choose>
 					<c:when test="<%= selUser != null %>">
 						<c:choose>
@@ -122,7 +122,7 @@ if (selUser != null) {
 								<liferay-ui:icon
 									iconCssClass="icon-search"
 									label="<%= true %>"
-									message="open-public-pages"
+									message="open-pages"
 									method="get"
 									target="_blank"
 									url="<%= selUserGroup.getDisplayURL(themeDisplay, false) %>"
@@ -153,7 +153,7 @@ if (selUser != null) {
 
 	<c:choose>
 		<c:when test="<%= PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED && hasGroupUpdatePermission && ((selUser == null) || ((privateLayoutSetPrototype == null) && (selUser.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-			<aui:select label="private-pages" name="privateLayoutSetPrototypeId">
+			<aui:select label="my-dashboard" name="privateLayoutSetPrototypeId">
 				<aui:option label="none" selected="<%= true %>" value="" />
 
 				<%
@@ -180,7 +180,7 @@ if (selUser != null) {
 			</c:choose>
 		</c:when>
 		<c:otherwise>
-			<aui:field-wrapper label="private-pages">
+			<aui:field-wrapper label="my-dashboard">
 				<c:choose>
 					<c:when test="<%= selUser != null %>">
 						<c:choose>
@@ -193,7 +193,7 @@ if (selUser != null) {
 								<liferay-ui:icon
 									iconCssClass="icon-search"
 									label="<%= true %>"
-									message="open-private-pages"
+									message="open-pages"
 									method="get"
 									target="_blank"
 									url="<%= selUserGroup.getDisplayURL(themeDisplay, true) %>"

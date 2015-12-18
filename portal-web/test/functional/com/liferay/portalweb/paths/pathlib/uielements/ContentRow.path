@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>ContentRow</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ContentRow</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ENTRY_CONTENT_ROW_1</td>
+	<td>//*[@data-qa-id='row']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_ROW_1_CHECKBOX</td>
+	<td>//*[@data-qa-id='row']//input[@title='Select']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_ROW_1_ELLIPSIS</td>
+	<td>//*[@data-qa-id='row']//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_ROW_NUMBER</td>
+	<td>xpath=(//*[@data-qa-id='row'])[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_ROW_NUMBER_CHECKBOX</td>
+	<td>xpath=(//*[@data-qa-id='row'])[${key_rowNumber}]//input[@title='Select']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS</td>
+	<td>xpath=(//*[@data-qa-id='row'])[${key_rowNumber}]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,6 +1,6 @@
 <definition>
 	<command name="addNewPG">
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" value1="Add" />
 
 		<execute function="AssertClick#assertTextClickAtAddApplication" locator1="NavPill#CONTENT" value1="Content" />
 
@@ -13,7 +13,7 @@
 	<command name="addPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" value1="Add" />
 
 		<execute function="AssertClick#assertTextClickAtAddApplication" locator1="NavPill#CONTENT" value1="Content" />
 		<execute function="Type" locator1="NavBar#CONTENT_SEARCH_FIELD" value1="${assetTitle}" />

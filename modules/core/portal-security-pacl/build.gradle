@@ -6,9 +6,9 @@ dependencies {
 	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi", version: "3.10.200-SNAPSHOT"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	compile group: "org.springframework", name: "spring-aop", version: "3.2.10.RELEASE"
-	compile group: "org.springframework", name: "spring-beans", version: "3.2.10.RELEASE"
-	compile group: "org.springframework", name: "spring-web", version: "3.2.10.RELEASE"
+	compile group: "org.springframework", name: "spring-aop", version: "3.2.15.RELEASE"
+	compile group: "org.springframework", name: "spring-beans", version: "3.2.15.RELEASE"
+	compile group: "org.springframework", name: "spring-web", version: "3.2.15.RELEASE"
 
 	provided group: "com.github.jsqlparser", name: "jsqlparser", version: "0.9.3"
 }

@@ -22,10 +22,14 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 /**
  * @author Tomas Polesovsky
  */
-@ConfigurationAdmin(category = "platform")
+@ConfigurationAdmin(
+	category = "platform", factoryInstanceLabelAttribute = "urlsIncludes"
+)
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.security.auth.verifier.request.parameter.module.configuration.RequestParameterAuthVerifierConfiguration"
+	id = "com.liferay.portal.security.auth.verifier.request.parameter.module.configuration.RequestParameterAuthVerifierConfiguration",
+	localization = "content/Language",
+	name = "%request.parameter.auth.verifier.configuration.name"
 )
 public interface RequestParameterAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {

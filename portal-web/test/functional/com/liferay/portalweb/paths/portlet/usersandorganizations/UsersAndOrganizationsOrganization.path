@@ -115,32 +115,32 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_ALL_CHECKBOX</td>
-	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//input[contains(@name,'allRowIds')])</td>
+	<td>//input[@type='checkbox' and @title='Select All']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[1]//input[contains(@name,'rowIds')])[1]</td>
+	<td>//input[@type='checkbox' and @title='Select']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_FIRST_NAME_1</td>
-	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td>//div[contains(@id,'ocerSearchContainer')]//td[2]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_LAST_NAME_1</td>
-	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[3]/a)[1]</td>
+	<td>//div[contains(@id,'ocerSearchContainer')]//td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_SCREEN_NAME_1</td>
-	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[4]/a)[1]</td>
+	<td>//div[contains(@id,'ocerSearchContainer')]//td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[8]/div/a)[1]</td>
+	<td>//div[contains(@id,'ocerSearchContainer')]//td[8]//a</td>
 	<td></td>
 </tr>
 </tbody>

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -44,7 +45,7 @@ import java.util.regex.Pattern;
 public class OracleDB extends BaseDB {
 
 	public OracleDB(int majorVersion, int minorVersion) {
-		super(TYPE_ORACLE, majorVersion, minorVersion);
+		super(DBType.ORACLE, majorVersion, minorVersion);
 	}
 
 	@Override

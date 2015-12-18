@@ -1,0 +1,40 @@
+{
+  "failCount" : 0,
+  "skipCount" : 0,
+  "totalCount" : 1,
+  "urlName" : "testReport",
+  "childReports" : [
+    {
+      "child" : {
+        "number" : 7735,
+        "url" : "https://test-1-16.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizard%23HypersonicToHypersonic,label_exp=!master/7735/"
+      },
+      "result" : {
+        "duration" : 324.953,
+        "empty" : false,
+        "failCount" : 0,
+        "passCount" : 1,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 0,
+                "className" : "com.liferay.poshi.runner.PoshiRunner",
+                "duration" : 324.953,
+                "failedSince" : 0,
+                "name" : "test[SetupWizard#HypersonicToHypersonic]",
+                "skipped" : false,
+                "status" : "PASSED"
+              }
+            ],
+            "duration" : 324.953,
+            "id" : "0",
+            "name" : "com.liferay.poshi.runner.PoshiRunner",
+            "timestamp" : "2015-11-18T18:44:29"
+          }
+        ]
+      }
+    }
+  ]
+}

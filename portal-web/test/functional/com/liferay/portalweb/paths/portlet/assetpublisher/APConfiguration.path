@@ -63,12 +63,12 @@
 </tr>
 <tr>
 	<td>SOURCE_CURRENT_SCOPE_NAME</td>
-	<td>//div[contains(@id,'groupsSearchContainer')]//tr[contains(.,'Current Site (${key_siteName})')]/td[1]/span/span</td>
+	<td>//div[contains(@id,'groupsSearchContainer')]//tr[contains(.,'Current Site (${key_siteName})')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SOURCE_SCOPE_NAME</td>
-	<td>//div[contains(@id,'groupsSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]/span/span</td>
+	<td>//div[contains(@id,'groupsSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

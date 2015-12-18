@@ -23,7 +23,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration"
+	id = "com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration",
+	localization = "content/Language",
+	name = "%journal.content.portlet.instance.configuration.name"
 )
 public interface JournalContentPortletInstanceConfiguration {
 

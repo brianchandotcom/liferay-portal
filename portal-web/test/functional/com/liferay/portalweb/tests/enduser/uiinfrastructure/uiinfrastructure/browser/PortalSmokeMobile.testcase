@@ -1,6 +1,7 @@
 <definition component-name="portal-user-interface">
 	<property name="browser.type" value="android" />
 	<property name="testray.main.component.name" value="User Interface" />
+	<property name="timeout.explicit.wait" value="180" />
 
 	<set-up>
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />

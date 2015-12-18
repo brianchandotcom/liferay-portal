@@ -89,13 +89,8 @@ roleSearch.setResults(roles);
 		>
 			<liferay-ui:search-container-column-text
 				name="title"
-			>
-				<liferay-ui:icon
-					iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
-					label="<%= true %>"
-					message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-				/>
-			</liferay-ui:search-container-column-text>
+				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+			/>
 
 			<liferay-ui:search-container-column-text
 				name="type"

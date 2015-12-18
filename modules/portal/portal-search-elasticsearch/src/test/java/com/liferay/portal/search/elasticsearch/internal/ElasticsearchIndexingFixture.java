@@ -101,7 +101,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 		return new ElasticsearchFilterTranslator() {
 			{
-				setBooleanQueryTranslator(new BooleanFilterTranslatorImpl());
+				setBooleanFilterTranslator(new BooleanFilterTranslatorImpl());
 				setDateRangeTermFilterTranslator(
 					new DateRangeTermFilterTranslatorImpl());
 				setExistsFilterTranslator(new ExistsFilterTranslatorImpl());

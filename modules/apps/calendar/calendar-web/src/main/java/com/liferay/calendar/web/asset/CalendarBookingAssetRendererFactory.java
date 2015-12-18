@@ -96,11 +96,10 @@ public class CalendarBookingAssetRendererFactory
 		return TYPE;
 	}
 
-	@Deprecated
 	@Override
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			LiferayPortletResponse liferayPortletResponse, long classTypeId)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =

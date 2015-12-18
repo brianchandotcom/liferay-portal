@@ -15,7 +15,7 @@
 package com.liferay.portal.configuration.persistence;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.ReaderInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -210,7 +210,7 @@ public class ConfigurationPersistenceManager
 	}
 
 	protected String buildSQL(String sql) throws IOException {
-		DB db = DBFactoryUtil.getDB();
+		DB db = DBManagerUtil.getDB();
 
 		return db.buildSQL(sql);
 	}

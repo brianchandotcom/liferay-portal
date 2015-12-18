@@ -20,14 +20,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -229,8 +225,7 @@ public class StagedModelDataHandlerUtil {
 			stagedModelClassName, classPK);
 
 		doImportReferenceStagedModel(
-			portletDataContext, referenceElement, stagedModelClassName,
-			classPK);
+			portletDataContext, referenceElement, stagedModelClassName);
 	}
 
 	/**
@@ -282,8 +277,7 @@ public class StagedModelDataHandlerUtil {
 			referrerStagedModel, stagedModelClassName, classPK);
 
 		doImportReferenceStagedModel(
-			portletDataContext, referenceElement, stagedModelClassName,
-			classPK);
+			portletDataContext, referenceElement, stagedModelClassName);
 	}
 
 	public static void importReferenceStagedModels(
@@ -378,7 +372,7 @@ public class StagedModelDataHandlerUtil {
 
 	protected static void doImportReferenceStagedModel(
 			PortletDataContext portletDataContext, Element referenceElement,
-			String stagedModelClassName, long classPK)
+			String stagedModelClassName)
 		throws PortletDataException {
 
 		if (referenceElement == null) {
@@ -403,26 +397,7 @@ public class StagedModelDataHandlerUtil {
 			return;
 		}
 
-		if (referenceElement != null) {
-			importStagedModel(portletDataContext, referenceElement);
-
-			return;
-		}
-
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("group-id"),
-			portletDataContext.getSourceGroupId());
-
-		String stagedModelPath = ExportImportPathUtil.getModelPath(
-			groupId, stagedModelClassName, classPK);
-
-		StagedModel stagedModel =
-			(StagedModel)portletDataContext.getZipEntryAsObject(
-				stagedModelPath);
-
-		if (stagedModel != null) {
-			importStagedModel(portletDataContext, stagedModel);
-		}
+		importStagedModel(portletDataContext, referenceElement);
 	}
 
 	private static StagedModel _getReferenceStagedModel(
@@ -436,7 +411,7 @@ public class StagedModelDataHandlerUtil {
 			groupId, className, classPK);
 
 		StagedModel stagedModel =
-			(StagedModel)portletDataContext.getZipEntryAsObject(path);
+			(StagedModel)portletDataContext.getZipEntryAsObject(element, path);
 
 		if (stagedModel != null) {
 			return stagedModel;
@@ -445,49 +420,25 @@ public class StagedModelDataHandlerUtil {
 		path = ExportImportPathUtil.getCompanyModelPath(
 			portletDataContext.getSourceCompanyId(), className, classPK);
 
-		return (StagedModel)portletDataContext.getZipEntryAsObject(path);
+		return (StagedModel)portletDataContext.getZipEntryAsObject(
+			element, path);
 	}
 
 	private static StagedModel _getStagedModel(
 		PortletDataContext portletDataContext, Element element) {
 
 		StagedModel stagedModel = null;
-		Attribute classNameAttribute = null;
 
 		String elementName = element.getName();
 
 		if (elementName.equals("reference")) {
 			stagedModel = _getReferenceStagedModel(portletDataContext, element);
-
-			Element referenceStagedModelElement =
-				portletDataContext.getImportDataElement(stagedModel);
-
-			if (referenceStagedModelElement != null) {
-				classNameAttribute = referenceStagedModelElement.attribute(
-					"class-name");
-			}
 		}
 		else {
 			String path = element.attributeValue("path");
 
 			stagedModel = (StagedModel)portletDataContext.getZipEntryAsObject(
 				element, path);
-
-			classNameAttribute = element.attribute("class-name");
-		}
-
-		if ((classNameAttribute != null) &&
-			(stagedModel instanceof TypedModel)) {
-
-			String className = classNameAttribute.getValue();
-
-			if (Validator.isNotNull(className)) {
-				long classNameId = PortalUtil.getClassNameId(className);
-
-				TypedModel typedModel = (TypedModel)stagedModel;
-
-				typedModel.setClassNameId(classNameId);
-			}
 		}
 
 		return stagedModel;

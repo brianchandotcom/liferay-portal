@@ -57,11 +57,12 @@ public class SyncFileService {
 		String checksum = FileUtil.getChecksum(filePath);
 		String name = String.valueOf(filePath.getFileName());
 		String mimeType = Files.probeContentType(filePath);
+		long size = Files.size(filePath);
 
 		SyncFile syncFile = addSyncFile(
-			null, checksum, null, filePath.toString(), mimeType, name, folderId,
-			repositoryId, SyncFile.STATE_SYNCED, syncAccountId,
-			SyncFile.TYPE_FILE, true);
+			null, checksum, true, null, filePath.toString(), mimeType, name,
+			folderId, repositoryId, size, SyncFile.STATE_SYNCED, syncAccountId,
+			SyncFile.TYPE_FILE);
 
 		// Remote sync file
 
@@ -86,10 +87,10 @@ public class SyncFileService {
 		String name = String.valueOf(filePath.getFileName());
 
 		SyncFile syncFile = addSyncFile(
-			null, null, null, filePath.toString(),
+			null, null, false, null, filePath.toString(),
 			Files.probeContentType(filePath), name, parentFolderId,
-			repositoryId, SyncFile.STATE_SYNCED, syncAccountId,
-			SyncFile.TYPE_FOLDER, false);
+			repositoryId, 0, SyncFile.STATE_SYNCED, syncAccountId,
+			SyncFile.TYPE_FOLDER);
 
 		// Remote sync file
 
@@ -100,10 +101,10 @@ public class SyncFileService {
 	}
 
 	public static SyncFile addSyncFile(
-			String changeLog, String checksum, String description,
-			String filePathName, String mimeType, String name,
-			long parentFolderId, long repositoryId, int state,
-			long syncAccountId, String type, boolean createChecksums)
+			String changeLog, String checksum, boolean createChecksums,
+			String description, String filePathName, String mimeType,
+			String name, long parentFolderId, long repositoryId, long size,
+			int state, long syncAccountId, String type)
 		throws Exception {
 
 		SyncFile syncFile = new SyncFile();
@@ -124,6 +125,7 @@ public class SyncFileService {
 		syncFile.setName(name);
 		syncFile.setParentFolderId(parentFolderId);
 		syncFile.setRepositoryId(repositoryId);
+		syncFile.setSize(size);
 		syncFile.setState(state);
 		syncFile.setSyncAccountId(syncAccountId);
 		syncFile.setType(type);
@@ -200,11 +202,12 @@ public class SyncFileService {
 		String checksum = FileUtil.getChecksum(filePath);
 		String name = String.valueOf(filePath.getFileName());
 		String mimeType = Files.probeContentType(filePath);
+		long size = Files.size(filePath);
 
 		SyncFile targetSyncFile = addSyncFile(
-			null, checksum, null, filePath.toString(), mimeType, name, folderId,
-			repositoryId, SyncFile.STATE_SYNCED, syncAccountId,
-			SyncFile.TYPE_FILE, false);
+			null, checksum, false, null, filePath.toString(), mimeType, name,
+			folderId, repositoryId, size, SyncFile.STATE_SYNCED, syncAccountId,
+			SyncFile.TYPE_FILE);
 
 		IODeltaUtil.copyChecksums(sourceSyncFile, targetSyncFile);
 
@@ -740,6 +743,7 @@ public class SyncFileService {
 		syncFile.setChecksum(targetChecksum);
 		syncFile.setFilePathName(filePath.toString());
 		syncFile.setName(name);
+		syncFile.setSize(Files.size(filePath));
 
 		update(syncFile);
 

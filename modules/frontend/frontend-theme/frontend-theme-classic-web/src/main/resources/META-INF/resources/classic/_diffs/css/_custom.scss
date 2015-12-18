@@ -1,4 +1,3 @@
-@import "custom_responsive";
 @import "portlet_decorator";
 
 $bg-color: #F5F7F8;
@@ -13,134 +12,190 @@ body {
 	margin-right: 15px;
 }
 
-.form-control {
-	background-color: transparent;
-}
-
-.navbar-blank > li {
-	& > a {
-		color: $solid-color;
-	}
-
-	&:hover, &.hover, &.active, .dropdown-menu .active {
-		& > a {
-			color: #000;
-		}
-	}
-}
-
-#navigation .input-container {
-	position: relative;
-}
-
 #wrapper {
 	padding: 0;
+}
 
-	#banner {
-		position: relative;
+#banner {
+	padding: 20px 0;
+	position: relative;
 
-		a:active, a:hover, a:focus {
-			text-decoration: none;
+	a:active, a:hover, a:focus {
+		text-decoration: none;
+	}
+
+	.portlet-topper {
+		z-index: 1;
+	}
+
+	.navbar-toggle {
+		margin: 12px;
+	}
+
+	#heading .site-name {
+		color: $solid-color;
+		font-size: 150%;
+		letter-spacing: 2px;
+		margin-left: 20px;
+		vertical-align: middle;
+	}
+
+	#navigationCollapse {
+		@include media-query(null, $screen-xs-max) {
+			font-size: 125%;
 		}
 
-		#heading .site-name {
-			color: $solid-color;
-			font-size: 150%;
-			letter-spacing: 2px;
-			margin-left: 20px;
-			vertical-align: middle;
-		}
-
-		.portlet-topper {
-			z-index: 1;
-		}
-
-		.navbar-toggle {
-			margin: 12px;
-		}
-
-		.navbar-form {
-			@include sm {
-				margin-left: 30px;
+		#navigation {
+			.input-container {
+				position: relative;
 			}
 
-			.form-control {
-				border-bottom-width: 1px;
-				border-color: #D6DCE2;
-				margin-top: 2px;
-			}
-
-			.search-select {
-				margin-right: 40px;
-				padding-right: 20px;
-			}
-
-			.field-wrapper {
-				position: absolute;
-				right: 0;
-				top: 0;
-
-				.search-button {
-					background-color: transparent;
-					border-width: 0;
-					margin-top: 0;
-
-					.lfr-btn-label {
-						display: none;
-					}
+			.portlet {
+				&, .portlet-body > .navbar {
+					margin-bottom: 0;
 				}
 			}
 		}
 
-		.user-personal-bar {
-			@include sm {
-				position: absolute;
-				right: 20px;
-				top: 0;
+		.nav > li > a {
+			@include media-query(null, $screen-xs-max) {
+				border-bottom: 1px solid #E1E1E1;
+			}
+		}
+
+		.navbar-blank > li {
+			& > a {
+				color: $solid-color;
 			}
 
-			.sign-in > a, .user-avatar-link {
+			&:hover, &.hover, &.active, .dropdown-menu .active {
+				& > a {
+					color: #000;
+				}
+			}
+		}
+	}
+
+	.navbar-form {
+		@include sm {
+			margin-left: 30px;
+		}
+
+		.input-text-wrapper {
+			@include media-query(null, $screen-xs-max) {
 				display: block;
-				line-height: 28px;
-				padding: 8px 4px 14px 14px;
 			}
+		}
 
-			.user-avatar-image {
-				background-size: auto 32px;
-				border-radius: 50%;
-				display: inline-block;
-				height: 32px;
-				overflow: hidden;
-				vertical-align: text-bottom;
-				width: 32px;
-			}
+		.form-control {
+			background-color: transparent;
+			border-bottom-width: 1px;
+			border-color: #D6DCE2;
+			margin-top: 2px;
+		}
+
+		.search-select {
+			margin-right: 40px;
+			padding-right: 20px;
+		}
+
+		.search-input {
+			font-size: 16px;
+			padding-right: 40px;
 
 			@include sm {
-				.icon-caret-down, .user-full-name {
+				height: auto;
+				max-width: 200px;
+			}
+		}
+
+		.field-wrapper {
+			position: absolute;
+			right: 0;
+			top: 0;
+
+			.search-button {
+				background-color: transparent;
+				border-width: 0;
+				margin-top: 0;
+
+				.lfr-btn-label {
 					display: none;
 				}
+
+				@include media-query(null, $screen-xs-max) {
+					padding: 0 14px;
+				}
 			}
 		}
 	}
 
-	#content .row {
-		margin-left: -15px;
-		margin-right: -15px;
-	}
-
-	.portlet-layout {
-		min-height: 500px;
-	}
-
-	#footer {
-		background-color: $solid-color;
-		color: #FFF;
-		margin-bottom: 60px;
-		padding: 40px 20px;
-
-		a {
-			color: #FFF;
+	.user-personal-bar {
+		@include sm {
+			position: absolute;
+			right: 20px;
+			top: 0;
 		}
+
+		.sign-in > a, .user-avatar-link {
+			display: block;
+			line-height: 28px;
+			padding: 8px 4px 14px 14px;
+		}
+
+		.user-avatar-image {
+			background-size: auto 32px;
+			border-radius: 50%;
+			display: inline-block;
+			height: 32px;
+			overflow: hidden;
+			vertical-align: text-bottom;
+			width: 32px;
+		}
+
+		.user-full-name {
+			@include sm {
+				display: none;
+			}
+		}
+	}
+
+	.lfr-nav-item .lfr-nav-child-toggle, .user-personal-bar .icon-caret-down {
+		line-height: 28px;
+		margin-top: -14px;
+		padding-left: 15px;
+		padding-right: 15px;
+		position: absolute;
+		right: 4px;
+		top: 50%;
+
+		@include sm {
+			display: none;
+		}
+	}
+
+	@include sm {
+		padding: 40px 0 30px;
+	}
+}
+
+#content .row {
+	margin-left: -15px;
+	margin-right: -15px;
+}
+
+#main-content > .portlet-layout {
+	min-height: 500px;
+}
+
+#footer {
+	background-color: $solid-color;
+	color: #FFF;
+	margin-bottom: 60px;
+	padding: 40px 20px;
+
+	a {
+		color: #FFF;
 	}
 }
 
@@ -149,14 +204,10 @@ body {
 	top: 22px;
 }
 
-.add-page-editor {
-	margin-top: 20px 0;
-
-	.btn {
-		padding: 3px 10px;
+.display-style-buttons > .dropdown > .dropdown-menu {
+	&:after, &:before {
+		@include media-query(null, $screen-xs-max) {
+			border-width: 0;
+		}
 	}
-}
-
-.lfr-portlet-title-editable .btn {
-	padding: 3px 10px;
 }

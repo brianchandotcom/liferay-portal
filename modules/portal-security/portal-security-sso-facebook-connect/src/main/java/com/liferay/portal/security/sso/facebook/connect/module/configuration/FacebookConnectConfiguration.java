@@ -23,7 +23,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.security.sso.facebook.connect.module.configuration.FacebookConnectConfiguration"
+	id = "com.liferay.portal.security.sso.facebook.connect.module.configuration.FacebookConnectConfiguration",
+	localization = "content/Language",
+	name = "%facebook.connect.configuration.name"
 )
 public interface FacebookConnectConfiguration {
 

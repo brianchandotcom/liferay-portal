@@ -23,7 +23,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "collaboration")
 @Meta.OCD(
-	id = "com.liferay.wiki.configuration.WikiPortletInstanceConfiguration"
+	id = "com.liferay.wiki.configuration.WikiPortletInstanceConfiguration",
+	localization = "content/Language",
+	name = "%wiki.portlet.instance.configuration.name"
 )
 public interface WikiPortletInstanceConfiguration {
 

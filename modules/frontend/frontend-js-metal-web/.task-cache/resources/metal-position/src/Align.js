@@ -58,24 +58,44 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', 'meta
 			var left = 0;
 
 			switch (position) {
-				case Align.Top:
+				case Align.TopCenter:
 					top = r1.top - r2.height;
 					left = r1.left + r1.width / 2 - r2.width / 2;
 					break;
 
-				case Align.Right:
+				case Align.RightCenter:
 					top = r1.top + r1.height / 2 - r2.height / 2;
 					left = r1.left + r1.width;
 					break;
 
-				case Align.Bottom:
+				case Align.BottomCenter:
 					top = r1.bottom;
 					left = r1.left + r1.width / 2 - r2.width / 2;
 					break;
 
-				case Align.Left:
+				case Align.LeftCenter:
 					top = r1.top + r1.height / 2 - r2.height / 2;
 					left = r1.left - r2.width;
+					break;
+
+				case Align.TopRight:
+					top = r1.top - r2.height;
+					left = r1.right - r2.width;
+					break;
+
+				case Align.BottomRight:
+					top = r1.bottom;
+					left = r1.right - r2.width;
+					break;
+
+				case Align.BottomLeft:
+					top = r1.bottom;
+					left = r1.left;
+					break;
+
+				case Align.TopLeft:
+					top = r1.top - r2.height;
+					left = r1.left;
 					break;
 			}
 
@@ -90,7 +110,7 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', 'meta
 		};
 
 		Align.isValidPosition = function isValidPosition(val) {
-			return 0 <= val && val <= 3;
+			return 0 <= val && val <= 8;
 		};
 
 		Align.suggestAlignBestRegion = function suggestAlignBestRegion(element, alignElement, position) {
@@ -102,7 +122,7 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', 'meta
 
 			var viewportRegion = _Position2.default.getRegion(window);
 
-			for (var i = 0; i < 4;) {
+			for (var i = 0; i < 8;) {
 				if (_Position2.default.intersectRegion(viewportRegion, tryRegion)) {
 					var visibleRegion = _Position2.default.intersection(viewportRegion, tryRegion);
 
@@ -119,7 +139,7 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', 'meta
 					}
 				}
 
-				tryPosition = (position + ++i) % 4;
+				tryPosition = (position + ++i) % 8;
 				tryRegion = this.getAlignRegion(element, alignElement, tryPosition);
 			}
 
@@ -132,10 +152,18 @@ define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', 'meta
 		return Align;
 	})();
 
-	Align.Top = 0;
-	Align.Right = 1;
-	Align.Bottom = 2;
-	Align.Left = 3;
+	Align.TopCenter = 0;
+	Align.TopRight = 1;
+	Align.RightCenter = 2;
+	Align.BottomRight = 3;
+	Align.BottomCenter = 4;
+	Align.BottomLeft = 5;
+	Align.LeftCenter = 6;
+	Align.TopLeft = 7;
+	Align.Top = Align.TopCenter;
+	Align.Right = Align.RightCenter;
+	Align.Bottom = Align.BottomCenter;
+	Align.Left = Align.LeftCenter;
 	exports.default = Align;
 });
 //# sourceMappingURL=Align.js.map

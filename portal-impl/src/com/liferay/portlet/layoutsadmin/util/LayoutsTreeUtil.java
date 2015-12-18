@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -208,13 +207,6 @@ public class LayoutsTreeUtil {
 				_paginateLayouts(
 					request, groupId, privateLayout, parentLayoutId, layouts,
 					treeId)) {
-
-			boolean hide = GetterUtil.getBoolean(
-				layout.getTypeSettingsProperty("hide"));
-
-			if (hide) {
-				continue;
-			}
 
 			LayoutTreeNode layoutTreeNode = new LayoutTreeNode(layout);
 

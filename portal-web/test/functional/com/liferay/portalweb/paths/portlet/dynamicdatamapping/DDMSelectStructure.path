@@ -47,12 +47,12 @@
 <!--DDM_STRUCTURE_TABLE-->
 <tr>
 	<td>DDM_STRUCTURE_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_ddlDataDefinitionName}')]//td[contains(@class,'entry-action')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//tr[contains(.,'${key_ddlDataDefinitionName}')]//td[contains(@class,'entry-action')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_ELLIPSIS_1</td>
-	<td>xpath=(//td[contains(@class,'entry-action')]//span[contains(@class,'icon-ellipsis-vertical')])[1]</td>
+	<td>xpath=(//td[contains(@class,'entry-action')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')])[1]</td>
 	<td></td>
 </tr>
 <tr>

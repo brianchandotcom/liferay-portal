@@ -56,8 +56,7 @@
 		<actions>
 			<notification>
 				<name>Review Completion Notification</name>
-				<template>
-					Your submission was reviewed and the reviewer has applied the following ${taskComments}.</template>
+				<template>Your submission was reviewed and the reviewer has applied the following ${taskComments}.</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients>

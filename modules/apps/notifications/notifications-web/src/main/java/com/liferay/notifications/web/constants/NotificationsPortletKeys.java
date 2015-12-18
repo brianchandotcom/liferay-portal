@@ -19,9 +19,6 @@ package com.liferay.notifications.web.constants;
  */
 public class NotificationsPortletKeys {
 
-	public static final String DOCKBAR_NOTIFICATIONS =
-		"com_liferay_notifications_web_portlet_DockbarNotificationsPortlet";
-
 	public static final String NOTIFICATIONS =
 		"com_liferay_notifications_web_portlet_NotificationsPortlet";
 

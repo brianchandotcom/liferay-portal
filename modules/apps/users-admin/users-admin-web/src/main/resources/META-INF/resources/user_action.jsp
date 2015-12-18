@@ -74,14 +74,12 @@ long userId = user2.getUserId();
 		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, user2.getGroup(), Layout.class.getName(), PortletProvider.Action.EDIT);
 
 		managePagesURL.setParameter("redirect", redirect);
-		managePagesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
 		<liferay-ui:icon
 			iconCssClass="icon-copy"
 			message="manage-pages"
 			url="<%= managePagesURL.toString() %>"
-			useDialog="<%= true %>"
 		/>
 	</c:if>
 

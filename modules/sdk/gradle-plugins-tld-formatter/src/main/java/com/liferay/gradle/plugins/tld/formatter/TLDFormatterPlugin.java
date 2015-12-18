@@ -20,6 +20,8 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -32,22 +34,15 @@ public class TLDFormatterPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addTLDFormatterConfiguration(project);
+		Configuration tldFormatterConfiguration = addConfigurationTLDFormatter(
+			project);
 
-		addFormatTLDTask(project);
+		addTaskFormatTLD(project);
+
+		configureTasksFormatTLD(project, tldFormatterConfiguration);
 	}
 
-	protected FormatTLDTask addFormatTLDTask(Project project) {
-		FormatTLDTask formatTLDTask = GradleUtil.addTask(
-			project, FORMAT_TLD_TASK_NAME, FormatTLDTask.class);
-
-		formatTLDTask.setDescription(
-			"Runs Liferay TLD Formatter to format files.");
-
-		return formatTLDTask;
-	}
-
-	protected Configuration addTLDFormatterConfiguration(
+	protected Configuration addConfigurationTLDFormatter(
 		final Project project) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -63,7 +58,7 @@ public class TLDFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Configuration configuration) {
-					addTLDFormatterDependencies(project);
+					addDependenciesTLDFormatter(project);
 				}
 
 			});
@@ -71,10 +66,44 @@ public class TLDFormatterPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addTLDFormatterDependencies(Project project) {
+	protected void addDependenciesTLDFormatter(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.tld.formatter", "latest.release");
+	}
+
+	protected FormatTLDTask addTaskFormatTLD(Project project) {
+		FormatTLDTask formatTLDTask = GradleUtil.addTask(
+			project, FORMAT_TLD_TASK_NAME, FormatTLDTask.class);
+
+		formatTLDTask.setDescription(
+			"Runs Liferay TLD Formatter to format files.");
+
+		return formatTLDTask;
+	}
+
+	protected void configureTaskFormatTLDClasspath(
+		FormatTLDTask formatTLDTask, FileCollection fileCollection) {
+
+		formatTLDTask.setClasspath(fileCollection);
+	}
+
+	protected void configureTasksFormatTLD(
+		Project project, final Configuration tldFormatterConfiguration) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			FormatTLDTask.class,
+			new Action<FormatTLDTask>() {
+
+				@Override
+				public void execute(FormatTLDTask formatTLDTask) {
+					configureTaskFormatTLDClasspath(
+						formatTLDTask, tldFormatterConfiguration);
+				}
+
+			});
 	}
 
 }

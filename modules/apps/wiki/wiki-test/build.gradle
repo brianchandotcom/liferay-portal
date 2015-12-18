@@ -2,6 +2,7 @@ dependencies {
 	testCompile project(":apps:export-import:export-import-api")
 	testCompile project(":apps:export-import:export-import-service")
 	testCompile project(":apps:wiki:wiki-service")
+	testCompile project(":apps:wiki:wiki-web")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.1"
 }

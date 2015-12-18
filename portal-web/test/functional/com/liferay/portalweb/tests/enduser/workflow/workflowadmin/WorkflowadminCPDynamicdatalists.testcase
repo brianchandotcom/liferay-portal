@@ -95,9 +95,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-		</execute>
+		<execute macro="DDLRecord#submitForPublication" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
@@ -171,6 +169,129 @@
 		</execute>
 	</command>
 
+	<command name="EditDDLRecordViaMyWorkflowTasks" priority="4">
+		<description message="This is a use case for LPS-61212." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListName" value="DDL List Name" />
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+			<var name="ddlListName" value="DDL List Name" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="DDL Record 1" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#submitForPublication" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+			<var name="ddlListName" value="DDL List Name" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="DDL Record 2" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#submitForPublication" />
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+			<var name="workflowAssetTitle" value="New Data Definition Name for List: DDL List Name" />
+			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+			<var name="workflowAssetContent" value="DDL Record" />
+			<var name="workflowAssetTitle" value="New Data Definition Name for List: DDL List Name" />
+			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#gotoPreviewEdit" />
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="DDL Record Edit" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#save" />
+
+		<execute macro="DDLRecord#viewEditPreview">
+			<var name="ddlRecordFieldDataEdit" value="DDL Record Edit" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+			<var name="workflowAssetContent" value="DDL Record Edit" />
+			<var name="workflowAssetTitle" value="New Data Definition Name for List: DDL List Name" />
+			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+	</command>
+
 	<command name="RejectDynamicdatalistCP" priority="5">
 		<property name="portal.acceptance" value="true" />
 
@@ -236,9 +357,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishCP">
-			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-		</execute>
+		<execute macro="DDLRecord#submitForPublication" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />

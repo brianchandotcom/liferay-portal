@@ -17,11 +17,13 @@
 <%@ include file="/html/taglib/aui/icon/init.jsp" %>
 
 <liferay-util:buffer var="iconContent">
-	<svg class="lexicon-icon lexicon-icon-<%= image %>" role="img" title="<%= image %>">
+	<svg class="lexicon-icon lexicon-icon-<%= image %>" role="img" title="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(request, label)) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#<%= image %>" />
 	</svg>
 
-	<liferay-ui:message key="<%= label %>" />
+	<span class="taglib-icon-label">
+		<liferay-ui:message key="<%= label %>" />
+	</span>
 </liferay-util:buffer>
 
 <c:choose>

@@ -16,7 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.ResourceBlocksNotSupportedException;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -900,7 +900,7 @@ public class ResourceBlockLocalServiceImpl
 
 					session.clear();
 
-					DB db = DBFactoryUtil.getDB();
+					DB db = DBManagerUtil.getDB();
 
 					if (!db.isSupportsQueryingAfterException()) {
 						DataSource dataSource =

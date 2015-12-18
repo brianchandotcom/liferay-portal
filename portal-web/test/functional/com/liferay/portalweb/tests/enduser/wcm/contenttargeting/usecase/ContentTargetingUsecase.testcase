@@ -19,16 +19,16 @@
 
 		<execute macro="Portlet#startServer" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -1061,6 +1061,15 @@
 			<var name="webContentTitle" value="Targeted Web Content Title" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Targeted Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Male Users" />
+			<var name="vocabularyName" value="User Segment" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page Name" />
@@ -1150,8 +1159,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -1260,8 +1269,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -1400,8 +1409,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -1485,8 +1494,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -1539,8 +1548,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -1593,8 +1602,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -1715,8 +1724,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -1828,8 +1837,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -1850,7 +1859,7 @@
 
 	<command name="StagingContentTargeting" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -2111,7 +2120,7 @@
 
 	<command name="StagingCTDeletions" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -2178,7 +2187,7 @@
 
 	<command name="StagingCTDisabled" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -2215,6 +2224,15 @@
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2294,7 +2312,7 @@
 
 	<command name="StagingCTEnabled" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -2330,6 +2348,15 @@
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2433,7 +2460,7 @@
 
 	<command name="StagingUncheckAppAllAndContentCTRefAllAndWC" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -2539,7 +2566,7 @@
 
 	<command name="StagingUncheckAppCTRefAllAndContentAll" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -2582,7 +2609,7 @@
 
 	<command name="StagingUncheckAppCTRefAllAndContentAT" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -2625,7 +2652,7 @@
 
 	<command name="StagingUncheckAppCTRefAllAndContentWC" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -2696,6 +2723,15 @@
 			<var name="webContentContent" value="Web Content targeted to a User Segment" />
 			<var name="webContentTitle" value="Targeted Web Content Title" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Targeted Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Female Users" />
+			<var name="vocabularyName" value="User Segment" />
+		</execute>
 	</command>
 
 	<command name="UserSegmentAddFromGlobalSiteViaCampaign" priority="4">
@@ -2764,8 +2800,8 @@
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -2773,8 +2809,8 @@
 			<var name="siteName" value="Child SiteName" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -2915,8 +2951,8 @@
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addMultipleCP">
@@ -2924,8 +2960,8 @@
 		</execute>
 
 		<for list="male,person,wcmuser" param="userScreenName">
-			<execute macro="Page#gotoCP">
-				<var name="portletName" value="Users and Organizations" />
+			<execute macro="ProductMenu#gotoControlPanelUsers">
+				<var name="portlet" value="Users and Organizations" />
 			</execute>
 
 			<execute macro="User#editPasswordCP">
@@ -2945,8 +2981,8 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#editUserGenderCP">
@@ -3055,8 +3091,8 @@
 	</command>
 
 	<command name="UserSegmentAddParentSiteCategorizationToChildSiteContent" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -3409,8 +3445,8 @@
 			<var name="preview2Text" value="Default" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -3421,8 +3457,8 @@
 			<var name="userScreenName" value="female" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
@@ -3554,8 +3590,8 @@
 			<var name="preview2Text" value="Default" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -3566,8 +3602,8 @@
 			<var name="userScreenName" value="female" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
@@ -3910,6 +3946,15 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -4064,6 +4109,15 @@
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Male Users" />
+			<var name="vocabularyName" value="User Segment" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

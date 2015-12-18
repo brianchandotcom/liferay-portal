@@ -58,12 +58,9 @@
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${subcategoryName}" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="CategoriesEditSubcategory#PROPERTIES_BAR_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CategoriesEditSubcategory#PROPERTIES_BAR" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Properties" />
+		</execute>
 
 		<execute function="Type" locator1="CategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
 		<execute function="Type" locator1="CategoriesEditSubcategory#PROPERTIES_VALUE_FIELD_DEFAULT" value1="${propertiesValueField}" />
@@ -184,6 +181,10 @@
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Properties" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="CategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
 		<execute function="AssertTextEquals" locator1="CategoriesEditSubcategory#PROPERTIES_VALUE_FIELD_DEFAULT" value1="${propertiesValueField}" />

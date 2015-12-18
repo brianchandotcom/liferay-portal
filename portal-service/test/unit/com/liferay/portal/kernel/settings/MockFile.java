@@ -35,6 +35,11 @@ public class MockFile implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
+	public String appendSuffix(String fileName, String suffix) {
+		return null;
+	}
+
+	@Override
 	public void copyDirectory(File source, File destination) {
 	}
 

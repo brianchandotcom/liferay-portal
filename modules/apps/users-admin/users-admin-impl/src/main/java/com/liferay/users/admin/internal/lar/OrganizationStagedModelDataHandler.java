@@ -320,7 +320,7 @@ public class OrganizationStagedModelDataHandler
 			String addressPath = addressElement.attributeValue("path");
 
 			Address address = (Address)portletDataContext.getZipEntryAsObject(
-				addressPath);
+				addressElement, addressPath);
 
 			address.setClassPK(importedOrganization.getOrganizationId());
 
@@ -361,7 +361,7 @@ public class OrganizationStagedModelDataHandler
 
 			EmailAddress emailAddress =
 				(EmailAddress)portletDataContext.getZipEntryAsObject(
-					emailAddressPath);
+					emailAddressElement, emailAddressPath);
 
 			emailAddress.setClassPK(importedOrganization.getOrganizationId());
 
@@ -455,8 +455,8 @@ public class OrganizationStagedModelDataHandler
 		for (Element phoneElement : phoneElements) {
 			String phonePath = phoneElement.attributeValue("path");
 
-			Phone phone = (Phone)portletDataContext.getZipEntryAsObject
-				(phonePath);
+			Phone phone = (Phone)portletDataContext.getZipEntryAsObject(
+				phoneElement, phonePath);
 
 			phone.setClassPK(importedOrganization.getOrganizationId());
 
@@ -499,7 +499,7 @@ public class OrganizationStagedModelDataHandler
 			String websitePath = websiteElement.attributeValue("path");
 
 			Website website = (Website)portletDataContext.getZipEntryAsObject(
-				websitePath);
+				websiteElement, websitePath);
 
 			website.setClassPK(importedOrganization.getOrganizationId());
 

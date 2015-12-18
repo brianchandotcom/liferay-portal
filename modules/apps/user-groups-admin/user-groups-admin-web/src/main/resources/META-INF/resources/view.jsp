@@ -56,7 +56,7 @@ if (filterManageableUserGroups) {
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="user-groups" />
+		<aui:nav-item label="user-groups" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>
@@ -90,7 +90,7 @@ if (filterManageableUserGroups) {
 
 		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
 			<liferay-frontend:management-bar-action-buttons>
-				<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteUserGroups" />
+				<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteUserGroups" label="delete" />
 			</liferay-frontend:management-bar-action-buttons>
 		</c:if>
 	</liferay-frontend:management-bar>

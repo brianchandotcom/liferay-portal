@@ -19,46 +19,43 @@ Group group = GroupLocalServiceUtil.getGroup(ruleGroup.getGroupId());
 
 String rowHREF = null;
 
-if (MDRRuleGroupPermission.contains(permissionChecker, ruleGroup, ActionKeys.UPDATE)) {
+if (MDRRuleGroupPermission.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.VIEW) && MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP)) {
 %>
 
-	<liferay-portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
-		<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+	<portlet:renderURL var="editRulesURL">
+		<portlet:param name="mvcPath" value="/view_rules.jsp" />
 		<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
-	</liferay-portlet:renderURL>
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	</portlet:renderURL>
 
 <%
-	rowHREF = editURL;
+	rowHREF = editRulesURL;
 }
 %>
 
 <liferay-ui:search-container-column-text
 	href="<%= rowHREF %>"
-	name="scope"
-	value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
-/>
-
-<liferay-ui:search-container-column-text
-	href="<%= rowHREF %>"
 	name="name"
-	value="<%= ruleGroup.getName(locale) %>"
-/>
+>
+	<strong><%= ruleGroup.getName(locale) %></strong>
+</liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
-	href="<%= rowHREF %>"
 	name="description"
 	value="<%= ruleGroup.getDescription(locale) %>"
 />
 
+<liferay-ui:search-container-column-text
+	name="scope"
+	value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
+/>
+
 <liferay-ui:search-container-column-date
-	href="<%= rowHREF %>"
 	name="modified-date"
 	value="<%= ruleGroup.getModifiedDate() %>"
 />
 
 <liferay-ui:search-container-column-jsp
-	align="right"
-	cssClass="entry-action"
+	cssClass="list-group-item-field"
 	path="/rule_group_actions.jsp"
 />

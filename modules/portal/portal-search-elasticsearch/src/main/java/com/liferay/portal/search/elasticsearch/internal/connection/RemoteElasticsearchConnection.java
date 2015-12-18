@@ -40,7 +40,7 @@ import java.util.Set;
 
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
 import org.osgi.service.component.annotations.Activate;
@@ -96,13 +96,18 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	}
 
 	@Override
-	protected Client createClient(ImmutableSettings.Builder builder) {
+	protected Client createClient(Settings.Builder builder) {
 		if (_transportAddresses.isEmpty()) {
 			throw new IllegalStateException(
 				"There must be at least one transport address");
 		}
 
-		TransportClient transportClient = new TransportClient(builder);
+		TransportClient.Builder transportClientBuilder =
+			TransportClient.builder();
+
+		transportClientBuilder.settings(builder);
+
+		TransportClient transportClient = transportClientBuilder.build();
 
 		for (String transportAddress : _transportAddresses) {
 			String[] transportAddressParts = StringUtil.split(
@@ -135,9 +140,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	}
 
 	@Override
-	protected void loadRequiredDefaultConfigurations(
-		ImmutableSettings.Builder builder) {
-
+	protected void loadRequiredDefaultConfigurations(Settings.Builder builder) {
 		builder.put(
 			"client.transport.ignore_cluster_name",
 			elasticsearchConfiguration.clientTransportIgnoreClusterName());

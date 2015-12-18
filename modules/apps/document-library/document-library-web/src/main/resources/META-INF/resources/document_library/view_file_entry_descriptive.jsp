@@ -35,22 +35,15 @@ else if (row.getObject() instanceof FileShortcut) {
 
 fileEntry = fileEntry.toEscapedModel();
 
-FileVersion fileVersion = fileEntry.getFileVersion();
-
-FileVersion latestFileVersion = fileVersion;
+FileVersion latestFileVersion = fileEntry.getFileVersion();
 
 if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 	latestFileVersion = fileEntry.getLatestFileVersion();
 }
 
-long assetClassPK = 0;
+Date modifiedDate = latestFileVersion.getModifiedDate();
 
-if (!latestFileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && (latestFileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
-	assetClassPK = latestFileVersion.getFileVersionId();
-}
-else {
-	assetClassPK = fileEntry.getFileEntryId();
-}
+String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 
 PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
@@ -59,24 +52,16 @@ rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPort
 rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 %>
 
-<liferay-ui:app-view-entry
-	assetCategoryClassName="<%= DLFileEntryConstants.getClassName() %>"
-	assetCategoryClassPK="<%= assetClassPK %>"
-	assetTagClassName="<%= DLFileEntryConstants.getClassName() %>"
-	assetTagClassPK="<%= assetClassPK %>"
-	author="<%= latestFileVersion.getUserName() %>"
-	createDate="<%= latestFileVersion.getCreateDate() %>"
-	description="<%= latestFileVersion.getDescription() %>"
-	displayStyle="descriptive"
-	latestApprovedVersion="<%= fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) ? null : fileVersion.getVersion() %>"
-	latestApprovedVersionAuthor="<%= fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) ? null : fileVersion.getUserName() %>"
-	locked="<%= fileEntry.isCheckedOut() %>"
-	markupView="lexicon"
-	modifiedDate="<%= latestFileVersion.getModifiedDate() %>"
-	shortcut="<%= fileShortcut != null %>"
-	showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"
-	status="<%= latestFileVersion.getStatus() %>"
-	title="<%= latestFileVersion.getTitle() %>"
-	url="<%= (rowURL != null) ? rowURL.toString() : null %>"
-	version="<%= latestFileVersion.getVersion() %>"
-/>
+<h5 class="text-default">
+	<liferay-ui:message arguments="<%= new String[] {latestFileVersion.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+</h5>
+
+<h4>
+	<aui:a href="<%= rowURL.toString() %>">
+		<%= latestFileVersion.getTitle() %>
+	</aui:a>
+</h4>
+
+<h5 class="text-default">
+	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+</h5>

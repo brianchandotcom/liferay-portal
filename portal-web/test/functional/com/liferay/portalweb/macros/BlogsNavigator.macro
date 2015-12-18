@@ -21,11 +21,11 @@
 	</command>
 
 	<command name="gotoConfigurationPermissionsPG">
-		<execute function="AssertClick" locator1="BasePortletConfiguration#NAVIGATION_PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="NavBar#PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="gotoConfigurationScopePG">
-		<execute function="AssertClick" locator1="BasePortletConfiguration#NAVIGATION_SCOPE" value1="Scope" />
+		<execute function="AssertClick" locator1="NavBar#SCOPE" value1="Scope" />
 	</command>
 
 	<command name="gotoConfigurationSetupPG">
@@ -165,7 +165,18 @@
 	</command>
 
 	<command name="gotoSettings">
-		<execute function="Click" locator1="Button#COG" />
+		<execute function="Pause" locator1="3000" />
+
+		<if>
+			<not>
+				<condition function="IsVisible" locator1="BlogsEditEntry#SETTINGS_SECTION" />
+			</not>
+			<then>
+				<execute function="Click" locator1="Button#COG" />
+
+				<execute function="AssertVisible" locator1="BlogsEditEntry#SETTINGS_SECTION" />
+			</then>
+		</if>
 	</command>
 
 	<command name="moveToRecycleBinCP">

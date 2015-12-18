@@ -158,14 +158,18 @@ YUI.add(
 					handleCurrentCommandSelect: function(event) {
 						var instance = this;
 
-						var xmlLog = instance.get(STR_XML_LOG);
-
 						var currentTargetAncestor = event.currentTarget.ancestor();
 
 						if (currentTargetAncestor) {
+							if (!currentTargetAncestor.hasClass('current-scope')) {
+								event.halt(true);
+							}
+
 							instance._parseCommandLog(currentTargetAncestor);
 
 							var functionLinkId = currentTargetAncestor.getData(ATTR_DATA_FUNCTION_LINK_ID);
+
+							var xmlLog = instance.get(STR_XML_LOG);
 
 							var linkedFunction = xmlLog.one('.line-group[data-functionLinkId="' + functionLinkId + '"]');
 
@@ -178,13 +182,17 @@ YUI.add(
 					handleCurrentScopeSelect: function(event) {
 						var instance = this;
 
-						var currentTarget = event.currentTarget.ancestor();
+						var currentTargetAncestor = event.currentTarget.ancestor();
 
-						event.stopPropagation();
+						if (currentTargetAncestor) {
+							if (!currentTargetAncestor.hasClass('current-scope')) {
+								event.halt(true);
+							}
 
-						instance._displayNode(currentTarget);
+							instance._displayNode(currentTargetAncestor);
 
-						instance._selectCurrentScope(currentTarget);
+							instance._selectCurrentScope(currentTargetAncestor);
+						}
 					},
 
 					handleErrorBtns: function(event) {
@@ -269,17 +277,27 @@ YUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						var lookUpScope = instance.get(STR_XML_LOG);
+						if (!currentTarget.hasClass('btn')) {
+							currentTarget = currentTarget.previous();
 
-						if (inSidebar) {
-							lookUpScope = instance.get(STR_SIDEBAR);
+							if (!inSidebar) {
+								currentTarget = currentTarget.one('.btn-collapse');
+							}
 						}
 
-						var linkId = currentTarget.getData(ATTR_DATA_BUTTON_LINK_ID);
+						if (currentTarget) {
+							var lookUpScope = instance.get(STR_XML_LOG);
 
-						var collapsibleNode = lookUpScope.one('.child-container[data-btnLinkId="' + linkId + '"]');
+							if (inSidebar) {
+								lookUpScope = instance.get(STR_SIDEBAR);
+							}
 
-						instance._toggleContainer(collapsibleNode, inSidebar);
+							var linkId = currentTarget.getData(ATTR_DATA_BUTTON_LINK_ID);
+
+							var collapsibleNode = lookUpScope.one('.child-container[data-btnLinkId="' + linkId + '"]');
+
+							instance._toggleContainer(collapsibleNode, inSidebar);
+						}
 					},
 
 					handleToggleCommandLogBtn: function(event) {
@@ -308,7 +326,7 @@ YUI.add(
 						sidebar.delegate(
 							'click',
 							A.rbind('handleToggleCollapseBtn', instance, true),
-							'.expand-toggle'
+							'.expand-toggle, .linkable.current-scope .line-container'
 						);
 
 						var logBtn = sidebar.all('.btn-command-log');
@@ -357,7 +375,7 @@ YUI.add(
 						xmlLog.delegate(
 							'click',
 							A.rbind('handleToggleCollapseBtn', instance, false),
-							'.btn-collapse, .btn-var'
+							'.btn-collapse, .btn-var, .current-scope > .line-container'
 						);
 
 						xmlLog.delegate(
@@ -645,36 +663,24 @@ YUI.add(
 							else {
 								var buffer = [];
 
-								if (scopeType === 'macro') {
-									var parameters = currentScope.all('> .line-container .child-container .name');
-									var parameterSize = parameters.size();
+								if (scopeType === 'macro' || scopeType === 'function') {
+									var increment = 2;
+									var start = 0;
+									var valueIncrement = 1;
 
-									for (var i = 0; i < parameterSize; i += 2) {
-										buffer.push(
-											A.Lang.sub(
-												TPL_PARAMETER,
-												{
-													cssClass: 'parameter-name',
-													parameter: parameters.item(i).html()
-												}
-											)
-										);
+									var paramCollection = currentScope.all('> .line-container .child-container .name');
 
-										buffer.push(
-											A.Lang.sub(
-												TPL_PARAMETER,
-												{
-													cssClass: 'parameter-value',
-													parameter: parameters.item(i + 1).html()
-												}
-											)
-										);
+									if (scopeType === 'function') {
+										increment = 1;
+										start = 1;
+										valueIncrement = 0;
+
+										paramCollection = scopeNames;
 									}
-								}
-								else if (scopeType === 'function') {
-									var parameterCount = scopeNames.size() - 1;
 
-									for (var i = 1; i <= parameterCount; i++) {
+									var limit = paramCollection.size();
+
+									for (var i = start; i < limit; i += increment) {
 										buffer.push(
 											A.Lang.sub(
 												TPL_PARAMETER,
@@ -682,15 +688,13 @@ YUI.add(
 													cssClass: 'parameter-name',
 													parameter: scopeTypes.item(i).html()
 												}
-											)
-										);
+											),
 
-										buffer.push(
 											A.Lang.sub(
 												TPL_PARAMETER,
 												{
 													cssClass: 'parameter-value',
-													parameter: scopeNames.item(i).html()
+													parameter: scopeNames.item(i + valueIncrement).html()
 												}
 											)
 										);

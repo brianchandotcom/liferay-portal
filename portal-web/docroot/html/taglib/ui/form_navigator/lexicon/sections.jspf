@@ -1,0 +1,76 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<aui:fieldset-group markupView="lexicon">
+
+	<%
+	final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
+
+	String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
+	%>
+
+	<!-- Begin fragment <%= sectionId %> -->
+
+	<aui:fieldset>
+
+		<%
+		PortalIncludeUtil.include(
+			pageContext,
+			new PortalIncludeUtil.HTMLRenderer() {
+
+				public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+					formNavigatorEntry.include(request, response);
+				}
+
+			});
+		%>
+
+	</aui:fieldset>
+
+	<!-- End fragment <%= sectionId %> -->
+
+	<%
+	for (int i = 1; i < formNavigatorEntries.size(); i++) {
+		final FormNavigatorEntry curFormNavigatorEntry = formNavigatorEntries.get(i);
+
+		sectionId = namespace + _getSectionId(curFormNavigatorEntry.getKey());
+	%>
+
+		<!-- Begin fragment <%= sectionId %> -->
+
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
+
+			<%
+			PortalIncludeUtil.include(
+				pageContext,
+				new PortalIncludeUtil.HTMLRenderer() {
+
+				public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+					curFormNavigatorEntry.include(request, response);
+				}
+
+			});
+			%>
+
+		</aui:fieldset>
+
+		<!-- End fragment <%= sectionId %> -->
+
+	<%
+	}
+	%>
+
+</aui:fieldset-group>

@@ -26,16 +26,18 @@
 Map<String, Object> data = new HashMap<String, Object>();
 
 data.put("panelURL", addURL);
+data.put("qa-id", "add");
+data.put("title", HtmlUtil.escape(LanguageUtil.get(request, "add")));
 %>
 
 <li>
-	<liferay-ui:icon
+	<aui:icon
+		cssClass="control-menu-icon"
 		data="<%= data %>"
-		iconCssClass="icon-plus icon-monospaced"
 		id="addPanel"
-		label="<%= false %>"
-		linkCssClass="control-menu-icon"
-		message="add"
+		image="plus"
+		label="add"
+		markupView="lexicon"
 		url="javascript:;"
 	/>
 </li>

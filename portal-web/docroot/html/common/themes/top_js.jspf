@@ -312,6 +312,20 @@
 
 				return filter;
 			},
+			getFilterConfig: function() {
+				var instance = this;
+
+				var filterConfig = null;
+
+				if (!instance.getCombine()) {
+					filterConfig = {
+						replaceStr: '.js' + instance.getStaticResourceURLParams(),
+						searchExp: '\\.js$'
+					}
+				}
+
+				return filterConfig;
+			},
 			getJavaScriptRootPath: function() {
 				return '<%= themeDisplay.getPathJavaScript() %>';
 			},

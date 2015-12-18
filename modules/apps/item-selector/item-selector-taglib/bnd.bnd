@@ -9,6 +9,4 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources
 Provide-Capability:\
 	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/item-selector";version:Version="1.0.0"
-Require-Capability:\
-	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/frontend";version:Version="1.0.0"
 Web-ContextPath: /item-selector-taglib

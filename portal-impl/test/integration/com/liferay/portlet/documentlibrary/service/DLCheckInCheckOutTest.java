@@ -28,21 +28,23 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.ContextUserReplace;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.FileEntryLockException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
@@ -66,8 +68,7 @@ public class DLCheckInCheckOutTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -104,8 +105,70 @@ public class DLCheckInCheckOutTest {
 	}
 
 	@Test
+	public void testAdminCancelCheckout() throws Exception {
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				TestPropsValues.getUser())) {
+
+			DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+			fileEntry = DLAppServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			Assert.assertFalse(fileEntry.isCheckedOut());
+		}
+	}
+
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
 	public void testAdminOverrideCheckout() throws Exception {
-		overrideCheckout(_authorUser, TestPropsValues.getUser(), true);
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				TestPropsValues.getUser())) {
+
+			DLAppServiceUtil.checkInFileEntry(
+				fileEntry.getFileEntryId(), false, StringPool.NULL,
+				_serviceContext);
+		}
+	}
+
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
+	public void testAdminUpdateCheckedOutFile() throws Exception {
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				TestPropsValues.getUser())) {
+
+			updateFileEntry(fileEntry.getFileEntryId());
+		}
 	}
 
 	@Test
@@ -136,6 +199,99 @@ public class DLCheckInCheckOutTest {
 		fileEntry = DLAppServiceUtil.getFileEntry(_fileEntry.getFileEntryId());
 
 		Assert.assertEquals("1.0", fileEntry.getVersion());
+	}
+
+	@Test
+	public void testCancelCheckout() throws Exception {
+		FileEntry fileEntry = createFileEntry(StringUtil.randomString());
+
+		DLAppServiceUtil.checkOutFileEntry(
+			fileEntry.getFileEntryId(), _serviceContext);
+
+		DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+		fileEntry = DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId());
+
+		Assert.assertFalse(fileEntry.isCheckedOut());
+	}
+
+	@Test
+	public void testCancelCheckoutVersion() throws Exception {
+		FileEntry fileEntry = createFileEntry(StringUtil.randomString());
+
+		DLAppServiceUtil.checkOutFileEntry(
+			fileEntry.getFileEntryId(), _serviceContext);
+
+		DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+		fileEntry = DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId());
+
+		Assert.assertEquals(
+			fileEntry.getVersion(), DLFileEntryConstants.VERSION_DEFAULT);
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testCancelCheckOutWithoutPermissionOverrideCheckout()
+		throws Exception {
+
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				_overriderUser)) {
+
+			DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+		}
+	}
+
+	@Test
+	public void testCancelCheckoutWithPermissionOverrideCheckout()
+		throws Exception {
+
+		Role role = RoleTestUtil.addRole(
+			"Overrider", RoleConstants.TYPE_REGULAR,
+			DLFileEntryConstants.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			ActionKeys.OVERRIDE_CHECKOUT);
+
+		try {
+			UserLocalServiceUtil.setRoleUsers(
+				role.getRoleId(), new long[] {_overriderUser.getUserId()});
+
+			FileEntry fileEntry = null;
+
+			try (ContextUserReplace contextUserReplacer =
+					new ContextUserReplace(_authorUser)) {
+
+				fileEntry = createFileEntry(StringUtil.randomString());
+
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntry.getFileEntryId(), _serviceContext);
+			}
+
+			try (ContextUserReplace contextUserReplacer =
+					new ContextUserReplace(_overriderUser)) {
+
+				DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+				fileEntry = DLAppServiceUtil.getFileEntry(
+					fileEntry.getFileEntryId());
+
+				Assert.assertFalse(fileEntry.isCheckedOut());
+			}
+		}
+		finally {
+			RoleLocalServiceUtil.deleteRole(role.getRoleId());
+		}
 	}
 
 	@Test
@@ -181,6 +337,67 @@ public class DLCheckInCheckOutTest {
 			fileVersion = fileEntry.getFileVersion();
 
 			getAssetEntry(fileVersion.getFileVersionId(), false);
+		}
+	}
+
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
+	public void testCheckInWithoutPermissionOverrideCheckout()
+		throws Exception {
+
+		FileEntry fileEntry = null;
+
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				_authorUser)) {
+
+			fileEntry = createFileEntry(StringUtil.randomString());
+
+			DLAppServiceUtil.checkOutFileEntry(
+				fileEntry.getFileEntryId(), _serviceContext);
+		}
+
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				_overriderUser)) {
+
+			DLAppServiceUtil.checkInFileEntry(
+				fileEntry.getFileEntryId(), false, StringUtil.randomString(),
+				_serviceContext);
+		}
+	}
+
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
+	public void testCheckInWithPermissionOverrideCheckout() throws Exception {
+		Role role = RoleTestUtil.addRole(
+			"Overrider", RoleConstants.TYPE_REGULAR,
+			DLFileEntryConstants.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			ActionKeys.OVERRIDE_CHECKOUT);
+
+		try {
+			UserLocalServiceUtil.setRoleUsers(
+				role.getRoleId(), new long[] {_overriderUser.getUserId()});
+
+			FileEntry fileEntry = null;
+
+			try (ContextUserReplace contextUserReplacer =
+					new ContextUserReplace(_authorUser)) {
+
+				fileEntry = createFileEntry(StringUtil.randomString());
+
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntry.getFileEntryId(), _serviceContext);
+			}
+
+			try (ContextUserReplace contextUserReplacer =
+					new ContextUserReplace(_overriderUser)) {
+
+				DLAppServiceUtil.checkInFileEntry(
+					fileEntry.getFileEntryId(), false, StringPool.NULL,
+					_serviceContext);
+			}
+		}
+		finally {
+			RoleLocalServiceUtil.deleteRole(role.getRoleId());
 		}
 	}
 
@@ -254,13 +471,8 @@ public class DLCheckInCheckOutTest {
 		getAssetEntry(fileVersion.getFileVersionId(), false);
 	}
 
-	@Test
-	public void testWithoutPermissionOverrideCheckout() throws Exception {
-		overrideCheckout(_authorUser, _overriderUser, false);
-	}
-
-	@Test
-	public void testWithPermissionOverrideCheckout() throws Exception {
+	@Test(expected = FileEntryLockException.MustOwnLock.class)
+	public void testUpdateWithPermissionOverrideCheckout() throws Exception {
 		Role role = RoleTestUtil.addRole(
 			"Overrider", RoleConstants.TYPE_REGULAR,
 			DLFileEntryConstants.getClassName(),
@@ -268,11 +480,32 @@ public class DLCheckInCheckOutTest {
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			ActionKeys.OVERRIDE_CHECKOUT);
 
+		RoleTestUtil.addResourcePermission(
+			role, DLFileEntryConstants.getClassName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			ActionKeys.UPDATE);
+
 		try {
 			UserLocalServiceUtil.setRoleUsers(
 				role.getRoleId(), new long[] {_overriderUser.getUserId()});
 
-			overrideCheckout(_authorUser, _overriderUser, true);
+			FileEntry fileEntry = null;
+
+			try (ContextUserReplace contextUserReplacer =
+					new ContextUserReplace(_authorUser)) {
+
+				fileEntry = createFileEntry(StringUtil.randomString());
+
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntry.getFileEntryId(), _serviceContext);
+			}
+
+			try (ContextUserReplace contextUserReplacer =
+					new ContextUserReplace(_overriderUser)) {
+
+				updateFileEntry(fileEntry.getFileEntryId());
+			}
 		}
 		finally {
 			RoleLocalServiceUtil.deleteRole(role.getRoleId());
@@ -330,77 +563,6 @@ public class DLCheckInCheckOutTest {
 		}
 
 		return assetEntry;
-	}
-
-	protected void overrideCheckout(
-			User authorUser, User overriderUser, boolean expectOverride)
-		throws Exception {
-
-		ServiceTestUtil.setUser(authorUser);
-
-		try {
-			Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
-
-			Date lastPostDate = folder.getLastPostDate();
-
-			String fileName = "OverrideCheckoutTest.txt";
-
-			FileEntry fileEntry = createFileEntry(fileName);
-
-			long fileEntryId = fileEntry.getFileEntryId();
-
-			DLAppServiceUtil.checkOutFileEntry(fileEntryId, _serviceContext);
-
-			ServiceTestUtil.setUser(overriderUser);
-
-			try {
-				DLAppServiceUtil.cancelCheckOut(fileEntryId);
-
-				Assert.assertTrue(
-					"Should not have succeeded cancel check out",
-					expectOverride);
-			}
-			catch (Exception e) {
-				Assert.assertFalse(
-					"Should not have failed cancel check out " + e,
-					expectOverride);
-			}
-
-			if (expectOverride) {
-				ServiceTestUtil.setUser(authorUser);
-
-				DLAppServiceUtil.checkOutFileEntry(
-					fileEntryId, _serviceContext);
-
-				updateFileEntry(fileEntryId, fileName);
-
-				ServiceTestUtil.setUser(overriderUser);
-			}
-
-			try {
-				DLAppServiceUtil.checkInFileEntry(
-					fileEntryId, false, StringPool.NULL, _serviceContext);
-
-				Assert.assertTrue(
-					"Should not have succeeded check in", expectOverride);
-
-				folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
-
-				Assert.assertFalse(
-					lastPostDate.after(folder.getLastPostDate()));
-
-				fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
-
-				Assert.assertEquals("1.1", fileEntry.getVersion());
-			}
-			catch (Exception e) {
-				Assert.assertFalse(
-					"Should not have failed check in " + e, expectOverride);
-			}
-		}
-		finally {
-			ServiceTestUtil.setUser(TestPropsValues.getUser());
-		}
 	}
 
 	protected FileEntry updateFileEntry(long fileEntryId) throws Exception {

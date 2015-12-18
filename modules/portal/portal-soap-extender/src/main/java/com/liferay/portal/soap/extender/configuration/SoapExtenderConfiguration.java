@@ -21,10 +21,14 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 /**
  * @author Carlos Sierra Andrés
  */
-@ConfigurationAdmin(category = "platform")
+@ConfigurationAdmin(
+	category = "platform", factoryInstanceLabelAttribute = "contextPaths"
+)
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.soap.extender.configuration.SoapExtenderConfiguration"
+	id = "com.liferay.portal.soap.extender.configuration.SoapExtenderConfiguration",
+	localization = "content/Language",
+	name = "%soap.extender.configuration.name"
 )
 public interface SoapExtenderConfiguration {
 

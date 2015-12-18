@@ -76,5 +76,7 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	META-INF/resources=tmp/META-INF/resources
+Provide-Capability:\
+	osgi.extender;osgi.extender="liferay.js";version:Version="${plugin.full.version}"
 Web-ContextPath: /frontend-js-web
 -donotcopy: (\.touch|.*_diffs.*)

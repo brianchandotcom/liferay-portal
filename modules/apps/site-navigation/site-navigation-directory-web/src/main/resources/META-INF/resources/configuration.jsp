@@ -41,8 +41,9 @@
 					<aui:option label="list-hierarchy" />
 				</aui:select>
 			</aui:fieldset>
+
 			<aui:button-row>
-				<aui:button type="submit" />
+				<aui:button cssClass="btn-lg" type="submit" />
 			</aui:button-row>
 		</aui:form>
 	</aui:col>

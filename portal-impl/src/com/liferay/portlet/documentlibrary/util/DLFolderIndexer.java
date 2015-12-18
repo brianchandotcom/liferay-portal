@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.FolderIndexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -97,13 +96,7 @@ public class DLFolderIndexer
 
 	@Override
 	protected void doDelete(DLFolder dlFolder) throws Exception {
-		Document document = new DocumentImpl();
-
-		document.addUID(CLASS_NAME, dlFolder.getFolderId());
-
-		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), dlFolder.getCompanyId(),
-			document.get(Field.UID), isCommitImmediately());
+		deleteDocument(dlFolder.getCompanyId(), dlFolder.getFolderId());
 	}
 
 	@Override
@@ -152,11 +145,9 @@ public class DLFolderIndexer
 
 		Document document = getDocument(dlFolder);
 
-		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), dlFolder.getCompanyId(), document,
-				isCommitImmediately());
-		}
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), dlFolder.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override
@@ -198,10 +189,7 @@ public class DLFolderIndexer
 					try {
 						Document document = getDocument(dlFolder);
 
-						if (document != null) {
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

@@ -8,5 +8,5 @@ dependencies {
 	testIntegrationCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "3.2.10.RELEASE"
+	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "3.2.15.RELEASE"
 }

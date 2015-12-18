@@ -1,0 +1,107 @@
+diff --git a/org/phidias/compile/BundleJavaFileObject.java b/org/phidias/compile/BundleJavaFileObject.java
+index 3b3d809..e56cbba 100644
+--- a/org/phidias/compile/BundleJavaFileObject.java
++++ b/org/phidias/compile/BundleJavaFileObject.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ /**
+  * Copyright 2012 Liferay Inc.
+  *
+@@ -20,6 +21,7 @@ import java.io.IOException;
+ import java.io.InputStream;
+ 
+ import java.net.URI;
++import java.net.URL;
+ 
+ import javax.tools.SimpleJavaFileObject;
+ 
+@@ -28,10 +30,11 @@ import javax.tools.SimpleJavaFileObject;
+  */
+ public class BundleJavaFileObject extends SimpleJavaFileObject {
+ 
+-	public BundleJavaFileObject(URI uri, String className) {
++	public BundleJavaFileObject(URI uri, String className, URL url) {
+ 		super(uri, Kind.CLASS);
+ 
+ 		_className = className;
++		this.url = url;
+ 	}
+ 
+ 	public String inferBinaryName() {
+@@ -40,7 +43,7 @@ public class BundleJavaFileObject extends SimpleJavaFileObject {
+ 
+ 	@Override
+ 	public InputStream openInputStream() throws IOException {
+-		return toUri().toURL().openStream();
++		return url.openStream();
+ 	}
+ 
+ 	@Override
+@@ -49,6 +52,7 @@ public class BundleJavaFileObject extends SimpleJavaFileObject {
+ 			toUri().toString()).concat("]");
+ 	}
+ 
++	protected URL url;
+ 	private String _className;
+ 
+ }
+\ No newline at end of file
+diff --git a/org/phidias/compile/BundleJavaManager.java b/org/phidias/compile/BundleJavaManager.java
+index 2708e8f..44b7206 100644
+--- a/org/phidias/compile/BundleJavaManager.java
++++ b/org/phidias/compile/BundleJavaManager.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ /**
+  * Copyright 2012 Liferay Inc.
+  *
+@@ -277,7 +278,7 @@ public class BundleJavaManager
+ 
+ 		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
+ 			try {
+-				return new BundleJavaFileObject(uri, className);
++				return new BundleJavaFileObject(uri, className, resourceURL);
+ 			}
+ 			catch (Exception e) {
+ 				_log.log(e);
+diff --git a/org/phidias/compile/JarJavaFileObject.java b/org/phidias/compile/JarJavaFileObject.java
+index f0cb9b5..4dd83fd 100644
+--- a/org/phidias/compile/JarJavaFileObject.java
++++ b/org/phidias/compile/JarJavaFileObject.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ /**
+  * Copyright 2012 Liferay Inc.
+  *
+@@ -34,16 +35,15 @@ public class JarJavaFileObject extends BundleJavaFileObject {
+ 	public JarJavaFileObject(
+ 		URI uri, String className, URL resourceURL, String entryName) {
+ 
+-		super(uri, className);
++		super(uri, className, resourceURL);
+ 
+-		_resourceURL = resourceURL;
+ 		_entryName = entryName;
+ 	}
+ 
+ 	@Override
+ 	public InputStream openInputStream() throws IOException {
+ 		JarURLConnection jarUrlConnection =
+-			(JarURLConnection)_resourceURL.openConnection();
++			(JarURLConnection)url.openConnection();
+ 
+ 		JarFile jarFile = jarUrlConnection.getJarFile();
+ 
+@@ -55,10 +55,9 @@ public class JarJavaFileObject extends BundleJavaFileObject {
+ 	@Override
+ 	public String toString() {
+ 		return getClass().getSimpleName().concat("[").concat(
+-			_resourceURL.toString()).concat("]");
++			url.toString()).concat("]");
+ 	}
+ 
+ 	private String _entryName;
+-	private URL _resourceURL;
+ 
+ }
+\ No newline at end of file

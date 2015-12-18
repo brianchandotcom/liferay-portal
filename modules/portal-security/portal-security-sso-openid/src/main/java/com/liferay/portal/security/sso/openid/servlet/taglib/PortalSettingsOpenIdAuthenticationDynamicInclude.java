@@ -25,11 +25,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Adds an OpenID tab to the Authentication section of the Portal Settings user
+ * interface in the Control Panel.
+ *
  * @author Stian Sigvartsen
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=open-id"},
+	property = {"portal.settings.authentication.tabs.name=openid"},
 	service = DynamicInclude.class
 )
 public class PortalSettingsOpenIdAuthenticationDynamicInclude
@@ -37,7 +40,7 @@ public class PortalSettingsOpenIdAuthenticationDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/open_id.jsp";
+		return "/com.liferay.portal.settings.web/openid.jsp";
 	}
 
 	@Override
@@ -45,6 +48,7 @@ public class PortalSettingsOpenIdAuthenticationDynamicInclude
 		return _log;
 	}
 
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.openid)",
 		unbind = "-"

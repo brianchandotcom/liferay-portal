@@ -41,11 +41,10 @@ import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.index.query.FilterBuilders;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermFilterBuilder;
+import org.elasticsearch.index.query.TermQueryBuilder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -172,16 +171,16 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			MatchAllQueryBuilder matchAllQueryBuilder =
 				QueryBuilders.matchAllQuery();
 
-			TermFilterBuilder termFilterBuilder = FilterBuilders.termFilter(
+			TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(
 				Field.ENTRY_CLASS_NAME, className);
 
-			termFilterBuilder.cache(false);
+			BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
-			QueryBuilder queryBuilder = QueryBuilders.filteredQuery(
-				matchAllQueryBuilder, termFilterBuilder);
+			boolQueryBuilder.filter(termQueryBuilder);
+			boolQueryBuilder.must(matchAllQueryBuilder);
 
 			searchResponseScroller = new SearchResponseScroller(
-				client, searchContext, queryBuilder,
+				client, searchContext, boolQueryBuilder,
 				TimeValue.timeValueSeconds(30), DocumentTypes.LIFERAY);
 
 			searchResponseScroller.prepare();

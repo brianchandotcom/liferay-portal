@@ -26,7 +26,6 @@
 	<liferay-ui:panel-container extended="<%= true %>" id="rssFeedsSettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="rssFeedsSettingsPanel" persistState="<%= true %>" title="feeds">
 			<liferay-ui:error exception="<%= ValidatorException.class %>">
-
 				<liferay-ui:message key="the-following-are-invalid-urls" />
 
 				<%
@@ -145,7 +144,7 @@
 	</liferay-ui:panel-container>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 

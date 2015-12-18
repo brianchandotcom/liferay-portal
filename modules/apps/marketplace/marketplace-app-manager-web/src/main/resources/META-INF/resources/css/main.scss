@@ -7,4 +7,25 @@
 			margin-right: 2em;
 		}
 	}
+
+	.search-container-icon {
+		height: 24px;
+		width: 24px;
+
+		img, svg {
+			height: 100%;
+			width: 100%;
+		}
+
+		svg {
+			fill: #869DAD;
+		}
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.marketplace-app-manager-portlet .search-container-icon {
+		height: 48px;
+		width: 48px;
+	}
 }

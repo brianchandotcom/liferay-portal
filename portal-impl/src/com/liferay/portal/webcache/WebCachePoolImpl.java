@@ -78,6 +78,10 @@ public class WebCachePoolImpl implements WebCachePool {
 		try {
 			obj = wci.convert(key);
 
+			if (obj == null) {
+				return null;
+			}
+
 			int timeToLive = (int)(wci.getRefreshTime() / Time.SECOND);
 
 			_portalCache.put(key, obj, timeToLive);

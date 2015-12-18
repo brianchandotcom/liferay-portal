@@ -1,0 +1,290 @@
+{
+  "failCount" : 0,
+  "skipCount" : 0,
+  "totalCount" : 27,
+  "urlName" : "testReport",
+  "childReports" : [
+    {
+      "child" : {
+        "number" : 461,
+        "url" : "https://test-1-10.liferay.com/job/test-portal-acceptance-pullrequest-batch%28ee-6.2.x%29/AXIS_VARIABLE=0,label_exp=!master/461/"
+      },
+      "result" : {
+        "duration" : 55.761,
+        "empty" : false,
+        "failCount" : 0,
+        "passCount" : 27,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.001,
+                "failedSince" : 0,
+                "name" : "testCombineLines",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.634,
+                "failedSince" : 0,
+                "name" : "testExceedMaxLineLength",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.563,
+                "failedSince" : 0,
+                "name" : "testFormatImports",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.389,
+                "failedSince" : 0,
+                "name" : "testIfClauseParentheses",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.415,
+                "failedSince" : 0,
+                "name" : "testIfClauseWhitespace",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.371,
+                "failedSince" : 0,
+                "name" : "testIncorrectClose",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.355,
+                "failedSince" : 0,
+                "name" : "testIncorrectImports1",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.463,
+                "failedSince" : 0,
+                "name" : "testIncorrectImports2",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.554,
+                "failedSince" : 0,
+                "name" : "testIncorrectLineBreaks",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.599,
+                "failedSince" : 0,
+                "name" : "testIncorrectTabs",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.524,
+                "failedSince" : 0,
+                "name" : "testIncorrectWhitespace",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.659,
+                "failedSince" : 0,
+                "name" : "testInefficientStringMethods",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.0,
+                "failedSince" : 0,
+                "name" : "testJavaTermDividers",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.43,
+                "failedSince" : 0,
+                "name" : "testLPS28266",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.417,
+                "failedSince" : 0,
+                "name" : "testLogLevels",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.461,
+                "failedSince" : 0,
+                "name" : "testMissingSerialVersionUID",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.413,
+                "failedSince" : 0,
+                "name" : "testSecureRandomNumberGeneration",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.001,
+                "failedSince" : 0,
+                "name" : "testSortAnnotations",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.507,
+                "failedSince" : 0,
+                "name" : "testSortExceptions",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.0,
+                "failedSince" : 0,
+                "name" : "testSortJavaTerms1",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.001,
+                "failedSince" : 0,
+                "name" : "testSortJavaTerms2",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.0,
+                "failedSince" : 0,
+                "name" : "testSortJavaTerms3",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.357,
+                "failedSince" : 0,
+                "name" : "testStaticFinalLog",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest",
+                "duration" : 0.384,
+                "failedSince" : 0,
+                "name" : "testUnusedImport",
+                "skipped" : false,
+                "status" : "PASSED"
+              }
+            ],
+            "duration" : 8.497999,
+            "id" : "0",
+            "name" : "TEST-com.liferay.portal.tools.sourceformatter.JavaSourceProcessorTest-mysql",
+            "timestamp" : "2015-11-18T00:48:39"
+          },
+          {
+            "cases" : [
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.SourceFormatterTest",
+                "duration" : 47.262,
+                "failedSince" : 0,
+                "name" : "testSourceFormatter",
+                "skipped" : false,
+                "status" : "PASSED"
+              }
+            ],
+            "duration" : 47.262,
+            "id" : "1",
+            "name" : "TEST-com.liferay.portal.tools.sourceformatter.SourceFormatterTest-mysql",
+            "timestamp" : "2015-11-18T00:48:48"
+          },
+          {
+            "cases" : [
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.ImportPackageTest",
+                "duration" : 0.001,
+                "failedSince" : 0,
+                "name" : "testContains",
+                "skipped" : false,
+                "status" : "PASSED"
+              },
+              {
+                "age" : 0,
+                "className" : "com.liferay.portal.tools.sourceformatter.ImportPackageTest",
+                "duration" : 0.0,
+                "failedSince" : 0,
+                "name" : "testEquals",
+                "skipped" : false,
+                "status" : "PASSED"
+              }
+            ],
+            "duration" : 0.001,
+            "id" : "2",
+            "name" : "com.liferay.portal.tools.sourceformatter.ImportPackageTest",
+            "timestamp" : "2015-11-18T00:49:36"
+          }
+        ]
+      }
+    }
+  ]
+}

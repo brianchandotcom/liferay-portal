@@ -16,106 +16,53 @@
 
 <%@ include file="/html/taglib/ui/form_navigator/init.jsp" %>
 
-<aui:fieldset-group markupView="lexicon">
-	<aui:fieldset>
-		<c:if test="<%= deprecatedCategorySections.length > 0 %>">
+<%
+List<String> filterCategoryKeys = new ArrayList<String>();
+
+for (String categoryKey : categoryKeys) {
+	List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
+
+	if (ListUtil.isNotEmpty(formNavigatorEntries)) {
+		filterCategoryKeys.add(categoryKey);
+	}
+}
+%>
+
+<c:choose>
+	<c:when test="<%= deprecatedCategorySections.length > 0 %>">
+		<%@ include file="/html/taglib/ui/form_navigator/lexicon/deprecated_sections.jspf" %>
+	</c:when>
+	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
+		<liferay-ui:tabs
+			names="<%= StringUtil.merge(filterCategoryKeys) %>"
+			refresh="<%= false %>"
+			type="tabs nav-tabs-default"
+		>
 
 			<%
-			String section = deprecatedCategorySections[0];
-
-			String sectionId = namespace + _getSectionId(section);
-			String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
+			for (String categoryKey : filterCategoryKeys) {
+				List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
 			%>
 
-			<!-- Begin fragment <%= sectionId %> -->
+				<liferay-ui:section>
+					<%@ include file="/html/taglib/ui/form_navigator/lexicon/sections.jspf" %>
+				</liferay-ui:section>
 
-			<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
+			<%
+			}
+			%>
 
-			<!-- End fragment <%= sectionId %> -->
-		</c:if>
+		</liferay-ui:tabs>
+	</c:when>
+	<c:otherwise>
 
 		<%
 		List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
 		%>
 
-		<c:if test="<%= ListUtil.isNotEmpty(formNavigatorEntries) %>">
-
-			<%
-			final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
-
-			String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
-			%>
-
-			<!-- Begin fragment <%= sectionId %> -->
-
-			<%
-			PortalIncludeUtil.include(
-				pageContext,
-				new PortalIncludeUtil.HTMLRenderer() {
-
-					public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-						formNavigatorEntry.include(request, response);
-					}
-
-				});
-			%>
-
-			<!-- End fragment <%= sectionId %> -->
-		</c:if>
-	</aui:fieldset>
-
-	<%
-	for (int i = 1; i < deprecatedCategorySections.length; i++) {
-		String section = deprecatedCategorySections[i];
-
-		String sectionId = namespace + _getSectionId(section);
-		String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
-	%>
-
-		<!-- Begin fragment <%= sectionId %> -->
-
-		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= section %>">
-			<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
-		</aui:fieldset>
-
-		<!-- End fragment <%= sectionId %> -->
-
-	<%
-	}
-
-	List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
-
-	for (int i = 1; i < formNavigatorEntries.size(); i++) {
-		final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(i);
-
-		String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
-	%>
-
-		<!-- Begin fragment <%= sectionId %> -->
-
-		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="<%= formNavigatorEntry.getLabel(locale) %>">
-
-			<%
-			PortalIncludeUtil.include(
-				pageContext,
-				new PortalIncludeUtil.HTMLRenderer() {
-
-					public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-						formNavigatorEntry.include(request, response);
-					}
-
-				});
-			%>
-
-		</aui:fieldset>
-
-		<!-- End fragment <%= sectionId %> -->
-
-	<%
-	}
-	%>
-
-</aui:fieldset-group>
+		<%@ include file="/html/taglib/ui/form_navigator/lexicon/sections.jspf" %>
+	</c:otherwise>
+</c:choose>
 
 <c:if test="<%= showButtons %>">
 	<aui:button-row>

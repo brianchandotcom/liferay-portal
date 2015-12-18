@@ -88,12 +88,12 @@
 						<equals arg1="${database.type}" arg2="mysql" />
 						<equals arg1="${database.type}" arg2="oracle" />
 						<equals arg1="${database.type}" arg2="postgresql" />
-						<equals arg1="${database.type}" arg2="sql.server" />
+						<equals arg1="${database.type}" arg2="sqlserver" />
 						<equals arg1="${database.type}" arg2="sybase" />
 					</or>
 				</not>
 				<then>
-					<fail>Please set "database.type" to one of the following:${line.separator}db2, hypersonic, mysql, oracle, postgresql, sql.server, sybase.</fail>
+					<fail>Please set "database.type" to one of the following:${line.separator}db2, hypersonic, mysql, oracle, postgresql, sqlserver, sybase.</fail>
 				</then>
 			</if>
 		</sequential>
@@ -960,6 +960,25 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="poshi-execute">
+		<attribute name="task" />
+
+		<sequential>
+			<if>
+				<equals arg1="${test.poshi.runner.local.release}" arg2="true" />
+				<then>
+					<gradle-execute dir="modules/test/poshi-runner" task="deploy" />
+				</then>
+			</if>
+
+			<gradle-execute failonerror="false" task="@{task}">
+				<arg value="--build-file=portal-web/build-test.gradle" />
+				<arg value="-Plocal=${test.poshi.runner.local.release}" />
+				<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
+			</gradle-execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
 			<get-testcase-property property.name="app.server.bundles.size" />
@@ -1185,7 +1204,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">
 				additionalConfigurations=\
 					cluster.routing.allocation.disk.threshold_enabled: false,\
-					cluster.service.cluster.service.slow_task_logging_threshold: 600s, \
+					cluster.service.slow_task_logging_threshold: 600s, \
 					index.indexing.slowlog.threshold.index.warn: 600s,\
 					index.search.slowlog.threshold.fetch.warn: 600s,\
 					index.search.slowlog.threshold.query.warn: 600s,\
@@ -2998,9 +3017,9 @@ go]]></replacevalue>
 				<property name="test.case.attachments">
 					<![CDATA[
 						<attachments>
-							<file name="console.output" value="${testray.logs.jenkins.console}" />
-							<file name="report.html" value="${testray.logs.poshi.report}" />
-							<file name="summary.html" value="${testray.logs.poshi.summary}" />
+							<file name="Jenkins Console" value="${testray.logs.jenkins.console}" />
+							<file name="Poshi Report" value="${testray.logs.poshi.report}" />
+							<file name="Poshi Summary" value="${testray.logs.poshi.summary}" />
 						</attachments>
 					]]>
 				</property>
@@ -3009,7 +3028,7 @@ go]]></replacevalue>
 				<property name="test.case.attachments">
 					<![CDATA[
 						<attachments>
-							<file name="console.output" value="${testray.logs.jenkins.console}" />
+							<file name="Jenkins Console" value="${testray.logs.jenkins.console}" />
 						</attachments>
 					]]>
 				</property>
@@ -4917,6 +4936,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<antcall target="prepare-selenium-browser" />
 		<antcall target="prepare-selenium-database-properties" />
 		<antcall target="prepare-selenium-email-properties" />
+		<antcall target="prepare-selenium-google-properties" />
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
@@ -5066,6 +5086,15 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
+			<equals arg1="${test.save.web.page}" arg2="true" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					save.web.page=true
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -5098,6 +5127,7 @@ module.framework.properties.osgi.console=11312</echo>
 	<target name="prepare-selenium-browser">
 		<echo append="true" file="${test.ext.properties.file}">
 			browser.type=${browser.type}
+			browser.version=${browser.version}
 		</echo>
 
 		<if>
@@ -5172,7 +5202,6 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
-					selenium.desired.capabilities.version=${selenium.desired.capabilities.version}
 					selenium.remote.driver.enabled=${selenium.remote.driver.enabled}
 					selenium.remote.driver.hub=${selenium.remote.driver.hub}
 				</echo>
@@ -5665,6 +5694,35 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.5=${marketplace.email.password.5}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-google-properties">
+		<if>
+			<isset property="google.api.key" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.api.key=${google.api.key}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.id=${google.client.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.secret" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.secret=${google.client.secret}
 				</echo>
 			</then>
 		</if>
@@ -6247,11 +6305,7 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
-		<gradle-execute failonerror="false" task="writePoshiProperties">
-			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-		</gradle-execute>
+		<poshi-execute task="writePoshiProperties" />
 
 		<move file="portal-web/test.case.method.names.properties" tofile="test.case.method.names.properties" />
 
@@ -6322,11 +6376,7 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
-		<gradle-execute failonerror="false" task="writePoshiProperties">
-			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-		</gradle-execute>
+		<poshi-execute task="writePoshiProperties" />
 
 		<move file="portal-web/test.generated.properties" tofile="test.generated.properties" />
 
@@ -6618,19 +6668,11 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
-		<gradle-execute failonerror="false" task="evaluatePoshiConsole">
-			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-		</gradle-execute>
+		<poshi-execute task="evaluatePoshiConsole" />
 	</target>
 
 	<target name="run-poshi-runner">
-		<gradle-execute failonerror="false" task="runPoshi">
-			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-		</gradle-execute>
+		<poshi-execute task="runPoshi" />
 	</target>
 
 	<target name="run-poshi-validation">
@@ -6648,11 +6690,7 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
-		<gradle-execute failonerror="false" task="validatePoshi">
-			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
-		</gradle-execute>
+		<poshi-execute task="validatePoshi" />
 	</target>
 
 	<target name="run-selenium-smoke-test">

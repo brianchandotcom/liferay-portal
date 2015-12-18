@@ -1243,7 +1243,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertTextEquals" locator1="SOProfile#PROFILE_INFO_SITES_EMPTY" value1="${userName} does not belong to any sites." />
 		<execute function="AssertTextNotPresent" value1="${siteName1}" />

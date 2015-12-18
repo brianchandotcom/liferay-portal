@@ -876,13 +876,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<isset property="env.JENKINS_HOME" />
 				<then>
 					<parallel>
-						<daemons>
-							<sequential>
-								<sleep hours="1" />
-
-								<print-thread-dump jps.name="GradleWrapperMain" />
-							</sequential>
-						</daemons>
 						<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 							<args />
 							<arg value="--no-daemon" />
@@ -1494,6 +1487,24 @@ rerun your task.
 				</then>
 			</if>
 
+			<if>
+				<matches pattern="\d\.\d\.\d\d" string="${lp.version}" />
+				<then>
+					<var name="liferay.releng.public" value="false" />
+					<var name="liferay.releng.supported" value="true" />
+				</then>
+				<elseif>
+					<matches pattern="\d\.\d\.\d" string="${lp.version}" />
+					<then>
+						<var name="liferay.releng.public" value="true" />
+						<var name="liferay.releng.supported" value="false" />
+					</then>
+				</elseif>
+				<else>
+					<fail>Please set a valid value for the property "lp.version" in ${basedir}/release.properties.</fail>
+				</else>
+			</if>
+
 			<propertyselector
 				casesensitive="false"
 				delimiter="," match="sonatype.(.+)"
@@ -1543,6 +1554,8 @@ rerun your task.
 				junit.java.unit.gc=${junit.java.unit.gc}
 				liferay.home=${liferay.home}
 				liferay.portal.version=${lp.version}-SNAPSHOT
+				liferay.releng.public=${liferay.releng.public}
+				liferay.releng.supported=${liferay.releng.supported}
 				microsoft.translator.client.id=${microsoft.translator.client.id}
 				microsoft.translator.client.secret=${microsoft.translator.client.secret}
 				nodejs.npm.email=${nodejs.npm.email}

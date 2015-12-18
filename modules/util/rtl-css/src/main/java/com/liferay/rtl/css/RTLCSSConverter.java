@@ -48,13 +48,12 @@ public class RTLCSSConverter {
 	}
 
 	public RTLCSSConverter(boolean compress) {
-		CSSWriterSettings cssWriterSettings = new CSSWriterSettings(
-			ECSSVersion.CSS30, compress);
+		_cssWriterSettings = new CSSWriterSettings(ECSSVersion.CSS30, compress);
 
-		cssWriterSettings.setOptimizedOutput(compress);
-		cssWriterSettings.setRemoveUnnecessaryCode(Boolean.TRUE);
+		_cssWriterSettings.setOptimizedOutput(compress);
+		_cssWriterSettings.setRemoveUnnecessaryCode(Boolean.TRUE);
 
-		_cssWriter = new CSSWriter(cssWriterSettings);
+		_cssWriter = new CSSWriter(_cssWriterSettings);
 
 		_cssWriter.setWriteFooterText(false);
 		_cssWriter.setWriteHeaderText(false);
@@ -236,12 +235,19 @@ public class RTLCSSConverter {
 			String property = stripAsterisk(cssDeclaration.getProperty());
 
 			if (_backgroundProperties.contains(property)) {
+				resizeYui3BackgroundPosition(cssStyleRule, cssDeclaration);
+
 				convertBackgroundProperties(cssDeclaration);
+			}
+			else if (_cursorProperties.contains(property)) {
+				replaceYui3Cursors(cssStyleRule, cssDeclaration);
 			}
 			else if (_iconProperties.contains(property)) {
 				replaceIcons(cssDeclaration);
 			}
 			else if (_reverseProperties.contains(property)) {
+				resizeYui3Offset(cssStyleRule, cssDeclaration);
+
 				reverseProperty(cssDeclaration);
 			}
 			else if (_reverseValueProperties.contains(property)) {
@@ -269,7 +275,9 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void replaceIcons(CSSDeclaration cssDeclaration) {
+	protected void replace(
+		CSSDeclaration cssDeclaration, Map<String, String> replacementValues) {
+
 		CSSExpression cssExpression = cssDeclaration.getExpression();
 
 		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
@@ -278,12 +286,105 @@ public class RTLCSSConverter {
 		for (CSSExpressionMemberTermSimple cssExpressionMemberTermSimple :
 				cssExpressionMemberTermSimples) {
 
-			String replacementValue = _replacementIcons.get(
+			String replacementValue = replacementValues.get(
 				cssExpressionMemberTermSimple.getValue());
 
 			if (replacementValue != null) {
 				cssExpressionMemberTermSimple.setValue(replacementValue);
 			}
+		}
+	}
+
+	protected void replaceIcons(CSSDeclaration cssDeclaration) {
+		replace(cssDeclaration, _replacementIcons);
+	}
+
+	protected void replaceYui3Cursors(
+		CSSStyleRule cssStyleRule, CSSDeclaration cssDeclaration) {
+
+		String selector = cssStyleRule.getSelectorsAsCSSString(
+			_cssWriterSettings, 0);
+
+		if (selector.contains(_YUI3_RESIZE_HANDLE)) {
+			replace(cssDeclaration, _yui3ReplacementCursors);
+		}
+	}
+
+	protected void resizeYui3BackgroundPosition(
+		CSSStyleRule cssStyleRule, CSSDeclaration cssDeclaration) {
+
+		String selector = cssStyleRule.getSelectorsAsCSSString(
+			_cssWriterSettings, 0);
+
+		String property = cssDeclaration.getProperty();
+
+		Matcher matcher = _yui3ResizeHandleInnerPattern.matcher(selector);
+
+		if (!property.equals("background-position")) {
+			return;
+		}
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		CSSExpression cssExpression = cssDeclaration.getExpression();
+
+		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
+			cssExpression.getAllSimpleMembers();
+
+		if (selector.endsWith("bl")) {
+			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple1 =
+				cssExpressionMemberTermSimples.get(0);
+
+			cssExpressionMemberTermSimple1.setValue("-30px");
+		}
+		else if (selector.endsWith("br")) {
+			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple1 =
+				cssExpressionMemberTermSimples.get(0);
+
+			cssExpressionMemberTermSimple1.setValue("-75px");
+		}
+		else if (selector.endsWith("tl")) {
+			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple1 =
+				cssExpressionMemberTermSimples.get(0);
+
+			cssExpressionMemberTermSimple1.setValue("-58px");
+		}
+		else if (selector.endsWith("tr")) {
+			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple1 =
+				cssExpressionMemberTermSimples.get(0);
+
+			cssExpressionMemberTermSimple1.setValue("-47px");
+		}
+
+		CSSExpressionMemberTermSimple cssExpressionMemberTermSimple2 =
+			cssExpressionMemberTermSimples.get(1);
+
+		cssExpressionMemberTermSimple2.setValue("0");
+	}
+
+	protected void resizeYui3Offset(
+		CSSStyleRule cssStyleRule, CSSDeclaration cssDeclaration) {
+
+		String selector = cssStyleRule.getSelectorsAsCSSString(
+			_cssWriterSettings, 0);
+
+		Matcher matcher = _yui3ResizeHandleInnerPattern.matcher(selector);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		CSSExpression cssExpression = cssDeclaration.getExpression();
+
+		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
+			cssExpression.getAllSimpleMembers();
+
+		for (CSSExpressionMemberTermSimple cssExpressionMemberTermSimple :
+				cssExpressionMemberTermSimples) {
+
+			cssExpressionMemberTermSimple.setValue("2px");
 		}
 	}
 
@@ -322,9 +423,8 @@ public class RTLCSSConverter {
 		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
 			cssExpression.getAllSimpleMembers();
 
-		if (cssExpressionMemberTermSimples.size() > 0) {
-			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple =
-				cssExpressionMemberTermSimples.get(0);
+		for (CSSExpressionMemberTermSimple cssExpressionMemberTermSimple :
+				cssExpressionMemberTermSimples) {
 
 			String value = cssExpressionMemberTermSimple.getValue();
 
@@ -345,8 +445,12 @@ public class RTLCSSConverter {
 		return property.replaceAll("\\**\\b", "");
 	}
 
+	private static final String _YUI3_RESIZE_HANDLE = ".yui3-resize-handle";
+
 	private static final List<String> _backgroundProperties = Arrays.asList(
 		"background", "background-image", "background-position");
+	private static final List<String> _cursorProperties = Arrays.asList(
+		"cursor");
 	private static final List<String> _iconProperties = Arrays.asList(
 		"content");
 	private static final Pattern _percentOrLengthPattern = Pattern.compile(
@@ -374,6 +478,10 @@ public class RTLCSSConverter {
 	private static final List<String> _shorthandRadiusProperties =
 		Arrays.asList(
 			"-moz-border-radius", "-webkit-border-radius", "border-radius");
+	private static final Map<String, String> _yui3ReplacementCursors =
+		new HashMap<>();
+	private static final Pattern _yui3ResizeHandleInnerPattern =
+		Pattern.compile("\\.yui3-resize-handle-inner-(tr|tl|br|bl)");
 
 	static {
 		_replacementIcons.put("\"\\f053\"", "\"\\f054\"");
@@ -394,8 +502,16 @@ public class RTLCSSConverter {
 		_replacementIcons.put("\"\\f138\"", "\"\\f137\"");
 		_replacementIcons.put("\"\\f177\"", "\"\\f178\"");
 		_replacementIcons.put("\"\\f178\"", "\"\\f177\"");
+
+		_yui3ReplacementCursors.put("e-resize", "w-resize");
+		_yui3ReplacementCursors.put("w-resize", "e-resize");
+		_yui3ReplacementCursors.put("ne-resize", "nw-resize");
+		_yui3ReplacementCursors.put("nw-resize", "ne-resize");
+		_yui3ReplacementCursors.put("se-resize", "sw-resize");
+		_yui3ReplacementCursors.put("sw-resize", "se-resize");
 	}
 
 	private final CSSWriter _cssWriter;
+	private final CSSWriterSettings _cssWriterSettings;
 
 }

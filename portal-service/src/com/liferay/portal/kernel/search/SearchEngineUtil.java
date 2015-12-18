@@ -71,7 +71,7 @@ public class SearchEngineUtil {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (isIndexReadOnly()) {
+		if (isIndexReadOnly() || (document == null)) {
 			return;
 		}
 
@@ -163,6 +163,12 @@ public class SearchEngineUtil {
 			for (long companyId : _companyIds.keySet()) {
 				searchEngine.backup(companyId, backupName);
 			}
+		}
+	}
+
+	public static void commit(String searchEngineId) throws SearchException {
+		for (long companyId : _companyIds.keySet()) {
+			commit(searchEngineId, companyId);
 		}
 	}
 
@@ -597,7 +603,7 @@ public class SearchEngineUtil {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (isIndexReadOnly()) {
+		if (isIndexReadOnly() || (document == null)) {
 			return;
 		}
 
@@ -898,7 +904,7 @@ public class SearchEngineUtil {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (isIndexReadOnly()) {
+		if (isIndexReadOnly() || (document == null)) {
 			return;
 		}
 

@@ -52,7 +52,6 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, recurrence);
 <aui:fieldset cssClass='<%= "taglib-input-repeat " + cssClass %>'>
 	<aui:col id="eventsContainer" width="<%= 25 %>">
 		<aui:field-wrapper label="repeat" name="recurrenceType">
-
 			<aui:input checked="<%= recurrenceType == Recurrence.NO_RECURRENCE %>" id="recurrenceTypeNever" label="never" name="recurrenceType" type="radio" value="<%= Recurrence.NO_RECURRENCE %>" />
 
 			<aui:input checked="<%= recurrenceType == Recurrence.DAILY %>" id="recurrenceTypeDaily" label="daily" name="recurrenceType" type="radio" value="<%= Recurrence.DAILY %>" />

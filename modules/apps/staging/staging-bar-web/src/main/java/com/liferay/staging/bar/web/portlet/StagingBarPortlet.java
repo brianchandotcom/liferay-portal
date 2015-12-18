@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.Release;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutRevisionLocalService;
 import com.liferay.portal.service.LayoutSetBranchLocalService;
@@ -36,7 +37,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.staging.bar.web.portlet.constants.StagingBarPortletKeys;
-import com.liferay.staging.bar.web.upgrade.StagingBarWebUpgrade;
 
 import java.io.IOException;
 
@@ -258,9 +258,11 @@ public class StagingBarPortlet extends MVCPortlet {
 		_layoutSetLocalService = layoutSetLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setStagingBarWebUpgrade(
-		StagingBarWebUpgrade stagingBarWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.staging.bar.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	protected void unsetLayoutRevisionLocalService(

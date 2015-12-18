@@ -50,7 +50,14 @@ AUI.add(
 			},
 
 			_useDialog: function(event) {
-				Liferay.Util.openInDialog(event, event.currentTarget);
+				Liferay.Util.openInDialog(
+					event,
+					{
+						dialogIframe: {
+							bodyCssClass: 'dialog-with-footer'
+						}
+					}
+				);
 			}
 		};
 

@@ -89,7 +89,7 @@
 	<td></td>
 </tr>
 <tr>
- 	<td>DISPLAY_DATE_YEAR</td>
+	<td>DISPLAY_DATE_YEAR</td>
 	<td>//input[contains(@id,'displayDateYear')]</td>
 	<td></td>
 </tr>
@@ -175,12 +175,12 @@
 </tr>
 <tr>
 	<td>INTEREST_PAID</td>
-	<td>//div[label[contains(.,'Interest Paid')]]//input[@type='text']</td>
+	<td>//input[@type='text' and contains(@name,'interestPaid')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INTEREST_RATE</td>
-	<td>//div[label[contains(.,'Interest Rate')]]//input[@type='text']</td>
+	<td>//input[@type='text' and contains(@name,'interestRate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -220,7 +220,7 @@
 </tr>
 <tr>
 	<td>LOAN_AMOUNT</td>
-	<td>//div[label[contains(.,'Loan Amount')]]//input[@type='text']</td>
+	<td>//input[@type='text' and contains(@name,'loanAmount')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -275,7 +275,7 @@
 </tr>
 <tr>
 	<td>MONTHLY_PAYMENT</td>
-	<td>//div[label[contains(.,'Monthly Payment')]]//input[@type='text']</td>
+	<td>//input[@type='text' and contains(@name,'monthlyPayment')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -375,7 +375,7 @@
 </tr>
 <tr>
 	<td>SEARCH</td>
-	<td>//input[@title='Search']</td>
+	<td>//input[@title='Search'] | //*[@data-qa-id='searchInput']</td>
 	<td></td>
 </tr>
 <tr>
@@ -445,7 +445,7 @@
 </tr>
 <tr>
 	<td>TOTAL_PAID</td>
-	<td>//div[label[contains(.,'Total Paid')]]//input[@type='input']</td>
+	<td>//input[@type='text' and contains(@name,'totalPaid')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -485,7 +485,7 @@
 </tr>
 <tr>
 	<td>YEARS</td>
-	<td>//div[label[contains(.,'Years')]]//input[@type='text']</td>
+	<td>//input[@type='text' and contains(@name,'years')]</td>
 	<td></td>
 </tr>
 <tr>

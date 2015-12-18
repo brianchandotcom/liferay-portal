@@ -1,6 +1,6 @@
 <definition>
 	<command name="removeReferencePG">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" value1="Edit" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#EDIT" value1="Edit" />
 
 		<execute macro="Dockbar#showEditField">
 			<var name="fieldKey" value="${fieldKey}" />
@@ -13,13 +13,13 @@
 	</command>
 
 	<command name="viewDisabledPG">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" value1="Edit" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#EDIT" value1="Edit" />
 
 		<execute function="AssertTextNotPresent" locator1="SitePagesEditPage#EMBEDDED_PORTLETS_PANEL_TOGGLE" value1="Embedded Portlets" />
 	</command>
 
 	<command name="viewPG">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" value1="Edit" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#EDIT" value1="Edit" />
 
 		<execute macro="Dockbar#showEditField">
 			<var name="fieldKey" value="${fieldKey}" />

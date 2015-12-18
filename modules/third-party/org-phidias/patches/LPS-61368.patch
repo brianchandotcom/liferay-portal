@@ -1,0 +1,45 @@
+diff --git a/org/phidias/compile/BundleJavaFileObject.java b/org/phidias/compile/BundleJavaFileObject.java
+index 3d4f4a1..7a4943e 100644
+--- a/org/phidias/compile/BundleJavaFileObject.java
++++ b/org/phidias/compile/BundleJavaFileObject.java
+@@ -34,6 +34,15 @@ public class BundleJavaFileObject extends SimpleJavaFileObject {
+ 
+ 		_className = className;
+ 		this.url = url;
++
++		int index = className.lastIndexOf('.');
++
++		if (index >= 0) {
++			_simpleName = className.substring(index + 1);
++		}
++		else {
++			_simpleName = className;
++		}
+ 	}
+ 
+ 	public String inferBinaryName() {
+@@ -41,6 +50,16 @@ public class BundleJavaFileObject extends SimpleJavaFileObject {
+ 	}
+ 
+ 	@Override
++	public boolean isNameCompatible(String simpleName, Kind kind) {
++		if ((kind == Kind.CLASS) && _simpleName.equals(simpleName)) {
++			return true;
++		}
++
++		return false;
++	}
++
++
++	@Override
+ 	public InputStream openInputStream() throws IOException {
+ 		return url.openStream();
+ 	}
+@@ -53,5 +72,6 @@ public class BundleJavaFileObject extends SimpleJavaFileObject {
+ 
+ 	protected URL url;
+ 	private String _className;
++	private String _simpleName;
+ 
+ }
+\ No newline at end of file

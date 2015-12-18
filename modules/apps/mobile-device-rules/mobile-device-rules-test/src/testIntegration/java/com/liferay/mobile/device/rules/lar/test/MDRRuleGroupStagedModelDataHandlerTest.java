@@ -30,6 +30,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -73,6 +74,21 @@ public class MDRRuleGroupStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return MDRRuleGroup.class;
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		MDRRuleGroup ruleGroup = (MDRRuleGroup)stagedModel;
+		MDRRuleGroup importedRuleGroup = (MDRRuleGroup)importedStagedModel;
+
+		Assert.assertEquals(ruleGroup.getName(), importedRuleGroup.getName());
+		Assert.assertEquals(
+			ruleGroup.getDescription(), importedRuleGroup.getDescription());
 	}
 
 }

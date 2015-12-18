@@ -99,6 +99,12 @@
 	<bean id="com.liferay.portal.service.PortletPreferencesService" class="com.liferay.portal.service.impl.PortletPreferencesServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.PortletPreferencesPersistence" class="com.liferay.portal.service.persistence.impl.PortletPreferencesPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.persistence.PortletPreferencesFinder" class="com.liferay.portal.service.persistence.impl.PortletPreferencesFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.RecentLayoutBranchLocalService" class="com.liferay.portal.service.impl.RecentLayoutBranchLocalServiceImpl" />
+	<bean id="com.liferay.portal.service.persistence.RecentLayoutBranchPersistence" class="com.liferay.portal.service.persistence.impl.RecentLayoutBranchPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.RecentLayoutRevisionLocalService" class="com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl" />
+	<bean id="com.liferay.portal.service.persistence.RecentLayoutRevisionPersistence" class="com.liferay.portal.service.persistence.impl.RecentLayoutRevisionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.RecentLayoutSetBranchLocalService" class="com.liferay.portal.service.impl.RecentLayoutSetBranchLocalServiceImpl" />
+	<bean id="com.liferay.portal.service.persistence.RecentLayoutSetBranchPersistence" class="com.liferay.portal.service.persistence.impl.RecentLayoutSetBranchPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.RegionService" class="com.liferay.portal.service.impl.RegionServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.RegionPersistence" class="com.liferay.portal.service.persistence.impl.RegionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ReleaseLocalService" class="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" />
@@ -255,6 +261,7 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLSyncEventPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLSyncEventPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.documentlibrary.service.DLTrashService" class="com.liferay.portlet.documentlibrary.service.impl.DLTrashServiceImpl" />
 	<bean id="com.liferay.portlet.expando.service.ExpandoColumnLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl" />
 	<bean id="com.liferay.portlet.expando.service.ExpandoColumnService" class="com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl" />
 	<bean id="com.liferay.portlet.expando.service.persistence.ExpandoColumnPersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoColumnPersistenceImpl" parent="basePersistence" />

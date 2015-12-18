@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceFinalizer;
-import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistrar;
 import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
@@ -129,48 +127,32 @@ public abstract class AbstractMessagingConfigurator
 
 	@Override
 	public void destroy() {
-		disconnect();
+		if (_messageListenerServiceRegistrar != null) {
+			_messageListenerServiceRegistrar.destroy();
+		}
 
-		_messageBusEventListeners.clear();
+		if (_destinationEventListenerServiceRegistrar != null) {
+			_destinationEventListenerServiceRegistrar.destroy();
+		}
+
+		if (_destinationServiceRegistrar != null) {
+			_destinationServiceRegistrar.destroy();
+		}
 
 		if (_messageBusEventListenerServiceRegistrar != null) {
 			_messageBusEventListenerServiceRegistrar.destroy();
 		}
 
 		_destinationConfigurations.clear();
-
-		_destinations.clear();
-
-		if (_destinationServiceRegistrar != null) {
-			_destinationServiceRegistrar.destroy(
-				new ServiceFinalizer<Destination>() {
-
-					@Override
-					public void finalize(
-						ServiceReference<Destination> serviceReference,
-						Destination destination) {
-
-						destination.close();
-
-						destination.removeDestinationEventListeners();
-
-						destination.unregisterMessageListeners();
-					}
-
-				});
-		}
-
+		_destinationEventListeners.clear();
 		_messageListeners.clear();
 
-		if (_messageListenerServiceRegistrar != null) {
-			_messageListenerServiceRegistrar.destroy();
+		for (Destination destination : _destinations) {
+			destination.destroy();
 		}
 
-		_destinationEventListeners.clear();
-
-		if (_destinationEventListenerServiceRegistrar != null) {
-			_destinationEventListenerServiceRegistrar.destroy();
-		}
+		_destinations.clear();
+		_messageBusEventListeners.clear();
 
 		ClassLoader operatingClassLoader = getOperatingClassloader();
 

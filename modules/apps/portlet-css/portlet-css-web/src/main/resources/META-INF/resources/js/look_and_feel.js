@@ -65,6 +65,8 @@ AUI.add(
 
 		var LINE_HEIGHT = 'lineHeight';
 
+		var LOOK_AND_FEEL_NS = '_com_liferay_portlet_css_web_portlet_PortletCSSPortlet_';
+
 		var NORMAL = 'normal';
 
 		var OK = 'ok';
@@ -141,6 +143,34 @@ AUI.add(
 											visibleChange: function(event) {
 												instance._destroyColorPickers();
 											}
+										},
+										toolbars: {
+											footer: [
+												{
+													cssClass: 'btn-primary btn-lg',
+													id: Liferay.Util.ns(LOOK_AND_FEEL_NS, 'lfr-lookfeel-save'),
+													label: Liferay.Language.get('save')
+												},
+												{
+													cssClass: 'btn-lg',
+													id: Liferay.Util.ns(LOOK_AND_FEEL_NS, 'lfr-lookfeel-reset'),
+													label: Liferay.Language.get('reset')
+												}
+											],
+											header: [
+												{
+													cssClass: 'close',
+													discardDefaultButtonCssClasses: true,
+													labelHTML: '<span> \u00D7 </span>',
+													on: {
+														click: function(event) {
+															instance._currentPopup.hide();
+
+															event.domEvent.stopPropagation();
+														}
+													}
+												}
+											]
 										}
 									},
 									title: Liferay.Language.get('look-and-feel')
@@ -892,7 +922,9 @@ AUI.add(
 			_getNodeById: function(id) {
 				var instance = this;
 
-				return A.one('#_com_liferay_portlet_css_web_portlet_PortletCSSPortlet_' + id);
+				var nsId = '#' + Liferay.Util.ns(LOOK_AND_FEEL_NS, id);
+
+				return A.one(nsId);
 			},
 
 			_getSafeInteger: function(input) {

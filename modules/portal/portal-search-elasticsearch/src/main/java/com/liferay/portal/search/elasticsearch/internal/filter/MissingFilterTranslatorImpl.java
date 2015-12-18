@@ -17,9 +17,9 @@ package com.liferay.portal.search.elasticsearch.internal.filter;
 import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.search.elasticsearch.filter.MissingFilterTranslator;
 
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.FilterBuilders;
-import org.elasticsearch.index.query.MissingFilterBuilder;
+import org.elasticsearch.index.query.MissingQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Component;
 public class MissingFilterTranslatorImpl implements MissingFilterTranslator {
 
 	@Override
-	public FilterBuilder translate(MissingFilter missingFilter) {
-		MissingFilterBuilder missingFilterBuilder =
-			FilterBuilders.missingFilter(missingFilter.getField());
+	public QueryBuilder translate(MissingFilter missingFilter) {
+		MissingQueryBuilder missingQueryBuilder = QueryBuilders.missingQuery(
+			missingFilter.getField());
 
 		if (missingFilter.isExists() != null) {
 			missingFilter.setExists(missingFilter.isExists());
@@ -42,7 +42,7 @@ public class MissingFilterTranslatorImpl implements MissingFilterTranslator {
 			missingFilter.setNullValue(missingFilter.isNullValue());
 		}
 
-		return missingFilterBuilder;
+		return missingQueryBuilder;
 	}
 
 }

@@ -48,8 +48,8 @@
 		<var name="userName" value="Test Test" />
 		<var name="userScreenName" value="test1" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Audit Reports" />
 		</execute>
 
 		<execute macro="Audit#searchCP">
@@ -58,8 +58,8 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Audit Reports" />
 		</execute>
 
 		<execute macro="Audit#searchCP">
@@ -67,8 +67,8 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Audit Reports" />
 		</execute>
 
 		<execute macro="Audit#searchCP">
@@ -77,8 +77,8 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Audit Reports" />
 		</execute>
 
 		<execute macro="Audit#searchCP">
@@ -87,8 +87,8 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Audit Reports" />
 		</execute>
 
 		<execute macro="Audit#searchCP">
@@ -109,8 +109,8 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Audit Reports" />
 		</execute>
 
 		<var name="key_resourceAction" value="${resourceAction2}" />
@@ -118,8 +118,8 @@
 
 		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction2}" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -129,8 +129,8 @@
 			<var name="userScreenName" value="test1" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#impersonateCP">
@@ -140,8 +140,8 @@
 		<execute function="Close" locator1="title=Welcome - Liferay" />
 		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Audit Reports" />
 		</execute>
 
 		<var name="key_resourceAction" value="${resourceAction3}" />
@@ -149,24 +149,24 @@
 
 		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction3}" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
 		</execute>
 
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
 			<var name="userScreenName" value="test1" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="User Groups" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="User Groups" />
 		</execute>
 
 		<execute macro="UserGroup#addCP">
@@ -178,8 +178,8 @@
 			<var name="userScreenName" value="test1" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Audit Reports" />
 		</execute>
 
 		<var name="key_resourceAction" value="${resourceAction4}" />

@@ -56,7 +56,7 @@ if (step == 1) {
 }
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="selectOrganizationRoleFm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectOrganizationRoleFm">
 	<c:choose>
 		<c:when test="<%= step == 1 %>">
 			<aui:input name="organizationId" type="hidden" />
@@ -136,7 +136,7 @@ if (step == 1) {
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator />
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 
 			<aui:script sandbox="<%= true %>">
@@ -277,7 +277,7 @@ if (step == 1) {
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator />
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 		</c:when>
 	</c:choose>

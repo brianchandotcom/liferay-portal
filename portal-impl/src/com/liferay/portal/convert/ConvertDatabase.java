@@ -16,7 +16,7 @@ package com.liferay.portal.convert;
 
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -84,7 +84,7 @@ public class ConvertDatabase extends BaseConvertProcess {
 
 		Dialect dialect = DialectDetector.getDialect(dataSource);
 
-		DB db = DBFactoryUtil.getDB(dialect, dataSource);
+		DB db = DBManagerUtil.getDB(dialect, dataSource);
 
 		List<String> modelNames = ModelHintsUtil.getModels();
 

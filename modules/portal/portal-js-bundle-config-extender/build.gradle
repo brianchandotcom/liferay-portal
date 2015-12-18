@@ -6,7 +6,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compile project(":apps:configuration-admin:configuration-admin-api")
 
-	provided group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "2.4.1"
 	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 	provided group: "org.json", name: "json", version: "20140107"
 }

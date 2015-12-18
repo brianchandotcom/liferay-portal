@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_VIEW_COUNT</td>
+	<td>//label[contains(.,'Enable View Count')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_VIEW_COUNT_INCREMENT</td>
 	<td>//label[contains(.,'Enable View Count Increment')]/input[@type='checkbox']</td>
 	<td></td>
@@ -196,6 +201,11 @@
 <tr>
 	<td>HISTORY_ENABLED</td>
 	<td>//label[contains(.,'History Enabled')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LEXICON_SELECT_ALL</td>
+	<td>//div[contains(@class,'collapse on')]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -250,7 +260,12 @@
 </tr>
 <tr>
 	<td>SELECT_ALL</td>
-	<td>//input[contains(@id,'allRowIds') or contains(@name,'allRowIds')]</td>
+	<td>//*[@data-qa-id='selectAllCheckbox'] | //input[contains(@id,'allRowIds') or contains(@name,'allRowIds') or contains(@class,'select-all-checkboxes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ALL_NOTIFICATIONS</td>
+	<td>//input[contains(@id,'notifications') and contains(@class,'select-all')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -295,7 +310,7 @@
 </tr>
 <tr>
 	<td>SITE_OWNER</td>
-	<td>xpath=(//input[contains(@name,'rowIds')])[2]</td>
+	<td>//tr[contains(.,'Site Owner')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

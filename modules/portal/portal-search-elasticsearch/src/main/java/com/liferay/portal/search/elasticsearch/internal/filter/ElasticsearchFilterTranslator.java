@@ -45,7 +45,7 @@ import com.liferay.portal.search.elasticsearch.filter.RangeTermFilterTranslator;
 import com.liferay.portal.search.elasticsearch.filter.TermFilterTranslator;
 import com.liferay.portal.search.elasticsearch.filter.TermsFilterTranslator;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,84 +58,84 @@ import org.osgi.service.component.annotations.Reference;
 	service = FilterTranslator.class
 )
 public class ElasticsearchFilterTranslator
-	implements FilterTranslator<FilterBuilder>, FilterVisitor<FilterBuilder> {
+	implements FilterTranslator<QueryBuilder>, FilterVisitor<QueryBuilder> {
 
 	@Override
-	public FilterBuilder translate(Filter filter, SearchContext searchContext) {
+	public QueryBuilder translate(Filter filter, SearchContext searchContext) {
 		return filter.accept(this);
 	}
 
 	@Override
-	public FilterBuilder visit(BooleanFilter booleanFilter) {
-		return _booleanQueryTranslator.translate(booleanFilter, this);
+	public QueryBuilder visit(BooleanFilter booleanFilter) {
+		return _booleanFilterTranslator.translate(booleanFilter, this);
 	}
 
 	@Override
-	public FilterBuilder visit(DateRangeTermFilter dateRangeTermFilter) {
+	public QueryBuilder visit(DateRangeTermFilter dateRangeTermFilter) {
 		return _dateRangeTermFilterTranslator.translate(dateRangeTermFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(ExistsFilter existsFilter) {
+	public QueryBuilder visit(ExistsFilter existsFilter) {
 		return _existsFilterTranslator.translate(existsFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(GeoBoundingBoxFilter geoBoundingBoxFilter) {
+	public QueryBuilder visit(GeoBoundingBoxFilter geoBoundingBoxFilter) {
 		return _geoBoundingBoxFilterTranslator.translate(geoBoundingBoxFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(GeoDistanceFilter geoDistanceFilter) {
+	public QueryBuilder visit(GeoDistanceFilter geoDistanceFilter) {
 		return _geoDistanceFilterTranslator.translate(geoDistanceFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(GeoDistanceRangeFilter geoDistanceRangeFilter) {
+	public QueryBuilder visit(GeoDistanceRangeFilter geoDistanceRangeFilter) {
 		return _geoDistanceRangeFilterTranslator.translate(
 			geoDistanceRangeFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(GeoPolygonFilter geoPolygonFilter) {
+	public QueryBuilder visit(GeoPolygonFilter geoPolygonFilter) {
 		return _geoPolygonFilterTranslator.translate(geoPolygonFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(MissingFilter missingFilter) {
+	public QueryBuilder visit(MissingFilter missingFilter) {
 		return _missingFilterTranslator.translate(missingFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(PrefixFilter prefixFilter) {
+	public QueryBuilder visit(PrefixFilter prefixFilter) {
 		return _prefixFilterTranslator.translate(prefixFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(QueryFilter queryFilter) {
+	public QueryBuilder visit(QueryFilter queryFilter) {
 		return _queryFilterTranslator.translate(queryFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(RangeTermFilter rangeTermFilter) {
+	public QueryBuilder visit(RangeTermFilter rangeTermFilter) {
 		return _rangeTermFilterTranslator.translate(rangeTermFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(TermFilter termFilter) {
+	public QueryBuilder visit(TermFilter termFilter) {
 		return _termFilterTranslator.translate(termFilter);
 	}
 
 	@Override
-	public FilterBuilder visit(TermsFilter termsFilter) {
+	public QueryBuilder visit(TermsFilter termsFilter) {
 		return _termsFilterTranslator.translate(termsFilter);
 	}
 
 	@Reference(unbind = "-")
-	protected void setBooleanQueryTranslator(
-		BooleanFilterTranslator booleanQueryTranslator) {
+	protected void setBooleanFilterTranslator(
+		BooleanFilterTranslator booleanFilterTranslator) {
 
-		_booleanQueryTranslator = booleanQueryTranslator;
+		_booleanFilterTranslator = booleanFilterTranslator;
 	}
 
 	@Reference(unbind = "-")
@@ -222,7 +222,7 @@ public class ElasticsearchFilterTranslator
 		_termsFilterTranslator = termsFilterTranslator;
 	}
 
-	private volatile BooleanFilterTranslator _booleanQueryTranslator;
+	private volatile BooleanFilterTranslator _booleanFilterTranslator;
 	private volatile DateRangeTermFilterTranslator
 		_dateRangeTermFilterTranslator;
 	private volatile ExistsFilterTranslator _existsFilterTranslator;

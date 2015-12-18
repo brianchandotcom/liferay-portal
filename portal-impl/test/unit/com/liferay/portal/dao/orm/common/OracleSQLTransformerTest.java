@@ -14,7 +14,7 @@
 
 package com.liferay.portal.dao.orm.common;
 
-import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBType;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,8 +33,8 @@ public class OracleSQLTransformerTest extends BaseSQLTransformerTestCase {
 	}
 
 	@Override
-	protected String getDBType() {
-		return DB.TYPE_ORACLE;
+	protected DBType getDBType() {
+		return DBType.ORACLE;
 	}
 
 }

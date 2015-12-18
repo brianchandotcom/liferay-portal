@@ -37,19 +37,18 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 	</portlet:renderURL>
 
 	<div class="archived-setups">
-		<liferay-ui:icon
-			iconCssClass="icon-save"
-			label="<%= true %>"
-			message="archive-restore-setup"
-			url="<%= archivedSetupsURL %>"
-		/>
+		<aui:a href="<%= archivedSetupsURL.toString() %>" label="archive-restore-setup" />
 	</div>
 </c:if>
 
-<%
-ConfigurationAction configurationAction = (ConfigurationAction)request.getAttribute(WebKeys.CONFIGURATION_ACTION);
+<div class="container-fluid-1280">
 
-if (configurationAction != null) {
-	configurationAction.include(portletConfig, request, new PipingServletResponse(pageContext));
-}
-%>
+	<%
+	ConfigurationAction configurationAction = (ConfigurationAction)request.getAttribute(WebKeys.CONFIGURATION_ACTION);
+
+	if (configurationAction != null) {
+		configurationAction.include(portletConfig, request, new PipingServletResponse(pageContext));
+	}
+	%>
+
+</div>

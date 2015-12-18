@@ -2,8 +2,8 @@
 	<command name="assignOrganizationRoleCP">
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Social Office Configurations" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Social Office Configurations" />
 		</execute>
 
 		<execute function="Click" locator1="SOConfigurations#ORGANIZATIONS" />
@@ -20,8 +20,8 @@
 	<command name="assignUserGroupRoleCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Social Office Configurations" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Social Office Configurations" />
 		</execute>
 
 		<execute function="Click" locator1="SOConfigurations#USER_GROUPS" />
@@ -37,8 +37,8 @@
 	<command name="assignUserRoleCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Social Office Configurations" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Social Office Configurations" />
 		</execute>
 
 		<execute function="Click" locator1="SOConfigurations#STATUS_AVAILABLE" />
@@ -51,8 +51,8 @@
 	</command>
 
 	<command name="disableAddSOSiteCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Social Office Configurations" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Social Office Configurations" />
 		</execute>
 
 		<execute function="AssertClick" locator1="SOConfigurations#NAVIGATION_GENERAL" value1="General" />
@@ -63,8 +63,8 @@
 	</command>
 
 	<command name="disableSOSiteTypeCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Social Office Configurations" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Social Office Configurations" />
 		</execute>
 
 		<execute function="AssertClick" locator1="SOConfigurations#NAVIGATION_GENERAL" value1="General" />
@@ -90,8 +90,8 @@
 	</command>
 
 	<command name="enableAddSOSiteCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Social Office Configurations" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Social Office Configurations" />
 		</execute>
 
 		<execute function="AssertClick" locator1="SOConfigurations#NAVIGATION_GENERAL" value1="General" />
@@ -102,8 +102,8 @@
 	</command>
 
 	<command name="enableSOSiteTypeCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Social Office Configurations" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Social Office Configurations" />
 		</execute>
 
 		<execute function="AssertClick" locator1="SOConfigurations#NAVIGATION_GENERAL" value1="General" />
@@ -140,8 +140,8 @@
 	<command name="unassignOrganizationRoleCP">
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Social Office Configurations" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Social Office Configurations" />
 		</execute>
 
 		<execute function="Click" locator1="SOConfigurations#ORGANIZATIONS" />
@@ -158,8 +158,8 @@
 	<command name="unassignUserGroupRoleCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Social Office Configurations" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Social Office Configurations" />
 		</execute>
 
 		<execute function="Click" locator1="SOConfigurations#USER_GROUPS" />
@@ -175,8 +175,8 @@
 	<command name="unassignUserRoleCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Social Office Configurations" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Social Office Configurations" />
 		</execute>
 
 		<execute function="Click" locator1="SOConfigurations#STATUS_CURRENT" />

@@ -5,4 +5,3 @@ Export-Package: com.liferay.site.my.sites.web.constants
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
-Require-SchemaVersion: 1.0.0

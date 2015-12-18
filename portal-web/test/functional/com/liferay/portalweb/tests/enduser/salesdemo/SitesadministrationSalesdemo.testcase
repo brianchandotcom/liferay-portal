@@ -41,8 +41,8 @@
 		<var name="siteNameLists" value="Site1 Name,Site2 Name,Site3 Name" />
 
 		<for list="${siteNameLists}" param="siteNameListsCount" >
-			<execute macro="Page#gotoCP">
-				<var name="portletName" value="Sites" />
+			<execute macro="ProductMenu#gotoControlPanelSites">
+				<var name="portlet" value="Sites" />
 			</execute>
 
 			<execute macro="Site#addCommunityCP">
@@ -50,18 +50,17 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Staging Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Staging Site Name" />
-			<var name="siteURL" value="true" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
+			<var name="site" value="Staging Site Name" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -71,7 +70,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteScopeName" value="Staging Site Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
@@ -90,8 +89,8 @@
 
 		<execute macro="Staging#viewStagingLocalLivePG" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addCP">
@@ -106,8 +105,8 @@
 			<var name="siteTemplate" value="Zoe Healthcare Theme" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<for list="${allSiteNameLists}" param="allSiteNameListsCount" >
@@ -131,8 +130,8 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="SiteTemplates#addCP">

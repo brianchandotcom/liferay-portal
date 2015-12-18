@@ -10,20 +10,20 @@
 
 		<var name="appName" value="Akismet" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Akismet" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Akismet" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="App Manager" />
 		</execute>
 
 		<execute macro="AppManager#uninstallAppCP">
 			<var name="appName" value="${appName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="App Manager" />
 		</execute>
 
 		<execute macro="AppManager#viewUninstallAppCP">

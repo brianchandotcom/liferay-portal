@@ -38,8 +38,8 @@
 		<var name="pageName" value="WSRP Page" />
 		<var name="producerName" value="Producer Demo" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP Admin" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addProducerCP">
@@ -47,8 +47,8 @@
 			<var name="producerName" value="${producerName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP Admin" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addConsumerCP">
@@ -56,8 +56,8 @@
 			<var name="producerName" value="${producerName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP Admin" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addConsumerPortletCP">

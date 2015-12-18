@@ -49,10 +49,21 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB_FOLDER_NAME</td>
+	<td>//ul[contains(@class,'breadcrumb')]/li/a[contains(.,'${key_folderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FOLDERS_TABLE-->
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_NAME</td>
-	<td>//div[contains(@id,'bookmarksFolder')]//tr[contains(.,'${key_folderName}')]/td[1]/a/strong</td>
+	<td>//table[contains(@class,'table-list')]//td[2]//a[contains(.,'${key_folderName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,12 +89,12 @@
 <!--BOOKMARKS_TABLE-->
 <tr>
 	<td>BOOKMARKS_TABLE_NAME</td>
-	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr[contains(.,'${key_bookmarkName}')]/td[1]/a</td>
+	<td>//table[contains(@class,'table-list')]//td[2]//a[contains(.,'${key_bookmarkName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BOOKMARKS_TABLE_URL</td>
-	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr[contains(.,'${key_bookmarkName}')]/td[2]/a</td>
+	<td>//table[contains(@class,'table-list')]//td[2]//a[contains(.,'${key_bookmarkName}')]/../../../../td[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,12 +109,28 @@
 </tr>
 <tr>
 	<td>BOOKMARKS_TABLE_VISITS</td>
-	<td>//tr[contains(.,'${key_bookmarkName}')]/td[3]</td>
+	<td>//table[contains(@class,'table-list')]//td[2]//a[contains(.,'${key_bookmarkName}')]/../../../../td[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BOOKMARK_TABLE_MODIFIED_DATE</td>
-	<td>//tr[contains(.,'${key_bookmarkName}')]/td[4]</td>
+	<td>//table[contains(@class,'table-list')]//td[2]//a[contains(.,'${key_bookmarkName}')]/../../../../td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDERS_DESCRIPTIVE-->
+<tr>
+	<td>FOLDERS_DESCRIPTIVE_ENTRY_TITLE</td>
+	<td>//li[contains(@class,'list-group-item')]//div/h5[contains(.,'${key_folderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDERS_DESCRIPTIVE_ENTRY_DESCRIPTION</td>
+	<td>//li[contains(@class,'list-group-item')]//div/h6[contains(.,'${key_folderDescription}')]</td>
 	<td></td>
 </tr>
 </tbody>

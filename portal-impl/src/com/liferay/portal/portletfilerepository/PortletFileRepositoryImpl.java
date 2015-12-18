@@ -92,6 +92,34 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	@Override
 	public FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, byte[] bytes, String fileName,
+			String mimeType, boolean indexingEnabled)
+		throws PortalException {
+
+		if (bytes == null) {
+			return null;
+		}
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile(bytes);
+
+			return addPortletFileEntry(
+				groupId, userId, className, classPK, portletId, folderId, file,
+				fileName, mimeType, indexingEnabled);
+		}
+		catch (IOException ioe) {
+			throw new SystemException("Unable to write temporary file", ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	@Override
+	public FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, File file, String fileName,
 			String mimeType, boolean indexingEnabled)
 		throws PortalException {

@@ -1,4 +1,6 @@
 ;(function() {
+	var LiferayAUI = Liferay.AUI;
+
 	var PATH_DDL_FORM_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-lists-form-web';
 
 	AUI().applyConfig(
@@ -6,6 +8,7 @@
 			groups: {
 				ddl: {
 					base: PATH_DDL_FORM_WEB + '/admin/js/',
+					filter: LiferayAUI.getFilterConfig(),
 					modules: {
 						'liferay-ddl-form-builder': {
 							path: 'form_builder.js',

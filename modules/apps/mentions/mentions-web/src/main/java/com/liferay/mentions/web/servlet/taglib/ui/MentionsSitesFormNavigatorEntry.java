@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
@@ -61,9 +63,6 @@ public class MentionsSitesFormNavigatorEntry
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 		UnicodeProperties typeSettingsProperties = null;
@@ -78,18 +77,26 @@ public class MentionsSitesFormNavigatorEntry
 		boolean groupMentionsEnabled = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("mentionsEnabled"), true);
 
-		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId(), true);
-
-		boolean companyMentionsEnabled = PrefsParamUtil.getBoolean(
-			companyPortletPreferences, request, "mentionsEnabled", true);
-
-		request.setAttribute(
-			MentionsWebKeys.COMPANY_MENTIONS_ENABLED, companyMentionsEnabled);
 		request.setAttribute(
 			MentionsWebKeys.GROUP_MENTIONS_ENABLED, groupMentionsEnabled);
 
 		super.include(request, response);
+	}
+
+	@Override
+	public boolean isVisible(User user, Object formModelBean) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		HttpServletRequest request = themeDisplay.getRequest();
+
+		PortletPreferences companyPortletPreferences =
+			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId(), true);
+
+		return PrefsParamUtil.getBoolean(
+			companyPortletPreferences, request, "mentionsEnabled", true);
 	}
 
 	@Override

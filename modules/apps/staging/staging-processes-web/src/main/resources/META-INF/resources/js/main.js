@@ -799,8 +799,6 @@ AUI.add(
 							var currentURL = instance.byId('currentURL');
 							var redirectNode = instance.byId('redirect');
 
-							debugger;
-
 							cmdNode.val(STR_EMPTY);
 							redirectNode.val(currentURL);
 

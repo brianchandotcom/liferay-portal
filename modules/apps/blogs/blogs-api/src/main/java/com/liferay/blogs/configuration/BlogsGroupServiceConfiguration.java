@@ -22,7 +22,11 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  * @author Sergio González
  */
 @ConfigurationAdmin(category = "collaboration")
-@Meta.OCD(id = "com.liferay.blogs.configuration.BlogsGroupServiceConfiguration")
+@Meta.OCD(
+	id = "com.liferay.blogs.configuration.BlogsGroupServiceConfiguration",
+	localization = "content/Language",
+	name = "%blogs.group.service.configuration.name"
+)
 public interface BlogsGroupServiceConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)

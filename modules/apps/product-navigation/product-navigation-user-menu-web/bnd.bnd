@@ -7,6 +7,4 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
-Require-Capability:\
-	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/application-list";version:Version="1.0.0"
 Web-ContextPath: /product-navigation-user-menu-web

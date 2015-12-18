@@ -15,9 +15,13 @@
 package com.liferay.marketplace.app.manager.web.util;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Version;
 
@@ -33,7 +37,13 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 	}
 
 	public SimpleAppDisplay(String title, String description, Version version) {
-		_title = title;
+		if (Validator.isNull(title)) {
+			_title = APP_TITLE_UNCATEGORIZED;
+		}
+		else {
+			_title = title;
+		}
+
 		_description = description;
 		_version = version;
 	}
@@ -57,8 +67,8 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 		return portletURL.toString();
 	}
 
-	public String getIconURL() {
-		return StringPool.BLANK;
+	public String getIconURL(HttpServletRequest request) {
+		return PortalUtil.getPathContext(request) + "/images/icons.svg#apps";
 	}
 
 	public String getTitle() {

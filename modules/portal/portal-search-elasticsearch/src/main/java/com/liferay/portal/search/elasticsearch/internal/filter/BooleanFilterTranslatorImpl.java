@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.FilterVisitor;
 import com.liferay.portal.search.elasticsearch.filter.BooleanFilterTranslator;
 
-import org.elasticsearch.index.query.BoolFilterBuilder;
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.FilterBuilders;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,49 +33,42 @@ import org.osgi.service.component.annotations.Component;
 public class BooleanFilterTranslatorImpl implements BooleanFilterTranslator {
 
 	@Override
-	public FilterBuilder translate(
+	public QueryBuilder translate(
 		BooleanFilter booleanFilter,
-		FilterVisitor<FilterBuilder> filterVisitor) {
+		FilterVisitor<QueryBuilder> filterVisitor) {
 
-		BoolFilterBuilder boolFilterBuilder = FilterBuilders.boolFilter();
-
-		if (booleanFilter.isCached() != null) {
-			boolFilterBuilder.cache(booleanFilter.isCached());
-		}
+		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
 		for (BooleanClause<Filter> booleanClause :
 				booleanFilter.getMustBooleanClauses()) {
 
-			FilterBuilder filterBuilder = translate(
-				booleanClause, filterVisitor);
+			QueryBuilder queryBuilder = translate(booleanClause, filterVisitor);
 
-			boolFilterBuilder.must(filterBuilder);
+			boolQueryBuilder.must(queryBuilder);
 		}
 
 		for (BooleanClause<Filter> booleanClause :
 				booleanFilter.getMustNotBooleanClauses()) {
 
-			FilterBuilder filterBuilder = translate(
-				booleanClause, filterVisitor);
+			QueryBuilder queryBuilder = translate(booleanClause, filterVisitor);
 
-			boolFilterBuilder.mustNot(filterBuilder);
+			boolQueryBuilder.mustNot(queryBuilder);
 		}
 
 		for (BooleanClause<Filter> booleanClause :
 				booleanFilter.getShouldBooleanClauses()) {
 
-			FilterBuilder filterBuilder = translate(
-				booleanClause, filterVisitor);
+			QueryBuilder queryBuilder = translate(booleanClause, filterVisitor);
 
-			boolFilterBuilder.should(filterBuilder);
+			boolQueryBuilder.should(queryBuilder);
 		}
 
-		return boolFilterBuilder;
+		return boolQueryBuilder;
 	}
 
-	protected FilterBuilder translate(
+	protected QueryBuilder translate(
 		BooleanClause<Filter> booleanClause,
-		FilterVisitor<FilterBuilder> filterVisitor) {
+		FilterVisitor<QueryBuilder> filterVisitor) {
 
 		Filter filter = booleanClause.getClause();
 

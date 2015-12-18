@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Product Navigation Simulation
+Bundle-SymbolicName: com.liferay.product.navigation.simulation
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.product.navigation.simulation.application.list.*
+Include-Resource: classes

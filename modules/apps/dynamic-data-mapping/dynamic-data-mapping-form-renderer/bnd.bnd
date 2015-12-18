@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package: com.liferay.dynamic.data.mapping.form.renderer
 Include-Resource:\
 	classes,\
-	META-INF=src/main/resources/META-INF
+	META-INF=src/main/resources/META-INF,\
+	META-INF/resources/content=src/main/resources/content
 JS-Config: /META-INF/resources/js/config.js
 Web-ContextPath: /dynamic-data-mapping-form-renderer

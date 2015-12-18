@@ -15,10 +15,8 @@ buildscript {
 	}
 }
 
-apply plugin: "java"
-apply plugin: "optional-base"
-
 apply plugin: "com.liferay.patcher"
+apply plugin: "nebula.optional-base"
 
 task patch(type: PatchTask)
 

@@ -10,5 +10,4 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/PropertyComparator.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class
-Require-SchemaVersion: 1.0.0
 Web-ContextPath: /search-web

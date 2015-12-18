@@ -15,11 +15,14 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.BufferedReader;
+import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Writer;
 
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -31,6 +34,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -38,6 +45,22 @@ import org.json.JSONObject;
  * @author Peter Yoo
  */
 public class JenkinsResultsParserUtil {
+
+	public static URL createURL(String urlString) throws Exception {
+		URL url = new URL(urlString);
+
+		return encode(url);
+	}
+
+	public static URL encode(URL url) throws Exception {
+		URI uri = new URI(
+			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
+			url.getPath(), url.getQuery(), url.getRef());
+
+		String uriASCIIString = uri.toASCIIString();
+
+		return new URL(uriASCIIString.replace("#", "%23"));
+	}
 
 	public static String expandSlaveRange(String value) {
 		StringBuilder sb = new StringBuilder();
@@ -121,6 +144,17 @@ public class JenkinsResultsParserUtil {
 		url = url.replace("]", "%5D");
 
 		return url;
+	}
+
+	public static String format(Element element) throws IOException {
+		Writer writer = new CharArrayWriter();
+
+		XMLWriter xmlWriter = new XMLWriter(
+			writer, OutputFormat.createPrettyPrint());
+
+		xmlWriter.write(element);
+
+		return writer.toString();
 	}
 
 	public static String getAxisVariable(JSONObject jsonObject)

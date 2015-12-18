@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.load.balancer;
 
 import com.liferay.jenkins.results.parser.BaseJenkinsResultsParserTestCase;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
 
@@ -32,14 +33,6 @@ import org.junit.Test;
  * @author Peter Yoo
  */
 public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
-
-	public LoadBalancerUtilTest() {
-		dependenciesDir = dependenciesDir.getParentFile();
-
-		dependenciesDir = new File(
-			dependenciesDir,
-			"load/balancer/dependencies/" + getSimpleClassName());
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -108,7 +101,7 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 		for (int i = 1; i <= hostNameCount; i++) {
 			downloadSampleURL(
 				new File(sampleDir, sampleDir.getName() + "-" + i),
-				createURL(
+				JenkinsResultsParserUtil.createURL(
 					project.getProperty(
 						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
 						"]")),
@@ -116,7 +109,7 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 						"[displayName,idle,offline]");
 			downloadSampleURL(
 				new File(sampleDir, sampleDir.getName() + "-" + i),
-				createURL(
+				JenkinsResultsParserUtil.createURL(
 					project.getProperty(
 						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
 						"]")),

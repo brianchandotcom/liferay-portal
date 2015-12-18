@@ -170,6 +170,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String parameterName = StringUtil.trim(
 				annotationParameters.substring(y + 1, x));
 
+			if (parameterName.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+				break;
+			}
+
 			if (Validator.isNull(previousParameterName) ||
 				(previousParameterName.compareToIgnoreCase(parameterName) <=
 					0)) {
@@ -207,6 +211,36 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, sb.toString());
 
 			return;
+		}
+	}
+
+	protected void checkDeserializationSecurity(
+		String fileName, String content, boolean isRunOutsidePortalExclusion) {
+
+		for (Pattern vulnerabilityPattern :
+				_javaSerializationVulnerabilityPatterns) {
+
+			Matcher matcher = vulnerabilityPattern.matcher(content);
+
+			if (!matcher.matches()) {
+				continue;
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			if (isRunOutsidePortalExclusion) {
+				sb.append("Possible Java Serialization Remote Code Execution ");
+				sb.append("vulnerablity using ");
+			}
+			else {
+				sb.append("Use ProtectedObjectInputStream instead of ");
+			}
+
+			sb.append(matcher.group(1));
+			sb.append(": ");
+			sb.append(fileName);
+
+			processErrorMessage(fileName, sb.toString());
 		}
 	}
 
@@ -603,6 +637,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent, new String[] {";\n/**", "\t/*\n\t *", ";;\n"},
 			new String[] {";\n\n/**", "\t/**\n\t *", ";\n"});
 
+		newContent = fixMissingEmptyLines(newContent);
+
 		while (true) {
 			Matcher matcher = _incorrectLineBreakPattern1.matcher(newContent);
 
@@ -637,10 +673,30 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			break;
 		}
 
+		Matcher matcher = _incorrectLineBreakPattern3.matcher(newContent);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			int closeParenthesesCount = StringUtil.count(
+				match, StringPool.CLOSE_PARENTHESIS);
+			int openParenthesesCount = StringUtil.count(
+				match, StringPool.OPEN_PARENTHESIS);
+
+			if (closeParenthesesCount == openParenthesesCount) {
+				String beforeMatch = newContent.substring(0, matcher.start());
+
+				int lineCount = StringUtil.count(beforeMatch, "\n") + 1;
+
+				processErrorMessage(
+					fileName, "line break: " + fileName + " " + lineCount);
+			}
+		}
+
 		newContent = formatAnnotations(
 			fileName, StringPool.BLANK, newContent, StringPool.BLANK);
 
-		Matcher matcher = _logPattern.matcher(newContent);
+		matcher = _logPattern.matcher(newContent);
 
 		if (matcher.find()) {
 			String logClassName = matcher.group(1);
@@ -856,6 +912,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);
 		}
 
+		// LPS-60358
+
+		if (!fileName.contains("/test/") &&
+			!fileName.contains("/testIntegration/") &&
+			!isExcludedFile(
+				_secureDeserializationExclusionFiles, absolutePath)) {
+
+			checkDeserializationSecurity(
+				fileName, content, isRunOutsidePortalExclusion);
+		}
+
 		// LPS-55690
 
 		if (newContent.contains("org.testng.Assert")) {
@@ -974,6 +1041,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_lineLengthExclusionFiles = getPropertyList(
 			"line.length.excludes.files");
 		_proxyExclusionFiles = getPropertyList("proxy.excludes.files");
+		_secureDeserializationExclusionFiles = getPropertyList(
+			"secure.deserialization.excluded.files");
 		_secureRandomExclusionFiles = getPropertyList(
 			"secure.random.excludes.files");
 		_secureXmlExclusionFiles = getPropertyList("secure.xml.excludes.files");
@@ -1100,6 +1169,49 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String fixMissingEmptyLines(String content) {
+		Matcher matcher = _missingEmptyLinePattern1.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			int closeParenthesesCount = StringUtil.count(
+				match, StringPool.CLOSE_PARENTHESIS);
+			int openParenthesesCount = StringUtil.count(
+				match, StringPool.OPEN_PARENTHESIS);
+
+			if (closeParenthesesCount == openParenthesesCount) {
+				content = StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start());
+			}
+		}
+
+		matcher = _missingEmptyLinePattern2.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			if (!match.contains(StringPool.OPEN_PARENTHESIS)) {
+				continue;
+			}
+
+			String whitespace = matcher.group(1);
+
+			int x = content.indexOf(
+				whitespace + StringPool.CLOSE_CURLY_BRACE + "\n",
+				matcher.end());
+			int y = content.indexOf(
+				whitespace + StringPool.CLOSE_CURLY_BRACE + "\n\n",
+				matcher.end());
+
+			if ((x != -1) && (x != y)) {
+				content = StringUtil.replaceFirst(content, "\n", "\n\n", x + 1);
+			}
+		}
+
+		return content;
+	}
+
 	protected String fixSystemExceptions(String content) {
 		if (!content.contains("SystemException")) {
 			return content;
@@ -1168,13 +1280,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (Validator.isNotNull(annotation) &&
 					annotation.contains(StringPool.OPEN_PARENTHESIS)) {
 
-					Matcher matcher = _annotationPattern.matcher(
-						"\n" + annotation);
+					Matcher matcher = _annotationPattern.matcher(annotation);
 
 					if (matcher.find()) {
 						String match = matcher.group();
-
-						match = match.substring(1);
 
 						if (!match.endsWith("\n)\n") &&
 							!match.endsWith("\t)\n")) {
@@ -1591,6 +1700,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					line, fileName, absolutePath, lineCount);
 
 				if (trimmedLine.startsWith(StringPool.EQUAL)) {
+					processErrorMessage(
+						fileName, "line break: " + fileName + " " + lineCount);
+				}
+
+				if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
 					processErrorMessage(
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
@@ -3580,7 +3694,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static final int _MAX_LINE_LENGTH = 80;
 
 	private static Pattern _annotationPattern = Pattern.compile(
-		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
+		"(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
@@ -3614,6 +3728,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private Pattern _incorrectLineBreakPattern2 = Pattern.compile(
 		"\\{\n\n\t*\\}");
+	private Pattern _incorrectLineBreakPattern3 = Pattern.compile(
+		", new .*\\(.*\\) \\{\n");
+	private Pattern[] _javaSerializationVulnerabilityPatterns = new Pattern[] {
+		Pattern.compile(
+			".*(new [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL),
+		Pattern.compile(
+			".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
+	};
 	private List<String> _javaTermAccessLevelModifierExclusionFiles;
 	private List<String> _javaTermSortExclusionFiles;
 	private Pattern _lineBreakPattern = Pattern.compile("\\}(\\)+) \\{");
@@ -3623,10 +3745,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
+	private Pattern _missingEmptyLinePattern1 = Pattern.compile(
+		"(\t| = |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
+	private Pattern _missingEmptyLinePattern2 = Pattern.compile(
+		"(\n\t*)(public|private|protected) [^;]+? \\{");
 	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
+	private List<String> _secureDeserializationExclusionFiles;
 	private List<String> _secureRandomExclusionFiles;
 	private List<String> _secureXmlExclusionFiles;
 	private Pattern _serviceUtilImportPattern = Pattern.compile(

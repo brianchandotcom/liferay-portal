@@ -109,12 +109,12 @@
 		<if>
 			<equals arg1="${browserType}" arg2="internetexplorer" />
 			<then>
-				<execute function="MouseDown#javaScriptMouseDown" locator1="Dockbar#ADD_ICON" />
+				<execute function="MouseDown#javaScriptMouseDown" locator1="ControlMenu#ADD" />
 
-				<execute function="MouseUp#javaScriptMouseUp" locator1="Dockbar#ADD_ICON" />
+				<execute function="MouseUp#javaScriptMouseUp" locator1="ControlMenu#ADD" />
 			</then>
 			<else>
-				<execute function="Click#clickAt" locator1="Dockbar#ADD_ICON" />
+				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
 			</else>
 		</if>
 
@@ -164,7 +164,7 @@
 	<command name="deletePG">
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_OPTIONS_ICON" />
+		<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_ELLIPSIS_ICON" />
 
 		<execute function="AssertClickNoError" locator1="BasePortlet#REMOVE" value1="Remove" />
 
@@ -182,7 +182,7 @@
 
 	<command name="flagAllDisplaySettingsCheckboxes">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -213,17 +213,16 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
+				<if>
+					<equals arg1="${portletName}" arg2="Navigation Menu" />
+					<then>
+						<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_ELLIPSIS_ICON" />
+					</then>
+					<else>
+						<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
+					</else>
+				</if>
 			</then>
-			<elseif>
-				<isset var="portletNameBorderless" />
-				<then>
-					<var name="key_portletName" value="${portletNameBorderless}" />
-
-					<execute function="MakeVisible" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_BAR" />
-					<execute function="Click" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
-				</then>
-			</elseif>
 			<else>
 				<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#OPTIONS_ICON" />
 			</else>
@@ -344,7 +343,7 @@
 			</elseif>
 		</if>
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" value1="Add" />
 
 		<execute function="AssertClick" locator1="NavPill#APPLICATIONS" value1="Applications" />
 		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
@@ -352,6 +351,22 @@
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 
 		<execute function="AssertElementNotPresent" locator1="${portletLocator}" />
+	</command>
+
+	<command name="viewDisplayStyles">
+		<for list="${displayStyleList}" param="displayStyle">
+			<var method="StringUtil#upperCase('${displayStyle}')" name="displayStyleUppercase" />
+
+			<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_${displayStyleUppercase}" />
+		</for>
+	</command>
+
+	<command name="viewDisplayStylesNotPresent">
+		<for list="${displayStyleList}" param="displayStyle">
+			<var method="StringUtil#upperCase('${displayStyle}')" name="displayStyleUppercase" />
+
+			<execute function="AssertElementNotPresent" locator1="Icon#DISPLAY_STYLE_${displayStyleUppercase}" />
+		</for>
 	</command>
 
 	<command name="viewDuplicatePG">
@@ -400,7 +415,7 @@
 	</command>
 
 	<command name="viewPortletOptionsMenulist">
-		<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#OPTIONS_ICON" />
 
 		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
 		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />

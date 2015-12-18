@@ -17,8 +17,8 @@ package com.liferay.portal.search.elasticsearch.internal.filter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.search.elasticsearch.filter.ExistsFilterTranslator;
 
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.FilterBuilders;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Component;
 public class ExistsFilterTranslatorImpl implements ExistsFilterTranslator {
 
 	@Override
-	public FilterBuilder translate(ExistsFilter existsFilter) {
-		return FilterBuilders.existsFilter(existsFilter.getField());
+	public QueryBuilder translate(ExistsFilter existsFilter) {
+		return QueryBuilders.existsQuery(existsFilter.getField());
 	}
 
 }

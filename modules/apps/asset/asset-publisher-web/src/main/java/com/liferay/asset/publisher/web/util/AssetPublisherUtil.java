@@ -89,6 +89,7 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
@@ -1002,10 +1003,17 @@ public class AssetPublisherUtil {
 
 		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
 
+		definitionTerms.put(
+			"[$PORTLET_NAME$]",
+			HtmlUtil.escape(
+				PortalUtil.getPortletTitle(
+					AssetPublisherPortletKeys.ASSET_PUBLISHER,
+					themeDisplay.getLocale())));
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		definitionTerms.put(
-			"[$PORTLET_NAME$]", HtmlUtil.escape(portletDisplay.getTitle()));
+			"[$PORTLET_TITLE$]", HtmlUtil.escape(portletDisplay.getTitle()));
 
 		definitionTerms.put(
 			"[$SITE_NAME$]",
@@ -1227,6 +1235,15 @@ public class AssetPublisherUtil {
 			long companyGroupId, Layout layout)
 		throws PortalException {
 
+		return isScopeIdSelectable(
+			permissionChecker, scopeId, companyGroupId, layout, true);
+	}
+
+	public static boolean isScopeIdSelectable(
+			PermissionChecker permissionChecker, String scopeId,
+			long companyGroupId, Layout layout, boolean checkPermission)
+		throws PortalException {
+
 		long groupId = getGroupIdFromScopeId(
 			scopeId, layout.getGroupId(), layout.isPrivateLayout());
 
@@ -1258,10 +1275,12 @@ public class AssetPublisherUtil {
 				return false;
 			}
 
-			return GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.UPDATE);
+			if (checkPermission) {
+				return GroupPermissionUtil.contains(
+					permissionChecker, group, ActionKeys.UPDATE);
+			}
 		}
-		else if (groupId != companyGroupId) {
+		else if ((groupId != companyGroupId) && checkPermission) {
 			return GroupPermissionUtil.contains(
 				permissionChecker, groupId, ActionKeys.UPDATE);
 		}
@@ -1312,6 +1331,8 @@ public class AssetPublisherUtil {
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+		subscriptionSender.setLocalizedPortletTitleMap(
+			PortletConfigurationUtil.getPortletTitleMap(portletPreferences));
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("asset_entry", assetEntry.getEntryId());
 		subscriptionSender.setPortletId(

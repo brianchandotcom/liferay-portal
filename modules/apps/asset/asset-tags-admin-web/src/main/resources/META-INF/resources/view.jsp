@@ -67,7 +67,7 @@ tagsSearchContainer.setResults(tags);
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="tags" />
+		<aui:nav-item label="tags" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= Validator.isNotNull(keywords) || (tagsCount > 0) %>">
@@ -107,9 +107,9 @@ tagsSearchContainer.setResults(tags);
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-random" id="mergeSelectedTags" label="merge" />
+			<liferay-frontend:management-bar-button href="javascript:;" icon="change" id="mergeSelectedTags" label="merge" />
 
-			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedTags" label="delete" />
+			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedTags" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>
@@ -131,8 +131,9 @@ tagsSearchContainer.setResults(tags);
 		>
 			<liferay-ui:search-container-column-text
 				name="name"
-				property="name"
-			/>
+			>
+				<strong><%= tag.getName() %></strong>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="usages"

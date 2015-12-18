@@ -105,7 +105,6 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 									<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
 								</c:otherwise>
 							</c:choose>
-
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text

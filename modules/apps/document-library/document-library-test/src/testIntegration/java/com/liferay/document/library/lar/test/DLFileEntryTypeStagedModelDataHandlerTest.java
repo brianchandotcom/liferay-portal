@@ -140,4 +140,22 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 			ddmStructure.getUuid(), group.getGroupId());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		DLFileEntryType dlFileEntryType = (DLFileEntryType)stagedModel;
+		DLFileEntryType importedDlFileEntryType =
+			(DLFileEntryType)importedStagedModel;
+
+		Assert.assertEquals(
+			dlFileEntryType.getName(), importedDlFileEntryType.getName());
+		Assert.assertEquals(
+			dlFileEntryType.getDescription(),
+			importedDlFileEntryType.getDescription());
+	}
+
 }

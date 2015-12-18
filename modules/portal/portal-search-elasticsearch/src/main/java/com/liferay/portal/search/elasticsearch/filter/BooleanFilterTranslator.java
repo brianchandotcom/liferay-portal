@@ -17,15 +17,14 @@ package com.liferay.portal.search.elasticsearch.filter;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.FilterVisitor;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface BooleanFilterTranslator {
 
-	public FilterBuilder translate(
-		BooleanFilter booleanFilter,
-		FilterVisitor<FilterBuilder> filterVisitor);
+	public QueryBuilder translate(
+		BooleanFilter booleanFilter, FilterVisitor<QueryBuilder> filterVisitor);
 
 }

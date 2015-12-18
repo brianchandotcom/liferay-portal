@@ -17,6 +17,9 @@ package com.liferay.sync.engine.util.test;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**
  * @author Shinn Lok
  */
@@ -35,10 +38,12 @@ public class SyncFileTestUtil {
 			long syncAccountId, long typePK)
 		throws Exception {
 
+		Files.createFile(Paths.get(filePathName));
+
 		SyncFile syncFile = SyncFileService.addSyncFile(
-			null, null, null, filePathName, null, null, parentFolderId,
-			repositoryId, SyncFile.STATE_SYNCED, syncAccountId,
-			SyncFile.TYPE_FILE, true);
+			null, null, true, null, filePathName, null, null, parentFolderId,
+			repositoryId, SyncFile.STATE_SYNCED, 0, syncAccountId,
+			SyncFile.TYPE_FILE);
 
 		if (typePK == 0) {
 			syncFile.setTypePK(syncFile.getSyncFileId());
@@ -69,10 +74,12 @@ public class SyncFileTestUtil {
 			long syncAccountId, long typePK)
 		throws Exception {
 
+		Files.createDirectory(Paths.get(filePathName));
+
 		SyncFile syncFile = SyncFileService.addSyncFile(
-			null, null, null, filePathName, null, null, parentFolderId,
-			repositoryId, SyncFile.STATE_SYNCED, syncAccountId,
-			SyncFile.TYPE_FOLDER, false);
+			null, null, false, null, filePathName, null, null, parentFolderId,
+			repositoryId, SyncFile.STATE_SYNCED, 0, syncAccountId,
+			SyncFile.TYPE_FOLDER);
 
 		if (typePK == 0) {
 			syncFile.setTypePK(syncFile.getSyncFileId());

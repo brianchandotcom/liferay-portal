@@ -29,6 +29,10 @@ long roleId = ParamUtil.getLong(request, "roleId");
 
 Role role = RoleServiceUtil.fetchRole(roleId);
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
@@ -37,6 +41,9 @@ portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("tabs3", tabs3);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+portletURL.setParameter("displayStyle", displayStyle);
+portletURL.setParameter("orderByCol", orderByCol);
+portletURL.setParameter("orderByType", orderByType);
 
 request.setAttribute("edit_role_assignments.jsp-tabs3", tabs3);
 
@@ -45,24 +52,24 @@ request.setAttribute("edit_role_assignments.jsp-cur", cur);
 request.setAttribute("edit_role_assignments.jsp-role", role);
 
 request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title="<%= role.getTitle(locale) %>"
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(role.getTitle(locale));
+%>
 
 <liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="assign-members" />
 	<liferay-util:param name="backURL" value="<%= redirect %>" />
+	<liferay-util:param name="portletURL" value="<%= String.valueOf(portletURL) %>" />
 </liferay-util:include>
 
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
 	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
@@ -70,11 +77,38 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
 
-	<liferay-ui:tabs
-		names="users,sites,organizations,user-groups"
-		param="tabs2"
-		url="<%= portletURL.toString() %>"
-	/>
+	<liferay-frontend:management-bar
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-filters>
+				<liferay-frontend:management-bar-navigation
+					navigationKeys='<%= new String[] {"users", "sites", "organizations", "user-groups"} %>'
+					navigationParam="tabs2"
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				/>
+
+				<liferay-frontend:management-bar-navigation
+					navigationKeys='<%= new String[] {"current", "available"} %>'
+					navigationParam="tabs3"
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				/>
+
+				<liferay-frontend:management-bar-sort
+					orderByCol="<%= orderByCol %>"
+					orderByType="<%= orderByType %>"
+					orderColumns='<%= new String[] {"name"} %>'
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				/>
+			</liferay-frontend:management-bar-filters>
+
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
 
 	<%
 	String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
@@ -82,16 +116,16 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 
 	<c:choose>
 		<c:when test='<%= tabs2.equals("users") %>'>
-			<liferay-util:include page="/edit_role_assignments_users.jsp" portletId="<%= portletId %>" />
+			<liferay-util:include page="/edit_role_assignments_users.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= tabs2.equals("sites") %>'>
-			<liferay-util:include page="/edit_role_assignments_sites.jsp" portletId="<%= portletId %>" />
+			<liferay-util:include page="/edit_role_assignments_sites.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= tabs2.equals("organizations") %>'>
-			<liferay-util:include page="/edit_role_assignments_organizations.jsp" portletId="<%= portletId %>" />
+			<liferay-util:include page="/edit_role_assignments_organizations.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= tabs2.equals("user-groups") %>'>
-			<liferay-util:include page="/edit_role_assignments_user_groups.jsp" portletId="<%= portletId %>" />
+			<liferay-util:include page="/edit_role_assignments_user_groups.jsp" servletContext="<%= application %>" />
 		</c:when>
 	</c:choose>
 </aui:form>

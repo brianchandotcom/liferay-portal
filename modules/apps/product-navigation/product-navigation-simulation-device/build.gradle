@@ -1,0 +1,14 @@
+dependencies {
+	compile project(":apps:product-navigation:product-navigation-simulation")
+	compile project(":apps:product-navigation:product-navigation-simulation-web")
+}
+
+deploy {
+	from("lib") {
+		include "com.liferay.osgi.service.tracker.collections.jar"
+	}
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

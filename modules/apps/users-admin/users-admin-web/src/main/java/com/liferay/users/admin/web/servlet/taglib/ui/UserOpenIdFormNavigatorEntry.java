@@ -36,7 +36,7 @@ public class UserOpenIdFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	public String getKey() {
-		return "open-id";
+		return "openid";
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class UserOpenIdFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/user/open_id.jsp";
+		return "/user/openid.jsp";
 	}
 
 }

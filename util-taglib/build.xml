@@ -108,6 +108,20 @@
 
 		<mkdir dir="${doc.taglibs.dir}" />
 
+		<pathconvert property="tld.files" pathsep=" ">
+			<path>
+				<fileset dir="${project.dir}">
+					<exclude name="**/bin/**" />
+					<exclude name="**/build/**" />
+					<exclude name="**/classes/**" />
+					<exclude name="**/portal-web/**" />
+					<exclude name="**/sdk/**" />
+					<exclude name="**/test/**" />
+					<include name="**/liferay-*.tld" />
+				</fileset>
+			</path>
+		</pathconvert>
+
 		<java
 			classname="com.sun.tlddoc.TLDDoc"
 			classpathref="project.classpath"
@@ -116,31 +130,21 @@
 			maxmemory="256m"
 		>
 			<arg line="-d ${doc.taglibs.dir}" />
-
-			<!--
-			Sort by short name. See LRDOCS-2073.
-			-->
-
-			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-aui.tld" />
-			<arg value="${project.dir}/modules/apps/application-list/application-list-taglib/src/main/resources/META-INF/resources/liferay-application-list.tld" />
-			<arg value="${project.dir}/modules/apps/dynamic-data-mapping/dynamic-data-mapping-taglib/src/main/resources/META-INF/resources/liferay-ddm.tld" />
-			<arg value="${project.dir}/modules/frontend/frontend-taglib/src/main/resources/META-INF/resources/liferay-frontend.tld" />
-			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet-ext.tld" />
-			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-security.tld" />
-			<arg value="${project.dir}/modules/apps/staging/staging-taglib/src/main/resources/META-INF/resources/liferay-staging.tld" />
-			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-theme.tld" />
-			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-ui.tld" />
-			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-util.tld" />
-			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet.tld" />
+			<arg line="${tld.files}" />
 		</java>
 	</target>
 
 	<target name="validate-tld">
 		<schemavalidate>
-			<fileset
-				dir="${project.dir}/util-taglib/src/META-INF"
-				includes="*.tld"
-			/>
+			<fileset dir="${project.dir}" >
+				<exclude name="**/bin/**" />
+				<exclude name="**/build/**" />
+				<exclude name="**/classes/**" />
+				<exclude name="**/portal-web/**" />
+				<exclude name="**/sdk/**" />
+				<exclude name="**/test/**" />
+				<include name="**/liferay-*.tld" />
+			</fileset>
 		</schemavalidate>
 	</target>
 </project>

@@ -98,14 +98,9 @@ if (assetEntryId > 0) {
 			%>
 
 					<li class="asset-links-list-item">
-						<liferay-ui:icon
-							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-							label="<%= true %>"
-							message="<%= asseLinktEntryTitle %>"
-							method="get"
-							target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'
-							url="<%= urlViewInContext %>"
-						/>
+						<aui:a href="<%= urlViewInContext %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
+							<%= asseLinktEntryTitle %>
+						</aui:a>
 					</li>
 
 			<%

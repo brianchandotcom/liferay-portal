@@ -1,7 +1,7 @@
 <definition>
 	<command name="acceptMemberRequestSOSite">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -173,8 +173,8 @@
 	</command>
 
 	<command name="denyMemberRequestSOSite">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">

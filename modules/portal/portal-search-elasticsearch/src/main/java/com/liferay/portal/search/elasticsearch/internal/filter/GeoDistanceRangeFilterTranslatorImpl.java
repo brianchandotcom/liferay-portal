@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.search.filter.GeoDistanceRangeFilter;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.elasticsearch.filter.GeoDistanceRangeFilterTranslator;
 
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.FilterBuilders;
-import org.elasticsearch.index.query.GeoDistanceRangeFilterBuilder;
+import org.elasticsearch.index.query.GeoDistanceRangeQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,36 +32,31 @@ public class GeoDistanceRangeFilterTranslatorImpl
 	implements GeoDistanceRangeFilterTranslator {
 
 	@Override
-	public FilterBuilder translate(
+	public QueryBuilder translate(
 		GeoDistanceRangeFilter geoDistanceRangeFilter) {
 
-		GeoDistanceRangeFilterBuilder geoDistanceRangeFilterBuilder =
-			FilterBuilders.geoDistanceRangeFilter(
+		GeoDistanceRangeQueryBuilder geoDistanceRangeQueryBuilder =
+			QueryBuilders.geoDistanceRangeQuery(
 				geoDistanceRangeFilter.getField());
 
-		if (geoDistanceRangeFilter.isCached() != null) {
-			geoDistanceRangeFilterBuilder.cache(
-				geoDistanceRangeFilter.isCached());
-		}
-
-		geoDistanceRangeFilterBuilder.from(
+		geoDistanceRangeQueryBuilder.from(
 			String.valueOf(geoDistanceRangeFilter.getLowerBoundGeoDistance()));
-		geoDistanceRangeFilterBuilder.includeLower(
+		geoDistanceRangeQueryBuilder.includeLower(
 			geoDistanceRangeFilter.isIncludesLower());
-		geoDistanceRangeFilterBuilder.includeUpper(
+		geoDistanceRangeQueryBuilder.includeUpper(
 			geoDistanceRangeFilter.isIncludesUpper());
 
 		GeoLocationPoint pinGeoLocationPoint =
 			geoDistanceRangeFilter.getPinGeoLocationPoint();
 
-		geoDistanceRangeFilterBuilder.point(
+		geoDistanceRangeQueryBuilder.point(
 			pinGeoLocationPoint.getLatitude(),
 			pinGeoLocationPoint.getLongitude());
 
-		geoDistanceRangeFilterBuilder.to(
+		geoDistanceRangeQueryBuilder.to(
 			String.valueOf(geoDistanceRangeFilter.getUpperBoundGeoDistance()));
 
-		return geoDistanceRangeFilterBuilder;
+		return geoDistanceRangeQueryBuilder;
 	}
 
 }

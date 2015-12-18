@@ -102,12 +102,12 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_ddlRecordFieldData}')]//td[contains(@class,'entry-action')]/div/a/span[contains(@class,'icon-ellipsis-vertical')][1]</td>
+	<td>//tr[contains(.,'${key_ddlRecordFieldData}')]//td[contains(@class,'entry-action')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')][1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_ELLIPSIS_1</td>
-	<td>xpath=//td[contains(@class,'entry-action')]/div/a/span[contains(@class,'icon-ellipsis-vertical')][1]</td>
+	<td>xpath=//td[contains(@class,'entry-action')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')][1]</td>
 	<td></td>
 </tr>
 <tr>

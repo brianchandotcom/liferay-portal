@@ -54,8 +54,8 @@
 	<command name="AssertPageTemplatePreviewWithSOUserBar" priority="4">
 		<var name="pageTemplateName" value="Page Template Name" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Page Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
@@ -78,8 +78,8 @@
 
 		<execute function="Close#closeWindow" locator1="SOPage#PAGE_TITLE" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Page Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#editCP">
@@ -98,13 +98,13 @@
 
 		<execute function="AssertVisible" locator1="SOUserBar#USER_BAR" />
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" />
 
 		<execute function="AssertElementPresent" locator1="NavPill#CONTENT" />
 
-		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#EDIT" />
 
-		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#PREVIEW" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#SIMULATION" />
 
 		<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_AUTOSIZE" />
 
@@ -402,7 +402,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -417,7 +417,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -694,8 +694,8 @@
 		<execute function="Open" locator1="http://localhost:8080/" />
 		<execute function="AssertLocation" value1="http://localhost:8080/" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Portal Settings" />
 		</execute>
 
 		<execute function="Type" locator1="PortalSettings#HOME_URL_FIELD" value1="/user" />
@@ -780,8 +780,8 @@
 			<var name="userScreenName" value="${userScreenName2}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -792,8 +792,8 @@
 			<var name="userScreenName" value="${userScreenName3}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
@@ -858,7 +858,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -876,7 +876,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 

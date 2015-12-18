@@ -126,10 +126,6 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			_direction = "left";
 		}
 
-		if (_icon == null) {
-			_icon = "../aui/cog";
-		}
-
 		if (Validator.isNull(_id)) {
 			_id = (String)request.getAttribute(
 				"liferay-ui:search-container-row:rowId");
@@ -455,6 +451,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 		request.setAttribute("liferay-ui:icon-menu:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:icon-menu:direction", _direction);
+		request.setAttribute("liferay-ui:icon-menu:icon", _icon);
 
 		String message = _message;
 

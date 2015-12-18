@@ -286,6 +286,16 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="gotoPreviewEdit">
+		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" value1="Edit" />
+
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+	</command>
+
+	<command name="gotoPreviewView">
+		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" value1="View" />
+	</command>
+
 	<command name="gotoTaskAssignedToMeActionsCmd">
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
@@ -307,7 +317,7 @@
 
 		<execute function="Click" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TITLE" />
 
-		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" value1="View" />
+		<execute macro="Workflow#gotoPreviewView" />
 	</command>
 
 	<command name="reactivateInactiveWorkflowDefinition">
@@ -437,8 +447,8 @@
 	</command>
 
 	<command name="tearDownPortalWorkflow">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow Configuration" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow Configuration" />
 		</execute>
 
 		<var name="noWorkflow" value="Default: No Workflow" />
@@ -487,8 +497,8 @@
 	</command>
 
 	<command name="tearDownSpecificWorkflowDefinition">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow Definition" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow Definition" />
 		</execute>
 
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
@@ -506,8 +516,8 @@
 	</command>
 
 	<command name="tearDownWorkflowDefinitionDraftsViaKDCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Kaleo Designer" />
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="Kaleo Designer" />
 		</execute>
 
 		<while>
@@ -526,8 +536,8 @@
 	</command>
 
 	<command name="tearDownWorkflowDefinitionsViaWorkflowCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow Definition" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow Definition" />
 		</execute>
 
 		<while>
@@ -709,6 +719,23 @@
 		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_STATUS" value1="${workflowTask}" />
 		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_END_DATE" />
+	</command>
+
+	<command name="viewPreviewCategories">
+		<if>
+			<condition function="IsElementPresent" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_HEADER_COLLAPSED" />
+			<then>
+				<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_HEADER_COLLAPSED" value1="More Details" />
+			</then>
+		</if>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_VOCABULARY" value1="${vocabularyName}:" />
+
+		<for list="${categoryNameList}" param="categoryName">
+			<var name="key_categoryName" value="${categoryName}" />
+
+			<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_CATEGORY" value1="${categoryName}" />
+		</for>
 	</command>
 
 	<command name="viewRejectedTask">

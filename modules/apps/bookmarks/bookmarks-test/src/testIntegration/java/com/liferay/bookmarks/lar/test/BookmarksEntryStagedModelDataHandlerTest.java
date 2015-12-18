@@ -143,4 +143,20 @@ public class BookmarksEntryStagedModelDataHandlerTest
 			folder.getUuid(), group.getGroupId());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		BookmarksEntry entry = (BookmarksEntry)stagedModel;
+		BookmarksEntry importedEntry = (BookmarksEntry)importedStagedModel;
+
+		Assert.assertEquals(entry.getName(), importedEntry.getName());
+		Assert.assertEquals(entry.getUrl(), importedEntry.getUrl());
+		Assert.assertEquals(
+			entry.getDescription(), importedEntry.getDescription());
+	}
+
 }

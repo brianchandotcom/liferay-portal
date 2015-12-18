@@ -24,8 +24,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_BOOKMARK</td>
-	<td>//a[contains(.,'Add Bookmark')]</td>
+	<td>ANY_MENU_ITEM</td>
+	<td>//li[contains(.,'${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARK</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(@id,'menu') and contains(.,'Bookmark')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -120,7 +125,7 @@
 </tr>
 <tr>
 	<td>ASSIGN_MEMBERS</td>
-	<td>//a[@role='menuitem' and contains(.,'Assign Members')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Assign Members')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -344,6 +349,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>JOIN</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Join')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LEAVE</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Leave')]</td>
 	<td></td>
@@ -399,6 +409,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MARK_AS_READ</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Mark as Read')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Show')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIDE</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Hide')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MARKETING_BANNER</td>
 	<td>//li[contains(@class,'open')]//a[contains(.,'Marketing Banner')] | //div[contains(@class,'open')]//a[contains(.,'Marketing Banner')]</td>
 	<td></td>
@@ -450,7 +475,12 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_ROLE</td>
-	<td>//a[@role='menuitem' and contains(.,'Organization Role')]</td>
+	<td>//li/a[contains(@id,'menuItem') and contains(.,'Organization Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_ROLES</td>
+	<td>//a[@role='menuitem' and contains(.,'Organization Roles')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -465,7 +495,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//div[contains(@class,'open')]//a[contains(.,'Permissions')] | //li[contains(@class,'open')]//a[contains(.,'Permissions')] | //ul[contains(@class,'dropdown')]//a[contains(.,'Permissions')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Permissions')] | //li[contains(@class,'open')]//a[contains(.,'Permissions')] | //ul[contains(@class,'dropdown')]//a[contains(.,'Permissions')] | //a[@title='Permissions' and @role='menuitem']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -495,7 +525,12 @@
 </tr>
 <tr>
 	<td>REGULAR_ROLE</td>
-	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
+	<td>//li/a[contains(@id,'menuItem') and contains(.,'Regular Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REGULAR_ROLES</td>
+	<td>//a[@role='menuitem' and contains(.,'Regular Roles')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -521,6 +556,11 @@
 <tr>
 	<td>REPOSITORY</td>
 	<td>//li[contains(@class,'open')]//a[contains(.,'Repository')] | //div[contains(@class,'open')]//a[contains(.,'Repository')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUEST_MEMBERSHIP</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Request Membership')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -565,7 +605,7 @@
 </tr>
 <tr>
 	<td>SCOPE_SELECTION</td>
-	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_scopeSelection}')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_scopeSelection}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -585,7 +625,12 @@
 </tr>
 <tr>
 	<td>SITE_ROLE</td>
-	<td>//a[@role='menuitem' and contains(.,'Site Role')]</td>
+	<td>//li/a[contains(@id,'menuItem') and contains(.,'Site Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ROLES</td>
+	<td>//a[@role='menuitem' and contains(.,'Site Roles')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -616,6 +661,11 @@
 <tr>
 	<td>SORT_BY_TITLE</td>
 	<td>//li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPREADSHEET_VIEW</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Spreadsheet View')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -232,7 +232,7 @@
 
 	<command name="configureKBArticleDisplayPG">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -274,7 +274,7 @@
 
 	<command name="configureKBDisplaySettingsPG">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -329,7 +329,7 @@
 		<var name="key_kbFolderName" value="${kbFolderName}" />
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -348,7 +348,7 @@
 
 	<command name="configureKBRatingTypePG">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -375,7 +375,7 @@
 	<command name="configureKBSectionPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Knowledge Base Section" />
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -388,7 +388,7 @@
 
 	<command name="configureKBSocialBookmarkSites">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -805,7 +805,7 @@
 
 	<command name="selectPGViaKBArticle">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -820,6 +820,8 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
+
+		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
 
@@ -845,21 +847,22 @@
 	</command>
 
 	<command name="selectScopePG">
-		<var name="key_currentKBPageScope" value="${currentKBPageScope}" />
-		<var name="key_newKBPageScope" value="${newKBPageScope}" />
-
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
 		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SECTION_SCOPE" value1="Scope" />
-		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SCOPE_MENU_BUTTON" value1="${currentKBPageScope}" />
-		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SCOPE_SELECTION" value1="${newKBPageScope}" />
+
+		<execute function="Select" locator1="KnowledgeBaseConfiguration#SCOPE_SELECTION" value1="${newKBPageScope}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectSectionPGViaKBSection">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

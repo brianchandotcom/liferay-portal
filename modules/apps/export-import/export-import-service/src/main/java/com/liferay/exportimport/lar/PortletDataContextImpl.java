@@ -15,6 +15,7 @@
 package com.liferay.exportimport.lar;
 
 import com.liferay.exportimport.xstream.ConverterAdapter;
+import com.liferay.exportimport.xstream.XStreamStagedModelTypeHierarchyPermission;
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.exportimport.xstream.configurator.XStreamConfiguratorRegistryUtil;
 import com.liferay.portal.NoSuchRoleException;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
@@ -67,6 +69,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
+import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
@@ -96,16 +99,20 @@ import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.xstream.XStreamAlias;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
+import com.liferay.portlet.exportimport.xstream.XStreamType;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.ClassLoaderReference;
 import com.thoughtworks.xstream.io.xml.XppDriver;
+import com.thoughtworks.xstream.security.NoTypePermission;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,6 +120,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -211,19 +219,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		element.addAttribute("path", path);
 
-		if (classedModel instanceof AttachedModel) {
-			AttachedModel attachedModel = (AttachedModel)classedModel;
-
-			element.addAttribute("class-name", attachedModel.getClassName());
-		}
-		else if (BeanUtil.hasProperty(classedModel, "className")) {
-			String className = BeanPropertiesUtil.getStringSilent(
-				classedModel, "className");
-
-			if (className != null) {
-				element.addAttribute("class-name", className);
-			}
-		}
+		populateClassNameAttribute(classedModel, element);
 
 		if (!hasPrimaryKey(String.class, path)) {
 			if (classedModel instanceof AuditedModel) {
@@ -1387,9 +1383,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Object getZipEntryAsObject(Element element, String path) {
 		Object object = fromXML(getZipEntryAsString(path));
 
-		Attribute classNameAttribute = element.attribute("class-name");
+		Attribute classNameAttribute = element.attribute("attached-class-name");
 
-		if (classNameAttribute != null) {
+		if ((object != null) && (classNameAttribute != null)) {
 			BeanPropertiesUtil.setProperty(
 				object, "className", classNameAttribute.getText());
 		}
@@ -2144,6 +2140,25 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 		}
 
+		// Workflow
+
+		if (classedModel instanceof WorkflowedModel) {
+			WorkflowedModel workflowedModel = (WorkflowedModel)classedModel;
+
+			if (workflowedModel.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_PUBLISH);
+			}
+			else if (workflowedModel.getStatus() ==
+						WorkflowConstants.STATUS_DRAFT) {
+
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+			}
+		}
+
 		return serviceContext;
 	}
 
@@ -2174,6 +2189,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		referenceElement.addAttribute(
 			"class-pk", String.valueOf(classedModel.getPrimaryKeyObj()));
+
+		populateClassNameAttribute(classedModel, referenceElement);
 
 		if (missing) {
 			if (classedModel instanceof StagedModel) {
@@ -2528,6 +2545,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
+		List<String> allowedTypeNames = new ArrayList<>();
+
 		for (XStreamConfigurator xStreamConfigurator : xStreamConfigurators) {
 			List<XStreamAlias> xStreamAliases =
 				xStreamConfigurator.getXStreamAliases();
@@ -2549,7 +2568,37 @@ public class PortletDataContextImpl implements PortletDataContext {
 						XStream.PRIORITY_VERY_HIGH);
 				}
 			}
+
+			List<XStreamType> xStreamTypes =
+				xStreamConfigurator.getAllowedXStreamTypes();
+
+			if (ListUtil.isNotEmpty(xStreamTypes)) {
+				for (XStreamType xStreamType : xStreamTypes) {
+					allowedTypeNames.add(xStreamType.getTypeExpression());
+				}
+			}
 		}
+
+		// For default permissions, first wipe than add default
+
+		_xStream.addPermission(NoTypePermission.NONE);
+
+		_xStream.addPermission(
+			XStreamStagedModelTypeHierarchyPermission.STAGED_MODELS);
+
+		_xStream.allowTypeHierarchy(List.class);
+		_xStream.allowTypeHierarchy(Map.class);
+		_xStream.allowTypeHierarchy(Timestamp.class);
+		_xStream.allowTypeHierarchy(Set.class);
+
+		Class[] types = new Class[] {
+			Boolean.class, Date.class, Integer.class, String.class,
+			Locale.class, Long.class
+		};
+
+		_xStream.allowTypes(types);
+
+		_xStream.allowTypes(allowedTypeNames.toArray(new String[] {}));
 	}
 
 	protected boolean isResourceMain(ClassedModel classedModel) {
@@ -2560,6 +2609,26 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return true;
+	}
+
+	protected void populateClassNameAttribute(
+		ClassedModel classedModel, Element element) {
+
+		String attachedClassName = null;
+
+		if (classedModel instanceof AttachedModel) {
+			AttachedModel attachedModel = (AttachedModel)classedModel;
+
+			attachedClassName = attachedModel.getClassName();
+		}
+		else if (BeanUtil.hasProperty(classedModel, "className")) {
+			attachedClassName = BeanPropertiesUtil.getStringSilent(
+				classedModel, "className");
+		}
+
+		if (Validator.isNotNull(attachedClassName)) {
+			element.addAttribute("attached-class-name", attachedClassName);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

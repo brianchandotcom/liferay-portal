@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.HypersonicServerTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.BasicRegistryImpl;
@@ -71,7 +70,6 @@ public class CounterLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			false, new LiferayIntegrationTestRule(),
-			MainServletTestRule.INSTANCE, HypersonicServerTestRule.INSTANCE,
 			new BaseTestRule<>(
 				new BaseTestCallback<Void, Void>() {
 
@@ -107,7 +105,8 @@ public class CounterLocalServiceTest {
 						return null;
 					}
 
-				}));
+				}),
+			HypersonicServerTestRule.INSTANCE);
 
 	@Test
 	public void testConcurrentIncrement() throws Exception {

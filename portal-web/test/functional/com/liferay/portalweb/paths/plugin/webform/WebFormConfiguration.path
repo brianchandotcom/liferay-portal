@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>SETUP_FORM_FIELDS_ADD_ROW_BUTTON</td>
-	<td>//div[@class='field-title' and contains(.,'${key_wfPreviousFieldName}')]/../../..//button[contains(@class,'add-row')]</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfPreviousFieldName}')]/../../../..//button[contains(@class,'add-row')]</td>
 	<td></td>
 </tr>
 <tr>

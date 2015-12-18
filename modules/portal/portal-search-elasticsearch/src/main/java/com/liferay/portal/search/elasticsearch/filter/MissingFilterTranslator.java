@@ -16,13 +16,13 @@ package com.liferay.portal.search.elasticsearch.filter;
 
 import com.liferay.portal.kernel.search.filter.MissingFilter;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface MissingFilterTranslator {
 
-	public FilterBuilder translate(MissingFilter missingFilter);
+	public QueryBuilder translate(MissingFilter missingFilter);
 
 }

@@ -359,6 +359,15 @@ public class BackgroundTaskLocalServiceUtil {
 				   .getBackgroundTasks(groupId, taskExecutorClassNames, status);
 	}
 
+	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+		long[] groupIds, java.lang.String name,
+		java.lang.String taskExecutorClassName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
+		return getService()
+				   .getBackgroundTasks(groupIds, name, taskExecutorClassName,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns a range of all the background tasks.
 	*
@@ -449,6 +458,21 @@ public class BackgroundTaskLocalServiceUtil {
 		return getService()
 				   .getBackgroundTasksCount(groupId, taskExecutorClassNames,
 			completed);
+	}
+
+	public static int getBackgroundTasksCount(long[] groupIds,
+		java.lang.String name, java.lang.String taskExecutorClassName) {
+		return getService()
+				   .getBackgroundTasksCount(groupIds, name,
+			taskExecutorClassName);
+	}
+
+	public static int getBackgroundTasksCount(long[] groupIds,
+		java.lang.String name, java.lang.String taskExecutorClassName,
+		boolean completed) {
+		return getService()
+				   .getBackgroundTasksCount(groupIds, name,
+			taskExecutorClassName, completed);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

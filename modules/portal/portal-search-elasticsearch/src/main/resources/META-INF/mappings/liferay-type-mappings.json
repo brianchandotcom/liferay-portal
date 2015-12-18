@@ -341,6 +341,20 @@
 				}
 			},
 			{
+				"template_pl": {
+					"mapping": {
+						"analyzer": "polish",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_pl\\b|\\w+_pl_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
 				"template_pt": {
 					"mapping": {
 						"analyzer": "portuguese",

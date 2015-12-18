@@ -23,7 +23,7 @@ if (SessionMessages.contains(renderRequest, "language")) {
 	language = (String)SessionMessages.get(renderRequest, "language");
 }
 
-String script = "// ### JavaScript Sample ###\n\nnumber = Packages.com.liferay.portal.service.UserLocalServiceUtil.getUsersCount();\n\nout.println(number);";
+String script = "// ### Groovy Sample ###\n\nnumber = com.liferay.portal.service.UserLocalServiceUtil.getUsersCount();\n\nout.println(number);";
 
 if (SessionMessages.contains(renderRequest, "script")) {
 	script = (String)SessionMessages.get(renderRequest, "script");

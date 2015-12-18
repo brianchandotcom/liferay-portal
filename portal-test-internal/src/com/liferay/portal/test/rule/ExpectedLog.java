@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface ExpectedLog {
 
-	public String dbType() default "";
+	public ExpectedDBType expectedDBType() default ExpectedDBType.NONE;
 
 	public String expectedLog();
 

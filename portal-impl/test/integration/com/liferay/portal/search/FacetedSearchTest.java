@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -39,10 +40,12 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,7 +63,7 @@ public class FacetedSearchTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
@@ -131,20 +134,25 @@ public class FacetedSearchTest {
 		assertSearch("Liferay", 0);
 	}
 
-	protected static void addUser(Group group, String tag) throws Exception {
-		ServiceContext serviceContext = getServiceContext(group, tag);
+	protected static void assertSearch(final String tag, final int count)
+		throws Exception {
 
-		User user = UserTestUtil.addUser(group.getGroupId());
+		IdempotentRetryAssert.retryAssert(
+			10, TimeUnit.SECONDS,
+			new Callable<Void>() {
 
-		UserTestUtil.updateUser(user, serviceContext);
-	}
+				@Override
+				public Void call() throws Exception {
+					FacetedSearcher indexer = new FacetedSearcher();
 
-	protected static void assertSearch(String tag, int count) throws Exception {
-		FacetedSearcher indexer = new FacetedSearcher();
+					Hits hits = indexer.search(getSearchContext(tag));
 
-		Hits hits = indexer.search(getSearchContext(tag));
+					Assert.assertEquals(count, hits.getLength());
 
-		Assert.assertEquals(count, hits.getLength());
+					return null;
+				}
+
+			});
 	}
 
 	protected static void deactivate(Group group) {
@@ -175,10 +183,23 @@ public class FacetedSearchTest {
 		return serviceContext;
 	}
 
+	protected void addUser(Group group, String tag) throws Exception {
+		ServiceContext serviceContext = getServiceContext(group, tag);
+
+		User user = UserTestUtil.addUser(group.getGroupId());
+
+		_users.add(user);
+
+		UserTestUtil.updateUser(user, serviceContext);
+	}
+
 	@DeleteAfterTestRun
 	private Group _group1;
 
 	@DeleteAfterTestRun
 	private Group _group2;
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<>();
 
 }

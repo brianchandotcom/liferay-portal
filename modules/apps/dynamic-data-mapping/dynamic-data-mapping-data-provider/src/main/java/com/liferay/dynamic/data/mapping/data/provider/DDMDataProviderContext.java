@@ -14,7 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.data.provider;
 
-import aQute.bnd.annotation.metatype.Configurable;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +25,8 @@ import java.util.Map;
  */
 public class DDMDataProviderContext {
 
-	public DDMDataProviderContext(Map<String, Object> properties) {
-		_properties = properties;
+	public DDMDataProviderContext(DDMFormValues ddmFormValues) {
+		_ddmFormValues = ddmFormValues;
 	}
 
 	public Map<String, String> getParameters() {
@@ -33,14 +34,14 @@ public class DDMDataProviderContext {
 	}
 
 	public <T> T getSettingsInstance(Class<T> clazz) {
-		return Configurable.createConfigurable(clazz, _properties);
+		return DDMFormInstanceFactory.create(clazz, _ddmFormValues);
 	}
 
 	public void setParameter(String key, String value) {
 		_parameters.put(key, value);
 	}
 
+	private final DDMFormValues _ddmFormValues;
 	private final Map<String, String> _parameters = new HashMap<>();
-	private final Map<String, Object> _properties;
 
 }

@@ -22,7 +22,7 @@
 
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="details" selected="<%= true %>" />
+		<aui:nav-item label="details" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
 

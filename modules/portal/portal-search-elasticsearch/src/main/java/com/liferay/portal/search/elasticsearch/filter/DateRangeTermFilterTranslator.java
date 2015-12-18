@@ -16,13 +16,13 @@ package com.liferay.portal.search.elasticsearch.filter;
 
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface DateRangeTermFilterTranslator {
 
-	public FilterBuilder translate(DateRangeTermFilter dateRangeTermFilter);
+	public QueryBuilder translate(DateRangeTermFilter dateRangeTermFilter);
 
 }

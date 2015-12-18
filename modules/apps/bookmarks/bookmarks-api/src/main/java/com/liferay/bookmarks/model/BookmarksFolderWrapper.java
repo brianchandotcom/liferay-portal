@@ -218,15 +218,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	*/
-	@Deprecated
-	@Override
-	public boolean getApproved() {
-		return _bookmarksFolder.getApproved();
-	}
-
-	/**
 	* Returns the company ID of this bookmarks folder.
 	*
 	* @return the company ID of this bookmarks folder

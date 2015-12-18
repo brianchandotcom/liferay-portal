@@ -154,7 +154,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			/>
 		</c:if>
 
-		<c:if test="<%= assetPublisherDisplayContext.isEnableRatings() %>">
+		<c:if test="<%= assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable() %>">
 			<div class="asset-ratings">
 				<liferay-ui:ratings
 					className="<%= assetEntry.getClassName() %>"
@@ -177,7 +177,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			/>
 		</c:if>
 
-		<c:if test="<%= Validator.isNotNull(assetRenderer.getDiscussionPath()) && assetPublisherDisplayContext.isEnableComments() %>">
+		<c:if test="<%= assetPublisherDisplayContext.isEnableComments() && assetRenderer.isCommentable() %>">
 			<br />
 
 			<liferay-ui:discussion

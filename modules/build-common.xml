@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="build-common">
+	<dirname file="${ant.file.build-common}" property="modules.dir" />
+
+	<taskdef classpath="${modules.dir}/../lib/development/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml" />
+
+	<property name="gradle.wrapper.path" relative="yes" value="${modules.dir}/../gradlew" />
+
+	<macrodef name="print-gradle-alternative">
+		<attribute name="args" />
+
+		<sequential>
+			<echo>Please run this command instead: ${gradle.wrapper.path} @{args}</echo>
+		</sequential>
+	</macrodef>
+</project>

@@ -1,6 +1,6 @@
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	compile group: "org.springframework", name: "spring-context", version: "3.2.10.RELEASE"
+	compile group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	compile project(":apps:export-import:export-import-api")

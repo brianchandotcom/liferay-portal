@@ -50,8 +50,8 @@
 	<command name="ApproveBlogsEntriesCPJoinXORNodeWorkflowDefinition" priority="4">
 		<description message="This is a use case for LPS-35577." />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow Definition" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow Definition" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -302,6 +302,8 @@
 	</command>
 
 	<command name="ApproveBlogsEntryCP" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

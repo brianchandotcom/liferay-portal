@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.upgrade.util;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -63,7 +63,7 @@ public abstract class BaseUpgradeColumnImpl implements UpgradeColumn {
 
 	@Override
 	public long increment() {
-		DB db = DBFactoryUtil.getDB();
+		DB db = DBManagerUtil.getDB();
 
 		return db.increment();
 	}

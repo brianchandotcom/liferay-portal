@@ -67,7 +67,7 @@ public class MatchQueryTranslatorImpl
 
 		if (matchQuery.getFuzziness() != null) {
 			matchQueryBuilder.fuzziness(
-				Fuzziness.fromSimilarity(matchQuery.getFuzziness()));
+				Fuzziness.build(matchQuery.getFuzziness()));
 		}
 
 		if (matchQuery.getFuzzyRewriteMethod() != null) {
@@ -95,12 +95,6 @@ public class MatchQueryTranslatorImpl
 
 		if (matchQuery.getPrefixLength() != null) {
 			matchQueryBuilder.prefixLength(matchQuery.getPrefixLength());
-		}
-
-		if (matchQuery.getRewriteMethod() != null) {
-			String matchQueryRewrite = translate(matchQuery.getRewriteMethod());
-
-			matchQueryBuilder.rewrite(matchQueryRewrite);
 		}
 
 		if (matchQuery.getSlop() != null) {

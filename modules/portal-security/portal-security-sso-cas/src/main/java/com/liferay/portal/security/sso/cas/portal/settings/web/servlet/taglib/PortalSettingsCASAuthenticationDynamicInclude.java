@@ -31,6 +31,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Adds a CAS tab to the Authentication section of the Portal Settings user
+ * interface in the Control Panel.
+ *
  * @author Tomas Polesovsky
  */
 @Component(
@@ -72,7 +75,8 @@ public class PortalSettingsCASAuthenticationDynamicInclude
 		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH = "/portal-settings/cas.jsp";
+	private static final String _JSP_PATH =
+		"/com.liferay.portal.settings.web/cas.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSettingsCASAuthenticationDynamicInclude.class);

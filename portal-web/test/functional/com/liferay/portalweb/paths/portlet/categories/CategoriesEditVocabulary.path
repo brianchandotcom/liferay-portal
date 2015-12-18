@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED</td>
-	<td>//fieldset//a[contains(.,'Associated Asset Types') and contains(@class,'collapsed')]</td>
+	<td>//a[contains(.,'Associated Asset Types') and contains(@class,'collapsed')]</td>
 	<td></td>
 </tr>
 <tr>

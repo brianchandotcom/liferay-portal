@@ -38,8 +38,8 @@
 	<command name="MarkNotificationAsReadAndAcceptRequest" priority="4">
 		<property name="portlet.plugins.includes" value="contacts-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-portlet" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -49,8 +49,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
@@ -59,8 +59,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#assignRegularRoleCP">
@@ -84,8 +84,8 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addCP">
@@ -177,11 +177,11 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
+		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="2" />
 		</execute>
 
-		<execute macro="Notifications#gotoDockbar" />
+		<execute macro="Notifications#gotoNotifications" />
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="Blogs Entry" />
@@ -195,8 +195,8 @@
 
 		<execute macro="Notifications#markAllAsRead" />
 
-		<execute macro="Notifications#viewRequestCount" >
-			<var name="requestsLink" value="Requests (1)" />
+		<execute macro="Notifications#viewBadgeCount" >
+			<var name="notificationCount" value="1" />
 		</execute>
 
 		<execute macro="Notifications#viewRequest">
@@ -207,13 +207,13 @@
 			<var name="requestsContent" value="Test Test invited you to join Community Site Name." />
 		</execute>
 
-		<execute macro="Notifications#viewRequestCount" >
-			<var name="requestsLink" value="Requests (0)" />
+		<execute macro="Notifications#viewBadgeCount" >
+			<var name="notificationCount" value="0" />
 		</execute>
 
 		<execute macro="Notifications#viewNoRequest" />
 
-		<execute macro="Notifications#viewCount" >
+		<execute macro="Notifications#viewBadgeCount" >
 			<var name="notificationCount" value="0" />
 		</execute>
 
@@ -226,11 +226,13 @@
 	</command>
 
 	<command name="ViewDefaultNotificationsPortletDeliveryOptions" priority="3">
-		<execute macro="Notifications#gotoDockbar" />
-
-		<execute macro="Notifications#navigateToViewAllNotifications" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
+		</execute>
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+
+		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<execute macro="NotificationsPortlet#viewDefaultNotificationDeliveries" />
 	</command>

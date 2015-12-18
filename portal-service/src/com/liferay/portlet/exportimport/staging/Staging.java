@@ -256,6 +256,9 @@ public interface Staging {
 
 	public String getStagedPortletId(String portletId);
 
+	public long[] getStagingAndLiveGroupIds(long groupId)
+		throws PortalException;
+
 	public Group getStagingGroup(long groupId);
 
 	/**
@@ -392,24 +395,31 @@ public interface Staging {
 		throws PortalException;
 
 	public void setRecentLayoutBranchId(
-		HttpServletRequest request, long layoutSetBranchId, long plid,
-		long layoutBranchId);
+			HttpServletRequest request, long layoutSetBranchId, long plid,
+			long layoutBranchId)
+		throws PortalException;
 
 	public void setRecentLayoutBranchId(
-		User user, long layoutSetBranchId, long plid, long layoutBranchId);
+			User user, long layoutSetBranchId, long plid, long layoutBranchId)
+		throws PortalException;
 
 	public void setRecentLayoutRevisionId(
-		HttpServletRequest request, long layoutSetBranchId, long plid,
-		long layoutRevisionId);
+			HttpServletRequest request, long layoutSetBranchId, long plid,
+			long layoutRevisionId)
+		throws PortalException;
 
 	public void setRecentLayoutRevisionId(
-		User user, long layoutSetBranchId, long plid, long layoutRevisionId);
+			User user, long layoutSetBranchId, long plid, long layoutRevisionId)
+		throws PortalException;
 
 	public void setRecentLayoutSetBranchId(
-		HttpServletRequest request, long layoutSetId, long layoutSetBranchId);
+			HttpServletRequest request, long layoutSetId,
+			long layoutSetBranchId)
+		throws PortalException;
 
 	public void setRecentLayoutSetBranchId(
-		User user, long layoutSetId, long layoutSetBranchId);
+			User user, long layoutSetId, long layoutSetBranchId)
+		throws PortalException;
 
 	public String stripProtocolFromRemoteAddress(String remoteAddress);
 

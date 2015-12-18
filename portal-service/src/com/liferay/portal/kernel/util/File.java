@@ -29,6 +29,8 @@ public interface File {
 
 	public String appendParentheticalSuffix(String fileName, String suffix);
 
+	public String appendSuffix(String fileName, String suffix);
+
 	public void copyDirectory(java.io.File source, java.io.File destination)
 		throws IOException;
 

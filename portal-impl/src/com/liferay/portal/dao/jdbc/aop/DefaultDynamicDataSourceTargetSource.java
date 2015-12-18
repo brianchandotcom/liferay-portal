@@ -58,6 +58,11 @@ public class DefaultDynamicDataSourceTargetSource
 	}
 
 	@Override
+	public DataSource getReadDataSource() {
+		return _readDataSource;
+	}
+
+	@Override
 	public Object getTarget() throws Exception {
 		Operation operationType = getOperation();
 
@@ -79,6 +84,11 @@ public class DefaultDynamicDataSourceTargetSource
 	@Override
 	public Class<DataSource> getTargetClass() {
 		return DataSource.class;
+	}
+
+	@Override
+	public DataSource getWriteDataSource() {
+		return _writeDataSource;
 	}
 
 	@Override

@@ -6,7 +6,6 @@
 	<property name="war.file" value="${ant.project.name}" />
 
 	<property name="alloy.bootstrap.version" value="3.2.0-2" />
-	<property name="alloy.version" value="3.0.1" />
 	<property name="alloy-font-awesome.version" value="2.0" />
 	<property name="frontend.js.web.dir" value="../modules/frontend/frontend-js-web" />
 	<property name="sass.portal.common.dir" value="../modules/frontend/frontend-common-css/tmp/META-INF/resources" />

@@ -217,6 +217,11 @@ public class JSONArrayImpl implements JSONArray {
 	}
 
 	@Override
+	public String toJSONString() {
+		return toString();
+	}
+
+	@Override
 	public String toString() {
 		return _jsonArray.toString();
 	}

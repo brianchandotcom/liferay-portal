@@ -1,8 +1,8 @@
 Bundle-Name: Liferay Frontend Theme Classic Web
 Bundle-SymbolicName: com.liferay.frontend.theme.classic.web
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /frontend-theme-classic-web
--donotcopy: (.*_diffs.*)
+-donotcopy: (.*_diffs.*|\.npmignore|npm-debug\.log|package\.json)

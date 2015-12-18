@@ -38,7 +38,7 @@ teamSearchContainer.setTotal(teamsCount);
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="teams" />
+		<aui:nav-item label="teams" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= teamsCount > 0 %>">
@@ -91,7 +91,7 @@ teamSearchContainer.setTotal(teamsCount);
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedTeams" label="delete" />
+			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedTeams" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>

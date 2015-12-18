@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.template.bundle.templatemanagerutil.TestTemplat
 import com.liferay.portal.kernel.template.bundle.templatemanagerutil.TestTemplateResource;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 
 import java.util.Map;
@@ -39,7 +38,7 @@ public class TemplateMangerUtilTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			new SyntheticBundleRule("bundle.templatemanagerutil"));
 
 	@Test

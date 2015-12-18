@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
@@ -85,7 +85,7 @@ public class QueryUtil {
 
 		List<Object> list = new ArrayList<>();
 
-		DB db = DBFactoryUtil.getDB();
+		DB db = DBManagerUtil.getDB();
 
 		if (!db.isSupportsScrollableResults()) {
 			if (_log.isWarnEnabled()) {
@@ -144,7 +144,7 @@ public class QueryUtil {
 
 		List<Object> list = new ArrayList<>();
 
-		DB db = DBFactoryUtil.getDB();
+		DB db = DBManagerUtil.getDB();
 
 		if (!db.isSupportsScrollableResults()) {
 			if (_log.isWarnEnabled()) {

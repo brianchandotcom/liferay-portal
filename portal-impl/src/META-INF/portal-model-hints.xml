@@ -705,6 +705,35 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
+	<model name="com.liferay.portal.model.RecentLayoutBranch">
+		<field name="mvccVersion" type="long" />
+		<field name="recentLayoutBranchId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="layoutBranchId" type="long" />
+		<field name="layoutSetBranchId" type="long" />
+		<field name="plid" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.RecentLayoutRevision">
+		<field name="mvccVersion" type="long" />
+		<field name="recentLayoutRevisionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="layoutRevisionId" type="long" />
+		<field name="layoutSetBranchId" type="long" />
+		<field name="plid" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.RecentLayoutSetBranch">
+		<field name="mvccVersion" type="long" />
+		<field name="recentLayoutSetBranchId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="layoutSetBranchId" type="long" />
+		<field name="layoutSetId" type="long" />
+	</model>
 	<model name="com.liferay.portal.model.Region">
 		<field name="mvccVersion" type="long" />
 		<field name="regionId" type="long" />

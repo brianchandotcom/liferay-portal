@@ -23,7 +23,8 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.monitoring.configuration.MonitoringConfiguration"
+	id = "com.liferay.portal.monitoring.configuration.MonitoringConfiguration",
+	localization = "content/Language", name = "%monitoring.configuration.name"
 )
 public interface MonitoringConfiguration {
 

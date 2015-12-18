@@ -87,10 +87,6 @@ if (dataJSONObject.has("values")) {
 
 			<li class="facet-value <%= fieldParam.equals(termCollector.getTerm()) ? "active" : StringPool.BLANK %>">
 				<a data-value="<%= HtmlUtil.escapeAttribute(assetType) %>" href="javascript:;">
-					<c:if test="<%= assetRendererFactory != null %>">
-						<i class="<%= assetRendererFactory.getIconCssClass() %>"></i>
-					</c:if>
-
 					<%= assetRendererFactory.getTypeName(locale) %>
 
 					<c:if test="<%= showAssetCount %>">

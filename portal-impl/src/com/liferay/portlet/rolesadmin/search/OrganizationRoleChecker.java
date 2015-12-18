@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.rolesadmin.search;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
@@ -27,7 +27,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrganizationRoleChecker extends RowChecker {
+public class OrganizationRoleChecker extends EmptyOnClickRowChecker {
 
 	public OrganizationRoleChecker(RenderResponse renderResponse, Role role) {
 		super(renderResponse);

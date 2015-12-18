@@ -150,6 +150,7 @@ public class NotificationUtil {
 					user);
 
 			notificationSender.sendNotification(
+				sender.getEmailAddress(), sender.getFullName(),
 				notificationRecipient, notificationTemplateContext);
 		}
 	}
@@ -203,6 +204,7 @@ public class NotificationUtil {
 					calendarBooking, user);
 
 			notificationSender.sendNotification(
+				user.getEmailAddress(), user.getFullName(),
 				notificationRecipient, notificationTemplateContext);
 		}
 	}

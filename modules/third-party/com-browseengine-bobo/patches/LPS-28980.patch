@@ -1,13 +1,8 @@
 diff --git a/com/browseengine/bobo/sort/DocComparatorSource.java b/com/browseengine/bobo/sort/DocComparatorSource.java
-index 2ad990b..961ecf5 100644
+index 2ad990b..c186b8c 100644
 --- a/com/browseengine/bobo/sort/DocComparatorSource.java
 +++ b/com/browseengine/bobo/sort/DocComparatorSource.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- package com.browseengine.bobo.sort;
- 
- import java.io.IOException;
-@@ -140,6 +141,9 @@ public abstract class DocComparatorSource {
+@@ -140,6 +140,9 @@ public abstract class DocComparatorSource {
  				}
  
  				public String value(ScoreDoc doc) {
@@ -17,16 +12,17 @@ index 2ad990b..961ecf5 100644
  					return String.valueOf(values.lookup[values.order[doc.doc]]);
  				}
  			};
+@@ -338,3 +341,4 @@ public abstract class DocComparatorSource {
+ 	
+ 	
+ }
++/* @generated */
+\ No newline at end of file
 diff --git a/com/browseengine/bobo/sort/ReverseDocComparatorSource.java b/com/browseengine/bobo/sort/ReverseDocComparatorSource.java
-index 3c203d1..bc6c35b 100644
+index 3c203d1..4479743 100644
 --- a/com/browseengine/bobo/sort/ReverseDocComparatorSource.java
 +++ b/com/browseengine/bobo/sort/ReverseDocComparatorSource.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- package com.browseengine.bobo.sort;
- 
- import java.io.IOException;
-@@ -50,6 +51,15 @@ public class ReverseDocComparatorSource extends DocComparatorSource {
+@@ -50,6 +50,15 @@ public class ReverseDocComparatorSource extends DocComparatorSource {
  			public int compareTo(Object o) {
  				if (o instanceof ReverseComparable){
  					Comparable inner = ((ReverseComparable)o)._inner;						
@@ -42,3 +38,9 @@ index 3c203d1..bc6c35b 100644
  					return -_inner.compareTo(inner);
  				}
  				else{
+@@ -68,3 +77,4 @@ public class ReverseDocComparatorSource extends DocComparatorSource {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

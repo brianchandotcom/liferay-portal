@@ -131,8 +131,8 @@
 	</command>
 
 	<command name="gotoMentionsViaPortalSettings">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Portal Settings" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavListItem#MENTIONS" value1="Mentions" />

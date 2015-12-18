@@ -17,7 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.NoSuchReleaseException;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -124,7 +124,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 				_log.info("Create tables and populate with default data");
 			}
 
-			DB db = DBFactoryUtil.getDB();
+			DB db = DBManagerUtil.getDB();
 
 			db.runSQLTemplate("portal-tables.sql", false);
 			db.runSQLTemplate("portal-data-common.sql", false);
@@ -169,7 +169,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 		// Gracefully add version column
 
-		DB db = DBFactoryUtil.getDB();
+		DB db = DBManagerUtil.getDB();
 
 		try {
 			db.runSQL(
@@ -380,7 +380,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	}
 
 	protected void testSupportsStringCaseSensitiveQuery() {
-		DB db = DBFactoryUtil.getDB();
+		DB db = DBManagerUtil.getDB();
 
 		int count = testSupportsStringCaseSensitiveQuery(
 			ReleaseConstants.TEST_STRING);

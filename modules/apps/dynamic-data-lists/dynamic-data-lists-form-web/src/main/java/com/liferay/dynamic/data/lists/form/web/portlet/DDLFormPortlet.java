@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -132,13 +133,16 @@ public class DDLFormPortlet extends MVCPortlet {
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		DDMForm ddmForm) {
 
 		String languageId = ParamUtil.getString(renderRequest, "languageId");
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setDDMFormValues(
+			_ddmFormValuesFactory.create(renderRequest, ddmForm));
 		ddmFormRenderingContext.setHttpServletRequest(
 			PortalUtil.getHttpServletRequest(renderRequest));
 		ddmFormRenderingContext.setHttpServletResponse(
@@ -201,6 +205,7 @@ public class DDLFormPortlet extends MVCPortlet {
 			DDMFormField captchaDDMFormField = new DDMFormField(
 				_DDM_FORM_FIELD_NAME_CAPTCHA, "captcha");
 
+			captchaDDMFormField.setDataType("string");
 			captchaDDMFormField.setProperty(
 				"url", createCaptchaResourceURL(renderResponse));
 
@@ -215,9 +220,6 @@ public class DDLFormPortlet extends MVCPortlet {
 			DDLRecordSet recordSet)
 		throws PortalException {
 
-		DDMFormRenderingContext ddmFormRenderingContext =
-			createDDMFormRenderingContext(renderRequest, renderResponse);
-
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 		boolean requireCaptcha = isCaptchaRequired(recordSet);
 
@@ -226,6 +228,10 @@ public class DDLFormPortlet extends MVCPortlet {
 
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(
 			ddmStructure, requireCaptcha);
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			createDDMFormRenderingContext(
+				renderRequest, renderResponse, ddmForm);
 
 		return _ddmFormRenderer.render(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
@@ -296,6 +302,13 @@ public class DDLFormPortlet extends MVCPortlet {
 		_ddmFormRenderer = ddmFormRenderer;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMFormValuesFactory(
+		DDMFormValuesFactory ddmFormValuesFactory) {
+
+		_ddmFormValuesFactory = ddmFormValuesFactory;
+	}
+
 	protected void setRenderRequestAttributes(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
@@ -326,5 +339,6 @@ public class DDLFormPortlet extends MVCPortlet {
 
 	private volatile DDLRecordSetService _ddlRecordSetService;
 	private volatile DDMFormRenderer _ddmFormRenderer;
+	private volatile DDMFormValuesFactory _ddmFormValuesFactory;
 
 }

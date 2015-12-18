@@ -460,7 +460,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("descriptive") %>'>
 							<liferay-ui:search-container-column-icon
-								icon='<%= curFolder.isMountPoint() ? "icon-hdd" : "icon-folder-close" %>'
+								icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
 								toggleRowChecker="<%= true %>"
 							/>
 

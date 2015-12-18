@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -177,15 +178,8 @@ public class ComboServlet extends HttpServlet {
 		if (!PropsValues.COMBO_CHECK_TIMESTAMP) {
 			modulePathsString = Arrays.toString(modulePaths);
 
-			if (minifierType.equals("css") &&
-				PortalUtil.isRightToLeft(request)) {
-
-				modulePathsString += ".rtl";
-			}
-			else if (minifierType.equals("js")) {
-				modulePathsString +=
-					StringPool.POUND + LanguageUtil.getLanguageId(request);
-			}
+			modulePathsString +=
+				StringPool.POUND + LanguageUtil.getLanguageId(request);
 
 			bytesArray = _bytesArrayPortalCache.get(modulePathsString);
 		}
@@ -263,8 +257,15 @@ public class ComboServlet extends HttpServlet {
 			resourcePath = portlet.getContextPath() + resourcePath;
 		}
 
-		String fileContentKey = resourcePath.concat(StringPool.QUESTION).concat(
-			minifierType);
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(resourcePath);
+		sb.append(StringPool.QUESTION);
+		sb.append(minifierType);
+		sb.append("&languageId=");
+		sb.append(ParamUtil.getString(request, "languageId"));
+
+		String fileContentKey = sb.toString();
 
 		FileContentBag fileContentBag = _fileContentBagPortalCache.get(
 			fileContentKey);

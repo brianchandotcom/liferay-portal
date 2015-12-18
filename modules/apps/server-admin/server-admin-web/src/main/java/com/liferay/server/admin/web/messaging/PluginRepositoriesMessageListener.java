@@ -14,21 +14,62 @@
 
 package com.liferay.server.admin.web.messaging;
 
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.plugin.PluginPackageUtil;
+import com.liferay.server.admin.web.configuration.PluginRepositoriesConfiguration;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
  * @author Philip Jones
  */
-@Component(immediate = true, service = MessageListener.class)
-public class PluginRepositoriesMessageListener extends BaseMessageListener {
+@Component(immediate = true, service = PluginRepositoriesMessageListener.class)
+public class PluginRepositoriesMessageListener
+	extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		PluginRepositoriesConfiguration pluginRepositoriesConfiguration =
+			Configurable.createConfigurable(
+				PluginRepositoriesConfiguration.class, properties);
+
+		if (!pluginRepositoriesConfiguration.enabled()) {
+			return;
+		}
+
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
+				getEventListenerClass(), getEventListenerClass(),
+				pluginRepositoriesConfiguration.interval(),
+				pluginRepositoriesConfiguration.timeUnit()));
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -36,5 +77,30 @@ public class PluginRepositoriesMessageListener extends BaseMessageListener {
 
 		PluginPackageUtil.reloadRepositories();
 	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.SCHEDULER_DISPATCH + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
+	}
+
+	private volatile SchedulerEngineHelper _schedulerEngineHelper;
 
 }

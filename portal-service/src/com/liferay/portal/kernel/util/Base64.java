@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.io.ProtectedObjectInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -222,10 +223,11 @@ public class Base64 {
 			ObjectInputStream is = null;
 
 			if (classLoader == null) {
-				is = new ObjectInputStream(ubais);
+				is = new ProtectedObjectInputStream(ubais);
 			}
 			else {
-				is = new ClassLoaderObjectInputStream(ubais, classLoader);
+				is = new ProtectedClassLoaderObjectInputStream(
+					ubais, classLoader);
 			}
 
 			return is.readObject();

@@ -116,7 +116,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD</td>
-	<td>//li[@data-search='Embedded']//div[contains(@class,'page-template-description')]</td>
+	<td>//li[@data-search='Embedded']//div[contains(@class,'page-template-title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -126,7 +126,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD</td>
-	<td>//li[@data-search='Link to URL']//div[contains(@class,'page-template-description')]</td>
+	<td>//li[@data-search='Link to URL']//div[contains(@class,'page-template-title')]</td>
 	<td></td>
 </tr>
 <tr>

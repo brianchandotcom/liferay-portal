@@ -21,7 +21,9 @@ import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
+import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorExtension;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
+import com.liferay.gradle.plugins.js.transpiler.JSTranspilerExtension;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.js.transpiler.TranspileJSTask;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
@@ -29,6 +31,7 @@ import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
+import com.liferay.gradle.plugins.soy.BuildSoyTask;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
@@ -59,7 +62,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +87,7 @@ import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
-import org.gradle.api.file.FileTree;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -99,11 +102,13 @@ import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
+import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 
 import org.zeroturnaround.exec.ProcessExecutor;
 import org.zeroturnaround.exec.ProcessResult;
@@ -133,13 +138,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		final LiferayExtension liferayExtension = addLiferayExtension(project);
 
-		configureTasksBuildCSS(project);
-
 		applyPlugins(project);
 
 		configureConf2ScopeMappings(project);
 		configureConfigurations(project);
-		configureDependencies(project);
 		configureProperties(project);
 		configureSourceSets(project);
 
@@ -148,9 +150,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		applyConfigScripts(project);
 
-		configureArtifacts(project);
+		configureJSModuleConfigGenerator(project);
+		configureJSTranspiler(project);
 		configureTestIntegrationTomcat(project, liferayExtension);
 
+		configureTaskClean(project);
 		configureTaskConfigJSModules(project);
 		configureTaskSetupTestableTomcat(project, liferayExtension);
 		configureTaskStartTestableTomcat(project, liferayExtension);
@@ -158,6 +162,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
 		configureTaskTranspileJS(project);
+		configureTasksBuildCSS(project);
 		configureTasksBuildLang(project);
 		configureTasksBuildUpgradeTable(project);
 
@@ -168,6 +173,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				public void execute(Project project) {
 					addDependenciesJspC(project, liferayExtension);
 
+					configureArtifacts(project);
 					configureVersion(project, liferayExtension);
 
 					configureTasks(project, liferayExtension);
@@ -216,8 +222,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		copy.from(jar);
-
-		GradleUtil.setProperty(copy, AUTO_CLEAN_PROPERTY_NAME, false);
 
 		return copy;
 	}
@@ -369,6 +373,19 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 			jar.from(sourceSet.getAllSource());
+
+			if (isTestProject(project)) {
+				sourceSet = GradleUtil.getSourceSet(
+					project, SourceSet.TEST_SOURCE_SET_NAME);
+
+				jar.from(sourceSet.getAllSource());
+
+				sourceSet = GradleUtil.getSourceSet(
+					project,
+					TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
+
+				jar.from(sourceSet.getAllSource());
+			}
 		}
 
 		TaskContainer taskContainer = project.getTasks();
@@ -447,7 +464,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, JavaPlugin.JAVADOC_TASK_NAME);
 
 		zip.dependsOn(javadoc);
-		zip.from(javadoc.getDestinationDir());
+		zip.from(javadoc);
 
 		return zip;
 	}
@@ -491,16 +508,45 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Task jarSourcesTask = GradleUtil.getTask(
 			project, JAR_SOURCES_TASK_NAME);
 
-		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
+		Spec<File> spec = new Spec<File>() {
 
-		Map<String, Object> args = new HashMap<>();
+			@Override
+			public boolean isSatisfiedBy(File file) {
+				String fileName = file.getName();
 
-		args.put("dir", project.getProjectDir());
-		args.put("include", "**/*.java");
+				if (fileName.equals("MANIFEST.MF")) {
+					return false;
+				}
 
-		FileTree javaFileTree = project.fileTree(args);
+				return true;
+			}
 
-		if (!javaFileTree.isEmpty()) {
+		};
+
+		if (hasSourceFiles(jarSourcesTask, spec)) {
+			artifactHandler.add(
+				Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
+		}
+
+		Task javadocTask = GradleUtil.getTask(
+			project, JavaPlugin.JAVADOC_TASK_NAME);
+
+		spec = new Spec<File>() {
+
+			@Override
+			public boolean isSatisfiedBy(File file) {
+				String fileName = file.getName();
+
+				if (fileName.endsWith(".java")) {
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		if (hasSourceFiles(javadocTask, spec)) {
 			Task zipJavadocTask = GradleUtil.getTask(
 				project, ZIP_JAVADOC_TASK_NAME);
 
@@ -574,38 +620,36 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configurationContainer.all(action);
 	}
 
-	protected void configureDependencies(Project project) {
-		configureDependenciesProvided(project);
-		configureDependenciesTestCompile(project);
-	}
+	protected void configureJSModuleConfigGenerator(final Project project) {
+		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
+			GradleUtil.getExtension(
+				project, JSModuleConfigGeneratorExtension.class);
 
-	protected void configureDependenciesProvided(Project project) {
-		if (!isAddDefaultDependencies(project)) {
-			return;
-		}
+		String version = GradleUtil.getProperty(
+			project, "nodejs.lfr.module.config.generator.version",
+			(String)null);
 
-		for (String dependencyNotation : DEFAULT_DEPENDENCY_NOTATIONS) {
-			GradleUtil.addDependency(
-				project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
-				dependencyNotation);
-		}
-
-		for (String dependencyNotation : _DEFAULT_EXT_DEPENDENCY_NOTATIONS) {
-			GradleUtil.addDependency(
-				project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
-				dependencyNotation);
+		if (Validator.isNotNull(version)) {
+			jsModuleConfigGeneratorExtension.setVersion(version);
 		}
 	}
 
-	protected void configureDependenciesTestCompile(Project project) {
-		if (!isAddTestDefaultDependencies(project)) {
-			return;
+	protected void configureJSTranspiler(Project project) {
+		JSTranspilerExtension jsTranspilerExtension = GradleUtil.getExtension(
+			project, JSTranspilerExtension.class);
+
+		String babelVersion = GradleUtil.getProperty(
+			project, "nodejs.babel.version", (String)null);
+
+		if (Validator.isNotNull(babelVersion)) {
+			jsTranspilerExtension.setBabelVersion(babelVersion);
 		}
 
-		for (String dependencyNotation : _DEFAULT_TEST_DEPENDENCY_NOTATIONS) {
-			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
-				dependencyNotation);
+		String lfrAmdLoaderVersion = GradleUtil.getProperty(
+			project, "nodejs.lfr.amd.loader.version", (String)null);
+
+		if (Validator.isNotNull(lfrAmdLoaderVersion)) {
+			jsTranspilerExtension.setLfrAmdLoaderVersion(lfrAmdLoaderVersion);
 		}
 	}
 
@@ -741,35 +785,60 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskClean(Project project) {
-		Task cleanTask = GradleUtil.getTask(
-			project, BasePlugin.CLEAN_TASK_NAME);
+		Task task = GradleUtil.getTask(project, BasePlugin.CLEAN_TASK_NAME);
 
-		configureTaskCleanDependsOn(cleanTask);
+		if (task instanceof Delete) {
+			configureTaskCleanDependsOn((Delete)task);
+		}
 	}
 
-	protected void configureTaskCleanDependsOn(Task cleanTask) {
-		Project project = cleanTask.getProject();
+	protected void configureTaskCleanDependsOn(Delete delete) {
+		Closure<Set<String>> closure = new Closure<Set<String>>(null) {
 
-		for (Task task : project.getTasks()) {
-			boolean autoClean = GradleUtil.getProperty(
-				task, AUTO_CLEAN_PROPERTY_NAME, true);
+			@SuppressWarnings("unused")
+			public Set<String> doCall(Delete delete) {
+				Set<String> cleanTaskNames = new HashSet<>();
 
-			if (!autoClean) {
-				continue;
+				Project project = delete.getProject();
+
+				for (Task task : project.getTasks()) {
+					String taskName = task.getName();
+
+					if (taskName.equals(DEPLOY_TASK_NAME) ||
+						taskName.equals(
+							EclipsePlugin.getECLIPSE_CP_TASK_NAME()) ||
+						taskName.equals(
+							EclipsePlugin.getECLIPSE_PROJECT_TASK_NAME()) ||
+						taskName.equals("ideaModule") ||
+						(task instanceof BuildSoyTask)) {
+
+						continue;
+					}
+
+					boolean autoClean = GradleUtil.getProperty(
+						task, AUTO_CLEAN_PROPERTY_NAME, true);
+
+					if (!autoClean) {
+						continue;
+					}
+
+					TaskOutputs taskOutputs = task.getOutputs();
+
+					if (!taskOutputs.getHasOutput()) {
+						continue;
+					}
+
+					cleanTaskNames.add(
+						BasePlugin.CLEAN_TASK_NAME +
+							StringUtil.capitalize(taskName));
+				}
+
+				return cleanTaskNames;
 			}
 
-			TaskOutputs taskOutputs = task.getOutputs();
+		};
 
-			if (!taskOutputs.getHasOutput()) {
-				continue;
-			}
-
-			String taskName =
-				BasePlugin.CLEAN_TASK_NAME +
-					StringUtil.capitalize(task.getName());
-
-			cleanTask.dependsOn(taskName);
-		}
+		delete.dependsOn(closure);
 	}
 
 	protected void configureTaskConfigJSModules(Project project) {
@@ -1101,7 +1170,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		configureTaskClasses(project);
-		configureTaskClean(project);
 		configureTaskDeploy(project, liferayExtension);
 		configureTaskInitGradle(project);
 		configureTaskJar(project);
@@ -1515,14 +1583,18 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return iterator.next();
 	}
 
-	protected boolean isAddDefaultDependencies(Project project) {
-		return GradleUtil.getProperty(
-			project, _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
-	}
+	protected boolean hasSourceFiles(Task task, Spec<File> spec) {
+		TaskInputs taskInputs = task.getInputs();
 
-	protected boolean isAddTestDefaultDependencies(Project project) {
-		return GradleUtil.getProperty(
-			project, _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+		FileCollection fileCollection = taskInputs.getSourceFiles();
+
+		fileCollection = fileCollection.filter(spec);
+
+		if (fileCollection.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean isCleanDeployed(Delete delete) {
@@ -1539,43 +1611,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		return false;
 	}
-
-	protected static final String[] DEFAULT_DEPENDENCY_NOTATIONS = {
-		"biz.aQute.bnd:biz.aQute.bnd:2.4.1",
-		"com.liferay.portal:portal-service:default",
-		"com.liferay.portal:util-bridges:default",
-		"com.liferay.portal:util-java:default",
-		"com.liferay.portal:util-taglib:default",
-		"commons-logging:commons-logging:1.1.3",
-		"javax.activation:activation:1.1", "javax.annotation:jsr250-api:1.0",
-		"javax.mail:mail:1.4", "javax.servlet.jsp:jsp-api:2.1",
-		"javax.servlet:javax.servlet-api:3.0.1", "log4j:log4j:1.2.17"
-	};
-
-	private static final String _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
-		"com.liferay.adddefaultdependencies";
-
-	private static final String _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
-		"com.liferay.addtestdefaultdependencies";
-
-	private static final String[] _DEFAULT_EXT_DEPENDENCY_NOTATIONS = {
-		"hsqldb:hsqldb:1.8.0.7", "javax.ccpp:ccpp:1.0", "javax.jms:jms:1.1",
-		"javax.portlet:portlet-api:2.0", "mysql:mysql-connector-java:5.1.23",
-		"net.sourceforge.jtds:jtds:1.2.6",
-		"org.eclipse.persistence:javax.persistence:2.0.0",
-		"postgresql:postgresql:9.2-1002.jdbc4"
-	};
-
-	private static final String[] _DEFAULT_TEST_DEPENDENCY_NOTATIONS = {
-		"junit:junit:4.12", "org.mockito:mockito-all:1.9.5",
-		"org.powermock:powermock-api-mockito:1.6.1",
-		"org.powermock:powermock-api-support:1.6.1",
-		"org.powermock:powermock-core:1.6.1",
-		"org.powermock:powermock-module-junit4:1.6.1",
-		"org.powermock:powermock-module-junit4-common:1.6.1",
-		"org.powermock:powermock-reflect:1.6.1",
-		"org.springframework:spring-test:3.2.10.RELEASE"
-	};
 
 	private static final Logger _logger = Logging.getLogger(
 		LiferayJavaPlugin.class);

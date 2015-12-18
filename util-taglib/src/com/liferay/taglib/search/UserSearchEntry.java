@@ -72,6 +72,8 @@ public class UserSearchEntry extends TextSearchEntry {
 		throws Exception {
 
 		request.setAttribute(
+			"liferay-ui:search-container-column-user:cssClass", getCssClass());
+		request.setAttribute(
 			"liferay-ui:search-container-column-user:date", _date);
 		request.setAttribute(
 			"liferay-ui:search-container-column-user:showDetails",

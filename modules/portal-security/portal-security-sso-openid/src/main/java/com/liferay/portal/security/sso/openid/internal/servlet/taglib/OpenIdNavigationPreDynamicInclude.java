@@ -35,6 +35,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * When Liferay's Sign In portlet is requested, this component checks if OpenID
+ * authentication has been enabled for the portal instance being accessed and,
+ * if so, adds an OpenID link to the Sign In portlet for triggering the
+ * authentication process.
+ *
  * @author Michael C. Han
  */
 @Component(immediate = true, service = DynamicInclude.class)
@@ -46,12 +51,13 @@ public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 			String key)
 		throws IOException {
 
-		String strutsAction = ParamUtil.getString(request, "struts_action");
+		String mvcRenderCommandName = ParamUtil.getString(
+			request, "mvcRenderCommandName");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (strutsAction.startsWith("/login/open_id") ||
+		if (mvcRenderCommandName.equals("/login/openid") ||
 			!_openId.isEnabled(themeDisplay.getCompanyId())) {
 
 			return;
@@ -75,7 +81,7 @@ public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
 		dynamicIncludeRegistry.register(
-			"/html/portlet/login/navigation.jsp#pre");
+			"com.liferay.login.web#/navigation.jsp#pre");
 	}
 
 	@Reference(unbind = "-")
@@ -92,7 +98,7 @@ public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private static final String _JSP_PATH =
-		"/html/portlet/login/navigation/open_id.jsp";
+		"/com.liferay.login.web/navigation/openid.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdNavigationPreDynamicInclude.class);

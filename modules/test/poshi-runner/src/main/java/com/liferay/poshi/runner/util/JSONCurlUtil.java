@@ -46,6 +46,8 @@ public class JSONCurlUtil {
 			sb.append(line);
 		}
 
+		System.out.println(sb.toString());
+
 		DocumentContext documentContext = JsonPath.parse(sb.toString());
 
 		Object object = documentContext.read(jsonPath);

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.FolderIndexer;
 import com.liferay.portal.kernel.search.Indexer;
@@ -96,13 +95,8 @@ public class JournalFolderIndexer
 
 	@Override
 	protected void doDelete(JournalFolder journalFolder) throws Exception {
-		Document document = new DocumentImpl();
-
-		document.addUID(CLASS_NAME, journalFolder.getFolderId());
-
-		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), journalFolder.getCompanyId(),
-			document.get(Field.UID), isCommitImmediately());
+		deleteDocument(
+			journalFolder.getCompanyId(), journalFolder.getFolderId());
 	}
 
 	@Override

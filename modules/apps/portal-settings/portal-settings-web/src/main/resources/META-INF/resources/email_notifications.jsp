@@ -60,7 +60,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 
 			<liferay-ui:error key="emailUserAddedBody" message="please-enter-a-valid-body" />
 
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				bodyLabel="body-with-password"
 				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedBody", "settings", ContentUtil.get(PropsValues.ADMIN_EMAIL_USER_ADDED_BODY)) %>'
 				emailParam="adminEmailUserAdded"
@@ -72,7 +72,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 
 			<liferay-ui:error key="emailUserAddedNoPasswordBody" message="please-enter-a-valid-body" />
 
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				bodyLabel="body-without-password"
 				emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedNoPasswordBody", "settings", ContentUtil.get(PropsValues.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY)) %>'
 				emailParam="adminEmailUserAddedNoPassword"
@@ -92,7 +92,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		<liferay-ui:error key="emailVerificationSubject" message="please-enter-a-valid-subject" />
 		<liferay-ui:error key="emailVerificationBody" message="please-enter-a-valid-body" />
 
-		<liferay-ui:email-notification-settings
+		<liferay-frontend:email-notification-settings
 			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailVerificationBody", "settings", ContentUtil.get(PropsValues.ADMIN_EMAIL_VERIFICATION_BODY)) %>'
 			emailParam="adminEmailVerification"
 			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailVerificationSubject", "settings", ContentUtil.get(PropsValues.ADMIN_EMAIL_VERIFICATION_SUBJECT)) %>'
@@ -109,7 +109,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		<liferay-ui:error key="emailPasswordSentSubject" message="please-enter-a-valid-subject" />
 		<liferay-ui:error key="emailPasswordSentBody" message="please-enter-a-valid-body" />
 
-		<liferay-ui:email-notification-settings
+		<liferay-frontend:email-notification-settings
 			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordSentBody", "settings", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY)) %>'
 			emailParam="adminEmailPasswordSent"
 			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordSentSubject", "settings", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT)) %>'
@@ -126,7 +126,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 			<liferay-ui:error key="emailPasswordResetSubject" message="please-enter-a-valid-subject" />
 			<liferay-ui:error key="emailPasswordResetBody" message="please-enter-a-valid-body" />
 
-		<liferay-ui:email-notification-settings
+		<liferay-frontend:email-notification-settings
 			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordResetBody", "settings", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY)) %>'
 			emailParam="adminEmailPasswordReset"
 			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordResetSubject", "settings", ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT)) %>'

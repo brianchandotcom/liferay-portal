@@ -14,9 +14,11 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.dao.db.HypersonicDB;
+import com.liferay.portal.dao.db.DBManagerImpl;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManager;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,6 +44,10 @@ public class HypersonicLoader {
 	public static void loadHypersonic(Connection con, String fileName)
 		throws Exception {
 
+		DBManager dbManager = new DBManagerImpl();
+
+		DB db = dbManager.getDB(DBType.HYPERSONIC, null);
+
 		List<String> lines = Files.readAllLines(
 			Paths.get(fileName), StandardCharsets.UTF_8);
 
@@ -55,8 +61,6 @@ public class HypersonicLoader {
 			sb.append(line);
 			sb.append(StringPool.NEW_LINE);
 		}
-
-		DB db = new HypersonicDB(0, 0);
 
 		db.runSQLTemplateString(con, sb.toString(), false, true);
 	}
@@ -82,7 +86,7 @@ public class HypersonicLoader {
 
 		ToolDependencies.wireBasic();
 
-		DBFactoryUtil.setDB(DB.TYPE_HYPERSONIC, null);
+		DBManagerUtil.setDB(DBType.HYPERSONIC, null);
 
 		// See LEP-2927. Appending ;shutdown=true to the database connection URL
 		// guarantees that ${databaseName}.log is purged.

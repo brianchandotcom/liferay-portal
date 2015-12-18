@@ -25,7 +25,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertClick" locator1="BasePortlet#SPECIFIC_PORTLET_OPTIONS_ICON" value1="Options" />
+				<execute function="AssertClick" locator1="BasePortlet#SPECIFIC_PORTLET_ELLIPSIS_ICON" value1="Options" />
 			</else>
 		</if>
 

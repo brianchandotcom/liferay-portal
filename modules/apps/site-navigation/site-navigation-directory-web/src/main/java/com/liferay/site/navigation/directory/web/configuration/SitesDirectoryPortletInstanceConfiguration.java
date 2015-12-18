@@ -23,7 +23,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.site.navigation.directory.web.configuration.SitesDirectoryPortletInstanceConfiguration"
+	id = "com.liferay.site.navigation.directory.web.configuration.SitesDirectoryPortletInstanceConfiguration",
+	localization = "content/Language",
+	name = "%sites.directory.portlet.instance.configuration.name"
 )
 public interface SitesDirectoryPortletInstanceConfiguration {
 

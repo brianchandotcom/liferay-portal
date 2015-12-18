@@ -134,7 +134,7 @@
 	</command>
 
 	<command name="addFromMyProfile">
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<execute function="Type#typeClickAt" locator1="TextInput#NAME" value1="${pageName}" />
 
@@ -156,7 +156,10 @@
 	</command>
 
 	<command name="addJavaScript">
-		<execute function="AssertClick" locator1="SitePages#JAVASCRIPT_NAVIGATION" value1="JavaScript" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="JavaScript" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="SitePages#JAVASCRIPT_LABEL" value1="Paste JavaScript code that is executed at the bottom of every page." />
 		<execute function="Type" locator1="SitePages#JAVASCRIPT_TEXTAREA" value1="${javaScript}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -186,12 +189,12 @@
 
 	<command name="addSitePageTypeEmbeddedCP">
 		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD" value1="${pageTypeURL}" />
-		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD" value1="Show content from another website." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD" value1="Show content from another website." />
 	</command>
 
 	<command name="addSitePageTypeLinkToURLCP">
 		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_URL_URL_FIELD" value1="${pageTypeURL}" />
-		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD" value1="Link to another website." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD" value1="Link to another website." />
 	</command>
 
 	<command name="addSitePageTypePanelCP">
@@ -202,6 +205,10 @@
 	</command>
 
 	<command name="changeColorSchemesCP">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Look and Feel" />
+		</execute>
+
 		<if>
 			<equals arg1="${colorScheme}" arg2="Dark" />
 			<then>
@@ -253,17 +260,25 @@
 	<command name="changePageTypeLayoutPG">
 		<var name="key_columnName" value="${columnName}" />
 
-		<execute function="Click" locator1="DockbarEditpanel#EDIT" value1="Edit" />
+		<execute function="Click" locator1="ControlMenu#EDIT" value1="Edit" />
+
 		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
+
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="copyApplicationsFromPageToPagePG">
-		<execute function="Click" locator1="DockbarEditpanel#EDIT" />
+		<execute function="Click" locator1="ControlMenu#EDIT" />
+
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#COPY_APPLICATIONS" value1="Copy Applications" />
+
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#COPY_APPLICATIONS_MESSAGE_INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL" value1="Copy from Page" />
+
 		<execute function="Click" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT" value1="${sitePageName}" />
+
 		<execute function="AssertClick" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_BUTTON" value1="Copy" />
 
 		<execute function="AssertTextNotPresent" locator1="CPBlogs#PORTLET_TITLE" value1="Blogs" />
@@ -376,7 +391,8 @@
 	</command>
 
 	<command name="editPG">
-		<execute function="Click" locator1="DockbarEditpanel#EDIT" value1="Edit" />
+		<execute function="Click" locator1="ControlMenu#EDIT" value1="Edit" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${sitePageNameEdit}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -389,8 +405,10 @@
 	</command>
 
 	<command name="embeddedPageTypePG">
-		<execute function="Click" locator1="DockbarEditpanel#EDIT" value1="Edit" />
+		<execute function="Click" locator1="ControlMenu#EDIT" value1="Edit" />
+
 		<execute function="AssertClick" locator1="SitePagesEditPage#TYPE_PAGE_OPTIONS" value1="Embedded" />
+
 		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD" value1="http://www.liferay.com" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -541,8 +559,8 @@
 	<command name="tearDownPrivateCP">
 		<description message="Delete all pages in the Private tab in Site Pages for Liferay." />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<var name="key_siteName" value="Liferay" />
@@ -698,7 +716,6 @@
 	<command name="viewIncompletePageViaStagingPageVariationCP">
 		<var name="key_sitePageName" value="${pageName}" />
 
-		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
 		<execute function="AssertTextEquals" locator1="SitePages#INCOMPLETE_STAGING_PAGE_VARIATION_ENABLE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
 		<execute function="AssertTextEquals" locator1="SitePages#INCOMPLETE_STAGING_PAGE_VARIATION_DELETE_BUTTON" value1="Delete in All Pages Variations" />
@@ -725,40 +742,16 @@
 	</command>
 
 	<command name="viewNoDeletePagesAssociatedWithSiteTemplateCP">
-		<if>
-			<equals arg1="${iframe}" arg2="true" />
-			<then>
+		<var name="key_page" value="${page}" />
 
-				<execute function="SelectFrame" locator1="IFrame#MANAGE_SITE_PAGES" />
-			</then>
-		</if>
+		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
 
-		<if>
-			<isset var="sitePageName" />
-			<then>
-				<var name="key_sitePageName" value="${sitePageName}" />
-
-				<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
-			</then>
-			<elseif>
-				<isset var="siteChildPageName" />
-				<then>
-					<var name="key_siteChildPageName" value="${siteChildPageName}" />
-
-					<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_3" value1="${siteChildPageName}" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="AssertElementNotPresent" locator1="Button#ADD_PAGE" value1="Add Page" />
 		<execute function="AssertElementNotPresent" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
-
-		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewOnlyAddOptionViaSiteAdminCP">
-		<execute function="Click" locator1="Icon#ADD" />
+		<execute function="Click" locator1="ControlMenu#ADD" />
 
 		<execute function="AssertElementNotPresent" locator1="NavPill#CONTENT" />
 		<execute function="AssertElementNotPresent" locator1="NavPill#APPLICATIONS" />
@@ -800,11 +793,11 @@
 	</command>
 
 	<command name="viewPageTemplatePG">
-		<execute function="Click" locator1="ControlMenu#PAGE_INFO_MESSAGE_ICON" />
+		<execute function="Click" locator1="ControlMenu#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
 
-		<execute function="Click#clickAt" locator1="ControlMenu#EDIT_COG" />
+		<execute function="Click#clickAt" locator1="ControlMenu#EDIT" />
 
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL_GENERIC" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute function="AssertChecked" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC" />
@@ -833,9 +826,11 @@
 	</command>
 
 	<command name="viewPanelPortletListCP">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
 
 		<var name="key_componentName" value="${componentName}" />
 

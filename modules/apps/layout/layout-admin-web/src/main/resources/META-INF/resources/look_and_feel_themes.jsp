@@ -207,15 +207,9 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 					PortletURL marketplaceURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.MARKETPLACE_STORE, PortletRequest.RENDER_PHASE);
 					%>
 
-					<liferay-ui:icon
-						cssClass="manage-layout-set-branches-link pull-right"
-						iconCssClass="icon-inbox"
-						id="installMore"
-						label="<%= true %>"
-						linkCssClass="btn btn-default"
-						message="install-more"
-						url="<%= marketplaceURL.toString() %>"
-					/>
+					<aui:button-row>
+						<aui:button cssClass="manage-layout-set-branches-link" href="<%= marketplaceURL.toString() %>" id="installMore" value="install-more" />
+					</aui:button-row>
 				</c:if>
 			</legend>
 

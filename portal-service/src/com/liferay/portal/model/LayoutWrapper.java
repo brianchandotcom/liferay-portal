@@ -1593,6 +1593,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public boolean isTypeSharedPortlet() {
+		return _layout.isTypeSharedPortlet();
+	}
+
+	@Override
 	public boolean isTypeURL() {
 		return _layout.isTypeURL();
 	}

@@ -1,0 +1,7 @@
+dependencies {
+	provided group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

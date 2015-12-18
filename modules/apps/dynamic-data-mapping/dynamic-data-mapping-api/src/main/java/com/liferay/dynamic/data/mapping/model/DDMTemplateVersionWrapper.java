@@ -197,15 +197,6 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 		return _ddmTemplateVersion.compareTo(ddmTemplateVersion);
 	}
 
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	*/
-	@Deprecated
-	@Override
-	public boolean getApproved() {
-		return _ddmTemplateVersion.getApproved();
-	}
-
 	@Override
 	public java.lang.String[] getAvailableLanguageIds() {
 		return _ddmTemplateVersion.getAvailableLanguageIds();

@@ -14,20 +14,17 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
 
 /**
  * @author Carlos Lancha
- * @generated
  */
 public class AlertTag extends IncludeTag {
 
 	@Override
-	public int doStartTag() throws JspException {
+	public int doStartTag() {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		return EVAL_BODY_INCLUDE;
@@ -45,12 +42,6 @@ public class AlertTag extends IncludeTag {
 		setScopedAttribute("closeable", closeable);
 	}
 
-	public void setMessage(String message) {
-		_message = message;
-
-		setScopedAttribute("message", message);
-	}
-
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 
@@ -61,6 +52,12 @@ public class AlertTag extends IncludeTag {
 		_destroyOnHide = destroyOnHide;
 
 		setScopedAttribute("destroyOnHide", destroyOnHide);
+	}
+
+	public void setMessage(String message) {
+		_message = message;
+
+		setScopedAttribute("message", message);
 	}
 
 	public void setTargetContainer(String targetContainer) {
@@ -120,17 +117,15 @@ public class AlertTag extends IncludeTag {
 		setNamespacedAttribute(request, "type", _type);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = 
-		"liferay-ui:alert:";
+	private static final String _ATTRIBUTE_NAMESPACE = "liferay-ui:alert:";
 
-	private static final String _PAGE =
-		"/html/taglib/ui/alert/page.jsp";
+	private static final String _PAGE = "/html/taglib/ui/alert/page.jsp";
 
 	private Integer _animationTime = 500;
 	private boolean _closeable = true;
-	private String _message;
 	private String _cssClass;
 	private boolean _destroyOnHide;
+	private String _message;
 	private String _targetContainer;
 	private Integer _timeout = -1;
 	private String _title;

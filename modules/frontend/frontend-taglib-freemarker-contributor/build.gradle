@@ -1,0 +1,7 @@
+dependencies {
+	compile project(":frontend:frontend-taglib")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

@@ -15,7 +15,7 @@
 package com.liferay.portal.tools.sql;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 /**
  * @author     Alexander Chow
@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 public abstract class DBUtil implements DB {
 
 	public static DB getInstance() {
-		return DBFactoryUtil.getDB();
+		return DBManagerUtil.getDB();
 	}
 
 }

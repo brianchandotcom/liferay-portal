@@ -38,6 +38,17 @@ public class UpdateFileEntriesHandler extends BaseJSONHandler {
 	}
 
 	@Override
+	public boolean handlePortalException(String exception) throws Exception {
+		if (exception.equals(
+				"com.liferay.portal.kernel.upload.UploadException")) {
+
+			return true;
+		}
+
+		return super.handlePortalException(exception);
+	}
+
+	@Override
 	public void processResponse(String response) throws Exception {
 		Map<String, Handler> handlers = (Map<String, Handler>)getParameterValue(
 			"handlers");

@@ -45,7 +45,7 @@ public class AnnotationsExtendedObjectClassDefinition
 		loadConfigurationBeanClass(bundle);
 
 		if (_configurationBeanClass != null) {
-			processConfigurationAdminCategory();
+			processConfigurationAdminFields();
 		}
 	}
 
@@ -124,7 +124,7 @@ public class AnnotationsExtendedObjectClassDefinition
 		}
 	}
 
-	protected void processConfigurationAdminCategory() {
+	protected void processConfigurationAdminFields() {
 		ConfigurationAdmin configurationAdmin =
 			_configurationBeanClass.getAnnotation(ConfigurationAdmin.class);
 
@@ -132,6 +132,9 @@ public class AnnotationsExtendedObjectClassDefinition
 			Map<String, String> map = new HashMap<>();
 
 			map.put("category", configurationAdmin.category());
+			map.put(
+				"factoryInstanceLabelAttribute",
+				configurationAdmin.factoryInstanceLabelAttribute());
 
 			_extensionAttributes.put(ConfigurationAdmin.XML_NAMESPACE, map);
 		}

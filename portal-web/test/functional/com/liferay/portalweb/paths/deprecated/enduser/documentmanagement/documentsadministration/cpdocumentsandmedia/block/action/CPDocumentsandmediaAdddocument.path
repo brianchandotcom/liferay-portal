@@ -108,12 +108,12 @@
 <!--CATEGORIZATION-->
 <tr>
 	<td>CATEGORIZATION_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='dlFileEntryCategorizationPanel']</td>
+	<td>//div[contains(@href,'categorizationContent') and @aria-expanded='false']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORIZATION_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='dlFileEntryCategorizationPanel']</td>
+	<td>//div[contains(@href,'categorizationContent') and @aria-expanded='true']</td>
 	<td></td>
 </tr>
 <tr>

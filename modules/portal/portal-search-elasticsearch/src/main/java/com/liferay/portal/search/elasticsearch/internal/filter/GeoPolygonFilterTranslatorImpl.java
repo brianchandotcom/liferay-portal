@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.search.filter.GeoPolygonFilter;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.elasticsearch.filter.GeoPolygonFilterTranslator;
 
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.FilterBuilders;
-import org.elasticsearch.index.query.GeoPolygonFilterBuilder;
+import org.elasticsearch.index.query.GeoPolygonQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,23 +32,19 @@ public class GeoPolygonFilterTranslatorImpl
 	implements GeoPolygonFilterTranslator {
 
 	@Override
-	public FilterBuilder translate(GeoPolygonFilter geoPolygonFilter) {
-		GeoPolygonFilterBuilder geoPolygonFilterBuilder =
-			FilterBuilders.geoPolygonFilter(geoPolygonFilter.getField());
+	public QueryBuilder translate(GeoPolygonFilter geoPolygonFilter) {
+		GeoPolygonQueryBuilder geoPolygonQueryBuilder =
+			QueryBuilders.geoPolygonQuery(geoPolygonFilter.getField());
 
 		for (GeoLocationPoint geoLocationPoint :
 				geoPolygonFilter.getGeoLocationPoints()) {
 
-			geoPolygonFilterBuilder.addPoint(
+			geoPolygonQueryBuilder.addPoint(
 				geoLocationPoint.getLatitude(),
 				geoLocationPoint.getLongitude());
 		}
 
-		if (geoPolygonFilter.isCached() != null) {
-			geoPolygonFilterBuilder.cache(geoPolygonFilter.isCached());
-		}
-
-		return geoPolygonFilterBuilder;
+		return geoPolygonQueryBuilder;
 	}
 
 }

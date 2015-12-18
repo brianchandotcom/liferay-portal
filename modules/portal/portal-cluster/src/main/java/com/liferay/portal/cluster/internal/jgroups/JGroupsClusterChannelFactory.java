@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cluster.internal.jgroups;
 
-import com.liferay.portal.cluster.ClusterChannel;
-import com.liferay.portal.cluster.ClusterChannelFactory;
-import com.liferay.portal.cluster.ClusterReceiver;
+import com.liferay.portal.cluster.internal.ClusterChannel;
+import com.liferay.portal.cluster.internal.ClusterChannelFactory;
+import com.liferay.portal.cluster.internal.ClusterReceiver;
 import com.liferay.portal.cluster.internal.constants.ClusterPropsKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

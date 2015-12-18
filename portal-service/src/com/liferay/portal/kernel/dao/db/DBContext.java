@@ -33,8 +33,8 @@ public class DBContext {
 		}
 	}
 
-	public DBFactory getDBFactory() {
-		return DBFactoryUtil.getDBFactory();
+	public DBManager getDBManager() {
+		return DBManagerUtil.getDBManager();
 	}
 
 	public Connection getUpgradeOptimizedConnection() {

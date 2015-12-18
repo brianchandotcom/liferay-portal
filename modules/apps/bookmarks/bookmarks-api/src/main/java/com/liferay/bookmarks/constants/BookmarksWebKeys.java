@@ -23,4 +23,7 @@ public class BookmarksWebKeys {
 
 	public static final String BOOKMARKS_FOLDER = "BOOKMARKS_FOLDER";
 
+	public static final String BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR =
+		"BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR";
+
 }

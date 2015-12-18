@@ -24,7 +24,8 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.scripting.javascript.configuration.JavaScriptExecutorConfiguration",
-	localization = "content/Language"
+	localization = "content/Language",
+	name = "%javascript.executor.configuration.name"
 )
 public interface JavaScriptExecutorConfiguration {
 

@@ -16,8 +16,8 @@
 
 <%@ include file="/html/taglib/ui/alert/init.jsp" %>
 
-<aui:script use="liferay-portlet-alert">
-	new Liferay.Portlet.Alert(
+<aui:script use="liferay-alert">
+	new Liferay.Alert(
 		{
 			closeable: <%= closeable %>,
 			delay: {

@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,7 +44,7 @@ public class QueryUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_db = DBFactoryUtil.getDB();
+		_db = DBManagerUtil.getDB();
 
 		_db.runSQL(_SQL_CREATE_TABLE);
 		_db.runSQL(createInserts(_SIZE));

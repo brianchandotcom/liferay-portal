@@ -46,8 +46,8 @@ public class AWTPermissionTest {
 					public void eventDispatched(AWTEvent event) {
 					}
 
-				}, AWTEvent.ACTION_EVENT_MASK
-			);
+				},
+				AWTEvent.ACTION_EVENT_MASK);
 
 			Assert.fail();
 		}

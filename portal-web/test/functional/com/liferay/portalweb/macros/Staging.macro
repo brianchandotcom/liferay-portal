@@ -69,20 +69,17 @@
 			<equals arg1="${editActivateStaging}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 			<elseif>
 				<equals arg1="${remoteStaging}" arg2="true" />
 				<then>
 					<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 					<execute function="Confirm" value1="Are you sure you want to activate remote staging for ${siteName}?" />
-					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 				</then>
 			</elseif>
 			<else>
 				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 				<execute function="Confirm" value1="Are you sure you want to activate local staging for ${siteName}?" />
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 
@@ -581,7 +578,6 @@
 
 	<command name="publishToLive">
 		<execute function="AssertClickNoError#assertPartialTextClickAt" locator1="Button#SUBMIT" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute function="Pause" locator1="5000" />
@@ -632,8 +628,8 @@
 	<command name="remoteStagingSetUp">
 		<var name="siteID" value="${siteID}" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -650,7 +646,7 @@
 		<execute function="Copy" locator1="SitesEditSite#SITE_ID" value1="siteID" />
 
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Configuration" />
+			<var name="portletName" value="Staging Processes" />
 			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
@@ -784,19 +780,19 @@
 	</command>
 
 	<command name="submitForPublicationPageRevision">
-		<execute function="AssertTextEquals" locator1="Message#STATUS" value1="Draft" />
+		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Draft" />
 
 		<execute function="AssertClick" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" />
 
 		<if>
-			<condition function="IsTextEqual" locator1="Message#STATUS" value1="Pending (Created)" />
+			<condition function="IsTextEqual" locator1="Message#WORKFLOW_STATUS" value1="Pending (Created)" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#STATUS" value1="Pending (Created)" />
+				<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Pending (Created)" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#STATUS" value1="Pending (Review)" />
+				<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Pending (Review)" />
 			</else>
 		</if>
 	</command>
@@ -811,6 +807,12 @@
 
 		<execute function="ClickNoError" locator1="Staging#STAGING_MENU_UNDO_BUTTON" />
 		<execute function="Confirm" value1="Are you sure you want to undo your last changes?" />
+	</command>
+
+	<command name="viewEditedSitePagesVariationPG">
+		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#EDITED_SITE_PAGES_VARIATION" value1="${sitePagesVariationName}" />
 	</command>
 
 	<command name="viewHistoryVersionPG">
@@ -918,7 +920,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#STATUS" value1="${stagingWorkflowStatus}" />
+		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="${stagingWorkflowStatus}" />
 	</command>
 
 	<command name="viewValidationError">

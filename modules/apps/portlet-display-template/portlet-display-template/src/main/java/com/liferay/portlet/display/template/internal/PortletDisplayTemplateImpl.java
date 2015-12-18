@@ -446,7 +446,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		contextObjects.put(TemplateConstants.WRITER, unsyncStringWriter);
 
 		if (renderRequest != null) {
-			contextObjects.putAll(_getPortletPreferences(renderRequest));
+			_mergePortletPreferences(renderRequest, contextObjects);
 		}
 
 		return transformer.transform(
@@ -492,10 +492,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		_groupLocalService = groupLocalService;
 	}
 
-	private Map<String, Object> _getPortletPreferences(
-		RenderRequest renderRequest) {
-
-		Map<String, Object> contextObjects = new HashMap<>();
+	private Map<String, Object> _mergePortletPreferences(
+		RenderRequest renderRequest, Map<String, Object> contextObjects) {
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
@@ -505,6 +503,10 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			PortletDisplayTemplateConstants.PORTLET_PREFERENCES, map);
 
 		for (Map.Entry<String, String[]> entry : map.entrySet()) {
+			if (contextObjects.containsKey(entry.getKey())) {
+				continue;
+			}
+
 			String[] values = entry.getValue();
 
 			if (ArrayUtil.isEmpty(values)) {

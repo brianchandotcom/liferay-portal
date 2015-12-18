@@ -15,12 +15,12 @@
 package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.test.rule.callback.TestCallback;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.rule.ExpectedDBType;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedMultipleLogs;
@@ -222,12 +222,12 @@ public class LogAssertionTestCallback
 
 		for (ExpectedLogs expectedLogs : expectedLogsList) {
 			for (ExpectedLog expectedLog : expectedLogs.expectedLogs()) {
-				String dbType = expectedLog.dbType();
+				ExpectedDBType expectedDBType = expectedLog.expectedDBType();
 
-				if (Validator.isNotNull(dbType)) {
-					DB db = DBFactoryUtil.getDB();
+				if (expectedDBType != ExpectedDBType.NONE) {
+					DB db = DBManagerUtil.getDB();
 
-					if (!Validator.equals(dbType, db.getType())) {
+					if (expectedDBType.getDBType() != db.getDBType()) {
 						continue;
 					}
 				}

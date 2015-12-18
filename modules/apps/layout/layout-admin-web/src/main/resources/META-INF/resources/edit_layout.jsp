@@ -74,7 +74,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav" id="layoutsNav">
 			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.DELETE) %>">
-				<aui:nav-item cssClass="remove-layout" iconCssClass="icon-remove" label="delete" />
+				<aui:nav-item cssClass="remove-layout" label="delete" />
 			</c:if>
 		</aui:nav>
 	</aui:nav-bar>
@@ -102,7 +102,24 @@ renderResponse.setTitle(selLayout.getName(locale));
 				);
 			</aui:script>
 
-			<aui:button cssClass="remove-layout" name="deleteLayout" value="delete-in-all-pages-variations" />
+			<aui:button cssClass="remove-layout" id="deleteLayoutButton" name="deleteLayout" value="delete-in-all-pages-variations" />
+
+			<portlet:actionURL name="deleteLayout" var="deleteLayoutURL">
+				<portlet:param name="mvcPath" value="/view.jsp" />
+				<portlet:param name="redirect" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>' />
+				<portlet:param name="plid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
+				<portlet:param name="layoutSetBranchId" value="0" />
+				<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getParentPlid()) %>" />
+			</portlet:actionURL>
+
+			<aui:script use="aui-base">
+				AUI.$('#<portlet:namespace />deleteLayoutButton').on(
+					'click',
+					function(event) {
+						submitForm(document.hrefFm, '<%= deleteLayoutURL %>');
+					}
+				);
+			</aui:script>
 		</aui:button-row>
 	</c:when>
 	<c:otherwise>

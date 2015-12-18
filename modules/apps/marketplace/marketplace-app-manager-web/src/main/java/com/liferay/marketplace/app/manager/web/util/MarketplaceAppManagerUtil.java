@@ -18,7 +18,10 @@ import com.liferay.marketplace.app.manager.web.constants.BundleConstants;
 import com.liferay.marketplace.model.App;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
@@ -53,6 +56,37 @@ public class MarketplaceAppManagerUtil {
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, appDisplay.getTitle(), null);
+	}
+
+	public static void addPortletBreadcrumbEntry(
+		AppDisplay appDisplay, ModuleGroupDisplay moduleGroupDisplay,
+		Bundle bundle, HttpServletRequest request,
+		RenderResponse renderResponse) {
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, LanguageUtil.get(request, "app-manager"),
+			portletURL.toString());
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, appDisplay.getTitle(),
+			appDisplay.getDisplayURL(renderResponse));
+
+		if (moduleGroupDisplay != null) {
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, moduleGroupDisplay.getTitle(),
+				moduleGroupDisplay.getDisplayURL(renderResponse));
+		}
+
+		Dictionary<String, String> headers = bundle.getHeaders();
+
+		String bundleName = GetterUtil.getString(
+			headers.get(BundleConstants.BUNDLE_NAME));
+
+		PortalUtil.addPortletBreadcrumbEntry(request, bundleName, null);
 	}
 
 	public static void addPortletBreadcrumbEntry(
@@ -93,6 +127,16 @@ public class MarketplaceAppManagerUtil {
 		categories.add(0, "all-categories");
 
 		return ArrayUtil.toStringArray(categories);
+	}
+
+	public static String getSearchContainerFieldText(Object object) {
+		if (object == null) {
+			return StringPool.BLANK;
+		}
+
+		String string = GetterUtil.getString(object);
+
+		return HtmlUtil.escape(StringUtil.shorten(string, 400));
 	}
 
 	protected static List<String> getAppCategories(List<App> apps) {

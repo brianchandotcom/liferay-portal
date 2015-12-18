@@ -41,9 +41,7 @@ String var = (String)request.getAttribute("liferay-ui:toolbar-item:var");
 		);
 
 		<c:if test="<%= Validator.isNotNull(javaScriptToolbarItem.getJavaScript()) %>">
-			<aui:script>
-				<%= javaScriptToolbarItem.getJavaScript() %>
-			</aui:script>
+			<%= javaScriptToolbarItem.getJavaScript() %>
 		</c:if>
 	</c:when>
 	<c:when test="<%= toolbarItem instanceof URLToolbarItem %>">

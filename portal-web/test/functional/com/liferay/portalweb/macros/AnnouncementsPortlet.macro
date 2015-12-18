@@ -2,7 +2,7 @@
 	<command name="configureDisplayCountPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Announcements" />
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

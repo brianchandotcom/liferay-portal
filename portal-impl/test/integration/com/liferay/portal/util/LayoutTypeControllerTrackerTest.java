@@ -21,7 +21,6 @@ import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.LayoutTypeControllerImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portal.util.bundle.layouttypecontrollertracker.TestLayoutTypeController;
 
@@ -42,7 +41,7 @@ public class LayoutTypeControllerTrackerTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			new SyntheticBundleRule("bundle.layouttypecontrollertracker"));
 
 	@Test

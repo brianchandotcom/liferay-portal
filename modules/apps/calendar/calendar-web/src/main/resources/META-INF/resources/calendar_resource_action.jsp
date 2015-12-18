@@ -75,6 +75,5 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 		<liferay-ui:icon-delete
 			url="<%= deleteURL %>"
 		/>
-
 	</c:if>
 </liferay-ui:icon-menu>

@@ -98,94 +98,13 @@
 
 		<execute macro="WebContent#publish" />
 
-		<execute macro="WebContentNavigator#gotoPreviewCP">
+		<execute macro="WebContentNavigator#gotoPreviewEntryCP">
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertElementPresent" locator1="//img[contains(@src,'Document_1.jpg')]" />
-	</command>
-
-	<command name="ViewCKEditorsInheritanceNo" priority="4">
-		<var name="ckEditorFormatOptionsInvalid" value="Heading,Heading 2,Heading 3,Heading 4,Heading 5,Heading 6" />
-		<var name="ckEditorFormatOptionsValid" value="Normal,Formatted" />
-		<var name="invalidSubstring" value="Heading" />
-		<var name="portlet1Name" value="Message Boards" />
-		<var name="portlet2Name" value="Wiki" />
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portlet1Name}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portlet2Name}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute function="Click" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" />
-
-		<var name="key_portletName" value="${portlet1Name}" />
-
-		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
-		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="14" />
-		<execute function="AssertElementPresent" locator1="//script[contains(@src,'/ckeditor/plugins/bbcode/bbcode_parser.js')]" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
-		<execute function="SelectFrame" locator1="CKEditor#TOOLBAR_FORMAT_IFRAME" />
-
-		<for list="${ckEditorFormatOptionsValid},${ckEditorFormatOptionsInvalid}" param="optionList" >
-			<var name="key_format" value="${optionList}" />
-
-			<if>
-				<contains string="${optionList}" substring="${invalidSubstring}" />
-				<then>
-					<execute function="AssertElementNotPresent" locator1="CKEditor#TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
-				</then>
-				<else>
-					<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
-				</else>
-			</if>
-		</for>
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
-
-		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
-		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="14" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
-		<execute function="SelectFrame" locator1="CKEditor#TOOLBAR_FORMAT_IFRAME" />
-
-		<for list="${ckEditorFormatOptionsValid},${ckEditorFormatOptionsInvalid}" param="optionList" >
-			<var name="key_format" value="${optionList}" />
-
-			<if>
-				<contains string="${optionList}" substring="${invalidSubstring}" />
-				<then>
-					<execute function="AssertElementNotPresent" locator1="CKEditor#TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
-				</then>
-				<else>
-					<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_FORMAT_MENULIST" value1="${optionList}" />
-				</else>
-			</if>
-		</for>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="ViewWikiFrontPageLeftToRight" priority="4">
@@ -219,8 +138,8 @@
 	<command name="ViewWikiFrontPageRightToLeft" priority="4">
 		<var name="currentPortalLanguages" value="English (United States),Arabic (Saudi Arabia)" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Portal Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#configureCurrentLanguagesCP">
@@ -249,9 +168,9 @@
 		</execute>
 
 		<execute macro="WikiPage#addLocalizedFrontPagePG">
-			<var name="emptyPageMessage" value="هذه الصفحة فارغة. قم بتحريرها لإضافة نص." />
+			<var name="emptyPageMessage" value="هذه الص�?حة �?ارغة. قم بتحريرها لإضا�?ة نص." />
 			<var name="rtl" value="true" />
-			<var name="successMessage" value="تم تنفيذ طلبك بنجاح." />
+			<var name="successMessage" value="تم تن�?يذ طلبك بنجاح." />
 			<var name="wikiPageContent" value="Wiki Right to Left محتوى" />
 		</execute>
 

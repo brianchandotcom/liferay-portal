@@ -19,7 +19,7 @@
 
 		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
 
-		<execute function="AssertElementPresent" locator1="ControlMenu#USER_SIGN_IN" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
 
 		<execute function="AssertClick" locator1="Button#REPLY_AS" value1="Reply as..." />
 

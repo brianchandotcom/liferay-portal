@@ -28,6 +28,8 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskInputs;
+import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -38,12 +40,15 @@ public class NodePlugin implements Plugin<Project> {
 
 	public static final String EXTENSION_NAME = "node";
 
+	public static final String NPM_INSTALL_TASK_NAME = "npmInstall";
+
 	@Override
 	public void apply(Project project) {
 		final NodeExtension nodeExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, NodeExtension.class);
 
 		addTaskDownloadNode(project);
+		addTaskNpmInstall(project);
 
 		configureTasksDownloadNode(project, nodeExtension);
 		configureTasksExecuteNode(project, nodeExtension);
@@ -63,6 +68,43 @@ public class NodePlugin implements Plugin<Project> {
 	protected DownloadNodeTask addTaskDownloadNode(Project project) {
 		return GradleUtil.addTask(
 			project, DOWNLOAD_NODE_TASK_NAME, DownloadNodeTask.class);
+	}
+
+	protected ExecuteNpmTask addTaskNpmInstall(Project project) {
+		final ExecuteNpmTask executeNpmTask = GradleUtil.addTask(
+			project, NPM_INSTALL_TASK_NAME, ExecuteNpmTask.class);
+
+		executeNpmTask.setArgs("install");
+		executeNpmTask.setDescription(
+			"Install Node packages from package.json.");
+
+		TaskInputs taskInputs = executeNpmTask.getInputs();
+
+		taskInputs.file(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						executeNpmTask.getWorkingDir(), "package.json");
+				}
+
+			});
+
+		TaskOutputs taskOutputs = executeNpmTask.getOutputs();
+
+		taskOutputs.dir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						executeNpmTask.getWorkingDir(), "node_modules");
+				}
+
+			});
+
+		return executeNpmTask;
 	}
 
 	protected void configureTaskDownloadNodeDir(

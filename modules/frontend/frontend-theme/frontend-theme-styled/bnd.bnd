@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Theme Styled
 Bundle-SymbolicName: com.liferay.frontend.theme.styled
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources

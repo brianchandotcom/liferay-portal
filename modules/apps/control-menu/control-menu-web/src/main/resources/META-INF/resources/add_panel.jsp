@@ -38,7 +38,7 @@
 
 			<c:if test="<%= !group.isControlPanel() && (hasLayoutAddPermission || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 				<div class="add-content-menu" id="<portlet:namespace />addPanelContainer">
-					<aui:button cssClass="close" name="closePanelAdd" value="&times;" />
+					<aui:icon cssClass="close" id="closePanelAdd" image="times" markupView="lexicon" url="javascript:;" />
 
 					<%
 					String[] tabs1Names = new String[0];
@@ -85,7 +85,7 @@
 
 					<span class="added-message hide" id="<portlet:namespace />addedMessage">
 						<span class="alert-success message">
-							<liferay-ui:icon iconCssClass="icon-ok-sign" /> <span id="<portlet:namespace />portletName"></span> <liferay-ui:message key="added" />
+							<aui:icon image="check" markupView="lexicon" /> <span id="<portlet:namespace />portletName"></span> <liferay-ui:message key="added" />
 
 							<a class="content-link" href="javascript:;" id="<portlet:namespace />contentLink"><liferay-ui:message key="skip-to-content" /></a>
 						</span>

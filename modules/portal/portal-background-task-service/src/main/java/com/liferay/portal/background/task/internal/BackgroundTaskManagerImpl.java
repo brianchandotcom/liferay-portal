@@ -340,6 +340,19 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Override
 	public List<BackgroundTask> getBackgroundTasks(
+		long[] groupIds, String name, String taskExecutorClassName, int start,
+		int end, OrderByComparator<BackgroundTask> orderByComparator) {
+
+		List<com.liferay.portal.background.task.model.BackgroundTask>
+			backgroundTasks = _backgroundTaskLocalService.getBackgroundTasks(
+				groupIds, name, taskExecutorClassName, start, end,
+				translate(orderByComparator));
+
+		return translate(backgroundTasks);
+	}
+
+	@Override
+	public List<BackgroundTask> getBackgroundTasks(
 		String taskExecutorClassName, int status) {
 
 		List<com.liferay.portal.background.task.model.BackgroundTask>
@@ -436,6 +449,23 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
+	public int getBackgroundTasksCount(
+		long[] groupIds, String name, String taskExecutorClassName) {
+
+		return _backgroundTaskLocalService.getBackgroundTasksCount(
+			groupIds, name, taskExecutorClassName);
+	}
+
+	@Override
+	public int getBackgroundTasksCount(
+		long[] groupIds, String name, String taskExecutorClassName,
+		boolean completed) {
+
+		return _backgroundTaskLocalService.getBackgroundTasksCount(
+			groupIds, name, taskExecutorClassName, completed);
+	}
+
+	@Override
 	public String getBackgroundTaskStatusJSON(long backgroundTaskId) {
 		return _backgroundTaskLocalService.getBackgroundTaskStatusJSON(
 			backgroundTaskId);
@@ -453,6 +483,8 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
 		registerDestination(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.BACKGROUND_TASK);
@@ -466,8 +498,15 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		for (ServiceRegistration<Destination> serviceRegistration :
 				_serviceRegistrations) {
 
+			Destination destination = _bundleContext.getService(
+				serviceRegistration.getReference());
+
 			serviceRegistration.unregister();
+
+			destination.destroy();
 		}
+
+		_bundleContext = null;
 	}
 
 	protected ServiceRegistration<Destination> registerDestination(
@@ -552,6 +591,7 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	private volatile BackgroundTaskLocalService _backgroundTaskLocalService;
+	private volatile BundleContext _bundleContext;
 	private volatile DestinationFactory _destinationFactory;
 	private final Set<ServiceRegistration<Destination>> _serviceRegistrations =
 		new HashSet<>();

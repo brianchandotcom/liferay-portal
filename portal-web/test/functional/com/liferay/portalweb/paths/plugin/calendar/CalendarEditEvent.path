@@ -147,6 +147,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPEAT_MONTHLY_CURRENT_DAY</td>
+	<td>//td[contains(@class,'calendar-recurrence-month-radio')]//input[contains(@id,'CalendarPortlet_weekday') and @type='hidden']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_MONTHLY_CURRENT_MONTH_POSITION</td>
+	<td>//td[contains(@class,'calendar-recurrence-month-radio')]//input[contains(@id,'CalendarPortlet_position') and @type='hidden']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_WEEKLY_CURRENT_DAY</td>
+	<td>//td[contains(@class,'calendar-recurrence-weekday-checkbox')]//input[@disabled='']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -164,12 +179,12 @@
 </tr>
 <tr>
 	<td>DETAILS_CALENDAR_SELECT</td>
-	<td>//select[contains(@id,'calendarId')]</td>
+	<td>//select[contains(@*,'calendarId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_CALENDAR_SELECT_OPTION</td>
-	<td>//select[contains(@id,'calendarId')]/option[contains(.,'${key_calendarName}')]</td>
+	<td>//select[contains(@*,'calendarId')]/option[contains(.,'${key_calendarName}')]</td>
 	<td></td>
 </tr>
 <tr>

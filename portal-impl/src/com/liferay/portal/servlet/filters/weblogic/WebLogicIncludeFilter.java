@@ -14,14 +14,16 @@
 
 package com.liferay.portal.servlet.filters.weblogic;
 
-import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
 import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
  * @author Minhchau Dang
@@ -29,12 +31,26 @@ import javax.servlet.http.HttpServletResponseWrapper;
 public class WebLogicIncludeFilter
 	extends BasePortalFilter implements WrapHttpServletResponseFilter {
 
+	public WebLogicIncludeFilter() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			WebLogicIncludeServletResponseFactory.class,
+			new WebLogicIncludeServletResponseFactoryTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
 	@Override
 	public HttpServletResponse getWrappedHttpServletResponse(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		if (isWrap(response)) {
-			return new WebLogicIncludeServletResponse(response);
+		WebLogicIncludeServletResponseFactory
+			webLogicIncludeServletResponseFactory =
+				_webLogicIncludeServletResponseFactory;
+
+		if (webLogicIncludeServletResponseFactory != null) {
+			return webLogicIncludeServletResponseFactory.create(response);
 		}
 
 		return response;
@@ -42,36 +58,56 @@ public class WebLogicIncludeFilter
 
 	@Override
 	public boolean isFilterEnabled() {
-		return ServerDetector.isWebLogic();
+		return _webLogicIncludeServletResponseFactory != null;
 	}
 
-	protected boolean isWrap(HttpServletResponse response) {
-		if (response instanceof WebLogicIncludeServletResponse) {
-			return false;
+	private final ServiceTracker
+		<WebLogicIncludeServletResponseFactory,
+			WebLogicIncludeServletResponseFactory> _serviceTracker;
+	private volatile WebLogicIncludeServletResponseFactory
+		_webLogicIncludeServletResponseFactory;
+
+	private class WebLogicIncludeServletResponseFactoryTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<WebLogicIncludeServletResponseFactory,
+				WebLogicIncludeServletResponseFactory> {
+
+		@Override
+		public WebLogicIncludeServletResponseFactory addingService(
+			ServiceReference<WebLogicIncludeServletResponseFactory>
+				serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			WebLogicIncludeServletResponseFactory
+				webLogicIncludeServletResponseFactory = registry.getService(
+					serviceReference);
+
+			_webLogicIncludeServletResponseFactory =
+				webLogicIncludeServletResponseFactory;
+
+			return webLogicIncludeServletResponseFactory;
 		}
 
-		boolean wrap = false;
+		@Override
+		public void modifiedService(
+			ServiceReference<WebLogicIncludeServletResponseFactory>
+				serviceReference,
+			WebLogicIncludeServletResponseFactory service) {
 
-		HttpServletResponseWrapper previousResponseWrapper = null;
-
-		while (response instanceof HttpServletResponseWrapper) {
-			if (!wrap && (response instanceof MetaInfoCacheServletResponse)) {
-				wrap = true;
-			}
-
-			HttpServletResponseWrapper responseWrapper =
-				(HttpServletResponseWrapper)response;
-
-			response = (HttpServletResponse)responseWrapper.getResponse();
-
-			if (responseWrapper instanceof WebLogicIncludeServletResponse) {
-				previousResponseWrapper.setResponse(response);
-			}
-
-			previousResponseWrapper = responseWrapper;
+			removedService(serviceReference, service);
+			addingService(serviceReference);
 		}
 
-		return wrap;
+		@Override
+		public void removedService(
+			ServiceReference<WebLogicIncludeServletResponseFactory>
+				serviceReference,
+			WebLogicIncludeServletResponseFactory service) {
+
+			_webLogicIncludeServletResponseFactory = null;
+		}
+
 	}
 
 }

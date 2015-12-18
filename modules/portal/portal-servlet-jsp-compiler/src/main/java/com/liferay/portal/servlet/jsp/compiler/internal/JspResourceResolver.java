@@ -169,8 +169,6 @@ public class JspResourceResolver implements ResourceResolver {
 			if (index > -1) {
 				fileName = fileName.substring(0, index);
 			}
-
-			fileName = decodePath(fileName);
 		}
 		else if (Validator.equals(url.getProtocol(), "zip")) {
 
@@ -185,12 +183,13 @@ public class JspResourceResolver implements ResourceResolver {
 			}
 		}
 
+		fileName = decodePath(fileName);
+
 		return new JarFile(fileName);
 	}
 
 	protected Collection<String> handleSystemBundle(
-		BundleWiring bundleWiring, final String path, final String fileRegex,
-		int options) {
+		BundleWiring bundleWiring, String path, String fileRegex, int options) {
 
 		String key = path + '/' + fileRegex;
 
@@ -212,9 +211,7 @@ public class JspResourceResolver implements ResourceResolver {
 			urls = extraPackageMap.get(packageName);
 		}
 
-		if (((urls == null) || urls.isEmpty()) &&
-			isExportsPackage(bundleWiring, packageName)) {
-
+		if ((urls == null) || urls.isEmpty()) {
 			ClassLoader classLoader = bundleWiring.getClassLoader();
 
 			try {

@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>SystemSettings</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SystemSettings</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>MENUBAR_CATEGORY</td>
+	<td>//ul[@role='menubar']//a[@role='menuitem' and contains(.,'${key_category}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -62,7 +62,7 @@
 <!--SETUP-->
 <tr>
 	<td>ARCHIVE_RESTORE</td>
-	<td>//div[@class='archived-setups']/span/a</td>
+	<td>//div[@class='archived-setups']//a</td>
 	<td></td>
 </tr>
 <tr>

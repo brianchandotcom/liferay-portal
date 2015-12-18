@@ -38,6 +38,8 @@
 	</command>
 
 	<command name="gotoNode">
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
 		<execute function="AssertClick" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />

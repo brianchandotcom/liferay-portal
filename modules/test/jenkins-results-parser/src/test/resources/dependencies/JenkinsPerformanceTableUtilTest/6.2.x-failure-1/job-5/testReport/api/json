@@ -1,0 +1,40 @@
+{
+  "failCount" : 0,
+  "skipCount" : 0,
+  "totalCount" : 1,
+  "urlName" : "testReport",
+  "childReports" : [
+    {
+      "child" : {
+        "number" : 1048,
+        "url" : "https://test-1-1.liferay.com/job/test-portal-acceptance-pullrequest-batch%28ee-6.2.x%29/AXIS_VARIABLE=0,label_exp=!master/1048/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 0,
+        "passCount" : 1,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 0,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 0,
+                "name" : "test-portal-acceptance-pullrequest-batch(ee-6.2.x)/AXIS_VARIABLE=0,label_exp=!master_portal-web",
+                "skipped" : false,
+                "status" : "PASSED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    }
+  ]
+}

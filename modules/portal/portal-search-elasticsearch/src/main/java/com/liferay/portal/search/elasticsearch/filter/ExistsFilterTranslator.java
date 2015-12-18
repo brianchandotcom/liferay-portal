@@ -16,13 +16,13 @@ package com.liferay.portal.search.elasticsearch.filter;
 
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface ExistsFilterTranslator {
 
-	public FilterBuilder translate(ExistsFilter existsFilter);
+	public QueryBuilder translate(ExistsFilter existsFilter);
 
 }

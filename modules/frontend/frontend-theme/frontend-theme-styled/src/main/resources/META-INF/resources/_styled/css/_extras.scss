@@ -20,7 +20,7 @@
 	box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5);
 }
 
-.lfr-add-panel, .lfr-device-preview-panel, .lfr-edit-layout-panel {
+.lfr-add-panel, .lfr-simulation-panel, .lfr-edit-layout-panel {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
@@ -40,7 +40,7 @@
 	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
 }
 
-.lfr-device-preview {
+.lfr-simulation-device {
 	.lfr-device-size-status-content {
 		border-radius: 3px;
 		box-shadow: 0 0 1px #FFF;

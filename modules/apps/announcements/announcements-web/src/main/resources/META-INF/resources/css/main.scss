@@ -1,54 +1,9 @@
-.portlet-alerts {
-	.entry {
-		border: 6px solid #C00;
-		margin: 8px 0;
-		padding: 6px;
-	}
-
-	.entry-content {
-		display: block;
-		padding: 2px;
-	}
-
-	.entry-scope {
-		color: #CCC;
-		display: block;
-	}
-}
-
-.portlet-announcements {
-	.entry {
-		margin: 4px 0 1.2em;
-		padding-bottom: 0.5em;
-	}
-
-	.entry.last {
-	}
-
-	.entry-content {
-		display: block;
-		margin-bottom: 0.5em;
-		padding: 2px;
-	}
-
-	.entry-scope {
-		color: #555;
-		display: block;
-	}
-}
-
 .portlet-announcements, .portlet-alerts {
+	.entry-content {
+		padding: 1em;
+	}
+
 	.important {
 		font-weight: normal;
-	}
-
-	.entry-title {
-		display: block;
-		margin-bottom: 0;
-		position: relative;
-	}
-
-	.read-entries .entry-title {
-		opacity: 0.5;
 	}
 }

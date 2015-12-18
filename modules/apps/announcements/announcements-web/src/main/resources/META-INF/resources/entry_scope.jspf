@@ -71,6 +71,8 @@ scopeName = HtmlUtil.escape(scopeName);
 		</c:choose>
 	</c:when>
 	<c:otherwise>
-		<span class="entry-scope"><%= scopeName %></span>
+		<h5 class="text-default" title="<%= scopeName %>">
+			<%= scopeName %>
+		</h5>
 	</c:otherwise>
 </c:choose>

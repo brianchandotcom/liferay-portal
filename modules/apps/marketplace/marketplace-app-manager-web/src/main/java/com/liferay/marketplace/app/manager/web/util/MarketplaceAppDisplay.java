@@ -19,6 +19,8 @@ import com.liferay.marketplace.model.App;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Ryan Park
  */
@@ -55,7 +57,7 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 		return portletURL.toString();
 	}
 
-	public String getIconURL() {
+	public String getIconURL(HttpServletRequest request) {
 		return _app.getIconURL();
 	}
 

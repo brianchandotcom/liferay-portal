@@ -4,7 +4,7 @@
 	</command>
 
 	<command name="addPageContent">
-		<execute function="Type#clickAtType" locator1="Wiki#RICH_TEXT_EDITOR" value1="${wikiPageContent}" />
+		<execute function="Type#typeAlloyEditor" locator1="Wiki#RICH_TEXT_EDITOR" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="addPageTitle">

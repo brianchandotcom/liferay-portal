@@ -278,4 +278,25 @@ public class MBMessageStagedModelDataHandlerTest
 		Assert.assertTrue(importedMessage.isAnswer());
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		MBMessage message = (MBMessage)stagedModel;
+		MBMessage importedMessage = (MBMessage)importedStagedModel;
+
+		Assert.assertEquals(message.getSubject(), importedMessage.getSubject());
+		Assert.assertEquals(message.getFormat(), importedMessage.getFormat());
+		Assert.assertEquals(
+			message.isAnonymous(), importedMessage.isAnonymous());
+		Assert.assertEquals(
+			message.getPriority(), importedMessage.getPriority(), 0L);
+		Assert.assertEquals(
+			message.isAllowPingbacks(), importedMessage.isAllowPingbacks());
+		Assert.assertEquals(message.isAnswer(), importedMessage.isAnswer());
+	}
+
 }

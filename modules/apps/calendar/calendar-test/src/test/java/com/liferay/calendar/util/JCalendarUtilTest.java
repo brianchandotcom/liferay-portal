@@ -107,46 +107,6 @@ public class JCalendarUtilTest {
 	}
 
 	@Test
-	public void testGetWeekdayPosition2June2014() {
-		Calendar jCalendar = CalendarFactoryUtil.getCalendar(
-			2014, Calendar.JUNE, 2);
-
-		Assert.assertEquals(1, JCalendarUtil.getWeekdayPosition(jCalendar));
-		Assert.assertEquals(
-			Calendar.MONDAY, jCalendar.get(Calendar.DAY_OF_WEEK));
-	}
-
-	@Test
-	public void testGetWeekdayPosition4August2014() {
-		Calendar jCalendar = CalendarFactoryUtil.getCalendar(
-			2014, Calendar.AUGUST, 4);
-
-		Assert.assertEquals(1, JCalendarUtil.getWeekdayPosition(jCalendar));
-		Assert.assertEquals(
-			Calendar.MONDAY, jCalendar.get(Calendar.DAY_OF_WEEK));
-	}
-
-	@Test
-	public void testGetWeekdayPosition7August2014() {
-		Calendar jCalendar = CalendarFactoryUtil.getCalendar(
-			2014, Calendar.AUGUST, 7);
-
-		Assert.assertEquals(1, JCalendarUtil.getWeekdayPosition(jCalendar));
-		Assert.assertEquals(
-			Calendar.THURSDAY, jCalendar.get(Calendar.DAY_OF_WEEK));
-	}
-
-	@Test
-	public void testGetWeekdayPosition8August2014() {
-		Calendar jCalendar = CalendarFactoryUtil.getCalendar(
-			2014, Calendar.AUGUST, 8);
-
-		Assert.assertEquals(2, JCalendarUtil.getWeekdayPosition(jCalendar));
-		Assert.assertEquals(
-			Calendar.FRIDAY, jCalendar.get(Calendar.DAY_OF_WEEK));
-	}
-
-	@Test
 	public void testMergeJCalendar() {
 		Calendar dateJCalendar = CalendarFactoryUtil.getCalendar(
 			randomYear(), randomMonth(), randomDayOfMonth(), randomHour(),

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Weblogic Support
+Bundle-SymbolicName: com.liferay.portal.weblogic.support
+Bundle-Version: 1.0.0
+Include-Resource: classes

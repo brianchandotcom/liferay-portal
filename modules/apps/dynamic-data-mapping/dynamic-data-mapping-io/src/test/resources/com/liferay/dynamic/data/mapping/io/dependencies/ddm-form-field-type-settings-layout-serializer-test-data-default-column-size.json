@@ -1,0 +1,30 @@
+{
+	"pages": [
+		{
+			"rows": [
+				{
+					"columns": [
+						{
+							"fieldNames": ["a", "b"],
+							"size": 12
+						}
+					]
+				}
+			],
+			"title": {"en_US":"basic"}
+		},
+		{
+			"rows": [
+				{
+					"columns":[
+						{
+							"fieldNames": ["e", "c", "d"],
+							"size": 12
+						}
+					]
+				}
+			],
+			"title": {"en_US":"advanced"}
+		}
+	]
+}

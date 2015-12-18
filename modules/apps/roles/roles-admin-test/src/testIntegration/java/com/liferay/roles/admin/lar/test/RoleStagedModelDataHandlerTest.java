@@ -30,6 +30,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -89,6 +90,23 @@ public class RoleStagedModelDataHandlerTest
 		rootElement.addAttribute(
 			"user-personal-site-group-id",
 			String.valueOf(userPersonalSiteGroup.getGroupId()));
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		Role role = (Role)stagedModel;
+		Role importedRole = (Role)importedStagedModel;
+
+		Assert.assertEquals(role.getName(), importedRole.getName());
+		Assert.assertEquals(
+			role.getDescription(), importedRole.getDescription());
+		Assert.assertEquals(role.getType(), importedRole.getType());
+		Assert.assertEquals(role.getSubtype(), importedRole.getSubtype());
 	}
 
 }

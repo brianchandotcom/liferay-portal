@@ -104,8 +104,6 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"bullet-style", String.class, "bulletStyle");
-		templateVariableGroup.addVariable(
 			"header-type", String.class, "headerType");
 		templateVariableGroup.addVariable(
 			"included-layouts", String.class, "includedLayouts");

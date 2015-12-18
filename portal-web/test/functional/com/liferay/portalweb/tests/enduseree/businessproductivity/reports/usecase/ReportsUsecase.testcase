@@ -138,7 +138,7 @@
 		<var method="TestPropsUtil#get('email.password.2')" name="emailPassword2" />
 		<var method="TestPropsUtil#get('email.password.4')" name="emailPassword4" />
 
-		<execute macro="ProductMenu#gotoControlPanelSystem">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
 		</execute>
 

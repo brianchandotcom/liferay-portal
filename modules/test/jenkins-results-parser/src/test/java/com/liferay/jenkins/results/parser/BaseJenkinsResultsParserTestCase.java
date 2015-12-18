@@ -16,12 +16,17 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 
 import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 
 import org.junit.Assert;
 
@@ -61,12 +66,6 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		}
 	}
 
-	protected URL createURL(String urlString) throws Exception {
-		URL url = new URL(urlString);
-
-		return encode(url);
-	}
-
 	protected void deleteFile(File file) {
 		if (!file.exists()) {
 			return;
@@ -98,14 +97,18 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		File sampleDir = new File(sampleDirName);
 
-		if (sampleDir.exists()) {
+		File expectedMessageFile = new File(sampleDir, "expected_message.html");
+
+		if (expectedMessageFile.exists()) {
 			return;
 		}
 
-		System.out.println("Downloading sample " + sampleKey);
-
 		try {
-			downloadSample(sampleDir, url);
+			if (!sampleDir.exists()) {
+				System.out.println("Downloading sample " + sampleKey);
+
+				downloadSample(sampleDir, url);
+			}
 
 			writeExpectedMessage(sampleDir);
 		}
@@ -133,14 +136,26 @@ public abstract class BaseJenkinsResultsParserTestCase {
 				JenkinsResultsParserUtil.getLocalURL(urlString)));
 	}
 
-	protected URL encode(URL url) throws Exception {
-		URI uri = new URI(
-			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
-			url.getPath(), url.getQuery(), url.getRef());
+	protected String formatXML(String xml)
+		throws DocumentException, IOException {
 
-		String uriASCIIString = uri.toASCIIString();
+		SAXReader saxReader = new SAXReader();
 
-		return new URL(uriASCIIString.replace("#", "%23"));
+		for (int i = 0; i < _XML_REPLACEMENTS.length; i++) {
+			xml = xml.replace(_XML_REPLACEMENTS[i][0], _XML_REPLACEMENTS[i][1]);
+		}
+
+		Document document = saxReader.read(new StringReader(xml));
+
+		String formattedXML = JenkinsResultsParserUtil.format(
+			document.getRootElement());
+
+		for (int i = 0; i < _XML_REPLACEMENTS.length; i++) {
+			formattedXML = formattedXML.replace(
+				_XML_REPLACEMENTS[i][1], _XML_REPLACEMENTS[i][0]);
+		}
+
+		return formattedXML;
 	}
 
 	protected abstract String getMessage(String urlString) throws Exception;
@@ -185,7 +200,11 @@ public abstract class BaseJenkinsResultsParserTestCase {
 	}
 
 	protected File dependenciesDir = new File(
-		"src/test/resources/com/liferay/jenkins/results/parser/dependencies/" +
-			getSimpleClassName());
+		"src/test/resources/dependencies/" + getSimpleClassName());
+
+	private static final String[][] _XML_REPLACEMENTS = new String[][] {
+		{"<pre>", "<pre><![CDATA["}, {"</pre>", "]]></pre>"},
+		{"&raquo;", "[raquo]"}
+	};
 
 }

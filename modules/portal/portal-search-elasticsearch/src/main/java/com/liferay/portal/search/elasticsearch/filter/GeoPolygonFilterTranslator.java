@@ -16,13 +16,13 @@ package com.liferay.portal.search.elasticsearch.filter;
 
 import com.liferay.portal.kernel.search.filter.GeoPolygonFilter;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface GeoPolygonFilterTranslator {
 
-	public FilterBuilder translate(GeoPolygonFilter geoPolygonFilter);
+	public QueryBuilder translate(GeoPolygonFilter geoPolygonFilter);
 
 }

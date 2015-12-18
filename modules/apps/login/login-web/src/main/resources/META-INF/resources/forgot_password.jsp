@@ -30,7 +30,9 @@ if (reminderAttempts == null) {
 }
 %>
 
-<portlet:actionURL name="/login/forgot_password" var="forgotPasswordURL" />
+<portlet:actionURL name="/login/forgot_password" var="forgotPasswordURL">
+	<portlet:param name="mvcRenderCommandName" value="/login/forgot_password" />
+</portlet:actionURL>
 
 <aui:form action="<%= forgotPasswordURL %>" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
@@ -99,7 +101,6 @@ if (reminderAttempts == null) {
 				<aui:button-row>
 					<aui:button type="submit" value='<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED ? "next" : "send-new-password" %>' />
 				</aui:button-row>
-
 			</c:when>
 			<c:when test="<%= (user2 != null) && Validator.isNotNull(user2.getEmailAddress()) %>">
 				<aui:input name="step" type="hidden" value="2" />

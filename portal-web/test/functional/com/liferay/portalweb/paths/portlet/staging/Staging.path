@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>EDITED_SITE_PAGES_VARIATION</td>
+	<td>//span[contains(@class,'layout-set-branch-selector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGING_NAVIGATION</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Staging')]</td>
 	<td></td>

@@ -16,8 +16,6 @@ package com.liferay.portal.cluster.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.cluster.ClusterChannel;
-import com.liferay.portal.cluster.ClusterChannelFactory;
 import com.liferay.portal.cluster.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.cluster.internal.constants.ClusterPropsKeys;
 import com.liferay.portal.kernel.cluster.Address;

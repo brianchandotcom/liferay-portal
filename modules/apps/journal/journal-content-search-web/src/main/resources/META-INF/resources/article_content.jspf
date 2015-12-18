@@ -1,0 +1,71 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+String articleId = document.get(Field.ARTICLE_ID);
+long articleGroupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+
+List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.getGroupId(), layout.isPrivateLayout(), articleId);
+%>
+
+<%= summary.getHighlightedContent() %><br />
+
+<c:choose>
+	<c:when test="<%= !hitLayoutIds.isEmpty() %>">
+
+		<%
+		for (int i = 0; i < hitLayoutIds.size(); i++) {
+			Long hitLayoutId = (Long)hitLayoutIds.get(i);
+
+			Layout hitLayout = null;
+
+			try {
+				hitLayout = LayoutLocalServiceUtil.getLayout(layout.getGroupId(), layout.isPrivateLayout(), hitLayoutId.longValue());
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Journal content search is stale and contains layout {" + layout.getGroupId() + ", " + layout.isPrivateLayout() + ", " + hitLayoutId.longValue() + "}");
+				}
+
+				continue;
+			}
+
+			String hitLayoutURL = PortalUtil.getLayoutFullURL(hitLayout, themeDisplay);
+		%>
+
+			<br /><a href="<%= hitLayoutURL %>"><%= StringUtil.shorten(hitLayoutURL, 100) %></a>
+
+		<%
+		}
+		%>
+
+	</c:when>
+	<c:when test="<%= Validator.isNotNull(journalContentSearchPortletInstanceConfiguration.targetPortletId()) %>">
+
+		<%
+		PortletURL webContentPortletURL = PortletURLFactoryUtil.create(request, journalContentSearchPortletInstanceConfiguration.targetPortletId(), plid, PortletRequest.RENDER_PHASE);
+
+		webContentPortletURL.setParameter("groupId", String.valueOf(articleGroupId));
+		webContentPortletURL.setParameter("articleId", articleId);
+		%>
+
+		<br /><a href="<%= webContentPortletURL.toString() %>"><%= StringUtil.shorten(webContentPortletURL.toString(), 100) %></a>
+	</c:when>
+</c:choose>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("com_liferay_journal_content_search_web.article_content_jspf");
+%>

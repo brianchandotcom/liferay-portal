@@ -138,7 +138,9 @@ public class DocumentImpl implements Document {
 
 		createSortableNumericField(name, false, datesTime);
 
-		addKeyword(name, dates);
+		Field field = createField(name, dates);
+
+		field.setDates(values);
 	}
 
 	@Override

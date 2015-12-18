@@ -17,34 +17,25 @@
 <%@ include file="/management_bar_navigation/init.jsp" %>
 
 <%
-String[] navigationKeys = (String[])request.getAttribute("liferay-frontend:management-bar-navigation:navigationKeys");
-String navigationParam = (String)request.getAttribute("liferay-frontend:management-bar-navigation:navigationParam");
-PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:management-bar-navigation:portletURL");
+List<FilterNavigationItem> filterNavigationItems = (List<FilterNavigationItem>)request.getAttribute("liferay-frontend:management-bar-navigation:filterNavigationItems");
+String label = (String)request.getAttribute("liferay-frontend:management-bar-navigation:label");
 %>
 
-<c:if test="<%= ArrayUtil.isNotEmpty(navigationKeys) %>">
-
-	<%
-	String navigationKey = ParamUtil.getString(request, navigationParam, navigationKeys[0]);
-	%>
-
+<c:if test="<%= ListUtil.isNotEmpty(filterNavigationItems) %>">
 	<li class="dropdown">
-		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
-			<span class="management-bar-item-title"><liferay-ui:message key="<%= navigationKey %>" /></span>
+		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter" data-toggle="dropdown" href="javascript:;">
+			<span class="management-bar-item-title"><liferay-ui:message key="<%= label %>" /></span>
 			<span class="icon-sort"></span>
 		</a>
 
-		<ul class="dropdown-menu">
+		<ul class="dropdown-menu" data-qa-id="filterValues">
 
 			<%
-			PortletURL navigationURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-			for (String curNavigationKey : navigationKeys) {
-				navigationURL.setParameter(navigationParam, curNavigationKey);
+			for (FilterNavigationItem curFilterNavigationItem : filterNavigationItems) {
 			%>
 
-				<li class="<%= curNavigationKey.equals(navigationKey) ? "active" : StringPool.BLANK %>">
-					<aui:a href="<%= navigationURL.toString() %>" label="<%= curNavigationKey %>" />
+				<li class="<%= curFilterNavigationItem.isActive() ? "active" : StringPool.BLANK %>">
+					<aui:a href="<%= curFilterNavigationItem.getUrl() %>" id="<%= Validator.isNotNull(curFilterNavigationItem.getId()) ? curFilterNavigationItem.getId() : StringPool.BLANK %>" label="<%= curFilterNavigationItem.getLabel() %>" />
 				</li>
 
 			<%

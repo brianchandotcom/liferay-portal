@@ -22,7 +22,10 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  * @author Sergio González
  */
 @ConfigurationAdmin(category = "collaboration")
-@Meta.OCD(id = "com.liferay.document.library.configuration.DLConfiguration")
+@Meta.OCD(
+	id = "com.liferay.document.library.configuration.DLConfiguration",
+	localization = "content/Language", name = "%dl.configuration.name"
+)
 public interface DLConfiguration {
 
 	/**

@@ -14,9 +14,6 @@
 
 package com.liferay.portal.cluster.internal;
 
-import com.liferay.portal.cluster.BaseClusterReceiver;
-import com.liferay.portal.cluster.ClusterChannel;
-import com.liferay.portal.cluster.ClusterReceiver;
 import com.liferay.portal.cluster.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;

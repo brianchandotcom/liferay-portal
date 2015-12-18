@@ -24,7 +24,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 @ConfigurationAdmin(category = "productivity")
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration",
-	name = "Dynamic Data Lists Form Configuration"
+	localization = "content/Language", name = "%ddl.form.web.configuration.name"
 )
 public interface DDLFormWebConfiguration {
 

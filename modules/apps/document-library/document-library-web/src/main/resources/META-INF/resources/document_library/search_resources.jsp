@@ -117,7 +117,6 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 				Liferay.Util.focusFormField(document.getElementById('<portlet:namespace />keywords'));
 			</aui:script>
 		</c:if>
-
 	</liferay-util:buffer>
 
 	<div id="<portlet:namespace />searchInfo">

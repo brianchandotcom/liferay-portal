@@ -37,6 +37,25 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
 %>
 
+<aui:nav-bar>
+	<aui:nav cssClass="navbar-nav" id="publishConfigurationButtons">
+		<portlet:renderURL var="advancedPublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+			<portlet:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
+			<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<portlet:param name="quickPublish" value="<%= Boolean.FALSE.toString() %>" />
+		</portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= advancedPublishURL %>"
+			iconCssClass="icon-cog"
+			label="switch-to-advanced-publication"
+		/>
+	</aui:nav>
+</aui:nav-bar>
+
 <portlet:actionURL name='<%= cmd.equals(Constants.EXPORT) ? "editExportConfiguration" : "editPublishConfiguration" %>' var="confirmedActionURL">
 	<portlet:param name="mvcRenderCommandName" value='<%= cmd.equals(Constants.EXPORT) ? "editExportConfiguration" : "editPublishConfiguration" %>' />
 	<portlet:param name="redirect" value="<%= redirect %>" />
@@ -51,29 +70,6 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 
 	<div class="export-dialog-tree">
 		<ul class="lfr-tree list-unstyled">
-			<portlet:renderURL var="advancedPublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-				<portlet:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
-				<portlet:param name="tabs2" value="new-publication-process" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
-				<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<portlet:param name="quickPublish" value="<%= Boolean.FALSE.toString() %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:icon
-				cssClass="label publish-mode-switch"
-				iconCssClass="icon-cog"
-				label="<%= true %>"
-				message="switch-to-advanced-publication"
-				method="post"
-				url="<%= advancedPublishURL %>"
-			/>
-
-			<span class="alert alert-info">
-				<liferay-ui:message key="this-process-is-going-to-publish-the-changes-made-since-the-last-publication" />
-			</span>
-
 			<aui:fieldset cssClass="options-group" label="changes-since-last-publication">
 				<li class="options portlet-list-simple">
 					<ul class="portlet-list">

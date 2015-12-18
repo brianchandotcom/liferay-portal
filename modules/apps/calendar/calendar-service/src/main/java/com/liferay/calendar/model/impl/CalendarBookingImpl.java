@@ -24,7 +24,10 @@ import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -77,7 +80,8 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 	@Override
 	public Recurrence getRecurrenceObj() {
 		if ((_recurrenceObj == null) && isRecurring()) {
-			_recurrenceObj = RecurrenceSerializer.deserialize(getRecurrence());
+			_recurrenceObj = RecurrenceSerializer.deserialize(
+				getRecurrence(), getTimeZone());
 		}
 
 		return _recurrenceObj;
@@ -89,12 +93,21 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 	}
 
 	@Override
-	public TimeZone getTimeZone() throws PortalException {
-		CalendarBooking parentCalendarBooking = getParentCalendarBooking();
+	public TimeZone getTimeZone() {
+		if (isAllDay()) {
+			return TimeZoneUtil.getTimeZone(StringPool.UTC);
+		}
 
-		Calendar calendar = parentCalendarBooking.getCalendar();
+		try {
+			CalendarBooking parentCalendarBooking = getParentCalendarBooking();
 
-		return calendar.getTimeZone();
+			Calendar calendar = parentCalendarBooking.getCalendar();
+
+			return calendar.getTimeZone();
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	@Override

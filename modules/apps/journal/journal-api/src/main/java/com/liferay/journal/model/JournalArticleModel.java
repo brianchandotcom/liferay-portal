@@ -872,13 +872,6 @@ public interface JournalArticleModel extends AttachedModel,
 	public boolean isInTrashImplicitly();
 
 	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
-	 */
-	@Deprecated
-	@Override
-	public boolean getApproved();
-
-	/**
 	 * Returns <code>true</code> if this journal article is approved.
 	 *
 	 * @return <code>true</code> if this journal article is approved; <code>false</code> otherwise

@@ -32,30 +32,37 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editSupportedClientsURL %>" method="post" name=">fm">
+<aui:form action="<%= editSupportedClientsURL %>" cssClass="container-fluid-1280" method="post" name=">fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
-	<%
-	for (String curPortletMode : allPortletModes) {
-		String mobileDevicesParam = "portletSetupSupportedClientsMobileDevices_" + curPortletMode;
-		boolean mobileDevicesDefault = selPortlet.hasPortletMode(ContentTypes.XHTML_MP, PortletModeFactory.getPortletMode(curPortletMode));
+	<aui:fieldset-group markupView="lexicon">
 
-		boolean mobileDevices = GetterUtil.getBoolean(portletPreferences.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault)));
-	%>
+		<%
+		boolean first = true;
 
-		<aui:fieldset label='<%= LanguageUtil.get(request, "portlet-mode") + ": " + LanguageUtil.get(request, curPortletMode) %>'>
-			<aui:input disabled="<%= true %>" label="regular-browsers" name='<%= "regularBrowsersEnabled" + curPortletMode %>' type="checkbox" value="<%= true %>" />
+		for (String curPortletMode : allPortletModes) {
+			String mobileDevicesParam = "portletSetupSupportedClientsMobileDevices_" + curPortletMode;
+			boolean mobileDevicesDefault = selPortlet.hasPortletMode(ContentTypes.XHTML_MP, PortletModeFactory.getPortletMode(curPortletMode));
 
-			<aui:input label="mobile-devices" name="<%= mobileDevicesParam %>" type="checkbox" value="<%= mobileDevices %>" />
-		</aui:fieldset>
+			boolean mobileDevices = GetterUtil.getBoolean(portletPreferences.getValue(mobileDevicesParam, String.valueOf(mobileDevicesDefault)));
+		%>
 
-	<%
-	}
-	%>
+			<aui:fieldset collapsed="<%= !first %>" collapsible="<%= true %>" label='<%= LanguageUtil.get(request, "portlet-mode") + ": " + LanguageUtil.get(request, curPortletMode) %>'>
+				<aui:input disabled="<%= true %>" label="regular-browsers" name='<%= "regularBrowsersEnabled" + curPortletMode %>' type="toggle-switch" value="<%= true %>" />
+
+				<aui:input label="mobile-devices" name="<%= mobileDevicesParam %>" type="toggle-switch" value="<%= mobileDevices %>" />
+			</aui:fieldset>
+
+		<%
+			first = false;
+		}
+		%>
+
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>

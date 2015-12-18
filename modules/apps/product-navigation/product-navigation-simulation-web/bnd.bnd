@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Product Navigation Simulation Web
+Bundle-SymbolicName: com.liferay.product.navigation.simulation.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources
+Web-ContextPath: /product-navigation-simulation-web

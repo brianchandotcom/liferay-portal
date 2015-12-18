@@ -226,7 +226,7 @@ public class MBUtil {
 			Part part, MBMailMessage mbMailMessage)
 		throws Exception {
 
-		Object partContent = part.getContent();
+		Object partContent = _getPartContent(part);
 
 		String contentType = StringUtil.toLowerCase(part.getContentType());
 
@@ -1131,6 +1131,24 @@ public class MBUtil {
 		}
 
 		return parentMessageId;
+	}
+
+	private static Object _getPartContent(Part part) throws Exception {
+
+		// See LPS-56173
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(Part.class.getClassLoader());
+
+			return part.getContent();
+		}
+		finally {
+			currentThread.setContextClassLoader(classLoader);
+		}
 	}
 
 	private static boolean _isEntityRank(

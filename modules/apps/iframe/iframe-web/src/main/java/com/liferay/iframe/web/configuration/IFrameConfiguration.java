@@ -22,7 +22,10 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  * @author Peter Fellwock
  */
 @ConfigurationAdmin(category = "web-experience-management")
-@Meta.OCD(id = "com.liferay.iframe.web.configuration.IFrameConfiguration")
+@Meta.OCD(
+	id = "com.liferay.iframe.web.configuration.IFrameConfiguration",
+	localization = "content/Language", name = "%iframe.configuration.name"
+)
 public interface IFrameConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)

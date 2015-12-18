@@ -80,65 +80,30 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 	</c:when>
 	<c:when test='<%= topLink.equals("message-boards-home") %>'>
-
-		<%
-		boolean showAddCategoryButton = MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY);
-		boolean showAddMessageButton = MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_MESSAGE);
-		boolean showPermissionsButton = MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
-
-		if (showAddMessageButton && !themeDisplay.isSignedIn()) {
-			if (!allowAnonymousPosting) {
-				showAddMessageButton = false;
-			}
-		}
-		%>
-
-		<c:if test="<%= showAddCategoryButton || showAddMessageButton || showPermissionsButton %>">
+		<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
 			<div class="category-buttons">
-				<c:if test="<%= showAddCategoryButton %>">
-					<portlet:renderURL var="editCategoryURL">
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
-					</portlet:renderURL>
 
-					<aui:button href="<%= editCategoryURL %>" value='<%= (category == null) ? "add-category[message-board]" : "add-subcategory[message-board]" %>' />
-				</c:if>
+				<%
+				String modelResource = "com.liferay.portlet.messageboards";
+				String modelResourceDescription = themeDisplay.getScopeGroupName();
+				String resourcePrimKey = String.valueOf(scopeGroupId);
 
-				<c:if test="<%= showAddMessageButton %>">
-					<portlet:renderURL var="editMessageURL">
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
-					</portlet:renderURL>
+				if (category != null) {
+					modelResource = MBCategory.class.getName();
+					modelResourceDescription = category.getName();
+					resourcePrimKey = String.valueOf(category.getCategoryId());
+				}
+				%>
 
-					<aui:button href="<%= editMessageURL %>" value="post-new-thread" />
-				</c:if>
+				<liferay-security:permissionsURL
+					modelResource="<%= modelResource %>"
+					modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
+					resourcePrimKey="<%= resourcePrimKey %>"
+					var="permissionsURL"
+					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+				/>
 
-				<c:if test="<%= showPermissionsButton %>">
-
-					<%
-					String modelResource = "com.liferay.portlet.messageboards";
-					String modelResourceDescription = themeDisplay.getScopeGroupName();
-					String resourcePrimKey = String.valueOf(scopeGroupId);
-
-					if (category != null) {
-						modelResource = MBCategory.class.getName();
-						modelResourceDescription = category.getName();
-						resourcePrimKey = String.valueOf(category.getCategoryId());
-					}
-					%>
-
-					<liferay-security:permissionsURL
-						modelResource="<%= modelResource %>"
-						modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
-						resourcePrimKey="<%= resourcePrimKey %>"
-						var="permissionsURL"
-						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-					/>
-
-					<aui:button href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
-				</c:if>
+				<aui:button href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
 			</div>
 
 			<%@ include file="/message_boards/category_subscriptions.jspf" %>

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cluster.internal.jgroups;
 
-import com.liferay.portal.cluster.ClusterReceiver;
+import com.liferay.portal.cluster.internal.ClusterReceiver;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.log.Log;

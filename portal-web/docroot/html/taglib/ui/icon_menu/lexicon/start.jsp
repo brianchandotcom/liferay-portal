@@ -18,14 +18,19 @@
 <%
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:cssClass"));
 String direction = (String)request.getAttribute("liferay-ui:icon-menu:direction");
+String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:icon"));
 String message = (String)request.getAttribute("liferay-ui:icon-menu:message");
 boolean scroll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-menu:scroll"));
 String triggerCssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:triggerCssClass"));
+
+if (Validator.isNull(icon)) {
+	icon = "ellipsis-v";
+}
 %>
 
 <div class="dropdown <%= cssClass %>">
 	<a aria-expanded="false" class="dropdown-toggle <%= triggerCssClass %>" data-toggle="dropdown" href="#1" title="<%= message %>">
-		<span class="icon-ellipsis-vertical icon-monospaced"></span>
+		<aui:icon image="<%= icon %>" markupView="lexicon" />
 	</a>
 
 	<c:choose>

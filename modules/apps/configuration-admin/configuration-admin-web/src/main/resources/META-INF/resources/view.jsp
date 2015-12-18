@@ -26,7 +26,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("configurationCategory", configurationCategory);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+<aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
 		<%
@@ -122,7 +122,7 @@ portletURL.setParameter("configurationCategory", configurationCategory);
 								</portlet:actionURL>
 
 								<liferay-ui:icon
-									message="delete"
+									message='<%= configurationModel.isFactory() ? "delete" : "reset-default-values" %>'
 									method="post"
 									url="<%= deleteConfigActionURL %>"
 								/>

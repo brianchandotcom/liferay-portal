@@ -4,7 +4,7 @@ dependencies {
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	compile group: "org.springframework", name: "spring-aop", version: "3.2.10.RELEASE"
+	compile group: "org.springframework", name: "spring-aop", version: "3.2.15.RELEASE"
 
 	testIntegrationCompile group: "org.apache.httpcomponents", name: "httpclient", version: "4.3.5"
 	testIntegrationCompile group: "org.arquillian.liferay", name: "arquillian-container-liferay", version: "1.0.0.Final-SNAPSHOT"

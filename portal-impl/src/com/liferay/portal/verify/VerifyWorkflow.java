@@ -28,59 +28,71 @@ import java.sql.ResultSet;
  */
 public class VerifyWorkflow extends VerifyProcess {
 
-	protected void deleteOrphanedWorkflowDefinitionLinks() throws Exception {
+	protected void deleteOrphaned() throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		try {
-			ps = connection.prepareStatement(
-				"select distinct classNameId from WorkflowDefinitionLink");
+		for (String[] orphanedAttachedModel : getOrphanedAttachedModels()) {
+			String tableName = orphanedAttachedModel[0];
 
-			rs = ps.executeQuery();
+			if (!hasTable(tableName) || !hasColumn(tableName, "classNameId")) {
+				continue;
+			}
 
-			while (rs.next()) {
-				long classNameId = rs.getLong("classNameId");
+			try {
+				ps = connection.prepareStatement(
+					"select distinct classNameId from " + tableName);
 
-				ClassName className = ClassNameLocalServiceUtil.fetchClassName(
-					classNameId);
+				rs = ps.executeQuery();
 
-				if (className == null) {
-					continue;
-				}
+				while (rs.next()) {
+					long classNameId = rs.getLong("classNameId");
 
-				String classNameValue = className.getValue();
+					ClassName className =
+						ClassNameLocalServiceUtil.fetchClassName(classNameId);
 
-				for (String[] orphanedAttachedModel :
-						getOrphanedAttachedModels()) {
-
-					String orphanedClassName = orphanedAttachedModel[0];
-
-					if (classNameValue.equals(orphanedClassName)) {
-						String orphanedTableName = orphanedAttachedModel[1];
-						String orphanedColumnName = orphanedAttachedModel[2];
-
-						deleteOrphanedWorkflowDefinitionLinks(
-							orphanedTableName, orphanedColumnName);
+					if (className == null) {
+						continue;
 					}
+
+					String classNameValue = className.getValue();
+
+					String orphanedClassName = orphanedAttachedModel[1];
+
+					if (!classNameValue.equals(orphanedClassName)) {
+						continue;
+					}
+
+					String orphanedTableName = orphanedAttachedModel[2];
+					String orphanedColumnName = orphanedAttachedModel[3];
+
+					if (!hasTable(orphanedTableName)) {
+						continue;
+					}
+
+					deleteOrphaned(
+						tableName, orphanedTableName, orphanedColumnName);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
+			finally {
+				DataAccess.cleanUp(null, ps, rs);
+			}
 		}
 	}
 
-	protected void deleteOrphanedWorkflowDefinitionLinks(
-			String tableName, String columnName)
+	protected void deleteOrphaned(
+			String tableName, String orphanedTableName,
+			String orphanedColumnName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("delete from WorkflowDefinitionLink where classPK not ");
-		sb.append("in (select ");
-		sb.append(columnName);
-		sb.append(" from ");
+		sb.append("delete from ");
 		sb.append(tableName);
+		sb.append(" where classPK not in (select ");
+		sb.append(orphanedColumnName);
+		sb.append(" from ");
+		sb.append(orphanedTableName);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		runSQL(sb.toString());
@@ -88,7 +100,7 @@ public class VerifyWorkflow extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		deleteOrphanedWorkflowDefinitionLinks();
+		deleteOrphaned();
 	}
 
 	protected String[][] getOrphanedAttachedModels() {
@@ -97,6 +109,22 @@ public class VerifyWorkflow extends VerifyProcess {
 
 	private static final String[][] _ORPHANED_ATTACHED_MODELS = new String[][] {
 		new String[] {
+			"KaleoInstance",
+			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
+			"DDLRecord", "recordId"
+		},
+		new String[] {
+			"KaleoInstanceToken",
+			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
+			"DDLRecord", "recordId"
+		},
+		new String[] {
+			"WorkflowDefinitionLink",
+			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
+			"DDLRecord", "recordId"
+		},
+		new String[] {
+			"WorkflowDefinitionLink",
 			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			"KaleoProcess", "kaleoProcessId"
 		}

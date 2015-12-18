@@ -1,6 +1,6 @@
 <definition>
 	<command name="addPollCP">
-		<execute function="Click" locator1="MenuItem#ADD_POLL" value1="Add Poll" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_POLL" value1="Add Poll" />
 
 		<execute function="Type" locator1="CPPollsAddquestion#TITLE_FIELD" value1="${pollsQuestionTitle}" />
 		<execute function="Type" locator1="CPPollsAddquestion#POLLS_QUESTION_FIELD" value1="${pollsQuestion}" />

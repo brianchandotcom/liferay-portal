@@ -361,6 +361,18 @@ create index IX_9F242DF6 on RatingsEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create unique index IX_A6E99284 on RatingsStats (classNameId, classPK);
 
+create index IX_B91F79BD on RecentLayoutBranch (groupId);
+create index IX_351E86E8 on RecentLayoutBranch (layoutBranchId);
+create unique index IX_C27D6369 on RecentLayoutBranch (userId, layoutSetBranchId, plid);
+
+create index IX_8D8A2724 on RecentLayoutRevision (groupId);
+create index IX_DA0788DA on RecentLayoutRevision (layoutRevisionId);
+create unique index IX_4C600BD0 on RecentLayoutRevision (userId, layoutSetBranchId, plid);
+
+create index IX_711995A5 on RecentLayoutSetBranch (groupId);
+create index IX_23FF0700 on RecentLayoutSetBranch (layoutSetBranchId);
+create unique index IX_4654D204 on RecentLayoutSetBranch (userId, layoutSetId);
+
 create index IX_2D9A426F on Region (active_);
 create index IX_11FB3E42 on Region (countryId, active_);
 create unique index IX_A2635F5C on Region (countryId, regionCode[$COLUMN_LENGTH:75$]);

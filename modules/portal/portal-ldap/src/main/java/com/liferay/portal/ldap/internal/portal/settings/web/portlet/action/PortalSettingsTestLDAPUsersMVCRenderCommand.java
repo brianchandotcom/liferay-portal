@@ -17,10 +17,10 @@ package com.liferay.portal.ldap.internal.portal.settings.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Philip Jones
@@ -29,16 +29,25 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
 		"mvc.command.name=/portal_settings/test_ldap_users"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class PortalSettingsTestLDAPUsersMVCRenderCommand
-	implements MVCRenderCommand {
+	extends BasePortalSettingsMVCRenderCommand {
 
 	@Override
-	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return "/test_ldap_users.jsp";
+	protected String getJspPath() {
+		return _JSP_PATH;
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.ldap)", unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.servletContext = servletContext;
+	}
+
+	private static final String _JSP_PATH =
+		"/com.liferay.portal.settings.web/test_ldap_users.jsp";
 
 }

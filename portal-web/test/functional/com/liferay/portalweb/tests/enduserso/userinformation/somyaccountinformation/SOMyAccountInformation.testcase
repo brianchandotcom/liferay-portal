@@ -47,7 +47,7 @@
 			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewAdditionalEmailAddress">
 			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
@@ -61,7 +61,7 @@
 			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddressEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewAdditionalEmailAddress">
 			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddressEdit}" />
@@ -75,7 +75,7 @@
 			<var name="userAdditionalEmailAddress" value="" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#ADD_EMAIL_ADDRESS" />
 	</command>
@@ -107,7 +107,7 @@
 			<var name="userAddressType" value="${userAddressType}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewAddress">
 			<var name="userAddressCity" value="${userAddressCity}" />
@@ -131,7 +131,7 @@
 			<var name="userAddressType" value="${userAddressTypeEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewAddress">
 			<var name="userAddressCity" value="${userAddressCityEdit}" />
@@ -155,7 +155,7 @@
 			<var name="userAddressType" value="${userAddressTypeEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#ADD_ADDRESSES" />
 	</command>
@@ -175,7 +175,7 @@
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewInstantMessenger">
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
@@ -191,7 +191,7 @@
 			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkypeEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewInstantMessenger">
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabberEdit}" />
@@ -207,7 +207,7 @@
 			<var name="userInstantMessengerSkype" value="" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#ADD_INSTANT_MESSENGER" />
 	</command>
@@ -224,7 +224,7 @@
 			<var name="userIntroduction" value="${userIntroduction}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewIntroduction">
 			<var name="userIntroduction" value="${userIntroduction}" />
@@ -238,7 +238,7 @@
 			<var name="userIntroduction" value="${userIntroductionEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewIntroduction">
 			<var name="userIntroduction" value="${userIntroductionEdit}" />
@@ -252,7 +252,7 @@
 			<var name="userIntroduction" value="" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#ADD_INTRODUCTION" />
 	</command>
@@ -275,7 +275,7 @@
 			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewPhoneNumbers">
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
@@ -293,7 +293,7 @@
 			<var name="userPhoneNumberType" value="${userPhoneNumberTypeEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewPhoneNumbers">
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtensionEdit}" />
@@ -311,7 +311,7 @@
 			<var name="userPhoneNumberType" value="${userPhoneNumberTypeEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#ADD_PHONES" />
 	</command>
@@ -329,7 +329,7 @@
 			<var name="imageFileName" value="${imageFileName}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewProfilePicture" />
 
@@ -344,7 +344,7 @@
 			<var name="imageFileName" value="${imageFileNameEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewProfilePicture" />
 
@@ -357,7 +357,7 @@
 
 		<execute macro="User#deleteProfilePictureViaMyAccount" />
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#DEFAULT_PROFILE_PICTURE" />
 		<execute function="SikuliAssertElementPresent" locator1="SOProfile#SCREENSHOTS_PROFILE_PICTURE_DEFAULT_PNG" />
@@ -384,7 +384,7 @@
 			<var name="userProjectTitle" value="${userProjectTitle}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewProjects">
 			<var name="userProjectDescription" value="${userProjectDescription}" />
@@ -402,7 +402,7 @@
 			<var name="userProjectTitle" value="${userProjectTitleEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewProjectsEdit">
 			<var name="userProjectDescription" value="${userProjectDescriptionEdit}" />
@@ -420,7 +420,7 @@
 			<var name="userProjectTitle" value="" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#ADD_PROJECTS" />
 	</command>
@@ -437,7 +437,7 @@
 			<var name="userSMS" value="${userSMS}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewSMS">
 			<var name="userSMS" value="${userSMS}" />
@@ -451,7 +451,7 @@
 			<var name="userSMS" value="${userSMSEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewSMS">
 			<var name="userSMS" value="${userSMSEdit}" />
@@ -465,7 +465,7 @@
 			<var name="userSMS" value="" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#ADD_SMS" />
 	</command>
@@ -485,7 +485,7 @@
 			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitter}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewSocialNetwork">
 			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebook}" />
@@ -501,7 +501,7 @@
 			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitterEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewSocialNetwork">
 			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebookEdit}" />
@@ -517,7 +517,7 @@
 			<var name="userSocialNetworkTwitter" value="" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#ADD_SOCIAL_NETWORK" />
 	</command>
@@ -534,7 +534,7 @@
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewTag">
 			<var name="key_userTag" value="${userTag}" />
@@ -550,7 +550,7 @@
 			<var name="userTag" value="${userTagEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewTag">
 			<var name="key_userTag" value="${userTag}" />
@@ -558,7 +558,7 @@
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewTag">
 			<var name="key_userTag" value="${userTagEdit}" />
@@ -575,7 +575,7 @@
 			<var name="userTagList" value="${userTag},${userTagEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#ADD_TAGS" />
 	</command>
@@ -595,7 +595,7 @@
 			<var name="userWebsiteURL" value="${userWebsiteURL}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewWebsite">
 			<var name="userWebsiteType" value="${userWebsiteType}" />
@@ -611,7 +611,7 @@
 			<var name="userWebsiteURL" value="${userWebsiteURLEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewWebsite">
 			<var name="userWebsiteType" value="${userWebsiteTypeEdit}" />
@@ -627,7 +627,7 @@
 			<var name="userWebsiteURL" value="" />
 		</execute>
 
-		<execute macro="Page#gotoMyProfile" />
+		<execute macro="UserBar#gotoMyProfile" />
 
 		<execute function="AssertElementPresent" locator1="SOProfile#ADD_WEBSITES" />
 	</command>

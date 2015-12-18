@@ -36,13 +36,13 @@ public class AccessControlAdvice
 
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
+		incrementServiceDepth();
+
 		AccessControlled accessControlled = findAnnotation(methodInvocation);
 
 		if (accessControlled == AccessControl.NULL_ACCESS_CONTROLLED) {
 			return null;
 		}
-
-		incrementServiceDepth();
 
 		_accessControlAdvisor.accept(methodInvocation, accessControlled);
 

@@ -16,7 +16,7 @@ package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.constants.DLWebKeys;
-import com.liferay.document.library.web.portlet.toolbar.item.DLPortletToolbarContributor;
+import com.liferay.document.library.web.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;

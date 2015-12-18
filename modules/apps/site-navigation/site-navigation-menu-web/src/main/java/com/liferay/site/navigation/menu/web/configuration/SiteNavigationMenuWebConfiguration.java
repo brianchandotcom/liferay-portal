@@ -23,23 +23,13 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration"
+	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration",
+	localization = "content/Language",
+	name = "%site.navigation.menu.web.configuration.name"
 )
 public interface SiteNavigationMenuWebConfiguration {
 
-	@Meta.AD(deflt = "blank-navigation-menu-ftl", required = false)
+	@Meta.AD(deflt = "navbar-blank-ftl", required = false)
 	public String ddmTemplateKeyDefault();
-
-	@Meta.AD(deflt = "dots", required = false)
-	public String defaultBulletStyle();
-
-	@Meta.AD(deflt = "relative-with-breadcrumb", required = false)
-	public String defaultDisplayStyle();
-
-	@Meta.AD(
-		deflt = "relative-with-breadcrumb,from-level-2-with-title,from-level-1-with-title,from-level-1,from-level-1-to-all-sublevels,from-level-0",
-		required = false
-	)
-	public String[] displayStyleOptions();
 
 }

@@ -6,13 +6,13 @@
 	</command>
 
 	<command name="viewNoResults">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No pages were found that matched the keywords: ${webContentSearchTerm}." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No pages were found that matched the keywords: ${webContentSearchTerm}." />
 	</command>
 
 	<command name="viewResultsEntry">
-		<var name="key_webContentSearchResultsName" value="${webContentSearchResultsName}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="AssertTextEquals" locator1="WebContentSearchResults#RESULTS_TABLE_NAME" value1="${webContentSearchResultsName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="WebContentSearchResults#RESULTS_TABLE_CONTENT" value1="${webContentSearchResultsContent}" />
+		<execute function="AssertTextEquals" locator1="WebContentSearchResults#TITLE" value1="${webContentTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="WebContentSearchResults#CONTENT" value1="${webContentContent}" />
 	</command>
 </definition>

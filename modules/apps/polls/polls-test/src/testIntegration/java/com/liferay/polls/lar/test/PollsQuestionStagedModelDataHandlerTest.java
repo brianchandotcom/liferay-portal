@@ -28,6 +28,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -65,6 +66,25 @@ public class PollsQuestionStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return PollsQuestion.class;
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		PollsQuestion question = (PollsQuestion)stagedModel;
+		PollsQuestion importedQuestion = (PollsQuestion)importedStagedModel;
+
+		Assert.assertEquals(question.getTitle(), importedQuestion.getTitle());
+		Assert.assertEquals(
+			question.getDescription(), importedQuestion.getDescription());
+		Assert.assertEquals(
+			question.getExpirationDate(), importedQuestion.getExpirationDate());
+		Assert.assertEquals(
+			question.getLastVoteDate(), importedQuestion.getLastVoteDate());
 	}
 
 }

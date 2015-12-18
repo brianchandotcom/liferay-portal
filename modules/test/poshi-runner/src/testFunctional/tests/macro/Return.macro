@@ -1,5 +1,29 @@
 <definition>
-	<command name="returnMacro" returns="variable">
+	<command name="returnInMacro">
+		<execute macro="Return#returnValue">
+			<return from="variable" name="actual" />
+		</execute>
+
+		<var name="expected" value="Return Value" />
+
+		<if>
+			<equals arg1="${actual}" arg2="${expected}" />
+			<then>
+				<echo message="The value returned from 'Return#return' was a match to the expected value." />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+			</then>
+			<else>
+				<echo message="The value returned from 'Return#return' was NOT a match to the expected value!" />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+
+				<fail message="Found the wrong value!" />
+			</else>
+		</if>
+	</command>
+
+	<command name="returnValue" returns="variable">
 		<return name="variable" value="Return Value" />
 	</command>
 </definition>

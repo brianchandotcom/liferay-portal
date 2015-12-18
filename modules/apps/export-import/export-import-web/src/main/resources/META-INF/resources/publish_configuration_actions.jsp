@@ -31,7 +31,6 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 <portlet:renderURL var="deleteRedirectURL">
 	<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
-	<portlet:param name="tabs2" value="new-publication-process" />
 	<portlet:param name="publishConfigurationButtons" value="saved" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
@@ -49,7 +48,6 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 <portlet:renderURL var="publishRedirectURL">
 	<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
-	<portlet:param name="tabs2" value="current-and-previous" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 	<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />

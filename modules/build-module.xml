@@ -2,19 +2,7 @@
 <!DOCTYPE project>
 
 <project name="build-module">
-	<dirname file="${ant.file.build-module}" property="modules.dir" />
-
-	<taskdef classpath="${modules.dir}/../lib/development/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml" />
-
-	<property name="gradle.wrapper.path" relative="yes" value="${modules.dir}/../gradlew" />
-
-	<macrodef name="print-gradle-alternative">
-		<attribute name="args" />
-
-		<sequential>
-			<echo>Please run this command instead: ${gradle.wrapper.path} @{args}</echo>
-		</sequential>
-	</macrodef>
+	<import file="build-common.xml" />
 
 	<target name="all">
 		<print-gradle-alternative args="clean deploy" />

@@ -1,12 +1,14 @@
 @import "bourbon";
 @import "mixins";
 
+$horizontal-spacing: 35px;
+
 .portlet-forms {
 	.aspect-ratio img {
 		top: 0;
 	}
 
-    .ddl-form-alert {
+	.ddl-form-alert {
 		border-radius: 0;
 		position: absolute;
 		top: 0;
@@ -21,11 +23,13 @@
 	.ddl-form-name {
 		font-size: 32px;
 		line-height: 32px;
+		word-break: break-all;
 	}
 
 	.ddl-form-description {
 		font-size: 14px;
 		line-height: 24px;
+		word-break: break-all;
 	}
 
 	.form-builder-page-header {
@@ -94,6 +98,7 @@
 
 	.liferay-ddm-form-field-checkbox .toggle-switch-handle .toggle-switch-text {
 		margin-left: 6px;
+		text-transform: none;
 	}
 }
 
@@ -163,6 +168,13 @@
 	.ddl-form-builder-app {
 		margin-top: -120px;
 
+		.ddl-loader {
+			display: block;
+			font-size: 60px;
+			margin-top: 150px;
+			text-align: center;
+		}
+
 		.form-builder-content,
 		.lfr-ddm-form-content {
 			background: #FFF;
@@ -190,15 +202,12 @@
 			}
 		}
 
-		.icon-refresh {
-			display: block;
-			font-size: 60px;
-			margin-top: 150px;
-			text-align: center;
-		}
-
 		.liferay-ddm-form-field-text textarea {
 			resize: none;
+		}
+
+		.liferay-ddm-form-field-paragraph p {
+			min-height: 65px;
 		}
 	}
 }
@@ -230,7 +239,7 @@
 		max-height: 100%;
 		overflow-x: hidden;
 		overflow-y: auto;
-		padding-bottom: 0;
+		padding: 0;
 	}
 
 	.modal-content.form-builder-field-settings-content {
@@ -273,7 +282,7 @@
 		}
 
 		.modal-header {
-			position: initial;
+			position: static;
 		}
 	}
 
@@ -365,6 +374,10 @@
 			}
 		}
 
+		.liferay-ddm-form-field-text textarea + .input-group-addon {
+			vertical-align: bottom;
+		}
+
 		.lfr-ddm-form-container {
 			.lfr-ddm-form-field-container {
 				position: relative;
@@ -405,17 +418,18 @@
 			}
 
 			.lfr-ddm-form-page {
-				&.active {
-					&.advanced {
-						display: block;
-					}
+				&.active, &.basic {
+					padding: 25px $horizontal-spacing;
+				}
+
+				&.active.advanced {
+					display: block;
 				}
 
 				&.advanced {
 					background-color: #F5F8FA;
 					display: none;
-					margin: 0 -50px;
-					padding: 20px 50px;
+					padding: 20px $horizontal-spacing;
 				}
 			}
 		}
@@ -426,8 +440,7 @@
 			color: #879CB5;
 			display: block;
 			font-weight: 500;
-			margin: 0 -50px;
-			padding: 18px 50px;
+			padding: 18px $horizontal-spacing;
 			position: static;
 			text-decoration: none;
 			width: auto;
@@ -546,7 +559,7 @@
 	}
 
 	.form-builder-field-list-empty .form-builder-field-list-add-container {
-		margin-top: initial;
+		margin-top: 0;
 	}
 
 	.form-builder-field-list-add-container,

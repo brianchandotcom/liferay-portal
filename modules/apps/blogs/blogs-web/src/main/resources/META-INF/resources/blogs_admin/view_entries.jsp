@@ -33,24 +33,31 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-int delta = ParamUtil.getInteger(request, "delta");
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL navigationPortletURL = renderResponse.createRenderURL();
 
 navigationPortletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
-navigationPortletURL.setParameter("delta", String.valueOf(delta));
+
+if (delta > 0) {
+	navigationPortletURL.setParameter("delta", String.valueOf(delta));
+}
+
 navigationPortletURL.setParameter("orderBycol", orderByCol);
 navigationPortletURL.setParameter("orderByType", orderByType);
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL portletURL = PortletURLUtil.clone(navigationPortletURL, liferayPortletResponse);
 
-portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 portletURL.setParameter("entriesNavigation", entriesNavigation);
-portletURL.setParameter("delta", String.valueOf(delta));
-portletURL.setParameter("orderBycol", orderByCol);
-portletURL.setParameter("orderByType", orderByType);
+
+PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+if (cur > 0) {
+	displayStyleURL.setParameter("cur", String.valueOf(cur));
+}
 
 String keywords = ParamUtil.getString(request, "keywords");
 %>
@@ -63,7 +70,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= portletURL %>"
+				portletURL="<%= displayStyleURL %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>
@@ -90,7 +97,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
 		%>
 
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

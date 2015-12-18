@@ -515,11 +515,11 @@ public class JournalFolderLocalServiceUtil {
 	public static void updateAsset(long userId,
 		com.liferay.journal.model.JournalFolder folder,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
+		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateAsset(userId, folder, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds);
+			assetLinkEntryIds, priority);
 	}
 
 	public static com.liferay.journal.model.JournalFolder updateFolder(

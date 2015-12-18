@@ -49,6 +49,7 @@ portletURL.setParameter("mvcPath", "/view_modules.jsp");
 portletURL.setParameter("app", app);
 portletURL.setParameter("moduleGroup", moduleGroup);
 portletURL.setParameter("state", state);
+portletURL.setParameter("orderByType", orderByType);
 
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, request, renderResponse);
 %>
@@ -74,7 +75,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="descriptive"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -83,14 +84,14 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
 			navigationParam="state"
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="title"
 			orderByType="<%= orderByType %>"
 			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
@@ -103,7 +104,11 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 		showParentGroups="<%= false %>"
 	/>
 
-	<liferay-ui:search-container>
+	<liferay-ui:search-container
+		emptyResultsMessage="no-modules-were-found"
+		id="bundles"
+		iteratorURL="<%= portletURL %>"
+	>
 		<liferay-ui:search-container-results>
 
 			<%
@@ -137,21 +142,34 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			className="org.osgi.framework.Bundle"
 			modelVar="bundle"
 		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/view_module.jsp" />
+				<portlet:param name="app" value="<%= app %>" />
+				<portlet:param name="moduleGroup" value="<%= moduleGroup %>" />
+				<portlet:param name="symbolicName" value="<%= bundle.getSymbolicName() %>" />
+				<portlet:param name="version" value="<%= String.valueOf(bundle.getVersion()) %>" />
+			</portlet:renderURL>
 
-			<%
-			Dictionary<String, String> headers = bundle.getHeaders();
-
-			String bundleName = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_NAME));
-			String bundleDescription = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_DESCRIPTION));
-			%>
+			<liferay-ui:search-container-column-text>
+				<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="iconURL" value='<%= PortalUtil.getPathContext(request) + "/images/icons.svg#modules" %>' />
+				</liferay-util:include>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+
+				<%
+				Dictionary<String, String> headers = bundle.getHeaders();
+				%>
+
 				<h5>
-					<%= bundleName %>
+					<a href="<%= HtmlUtil.escapeHREF(rowURL) %>">
+						<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_NAME)) %>
+					</a>
 				</h5>
 
 				<h6 class="text-default">
-					<%= bundleDescription %>
+					<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_DESCRIPTION)) %>
 				</h6>
 
 				<h6 class="text-default">
@@ -164,7 +182,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 							<liferay-ui:message key="version" />:
 						</strong>
 
-						<%= String.valueOf(bundle.getVersion()) %>
+						<%= bundle.getVersion() %>
 					</div>
 
 					<div class="additional-info-item">

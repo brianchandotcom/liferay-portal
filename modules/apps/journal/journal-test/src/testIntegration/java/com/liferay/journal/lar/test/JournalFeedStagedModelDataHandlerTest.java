@@ -242,6 +242,25 @@ public class JournalFeedStagedModelDataHandlerTest
 		}
 	}
 
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		JournalFeed feed = (JournalFeed)stagedModel;
+		JournalFeed importedFeed = (JournalFeed)importedStagedModel;
+
+		Assert.assertEquals(feed.getName(), importedFeed.getName());
+		Assert.assertEquals(feed.getDelta(), importedFeed.getDelta());
+		Assert.assertEquals(feed.getOrderByCol(), importedFeed.getOrderByCol());
+		Assert.assertEquals(
+			feed.getOrderByType(), importedFeed.getOrderByType());
+		Assert.assertEquals(
+			feed.getContentField(), importedFeed.getContentField());
+	}
+
 	private Layout _layout;
 
 }

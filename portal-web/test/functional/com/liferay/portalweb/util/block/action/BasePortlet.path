@@ -54,7 +54,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SPECIFIC_PORTLET_OPTIONS_ICON</td>
+	<td>SPECIFIC_PORTLET_ELLIPSIS_ICON</td>
 	<td>//div[@id='main-content']//h2[contains(.,'${key_portletName}')]/../../header/menu/div[contains(@class,'portlet-options')]/a</td>
 	<td></td>
 </tr>

@@ -14,8 +14,9 @@
 
 package com.liferay.portal.dao.orm.common;
 
-import com.liferay.portal.dao.db.DBFactoryImpl;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.dao.db.DBManagerImpl;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 
 import org.junit.Before;
 
@@ -26,12 +27,12 @@ public abstract class BaseSQLTransformerTestCase {
 
 	@Before
 	public void setUp() {
-		DBFactoryUtil.setDBFactory(new DBFactoryImpl());
+		DBManagerUtil.setDBManager(new DBManagerImpl());
 
-		DBFactoryUtil.setDB(getDBType(), null);
+		DBManagerUtil.setDB(getDBType(), null);
 	}
 
-	protected abstract String getDBType();
+	protected abstract DBType getDBType();
 
 	protected String transformSQL(String sql) {
 		return SQLTransformer.transform(sql);

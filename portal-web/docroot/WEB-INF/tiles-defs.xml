@@ -104,14 +104,6 @@
 		<put name="content" value="/portal/verify_email_address.jsp" />
 	</definition>
 
-	<!-- Background Task-->
-
-	<definition name="portlet.background_task" extends="portlet" />
-
-	<definition name="portlet.background_task.error" extends="portlet.background_task">
-		<put name="portlet_content" value="/portlet/background_task/error.jsp" />
-	</definition>
-
 	<!-- Calendar -->
 
 	<definition name="portlet.calendar" extends="portlet" />
@@ -138,14 +130,6 @@
 
 	<definition name="portlet.group_statistics.add_activity_counter" extends="portlet.group_statistics">
 		<put name="portlet_content" value="/portlet/group_statistics/add_activity_counter.jsp" />
-	</definition>
-
-	<!-- Image Uploader -->
-
-	<definition name="portlet.image_uploader" extends="portlet" />
-
-	<definition name="portlet.image_uploader.view" extends="portlet.image_uploader">
-		<put name="portlet_content" value="/portlet/image_uploader/view.jsp" />
 	</definition>
 
 	<!-- Invitation -->

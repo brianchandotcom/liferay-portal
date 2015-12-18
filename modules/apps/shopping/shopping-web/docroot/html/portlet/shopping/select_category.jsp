@@ -107,7 +107,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
 			</liferay-ui:search-container-column-text>
-
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />

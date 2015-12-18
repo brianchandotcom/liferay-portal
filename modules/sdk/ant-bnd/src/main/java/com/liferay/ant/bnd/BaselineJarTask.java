@@ -197,15 +197,15 @@ public class BaselineJarTask extends BaseBndTask {
 			Info[] infosArray = infos.toArray(new Info[infos.size()]);
 
 			Arrays.sort(
-				infosArray, new Comparator<Info>() {
+				infosArray,
+				new Comparator<Info>() {
 
 					@Override
 					public int compare(Info info1, Info info2) {
 						return info1.packageName.compareTo(info2.packageName);
 					}
 
-				}
-			);
+				});
 
 			doHeader(bundleInfo);
 

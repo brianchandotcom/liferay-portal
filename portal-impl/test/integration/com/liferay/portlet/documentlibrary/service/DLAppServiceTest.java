@@ -55,7 +55,6 @@ import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.PrefsPropsTemporarySwapper;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -101,7 +100,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -508,7 +507,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -552,7 +551,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -632,7 +631,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -661,7 +660,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -734,7 +733,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -772,7 +771,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -795,7 +794,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
 
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 			DLAppServiceUtil.deleteFolder(folder.getFolderId());
 
@@ -838,9 +837,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
 
-			DLAppServiceUtil.moveFolderToTrash(subfolder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(subfolder.getFolderId());
 
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 			DLAppServiceUtil.deleteFolder(folder.getFolderId());
 
@@ -856,7 +855,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -879,7 +878,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
 
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 			folder = DLAppServiceUtil.getFolder(folder.getFolderId());
 
@@ -908,9 +907,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
 
-			DLAppServiceUtil.moveFolderToTrash(subfolder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(subfolder.getFolderId());
 
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+			DLTrashServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 			folder = DLAppServiceUtil.getFolder(folder.getFolderId());
 
@@ -930,7 +929,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -980,7 +979,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Before
@@ -1000,7 +999,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			Assert.assertTrue(_fileEntry.isCheckedOut());
 
-			DLAppServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
+			DLTrashServiceUtil.moveFileEntryToTrash(
+				_fileEntry.getFileEntryId());
 
 			_fileEntry = DLAppServiceUtil.getFileEntry(
 				_fileEntry.getFileEntryId());
@@ -1021,7 +1021,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					DLFileEntryConstants.getClassName(),
 					fileVersion.getFileVersionId()));
 
-			DLAppServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
+			DLTrashServiceUtil.moveFileEntryToTrash(
+				_fileEntry.getFileEntryId());
 
 			Assert.assertNull(
 				AssetEntryLocalServiceUtil.fetchEntry(
@@ -1048,7 +1049,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -1081,7 +1082,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -1159,7 +1160,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -1231,7 +1232,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
@@ -1456,7 +1457,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new AggregateTestRule(
-				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				new LiferayIntegrationTestRule(),
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test

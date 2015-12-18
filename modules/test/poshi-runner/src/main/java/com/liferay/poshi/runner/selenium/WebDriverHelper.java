@@ -185,8 +185,8 @@ public class WebDriverHelper {
 		}
 	}
 
-	public static void executeJavaScriptMouseEvent(
-		WebDriver webDriver, String locator, String event) {
+	public static void executeJavaScriptEvent(
+		WebDriver webDriver, String locator, String eventType, String event) {
 
 		WebElement webElement = getWebElement(webDriver, locator);
 
@@ -204,8 +204,9 @@ public class WebDriverHelper {
 		StringBuilder sb = new StringBuilder(6);
 
 		sb.append("var element = arguments[0];");
-		sb.append("var event = document.createEvent('MouseEvents');");
-		sb.append("event.initEvent('");
+		sb.append("var event = document.createEvent('");
+		sb.append(eventType);
+		sb.append("');event.initEvent('");
 		sb.append(event);
 		sb.append("', true, false);");
 		sb.append("element.dispatchEvent(event);");

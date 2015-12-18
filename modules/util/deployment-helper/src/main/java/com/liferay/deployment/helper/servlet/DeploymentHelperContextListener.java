@@ -14,6 +14,7 @@
 
 package com.liferay.deployment.helper.servlet;
 
+import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.File;
@@ -115,10 +116,19 @@ public class DeploymentHelperContextListener implements ServletContextListener {
 			}
 			catch (Exception e) {
 				servletContext.log(
-					"An error occured while attempting to process " +
-						deploymentFileName + ":\n" + e.getMessage(),
+					"Unable to process " + deploymentFileName + ":\n" +
+						e.getMessage(),
 					e);
 			}
+		}
+
+		try {
+			DeployManagerUtil.undeploy(servletContext.getServletContextName());
+		}
+		catch (Exception e) {
+			servletContext.log(
+				"Unable to undeploy " + servletContext.getServletContextName(),
+				e);
 		}
 	}
 

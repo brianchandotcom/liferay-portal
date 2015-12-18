@@ -241,6 +241,17 @@ public class ExportImportConfigurationIndexer
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String parameterName = entry.getKey();
+
+			if (!Field.validateFieldName(parameterName)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Skipping invalid parameter name: " + parameterName);
+				}
+
+				continue;
+			}
+
 			String[] parameterValues = ArrayUtil.clone(entry.getValue());
 
 			for (int i = 0; i < parameterValues.length; i++) {

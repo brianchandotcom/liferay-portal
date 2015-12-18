@@ -52,17 +52,17 @@ public class SharedPortletLayoutTypeController
 
 	@Override
 	public boolean isBrowsable() {
-		return true;
-	}
-
-	@Override
-	public boolean isFirstPageable() {
 		return false;
 	}
 
 	@Override
-	public boolean isFullPageDisplayable() {
+	public boolean isFirstPageable() {
 		return true;
+	}
+
+	@Override
+	public boolean isFullPageDisplayable() {
+		return false;
 	}
 
 	@Override

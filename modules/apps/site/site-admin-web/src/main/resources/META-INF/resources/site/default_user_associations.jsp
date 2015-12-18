@@ -55,8 +55,7 @@ for (long defaultTeamId : defaultTeamIds) {
 
 <liferay-util:buffer var="removeRoleIcon">
 	<liferay-ui:icon
-		iconCssClass="icon-unlink"
-		label="<%= true %>"
+		iconCssClass="icon-remove"
 		message="remove"
 	/>
 </liferay-util:buffer>
@@ -85,33 +84,22 @@ for (long defaultTeamId : defaultTeamIds) {
 
 		<liferay-ui:search-container-column-text
 			name="title"
-		>
-			<liferay-ui:icon
-				iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
-				label="<%= true %>"
-				message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-			/>
-		</liferay-ui:search-container-column-text>
+			value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+		/>
 
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			cssClass="list-group-item-field"
+		>
 			<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
-<liferay-ui:icon
-	cssClass="modify-link"
-	iconCssClass="icon-search"
-	id="selectSiteRoleLink"
-	label="<%= true %>"
-	linkCssClass="btn btn-default"
-	message="select"
-	url="javascript:;"
-/>
-
-<br /><br />
+<aui:button-row>
+	<aui:button cssClass="modify-link" id="selectSiteRoleLink" value="select" />
+</aui:button-row>
 
 <h3><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h3>
 
@@ -134,23 +122,19 @@ for (long defaultTeamId : defaultTeamIds) {
 			value="<%= HtmlUtil.escape(team.getName()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			cssClass="list-group-item-field"
+		>
 			<a class="modify-link" data-rowId="<%= team.getTeamId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
-<liferay-ui:icon
-	cssClass="modify-link"
-	iconCssClass="icon-search"
-	id="selectTeamLink"
-	label="<%= true %>"
-	linkCssClass="btn btn-default"
-	message="select"
-	url="javascript:;"
-/>
+<aui:button-row>
+	<aui:button cssClass="modify-link" id="selectTeamLink" value="select" />
+</aui:button-row>
 
 <aui:script use="liferay-search-container">
 	var Util = Liferay.Util;
@@ -263,6 +247,7 @@ for (long defaultTeamId : defaultTeamIds) {
 					selectSiteRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
 					selectSiteRoleURL.setParameter("step", "2");
 					selectSiteRoleURL.setParameter("groupId", String.valueOf(groupId));
+					selectSiteRoleURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectSiteRole");
 					selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
 					%>
 
@@ -279,7 +264,7 @@ for (long defaultTeamId : defaultTeamIds) {
 
 					var rowColumns = [];
 
-					rowColumns.push('<i class="' + event.iconcssclass + '"></i> ' + A.Escape.html(event.roletitle));
+					rowColumns.push(A.Escape.html(event.roletitle));
 
 					if (event.groupid) {
 						rowColumns.push('<a class="modify-link" data-rowId="' + event.roleid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');

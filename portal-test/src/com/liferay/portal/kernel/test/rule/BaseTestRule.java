@@ -30,8 +30,6 @@ import org.junit.internal.runners.statements.RunAfters;
 import org.junit.internal.runners.statements.RunBefores;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
-import org.junit.runner.RunWith;
-import org.junit.runner.Runner;
 import org.junit.runners.model.Statement;
 
 /**
@@ -70,7 +68,7 @@ public class BaseTestRule<C, M>
 			};
 		}
 
-		boolean arquillianTest = _isArquillianTest(description);
+		boolean arquillianTest = ArquillianUtil.isArquillianTest(description);
 
 		if (!arquillianTest) {
 			return new StatementWrapper(statement) {
@@ -176,27 +174,6 @@ public class BaseTestRule<C, M>
 		}
 
 		throw new IllegalStateException("Unknow statement " + statement);
-	}
-
-	private static boolean _isArquillianTest(Description description) {
-		RunWith runWith = description.getAnnotation(RunWith.class);
-
-		if (runWith == null) {
-			return false;
-		}
-
-		Class<? extends Runner> runnerClass = runWith.value();
-
-		String runnerClassName = runnerClass.getName();
-
-		if (runnerClassName.equals(
-				"com.liferay.arquillian.extension.junit.bridge.junit." +
-					"Arquillian")) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Map<Class<?>, Deque<Object>> _classCarryOnMap =

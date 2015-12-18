@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.upgrade.util;
 
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.model.ServiceComponent;
 
 import java.io.IOException;
@@ -42,7 +42,7 @@ public abstract class BaseUpgradeTableListener implements UpgradeTableListener {
 	}
 
 	protected void runSQL(String template) throws IOException, SQLException {
-		DB db = DBFactoryUtil.getDB();
+		DB db = DBManagerUtil.getDB();
 
 		db.runSQL(template);
 	}

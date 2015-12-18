@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.cluster.ClusterableProxyFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -55,15 +58,19 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.scheduler.internal.messaging.config.SchedulerProxyMessagingConfigurator;
+import com.liferay.portal.scheduler.internal.messaging.config.ScriptingMessageListener;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -142,6 +149,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void delete(String groupName, StorageType storageType)
 		throws SchedulerException {
 
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		_schedulerEngine.delete(groupName, storageType);
 	}
 
@@ -149,6 +160,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void delete(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
+
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
 
 		_schedulerEngine.delete(jobName, groupName, storageType);
 	}
@@ -486,6 +501,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
+		if (!_schedulerEngineEnabled) {
+			return null;
+		}
+
 		return _schedulerEngine.getScheduledJob(
 			jobName, groupName, storageType);
 	}
@@ -494,12 +513,20 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public List<SchedulerResponse> getScheduledJobs()
 		throws SchedulerException {
 
+		if (!_schedulerEngineEnabled) {
+			return Collections.emptyList();
+		}
+
 		return _schedulerEngine.getScheduledJobs();
 	}
 
 	@Override
 	public List<SchedulerResponse> getScheduledJobs(StorageType storageType)
 		throws SchedulerException {
+
+		if (!_schedulerEngineEnabled) {
+			return Collections.emptyList();
+		}
 
 		return _schedulerEngine.getScheduledJobs(storageType);
 	}
@@ -508,6 +535,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public List<SchedulerResponse> getScheduledJobs(
 			String groupName, StorageType storageType)
 		throws SchedulerException {
+
+		if (!_schedulerEngineEnabled) {
+			return Collections.emptyList();
+		}
 
 		return _schedulerEngine.getScheduledJobs(groupName, storageType);
 	}
@@ -546,17 +577,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public boolean isClusteredSchedulerEngine() {
-		if (_schedulerEngine instanceof ClusterSchedulerEngine) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public void pause(String groupName, StorageType storageType)
 		throws SchedulerException {
+
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
 
 		_schedulerEngine.pause(groupName, storageType);
 	}
@@ -565,6 +591,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void pause(String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		_schedulerEngine.pause(jobName, groupName, storageType);
 	}
 
@@ -572,6 +602,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void register(
 		MessageListener messageListener, SchedulerEntry schedulerEntry,
 		String destinationName) {
+
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
 
 		SchedulerEventMessageListenerWrapper
 			schedulerEventMessageListenerWrapper =
@@ -600,6 +634,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void resume(String groupName, StorageType storageType)
 		throws SchedulerException {
 
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		_schedulerEngine.resume(groupName, storageType);
 	}
 
@@ -607,6 +645,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void resume(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
+
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
 
 		_schedulerEngine.resume(jobName, groupName, storageType);
 	}
@@ -616,6 +658,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			Trigger trigger, StorageType storageType, String description,
 			String destinationName, Message message, int exceptionsMaxSize)
 		throws SchedulerException {
+
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
 
 		if (message == null) {
 			message = new Message();
@@ -644,11 +690,19 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	@Override
 	public void shutdown() throws SchedulerException {
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		_schedulerEngine.shutdown();
 	}
 
 	@Override
 	public void start() throws SchedulerException {
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		_schedulerEngine.start();
 	}
 
@@ -657,11 +711,19 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		_schedulerEngine.suppressError(jobName, groupName, storageType);
 	}
 
 	@Override
 	public void unregister(MessageListener messageListener) {
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		synchronized (_serviceRegistrations) {
 			ServiceRegistration<SchedulerEventMessageListener>
 				serviceRegistration = _serviceRegistrations.remove(
@@ -685,6 +747,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void unschedule(String groupName, StorageType storageType)
 		throws SchedulerException {
 
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		_schedulerEngine.unschedule(groupName, storageType);
 	}
 
@@ -692,6 +758,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void unschedule(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
+
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
 
 		_schedulerEngine.unschedule(jobName, groupName, storageType);
 	}
@@ -731,6 +801,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void update(Trigger trigger, StorageType storageType)
 		throws SchedulerException {
 
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		_schedulerEngine.update(trigger, storageType);
 	}
 
@@ -738,14 +812,19 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	protected void activate(ComponentContext componentContext)
 		throws Exception {
 
+		_schedulerEngineEnabled = GetterUtil.getBoolean(
+			_props.get(PropsKeys.SCHEDULER_ENABLED));
+
+		if (!_schedulerEngineEnabled) {
+			return;
+		}
+
 		_auditMessageSchedulerJob = GetterUtil.getBoolean(
 			_props.get(PropsKeys.AUDIT_MESSAGE_SCHEDULER_JOB));
 
 		_bundleContext = componentContext.getBundleContext();
 
-		if (_clusterLink.isEnabled() &&
-			GetterUtil.getBoolean(_props.get(PropsKeys.SCHEDULER_ENABLED))) {
-
+		if (_clusterLink.isEnabled()) {
 			ClusterSchedulerEngine clusterSchedulerEngine =
 				new ClusterSchedulerEngine(_schedulerEngine);
 
@@ -762,13 +841,28 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				clusterSchedulerEngine);
 		}
 
-		if (GetterUtil.getBoolean(_props.get(PropsKeys.SCHEDULER_ENABLED))) {
-			_serviceTracker = ServiceTrackerFactory.open(
-				_bundleContext,
-				"(objectClass=" +
-					SchedulerEventMessageListener.class.getName() + ")",
-				new SchedulerEventMessageListenerServiceTrackerCustomizer());
-		}
+		registerDestination(
+			_bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+			DestinationNames.SCHEDULER_DISPATCH);
+
+		Destination scriptingDestination = registerDestination(
+			_bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+			DestinationNames.SCHEDULER_SCRIPTING);
+
+		SchedulerEventMessageListenerWrapper
+			schedulerEventMessageListenerWrapper =
+				new SchedulerEventMessageListenerWrapper();
+
+		schedulerEventMessageListenerWrapper.setMessageListener(
+			new ScriptingMessageListener());
+
+		scriptingDestination.register(schedulerEventMessageListenerWrapper);
+
+		_serviceTracker = ServiceTrackerFactory.open(
+			_bundleContext,
+			"(objectClass=" +
+				SchedulerEventMessageListener.class.getName() + ")",
+			new SchedulerEventMessageListenerServiceTrackerCustomizer());
 	}
 
 	protected void addWeeklyDayPos(
@@ -781,14 +875,16 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_serviceTracker != null) {
-			_serviceTracker.close();
-
-			_serviceTracker = null;
+		if (!_schedulerEngineEnabled) {
+			return;
 		}
 
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
+		if (_bundleContext == null) {
+			return;
+		}
+
+		if (_serviceTracker != null) {
+			_serviceTracker.close();
 		}
 
 		try {
@@ -798,6 +894,21 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to shutdown scheduler", e);
 			}
+		}
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+
+		for (ServiceRegistration<Destination> serviceRegistration :
+				_destinationServiceRegistrations) {
+
+			Destination destination = _bundleContext.getService(
+				serviceRegistration.getReference());
+
+			serviceRegistration.unregister();
+
+			destination.destroy();
 		}
 
 		for (ServiceRegistration<SchedulerEventMessageListener>
@@ -811,6 +922,29 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	protected SchedulerEngine getSchedulerEngine() {
 		return _schedulerEngine;
+	}
+
+	protected Destination registerDestination(
+		BundleContext bundleContext, String destinationType,
+		String destinationName) {
+
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(destinationType, destinationName);
+
+		Destination destination = _destinationFactory.createDestination(
+			destinationConfiguration);
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("destination.name", destination.getName());
+
+		ServiceRegistration<Destination> serviceRegistration =
+			bundleContext.registerService(
+				Destination.class, destination, dictionary);
+
+		_destinationServiceRegistrations.add(serviceRegistration);
+
+		return destination;
 	}
 
 	@Reference(
@@ -835,6 +969,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDestinationFactory(
+		DestinationFactory destinationFactory) {
+
+		_destinationFactory = destinationFactory;
+	}
+
+	@Reference(unbind = "-")
 	protected void setJsonFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
@@ -844,7 +985,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_props = props;
 	}
 
-	@Reference(target = "(bean.id=*.SchedulerEngineProxyBean)", unbind = "-")
+	@Reference(target = "(scheduler.engine.proxy=true)", unbind = "-")
 	protected void setSchedulerEngine(SchedulerEngine schedulerEngine) {
 		_schedulerEngine = schedulerEngine;
 	}
@@ -867,11 +1008,15 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private volatile BundleContext _bundleContext;
 	private volatile ClusterLink _clusterLink;
 	private volatile ClusterMasterExecutor _clusterMasterExecutor;
+	private volatile DestinationFactory _destinationFactory;
+	private final Set<ServiceRegistration<Destination>>
+		_destinationServiceRegistrations = new HashSet<>();
 	private volatile JSONFactory _jsonFactory;
 	private final Map<String, ServiceRegistration<MessageListener>>
 		_messageListenerServiceRegistrations = new HashMap<>();
 	private volatile Props _props;
 	private volatile SchedulerEngine _schedulerEngine;
+	private volatile boolean _schedulerEngineEnabled;
 	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
 	private final Map
 		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>

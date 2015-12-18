@@ -7,5 +7,4 @@ Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/log4j/Levels.class
-Require-SchemaVersion: 1.0.0
 Web-ContextPath: /monitoring-web

@@ -35,7 +35,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" label="info" />
+		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" label="info" />
 
 		<c:if test="<%= !search %>">
 			<liferay-util:include page="/document_library/display_style_buttons.jsp" servletContext="<%= application %>" />
@@ -60,38 +60,38 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-remove" label="delete" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="times" label="cancel-checkout[document]" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-lock" label="lock" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="lock" label="lock" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-unlock" label="unlock" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="unlock" label="unlock" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-move" label="move" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="change" label="move" />
 		</c:if>
 
 		<%
 		String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE_TO_TRASH + "'}); void(0);";
 		%>
 
-		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" id="moveToTrashAction" />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="trash" id="moveToTrashAction" label="delete" />
 
 		<%
 		taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
 		%>
 
-		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-remove" id="deleteAction" />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="trash" id="deleteAction" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

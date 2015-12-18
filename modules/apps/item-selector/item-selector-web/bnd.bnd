@@ -5,5 +5,3 @@ Export-Package: com.liferay.item.selector.web.constants
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
-Require-Capability:\
-	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/item-selector";version:Version="1.0.0"

@@ -19,16 +19,25 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.configuration.admin.ConfigurationAdmin;
 
 /**
+ * Defines the configuration property keys and sensible default values.
+ *
+ * <p>
+ * This class also defines the identity of the configuration schema which, among
+ * other things, defines the filename (minus the <code>.cfg</code> extension)
+ * for setting values via a file.
+ * </p>
+ *
  * @author Michael C. Han
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.security.sso.openid.module.configuration.OpenIdConfiguration"
+	id = "com.liferay.portal.security.sso.openid.module.configuration.OpenIdConfiguration",
+	localization = "content/Language", name = "%open.id.configuration.name"
 )
 public interface OpenIdConfiguration {
 
 	@Meta.AD(
-		deflt = "true",
+		deflt = "false",
 		description = "Set this to true to enable OpenId authentication.",
 		required = false
 	)

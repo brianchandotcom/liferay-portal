@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -98,13 +97,8 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 
 	@Override
 	protected void doDelete(AssetVocabulary assetVocabulary) throws Exception {
-		Document document = new DocumentImpl();
-
-		document.addUID(CLASS_NAME, assetVocabulary.getVocabularyId());
-
-		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), assetVocabulary.getCompanyId(),
-			document.get(Field.UID), isCommitImmediately());
+		deleteDocument(
+			assetVocabulary.getCompanyId(), assetVocabulary.getVocabularyId());
 	}
 
 	@Override
@@ -143,11 +137,9 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 	protected void doReindex(AssetVocabulary assetVocabulary) throws Exception {
 		Document document = getDocument(assetVocabulary);
 
-		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), assetVocabulary.getCompanyId(), document,
-				isCommitImmediately());
-		}
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), assetVocabulary.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override
@@ -181,10 +173,7 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 					try {
 						Document document = getDocument(assetVocabulary);
 
-						if (document != null) {
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {

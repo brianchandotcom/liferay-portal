@@ -42,8 +42,6 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 			<a href="<%= viewURL %>">
 		</c:if>
 
-		<i class="<%= assetRenderer.getIconCssClass() %>"></i>
-
 		<%= HtmlUtil.escape(title) %>
 
 		<c:if test="<%= Validator.isNotNull(viewURL) %>">

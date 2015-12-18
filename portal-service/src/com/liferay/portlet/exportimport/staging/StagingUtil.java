@@ -380,6 +380,12 @@ public class StagingUtil {
 		return _staging.getStagedPortletId(portletId);
 	}
 
+	public static long[] getStagingAndLiveGroupIds(long groupId)
+		throws PortalException {
+
+		return _staging.getStagingAndLiveGroupIds(groupId);
+	}
+
 	public static Group getStagingGroup(long groupId) {
 		return _staging.getStagingGroup(groupId);
 	}
@@ -608,44 +614,51 @@ public class StagingUtil {
 	}
 
 	public static void setRecentLayoutBranchId(
-		HttpServletRequest request, long layoutSetBranchId, long plid,
-		long layoutBranchId) {
+			HttpServletRequest request, long layoutSetBranchId, long plid,
+			long layoutBranchId)
+		throws PortalException {
 
 		_staging.setRecentLayoutBranchId(
 			request, layoutSetBranchId, plid, layoutBranchId);
 	}
 
 	public static void setRecentLayoutBranchId(
-		User user, long layoutSetBranchId, long plid, long layoutBranchId) {
+			User user, long layoutSetBranchId, long plid, long layoutBranchId)
+		throws PortalException {
 
 		_staging.setRecentLayoutBranchId(
 			user, layoutSetBranchId, plid, layoutBranchId);
 	}
 
 	public static void setRecentLayoutRevisionId(
-		HttpServletRequest request, long layoutSetBranchId, long plid,
-		long layoutRevisionId) {
+			HttpServletRequest request, long layoutSetBranchId, long plid,
+			long layoutRevisionId)
+		throws PortalException {
 
 		_staging.setRecentLayoutRevisionId(
 			request, layoutSetBranchId, plid, layoutRevisionId);
 	}
 
 	public static void setRecentLayoutRevisionId(
-		User user, long layoutSetBranchId, long plid, long layoutRevisionId) {
+			User user, long layoutSetBranchId, long plid, long layoutRevisionId)
+		throws PortalException {
 
 		_staging.setRecentLayoutRevisionId(
 			user, layoutSetBranchId, plid, layoutRevisionId);
 	}
 
 	public static void setRecentLayoutSetBranchId(
-		HttpServletRequest request, long layoutSetId, long layoutSetBranchId) {
+			HttpServletRequest request, long layoutSetId,
+			long layoutSetBranchId)
+		throws PortalException {
 
 		_staging.setRecentLayoutSetBranchId(
 			request, layoutSetId, layoutSetBranchId);
 	}
 
 	public static void setRecentLayoutSetBranchId(
-		User user, long layoutSetId, long layoutSetBranchId) {
+			User user, long layoutSetId, long layoutSetBranchId)
+		throws PortalException {
 
 		_staging.setRecentLayoutSetBranchId(
 			user, layoutSetId, layoutSetBranchId);

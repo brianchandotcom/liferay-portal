@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cluster.internal.jgroups;
 
-import com.liferay.portal.cluster.ClusterChannel;
-import com.liferay.portal.cluster.ClusterReceiver;
+import com.liferay.portal.cluster.internal.ClusterChannel;
+import com.liferay.portal.cluster.internal.ClusterReceiver;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.Serializer;
@@ -61,11 +61,13 @@ public class JGroupsClusterChannel implements ClusterChannel {
 		try {
 			_jChannel = new JChannel(channelProperties);
 
-			ProtocolStack protocolStack = _jChannel.getProtocolStack();
+			if (bindInetAddress != null) {
+				ProtocolStack protocolStack = _jChannel.getProtocolStack();
 
-			TP tp = protocolStack.getTransport();
+				TP tp = protocolStack.getTransport();
 
-			tp.setBindAddress(bindInetAddress);
+				tp.setBindAddress(bindInetAddress);
+			}
 
 			_jChannel.setReceiver(new JGroupsReceiver(clusterReceiver));
 

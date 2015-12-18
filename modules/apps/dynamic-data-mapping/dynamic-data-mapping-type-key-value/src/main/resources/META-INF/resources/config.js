@@ -1,4 +1,6 @@
 ;(function() {
+	var LiferayAUI = Liferay.AUI;
+
 	var PATH_DDM_TYPE_KEYVALUE = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-type-key-value';
 
 	AUI().applyConfig(
@@ -6,6 +8,7 @@
 			groups: {
 				'field-key-value': {
 					base: PATH_DDM_TYPE_KEYVALUE + '/',
+					filter: LiferayAUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-key-value': {
 							condition: {

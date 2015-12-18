@@ -49,12 +49,13 @@ public class PortletKeys {
 		"com_liferay_login_web_portlet_FastLoginPortlet";
 
 	public static final String FLAGS =
-		"com_liferay_flags_page_flags_web_portlet_FlagsPortlet";
+		"com_liferay_flags_web_portlet_FlagsPortlet";
 
 	public static final String FRIENDS_DIRECTORY =
 		"com_liferay_directory_web_portlet_FriendsDirectoryPortlet";
 
-	public static final String IMAGE_UPLOADER = "195";
+	public static final String IMAGE_UPLOADER =
+		"com_liferay_image_uploader_web_portlet_ImageUploaderPortlet";
 
 	public static final String ITEM_SELECTOR =
 		"com_liferay_item_selector_web_portlet_ItemSelectorPortlet";

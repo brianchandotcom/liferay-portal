@@ -21,11 +21,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 %>
 
 <div class="alert alert-info container-fluid-1280 site-membership-type">
-	<liferay-ui:icon
-		iconCssClass="icon-signin"
-		label="<%= true %>"
-		message='<%= LanguageUtil.get(request, "membership-type") + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, GroupConstants.getTypeLabel(group.getType())) %>'
-	/>
+	<liferay-ui:message key="membership-type" />, <liferay-ui:message key="<%= GroupConstants.getTypeLabel(group.getType()) %>" />
 
 	<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help") %>' />
 
@@ -45,7 +41,6 @@ Group group = siteMembershipsDisplayContext.getGroup();
 
 			<liferay-ui:icon
 				cssClass="alert-link"
-				iconCssClass="icon-tasks"
 				label="<%= true %>"
 				message='<%= LanguageUtil.format(request, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>'
 				url="<%= viewMembershipRequestsURL %>"

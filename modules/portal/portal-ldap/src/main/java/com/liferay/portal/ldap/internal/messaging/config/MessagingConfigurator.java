@@ -24,7 +24,6 @@ import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -37,8 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 public class MessagingConfigurator {
 
 	@Activate
-	protected void activate(ComponentContext componentContext) {
-		BundleContext bundleContext = componentContext.getBundleContext();
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
@@ -59,10 +58,15 @@ public class MessagingConfigurator {
 	@Deactivate
 	protected void deactivate() {
 		if (_serviceRegistration != null) {
+			Destination destination = _bundleContext.getService(
+				_serviceRegistration.getReference());
+
 			_serviceRegistration.unregister();
+
+			destination.destroy();
 		}
 
-		_serviceRegistration = null;
+		_bundleContext = null;
 	}
 
 	@Reference(unbind = "-")
@@ -72,6 +76,7 @@ public class MessagingConfigurator {
 		_destinationFactory = destinationFactory;
 	}
 
+	private volatile BundleContext _bundleContext;
 	private volatile DestinationFactory _destinationFactory;
 	private ServiceRegistration<Destination> _serviceRegistration;
 

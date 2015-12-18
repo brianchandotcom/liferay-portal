@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %><%@
+<%@ page import="com.liferay.application.list.util.LatentGroupManagerUtil" %><%@
+page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %><%@
 page import="com.liferay.layout.admin.web.display.context.LayoutsAdminDisplayContext" %><%@
 page import="com.liferay.mobile.device.rules.model.MDRAction" %><%@
 page import="com.liferay.mobile.device.rules.model.MDRRuleGroup" %><%@
@@ -124,8 +125,7 @@ page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
-page import="com.liferay.portlet.sites.util.SitesUtil" %><%@
-page import="com.liferay.product.navigation.site.administration.util.LatentGroupManagerUtil" %>
+page import="com.liferay.portlet.sites.util.SitesUtil" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.HashMap" %><%@

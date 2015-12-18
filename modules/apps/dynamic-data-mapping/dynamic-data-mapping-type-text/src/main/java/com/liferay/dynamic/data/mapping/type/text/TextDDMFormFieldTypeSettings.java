@@ -16,6 +16,10 @@ package com.liferay.dynamic.data.mapping.type.text;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
@@ -23,6 +27,42 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
  * @author Lino Alves
  */
 @DDMForm
+@DDMFormLayout(
+	{
+		@DDMFormLayoutPage(
+			title = "basic",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {"label", "tip", "displayStyle", "required"}
+						)
+					}
+				)
+			}
+		),
+		@DDMFormLayoutPage(
+			title = "advanced",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {
+								"validation", "showLabel", "repeatable",
+								"placeholder", "predefinedValue",
+								"visibilityExpression", "fieldNamespace",
+								"indexType", "localizable", "readOnly",
+								"dataType", "type", "name"
+							}
+						)
+					}
+				)
+			}
+		)
+	}
+)
 public interface TextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
@@ -30,18 +70,12 @@ public interface TextDDMFormFieldTypeSettings
 		label = "%my-text-field-has",
 		optionLabels = {"%a-single-line", "%multiple-lines"},
 		optionValues = {"singleline", "multiline"},
-		properties = {
-			"inline=true", "setting.category=basic", "setting.weight=2"
-		},
+		properties = {"inline=true"},
 		type = "radio"
 	)
 	public String displayStyle();
 
-	@DDMFormField(
-		dataType = "string", label = "%field-tip",
-		properties = {"setting.category=advanced", "setting.weight=2"},
-		type = "text"
-	)
+	@DDMFormField(dataType = "string", label = "%field-tip", type = "text")
 	public LocalizedValue placeholder();
 
 }

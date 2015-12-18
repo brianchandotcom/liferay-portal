@@ -72,6 +72,10 @@ public class RoleDisplayTerms extends DisplayTerms {
 		}
 	}
 
+	public void setType(int type) {
+		this.type = type;
+	}
+
 	protected String description;
 	protected String name;
 	protected int type;

@@ -16,6 +16,10 @@ package com.liferay.dynamic.data.mapping.type.radio;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 
@@ -23,6 +27,42 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
  * @author Marcellus Tavares
  */
 @DDMForm
+@DDMFormLayout(
+	{
+		@DDMFormLayoutPage(
+			title = "basic",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {"label", "tip", "required", "options"}
+						)
+					}
+				)
+			}
+		),
+		@DDMFormLayoutPage(
+			title = "advanced",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {
+								"validation", "showLabel", "repeatable",
+								"predefinedValue", "visibilityExpression",
+								"inline", "fieldNamespace", "indexType",
+								"localizable", "readOnly", "dataType", "type",
+								"name"
+							}
+						)
+					}
+				)
+			}
+		)
+	}
+)
 public interface RadioDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
@@ -30,9 +70,8 @@ public interface RadioDDMFormFieldTypeSettings
 	public boolean inline();
 
 	@DDMFormField(
-		dataType = "ddm-options", label = "%options",
-		properties = {"setting.category=basic", "setting.weight=0"},
-		required = true, type = "options"
+		dataType = "ddm-options", label = "%options", required = true,
+		type = "options"
 	)
 	public DDMFormFieldOptions options();
 

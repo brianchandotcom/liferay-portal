@@ -35,7 +35,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.util.List;
 
@@ -58,7 +57,7 @@ public class PermissionCheckerTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
@@ -286,9 +285,9 @@ public class PermissionCheckerTest {
 	public void testIsOmniAdminWithCompanyAdmin() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		User adminUser = UserTestUtil.addCompanyAdminUser(_company);
+		_user = UserTestUtil.addCompanyAdminUser(_company);
 
-		PermissionChecker permissionChecker = _getPermissionChecker(adminUser);
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
 
 		Assert.assertFalse(permissionChecker.isOmniadmin());
 	}

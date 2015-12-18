@@ -14,8 +14,12 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.aui.base.BaseButtonRowTag;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 
 /**
@@ -37,6 +41,24 @@ public class ButtonRowTag extends BaseButtonRowTag {
 		jspWriter.write("</div>");
 
 		return EVAL_PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isStatePopUp()) {
+			String cssClass = "dialog-footer";
+
+			if (getCssClass() != null) {
+				cssClass = cssClass + StringPool.SPACE + getCssClass();
+			}
+
+			setCssClass(cssClass);
+		}
+
+		super.setAttributes(request);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

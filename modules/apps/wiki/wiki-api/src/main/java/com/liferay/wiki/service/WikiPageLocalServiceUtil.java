@@ -924,11 +924,12 @@ public class WikiPageLocalServiceUtil {
 
 	public static void updateAsset(long userId,
 		com.liferay.wiki.model.WikiPage page, long[] assetCategoryIds,
-		java.lang.String[] assetTagNames, long[] assetLinkEntryIds)
+		java.lang.String[] assetTagNames, long[] assetLinkEntryIds,
+		java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateAsset(userId, page, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds);
+			assetLinkEntryIds, priority);
 	}
 
 	public static com.liferay.wiki.model.WikiPage updatePage(long userId,

@@ -8,7 +8,7 @@ dependencies {
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	compile group: "javax.mail", name: "mail", version: "1.4"
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	compile group: "org.springframework", name: "spring-context", version: "3.2.10.RELEASE"
+	compile group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	compile project(":portal:portal-upgrade")
 	compile project(":portal:portal-workflow-kaleo-api")
 

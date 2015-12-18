@@ -1,6 +1,5 @@
 import com.liferay.gradle.util.GradleUtil
-
-task deployWithDependencies(type: Copy)
+import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 buildCSS {
 	ext {
@@ -10,7 +9,7 @@ buildCSS {
 
 dependencies {
 	compile group: "com.google.guava", name: "guava", version: "16.0.1"
-	compile group: "com.jayway.jsonpath", name: "json-path", version: "2.0.0"
+	compile group: "com.jayway.jsonpath", name: "json-path", version: "2.1.0"
 	compile group: "com.liferay", name: "net.jsourcerer.webdriver.JSErrorCollector", version: "0.6"
 	compile group: "commons-io", name: "commons-io", version: "2.4"
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
@@ -24,9 +23,11 @@ dependencies {
 	compile group: "org.sikuli", name: "sikuli-api", version: "1.2.0"
 }
 
-deployWithDependencies {
+deploy {
 	from configurations.runtime
-	from jar
+	rename new RenameDependencyClosure(project, configurations.runtime.name)
+}
 
-	into GradleUtil.getProperty(project, "destinationDir", (File)null)
+liferay {
+	deployDir = "../../../tools/sdk/tmp/portal-tools/poshi-runner"
 }

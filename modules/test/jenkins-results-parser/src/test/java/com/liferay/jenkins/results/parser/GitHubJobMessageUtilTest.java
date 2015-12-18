@@ -46,7 +46,7 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	}
 
 	@Test
-	public void testGetFailedJobMessage() throws Exception {
+	public void testGetGitHubJobMessage() throws Exception {
 		assertSamples();
 	}
 
@@ -78,7 +78,7 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		urlString = replaceToken(urlString, "hostName", hostName);
 		urlString = replaceToken(urlString, "jobName", jobName);
 
-		URL url = createURL(urlString);
+		URL url = JenkinsResultsParserUtil.createURL(urlString);
 
 		downloadSample(sampleKey + "-" + jobName, url);
 	}
@@ -100,7 +100,7 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 				continue;
 			}
 
-			URL runURL = createURL(
+			URL runURL = JenkinsResultsParserUtil.createURL(
 				URLDecoder.decode(runJSONObject.getString("url"), "UTF-8"));
 
 			File runDir = new File(sampleDir, "run-" + i + "/" + number + "/");

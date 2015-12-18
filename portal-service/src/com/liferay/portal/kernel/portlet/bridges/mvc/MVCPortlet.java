@@ -276,6 +276,10 @@ public class MVCPortlet extends LiferayPortlet {
 					renderRequest, renderResponse);
 			}
 
+			if (mvcPath == MVCRenderCommand.MVC_PATH_SKIP_DISPATCH) {
+				return;
+			}
+
 			renderRequest.setAttribute(
 				getMVCPathAttributeName(renderResponse.getNamespace()),
 				mvcPath);

@@ -45,7 +45,6 @@ import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
-import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
@@ -363,19 +362,6 @@ public abstract class BasePortletExportImportTestCase
 		validateVersions();
 	}
 
-	protected AssetLink addAssetLink(
-			StagedModel sourceStagedModel, StagedModel targetStagedModel,
-			int weight)
-		throws PortalException {
-
-		AssetEntry originAssetEntry = getAssetEntry(sourceStagedModel);
-		AssetEntry targetAssetEntry = getAssetEntry(targetStagedModel);
-
-		return AssetLinkLocalServiceUtil.addLink(
-			TestPropsValues.getUserId(), originAssetEntry.getEntryId(),
-			targetAssetEntry.getEntryId(), 0, weight);
-	}
-
 	protected void addParameter(
 		Map<String, String[]> parameterMap, String name, boolean value) {
 
@@ -457,14 +443,6 @@ public abstract class BasePortletExportImportTestCase
 		finally {
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
 		}
-	}
-
-	protected AssetEntry getAssetEntry(StagedModel stagedModel)
-		throws PortalException {
-
-		return AssetEntryLocalServiceUtil.getEntry(
-			ExportImportClassedModelUtil.getClassName(stagedModel),
-			ExportImportClassedModelUtil.getClassPK(stagedModel));
 	}
 
 	protected PortletPreferences getImportedPortletPreferences(

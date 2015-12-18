@@ -22,7 +22,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+<aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item label="live-sessions" selected="<%= true %>" />
 	</aui:nav>
@@ -106,7 +106,6 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 						name="num-of-hits"
 						property="hits"
 					/>
-
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />

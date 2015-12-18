@@ -361,11 +361,11 @@ public class GroupImpl extends GroupBaseImpl {
 	public String getLayoutRootNodeName(boolean privateLayout, Locale locale) {
 		String pagesName = null;
 
-		if (isLayoutPrototype() || isLayoutSetPrototype() || isUserGroup()) {
+		if (isLayoutPrototype() || isLayoutSetPrototype()) {
 			pagesName = "pages";
 		}
 		else if (privateLayout) {
-			if (isUser()) {
+			if (isUser() || isUserGroup()) {
 				pagesName = "my-dashboard";
 			}
 			else {
@@ -373,7 +373,7 @@ public class GroupImpl extends GroupBaseImpl {
 			}
 		}
 		else {
-			if (isUser()) {
+			if (isUser() || isUserGroup()) {
 				pagesName = "my-profile";
 			}
 			else {

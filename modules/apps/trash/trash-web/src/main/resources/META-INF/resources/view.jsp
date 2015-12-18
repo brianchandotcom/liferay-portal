@@ -50,7 +50,7 @@ if (Validator.isNotNull(keywords)) {
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="entries" />
+		<aui:nav-item label="entries" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>
@@ -114,7 +114,6 @@ if (Validator.isNotNull(keywords)) {
 		<c:if test="<%= tpe.getType() == TrashPermissionException.RESTORE_RENAME %>">
 			<liferay-ui:message key="you-do-not-have-permission-to-rename-this-item" />
 		</c:if>
-
 	</liferay-ui:error>
 
 	<c:if test="<%= group.isStagingGroup() %>">
@@ -199,7 +198,6 @@ if (Validator.isNotNull(keywords)) {
 				name="name"
 			>
 				<liferay-ui:icon
-					iconCssClass="<%= trashRenderer.getIconCssClass() %>"
 					label="<%= true %>"
 					message="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>"
 					method="get"
@@ -229,7 +227,6 @@ if (Validator.isNotNull(keywords)) {
 
 					<liferay-util:buffer var="rootEntryIcon">
 						<liferay-ui:icon
-							iconCssClass="<%= rootTrashRenderer.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= HtmlUtil.escape(rootTrashRenderer.getTitle(locale)) %>"
 							method="get"

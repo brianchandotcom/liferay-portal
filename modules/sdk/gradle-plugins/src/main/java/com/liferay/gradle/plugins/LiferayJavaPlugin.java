@@ -480,6 +480,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, UpgradeTableBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, WhipDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
+		GradleUtil.applyPlugin(project, WSDDBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 	}

@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"/common/referer_jsp.jsp=/common/referer_jsp.jsp",
-		"path=/login/facebook_connect_oauth",
+		"path=/facebook_connect/facebook_connect_oauth",
 		"portlet.login.login=portlet.login.login",
 		"portlet.login.update_account=portlet.login.update_account"
 	},

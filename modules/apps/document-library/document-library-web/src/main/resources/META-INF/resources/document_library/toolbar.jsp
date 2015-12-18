@@ -44,8 +44,26 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
+	<%
+	String label = null;
+
+	if (fileEntryTypeId != -1) {
+		String fileEntryTypeName = LanguageUtil.get(request, "basic-document");
+
+		if (fileEntryTypeId != DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+			DLFileEntryType fileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
+
+			fileEntryTypeName = fileEntryType.getName(locale);
+		}
+
+		label = LanguageUtil.get(request, "document-types") + StringPool.COLON + StringPool.SPACE + fileEntryTypeName;
+	}
+	%>
+
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation>
+		<liferay-frontend:management-bar-navigation
+				label="<%= label %>"
+		>
 			<portlet:renderURL var="viewDocumentsHomeURL">
 				<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 				<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
@@ -70,6 +88,8 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 
 				<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("mine") %>' label="mine" url="<%= viewMyDocumentsURL.toString() %>" />
 			</c:if>
+
+			<liferay-frontend:management-bar-navigation-item active="<%= fileEntryTypeId != -1 %>" id="fileEntryTypes" label="document-types" url="javascript:;" />
 		</liferay-frontend:management-bar-navigation>
 
 		<c:if test='<%= !search && !navigation.equals("recent") %>'>
@@ -135,4 +155,45 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			);
 		}
 	}
+</aui:script>
+
+<aui:script use="liferay-item-selector-dialog">
+	var form = $(document.<portlet:namespace />fm);
+
+	<portlet:renderURL var="viewFileEntryTypeURL">
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+		<portlet:param name="browseBy" value="file-entry-type" />
+		<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+	</portlet:renderURL>
+
+	$('#<portlet:namespace />fileEntryTypes').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectFileEntryType',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							if (selectedItem) {
+								var uri = '<%= viewFileEntryTypeURL %>';
+
+								uri = Liferay.Util.addParams('<portlet:namespace />fileEntryTypeId=' + selectedItem, uri);
+
+								location.href = uri;
+							}
+						}
+					},
+					'strings.add': '<liferay-ui:message key="done" />',
+					title: '<liferay-ui:message key="select-document-type" />',
+					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_file_entry_type.jsp" /><portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" /></portlet:renderURL>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
 </aui:script>

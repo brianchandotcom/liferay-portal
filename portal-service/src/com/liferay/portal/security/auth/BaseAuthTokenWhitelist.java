@@ -156,7 +156,6 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		Map<String, Object> properties = new HashMap<>();
 
 		properties.put(propertyName, propertyValue);
-		properties.put("objectClass", Object.class.getName());
 
 		ServiceRegistration<Object> serviceRegistration =
 			registry.registerService(Object.class, new Object(), properties);
@@ -171,9 +170,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceTracker<Object, Object> serviceTracker = registry.trackServices(
-			registry.getFilter(
-				"(&(" + whitelistName + "=*)" +
-					"(objectClass=java.lang.Object))"),
+			registry.getFilter("(" + whitelistName + "=*)"),
 			new TokenWhitelistTrackerCustomizer(whitelistName, whiteList));
 
 		serviceTracker.open();
@@ -201,9 +198,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
 			_whitelist.addAll(authTokenIgnoreActions);
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			return registry.getService(serviceReference);
+			return null;
 		}
 
 		@Override
@@ -223,10 +218,6 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 				serviceReference.getProperty(_whitelistName));
 
 			_whitelist.removeAll(authTokenIgnoreActions);
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
 		}
 
 		private final Set _whitelist;

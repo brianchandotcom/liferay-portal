@@ -153,7 +153,6 @@ YUI.add(
 							var linkedFunction = instance.get(STR_XML_LOG).one('#' + id);
 
 							instance._displayNode(linkedFunction);
-
 							instance._setXmlNodeClass(linkedFunction);
 
 							if (latestCommand.hasClass('failed')) {
@@ -181,9 +180,7 @@ YUI.add(
 							var linkedFunction = xmlLog.one('.line-group[data-functionLinkId="' + functionLinkId + '"]');
 
 							instance._displayNode(linkedFunction);
-
 							instance._scrollToNode(linkedFunction);
-
 							instance._selectCurrentScope(linkedFunction);
 						}
 					},
@@ -199,9 +196,7 @@ YUI.add(
 							}
 
 							instance._displayNode(currentTargetAncestor);
-
 							instance._scrollToNode(currentTargetAncestor);
-
 							instance._selectCurrentScope(currentTargetAncestor);
 						}
 					},

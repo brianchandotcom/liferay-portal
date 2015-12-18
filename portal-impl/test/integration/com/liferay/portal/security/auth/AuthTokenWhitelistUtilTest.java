@@ -14,22 +14,37 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestAuthTokenIgnoreActions;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestAuthTokenIgnoreOrigins;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestAuthTokenIgnorePortlets;
+import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestMVCActionCommand;
+import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestMVCRenderCommand;
+import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestMVCResourceCommand;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestPortalAddDefaultResourceCheckWhitelist;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestPortalAddDefaultResourceCheckWhitelistActions;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.PortletURLImpl;
 
 import java.util.Set;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Cristina González
@@ -158,6 +173,149 @@ public class AuthTokenWhitelistUtilTest {
 			Assert.assertTrue(
 				AuthTokenWhitelistUtil.isCSRFOrigintWhitelisted(0, origin));
 		}
+	}
+
+	@Test
+	public void testIsPortletCSRFWhitelistedForMVCActionCommand() {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			TestMVCActionCommand.TEST_PORTLET);
+
+		MockHttpServletRequest request = new MockHttpServletRequest();
+
+		String namespace = PortalUtil.getPortletNamespace(
+			TestMVCActionCommand.TEST_PORTLET);
+
+		request.setParameter(
+			namespace + ActionRequest.ACTION_NAME,
+			TestMVCActionCommand.TEST_MVC_COMMAND_NAME);
+
+		Assert.assertTrue(
+			AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(request, portlet));
+	}
+
+	@Test
+	public void testIsPortletInvocationWhitelistedForMVCActionCommand() {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			TestMVCActionCommand.TEST_PORTLET);
+
+		MockHttpServletRequest request = new MockHttpServletRequest();
+
+		String namespace = PortalUtil.getPortletNamespace(
+			TestMVCActionCommand.TEST_PORTLET);
+
+		request.setParameter(
+			namespace + ActionRequest.ACTION_NAME,
+			TestMVCActionCommand.TEST_MVC_COMMAND_NAME);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+		themeDisplay.setLifecycleAction(true);
+		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		Assert.assertTrue(
+			AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
+				request, portlet));
+	}
+
+	@Test
+	public void testIsPortletInvocationWhitelistedForMVCRenderCommand() {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			TestMVCRenderCommand.TEST_PORTLET);
+
+		MockHttpServletRequest request = new MockHttpServletRequest();
+
+		String namespace = PortalUtil.getPortletNamespace(
+			TestMVCRenderCommand.TEST_PORTLET);
+
+		request.setParameter(
+			namespace + "mvcRenderCommandName",
+			TestMVCRenderCommand.TEST_MVC_COMMAND_NAME);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+		themeDisplay.setLifecycleRender(true);
+		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		Assert.assertTrue(
+			AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
+				request, portlet));
+	}
+
+	@Test
+	public void testIsPortletInvocationWhitelistedForMVCResourceCommand() {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			TestMVCResourceCommand.TEST_PORTLET);
+
+		MockHttpServletRequest request = new MockHttpServletRequest();
+
+		request.setParameter("p_p_id", TestMVCResourceCommand.TEST_PORTLET);
+
+		request.setParameter(
+			"p_p_resource_id", TestMVCResourceCommand.TEST_MVC_COMMAND_NAME);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+		themeDisplay.setLifecycleResource(true);
+		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		Assert.assertTrue(
+			AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
+				request, portlet));
+	}
+
+	@Test
+	public void testIsPortletURLCSRFWhitelistedForMVCActionCommand() {
+		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
+			new MockHttpServletRequest(), TestMVCActionCommand.TEST_PORTLET, 0,
+			PortletRequest.ACTION_PHASE);
+
+		liferayPortletURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			TestMVCActionCommand.TEST_MVC_COMMAND_NAME);
+
+		Assert.assertTrue(
+			AuthTokenWhitelistUtil.isPortletURLCSRFWhitelisted(
+				liferayPortletURL));
+	}
+
+	@Test
+	public void testIsPortletURLInvocationWhitelistedForMVCActionCommand() {
+		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
+			new MockHttpServletRequest(), TestMVCActionCommand.TEST_PORTLET, 0,
+			PortletRequest.ACTION_PHASE);
+
+		liferayPortletURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			TestMVCActionCommand.TEST_MVC_COMMAND_NAME);
+
+		Assert.assertTrue(
+			AuthTokenWhitelistUtil.isPortletURLPortletInvocationWhitelisted(
+				liferayPortletURL));
+	}
+
+	@Test
+	public void testIsPortletURLInvocationWhitelistedForMVCRenderCommand() {
+		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
+			new MockHttpServletRequest(), TestMVCRenderCommand.TEST_PORTLET, 0,
+			PortletRequest.RENDER_PHASE);
+
+		liferayPortletURL.setParameter(
+			"mvcRenderCommandName", TestMVCRenderCommand.TEST_MVC_COMMAND_NAME);
+
+		Assert.assertTrue(
+			AuthTokenWhitelistUtil.isPortletURLPortletInvocationWhitelisted(
+				liferayPortletURL));
+	}
+
+	@Test
+	public void testIsPortletURLInvocationWhitelistedForMVCResourceCommand() {
+		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
+			new MockHttpServletRequest(), TestMVCResourceCommand.TEST_PORTLET,
+			0, PortletRequest.RESOURCE_PHASE);
+
+		liferayPortletURL.setResourceID(
+			TestMVCResourceCommand.TEST_MVC_COMMAND_NAME);
+
+		Assert.assertTrue(
+			AuthTokenWhitelistUtil.isPortletURLPortletInvocationWhitelisted(
+				liferayPortletURL));
 	}
 
 }

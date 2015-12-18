@@ -1,11 +1,26 @@
 import groovy.json.JsonBuilder
 
 apply plugin: "base"
+apply plugin: "com.liferay.cache"
 apply plugin: "com.liferay.gulp"
 
 buildDir = file("build_gradle")
 
 task deploy(type: Copy)
+
+cache {
+	task(gulpBuild) {
+		baseDir = "dist"
+		cacheDir = ".task-cache"
+
+		skipTaskDependency downloadNode
+		skipTaskDependency npmInstall
+
+		testFile "gulpfile.js"
+		testFile "package.json"
+		testFile "src"
+	}
+}
 
 clean {
 	dependsOn cleanNpmInstall

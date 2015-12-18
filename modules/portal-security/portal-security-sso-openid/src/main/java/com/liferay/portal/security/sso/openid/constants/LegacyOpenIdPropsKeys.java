@@ -20,8 +20,7 @@ package com.liferay.portal.security.sso.openid.constants;
 public class LegacyOpenIdPropsKeys {
 
 	public static final String OPENID_AUTH_ENABLED = "openid.auth.enabled";
-	
-	public static final String[] NONPOSTFIXED_OPENID_KEYS = {
-		OPENID_AUTH_ENABLED
-	};
+
+	public static final String[] OPENID_KEYS = {OPENID_AUTH_ENABLED};
+
 }

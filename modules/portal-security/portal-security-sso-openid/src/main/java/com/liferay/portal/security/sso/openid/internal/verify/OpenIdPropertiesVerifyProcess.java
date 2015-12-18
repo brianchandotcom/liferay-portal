@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.sso.openid.constants.LegacyOpenIdPropsKeys;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
@@ -32,9 +34,7 @@ import com.liferay.portal.verify.VerifyProcess;
 
 import java.io.IOException;
 
-import java.util.Arrays;
 import java.util.Dictionary;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -48,14 +48,42 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"verify.process.name=com.liferay.portal.openid"},
+	property = {"verify.process.name=com.liferay.portal.security.sso.openid"},
 	service = VerifyProcess.class
 )
 public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyOpenIdProperties();
+		verifyProperties();
+	}
+
+	protected CompanyLocalService getCompanyLocalService() {
+		return _companyLocalService;
+	}
+
+	protected Set<String> getLegacyPropertyKeys() {
+		return SetUtil.fromArray(LegacyOpenIdPropsKeys.OPENID_KEYS);
+	}
+
+	protected Dictionary<String, String> getPropertyValues(long companyId) {
+		Dictionary<String, String> dictionary = new HashMapDictionary<>();
+
+		dictionary.put(
+			OpenIdConstants.AUTH_ENABLED,
+			_prefsProps.getString(
+				companyId, LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED,
+				StringPool.FALSE));
+
+		return dictionary;
+	}
+
+	protected SettingsFactory getSettingsFactory() {
+		return _settingsFactory;
+	}
+
+	protected String getSettingsId() {
+		return OpenIdConstants.SERVICE_NAME;
 	}
 
 	@Reference(unbind = "-")
@@ -76,64 +104,44 @@ public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
 	}
 
 	protected void storeSettings(
-			long companyId,
-			Dictionary<String, Object> dictionary)
+			long companyId, String settingsId,
+			Dictionary<String, String> dictionary)
 		throws IOException, SettingsException, ValidatorException {
 
-		Settings settings = _settingsFactory.getSettings(
-				new CompanyServiceSettingsLocator(
-					companyId, OpenIdConstants.SERVICE_NAME));
+		Settings settings = getSettingsFactory().getSettings(
+			new CompanyServiceSettingsLocator(companyId, settingsId));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
 		SettingsDescriptor settingsDescriptor =
-				_settingsFactory.getSettingsDescriptor(
-					OpenIdConstants.SERVICE_NAME);
+			getSettingsFactory().getSettingsDescriptor(settingsId);
 
-			for (String name : settingsDescriptor.getAllKeys()) {
-				String value = dictionary.get(name).toString();
-				String oldValue = settings.getValue(name, null);
+		for (String name : settingsDescriptor.getAllKeys()) {
+			String value = dictionary.get(name);
 
-				if (!value.equals(oldValue)) {
-					modifiableSettings.setValue(name, value);
-				}
+			String oldValue = settings.getValue(name, null);
+
+			if (!value.equals(oldValue)) {
+				modifiableSettings.setValue(name, value);
 			}
-
-			modifiableSettings.store();
-	}
-
-	protected void verifyOpenIdAuthProperties(long companyId)
-		throws IOException, SettingsException, ValidatorException {
-
-		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-
-		dictionary.put(
-			OpenIdConstants.AUTH_ENABLED,
-			_prefsProps.getBoolean(
-				companyId, LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED, true));
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Adding OpenID auth configuration for company " + companyId +
-					" with properties: " + dictionary);
 		}
 
-		storeSettings(companyId, dictionary);
+		modifiableSettings.store();
 	}
 
-	protected void verifyOpenIdProperties() throws Exception {
-		List<Company> companies =_companyLocalService.getCompanies(false);
+	protected void verifyProperties() throws Exception {
+		List<Company> companies = getCompanyLocalService().getCompanies(false);
 
 		for (Company company : companies) {
 			long companyId = company.getCompanyId();
 
-			verifyOpenIdAuthProperties(companyId);
+			Dictionary<String, String> dictionary = getPropertyValues(
+				companyId);
 
-			Set<String> keys = new HashSet<>();
+			storeSettings(companyId, getSettingsId(), dictionary);
 
-			keys.addAll(
-				Arrays.asList(LegacyOpenIdPropsKeys.NONPOSTFIXED_OPENID_KEYS));
+			Set<String> keys = getLegacyPropertyKeys();
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -141,7 +149,7 @@ public class OpenIdPropertiesVerifyProcess extends VerifyProcess {
 						companyId);
 			}
 
-			_companyLocalService.removePreferences(
+			getCompanyLocalService().removePreferences(
 				companyId, keys.toArray(new String[keys.size()]));
 		}
 	}

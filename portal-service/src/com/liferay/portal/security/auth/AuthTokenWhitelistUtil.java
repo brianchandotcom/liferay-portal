@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Portlet;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -151,6 +152,22 @@ public class AuthTokenWhitelistUtil {
 		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
 			if (authTokenWhitelist.isPortletInvocationWhitelisted(
 					companyId, portletId, strutsAction)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isPortletURLCSRFWhitelisted(
+		LiferayPortletURL liferayPortletURL) {
+
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
+
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+			if (authTokenWhitelist.isPortletURLCSRFWhitelisted(
+					liferayPortletURL)) {
 
 				return true;
 			}

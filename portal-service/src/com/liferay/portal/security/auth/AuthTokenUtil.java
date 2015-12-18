@@ -15,6 +15,7 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -27,6 +28,12 @@ import javax.servlet.http.HttpServletRequest;
  * @author Raymond Augé
  */
 public class AuthTokenUtil {
+
+	public static void addCSRFToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		_instance._addCSRFToken(request, liferayPortletURL);
+	}
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
@@ -69,6 +76,18 @@ public class AuthTokenUtil {
 		_serviceTracker = registry.trackServices(AuthToken.class.getName());
 
 		_serviceTracker.open();
+	}
+
+	private void _addCSRFToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		if (_serviceTracker.isEmpty()) {
+			return;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		authToken.addCSRFToken(request, liferayPortletURL);
 	}
 
 	@SuppressWarnings("deprecation")

@@ -1694,7 +1694,12 @@ public class VerifyProperties extends VerifyProcess {
 			"configuration.jsp",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.portal_settings." +
 			"email_notifications.jsp",
+		"ehcache.bootstrap.cache.loader.factory",
+		"ehcache.cache.event.listener.factory",
+		"ehcache.cache.manager.peer.listener.factory",
+		"ehcache.cache.manager.peer.provider.factory",
 		"ehcache.cache.manager.statistics.thread.pool.size",
+		"ehcache.multi.vm.config.location.peerProviderProperties",
 		"ehcache.statistics.enabled",
 		"hot.deploy.hook.custom.jsp.verification.enabled",
 		"hibernate.cache.region.factory_class",

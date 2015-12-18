@@ -12,26 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal.configurator;
+package com.liferay.portal.cache.ehcache.single.internal.bootstrap;
 
-import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.cache.PortalCacheBootstrapLoader;
+import com.liferay.portal.cache.PortalCacheBootstrapLoaderFactory;
+
+import java.util.Properties;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Dante Wang
+ * @author Tina Tian
  */
-@Component(
-	immediate = true,
-	service = SingleVMEhcachePortalCacheManagerConfigurator.class
-)
-public class SingleVMEhcachePortalCacheManagerConfigurator
-	extends BaseEhcachePortalCacheManagerConfigurator {
+@Component(immediate = true, service = PortalCacheBootstrapLoaderFactory.class)
+public class SinglePortalCacheBootstrapLoaderFactory
+	implements PortalCacheBootstrapLoaderFactory {
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		this.props = props;
+	@Override
+	public PortalCacheBootstrapLoader create(Properties properties) {
+		return null;
 	}
 
 }

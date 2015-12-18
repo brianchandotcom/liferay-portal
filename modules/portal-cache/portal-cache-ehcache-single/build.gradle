@@ -1,0 +1,7 @@
+dependencies {
+	compile project(":portal-cache:portal-cache-ehcache")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

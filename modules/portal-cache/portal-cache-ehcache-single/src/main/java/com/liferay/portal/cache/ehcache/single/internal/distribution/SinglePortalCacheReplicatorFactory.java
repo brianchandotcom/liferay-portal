@@ -12,26 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal.configurator;
+package com.liferay.portal.cache.ehcache.single.internal.distribution;
 
-import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.cache.PortalCacheReplicator;
+import com.liferay.portal.cache.PortalCacheReplicatorFactory;
+
+import java.io.Serializable;
+
+import java.util.Properties;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Dante Wang
+ * @author Tina Tian
  */
-@Component(
-	immediate = true,
-	service = SingleVMEhcachePortalCacheManagerConfigurator.class
-)
-public class SingleVMEhcachePortalCacheManagerConfigurator
-	extends BaseEhcachePortalCacheManagerConfigurator {
+@Component(immediate = true, service = PortalCacheReplicatorFactory.class)
+public class SinglePortalCacheReplicatorFactory
+	implements PortalCacheReplicatorFactory {
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		this.props = props;
+	@Override
+	public <K extends Serializable, V extends Serializable>
+		PortalCacheReplicator<K, V> create(Properties properties) {
+
+		return null;
 	}
 
 }

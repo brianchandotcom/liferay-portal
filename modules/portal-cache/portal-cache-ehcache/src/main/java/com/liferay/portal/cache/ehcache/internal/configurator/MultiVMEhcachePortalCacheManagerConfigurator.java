@@ -15,15 +15,17 @@
 package com.liferay.portal.cache.ehcache.internal.configurator;
 
 import com.liferay.portal.cache.PortalCacheReplicator;
-import com.liferay.portal.cache.ehcache.EhcacheConstants;
+import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Properties;
+import java.util.Set;
 
 import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.config.FactoryConfiguration;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -41,19 +43,24 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 
 	@Activate
 	protected void activate() {
+		_bootstrapLoaderEnabled = GetterUtil.getBoolean(
+			props.get(PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED));
 		_clusterEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
-		_clusterLinkReplicationEnabled = GetterUtil.getBoolean(
-			props.get(PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED));
-	}
 
-	@Override
-	protected boolean isClearCacheManagerPeerConfigurations() {
-		if (_clusterEnabled && !_clusterLinkReplicationEnabled) {
-			return false;
-		}
+		_defaultBootstrapLoaderPropertiesString = props.get(
+			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES_DEFAULT);
+		_bootstrapLoaderProperties = props.getProperties(
+			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES +
+				StringPool.PERIOD,
+			true);
 
-		return true;
+		_defaultReplicatorPropertiesString = props.get(
+			PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATOR_PROPERTIES_DEFAULT);
+		_replicatorProperties = props.getProperties(
+			PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATOR_PROPERTIES +
+				StringPool.PERIOD,
+			true);
 	}
 
 	@Override
@@ -68,38 +75,51 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 	}
 
 	@Override
-	protected boolean isValidCacheEventListener(
-		Properties properties, boolean usingDefault) {
+	protected PortalCacheConfiguration parseCacheListenerConfigurations(
+		CacheConfiguration cacheConfiguration, boolean usingDefault) {
 
-		if (Boolean.valueOf(
-				properties.getProperty(PortalCacheReplicator.REPLICATOR))) {
+		PortalCacheConfiguration portalCacheConfiguration =
+			super.parseCacheListenerConfigurations(
+				cacheConfiguration, usingDefault);
 
-			return _clusterEnabled;
+		if (!_clusterEnabled) {
+			return portalCacheConfiguration;
 		}
 
-		return super.isValidCacheEventListener(properties, usingDefault);
-	}
+		String cacheName = cacheConfiguration.getName();
 
-	@Override
-	protected Properties parseBootstrapCacheLoaderConfigurations(
-		FactoryConfiguration<?> factoryConfiguration) {
+		if (_bootstrapLoaderEnabled) {
+			String bootstrapLoaderPropertiesString =
+				_bootstrapLoaderProperties.getProperty(cacheName);
 
-		if ((factoryConfiguration == null) || !_clusterEnabled) {
-			return null;
+			if (Validator.isNull(bootstrapLoaderPropertiesString)) {
+				bootstrapLoaderPropertiesString =
+					_defaultBootstrapLoaderPropertiesString;
+			}
+
+			portalCacheConfiguration.setPortalCacheBootstrapLoaderProperties(
+				parseProperties(
+					bootstrapLoaderPropertiesString, StringPool.COMMA));
 		}
 
-		Properties portalCacheBootstrapLoaderProperties = parseProperties(
-			factoryConfiguration.getProperties(),
-			factoryConfiguration.getPropertySeparator());
+		String replicatorPropertiesString = _replicatorProperties.getProperty(
+			cacheName);
 
-		if (!_clusterLinkReplicationEnabled) {
-			portalCacheBootstrapLoaderProperties.put(
-				EhcacheConstants.
-					BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME,
-				factoryConfiguration.getFullyQualifiedClassPath());
+		if (Validator.isNull(replicatorPropertiesString)) {
+			replicatorPropertiesString = _defaultReplicatorPropertiesString;
 		}
 
-		return portalCacheBootstrapLoaderProperties;
+		Properties replicatorProperties = parseProperties(
+			replicatorPropertiesString, StringPool.COMMA);
+
+		replicatorProperties.put(PortalCacheReplicator.REPLICATOR, true);
+
+		Set<Properties> portalCacheListenerPropertiesSet =
+			portalCacheConfiguration.getPortalCacheListenerPropertiesSet();
+
+		portalCacheListenerPropertiesSet.add(replicatorProperties);
+
+		return portalCacheConfiguration;
 	}
 
 	@Reference(unbind = "-")
@@ -107,7 +127,11 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 		this.props = props;
 	}
 
+	private boolean _bootstrapLoaderEnabled;
+	private Properties _bootstrapLoaderProperties;
 	private boolean _clusterEnabled;
-	private boolean _clusterLinkReplicationEnabled;
+	private String _defaultBootstrapLoaderPropertiesString;
+	private String _defaultReplicatorPropertiesString;
+	private Properties _replicatorProperties;
 
 }

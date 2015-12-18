@@ -1,9 +1,0 @@
-Bundle-Name: Liferay Portal Cache Ehcache Cluster
-Bundle-SymbolicName: com.liferay.portal.cache.ehcache.cluster
-Bundle-Version: 1.0.0
-DynamicImport-Package: *
-Export-Package: com.liferay.portal.cache.ehcache.cluster
--include: ../../../../marketplace/platform/bnd.bnd
-Include-Resource: classes
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Cache Engines

@@ -872,37 +872,17 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</else>
 			</if>
 
-			<if>
-				<isset property="env.JENKINS_HOME" />
-				<then>
-					<parallel>
-						<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
-							<args />
-							<arg value="--no-daemon" />
-							<arg value="--project-cache-dir=${project.dir}/.gradle" />
-							<arg value="--stacktrace" />
-							<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
-							<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
-							<arg value="-Dliferay.home=${liferay.home}" />
-							<arg value="@{task}" />
-							<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
-						</exec>
-					</parallel>
-				</then>
-				<else>
-					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
-						<args />
-						<arg value="--no-daemon" />
-						<arg value="--project-cache-dir=${project.dir}/.gradle" />
-						<arg value="--stacktrace" />
-						<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
-						<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
-						<arg value="-Dliferay.home=${liferay.home}" />
-						<arg value="@{task}" />
-						<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
-					</exec>
-				</else>
-			</if>
+			<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+				<args />
+				<arg value="--no-daemon" />
+				<arg value="--project-cache-dir=${project.dir}/.gradle" />
+				<arg value="--stacktrace" />
+				<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
+				<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
+				<arg value="-Dliferay.home=${liferay.home}" />
+				<arg value="@{task}" />
+				<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
+			</exec>
 		</sequential>
 	</macrodef>
 

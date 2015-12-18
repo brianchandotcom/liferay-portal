@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Asset Publisher Layout Prototype
 Bundle-SymbolicName: com.liferay.asset.publisher.layout.prototype
 Bundle-Version: 1.0.0
--include: ../../../../marketplace/web-content-management/bnd.bnd
 Import-Package:\
 	com.liferay.asset.categories.navigation.web.constants,\
 	com.liferay.asset.tags.navigation.web.constants,\
@@ -10,3 +9,4 @@ Import-Package:\
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset
+-include: ../../../../marketplace/web-content-management/bnd.bnd

@@ -85,7 +85,6 @@ Import-Package:\
 	!org.junit.*,\
 	!sun.security.*,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	lib/analysis-icu.jar=lib/analysis-icu.jar,\
@@ -130,3 +129,4 @@ Include-Resource:\
 	lib/t-digest.jar=lib/t-digest.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Elasticsearch
+-include: ../../../marketplace/platform/bnd.bnd

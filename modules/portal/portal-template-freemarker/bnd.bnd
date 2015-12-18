@@ -49,7 +49,6 @@ Import-Package:\
 	org.apache.taglibs.standard.tei;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.tlv;version='[1.2.3,2.0)',\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	WEB-INF=src/main/resources/WEB-INF,\
@@ -57,3 +56,4 @@ Include-Resource:\
 	@lib/org.freemarker.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines
+-include: ../../../marketplace/platform/bnd.bnd

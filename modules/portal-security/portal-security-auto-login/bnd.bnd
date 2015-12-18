@@ -7,7 +7,7 @@ Export-Package: \
 	com.liferay.portal.security.auto.login.request.parameter,\
 	com.liferay.portal.security.auto.login.request.header
 Import-Package: *
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
+-include: ../../../marketplace/platform/bnd.bnd

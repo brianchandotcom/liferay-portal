@@ -13,9 +13,9 @@ Export-Package:\
 	com.liferay.exportimport.staged.model.repository.base,\
 	com.liferay.exportimport.staging,\
 	com.liferay.exportimport.xstream
--include: ../../../../marketplace/web-content-management/bnd.bnd
 Include-Resource:\
 	classes,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/xml/DocUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
+-include: ../../../../marketplace/web-content-management/bnd.bnd

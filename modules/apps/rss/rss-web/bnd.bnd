@@ -1,7 +1,6 @@
 Bundle-Name: Liferay RSS Web
 Bundle-SymbolicName: com.liferay.rss.web
 Bundle-Version: 1.0.0
--include: ../../../../marketplace/web-content-management/bnd.bnd
 Import-Package:\
 	com.sun.syndication,\
 	com.sun.syndication.feed,\
@@ -14,3 +13,4 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Publication Tools
 Web-ContextPath: /rss-web
+-include: ../../../../marketplace/web-content-management/bnd.bnd

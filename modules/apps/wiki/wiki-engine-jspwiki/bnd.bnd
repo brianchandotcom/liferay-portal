@@ -13,7 +13,6 @@ Import-Package:\
 	!org.intabulas.sandler.*,\
 	!org.jgroups.*,\
 	*
--include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	@../../../../lib/portal/ecs.jar,\
@@ -25,3 +24,4 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-jspwiki
+-include: ../../../../marketplace/collaboration/bnd.bnd

@@ -44,7 +44,6 @@ Import-Package:\
 	!org.terracotta.toolkit.store,\
 	!sun.misc,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/ehcache.jar!/com/*,\
@@ -53,3 +52,4 @@ Include-Resource:\
 	@lib/ehcache.jar!/META-INF/*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Cache Engines
+-include: ../../../marketplace/platform/bnd.bnd

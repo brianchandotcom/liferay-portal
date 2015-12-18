@@ -9,7 +9,6 @@ Import-Package:\
 	!org.json.simple.*,\
 	!org.relaxng.datatype.*,\
 	*
--include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/chemistry-opencmis-client-api.jar,\
@@ -21,3 +20,4 @@ Include-Resource:\
 	@lib/woodstox-core-asl.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
+-include: ../../../../marketplace/collaboration/bnd.bnd

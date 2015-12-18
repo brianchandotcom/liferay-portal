@@ -2,7 +2,7 @@ Bundle-Name: Liferay Product Navigation User
 Bundle-SymbolicName: com.liferay.product.navigation.user
 Bundle-Version: 1.0.0
 Include-Resource: classes
--include: ../../../../marketplace/web-content-management/bnd.bnd
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Product Navigation
 Web-ContextPath: /product-navigation-user
+-include: ../../../../marketplace/web-content-management/bnd.bnd

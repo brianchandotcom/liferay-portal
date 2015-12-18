@@ -10,9 +10,9 @@ Import-Package:\
 	!org.apache.logging.*,\
 	!org.mozilla.javascript.*,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/jgroups.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Clustering
+-include: ../../../marketplace/platform/bnd.bnd

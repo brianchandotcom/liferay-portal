@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.staging.taglib
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.staging.taglib.servlet.taglib
--include: ../../../../marketplace/web-content-management/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
@@ -12,3 +11,4 @@ Provide-Capability:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Web-ContextPath: /staging-taglib
+-include: ../../../../marketplace/web-content-management/bnd.bnd

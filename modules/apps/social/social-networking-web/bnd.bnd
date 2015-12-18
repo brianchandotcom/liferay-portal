@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portlet.messageboards.model,\
 	*
--include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
@@ -13,3 +12,4 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social
 Web-ContextPath: /social-networking-web
+-include: ../../../../marketplace/collaboration/bnd.bnd

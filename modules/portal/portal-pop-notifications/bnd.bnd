@@ -2,7 +2,6 @@ Bundle-Name: Liferay Portal POP Notifications
 Bundle-SymbolicName: com.liferay.portal.pop.notifications
 Bundle-Version: 1.0.0
 Import-Package: *
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/mail/LiferayMimeMessage.class,\
@@ -10,3 +9,4 @@ Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/mail/MailEngineException.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
+-include: ../../../marketplace/platform/bnd.bnd

@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.dynamic.data.mapping.taglib.servlet.taglib,\
 	com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base
--include: ../../../../marketplace/business-productivity/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
@@ -13,3 +12,4 @@ Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Provide-Capability:\
 	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/ddm";version:Version="1.0.0"
 Web-ContextPath: /dynamic-data-mapping-taglib
+-include: ../../../../marketplace/business-productivity/bnd.bnd

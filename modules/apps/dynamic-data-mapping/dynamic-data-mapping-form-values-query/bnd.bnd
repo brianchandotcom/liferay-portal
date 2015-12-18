@@ -7,10 +7,10 @@ Import-Package:\
 	!javax.print.*,\
 	!javax.swing.*,\
 	*
--include: ../../../../marketplace/business-productivity/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/antlr4-runtime.jar,\
 	@lib/org.abego.treelayout.core.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
+-include: ../../../../marketplace/business-productivity/bnd.bnd

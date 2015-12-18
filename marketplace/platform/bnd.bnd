@@ -3,7 +3,7 @@ Liferay-Releng-App-Title: Platform${app.title.suffix}
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
-Liferay-Releng-Dependent-Apps:\ 
+Liferay-Releng-Dependent-Apps:\
 	com.liferay.configuration.admin.annotations:1.0.0,\
 	com.liferay.configuration.admin.api:1.0.0,\
 	com.liferay.configuration.admin.equinox:1.0.0,\
@@ -33,16 +33,16 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.background.task.api:1.0.0,\
 	com.liferay.portal.background.task.service:1.0.0,\
 	com.liferay.portal.background.task.test:1.0.0,\
-	com.liferay.portal.cache:1.0.0,\
-	com.liferay.portal.cache.ehcache:1.0.0,\
 	com.liferay.portal.cache.ehcache.cluster:1.0.0,\
 	com.liferay.portal.cache.ehcache.provider:1.0.0,\
+	com.liferay.portal.cache.ehcache:1.0.0,\
 	com.liferay.portal.cache.memory:1.0.0,\
 	com.liferay.portal.cache.test:1.0.0,\
+	com.liferay.portal.cache:1.0.0,\
 	com.liferay.portal.cluster:1.0.0,\
 	com.liferay.portal.configuration.cluster:1.0.0,\
-	com.liferay.portal.configuration.persistence:1.0.0,\
 	com.liferay.portal.configuration.persistence.test:1.0.0,\
+	com.liferay.portal.configuration.persistence:1.0.0,\
 	com.liferay.portal.configurator.extender:1.0.0,\
 	com.liferay.portal.cxf.common:1.0.0,\
 	com.liferay.portal.cxf.jaxrs.common:1.0.0,\
@@ -55,8 +55,8 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.js.bundle.config.extender:1.0.0,\
 	com.liferay.portal.js.loader.modules.extender:1.0.0,\
 	com.liferay.portal.json.web.service.extender:1.0.0,\
-	com.liferay.portal.ldap:1.0.0,\
 	com.liferay.portal.ldap.test:1.0.0,\
+	com.liferay.portal.ldap:1.0.0,\
 	com.liferay.portal.lock.service:1.0.0,\
 	com.liferay.portal.lock.test:1.0.0,\
 	com.liferay.portal.messaging:1.0.0,\
@@ -68,19 +68,19 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.pop.notifications:1.0.0,\
 	com.liferay.portal.portlet.container.test:1.0.0,\
 	com.liferay.portal.portlet.tracker:1.0.0,\
-	com.liferay.portal.rest.extender:1.0.0,\
 	com.liferay.portal.rest.extender.test:1.0.0,\
-	com.liferay.portal.scheduler:1.0.0,\
+	com.liferay.portal.rest.extender:1.0.0,\
 	com.liferay.portal.scheduler.quartz:1.0.0,\
-	com.liferay.portal.scripting:1.0.0,\
+	com.liferay.portal.scheduler:1.0.0,\
 	com.liferay.portal.scripting.beanshell:1.0.0,\
 	com.liferay.portal.scripting.groovy:1.0.0,\
 	com.liferay.portal.scripting.groovy:1.0.0,\
 	com.liferay.portal.scripting.python:1.0.0,\
 	com.liferay.portal.scripting.ruby:1.0.0,\
-	com.liferay.portal.search:1.0.0,\
+	com.liferay.portal.scripting:1.0.0,\
 	com.liferay.portal.search.elasticsearch:1.0.0,\
 	com.liferay.portal.search.solr:1.0.0,\
+	com.liferay.portal.search:1.0.0,\
 	com.liferay.portal.security.auth.verifier:1.0.0,\
 	com.liferay.portal.security.auto.login:1.0.0,\
 	com.liferay.portal.security.sso.cas:1.0.0,\
@@ -92,19 +92,19 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.servlet.jsp.compiler:1.0.0,\
 	com.liferay.portal.servlet.jstl:1.0.0,\
 	com.liferay.portal.settings:1.0.0,\
-	com.liferay.portal.soap.extender:1.0.0,\
 	com.liferay.portal.soap.extender.test:1.0.0,\
+	com.liferay.portal.soap.extender:1.0.0,\
 	com.liferay.portal.spring.extender:1.0.0,\
-	com.liferay.portal.store.cmis:1.0.0,\
 	com.liferay.portal.store.cmis.test:1.0.0,\
-	com.liferay.portal.store.db:1.0.0,\
+	com.liferay.portal.store.cmis:1.0.0,\
 	com.liferay.portal.store.db.test:1.0.0,\
-	com.liferay.portal.store.file.system:1.0.0,\
+	com.liferay.portal.store.db:1.0.0,\
 	com.liferay.portal.store.file.system.test:1.0.0,\
-	com.liferay.portal.store.jcr:1.0.0,\
+	com.liferay.portal.store.file.system:1.0.0,\
 	com.liferay.portal.store.jcr.test:1.0.0,\
-	com.liferay.portal.store.s3:1.0.0,\
+	com.liferay.portal.store.jcr:1.0.0,\
 	com.liferay.portal.store.s3.test:1.0.0,\
+	com.liferay.portal.store.s3:1.0.0,\
 	com.liferay.portal.store.safefilenamewrapper:1.0.0,\
 	com.liferay.portal.taglib.aui.form.extension.sample:1.0.0,\
 	com.liferay.portal.template.freemarker:1.0.0,\

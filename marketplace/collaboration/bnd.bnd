@@ -3,15 +3,16 @@ Liferay-Releng-App-Title: Collaboration${app.title.suffix}
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Communication
 Liferay-Releng-Demo-Url:
-Liferay-Releng-Dependent-Apps:\ 
+Liferay-Releng-Dependent-Apps:\
 	com.liferay.announcements.web:1.0.0,\
 	com.liferay.blogs.api:1.0.0,\
 	com.liferay.blogs.editor.config:1.0.0,\
-	com.liferay.blogs.item.selector:1.0.0,\
 	com.liferay.blogs.item.selector.web:1.0.0,\
+	com.liferay.blogs.item.selector:1.0.0,\
 	com.liferay.blogs.layout.prototype:1.0.0,\
 	com.liferay.blogs.portlet.toolbar.contributor:1.0.0,\
 	com.liferay.blogs.recent.bloggers.web:1.0.0,\
+	com.liferay.blogs.service:1.0.0,\
 	com.liferay.blogs.test:1.0.0,\
 	com.liferay.blogs.web:1.0.0,\
 	com.liferay.bookmarks.api:1.0.0,\
@@ -29,9 +30,9 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.document.library.google.docs:1.0.0,\
 	com.liferay.document.library.item.selector.web:1.0.0,\
 	com.liferay.document.library.layout.set.prototype:1.0.0,\
-	com.liferay.document.library.repository.cmis:1.0.0,\
 	com.liferay.document.library.repository.cmis.impl:1.0.0,\
 	com.liferay.document.library.repository.cmis.test:1.0.0,\
+	com.liferay.document.library.repository.cmis:1.0.0,\
 	com.liferay.document.library.repository.search:1.0.0,\
 	com.liferay.document.library.service:1.0.0,\
 	com.liferay.document.library.test:1.0.0,\
@@ -62,8 +63,8 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.ratings.page.ratings.web:1.0.0,\
 	com.liferay.ratings.service:1.0.0,\
 	com.liferay.social.activities.web:1.0.0,\
-	com.liferay.social.activity:1.0.0,\
 	com.liferay.social.activity.web:1.0.0,\
+	com.liferay.social.activity:1.0.0,\
 	com.liferay.social.group.statistics.web:1.0.0,\
 	com.liferay.social.networking.api:1.0.0,\
 	com.liferay.social.networking.service:1.0.0,\
@@ -81,8 +82,7 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.wiki.layout.prototype:1.0.0,\
 	com.liferay.wiki.service:1.0.0,\
 	com.liferay.wiki.test:1.0.0,\
-	com.liferay.wiki.web:1.0.0,\
-	com.liferay.blogs.service:1.0.0
+	com.liferay.wiki.web:1.0.0
 Liferay-Releng-Labs: false
 Liferay-Releng-Marketplace: true
 Liferay-Releng-Public: ${liferay.releng.public}

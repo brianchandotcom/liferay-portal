@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Social Activities Web
 Bundle-SymbolicName: com.liferay.social.activities.web
 Bundle-Version: 1.0.0
--include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
@@ -10,3 +9,4 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social
 Web-ContextPath: /social-activities-web
+-include: ../../../../marketplace/collaboration/bnd.bnd

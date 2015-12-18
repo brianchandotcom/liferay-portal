@@ -8,3 +8,4 @@ Export-Package:\
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
+-include: ../../../../marketplace/collaboration/bnd.bnd

@@ -16,10 +16,10 @@ Import-Package:\
 	!org.zeroturnaround.javarebel,\
 	com.liferay.portal.template,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/velocity.jar,\
 	@lib/velocity-tools.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines
+-include: ../../../marketplace/platform/bnd.bnd

@@ -23,12 +23,6 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 %>
 
-<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
-
-<liferay-util:include page="/wiki/page_tabs.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="attachments" />
-</liferay-util:include>
-
 <portlet:actionURL name="/wiki/edit_page_attachment" var="editPageAttachmentURL" />
 
 <aui:form action="<%= editPageAttachmentURL %>" enctype="multipart/form-data" method="post" name="fm1">

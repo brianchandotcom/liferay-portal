@@ -16,7 +16,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -60,9 +60,9 @@ public class VerifyProcessUtil {
 			PropsValues.INDEX_ON_STARTUP = true;
 		}
 
-		boolean tempIndexReadOnly = SearchEngineUtil.isIndexReadOnly();
+		boolean tempIndexReadOnly = SearchEngineHelperUtil.isIndexReadOnly();
 
-		SearchEngineUtil.setIndexReadOnly(true);
+		SearchEngineHelperUtil.setIndexReadOnly(true);
 
 		NotificationThreadLocal.setEnabled(false);
 		StagingAdvicesThreadLocal.setEnabled(false);
@@ -82,7 +82,7 @@ public class VerifyProcessUtil {
 			}
 		}
 		finally {
-			SearchEngineUtil.setIndexReadOnly(tempIndexReadOnly);
+			SearchEngineHelperUtil.setIndexReadOnly(tempIndexReadOnly);
 
 			NotificationThreadLocal.setEnabled(true);
 			StagingAdvicesThreadLocal.setEnabled(true);

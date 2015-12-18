@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.server.admin.web.configuration.PluginRepositoriesConfiguration;
@@ -73,7 +73,7 @@ public class PluginRepositoriesMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		SearchEngineUtil.initialize(CompanyConstants.SYSTEM);
+		SearchEngineHelperUtil.initialize(CompanyConstants.SYSTEM);
 
 		PluginPackageUtil.reloadRepositories();
 	}

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderU
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -501,7 +501,7 @@ public abstract class BaseRepositoryImpl
 
 	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
-		searchContext.setSearchEngineId(SearchEngineUtil.GENERIC_ENGINE_ID);
+		searchContext.setSearchEngineId(SearchEngineHelper.GENERIC_ENGINE_ID);
 
 		BooleanQuery fullQuery = RepositorySearchQueryBuilderUtil.getFullQuery(
 			searchContext);

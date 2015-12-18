@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1278,16 +1278,16 @@ public class FileSystemImporter extends BaseImporter {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		boolean indexReadOnly = SearchEngineUtil.isIndexReadOnly();
+		boolean indexReadOnly = SearchEngineHelperUtil.isIndexReadOnly();
 
 		try {
-			SearchEngineUtil.setIndexReadOnly(true);
+			SearchEngineHelperUtil.setIndexReadOnly(true);
 
 			setUpAssets("assets.json");
 			setUpSettings("settings.json");
 			setUpSitemap("sitemap.json");
 
-			SearchEngineUtil.setIndexReadOnly(false);
+			SearchEngineHelperUtil.setIndexReadOnly(false);
 
 			long startTime = System.currentTimeMillis();
 
@@ -1304,7 +1304,7 @@ public class FileSystemImporter extends BaseImporter {
 			}
 		}
 		finally {
-			SearchEngineUtil.setIndexReadOnly(indexReadOnly);
+			SearchEngineHelperUtil.setIndexReadOnly(indexReadOnly);
 		}
 	}
 

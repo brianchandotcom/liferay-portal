@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
@@ -193,7 +193,7 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 	protected void doReindex(AssetCategory assetCategory) throws Exception {
 		Document document = getDocument(assetCategory);
 
-		SearchEngineUtil.updateDocument(
+		SearchEngineHelperUtil.updateDocument(
 			getSearchEngineId(), assetCategory.getCompanyId(), document,
 			isCommitImmediately());
 	}

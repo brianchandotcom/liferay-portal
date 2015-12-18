@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -175,7 +175,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 		}
 
 		if (ArrayUtil.isEmpty(entryClassNames)) {
-			entryClassNames = SearchEngineUtil.getEntryClassNames();
+			entryClassNames = SearchEngineHelperUtil.getEntryClassNames();
 
 			if (!dataJSONObject.has("values")) {
 				JSONArray entriesJSONArray = JSONFactoryUtil.createJSONArray();

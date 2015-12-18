@@ -15,7 +15,7 @@
 package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.ArquillianUtil;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
@@ -56,7 +56,7 @@ public class MainServletTestCallback extends BaseTestCallback<Void, Void> {
 			return;
 		}
 
-		SearchEngineUtil.removeCompany(TestPropsValues.getCompanyId());
+		SearchEngineHelperUtil.removeCompany(TestPropsValues.getCompanyId());
 	}
 
 	@Override

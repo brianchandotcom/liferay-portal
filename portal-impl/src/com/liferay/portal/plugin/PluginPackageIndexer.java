@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -184,7 +184,7 @@ public class PluginPackageIndexer extends BaseIndexer<PluginPackage> {
 	protected void doReindex(PluginPackage pluginPackage) throws Exception {
 		Document document = getDocument(pluginPackage);
 
-		SearchEngineUtil.updateDocument(
+		SearchEngineHelperUtil.updateDocument(
 			getSearchEngineId(), CompanyConstants.SYSTEM, document,
 			isCommitImmediately());
 	}
@@ -195,7 +195,7 @@ public class PluginPackageIndexer extends BaseIndexer<PluginPackage> {
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
-		SearchEngineUtil.deleteEntityDocuments(
+		SearchEngineHelperUtil.deleteEntityDocuments(
 			getSearchEngineId(), CompanyConstants.SYSTEM, CLASS_NAME,
 			isCommitImmediately());
 
@@ -215,7 +215,7 @@ public class PluginPackageIndexer extends BaseIndexer<PluginPackage> {
 			documents.add(document);
 		}
 
-		SearchEngineUtil.updateDocuments(
+		SearchEngineHelperUtil.updateDocuments(
 			getSearchEngineId(), CompanyConstants.SYSTEM, documents,
 			isCommitImmediately());
 

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -134,7 +134,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 	protected void doReindex(BlogsEntry blogsEntry) throws Exception {
 		Document document = getDocument(blogsEntry);
 
-		SearchEngineUtil.updateDocument(
+		SearchEngineHelperUtil.updateDocument(
 			getSearchEngineId(), blogsEntry.getCompanyId(), document,
 			isCommitImmediately());
 	}

@@ -133,6 +133,11 @@ public class SearchEngineHelperUtil {
 			searchEngineId);
 	}
 
+	public static String getSearchWriterDestinationName(String searchEngineId) {
+		return _searchEngineHelper.getSearchWriterDestinationName(
+			searchEngineId);
+	}
+
 	public static void indexKeyword(
 			long companyId, String querySuggestion, float weight,
 			String keywordType, Locale locale)
@@ -240,6 +245,10 @@ public class SearchEngineHelperUtil {
 		_searchEngineHelper.removeCompany(companyId);
 	}
 
+	public static SearchEngine removeSearchEngine(String searchEngineId) {
+		return _searchEngineHelper.removeSearchEngine(searchEngineId);
+	}
+
 	public static Hits search(SearchContext searchContext, Query query)
 		throws SearchException {
 
@@ -316,15 +325,6 @@ public class SearchEngineHelperUtil {
 
 	public static void updatePermissionFields(String name, String primKey) {
 		_searchEngineHelper.updatePermissionFields(name, primKey);
-	}
-
-	public String getSearchWriterDestinationName(String searchEngineId) {
-		return _searchEngineHelper.getSearchWriterDestinationName(
-			searchEngineId);
-	}
-
-	public SearchEngine removeSearchEngine(String searchEngineId) {
-		return _searchEngineHelper.removeSearchEngine(searchEngineId);
 	}
 
 	private static final SearchEngineHelper _searchEngineHelper =

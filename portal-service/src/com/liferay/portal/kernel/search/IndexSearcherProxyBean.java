@@ -45,7 +45,8 @@ public class IndexSearcherProxyBean
 			searchEngineId = (String)arguments[0];
 		}
 
-		return SearchEngineUtil.getSearchReaderDestinationName(searchEngineId);
+		return SearchEngineHelperUtil.getSearchReaderDestinationName(
+			searchEngineId);
 	}
 
 	@Override

@@ -14,7 +14,8 @@
 
 package com.liferay.portal.search;
 
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.IndexAdminHelperUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -55,8 +56,8 @@ public class BackupAndRestoreIndexesTest {
 
 			backupName = backupName + "-" + System.currentTimeMillis();
 
-			SearchEngineUtil.backup(
-				companyId, SearchEngineUtil.SYSTEM_ENGINE_ID, backupName);
+			IndexAdminHelperUtil.backup(
+				companyId, SearchEngineHelper.SYSTEM_ENGINE_ID, backupName);
 
 			backupNames.put(companyId, backupName);
 		}
@@ -66,9 +67,9 @@ public class BackupAndRestoreIndexesTest {
 		for (Map.Entry<Long, String> entry : backupNames.entrySet()) {
 			String backupName = entry.getValue();
 
-			SearchEngineUtil.restore(entry.getKey(), backupName);
+			IndexAdminHelperUtil.restore(entry.getKey(), backupName);
 
-			SearchEngineUtil.removeBackup(entry.getKey(), backupName);
+			IndexAdminHelperUtil.removeBackup(entry.getKey(), backupName);
 		}
 	}
 

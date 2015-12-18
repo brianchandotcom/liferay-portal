@@ -14,12 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
-import com.liferay.portal.kernel.interval.IntervalActionProcessor;
-import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -408,12 +404,12 @@ public class DLFileEntryLocalServiceTest {
 			StringPool.BLANK, StringPool.BLANK, is, bytes.length,
 			serviceContext);
 
-		boolean indexReadOnly = SearchEngineUtil.isIndexReadOnly();
+		boolean indexReadOnly = SearchEngineHelperUtil.isIndexReadOnly();
 
 		DLFileEntry dlFileEntry = null;
 
 		try {
-			SearchEngineUtil.setIndexReadOnly(true);
+			SearchEngineHelperUtil.setIndexReadOnly(true);
 
 			dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
 				fileEntry.getFileEntryId());
@@ -434,7 +430,7 @@ public class DLFileEntryLocalServiceTest {
 					dlFileEntry.getFileEntryId());
 			}
 
-			SearchEngineUtil.setIndexReadOnly(indexReadOnly);
+			SearchEngineHelperUtil.setIndexReadOnly(indexReadOnly);
 		}
 	}
 

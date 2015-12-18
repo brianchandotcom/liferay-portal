@@ -955,6 +955,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<loadfile property="testray.testcase.warnings" srcfile="poshi-warnings.xml" />
 
 					<propertyregex
+						global="true"
 						input="${testray.testcase.warnings}"
 						override="true"
 						property="testray.testcase.warnings"

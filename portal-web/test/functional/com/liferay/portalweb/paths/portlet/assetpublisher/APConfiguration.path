@@ -63,7 +63,7 @@
 </tr>
 <tr>
 	<td>SOURCE_CURRENT_SCOPE_NAME</td>
-	<td>//div[contains(@id,'groupsSearchContainer')]//tr[contains(.,'Current Site (${key_siteName})')]/td[1]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Current Site')]</td>
 	<td></td>
 </tr>
 <tr>

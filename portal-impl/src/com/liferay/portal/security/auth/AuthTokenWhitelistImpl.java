@@ -86,11 +86,11 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 
 	@Override
 	public boolean isPortletInvocationWhitelisted(
-		long companyId, String portletId, String strutsAction) {
+		HttpServletRequest request, Portlet portlet) {
 
 		Set<String> whitelist = getPortletInvocationWhitelist();
 
-		if (whitelist.contains(portletId)) {
+		if (whitelist.contains(portlet.getPortletId())) {
 			return true;
 		}
 
@@ -108,6 +108,21 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 		Set<String> whitelist = getPortletCSRFWhitelist();
 
 		if (whitelist.contains(rootPortletId)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isPortletURLPortletInvocationWhitelisted(
+		LiferayPortletURL liferayPortletURL) {
+
+		String portletId = liferayPortletURL.getPortletId();
+
+		Set<String> whitelist = getPortletInvocationWhitelist();
+
+		if (whitelist.contains(portletId)) {
 			return true;
 		}
 

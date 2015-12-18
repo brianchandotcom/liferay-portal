@@ -1,3 +1,5 @@
+@import "mixins";
+
 .portlet-dynamic-data-mapping-data-provider {
 	.btn-action {
 		height: 64px;
@@ -7,6 +9,17 @@
 
 	.required-warning {
 		margin-bottom: 20px;
+	}
+
+	.form-control {
+		font-size: 14px;
+    	height: 40px;
+	}
+
+	@include sm {
+		.form-control {
+			font-size: 16px;
+		}
 	}
 }
 

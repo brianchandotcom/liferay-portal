@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -53,6 +52,7 @@ import com.liferay.portal.webserver.WebServerServlet;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLTrashLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -624,7 +624,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			LocalRepository localRepository =
 				RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
 
-			return RepositoryTrashUtil.moveFileEntryToTrash(
+			return DLTrashLocalServiceUtil.moveFileEntryToTrash(
 				userId, localRepository.getRepositoryId(), fileEntryId);
 		}
 		finally {
@@ -657,7 +657,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			LocalRepository localRepository =
 				RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
 
-			RepositoryTrashUtil.restoreFileEntryFromTrash(
+			DLTrashLocalServiceUtil.restoreFileEntryFromTrash(
 				userId, localRepository.getRepositoryId(), fileEntryId);
 		}
 		finally {

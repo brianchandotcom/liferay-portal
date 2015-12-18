@@ -1646,36 +1646,6 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
-	* Moves the file entry from a trashed folder to the new folder.
-	*
-	* @param fileEntryId the primary key of the file entry
-	* @param newFolderId the primary key of the new folder
-	* @param serviceContext the service context to be applied
-	* @return the file entry
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
-		long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppService.moveFileEntryFromTrash(fileEntryId, newFolderId,
-			serviceContext);
-	}
-
-	/**
-	* Moves the file entry with the primary key to the trash portlet.
-	*
-	* @param fileEntryId the primary key of the file entry
-	* @return the file entry
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppService.moveFileEntryToTrash(fileEntryId);
-	}
-
-	/**
 	* Moves the folder to the new parent folder with the primary key.
 	*
 	* @param folderId the primary key of the folder
@@ -1689,19 +1659,6 @@ public class DLAppServiceWrapper implements DLAppService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.moveFolder(folderId, parentFolderId, serviceContext);
-	}
-
-	/**
-	* Moves the folder with the primary key to the trash portlet.
-	*
-	* @param folderId the primary key of the folder
-	* @return the file entry
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppService.moveFolderToTrash(folderId);
 	}
 
 	/**
@@ -1740,28 +1697,6 @@ public class DLAppServiceWrapper implements DLAppService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.refreshFolderLock(lockUuid, companyId,
 			expirationTime);
-	}
-
-	/**
-	* Restores the file entry with the primary key from the trash portlet.
-	*
-	* @param fileEntryId the primary key of the file entry
-	*/
-	@Override
-	public void restoreFileEntryFromTrash(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppService.restoreFileEntryFromTrash(fileEntryId);
-	}
-
-	/**
-	* Restores the folder with the primary key from the trash portlet.
-	*
-	* @param folderId the primary key of the folder
-	*/
-	@Override
-	public void restoreFolderFromTrash(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppService.restoreFolderFromTrash(folderId);
 	}
 
 	/**

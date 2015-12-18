@@ -709,7 +709,7 @@
 			<finder-column name="typePK" />
 		</finder>
 	</entity>
-	<entity name="DLTrash" local-service="false" remote-service="true">
+	<entity name="DLTrash" local-service="true" remote-service="true">
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLAppHelper" />
 	</entity>
 	<exceptions>

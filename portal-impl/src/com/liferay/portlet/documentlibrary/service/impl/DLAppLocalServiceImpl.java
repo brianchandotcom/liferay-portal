@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
-import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -736,42 +735,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             RepositoryTrashUtil#moveFileEntryFromTrash(long, long, long,
-	 *             long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FileEntry moveFileEntryFromTrash(
-			long userId, long fileEntryId, long newFolderId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		LocalRepository localRepository =
-			repositoryProvider.getFileEntryLocalRepository(fileEntryId);
-
-		return RepositoryTrashUtil.moveFileEntryFromTrash(
-			userId, localRepository.getRepositoryId(), fileEntryId, newFolderId,
-			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             RepositoryTrashUtil#moveFileEntryToTrash(long, long, long)}
-	 */
-	@Deprecated
-	@Override
-	public FileEntry moveFileEntryToTrash(long userId, long fileEntryId)
-		throws PortalException {
-
-		LocalRepository localRepository =
-			repositoryProvider.getFileEntryLocalRepository(fileEntryId);
-
-		return RepositoryTrashUtil.moveFileEntryToTrash(
-			userId, localRepository.getRepositoryId(), fileEntryId);
-	}
-
 	@Override
 	public Folder moveFolder(
 			long userId, long folderId, long parentFolderId,
@@ -816,23 +779,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		finally {
 			SystemEventHierarchyEntryThreadLocal.pop(Folder.class);
 		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             RepositoryTrashUtil#restoreFileEntryFromTrash(long, long,
-	 *             long)}
-	 */
-	@Deprecated
-	@Override
-	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
-		throws PortalException {
-
-		LocalRepository localRepository =
-			repositoryProvider.getFileEntryLocalRepository(fileEntryId);
-
-		RepositoryTrashUtil.restoreFileEntryFromTrash(
-			userId, localRepository.getRepositoryId(), fileEntryId);
 	}
 
 	/**

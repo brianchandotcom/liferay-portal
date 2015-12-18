@@ -1704,6 +1704,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						fileName, "line break: " + fileName + " " + lineCount);
 				}
 
+				if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
+					processErrorMessage(
+						fileName, "line break: " + fileName + " " + lineCount);
+				}
+
 				if (line.contains("ActionForm form")) {
 					processErrorMessage(
 						fileName,

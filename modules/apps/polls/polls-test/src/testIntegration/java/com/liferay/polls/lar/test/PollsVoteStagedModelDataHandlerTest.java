@@ -30,7 +30,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,28 +137,6 @@ public class PollsVoteStagedModelDataHandlerTest
 
 		PollsQuestionLocalServiceUtil.getPollsQuestionByUuidAndGroupId(
 			question.getUuid(), group.getGroupId());
-	}
-
-	@Override
-	protected void validateImportedStagedModel(
-			StagedModel stagedModel, StagedModel importedStagedModel)
-		throws Exception {
-
-		super.validateImportedStagedModel(stagedModel, importedStagedModel);
-
-		PollsVote vote = (PollsVote)stagedModel;
-		PollsVote importedVote = (PollsVote)importedStagedModel;
-
-		Calendar voteDateCalendar = Calendar.getInstance();
-		Calendar importedVoteDateCalendar = Calendar.getInstance();
-
-		voteDateCalendar.setTime(vote.getVoteDate());
-		importedVoteDateCalendar.setTime(importedVote.getVoteDate());
-
-		voteDateCalendar.set(Calendar.MILLISECOND, 0);
-		importedVoteDateCalendar.set(Calendar.MILLISECOND, 0);
-
-		Assert.assertEquals(voteDateCalendar, importedVoteDateCalendar);
 	}
 
 }

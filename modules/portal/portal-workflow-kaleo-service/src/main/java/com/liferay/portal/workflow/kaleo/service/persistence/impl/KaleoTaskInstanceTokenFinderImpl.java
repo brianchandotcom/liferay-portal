@@ -248,23 +248,22 @@ public class KaleoTaskInstanceTokenFinderImpl
 						 kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateLT() == null))));
+
 			sql = CustomSQLUtil.appendCriteria(sql, ")");
 
 			sql = CustomSQLUtil.replaceAndOperator(
 				sql, kaleoTaskInstanceTokenQuery.isAndOperator());
 		}
 
-		if (kaleoTaskInstanceTokenQuery.getOrderByComparator() != null) {
+		OrderByComparator<KaleoTaskInstanceToken> obc =
+			kaleoTaskInstanceTokenQuery.getOrderByComparator();
+
+		if (obc != null) {
 			StringBundler sb = new StringBundler(sql);
 
-			appendOrderByComparator(
-				sb, _ORDER_BY_ENTITY_ALIAS,
-				kaleoTaskInstanceTokenQuery.getOrderByComparator());
+			appendOrderByComparator(sb, _ORDER_BY_ENTITY_ALIAS, obc);
 
 			sql = sb.toString();
-
-			OrderByComparator<KaleoTaskInstanceToken> obc =
-				kaleoTaskInstanceTokenQuery.getOrderByComparator();
 
 			String[] orderByFields = obc.getOrderByFields();
 
@@ -340,7 +339,13 @@ public class KaleoTaskInstanceTokenFinderImpl
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery,
 		boolean firstCriteria) {
 
-		String[] assetTypes = CustomSQLUtil.keywords(
+		String[] assetTypes = kaleoTaskInstanceTokenQuery.getAssetTypes();
+
+		if (ArrayUtil.isEmpty(assetTypes)) {
+			return StringPool.BLANK;
+		}
+
+		assetTypes = CustomSQLUtil.keywords(
 			kaleoTaskInstanceTokenQuery.getAssetTypes());
 
 		if (ArrayUtil.isEmpty(assetTypes)) {

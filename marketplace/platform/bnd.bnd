@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: Platform
+Liferay-Releng-App-Title: Platform${app.title.suffix}
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:

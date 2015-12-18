@@ -198,6 +198,18 @@ AUI.add(
 						return status;
 					},
 
+					_renderErrorMessage: function() {
+						var instance = this;
+
+						SelectField.superclass._renderErrorMessage.apply(instance, arguments);
+
+						var container = instance.get('container');
+
+						var inputGroup = container.one('.input-select-wrapper');
+
+						inputGroup.insert(container.one('.help-block'), 'after');
+					},
+
 					_setValue: function(val) {
 						return val || [];
 					}

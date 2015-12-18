@@ -147,7 +147,7 @@ else if (group != null) {
 </c:if>
 
 <c:if test="<%= (group == null) || !group.isCompany() %>">
-	<aui:input name="active" type="toggle-switch" value="<%= true %>" />
+	<aui:input name="active" type="toggle-switch" value="<%= (group == null) ? true : group.isActive() %>" />
 </c:if>
 
 <c:if test="<%= (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) && PropsValues.SITES_SHOW_INHERIT_CONTENT_SCOPE_FROM_PARENT_SITE %>">

@@ -14,29 +14,41 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import com.liferay.portal.kernel.util.ReflectionUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * @author Shuyang Zhou
  */
-public class StringJavaFileObject extends BaseJavaFileObject {
+public class BundleJavaFileObject extends BaseJavaFileObject {
 
-	public StringJavaFileObject(String simpleName, String content) {
-		super(Kind.SOURCE, simpleName);
+	public BundleJavaFileObject(String className, URL url) {
+		super(Kind.CLASS, className);
 
-		_content = content;
+		_url = url;
 	}
 
 	@Override
-	public CharSequence getCharContent(boolean ignoreEncodingErrors) {
-		return _content;
+	public InputStream openInputStream() throws IOException {
+		return _url.openStream();
 	}
 
 	@Override
 	public URI toUri() {
-		return URI.create("string:///".concat(getName()));
+		try {
+			return _url.toURI();
+		}
+		catch (URISyntaxException urise) {
+			return ReflectionUtil.throwException(urise);
+		}
 	}
 
-	private final String _content;
+	private final URL _url;
 
 }

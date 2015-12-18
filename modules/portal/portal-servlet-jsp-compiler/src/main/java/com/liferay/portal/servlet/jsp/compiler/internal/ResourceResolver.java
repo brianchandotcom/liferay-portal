@@ -14,29 +14,21 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
-import java.net.URI;
+import java.net.URL;
+
+import java.util.Collection;
+
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
- * @author Shuyang Zhou
+ * @author Raymond Augé
  */
-public class StringJavaFileObject extends BaseJavaFileObject {
+public interface ResourceResolver {
 
-	public StringJavaFileObject(String simpleName, String content) {
-		super(Kind.SOURCE, simpleName);
+	public URL getResource(BundleWiring bundleWiring, String name);
 
-		_content = content;
-	}
-
-	@Override
-	public CharSequence getCharContent(boolean ignoreEncodingErrors) {
-		return _content;
-	}
-
-	@Override
-	public URI toUri() {
-		return URI.create("string:///".concat(getName()));
-	}
-
-	private final String _content;
+	public Collection<String> resolveResources(
+		BundleWiring bundleWiring, String path, String filePattern,
+		int options);
 
 }

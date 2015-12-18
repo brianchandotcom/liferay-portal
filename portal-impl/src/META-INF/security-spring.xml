@@ -67,6 +67,7 @@
 	<bean id="com.liferay.portal.security.auth.LiberalScreenNameValidator" class="com.liferay.portal.security.auth.LiberalScreenNameValidator" />
 	<bean id="com.liferay.portal.security.auth.LoginFailure" class="com.liferay.portal.security.auth.LoginFailure" />
 	<bean id="com.liferay.portal.security.auth.LoginMaxFailures" class="com.liferay.portal.security.auth.LoginMaxFailures" />
+	<bean id="com.liferay.portal.security.auth.MVCPortletAuthTokenWhitelist" class="com.liferay.portal.security.auth.MVCPortletAuthTokenWhitelist" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" class="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameValidatorFactory" class="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.SessionAuthToken" class="com.liferay.portal.security.auth.SessionAuthToken" />

@@ -261,7 +261,7 @@
 	</command>
 
 	<command name="viewScopeSelection">
-		<execute function="AssertTextEquals" locator1="MenuItem#SCOPE" value1="${scopeSelection}" />
+		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${scopeSelection}" />
 	</command>
 
 	<command name="viewSubscribePG">

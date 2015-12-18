@@ -1049,44 +1049,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
-	<macrodef name="print-thread-dump">
-		<attribute name="jps.name" />
-
-		<sequential>
-			<local name="jps.pid" />
-
-			<exec executable="jps" />
-
-			<exec executable="jps">
-				<redirector outputproperty="jps.pid">
-					<outputfilterchain>
-						<linecontains>
-							<contains value="@{jps.name}" />
-						</linecontains>
-						<replacestring from=" @{jps.name}" />
-					</outputfilterchain>
-				</redirector>
-			</exec>
-
-			<if>
-				<not>
-					<equals arg1="${jps.pid}" arg2="" />
-				</not>
-				<then>
-					<echo>Thread dump for process : ${jps.pid}</echo>
-
-					<exec executable="jstack">
-						<arg value="-l" />
-						<arg value="${jps.pid}" />
-					</exec>
-				</then>
-				<else>
-					<echo>Unable to print the thread dump of @{jps.name}.</echo>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="remake-dir">
 		<attribute name="dir" />
 

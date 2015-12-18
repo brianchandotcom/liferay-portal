@@ -300,6 +300,8 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		return notification;
 	}
 
+	var originalSelectedValues = [];
+
 	function processNavigationLinks() {
 		var permissionContainerNode = A.one('#<portlet:namespace />permissionContainer');
 
@@ -346,7 +348,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 								var checkedNodes = permissionContentContainerNode.all(':checked');
 
-								window.<portlet:namespace />originalSelectedValues = checkedNodes.val();
+								originalSelectedValues = checkedNodes.val();
 							}
 						}
 					}
@@ -356,7 +358,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		);
 	}
 
-	function updateTargets() {
+	function processTargetCheckboxes() {
 		var permissionContainerNode = A.one('#<portlet:namespace />permissionContainer');
 
 		permissionContainerNode.delegate(
@@ -377,7 +379,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 						unselectedTargets.splice(index, 1);
 					}
 				}
-				else if (window.<portlet:namespace />originalSelectedValues.indexOf(value) != -1) {
+				else if (originalSelectedValues.indexOf(value) != -1) {
 					unselectedTargets.push(value);
 				}
 
@@ -427,7 +429,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 			createLiveSearch();
 			processNavigationLinks();
-			updateTargets();
+			processTargetCheckboxes();
 		}
 	);
 </aui:script>

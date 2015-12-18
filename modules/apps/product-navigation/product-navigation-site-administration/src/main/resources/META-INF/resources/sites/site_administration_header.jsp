@@ -43,33 +43,29 @@ ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language",
 <div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "collapse-icon" : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "role=\"button\"" : StringPool.BLANK %> >
 	<div>
 		<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null %>">
-			<div class="toolbar-group-field">
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
-						<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
-					</c:when>
-					<c:otherwise>
-						<div class="sticker sticker-default">
-							<aui:icon image="sites" markupView="lexicon" />
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</div>
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
+					<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
+				</c:when>
+				<c:otherwise>
+					<div class="sticker sticker-default">
+						<aui:icon image="sites" markupView="lexicon" />
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 
-		<div class="toolbar-group-content">
-			<span class="site-name">
-				<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getGroupName()) ? HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) : LanguageUtil.get(resourceBundle, "choose-a-site") %>
+		<span class="site-name">
+			<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getGroupName()) ? HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) : LanguageUtil.get(resourceBundle, "choose-a-site") %>
 
-				<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
-					<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
-				</c:if>
-			</span>
-
-			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
-				<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
+			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
+				<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
 			</c:if>
-		</div>
+		</span>
+
+		<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
+			<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
+		</c:if>
 	</div>
 </div>
 

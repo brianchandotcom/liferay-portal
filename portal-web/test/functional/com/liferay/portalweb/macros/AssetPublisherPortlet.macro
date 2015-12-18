@@ -47,7 +47,7 @@
 		<if>
 			<isset var="defaultSite" />
 			<then>
-				<execute function="Click" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
+				<execute function="Click" locator1="Configuration#SOURCE_SCOPE_SELECT" />
 
 				<execute function="Click" locator1="APConfiguration#SOURCE_CURRENT_SCOPE_NAME" />
 			</then>

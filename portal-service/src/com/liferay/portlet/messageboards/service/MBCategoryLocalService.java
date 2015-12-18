@@ -269,6 +269,21 @@ public interface MBCategoryLocalService extends BaseLocalService,
 		long groupId, long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

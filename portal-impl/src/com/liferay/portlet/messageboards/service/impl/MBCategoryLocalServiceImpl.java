@@ -365,20 +365,51 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public List<Object> getCategoriesAndThreads(long groupId, long categoryId) {
-		List<Object> categoriesAndThreads = new ArrayList<>();
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			WorkflowConstants.STATUS_ANY);
 
-		List<MBCategory> categories = getCategories(
-			groupId, categoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		return mbCategoryFinder.findC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
+	}
 
-		categoriesAndThreads.addAll(categories);
+	@Override
+	public List<Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status) {
 
-		List<MBThread> threads = mbThreadLocalService.getThreads(
-			groupId, categoryId, WorkflowConstants.STATUS_ANY,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
 
-		categoriesAndThreads.addAll(threads);
+		return mbCategoryFinder.findC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
+	}
 
-		return categoriesAndThreads;
+	@Override
+	public List<Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status, int start, int end) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, start, end, null);
+
+		return mbCategoryFinder.findC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
+	}
+
+	@Override
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId) {
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			WorkflowConstants.STATUS_ANY);
+
+		return mbCategoryFinder.countC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
+	}
+
+	@Override
+	public int getCategoriesAndThreadsCount(
+		long groupId, long categoryId, int status) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
+
+		return mbCategoryFinder.countC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
 	}
 
 	@Override
@@ -596,7 +627,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			User user = userPersistence.findByPrimaryKey(userId);
 
 			List<Object> categoriesAndThreads = getCategoriesAndThreads(
-				category.getGroupId(), categoryId);
+				category.getGroupId(), categoryId,
+				WorkflowConstants.STATUS_IN_TRASH);
 
 			restoreDependentsFromTrash(user, categoriesAndThreads);
 		}
@@ -650,7 +682,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		List<Object> categoriesAndThreads = getCategoriesAndThreads(
-			category.getGroupId(), categoryId);
+			category.getGroupId(), categoryId,
+			WorkflowConstants.STATUS_IN_TRASH);
 
 		restoreDependentsFromTrash(user, categoriesAndThreads);
 
@@ -1110,7 +1143,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				restoreDependentsFromTrash(
 					user,
 					getCategoriesAndThreads(
-						category.getGroupId(), category.getCategoryId()));
+						category.getGroupId(), category.getCategoryId(),
+						WorkflowConstants.STATUS_IN_TRASH));
 
 				// Trash
 

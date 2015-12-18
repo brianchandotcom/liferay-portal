@@ -1,4 +1,6 @@
 dependencies {
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi.services", version: "3.5.0-SNAPSHOT"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")

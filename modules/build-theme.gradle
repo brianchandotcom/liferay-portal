@@ -43,7 +43,7 @@ createLiferayThemeJson {
 	outputs.file liferayThemeJsonFile
 }
 
-tasks.whenTaskAdded {
+tasks.all {
 	if (it.class.name.startsWith("com.liferay.gradle.plugins.gulp.ExecuteGulpTask")) {
 		it.dependsOn createLiferayThemeJson, npmInstall
 	}

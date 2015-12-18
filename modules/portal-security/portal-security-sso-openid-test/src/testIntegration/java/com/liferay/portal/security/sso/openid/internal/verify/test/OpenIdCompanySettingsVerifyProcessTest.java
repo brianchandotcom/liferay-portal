@@ -61,7 +61,7 @@ import org.osgi.framework.ServiceReference;
  * @author Stian Sigvartsen
  */
 @RunWith(Arquillian.class)
-public class OpenIdPropertiesVerifyProcessTest
+public class OpenIdCompanySettingsVerifyProcessTest
 	extends BaseVerifyProcessTestCase {
 
 	@ClassRule
@@ -186,7 +186,7 @@ public class OpenIdPropertiesVerifyProcessTest
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdPropertiesVerifyProcessTest.class);
+		OpenIdCompanySettingsVerifyProcessTest.class);
 
 	private static BundleContext _bundleContext;
 	private static volatile CompanyLocalService _companyLocalService;

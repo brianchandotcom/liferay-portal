@@ -107,7 +107,7 @@ public class DDLImpl implements DDL {
 			recordVersion.getDDMStorageId());
 
 		Fields fields = _ddmFormValuesToFieldsConverter.convert(
-			ddmStructure, ddmFormValues, locale);
+			ddmStructure, ddmFormValues);
 
 		for (Field field : fields) {
 			String fieldName = field.getName();

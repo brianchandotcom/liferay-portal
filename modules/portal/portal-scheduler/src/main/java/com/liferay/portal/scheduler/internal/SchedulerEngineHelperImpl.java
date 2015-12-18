@@ -831,7 +831,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			clusterSchedulerEngine.setClusterMasterExecutor(
 				_clusterMasterExecutor);
 			clusterSchedulerEngine.setProps(_props);
-			clusterSchedulerEngine.setSchedulerEngineHelper(this);
 
 			_serviceRegistration = _bundleContext.registerService(
 				IdentifiableOSGiService.class, clusterSchedulerEngine,

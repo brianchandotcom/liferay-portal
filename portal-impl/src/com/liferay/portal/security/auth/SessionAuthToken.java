@@ -14,15 +14,20 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -32,6 +37,29 @@ import javax.servlet.http.HttpSession;
  * @author Amos Fong
  */
 public class SessionAuthToken implements AuthToken {
+
+	@Override
+	public void addCSRFToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		if (!PropsValues.AUTH_TOKEN_CHECK_ENABLED) {
+			return;
+		}
+
+		String lifecycle = liferayPortletURL.getLifecycle();
+
+		if (!lifecycle.equals(PortletRequest.ACTION_PHASE)) {
+			return;
+		}
+
+		if (AuthTokenWhitelistUtil.isPortletURLCSRFWhitelisted(
+				liferayPortletURL)) {
+
+			return;
+		}
+
+		liferayPortletURL.setParameter("p_auth", getToken(request));
+	}
 
 	/**
 	 * @deprecated As of 7.0.0
@@ -68,13 +96,11 @@ public class SessionAuthToken implements AuthToken {
 		if (origin.equals(SecurityPortletContainerWrapper.class.getName())) {
 			String ppid = ParamUtil.getString(request, "p_p_id");
 
-			String portletNamespace = PortalUtil.getPortletNamespace(ppid);
-
-			String strutsAction = ParamUtil.getString(
-				request, portletNamespace + "struts_action");
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				companyId, ppid);
 
 			if (AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
-					companyId, ppid, strutsAction)) {
+					request, portlet)) {
 
 				return;
 			}

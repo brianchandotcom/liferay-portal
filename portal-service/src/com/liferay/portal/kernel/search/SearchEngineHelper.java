@@ -83,8 +83,6 @@ public interface SearchEngineHelper {
 
 	public SearchEngine getSearchEngineSilent(String searchEngineId);
 
-	public SearchPermissionChecker getSearchPermissionChecker();
-
 	public String getSearchReaderDestinationName(String searchEngineId);
 
 	public String getSearchWriterDestinationName(String searchEngineId);

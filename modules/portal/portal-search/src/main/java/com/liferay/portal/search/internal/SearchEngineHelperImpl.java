@@ -372,11 +372,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public SearchPermissionChecker getSearchPermissionChecker() {
-		return _searchPermissionChecker;
-	}
-
-	@Override
 	public String getSearchReaderDestinationName(String searchEngineId) {
 		return DestinationNames.SEARCH_READER.concat(StringPool.SLASH).concat(
 			searchEngineId);

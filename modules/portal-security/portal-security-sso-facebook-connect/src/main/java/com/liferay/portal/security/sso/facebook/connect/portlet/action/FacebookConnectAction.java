@@ -218,7 +218,7 @@ public class FacebookConnectAction extends BaseStrutsAction {
 
 		JSONObject jsonObject = _facebookConnect.getGraphResources(
 			companyId, "/me", token,
-			"id,email,first_name,last_name,gender");
+			"id,email,first_name,last_name,gender,verified");
 
 		if ((jsonObject == null) ||
 			(jsonObject.getJSONObject("error") != null)) {

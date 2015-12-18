@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -31,10 +30,8 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.ServiceTracker;
 
-import java.util.Collections;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,18 +43,24 @@ import javax.servlet.http.HttpServletRequest;
 public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 	public StrutsPortletAuthTokenWhitelist() {
-		resetPortletInvocationWhitelistActions();
-
-		_serviceTracker = trackWhitelistServices(
+		_csrfTokenServiceTracker = trackWhitelistServices(
 			PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, _portletCSRFWhitelistActions);
 
 		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS);
+
+		_portletInvocationTokenServiceTracker = trackWhitelistServices(
+			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS,
+			_portletInvocationWhitelistActions);
+
+		registerPortalProperty(
+			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS);
 	}
 
 	public void destroy() {
 		super.destroy();
 
-		_serviceTracker.close();
+		_csrfTokenServiceTracker.close();
+		_portletInvocationTokenServiceTracker.close();
 	}
 
 	@Override
@@ -209,16 +212,6 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		return false;
 	}
 
-	@Override
-	public Set<String> resetPortletInvocationWhitelistActions() {
-		_portletInvocationWhitelistActions = SetUtil.fromArray(
-			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS);
-		_portletInvocationWhitelistActions = Collections.unmodifiableSet(
-			_portletInvocationWhitelistActions);
-
-		return _portletInvocationWhitelistActions;
-	}
-
 	protected boolean isValidStrutsAction(
 		long companyId, String portletId, String strutsAction) {
 
@@ -248,9 +241,12 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	private static final Log _log = LogFactoryUtil.getLog(
 		StrutsPortletAuthTokenWhitelist.class);
 
+	private final ServiceTracker<Object, Object> _csrfTokenServiceTracker;
 	private final Set<String> _portletCSRFWhitelistActions =
 		new ConcurrentHashSet<>();
-	private Set<String> _portletInvocationWhitelistActions;
-	private final ServiceTracker<Object, Object> _serviceTracker;
+	private final ServiceTracker<Object, Object>
+		_portletInvocationTokenServiceTracker;
+	private final Set<String> _portletInvocationWhitelistActions =
+		new ConcurrentHashSet<>();
 
 }

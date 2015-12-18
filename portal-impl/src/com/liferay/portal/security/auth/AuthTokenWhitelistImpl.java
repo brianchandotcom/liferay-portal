@@ -14,16 +14,17 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.ServiceTracker;
 import com.liferay.util.Encryptor;
 
-import java.util.Collections;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,9 +37,22 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 
 	public AuthTokenWhitelistImpl() {
-		resetOriginCSRFWhitelist();
-		resetPortletCSRFWhitelist();
-		resetPortletInvocationWhitelist();
+		_originCSRFServiceTracker = trackWhitelistServices(
+			PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS, _originCSRFWhitelist);
+
+		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS);
+
+		_portletCSRFServiceTracker = trackWhitelistServices(
+			PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS, _portletCSRFWhitelist);
+
+		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS);
+
+		_portletInvocationServiceTracker = trackWhitelistServices(
+			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
+			_portletInvocationWhitelist);
+
+		registerPortalProperty(
+			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
 	}
 
 	@Override
@@ -143,38 +157,13 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 			Encryptor.digest(PropsValues.AUTH_TOKEN_SHARED_SECRET));
 	}
 
-	@Override
-	public Set<String> resetOriginCSRFWhitelist() {
-		_originCSRFWhitelist = SetUtil.fromArray(
-			PropsValues.AUTH_TOKEN_IGNORE_ORIGINS);
-		_originCSRFWhitelist = Collections.unmodifiableSet(
-			_originCSRFWhitelist);
-
-		return _originCSRFWhitelist;
-	}
-
-	@Override
-	public Set<String> resetPortletCSRFWhitelist() {
-		_portletCSRFWhitelist = SetUtil.fromArray(
-			PropsValues.AUTH_TOKEN_IGNORE_PORTLETS);
-		_portletCSRFWhitelist = Collections.unmodifiableSet(
-			_portletCSRFWhitelist);
-
-		return _portletCSRFWhitelist;
-	}
-
-	@Override
-	public Set<String> resetPortletInvocationWhitelist() {
-		_portletInvocationWhitelist = SetUtil.fromArray(
-			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
-		_portletInvocationWhitelist = Collections.unmodifiableSet(
-			_portletInvocationWhitelist);
-
-		return _portletInvocationWhitelist;
-	}
-
-	private Set<String> _originCSRFWhitelist;
-	private Set<String> _portletCSRFWhitelist;
-	private Set<String> _portletInvocationWhitelist;
+	private final ServiceTracker<Object, Object> _originCSRFServiceTracker;
+	private final Set<String> _originCSRFWhitelist = new ConcurrentHashSet<>();
+	private final ServiceTracker<Object, Object> _portletCSRFServiceTracker;
+	private final Set<String> _portletCSRFWhitelist = new ConcurrentHashSet<>();
+	private final ServiceTracker<Object, Object>
+		_portletInvocationServiceTracker;
+	private final Set<String> _portletInvocationWhitelist =
+		new ConcurrentHashSet<>();
 
 }

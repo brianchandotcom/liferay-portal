@@ -55,10 +55,14 @@ DDLRecordSet ddlRecordSet = ddlFormViewRecordsDisplayContext.getDDLRecordSet();
 			DDMFormValues ddmFormValues = ddlFormViewRecordsDisplayContext.getDDMFormValues(record);
 
 			for (int i = 0; i < ddlFormViewRecordsDisplayContext.getTotalColumns(); i++) {
+			
+			String columnName = ddlFormViewRecordsDisplayContext.getColumnName(i, ddmFormValues);
+			if(Validator.isNull(columnName)){
+				continue;
+			}
 			%>
-
-				<liferay-ui:search-container-column-text
-					name="<%= ddlFormViewRecordsDisplayContext.getColumnName(i, ddmFormValues) %>"
+				<liferay-ui:search-container-column-text 
+					name="<%= columnName %>"
 					value="<%= ddlFormViewRecordsDisplayContext.getColumnValue(i, ddmFormValues) %>"
 				/>
 

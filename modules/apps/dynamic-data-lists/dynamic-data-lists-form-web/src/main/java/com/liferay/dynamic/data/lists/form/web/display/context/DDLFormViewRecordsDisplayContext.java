@@ -90,7 +90,11 @@ public class DDLFormViewRecordsDisplayContext {
 
 	public String getColumnName(int index, DDMFormValues ddmFormValues) {
 		DDMFormField ddmFormField = _ddmFormFields.get(index);
-
+		
+		if(ddmFormField.isTransient()){
+			return null;
+		}
+		
 		LocalizedValue label = ddmFormField.getLabel();
 
 		return label.getString(_liferayPortletRequest.getLocale());
@@ -99,6 +103,10 @@ public class DDLFormViewRecordsDisplayContext {
 	public String getColumnValue(int index, DDMFormValues ddmFormValues) {
 		DDMFormField ddmFormField = _ddmFormFields.get(index);
 
+		if(ddmFormField.isTransient()){
+			return null;
+		}
+		
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
 

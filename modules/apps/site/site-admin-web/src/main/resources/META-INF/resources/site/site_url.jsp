@@ -31,8 +31,6 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 
 <liferay-ui:error-marker key="errorSection" value="siteUrl" />
 
-<h3><liferay-ui:message key="site-url" /></h3>
-
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
 <liferay-ui:error exception="<%= GroupFriendlyURLException.class %>">

@@ -5,46 +5,23 @@ apply plugin: "com.liferay.gulp"
 
 buildDir = file("build_gradle")
 
-task createLiferayThemeJson
+task deploy(type: Copy)
 
 clean {
 	dependsOn cleanNpmInstall
-	dependsOn cleanCreateLiferayThemeJson
 
 	delete "build"
 	delete "dist"
 }
 
-createLiferayThemeJson {
-	File liferayThemeJsonFile = file("liferay-theme.json")
-
-	doLast {
-		JsonBuilder jsonBuilder = new JsonBuilder()
-
-		File appServerTomcatDir = file(project.properties["app.server.tomcat.dir"])
-		File appServerThemeDir = new File(project.properties['app.server.tomcat.deploy.dir'], project.name)
-		File deployDir = new File(project.properties["liferay.home"], "deploy")
-
-		jsonBuilder.LiferayTheme {
-			appServerPath appServerTomcatDir.absolutePath
-			appServerPathTheme appServerThemeDir.absolutePath
-			deployed false
-			deployPath deployDir.absolutePath
-			themeName project.name
-		}
-
-		liferayThemeJsonFile.text = jsonBuilder
-	}
-
-	onlyIf {
-		!liferayThemeJsonFile.exists()
-	}
-
-	outputs.file liferayThemeJsonFile
+deploy {
+	dependsOn gulpBuild
+	from "dist"
+	into new File(project.properties["liferay.home"], "deploy")
 }
 
 tasks.all {
 	if (it.class.name.startsWith("com.liferay.gradle.plugins.gulp.ExecuteGulpTask")) {
-		it.dependsOn createLiferayThemeJson, npmInstall
+		it.dependsOn npmInstall
 	}
 }

@@ -41,7 +41,7 @@ public class TermQueryFactoryUtil {
 
 		String searchEngineId = searchContext.getSearchEngineId();
 
-		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
+		SearchEngine searchEngine = SearchEngineHelperUtil.getSearchEngine(
 			searchEngineId);
 
 		return searchEngine.getTermQueryFactory();

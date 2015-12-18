@@ -84,7 +84,8 @@ public class IndexWriterProxyBean
 
 		String searchEngineId = searchContext.getSearchEngineId();
 
-		return SearchEngineUtil.getSearchWriterDestinationName(searchEngineId);
+		return SearchEngineHelperUtil.getSearchWriterDestinationName(
+			searchEngineId);
 	}
 
 	@Override

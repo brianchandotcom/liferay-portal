@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.FolderIndexer;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.CharPool;
@@ -140,7 +140,7 @@ public class JournalFolderIndexer
 	protected void doReindex(JournalFolder journalFolder) throws Exception {
 		Document document = getDocument(journalFolder);
 
-		SearchEngineUtil.updateDocument(
+		SearchEngineHelperUtil.updateDocument(
 			getSearchEngineId(), journalFolder.getCompanyId(), document,
 			isCommitImmediately());
 	}

@@ -211,15 +211,6 @@
 							'liferay-translation-manager'
 						]
 					},
-					'liferay-diff-version-comparator': {
-						path: 'diff_version_comparator.js',
-						requires: [
-							'aui-io-request',
-							'autocomplete-base',
-							'autocomplete-filters',
-							'liferay-portlet-base'
-						]
-					},
 					'liferay-dynamic-select': {
 						path: 'dynamic_select.js',
 						requires: [

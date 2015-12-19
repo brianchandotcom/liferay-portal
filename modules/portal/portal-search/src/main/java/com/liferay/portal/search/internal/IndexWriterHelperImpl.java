@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
@@ -25,22 +27,26 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.search.configuration.IndexWriterHelperConfiguration;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = IndexWriterHelper.class)
+@Component(
+	configurationPid = "com.liferay.portal.search.configuration.IndexWriterHelperConfiguration",
+	immediate = true, service = IndexWriterHelper.class
+)
 public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 	@Override
@@ -509,11 +515,24 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		IndexWriterHelperConfiguration indexWriterHelperConfiguration =
+			Configurable.createConfigurable(
+				IndexWriterHelperConfiguration.class, properties);
+
+		_commitImmediately =
+			indexWriterHelperConfiguration.indexCommitImmediately();
+
+		_indexReadOnly = indexWriterHelperConfiguration.indexReadOnly();
+	}
+
 	protected void setCommitImmediately(
 		SearchContext searchContext, boolean commitImmediately) {
 
 		if (!commitImmediately) {
-			searchContext.setCommitImmediately(_INDEX_COMMIT_IMMEDIATELY);
+			searchContext.setCommitImmediately(_commitImmediately);
 		}
 		else {
 			searchContext.setCommitImmediately(true);
@@ -534,15 +553,11 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		_searchPermissionChecker = searchPermissionChecker;
 	}
 
-	private static final boolean _INDEX_COMMIT_IMMEDIATELY =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.INDEX_COMMIT_IMMEDIATELY));
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexWriterHelperImpl.class);
 
-	private boolean _indexReadOnly = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.INDEX_READ_ONLY));
+	private volatile boolean _commitImmediately;
+	private volatile boolean _indexReadOnly;
 	private volatile SearchEngineHelper _searchEngineHelper;
 	private volatile SearchPermissionChecker _searchPermissionChecker;
 

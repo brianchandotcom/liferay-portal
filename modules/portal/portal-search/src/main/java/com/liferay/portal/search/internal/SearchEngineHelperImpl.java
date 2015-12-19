@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -27,18 +29,21 @@ import com.liferay.portal.kernel.search.queue.QueuingSearchEngine;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.search.configuration.SearchEngineHelperConfiguration;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -47,7 +52,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = SearchEngineHelper.class)
+@Component(
+	configurationPid = "com.liferay.portal.search.configuration.SearchEngineHelperConfiguration",
+	immediate = true, service = SearchEngineHelper.class
+)
 public class SearchEngineHelperImpl implements SearchEngineHelper {
 
 	@Override
@@ -228,16 +236,6 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public void setExcludedEntryClassNames(
-		List<String> excludedEntryClassNames) {
-
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "excludedEntryClassNames");
-
-		_excludedEntryClassNames.addAll(excludedEntryClassNames);
-	}
-
-	@Override
 	public void setQueueCapacity(int queueCapacity) {
 		_queueCapacity = queueCapacity;
 	}
@@ -273,6 +271,18 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 				}
 			}
 		}
+	}
+
+	@Activate
+	@Modified
+	protected synchronized void activate(Map<String, Object> properties) {
+		SearchEngineHelperConfiguration searchEngineHelperConfiguration =
+			Configurable.createConfigurable(
+				SearchEngineHelperConfiguration.class, properties);
+
+		_excludedEntryClassNames.addAll(
+			Arrays.asList(
+				searchEngineHelperConfiguration.excludedEntryClassNames()));
 	}
 
 	@Reference(

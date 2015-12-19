@@ -24,10 +24,10 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:row>
-				<aui:col width="<%= 50 %>">
+	<aui:row>
+		<aui:col width="<%= 50 %>">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
 					<div class="display-template">
 						<liferay-ddm:template-selector
 							className="<%= NavItem.class.getName() %>"
@@ -62,16 +62,16 @@
 							<aui:option label="all" />
 						</aui:select>
 					</div>
-				</aui:col>
-				<aui:col width="<%= 50 %>">
-					<liferay-portlet:preview
-						portletName="<%= portletResource %>"
-						showBorders="<%= true %>"
-						/>
-				</aui:col>
-			</aui:row>
-		</aui:fieldset>
-	</aui:fieldset-group>
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</aui:col>
+		<aui:col width="<%= 50 %>">
+			<liferay-portlet:preview
+				portletName="<%= portletResource %>"
+				showBorders="<%= true %>"
+			/>
+		</aui:col>
+	</aui:row>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

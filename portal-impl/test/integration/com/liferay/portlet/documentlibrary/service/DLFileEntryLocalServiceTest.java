@@ -14,8 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
-import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -404,12 +403,12 @@ public class DLFileEntryLocalServiceTest {
 			StringPool.BLANK, StringPool.BLANK, is, bytes.length,
 			serviceContext);
 
-		boolean indexReadOnly = SearchEngineHelperUtil.isIndexReadOnly();
+		boolean indexReadOnly = IndexWriterHelperUtil.isIndexReadOnly();
 
 		DLFileEntry dlFileEntry = null;
 
 		try {
-			SearchEngineHelperUtil.setIndexReadOnly(true);
+			IndexWriterHelperUtil.setIndexReadOnly(true);
 
 			dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
 				fileEntry.getFileEntryId());
@@ -430,7 +429,7 @@ public class DLFileEntryLocalServiceTest {
 					dlFileEntry.getFileEntryId());
 			}
 
-			SearchEngineHelperUtil.setIndexReadOnly(indexReadOnly);
+			IndexWriterHelperUtil.setIndexReadOnly(indexReadOnly);
 		}
 	}
 

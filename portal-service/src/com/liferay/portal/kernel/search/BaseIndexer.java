@@ -114,7 +114,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	@Override
 	public void delete(long companyId, String uid) throws SearchException {
 		try {
-			SearchEngineHelperUtil.deleteDocument(
+			IndexWriterHelperUtil.deleteDocument(
 				getSearchEngineId(), companyId, uid, _commitImmediately);
 		}
 		catch (SearchException se) {
@@ -525,7 +525,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public void reindex(Collection<T> collection) {
-		if (SearchEngineHelperUtil.isIndexReadOnly() || !isIndexerEnabled() ||
+		if (IndexWriterHelperUtil.isIndexReadOnly() || !isIndexerEnabled() ||
 			collection.isEmpty()) {
 
 			return;
@@ -546,7 +546,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	@Override
 	public void reindex(String className, long classPK) throws SearchException {
 		try {
-			if (SearchEngineHelperUtil.isIndexReadOnly() ||
+			if (IndexWriterHelperUtil.isIndexReadOnly() ||
 				!isIndexerEnabled() || (classPK <= 0)) {
 
 				return;
@@ -570,7 +570,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	@Override
 	public void reindex(String[] ids) throws SearchException {
 		try {
-			if (SearchEngineHelperUtil.isIndexReadOnly() ||
+			if (IndexWriterHelperUtil.isIndexReadOnly() ||
 				!isIndexerEnabled()) {
 
 				return;
@@ -589,7 +589,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	@Override
 	public void reindex(T object) throws SearchException {
 		try {
-			if (SearchEngineHelperUtil.isIndexReadOnly() ||
+			if (IndexWriterHelperUtil.isIndexReadOnly() ||
 				!isIndexerEnabled()) {
 
 				return;
@@ -693,7 +693,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		fullQuery.setQueryConfig(queryConfig);
 
-		return SearchEngineHelperUtil.searchCount(searchContext, fullQuery);
+		return IndexSearcherHelperUtil.searchCount(searchContext, fullQuery);
 	}
 
 	public void setCommitImmediately(boolean commitImmediately) {
@@ -1435,7 +1435,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		document.addUID(getClassName(), field1);
 
-		SearchEngineHelperUtil.deleteDocument(
+		IndexWriterHelperUtil.deleteDocument(
 			getSearchEngineId(), companyId, document.get(Field.UID),
 			_commitImmediately);
 	}
@@ -1447,7 +1447,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		document.addUID(getClassName(), field1, field2);
 
-		SearchEngineHelperUtil.deleteDocument(
+		IndexWriterHelperUtil.deleteDocument(
 			getSearchEngineId(), companyId, document.get(Field.UID),
 			_commitImmediately);
 	}
@@ -1512,7 +1512,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		fullQuery.setQueryConfig(queryConfig);
 
-		return SearchEngineHelperUtil.search(searchContext, fullQuery);
+		return IndexSearcherHelperUtil.search(searchContext, fullQuery);
 	}
 
 	protected Document getBaseModelDocument(

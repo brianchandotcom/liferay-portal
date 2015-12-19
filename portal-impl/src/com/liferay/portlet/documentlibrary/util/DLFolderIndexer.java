@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.FolderIndexer;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -145,7 +145,7 @@ public class DLFolderIndexer
 
 		Document document = getDocument(dlFolder);
 
-		SearchEngineHelperUtil.updateDocument(
+		IndexWriterHelperUtil.updateDocument(
 			getSearchEngineId(), dlFolder.getCompanyId(), document,
 			isCommitImmediately());
 	}

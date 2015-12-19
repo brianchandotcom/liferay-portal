@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.dao.orm;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,7 +73,7 @@ public class IndexableActionableDynamicQuery
 	@Override
 	protected void actionsCompleted() throws PortalException {
 		if (Validator.isNotNull(_searchEngineId)) {
-			SearchEngineHelperUtil.commit(_searchEngineId, getCompanyId());
+			IndexWriterHelperUtil.commit(_searchEngineId, getCompanyId());
 		}
 
 		sendStatusMessage();
@@ -104,7 +105,7 @@ public class IndexableActionableDynamicQuery
 				_documents);
 		}
 
-		SearchEngineHelperUtil.updateDocuments(
+		IndexWriterHelperUtil.updateDocuments(
 			_searchEngineId, getCompanyId(), new ArrayList<>(_documents),
 			false);
 

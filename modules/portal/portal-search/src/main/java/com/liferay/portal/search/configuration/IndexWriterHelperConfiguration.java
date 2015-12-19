@@ -29,7 +29,10 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 )
 public interface IndexWriterHelperConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", description = "%index-commit-immediately-help",
+		required = false
+	)
 	public boolean indexCommitImmediately();
 
 	@Meta.AD(deflt = "false", required = false)

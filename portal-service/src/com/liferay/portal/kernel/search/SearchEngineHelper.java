@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.search;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -60,9 +59,6 @@ public interface SearchEngineHelper {
 	public SearchEngine removeSearchEngine(String searchEngineId);
 
 	public void setDefaultSearchEngineId(String defaultSearchEngineId);
-
-	public void setExcludedEntryClassNames(
-		List<String> excludedEntryClassNames);
 
 	public void setQueueCapacity(int queueCapacity);
 

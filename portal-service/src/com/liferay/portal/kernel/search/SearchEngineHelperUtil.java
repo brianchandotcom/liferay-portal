@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -89,12 +88,6 @@ public class SearchEngineHelperUtil {
 
 	public static void setDefaultSearchEngineId(String defaultSearchEngineId) {
 		_searchEngineHelper.setDefaultSearchEngineId(defaultSearchEngineId);
-	}
-
-	public static void setExcludedEntryClassNames(
-		List<String> excludedEntryClassNames) {
-
-		_searchEngineHelper.setExcludedEntryClassNames(excludedEntryClassNames);
 	}
 
 	public static void setQueueCapacity(int queueCapacity) {

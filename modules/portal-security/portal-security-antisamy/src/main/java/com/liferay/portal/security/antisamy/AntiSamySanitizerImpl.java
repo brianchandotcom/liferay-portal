@@ -41,7 +41,6 @@ import org.owasp.validator.html.Policy;
 public class AntiSamySanitizerImpl implements Sanitizer {
 
 	public AntiSamySanitizerImpl(URL url) {
-
 		try (InputStream inputstream = url.openStream()) {
 			_policy = Policy.getInstance(inputstream);
 		}

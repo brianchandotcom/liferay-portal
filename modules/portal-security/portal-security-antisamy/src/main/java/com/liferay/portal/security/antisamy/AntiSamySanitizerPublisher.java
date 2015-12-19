@@ -66,14 +66,14 @@ public class AntiSamySanitizerPublisher {
 
 		Sanitizer sanitizer = new AntiSamySanitizerImpl(url);
 
-		sanitizerServiceRegistration = bundleContext.registerService(
+		_sanitizerServiceRegistration = bundleContext.registerService(
 			Sanitizer.class, sanitizer, null);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (sanitizerServiceRegistration != null) {
-			sanitizerServiceRegistration.unregister();
+		if (_sanitizerServiceRegistration != null) {
+			_sanitizerServiceRegistration.unregister();
 		}
 	}
 
@@ -86,6 +86,6 @@ public class AntiSamySanitizerPublisher {
 		activate(bundleContext, properties);
 	}
 
-	private ServiceRegistration<Sanitizer> sanitizerServiceRegistration;
+	private ServiceRegistration<Sanitizer> _sanitizerServiceRegistration;
 
 }

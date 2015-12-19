@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.internal;
+package com.liferay.portal.scheduler.single.internal;
 
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;

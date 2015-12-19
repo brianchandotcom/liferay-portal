@@ -35,32 +35,61 @@ WikiPage templatePage = null;
 if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 	try {
 		templatePage = WikiPageServiceUtil.getPage(templateNodeId, templateTitle);
+
+		attachmentsFileEntries = templatePage.getAttachmentsFileEntries();
 	}
 	catch (Exception e) {
 	}
 }
+
+int deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
 %>
 
-<c:if test="<%= (templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0) %>">
+<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) && (deletedAttachmentsCount > 0) %>">
+	<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcRenderCommandName" value="/wiki/view_trash_page_attachments" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+		<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+		<portlet:param name="viewTrashAttachments" value="<%= Boolean.TRUE.toString() %>" />
+	</portlet:renderURL>
 
-	<%
-	attachmentsFileEntries = templatePage.getAttachmentsFileEntries();
-	%>
+	<div align="right">
+		<a href="javascript:;" id="view-removed-attachments-link"><liferay-ui:message arguments="<%= deletedAttachmentsCount %>" key='<%= (deletedAttachmentsCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments" %>' /> &raquo;</a>
+	</div>
 
-	<aui:input name="copyPageAttachments" type="checkbox" value="<%= copyPageAttachments %>" />
+	<aui:script use="liferay-util-window">
+		var viewRemovedAttachmentsLink = A.one('#view-removed-attachments-link');
+
+		viewRemovedAttachmentsLink.on(
+			'click',
+			function(event) {
+				Liferay.Util.openWindow(
+					{
+						id: '<portlet:namespace />openRemovedPageAttachments',
+						title: '<%= LanguageUtil.get(request, "removed-attachments") %>',
+						uri: '<%= viewTrashAttachmentsURL %>'
+					}
+				);
+			}
+		);
+	</aui:script>
 </c:if>
 
 <c:if test="<%= attachmentsFileEntries != null %>">
+	<c:if test="<%= (templatePage != null) && !attachmentsFileEntries.isEmpty() %>">
+		<aui:input name="copyPageAttachments" type="checkbox" value="<%= copyPageAttachments %>" />
+	</c:if>
 
 	<%
-	for (int i = 0; i < attachmentsFileEntries.size(); i++) {
-		FileEntry attachmentsFileEntry = attachmentsFileEntries.get(i);
+	int attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
+
+	String emptyResultsMessage = "this-page-does-not-have-file-attachments";
+
+	int status = WorkflowConstants.STATUS_APPROVED;
+
+	boolean showPageAttachmentAction = true;
 	%>
 
-		<aui:a href="<%= (templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0) ? PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, attachmentsFileEntry, StringPool.BLANK) : null %>"><%= attachmentsFileEntry.getTitle() %></aui:a> (<%= TextFormatter.formatStorageSize(attachmentsFileEntry.getSize(), locale) %>)<%= (i < (attachmentsFileEntries.size() - 1)) ? ", " : "" %>
-
-	<%
-	}
-	%>
-
+	<%@ include file="/META-INF/resources/wiki/attachments_list.jspf" %>
 </c:if>

@@ -49,54 +49,16 @@ iteratorURL.setParameter("mvcRenderCommandName", "/wiki/view_page_attachments");
 iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 iteratorURL.setParameter("title", wikiPage.getTitle());
+
+List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
+
+int attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
+
+String emptyResultsMessage = "this-page-does-not-have-file-attachments";
+
+int status = WorkflowConstants.STATUS_APPROVED;
+
+boolean showPageAttachmentAction = false;
 %>
 
-<liferay-ui:search-container
-	emptyResultsMessage="this-page-does-not-have-file-attachments"
-	iteratorURL="<%= iteratorURL %>"
-	total="<%= wikiPage.getAttachmentsFileEntriesCount() %>"
->
-
-	<liferay-ui:search-container-results
-		results="<%= wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.repository.model.FileEntry"
-		escapedModel="<%= true %>"
-		keyProperty="fileEntryId"
-		modelVar="fileEntry"
-		rowVar="row"
-	>
-
-		<%
-		String rowHREF = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
-		%>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="file-name"
-		>
-
-			<%
-			AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory<?>)AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
-
-			AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
-			%>
-
-			<liferay-ui:icon
-				iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-				label="<%= true %>"
-				message="<%= fileEntry.getTitle() %>"
-			/>
-		</liferay-ui:search-container-column-text>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="size"
-			value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
-		/>
-	</liferay-ui:search-container-row>
-
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+<%@ include file="/META-INF/resources/wiki/attachments_list.jspf" %>

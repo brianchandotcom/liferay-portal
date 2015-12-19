@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.spring.aop.InvocationHandlerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.scheduler.internal.messaging.config.SchedulerEngineProxyBean;
 
 import java.lang.reflect.InvocationHandler;
 

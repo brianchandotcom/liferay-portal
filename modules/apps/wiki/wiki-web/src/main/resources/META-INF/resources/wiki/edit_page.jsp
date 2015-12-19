@@ -220,8 +220,10 @@ if (portletTitleBasedNavigation) {
 						</aui:field-wrapper>
 					</aui:fieldset>
 
-					<c:if test="<%= ((wikiPage != null) && wikiPage.getAttachmentsFileEntriesCount() > 0) || ((templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0)) %>">
+					<c:if test="<%= wikiPage != null %>">
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
+							<liferay-util:include page="/wiki/edit_page_attachment.jsp" servletContext="<%= application %>" />
+
 							<liferay-util:include page="/wiki/view_attachments.jsp" servletContext="<%= application %>" />
 						</aui:fieldset>
 					</c:if>
@@ -264,7 +266,6 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-
 						<aui:input label="Summary" name="summary" />
 
 						<%
@@ -286,7 +287,6 @@ if (portletTitleBasedNavigation) {
 									%>
 
 								</aui:select>
-
 							</c:when>
 							<c:otherwise>
 								<aui:input name="format" type="hidden" value="<%= selectedFormat %>" />
@@ -305,14 +305,14 @@ if (portletTitleBasedNavigation) {
 							<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 
 								<%
-								classPK = 0;
+									classPK = 0;
 
-								if (templatePage != null) {
-									classPK = templatePage.getPrimaryKey();
-								}
-								else if (page != null) {
-									classPK = wikiPage.getPrimaryKey();
-								}
+									if (templatePage != null) {
+										classPK = templatePage.getPrimaryKey();
+									}
+									else if (page != null) {
+										classPK = wikiPage.getPrimaryKey();
+									}
 								%>
 
 								<liferay-ui:custom-attribute-list

@@ -77,7 +77,6 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 				</portlet:actionURL>
 
 				<liferay-ui:icon-delete
-					message='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
 					trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
 					url="<%= deleteURL %>"
 				/>

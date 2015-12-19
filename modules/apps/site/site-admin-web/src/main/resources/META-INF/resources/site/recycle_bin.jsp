@@ -33,18 +33,13 @@ boolean groupTrashEnabled = PropertiesParamUtil.getBoolean(groupTypeSettings, re
 int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, request, "trashEntriesMaxAge", PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE));
 %>
 
-<h3><liferay-ui:message key="recycle-bin" /></h3>
+<aui:input id="trashEnabled" label="enable-recycle-bin" name="trashEnabled" type="toggle-switch" value="<%= groupTrashEnabled %>" />
 
-<aui:fieldset>
-	<aui:input id="trashEnabled" label="enable-recycle-bin" name="trashEnabled" type="checkbox" value="<%= groupTrashEnabled %>" />
-
-	<div class="trash-entries-max-age">
-		<aui:input disabled="<%= !groupTrashEnabled %>" helpMessage="trash-entries-max-age-help" label="trash-entries-max-age" name="trashEntriesMaxAge" type="text" value="<%= (trashEntriesMaxAge % 1 == 0) ? GetterUtil.getInteger(trashEntriesMaxAge) : String.valueOf(trashEntriesMaxAge) %>">
-			<aui:validator name="min"><%= PropsValues.TRASH_ENTRY_CHECK_INTERVAL %></aui:validator>
-		</aui:input>
-	</div>
-
-</aui:fieldset>
+<div class="trash-entries-max-age">
+	<aui:input disabled="<%= !groupTrashEnabled %>" helpMessage="trash-entries-max-age-help" label="trash-entries-max-age" name="trashEntriesMaxAge" type="text" value="<%= (trashEntriesMaxAge % 1 == 0) ? GetterUtil.getInteger(trashEntriesMaxAge) : String.valueOf(trashEntriesMaxAge) %>">
+		<aui:validator name="min"><%= PropsValues.TRASH_ENTRY_CHECK_INTERVAL %></aui:validator>
+	</aui:input>
+</div>
 
 <aui:script sandbox="<%= true %>">
 	var trashEnabledCheckbox = $('#<portlet:namespace />trashEnabled');

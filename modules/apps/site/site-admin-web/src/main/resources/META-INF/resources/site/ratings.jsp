@@ -37,8 +37,6 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 
 <liferay-ui:error-marker key="errorSection" value="ratings" />
 
-<h3><liferay-ui:message key="ratings" /></h3>
-
 <p><liferay-ui:message key="select-the-ratings-type-for-the-following-applications" /></p>
 
 <aui:fieldset id="ratingsSettingsContainer">

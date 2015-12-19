@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.auto.login;
+package com.liferay.portal.security.sso.token.internal.auto.login;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

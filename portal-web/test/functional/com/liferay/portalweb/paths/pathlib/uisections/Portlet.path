@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADER</td>
+	<td>//header[@data-qa-id="header"]//span[@class='header-toolbar-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_PLUS_SIGN</td>
 	<td>//i[contains(@class,'icon-plus-sign')]</td>
 	<td></td>

@@ -55,7 +55,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#viewCP">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
@@ -101,7 +101,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#viewCP">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmark1Name}" />
 			<var name="bookmarkURL" value="${bookmark1URL}" />
 		</execute>
@@ -112,7 +112,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#viewCP">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmark2Name}" />
 			<var name="bookmarkURL" value="${bookmark2URL}" />
 		</execute>
@@ -289,7 +289,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#viewCP">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
@@ -373,7 +373,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#viewCP">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
@@ -468,6 +468,7 @@
 			<var name="editSubfolderDescription" value="${editSubfolderDescription}" />
 			<var name="editSubfolderName" value="${editSubfolderName}" />
 			<var name="folderName" value="${folderName}" />
+			<var name="subfolderName" value="${subfolderName}" />
 		</execute>
 	</command>
 
@@ -610,7 +611,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="BookmarksFolder#viewCP">
+		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescription}" />
 			<var name="folderName" value="${folderName}" />
 		</execute>
@@ -653,7 +654,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#viewCP">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
@@ -707,7 +708,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#viewCP">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmark1Name}" />
 			<var name="bookmarkURL" value="${bookmark1URL}" />
 		</execute>
@@ -718,7 +719,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#viewCP">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmark2Name}" />
 			<var name="bookmarkURL" value="${bookmark2URL}" />
 		</execute>

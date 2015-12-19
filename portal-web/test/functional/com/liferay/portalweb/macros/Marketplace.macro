@@ -816,7 +816,7 @@
 			<var name="folderName" value="${bookmarkFolderName}" />
 		</execute>
 
-		<execute macro="Bookmark#viewPG">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName1}" />
 			<var name="bookmarkURL" value="${bookmarkURL1}" />
 		</execute>
@@ -852,7 +852,7 @@
 			<var name="folderName" value="${bookmarkFolderName}" />
 		</execute>
 
-		<execute macro="Bookmark#viewPG">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName2}" />
 			<var name="bookmarkURL" value="${bookmarkURL2}" />
 		</execute>
@@ -888,7 +888,7 @@
 			<var name="folderName" value="${bookmarkFolderName}" />
 		</execute>
 
-		<execute macro="Bookmark#viewPG">
+		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName3}" />
 			<var name="bookmarkURL" value="${bookmarkURL3}" />
 		</execute>

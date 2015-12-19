@@ -16,10 +16,10 @@ package com.liferay.portal.search.internal.hits;
 
 import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -58,7 +58,7 @@ public class AlternateKeywordQueryHitsProcessor implements HitsProcessor {
 		searchContext.overrideKeywords(spellCheckedKeywords);
 
 		String[] querySuggestions =
-			SearchEngineHelperUtil.suggestKeywordQueries(searchContext, 5);
+			IndexSearcherHelperUtil.suggestKeywordQueries(searchContext, 5);
 
 		if (ArrayUtil.isNotEmpty(querySuggestions)) {
 			searchContext.setKeywords(querySuggestions[0]);

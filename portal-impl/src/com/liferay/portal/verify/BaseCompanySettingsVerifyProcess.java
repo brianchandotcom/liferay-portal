@@ -106,6 +106,6 @@ public abstract class BaseCompanySettingsVerifyProcess extends VerifyProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AbstractCompanySettingsVerifyProcess.class);
+		BaseCompanySettingsVerifyProcess.class);
 
 }

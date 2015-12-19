@@ -34,14 +34,6 @@
 
 	<!-- Util -->
 
-	<bean id="com.liferay.portal.kernel.search.SearchEngineUtil" class="com.liferay.portal.kernel.search.SearchEngineUtil">
-		<property name="excludedEntryClassNames">
-			<list>
-				<value>com.liferay.portal.kernel.plugin.PluginPackage</value>
-				<value>com.liferay.portlet.asset.model.AssetEntry</value>
-			</list>
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactory" class="com.liferay.portal.kernel.search.generic.StringQueryFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactoryUtil" class="com.liferay.portal.kernel.search.StringQueryFactoryUtil">
 		<property name="stringQueryFactory" ref="com.liferay.portal.kernel.search.StringQueryFactory" />

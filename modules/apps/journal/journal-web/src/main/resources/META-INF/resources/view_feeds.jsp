@@ -68,9 +68,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="deleteFeedIds" type="hidden" />
+<portlet:actionURL name="deleteFeeds" var="deleteFeedsURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
+<aui:form action="<%= deleteFeedsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
 		id="feeds"
 		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
@@ -126,11 +128,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 <aui:script>
 	function <portlet:namespace />deleteFeeds() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.fm('deleteFeedIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form, '<portlet:actionURL name="deleteFeeds"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+			submitForm(form);
 		}
 	}
 </aui:script>

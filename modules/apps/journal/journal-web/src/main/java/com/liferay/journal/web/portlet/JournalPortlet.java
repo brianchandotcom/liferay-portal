@@ -245,7 +245,8 @@ public class JournalPortlet extends MVCPortlet {
 
 		for (long curDeleteFeedId : deleteFeedIds) {
 			_journalFeedService.deleteFeed(
-				themeDisplay.getScopeGroupId(), curDeleteFeedId);
+				themeDisplay.getScopeGroupId(),
+				String.valueOf(curDeleteFeedId));
 		}
 	}
 

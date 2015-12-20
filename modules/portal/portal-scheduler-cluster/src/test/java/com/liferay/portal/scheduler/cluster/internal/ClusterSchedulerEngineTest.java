@@ -16,21 +16,16 @@ package com.liferay.portal.scheduler.cluster.internal;
 
 import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.messaging.BaseDestination;
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationConfiguration;
-import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -38,42 +33,34 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
-import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.servlet.PluginContextLifecycleThreadLocal;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.uuid.PortalUUID;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import java.lang.reflect.Constructor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -89,10 +76,6 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
-import org.osgi.service.component.ComponentContext;
-
 /**
  * @author Tina Tian
  */
@@ -103,91 +86,9 @@ public class ClusterSchedulerEngineTest {
 	public void setUp() throws Exception {
 		setUpProps();
 
-		setUpClusterLink();
+		setUpSchedulerEngineHelperUtil();
 		setUpClusterSchedulerEngine();
 		setUpClusterInvokeAcceptor();
-		setUpDestinationFactory();
-		setUpComponentContext();
-		setUpPortalUUIDUtil();
-		setUpSchedulerEngineHelper(setUpJSONFactory());
-
-		_schedulerEngineHelperImpl.setSchedulerEngine(_clusterSchedulerEngine);
-
-		_clusterSchedulerEngine.setSchedulerEngineHelper(
-			_schedulerEngineHelperImpl);
-	}
-
-	@Test
-	public void testCreateClusterSchedulerEngine1() throws Exception {
-		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
-
-		_schedulerEngineHelperImpl.activate(_componentContext);
-
-		SchedulerEngine schedulerEngine =
-			_schedulerEngineHelperImpl.getSchedulerEngine();
-
-		Assert.assertNotSame(_mockSchedulerEngine, schedulerEngine);
-		Assert.assertTrue(ProxyUtil.isProxyClass(schedulerEngine.getClass()));
-	}
-
-	@Test
-	public void testCreateClusterSchedulerEngine2() throws Exception {
-		Mockito.when(
-			_props.get(PropsKeys.SCHEDULER_ENABLED)
-		).thenReturn(
-			"false"
-		);
-
-		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
-
-		_schedulerEngineHelperImpl.activate(_componentContext);
-
-		SchedulerEngine schedulerEngine =
-			_schedulerEngineHelperImpl.getSchedulerEngine();
-
-		Assert.assertSame(_mockSchedulerEngine, schedulerEngine);
-	}
-
-	@Test
-	public void testCreateClusterSchedulerEngine3() throws Exception {
-		Mockito.when(
-			_clusterLink.isEnabled()
-		).thenReturn(
-			false
-		);
-
-		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
-
-		_schedulerEngineHelperImpl.activate(_componentContext);
-
-		SchedulerEngine schedulerEngine =
-			_schedulerEngineHelperImpl.getSchedulerEngine();
-
-		Assert.assertSame(_mockSchedulerEngine, schedulerEngine);
-	}
-
-	@Test
-	public void testCreateClusterSchedulerEngine4() throws Exception {
-		Mockito.when(
-			_clusterLink.isEnabled()
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			_props.get(PropsKeys.SCHEDULER_ENABLED)
-		).thenReturn(
-			"false"
-		);
-
-		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
-
-		_schedulerEngineHelperImpl.activate(_componentContext);
-
-		SchedulerEngine schedulerEngine =
-			_schedulerEngineHelperImpl.getSchedulerEngine();
-
-		Assert.assertSame(_mockSchedulerEngine, schedulerEngine);
 	}
 
 	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
@@ -1837,16 +1738,6 @@ public class ClusterSchedulerEngineTest {
 		_clusterInvokeAcceptor = constructor.newInstance();
 	}
 
-	protected void setUpClusterLink() throws Exception {
-		_clusterLink = Mockito.mock(ClusterLink.class);
-
-		Mockito.when(
-			_clusterLink.isEnabled()
-		).thenReturn(
-			true
-		);
-	}
-
 	protected void setUpClusterSchedulerEngine() {
 		_mockSchedulerEngine = new MockSchedulerEngine();
 
@@ -1861,145 +1752,52 @@ public class ClusterSchedulerEngineTest {
 			_clusterSchedulerEngine, "_memoryClusteredJobs");
 	}
 
-	protected void setUpComponentContext() throws Exception {
-		_componentContext = Mockito.mock(ComponentContext.class);
-
-		BundleContext bundleContext = Mockito.mock(BundleContext.class);
-
-		Mockito.when(
-			bundleContext.createFilter(Mockito.anyString())
-		).thenReturn(
-			Mockito.mock(Filter.class)
-		);
-
-		Mockito.when(
-			_componentContext.getBundleContext()
-		).thenReturn(
-			bundleContext
-		);
-	}
-
-	protected void setUpDestinationFactory() {
-		_destinationFactory = new DestinationFactory() {
-
-			@Override
-			public Destination createDestination(
-				DestinationConfiguration destinationConfiguration) {
-
-				return new BaseDestination() {};
-			}
-
-			@Override
-			public Collection<String> getDestinationTypes() {
-				return null;
-			}
-
-		};
-	}
-
-	protected JSONFactory setUpJSONFactory() {
-		JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
-
-		Mockito.when(
-			jsonFactory.deserialize(Mockito.anyString())
-		).then(
-			new Answer<Object>() {
-
-				@Override
-				public Object answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					String base64 = (String)invocationOnMock.getArguments()[0];
-
-					byte[] bytes = Base64.decode(base64);
-
-					ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-
-					ObjectInputStream ois = new ObjectInputStream(bais);
-
-					return ois.readObject();
-				}
-
-			}
-		);
-
-		Mockito.when(
-			jsonFactory.serialize(Mockito.anyObject())
-		).then(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					Object obj = invocationOnMock.getArguments()[0];
-
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-					ObjectOutputStream oos = new ObjectOutputStream(baos);
-
-					oos.writeObject(obj);
-
-					byte[] bytes = baos.toByteArray();
-
-					oos.close();
-
-					return Base64.encode(bytes);
-				}
-
-			}
-		);
-
-		return jsonFactory;
-	}
-
-	protected void setUpPortalUUIDUtil() {
-		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
-
-		PortalUUID portalUUID = Mockito.mock(PortalUUID.class);
-
-		Mockito.when(
-			portalUUID.generate()
-		).then(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					UUID uuid = new UUID(
-						SecureRandomUtil.nextLong(),
-						SecureRandomUtil.nextLong());
-
-					return uuid.toString();
-				}
-
-			}
-		);
-
-		portalUUIDUtil.setPortalUUID(portalUUID);
-	}
-
 	protected void setUpProps() {
 		_props = Mockito.mock(Props.class);
 
 		Mockito.when(
-			_props.get(PropsKeys.SCHEDULER_ENABLED)
+			_props.get(PropsKeys.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT)
 		).thenReturn(
-			"true"
+			"100"
 		);
 	}
 
-	protected void setUpSchedulerEngineHelper(JSONFactory jsonFactory) {
-		_schedulerEngineHelperImpl = new SchedulerEngineHelperImpl();
+	protected void setUpSchedulerEngineHelperUtil() {
+		SchedulerEngineHelper schedulerEngineHelper = Mockito.mock(
+			SchedulerEngineHelper.class);
 
-		_schedulerEngineHelperImpl.setClusterMasterExecutor(
-			_mockClusterMasterExecutor);
-		_schedulerEngineHelperImpl.setJsonFactory(jsonFactory);
-		_schedulerEngineHelperImpl.setProps(_props);
+		Mockito.when(
+			schedulerEngineHelper.getJobState(
+				Mockito.any(SchedulerResponse.class))
+		).then(
+			new Answer<TriggerState>() {
 
-		_schedulerEngineHelperImpl.setClusterLink(_clusterLink);
-		_schedulerEngineHelperImpl.setDestinationFactory(_destinationFactory);
+				@Override
+				public TriggerState answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					Object[] args = invocationOnMock.getArguments();
+
+					SchedulerResponse schedulerResponse =
+						(SchedulerResponse)args[0];
+
+					Message message = schedulerResponse.getMessage();
+
+					JobState jobState = (JobState)message.get(
+						SchedulerEngine.JOB_STATE);
+
+					return jobState.getTriggerState();
+				}
+
+			}
+		);
+
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(
+			SchedulerEngineHelper.class, schedulerEngineHelper);
 	}
 
 	private static final int _DEFAULT_INTERVAL = 20;
@@ -2023,17 +1821,13 @@ public class ClusterSchedulerEngineTest {
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
 
 	private ClusterInvokeAcceptor _clusterInvokeAcceptor;
-	private ClusterLink _clusterLink;
 	private ClusterSchedulerEngine _clusterSchedulerEngine;
-	private ComponentContext _componentContext;
-	private DestinationFactory _destinationFactory;
 	private Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 		_memoryClusteredJobs;
 	private final MockClusterMasterExecutor _mockClusterMasterExecutor =
 		new MockClusterMasterExecutor();
 	private MockSchedulerEngine _mockSchedulerEngine;
 	private Props _props;
-	private SchedulerEngineHelperImpl _schedulerEngineHelperImpl;
 
 	private static class MockClusterMasterExecutor
 		implements ClusterMasterExecutor {

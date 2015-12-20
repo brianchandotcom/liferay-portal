@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -34,8 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarFile;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 
 import org.apache.felix.utils.log.Logger;
@@ -98,8 +97,7 @@ public class JspClassResolver implements ClassResolver {
 		}
 		else if (isExportsPackage(bundleWiring, path.replace('/', '.'))) {
 			if (bundle.getBundleId() == 0) {
-				resources = handleSystemBundle(
-					bundleWiring, path, "*.class", options);
+				resources = handleSystemBundle(bundleWiring, path);
 			}
 			else {
 				resources = bundleWiring.listResources(
@@ -185,26 +183,20 @@ public class JspClassResolver implements ClassResolver {
 	}
 
 	protected Collection<String> handleSystemBundle(
-		BundleWiring bundleWiring, String path, String fileRegex, int options) {
+		BundleWiring bundleWiring, String path) {
 
-		String key = path + '/' + fileRegex;
-
-		Collection<String> resources = _jspResourceCache.get(key);
+		Collection<String> resources = _jspResourceCache.get(path);
 
 		if (resources != null) {
 			return resources;
 		}
-
-		resources = new ArrayList<>();
-
-		String packageName = path.replace('/', '.');
 
 		List<URL> urls = null;
 
 		Map<String, List<URL>> extraPackageMap = _serviceTracker.getService();
 
 		if (extraPackageMap != null) {
-			urls = extraPackageMap.get(packageName);
+			urls = extraPackageMap.get(path.replace('/', '.'));
 		}
 
 		if ((urls == null) || urls.isEmpty()) {
@@ -223,18 +215,12 @@ public class JspClassResolver implements ClassResolver {
 		}
 
 		if ((urls == null) || urls.isEmpty()) {
-			_jspResourceCache.put(key, resources);
+			_jspResourceCache.put(path, Collections.<String>emptyList());
 
-			return resources;
+			return null;
 		}
 
-		String matcherRegex = replace(fileRegex, '*', "[^/]*");
-
-		matcherRegex = replace(matcherRegex, '.', "\\.");
-
-		matcherRegex = path + "/" + matcherRegex;
-
-		Pattern pattern = Pattern.compile(matcherRegex);
+		int length = path.length();
 
 		for (URL url : urls) {
 			try {
@@ -247,11 +233,38 @@ public class JspClassResolver implements ClassResolver {
 
 					String name = zipEntry.getName();
 
-					Matcher matcher = pattern.matcher(name);
+					// Long enough, otherwise don't bother to look into it.
 
-					if (matcher.matches()) {
-						resources.add(name);
+					if (name.length() <= (length + 7)) {
+						continue;
 					}
+
+					// Start with path + "/", check separately to avoid creating
+					// temp string
+
+					if (!name.startsWith(path) ||
+						(name.charAt(length) != CharPool.SLASH)) {
+
+						continue;
+					}
+
+					// End with ".class"
+
+					if (!name.endsWith(".class")) {
+						continue;
+					}
+
+					// Middle part does not contain '/'
+
+					if (name.indexOf(CharPool.SLASH, length + 1) >= 0) {
+						continue;
+					}
+
+					if (resources == null) {
+						resources = new ArrayList<>();
+					}
+
+					resources.add(name);
 				}
 			}
 			catch (Exception e) {
@@ -259,7 +272,12 @@ public class JspClassResolver implements ClassResolver {
 			}
 		}
 
-		_jspResourceCache.put(key, resources);
+		if (resources == null) {
+			_jspResourceCache.put(path, Collections.<String>emptyList());
+		}
+		else {
+			_jspResourceCache.put(path, resources);
+		}
 
 		return resources;
 	}
@@ -279,30 +297,6 @@ public class JspClassResolver implements ClassResolver {
 		}
 
 		return false;
-	}
-
-	protected String replace(String s, char oldSub, String newSub) {
-		int y = s.indexOf(oldSub);
-
-		if (y < 0) {
-			return s;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		int x = 0;
-
-		while (x <= y) {
-			sb.append(s.substring(x, y));
-			sb.append(newSub);
-
-			x = y + 1;
-			y = s.indexOf(oldSub, x);
-		}
-
-		sb.append(s.substring(x));
-
-		return sb.toString();
 	}
 
 	private final Bundle _bundle;

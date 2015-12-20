@@ -60,13 +60,25 @@ portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 				</c:if>
 			</aui:nav>
 
-			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
-				<%@ include file="/feed_search.jspf" %>
+			<aui:nav-bar-search>
+				<liferay-ui:input-search />
 			</aui:nav-bar-search>
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/feed_search_results.jspf" %>
+
+			<%
+			FeedSearchTerms searchTerms = (FeedSearchTerms)searchContainer.getSearchTerms();
+
+			total = JournalFeedLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
+
+			searchContainer.setTotal(total);
+
+			results = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null);
+
+			searchContainer.setResults(results);
+			%>
+
 		</liferay-ui:search-container-results>
 
 		<c:if test="<%= !results.isEmpty() %>">

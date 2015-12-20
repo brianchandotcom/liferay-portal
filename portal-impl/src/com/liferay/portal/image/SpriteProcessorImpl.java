@@ -266,6 +266,33 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			renderedImage = LookupDescriptor.create(
 				renderedImage, lookupTableJAI, null);
 		}
+		else if (sampleModel.getNumBands() == 1) {
+			List<Byte> bytesList = new ArrayList<>(
+				height * width * _NUM_OF_BANDS);
+
+			for (int i = 0; i < dataBuffer.getSize(); i++) {
+				byte elem = (byte)dataBuffer.getElem(i);
+
+				if (elem == -1) {
+					bytesList.add((byte)0);
+				}
+				else {
+					bytesList.add((byte)255);
+				}
+
+				bytesList.add(elem);
+				bytesList.add(elem);
+				bytesList.add(elem);
+			}
+
+			byte[] data = ArrayUtil.toArray(
+				bytesList.toArray(new Byte[bytesList.size()]));
+
+			DataBuffer newDataBuffer = new DataBufferByte(data, data.length);
+
+			renderedImage = createRenderedImage(
+				renderedImage, height, width, newDataBuffer);
+		}
 		else if (sampleModel.getNumBands() == 2) {
 			List<Byte> bytesList = new ArrayList<>(
 				height * width * _NUM_OF_BANDS);

@@ -14,6 +14,7 @@ FileTree fileTree = fileTree(rootDir) {
 		exclude "portal/portal-taglib-aui-form-extension-sample/"
 		exclude "sdk/"
 		exclude "test/"
+		exclude "themes/product-app-theme/"
 		exclude "third-party/"
 		exclude "util/alloy-taglib/"
 		exclude "util/ant-build-logger/"

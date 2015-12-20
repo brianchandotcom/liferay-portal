@@ -158,6 +158,10 @@ public class RecurrenceUtil {
 	public static Recurrence inTimeZone(
 		Recurrence recurrence, Calendar startTimeJCalendar, TimeZone timeZone) {
 
+		if (recurrence == null) {
+			return null;
+		}
+
 		recurrence = recurrence.clone();
 
 		List<Calendar> newExceptionJCalendars = new ArrayList<>();

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.internal;
+package com.liferay.portal.scheduler.cluster.internal;
 
 import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.scheduler.SchedulerClusterInvokingThreadLocal;
 
 import java.util.Iterator;
 import java.util.List;

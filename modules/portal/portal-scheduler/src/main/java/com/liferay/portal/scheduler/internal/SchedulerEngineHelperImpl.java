@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.scheduler.SchedulerClusterInvokingThreadLocal;
 import com.liferay.portal.scheduler.internal.messaging.config.SchedulerProxyMessagingConfigurator;
 import com.liferay.portal.scheduler.internal.messaging.config.ScriptingMessageListener;
 import com.liferay.portal.util.PortalUtil;

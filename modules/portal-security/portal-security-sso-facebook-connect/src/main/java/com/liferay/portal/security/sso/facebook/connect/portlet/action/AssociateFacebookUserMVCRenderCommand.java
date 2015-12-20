@@ -51,30 +51,33 @@ import org.osgi.service.component.annotations.Reference;
 public class AssociateFacebookUserMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	public String render(RenderRequest request, RenderResponse response)
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
 			throw new PortletException(
-					new PrincipalException.MustBeEnabled(
-						themeDisplay.getCompanyId(),
-						FacebookConnect.class.getName()));
+				new PrincipalException.MustBeEnabled(
+					themeDisplay.getCompanyId(),
+					FacebookConnect.class.getName()));
 		}
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getOriginalServletRequest(
-				PortalUtil.getHttpServletRequest(request));
+				PortalUtil.getHttpServletRequest(renderRequest));
 
 		HttpSession session = httpServletRequest.getSession(true);
 
-		long facebookIncompleteUserId = ParamUtil.getLong(request, "userId");
+		long facebookIncompleteUserId = ParamUtil.getLong(
+			renderRequest, "userId");
 
 		if (!Validator.isNull(facebookIncompleteUserId)) {
 			User user = _userLocalService.fetchUser(facebookIncompleteUserId);
-			return renderUpdateAccount(request, user);
+
+			return renderUpdateAccount(renderRequest, user);
 		}
 
 		// This situation might happen if the browser back button is used
@@ -82,10 +85,12 @@ public class AssociateFacebookUserMVCRenderCommand implements MVCRenderCommand {
 		return "/login.jsp";
 	}
 
-	protected String renderUpdateAccount(PortletRequest request, User user)
+	protected String renderUpdateAccount(
+			PortletRequest portletRequest, User user)
 		throws PortletException {
 
-		request.setAttribute("selUser", user);
+		portletRequest.setAttribute("selUser", user);
+
 		return "/update_account.jsp";
 	}
 

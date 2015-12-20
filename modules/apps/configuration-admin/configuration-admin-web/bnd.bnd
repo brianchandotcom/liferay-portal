@@ -5,7 +5,6 @@ Import-Package:\
 	com.liferay.dynamic.data.mapping.form.renderer,\
 	com.liferay.dynamic.data.mapping.form.values.factory,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
@@ -16,3 +15,4 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Configuration Framework
 Private-Package: com.liferay.configuration.admin.web.*
+-include: ../../../../marketplace/platform/bnd.bnd

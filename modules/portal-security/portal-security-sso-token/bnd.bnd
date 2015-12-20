@@ -4,7 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.security.sso.token.events.*;version=${plugin.full.version},\
 	com.liferay.portal.security.sso.token.security.auth.*;version=${plugin.full.version}
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
+-include: ../../../marketplace/platform/bnd.bnd

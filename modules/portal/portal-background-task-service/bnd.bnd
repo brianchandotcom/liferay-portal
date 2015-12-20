@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.kernel.backgroundtask,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Background Tasks
@@ -13,4 +12,5 @@ Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Spring-Context: META-INF/spring
+-include: ../../../marketplace/platform/bnd.bnd
 -spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

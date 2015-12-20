@@ -12,7 +12,6 @@ Import-Package:\
 	!org.ietf.jgss,\
 	!org.joda.convert,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/aws-java-sdk-core.jar,\
@@ -28,3 +27,4 @@ Include-Resource:\
 	@lib/joda-time.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
+-include: ../../../marketplace/platform/bnd.bnd

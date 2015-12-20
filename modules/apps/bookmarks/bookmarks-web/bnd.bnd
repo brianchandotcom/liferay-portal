@@ -66,7 +66,6 @@ Import-Package:\
 	org.apache.struts.config.*,\
 	org.apache.struts.util,\
 	*
--include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
@@ -75,3 +74,4 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Bookmarks
 Web-ContextPath: /bookmarks-web
+-include: ../../../../marketplace/collaboration/bnd.bnd

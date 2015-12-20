@@ -7,7 +7,6 @@ Export-Package:\
 Import-Package:\
 	javax.servlet;version='[2.3.0,4.0.0)',\
 	*
--include: ../../../../marketplace/web-content-management/bnd.bnd
 Include-Resource:\
 	classes,\
 	content=../../staging/staging-lang/src/main/resources/content,\
@@ -16,3 +15,4 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Web-ContextPath: /exportimport-web
+-include: ../../../../marketplace/web-content-management/bnd.bnd

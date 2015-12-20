@@ -1432,12 +1432,14 @@ rerun your task.
 			<if>
 				<matches pattern="\d\.\d\.\d\d" string="${lp.version}" />
 				<then>
+					<var name="app.title.suffix" value="\s EE" />
 					<var name="liferay.releng.public" value="false" />
 					<var name="liferay.releng.supported" value="true" />
 				</then>
 				<elseif>
 					<matches pattern="\d\.\d\.\d" string="${lp.version}" />
 					<then>
+						<var name="app.title.suffix" value="" />
 						<var name="liferay.releng.public" value="true" />
 						<var name="liferay.releng.supported" value="false" />
 					</then>
@@ -1491,6 +1493,7 @@ rerun your task.
 				file="${basedir}/.gradle/gradle.properties"
 			>
 				app.server.type=${app.server.type}
+				app.title.suffix=${app.title.suffix}
 				auto.deploy.dir=${liferay.home}/osgi/apps
 				junit.java.integration.gc=${junit.java.integration.gc}
 				junit.java.unit.gc=${junit.java.unit.gc}

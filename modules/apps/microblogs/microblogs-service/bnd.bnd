@@ -5,7 +5,6 @@ Export-Package:\
 	com.liferay.microblogs.service.permission,\
 	com.liferay.microblogs.util,\
 	com.liferay.microblogs.util.comparator
--include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
@@ -19,4 +18,5 @@ Require-Capability:\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Require-SchemaVersion: 1.0.2
 Spring-Context: META-INF/spring
+-include: ../../../../marketplace/collaboration/bnd.bnd
 -spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

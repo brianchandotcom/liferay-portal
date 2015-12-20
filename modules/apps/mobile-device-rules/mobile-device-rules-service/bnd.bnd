@@ -7,7 +7,6 @@ Export-Package:\
 	com.liferay.mobile.device.rules.rule.group.action,\
 	com.liferay.mobile.device.rules.rule.group.rule,\
 	com.liferay.mobile.device.rules.service.permission
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
@@ -21,4 +20,5 @@ Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Spring-Context: META-INF/spring
+-include: ../../../../marketplace/platform/bnd.bnd
 -spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

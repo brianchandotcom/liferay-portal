@@ -3,7 +3,7 @@ Bundle-Name: Liferay Portal Configuration Persistence
 Bundle-SymbolicName: com.liferay.portal.configuration.persistence
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.configuration.persistence
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Configuration Framework
+-include: ../../../marketplace/platform/bnd.bnd

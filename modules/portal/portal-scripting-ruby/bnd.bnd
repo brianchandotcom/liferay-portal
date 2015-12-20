@@ -10,7 +10,6 @@ Import-Package:\
 	!sun.misc.*,\
 	!sun.nio.cs*,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource: \
 	classes,\
 	@lib/jruby-complete.jar
@@ -20,3 +19,4 @@ Liferay-Releng-Module-Group-Title: Scripting Engines
 	"The default package '.' is not permitted by the Import-Package ...";is:=ignore,\
 	"The JAR is empty: ...";is:=ignore,\
 	"While setting properties ...";is:=ignore
+-include: ../../../marketplace/platform/bnd.bnd

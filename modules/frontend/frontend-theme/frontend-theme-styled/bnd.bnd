@@ -1,10 +1,10 @@
 Bundle-Name: Liferay Frontend Theme Styled
 Bundle-SymbolicName: com.liferay.frontend.theme.styled
 Bundle-Version: 1.0.3
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Themes
 -donotcopy: (npm-debug\.log)
+-include: ../../../../marketplace/platform/bnd.bnd

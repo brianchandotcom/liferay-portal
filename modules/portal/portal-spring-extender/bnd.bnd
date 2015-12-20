@@ -66,7 +66,6 @@ Import-Package:\
 	org.springframework.web.servlet.config,\
 	\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
@@ -77,3 +76,4 @@ Provide-Capability:\
 	liferay.extender;\
 	liferay.extender="spring.extender";\
 	version:Version="${plugin.full.version}"
+-include: ../../../marketplace/platform/bnd.bnd

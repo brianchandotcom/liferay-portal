@@ -1,10 +1,10 @@
 Bundle-Name: Liferay Blogs Layout Prototype
 Bundle-SymbolicName: com.liferay.blogs.layout.prototype
 Bundle-Version: 1.0.0
--include: ../../../../marketplace/collaboration/bnd.bnd
 Import-Package:\
 	com.liferay.asset.tags.navigation.web.constants,\
 	*
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
+-include: ../../../../marketplace/collaboration/bnd.bnd

@@ -41,7 +41,6 @@ Import-Package:\
 	org.apache.struts.config.*,\
 	org.apache.struts.util,\
 	*
--include: ../../../../marketplace/business-productivity/bnd.bnd
 Include-Resource:\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
 	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions,\
@@ -51,6 +50,7 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls
 Web-ContextPath: /polls-web
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
+-include: ../../../../marketplace/business-productivity/bnd.bnd
 -wab: docroot
 -wablib:\
 	../../../../lib/portal/jcommon.jar,\

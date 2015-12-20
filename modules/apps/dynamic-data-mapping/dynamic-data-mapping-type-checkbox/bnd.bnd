@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Type Checkbox
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.type.checkbox
 Bundle-Version: 1.0.0
--include: ../../../../marketplace/business-productivity/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
@@ -10,3 +9,4 @@ JS-Config: /META-INF/resources/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Web-ContextPath: /dynamic-data-mapping-type-checkbox
+-include: ../../../../marketplace/business-productivity/bnd.bnd

@@ -9,7 +9,6 @@ Import-Package:\
 	!org.apache.log.*,\
 	!sun.io.*,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
@@ -24,3 +23,4 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
 Web-ContextPath: /portal-security-sso-openid
+-include: ../../../marketplace/platform/bnd.bnd

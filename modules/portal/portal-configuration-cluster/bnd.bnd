@@ -2,7 +2,7 @@ Bundle-Name: Liferay Portal Configuration Cluster
 Bundle-SymbolicName: com.liferay.portal.configuration.cluster
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.configuration.cluster
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Configuration Framework
+-include: ../../../marketplace/platform/bnd.bnd

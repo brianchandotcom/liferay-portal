@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Wiki Engine Creole
 Bundle-SymbolicName: com.liferay.wiki.engine.creole
 Bundle-Version: 1.0.0
--include: ../../../../marketplace/collaboration/bnd.bnd
 Include-Resource:\
 	classes,\
 	@../../../../lib/portal/antlr2.jar,\
@@ -10,3 +9,4 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-creole
+-include: ../../../../marketplace/collaboration/bnd.bnd

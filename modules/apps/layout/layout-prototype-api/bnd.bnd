@@ -2,7 +2,7 @@ Bundle-Name: Liferay Layout Prototype API
 Bundle-SymbolicName: com.liferay.layout.prototype
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.layout.prototype.constants
--include: ../../../../marketplace/web-content-management/bnd.bnd
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
+-include: ../../../../marketplace/web-content-management/bnd.bnd

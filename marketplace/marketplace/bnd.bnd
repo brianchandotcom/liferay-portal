@@ -1,9 +1,9 @@
 Liferay-Releng-App-Description: Liferay Marketplace is an integral part of the Liferay platform experience for all users. Enterprise subscribers also have exclusive access to Liferay Subscription Apps through the Liferay Marketplace. Log in with your Liferay account to browse hundreds of apps to help you build your business or technical solution.
-Liferay-Releng-App-Title: Marketplace
+Liferay-Releng-App-Title: Marketplace${app.title.suffix}
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
-Liferay-Releng-Dependent-Apps:\ 
+Liferay-Releng-Dependent-Apps:\
 	com.liferay.marketplace.api:1.0.0,\
 	com.liferay.marketplace.app.manager.web:1.0.0,\
 	com.liferay.marketplace.service:1.0.0,\

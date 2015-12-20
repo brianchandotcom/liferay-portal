@@ -34,7 +34,6 @@ Import-Package:\
 	!org.slf4j.spi.*,\
 	!org.springframework.*,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	lib/=lib/cxf-rt-frontend-jaxrs.jar,\
@@ -45,3 +44,4 @@ Include-Resource:\
 	lib/=lib/jettison.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
+-include: ../../../marketplace/platform/bnd.bnd

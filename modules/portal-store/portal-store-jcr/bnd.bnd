@@ -7,7 +7,6 @@ Import-Package:\
 	!org.apache.lucene.*,\
 	!org.apache.tika.*,\
 	*
--include: ../../../../marketplace/platform/bnd.bnd
 Include-Resource:\
 	classes,\
 	@lib/concurrent.jar,\
@@ -19,3 +18,4 @@ Include-Resource:\
 	@lib/jcr.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
+-include: ../../../marketplace/platform/bnd.bnd

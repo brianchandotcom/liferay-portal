@@ -100,6 +100,11 @@ if (feed != null) {
 	feedURL.setParameter("feedId", String.valueOf(feedId));
 	feedURL.setResourceID("rss");
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") : feed.getName());
 %>
 
 <portlet:actionURL var="editFeedURL">
@@ -113,12 +118,6 @@ if (feed != null) {
 	<aui:input name="feedId" type="hidden" value="<%= feedId %>" />
 	<aui:input name="ddmRendererTemplateKey" type="hidden" value="<%= ddmRendererTemplateKey %>" />
 	<aui:input name="contentField" type="hidden" value="<%= contentField %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (feed == null) %>"
-		title='<%= (feed == null) ? "new-feed" : feed.getName() %>'
-	/>
 
 	<liferay-ui:error exception="<%= DuplicateFeedIdException.class %>" message="please-enter-a-unique-id" />
 	<liferay-ui:error exception="<%= FeedContentFieldException.class %>" message="please-select-a-valid-feed-item-content" />

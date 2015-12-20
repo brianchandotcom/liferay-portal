@@ -40,20 +40,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 
 		<aui:nav-bar>
 			<aui:nav cssClass="navbar-nav">
-				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
-					<liferay-security:permissionsURL
-						modelResource="com.liferay.journal"
-						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-						var="permissionsURL"
-						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-					/>
-
-					<aui:nav-item
-						href="<%= permissionsURL %>"
-						label="permissions"
-					/>
-				</c:if>
+				<aui:nav-item label="feeds" selected="<%= true %>" />
 			</aui:nav>
 
 			<aui:nav-bar-search>

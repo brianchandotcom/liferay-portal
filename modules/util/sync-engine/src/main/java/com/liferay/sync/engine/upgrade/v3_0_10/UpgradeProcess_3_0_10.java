@@ -14,7 +14,12 @@
 
 package com.liferay.sync.engine.upgrade.v3_0_10;
 
+import com.liferay.sync.engine.model.SyncAccount;
+import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.model.SyncSite;
+import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
+import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.upgrade.UpgradeProcess;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
@@ -32,6 +37,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -50,6 +56,8 @@ public class UpgradeProcess_3_0_10 extends UpgradeProcess {
 	public void upgrade() throws Exception {
 		upgradeLogger();
 		upgradeTable();
+
+		upgradeSites();
 	}
 
 	protected void upgradeLogger() throws Exception {
@@ -112,6 +120,30 @@ public class UpgradeProcess_3_0_10 extends UpgradeProcess {
 		}
 
 		UpgradeUtil.copyLoggerConfiguration();
+	}
+
+	protected void upgradeSites() throws Exception {
+		List<SyncAccount> syncAccounts = SyncAccountService.findAll();
+
+		for (SyncAccount syncAccount : syncAccounts) {
+			List<SyncSite> syncSites = SyncSiteService.findSyncSites(
+				syncAccount.getSyncAccountId());
+
+			for (SyncSite syncSite : syncSites) {
+				SyncFile syncFile = SyncFileService.fetchSyncFile(
+					syncSite.getFilePathName());
+
+				if (syncFile != null) {
+					continue;
+				}
+
+				SyncFileService.addSyncFile(
+					null, null, false, null, syncSite.getFilePathName(), null,
+					syncSite.getName(), 0, syncSite.getGroupId(), 0,
+					SyncFile.STATE_SYNCED, syncSite.getSyncAccountId(),
+					SyncFile.TYPE_SYSTEM);
+			}
+		}
 	}
 
 	protected void upgradeTable() throws Exception {

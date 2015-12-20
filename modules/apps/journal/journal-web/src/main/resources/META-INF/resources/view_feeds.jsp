@@ -30,6 +30,18 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 %>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="feeds" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" method="post" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="deleteFeedIds" type="hidden" />
 
@@ -37,16 +49,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 		searchContainer="<%= new FeedSearch(renderRequest, portletURL) %>"
 	>
-
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="feeds" selected="<%= true %>" />
-			</aui:nav>
-
-			<aui:nav-bar-search>
-				<liferay-ui:input-search />
-			</aui:nav-bar-search>
-		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>
 

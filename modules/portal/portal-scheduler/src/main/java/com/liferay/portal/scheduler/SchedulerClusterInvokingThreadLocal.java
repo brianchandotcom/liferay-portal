@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.internal;
+package com.liferay.portal.scheduler;
 
 import com.liferay.portal.kernel.util.InitialThreadLocal;
 

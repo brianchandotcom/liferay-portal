@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.Duration;
 import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cal.RecurrenceSerializer;
-import com.liferay.portal.kernel.cluster.ClusterLink;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterableProxyFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,7 +30,6 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -57,6 +53,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.scheduler.SchedulerClusterInvokingThreadLocal;
 import com.liferay.portal.scheduler.internal.messaging.config.SchedulerProxyMessagingConfigurator;
 import com.liferay.portal.scheduler.internal.messaging.config.ScriptingMessageListener;
 import com.liferay.portal.util.PortalUtil;
@@ -824,23 +821,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		_bundleContext = componentContext.getBundleContext();
 
-		if (_clusterLink.isEnabled()) {
-			ClusterSchedulerEngine clusterSchedulerEngine =
-				new ClusterSchedulerEngine(_schedulerEngine);
-
-			clusterSchedulerEngine.setClusterMasterExecutor(
-				_clusterMasterExecutor);
-			clusterSchedulerEngine.setProps(_props);
-			clusterSchedulerEngine.setSchedulerEngineHelper(this);
-
-			_serviceRegistration = _bundleContext.registerService(
-				IdentifiableOSGiService.class, clusterSchedulerEngine,
-				new HashMapDictionary<String, Object>());
-
-			_schedulerEngine = ClusterableProxyFactory.createClusterableProxy(
-				clusterSchedulerEngine);
-		}
-
 		registerDestination(
 			_bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.SCHEDULER_DISPATCH);
@@ -894,10 +874,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to shutdown scheduler", e);
 			}
-		}
-
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
 		}
 
 		for (ServiceRegistration<Destination> serviceRegistration :
@@ -957,18 +933,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Reference(unbind = "-")
-	protected void setClusterLink(ClusterLink clusterLink) {
-		_clusterLink = clusterLink;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClusterMasterExecutor(
-		ClusterMasterExecutor clusterMasterExecutor) {
-
-		_clusterMasterExecutor = clusterMasterExecutor;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDestinationFactory(
 		DestinationFactory destinationFactory) {
 
@@ -1006,8 +970,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private boolean _auditMessageSchedulerJob;
 	private volatile AuditRouter _auditRouter;
 	private volatile BundleContext _bundleContext;
-	private volatile ClusterLink _clusterLink;
-	private volatile ClusterMasterExecutor _clusterMasterExecutor;
 	private volatile DestinationFactory _destinationFactory;
 	private final Set<ServiceRegistration<Destination>>
 		_destinationServiceRegistrations = new HashSet<>();
@@ -1017,7 +979,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private volatile Props _props;
 	private volatile SchedulerEngine _schedulerEngine;
 	private volatile boolean _schedulerEngineEnabled;
-	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
 	private final Map
 		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>
 			_serviceRegistrations = new HashMap<>();

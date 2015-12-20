@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.internal;
+package com.liferay.portal.scheduler.cluster.internal;
 
 import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.scheduler.SchedulerClusterInvokingThreadLocal;
 
 import java.util.Iterator;
 import java.util.List;
@@ -509,7 +509,7 @@ public class ClusterSchedulerEngine
 			String jobName = schedulerResponse.getJobName();
 			String groupName = schedulerResponse.getGroupName();
 
-			TriggerState triggerState = _schedulerEngineHelper.getJobState(
+			TriggerState triggerState = SchedulerEngineHelperUtil.getJobState(
 				schedulerResponse);
 
 			Message message = schedulerResponse.getMessage();
@@ -587,12 +587,6 @@ public class ClusterSchedulerEngine
 		_props = props;
 	}
 
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
 	protected void updateMemoryClusteredJob(
 		String jobName, String groupName, TriggerState triggerState) {
 
@@ -641,7 +635,6 @@ public class ClusterSchedulerEngine
 	private ClusterMasterTokenTransitionListener
 		_schedulerClusterMasterTokenTransitionListener;
 	private final SchedulerEngine _schedulerEngine;
-	private SchedulerEngineHelper _schedulerEngineHelper;
 	private final java.util.concurrent.locks.Lock _writeLock;
 
 	private class SchedulerClusterMasterTokenTransitionListener

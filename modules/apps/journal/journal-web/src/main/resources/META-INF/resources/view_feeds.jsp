@@ -40,18 +40,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 
 		<aui:nav-bar>
 			<aui:nav cssClass="navbar-nav">
-				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) %>">
-					<portlet:renderURL var="editFeedURL">
-						<portlet:param name="mvcPath" value="/edit_feed.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-					</portlet:renderURL>
-
-					<aui:nav-item
-						href="<%= editFeedURL %>"
-						label="add-feed"
-					/>
-				</c:if>
-
 				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
 					<liferay-security:permissionsURL
 						modelResource="com.liferay.journal"
@@ -151,3 +139,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 		}
 	}
 </aui:script>
+
+<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) %>">
+	<portlet:renderURL var="editFeedURL">
+		<portlet:param name="mvcPath" value="/edit_feed.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-feed") %>' url="<%= editFeedURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>

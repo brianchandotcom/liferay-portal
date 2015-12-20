@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SchedulerProxyMessagingConfigurator {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
 		DestinationConfiguration destinationConfiguration =

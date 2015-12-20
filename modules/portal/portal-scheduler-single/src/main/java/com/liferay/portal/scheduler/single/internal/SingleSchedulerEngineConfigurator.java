@@ -33,7 +33,7 @@ public class SingleSchedulerEngineConfigurator
 	extends BaseSchedulerEngineConfigurator {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
+	protected void activate(BundleContext bundleContext) {
 		SchedulerEngine schedulerEngine = createSchedulerEngineProxy();
 
 		_schedulerEngineServiceRegistration = registerSchedulerEngine(

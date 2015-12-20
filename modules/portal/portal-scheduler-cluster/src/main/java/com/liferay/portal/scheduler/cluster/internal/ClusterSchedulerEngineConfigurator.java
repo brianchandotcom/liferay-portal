@@ -38,7 +38,7 @@ public class ClusterSchedulerEngineConfigurator
 	extends BaseSchedulerEngineConfigurator {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
+	protected void activate(BundleContext bundleContext) {
 		SchedulerEngine schedulerEngine = createSchedulerEngineProxy();
 
 		if (_clusterLink.isEnabled()) {

@@ -77,30 +77,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 			keyProperty="feedId"
 			modelVar="feed"
 		>
-
-			<%
-			PortletURL rowURL = renderResponse.createRenderURL();
-
-			rowURL.setParameter("mvcPath", "/edit_feed.jsp");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
-			rowURL.setParameter("feedId", feed.getFeedId());
-			%>
-
 			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
 				name="id"
 				property="feedId"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
 				name="name"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
 				name="description"
 				property="description"
 			/>

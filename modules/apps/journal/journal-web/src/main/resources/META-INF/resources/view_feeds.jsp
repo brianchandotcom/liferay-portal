@@ -46,7 +46,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	<aui:input name="deleteFeedIds" type="hidden" />
 
 	<liferay-ui:search-container
-		rowChecker="<%= new RowChecker(renderResponse) %>"
+		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 		searchContainer="<%= new FeedSearch(renderRequest, portletURL) %>"
 	>
 

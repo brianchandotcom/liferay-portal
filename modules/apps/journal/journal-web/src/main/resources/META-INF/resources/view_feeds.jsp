@@ -17,9 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_feeds.jsp");
+portletURL.setParameter("redirect", redirect);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

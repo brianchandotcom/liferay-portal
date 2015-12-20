@@ -35,8 +35,11 @@ import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -60,7 +63,10 @@ import org.apache.jasper.compiler.Jsr199JavaCompiler;
 import org.apache.jasper.compiler.Node.Nodes;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.wiring.BundleCapability;
+import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 
@@ -147,7 +153,43 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		_jspBundle = FrameworkUtil.getBundle(
 			com.liferay.portal.servlet.jsp.compiler.JspServlet.class);
 
-		_logger = new Logger(_jspBundle.getBundleContext());
+		BundleWiring bundleWiring = _jspBundle.adapt(BundleWiring.class);
+
+		_jspBundleWirings.add(bundleWiring);
+
+		for (BundleWire bundleWire : bundleWiring.getRequiredWires(null)) {
+			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
+
+			_jspBundleWirings.add(providedBundleWiring);
+		}
+
+		BundleContext bundleContext = _jspBundle.getBundleContext();
+
+		Bundle systemBundle = bundleContext.getBundle(0);
+
+		if (systemBundle == null) {
+			throw new IllegalStateException(
+				"Unable to access to system bundle");
+		}
+
+		BundleWiring systemBundleWiring = systemBundle.adapt(
+			BundleWiring.class);
+
+		for (BundleCapability bundleCapability :
+				systemBundleWiring.getCapabilities(
+					BundleRevision.PACKAGE_NAMESPACE)) {
+
+			Map<String, Object> attributes = bundleCapability.getAttributes();
+
+			Object packageName = attributes.get(
+				BundleRevision.PACKAGE_NAMESPACE);
+
+			if (packageName != null) {
+				_systemPackageNames.add(packageName);
+			}
+		}
+
+		_logger = new Logger(bundleContext);
 
 		ServletContext servletContext =
 			jspCompilationContext.getServletContext();
@@ -174,23 +216,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		initTLDMappings(servletContext);
 
 		super.init(jspCompilationContext, errorDispatcher, suppressLogging);
-	}
-
-	protected void addBundleWirings(
-		BundleJavaFileManager bundleJavaFileManager) {
-
-		BundleWiring bundleWiring = _jspBundle.adapt(BundleWiring.class);
-
-		bundleJavaFileManager.addBundleWiring(bundleWiring);
-
-		List<BundleWire> requiredBundleWires = bundleWiring.getRequiredWires(
-			null);
-
-		for (BundleWire bundleWire : requiredBundleWires) {
-			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
-
-			bundleJavaFileManager.addBundleWiring(providedBundleWiring);
-		}
 	}
 
 	protected void addDependenciesToClassPath() {
@@ -291,15 +316,11 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
 			}
 
-			BundleJavaFileManager bundleJavaFileManager =
-				new BundleJavaFileManager(
-					_bundle, standardJavaFileManager, _logger,
-					options.contains(BundleJavaFileManager.OPT_VERBOSE),
-					_classResolver);
-
-			addBundleWirings(bundleJavaFileManager);
-
-			javaFileManager = bundleJavaFileManager;
+			javaFileManager = new BundleJavaFileManager(
+				_bundle, _jspBundleWirings, _systemPackageNames,
+				standardJavaFileManager, _logger,
+				options.contains(BundleJavaFileManager.OPT_VERBOSE),
+				_classResolver);
 		}
 
 		return super.getJavaFileManager(javaFileManager);
@@ -452,6 +473,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private final List<File> _classPath = new ArrayList<>();
 	private ClassResolver _classResolver;
 	private Bundle _jspBundle;
+	private final Set<BundleWiring> _jspBundleWirings = new LinkedHashSet<>();
 	private Logger _logger;
+	private final Set<Object> _systemPackageNames = new HashSet<>();
 
 }

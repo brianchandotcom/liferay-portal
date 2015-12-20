@@ -26,10 +26,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.tools.ForwardingJavaFileManager;
@@ -41,8 +39,6 @@ import javax.tools.StandardLocation;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleCapability;
-import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 
@@ -56,11 +52,13 @@ public class BundleJavaFileManager
 	public static final String OPT_VERBOSE = "-verbose";
 
 	public BundleJavaFileManager(
-		Bundle bundle, JavaFileManager javaFileManager, Logger logger,
-		boolean verbose, ClassResolver classResolver) {
+		Bundle bundle, Set<BundleWiring> jspBundleWirings,
+		Set<Object> systemPackageNames, JavaFileManager javaFileManager,
+		Logger logger, boolean verbose, ClassResolver classResolver) {
 
 		super(javaFileManager);
 
+		_systemPackageNames = systemPackageNames;
 		_logger = logger;
 		_verbose = verbose;
 		_classResolver = classResolver;
@@ -70,29 +68,10 @@ public class BundleJavaFileManager
 		for (BundleWire bundleWire : _bundleWiring.getRequiredWires(null)) {
 			BundleWiring bundleWiring = bundleWire.getProviderWiring();
 
-			if (!_bundleWirings.add(bundleWiring)) {
-				continue;
-			}
-
-			Bundle currentBundle = bundleWiring.getBundle();
-
-			if (currentBundle.getBundleId() == 0) {
-				for (BundleCapability bundleCapability :
-						bundleWiring.getCapabilities(
-							BundleRevision.PACKAGE_NAMESPACE)) {
-
-					Map<String, Object> attributes =
-						bundleCapability.getAttributes();
-
-					Object packageName = attributes.get(
-						BundleRevision.PACKAGE_NAMESPACE);
-
-					if (packageName != null) {
-						_systemPackageNames.add(packageName);
-					}
-				}
-			}
+			_bundleWirings.add(bundleWiring);
 		}
+
+		_bundleWirings.addAll(jspBundleWirings);
 
 		if (_verbose) {
 			StringBundler sb = new StringBundler(_bundleWirings.size() * 4 + 6);
@@ -118,10 +97,6 @@ public class BundleJavaFileManager
 
 			_logger.log(Logger.LOG_INFO, sb.toString());
 		}
-	}
-
-	public void addBundleWiring(BundleWiring bundleWiring) {
-		_bundleWirings.add(bundleWiring);
 	}
 
 	@Override
@@ -303,7 +278,7 @@ public class BundleJavaFileManager
 	private final Set<BundleWiring> _bundleWirings = new LinkedHashSet<>();
 	private final ClassResolver _classResolver;
 	private final Logger _logger;
-	private final Set<Object> _systemPackageNames = new HashSet<>();
+	private final Set<Object> _systemPackageNames;
 	private final boolean _verbose;
 
 }

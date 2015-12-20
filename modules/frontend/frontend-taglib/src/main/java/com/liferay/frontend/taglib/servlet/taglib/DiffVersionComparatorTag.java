@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -23,6 +24,7 @@ import java.util.Set;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
@@ -48,6 +50,13 @@ public class DiffVersionComparatorTag extends IncludeTag {
 
 	public void setLanguageId(String languageId) {
 		_languageId = languageId;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setPortletURL(PortletURL portletURL) {
@@ -91,30 +100,32 @@ public class DiffVersionComparatorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:availableLocales",
+			"liferay-frontend:diff-version-comparator:availableLocales",
 			_availableLocales);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:diffHtmlResults",
+			"liferay-frontend:diff-version-comparator:diffHtmlResults",
 			_diffHtmlResults);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:diffVersionsInfo",
+			"liferay-frontend:diff-version-comparator:diffVersionsInfo",
 			_diffVersionsInfo);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:languageId", _languageId);
+			"liferay-frontend:diff-version-comparator:languageId", _languageId);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:portletURL", _portletURL);
+			"liferay-frontend:diff-version-comparator:portletURL", _portletURL);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:resourceURL", _resourceURL);
+			"liferay-frontend:diff-version-comparator:resourceURL",
+			_resourceURL);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:sourceVersion", _sourceVersion);
+			"liferay-frontend:diff-version-comparator:sourceVersion",
+			_sourceVersion);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:targetVersion", _targetVersion);
+			"liferay-frontend:diff-version-comparator:targetVersion",
+			_targetVersion);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE =
-		"/html/taglib/ui/diff_version_comparator/page.jsp";
+	private static final String _PAGE = "/diff_version_comparator/page.jsp";
 
 	private Set<Locale> _availableLocales;
 	private String _diffHtmlResults;

@@ -23,6 +23,8 @@ import java.util.Map;
  * @author Bruno Farache
  * @author Raymond Augé
  * @author Michael C. Han
+ * @deprecated As of 7.0.0, replaced by {@link IndexWriterHelperUtil,
+ *             IndexSearcherHelperUtil, SearchEngineHelperUtil}
  */
 @Deprecated
 public class SearchEngineUtil extends SearchEngineHelperUtil {
@@ -457,6 +459,15 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 		throws SearchException {
 
 		return IndexSearcherHelperUtil.searchCount(searchContext, query);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             IndexWriterHelperUtil#setIndexReadOnly(boolean)}
+	 */
+	@Deprecated
+	public static void setIndexReadOnly(boolean readOnly) {
+		IndexWriterHelperUtil.setIndexReadOnly(readOnly);
 	}
 
 	/**

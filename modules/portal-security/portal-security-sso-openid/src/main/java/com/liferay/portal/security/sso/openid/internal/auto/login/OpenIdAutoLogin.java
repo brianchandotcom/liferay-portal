@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.auto.login;
+package com.liferay.portal.security.sso.openid.internal.auto.login;
 
 import com.liferay.portal.kernel.openid.OpenId;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;

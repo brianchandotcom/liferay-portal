@@ -15,13 +15,12 @@
 package com.liferay.portal.security.sso.openid.constants;
 
 /**
- * @author Mika Koivisto
+ * @author Stian Sigvartsen
  */
-public class OpenIdConstants {
+public class LegacyOpenIdPropsKeys {
 
-	public static final String AUTH_ENABLED = "enabled";
+	public static final String OPENID_AUTH_ENABLED = "openid.auth.enabled";
 
-	public static final String SERVICE_NAME =
-		"com.liferay.portal.security.sso.openid";
+	public static final String[] OPENID_KEYS = {OPENID_AUTH_ENABLED};
 
 }

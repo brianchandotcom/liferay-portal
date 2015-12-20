@@ -44,7 +44,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="feeds"
+>
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
@@ -59,12 +62,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteFeeds" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="deleteFeedIds" type="hidden" />
 
 	<liferay-ui:search-container
+		id="feeds"
 		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 		searchContainer="<%= new FeedSearch(renderRequest, portletURL) %>"
 	>
@@ -84,12 +92,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 			%>
 
 		</liferay-ui:search-container-results>
-
-		<c:if test="<%= !results.isEmpty() %>">
-			<div class="separator"><!-- --></div>
-
-			<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteFeeds();" %>' value="delete" />
-		</c:if>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.journal.model.JournalFeed"
@@ -122,8 +124,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 </aui:form>
 
 <aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
 	function <portlet:namespace />deleteFeeds() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);

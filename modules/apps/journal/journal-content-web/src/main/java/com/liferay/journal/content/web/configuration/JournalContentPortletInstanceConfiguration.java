@@ -21,7 +21,10 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 /**
  * @author Juergen Kappler
  */
-@ConfigurationAdmin(category = "web-experience-management")
+@ConfigurationAdmin(
+	category = "web-experience-management",
+	scope = ConfigurationAdmin.Scope.PORTLET_INSTANCE
+)
 @Meta.OCD(
 	id = "com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration",
 	localization = "content/Language",

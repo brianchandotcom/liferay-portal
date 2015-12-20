@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 /**
  * @author Sergio González
  */
-@ConfigurationAdmin(category = "collaboration")
+@ConfigurationAdmin(
+	category = "collaboration", scope = ConfigurationAdmin.Scope.GROUP
+)
 @Meta.OCD(
 	id = "com.liferay.mentions.configuration.MentionsGroupServiceConfiguration",
 	localization = "content/Language",

@@ -41,4 +41,32 @@ public @interface ConfigurationAdmin {
 
 	public String factoryInstanceLabelAttribute() default "";
 
+	public Scope scope() default Scope.SYSTEM;
+
+	public enum Scope {
+
+		COMPANY("company"), GROUP("group"),
+		PORTLET_INSTANCE("portlet-instance"), SYSTEM("system");
+
+		public boolean equals(String value) {
+			return _value.equals(value);
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Scope(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 }

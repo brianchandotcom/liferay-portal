@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 /**
  * @author Peter Fellwock
  */
-@ConfigurationAdmin(category = "other")
+@ConfigurationAdmin(category = "other", scope = ConfigurationAdmin.Scope.GROUP)
 @Meta.OCD(
 	id = "com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration",
 	localization = "content/Language",

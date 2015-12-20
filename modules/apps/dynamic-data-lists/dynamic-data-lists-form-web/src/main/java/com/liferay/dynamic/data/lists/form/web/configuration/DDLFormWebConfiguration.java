@@ -21,7 +21,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 /**
  * @author Lino Alves
  */
-@ConfigurationAdmin(category = "productivity")
+@ConfigurationAdmin(
+	category = "productivity", scope = ConfigurationAdmin.Scope.GROUP
+)
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration",
 	localization = "content/Language", name = "%ddl.form.web.configuration.name"

@@ -141,6 +141,14 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return _extendedObjectClassDefinition.getName();
 	}
 
+	public String getScope() {
+		Map<String, String> extensionAttributes =
+			_extendedObjectClassDefinition.getExtensionAttributes(
+				ConfigurationAdmin.XML_NAMESPACE);
+
+		return extensionAttributes.get("scope");
+	}
+
 	public boolean isFactory() {
 		return _factory;
 	}

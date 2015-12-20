@@ -21,7 +21,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 /**
  * @author Lino Alves
  */
-@ConfigurationAdmin(category = "productivity")
+@ConfigurationAdmin(
+	category = "productivity", scope = ConfigurationAdmin.Scope.GROUP
+)
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration",
 	localization = "content/Language", name = "%ddm.service.configuration.name"

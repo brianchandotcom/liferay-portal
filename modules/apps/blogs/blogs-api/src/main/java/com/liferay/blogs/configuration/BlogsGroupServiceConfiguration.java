@@ -21,7 +21,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 /**
  * @author Sergio González
  */
-@ConfigurationAdmin(category = "collaboration")
+@ConfigurationAdmin(
+	category = "collaboration", scope = ConfigurationAdmin.Scope.GROUP
+)
 @Meta.OCD(
 	id = "com.liferay.blogs.configuration.BlogsGroupServiceConfiguration",
 	localization = "content/Language",

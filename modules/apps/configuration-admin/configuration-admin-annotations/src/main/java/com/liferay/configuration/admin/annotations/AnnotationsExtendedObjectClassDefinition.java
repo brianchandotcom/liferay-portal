@@ -136,6 +136,10 @@ public class AnnotationsExtendedObjectClassDefinition
 				"factoryInstanceLabelAttribute",
 				configurationAdmin.factoryInstanceLabelAttribute());
 
+			ConfigurationAdmin.Scope scope = configurationAdmin.scope();
+
+			map.put("scope", scope.toString());
+
 			_extensionAttributes.put(ConfigurationAdmin.XML_NAMESPACE, map);
 		}
 	}

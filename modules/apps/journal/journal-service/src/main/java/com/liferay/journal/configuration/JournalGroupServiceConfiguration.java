@@ -22,7 +22,10 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 /**
  * @author Juergen Kappler
  */
-@ConfigurationAdmin(category = "web-experience-management")
+@ConfigurationAdmin(
+	category = "web-experience-management",
+	scope = ConfigurationAdmin.Scope.GROUP
+)
 @Meta.OCD(
 	id = "com.liferay.journal.configuration.JournalGroupServiceConfiguration",
 	localization = "content/Language",

@@ -18,6 +18,8 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -33,11 +35,22 @@ import com.liferay.registry.ServiceRegistration;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareOnlyThisForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Raymond Augé
  */
-public class FacetFactoryTest {
+@PrepareOnlyThisForTest( {
+	SearchEngineHelperUtil.class
+})
+@RunWith(PowerMockRunner.class)
+public class FacetFactoryTest extends PowerMockito {
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -53,6 +66,26 @@ public class FacetFactoryTest {
 
 		registry.registerService(
 			IndexerRegistry.class, new TestIndexerRegistry());
+
+		SearchEngineHelper searchEngineHelper = Mockito.mock(
+			SearchEngineHelper.class);
+
+		Mockito.when(
+			searchEngineHelper.getDefaultSearchEngineId()
+		).thenReturn(
+			SearchEngineHelper.SYSTEM_ENGINE_ID
+		);
+
+		Mockito.when(
+			searchEngineHelper.getEntryClassNames()
+		).thenReturn(
+			new String[] {
+				"com.liferay.portal.kernel.plugin.PluginPackage",
+				"com.liferay.portlet.asset.model.AssetEntry"
+			}
+		);
+
+		registry.registerService(SearchEngineHelper.class, searchEngineHelper);
 	}
 
 	@Test(expected = NullPointerException.class)

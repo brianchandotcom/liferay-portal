@@ -42,7 +42,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="deleteFeedIds" type="hidden" />
 
 	<liferay-ui:search-container
@@ -93,12 +93,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
+				cssClass="list-group-item-field"
 				path="/feed_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

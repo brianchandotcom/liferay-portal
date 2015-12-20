@@ -56,10 +56,8 @@ public abstract class BaseSchedulerEngineConfigurator {
 
 		Class<?> beanClass = schedulerEngineProxyBean.getClass();
 
-		Thread thread = Thread.currentThread();
-
 		return (SchedulerEngine)ProxyUtil.newProxyInstance(
-			thread.getContextClassLoader(), beanClass.getInterfaces(),
+			beanClass.getClassLoader(), beanClass.getInterfaces(),
 			invocationHandler);
 	}
 

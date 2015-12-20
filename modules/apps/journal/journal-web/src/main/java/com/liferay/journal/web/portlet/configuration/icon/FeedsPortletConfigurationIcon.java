@@ -44,6 +44,7 @@ public class FeedsPortletConfigurationIcon
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_feeds.jsp");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		return portletURL.toString();
 	}

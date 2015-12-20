@@ -132,6 +132,16 @@
 	<command name="ViewUpdateUserViaJSONWS" priority="4">
 		<property name="custom.properties" value="company.security.strangers.verify=true" />
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<var name="key_userScreenName" value="test" />
+
+		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="test" />
+
+		<var locator="UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD" name="userId" />
+
 		<execute macro="Api#apiJsonwsUserView" />
 
 		<execute macro="Api#editJsonwsUserView">
@@ -141,23 +151,28 @@
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userFacebookId" value="0" />
 			<var name="userFirstName" value="test1" />
-			<var name="userId" value="10205" />
+			<var name="userId" value="${userId}" />
 			<var name="userLastName" value="test1" />
 			<var name="userPrefixId" value="0" />
 			<var name="userScreenName" value="test1" />
 			<var name="userSuffixId" value="0" />
 		</execute>
 
+		<execute macro="Page#openURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#viewCP">
-			<var name="userScreenName" value="test1" />
-		</execute>
+		<var name="key_userScreenName" value="test1" />
+
+		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="test1" />
 
 		<execute function="AssertValue" locator1="UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD" value1="${userId}" />
-		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="Male" />
-		<execute function="AssertValue" locator1="UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD" value1="${userBirthdayMonth}/${userBirthdayDay}/${userBirthdayYear}" />
+		<execute function="AssertValue" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="test1" />
+		<execute function="AssertValue" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="test1" />
+		<execute function="AssertValue" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="test1@liferay.com" />
+		<execute function="AssertValue" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="test1" />
+		<execute function="AssertValue" locator1="UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD" value1="11/24/1984" />
 	</command>
 </definition>

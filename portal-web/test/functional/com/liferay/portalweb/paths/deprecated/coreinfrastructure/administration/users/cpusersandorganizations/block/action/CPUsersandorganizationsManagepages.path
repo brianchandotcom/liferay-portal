@@ -111,6 +111,11 @@
 	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[3]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGE_TREE_MY_DASHBOARD_LINK_1</td>
+	<td>//a[contains(@id,'privateLayoutsTree')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

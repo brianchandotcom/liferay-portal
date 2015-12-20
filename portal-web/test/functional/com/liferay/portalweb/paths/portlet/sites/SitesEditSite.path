@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>PARENT_SITE_SELECT</td>
-	<td>//a[contains(@id,'selectParentSiteLink')]/span</td>
+	<td>//button[contains(@id,'selectParentSiteLink')]/span</td>
 	<td></td>
 </tr>
 <tr>

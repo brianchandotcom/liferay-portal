@@ -46,7 +46,9 @@
 			<var name="pageName" value="Site Page 3" />
 		</execute>
 
-		<execute macro="SitePage#deleteSitepagesPG" />
+		<execute macro="Page#tearDownPG">
+			<var name="site" value="Liferay" />
+		</execute>
 	</command>
 
 	<command name="AddPageWithEscapeCharacter" priority="3">

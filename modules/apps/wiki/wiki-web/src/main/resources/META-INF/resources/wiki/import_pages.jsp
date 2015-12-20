@@ -67,9 +67,9 @@ portletURL.setParameter("nodeId", String.valueOf(nodeId));
 	<liferay-util:include page="<%= WikiUtil.getWikiImporterPage(tabs2) %>" servletContext="<%= application %>" />
 
 	<aui:button-row>
-		<aui:button type="submit" value="import" />
+		<aui:button cssClass="btn-lg" type="submit" value="import" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

@@ -151,9 +151,9 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 </aui:form>
 
 <aui:button-row>
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' type="submit" />
+	<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' type="submit" />
 
-	<aui:button href="<%= redirect %>" type="cancel" />
+	<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 </aui:button-row>
 
 <aui:script>

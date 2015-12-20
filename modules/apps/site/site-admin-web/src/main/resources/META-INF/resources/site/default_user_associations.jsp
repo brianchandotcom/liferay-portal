@@ -98,7 +98,7 @@ for (long defaultTeamId : defaultTeamIds) {
 </liferay-ui:search-container>
 
 <aui:button-row>
-	<aui:button cssClass="modify-link" id="selectSiteRoleLink" value="select" />
+	<aui:button cssClass="btn-lg modify-link" id="selectSiteRoleLink" value="select" />
 </aui:button-row>
 
 <h3><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h3>
@@ -133,7 +133,7 @@ for (long defaultTeamId : defaultTeamIds) {
 </liferay-ui:search-container>
 
 <aui:button-row>
-	<aui:button cssClass="modify-link" id="selectTeamLink" value="select" />
+	<aui:button cssClass="btn-lg modify-link" id="selectTeamLink" value="select" />
 </aui:button-row>
 
 <aui:script use="liferay-search-container">

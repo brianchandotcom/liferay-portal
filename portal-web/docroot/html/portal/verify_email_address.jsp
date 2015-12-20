@@ -48,12 +48,12 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 	<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="email-verification-code" name="ticketKey" size="36" type="text" value="<%= ticketKey %>" />
 
 	<aui:button-row>
-		<aui:button type="submit" value="verify" />
+		<aui:button cssClass="btn-lg" type="submit" value="verify" />
 
 		<c:if test="<%= themeDisplay.isSignedIn() && !user.isEmailAddressVerified() %>">
-			<aui:button href='<%= themeDisplay.getPathMain() + "/portal/verify_email_address?p_l_id=" + layout.getPlid() + "&cmd=" + Constants.SEND + "&referer=" + HttpUtil.encodeURL(referer) %>' value="send-new-verification-code" />
+			<aui:button cssClass="btn-lg" href='<%= themeDisplay.getPathMain() + "/portal/verify_email_address?p_l_id=" + layout.getPlid() + "&cmd=" + Constants.SEND + "&referer=" + HttpUtil.encodeURL(referer) %>' value="send-new-verification-code" />
 
-			<aui:button href='<%= themeDisplay.getPathMain() + "/portal/update_email_address?p_l_id=" + layout.getPlid() + "&referer=" + HttpUtil.encodeURL(referer) %>' value="change-email-address" />
+			<aui:button cssClass="btn-lg" href='<%= themeDisplay.getPathMain() + "/portal/update_email_address?p_l_id=" + layout.getPlid() + "&referer=" + HttpUtil.encodeURL(referer) %>' value="change-email-address" />
 		</c:if>
 	</aui:button-row>
 </aui:form>

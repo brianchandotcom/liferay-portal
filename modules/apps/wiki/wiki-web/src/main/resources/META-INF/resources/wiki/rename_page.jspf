@@ -32,9 +32,9 @@
 	</c:if>
 
 	<aui:button-row>
-		<aui:button disabled="<%= pending %>" onClick='<%= renderResponse.getNamespace() + "renamePage();" %>' value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>' />
+		<aui:button cssClass="btn-lg" disabled="<%= pending %>" onClick='<%= renderResponse.getNamespace() + "renamePage();" %>' value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>' />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:fieldset>
 

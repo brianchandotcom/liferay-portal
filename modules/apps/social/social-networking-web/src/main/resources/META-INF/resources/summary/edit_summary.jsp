@@ -38,8 +38,8 @@ String aboutMe = HtmlUtil.escape(ExpandoValueLocalServiceUtil.getData(User.class
 	<aui:input label="about-me" name="aboutMe" type="textarea" value="<%= aboutMe %>" />
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button href="<%= redirectURL %>" value="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirectURL %>" value="cancel" />
 	</aui:button-row>
 </aui:form>

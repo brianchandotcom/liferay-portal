@@ -32,7 +32,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 }
 %>
 
-<liferay-ui:icon-menu showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
 		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
 			<portlet:actionURL name="updateLayoutRevision" var="publishURL">
@@ -49,7 +49,6 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			%>
 
 			<liferay-ui:icon
-				iconCssClass='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "icon-random" : "icon-check" %>'
 				message='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName()) ? "submit-for-publication" : "mark-as-ready-for-publication" %>'
 				url="<%= taglibURL %>"
 			/>

@@ -58,5 +58,5 @@ catch (NoSuchOrderException nsoe) {
 </portlet:renderURL>
 
 <aui:button-row>
-	<aui:button href="<%= continueShoppingURL.toString() %>" value="continue-shopping" />
+	<aui:button cssClass="btn-lg" href="<%= continueShoppingURL.toString() %>" value="continue-shopping" />
 </aui:button-row>

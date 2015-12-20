@@ -373,7 +373,7 @@ for (int i = 0; i < results.size(); i++) {
 
 <c:if test='<%= type.equals("history") && (results.size() > 1) %>'>
 	<aui:button-row>
-		<aui:button cssClass="btn-primary" name="compare" value="compare-versions" />
+		<aui:button cssClass="btn-lg btn-primary" name="compare" value="compare-versions" />
 	</aui:button-row>
 </c:if>
 

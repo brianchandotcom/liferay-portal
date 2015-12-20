@@ -105,13 +105,13 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 		}
 		%>
 
-		<aui:button name="publishButton" type="submit" value="publish" />
+		<aui:button cssClass="btn-lg" name="publishButton" type="submit" value="publish" />
 
 		<%
 		String taglibCancelReply = renderResponse.getNamespace() + "addQuickReply('cancel', '');";
 		%>
 
-		<aui:button onClick="<%= taglibCancelReply %>" type="cancel" />
+		<aui:button cssClass="btn-lg" onClick="<%= taglibCancelReply %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

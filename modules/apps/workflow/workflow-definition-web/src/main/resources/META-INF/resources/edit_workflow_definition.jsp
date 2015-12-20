@@ -59,9 +59,9 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<aui:input name="file" type="file" />
 
 			<aui:button-row>
-				<aui:button type="submit" />
+				<aui:button cssClass="btn-lg" type="submit" />
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 			</aui:button-row>
 		</aui:fieldset>
 	</aui:form>

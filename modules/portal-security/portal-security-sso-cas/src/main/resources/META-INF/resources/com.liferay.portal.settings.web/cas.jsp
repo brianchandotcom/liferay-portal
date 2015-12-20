@@ -64,7 +64,7 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 		String taglibOnClick = renderResponse.getNamespace() + "testCasSettings();";
 		%>
 
-		<aui:button onClick="<%= taglibOnClick %>" value="test-cas-configuration" />
+		<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="test-cas-configuration" />
 	</aui:button-row>
 </aui:fieldset>
 

@@ -553,7 +553,7 @@ if (portletTitleBasedNavigation) {
 											<aui:input name="targetFileVersionId" type="hidden" value="<%= fileVersion.getFileVersionId() %>" />
 
 											<aui:button-row>
-												<aui:button type="submit" value="compare-versions" />
+												<aui:button cssClass="btn-lg" type="submit" value="compare-versions" />
 											</aui:button-row>
 										</aui:form>
 

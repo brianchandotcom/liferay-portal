@@ -62,7 +62,7 @@ double interestPaid = totalPaid - loanAmount;
 					<aui:input name="years" value="<%= years %>" />
 
 					<aui:button-row>
-						<aui:button type="submit" value="calculate" />
+						<aui:button cssClass="btn-lg" type="submit" value="calculate" />
 					</aui:button-row>
 				</aui:field-wrapper>
 			</aui:fieldset>

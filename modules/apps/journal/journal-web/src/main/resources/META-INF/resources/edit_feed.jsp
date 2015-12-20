@@ -326,10 +326,10 @@ if (feed != null) {
 		%>
 
 		<c:if test="<%= hasSavePermission %>">
-			<aui:button type="submit" />
+			<aui:button cssClass="btn-lg" type="submit" />
 		</c:if>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

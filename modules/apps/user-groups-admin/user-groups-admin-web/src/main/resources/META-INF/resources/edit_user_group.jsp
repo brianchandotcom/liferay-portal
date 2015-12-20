@@ -283,9 +283,9 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 	</c:if>
 
 	<aui:button-row>
-		<aui:button disabled="<%= !hasUserGroupUpdatePermission %>" type="submit" />
+		<aui:button cssClass="btn-lg" disabled="<%= !hasUserGroupUpdatePermission %>" type="submit" />
 
-		<aui:button disabled="<%= !hasUserGroupUpdatePermission %>" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" disabled="<%= !hasUserGroupUpdatePermission %>" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

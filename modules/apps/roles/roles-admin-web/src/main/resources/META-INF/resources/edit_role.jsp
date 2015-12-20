@@ -147,9 +147,9 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 			</aui:fieldset-group>
 
 			<aui:button-row>
-				<aui:button type="submit" />
+				<aui:button cssClass="btn-lg" type="submit" />
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 			</aui:button-row>
 		</aui:fieldset>
 	</aui:fieldset-group>

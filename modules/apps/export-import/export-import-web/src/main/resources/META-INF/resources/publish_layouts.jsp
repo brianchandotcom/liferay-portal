@@ -373,14 +373,14 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 				<aui:button-row>
 					<c:choose>
 						<c:when test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
-							<aui:button type="submit" value="save" />
+							<aui:button cssClass="btn-lg" type="submit" value="save" />
 
-							<aui:button href="<%= renderURL.toString() %>" type="reset" value="cancel" />
+							<aui:button cssClass="btn-lg" href="<%= renderURL.toString() %>" type="reset" value="cancel" />
 						</c:when>
 						<c:otherwise>
-							<aui:button id="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
+							<aui:button cssClass="btn-lg" id="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
 
-							<aui:button id="publishButton" type="submit" value="<%= publishActionKey %>" />
+							<aui:button cssClass="btn-lg" id="publishButton" type="submit" value="<%= publishActionKey %>" />
 						</c:otherwise>
 					</c:choose>
 				</aui:button-row>

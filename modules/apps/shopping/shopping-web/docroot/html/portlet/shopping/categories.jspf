@@ -121,7 +121,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 					<aui:button-row>
 						<c:if test="<%= showSearch %>">
-							<aui:button type="submit" value="search-categories" />
+							<aui:button cssClass="btn-lg" type="submit" value="search-categories" />
 						</c:if>
 
 						<c:if test="<%= showAddCategoryButton %>">
@@ -131,7 +131,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 								<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
 							</portlet:renderURL>
 
-							<aui:button href="<%= addCategoriesURL %>" value='<%= (category == null) ? "add-category" : "add-subcategory" %>' />
+							<aui:button cssClass="btn-lg" href="<%= addCategoriesURL %>" value='<%= (category == null) ? "add-category" : "add-subcategory" %>' />
 						</c:if>
 
 						<c:if test="<%= showPermissionsButton %>">
@@ -156,7 +156,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 								windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 							/>
 
-							<aui:button href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
+							<aui:button cssClass="btn-lg" href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
 						</c:if>
 					</aui:button-row>
 				</c:if>
@@ -319,7 +319,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 					<aui:button-row>
 						<c:if test="<%= showSearch %>">
-							<aui:button type="submit" value="search-this-category" />
+							<aui:button cssClass="btn-lg" type="submit" value="search-this-category" />
 						</c:if>
 
 						<c:if test="<%= showAddItemButton %>">
@@ -329,7 +329,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 								<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
 							</portlet:renderURL>
 
-							<aui:button href="<%= addItemURL %>" value="add-item" />
+							<aui:button cssClass="btn-lg" href="<%= addItemURL %>" value="add-item" />
 						</c:if>
 					</aui:button-row>
 				</c:if>

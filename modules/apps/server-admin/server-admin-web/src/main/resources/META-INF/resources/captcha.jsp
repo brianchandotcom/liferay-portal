@@ -28,5 +28,5 @@
 </aui:fieldset>
 
 <aui:button-row>
-	<aui:button cssClass="save-server-button" data-cmd="updateCaptcha" value="save" />
+	<aui:button cssClass="btn-lg save-server-button" data-cmd="updateCaptcha" value="save" />
 </aui:button-row>

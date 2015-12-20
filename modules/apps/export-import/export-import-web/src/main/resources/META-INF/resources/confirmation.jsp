@@ -132,9 +132,9 @@ long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 					<liferay-staging:content disableInputs="<%= true %>" parameterMap="<%= parameterMap %>" type="<%= cmd %>" />
 
 					<aui:button-row>
-						<aui:button type="submit" value="<%= LanguageUtil.get(request, submitLanguageKey) %>" />
+						<aui:button cssClass="btn-lg" type="submit" value="<%= LanguageUtil.get(request, submitLanguageKey) %>" />
 
-						<aui:button href="<%= backURL %>" type="cancel" />
+						<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
 					</aui:button-row>
 				</li>
 			</ul>

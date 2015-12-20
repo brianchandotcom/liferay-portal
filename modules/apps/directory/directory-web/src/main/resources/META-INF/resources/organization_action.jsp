@@ -28,7 +28,7 @@ Organization organization = (Organization)row.getObject();
 long organizationId = organization.getOrganizationId();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="viewUsersURL">
 		<portlet:param name="mvcRenderCommandName" value="/directory/view" />
 		<portlet:param name="tabs1" value="users" />
@@ -37,7 +37,6 @@ long organizationId = organization.getOrganizationId();
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-search"
 		message="view-users"
 		method="get"
 		url="<%= viewUsersURL %>"
@@ -51,6 +50,10 @@ long organizationId = organization.getOrganizationId();
 			<portlet:param name="parentOrganizationId" value="<%= String.valueOf(organizationId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon iconCssClass="icon-search" message="view-suborganizations" method="get" url="<%= viewSuborganizationsURL %>" />
+		<liferay-ui:icon
+			message="view-suborganizations"
+			method="get"
+			url="<%= viewSuborganizationsURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

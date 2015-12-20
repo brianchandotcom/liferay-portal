@@ -149,7 +149,7 @@ portletURL.setParameter("tabs1", "default-configuration");
 		</liferay-ui:search-container>
 
 		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button cssClass="btn-lg" type="submit" />
 		</aui:button-row>
 
 		<br />

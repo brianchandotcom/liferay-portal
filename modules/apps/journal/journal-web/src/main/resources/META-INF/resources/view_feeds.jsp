@@ -19,6 +19,9 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -52,6 +55,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+
+		<%
+		PortletURL iteratorURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		iteratorURL.setParameter("displayStyle", displayStyle);
+		%>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name", "id"} %>'
+			portletURL="<%= iteratorURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
@@ -88,7 +104,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 
 			searchContainer.setTotal(total);
 
-			results = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), null);
+			results = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 			searchContainer.setResults(results);
 			%>

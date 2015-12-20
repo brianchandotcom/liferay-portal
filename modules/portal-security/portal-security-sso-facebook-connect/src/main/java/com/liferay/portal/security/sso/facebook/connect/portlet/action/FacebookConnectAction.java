@@ -294,46 +294,6 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		_userLocalService = userLocalService;
 	}
 
-	protected String strutsExecute(
-			HttpServletRequest request, HttpServletResponse response,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if (!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
-			throw new PrincipalException.MustBeEnabled(
-				themeDisplay.getCompanyId(), FacebookConnect.class.getName());
-		}
-
-		HttpSession session = request.getSession();
-
-		String redirect = ParamUtil.getString(request, "redirect");
-
-		String code = ParamUtil.getString(request, "code");
-
-		String token = _facebookConnect.getAccessToken(
-			themeDisplay.getCompanyId(), redirect, code);
-
-		if (Validator.isNotNull(token)) {
-			User user = setFacebookCredentials(
-				session, themeDisplay.getCompanyId(), token);
-
-			if ((user != null) &&
-				(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
-
-				redirectUpdateAccount(request, response, user);
-
-				return null;
-			}
-		}
-		else {
-			return _forwards.get("/common/referer_jsp.jsp");
-		}
-
-		response.sendRedirect(redirect);
-
-		return null;
-	}
-
 	protected User updateUser(User user, JSONObject jsonObject)
 		throws Exception {
 

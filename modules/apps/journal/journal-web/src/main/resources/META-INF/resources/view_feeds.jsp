@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 String redirect = ParamUtil.getString(request, "redirect");
 

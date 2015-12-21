@@ -81,6 +81,12 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="search">
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${calendarResourceName}" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+	</command>
+
 	<command name="tearDown">
 		<execute macro="CalendarNavigator#gotoResources" />
 

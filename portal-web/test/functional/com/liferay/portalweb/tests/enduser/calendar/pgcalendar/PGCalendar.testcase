@@ -3557,6 +3557,58 @@
 		</execute>
 	</command>
 
+	<command name="SearchCalendarResource" priority="3">
+		<description message="This is a use case for LPS-59743." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Room 1" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Car1" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Truck" />
+		</execute>
+
+		<execute macro="CalendarResource#search">
+			<var name="calendarResourceName" value="Room Car " />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceName">
+			<var name="calendarResourceName" value="Room 1" />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceName">
+			<var name="calendarResourceName" value="Car1" />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceNameNotPresent">
+			<var name="calendarResourceName" value="Truck" />
+		</execute>
+
+		<execute macro="CalendarResource#search">
+			<var name="calendarResourceName" value="Room" />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceName">
+			<var name="calendarResourceName" value="Room 1" />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceNameNotPresent">
+			<var name="calendarResourceName" value="Car1" />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceNameNotPresent">
+			<var name="calendarResourceName" value="Truck" />
+		</execute>
+	</command>
+
 	<command name="SearchForOtherCalendars" priority="5">
 		<property name="portal.acceptance" value="true" />
 

@@ -32,12 +32,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
+		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT,
 		"mvc.command.name=deleteBackgroundTask"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteBackgroundTaskMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteExportBackgroundTaskMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

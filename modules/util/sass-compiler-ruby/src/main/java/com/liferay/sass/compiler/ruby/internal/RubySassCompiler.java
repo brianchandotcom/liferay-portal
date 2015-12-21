@@ -153,8 +153,9 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 			String[] results = _scriptingContainer.callMethod(
 				_scriptObject, "process",
-				new Object[] {inputFileName, includeDirNames, _tmpDirName,
-					false, outputFileName, _precision, generateSourceMap,
+				new Object[] {
+					inputFileName, includeDirNames, _tmpDirName, false,
+					outputFileName, _precision, generateSourceMap,
 					sourceMapFileName
 				},
 				String[].class);

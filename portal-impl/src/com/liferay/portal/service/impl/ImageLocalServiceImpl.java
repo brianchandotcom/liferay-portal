@@ -48,7 +48,8 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			return null;
 		}
 
-		/*if (PropsValues.IMAGE_HOOK_IMPL.equals(
+		/*
+		if (PropsValues.IMAGE_HOOK_IMPL.equals(
 				DatabaseHook.class.getName()) &&
 			(imagePersistence.getListeners().length == 0)) {
 
@@ -56,7 +57,8 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 
 			imagePersistence.clearCache();
 		}
-		else {*/
+		else {
+		*/
 			Image image = getImage(imageId);
 
 			if (image != null) {

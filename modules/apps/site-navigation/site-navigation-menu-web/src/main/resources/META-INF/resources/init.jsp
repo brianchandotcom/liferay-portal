@@ -25,7 +25,11 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.model.Layout" %><%@
+page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.theme.NavItem" %><%@
+page import="com.liferay.portal.util.LayoutDescription" %><%@
 page import="com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration" %><%@
 page import="com.liferay.site.navigation.menu.web.display.context.SiteNavigationMenuDisplayContext" %>
 

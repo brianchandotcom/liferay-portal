@@ -16,12 +16,18 @@ package com.liferay.site.navigation.menu.web.display.context;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.LayoutDescription;
+import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuPortletInstanceConfiguration;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -111,6 +117,19 @@ public class SiteNavigationMenuDisplayContext {
 		return _includedLayouts;
 	}
 
+	public List<LayoutDescription> getLayoutDescriptions() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		String rootNodeName = StringPool.BLANK;
+
+		return LayoutListUtil.getLayoutDescriptions(
+			layout.getGroupId(), layout.isPrivateLayout(), rootNodeName,
+			themeDisplay.getLocale());
+	}
+
 	public int getRootLayoutLevel() {
 		if (_rootLayoutLevel != null) {
 			return _rootLayoutLevel;
@@ -135,6 +154,18 @@ public class SiteNavigationMenuDisplayContext {
 		return _rootLayoutType;
 	}
 
+	public String getRootLayoutUuid() {
+		if (_rootLayoutUuid != null) {
+			return _rootLayoutUuid;
+		}
+
+		_rootLayoutUuid = ParamUtil.getString(
+			_request, "rootLayoutUuid",
+			_siteNavigationMenuPortletInstanceConfiguration.rootLayoutUuid());
+
+		return _rootLayoutUuid;
+	}
+
 	public boolean isPreview() {
 		if (_preview != null) {
 			return _preview;
@@ -155,6 +186,7 @@ public class SiteNavigationMenuDisplayContext {
 	private final HttpServletRequest _request;
 	private Integer _rootLayoutLevel;
 	private String _rootLayoutType;
+	private String _rootLayoutUuid;
 	private final SiteNavigationMenuPortletInstanceConfiguration
 		_siteNavigationMenuPortletInstanceConfiguration;
 	private final SiteNavigationMenuWebConfiguration

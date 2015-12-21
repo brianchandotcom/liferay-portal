@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.lists.form.web.asset;
 
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
-import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
@@ -37,7 +35,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,6 +48,8 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 		DDLFormRecord formRecord, DDLRecordVersion recordVersion) {
 
 		_formRecord = formRecord;
+
+		_record = formRecord.getDDLRecord();
 		_recordVersion = recordVersion;
 
 		DDLRecordSet recordSet = null;
@@ -84,12 +83,12 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 
 	@Override
 	public long getClassPK() {
-		return getDDLRecord().getRecordId();
+		return _record.getRecordId();
 	}
 
 	@Override
 	public long getGroupId() {
-		return getDDLRecord().getGroupId();
+		return _record.getGroupId();
 	}
 
 	@Override
@@ -151,23 +150,17 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 
 	@Override
 	public long getUserId() {
-		return getDDLRecord().getUserId();
+		return _record.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return getDDLRecord().getUserName();
+		return _record.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return getDDLRecord().getUuid();
-	}
-
-	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker) {
-		return DDLRecordSetPermission.contains(
-			permissionChecker, _recordSet, ActionKeys.UPDATE);
+		return _record.getUuid();
 	}
 
 	@Override
@@ -200,6 +193,7 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 		DDLFormAssetRenderer.class);
 
 	private final DDLFormRecord _formRecord;
+	private final DDLRecord _record;
 	private final DDLRecordSet _recordSet;
 	private final DDLRecordVersion _recordVersion;
 

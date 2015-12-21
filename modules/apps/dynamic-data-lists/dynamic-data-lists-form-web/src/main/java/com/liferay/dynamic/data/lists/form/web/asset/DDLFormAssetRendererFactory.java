@@ -54,7 +54,7 @@ public class DDLFormAssetRendererFactory
 		setClassName(DDLFormRecord.class.getName());
 		setPortletId(DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM);
 		setSearchable(true);
-		setSelectable(true);
+		setSelectable(false);
 	}
 
 	@Override
@@ -111,11 +111,6 @@ public class DDLFormAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
-	@Override
-	public boolean isSelectable() {
-		return false;
-	}
-
 	@Reference(
 		target =
 			"(osgi.web.symbolicname=com.liferay.dynamic.data.lists.form.web)",
@@ -128,10 +123,10 @@ public class DDLFormAssetRendererFactory
 	protected AssetRenderer<DDLFormRecord> createAssetRenderer(
 		DDLRecord record, DDLRecordVersion recordVersion, int type) {
 
-		DDLFormRecordImpl formRecordImpl = new DDLFormRecordImpl(record);
+		DDLFormRecord formRecord = new DDLFormRecordImpl(record);
 
 		DDLFormAssetRenderer ddlFormAssetRenderer = new DDLFormAssetRenderer(
-			formRecordImpl, recordVersion);
+			formRecord, recordVersion);
 
 		ddlFormAssetRenderer.setAssetRendererType(type);
 		ddlFormAssetRenderer.setServletContext(_servletContext);

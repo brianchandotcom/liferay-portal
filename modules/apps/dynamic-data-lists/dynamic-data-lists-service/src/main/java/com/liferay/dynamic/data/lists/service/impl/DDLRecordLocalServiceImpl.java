@@ -127,11 +127,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Workflow
 
-		String assetClassName = DDLRecord.class.getName();
+		String assetClassName = (String)serviceContext.getAttribute(
+			"assetClassName");
 
-		if (serviceContext.getAttribute("assetClassName") != null) {
-			assetClassName = (String)serviceContext.getAttribute(
-				"assetClassName");
+		if (assetClassName == null) {
+			assetClassName = DDLRecord.class.getName();
 		}
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(

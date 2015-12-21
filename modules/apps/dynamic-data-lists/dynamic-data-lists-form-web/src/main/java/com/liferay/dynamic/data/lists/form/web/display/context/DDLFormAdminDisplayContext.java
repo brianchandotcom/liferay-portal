@@ -420,7 +420,9 @@ public class DDLFormAdminDisplayContext {
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
 		if (record instanceof DDLFormRecord) {
-			return ((DDLFormRecord)record).getDDLRecord();
+			DDLFormRecord formRecord = (DDLFormRecord)record;
+
+			return formRecord.getDDLRecord();
 		}
 		else {
 			return (DDLRecord)record;

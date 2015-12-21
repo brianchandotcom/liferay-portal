@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"/common/referer_jsp.jsp=/common/referer_jsp.jsp",
-		"path=/login/facebook_connect_oauth",
+		"path=/facebook_connect/facebook_connect_oauth",
 		"portlet.login.login=portlet.login.login",
 		"portlet.login.update_account=portlet.login.update_account"
 	},
@@ -194,19 +194,11 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-		portletURL.setParameter("struts_action", "/login/update_account");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/login/associate_facebook_user");
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
-
-		redirectURL.setParameter("struts_action", "/login/login_redirect");
-		redirectURL.setParameter("emailAddress", user.getEmailAddress());
-		redirectURL.setParameter("anonymousUser", Boolean.FALSE.toString());
-		redirectURL.setPortletMode(PortletMode.VIEW);
-		redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
-		portletURL.setParameter("redirect", redirectURL.toString());
+		portletURL.setParameter(
+			"redirect", ParamUtil.getString(request, "redirect"));
 		portletURL.setParameter("userId", String.valueOf(user.getUserId()));
 		portletURL.setParameter("emailAddress", user.getEmailAddress());
 		portletURL.setParameter("firstName", user.getFirstName());
@@ -228,7 +220,7 @@ public class FacebookConnectAction extends BaseStrutsAction {
 
 		JSONObject jsonObject = _facebookConnect.getGraphResources(
 			companyId, "/me", token,
-			"id,email,first_name,last_name,gender");
+			"id,email,first_name,last_name,gender,verified");
 
 		if ((jsonObject == null) ||
 			(jsonObject.getJSONObject("error") != null)) {
@@ -300,46 +292,6 @@ public class FacebookConnectAction extends BaseStrutsAction {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
-	}
-
-	protected String strutsExecute(
-			HttpServletRequest request, HttpServletResponse response,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if (!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
-			throw new PrincipalException.MustBeEnabled(
-				themeDisplay.getCompanyId(), FacebookConnect.class.getName());
-		}
-
-		HttpSession session = request.getSession();
-
-		String redirect = ParamUtil.getString(request, "redirect");
-
-		String code = ParamUtil.getString(request, "code");
-
-		String token = _facebookConnect.getAccessToken(
-			themeDisplay.getCompanyId(), redirect, code);
-
-		if (Validator.isNotNull(token)) {
-			User user = setFacebookCredentials(
-				session, themeDisplay.getCompanyId(), token);
-
-			if ((user != null) &&
-				(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
-
-				redirectUpdateAccount(request, response, user);
-
-				return null;
-			}
-		}
-		else {
-			return _forwards.get("/common/referer_jsp.jsp");
-		}
-
-		response.sendRedirect(redirect);
-
-		return null;
 	}
 
 	protected User updateUser(User user, JSONObject jsonObject)

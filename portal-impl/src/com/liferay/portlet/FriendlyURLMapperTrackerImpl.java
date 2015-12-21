@@ -142,8 +142,12 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 					friendlyURLRoutes = _portlet.getFriendlyURLRoutes();
 				}
 
+				ClassLoader classLoader = friendlyURLMapper.getClass().getClassLoader();
+
+				String xml = StringUtil.read(classLoader, friendlyURLRoutes);
+				
 				friendlyURLMapper.setRouter(
-					newFriendlyURLRouter(friendlyURLRoutes));
+					newFriendlyURLRouter(xml));
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -170,18 +174,14 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 			registry.ungetService(serviceReference);
 		}
 
-		protected Router newFriendlyURLRouter(String friendlyURLRoutes)
+		protected Router newFriendlyURLRouter(String xml)
 			throws Exception {
 
-			if (Validator.isNull(friendlyURLRoutes)) {
+			if (Validator.isNull(xml) || Validator.isBlank(xml)) {
 				return null;
 			}
 
 			Router router = new RouterImpl();
-
-			ClassLoader classLoader = getClassLoader();
-
-			String xml = StringUtil.read(classLoader, friendlyURLRoutes);
 
 			Document document = UnsecureSAXReaderUtil.read(xml, true);
 
@@ -233,14 +233,6 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 			}
 
 			return router;
-		}
-
-		private ClassLoader getClassLoader() {
-			PortletApp portletApp = _portlet.getPortletApp();
-
-			ServletContext servletContext = portletApp.getServletContext();
-
-			return servletContext.getClassLoader();
 		}
 
 	}

@@ -468,13 +468,6 @@
 							'aui-base'
 						]
 					},
-					'liferay-management-bar': {
-						path: 'management_bar.js',
-						requires: [
-							'aui-component',
-							'liferay-portlet-base'
-						]
-					},
 					'liferay-map-base': {
 						path: 'map_base.js',
 						requires: [

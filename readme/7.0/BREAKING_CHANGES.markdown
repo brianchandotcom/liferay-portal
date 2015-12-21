@@ -3125,7 +3125,7 @@ services from `DLAppService` was the only sensible solution to this circularity.
 
 #### What changed?
 
-The `liferay-ui:diff` tag has been removed and replaced with
+The `liferay-ui:diff` tag has been removed and replaced with the
 `liferay-frontend:diff` tag.
 
 #### Who is affected?

@@ -208,7 +208,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		_bundle = _allParticipatingBundles[0];
 
-		_classResolver = new JspClassResolver(_bundle, _jspBundle, _logger);
+		_javaFileObjectResolver = new JspJavaFileObjectResolver(
+			_bundle, _jspBundle, _logger);
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
@@ -320,7 +321,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				_bundle, _jspBundleWirings, _systemPackageNames,
 				standardJavaFileManager, _logger,
 				options.contains(BundleJavaFileManager.OPT_VERBOSE),
-				_classResolver);
+				_javaFileObjectResolver);
 		}
 
 		return super.getJavaFileManager(javaFileManager);
@@ -471,7 +472,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
 	private final List<File> _classPath = new ArrayList<>();
-	private ClassResolver _classResolver;
+	private JavaFileObjectResolver _javaFileObjectResolver;
 	private Bundle _jspBundle;
 	private final Set<BundleWiring> _jspBundleWirings = new LinkedHashSet<>();
 	private Logger _logger;

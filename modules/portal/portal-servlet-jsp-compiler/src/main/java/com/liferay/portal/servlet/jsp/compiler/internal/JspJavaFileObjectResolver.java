@@ -59,9 +59,11 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Raymond Augé
  */
-public class JspClassResolver implements ClassResolver {
+public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
-	public JspClassResolver(Bundle bundle, Bundle jspBundle, Logger logger) {
+	public JspJavaFileObjectResolver(
+		Bundle bundle, Bundle jspBundle, Logger logger) {
+
 		_bundle = bundle;
 		_jspBundle = jspBundle;
 		_logger = logger;

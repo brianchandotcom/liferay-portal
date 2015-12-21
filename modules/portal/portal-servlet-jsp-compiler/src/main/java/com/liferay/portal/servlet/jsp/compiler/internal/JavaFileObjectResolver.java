@@ -23,7 +23,7 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Raymond Augé
  */
-public interface ClassResolver {
+public interface JavaFileObjectResolver {
 
 	public Collection<JavaFileObject> resolveClasses(
 		BundleWiring bundleWiring, String path, int options);

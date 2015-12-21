@@ -50,14 +50,15 @@ public class BundleJavaFileManager
 	public BundleJavaFileManager(
 		Bundle bundle, Set<BundleWiring> jspBundleWirings,
 		Set<Object> systemPackageNames, JavaFileManager javaFileManager,
-		Logger logger, boolean verbose, ClassResolver classResolver) {
+		Logger logger, boolean verbose,
+		JavaFileObjectResolver javaFileObjectResolver) {
 
 		super(javaFileManager);
 
 		_systemPackageNames = systemPackageNames;
 		_logger = logger;
 		_verbose = verbose;
-		_classResolver = classResolver;
+		_javaFileObjectResolver = javaFileObjectResolver;
 
 		_bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -181,13 +182,13 @@ public class BundleJavaFileManager
 
 		for (BundleWiring bundleWiring : _bundleWirings) {
 			javaFileObjects.addAll(
-				_classResolver.resolveClasses(
+				_javaFileObjectResolver.resolveClasses(
 					bundleWiring, packagePath, options));
 		}
 
 		if (javaFileObjects.isEmpty()) {
 			javaFileObjects.addAll(
-				_classResolver.resolveClasses(
+				_javaFileObjectResolver.resolveClasses(
 					_bundleWiring, packagePath, options));
 		}
 
@@ -196,7 +197,7 @@ public class BundleJavaFileManager
 
 	private final BundleWiring _bundleWiring;
 	private final Set<BundleWiring> _bundleWirings = new LinkedHashSet<>();
-	private final ClassResolver _classResolver;
+	private final JavaFileObjectResolver _javaFileObjectResolver;
 	private final Logger _logger;
 	private final Set<Object> _systemPackageNames;
 	private final boolean _verbose;

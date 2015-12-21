@@ -73,7 +73,7 @@ public class UnstableMessageUtil {
 
 				sb.append("<li>");
 				sb.append(
-					_getRunBuildAnchor(
+					_getBuildAnchor(
 						axis, caseJSONObject, jobVariant, runBuildURL));
 
 				if (jobVariant.contains("functional")) {
@@ -98,16 +98,14 @@ public class UnstableMessageUtil {
 
 				String errorDetails = caseJSONObject.isNull(
 					"errorDetails") ?
-						null : caseJSONObject.getString("errorDetails");
+					null : caseJSONObject.getString("errorDetails");
 				String errorStackTrace = caseJSONObject.isNull(
 					"errorStackTrace") ?
-						null : caseJSONObject.getString("errorStackTrace");
+					null : caseJSONObject.getString("errorStackTrace");
 
 				sb.append("<pre>");
-				sb.append(_processError(errorDetails, errorStackTrace));
-				sb.append("</pre>");
-
-				sb.append("</li>");
+				sb.append(_getMessage(errorDetails, errorStackTrace));
+				sb.append("</pre></li>");
 			}
 		}
 
@@ -125,7 +123,7 @@ public class UnstableMessageUtil {
 		return newLink;
 	}
 
-	private static String _getRunBuildAnchor(
+	private static String _getBuildAnchor(
 		String axis, JSONObject caseJSONObject, String jobVariant,
 		String runBuildURL) {
 
@@ -138,7 +136,6 @@ public class UnstableMessageUtil {
 		runBuildHREF = _fixURL(runBuildHREF);
 
 		sb.append(runBuildHREF);
-
 		sb.append("/testReport/");
 
 		String testClassName = caseJSONObject.getString("className");
@@ -148,13 +145,11 @@ public class UnstableMessageUtil {
 		String testPackageName = testClassName.substring(0, x);
 
 		sb.append(testPackageName);
-
 		sb.append("/");
 
 		String testSimpleClassName = testClassName.substring(x + 1);
 
 		sb.append(testSimpleClassName);
-
 		sb.append("/");
 
 		String testMethodName = caseJSONObject.getString("name");
@@ -168,7 +163,6 @@ public class UnstableMessageUtil {
 		}
 
 		sb.append(testMethodNameURL);
-
 		sb.append("\">");
 		sb.append(testSimpleClassName);
 		sb.append(".");
@@ -185,9 +179,9 @@ public class UnstableMessageUtil {
 		sb.append("</a>");
 
 		return sb.toString();
-}
+	}
 
-	private static String _processError(
+	private static String _getMessage(
 		String errorDetails, String errorStackTrace) {
 
 		if ((errorStackTrace == null) || (errorStackTrace.length() == 0)) {
@@ -206,10 +200,8 @@ public class UnstableMessageUtil {
 			message = errorDetails + "\n" + message;
 		}
 
-		return _truncate((2500/_MAX_MESSAGE_COUNT), message);
-	}
+		int maxLength = 2500 / _MAX_MESSAGE_COUNT;
 
-	private static String _truncate(int maxLength, String message) {
 		if (message.length() <= maxLength) {
 			return message;
 		}

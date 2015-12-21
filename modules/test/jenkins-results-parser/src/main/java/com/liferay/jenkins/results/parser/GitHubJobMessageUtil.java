@@ -34,27 +34,30 @@ public class GitHubJobMessageUtil {
 
 		String buildURL = project.getProperty("build.url");
 
-		List<JobResult> jobResults = getGitHubJobMessage(buildURL, project);
+		List<RunResult> runResults = _getRunResults(buildURL, project);
 
-		int failureCount = countByResult(jobResults, "FAILURE");
-		int unstableCount = countByResult(jobResults, "UNSTABLE");
-		int successCount = countByResult(jobResults, "SUCCESS");
+		int failureCount = _countByResult(runResults, "FAILURE");
+		int unstableCount = _countByResult(runResults, "UNSTABLE");
+		int successCount = _countByResult(runResults, "SUCCESS");
 
-		if (jobResults.size() > 0) {
-			JobResult firstJobResult = jobResults.get(0);
+		if (runResults.size() > 0) {
+			RunResult firstRunResult = runResults.get(0);
 			int failureAndUnstableCount = 0;
 
-			if (firstJobResult._result.equals("ABORTED")) {
-				sb.append(firstJobResult._getMessage());
+			String firstRunResultString = firstRunResult._result;
+
+			if (firstRunResultString.equals("ABORTED")) {
+				sb.append(firstRunResult._getMessage());
 			}
 			else {
 				sb.append(
-					generateHeaderText(
-						failureCount, successCount, unstableCount));
+					_getHeaderText(failureCount, successCount, unstableCount));
 
-				for (JobResult jobResult : jobResults) {
-					if (!jobResult._result.equals("FAILURE") &&
-						!jobResult._result.equals("UNSTABLE")) {
+				for (RunResult runResult : runResults) {
+					String runResultString = runResult._result;
+
+					if (!runResultString.equals("FAILURE") &&
+						!runResultString.equals("UNSTABLE")) {
 
 						continue;
 					}
@@ -67,7 +70,7 @@ public class GitHubJobMessageUtil {
 						break;
 					}
 
-					sb.append(jobResult._getMessage());
+					sb.append(runResult._getMessage());
 				}
 
 				sb.append("</ol>");
@@ -113,13 +116,15 @@ public class GitHubJobMessageUtil {
 		project.setProperty("report.html.content", sb.toString());
 	}
 
-	private static int countByResult(
-		List<JobResult> jobResults, String result) {
+	private static int _countByResult(
+		List<RunResult> runResults, String result) {
 
 		int count = 0;
 
-		for (JobResult jobResult : jobResults) {
-			if (jobResult._result.equals(result)) {
+		for (RunResult runResult : runResults) {
+			String runResultString = runResult._result;
+
+			if (runResultString.equals(result)) {
 				count++;
 			}
 		}
@@ -127,7 +132,7 @@ public class GitHubJobMessageUtil {
 		return count;
 	}
 
-	private static String generateCountLine(
+	private static String _getCountLine(
 		int count, String description, String type) {
 
 		StringBuilder sb = new StringBuilder();
@@ -141,23 +146,23 @@ public class GitHubJobMessageUtil {
 		return sb.toString();
 	}
 
-	private static String generateHeaderText(
+	private static String _getHeaderText(
 		int failedCount, int passedCount, int unstableCount) {
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<h6>Job Results:</h6><p>");
 
-		sb.append(generateCountLine(passedCount, "Passed", "Test"));
-		sb.append(generateCountLine(failedCount, "Failed", "Test"));
-		sb.append(generateCountLine(unstableCount, "Unstable", "Test"));
+		sb.append(_getCountLine(passedCount, "Passed", "Test"));
+		sb.append(_getCountLine(failedCount, "Failed", "Test"));
+		sb.append(_getCountLine(unstableCount, "Unstable", "Test"));
 
 		sb.append("</p><ol>");
 
 		return sb.toString();
 	}
 
-	private static List<JobResult> getGitHubJobMessage(
+	private static List<RunResult> _getRunResults(
 			String buildURL, Project project)
 		throws Exception {
 
@@ -166,17 +171,19 @@ public class GitHubJobMessageUtil {
 
 		String buildNumber = jsonObject.get("number").toString();
 
-		List<JobResult> jobResults = new ArrayList<>();
+		List<RunResult> runResults = new ArrayList<>();
 
-		JobResult jobResult = new JobResult(jsonObject, project, buildURL);
+		RunResult runResult = new RunResult(jsonObject, project, buildURL);
 
-		if (jobResult._result.equals("SUCCESS")) {
-			return jobResults;
+		String runResultString = runResult._result;
+
+		if (runResultString.equals("SUCCESS")) {
+			return runResults;
 		}
 
-		if (jobResult._result.equals("ABORTED")) {
-			jobResults.add(jobResult);
-			return jobResults;
+		if (runResultString.equals("ABORTED")) {
+			runResults.add(runResult);
+			return runResults;
 		}
 
 		if (jsonObject.has("runs")) {
@@ -192,23 +199,23 @@ public class GitHubJobMessageUtil {
 					continue;
 				}
 
-				jobResult = new JobResult(project, runBuildURL);
+				runResult = new RunResult(project, runBuildURL);
 
-				jobResults.add(jobResult);
+				runResults.add(runResult);
 			}
 		}
 		else {
-			jobResults.add(jobResult);
+			runResults.add(runResult);
 		}
 
-		return jobResults;
+		return runResults;
 	}
 
 	private static final int _MAX_MESSAGE_COUNT = 3;
 
-	private static class JobResult {
+	private static class RunResult {
 
-		private JobResult(JSONObject jsonObject, Project project, String url) {
+		private RunResult(JSONObject jsonObject, Project project, String url) {
 			_name = JenkinsResultsParserUtil.fixJSON(
 				jsonObject.getString("fullDisplayName"));
 			_project = project;
@@ -216,7 +223,7 @@ public class GitHubJobMessageUtil {
 			_url = url;
 		}
 
-		private JobResult(Project project, String url) throws Exception {
+		private RunResult(Project project, String url) throws Exception {
 			this(
 				JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(url + "/api/json")),
@@ -252,9 +259,9 @@ public class GitHubJobMessageUtil {
 				int passCount = jsonObject.getInt("passCount");
 
 				sb.append("<p>");
-				sb.append(generateCountLine(passCount, "Passed", "Case"));
-				sb.append(generateCountLine(failCount, "Failed", "Case"));
-				sb.append(generateCountLine(skipCount, "Skipped", "Case"));
+				sb.append(_getCountLine(passCount, "Passed", "Case"));
+				sb.append(_getCountLine(failCount, "Failed", "Case"));
+				sb.append(_getCountLine(skipCount, "Skipped", "Case"));
 				sb.append("</p>");
 				sb.append(UnstableMessageUtil.getUnstableMessage(_url));
 			}

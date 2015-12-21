@@ -125,7 +125,15 @@
 		<execute function="AssertElementNotPresent" locator1="CalendarResources#RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
 	</command>
 
-	<command name="viewResourceNotPresent">
+	<command name="viewResourceName">
+		<var name="key_calendarResourceName" value="${calendarResourceName}" />
+
+		<execute function="AssertTextEquals" locator1="CalendarResources#RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
+	</command>
+
+	<command name="viewResourceNameNotPresent">
+		<var name="key_calendarResourceName" value="${calendarResourceName}" />
+
 		<execute function="AssertElementNotPresent" locator1="CalendarResources#RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
 		<execute function="AssertTextNotPresent" value1="${calendarResourceName}" />
 	</command>

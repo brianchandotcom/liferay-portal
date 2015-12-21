@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
+		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT,
 		"mvc.command.name=exportLayouts"
 	},
 	service = MVCActionCommand.class

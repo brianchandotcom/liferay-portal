@@ -24,7 +24,7 @@ import javax.portlet.PortletRequest;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marcellus Tavares
+ * @author Bruno Basto
  */
 @Component(
 	immediate = true,
@@ -34,17 +34,17 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIconFactory.class
 )
-public class DDLRecordSetSettingsConfigurationIconFactory
+public class DDLRecordSetPublishConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new DDLRecordSetSettingsPortletConfigurationIcon(portletRequest);
+		return new DDLRecordSetPublishPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override
 	public double getWeight() {
-		return 110.0;
+		return 100.0;
 	}
 
 }

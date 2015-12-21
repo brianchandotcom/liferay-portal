@@ -38,7 +38,7 @@ int mdrRuleGroupsCount = MDRRuleGroupLocalServiceUtil.searchByKeywordsCount(grou
 
 ruleGroupSearch.setTotal(mdrRuleGroupsCount);
 
-List<MDRRuleGroup> mdrRuleGroups = MDRRuleGroupLocalServiceUtil.searchByKeywords(groupId, searchTerms.getKeywords(), params, searchTerms.isAndOperator(), ruleGroupSearch.getStart(), ruleGroupSearch.getEnd());
+List<MDRRuleGroup> mdrRuleGroups = MDRRuleGroupLocalServiceUtil.searchByKeywords(groupId, searchTerms.getKeywords(), params, searchTerms.isAndOperator(), ruleGroupSearch.getStart(), ruleGroupSearch.getEnd(), ruleGroupSearch.getOrderByComparator());
 
 ruleGroupSearch.setResults(mdrRuleGroups);
 %>
@@ -84,6 +84,13 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
 				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= iteratorURL %>"
+			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= ruleGroupSearch.getOrderByCol() %>"
+				orderByType="<%= ruleGroupSearch.getOrderByType() %>"
+				orderColumns='<%= new String[] {"create-date"} %>'
 				portletURL="<%= iteratorURL %>"
 			/>
 		</liferay-frontend:management-bar-filters>

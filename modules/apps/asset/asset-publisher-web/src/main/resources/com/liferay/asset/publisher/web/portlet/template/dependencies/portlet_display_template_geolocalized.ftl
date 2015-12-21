@@ -116,7 +116,7 @@
 	}
 </style>
 
-<@liferay_map["map"]
+<@liferay_map["map-display"]
 	name='Map'
 	points="${featureCollectionJSONObject}"
 />

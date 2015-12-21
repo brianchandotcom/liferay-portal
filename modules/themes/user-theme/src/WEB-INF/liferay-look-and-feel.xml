@@ -10,7 +10,7 @@
 		<template-extension>vm</template-extension>
 
 		<settings>
-			<setting configurable="true" key="page-distribution-type" type="select" options="horizontal,vertical" value="vertical" />
+			<setting configurable="false" key="page-distribution-type" value="vertical" />
 			<setting configurable="true" key="user-card-visible" type="checkbox" value="true" />
 		</settings>
 
@@ -33,7 +33,7 @@
 		<template-extension>vm</template-extension>
 
 		<settings>
-			<setting configurable="true" key="page-distribution-type" type="select" options="horizontal,vertical" value="horizontal" />
+			<setting configurable="false" key="page-distribution-type" value="horizontal" />
 			<setting configurable="true" key="user-card-visible" type="checkbox" value="true" />
 		</settings>
 

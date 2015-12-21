@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `5b13a9e`.*
+*This document has been reviewed through commit `202b3b7`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2928,14 +2928,41 @@ the preference is no longer used.
 
 ---------------------------------------
 
+### Removed the liferay-ui:navigation Tag and Replaced with liferay-site-navigation:navigation Tag
+- **Date:** 2015-Nov-20
+- **JIRA Ticket:** LPS-60328
+
+#### What changed?
+
+The `liferay-ui:navigation` tag has been removed and replaced with the
+`liferay-site-navigation:navigation` tag.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:navigation` tag need to
+update their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-site-navigation` tag library (if necessary) and
+update the tag namespace from `liferay-ui:navigation` to
+`liferay-site-navigation:navigation`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------
+
 ### Removed Software Catalog Portlet and Services
 - **Date:** 2015-Nov-21
 - **JIRA Ticket:** LPS-60705
 
 #### What changed?
 
-The Software Catalog portlet and its associated services are no longer part
-of Liferay's source code or binaries.
+The Software Catalog portlet and its associated services are no longer part of
+Liferay's source code or binaries.
 
 #### Who is affected?
 
@@ -3063,7 +3090,7 @@ flexibility for all developers.
 
 ---------------------------------------
 
-### Moved Recycle Bin logic into a new `DLTrashService` interface
+### Moved Recycle Bin Logic Into a New DLTrashService Interface
 - **Date:** 2015-Dec-02
 - **JIRA Ticket:** LPS-60810
 
@@ -3091,28 +3118,3 @@ components depended on `DLAppService` to implement their logic. Extracting the
 services from `DLAppService` was the only sensible solution to this circularity.
 
 ---------------------------------------
-
-### The liferay-ui:navigation taglib has been removed and replaced with liferay-site-navigation:navigation taglib
-- **Date:** 2015-Nov-20
-- **JIRA Ticket:** LPS-60328
-
-#### What changed?
-
-The `liferay-ui:navigation` taglib has been removed and replaced with
-`liferay-site-navigation:navigation` taglib.
-
-#### Who is affected?
-
-Plugins or templates that are using the `liferay-ui:navigation` tag need
-to update their usage of the tag.
-
-#### How should I update my code?
-
-You should import the `liferay-site-navigation` tag library if it isn't already
-and update the tag namespace from `liferay-ui:navigation` to
-`liferay-site-navigation:navigation`.
-
-#### Why was this change made?
-
-This change was made as a part of the ongoing strategy to modularize Liferay
-Portal by means of an OSGi container.

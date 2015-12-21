@@ -29,7 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
-page import="com.liferay.frontend.map.api.constants.MapProviderWebKeys" %><%@
+page import="com.liferay.map.api.constants.MapProviderWebKeys" %><%@
 page import="com.liferay.portal.DuplicateGroupException" %><%@
 page import="com.liferay.portal.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.GroupInheritContentException" %><%@

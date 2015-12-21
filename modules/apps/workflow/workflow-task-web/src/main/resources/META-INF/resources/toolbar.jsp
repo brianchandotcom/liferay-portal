@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "pending");
+String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "assigned-to-me");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -28,26 +28,26 @@ portletURL.setParameter("tabs1", tabs1);
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
-			<portlet:renderURL var="viewPendingURL">
+			<portlet:renderURL var="viewAssignedToMeURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="tabs1" value="pending" />
+				<portlet:param name="tabs1" value="assigned-to-me" />
 			</portlet:renderURL>
 
 			<aui:nav-item
-				href="<%= viewPendingURL %>"
-				label="pending"
-				selected='<%= tabs1.equals("pending") %>'
+				href="<%= viewAssignedToMeURL %>"
+				label="assigned-to-me"
+				selected='<%= tabs1.equals("assigned-to-me") %>'
 			/>
 
-			<portlet:renderURL var="viewCompletedURL">
+			<portlet:renderURL var="viewAssignedToMyRolesURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="tabs1" value="completed" />
+				<portlet:param name="tabs1" value="assigned-to-my-roles" />
 			</portlet:renderURL>
 
 			<aui:nav-item
-				href="<%= viewCompletedURL %>"
-				label="completed"
-				selected='<%= tabs1.equals("completed") %>'
+				href="<%= viewAssignedToMyRolesURL %>"
+				label="assigned-to-my-roles"
+				selected='<%= tabs1.equals("assigned-to-my-roles") %>'
 			/>
 		</aui:nav>
 		<aui:nav-bar-search>

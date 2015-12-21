@@ -29,7 +29,7 @@ List[] diffResults = (List[])renderRequest.getAttribute(WebKeys.DIFF_RESULTS);
 	title="compare-versions"
 />
 
-<liferay-ui:diff
+<liferay-frontend:diff
 	diffResults="<%= diffResults %>"
 	sourceName="<%= sourceName %>"
 	targetName="<%= targetName %>"

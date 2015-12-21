@@ -159,8 +159,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 	protected Collection<JavaFileObject> handleSystemBundle(
 		BundleWiring bundleWiring, String path) {
 
-		Collection<JavaFileObject> javaFileObjects = _javaFileObjectCache.get(
-			path);
+		Collection<JavaFileObject> javaFileObjects = _javaFileObjects.get(path);
 
 		if (javaFileObjects != null) {
 			return javaFileObjects;
@@ -190,8 +189,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		}
 
 		if ((urls == null) || urls.isEmpty()) {
-			_javaFileObjectCache.put(
-				path, Collections.<JavaFileObject>emptyList());
+			_javaFileObjects.put(path, Collections.<JavaFileObject>emptyList());
 
 			return Collections.emptyList();
 		}
@@ -240,7 +238,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			javaFileObjects = Collections.<JavaFileObject>emptyList();
 		}
 
-		_javaFileObjectCache.put(path, javaFileObjects);
+		_javaFileObjects.put(path, javaFileObjects);
 
 		return javaFileObjects;
 	}
@@ -341,7 +339,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 	}
 
 	private final Bundle _bundle;
-	private final Map<String, Collection<JavaFileObject>> _javaFileObjectCache =
+	private final Map<String, Collection<JavaFileObject>> _javaFileObjects =
 		new ConcurrentHashMap<>();
 	private final Bundle _jspBundle;
 	private final Logger _logger;

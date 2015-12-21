@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-trash</short-name>
+	<uri>http://liferay.com/tld/trash</uri>
+	<tag>
+		<description>Creates a component for users to permanently delete items such as images, articles, etc. from the recycle bin.</description>
+		<name>trash-empty</name>
+		<tag-class>com.liferay.trash.taglib.servlet.taglib.TrashEmptyTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>A message to display to confirm that the user wants to remove the item(s) from the recycle bin</description>
+			<name>confirmMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A message to be used for the <![CDATA[<code>empty-trash</code>]]> button and link</description>
+			<name>emptyMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A message to display to give users information about removing items from the recycle bin</description>
+			<name>infoMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A URL for the <![CDATA[<code>empty-trash</code>]]> button/link</description>
+			<name>portletURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The number of items to be removed from the recycle bin</description>
+			<name>totalEntries</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Creates a message confirming items were moved to the recycle bin and presenting an option to restore them.</description>
+		<name>trash-undo</name>
+		<tag-class>com.liferay.trash.taglib.servlet.taglib.TrashUndoTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The URL of the undo link</description>
+			<name>portletURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A redirect URL</description>
+			<name>redirect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

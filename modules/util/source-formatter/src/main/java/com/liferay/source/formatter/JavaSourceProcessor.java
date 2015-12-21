@@ -1869,6 +1869,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
+					if (!strippedQuotesLine.endsWith("{") &&
+						strippedQuotesLine.contains("{") &&
+						!strippedQuotesLine.contains("}") &&
+						!strippedQuotesLine.contains("\t//")) {
+
+						processErrorMessage(
+							fileName,
+							"line break: " + fileName + " " + lineCount);
+					}
+
 					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
 						previousLine.endsWith(StringPool.PLUS)) {
 

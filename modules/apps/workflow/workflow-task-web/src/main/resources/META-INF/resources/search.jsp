@@ -16,33 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-WorkflowTaskDisplayTerms workflowTaskDisplayTerms = workflowTaskDisplayContext.getWorkflowTaskDisplayTerms();
-%>
-
-<liferay-ui:search-toggle
-	autoFocus="<%= workflowTaskDisplayContext.getWindowState().equals(WindowState.MAXIMIZED) %>"
-	buttonLabel="search"
-	displayTerms="<%= workflowTaskDisplayTerms %>"
-	id="toggle_id_workflow_task_search"
-	markupView="lexicon"
->
-	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" label="task" name="name" size="20" value="<%= workflowTaskDisplayTerms.getName() %>" />
-
-		<aui:select inlineField="<%= true %>" name="type">
-
-			<%
-			for (WorkflowHandler<?> workflowHandler : workflowTaskDisplayContext.getSearchableAssetsWorkflowHandlers()) {
-				String className = workflowHandler.getClassName();
-			%>
-
-				<aui:option label="<%= workflowHandler.getType(locale) %>" selected="<%= className.equals(workflowTaskDisplayTerms.getType()) %>" value="<%= workflowHandler.getClassName() %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
-	</aui:fieldset>
-</liferay-ui:search-toggle>
+<liferay-ui:input-search markupView="lexicon" />

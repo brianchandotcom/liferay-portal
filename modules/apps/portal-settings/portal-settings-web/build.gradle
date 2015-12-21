@@ -3,7 +3,7 @@ dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compile project(":apps:users-admin:users-admin-web")
-	compile project(":frontend:frontend-map:frontend-map-api")
+	compile project(":apps:map:map-api")
 	compile project(":portal:portal-upgrade")
 }
 

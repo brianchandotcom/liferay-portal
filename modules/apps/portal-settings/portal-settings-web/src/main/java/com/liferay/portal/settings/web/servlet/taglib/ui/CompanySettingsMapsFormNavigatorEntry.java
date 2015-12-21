@@ -14,8 +14,8 @@
 
 package com.liferay.portal.settings.web.servlet.taglib.ui;
 
-import com.liferay.frontend.map.api.constants.MapProviderWebKeys;
-import com.liferay.frontend.map.api.util.MapProviderHelper;
+import com.liferay.map.api.constants.MapProviderWebKeys;
+import com.liferay.map.api.util.MapProviderHelper;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -62,8 +62,7 @@ public class CompanySettingsMapsFormNavigatorEntry
 
 		request.setAttribute(
 			MapProviderWebKeys.MAP_PROVIDER_KEY,
-			_mapProviderHelper.getMapProviderKey(
-				themeDisplay.getCompanyId()));
+			_mapProviderHelper.getMapProviderKey(themeDisplay.getCompanyId()));
 
 		super.include(request, response);
 	}

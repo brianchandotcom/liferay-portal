@@ -59,11 +59,17 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(role.getTitle(locale));
 %>
 
-<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="assign-members" />
-	<liferay-util:param name="backURL" value="<%= redirect %>" />
-	<liferay-util:param name="portletURL" value="<%= String.valueOf(portletURL) %>" />
-</liferay-util:include>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= portletURL.toString() %>" label="assignees" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
 	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />

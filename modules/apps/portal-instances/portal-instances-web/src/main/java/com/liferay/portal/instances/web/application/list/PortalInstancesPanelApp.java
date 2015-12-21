@@ -18,7 +18,10 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION,
-		"service.ranking:Integer=800"
+		"service.ranking:Integer=50"
 	},
 	service = PanelApp.class
 )
@@ -39,6 +42,14 @@ public class PortalInstancesPanelApp extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return PortalInstancesPortletKeys.PORTAL_INSTANCES;
+	}
+
+	@Override
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		return permissionChecker.isOmniadmin();
 	}
 
 	@Override

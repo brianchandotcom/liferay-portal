@@ -2939,8 +2939,8 @@ The `liferay-ui:navigation` tag has been removed and replaced with the
 
 #### Who is affected?
 
-Plugins or templates that are using the `liferay-ui:navigation` tag need
-to update their usage of the tag.
+Plugins or templates that are using the `liferay-ui:navigation` tag need to
+update their usage of the tag.
 
 #### How should I update my code?
 
@@ -2961,8 +2961,8 @@ Portal by means of an OSGi container.
 
 #### What changed?
 
-The Software Catalog portlet and its associated services are no longer part
-of Liferay's source code or binaries.
+The Software Catalog portlet and its associated services are no longer part of
+Liferay's source code or binaries.
 
 #### Who is affected?
 

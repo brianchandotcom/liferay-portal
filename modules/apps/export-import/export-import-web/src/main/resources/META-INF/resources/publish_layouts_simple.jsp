@@ -56,8 +56,8 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 	</aui:nav>
 </aui:nav-bar>
 
-<portlet:actionURL name='<%= cmd.equals(Constants.EXPORT) ? "editExportConfiguration" : "editPublishConfiguration" %>' var="confirmedActionURL">
-	<portlet:param name="mvcRenderCommandName" value='<%= cmd.equals(Constants.EXPORT) ? "editExportConfiguration" : "editPublishConfiguration" %>' />
+<portlet:actionURL name="editPublishConfiguration" var="confirmedActionURL">
+	<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />

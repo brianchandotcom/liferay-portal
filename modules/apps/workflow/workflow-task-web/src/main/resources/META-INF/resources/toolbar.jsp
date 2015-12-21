@@ -60,3 +60,52 @@ portletURL.setParameter("tabs1", tabs1);
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 </aui:form>
+
+<liferay-frontend:management-bar
+	includeCheckBox="<%= false %>"
+>
+	<liferay-frontend:management-bar-buttons>
+		<c:if test="<%= !workflowTaskDisplayContext.isSearch() %>">
+			<liferay-frontend:management-bar-display-buttons
+				displayViews="<%= workflowTaskDisplayContext.getDisplayViews() %>"
+				portletURL="<%= workflowTaskDisplayContext.getPortletURL() %>"
+				selectedDisplayStyle="<%= workflowTaskDisplayContext.getDisplayStyle() %>"
+			/>
+		</c:if>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+				label="<%= null %>"
+			>
+			<portlet:renderURL var="viewAllURL">
+				<portlet:param name="navigation" value="all" />
+				<portlet:param name="tabs1" value="<%= tabs1 %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active="<%= workflowTaskDisplayContext.isNavigationAll() %>" label="all" url="<%= viewAllURL.toString() %>" />
+
+			<portlet:renderURL var="viewPendingsURL">
+				<portlet:param name="navigation" value="pending" />
+				<portlet:param name="tabs1" value="<%= tabs1 %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active="<%= workflowTaskDisplayContext.isNavigationPending() %>" label="pending" url="<%= viewPendingsURL.toString() %>" />
+
+			<portlet:renderURL var="viewCompletedURL">
+				<portlet:param name="navigation" value="completed" />
+				<portlet:param name="tabs1" value="<%= tabs1 %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active="<%= workflowTaskDisplayContext.isNavigationCompleted() %>" label="completed" url="<%= viewCompletedURL.toString() %>" />
+
+		</liferay-frontend:management-bar-navigation>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= workflowTaskDisplayContext.getOrderByCol() %>"
+			orderByType="<%= workflowTaskDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"last-activity-date", "due-date"} %>'
+			portletURL="<%= workflowTaskDisplayContext.getPortletURL() %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>

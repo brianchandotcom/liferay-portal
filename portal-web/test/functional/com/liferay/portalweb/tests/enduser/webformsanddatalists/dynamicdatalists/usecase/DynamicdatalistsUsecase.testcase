@@ -1483,9 +1483,9 @@
 
 		<execute macro="DDLDataDefinition#selectFrame" />
 
-		<for list="Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do" param="Name">
+		<for list="Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do" param="ddlDataDefinitionName">
 			<execute macro="DDLDataDefinition#assertPresent">
-				<var name="Name" value="${Name}" />
+				<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			</execute>
 		</for>
 	</command>

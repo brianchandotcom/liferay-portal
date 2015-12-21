@@ -23,6 +23,12 @@ AUI.add(
 					},
 
 					layout: {
+					},
+
+					publishRecordSetURL: {
+					},
+
+					recordSetId: {
 					}
 				},
 
@@ -69,8 +75,7 @@ AUI.add(
 						var rootNode = instance.get('rootNode');
 
 						instance._eventHandlers = [
-							rootNode.delegate('click', A.bind('_onClickButtons', instance), '.ddl-form-builder-buttons .ddl-button'),
-							rootNode.delegate('click', A.bind('_onClickCloseAlert', instance), '.ddl-form-alert .close'),
+							instance.one('#publishCheckbox').on('change', A.bind('_onChangePublishCheckbox', instance)),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
 					},
@@ -89,6 +94,33 @@ AUI.add(
 						var buttons = instance.all('.ddl-button');
 
 						Liferay.Util.toggleDisabled(buttons, false);
+					},
+
+					openPublishModal: function() {
+						var instance = this;
+
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									height: 325,
+									resizable: false,
+									width: 720
+								},
+								id: instance.ns('publishModal'),
+								title: Liferay.Language.get('publish')
+							},
+							function(dialogWindow) {
+								var bodyNode = dialogWindow.bodyNode;
+
+								var publishNode = instance.one('#publishModal');
+
+								if (publishNode) {
+									publishNode.show();
+
+									bodyNode.append(publishNode);
+								}
+							}
+						);
 					},
 
 					serializeFormBuilder: function() {
@@ -135,29 +167,26 @@ AUI.add(
 						submitForm(editForm.form);
 					},
 
-					_onClickButtons: function(event) {
+					_onChangePublishCheckbox: function(event) {
 						var instance = this;
 
-						var currentTarget = event.currentTarget;
+						var publishCheckbox = event.target;
 
-						var publishNode = instance.one('#publish');
+						var payload = instance.ns(
+							{
+								recordSetId: instance.get('recordSetId'),
+								published: publishCheckbox.attr('checked')
+							}
+						);
 
-						if (currentTarget.hasClass('publish')) {
-							publishNode.val('true');
-						}
-						else if (currentTarget.hasClass('unpublish')) {
-							publishNode.val('false');
-						}
-
-						if (currentTarget.hasClass('save')) {
-							instance.submitForm();
-						}
-					},
-
-					_onClickCloseAlert: function() {
-						var instance = this;
-
-						instance.one('.ddl-form-alert').hide();
+						A.io.request(
+							instance.get('publishRecordSetURL'),
+							{
+								data: payload,
+								dataType: 'JSON',
+								method: 'POST'
+							}
+						);
 					},
 
 					_onDestroyPortlet: function(event) {

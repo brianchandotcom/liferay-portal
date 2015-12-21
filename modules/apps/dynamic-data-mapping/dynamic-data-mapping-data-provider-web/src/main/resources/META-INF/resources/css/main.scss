@@ -11,6 +11,24 @@
 		margin-bottom: 20px;
 	}
 
+	.form  {
+		padding: 25px 20px;
+
+		.form-group {
+			margin-bottom: 50px;
+		}
+
+		.help-block {
+			position: absolute;	
+		}
+
+		.input-localized {
+			.help-block {
+				margin-top: 21px;
+			}
+		}
+	}
+
 	.form-control {
 		font-size: 14px;
     	height: 40px;

@@ -16,6 +16,13 @@
 								'liferay-portlet-base'
 							]
 						},
+						'liferay-management-bar': {
+							path: 'management_bar/js/management_bar.js',
+							requires: [
+								'aui-component',
+								'liferay-portlet-base'
+							]
+						},
 						'liferay-sidebar-panel': {
 							path: 'sidebar_panel/js/sidebar_panel.js',
 							requires: [

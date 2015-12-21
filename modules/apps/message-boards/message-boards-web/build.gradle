@@ -4,6 +4,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:message-boards:message-boards-api")
+	compile project(":apps:trash:trash-taglib")
 	compile project(":portal:portal-upgrade")
 }
 

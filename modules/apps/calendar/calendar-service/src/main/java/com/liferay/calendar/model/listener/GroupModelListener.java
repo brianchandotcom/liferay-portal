@@ -49,13 +49,11 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				return;
 			}
 
-			Map<Locale, String> calendarResourceNameMap = new HashMap<>();
+			Map<Locale, String> nameMap = new HashMap<>();
 
-			calendarResourceNameMap.putAll(group.getNameMap());
-			calendarResourceNameMap.put(
-				LocaleUtil.getDefault(), group.getDescriptiveName());
+			nameMap.put(LocaleUtil.getDefault(), group.getDescriptiveName());
 
-			calendarResource.setNameMap(calendarResourceNameMap);
+			calendarResource.setNameMap(nameMap);
 
 			_calendarResourceLocalService.updateCalendarResource(
 				calendarResource);

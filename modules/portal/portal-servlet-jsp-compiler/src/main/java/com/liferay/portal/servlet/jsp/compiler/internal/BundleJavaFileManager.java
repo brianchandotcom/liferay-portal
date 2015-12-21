@@ -20,11 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -172,86 +168,6 @@ public class BundleJavaFileManager
 		return fileManager.list(location, packagePath, kinds, recurse);
 	}
 
-	protected String getClassName(String resourceName) {
-		if (resourceName.endsWith(".class")) {
-			resourceName = resourceName.substring(0, resourceName.length() - 6);
-		}
-
-		return resourceName.replace(CharPool.SLASH, CharPool.PERIOD);
-	}
-
-	protected JavaFileObject getJavaFileObject(
-		URL resourceURL, String resourceName) {
-
-		String protocol = resourceURL.getProtocol();
-
-		String className = getClassName(resourceName);
-
-		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
-			return new BundleJavaFileObject(className, resourceURL);
-		}
-		else if (protocol.equals("jar")) {
-			try {
-				return new JarJavaFileObject(
-					className, resourceURL, resourceName);
-			}
-			catch (IOException ioe) {
-				if (_verbose) {
-					_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
-				}
-			}
-		}
-		else if (protocol.equals("vfs")) {
-			try {
-				return new VfsJavaFileObject(
-					className, resourceURL, resourceName);
-			}
-			catch (MalformedURLException murie) {
-				if (_verbose) {
-					_logger.log(Logger.LOG_ERROR, murie.getMessage(), murie);
-				}
-			}
-		}
-
-		return null;
-	}
-
-	protected void list(
-		String packagePath, int options, BundleWiring bundleWiring,
-		List<JavaFileObject> javaFileObjects) {
-
-		Collection<String> resources = _classResolver.resolveClasses(
-			bundleWiring, packagePath, options);
-
-		if ((resources == null) || resources.isEmpty()) {
-			return;
-		}
-
-		for (String resourceName : resources) {
-			URL resourceURL = _classResolver.getClassURL(
-				bundleWiring, resourceName);
-
-			JavaFileObject javaFileObject = getJavaFileObject(
-				resourceURL, resourceName);
-
-			if (javaFileObject == null) {
-				if (_verbose) {
-					_logger.log(
-						Logger.LOG_INFO,
-						"Unable to create Java file object for " + resourceURL);
-				}
-
-				continue;
-			}
-
-			if (_verbose) {
-				_logger.log(Logger.LOG_INFO, "Created " + javaFileObject);
-			}
-
-			javaFileObjects.add(javaFileObject);
-		}
-	}
-
 	protected List<JavaFileObject> listFromDependencies(
 		boolean recurse, String packagePath) {
 
@@ -264,11 +180,15 @@ public class BundleJavaFileManager
 		}
 
 		for (BundleWiring bundleWiring : _bundleWirings) {
-			list(packagePath, options, bundleWiring, javaFileObjects);
+			javaFileObjects.addAll(
+				_classResolver.resolveClasses(
+					bundleWiring, packagePath, options));
 		}
 
 		if (javaFileObjects.isEmpty()) {
-			list(packagePath, options, _bundleWiring, javaFileObjects);
+			javaFileObjects.addAll(
+				_classResolver.resolveClasses(
+					_bundleWiring, packagePath, options));
 		}
 
 		return javaFileObjects;

@@ -2626,6 +2626,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_xStream.allowTypes(types);
 
 		_xStream.allowTypes(allowedTypeNames.toArray(new String[] {}));
+
+		_xStream.allowTypesByWildcard(
+			new String[] {
+				"com.thoughtworks.xstream.mapper.DynamicProxyMapper*"
+			});
 	}
 
 	protected boolean isResourceMain(ClassedModel classedModel) {

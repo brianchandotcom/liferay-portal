@@ -30,7 +30,6 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 <portlet:renderURL var="deleteRedirectURL">
 	<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-	<portlet:param name="tabs2" value="new-export-process" />
 	<portlet:param name="exportConfigurationButtons" value="saved" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
@@ -46,9 +45,8 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 </portlet:actionURL>
 
 <portlet:renderURL var="exportRedirectURL">
-	<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
+	<portlet:param name="mvcRenderCommandName" value="exportLayoutsView" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-	<portlet:param name="tabs2" value="current-and-previous" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

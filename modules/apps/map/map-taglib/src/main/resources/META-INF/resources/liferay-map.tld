@@ -11,7 +11,7 @@
 	<uri>http://liferay.com/tld/map</uri>
 	<tag>
 		<name>map-display</name>
-		<tag-class>com.liferay.map.taglib.servlet.taglib.MapTag</tag-class>
+		<tag-class>com.liferay.map.taglib.servlet.taglib.MapDisplayTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>geolocation</name>

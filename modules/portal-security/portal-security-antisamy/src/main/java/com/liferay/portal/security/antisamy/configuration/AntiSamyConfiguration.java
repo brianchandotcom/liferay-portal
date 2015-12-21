@@ -23,7 +23,8 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration"
+	id = "com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration",
+	localization = "content/Language", name = "%anti.samy.configuration.name"
 )
 public interface AntiSamyConfiguration {
 

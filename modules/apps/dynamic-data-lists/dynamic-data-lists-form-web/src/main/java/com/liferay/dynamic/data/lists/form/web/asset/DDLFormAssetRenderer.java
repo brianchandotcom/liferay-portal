@@ -121,24 +121,6 @@ public class DDLFormAssetRenderer extends BaseJSPAssetRenderer<DDLFormRecord> {
 	}
 
 	@Override
-	public PortletURL getURLEdit(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest,
-			DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/admin/view_record.jsp");
-		portletURL.setParameter(
-			"recordId", String.valueOf(getDDLRecord().getRecordId()));
-
-		return portletURL;
-	}
-
-	@Override
 	public String getURLViewInContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,

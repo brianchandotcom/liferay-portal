@@ -75,7 +75,7 @@ public class TrashUndoTag extends IncludeTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE = "/trash_undo/page.jsp";
+	private static final String _PAGE = "/undo/page.jsp";
 
 	private String _portletURL;
 	private String _redirect;

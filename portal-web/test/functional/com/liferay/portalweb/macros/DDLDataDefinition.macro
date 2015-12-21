@@ -55,12 +55,6 @@
 		</execute>
 	</command>
 
-	<command name="assertPresent">
-		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-
-		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${ddlDataDefinitionName}" />
-	</command>
-
 	<command name="copyCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
@@ -95,9 +89,10 @@
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_2" />
 
-		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />
+		<execute macro="DDLDataDefinition#viewName">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${ddlDataDefinitionCopyName}" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -294,5 +289,11 @@
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewName">
+		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+
+		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${ddlDataDefinitionName}" />
 	</command>
 </definition>

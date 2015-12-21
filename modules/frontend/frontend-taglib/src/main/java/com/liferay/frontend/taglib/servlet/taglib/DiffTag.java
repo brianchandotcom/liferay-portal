@@ -32,6 +32,13 @@ public class DiffTag extends IncludeTag {
 		_diffResults = diffResults;
 	}
 
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
+	}
+
 	public void setSourceName(String sourceName) {
 		_sourceName = sourceName;
 	}
@@ -57,13 +64,6 @@ public class DiffTag extends IncludeTag {
 		request.setAttribute("liferay-frontend:diff:diffResults", _diffResults);
 		request.setAttribute("liferay-frontend:diff:sourceName", _sourceName);
 		request.setAttribute("liferay-frontend:diff:targetName", _targetName);
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	private static final String _PAGE = "/diff/page.jsp";

@@ -170,12 +170,20 @@ pageContext.setAttribute("portletURL", portletURL);
 		>
 
 			<%
+			String name = role.getName();
+
+			boolean unassignableRole = false;
+
+			if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name.equals(RoleConstants.USER)) {
+				unassignableRole = true;
+			}
+
 			PortletURL rowURL = null;
 
-			if (RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.UPDATE)) {
+			if (!unassignableRole && (role.getType() == RoleConstants.TYPE_REGULAR) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.ASSIGN_MEMBERS)) {
 				rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcPath", "/edit_role.jsp");
+				rowURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 				rowURL.setParameter("redirect", searchContainer.getIteratorURL().toString());
 				rowURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			}

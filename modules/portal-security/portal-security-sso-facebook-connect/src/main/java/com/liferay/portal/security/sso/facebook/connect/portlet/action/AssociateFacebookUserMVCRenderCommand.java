@@ -43,8 +43,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=", "javax.portlet.name=" + PortletKeys.LOGIN,
-		"mvc.command.name=/login/associate_facebook_user" + PortletKeys.FAST_LOGIN
+		"mvc.command.name=/login/associate_facebook_user",
+		"javax.portlet.name=" + PortletKeys.LOGIN,
+		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
 	},
 	service = MVCRenderCommand.class
 )

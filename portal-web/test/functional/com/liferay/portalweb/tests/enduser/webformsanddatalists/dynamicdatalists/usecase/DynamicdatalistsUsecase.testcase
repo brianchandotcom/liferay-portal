@@ -1460,7 +1460,7 @@
 		</execute>
 	</command>
 
-	<command name="CreateSiteAndAssertDefaultDataDefinitions" priority="3">
+	<command name="CreateSiteAndViewDefaultDataDefinitions" priority="3">
 		<description message="This is a use case for LPS-50557." />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

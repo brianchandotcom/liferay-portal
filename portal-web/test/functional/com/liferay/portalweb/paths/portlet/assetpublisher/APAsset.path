@@ -40,63 +40,13 @@
 </tr>
 <!--DOCUMENT_CONVERSION-->
 <tr>
-	<td>DOCUMENT_CONVERSION_DOC</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'DOC')]</td>
+	<td>DOCUMENT_CONVERSION_NAME</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'${key_documentType}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_CONVERSION_DOC_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'DOC')]/../img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_ODT</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'ODT')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_ODT_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'ODT')]/../img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_PDF</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'PDF')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_PDF_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'PDF')]/../img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_RTF</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'RTF')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_RTF_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'RTF')]/../img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_SXW</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'SXW')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_SXW_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'SXW')]/../img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_TXT</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'TXT')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_TXT_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'TXT')]/../img</td>
+	<td>DOCUMENT_CONVERSION_NAME_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'${key_documentType}')]/../i</td>
 	<td></td>
 </tr>
 </tbody>

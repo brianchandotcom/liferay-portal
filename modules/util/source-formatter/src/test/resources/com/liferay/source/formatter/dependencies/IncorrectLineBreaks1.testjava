@@ -116,6 +116,11 @@ public class IncorrectLineBreaks1 {
 			new String[] {
 				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"
 			}, 5);
+
+		StringUtil.merge(
+			new String[] {"One", "Two", "Three", "Four", "Five", "Six", "Seven",
+			"Eight"
+		});
 	}
 
 	public void methodWithASlightlyLongerName(

@@ -47,12 +47,16 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil" %><%@
 page import="com.liferay.portal.kernel.scheduler.StorageType" %><%@
 page import="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse" %><%@
+page import="com.liferay.portal.kernel.search.BaseModelSearchResult" %><%@
+page import="com.liferay.portal.kernel.search.Sort" %><%@
+page import="com.liferay.portal.kernel.search.SortFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.MapUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
@@ -80,12 +84,18 @@ page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.exportimport.RemoteExportException" %><%@
 page import="com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames" %><%@
+page import="com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants" %><%@
 page import="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@
+page import="com.liferay.portlet.exportimport.model.ExportImportConfiguration" %><%@
+page import="com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
+page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.staging.configuration.web.portlet.constants.StagingConfigurationPortletKeys" %><%@
 page import="com.liferay.staging.processes.web.constants.StagingProcessesPortletKeys" %><%@
+page import="com.liferay.staging.processes.web.search.PublishConfigurationDisplayTerms" %><%@
+page import="com.liferay.staging.processes.web.search.PublishConfigurationSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.search.SearchEntry" %><%@
 page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
@@ -93,6 +103,7 @@ page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
 <%@ page import="java.io.Serializable" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
@@ -100,7 +111,8 @@ page import="java.util.Map" %>
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletMode" %><%@
 page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.PortletURL" %>
+page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
 
 <portlet:defineObjects />
 
@@ -109,6 +121,8 @@ page import="javax.portlet.PortletURL" %>
 <liferay-staging:defineObjects />
 
 <%
+WindowState windowState = liferayPortletRequest.getWindowState();
+
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

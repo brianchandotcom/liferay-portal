@@ -14,50 +14,34 @@
 
 package com.liferay.staging.processes.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 import com.liferay.staging.processes.web.constants.StagingProcessesPortletKeys;
 
 import javax.portlet.PortletRequest;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Levente Hudák
+ * @author Mate Thurzo
  */
 @Component(
 	immediate = true,
 	property = {"javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES},
 	service = PortletConfigurationIconFactory.class
 )
-public class StagingConfigurationPortletConfigurationIconFactory
-	extends BaseJSPPortletConfigurationIconFactory {
+public class PublishTemplatesConfigurationIconFactory
+	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new StagingConfigurationPortletConfigurationIcon(portletRequest);
-	}
-
-	@Override
-	public String getJspPath() {
-		return "/configuration/icon/staging_configuration.jsp";
+		return new PublishTemplatesConfigurationIcon(portletRequest);
 	}
 
 	@Override
 	public double getWeight() {
-		return 101.0;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.staging.processes.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+		return 102.0;
 	}
 
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateMa
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.NavItem;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.site.navigation.taglib.servlet.ServletContextUtil;
@@ -70,6 +71,10 @@ public class NavigationTag extends IncludeTag {
 		_rootLayoutType = rootLayoutType;
 	}
 
+	public void setRootLayoutUuid(String rootLayoutUuid) {
+		_rootLayoutUuid = rootLayoutUuid;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_ddmTemplateGroupId = 0;
@@ -78,6 +83,7 @@ public class NavigationTag extends IncludeTag {
 		_preview = false;
 		_rootLayoutLevel = 1;
 		_rootLayoutType = "absolute";
+		_rootLayoutUuid = null;
 	}
 
 	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
@@ -124,6 +130,9 @@ public class NavigationTag extends IncludeTag {
 	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		List<NavItem> navItems = new ArrayList<>();
 
 		NavItem rootNavItem = null;
@@ -144,9 +153,22 @@ public class NavigationTag extends IncludeTag {
 				rootNavItem = branchNavItems.get(ancestorIndex);
 			}
 			else if (ancestorIndex == branchNavItems.size()) {
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				navItems = NavItem.fromLayouts(
+					request, themeDisplay.getLayouts(), null);
+			}
+		}
+		else if (_rootLayoutType.equals("select")) {
+			Layout layout = themeDisplay.getLayout();
 
+			if (Validator.isNotNull(_rootLayoutUuid)) {
+				Layout rootLayout =
+					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+						_rootLayoutUuid, layout.getGroupId(),
+						layout.isPrivateLayout());
+
+				rootNavItem = new NavItem(request, rootLayout, null);
+			}
+			else {
 				navItems = NavItem.fromLayouts(
 					request, themeDisplay.getLayouts(), null);
 			}
@@ -211,5 +233,6 @@ public class NavigationTag extends IncludeTag {
 	private boolean _preview;
 	private int _rootLayoutLevel = 1;
 	private String _rootLayoutType = "absolute";
+	private String _rootLayoutUuid;
 
 }

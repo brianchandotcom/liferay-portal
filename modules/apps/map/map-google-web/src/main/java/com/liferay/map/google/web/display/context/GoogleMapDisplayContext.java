@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.map.google.web.display.context;
+package com.liferay.map.google.web.display.context;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;

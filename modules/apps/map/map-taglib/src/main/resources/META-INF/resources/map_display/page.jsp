@@ -1,3 +1,5 @@
+
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,33 +13,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.frontend.map.api;
+<%@ include file="/map_display/init.jsp" %>
 
-import java.io.IOException;
+<c:choose>
+	<c:when test="<%= mapProvider != null %>">
+		<div class="lfr-map" id="<%= name %>Map">
 
-import java.util.Locale;
+			<%
+			mapProvider.include(request, new PipingServletResponse(pageContext));
+			%>
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * @author Jürgen Kappler
- */
-public interface MapProvider {
-
-	public String getHelpMessage();
-
-	public String getKey();
-
-	public String getLabel(Locale locale);
-
-	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
-
-	public boolean includeConfiguration(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
-
-}
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-danger">
+			<%= LanguageUtil.get(resourceBundle, "a-map-should-be-shown-here") %>
+		</div>
+	</c:otherwise>
+</c:choose>

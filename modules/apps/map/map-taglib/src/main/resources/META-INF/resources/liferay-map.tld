@@ -10,7 +10,7 @@
 	<short-name>liferay-map</short-name>
 	<uri>http://liferay.com/tld/map</uri>
 	<tag>
-		<name>map</name>
+		<name>map-display</name>
 		<tag-class>com.liferay.map.taglib.servlet.taglib.MapTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

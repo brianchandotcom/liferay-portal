@@ -14,9 +14,9 @@
 
 package com.liferay.map.taglib.servlet.taglib;
 
-import com.liferay.frontend.map.api.MapProvider;
-import com.liferay.frontend.map.api.util.MapProviderHelper;
-import com.liferay.frontend.map.api.util.MapProviderTracker;
+import com.liferay.map.api.MapProvider;
+import com.liferay.map.api.util.MapProviderHelper;
+import com.liferay.map.api.util.MapProviderTracker;
 import com.liferay.map.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -32,7 +32,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Chema Balsas
  */
-public class MapTag extends IncludeTag {
+public class MapDisplayTag extends IncludeTag {
 
 	public void setGeolocation(boolean geolocation) {
 		_geolocation = geolocation;
@@ -131,7 +131,7 @@ public class MapTag extends IncludeTag {
 		return mapProdiverKey;
 	}
 
-	private static final String _PAGE = "/map/page.jsp";
+	private static final String _PAGE = "/map_display/page.jsp";
 
 	private boolean _geolocation;
 	private double _latitude;

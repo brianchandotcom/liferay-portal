@@ -47,7 +47,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 	</portlet:actionURL>
 
-	<liferay-trash:trash-undo portletURL="<%= undoTrashURL %>" />
+	<liferay-trash:undo portletURL="<%= undoTrashURL %>" />
 </c:if>
 
 <liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
@@ -71,7 +71,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 				<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 			</portlet:actionURL>
 
-			<liferay-trash:trash-empty
+			<liferay-trash:empty
 				confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-page"
 				emptyMessage="remove-the-attachments-for-this-page"
 				infoMessage="attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted"

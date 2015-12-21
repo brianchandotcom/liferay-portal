@@ -159,7 +159,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 	</portlet:actionURL>
 
-	<liferay-trash:trash-undo
+	<liferay-trash:undo
 		portletURL="<%= restoreTrashEntriesURL %>"
 	/>
 

@@ -19,9 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.base.MDRRuleGroupLocalServiceBaseImpl;
+import com.liferay.mobile.device.rules.util.comparator.RuleGroupCreateDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -247,8 +249,19 @@ public class MDRRuleGroupLocalServiceImpl
 		long groupId, String keywords, LinkedHashMap<String, Object> params,
 		boolean andOperator, int start, int end) {
 
+		return searchByKeywords(
+			groupId, keywords, params, andOperator, start, end,
+			new RuleGroupCreateDateComparator());
+	}
+
+	@Override
+	public List<MDRRuleGroup> searchByKeywords(
+		long groupId, String keywords, LinkedHashMap<String, Object> params,
+		boolean andOperator, int start, int end,
+		OrderByComparator<MDRRuleGroup> obc) {
+
 		return mdrRuleGroupFinder.findByKeywords(
-			groupId, keywords, params, start, end);
+			groupId, keywords, params, start, end, obc);
 	}
 
 	/**

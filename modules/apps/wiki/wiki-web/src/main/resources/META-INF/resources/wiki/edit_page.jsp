@@ -203,24 +203,39 @@ if (portletTitleBasedNavigation) {
 							</div>
 						</c:if>
 
-						<aui:input disabled="<%= !editTitle %>" name="title" required="<%= editTitle %>" value="<%= title %>" />
+						<c:choose>
+							<c:when test="<%= editTitle %>">
+								<aui:field-wrapper required="<%= true %>">
+									<div class="entry-title">
+										<h1><liferay-ui:input-editor editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
+									</div>
+								</aui:field-wrapper>
+
+								<aui:input name="title" type="hidden" />
+							</c:when>
+							<c:otherwise>
+								<div class="entry-title">
+									<h1><%= HtmlUtil.escape(title) %></h1>
+								</div>
+
+								<aui:input name="title" type="hidden" value="<%= title %>" />
+							</c:otherwise>
+						</c:choose>
 
 						<c:if test="<%= Validator.isNotNull(parentTitle) %>">
 							<aui:input name="parent" type="resource" value="<%= parentTitle %>" />
 						</c:if>
 
-						<aui:field-wrapper label="content">
-							<div>
+						<div>
 
-								<%
-								WikiUtil.renderEditPageHTML(selectedFormat, pageContext, wikiPage);
-								%>
+							<%
+							WikiUtil.renderEditPageHTML(selectedFormat, pageContext, wikiPage);
+							%>
 
-							</div>
-						</aui:field-wrapper>
+						</div>
 					</aui:fieldset>
 
-					<c:if test="<%= wikiPage != null %>">
+					<c:if test="<%= (wikiPage != null) && (wikiPage.getPageId() > 0) %>">
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
 							<liferay-util:include page="/wiki/edit_page_attachment.jsp" servletContext="<%= application %>" />
 
@@ -411,6 +426,12 @@ if (portletTitleBasedNavigation) {
 
 		if (editor) {
 			form.fm('content').val(editor.getHTML());
+		}
+
+		var titleEditor = window.<portlet:namespace />titleEditor;
+
+		if (titleEditor) {
+		 form.fm('title').val(titleEditor.getText());
 		}
 
 		submitForm(form);

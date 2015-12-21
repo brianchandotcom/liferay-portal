@@ -32,11 +32,9 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 			<liferay-ui:input-editor
 				configParams="<%= configParams %>"
 				contents="<%= content %>"
-				cssClass="form-control"
 				editorName="<%= baseInputEditorWikiEngine.getEditorName() %>"
 				fileBrowserParams="<%= fileBrowserParams %>"
 				toolbarSet="<%= baseInputEditorWikiEngine.getToolbarSet() %>"
-				width="100%"
 			/>
 
 			<aui:input name="content" type="hidden" />

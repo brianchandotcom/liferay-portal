@@ -37,7 +37,7 @@ public class PortalDatabaseConverter implements DatabaseConverter {
 
 	@Override
 	public void convert(DataSource dataSource) throws Exception {
-		_modelMigrator.migrate(dataSource, getModelClassesName("*"));
+		_modelMigrator.migrate(dataSource, getModelClassesName(".*"));
 	}
 
 	public void setModelMigrator(ModelMigrator modelMigrator) {

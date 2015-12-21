@@ -49,7 +49,7 @@ public class StagingConfigurationPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 101;
+		return 101.0;
 	}
 
 	@Override

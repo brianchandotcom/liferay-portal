@@ -28,59 +28,61 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<aui:fieldset>
-		<aui:select label="root-layout" name="preferences--rootLayoutUuid--">
-			<aui:option value="" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:select label="root-layout" name="preferences--rootLayoutUuid--">
+				<aui:option value="" />
 
-			<%
-			for (LayoutDescription layoutDescription : layoutDescriptions) {
-				Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
+				<%
+				for (LayoutDescription layoutDescription : layoutDescriptions) {
+					Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
 
-				if (layoutDescriptionLayout != null) {
-			%>
+					if (layoutDescriptionLayout != null) {
+				%>
 
-				<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Validator.equals(layoutDescriptionLayout.getUuid(), siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
+					<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Validator.equals(layoutDescriptionLayout.getUuid(), siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
 
-			<%
+				<%
+					}
 				}
-			}
-			%>
+				%>
 
-		</aui:select>
+			</aui:select>
 
-		<aui:select name="preferences--displayDepth--">
-			<aui:option label="unlimited" value="0" />
+			<aui:select name="preferences--displayDepth--">
+				<aui:option label="unlimited" value="0" />
 
-			<%
-			for (int i = 1; i <= 20; i++) {
-			%>
+				<%
+				for (int i = 1; i <= 20; i++) {
+				%>
 
-				<aui:option label="<%= i %>" selected="<%= siteNavigationSiteMapPortletInstanceConfiguration.displayDepth() == i %>" />
+					<aui:option label="<%= i %>" selected="<%= siteNavigationSiteMapPortletInstanceConfiguration.displayDepth() == i %>" />
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
-		</aui:select>
+			</aui:select>
 
-		<aui:input name="preferences--includeRootInTree--" type="checkbox" value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>" />
+			<aui:input name="preferences--includeRootInTree--" type="toggle-switch" value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>" />
 
-		<aui:input name="preferences--showCurrentPage--" type="checkbox" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showCurrentPage() %>" />
+			<aui:input name="preferences--showCurrentPage--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showCurrentPage() %>" />
 
-		<aui:input name="preferences--useHtmlTitle--" type="checkbox" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.useHtmlTitle() %>" />
+			<aui:input name="preferences--useHtmlTitle--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.useHtmlTitle() %>" />
 
-		<aui:input name="preferences--showHiddenPages--" type="checkbox" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showHiddenPages() %>" />
+			<aui:input name="preferences--showHiddenPages--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showHiddenPages() %>" />
 
-		<div class="display-template">
-			<liferay-ddm:template-selector
-				className="<%= LayoutSet.class.getName() %>"
-				displayStyle="<%= siteNavigationSiteMapPortletInstanceConfiguration.displayStyle() %>"
-				displayStyleGroupId="<%= siteNavigationSiteMapDisplayContext.getDisplayStyleGroupId() %>"
-				refreshURL="<%= configurationRenderURL %>"
-				showEmptyOption="<%= true %>"
-			/>
-		</div>
-	</aui:fieldset>
+			<div class="display-template">
+				<liferay-ddm:template-selector
+					className="<%= LayoutSet.class.getName() %>"
+					displayStyle="<%= siteNavigationSiteMapPortletInstanceConfiguration.displayStyle() %>"
+					displayStyleGroupId="<%= siteNavigationSiteMapDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+					showEmptyOption="<%= true %>"
+				/>
+			</div>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

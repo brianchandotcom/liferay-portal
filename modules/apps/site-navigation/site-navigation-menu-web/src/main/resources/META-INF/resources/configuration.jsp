@@ -16,65 +16,67 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:row>
-	<aui:col width="<%= 50 %>">
-		<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-		<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-		<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-			<div class="display-template">
-				<liferay-ddm:template-selector
-					className="<%= NavItem.class.getName() %>"
-					displayStyle="<%= siteNavigationMenuDisplayContext.getDisplayStyle() %>"
-					displayStyleGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
-					refreshURL="<%= configurationRenderURL %>"
-				/>
-			</div>
+	<aui:row>
+		<aui:col width="<%= 50 %>">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<div class="display-template">
+						<liferay-ddm:template-selector
+							className="<%= NavItem.class.getName() %>"
+							displayStyle="<%= siteNavigationMenuDisplayContext.getDisplayStyle() %>"
+							displayStyleGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
+							refreshURL="<%= configurationRenderURL %>"
+						/>
+					</div>
 
-			<aui:fieldset column="<%= true %>">
-				<div class="" id="<portlet:namespace />customDisplayOptions">
-					<aui:select label="root-layout" name="preferences--rootLayoutType--" value="<%= siteNavigationMenuDisplayContext.getRootLayoutType() %>">
-						<aui:option label="parent-at-level" value="absolute" />
-						<aui:option label="relative-parent-up-by" value="relative" />
-					</aui:select>
+					<div id="<portlet:namespace />customDisplayOptions">
+						<aui:select label="root-layout" name="preferences--rootLayoutType--" value="<%= siteNavigationMenuDisplayContext.getRootLayoutType() %>">
+							<aui:option label="parent-at-level" value="absolute" />
+							<aui:option label="relative-parent-up-by" value="relative" />
+						</aui:select>
 
-					<aui:select name="preferences--rootLayoutLevel--">
+						<aui:select name="preferences--rootLayoutLevel--">
 
-						<%
-						for (int i = 0; i <= 4; i++) {
-						%>
+							<%
+							for (int i = 0; i <= 4; i++) {
+							%>
 
-							<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() == i %>" />
+								<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() == i %>" />
 
-						<%
-						}
-						%>
+							<%
+							}
+							%>
 
-					</aui:select>
+						</aui:select>
 
-					<aui:select name="preferences--includedLayouts--" value="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>">
-						<aui:option label="auto" />
-						<aui:option label="all" />
-					</aui:select>
-				</div>
-			</aui:fieldset>
+						<aui:select name="preferences--includedLayouts--" value="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>">
+							<aui:option label="auto" />
+							<aui:option label="all" />
+						</aui:select>
+					</div>
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</aui:col>
+		<aui:col width="<%= 50 %>">
+			<liferay-portlet:preview
+				portletName="<%= portletResource %>"
+				showBorders="<%= true %>"
+			/>
+		</aui:col>
+	</aui:row>
 
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" />
-			</aui:button-row>
-		</aui:form>
-	</aui:col>
-	<aui:col width="<%= 50 %>">
-		<liferay-portlet:preview
-			portletName="<%= portletResource %>"
-			showBorders="<%= true %>"
-		/>
-	</aui:col>
-</aui:row>
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+	</aui:button-row>
+</aui:form>
 
 <aui:script sandbox="<%= true %>">
 	var form = $('#<portlet:namespace />fm');

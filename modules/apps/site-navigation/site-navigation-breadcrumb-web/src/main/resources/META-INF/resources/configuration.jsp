@@ -16,52 +16,54 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:row>
-	<aui:col width="<%= 50 %>">
-		<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-		<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-		<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-			<aui:fieldset>
-				<div class="display-template">
-					<liferay-ddm:template-selector
-						className="<%= BreadcrumbEntry.class.getName() %>"
-						displayStyle="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyle() %>"
-						displayStyleGroupId="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyleGroupId() %>"
-						refreshURL="<%= configurationRenderURL %>"
-					/>
-				</div>
-			</aui:fieldset>
+	<aui:row>
+		<aui:col width="<%= 50 %>">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<div class="display-template">
+						<liferay-ddm:template-selector
+							className="<%= BreadcrumbEntry.class.getName() %>"
+							displayStyle="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyle() %>"
+							displayStyleGroupId="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyleGroupId() %>"
+							refreshURL="<%= configurationRenderURL %>"
+						/>
+					</div>
+				</aui:fieldset>
 
-			<aui:fieldset id="checkBoxes">
-				<aui:col width="<%= 50 %>">
-					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showCurrentGroup" %>' label="show-current-site" name="preferences--showCurrentGroup--" type="checkbox" value="<%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>" />
-					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showGuestGroup" %>' label="show-guest-site" name="preferences--showGuestGroup--" type="checkbox" value="<%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>" />
-				</aui:col>
+				<aui:fieldset id="checkBoxes">
+					<aui:col width="<%= 50 %>">
+						<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showCurrentGroup" %>' label="show-current-site" name="preferences--showCurrentGroup--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>" />
+						<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showGuestGroup" %>' label="show-guest-site" name="preferences--showGuestGroup--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>" />
+					</aui:col>
 
-				<aui:col width="<%= 50 %>">
-					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showLayout" %>' label="show-page" name="preferences--showLayout--" type="checkbox" value="<%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>" />
-					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showParentGroups" %>' label="show-parent-sites" name="preferences--showParentGroups--" type="checkbox" value="<%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>" />
-					<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showPortletBreadcrumb" %>' label="show-application-breadcrumb" name="preferences--showPortletBreadcrumb--" type="checkbox" value="<%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>" />
-				</aui:col>
-			</aui:fieldset>
+					<aui:col width="<%= 50 %>">
+						<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showLayout" %>' label="show-page" name="preferences--showLayout--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>" />
+						<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showParentGroups" %>' label="show-parent-sites" name="preferences--showParentGroups--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>" />
+						<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showPortletBreadcrumb" %>' label="show-application-breadcrumb" name="preferences--showPortletBreadcrumb--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>" />
+					</aui:col>
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</aui:col>
+		<aui:col width="<%= 50 %>">
+			<liferay-portlet:preview
+				portletName="<%= siteNavigationBreadcrumbDisplayContext.getPortletResource() %>"
+				showBorders="<%= true %>"
+			/>
+		</aui:col>
+	</aui:row>
 
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" />
-			</aui:button-row>
-		</aui:form>
-	</aui:col>
-	<aui:col width="<%= 50 %>">
-		<liferay-portlet:preview
-			portletName="<%= siteNavigationBreadcrumbDisplayContext.getPortletResource() %>"
-			showBorders="<%= true %>"
-		/>
-	</aui:col>
-</aui:row>
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+	</aui:button-row>
+</aui:form>
 
 <aui:script sandbox="<%= true %>">
 	var data = {

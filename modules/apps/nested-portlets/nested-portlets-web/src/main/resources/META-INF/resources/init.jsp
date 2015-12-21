@@ -36,8 +36,6 @@ page import="com.liferay.portal.model.LayoutTemplate" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %>
 
-<%@ page import="java.util.List" %>
-
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />

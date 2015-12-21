@@ -145,7 +145,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 </div>
 
 <div class="hide" id="<%= randomId %>updateComments">
-	<aui:input cols="55" name="comment" rows="10" type="textarea" />
+	<aui:input cols="55" name="comment" placeholder="comment" rows="1" type="textarea" />
 </div>
 
 <aui:script use="liferay-workflow-tasks">

@@ -108,6 +108,12 @@
 		<column name="description" type="String" localized="true" />
 		<column name="lastPublishDate" type="Date" />
 
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
+
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.web.asset;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -40,10 +41,14 @@ public class DDLRecordSetClassTypeReader implements ClassTypeReader {
 			groupIds);
 
 		for (DDLRecordSet recordSet : recordSets) {
-			classTypes.add(
-				new DDLRecordSetClassType(
-					recordSet.getRecordSetId(), recordSet.getName(locale),
-					LocaleUtil.toLanguageId(locale)));
+			if (recordSet.getScope() ==
+					DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) {
+
+				classTypes.add(
+					new DDLRecordSetClassType(
+						recordSet.getRecordSetId(), recordSet.getName(locale),
+						LocaleUtil.toLanguageId(locale)));
+			}
 		}
 
 		return classTypes;

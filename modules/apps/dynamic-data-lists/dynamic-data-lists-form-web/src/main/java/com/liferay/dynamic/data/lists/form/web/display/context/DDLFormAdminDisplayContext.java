@@ -15,11 +15,13 @@
 package com.liferay.dynamic.data.lists.form.web.display.context;
 
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
+import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
 import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormWebRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
 import com.liferay.dynamic.data.lists.form.web.util.DDLFormPortletUtil;
+import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
@@ -70,6 +72,8 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
@@ -206,8 +210,17 @@ public class DDLFormAdminDisplayContext {
 
 		long recordSetId = ParamUtil.getLong(_renderRequest, "recordSetId");
 
-		_recordSet = DDLRecordSetLocalServiceUtil.fetchDDLRecordSet(
-			recordSetId);
+		if (recordSetId > 0) {
+			_recordSet = DDLRecordSetLocalServiceUtil.fetchDDLRecordSet(
+				recordSetId);
+		}
+		else {
+			DDLRecord ddlRecord = getRecord();
+
+			if (ddlRecord != null) {
+				_recordSet = ddlRecord.getRecordSet();
+			}
+		}
 
 		return _recordSet;
 	}
@@ -396,7 +409,24 @@ public class DDLFormAdminDisplayContext {
 	protected DDLRecord getRecord() throws PortalException {
 		long recordId = ParamUtil.getLong(_renderRequest, "recordId");
 
-		return DDLRecordLocalServiceUtil.fetchDDLRecord(recordId);
+		if (recordId > 0) {
+			return DDLRecordLocalServiceUtil.fetchDDLRecord(recordId);
+		}
+
+		HttpServletRequest httpServletRequest =
+			_ddlFormAdminRequestHelper.getRequest();
+
+		Object record = httpServletRequest.getAttribute(
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
+
+		if (record instanceof DDLFormRecord) {
+			DDLFormRecord formRecord = (DDLFormRecord)record;
+
+			return formRecord.getDDLRecord();
+		}
+		else {
+			return (DDLRecord)record;
+		}
 	}
 
 	protected String serialize(

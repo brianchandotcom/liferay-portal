@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,24 +12,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.dynamic.data.lists.model;
+<%@ include file="/admin/init.jsp" %>
 
-/**
- * @author Marcellus Tavares
- */
-public class DDLRecordConstants {
-
-	public static final int DISPLAY_INDEX_DEFAULT = 0;
-
-	public static final String VERSION_DEFAULT = "1.0";
-
-	public static String getClassName(int scope) {
-		if (scope == DDLRecordSetConstants.SCOPE_FORMS) {
-			return DDLFormRecord.class.getName();
-		}
-
-		return DDLRecord.class.getName();
-	}
-
-}
+<div class="container-fluid-1280">
+	<%= ddlFormAdminDisplayContext.getDDMFormHTML() %>
+</div>

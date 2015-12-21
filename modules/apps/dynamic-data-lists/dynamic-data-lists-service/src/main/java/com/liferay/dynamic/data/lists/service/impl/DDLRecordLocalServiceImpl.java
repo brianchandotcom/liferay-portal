@@ -127,8 +127,15 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Workflow
 
+		String assetClassName = (String)serviceContext.getAttribute(
+			"assetClassName");
+
+		if (assetClassName == null) {
+			assetClassName = DDLRecord.class.getName();
+		}
+
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId, DDLRecord.class.getName(),
+			user.getCompanyId(), groupId, userId, assetClassName,
 			recordVersion.getRecordVersionId(), recordVersion, serviceContext);
 
 		return record;
@@ -494,6 +501,10 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			visible = false;
 		}
 
+		if (scope == DDLRecordSetConstants.SCOPE_FORMS) {
+			visible = false;
+		}
+
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		String ddmStructureName = ddmStructure.getName(locale);
@@ -507,7 +518,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		if (addDraftAssetEntry) {
 			assetEntryLocalService.updateEntry(
 				userId, record.getGroupId(), record.getCreateDate(),
-				record.getModifiedDate(), DDLRecordConstants.getClassName(),
+				record.getModifiedDate(),
+				DDLRecordConstants.getClassName(scope),
 				recordVersion.getRecordVersionId(), record.getUuid(), 0,
 				assetCategoryIds, assetTagNames, false, null, null, null,
 				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
@@ -516,11 +528,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		else {
 			assetEntryLocalService.updateEntry(
 				userId, record.getGroupId(), record.getCreateDate(),
-				record.getModifiedDate(), DDLRecordConstants.getClassName(),
-				record.getRecordId(), record.getUuid(), 0, assetCategoryIds,
-				assetTagNames, visible, null, null, null,
-				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-				null, 0, 0, priority);
+				record.getModifiedDate(),
+				DDLRecordConstants.getClassName(scope), record.getRecordId(),
+				record.getUuid(), 0, assetCategoryIds, assetTagNames, visible,
+				null, null, null, ContentTypes.TEXT_HTML, title, null,
+				StringPool.BLANK, null, null, 0, 0, priority);
 		}
 	}
 

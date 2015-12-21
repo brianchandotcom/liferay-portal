@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.model;
+package com.liferay.dynamic.data.lists.model.impl;
+
+import com.liferay.dynamic.data.lists.model.DDLFormRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 
 /**
- * @author Marcellus Tavares
+ * @author Leonardo Barros
  */
-public class DDLRecordConstants {
+public class DDLFormRecordImpl implements DDLFormRecord {
 
-	public static final int DISPLAY_INDEX_DEFAULT = 0;
-
-	public static final String VERSION_DEFAULT = "1.0";
-
-	public static String getClassName(int scope) {
-		if (scope == DDLRecordSetConstants.SCOPE_FORMS) {
-			return DDLFormRecord.class.getName();
-		}
-
-		return DDLRecord.class.getName();
+	public DDLFormRecordImpl(DDLRecord record) {
+		_record = record;
 	}
+
+	public DDLRecord getDDLRecord() {
+		return _record;
+	}
+
+	private final DDLRecord _record;
 
 }

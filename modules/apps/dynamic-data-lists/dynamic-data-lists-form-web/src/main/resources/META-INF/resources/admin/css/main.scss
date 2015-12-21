@@ -256,6 +256,7 @@ $horizontal-spacing: 35px;
 		height: 100%;
 		padding-bottom: 85px;
 		padding-top: 62px;
+		z-index: 1;
 	}
 
 	.modal-footer {
@@ -773,4 +774,8 @@ $horizontal-spacing: 35px;
 
 .dynamic-data-mapping-data-providers-modal {
 	max-width: 720px;
+
+	.modal-content {
+		z-index: 1;
+	}
 }

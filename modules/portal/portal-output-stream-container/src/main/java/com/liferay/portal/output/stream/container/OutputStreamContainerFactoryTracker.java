@@ -179,8 +179,7 @@ public class OutputStreamContainerFactoryTracker {
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetOutputStreamContainerFactory"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setOutputStreamContainerFactory(
 		OutputStreamContainerFactory outputStreamContainerFactory) {

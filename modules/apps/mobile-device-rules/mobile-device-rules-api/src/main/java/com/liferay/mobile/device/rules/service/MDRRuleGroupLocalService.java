@@ -354,6 +354,13 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
+		long groupId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> obc);
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
 	String, LinkedHashMap, boolean)}

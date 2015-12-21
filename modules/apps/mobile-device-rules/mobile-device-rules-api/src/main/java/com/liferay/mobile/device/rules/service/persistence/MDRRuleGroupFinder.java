@@ -38,6 +38,12 @@ public interface MDRRuleGroupFinder {
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end);
 
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> findByKeywords(
+		long groupId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> obc);
+
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> findByG_N(
 		long groupId, java.lang.String name,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
@@ -52,4 +58,10 @@ public interface MDRRuleGroupFinder {
 		long groupId, java.lang.String[] names,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end);
+
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> findByG_N(
+		long groupId, java.lang.String[] names,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> obc);
 }

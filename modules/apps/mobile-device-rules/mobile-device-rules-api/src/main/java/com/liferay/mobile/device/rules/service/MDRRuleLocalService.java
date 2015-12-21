@@ -321,6 +321,11 @@ public interface MDRRuleLocalService extends BaseLocalService,
 		long ruleGroupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRRule> getRules(
+		long ruleGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRule> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRulesCount(long ruleGroupId);
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.marketplace.app.manager.web.util;
 
 import com.liferay.marketplace.model.App;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,14 @@ public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 		Version version) {
 
 		_appDisplay = appDisplay;
-		_title = title;
+
+		if (Validator.isNull(title)) {
+			_title = MODULE_GROUP_TITLE_UNCATEGORIZED;
+		}
+		else {
+			_title = title;
+		}
+
 		_description = description;
 		_version = version;
 	}

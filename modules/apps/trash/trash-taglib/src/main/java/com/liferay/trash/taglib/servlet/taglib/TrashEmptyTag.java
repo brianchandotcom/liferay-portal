@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.trash.taglib.servlet.taglib;
 
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.trash.taglib.servlet.ServletContextUtil;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Sergio González
@@ -40,6 +42,13 @@ public class TrashEmptyTag extends IncludeTag {
 
 	public void setInfoMessage(String infoMessage) {
 		_infoMessage = infoMessage;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setPortletURL(PortletURL portletURL) {
@@ -76,14 +85,15 @@ public class TrashEmptyTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:trash-empty:confirmMessage", _confirmMessage);
+			"liferay-trash:trash-empty:confirmMessage", _confirmMessage);
 		request.setAttribute(
-			"liferay-ui:trash-empty:emptyMessage", _emptyMessage);
+			"liferay-trash:trash-empty:emptyMessage", _emptyMessage);
 		request.setAttribute(
-			"liferay-ui:trash-empty:infoMessage", _infoMessage);
-		request.setAttribute("liferay-ui:trash-empty:portletURL", _portletURL);
+			"liferay-trash:trash-empty:infoMessage", _infoMessage);
 		request.setAttribute(
-			"liferay-ui:trash-empty:totalEntries", _totalEntries);
+			"liferay-trash:trash-empty:portletURL", _portletURL);
+		request.setAttribute(
+			"liferay-trash:trash-empty:totalEntries", _totalEntries);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -97,7 +107,7 @@ public class TrashEmptyTag extends IncludeTag {
 		"entries-that-have-been-in-the-recycle-bin-for-more-than-x-are-" +
 			"automatically-deleted";
 
-	private static final String _PAGE = "/html/taglib/ui/trash_empty/page.jsp";
+	private static final String _PAGE = "/trash_empty/page.jsp";
 
 	private String _confirmMessage = _CONFIRM_MESSAGE;
 	private String _emptyMessage = _EMPTY_MESSAGE;

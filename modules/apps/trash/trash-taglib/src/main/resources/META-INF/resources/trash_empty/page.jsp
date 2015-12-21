@@ -14,14 +14,14 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-String confirmMessage = (String)request.getAttribute("liferay-ui:trash-empty:confirmMessage");
-String emptyMessage = (String)request.getAttribute("liferay-ui:trash-empty:emptyMessage");
-String infoMessage = (String)request.getAttribute("liferay-ui:trash-empty:infoMessage");
-String portletURL = (String)request.getAttribute("liferay-ui:trash-empty:portletURL");
-int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-ui:trash-empty:totalEntries"));
+String confirmMessage = (String)request.getAttribute("liferay-trash:trash-empty:confirmMessage");
+String emptyMessage = (String)request.getAttribute("liferay-trash:trash-empty:emptyMessage");
+String infoMessage = (String)request.getAttribute("liferay-trash:trash-empty:infoMessage");
+String portletURL = (String)request.getAttribute("liferay-trash:trash-empty:portletURL");
+int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:trash-empty:totalEntries"));
 %>
 
 <c:if test="<%= totalEntries > 0 %>">

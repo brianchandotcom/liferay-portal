@@ -8,6 +8,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:portlet-display-template:portlet-display-template")
+	compile project(":apps:trash:trash-taglib")
 	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-upgrade")
 }

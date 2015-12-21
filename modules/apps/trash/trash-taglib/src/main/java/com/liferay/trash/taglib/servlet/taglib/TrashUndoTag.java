@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.trash.taglib.servlet.taglib;
 
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.trash.taglib.servlet.ServletContextUtil;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Julio Camarero
@@ -28,6 +30,13 @@ public class TrashUndoTag extends IncludeTag {
 	@Override
 	public int doStartTag() {
 		return EVAL_BODY_INCLUDE;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setPortletURL(PortletURL portletURL) {
@@ -60,13 +69,14 @@ public class TrashUndoTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:trash-undo:portletURL", _portletURL);
-		request.setAttribute("liferay-ui:trash-undo:redirect", _redirect);
+		request.setAttribute(
+			"liferay-trash:trash-undo:portletURL", _portletURL);
+		request.setAttribute("liferay-trash:trash-undo:redirect", _redirect);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE = "/html/taglib/ui/trash_undo/page.jsp";
+	private static final String _PAGE = "/trash_undo/page.jsp";
 
 	private String _portletURL;
 	private String _redirect;

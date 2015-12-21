@@ -658,29 +658,17 @@
 			<var name="dmDocumentTitle" value="Test Document" />
 		</execute>
 
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="guest" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="owner" />
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="site-member" />
 		<execute macro="PermissionsInline#gotoDMDocumentCP">
 			<var name="dmDocumentTitle" value="Test Document" />
 		</execute>
 
-		<execute macro="Role#viewPermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="permissionFlagged" value="false" />
-			<var name="roleName" value="organization-user" />
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Remove" />
+			<var name="roleList" value="Guest,Owner,Site Member,Organization User" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

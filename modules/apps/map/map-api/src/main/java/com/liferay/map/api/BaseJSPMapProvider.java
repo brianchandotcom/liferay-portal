@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.map.api;
+package com.liferay.map.api;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

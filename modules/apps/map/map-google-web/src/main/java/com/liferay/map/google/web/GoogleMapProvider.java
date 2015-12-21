@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.frontend.map.google.web;
+package com.liferay.map.google.web;
 
-import com.liferay.frontend.map.api.BaseJSPMapProvider;
-import com.liferay.frontend.map.api.MapProvider;
+import com.liferay.map.api.BaseJSPMapProvider;
+import com.liferay.map.api.MapProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -63,7 +63,7 @@ public class GoogleMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.map.google.web)",
+		target = "(osgi.web.symbolicname=com.liferay.map.google.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

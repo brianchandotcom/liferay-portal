@@ -22,7 +22,7 @@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.frontend.map.google.web.display.context.GoogleMapDisplayContext" %><%@
+<%@ page import="com.liferay.map.google.web.display.context.GoogleMapDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@

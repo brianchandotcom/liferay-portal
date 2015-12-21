@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_FRONTEND_MAP_OPENSTREET_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/frontend-map-openstreet-web';
+	var PATH_FRONTEND_MAP_OPENSTREET_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/map-openstreet-web';
 
 	AUI().applyConfig(
 		{

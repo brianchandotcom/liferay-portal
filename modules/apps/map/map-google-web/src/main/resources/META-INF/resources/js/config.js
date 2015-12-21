@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_FRONTEND_MAP_GOOGLE_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/frontend-map-google-web';
+	var PATH_FRONTEND_MAP_GOOGLE_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/map-google-web';
 
 	AUI().applyConfig(
 		{

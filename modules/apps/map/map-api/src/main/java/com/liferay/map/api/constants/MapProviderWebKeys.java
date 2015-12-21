@@ -1,5 +1,3 @@
-
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -13,23 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/map/init.jsp" %>
+package com.liferay.map.api.constants;
 
-<c:choose>
-	<c:when test="<%= mapProvider != null %>">
-		<div class="lfr-map" id="<%= name %>Map">
+/**
+ * @author Jürgen Kappler
+ */
+public class MapProviderWebKeys {
 
-			<%
-			mapProvider.include(request, new PipingServletResponse(pageContext));
-			%>
+	public static final String MAP_PROVIDER_KEY = "MAP_PROVIDER_KEY";
 
-		</div>
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-danger">
-			<%= LanguageUtil.get(resourceBundle, "a-map-should-be-shown-here") %>
-		</div>
-	</c:otherwise>
-</c:choose>
+	public static final String MAP_PROVIDER_TRACKER = "MAP_PROVIDER_TRACKER";
+
+}

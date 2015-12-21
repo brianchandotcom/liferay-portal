@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_FRONTEND_MAP_BASE_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/frontend-map-base-web';
+	var PATH_FRONTEND_MAP_BASE_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/map-base-web';
 
 	AUI().applyConfig(
 		{

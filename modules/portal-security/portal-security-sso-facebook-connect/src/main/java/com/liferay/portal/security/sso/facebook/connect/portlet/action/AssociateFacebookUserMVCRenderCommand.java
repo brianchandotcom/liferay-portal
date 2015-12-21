@@ -66,12 +66,6 @@ public class AssociateFacebookUserMVCRenderCommand implements MVCRenderCommand {
 					FacebookConnect.class.getName()));
 		}
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getOriginalServletRequest(
-				PortalUtil.getHttpServletRequest(renderRequest));
-
-		HttpSession session = httpServletRequest.getSession(true);
-
 		long facebookIncompleteUserId = ParamUtil.getLong(
 			renderRequest, "userId");
 

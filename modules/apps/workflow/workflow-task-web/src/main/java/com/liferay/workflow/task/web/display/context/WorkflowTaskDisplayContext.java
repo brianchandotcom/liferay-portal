@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,12 +52,15 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.workflow.task.web.configuration.WorkflowTaskWebConfiguration;
 import com.liferay.workflow.task.web.display.context.util.WorkflowTaskRequestHelper;
 import com.liferay.workflow.task.web.search.WorkflowTaskDisplayTerms;
 import com.liferay.workflow.task.web.search.WorkflowTaskSearch;
@@ -94,8 +98,8 @@ public class WorkflowTaskDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_portletPreferences = portletPreferences;
 
-		_portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_request);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
@@ -237,6 +241,30 @@ public class WorkflowTaskDisplayContext {
 		return HtmlUtil.escape(workflowTask.getDescription());
 	}
 
+	public String getDisplayStyle() {
+		if (_displayStyle == null) {
+			_displayStyle = getDisplayStyle(_request, getDisplayViews());
+		}
+
+		return _displayStyle;
+	}
+
+	public String[] getDisplayViews() {
+		if (_displayViews == null) {
+			WorkflowTaskWebConfiguration workflowTaskWebConfiguration =
+				(WorkflowTaskWebConfiguration) _liferayPortletRequest.
+					getAttribute(WorkflowTaskWebConfiguration.class.getName());
+
+			_displayViews = StringUtil.split(
+				PrefsParamUtil.getString(
+					_portletPreferences, _liferayPortletRequest, "displayViews",
+					StringUtil.merge(
+						workflowTaskWebConfiguration.displayViews())));
+		}
+
+		return _displayViews;
+	}
+
 	public Date getDueDate(WorkflowTask workflowTask) {
 		return workflowTask.getDueDate();
 	}
@@ -284,6 +312,16 @@ public class WorkflowTaskDisplayContext {
 		return taskName + ": " + title;
 	}
 
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_liferayPortletRequest, "keywords");
+
+		return _keywords;
+	}
+
 	public Date getLastActivityDate(WorkflowTask workflowTask)
 		throws PortalException {
 
@@ -300,6 +338,62 @@ public class WorkflowTaskDisplayContext {
 		return new String[] {"author", "categories", "tags"};
 	}
 
+	public String getNavigation() {
+		if (_navigation != null) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(_request, "navigation", "all");
+
+		return _navigation;
+	}
+
+	public String getOrderByCol() {
+		if (_orderByCol != null) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(_request, "orderByCol");
+
+		if (Validator.isNull(_orderByCol)) {
+			_orderByCol = _portalPreferences.getValue(
+				PortletKeys.MY_WORKFLOW_TASK, "order-by-col", "asset-type");
+		}
+		else {
+			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+
+			if (saveOrderBy) {
+				_portalPreferences.setValue(
+					PortletKeys.MY_WORKFLOW_TASK, "order-by-col", _orderByCol);
+			}
+		}
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (_orderByType != null) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(_request, "orderByType");
+
+		if (Validator.isNull(_orderByType)) {
+			_orderByType = _portalPreferences.getValue(
+				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", "asc");
+		}
+		else {
+			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+
+			if (saveOrderBy) {
+				_portalPreferences.setValue(
+					PortletKeys.MY_WORKFLOW_TASK, "order-by-type",
+					_orderByType);
+			}
+		}
+
+		return _orderByType;
+	}
 	public WorkflowTaskSearch getPendingTasksAssignedToMe()
 		throws PortalException {
 
@@ -372,6 +466,12 @@ public class WorkflowTaskDisplayContext {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("tabs1", getTabs1());
+
+		String navigation = ParamUtil.getString(_request, "navigation");
+
+		if (Validator.isNotNull(navigation)) {
+			portletURL.setParameter("navigation", getNavigation());
+		}
 
 		return portletURL;
 	}
@@ -816,6 +916,38 @@ public class WorkflowTaskDisplayContext {
 		return false;
 	}
 
+	public boolean isNavigationAll() {
+		if (Validator.equals(getNavigation(), "all")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationCompleted() {
+		if (Validator.equals(getNavigation(), "completed")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationPending() {
+		if (Validator.equals(getNavigation(), "pending")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isCompletedTabSelected() {
 		String tabs1 = getTabs1();
 
@@ -864,6 +996,41 @@ public class WorkflowTaskDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	protected String getDisplayStyle(
+		HttpServletRequest request, String[] displayViews) {
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+		String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			WorkflowTaskWebConfiguration workflowTaskWebConfiguration =
+				(WorkflowTaskWebConfiguration)_request.getAttribute(
+					WorkflowTaskWebConfiguration.class.getName());
+
+			displayStyle = portalPreferences.getValue(
+				PortletKeys.MY_WORKFLOW_TASK, "display-style",
+				workflowTaskWebConfiguration.defaultDisplayView());
+		}
+		else {
+			if (ArrayUtil.contains(displayViews, displayStyle)) {
+				portalPreferences.setValue(
+					PortletKeys.MY_WORKFLOW_TASK, "display-style",
+					displayStyle);
+
+				request.setAttribute(
+					WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+			}
+		}
+
+		if (!ArrayUtil.contains(displayViews, displayStyle)) {
+			displayStyle = displayViews[0];
+		}
+
+		return displayStyle;
 	}
 
 	protected Role getRole(long roleId) throws PortalException {
@@ -1004,8 +1171,14 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	private final Format _dateFormatDateTime;
+	private String _displayStyle;
+	private String[] _displayViews;
+	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _navigation;
+	private String _orderByCol;
+	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;

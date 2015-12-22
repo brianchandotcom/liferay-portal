@@ -41,12 +41,11 @@ public interface ControlMenuEntry {
 
 	public String getURL(HttpServletRequest request);
 
-	public boolean hasAccessPermission(HttpServletRequest request)
-		throws PortalException;
-
 	public boolean include(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException;
+
+	public boolean isShow(HttpServletRequest request) throws PortalException;
 
 	public boolean isUseDialog();
 

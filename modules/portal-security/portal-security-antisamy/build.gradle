@@ -1,8 +1,3 @@
-task downloadSanitizerConfiguration(type: AntGetDownload)
-task processSanitizerConfiguration (type: Copy, dependsOn: downloadSanitizerConfiguration)
-
-processResources.dependsOn processSanitizerConfiguration
-
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "2.4.1"
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
@@ -10,36 +5,6 @@ dependencies {
 	compile group: "org.owasp.antisamy", name: "antisamy", version: "1.5.3"
 }
 
-downloadSanitizerConfiguration {
-	sourceUrl = 'https://owaspantisamy.googlecode.com/files/antisamy-ebay-1.4.4.xml'
-	target = file ('build/tmp/antisamy-ebay-1.4.4.xml')
-}
-
-processSanitizerConfiguration {
-	from ('build/tmp') {
-		include ('antisamy-ebay-1.4.4.xml')
-		rename ('antisamy-ebay-1.4.4.xml', 'sanitizer-configuration.xml')
-		filter {
-			line -> line.contains('<directive name="maxInputSize" value="20000"/>') ? line.replace('20000', '200000') : line
-		}
-	}
-
-	into 'classes'
-}
-
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
-}
-
-class AntGetDownload extends DefaultTask {
-	@Input
-	String sourceUrl
-
-	@OutputFile
-	File target
-
-	@TaskAction
-	void download() {
-		ant.get(src: sourceUrl, dest: target)
-	}
 }

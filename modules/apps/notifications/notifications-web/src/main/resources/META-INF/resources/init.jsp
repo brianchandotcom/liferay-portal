@@ -30,6 +30,7 @@ page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.notifications.UserNotificationDefinition" %><%@
 page import="com.liferay.portal.kernel.notifications.UserNotificationDeliveryType" %><%@
 page import="com.liferay.portal.kernel.notifications.UserNotificationFeedEntry" %><%@

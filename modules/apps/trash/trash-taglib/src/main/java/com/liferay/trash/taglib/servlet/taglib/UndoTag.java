@@ -25,7 +25,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Julio Camarero
  */
-public class TrashUndoTag extends IncludeTag {
+public class UndoTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
@@ -69,14 +69,13 @@ public class TrashUndoTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-trash:trash-undo:portletURL", _portletURL);
-		request.setAttribute("liferay-trash:trash-undo:redirect", _redirect);
+		request.setAttribute("liferay-trash:undo:portletURL", _portletURL);
+		request.setAttribute("liferay-trash:undo:redirect", _redirect);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE = "/trash_undo/page.jsp";
+	private static final String _PAGE = "/undo/page.jsp";
 
 	private String _portletURL;
 	private String _redirect;

@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String confirmMessage = (String)request.getAttribute("liferay-trash:trash-empty:confirmMessage");
-String emptyMessage = (String)request.getAttribute("liferay-trash:trash-empty:emptyMessage");
-String infoMessage = (String)request.getAttribute("liferay-trash:trash-empty:infoMessage");
-String portletURL = (String)request.getAttribute("liferay-trash:trash-empty:portletURL");
-int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:trash-empty:totalEntries"));
+String confirmMessage = (String)request.getAttribute("liferay-trash:empty:confirmMessage");
+String emptyMessage = (String)request.getAttribute("liferay-trash:empty:emptyMessage");
+String infoMessage = (String)request.getAttribute("liferay-trash:empty:infoMessage");
+String portletURL = (String)request.getAttribute("liferay-trash:empty:portletURL");
+int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:empty:totalEntries"));
 %>
 
 <c:if test="<%= totalEntries > 0 %>">

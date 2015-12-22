@@ -6,8 +6,8 @@
 	<uri>http://liferay.com/tld/trash</uri>
 	<tag>
 		<description>Creates a component for users to permanently delete items such as images, articles, etc. from the recycle bin.</description>
-		<name>trash-empty</name>
-		<tag-class>com.liferay.trash.taglib.servlet.taglib.TrashEmptyTag</tag-class>
+		<name>empty</name>
+		<tag-class>com.liferay.trash.taglib.servlet.taglib.EmptyTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description>A message to display to confirm that the user wants to remove the item(s) from the recycle bin</description>
@@ -43,8 +43,8 @@
 	</tag>
 	<tag>
 		<description>Creates a message confirming items were moved to the recycle bin and presenting an option to restore them.</description>
-		<name>trash-undo</name>
-		<tag-class>com.liferay.trash.taglib.servlet.taglib.TrashUndoTag</tag-class>
+		<name>undo</name>
+		<tag-class>com.liferay.trash.taglib.servlet.taglib.UndoTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description>The URL of the undo link</description>

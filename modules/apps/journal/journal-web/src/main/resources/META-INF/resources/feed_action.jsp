@@ -55,7 +55,7 @@ JournalFeed feed = (JournalFeed)row.getObject();
 		<portlet:actionURL name="deleteFeeds" var="deleteFeedURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(feed.getGroupId()) %>" />
-			<portlet:param name="deleteFeedIds" value="<%= feed.getFeedId() %>" />
+			<portlet:param name="deleteFeedId" value="<%= feed.getFeedId() %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

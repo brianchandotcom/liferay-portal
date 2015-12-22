@@ -59,8 +59,9 @@ public class AntiSamySanitizerPublisher {
 
 		if (url == null) {
 			throw new IllegalStateException(
-				"Unable to find " +
-					antiSamyConfiguration.configurationFileURL());
+				"Configuration " +
+					antiSamyConfiguration.configurationFileURL() +
+					" not found");
 		}
 
 		Sanitizer sanitizer = new AntiSamySanitizerImpl(url);

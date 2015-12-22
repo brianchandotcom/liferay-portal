@@ -333,7 +333,7 @@
 
 	<command name="ViewChangedDefaultPortalLanguageViaWebContent" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Settings" />
+			<var name="portlet" value="Instance Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#configureCurrentLanguagesCP">
@@ -460,7 +460,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Settings" />
+			<var name="portlet" value="Instance Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#configureCurrentLanguagesCP">

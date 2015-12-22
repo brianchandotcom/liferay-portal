@@ -695,7 +695,7 @@
 		<execute function="AssertLocation" value1="http://localhost:8080/" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Settings" />
+			<var name="portlet" value="Instance Settings" />
 		</execute>
 
 		<execute function="Type" locator1="PortalSettings#HOME_URL_FIELD" value1="/user" />

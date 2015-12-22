@@ -8,14 +8,6 @@ $horizontal-spacing: 35px;
 		top: 0;
 	}
 
-	.ddl-form-alert {
-		border-radius: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-		z-index: 500;
-	}
-
 	.ddl-form-builder-buttons {
 		margin-bottom: 0;
 	}
@@ -717,6 +709,24 @@ $horizontal-spacing: 35px;
 		.form-builder-pagination {
 			margin: 0;
 		}
+	}
+}
+
+.ddl-publish-modal {
+	.alert-info {
+		text-align: center;
+	}
+
+	.ddl-publish-checkbox {
+		width: 100%;
+
+		small {
+			display: block;
+		}
+	}
+
+	.input-checkbox-wrapper {
+		float: right;
 	}
 }
 

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -122,18 +121,7 @@ public class AddRecordSetMVCActionCommand
 
 		DDMStructure ddmStructure = addDDMStructure(actionRequest);
 
-		DDLRecordSet recordSet = addRecordSet(
-			actionRequest, ddmStructure.getStructureId());
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
-
-		boolean publish = ParamUtil.getBoolean(actionRequest, "publish");
-
-		typeSettingsProperties.setProperty(
-			"published", String.valueOf(publish));
-
-		ddlRecordSetService.updateRecordSet(
-			recordSet.getRecordSetId(), typeSettingsProperties.toString());
+		addRecordSet(actionRequest, ddmStructure.getStructureId());
 	}
 
 	protected DDMForm getDDMForm(ActionRequest actionRequest)

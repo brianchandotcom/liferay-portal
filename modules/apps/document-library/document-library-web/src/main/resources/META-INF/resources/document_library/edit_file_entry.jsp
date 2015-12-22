@@ -182,8 +182,12 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 		<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
-		<aui:input name="majorVersion" type="hidden" />
-		<aui:input name="changeLog" type="hidden" />
+
+		<c:if test="<%= (fileEntry != null) && checkedOut %>">
+			<aui:input name="majorVersion" type="hidden" />
+			<aui:input name="changeLog" type="hidden" />
+		</c:if>
+
 		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 
 		<liferay-ui:error exception="<%= AntivirusScannerException.class %>">
@@ -425,6 +429,13 @@ if (portletTitleBasedNavigation) {
 							name="updateVersionDetails"
 							type="checkbox"
 						/>
+
+						<div id="<portlet:namespace />versionDetails" style="display: none">
+							<aui:input label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
+							<aui:input label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
+
+							<aui:input label="change-log" name="changeLog" type="textarea" />
+						</div>
 					</c:if>
 				</c:if>
 			</aui:fieldset>
@@ -503,7 +514,9 @@ if (portletTitleBasedNavigation) {
 	/>
 </div>
 
-<%@ include file="/document_library/version_details.jspf" %>
+<c:if test="<%= (fileEntry != null) && checkedOut %>">
+	<%@ include file="/document_library/version_details.jspf" %>
+</c:if>
 
 <aui:script>
 	function <portlet:namespace />changeFileEntryType() {
@@ -549,19 +562,11 @@ if (portletTitleBasedNavigation) {
 
 		form.fm('<%= Constants.CMD %>').val('<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>');
 
-		var checkedOut = <%= (fileEntry != null) && checkedOut %>;
-		var showModalDialog = form.fm('updateVersionDetails').is(':checked');
-
-		if (draft || !showModalDialog) {
-			if (draft) {
-				form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
-			}
-
-			submitForm(form);
+		if (draft) {
+			form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
 		}
-		else if (!checkedOut) {
-			<portlet:namespace />showVersionDetailsDialog(form);
-		}
+
+		submitForm(form);
 	}
 
 	Liferay.provide(
@@ -592,6 +597,17 @@ if (portletTitleBasedNavigation) {
 		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');
 	}
 </aui:script>
+
+<c:if test="<%= (fileEntry != null) && !checkedOut %>">
+	<aui:script use="aui-base">
+		$('#<portlet:namespace />updateVersionDetails').on(
+			'click',
+			function(event) {
+				$('#<portlet:namespace />versionDetails').show();
+			}
+		);
+	</aui:script>
+</c:if>
 
 <%
 if (fileEntry != null) {

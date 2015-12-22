@@ -150,11 +150,14 @@ public class DDMFormFactoryHelper {
 
 		String predefinedValue = _ddmFormField.predefinedValue();
 
-		if (Validator.isNull(predefinedValue)) {
-			return localizedValue;
-		}
+		String fieldType = getDDMFormFieldType();
 
-		localizedValue.addString(_defaultLocale, predefinedValue);
+		if (Validator.isNotNull(predefinedValue)) {
+			localizedValue.addString(_defaultLocale, predefinedValue);
+		}
+		else if (fieldType.equals("checkbox")) {
+			localizedValue.addString(_defaultLocale, Boolean.FALSE.toString());
+		}
 
 		return localizedValue;
 	}

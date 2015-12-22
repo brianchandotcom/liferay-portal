@@ -36,10 +36,9 @@ public class JarJavaFileObject extends BaseJavaFileObject {
 
 		super(Kind.CLASS, className);
 
-		_url = url;
 		_entryName = entryName;
 
-		_jarURLConnection =(JarURLConnection)_url.openConnection();
+		_jarURLConnection =(JarURLConnection)url.openConnection();
 	}
 
 	@Override
@@ -63,6 +62,5 @@ public class JarJavaFileObject extends BaseJavaFileObject {
 
 	private final String _entryName;
 	private final JarURLConnection _jarURLConnection;
-	private final URL _url;
 
 }

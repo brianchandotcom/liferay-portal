@@ -42,7 +42,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:trash-undo
+<liferay-trash:undo
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 

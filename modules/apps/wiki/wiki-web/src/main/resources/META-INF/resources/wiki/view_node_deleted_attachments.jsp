@@ -52,7 +52,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 	<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
 </portlet:actionURL>
 
-<liferay-trash:trash-empty
+<liferay-trash:empty
 	confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-wiki-node"
 	emptyMessage="remove-the-attachments-for-this-wiki-node"
 	infoMessage="attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted"

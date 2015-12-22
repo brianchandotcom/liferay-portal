@@ -12,32 +12,15 @@
  * details.
  */
 
-package com.liferay.map.api;
-
-import java.io.IOException;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package com.liferay.map.constants;
 
 /**
  * @author Jürgen Kappler
  */
-public interface MapProvider {
+public class MapProviderWebKeys {
 
-	public String getHelpMessage();
+	public static final String MAP_PROVIDER_KEY = "MAP_PROVIDER_KEY";
 
-	public String getKey();
-
-	public String getLabel(Locale locale);
-
-	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
-
-	public boolean includeConfiguration(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
+	public static final String MAP_PROVIDER_TRACKER = "MAP_PROVIDER_TRACKER";
 
 }

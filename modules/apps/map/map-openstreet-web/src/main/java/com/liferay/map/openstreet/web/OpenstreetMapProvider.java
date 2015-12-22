@@ -14,8 +14,8 @@
 
 package com.liferay.map.openstreet.web;
 
-import com.liferay.map.api.BaseJSPMapProvider;
-import com.liferay.map.api.MapProvider;
+import com.liferay.map.BaseJSPMapProvider;
+import com.liferay.map.MapProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 

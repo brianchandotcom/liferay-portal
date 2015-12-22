@@ -6,8 +6,8 @@ processResources.dependsOn processSanitizerConfiguration
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "2.4.1"
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+
 	compile group: "org.owasp.antisamy", name: "antisamy", version: "1.5.3"
-	compile project(":apps:configuration-admin:configuration-admin-api")
 }
 
 downloadSanitizerConfiguration {

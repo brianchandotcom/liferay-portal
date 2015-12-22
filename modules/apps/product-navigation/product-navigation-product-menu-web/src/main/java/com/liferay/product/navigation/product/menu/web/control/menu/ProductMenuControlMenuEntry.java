@@ -54,9 +54,7 @@ public class ProductMenuControlMenuEntry extends BaseJSPControlMenuEntry {
 	}
 
 	@Override
-	public boolean hasAccessPermission(HttpServletRequest request)
-		throws PortalException {
-
+	public boolean isShow(HttpServletRequest request) throws PortalException {
 		if (_panelCategoryRegistry == null) {
 			return false;
 		}
@@ -76,7 +74,7 @@ public class ProductMenuControlMenuEntry extends BaseJSPControlMenuEntry {
 			return false;
 		}
 
-		return super.hasAccessPermission(request);
+		return super.isShow(request);
 	}
 
 	@Override

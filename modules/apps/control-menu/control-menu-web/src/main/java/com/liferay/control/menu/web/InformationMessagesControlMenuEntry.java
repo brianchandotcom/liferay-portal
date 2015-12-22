@@ -57,28 +57,6 @@ public class InformationMessagesControlMenuEntry
 		return "/entries/information_messages.jsp";
 	}
 
-	@Override
-	public boolean hasAccessPermission(HttpServletRequest request)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		if (!isCustomizableLayout(themeDisplay) &&
-			!isLinkedLayout(themeDisplay) && !isModifiedLayout(themeDisplay)) {
-
-			return false;
-		}
-
-		return super.hasAccessPermission(request);
-	}
-
 	public boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -178,6 +156,26 @@ public class InformationMessagesControlMenuEntry
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isShow(HttpServletRequest request) throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		if (!isCustomizableLayout(themeDisplay) &&
+			!isLinkedLayout(themeDisplay) && !isModifiedLayout(themeDisplay)) {
+
+			return false;
+		}
+
+		return super.isShow(request);
 	}
 
 	@Override

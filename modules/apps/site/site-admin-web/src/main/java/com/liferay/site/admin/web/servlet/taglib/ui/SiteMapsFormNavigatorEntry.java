@@ -14,8 +14,8 @@
 
 package com.liferay.site.admin.web.servlet.taglib.ui;
 
-import com.liferay.map.api.constants.MapProviderWebKeys;
-import com.liferay.map.api.util.MapProviderHelper;
+import com.liferay.map.constants.MapProviderWebKeys;
+import com.liferay.map.util.MapProviderHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;

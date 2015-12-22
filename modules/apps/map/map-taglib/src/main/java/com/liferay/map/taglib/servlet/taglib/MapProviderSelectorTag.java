@@ -14,9 +14,9 @@
 
 package com.liferay.map.taglib.servlet.taglib;
 
-import com.liferay.map.api.MapProvider;
-import com.liferay.map.api.util.MapProviderTracker;
+import com.liferay.map.MapProvider;
 import com.liferay.map.taglib.servlet.ServletContextUtil;
+import com.liferay.map.util.MapProviderTracker;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;

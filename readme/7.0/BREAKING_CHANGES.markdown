@@ -2986,6 +2986,58 @@ time to focus on other areas of the product that add more value.
 
 ---------------------------------------
 
+### The liferay-ui:trash-empty taglib has been removed and replaced with liferay-trash:empty taglib
+- **Date:** 2015-Nov-30
+- **JIRA Ticket:** LPS-60779
+
+#### What changed?
+
+The `liferay-ui:trash-empty` taglib has been removed and replaced with
+`liferay-trash:empty` taglib.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:trash-empty` tag need to
+update their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-trash` tag library if it isn't already and update
+the tag namespace from `liferay-ui:trash-empty` to `liferay-trash:empty`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------
+
+### The liferay-ui:trash-undo taglib has been removed and replaced with liferay-trash:undo taglib
+- **Date:** 2015-Nov-30
+- **JIRA Ticket:** LPS-60779
+
+#### What changed?
+
+The `liferay-ui:trash-undo` taglib has been removed and replaced with
+`liferay-trash:undo` taglib.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:trash-undo` tag need to
+update their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-trash` tag library if it isn't already and update
+the tag namespace from `liferay-ui:trash-undo` to `liferay-trash:undo`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------
+
 ### Removed the getPageOrderByComparator Method from WikiUtil
 - **Date:** 2015-Dec-01
 - **JIRA Ticket:** LPS-60843
@@ -3144,53 +3196,3 @@ This change was made as a part of the ongoing strategy to modularize Liferay
 Portal by means of an OSGi container.
 
 ---------------------------------------
-
-### The liferay-ui:trash-empty taglib has been removed and replaced with liferay-trash:empty taglib
-- **Date:** 2015-Nov-30
-- **JIRA Ticket:** LPS-60779
-
-#### What changed?
-
-The `liferay-ui:trash-empty` taglib has been removed and replaced with
-`liferay-trash:empty` taglib.
-
-#### Who is affected?
-
-Plugins or templates that are using the `liferay-ui:trash-empty` tag need to
-update their usage of the tag.
-
-#### How should I update my code?
-
-You should import the `liferay-trash` tag library if it isn't already and update
-the tag namespace from `liferay-ui:trash-empty` to `liferay-trash:empty`.
-
-#### Why was this change made?
-
-This change was made as a part of the ongoing strategy to modularize Liferay
-Portal by means of an OSGi container.
-
----------------------------------------
-
-### The liferay-ui:trash-undo taglib has been removed and replaced with liferay-trash:undo taglib
-- **Date:** 2015-Nov-30
-- **JIRA Ticket:** LPS-60779
-
-#### What changed?
-
-The `liferay-ui:trash-undo` taglib has been removed and replaced with
-`liferay-trash:undo` taglib.
-
-#### Who is affected?
-
-Plugins or templates that are using the `liferay-ui:trash-undo` tag need to
-update their usage of the tag.
-
-#### How should I update my code?
-
-You should import the `liferay-trash` tag library if it isn't already and update
-the tag namespace from `liferay-ui:trash-undo` to `liferay-trash:undo`.
-
-#### Why was this change made?
-
-This change was made as a part of the ongoing strategy to modularize Liferay
-Portal by means of an OSGi container.

@@ -19,12 +19,15 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.workflow.definition.web.search.WorkflowDefinitionSearchTerms;
+import com.liferay.workflow.definition.web.util.WorkflowDefinitionPortletUtil;
 
 import java.util.Iterator;
 import java.util.List;
@@ -65,7 +68,7 @@ public class WorkflowDefinitionDisplayContext {
 		List<WorkflowDefinition> workflowDefinitions =
 			WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
 				_workflowDefinitionRequestHelper.getCompanyId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 
 		WorkflowDefinitionSearchTerms searchTerms =
 			(WorkflowDefinitionSearchTerms)searchContainer.getSearchTerms();
@@ -160,6 +163,22 @@ public class WorkflowDefinitionDisplayContext {
 				}
 			}
 		}
+	}
+
+	protected OrderByComparator<WorkflowDefinition> getOrderByComparator() {
+		HttpServletRequest request =
+			_workflowDefinitionRequestHelper.getRequest();
+
+		ThemeDisplay themeDisplay =
+			_workflowDefinitionRequestHelper.getThemeDisplay();
+
+		String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+
+		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+		return WorkflowDefinitionPortletUtil.
+			getWorkflowDefitionOrderByComparator(
+				themeDisplay.getLanguageId(), orderByCol, orderByType);
 	}
 
 	private final WorkflowDefinitionRequestHelper

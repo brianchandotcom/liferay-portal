@@ -50,6 +50,7 @@ public class PublishRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		long recordSetId = ParamUtil.getLong(resourceRequest, "recordSetId");
+
 		boolean published = ParamUtil.getBoolean(resourceRequest, "published");
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);

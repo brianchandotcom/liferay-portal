@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -34,7 +34,6 @@ import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.spi.FileSystemProvider;
 
 import java.util.ArrayList;
@@ -124,143 +123,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		return resourceName.replace(CharPool.SLASH, CharPool.PERIOD);
 	}
 
-	protected JavaFileObject getJavaFileObject(
-		URL resourceURL, String resourceName) {
-
-		String protocol = resourceURL.getProtocol();
-
-		String className = getClassName(resourceName);
-
-		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
-			return new BundleJavaFileObject(className, resourceURL);
-		}
-		else if (protocol.equals("jar")) {
-			try {
-				return new JarJavaFileObject(
-					className, resourceURL, resourceName);
-			}
-			catch (IOException ioe) {
-				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
-			}
-		}
-		else if (protocol.equals("vfs")) {
-			try {
-				return new VfsJavaFileObject(
-					className, resourceURL, resourceName);
-			}
-			catch (MalformedURLException murie) {
-				_logger.log(Logger.LOG_ERROR, murie.getMessage(), murie);
-			}
-		}
-
-		return null;
-	}
-
-	protected Collection<JavaFileObject> handleSystemBundle(
-		BundleWiring bundleWiring, String path) {
-
-		Collection<JavaFileObject> javaFileObjects = _javaFileObjects.get(path);
-
-		if (javaFileObjects != null) {
-			return javaFileObjects;
-		}
-
-		List<URL> urls = null;
-
-		Map<String, List<URL>> extraPackageMap = _serviceTracker.getService();
-
-		if (extraPackageMap != null) {
-			urls = extraPackageMap.get(path.replace('/', '.'));
-		}
-
-		if ((urls == null) || urls.isEmpty()) {
-			ClassLoader classLoader = bundleWiring.getClassLoader();
-
-			try {
-				Enumeration<URL> enumeration = classLoader.getResources(path);
-
-				if ((enumeration != null) && enumeration.hasMoreElements()) {
-					urls = Collections.list(enumeration);
-				}
-			}
-			catch (IOException ioe) {
-				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
-			}
-		}
-
-		if ((urls == null) || urls.isEmpty()) {
-			_javaFileObjects.put(path, Collections.<JavaFileObject>emptyList());
-
-			return Collections.emptyList();
-		}
-
-		for (URL url : urls) {
-			try (FileSystem fileSystem = openFileSystem(url)) {
-				FileSystemProvider fileSystemProvider = fileSystem.provider();
-
-				try (DirectoryStream<Path> directoryStream =
-						fileSystemProvider.newDirectoryStream(
-							fileSystem.getPath(path),
-							new Filter<Path>() {
-
-								@Override
-								public boolean accept(Path entryPath) {
-									Path fileNamePath = entryPath.getFileName();
-
-									String fileName = fileNamePath.toString();
-
-									return fileName.endsWith(".class");
-								}
-
-							})) {
-
-					for (Path filePath : directoryStream) {
-						if (javaFileObjects == null) {
-							javaFileObjects = new ArrayList<>();
-						}
-
-						URI uri = filePath.toUri();
-
-						String filePathString = filePath.toString();
-
-						javaFileObjects.add(
-							getJavaFileObject(
-								uri.toURL(), filePathString.substring(1)));
-					}
-				}
-			}
-			catch (Exception e) {
-				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
-			}
-		}
-
-		if (javaFileObjects == null) {
-			javaFileObjects = Collections.<JavaFileObject>emptyList();
-		}
-
-		_javaFileObjects.put(path, javaFileObjects);
-
-		return javaFileObjects;
-	}
-
-	protected boolean isExportsPackage(
-		BundleWiring bundleWiring, String packageName) {
-
-		List<BundleCapability> bundleCapabilities =
-			bundleWiring.getCapabilities("osgi.wiring.package");
-
-		for (BundleCapability bundleCapability : bundleCapabilities) {
-			Map<String, Object> attributes = bundleCapability.getAttributes();
-
-			if (packageName.equals(attributes.get("osgi.wiring.package"))) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	protected FileSystem openFileSystem(URL url) throws IOException {
+	protected File getFile(URL url) throws IOException {
 		URLConnection urlConnection = url.openConnection();
 
 		String fileName = url.getFile();
@@ -317,7 +180,144 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			}
 		}
 
-		return FileSystems.newFileSystem(Paths.get(decodePath(fileName)), null);
+		return new File(decodePath(fileName));
+	}
+
+	protected JavaFileObject getJavaFileObject(
+		URL resourceURL, String resourceName) {
+
+		String protocol = resourceURL.getProtocol();
+
+		String className = getClassName(resourceName);
+
+		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
+			return new BundleJavaFileObject(className, resourceURL);
+		}
+		else if (protocol.equals("vfs")) {
+			try {
+				return new VfsJavaFileObject(
+					className, resourceURL, resourceName);
+			}
+			catch (MalformedURLException murie) {
+				_logger.log(Logger.LOG_ERROR, murie.getMessage(), murie);
+			}
+		}
+
+		return null;
+	}
+
+	protected Collection<JavaFileObject> handleSystemBundle(
+		BundleWiring bundleWiring, String path) {
+
+		Collection<JavaFileObject> javaFileObjects = _javaFileObjects.get(path);
+
+		if (javaFileObjects != null) {
+			return javaFileObjects;
+		}
+
+		List<URL> urls = null;
+
+		Map<String, List<URL>> extraPackageMap = _serviceTracker.getService();
+
+		if (extraPackageMap != null) {
+			urls = extraPackageMap.get(path.replace('/', '.'));
+		}
+
+		if ((urls == null) || urls.isEmpty()) {
+			ClassLoader classLoader = bundleWiring.getClassLoader();
+
+			try {
+				Enumeration<URL> enumeration = classLoader.getResources(path);
+
+				if ((enumeration != null) && enumeration.hasMoreElements()) {
+					urls = Collections.list(enumeration);
+				}
+			}
+			catch (IOException ioe) {
+				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
+			}
+		}
+
+		if ((urls == null) || urls.isEmpty()) {
+			_javaFileObjects.put(path, Collections.<JavaFileObject>emptyList());
+
+			return Collections.emptyList();
+		}
+
+		for (URL url : urls) {
+			try {
+				File file = getFile(url);
+
+				try (FileSystem fileSystem = FileSystems.newFileSystem(
+						file.toPath(), null)) {
+
+					FileSystemProvider fileSystemProvider =
+						fileSystem.provider();
+
+					try (DirectoryStream<Path> directoryStream =
+							fileSystemProvider.newDirectoryStream(
+								fileSystem.getPath(path),
+								new Filter<Path>() {
+
+									@Override
+									public boolean accept(Path entryPath) {
+										Path fileNamePath =
+											entryPath.getFileName();
+
+										String fileName =
+											fileNamePath.toString();
+
+										return fileName.endsWith(".class");
+									}
+
+								})) {
+
+						for (Path entryPath : directoryStream) {
+							if (javaFileObjects == null) {
+								javaFileObjects = new ArrayList<>();
+							}
+
+							String entryPathString = entryPath.toString();
+
+							entryPathString = entryPathString.substring(1);
+
+							javaFileObjects.add(
+								new JarJavaFileObject(
+									getClassName(entryPathString), file,
+									entryPathString));
+						}
+					}
+				}
+			}
+			catch (IOException ioe) {
+				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
+			}
+		}
+
+		if (javaFileObjects == null) {
+			javaFileObjects = Collections.<JavaFileObject>emptyList();
+		}
+
+		_javaFileObjects.put(path, javaFileObjects);
+
+		return javaFileObjects;
+	}
+
+	protected boolean isExportsPackage(
+		BundleWiring bundleWiring, String packageName) {
+
+		List<BundleCapability> bundleCapabilities =
+			bundleWiring.getCapabilities("osgi.wiring.package");
+
+		for (BundleCapability bundleCapability : bundleCapabilities) {
+			Map<String, Object> attributes = bundleCapability.getAttributes();
+
+			if (packageName.equals(attributes.get("osgi.wiring.package"))) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected Collection<JavaFileObject> toJavaFileObjects(

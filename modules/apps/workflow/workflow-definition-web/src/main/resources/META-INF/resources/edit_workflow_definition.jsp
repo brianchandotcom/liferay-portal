@@ -43,7 +43,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
 </liferay-portlet:actionURL>
 
-<div class="container-fluid-1280">
+<div class="container-fluid-1280 workflow-definition-container">
 	<aui:form action="<%= editWorkflowDefinitionURL %>" enctype="multipart/form-data" method="post">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="name" type="hidden" value="<%= name %>" />

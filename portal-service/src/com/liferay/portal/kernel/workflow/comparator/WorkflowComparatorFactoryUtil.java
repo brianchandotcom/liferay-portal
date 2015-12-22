@@ -41,6 +41,20 @@ public class WorkflowComparatorFactoryUtil {
 	}
 
 	public static OrderByComparator<WorkflowInstance>
+		getInstanceCompletedComparator() {
+
+		return getWorkflowComparatorFactory().getInstanceCompletedComparator(
+			false);
+	}
+
+	public static OrderByComparator<WorkflowInstance>
+		getInstanceCompletedComparator(boolean ascending) {
+
+		return getWorkflowComparatorFactory().getInstanceCompletedComparator(
+			ascending);
+	}
+
+	public static OrderByComparator<WorkflowInstance>
 		getInstanceEndDateComparator() {
 
 		return getWorkflowComparatorFactory().getInstanceEndDateComparator(

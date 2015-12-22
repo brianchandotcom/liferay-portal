@@ -241,8 +241,7 @@ public class BookmarksPortletToolbarContributor
 			BookmarksGroupServiceOverriddenConfiguration
 				bookmarksGroupServiceOverriddenConfiguration =
 					ConfigurationFactoryUtil.getConfiguration(
-						BookmarksGroupServiceOverriddenConfiguration.
-							class,
+						BookmarksGroupServiceOverriddenConfiguration.class,
 						new GroupServiceSettingsLocator(
 							themeDisplay.getScopeGroupId(),
 							BookmarksConstants.SERVICE_NAME));

@@ -150,9 +150,9 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 					PortletURL rowURL = renderResponse.createRenderURL();
 
 					rowURL.setParameter("mvcRenderCommandName", "/wiki_admin/view_pages");
+					rowURL.setParameter("navigation", "all-pages");
 					rowURL.setParameter("redirect", currentURL);
 					rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-					rowURL.setParameter("navigation", "all-pages");
 					%>
 
 					<c:choose>

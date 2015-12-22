@@ -203,7 +203,7 @@ public class WikiPortletToolbarContributor
 		}
 		catch (ConfigurationException ce) {
 			_log.error(
-				"Cannot obtain initial node name for group id " +
+				"Unable to get initial node name for group " +
 					themeDisplay.getScopeGroupId());
 		}
 

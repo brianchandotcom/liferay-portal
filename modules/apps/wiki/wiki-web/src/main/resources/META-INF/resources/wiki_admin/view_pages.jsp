@@ -96,14 +96,7 @@ else {
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-
-		<%
-		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deletePages();";
-
-		boolean isTrashEnabled = TrashUtil.isTrashEnabled(scopeGroupId);
-		%>
-
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass='<%= isTrashEnabled ? "icon-trash" : "icon-remove" %>' label='<%= isTrashEnabled ? "recycle-bin" : "delete" %>' />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deletePages();" %>' iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

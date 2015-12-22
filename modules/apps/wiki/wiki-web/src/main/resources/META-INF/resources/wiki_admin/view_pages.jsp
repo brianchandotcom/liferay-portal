@@ -162,7 +162,7 @@ else {
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-icon
-							icon="folder"
+							icon="pencil"
 							toggleRowChecker="<%= true %>"
 						/>
 

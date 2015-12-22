@@ -25,7 +25,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Julio Camarero
  */
-public class TrashUndoTag extends IncludeTag {
+public class UndoTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {

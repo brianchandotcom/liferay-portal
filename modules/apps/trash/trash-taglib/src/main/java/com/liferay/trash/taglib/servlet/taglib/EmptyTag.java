@@ -25,7 +25,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Sergio González
  */
-public class TrashEmptyTag extends IncludeTag {
+public class EmptyTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {

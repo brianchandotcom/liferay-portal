@@ -26,6 +26,8 @@ Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
 String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
+
+UserRoleChecker rowChecker = new UserRoleChecker(renderResponse, role);
 %>
 
 <aui:input name="addUserIds" type="hidden" />
@@ -34,7 +36,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 <liferay-ui:membership-policy-error />
 
 <liferay-ui:search-container
-	rowChecker="<%= new UserRoleChecker(renderResponse, role) %>"
+	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 	var="userSearchContainer"
 >
@@ -58,15 +60,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 		modelVar="user2"
 		rowIdProperty="screenName"
 	>
-		<liferay-ui:search-container-column-text
-			name="name"
-			property="fullName"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="screen-name"
-			property="screenName"
-		/>
+		<%@ include file="/user_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
 	<%

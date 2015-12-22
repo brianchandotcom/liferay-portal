@@ -9,7 +9,7 @@ AUI.add(
 			{
 				ATTRS: {
 					dataSourceOptions: {
-						value: [],
+						value: []
 					},
 
 					dataSourceType: {

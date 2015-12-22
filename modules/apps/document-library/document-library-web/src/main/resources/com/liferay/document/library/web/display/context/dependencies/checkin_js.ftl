@@ -5,8 +5,7 @@ Liferay.provide(
 		Liferay.Portlet.DocumentLibrary.Checkin.showDialog(
 			'${namespace}versionDetails',
 			'${dialogTitle}',
-			['${namespace}versionDetailsMajorVersion', '${namespace}versionDetailsChangeLog'],
-			function(event, nodes) {
+			function(event) {
 				var $ = AUI.$;
 
 				var portletURL = new Liferay.PortletURL(null, null, saveURL);

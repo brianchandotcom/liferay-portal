@@ -576,8 +576,7 @@ if (portletTitleBasedNavigation) {
 			Liferay.Portlet.DocumentLibrary.Checkin.showDialog(
 				'<portlet:namespace />versionDetails',
 				'<%= UnicodeLanguageUtil.get(request, "describe-your-changes") %>',
-				['<portlet:namespace />versionDetailsMajorVersion', '<portlet:namespace />versionDetailsChangeLog'],
-				function(event, nodes) {
+				function(event) {
 					var $ = AUI.$;
 
 					var majorVersionNode = $("input:radio[name='<portlet:namespace />versionDetailsMajorVersion']:checked");

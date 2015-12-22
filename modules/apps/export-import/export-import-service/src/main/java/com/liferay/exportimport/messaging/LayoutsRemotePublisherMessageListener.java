@@ -107,7 +107,8 @@ public class LayoutsRemotePublisherMessageListener
 
 		try {
 			StagingUtil.copyRemoteLayouts(
-				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
+				sourceGroupId, privateLayout, layoutIdMap,
+				exportImportConfiguration.getName(), parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
 				targetGroupId, remotePrivateLayout);
 		}

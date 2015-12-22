@@ -959,7 +959,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 						input="${testray.testcase.warnings}"
 						override="true"
 						property="testray.testcase.warnings"
-						regexp="(?&lt;!&lt;value&gt;)&lt;!\[CDATA\["
+						regexp="(?&lt;!&lt;value&gt;\s?)&lt;!\\?\[CDATA\\?\["
 						replace="&amp;lt;!&amp;#91;CDATA&amp;#91;"
 					/>
 
@@ -968,7 +968,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 						input="${testray.testcase.warnings}"
 						override="true"
 						property="testray.testcase.warnings"
-						regexp="]]&gt;(?!&lt;\/value&gt;)"
+						regexp="\\?]\\?]&gt;(?!\s*&lt;\/value&gt;)"
 						replace="&amp;#93;&amp;#93;&amp;gt;"
 					/>
 				</then>

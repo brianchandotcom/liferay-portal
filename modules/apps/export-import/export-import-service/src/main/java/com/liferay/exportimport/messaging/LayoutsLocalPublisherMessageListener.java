@@ -94,7 +94,7 @@ public class LayoutsLocalPublisherMessageListener
 		try {
 			StagingUtil.publishLayouts(
 				userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
-				parameterMap);
+				exportImportConfiguration.getName(), parameterMap);
 		}
 		finally {
 			resetThreadLocals();

@@ -215,6 +215,8 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			}
 			%>
 
+			<aui:input name="name" />
+
 			<aui:fieldset cssClass="options-group" label="date">
 				<%@ include file="/new_publication/publish_layouts_scheduler.jspf" %>
 			</aui:fieldset>

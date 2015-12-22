@@ -141,6 +141,10 @@ public class PanelAppTag extends BasePanelTag {
 
 			_label = PortalUtil.getPortletTitle(
 				portlet, servletContext, themeDisplay.getLocale());
+
+			if (!_data.containsKey("qa-id")) {
+				_data.put("qa-id", "app");
+			}
 		}
 
 		if (!_data.containsKey("title")) {

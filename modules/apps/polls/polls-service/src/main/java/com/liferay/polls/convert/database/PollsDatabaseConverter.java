@@ -15,8 +15,8 @@
 package com.liferay.polls.convert.database;
 
 import com.liferay.portal.convert.DatabaseConverter;
+import com.liferay.portal.convert.util.HibernateModelLoaderUtil;
 import com.liferay.portal.convert.util.ModelMigrator;
-import com.liferay.portal.convert.util.ModelMigratorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -35,7 +35,7 @@ public class PollsDatabaseConverter implements DatabaseConverter {
 	public void convert(DataSource dataSource) throws Exception {
 		_modelMigrator.migrate(
 			dataSource,
-			ModelMigratorUtil.getModelClassesName(
+			HibernateModelLoaderUtil.getModelClassesName(
 				getClass().getClassLoader(), ".*Polls.*"));
 	}
 

@@ -14,10 +14,18 @@
 
 package com.liferay.portal.settings.web.servlet.taglib.ui;
 
+import com.liferay.map.constants.MapProviderWebKeys;
+import com.liferay.map.util.MapProviderHelper;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import java.io.IOException;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,6 +53,21 @@ public class CompanySettingsMapsFormNavigatorEntry
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		request.setAttribute(
+			MapProviderWebKeys.MAP_PROVIDER_KEY,
+			_mapProviderHelper.getMapProviderKey(themeDisplay.getCompanyId()));
+
+		super.include(request, response);
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)",
 		unbind = "-"
@@ -57,5 +80,12 @@ public class CompanySettingsMapsFormNavigatorEntry
 	protected String getJspPath() {
 		return "/maps.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected void setMapProviderHelper(MapProviderHelper mapProviderHelper) {
+		_mapProviderHelper = mapProviderHelper;
+	}
+
+	private volatile MapProviderHelper _mapProviderHelper;
 
 }

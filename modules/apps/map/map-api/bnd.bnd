@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Map API
+Bundle-SymbolicName: com.liferay.map.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.map.*
+Include-Resource: classes

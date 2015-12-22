@@ -2821,6 +2821,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<then>
 						<property name="portal.version.url.path" value="6.1.2-ga3" />
 					</then>
+					<elseif>
+						<equals arg1="${portal.version}" arg2="6.2.3" />
+						<then>
+							<property name="portal.version.url.path" value="6.2.3-ga4" />
+						</then>
+					</elseif>
 					<else>
 						<property name="portal.version.url.path" value="${portal.version}" />
 					</else>
@@ -2830,6 +2836,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<or>
 						<equals arg1="${portal.version}" arg2="6.0.6" />
 						<equals arg1="${portal.version}" arg2="6.1.2" />
+						<equals arg1="${portal.version}" arg2="6.2.3" />
 					</or>
 					<then>
 						<propertycopy from="sql.legacy.base.url[ce]" name="sql.legacy.base.url" />

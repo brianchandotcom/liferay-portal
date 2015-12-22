@@ -338,6 +338,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
+	public String getSchemaVersion() {
+		return "1.0.0";
+	}
+
+	@Override
 	public String getServiceName() {
 		return null;
 	}
@@ -509,6 +514,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	@Override
 	public void setRank(int rank) {
 		_rank = rank;
+	}
+
+	@Override
+	public boolean validateSchemaVersion(String schemaVersion) {
+		return true;
 	}
 
 	protected Element addExportDataRootElement(

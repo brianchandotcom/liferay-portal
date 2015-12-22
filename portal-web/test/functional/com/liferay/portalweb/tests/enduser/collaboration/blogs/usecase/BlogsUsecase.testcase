@@ -1757,6 +1757,11 @@
 			</execute>
 		</for>
 
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization3 Name" />
+			<var name="searchTerm" value="Organization3 Name" />
+		</execute>
+
 		<execute macro="Organization#selectParentOrganizationCP">
 			<var name="orgName" value="Organization3 Name" />
 			<var name="parentOrgName" value="Organization1 Name" />

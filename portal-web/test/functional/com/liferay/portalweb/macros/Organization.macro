@@ -419,11 +419,13 @@
 
 	<command name="gotoCP">
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchToken}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_orgName" value="${orgName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 	</command>
 
@@ -476,21 +478,20 @@
 	</command>
 
 	<command name="searchCP">
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
+
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 	</command>
 
 	<command name="selectParentOrganizationCP">
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${orgName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_SELECT_BUTTON" value1="Select" />
@@ -563,9 +564,11 @@
 	</command>
 
 	<command name="viewAssignMemberCP">
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_LAST_NAME_1" value1="${userLastName}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_LAST_NAME" value1="${userLastName}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
 	<command name="viewCommentCP">
@@ -582,14 +585,13 @@
 	</command>
 
 	<command name="viewCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${orgName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-
 		<var name="key_orgName" value="${orgName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
+
 		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<var name="key_orgType" value="${orgType}" />
@@ -602,7 +604,8 @@
 
 	<command name="viewEditSiteCP">
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${orgNameEdit}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_orgName" value="${orgNameEdit}" />
 

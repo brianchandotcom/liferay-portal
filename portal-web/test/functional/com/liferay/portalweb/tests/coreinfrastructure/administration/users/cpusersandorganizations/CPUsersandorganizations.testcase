@@ -101,6 +101,16 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchTerm" value="Organization Name" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
 		<execute macro="Suborganization#addCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
@@ -187,6 +197,11 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchTerm" value="Organization Name" />
+		</execute>
+
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
@@ -238,6 +253,11 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchTerm" value="Organization Name" />
+		</execute>
+
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
@@ -268,6 +288,11 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name 1" />
+			<var name="searchTerm" value="Organization Name 1" />
+		</execute>
+
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Name 1" />
 			<var name="orgType" value="Regular Organization" />
@@ -286,6 +311,11 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name 2" />
+			<var name="searchTerm" value="Organization Name 2" />
+		</execute>
+
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Name 2" />
 			<var name="orgType" value="Regular Organization" />
@@ -302,6 +332,11 @@
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name 3" />
+			<var name="searchTerm" value="Organization Name 3" />
 		</execute>
 
 		<execute macro="Organization#viewCP">
@@ -491,6 +526,16 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchTerm" value="Organization Name" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
 		<execute macro="Suborganization#addCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
@@ -506,7 +551,6 @@
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
 			<var name="suborgName" value="Suborganization Name" />
-			<var name="suborgSearchName" value="Suborganization" />
 			<var name="suborgType" value="Regular Organization" />
 		</execute>
 	</command>
@@ -1482,6 +1526,11 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name Edit" />
+			<var name="searchTerm" value="Organization Name Edit" />
+		</execute>
+
 		<execute macro="Organization#viewEditSiteCP">
 			<var name="orgNameEdit" value="Organization Name Edit" />
 			<var name="orgType" value="Regular Organization" />
@@ -1762,7 +1811,6 @@
 
 		<execute macro="Organization#searchCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
 			<var name="searchTerm" value="Organization Name" />
 		</execute>
 	</command>

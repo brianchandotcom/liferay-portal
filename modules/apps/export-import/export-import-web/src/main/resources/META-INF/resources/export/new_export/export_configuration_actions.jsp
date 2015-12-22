@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/export/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");

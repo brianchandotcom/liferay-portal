@@ -15,7 +15,11 @@
 package com.liferay.journal.web.search;
 
 import com.liferay.journal.model.JournalFeed;
+import com.liferay.journal.util.comparator.FeedIDComparator;
+import com.liferay.journal.util.comparator.FeedNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +57,39 @@ public class FeedSearch extends SearchContainer<JournalFeed> {
 		iteratorURL.setParameter(
 			FeedDisplayTerms.GROUP_ID,
 			String.valueOf(displayTerms.getGroupId()));
+
+			String orderByCol = ParamUtil.getString(
+				portletRequest, "orderByCol");
+			String orderByType = ParamUtil.getString(
+				portletRequest, "orderByType");
+
+			OrderByComparator<JournalFeed> orderByComparator =
+				getOrganizationOrderByComparator(orderByCol, orderByType);
+
+			setOrderByCol(orderByCol);
+			setOrderByType(orderByType);
+			setOrderByComparator(orderByComparator);
+	}
+
+	protected OrderByComparator<JournalFeed> getOrganizationOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<JournalFeed> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = new FeedNameComparator(orderByAsc);
+		}
+		else {
+			orderByComparator = new FeedIDComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 }

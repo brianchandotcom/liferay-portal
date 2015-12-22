@@ -100,25 +100,24 @@ if (feed != null) {
 	feedURL.setParameter("feedId", String.valueOf(feedId));
 	feedURL.setResourceID("rss");
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") : feed.getName());
 %>
 
 <portlet:actionURL var="editFeedURL">
 	<portlet:param name="mvcPath" value="/edit_feed.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editFeedURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFeed();" %>'>
+<aui:form action="<%= editFeedURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFeed();" %>'>
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="feedId" type="hidden" value="<%= feedId %>" />
 	<aui:input name="ddmRendererTemplateKey" type="hidden" value="<%= ddmRendererTemplateKey %>" />
 	<aui:input name="contentField" type="hidden" value="<%= contentField %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (feed == null) %>"
-		title='<%= (feed == null) ? "new-feed" : feed.getName() %>'
-	/>
 
 	<liferay-ui:error exception="<%= DuplicateFeedIdException.class %>" message="please-enter-a-unique-id" />
 	<liferay-ui:error exception="<%= FeedContentFieldException.class %>" message="please-select-a-valid-feed-item-content" />
@@ -129,188 +128,181 @@ if (feed != null) {
 
 	<aui:model-context bean="<%= feed %>" model="<%= JournalFeed.class %>" />
 
-	<aui:fieldset>
-		<c:choose>
-			<c:when test="<%= feed == null %>">
-				<c:choose>
-					<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() %>">
-						<aui:input name="newFeedId" type="hidden" />
-						<aui:input name="autoFeedId" type="hidden" value="<%= true %>" />
-					</c:when>
-					<c:otherwise>
-						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="lfr-input-text-container" field="feedId" fieldParam="newFeedId" label="id" name="newFeedId" value="<%= newFeedId %>" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<c:choose>
+				<c:when test="<%= feed == null %>">
+					<c:choose>
+						<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() %>">
+							<aui:input name="newFeedId" type="hidden" />
+							<aui:input name="autoFeedId" type="hidden" value="<%= true %>" />
+						</c:when>
+						<c:otherwise>
+							<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="lfr-input-text-container" field="feedId" fieldParam="newFeedId" label="id" name="newFeedId" value="<%= newFeedId %>" />
 
-						<aui:input label="autogenerate-id" name="autoFeedId" type="checkbox" />
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<aui:input name="id" type="resource" value="<%= feedId %>" />
-			</c:otherwise>
-		</c:choose>
+							<aui:input label="autogenerate-id" name="autoFeedId" type="checkbox" />
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
+					<aui:input name="id" type="resource" value="<%= feedId %>" />
+				</c:otherwise>
+			</c:choose>
 
-		<aui:input autoFocus="<%= ((feed != null) && !journalWebConfiguration.journalFeedForceAutogenerateId() && (windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP)) %>" cssClass="lfr-input-text-container" name="name" />
+			<aui:input autoFocus="<%= ((feed != null) && !journalWebConfiguration.journalFeedForceAutogenerateId() && (windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP)) %>" cssClass="lfr-input-text-container" name="name" />
 
-		<aui:input cssClass="lfr-textarea-container" name="description" />
+			<aui:input cssClass="lfr-textarea-container" name="description" />
 
-		<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-layout-friendly-url-help" name="targetLayoutFriendlyUrl" />
+			<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-layout-friendly-url-help" name="targetLayoutFriendlyUrl" />
 
-		<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-portlet-id-help" name="targetPortletId" />
+			<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-portlet-id-help" name="targetPortletId" />
 
-		<c:choose>
-			<c:when test="<%= feed == null %>">
-				<aui:field-wrapper label="permissions">
-					<liferay-ui:input-permissions modelName="<%= JournalFeed.class.getName() %>" />
-				</aui:field-wrapper>
-			</c:when>
-			<c:otherwise>
-				<aui:field-wrapper>
-					<aui:input name="url" type="resource" value="<%= feedURL.toString() %>" />
+			<c:if test="<%= feed != null %>">
+				<aui:input name="url" type="resource" value="<%= feedURL.toString() %>" />
 
-					<aui:a href="<%= feedURL.toString() %>" label="preview" target="_blank" />
-				</aui:field-wrapper>
-			</c:otherwise>
-		</c:choose>
-	</aui:fieldset>
+				<aui:a href="<%= feedURL.toString() %>" label="preview" target="_blank" />
+			</c:if>
+		</aui:fieldset>
 
-	<liferay-ui:panel-container extended="<%= true %>" id="journalFeedSettingsPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="journalFeedConstraintsPanel" persistState="<%= true %>" title="web-content-contraints">
-			<aui:fieldset>
-				<div class="form-group">
-					<aui:input name="ddmStructureKey" required="<%= true %>" type="hidden" value="<%= ddmStructureKey %>" />
-
-					<aui:input name="structure" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
-
-					<aui:button name="selectStructureButton" onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
-
-					<aui:button disabled="<%= Validator.isNull(ddmStructureKey) %>" name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
-				</div>
-
-				<c:choose>
-					<c:when test="<%= ddmTemplates.isEmpty() %>">
-						<aui:input name="ddmTemplateKey" type="hidden" value="<%= ddmTemplateKey %>" />
-					</c:when>
-					<c:otherwise>
-						<aui:field-wrapper label="template">
-							<liferay-ui:table-iterator
-								list="<%= ddmTemplates %>"
-								listType="com.liferay.dynamic.data.mapping.model.DDMTemplate"
-								rowLength="3"
-								rowPadding="30"
-							>
-
-								<%
-								boolean templateChecked = false;
-
-								if (ddmTemplateKey.equals(tableIteratorObj.getTemplateKey())) {
-									templateChecked = true;
-								}
-								%>
-
-								<aui:input checked="<%= templateChecked %>" label="<%= HtmlUtil.escape(tableIteratorObj.getName(locale)) %>" name="ddmTemplateKey" type="radio" value="<%= tableIteratorObj.getTemplateKey() %>" />
-
-								<c:if test="<%= tableIteratorObj.isSmallImage() %>">
-									<br />
-
-									<img alt="" hspace="0" src="<%= HtmlUtil.escapeAttribute(tableIteratorObj.getTemplateImageURL(themeDisplay)) %>" vspace="0" />
-								</c:if>
-							</liferay-ui:table-iterator>
-						</aui:field-wrapper>
-					</c:otherwise>
-				</c:choose>
+		<c:if test="<%= feed == null %>">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<liferay-ui:input-permissions modelName="<%= JournalFeed.class.getName() %>" />
 			</aui:fieldset>
-		</liferay-ui:panel>
+		</c:if>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="journalPresentationSettingsPanel" persistState="<%= true %>" title="presentation-settings">
-			<aui:fieldset>
-				<aui:select label="feed-item-content" name="contentFieldSelector">
-					<aui:option label="<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>" selected="<%= contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) %>" />
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="web-content-contraints">
+			<div class="form-group">
+				<aui:input name="ddmStructureKey" required="<%= true %>" type="hidden" value="<%= ddmStructureKey %>" />
 
-					<optgroup label='<liferay-ui:message key="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />'>
-						<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label="use-default-template" selected="<%= contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT) %>" value="" />
+				<aui:input name="structure" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
 
-						<c:if test="<%= (ddmStructure != null) && (ddmTemplates.size() > 1) %>">
+				<aui:button name="selectStructureButton" onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
+
+				<aui:button disabled="<%= Validator.isNull(ddmStructureKey) %>" name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
+			</div>
+
+			<c:choose>
+				<c:when test="<%= ddmTemplates.isEmpty() %>">
+					<aui:input name="ddmTemplateKey" type="hidden" value="<%= ddmTemplateKey %>" />
+				</c:when>
+				<c:otherwise>
+					<aui:field-wrapper label="template">
+						<liferay-ui:table-iterator
+							list="<%= ddmTemplates %>"
+							listType="com.liferay.dynamic.data.mapping.model.DDMTemplate"
+							rowLength="3"
+							rowPadding="30"
+						>
 
 							<%
-							for (DDMTemplate curTemplate : ddmTemplates) {
-							%>
+							boolean templateChecked = false;
 
-								<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label='<%= LanguageUtil.format(request, "use-template-x", HtmlUtil.escape(curTemplate.getName(locale)), false) %>' selected="<%= ddmRendererTemplateKey.equals(curTemplate.getTemplateKey()) %>" value="<%= curTemplate.getTemplateKey() %>" />
-
-							<%
+							if (ddmTemplateKey.equals(tableIteratorObj.getTemplateKey())) {
+								templateChecked = true;
 							}
 							%>
 
-						</c:if>
-					</optgroup>
+							<aui:input checked="<%= templateChecked %>" label="<%= HtmlUtil.escape(tableIteratorObj.getName(locale)) %>" name="ddmTemplateKey" type="radio" value="<%= tableIteratorObj.getTemplateKey() %>" />
 
-					<c:if test="<%= ddmStructure != null %>">
-						<optgroup label="<liferay-ui:message key="structure-fields" />">
+							<c:if test="<%= tableIteratorObj.isSmallImage() %>">
+								<br />
 
-							<%
-							DDMForm ddmForm = ddmStructure.getDDMForm();
+								<img alt="" hspace="0" src="<%= HtmlUtil.escapeAttribute(tableIteratorObj.getTemplateImageURL(themeDisplay)) %>" vspace="0" />
+							</c:if>
+						</liferay-ui:table-iterator>
+					</aui:field-wrapper>
+				</c:otherwise>
+			</c:choose>
+		</aui:fieldset>
 
-							Map<String, DDMFormField> ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(true);
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="presentation-settings">
+			<aui:select label="feed-item-content" name="contentFieldSelector">
+				<aui:option label="<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>" selected="<%= contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) %>" />
 
-							for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
-								String ddmFormFieldType = ddmFormField.getType();
+				<optgroup label='<liferay-ui:message key="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />'>
+					<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label="use-default-template" selected="<%= contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT) %>" value="" />
 
-								if (ddmFormFieldType.equals("radio") || ddmFormFieldType.equals("select")) {
-									DDMFormFieldOptions ddmFormFieldOptions = ddmFormField.getDDMFormFieldOptions();
+					<c:if test="<%= (ddmStructure != null) && (ddmTemplates.size() > 1) %>">
 
-									for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
-										LocalizedValue optionLabels = ddmFormFieldOptions.getOptionLabels(optionValue);
+						<%
+						for (DDMTemplate curTemplate : ddmTemplates) {
+						%>
 
-										optionValue = ddmFormField.getName() + StringPool.UNDERLINE + optionValue;
-							%>
+							<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label='<%= LanguageUtil.format(request, "use-template-x", HtmlUtil.escape(curTemplate.getName(locale)), false) %>' selected="<%= ddmRendererTemplateKey.equals(curTemplate.getTemplateKey()) %>" value="<%= curTemplate.getTemplateKey() %>" />
 
-										<aui:option label='<%= TextFormatter.format(optionLabels.getString(locale), TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(optionValue) %>" value="<%= optionValue %>" />
+						<%
+						}
+						%>
 
-							<%
-									}
-								}
-								else if (!ddmFormFieldType.equals("checkbox")) {
-							%>
-
-									<aui:option label='<%= TextFormatter.format(ddmFormField.getName(), TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(ddmFormField.getName()) %>" value="<%= ddmFormField.getName() %>" />
-
-							<%
-								}
-							}
-							%>
-
-						</optgroup>
 					</c:if>
-				</aui:select>
+				</optgroup>
 
-				<aui:select name="feedType">
+				<c:if test="<%= ddmStructure != null %>">
+					<optgroup label="<liferay-ui:message key="structure-fields" />">
 
-					<%
-					for (String curFeedType : RSSUtil.FEED_TYPES) {
-					%>
+						<%
+						DDMForm ddmForm = ddmStructure.getDDMForm();
 
-						<aui:option label="<%= RSSUtil.getFeedTypeName(curFeedType) %>" selected="<%= feedType.equals(curFeedType) %>" value="<%= curFeedType %>" />
+						Map<String, DDMFormField> ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(true);
 
-					<%
-					}
-					%>
+						for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+							String ddmFormFieldType = ddmFormField.getType();
 
-				</aui:select>
+							if (ddmFormFieldType.equals("radio") || ddmFormFieldType.equals("select")) {
+								DDMFormFieldOptions ddmFormFieldOptions = ddmFormField.getDDMFormFieldOptions();
 
-				<aui:input label="maximum-items-to-display" name="delta" value="10" />
+								for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
+									LocalizedValue optionLabels = ddmFormFieldOptions.getOptionLabels(optionValue);
 
-				<aui:select label="order-by-column" name="orderByCol">
-					<aui:option label="modified-date" />
-					<aui:option label="display-date" />
-				</aui:select>
+									optionValue = ddmFormField.getName() + StringPool.UNDERLINE + optionValue;
+						%>
 
-				<aui:select name="orderByType">
-					<aui:option label="ascending" value="asc" />
-					<aui:option label="descending" value="desc" />
-				</aui:select>
-			</aui:fieldset>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
+									<aui:option label='<%= TextFormatter.format(optionLabels.getString(locale), TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(optionValue) %>" value="<%= optionValue %>" />
+
+						<%
+								}
+							}
+							else if (!ddmFormFieldType.equals("checkbox")) {
+						%>
+
+								<aui:option label='<%= TextFormatter.format(ddmFormField.getName(), TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(ddmFormField.getName()) %>" value="<%= ddmFormField.getName() %>" />
+
+						<%
+							}
+						}
+						%>
+
+					</optgroup>
+				</c:if>
+			</aui:select>
+
+			<aui:select name="feedType">
+
+				<%
+				for (String curFeedType : RSSUtil.FEED_TYPES) {
+				%>
+
+					<aui:option label="<%= RSSUtil.getFeedTypeName(curFeedType) %>" selected="<%= feedType.equals(curFeedType) %>" value="<%= curFeedType %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:input label="maximum-items-to-display" name="delta" value="10" />
+
+			<aui:select label="order-by-column" name="orderByCol">
+				<aui:option label="modified-date" />
+				<aui:option label="display-date" />
+			</aui:select>
+
+			<aui:select name="orderByType">
+				<aui:option label="ascending" value="asc" />
+				<aui:option label="descending" value="desc" />
+			</aui:select>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 

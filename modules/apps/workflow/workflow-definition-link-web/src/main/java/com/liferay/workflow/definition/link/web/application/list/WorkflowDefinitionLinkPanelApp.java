@@ -45,15 +45,14 @@ public class WorkflowDefinitionLinkPanelApp extends BasePanelApp {
 	}
 
 	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
 		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
 			return false;
 		}
 
-		return super.hasAccessPermission(permissionChecker, group);
+		return super.isShow(permissionChecker, group);
 	}
 
 	@Override

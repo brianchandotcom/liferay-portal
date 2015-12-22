@@ -46,8 +46,7 @@ public class MarketplacePurchasedPanelApp extends BasePanelApp {
 	}
 
 	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
 		return permissionChecker.isOmniadmin();

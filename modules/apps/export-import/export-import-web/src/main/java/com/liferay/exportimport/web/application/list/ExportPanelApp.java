@@ -47,8 +47,7 @@ public class ExportPanelApp extends BasePanelApp {
 	}
 
 	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
 		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {

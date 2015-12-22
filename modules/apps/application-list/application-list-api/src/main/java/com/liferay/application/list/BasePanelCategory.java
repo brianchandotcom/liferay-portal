@@ -63,14 +63,6 @@ public abstract class BasePanelCategory implements PanelCategory {
 	}
 
 	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		return true;
-	}
-
-	@Override
 	public int hashCode() {
 		return HashUtil.hash(0, getKey());
 	}
@@ -100,6 +92,13 @@ public abstract class BasePanelCategory implements PanelCategory {
 
 		return panelCategoryHelper.containsPortlet(
 			themeDisplay.getPpid(), this);
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		return true;
 	}
 
 }

@@ -88,8 +88,7 @@ public class PanelCategoryRegistry {
 				@Override
 				public boolean filter(PanelCategory panelCategory) {
 					try {
-						return panelCategory.hasAccessPermission(
-							permissionChecker, group);
+						return panelCategory.isShow(permissionChecker, group);
 					}
 					catch (PortalException pe) {
 						_log.error(pe, pe);
@@ -110,9 +109,7 @@ public class PanelCategoryRegistry {
 
 		for (PanelCategory panelCategory : panelCategories) {
 			try {
-				if (panelCategory.hasAccessPermission(
-						permissionChecker, group)) {
-
+				if (panelCategory.isShow(permissionChecker, group)) {
 					return panelCategory;
 				}
 			}

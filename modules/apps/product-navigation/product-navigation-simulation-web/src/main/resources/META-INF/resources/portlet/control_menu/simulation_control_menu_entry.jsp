@@ -50,7 +50,7 @@ data.put("title", HtmlUtil.escape(LanguageUtil.get(request, "simulation")));
 			layoutControl: '.page-preview-controls > a',
 			node: null,
 			showFn: A.bind('showPanel', ControlMenu),
-			tpl: '<div class="lfr-admin-panel lfr-simulation-panel" id="{0}" />',
+			tpl: '<div class="lfr-admin-panel lfr-simulation-panel product-menu" id="{0}" />',
 			trigger: A.one('#<portlet:namespace />simulationPanel')
 		}
 	);

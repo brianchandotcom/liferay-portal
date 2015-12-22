@@ -36,7 +36,7 @@ public class JournalAddEntryUserNotificationDefinition
 		super(
 			JournalPortletKeys.JOURNAL, 0,
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-			"receive-a-notification-when-someone-adds-a-new-content-in-a-" +
+			"receive-a-notification-when-someone-adds-new-web-content-in-a-" +
 				"folder-you-are-subscribed-to");
 
 		addUserNotificationDeliveryType(

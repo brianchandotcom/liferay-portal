@@ -38,7 +38,7 @@ public class MentionsUserNotificationDefinition
 			MentionsPortletKeys.MENTIONS, 0,
 			MentionsConstants.NOTIFICATION_TYPE_MENTION,
 			"receive-a-notification-when-someone-mentions-you-in-a-blogs-" +
-				"entry,-a-comment,-or-a-message-boards-message");
+				"entry,-comment,-or-message-boards-message");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

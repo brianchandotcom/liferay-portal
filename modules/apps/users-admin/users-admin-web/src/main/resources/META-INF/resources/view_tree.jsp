@@ -242,6 +242,7 @@ if (organization != null) {
 							%>
 
 							<liferay-ui:search-container
+								id="organizations"
 								searchContainer="<%= searchContainer %>"
 								var="organizationSearchContainer"
 							>

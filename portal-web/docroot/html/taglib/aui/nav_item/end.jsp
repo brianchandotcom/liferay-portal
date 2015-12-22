@@ -52,7 +52,7 @@ if (Validator.isNull(title)) {
 					</c:choose>
 
 					<span class="nav-item-label">
-						<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
+						<liferay-ui:message key="<%= HtmlUtil.escape(label) %>" localizeKey="<%= localizeLabel %>" />
 					</span>
 
 					<c:if test="<%= dropdown %>">

@@ -94,12 +94,6 @@ $horizontal-spacing: 35px;
 	}
 }
 
-@include sm {
-	.lfr-ddl-form-builder-field-types-modal {
-		padding-top: 85px;
-	}
-}
-
 .portal-popup, .portlet-forms-admin {
 	.alert {
 		margin: 0;
@@ -462,26 +456,15 @@ $horizontal-spacing: 35px;
 	}
 }
 
-@include sm {
-	.lfr-ddl-field-settings-modal.form-builder-field-settings {
-		height: 670px;
-		padding-top: 85px;
-		width: 390px;
-	}
-}
-
-@include md {
-	.lfr-ddl-field-settings-modal.form-builder-field-settings {
-		height: 676px;
-		width: 720px;
-	}
-}
-
 .lfr-ddl-form-builder-field-types-modal {
-	max-height: 550px;
+	height: 100%;
+	margin: 0;
 	outline: none;
-	padding-top: 73px;
-	width: 500px;
+	width: 100%;
+
+	&.modal-dialog {
+		width: 100%;
+	}
 
 	@include sm {
 		&.modal-dialog {
@@ -774,5 +757,26 @@ $horizontal-spacing: 35px;
 		line-height: 16px;
 		list-style-type: none;
 		padding: 11px 0 11px 0;
+	}
+}
+
+@include md {
+	.lfr-ddl-field-settings-modal.form-builder-field-settings {
+		height: 676px;
+		width: 720px;
+	}
+}
+
+@include sm {
+	.lfr-ddl-field-settings-modal.form-builder-field-settings {
+		height: 670px;
+		padding-top: 85px;
+		width: 390px;
+	}
+
+	.lfr-ddl-form-builder-field-types-modal {
+		max-height: 550px;
+		padding-top: 85px;
+		width: 500px;
 	}
 }

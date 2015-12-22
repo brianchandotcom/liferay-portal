@@ -417,7 +417,7 @@ public class WikiPageFinderImpl
 					groupId);
 			}
 
-			CustomSQLUtil.replaceOrderBy(
+			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator("WikiPage"));
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);

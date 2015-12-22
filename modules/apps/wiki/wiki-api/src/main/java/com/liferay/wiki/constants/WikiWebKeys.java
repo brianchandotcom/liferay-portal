@@ -25,6 +25,9 @@ public class WikiWebKeys {
 
 	public static final String WIKI_PAGE = "WIKI_PAGE";
 
+	public static final String WIKI_PORTLET_TOOLBAR_CONTRIBUTOR =
+		"WIKI_PORTLET_TOOLBAR_CONTRIBUTOR";
+
 	public static final String WIKI_TREE_WALKER_DEPTH =
 		"WIKI_TREE_WALKER_DEPTH";
 

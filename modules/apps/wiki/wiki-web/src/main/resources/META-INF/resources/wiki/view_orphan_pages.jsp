@@ -23,5 +23,5 @@
 />
 
 <liferay-util:include page="/wiki/page_iterator.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="type" value="orphan_pages" />
+	<liferay-util:param name="navigation" value="orphan-pages" />
 </liferay-util:include>

@@ -16,7 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" %><%@
+<%@ page import="com.liferay.frontend.taglib.servlet.taglib.AddMenuItem" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.ui.Menu" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem" %><%@
+page import="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" %><%@
 page import="com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration" %><%@
 page import="com.liferay.wiki.constants.WikiConstants" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
@@ -38,11 +41,9 @@ page import="com.liferay.wiki.model.WikiNode" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.model.WikiPageConstants" %><%@
 page import="com.liferay.wiki.model.WikiPageDisplay" %><%@
-page import="com.liferay.wiki.model.WikiPageResource" %><%@
 page import="com.liferay.wiki.model.impl.WikiPageImpl" %><%@
 page import="com.liferay.wiki.service.WikiNodeServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
-page import="com.liferay.wiki.service.WikiPageResourceLocalServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageServiceUtil" %><%@
 page import="com.liferay.wiki.service.permission.WikiNodePermissionChecker" %><%@
 page import="com.liferay.wiki.service.permission.WikiPagePermissionChecker" %><%@
@@ -59,6 +60,7 @@ page import="com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSetti
 page import="com.liferay.wiki.web.display.context.logic.WikiVisualizationHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiRequestHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiURLHelper" %><%@
+page import="com.liferay.wiki.web.portlet.toolbar.item.WikiPortletToolbarContributor" %><%@
 page import="com.liferay.wiki.web.util.WikiWebComponentProvider" %>
 
 <%

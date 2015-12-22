@@ -14,6 +14,8 @@
 
 package com.liferay.wiki.web.display.context;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -22,25 +24,42 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
+import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.display.context.WikiListPagesDisplayContext;
 import com.liferay.wiki.display.context.WikiUIItemKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.model.WikiPageResource;
+import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
+import com.liferay.wiki.util.comparator.PageVersionComparator;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
+import com.liferay.wiki.web.util.WikiPortletUtil;
+import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,8 +88,56 @@ public class DefaultWikiListPagesDisplayContext
 	}
 
 	@Override
+	public String getEmptyResultsMessage() {
+		String navigation = ParamUtil.getString(_request, "navigation");
+
+		if (navigation.equals("categorized-pages")) {
+			return "there-are-no-pages-with-this-category";
+		}
+		else if (navigation.equals("draft-pages")) {
+			return "there-are-no-drafts";
+		}
+		else if (navigation.equals("frontpage")) {
+			WikiWebComponentProvider wikiWebComponentProvider =
+				WikiWebComponentProvider.getWikiWebComponentProvider();
+
+			WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+				wikiWebComponentProvider.getWikiGroupServiceConfiguration();
+
+			return LanguageUtil.format(
+				_request, "there-is-no-x",
+				new String[] {wikiGroupServiceConfiguration.frontPageName()},
+				false);
+		}
+		else if (navigation.equals("incoming-links")) {
+			return "there-are-no-pages-that-link-to-this-page";
+		}
+		else if (navigation.equals("orphan-pages")) {
+			return "there-are-no-orphan-pages";
+		}
+		else if (navigation.equals("outgoing-links")) {
+			return "this-page-has-no-links";
+		}
+		else if (navigation.equals("pending-pages")) {
+			return "there-are-no-pages-submitted-by-you-pending-approval";
+		}
+		else if (navigation.equals("recent-changes")) {
+			return "there-are-no-recent-changes";
+		}
+		else if (navigation.equals("tagged-pages")) {
+			return "there-are-no-pages-with-this-tag";
+		}
+
+		return "there-are-no-pages";
+	}
+
+	@Override
 	public Menu getMenu(WikiPage wikiPage) throws PortalException {
 		Menu menu = new Menu();
+
+		menu.setDirection("left-side");
+		menu.setMarkupView("lexicon");
+		menu.setScroll(false);
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
@@ -92,39 +159,175 @@ public class DefaultWikiListPagesDisplayContext
 	}
 
 	@Override
-	public List<ToolbarItem> getToolbarItems() {
-		List<ToolbarItem> toolbarItems = new ArrayList<>();
-
-		addAddPageToolbarItem(toolbarItems);
-
-		return toolbarItems;
-	}
-
-	@Override
 	public UUID getUuid() {
 		return _UUID;
 	}
 
-	protected void addAddPageToolbarItem(List<ToolbarItem> toolbarItems) {
-		LiferayPortletResponse liferayPortletResponse =
-			_wikiRequestHelper.getLiferayPortletResponse();
+	@Override
+	public void populateResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException {
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		WikiPage page = (WikiPage)_request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		portletURL.setParameter("redirect", _wikiRequestHelper.getCurrentURL());
-		portletURL.setParameter(
-			"nodeId", String.valueOf(_wikiNode.getNodeId()));
-		portletURL.setParameter("title", StringPool.BLANK);
-		portletURL.setParameter("editTitle", "1");
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		URLToolbarItem addPageURLToolbarItem = new URLToolbarItem();
+		String navigation = ParamUtil.getString(
+			_request, "navigation", "all-pages");
 
-		addPageURLToolbarItem.setKey(WikiUIItemKeys.ADD_PAGE);
-		addPageURLToolbarItem.setLabel(LanguageUtil.get(_request, "add-page"));
-		addPageURLToolbarItem.setURL(portletURL.toString());
+		int total = 0;
+		List<WikiPage> results = new ArrayList<>();
 
-		toolbarItems.add(addPageURLToolbarItem);
+		if (navigation.equals("all-pages")) {
+			total = WikiPageServiceUtil.getPagesCount(
+				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(), true,
+				themeDisplay.getUserId(), true,
+				WorkflowConstants.STATUS_APPROVED);
+
+			searchContainer.setTotal(total);
+
+			OrderByComparator<WikiPage> obc =
+				WikiPortletUtil.getPageOrderByComparator(
+					searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType());
+
+			results = WikiPageServiceUtil.getPages(
+				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(), true,
+				themeDisplay.getUserId(), true,
+				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
+				searchContainer.getEnd(), obc);
+		}
+		else if (navigation.equals("categorized-pages") ||
+				 navigation.equals("tagged-pages")) {
+
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(
+				WikiPage.class.getName(), searchContainer);
+
+			assetEntryQuery.setEnablePermissions(true);
+
+			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+			searchContainer.setTotal(total);
+
+			assetEntryQuery.setEnd(searchContainer.getEnd());
+			assetEntryQuery.setStart(searchContainer.getStart());
+
+			List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(
+				assetEntryQuery);
+
+			for (AssetEntry assetEntry : assetEntries) {
+				WikiPageResource pageResource =
+					WikiPageResourceLocalServiceUtil.getPageResource(
+						assetEntry.getClassPK());
+
+				WikiPage assetPage = WikiPageLocalServiceUtil.getPage(
+					pageResource.getNodeId(), pageResource.getTitle());
+
+				results.add(assetPage);
+			}
+		}
+		else if (navigation.equals("draft-pages") ||
+				 navigation.equals("pending-pages")) {
+
+			long draftUserId = themeDisplay.getUserId();
+
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
+			if (permissionChecker.isContentReviewer(
+					themeDisplay.getCompanyId(),
+					themeDisplay.getScopeGroupId())) {
+
+				draftUserId = 0;
+			}
+
+			int status = WorkflowConstants.STATUS_DRAFT;
+
+			if (navigation.equals("pending-pages")) {
+				status = WorkflowConstants.STATUS_PENDING;
+			}
+
+			total = WikiPageServiceUtil.getPagesCount(
+				themeDisplay.getScopeGroupId(), draftUserId,
+				_wikiNode.getNodeId(), status);
+
+			searchContainer.setTotal(total);
+
+			results = WikiPageServiceUtil.getPages(
+				themeDisplay.getScopeGroupId(), draftUserId,
+				_wikiNode.getNodeId(), status, searchContainer.getStart(),
+				searchContainer.getEnd());
+		}
+		else if (navigation.equals("frontpage")) {
+			WikiWebComponentProvider wikiWebComponentProvider =
+				WikiWebComponentProvider.getWikiWebComponentProvider();
+
+			WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+				wikiWebComponentProvider.getWikiGroupServiceConfiguration();
+
+			WikiPage wikiPage = WikiPageServiceUtil.getPage(
+				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(),
+				wikiGroupServiceConfiguration.frontPageName());
+
+			searchContainer.setTotal(1);
+
+			results.add(wikiPage);
+		}
+		else if (navigation.equals("history")) {
+			total = WikiPageLocalServiceUtil.getPagesCount(
+				page.getNodeId(), page.getTitle());
+
+			searchContainer.setTotal(total);
+
+			results = WikiPageLocalServiceUtil.getPages(
+				page.getNodeId(), page.getTitle(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new PageVersionComparator());
+		}
+		else if (navigation.equals("incoming-links")) {
+			List<WikiPage> links = WikiPageLocalServiceUtil.getIncomingLinks(
+				page.getNodeId(), page.getTitle());
+
+			total = links.size();
+
+			searchContainer.setTotal(total);
+
+			results = ListUtil.subList(
+				links, searchContainer.getStart(), searchContainer.getEnd());
+		}
+		else if (navigation.equals("orphan-pages")) {
+			List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(
+				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId());
+
+			total = orphans.size();
+
+			searchContainer.setTotal(total);
+
+			results = ListUtil.subList(
+				orphans, searchContainer.getStart(), searchContainer.getEnd());
+		}
+		else if (navigation.equals("outgoing-links")) {
+			List<WikiPage> links = WikiPageLocalServiceUtil.getOutgoingLinks(
+				page.getNodeId(), page.getTitle());
+
+			total = links.size();
+
+			searchContainer.setTotal(total);
+
+			results = ListUtil.subList(
+				links, searchContainer.getStart(), searchContainer.getEnd());
+		}
+		else if (navigation.equals("recent-changes")) {
+			total = WikiPageServiceUtil.getRecentChangesCount(
+				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId());
+
+			searchContainer.setTotal(total);
+
+			results = WikiPageServiceUtil.getRecentChanges(
+				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(),
+				searchContainer.getStart(), searchContainer.getEnd());
+		}
+
+		searchContainer.setResults(results);
 	}
 
 	protected void addCopyMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
@@ -136,7 +339,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIcon("icon-copy");
 		urlMenuItem.setKey(WikiUIItemKeys.COPY);
 		urlMenuItem.setLabel("copy");
 
@@ -212,7 +414,6 @@ public class DefaultWikiListPagesDisplayContext
 
 			URLMenuItem urlMenuItem = new URLMenuItem();
 
-			urlMenuItem.setIcon("icon-remove");
 			urlMenuItem.setKey(WikiUIItemKeys.DELETE);
 			urlMenuItem.setLabel("discard-draft");
 
@@ -251,7 +452,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIcon("icon-edit");
 		urlMenuItem.setKey(WikiUIItemKeys.EDIT);
 		urlMenuItem.setLabel("edit");
 
@@ -279,7 +479,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIcon("icon-move");
 		urlMenuItem.setKey(WikiUIItemKeys.MOVE);
 		urlMenuItem.setLabel("move");
 
@@ -311,7 +510,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIcon("icon-lock");
 		urlMenuItem.setKey(WikiUIItemKeys.PERMISSIONS);
 		urlMenuItem.setLabel("permissions");
 		urlMenuItem.setMethod("get");
@@ -359,7 +557,6 @@ public class DefaultWikiListPagesDisplayContext
 
 			URLMenuItem urlMenuItem = new URLMenuItem();
 
-			urlMenuItem.setIcon("icon-remove-sign");
 			urlMenuItem.setKey(WikiUIItemKeys.UNSUBSCRIBE);
 			urlMenuItem.setLabel("unsubscribe");
 
@@ -385,7 +582,6 @@ public class DefaultWikiListPagesDisplayContext
 		else {
 			URLMenuItem urlMenuItem = new URLMenuItem();
 
-			urlMenuItem.setIcon("icon-ok-sign");
 			urlMenuItem.setKey(WikiUIItemKeys.SUBSCRIBE);
 			urlMenuItem.setLabel("subscribe");
 

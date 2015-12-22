@@ -53,9 +53,9 @@ public class MapProviderHelper {
 			}
 
 			return GetterUtil.getString(
-					group.getTypeSettingsProperty(
-							MapProviderWebKeys.MAP_PROVIDER_KEY),
-					companyMapProviderKey);
+				group.getTypeSettingsProperty(
+					MapProviderWebKeys.MAP_PROVIDER_KEY),
+				companyMapProviderKey);
 		}
 	}
 

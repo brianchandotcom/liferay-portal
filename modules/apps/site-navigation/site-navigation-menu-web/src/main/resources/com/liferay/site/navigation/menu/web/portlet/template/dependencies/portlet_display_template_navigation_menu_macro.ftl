@@ -3,9 +3,10 @@
 	includeAllChildNavItems
 	navItemLevel
 	navItems
+	cssClass="layouts"
 >
 	<#if navItems?has_content>
-		<ul class="layouts level-${navItemLevel}">
+		<ul class="${cssClass} level-${navItemLevel}">
 			<#list navItems as navItem>
 				<#assign nav_item_attr_selected = "" />
 				<#assign nav_item_css_class = "lfr-nav-item" />
@@ -29,9 +30,10 @@
 					<#if includeAllChildNavItems || navItem.isInNavigation(branchNavItems)>
 						<@buildNavigation
 							branchNavItems=branchNavItems
+							cssClass=cssClass
+							includeAllChildNavItems=includeAllChildNavItems
 							navItemLevel=(navItemLevel + 1)
 							navItems=navItem.getChildren()
-							includeAllChildNavItems=includeAllChildNavItems
 						/>
 					</#if>
 				</li>

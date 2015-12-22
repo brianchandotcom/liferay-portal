@@ -53,4 +53,7 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	@Meta.AD(deflt = "absolute", required = false)
 	public String rootLayoutType();
 
+	@Meta.AD(required = false)
+	public String rootLayoutUuid();
+
 }

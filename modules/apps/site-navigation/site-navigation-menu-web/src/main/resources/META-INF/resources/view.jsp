@@ -23,4 +23,5 @@
 	preview="<%= siteNavigationMenuDisplayContext.isPreview() %>"
 	rootLayoutLevel="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() %>"
 	rootLayoutType="<%= siteNavigationMenuDisplayContext.getRootLayoutType() %>"
+	rootLayoutUuid="<%= siteNavigationMenuDisplayContext.getRootLayoutUuid() %>"
 />

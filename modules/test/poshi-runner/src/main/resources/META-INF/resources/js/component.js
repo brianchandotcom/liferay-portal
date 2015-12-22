@@ -25,6 +25,10 @@ YUI.add(
 
 		var CSS_TRANSITIONING = 'transitioning';
 
+		var CSS_WARNING = 'warning';
+
+		var SELECTOR_WARNING = STR_DOT + CSS_WARNING;
+
 		var STR_BLANK = '';
 
 		var STR_COMMAND_LOG_ID = 'commandLogId';
@@ -53,8 +57,6 @@ YUI.add(
 
 		var STR_XML_LOG = 'xmlLog';
 
-		var SELECTOR_FAIL = STR_DOT + CSS_FAIL;
-
 		var TPL_ERROR_BUTTONS = '<button class="btn {cssClass}" data-errorlinkid="{linkId}" onclick="loggerInterface.handleErrorBtns">' +
 				'<div class="btn-content"></div>' +
 			'</button>';
@@ -78,13 +80,13 @@ YUI.add(
 						setter: A.one
 					},
 
-					fails: {
+					errors: {
 						setter: function() {
 							var instance = this;
 
 							var xmlLog = instance.get(STR_XML_LOG);
 
-							return xmlLog.all(SELECTOR_FAIL);
+							return xmlLog.all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
 						}
 					},
 
@@ -98,7 +100,7 @@ YUI.add(
 
 					status: {
 						validator: Lang.isArray,
-						value: ['fail', 'pass', 'pending']
+						value: ['fail', 'pass', 'pending', CSS_WARNING]
 					},
 
 					transitioning: {
@@ -155,7 +157,7 @@ YUI.add(
 							instance._displayNode(linkedFunction);
 							instance._setXmlNodeClass(linkedFunction);
 
-							if (latestCommand.hasClass('failed')) {
+							if (latestCommand.hasClass('failed') || latestCommand.hasClass(CSS_WARNING)) {
 								instance._injectXmlError(latestCommand);
 							}
 						}
@@ -468,7 +470,7 @@ YUI.add(
 					_displayNode: function(node) {
 						var instance = this;
 
-						node = node || instance.get(STR_FAILS).last();
+						node = node || instance.get(STR_ERRORS).last();
 
 						if (node) {
 							var parentContainers = node.ancestors('.child-container');
@@ -790,6 +792,8 @@ YUI.add(
 										}
 									}
 								).run();
+									}
+								);
 							}
 						}
 					},
@@ -857,14 +861,14 @@ YUI.add(
 
 							newLogId = logId;
 
-							var commandFailures = commandLog.all('.failed');
+							var commandFailures = commandLog.all('.failed, ' + SELECTOR_WARNING);
 
 							commandFailures.each(instance._injectXmlError, instance);
 						}
 						else {
 							newLogId = null;
 
-							var fails = instance.get(STR_XML_LOG).all(SELECTOR_FAIL);
+							var fails = instance.get(STR_XML_LOG).all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
 
 							if (fails.size()) {
 								fails.each(instance._clearXmlErrors);
@@ -875,7 +879,7 @@ YUI.add(
 
 						instance._toggleXmlLogClasses(logId);
 
-						var failNodes = instance.get(STR_XML_LOG).all(SELECTOR_FAIL);
+						var failNodes = instance.get(STR_XML_LOG).all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
 
 						instance.set(STR_FAILS, failNodes);
 
@@ -883,6 +887,8 @@ YUI.add(
 
 						if (failNodes.size() > 0) {
 							failNodes.each(instance._displayNode, instance);
+
+							failNodes = failNodes.filter(SELECTOR_FAIL);
 
 							instance._selectCurrentScope(failNodes.last());
 							instance._scrollToNode(failNodes.last());

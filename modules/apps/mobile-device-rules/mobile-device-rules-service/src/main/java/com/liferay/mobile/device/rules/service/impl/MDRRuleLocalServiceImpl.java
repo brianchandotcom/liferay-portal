@@ -21,6 +21,7 @@ import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.base.MDRRuleLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -163,6 +164,14 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 	@Override
 	public List<MDRRule> getRules(long ruleGroupId, int start, int end) {
 		return mdrRulePersistence.findByRuleGroupId(ruleGroupId, start, end);
+	}
+
+	@Override
+	public List<MDRRule> getRules(
+		long ruleGroupId, int start, int end, OrderByComparator<MDRRule> obc) {
+
+		return mdrRulePersistence.findByRuleGroupId(
+			ruleGroupId, start, end, obc);
 	}
 
 	@Override

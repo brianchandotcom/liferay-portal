@@ -17,6 +17,7 @@ package com.liferay.mobile.device.rules.service.persistence.impl;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupImpl;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupFinder;
+import com.liferay.mobile.device.rules.util.comparator.RuleGroupCreateDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -135,6 +137,16 @@ public class MDRRuleGroupFinderImpl
 		long groupId, String keywords, LinkedHashMap<String, Object> params,
 		int start, int end) {
 
+		return findByKeywords(
+			groupId, keywords, params, start, end,
+			new RuleGroupCreateDateComparator());
+	}
+
+	@Override
+	public List<MDRRuleGroup> findByKeywords(
+		long groupId, String keywords, LinkedHashMap<String, Object> params,
+		int start, int end, OrderByComparator<MDRRuleGroup> obc) {
+
 		String[] names = null;
 		boolean andOperator = false;
 
@@ -145,7 +157,7 @@ public class MDRRuleGroupFinderImpl
 			andOperator = true;
 		}
 
-		return findByG_N(groupId, names, params, andOperator, start, end);
+		return findByG_N(groupId, names, params, andOperator, start, end, obc);
 	}
 
 	@Override
@@ -173,6 +185,17 @@ public class MDRRuleGroupFinderImpl
 		long groupId, String[] names, LinkedHashMap<String, Object> params,
 		boolean andOperator, int start, int end) {
 
+		return findByG_N(
+			groupId, names, params, andOperator, start, end,
+			new RuleGroupCreateDateComparator());
+	}
+
+	@Override
+	public List<MDRRuleGroup> findByG_N(
+		long groupId, String[] names, LinkedHashMap<String, Object> params,
+		boolean andOperator, int start, int end,
+		OrderByComparator<MDRRuleGroup> obc) {
+
 		names = CustomSQLUtil.keywords(names);
 
 		if (params == null) {
@@ -190,6 +213,7 @@ public class MDRRuleGroupFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, true, names);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

@@ -47,6 +47,8 @@ public class TranspileJSTask extends ExecuteNodeTask {
 	public TranspileJSTask() {
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_BABEL_TASK_NAME);
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_LFR_AMD_LOADER_TASK_NAME);
+
+		include("**/*.es.js");
 	}
 
 	public TranspileJSTask exclude(Closure<?> closure) {

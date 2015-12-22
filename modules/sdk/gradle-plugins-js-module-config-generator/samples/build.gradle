@@ -12,11 +12,9 @@ buildscript {
 	}
 }
 
-apply plugin: "java"
-
 apply plugin: "com.liferay.js.module.config.generator"
+apply plugin: "java"
 
 configJSModules {
 	include "**/*.js"
-	sourceDir = "src/main/resources"
 }

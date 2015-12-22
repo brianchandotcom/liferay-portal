@@ -25,7 +25,6 @@ import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGener
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerExtension;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
-import com.liferay.gradle.plugins.js.transpiler.TranspileJSTask;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
@@ -161,7 +160,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskStopTestableTomcat(project, liferayExtension);
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
-		configureTaskTranspileJS(project);
 		configureTasksBuildCSS(project);
 		configureTasksBuildLang(project);
 		configureTasksBuildUpgradeTable(project);
@@ -848,13 +846,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				JSModuleConfigGeneratorPlugin.CONFIG_JS_MODULES_TASK_NAME);
 
 		configureTaskConfigJSModulesConfigVariable(configJSModulesTask);
-		configureTaskConfigJSModulesDependsOn(configJSModulesTask);
 		configureTaskConfigJSModulesIgnorePath(configJSModulesTask);
-		configureTaskConfigJSModulesIncludes(configJSModulesTask);
 		configureTaskConfigJSModulesModuleExtension(configJSModulesTask);
 		configureTaskConfigJSModulesModuleFormat(configJSModulesTask);
-		configureTaskConfigJSModulesMustRunAfter(configJSModulesTask);
-		configureTaskConfigJSModulesSourceDir(configJSModulesTask);
 	}
 
 	protected void configureTaskConfigJSModulesConfigVariable(
@@ -863,22 +857,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configJSModulesTask.setConfigVariable("");
 	}
 
-	protected void configureTaskConfigJSModulesDependsOn(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.dependsOn(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-	}
-
 	protected void configureTaskConfigJSModulesIgnorePath(
 		ConfigJSModulesTask configJSModulesTask) {
 
 		configJSModulesTask.setIgnorePath(true);
-	}
-
-	protected void configureTaskConfigJSModulesIncludes(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.setIncludes(Collections.singleton("**/*.es.js"));
 	}
 
 	protected void configureTaskConfigJSModulesModuleExtension(
@@ -891,33 +873,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		ConfigJSModulesTask configJSModulesTask) {
 
 		configJSModulesTask.setModuleFormat("/_/g,-");
-	}
-
-	protected void configureTaskConfigJSModulesMustRunAfter(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.mustRunAfter(
-			JSTranspilerPlugin.TRANSPILE_JS_TASK_NAME);
-	}
-
-	protected void configureTaskConfigJSModulesSourceDir(
-		final ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.setSourceDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					TranspileJSTask transpileJSTask =
-						(TranspileJSTask)GradleUtil.getTask(
-							configJSModulesTask.getProject(),
-							JSTranspilerPlugin.TRANSPILE_JS_TASK_NAME);
-
-					return new File(
-						transpileJSTask.getOutputDir(), "META-INF/resources");
-				}
-
-			});
 	}
 
 	protected void configureTaskDeploy(
@@ -1432,34 +1387,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		whipTaskExtension.excludes(
 			".*Test", ".*Test\\$.*", ".*\\$Proxy.*", "com/liferay/whip/.*");
 		whipTaskExtension.includes("com/liferay/.*");
-	}
-
-	protected void configureTaskTranspileJS(Project project) {
-		TranspileJSTask transpileJSTask = (TranspileJSTask)GradleUtil.getTask(
-			project, JSTranspilerPlugin.TRANSPILE_JS_TASK_NAME);
-
-		configureTaskTranspileJSDependsOn(transpileJSTask);
-		configureTaskTranspileJSSourceDir(transpileJSTask);
-		configureTaskTranspileJSIncludes(transpileJSTask);
-	}
-
-	protected void configureTaskTranspileJSDependsOn(
-		TranspileJSTask transpileJSTask) {
-
-		transpileJSTask.dependsOn(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-	}
-
-	protected void configureTaskTranspileJSIncludes(
-		TranspileJSTask transpileJSTask) {
-
-		transpileJSTask.setIncludes(Collections.singleton("**/*.es.js"));
-	}
-
-	protected void configureTaskTranspileJSSourceDir(
-		TranspileJSTask transpileJSTask) {
-
-		transpileJSTask.setSourceDir(
-			getResourcesDir(transpileJSTask.getProject()));
 	}
 
 	protected void configureTestIntegrationTomcat(

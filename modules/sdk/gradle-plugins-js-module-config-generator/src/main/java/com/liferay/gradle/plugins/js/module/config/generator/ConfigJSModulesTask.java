@@ -17,7 +17,6 @@ package com.liferay.gradle.plugins.js.module.config.generator;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.StringUtil;
 
 import groovy.lang.Closure;
 
@@ -33,7 +32,6 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.FileTreeElement;
-import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
@@ -55,8 +53,8 @@ public class ConfigJSModulesTask extends ExecuteNodeTask {
 		dependsOn(
 			JSModuleConfigGeneratorPlugin.
 				DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME);
-		dependsOn(
-			BasePlugin.CLEAN_TASK_NAME + StringUtil.capitalize(getName()));
+
+		include("**/*.es.js");
 	}
 
 	public ConfigJSModulesTask exclude(Closure<?> closure) {
@@ -87,13 +85,17 @@ public class ConfigJSModulesTask extends ExecuteNodeTask {
 	public void executeNode() {
 		Project project = getProject();
 
+		final File outputDir = getOutputDir();
+
+		project.delete(getOutputFile(), outputDir);
+
 		project.copy(
 			new Action<CopySpec>() {
 
 				@Override
 				public void execute(CopySpec copySpec) {
 					copySpec.from(getSourceFiles());
-					copySpec.into(getOutputDir());
+					copySpec.into(outputDir);
 				}
 
 			});
@@ -107,7 +109,7 @@ public class ConfigJSModulesTask extends ExecuteNodeTask {
 
 				@Override
 				public void execute(CopySpec copySpec) {
-					copySpec.from(getOutputDir());
+					copySpec.from(outputDir);
 					copySpec.into(getSourceDir());
 				}
 

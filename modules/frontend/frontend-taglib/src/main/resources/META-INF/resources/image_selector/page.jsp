@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/image_selector/init.jsp" %>
+<%@ include file="/image_selector/init.jsp" %>
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_image_selector") + StringPool.UNDERLINE;

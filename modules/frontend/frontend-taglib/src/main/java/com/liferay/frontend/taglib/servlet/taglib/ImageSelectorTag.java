@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Sergio González
@@ -33,6 +35,13 @@ public class ImageSelectorTag extends IncludeTag {
 
 	public void setMaxFileSize(long maxFileSize) {
 		_maxFileSize = maxFileSize;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setParamName(String paramName) {
@@ -76,8 +85,7 @@ public class ImageSelectorTag extends IncludeTag {
 			"liferay-ui:image-selector:validExtensions", _validExtensions);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/image_selector/page.jsp";
+	private static final String _PAGE = "/image_selector/page.jsp";
 
 	private String _draggableImage = "none";
 	private long _fileEntryId;

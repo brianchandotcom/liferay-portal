@@ -43,7 +43,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 <c:if test="<%= commentTreeDisplayContext.isDiscussionVisible() %>">
 	<article class="lfr-discussion">
 		<div id="<%= randomNamespace %>messageScroll<%= discussionComment.getCommentId() %>">
-			<a name="<%= randomNamespace %>message_<%= discussionComment.getCommentId() %>"></a>
+			<a id="<%= randomNamespace %>message_<%= discussionComment.getCommentId() %>" name="<%= randomNamespace %>message_<%= discussionComment.getCommentId() %>"></a>
 
 			<aui:input name='<%= "commentId" + index %>' type="hidden" value="<%= discussionComment.getCommentId() %>" />
 			<aui:input name='<%= "parentCommentId" + index %>' type="hidden" value="<%= discussionComment.getCommentId() %>" />

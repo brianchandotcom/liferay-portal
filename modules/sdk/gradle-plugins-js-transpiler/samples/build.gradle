@@ -12,11 +12,5 @@ buildscript {
 	}
 }
 
-apply plugin: "java"
-
 apply plugin: "com.liferay.js.transpiler"
-
-transpileJS {
-	include "**/*.es.js"
-	sourceDir = "src/main/resources"
-}
+apply plugin: "java"

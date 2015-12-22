@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Security AntiSamy
-Bundle-SymbolicName: com.liferay.portal.security.antisamy
-Bundle-Version: 1.0.0
-Include-Resource: classes

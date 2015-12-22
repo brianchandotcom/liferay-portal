@@ -61,6 +61,8 @@ public class WebDriverUtil extends PropsValues {
 
 		desiredCapabilities.setCapability("browserName", "Browser");
 		desiredCapabilities.setCapability("deviceName", "deviceName");
+		desiredCapabilities.setCapability(
+			"newCommandTimeout", PropsValues.TIMEOUT_EXPLICIT_WAIT);
 		desiredCapabilities.setCapability("platformName", "Android");
 		desiredCapabilities.setCapability("platformVersion", "4.4");
 
@@ -81,6 +83,8 @@ public class WebDriverUtil extends PropsValues {
 		desiredCapabilities.setCapability("browserName", "Chrome");
 		desiredCapabilities.setCapability(
 			"deviceName", PropsValues.MOBILE_DEVICE_NAME);
+		desiredCapabilities.setCapability(
+			"newCommandTimeout", PropsValues.TIMEOUT_EXPLICIT_WAIT);
 		desiredCapabilities.setCapability("platformName", "Android");
 		desiredCapabilities.setCapability("platformVersion", "5.0.1");
 
@@ -219,6 +223,8 @@ public class WebDriverUtil extends PropsValues {
 
 		desiredCapabilities.setCapability("browserName", "Safari");
 		desiredCapabilities.setCapability("deviceName", "iPhone 5s");
+		desiredCapabilities.setCapability(
+			"newCommandTimeout", PropsValues.TIMEOUT_EXPLICIT_WAIT);
 		desiredCapabilities.setCapability("platformName", "iOS");
 		desiredCapabilities.setCapability("platformVersion", "8.2");
 

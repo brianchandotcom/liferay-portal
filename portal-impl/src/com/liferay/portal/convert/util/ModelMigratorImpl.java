@@ -73,7 +73,7 @@ public class ModelMigratorImpl implements ModelMigrator {
 				Map<String, Tuple> modelTableDetails = getModelTableDetails(
 					model);
 
-				if ((i > 0) && (i % (models.size() / 4.0) == 0)) {
+				if ((i > 0) && (i % (models.size() / 4) == 0)) {
 					MaintenanceUtil.appendStatus(
 						(i * 100 / modelTableDetails.size()) + "%");
 				}

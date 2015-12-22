@@ -150,10 +150,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		JspCompilationContext jspCompilationContext,
 		ErrorDispatcher errorDispatcher, boolean suppressLogging) {
 
-		_jspBundle = FrameworkUtil.getBundle(
+		Bundle jspBundle = FrameworkUtil.getBundle(
 			com.liferay.portal.servlet.jsp.compiler.JspServlet.class);
 
-		BundleWiring bundleWiring = _jspBundle.adapt(BundleWiring.class);
+		BundleWiring bundleWiring = jspBundle.adapt(BundleWiring.class);
 
 		_jspBundleWirings.add(bundleWiring);
 
@@ -163,7 +163,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			_jspBundleWirings.add(providedBundleWiring);
 		}
 
-		BundleContext bundleContext = _jspBundle.getBundleContext();
+		BundleContext bundleContext = jspBundle.getBundleContext();
 
 		Bundle systemBundle = bundleContext.getBundle(0);
 
@@ -209,7 +209,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		_bundle = _allParticipatingBundles[0];
 
 		_javaFileObjectResolver = new JspJavaFileObjectResolver(
-			_bundle, _jspBundle, _logger);
+			_bundle, jspBundle, _logger);
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
@@ -473,7 +473,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private Bundle _bundle;
 	private final List<File> _classPath = new ArrayList<>();
 	private JavaFileObjectResolver _javaFileObjectResolver;
-	private Bundle _jspBundle;
 	private final Set<BundleWiring> _jspBundleWirings = new LinkedHashSet<>();
 	private Logger _logger;
 	private final Set<Object> _systemPackageNames = new HashSet<>();

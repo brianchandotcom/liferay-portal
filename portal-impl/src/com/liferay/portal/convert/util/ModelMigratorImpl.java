@@ -67,13 +67,22 @@ public class ModelMigratorImpl implements ModelMigrator {
 				_log.debug("Migrating database tables");
 			}
 
+			int i = 0;
+
 			for (Class<? extends BaseModel<?>> model : models) {
 				Map<String, Tuple> modelTableDetails = getModelTableDetails(
 					model);
 
+				if ((i > 0) && (i % (models.size() / 4.0) == 0)) {
+					MaintenanceUtil.appendStatus(
+						(i * 100 / modelTableDetails.size()) + "%");
+				}
+
 				migrateModel(
 					modelTableDetails, DBManagerUtil.getDB(dialect, dataSource),
 					connection);
+
+				i++;
 			}
 		}
 		finally {
@@ -136,21 +145,12 @@ public class ModelMigratorImpl implements ModelMigrator {
 			Map<String, Tuple> modelTableDetails, DB db, Connection connection)
 		throws IOException {
 
-		int i = 0;
-
 		for (Tuple tuple : modelTableDetails.values()) {
-			if ((i > 0) && (i % (modelTableDetails.size() / 4) == 0)) {
-				MaintenanceUtil.appendStatus(
-					(i * 100 / modelTableDetails.size()) + "%");
-			}
-
 			String table = (String)tuple.getObject(0);
 			Object[][] columns = (Object[][])tuple.getObject(1);
 			String sqlCreate = (String)tuple.getObject(2);
 
 			migrateTable(db, connection, table, columns, sqlCreate);
-
-			i++;
 		}
 
 		if (_log.isDebugEnabled()) {

@@ -115,6 +115,14 @@ public interface Staging {
 			boolean remotePrivateLayout, Date startDate, Date endDate)
 		throws PortalException;
 
+	public void copyRemoteLayouts(
+			long sourceGroupId, boolean privateLayout,
+			Map<Long, Boolean> layoutIdMap, String name,
+			Map<String, String[]> parameterMap, String remoteAddress,
+			int remotePort, String remotePathContext, boolean secureConnection,
+			long remoteGroupId, boolean remotePrivateLayout)
+		throws PortalException;
+
 	public void deleteLastImportSettings(Group liveGroup, boolean privateLayout)
 		throws PortalException;
 
@@ -334,6 +342,12 @@ public interface Staging {
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, long[] layoutIds,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException;
+
+	public void publishLayouts(
+			long userId, long sourceGroupId, long targetGroupId,
+			boolean privateLayout, long[] layoutIds, String name,
+			Map<String, String[]> parameterMap)
 		throws PortalException;
 
 	/**

@@ -53,6 +53,8 @@ public class ConfigJSModulesTask extends ExecuteNodeTask {
 		dependsOn(
 			JSModuleConfigGeneratorPlugin.
 				DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME);
+
+		include("**/*.es.js");
 	}
 
 	public ConfigJSModulesTask exclude(Closure<?> closure) {

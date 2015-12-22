@@ -19,11 +19,8 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration;
 
-import java.net.URL;
-
 import java.util.Map;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -52,28 +49,18 @@ public class AntiSamySanitizerPublisher {
 			return;
 		}
 
-		Bundle bundle = bundleContext.getBundle();
+		AntiSamySanitizerImpl antiSamySanitizer = new AntiSamySanitizerImpl();
 
-		URL url = bundle.getResource(
-			antiSamyConfiguration.configurationFileURL());
+		antiSamySanitizer.init();
 
-		if (url == null) {
-			throw new IllegalStateException(
-				"Configuration " +
-					antiSamyConfiguration.configurationFileURL() +
-					" not found");
-		}
-
-		Sanitizer sanitizer = new AntiSamySanitizerImpl(url);
-
-		sanitizerServiceRegistration = bundleContext.registerService(
-			Sanitizer.class, sanitizer, null);
+		_antiSamySanitizerRegistration = bundleContext.registerService(
+			Sanitizer.class, antiSamySanitizer, null);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (sanitizerServiceRegistration != null) {
-			sanitizerServiceRegistration.unregister();
+		if (_antiSamySanitizerRegistration != null) {
+			_antiSamySanitizerRegistration.unregister();
 		}
 	}
 
@@ -86,6 +73,6 @@ public class AntiSamySanitizerPublisher {
 		activate(bundleContext, properties);
 	}
 
-	private ServiceRegistration<Sanitizer> sanitizerServiceRegistration;
+	private ServiceRegistration<Sanitizer> _antiSamySanitizerRegistration;
 
 }

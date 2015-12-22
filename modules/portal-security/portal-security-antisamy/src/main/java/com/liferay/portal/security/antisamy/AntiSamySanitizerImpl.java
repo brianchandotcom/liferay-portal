@@ -26,30 +26,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import java.net.URL;
-
 import java.util.Map;
 
 import org.owasp.validator.html.AntiSamy;
 import org.owasp.validator.html.CleanResults;
 import org.owasp.validator.html.Policy;
+import org.owasp.validator.html.PolicyException;
 
 /**
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
  */
 public class AntiSamySanitizerImpl implements Sanitizer {
-
-	public AntiSamySanitizerImpl(URL url) {
-
-		try (InputStream inputstream = url.openStream()) {
-			_policy = Policy.getInstance(inputstream);
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(
-				"Policy could not be initialized", e);
-		}
-	}
 
 	@Override
 	public byte[] sanitize(
@@ -115,9 +103,29 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		}
 	}
 
+	protected void init() {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"sanitizer-configuration.xml");
+
+		if (inputStream == null) {
+			throw new NullPointerException("Configuration could not be found");
+		}
+
+		try {
+			_policy = Policy.getInstance(inputStream);
+		}
+		catch (PolicyException pe) {
+			throw new RuntimeException("Policy could not be initialized", pe);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AntiSamySanitizerImpl.class);
 
-	private final Policy _policy;
+	private Policy _policy;
 
 }

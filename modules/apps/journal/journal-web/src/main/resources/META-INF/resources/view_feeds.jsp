@@ -17,12 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String redirect = ParamUtil.getString(request, "redirect");
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-String redirect = ParamUtil.getString(request, "redirect");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

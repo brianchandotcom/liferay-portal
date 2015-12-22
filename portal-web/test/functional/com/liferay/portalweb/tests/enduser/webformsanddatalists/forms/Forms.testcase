@@ -36,7 +36,7 @@
 		</if>
 	</tear-down>
 
-	<command name="EditFormsApplicationConfigurationViaSystemSettings" priority="3">
+	<command name="EditFormsConfigurationViaSystemSettings" priority="3">
 		<description message="This is a use case for LPS-59749" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

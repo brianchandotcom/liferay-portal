@@ -95,6 +95,7 @@ page import="com.liferay.portal.service.ServiceContextFunction" %><%@
 page import="com.liferay.portal.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.upload.LiferayFileItem" %><%@
+page import="com.liferay.portal.util.DynamicIncludeKeys" %><%@
 page import="com.liferay.portal.util.Portal" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@

@@ -40,11 +40,11 @@ name = namespace + name;
 	</script>
 
 	<%
-		String apiURL = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
+	String apiURL = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
 
-		if (Validator.isNotNull(googleMapDisplayContext.getGoogleMapsAPIKey())) {
-			apiURL += "&key=" + googleMapDisplayContext.getGoogleMapsAPIKey();
-		}
+	if (Validator.isNotNull(googleMapDisplayContext.getGoogleMapsAPIKey())) {
+		apiURL += "&key=" + googleMapDisplayContext.getGoogleMapsAPIKey();
+	}
 	%>
 
 	<script src="<%= apiURL %>" type="text/javascript"></script>

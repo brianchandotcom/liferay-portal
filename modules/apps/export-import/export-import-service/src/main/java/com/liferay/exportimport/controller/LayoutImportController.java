@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -1286,6 +1287,44 @@ public class LayoutImportController implements ImportController {
 			throw new LayoutImportException(
 				"LAR build number " + importBuildNumber + " does not match " +
 					"portal build number " + buildNumber);
+		}
+
+		// Portlets compatibility
+
+		Element portletsElement = rootElement.element("portlets");
+
+		List<Element> portletElements = portletsElement.elements("portlet");
+
+		for (Element portletElement : portletElements) {
+			String portletId = GetterUtil.getString(
+				portletElement.attributeValue("portlet-id"));
+
+			if (Validator.isNull(portletId)) {
+				continue;
+			}
+
+			String schemaVersion = GetterUtil.getString(
+				portletElement.attributeValue("schema-version"));
+
+			Portlet portlet = _portletLocalService.getPortletById(
+				companyId, portletId);
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if (!portletDataHandler.validateSchemaVersion(schemaVersion)) {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("Portlet's schema version ");
+				sb.append(schemaVersion);
+				sb.append(
+					" in the LAR is not valid for the deployed portlet's ");
+				sb.append(portletDataHandler.getSchemaVersion());
+				sb.append(" for portlet id ");
+				sb.append(portletId);
+
+				throw new LayoutImportException(sb.toString());
+			}
 		}
 
 		// Type

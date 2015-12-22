@@ -127,16 +127,17 @@ public interface WorkflowTaskManager {
 		throws WorkflowException;
 
 	public List<WorkflowTask> search(
-			long companyId, long userId, String taskName, String assetType,
-			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
-			Boolean completed, Boolean searchByUserRoles, boolean andOperator,
-			int start, int end,
+			long companyId, long userId, String taskName, String assetTitle,
+			String assetType, Long[] assetPrimaryKey, Date dueDateGT,
+			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+			boolean andOperator, int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
 
 	public List<WorkflowTask> search(
-			long companyId, long userId, String keywords, String[] assetTypes,
-			Boolean completed, Boolean searchByUserRoles, int start, int end,
+			long companyId, long userId, String keywords, String assetTitle,
+			String[] assetTypes, Boolean completed, Boolean searchByUserRoles,
+			int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
 
@@ -146,14 +147,15 @@ public interface WorkflowTaskManager {
 		throws WorkflowException;
 
 	public int searchCount(
-			long companyId, long userId, String taskName, String assetType,
-			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
-			Boolean completed, Boolean searchByUserRoles, boolean andOperator)
+			long companyId, long userId, String taskName, String assetTitle,
+			String assetType, Long[] assetPrimaryKey, Date dueDateGT,
+			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+			boolean andOperator)
 		throws WorkflowException;
 
 	public int searchCount(
-			long companyId, long userId, String keywords, String[] assetTypes,
-			Boolean completed, Boolean searchByUserRoles)
+			long companyId, long userId, String keywords, String assetTitle,
+			String[] assetTypes, Boolean completed, Boolean searchByUserRoles)
 		throws WorkflowException;
 
 	public WorkflowTask updateDueDate(

@@ -58,8 +58,8 @@ public class KaleoTaskInstanceTokenServiceTest {
 			serviceContext.setUserId(user.getUserId());
 
 			int count = KaleoTaskInstanceTokenLocalServiceUtil.searchCount(
-				RandomTestUtil.randomString(), RandomTestUtil.randomStrings(10),
-				false, true, serviceContext);
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomStrings(10), false, true, serviceContext);
 
 			Assert.assertEquals(0, count);
 		}

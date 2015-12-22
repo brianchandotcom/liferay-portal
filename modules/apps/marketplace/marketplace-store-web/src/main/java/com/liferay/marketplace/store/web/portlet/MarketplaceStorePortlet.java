@@ -381,9 +381,13 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		parameterMap.put(
 			"clientBuild",
 			new String[] {String.valueOf(MarketplaceConstants.CLIENT_BUILD)});
-		parameterMap.put(
-			"compatibility",
-			new String[] {String.valueOf(ReleaseInfo.getBuildNumber())});
+
+		if (!parameterMap.containsKey("compatibility")) {
+			parameterMap.put(
+				"compatibility",
+				new String[] {String.valueOf(ReleaseInfo.getBuildNumber())});
+		}
+
 		parameterMap.put(
 			"supportsHotDeploy",
 			new String[] {

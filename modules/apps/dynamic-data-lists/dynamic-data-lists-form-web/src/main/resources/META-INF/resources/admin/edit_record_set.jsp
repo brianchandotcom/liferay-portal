@@ -128,12 +128,18 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 		<div class="container-fluid-1280 ddl-publish-modal hide" id="<portlet:namespace />publishModal">
 			<div class="alert alert-info">
-				<a href="<%= ddlFormAdminDisplayContext.getPublishedFormURL() %>" target="_blank"><liferay-ui:message key="click-here-to-preview-the-form-in-a-new-window" /></a>
+				<a href="<%= ddlFormAdminDisplayContext.getPublishedFormURL() %>" target="_blank">
+					<liferay-ui:message key="click-here-to-preview-the-form-in-a-new-window" />
+				</a>
 			</div>
 
 			<div class="form-group">
 				<label class="control-label ddl-publish-checkbox" for="<portlet:namespace />publishCheckbox">
-					<span class="pull-left"><liferay-ui:message key="publish-form" /><small><liferay-ui:message key="make-this-form-public" /></small></span>
+					<span class="pull-left">
+						<liferay-ui:message key="publish-form" />
+
+						<small><liferay-ui:message key="make-this-form-public" /></small>
+					</span>
 
 					<aui:input label="" name="publishCheckbox" type="toggle-switch" value="<%= ddlFormAdminDisplayContext.isRecordSetPublished() %>" />
 				</label>

@@ -170,7 +170,7 @@ AUI.add(
 					_onChangePublishCheckbox: function(event) {
 						var instance = this;
 
-						var publishCheckbox = event.target;
+						var publishCheckbox = event.currentTarget;
 
 						var payload = instance.ns(
 							{

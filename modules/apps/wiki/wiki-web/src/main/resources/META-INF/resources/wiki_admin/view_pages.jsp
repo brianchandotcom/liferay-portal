@@ -119,7 +119,7 @@ else {
 		PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
 		%>
 
-		<liferay-ui:trash-undo portletURL="<%= undoTrashURL.toString() %>" />
+		<liferay-trash:trash-undo portletURL="<%= undoTrashURL.toString() %>" />
 	</c:if>
 
 	<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">

@@ -2408,7 +2408,26 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<arg value="${mobile.android.home}/tools/emulator -avd deviceName -no-boot-anim" />
 			</exec>
 
-			<sleep seconds="120" />
+			<echo file="wait_for_android_device.sh">
+				<![CDATA[
+					#!/bin/bash
+
+					bootanim=""
+
+					until [[ $bootanim =~ "stopped" ]];
+					do
+						bootanim=`${mobile.android.home}/platform-tools/adb shell getprop init.svc.bootanim`
+
+						sleep 1
+					done
+				]]>
+			</echo>
+
+			<chmod file="wait_for_android_device.sh" perm="a+x" />
+
+			<exec executable="${basedir}/wait_for_android_device.sh" timeout="300000" />
+
+			<delete file="wait_for_android_device.sh" />
 
 			<execute>
 				${mobile.android.home}/platform-tools/adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local

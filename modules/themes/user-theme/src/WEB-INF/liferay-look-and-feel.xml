@@ -24,7 +24,7 @@
 		</portlet-decorator>
 	</theme>
 
-	<theme id="user-vertical" name="User vertical">
+	<theme id="user-vertical" name="User Vertical">
 		<images-path>${root-path}/user-horizontal-images</images-path>
 		<template-extension>vm</template-extension>
 		<settings>

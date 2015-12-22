@@ -1,5 +1,4 @@
-<%@ page
-	import="com.liferay.exportimport.web.constants.ExportImportPortletKeys" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *

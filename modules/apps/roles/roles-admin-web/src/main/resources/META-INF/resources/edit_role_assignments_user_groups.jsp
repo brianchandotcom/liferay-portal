@@ -26,13 +26,15 @@ Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
 String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
+
+UserGroupRoleChecker rowChecker = new UserGroupRoleChecker(renderResponse, role);
 %>
 
 <aui:input name="addGroupIds" type="hidden" />
 <aui:input name="removeGroupIds" type="hidden" />
 
 <liferay-ui:search-container
-	rowChecker="<%= new UserGroupRoleChecker(renderResponse, role) %>"
+	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >
 
@@ -58,17 +60,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 		keyProperty="group.groupId"
 		modelVar="userGroup"
 	>
-		<liferay-ui:search-container-column-text
-			name="name"
-			orderable="<%= true %>"
-			property="name"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="description"
-			orderable="<%= true %>"
-			property="description"
-		/>
+		<%@ include file="/user_group_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
 	<%

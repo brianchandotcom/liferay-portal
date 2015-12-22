@@ -133,6 +133,15 @@ public abstract class BaseDBProvider
 			sb.append(formatDateTime(field));
 			sb.append("'");
 		}
+		else if (field instanceof String) {
+			String value = (String)field;
+
+			value = value.replace("'", "\\'");
+
+			sb.append("'");
+			sb.append(value);
+			sb.append("'");
+		}
 		else {
 			sb.append("'");
 			sb.append(field);

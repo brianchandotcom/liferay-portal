@@ -123,9 +123,12 @@ public abstract class BaseDBProvider
 
 	@Override
 	public String serializeTableField(Object field) throws SQLException {
-		StringBuilder sb = new StringBuilder(3);
+		StringBuilder sb = new StringBuilder();
 
-		if ((field instanceof Date) || (field instanceof Timestamp)) {
+		if (field == null) {
+			sb.append("null");
+		}
+		else if ((field instanceof Date) || (field instanceof Timestamp)) {
 			sb.append("'");
 			sb.append(formatDateTime(field));
 			sb.append("'");

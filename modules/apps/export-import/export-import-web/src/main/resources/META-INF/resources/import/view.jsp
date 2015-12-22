@@ -17,8 +17,9 @@
 <%@ include file="/import/init.jsp" %>
 
 <%
-GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+
+GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
 %>
 
 <liferay-util:include page="/import/navigation.jsp" servletContext="<%= application %>" />

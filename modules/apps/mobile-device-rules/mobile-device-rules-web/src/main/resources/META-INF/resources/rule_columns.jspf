@@ -26,6 +26,11 @@
 	value="<%= rule.getDescription(locale) %>"
 />
 
+<liferay-ui:search-container-column-date
+	name="create-date"
+	property="createDate"
+/>
+
 <liferay-ui:search-container-column-text
 	name="type"
 	translate="<%= true %>"

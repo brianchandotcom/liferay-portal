@@ -103,7 +103,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			MDRRuleModelImpl.FINDER_CACHE_ENABLED, MDRRuleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
-			MDRRuleModelImpl.UUID_COLUMN_BITMASK);
+			MDRRuleModelImpl.UUID_COLUMN_BITMASK |
+			MDRRuleModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
 			MDRRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -900,7 +901,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] { String.class.getName(), Long.class.getName() },
 			MDRRuleModelImpl.UUID_COLUMN_BITMASK |
-			MDRRuleModelImpl.COMPANYID_COLUMN_BITMASK);
+			MDRRuleModelImpl.COMPANYID_COLUMN_BITMASK |
+			MDRRuleModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
 			MDRRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1482,7 +1484,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			MDRRuleModelImpl.FINDER_CACHE_ENABLED, MDRRuleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRuleGroupId",
 			new String[] { Long.class.getName() },
-			MDRRuleModelImpl.RULEGROUPID_COLUMN_BITMASK);
+			MDRRuleModelImpl.RULEGROUPID_COLUMN_BITMASK |
+			MDRRuleModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_RULEGROUPID = new FinderPath(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
 			MDRRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRuleGroupId",

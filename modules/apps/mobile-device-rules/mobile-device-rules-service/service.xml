@@ -72,6 +72,12 @@
 		<column name="typeSettings" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
+
 		<!-- Finder methods -->
 
 		<finder name="RuleGroupId" return-type="Collection">
@@ -107,6 +113,12 @@
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
 
 		<!-- Finder methods -->
 

@@ -43,6 +43,31 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("ruleGroupId", String.valueOf(ruleGroupId));
 portletURL.setParameter("groupId", String.valueOf(groupId));
 
+SearchContainer rulesSearchContainer = new SearchContainer(renderRequest, portletURL, null, "no-classification-rules-are-configured-for-this-device-family");
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
+
+rulesSearchContainer.setOrderByCol(orderByCol);
+
+boolean orderByAsc = false;
+
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator<MDRRule> orderByComparator = new RuleCreateDateComparator(orderByAsc);
+
+rulesSearchContainer.setOrderByComparator(orderByComparator);
+
+rulesSearchContainer.setOrderByType(orderByType);
+
+int rulesCount = MDRRuleLocalServiceUtil.getRulesCount(ruleGroupId);
+List<MDRRule> rules = MDRRuleLocalServiceUtil.getRules(ruleGroupId, rulesSearchContainer.getStart(), rulesSearchContainer.getEnd(), rulesSearchContainer.getOrderByComparator());
+
+rulesSearchContainer.setResults(rules);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
@@ -54,10 +79,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "classification-rules-for-x
 		<aui:nav-item label="classification-rules" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
-
-<%
-int rulesCount = MDRRuleLocalServiceUtil.getRulesCount(ruleGroupId);
-%>
 
 <c:if test="<%= rulesCount > 0 %>">
 	<liferay-frontend:management-bar>
@@ -85,20 +106,21 @@ int rulesCount = MDRRuleLocalServiceUtil.getRulesCount(ruleGroupId);
 				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= iteratorURL %>"
 			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"create-date"} %>'
+				portletURL="<%= iteratorURL %>"
+			/>
 		</liferay-frontend:management-bar-filters>
 	</liferay-frontend:management-bar>
 </c:if>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-classification-rules-are-configured-for-this-device-family"
-		iteratorURL="<%= portletURL %>"
-		total="<%= rulesCount %>"
+		searchContainer="<%= rulesSearchContainer %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= MDRRuleLocalServiceUtil.getRules(ruleGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.mobile.device.rules.model.MDRRule"
 			escapedModel="<%= true %>"

@@ -45,7 +45,8 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 			_policy = Policy.getInstance(inputstream);
 		}
 		catch (Exception e) {
-			throw new IllegalStateException("Unable to initialize policy", e);
+			throw new IllegalStateException(
+				"Unable to initialize policy", e);
 		}
 	}
 

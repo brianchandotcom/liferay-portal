@@ -76,9 +76,9 @@ include:
 - *Allow subsites to display content from this site*
 - *Use the default language options*
 
-If a radio or checkbox provides more options on select it, make that obvious by
-starting its label with an action word. For example, a checkbox using one of the
-labels below hints that selecting it brings up more options:
+If a radio or checkbox provides more options when selecting it, make that
+obvious by starting its label with an action word. For example, a checkbox using
+one of the labels below hints that selecting it brings up more options:
 
 - *Define social interactions for users*
 - *Define a custom default language and additional available languages for this

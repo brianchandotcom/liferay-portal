@@ -21,6 +21,8 @@ String randomId = StringUtil.randomId();
 
 String redirect = ParamUtil.getString(request, "redirect");
 
+String backURL = ParamUtil.getString(request, "backURL", redirect);
+
 WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
 long classPK = workflowTaskDisplayContext.getWorkflowContextEntryClassPK(workflowTask);
@@ -36,7 +38,7 @@ AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.
 String headerTitle = workflowTaskDisplayContext.getHeaderTitle(workflowTask);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(headerTitle);
 %>

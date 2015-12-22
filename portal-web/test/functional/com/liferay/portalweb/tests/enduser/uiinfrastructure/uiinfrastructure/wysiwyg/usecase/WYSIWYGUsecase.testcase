@@ -139,7 +139,7 @@
 		<var name="currentPortalLanguages" value="English (United States),Arabic (Saudi Arabia)" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Settings" />
+			<var name="portlet" value="Instance Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#configureCurrentLanguagesCP">

@@ -337,7 +337,7 @@
 
 	<command name="tearDownAuthenticationCP">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Settings" />
+			<var name="portlet" value="Instance Settings" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">
@@ -363,7 +363,7 @@
 
 	<command name="tearDownCP">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Settings" />
+			<var name="portlet" value="Instance Settings" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">

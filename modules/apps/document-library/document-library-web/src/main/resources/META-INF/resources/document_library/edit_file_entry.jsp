@@ -465,12 +465,6 @@ if (portletTitleBasedNavigation) {
 				</aui:fieldset>
 			</c:if>
 
-			<c:if test="<%= approved && dlEditFileEntryDisplayContext.isVersionInfoVisible() %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="a-new-version-is-created-automatically-if-this-content-is-modified" />
-				</div>
-			</c:if>
-
 			<c:if test="<%= pending %>">
 				<div class="alert alert-info">
 					<liferay-ui:message key="there-is-a-publication-workflow-in-process" />

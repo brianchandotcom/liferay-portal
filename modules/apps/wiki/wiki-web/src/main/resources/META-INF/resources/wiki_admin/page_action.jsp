@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,18 +12,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.wiki.display.context;
+<%@ include file="/wiki/init.jsp" %>
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.wiki.model.WikiPage;
+<%
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-/**
- * @author Iván Zaera
- */
-public interface WikiListPagesDisplayContext extends WikiDisplayContext {
+WikiPage wikiPage = (WikiPage)row.getObject();
 
-	public Menu getMenu(WikiPage wikiPage) throws PortalException;
+WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, wikiPage.getNode());
 
-}
+Menu menu = wikiListPagesDisplayContext.getMenu(wikiPage);
+
+menu.setDirection("left-side");
+menu.setMarkupView("lexicon");
+menu.setScroll(false);
+%>
+
+<liferay-ui:menu menu="<%= menu %>" />

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -52,6 +54,9 @@ import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -83,28 +88,58 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		String title = ParamUtil.getString(actionRequest, "title");
 		double version = ParamUtil.getDouble(actionRequest, "version");
 
-		WikiPage wikiPage = null;
+		String[] deletePageTitles = null;
+
+		if (Validator.isNotNull(title)) {
+			deletePageTitles = new String[] {title};
+		}
+		else {
+			long[] rowIdsWikiPages = ParamUtil.getLongValues(
+				actionRequest, "rowIdsWikiPage");
+
+			deletePageTitles = new String[rowIdsWikiPages.length];
+
+			for (long rowIdsWikiPage : rowIdsWikiPages) {
+				WikiPage rowPage = _wikiPageLocalService.getPageByPageId(
+					rowIdsWikiPage);
+
+				deletePageTitles = ArrayUtil.append(
+					deletePageTitles, rowPage.getTitle());
+			}
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
 
 		if (moveToTrash) {
-			if (version > 0) {
-				wikiPage = _wikiPageService.movePageToTrash(
-					nodeId, title, version);
-			}
-			else {
-				wikiPage = _wikiPageService.movePageToTrash(nodeId, title);
+			for (String deletePageTitle : deletePageTitles) {
+				WikiPage trashedWikiPage = null;
+
+				if (version > 0) {
+					trashedWikiPage = _wikiPageService.movePageToTrash(
+						nodeId, deletePageTitle, version);
+				}
+				else {
+					trashedWikiPage = _wikiPageService.movePageToTrash(
+						nodeId, deletePageTitle);
+				}
+
+				trashedModels.add(trashedWikiPage);
 			}
 		}
 		else {
-			if (version > 0) {
-				_wikiPageService.discardDraft(nodeId, title, version);
-			}
-			else {
-				_wikiPageService.deletePage(nodeId, title);
+			for (String deletePageTitle : deletePageTitles) {
+				if (version > 0) {
+					_wikiPageService.discardDraft(
+						nodeId, deletePageTitle, version);
+				}
+				else {
+					_wikiPageService.deletePage(nodeId, deletePageTitle);
+				}
 			}
 		}
 
-		if (moveToTrash && (wikiPage != null)) {
-			TrashUtil.addTrashSessionMessages(actionRequest, wikiPage);
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
 		}

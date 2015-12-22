@@ -228,36 +228,37 @@ public class BookmarksPortletToolbarContributor
 	private BookmarksFolder _getFolder(
 		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
 
-		long rootFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		try {
-			BookmarksGroupServiceOverriddenConfiguration
-				bookmarksGroupServiceOverriddenConfiguration =
-					ConfigurationFactoryUtil.getConfiguration(
-						BookmarksGroupServiceOverriddenConfiguration.class,
-						new GroupServiceSettingsLocator(
-							themeDisplay.getScopeGroupId(),
-							BookmarksConstants.SERVICE_NAME));
-
-			rootFolderId =
-				bookmarksGroupServiceOverriddenConfiguration.rootFolderId();
-		}
-		catch (ConfigurationException ce) {
-			_log.error(
-				"Unable to obtain bookmarks root folder ID for group " +
-					themeDisplay.getScopeGroupId());
-		}
-
 		BookmarksFolder folder = (BookmarksFolder)portletRequest.getAttribute(
 			BookmarksWebKeys.BOOKMARKS_FOLDER);
 
-		long folderId = BeanParamUtil.getLong(
-			folder, portletRequest, "folderId", rootFolderId);
-
-		if ((folder == null) &&
-			(folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
+		if (folder == null) {
 			try {
+				long rootFolderId =
+					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+				try {
+					BookmarksGroupServiceOverriddenConfiguration
+						bookmarksGroupServiceOverriddenConfiguration =
+							ConfigurationFactoryUtil.getConfiguration(
+								BookmarksGroupServiceOverriddenConfiguration.
+									class,
+								new GroupServiceSettingsLocator(
+									themeDisplay.getScopeGroupId(),
+									BookmarksConstants.SERVICE_NAME));
+
+					rootFolderId =
+						bookmarksGroupServiceOverriddenConfiguration.
+							rootFolderId();
+				}
+				catch (ConfigurationException ce) {
+					_log.error(
+						"Unable to obtain bookmarks root folder ID for group " +
+							themeDisplay.getScopeGroupId());
+				}
+
+				long folderId = BeanParamUtil.getLong(
+					folder, portletRequest, "folderId", rootFolderId);
+
 				folder = _bookmarksFolderService.getFolder(folderId);
 			}
 			catch (NoSuchFolderException nsfe) {

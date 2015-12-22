@@ -27,20 +27,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Iván Zaera
  * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
-		"mvc.command.name=/wiki/view_all_pages"
+		"mvc.command.name=/wiki_admin/view_pages"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewAllPagesMVCRenderCommand implements MVCRenderCommand {
+public class ViewPagesMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -51,7 +48,7 @@ public class ViewAllPagesMVCRenderCommand implements MVCRenderCommand {
 			WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR,
 			_wikiPortletToolbarContributor);
 
-		return ActionUtil.viewNode(renderRequest, "/wiki/view_all_pages.jsp");
+		return ActionUtil.viewNode(renderRequest, "/wiki_admin/view_pages.jsp");
 	}
 
 	@Reference(unbind = "-")

@@ -20,8 +20,12 @@
 String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
 %>
 
-<div class="toolbar-group-content <%= Validator.equals(productMenuState, "open") ? "active" : StringPool.BLANK %>">
-	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-qa-id="productMenu" data-target="#sidenavSliderId,#wrapper" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "menu")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" href="#sidenavSliderId" id="sidenavToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "menu")) %>')">
+<div class="toolbar-group-content="<%= Validator.equals(productMenuState, "open") ? "active" : StringPool.BLANK %>">
+	<liferay-portlet:renderURL portletName="<%= ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU %>" var="portletURL" windowState="exclusive">
+		<portlet:param name="mvcPath" value="/portlet/product_menu.jsp" />
+	</liferay-portlet:renderURL>
+
+	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-panelurl="<%= portletURL.toString() %>" data-qa-id="productMenu" data-target="#sidenavSliderId,#wrapper" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "menu")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" href="#sidenavSliderId" id="sidenavToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "menu")) %>')">
 		<div class="toast-animation">
 			<div class="pm"></div>
 

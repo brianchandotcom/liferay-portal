@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class MapProviderTracker {
 
 	public MapProvider getMapProvider(String mapProviderKey) {
-		return _mapProvidersMap.get(mapProviderKey);
+		return _mapProviders.get(mapProviderKey);
 	}
 
 	public Collection<MapProvider> getMapProviders() {
-		return _mapProvidersMap.values();
+		return _mapProviders.values();
 	}
 
 	@Reference(
@@ -47,14 +47,14 @@ public class MapProviderTracker {
 		unbind = "unregisterMapProvider"
 	)
 	protected synchronized void registerMapProvider(MapProvider mapProvider) {
-		_mapProvidersMap.put(mapProvider.getKey(), mapProvider);
+		_mapProviders.put(mapProvider.getKey(), mapProvider);
 	}
 
 	protected synchronized void unregisterMapProvider(MapProvider mapProvider) {
-		_mapProvidersMap.remove(mapProvider.getKey());
+		_mapProviders.remove(mapProvider.getKey());
 	}
 
-	private final Map<String, MapProvider>
-		_mapProvidersMap = new ConcurrentHashMap<>();
+	private final Map<String, MapProvider> _mapProviders =
+		new ConcurrentHashMap<>();
 
 }

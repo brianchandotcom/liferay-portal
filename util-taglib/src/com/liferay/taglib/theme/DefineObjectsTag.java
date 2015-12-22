@@ -16,6 +16,7 @@ package com.liferay.taglib.theme;
 
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -68,6 +69,10 @@ public class DefineObjectsTag extends TagSupport {
 		pageContext.setAttribute("themeDisplay", themeDisplay);
 		pageContext.setAttribute("timeZone", themeDisplay.getTimeZone());
 		pageContext.setAttribute("user", themeDisplay.getUser());
+		pageContext.setAttribute(
+			"resourceBundle",
+			TagResourceBundleUtil.getResourceBundle(
+				pageContext, themeDisplay.getLocale()));
 
 		// Deprecated
 

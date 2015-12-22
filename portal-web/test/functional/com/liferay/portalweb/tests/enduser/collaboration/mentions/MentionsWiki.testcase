@@ -65,7 +65,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Instances" />
+			<var name="portlet" value="Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#editCP">

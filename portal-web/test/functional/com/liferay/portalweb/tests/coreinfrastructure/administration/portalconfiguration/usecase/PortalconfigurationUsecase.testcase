@@ -32,7 +32,7 @@
 
 	<command name="AddPortalInstance" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Instances" />
+			<var name="portlet" value="Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#addCP">
@@ -79,7 +79,7 @@
 
 	<command name="DeletePortalInstance" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Instances" />
+			<var name="portlet" value="Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#addCP">
@@ -95,7 +95,7 @@
 
 	<command name="PermissionCheckPortalInstances" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Instances" />
+			<var name="portlet" value="Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#addCP">
@@ -155,7 +155,7 @@
 
 	<command name="ViewDeactivatedPortalInstance" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Instances" />
+			<var name="portlet" value="Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#addCP">
@@ -250,7 +250,7 @@
 		<execute macro="User#loginPG" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Portal Instances" />
+			<var name="portlet" value="Instances" />
 		</execute>
 
 		<execute macro="PortalInstances#deactivatePortalInstance">

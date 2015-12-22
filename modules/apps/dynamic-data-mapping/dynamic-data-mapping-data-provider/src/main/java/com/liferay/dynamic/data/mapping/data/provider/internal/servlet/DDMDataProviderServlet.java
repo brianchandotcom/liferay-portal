@@ -21,9 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -99,8 +101,21 @@ public class DDMDataProviderServlet extends HttpServlet {
 		String serializedDDMForm = ParamUtil.getString(
 			request, "serializedDDMForm");
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		String data = doGetData(fieldName, serializedDDMForm);
 
+		if (data == null) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+
+			return;
+		}
+
+		response.setContentType(ContentTypes.APPLICATION_JSON);
+		response.setStatus(HttpServletResponse.SC_OK);
+
+		ServletResponseUtil.write(response, data);
+	}
+
+	protected String doGetData(String fieldName, String serializedDDMForm) {
 		try {
 			DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
 				serializedDDMForm);
@@ -117,32 +132,18 @@ public class DDMDataProviderServlet extends HttpServlet {
 				_ddmDataProviderInstanceService.getDataProviderInstance(
 					ddmDataProviderInstanceId);
 
-			List<KeyValuePair> data = ddmDataProviderInstance.getData();
+			JSONArray jsonArray = toJSONArray(
+				ddmDataProviderInstance.getData());
 
-			for (KeyValuePair keyValuePair : data) {
-				JSONObject optionJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				JSONObject labelJSONObject = JSONFactoryUtil.createJSONObject();
-
-				labelJSONObject.put(
-					LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
-					keyValuePair.getKey());
-
-				optionJSONObject.put("label", labelJSONObject);
-				optionJSONObject.put("value", keyValuePair.getValue());
-
-				jsonArray.put(optionJSONObject);
-			}
+			return jsonArray.toString();
 		}
 		catch (PortalException pe) {
-			pe.printStackTrace();
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
-		response.setStatus(HttpServletResponse.SC_OK);
-
-		ServletResponseUtil.write(response, jsonArray.toJSONString());
+		return null;
 	}
 
 	@Reference(unbind = "-")
@@ -159,10 +160,40 @@ public class DDMDataProviderServlet extends HttpServlet {
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
+	protected JSONArray toJSONArray(List<KeyValuePair> keyValuePairs) {
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (KeyValuePair keyValuePair : keyValuePairs) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+			JSONObject labelJSONObject = _jsonFactory.createJSONObject();
+
+			labelJSONObject.put(
+				LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
+				keyValuePair.getValue());
+
+			jsonObject.put("label", labelJSONObject);
+			jsonObject.put("value", keyValuePair.getKey());
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMDataProviderServlet.class);
+
 	private static final long serialVersionUID = 1L;
 
 	private volatile DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService;
 	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private volatile JSONFactory _jsonFactory;
 
 }

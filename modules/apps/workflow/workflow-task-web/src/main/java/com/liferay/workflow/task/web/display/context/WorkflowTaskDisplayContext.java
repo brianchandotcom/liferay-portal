@@ -403,13 +403,6 @@ public class WorkflowTaskDisplayContext {
 		return searchableAssetsWorkflowHandlers;
 	}
 
-	public String getSearchURL() {
-		PortletURL portletURL = PortletURLUtil.getWorkflowSearchURL(
-			_renderRequest, _renderResponse);
-
-		return portletURL.toString();
-	}
-
 	public String getState(WorkflowTask workflowTask) throws PortalException {
 		long companyId = getWorkflowCompanyId(workflowTask);
 		long groupId = getWorkflowGroupId(workflowTask);

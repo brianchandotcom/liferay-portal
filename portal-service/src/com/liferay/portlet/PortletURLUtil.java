@@ -311,55 +311,6 @@ public class PortletURLUtil {
 		return sb.toString();
 	}
 
-	public static PortletURL getWorkflowSearchURL(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		Enumeration<String> enu = liferayPortletRequest.getParameterNames();
-
-		while (enu.hasMoreElements()) {
-			String param = enu.nextElement();
-
-			if (!ArrayUtil.contains(_WORKFLOW_SEARCH_PARAMETERS, param)) {
-				continue;
-			}
-
-			String[] values = liferayPortletRequest.getParameterValues(param);
-
-			if (values == null) {
-				continue;
-			}
-
-			boolean addParam = true;
-
-			// Don't set paramter values that are over 32 kb. See LEP-1755.
-
-			for (int i = 0; i < values.length; i++) {
-				if (values[i].length() > _CURRENT_URL_PARAMETER_THRESHOLD) {
-					addParam = false;
-
-					break;
-				}
-			}
-
-			if (addParam) {
-				portletURL.setParameter(param, values);
-			}
-		}
-
-		return portletURL;
-	}
-
-	public static PortletURL getWorkflowSearchURL(
-		PortletRequest portletRequest, MimeResponse mimeResponse) {
-
-		return getWorkflowSearchURL(
-			(LiferayPortletRequest)portletRequest,
-			(LiferayPortletResponse)mimeResponse);
-	}
-
 	protected static boolean isRefreshURLReservedParameter(
 		String parameter, String namespace) {
 
@@ -385,8 +336,5 @@ public class PortletURLUtil {
 	private static final String[] _PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS =
 		PropsUtil.getArray(
 			PropsKeys.PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS);
-
-	private static final String[] _WORKFLOW_SEARCH_PARAMETERS =
-		{"advancedSearch", "andOperator", "keywords", "name", "type"};
 
 }

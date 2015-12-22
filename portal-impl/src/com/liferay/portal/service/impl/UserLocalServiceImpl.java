@@ -889,7 +889,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Groups
 
-		if (groupIds != null) {
+		if (!ArrayUtil.isEmpty(groupIds)) {
 			List<Group> groups = new ArrayList<>();
 
 			for (long groupId : groupIds) {

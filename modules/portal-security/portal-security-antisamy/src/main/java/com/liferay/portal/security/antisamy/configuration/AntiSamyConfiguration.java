@@ -27,12 +27,6 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 )
 public interface AntiSamyConfiguration {
 
-	@Meta.AD(
-		deflt = "/META-INF/resources/sanitizer-configuration.xml",
-		required = false
-	)
-	public String configurationFileURL();
-
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enabled();
 

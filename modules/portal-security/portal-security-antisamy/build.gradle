@@ -24,7 +24,7 @@ processSanitizerConfiguration {
 		}
 	}
 
-	into 'classes/META-INF/resources'
+	into 'classes'
 }
 
 liferay {

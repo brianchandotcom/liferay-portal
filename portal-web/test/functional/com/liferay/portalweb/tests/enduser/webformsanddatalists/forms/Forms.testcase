@@ -36,7 +36,7 @@
 		</if>
 	</tear-down>
 
-	<command name="EditFormsApplicationConfigurationViaSystemSettings" priority="3">
+	<command name="EditFormsConfigurationViaSystemSettings" priority="3">
 		<description message="This is a use case for LPS-59749" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -56,7 +56,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
-			<var name="configurationName" value="Forms Application" />
+			<var name="configurationName" value="Forms" />
 		</execute>
 
 		<execute macro="FormFields#removeRepeatableField" />
@@ -83,7 +83,7 @@
 
 		<execute macro="SystemSettings#resetConfiguration">
 			<var name="category" value="Productivity" />
-			<var name="configurationName" value="Forms Application" />
+			<var name="configurationName" value="Forms" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">

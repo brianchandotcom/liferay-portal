@@ -161,7 +161,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskStopTestableTomcat(project, liferayExtension);
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
-		configureTaskTranspileJS(project);
 		configureTasksBuildCSS(project);
 		configureTasksBuildLang(project);
 		configureTasksBuildUpgradeTable(project);
@@ -1432,34 +1431,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		whipTaskExtension.excludes(
 			".*Test", ".*Test\\$.*", ".*\\$Proxy.*", "com/liferay/whip/.*");
 		whipTaskExtension.includes("com/liferay/.*");
-	}
-
-	protected void configureTaskTranspileJS(Project project) {
-		TranspileJSTask transpileJSTask = (TranspileJSTask)GradleUtil.getTask(
-			project, JSTranspilerPlugin.TRANSPILE_JS_TASK_NAME);
-
-		configureTaskTranspileJSDependsOn(transpileJSTask);
-		configureTaskTranspileJSSourceDir(transpileJSTask);
-		configureTaskTranspileJSIncludes(transpileJSTask);
-	}
-
-	protected void configureTaskTranspileJSDependsOn(
-		TranspileJSTask transpileJSTask) {
-
-		transpileJSTask.dependsOn(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-	}
-
-	protected void configureTaskTranspileJSIncludes(
-		TranspileJSTask transpileJSTask) {
-
-		transpileJSTask.setIncludes(Collections.singleton("**/*.es.js"));
-	}
-
-	protected void configureTaskTranspileJSSourceDir(
-		TranspileJSTask transpileJSTask) {
-
-		transpileJSTask.setSourceDir(
-			getResourcesDir(transpileJSTask.getProject()));
 	}
 
 	protected void configureTestIntegrationTomcat(

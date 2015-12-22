@@ -29,6 +29,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
@@ -72,8 +73,20 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 	protected ConfigJSModulesTask addTaskConfigJSModules(
 		final Project project) {
 
-		ConfigJSModulesTask configJSModulesTask = GradleUtil.addTask(
+		final ConfigJSModulesTask configJSModulesTask = GradleUtil.addTask(
 			project, CONFIG_JS_MODULES_TASK_NAME, ConfigJSModulesTask.class);
+
+		configJSModulesTask.mustRunAfter(
+			new Callable<Task>() {
+
+				@Override
+				public Task call() throws Exception {
+					TaskContainer taskContainer = project.getTasks();
+
+					return taskContainer.findByName(_TRANSPILE_JS_TASK_NAME);
+				}
+
+			});
 
 		configJSModulesTask.setDescription(
 			"Generates the config file needed to load AMD files via " +
@@ -81,27 +94,19 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		configJSModulesTask.setGroup(BasePlugin.BUILD_GROUP);
 		configJSModulesTask.setModuleConfigFile(project.file("bower.json"));
 
-		configJSModulesTask.setOutputFile(
-			new Callable<File>() {
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
 
 				@Override
-				public File call() throws Exception {
-					SourceSet sourceSet = GradleUtil.getSourceSet(
-						project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-					return new File(
-						sourceSetOutput.getResourcesDir(),
-						"META-INF/config.json");
+				public void execute(JavaPlugin javaPlugin) {
+					configureTaskConfigJSModulesForJavaPlugin(
+						configJSModulesTask);
 				}
 
 			});
-
-		Task classesTask = GradleUtil.getTask(
-			project, JavaPlugin.CLASSES_TASK_NAME);
-
-		classesTask.dependsOn(configJSModulesTask);
 
 		return configJSModulesTask;
 	}
@@ -142,6 +147,49 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		}
 	}
 
+	protected void configureTaskConfigJSModulesForJavaPlugin(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		configJSModulesTask.mustRunAfter(
+			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		Project project = configJSModulesTask.getProject();
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		final SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+		configJSModulesTask.setOutputFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						sourceSetOutput.getResourcesDir(),
+						"META-INF/config.json");
+				}
+
+			});
+
+		configJSModulesTask.setSourceDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						sourceSetOutput.getResourcesDir(),
+						"META-INF/resources");
+				}
+
+			});
+
+		Task classesTask = GradleUtil.getTask(
+			project, JavaPlugin.CLASSES_TASK_NAME);
+
+		classesTask.dependsOn(configJSModulesTask);
+	}
+
 	protected void configureTasksConfigJSModules(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -156,5 +204,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 			});
 	}
+
+	private static final String _TRANSPILE_JS_TASK_NAME = "transpileJS";
 
 }

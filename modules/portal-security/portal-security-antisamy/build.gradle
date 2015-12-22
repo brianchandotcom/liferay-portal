@@ -1,8 +1,7 @@
-import com.liferay.gradle.util.FileUtil
+task downloadSanitizerConfiguration(type: AntGetDownload)
+task processSanitizerConfiguration (type: Copy, dependsOn: downloadSanitizerConfiguration)
 
-task processSanitizerConfiguration(type: Copy)
-
-String sanitizerConfigurationUrl = "https://owaspantisamy.googlecode.com/files/antisamy-ebay-1.4.4.xml"
+processResources.dependsOn processSanitizerConfiguration
 
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "2.4.1"
@@ -12,34 +11,36 @@ dependencies {
 	provided group: "org.owasp.antisamy", name: "antisamy", version: "1.5.3"
 }
 
+downloadSanitizerConfiguration {
+	sourceUrl = 'https://owaspantisamy.googlecode.com/files/antisamy-ebay-1.4.4.xml'
+	target = file ('build/tmp/antisamy-ebay-1.4.4.xml')
+}
+
+processSanitizerConfiguration {
+	from ('build/tmp') {
+		include ('antisamy-ebay-1.4.4.xml')
+		rename ('antisamy-ebay-1.4.4.xml', 'sanitizer-configuration.xml')
+		filter {
+			line -> line.contains('<directive name="maxInputSize" value="20000"/>') ? line.replace('20000', '200000') : line
+		}
+	}
+
+	into 'classes/META-INF/resources'
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
 }
 
-processResources {
-	dependsOn processSanitizerConfiguration
-}
+class AntGetDownload extends DefaultTask {
+	@Input
+	String sourceUrl
 
-processSanitizerConfiguration {
-	File sanitizerConfigurationFile = new File(sourceSets.main.output.resourcesDir, "META-INF/resources/sanitizer-configuration.xml")
+	@OutputFile
+	File target
 
-	filter {
-		String line ->
-
-		if (line.contains('<directive name="maxInputSize" value="20000"/>')) {
-			line = line.replace "20000", "200000"
-		}
-
-		return line
-	}
-
-	from {
-		FileUtil.get(project, sanitizerConfigurationUrl)
-	}
-
-	into sanitizerConfigurationFile.parentFile
-
-	rename {
-		sanitizerConfigurationFile.name
+	@TaskAction
+	void download() {
+		ant.get(src: sourceUrl, dest: target)
 	}
 }

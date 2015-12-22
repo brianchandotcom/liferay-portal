@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `202b3b7`.*
+*This document has been reviewed through commit `489b33c`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2986,24 +2986,24 @@ time to focus on other areas of the product that add more value.
 
 ---------------------------------------
 
-### The liferay-ui:trash-empty taglib has been removed and replaced with liferay-trash:empty taglib
+### Removed the liferay-ui:trash-empty Tag and Replaced with liferay-trash:empty
 - **Date:** 2015-Nov-30
 - **JIRA Ticket:** LPS-60779
 
 #### What changed?
 
-The `liferay-ui:trash-empty` taglib has been removed and replaced with
-`liferay-trash:empty` taglib.
+The `liferay-ui:trash-empty` tag has been removed and replaced with the
+`liferay-trash:empty` tag.
 
 #### Who is affected?
 
-Plugins or templates that are using the `liferay-ui:trash-empty` tag need to
+Plugins and templates that are using the `liferay-ui:trash-empty` tag need to
 update their usage of the tag.
 
 #### How should I update my code?
 
-You should import the `liferay-trash` tag library if it isn't already and update
-the tag namespace from `liferay-ui:trash-empty` to `liferay-trash:empty`.
+You should import the `liferay-trash` tag library (if necessary) and update the
+tag namespace from `liferay-ui:trash-empty` to `liferay-trash:empty`.
 
 #### Why was this change made?
 
@@ -3012,24 +3012,24 @@ Portal by means of an OSGi container.
 
 ---------------------------------------
 
-### The liferay-ui:trash-undo taglib has been removed and replaced with liferay-trash:undo taglib
+### Removed the liferay-ui:trash-undo Tag and Replaced with liferay-trash:undo
 - **Date:** 2015-Nov-30
 - **JIRA Ticket:** LPS-60779
 
 #### What changed?
 
-The `liferay-ui:trash-undo` taglib has been removed and replaced with
-`liferay-trash:undo` taglib.
+The `liferay-ui:trash-undo` taglib has been removed and replaced with the
+`liferay-trash:undo` tag.
 
 #### Who is affected?
 
-Plugins or templates that are using the `liferay-ui:trash-undo` tag need to
+Plugins and templates that are using the `liferay-ui:trash-undo` tag need to
 update their usage of the tag.
 
 #### How should I update my code?
 
-You should import the `liferay-trash` tag library if it isn't already and update
-the tag namespace from `liferay-ui:trash-undo` to `liferay-trash:undo`.
+You should import the `liferay-trash` tag library (if necessary) and update the
+tag namespace from `liferay-ui:trash-undo` to `liferay-trash:undo`.
 
 #### Why was this change made?
 

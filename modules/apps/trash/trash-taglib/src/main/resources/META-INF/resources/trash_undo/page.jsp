@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletURL = (String)request.getAttribute("liferay-trash:undo:portletURL");
-String redirect = GetterUtil.getString((String)request.getAttribute("liferay-trash:undo:redirect"), currentURL);
+String portletURL = (String)request.getAttribute("liferay-trash:trash-undo:portletURL");
+String redirect = GetterUtil.getString((String)request.getAttribute("liferay-trash:trash-undo:redirect"), currentURL);
 
 if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA)) {
 	Map<String, String[]> data = (HashMap<String, String[]>)SessionMessages.get(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);

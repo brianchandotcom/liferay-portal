@@ -18,7 +18,7 @@
 
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
 
-<liferay-trash:undo
+<liferay-trash:trash-undo
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 

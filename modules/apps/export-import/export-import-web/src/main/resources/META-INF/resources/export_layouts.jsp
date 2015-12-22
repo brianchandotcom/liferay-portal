@@ -122,7 +122,7 @@ if (!cmd.equals(Constants.ADD)) {
 </portlet:actionURL>
 
 <div class="container-fluid-1280">
-	<liferay-trash:undo
+	<liferay-trash:trash-undo
 		portletURL="<%= restoreTrashEntriesURL %>"
 	/>
 

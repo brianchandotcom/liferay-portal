@@ -29,7 +29,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-trash:undo
+<liferay-trash:trash-undo
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 

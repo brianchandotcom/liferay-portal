@@ -117,7 +117,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 	</div>
 
 	<div class="sidenav-content">
-		<liferay-trash:undo
+		<liferay-trash:trash-undo
 			portletURL="<%= restoreTrashEntriesURL %>"
 		/>
 

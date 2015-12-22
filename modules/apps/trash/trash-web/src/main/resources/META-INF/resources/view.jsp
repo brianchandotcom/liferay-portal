@@ -289,7 +289,7 @@ if (Validator.isNotNull(keywords)) {
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</portlet:actionURL>
 
-			<liferay-trash:empty
+			<liferay-trash:trash-empty
 				portletURL="<%= emptyTrashURL %>"
 				totalEntries="<%= searchContainer.getTotal() %>"
 			/>

@@ -103,7 +103,7 @@ public class TrashEmptyTag extends IncludeTag {
 		"entries-that-have-been-in-the-recycle-bin-for-more-than-x-are-" +
 			"automatically-deleted";
 
-	private static final String _PAGE = "/empty/page.jsp";
+	private static final String _PAGE = "/trash_empty/page.jsp";
 
 	private String _confirmMessage = _CONFIRM_MESSAGE;
 	private String _emptyMessage = _EMPTY_MESSAGE;

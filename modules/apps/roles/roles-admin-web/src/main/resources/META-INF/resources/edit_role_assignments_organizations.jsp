@@ -23,6 +23,8 @@ int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
 
 Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
 
+String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
+
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
 %>
 
@@ -97,5 +99,5 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 
 	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>

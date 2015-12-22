@@ -51,6 +51,8 @@ request.setAttribute("edit_role_assignments.jsp-cur", cur);
 
 request.setAttribute("edit_role_assignments.jsp-role", role);
 
+request.setAttribute("edit_role_assignments.jsp-displayStyle", displayStyle);
+
 request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 
 portletDisplay.setShowBackIcon(true);
@@ -128,7 +130,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 			</liferay-frontend:management-bar-filters>
 
 			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
+				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>

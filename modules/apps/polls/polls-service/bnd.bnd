@@ -2,6 +2,7 @@ Bundle-Name: Liferay Polls Service
 Bundle-SymbolicName: com.liferay.polls.service
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.polls.convert.database,\
 	com.liferay.polls.lar,\
 	com.liferay.polls.service.configuration.configurator
 Include-Resource: classes

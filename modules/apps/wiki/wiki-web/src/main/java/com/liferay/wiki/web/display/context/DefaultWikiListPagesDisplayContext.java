@@ -339,7 +339,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIcon("icon-copy");
 		urlMenuItem.setKey(WikiUIItemKeys.COPY);
 		urlMenuItem.setLabel("copy");
 
@@ -415,7 +414,6 @@ public class DefaultWikiListPagesDisplayContext
 
 			URLMenuItem urlMenuItem = new URLMenuItem();
 
-			urlMenuItem.setIcon("icon-remove");
 			urlMenuItem.setKey(WikiUIItemKeys.DELETE);
 			urlMenuItem.setLabel("discard-draft");
 
@@ -454,7 +452,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIcon("icon-edit");
 		urlMenuItem.setKey(WikiUIItemKeys.EDIT);
 		urlMenuItem.setLabel("edit");
 
@@ -482,7 +479,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIcon("icon-move");
 		urlMenuItem.setKey(WikiUIItemKeys.MOVE);
 		urlMenuItem.setLabel("move");
 
@@ -514,7 +510,6 @@ public class DefaultWikiListPagesDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIcon("icon-lock");
 		urlMenuItem.setKey(WikiUIItemKeys.PERMISSIONS);
 		urlMenuItem.setLabel("permissions");
 		urlMenuItem.setMethod("get");
@@ -562,7 +557,6 @@ public class DefaultWikiListPagesDisplayContext
 
 			URLMenuItem urlMenuItem = new URLMenuItem();
 
-			urlMenuItem.setIcon("icon-remove-sign");
 			urlMenuItem.setKey(WikiUIItemKeys.UNSUBSCRIBE);
 			urlMenuItem.setLabel("unsubscribe");
 
@@ -588,7 +582,6 @@ public class DefaultWikiListPagesDisplayContext
 		else {
 			URLMenuItem urlMenuItem = new URLMenuItem();
 
-			urlMenuItem.setIcon("icon-ok-sign");
 			urlMenuItem.setKey(WikiUIItemKeys.SUBSCRIBE);
 			urlMenuItem.setLabel("subscribe");
 

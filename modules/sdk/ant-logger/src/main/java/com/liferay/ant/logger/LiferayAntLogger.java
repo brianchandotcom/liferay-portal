@@ -14,12 +14,15 @@
 
 package com.liferay.ant.logger;
 
+import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.DefaultLogger;
+import org.apache.tools.ant.Target;
 
 /**
  * @author Kevin Yen
@@ -29,44 +32,48 @@ public class LiferayAntLogger extends DefaultLogger {
 	public void targetFinished(BuildEvent event) {
 		super.targetFinished(event);
 
-		Date start = _startTimesMap.get((Object)event.getTarget());
+		Target target = event.getTarget();
 
-		String name = "Target " + event.getTarget().getName();
+		long startTime = _startTimeMap.get(target);
 
-		logFinish(event, start, name);
+		long duration = System.currentTimeMillis() - startTime;
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("  [logging] ");
+		sb.append(_simpleDateFormat.format(new Date(startTime)));
+		sb.append(" : Target ");
+		sb.append(target.getName());
+		sb.append(" finished in ");
+		sb.append(duration);
+		sb.append("ms");
+
+		printMessage(sb.toString(), out, event.getPriority());
 	}
 
 	public void targetStarted(BuildEvent event) {
 		super.targetStarted(event);
 
-		Date now = new Date();
+		Target target = event.getTarget();
 
-		_startTimesMap.put((Object)event.getTarget(), now);
+		long currentTime = System.currentTimeMillis();
 
-		String name = "Target " + event.getTarget().getName();
+		_startTimeMap.put(target, currentTime);
 
-		logStart(event, now, name);
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("  [logging] ");
+		sb.append(_simpleDateFormat.format(new Date(currentTime)));
+		sb.append(" : Target ");
+		sb.append(target.getName());
+		sb.append(" started");
+
+		printMessage(sb.toString(), out, event.getPriority());
 	}
 
-	private void logFinish(BuildEvent event, Date start, String name) {
-		Date now = new Date();
+	private static final SimpleDateFormat _simpleDateFormat =
+		new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS aa");
 
-		long duration = now.getTime() - start.getTime();
-
-		String message =
-			"  [logging] " + start.toString() + " : " + name + " finished in " +
-				duration + "ms";
-
-		printMessage(message, out, event.getPriority());
-	}
-
-	private void logStart(BuildEvent event, Date start, String name) {
-		String message =
-			"  [logging] " + start.toString() + " : " + name + " started";
-
-		printMessage(message, out, event.getPriority());
-	}
-
-	private final Map<Object, Date> _startTimesMap = new HashMap();
+	private final Map<Target, Long> _startTimeMap = new HashMap<>();
 
 }

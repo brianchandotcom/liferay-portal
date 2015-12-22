@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/export/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -26,7 +26,6 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-	<portlet:param name="tabs2" value="new-export-process" />
 	<portlet:param name="exportConfigurationButtons" value="saved" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
@@ -131,7 +130,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/export_configuration_actions.jsp"
+				path="/export/new_export/export_configuration_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

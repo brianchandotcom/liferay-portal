@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/import/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -29,7 +29,6 @@ else {
 }
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 
 FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME);
 
@@ -104,20 +103,17 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 </liferay-ui:error>
 
 <portlet:actionURL name="importLayouts" var="importPagesURL">
-	<portlet:param name="mvcRenderCommandName" value="importLayouts" />
+	<portlet:param name="mvcRenderCommandName" value="viewImport" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-	<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= importPagesURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
 	<portlet:renderURL var="portletURL">
-		<portlet:param name="mvcRenderCommandName" value="importLayouts" />
-		<portlet:param name="tabs2" value="current-and-previous" />
+		<portlet:param name="mvcRenderCommandName" value="viewImport" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-		<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 	</portlet:renderURL>
 
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
@@ -378,7 +374,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-					<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 				</portlet:renderURL>
 
 				<aui:button cssClass="btn-lg" href="<%= backURL %>" name="back1" value="back" />

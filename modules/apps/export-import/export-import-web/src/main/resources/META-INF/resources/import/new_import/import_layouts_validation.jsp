@@ -14,12 +14,11 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/import/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 %>
 
 <aui:form cssClass="lfr-export-dialog" method="post" name="fm1">
@@ -125,7 +124,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 						<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
-						<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 					</liferay-portlet:resourceURL>
 
 					uri: '<%= importPagesURL %>'

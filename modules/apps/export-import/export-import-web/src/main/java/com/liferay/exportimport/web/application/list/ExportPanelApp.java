@@ -35,15 +35,15 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS,
-		"service.ranking:Integer=200"
+		"service.ranking:Integer=300"
 	},
 	service = PanelApp.class
 )
-public class ExportImportPanelApp extends BasePanelApp {
+public class ExportPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return ExportImportPortletKeys.EXPORT_IMPORT;
+		return ExportImportPortletKeys.EXPORT;
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class ExportImportPanelApp extends BasePanelApp {
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT + ")",
+		target = "(javax.portlet.name=" + ExportImportPortletKeys.EXPORT + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

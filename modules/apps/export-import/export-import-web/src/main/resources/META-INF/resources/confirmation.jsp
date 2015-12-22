@@ -74,7 +74,7 @@ long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 	</aui:fieldset>
 
 	<portlet:actionURL name='<%= (cmd.equals(Constants.EXPORT) ? "editExportConfiguration" : "editPublishConfiguration") %>' var="confirmedActionURL">
-		<portlet:param name="mvcPath" value='<%= (cmd.equals(Constants.EXPORT) ? "/export_layouts.jsp" : "/publish_layouts.jsp") %>' />
+		<portlet:param name="mvcPath" value='<%= (cmd.equals(Constants.EXPORT) ? "/export/new_export/export_layouts.jsp" : "/publish_layouts.jsp") %>' />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 		<portlet:param name="redirect" value="<%= redirectURL %>" />
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />

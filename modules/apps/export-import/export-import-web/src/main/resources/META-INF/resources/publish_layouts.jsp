@@ -164,8 +164,8 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 	</c:if>
 </c:if>
 
-<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
-	<portlet:param name="mvcPath" value="editExportConfiguration" />
+<portlet:actionURL name="editPublishConfiguration" var="restoreTrashEntriesURL">
+	<portlet:param name="mvcPath" value="editPublishConfiguration" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 

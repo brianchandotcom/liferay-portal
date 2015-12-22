@@ -1,9 +1,9 @@
 <#macro buildNavigation
 	branchNavItems
+	cssClass="layouts"
 	includeAllChildNavItems
 	navItemLevel
 	navItems
-	cssClass="layouts"
 >
 	<#if navItems?has_content>
 		<ul class="${cssClass} level-${navItemLevel}">

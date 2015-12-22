@@ -123,10 +123,8 @@ public class SiteNavigationMenuDisplayContext {
 
 		Layout layout = themeDisplay.getLayout();
 
-		String rootNodeName = StringPool.BLANK;
-
 		return LayoutListUtil.getLayoutDescriptions(
-			layout.getGroupId(), layout.isPrivateLayout(), rootNodeName,
+			layout.getGroupId(), layout.isPrivateLayout(), StringPool.BLANK,
 			themeDisplay.getLocale());
 	}
 

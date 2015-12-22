@@ -293,15 +293,6 @@
 							'aui-base'
 						]
 					},
-					'liferay-image-selector': {
-						path: 'image_selector.js',
-						requires: [
-							'aui-base',
-							'liferay-item-selector-dialog',
-							'liferay-portlet-base',
-							'uploader'
-						]
-					},
 					'liferay-inline-editor-base': {
 						path: 'inline_editor_base.js',
 						requires: [

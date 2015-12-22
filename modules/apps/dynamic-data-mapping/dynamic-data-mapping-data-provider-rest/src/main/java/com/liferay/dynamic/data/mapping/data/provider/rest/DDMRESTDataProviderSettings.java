@@ -42,8 +42,6 @@ public interface DDMRESTDataProviderSettings {
 	@DDMFormField
 	public boolean cacheable();
 
-	@DDMFormField
-
 	@DDMFormField(
 		label = "%displayed-json-attribute",
 		properties = { "placeholder=%enter-the-attribute-to-be-displayed" },

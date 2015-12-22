@@ -2192,8 +2192,6 @@ public class StagingImpl implements Staging {
 		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(
 			portletRequest, targetGroupId);
 
-		String name = ParamUtil.getString(portletRequest, "name");
-
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
 				DestinationNames.LAYOUTS_LOCAL_PUBLISHER, targetGroupId);
@@ -2228,6 +2226,8 @@ public class StagingImpl implements Staging {
 				schedulerEndDate, description);
 		}
 		else {
+			String name = ParamUtil.getString(portletRequest, "name");
+
 			publishLayouts(
 				themeDisplay.getUserId(), sourceGroupId, targetGroupId,
 				privateLayout, layoutIds, name, parameterMap);
@@ -2288,8 +2288,6 @@ public class StagingImpl implements Staging {
 			groupId, remoteAddress, remotePort, remotePathContext,
 			secureConnection, remoteGroupId);
 
-		String name = ParamUtil.getString(portletRequest, "name");
-
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
 				DestinationNames.LAYOUTS_REMOTE_PUBLISHER, groupId);
@@ -2326,8 +2324,10 @@ public class StagingImpl implements Staging {
 				description);
 		}
 		else {
+			String name = ParamUtil.getString(portletRequest, "name");
+
 			copyRemoteLayouts(
-				groupId, privateLayout, layoutIdMap, parameterMap,
+				groupId, privateLayout, layoutIdMap, name, parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
 				remoteGroupId, remotePrivateLayout);
 		}

@@ -341,9 +341,10 @@ public class StagingImpl implements Staging {
 			boolean remotePrivateLayout)
 		throws PortalException {
 
-		copyRemoteLayouts(sourceGroupId, privateLayout, layoutIdMap, null,
-			parameterMap, remoteAddress, remotePort, remotePathContext,
-			secureConnection, remoteGroupId, remotePrivateLayout);
+		copyRemoteLayouts(
+			sourceGroupId, privateLayout, layoutIdMap, null, parameterMap,
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId, remotePrivateLayout);
 	}
 
 	/**

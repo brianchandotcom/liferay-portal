@@ -15,8 +15,6 @@
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
-import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -210,11 +208,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 	protected Collection<JavaFileObject> handleSystemBundle(
 		BundleWiring bundleWiring, String path) {
 
-		Collection<JavaFileObject> javaFileObjects = _javaFileObjects.get(path);
-
-		if (javaFileObjects != null) {
-			return javaFileObjects;
-		}
+		Collection<JavaFileObject> javaFileObjects = null;
 
 		List<URL> urls = null;
 
@@ -240,8 +234,6 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		}
 
 		if ((urls == null) || urls.isEmpty()) {
-			_javaFileObjects.put(path, Collections.<JavaFileObject>emptyList());
-
 			return Collections.emptyList();
 		}
 
@@ -299,8 +291,6 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			javaFileObjects = Collections.<JavaFileObject>emptyList();
 		}
 
-		_javaFileObjects.put(path, javaFileObjects);
-
 		return javaFileObjects;
 	}
 
@@ -340,9 +330,6 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 	}
 
 	private final Bundle _bundle;
-	private final Map<String, Collection<JavaFileObject>> _javaFileObjects =
-		new ConcurrentReferenceValueHashMap<>(
-			FinalizeManager.SOFT_REFERENCE_FACTORY);
 	private final Bundle _jspBundle;
 	private final Logger _logger;
 	private final ServiceTracker<Map<String, List<URL>>, Map<String, List<URL>>>

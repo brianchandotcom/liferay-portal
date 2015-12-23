@@ -215,12 +215,13 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private WebDriver _getIOSMobileDriver() {
-		DesiredCapabilities desiredCapabilities = DesiredCapabilities.android();
+		DesiredCapabilities desiredCapabilities = DesiredCapabilities.iphone();
 
 		desiredCapabilities.setCapability("browserName", "Safari");
 		desiredCapabilities.setCapability("deviceName", "iPhone 5s");
 		desiredCapabilities.setCapability("platformName", "iOS");
-		desiredCapabilities.setCapability("platformVersion", "8.2");
+		desiredCapabilities.setCapability(
+			"platformVersion", PropsValues.BROWSER_VERSION);
 
 		URL url = null;
 

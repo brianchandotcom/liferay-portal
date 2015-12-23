@@ -247,7 +247,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME</td>
-	<td>//div[contains(@class,'toolbar-group-content') and contains(.,'${key_siteName}')]</td>
+	<td>//span[@class='site-name']</td>
 	<td></td>
 </tr>
 <tr>

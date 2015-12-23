@@ -139,38 +139,34 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							String articleImageURL = curArticle.getArticleImageURL(themeDisplay);
 							%>
 
-							<liferay-frontend:vertical-card
-								actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
-								actionJspServletContext="<%= application %>"
-								imageUrl='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
-								resultRow="<%= row %>"
-								rowChecker="<%= articleSearchContainer.getRowChecker() %>"
-								title="<%= curArticle.getTitle(locale) %>"
-								url="<%= rowURL != null ? rowURL.toString() : null %>"
-							>
-								<liferay-frontend:vertical-card-sticker-bottom>
-									<liferay-ui:user-portrait
-										cssClass="sticker sticker-bottom"
-										imageCssClass="user-icon-lg"
-										userId="<%= curArticle.getUserId() %>"
-									/>
-								</liferay-frontend:vertical-card-sticker-bottom>
-
-								<liferay-frontend:vertical-card-header>
-
-									<%
-									Date createDate = curArticle.getModifiedDate();
-
-									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-									%>
-
-									<liferay-ui:message arguments="<%= new String[] {curArticle.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
-								</liferay-frontend:vertical-card-header>
-
-								<liferay-frontend:vertical-card-footer>
-									<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
-								</liferay-frontend:vertical-card-footer>
-							</liferay-frontend:vertical-card>
+							<c:choose>
+								<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
+									<liferay-frontend:vertical-card
+										actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
+										actionJspServletContext="<%= application %>"
+										imageUrl="<%= articleImageURL %>"
+										resultRow="<%= row %>"
+										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
+										title="<%= curArticle.getTitle(locale) %>"
+										url="<%= rowURL != null ? rowURL.toString() : null %>"
+									>
+										<%@ include file="/article_vertical_card.jspf" %>
+									</liferay-frontend:vertical-card>
+								</c:when>
+								<c:otherwise>
+									 <liferay-frontend:icon-vertical-card
+										actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
+										actionJspServletContext="<%= application %>"
+										icon="web-content"
+										resultRow="<%= row %>"
+										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
+										title="<%= curArticle.getTitle(locale) %>"
+										url="<%= rowURL != null ? rowURL.toString() : null %>"
+									>
+										 <%@ include file="/article_vertical_card.jspf" %>
+									</liferay-frontend:icon-vertical-card>
+								</c:otherwise>
+							</c:choose>
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>

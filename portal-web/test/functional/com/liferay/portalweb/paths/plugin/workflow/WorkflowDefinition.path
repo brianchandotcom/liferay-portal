@@ -32,37 +32,37 @@
 <!--DEFINITION_TABLE-->
 <tr>
 	<td>DEFINITION_TABLE_NAME</td>
-	<td>//div[contains(@id,'workflowDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionName}')]/td[1]</td>
+	<td>//div[contains(@id,'WorkflowDefinitionPortlet_searchContainer')]//tr[contains(.,'${key_workflowDefinitionName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_TITLE</td>
-	<td>//div[contains(@id,'workflowDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionName}')]/td[2]</td>
+	<td>//div[contains(@id,'WorkflowDefinitionPortlet_searchContainer')]//tr[contains(.,'${key_workflowDefinitionName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_VERSION</td>
-	<td>//div[contains(@id,'workflowDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionName}')]/td[3]</td>
+	<td>//div[contains(@id,'WorkflowDefinitionPortlet_searchContainer')]//tr[contains(.,'${key_workflowDefinitionName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_ACTIVE</td>
-	<td>//div[contains(@id,'workflowDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionName}')]/td[4]</td>
+	<td>//div[contains(@id,'WorkflowDefinitionPortlet_searchContainer')]//tr[contains(.,'${key_workflowDefinitionName}')]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS</td>
-	<td>//div[contains(@id,'workflowDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[5]/div/a</td>
+	<td>//div[contains(@id,'WorkflowDefinitionPortlet_searchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[5]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS</td>
-	<td>//div[contains(@id,'workflowDefinitionsSearchContainer')]//tr[not (contains(.,'Single Approver'))]/td[5]/div/a</td>
+	<td>//div[contains(@id,'WorkflowDefinitionPortlet_searchContainer')]//tr[not (contains(.,'Single Approver'))]/td[5]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_DEACTIVATED_DEFINITION_ELLIPSIS</td>
-	<td>//div[contains(@id,'workflowDefinitionsSearchContainer')]//tr/td[(4 and contains(.,'No'))]/following-sibling::td/div/a</td>
+	<td>//div[contains(@id,'WorkflowDefinitionPortlet_searchContainer')]//tr/td[(4 and contains(.,'No'))]/following-sibling::td/div/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -39,6 +39,11 @@
 	<td>//tr[contains(.,'${key_roleName}')]/td[5]//span</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ROLE_TABLE_DEFINE_PERMISSIONS</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[5]//span[contains(.,'Define Permissions')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

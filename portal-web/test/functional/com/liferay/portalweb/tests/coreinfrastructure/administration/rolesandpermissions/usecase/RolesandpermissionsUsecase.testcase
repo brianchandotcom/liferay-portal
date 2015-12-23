@@ -1102,7 +1102,7 @@
 		<var name="key_ddlDataDefinitionName" value="Add Employee Profile Data Definition" />
 
 		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add Employee Profile Data Definition" />
-		<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 
 		<execute macro="User#logoutPG" />
 
@@ -1144,6 +1144,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1239,24 +1240,17 @@
 			<var name="dmDocumentTitle" value="Test Document" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDMDocumentPG">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoDMDocumentCP">
 			<var name="dmDocumentTitle" value="Test Document" />
-			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="guest" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="owner" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="site-member" />
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Remove" />
+			<var name="roleList" value="Guest,Owner,Site Member" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1989,6 +1983,7 @@
 		<execute macro="Role#viewNoXSSCP">
 			<var name="roleDescription"><![CDATA[<script>alert("xss")</script>]]></var>
 			<var name="roleName" value="Role 4" />
+			<var name="roleType" value="Site" />
 		</execute>
 
 		<execute macro="Role#addCP">
@@ -2001,6 +1996,7 @@
 		<execute macro="Role#viewNoXSSCP">
 			<var name="roleDescription"><![CDATA[<script>alert("xss")</script>]]></var>
 			<var name="roleName" value="Role 5" />
+			<var name="roleType" value="Organization" />
 		</execute>
 
 		<execute macro="Page#openURL" />
@@ -2121,11 +2117,6 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Bookmarks Page" />
-		</execute>
-
-		<execute macro="Bookmark#gotoPG">
-			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
 		<execute macro="Bookmark#viewBookmark">
@@ -2322,6 +2313,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Repository" />
 			<var name="roleName" value="Site Member" />
+			<var name="roleType" value="Site" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="action.ADD_REPOSITORY" />
@@ -2334,6 +2326,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Repository" />
 			<var name="roleName" value="Site Member" />
+			<var name="roleType" value="Site" />
 		</execute>
 	</command>
 

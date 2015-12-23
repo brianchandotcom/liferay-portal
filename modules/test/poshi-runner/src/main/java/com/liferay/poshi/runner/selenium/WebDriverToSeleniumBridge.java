@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -53,7 +51,6 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.WrapsDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import org.w3c.dom.Document;
@@ -1566,56 +1563,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected void selectByRegexpText(String selectLocator, String regexp) {
-		WebElement webElement = getWebElement(selectLocator);
-
-		Select select = new Select(webElement);
-
-		List<WebElement> optionWebElements = select.getOptions();
-
-		Pattern pattern = Pattern.compile(regexp);
-
-		int index = -1;
-
-		for (WebElement optionWebElement : optionWebElements) {
-			String optionWebElementText = optionWebElement.getText();
-
-			Matcher matcher = pattern.matcher(optionWebElementText);
-
-			if (matcher.matches()) {
-				index = optionWebElements.indexOf(optionWebElement);
-
-				break;
-			}
-		}
-
-		select.selectByIndex(index);
+		WebDriverHelper.selectByRegexpText(this, selectLocator, regexp);
 	}
 
 	protected void selectByRegexpValue(String selectLocator, String regexp) {
-		WebElement webElement = getWebElement(selectLocator);
-
-		Select select = new Select(webElement);
-
-		List<WebElement> optionWebElements = select.getOptions();
-
-		Pattern pattern = Pattern.compile(regexp);
-
-		int index = -1;
-
-		for (WebElement optionWebElement : optionWebElements) {
-			String optionWebElementValue = optionWebElement.getAttribute(
-				"value");
-
-			Matcher matcher = pattern.matcher(optionWebElementValue);
-
-			if (matcher.matches()) {
-				index = optionWebElements.indexOf(optionWebElement);
-
-				break;
-			}
-		}
-
-		select.selectByIndex(index);
+		WebDriverHelper.selectByRegexpValue(this, selectLocator, regexp);
 	}
 
 	private final Map<String, String> _keysSpecialChars = new HashMap<>();

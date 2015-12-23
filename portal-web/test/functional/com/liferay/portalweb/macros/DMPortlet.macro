@@ -124,6 +124,12 @@
 		</execute>
 
 		<execute function="Select" locator1="Select#SCOPE" value1="Global" />
+
+		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="Global" />
+
+		<execute function="Click" locator1="Button#SAVE" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="viewDefaultConfigurationDisplaySettingsPG">

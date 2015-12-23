@@ -119,10 +119,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="AnnouncementsEntry#viewPG">
-			<var name="announcementType" value="${announcementType}" />
-			<var name="distributionScope" value="Liferay" />
-			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
+		<execute macro="AnnouncementsEntry#viewNoPG">
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
 		</execute>
 
@@ -176,15 +173,10 @@
 			<var name="entryTitle" value="Announcements Entry Title" />
 		</execute>
 
-		<execute macro="AnnouncementsEntry#viewNoPG">
+		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
+			<var name="distributionScope" value="Liferay" />
+			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
 

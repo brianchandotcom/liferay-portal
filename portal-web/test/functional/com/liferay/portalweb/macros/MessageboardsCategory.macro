@@ -2,25 +2,34 @@
 	<var name="assetType" value="Message Boards Category" />
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="MessageBoards#ADD_CATEGORY_BUTTON" value1="Add Category" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#CATEGORY" value1="Category" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${categoryName}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals#assertText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addNullPG">
-		<execute function="Click" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#CATEGORY" value1="Category" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${categoryNullName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${categoryDescription}" />
+
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute function="AssertTextEquals" locator1="TextInput#REQUIRED_ALERT" value1="This field is required." />
 	</command>
 
 	<command name="addPG">
-		<execute function="AssertClick" locator1="MessageBoards#ADD_CATEGORY_BUTTON" value1="Add Category" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#CATEGORY" value1="Category" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${categoryName}" />
 

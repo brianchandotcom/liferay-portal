@@ -189,6 +189,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Category')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKIN</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Checkin')]</td>
 	<td></td>
@@ -696,6 +701,11 @@
 <tr>
 	<td>TEMPLATES</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem']//span[contains(.,'Templates')] | //a[@role='menuitem' and .='Templates']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Thread')]</td>
 	<td></td>
 </tr>
 <tr>

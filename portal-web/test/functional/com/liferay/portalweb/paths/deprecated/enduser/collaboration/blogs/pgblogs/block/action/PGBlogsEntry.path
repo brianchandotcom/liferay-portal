@@ -354,11 +354,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENTS_TRACKBACK_URL</td>
-	<td>//input[contains(@id,'trackbackURL')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COMMENTS_SUCCESS</td>
 	<td>//div[@class='lfr-message-response alert alert-success']</td>
 	<td></td>

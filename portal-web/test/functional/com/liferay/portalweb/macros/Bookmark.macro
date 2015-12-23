@@ -303,8 +303,8 @@
 		<if>
 			<isset var="folderName" />
 			<then>
-				<execute macro="Bookmark#gotoPG">
-					<var name="key_assetName" value="${folderName}" />
+				<execute macro="BookmarksFolder#gotoPG">
+					<var name="folderName" value="${folderName}" />
 				</execute>
 			</then>
 		</if>
@@ -328,7 +328,7 @@
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no bookmarks in this folder." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no bookmarks in this folder." />
 	</command>
 
 	<command name="moveToHomeCP">
@@ -413,7 +413,8 @@
 
 	<command name="searchCP">
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${bookmarkName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
@@ -422,7 +423,8 @@
 
 	<command name="searchNullCP">
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${nullBookmarkName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
 
 		<var name="key_bookmarkName" value="${nullBookmarkName}" />
 
@@ -438,7 +440,7 @@
 
 				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${bookmarkName}" />
 
-				<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+				<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
 
 				<var name="key_bookmarkName" value="${bookmarkName}" />
 
@@ -451,7 +453,7 @@
 
 					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="asdf" />
 
-					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+					<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
 
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found that matched the keywords: asdf." />
 				</then>
@@ -463,7 +465,7 @@
 
 					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${quotes}" />
 
-					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+					<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
 
 					<var name="key_bookmarkName" value="${bookmarkName}" />
 

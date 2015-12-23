@@ -1062,6 +1062,8 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
+		<execute function="Pause" locator1="1000" />
+
 		<execute macro="DMFolder#addSubfolderPG">
 			<var name="dmSubFolderDescription" value="DM Subfolder Description" />
 			<var name="dmSubFolderName" value="DM Subfolder Name" />

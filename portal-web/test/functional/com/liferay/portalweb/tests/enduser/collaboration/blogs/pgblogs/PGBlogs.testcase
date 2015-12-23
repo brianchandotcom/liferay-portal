@@ -469,10 +469,13 @@
 	</command>
 
 	<command name="AddBlogsEntryWithTrackbackURL" priority="4">
+		<property name="custom.properties" value="blogs.trackback.enabled=true" />
+
 		<var name="entryContent" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryTitle" value="Blogs Entry1 Title" />
 		<var name="entryTitle2" value="Blogs Entry2 Title" />
+		<var name="ipAddress" value="${getIPAddress()}" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

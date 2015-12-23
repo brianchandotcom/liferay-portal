@@ -3,7 +3,9 @@
 	<var name="userName" value="Test Test" />
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 		<execute function="Type#typeCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
@@ -13,7 +15,9 @@
 	</command>
 
 	<command name="addCPWithAttachment">
-		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 		<execute function="Type#typeCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
@@ -29,7 +33,9 @@
 	</command>
 
 	<command name="addInvalidAttachmentPG">
-		<execute function="Click" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
@@ -50,7 +56,9 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="Click" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
@@ -201,7 +209,9 @@
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 		<execute function="Type#typeCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
@@ -211,7 +221,9 @@
 	</command>
 
 	<command name="addWithWorkflowPG">
-		<execute function="Click" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
@@ -792,7 +804,9 @@
 	</command>
 
 	<command name="viewAnonymousPostingCheckboxCP">
-		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
 		<execute function="AssertElementPresent" locator1="Checkbox#ANONYMOUS" />
 	</command>
@@ -884,21 +898,29 @@
 	</command>
 
 	<command name="viewMarkAsQuestionCheckedCP">
-		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
 		<execute function="AssertChecked" locator1="Checkbox#MARK_AS_A_QUESTION" />
+
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 	</command>
 
 	<command name="viewMarkAsQuestionNotCheckedCP">
-		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
 		<execute function="AssertNotChecked" locator1="Checkbox#MARK_AS_A_QUESTION" />
+
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 	</command>
 
 	<command name="viewNoAnonymousPostingCheckboxCP">
-		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
 		<execute function="AssertElementNotPresent" locator1="Checkbox#ANONYMOUS" />
 	</command>

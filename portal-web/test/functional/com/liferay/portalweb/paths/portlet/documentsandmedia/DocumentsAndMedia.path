@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_ACTIONS</td>
-	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]/span/div/a</td>
+	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmDocumentTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>

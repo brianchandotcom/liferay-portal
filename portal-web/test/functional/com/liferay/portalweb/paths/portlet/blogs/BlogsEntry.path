@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENTS_TRACKBACK_URL</td>
+	<td>//input[contains(@id,'trackbackURL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT</td>
 	<td>//div[contains(@class,'entry-body')]//p[contains(.,'${key_entryContent}')]</td>
 	<td></td>

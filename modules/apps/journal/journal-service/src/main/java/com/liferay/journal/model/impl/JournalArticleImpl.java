@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -57,6 +56,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -153,8 +153,13 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		Set<String> availableLanguageIds = SetUtil.fromArray(
-			super.getAvailableLanguageIds());
+		String[] availableLanguageIdsArray = super.getAvailableLanguageIds();
+
+		Set<String> availableLanguageIds = new TreeSet<>();
+
+		for (int i = 0; i < availableLanguageIdsArray.length; i++) {
+			availableLanguageIds.add(availableLanguageIdsArray[i]);
+		}
 
 		Document document = getDocument();
 

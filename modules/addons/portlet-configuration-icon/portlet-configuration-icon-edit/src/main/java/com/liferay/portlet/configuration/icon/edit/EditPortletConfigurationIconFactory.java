@@ -36,7 +36,7 @@ public class EditPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 14.0;
+		return 13.0;
 	}
 
 }

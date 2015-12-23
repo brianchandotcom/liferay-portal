@@ -23,7 +23,7 @@
 		<div id="${portletNamespace}${namespacedFieldName}CoordinatesContainer">
 			<div class="glyphicon glyphicon-map-marker" id="${portletNamespace}${namespacedFieldName}Location"></div>
 
-			<@liferay_ui["map"]
+			<@liferay_map["map-display"]
 				geolocation=true
 				latitude=latitude
 				longitude=longitude

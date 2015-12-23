@@ -26,5 +26,4 @@ Import-Package:\
 	com.liferay.taglib.ui.display.context;version='[1.0.0,2.0)',\
 	com.liferay.taglib.ui.util;version='[1.0.0,2.0)',\
 	com.liferay.taglib.util;version='[7.0.0,8.0)'
-Include-Resource:\
-	@lib/util-taglib.jar!/META-INF/*.tld
+Include-Resource: @lib/util-taglib.jar!/META-INF/*.tld

@@ -1,0 +1,7 @@
+dependencies {
+	compile project(":apps:map:map-taglib")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

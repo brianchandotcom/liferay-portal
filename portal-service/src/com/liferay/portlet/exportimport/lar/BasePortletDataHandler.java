@@ -519,13 +519,12 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
 	public boolean validateSchemaVersion(String schemaVersion) {
-		Version currentVersion = Version.getInstance(getSchemaVersion());
-
-		if (currentVersion.isLaterVersionThan(schemaVersion)) {
+		try {
+			return doValidateSchemaVersion(schemaVersion);
+		}
+		catch (Exception e) {
 			return false;
 		}
-
-		return true;
 	}
 
 	protected Element addExportDataRootElement(
@@ -661,6 +660,18 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		throws Exception {
 
 		return portletPreferences;
+	}
+
+	protected boolean doValidateSchemaVersion(String schemaVersion)
+		throws Exception {
+
+		Version currentVersion = Version.getInstance(getSchemaVersion());
+
+		if (currentVersion.isLaterVersionThan(schemaVersion)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected String getExportDataRootElementString(Element rootElement) {

@@ -61,16 +61,7 @@
 				<aui:input name="newFolderId" type="hidden" />
 
 				<div class="journal-container" id="<portlet:namespace />entriesContainer">
-					<c:choose>
-						<c:when test="<%= journalDisplayContext.isSearch() %>">
-							<liferay-util:include page="/search_resources.jsp" servletContext="<%= application %>" />
-						</c:when>
-						<c:otherwise>
-							<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="searchContainerId" value="articles" />
-							</liferay-util:include>
-						</c:otherwise>
-					</c:choose>
+					<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
 				</div>
 			</aui:form>
 		</div>

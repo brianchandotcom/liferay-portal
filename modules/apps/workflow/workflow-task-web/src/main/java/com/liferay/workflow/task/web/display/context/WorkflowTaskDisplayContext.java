@@ -62,7 +62,6 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.workflow.task.web.configuration.WorkflowTaskWebConfiguration;
 import com.liferay.workflow.task.web.display.context.util.WorkflowTaskRequestHelper;
-import com.liferay.workflow.task.web.search.WorkflowTaskDisplayTerms;
 import com.liferay.workflow.task.web.search.WorkflowTaskSearch;
 
 import java.io.Serializable;
@@ -214,12 +213,6 @@ public class WorkflowTaskDisplayContext {
 					workflowLog.getAuditUserId(), StringPool.BLANK)),
 			HtmlUtil.escape(actorName)
 		};
-	}
-
-	public WorkflowTaskSearch getCompletedTasksAssignedToMe()
-		throws PortalException {
-
-		return searchTasksAssignedToMe(true);
 	}
 
 	public String getCreateDate(WorkflowLog workflowLog) {
@@ -393,65 +386,6 @@ public class WorkflowTaskDisplayContext {
 		}
 
 		return _orderByType;
-	}
-	public WorkflowTaskSearch getPendingTasksAssignedToMe()
-		throws PortalException {
-
-		return searchTasksAssignedToMe(false);
-	}
-
-	public WorkflowTaskSearch getPendingTasksAssignedToMyRoles()
-		throws PortalException {
-
-		List<WorkflowTask> results = null;
-		int total = 0;
-
-		WorkflowTaskSearch searchContainer = new WorkflowTaskSearch(
-			_renderRequest, "cur2", getPortletURL());
-
-		WorkflowTaskDisplayTerms searchTerms =
-			(WorkflowTaskDisplayTerms)searchContainer.getDisplayTerms();
-
-		if (searchTerms.isAdvancedSearch()) {
-			total = WorkflowTaskManagerUtil.searchCount(
-				_workflowTaskRequestHelper.getCompanyId(),
-				_workflowTaskRequestHelper.getUserId(), searchTerms.getName(),
-				searchTerms.getKeywords(), searchTerms.getType(), null, null,
-				null, false, true, searchTerms.isAndOperator());
-
-			searchContainer.setTotal(total);
-
-			results = WorkflowTaskManagerUtil.search(
-				_workflowTaskRequestHelper.getCompanyId(),
-				_workflowTaskRequestHelper.getUserId(), searchTerms.getName(),
-				searchTerms.getKeywords(), searchTerms.getType(), null, null,
-				null, false, true, searchTerms.isAndOperator(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-		}
-		else {
-			total = WorkflowTaskManagerUtil.searchCount(
-				_workflowTaskRequestHelper.getCompanyId(),
-				_workflowTaskRequestHelper.getUserId(),
-				searchTerms.getKeywords(), searchTerms.getKeywords(),
-				WorkflowHandlerUtil.getSearchableAssetTypes(), false, true);
-
-			searchContainer.setTotal(total);
-
-			results = WorkflowTaskManagerUtil.search(
-				_workflowTaskRequestHelper.getCompanyId(),
-				_workflowTaskRequestHelper.getUserId(),
-				searchTerms.getKeywords(), searchTerms.getKeywords(),
-				WorkflowHandlerUtil.getSearchableAssetTypes(), false, true,
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-		}
-
-		searchContainer.setResults(results);
-
-		setRolesSearchContainerEmptyResultsMessage(searchContainer);
-
-		return searchContainer;
 	}
 
 	public long[] getPooledActorsIds(WorkflowTask workflowTask)
@@ -833,10 +767,6 @@ public class WorkflowTaskDisplayContext {
 			workflowTask.getAssigneeUserId(), StringPool.BLANK);
 	}
 
-	public WorkflowTaskDisplayTerms getWorkflowTaskDisplayTerms() {
-		return new WorkflowTaskDisplayTerms(_liferayPortletRequest);
-	}
-
 	public String getWorkflowTaskRandomId() {
 		String randomId = StringPool.BLANK;
 
@@ -973,26 +903,6 @@ public class WorkflowTaskDisplayContext {
 
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isCompletedTabSelected() {
-		String tabs1 = getTabs1();
-
-		if (tabs1.equals("completed")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isPendingTabSelected() {
-		String tabs1 = getTabs1();
-
-		if (tabs1.equals("pending")) {
 			return true;
 		}
 
@@ -1208,50 +1118,6 @@ public class WorkflowTaskDisplayContext {
 			searchContainer.setEmptyResultsMessage(
 				searchContainer.getEmptyResultsMessage() +
 				"-with-the-specified-search-criteria");
-		}
-	}
-
-	protected void setRolesSearchContainerEmptyResultsMessage(
-		WorkflowTaskSearch searchContainer) {
-
-		WorkflowTaskDisplayTerms searchTerms =
-			(WorkflowTaskDisplayTerms)searchContainer.getDisplayTerms();
-
-		searchContainer.setEmptyResultsMessage(
-			"there-are-no-pending-tasks-assigned-to-your-roles");
-
-		if (Validator.isNotNull(searchTerms.getKeywords()) ||
-			Validator.isNotNull(searchTerms.getName()) ||
-			Validator.isNotNull(searchTerms.getType())) {
-
-			searchContainer.setEmptyResultsMessage(
-				searchContainer.getEmptyResultsMessage() +
-					"-with-the-specified-search-criteria");
-		}
-	}
-
-	protected void setUserSearchContainerEmptyResultsMessage(
-		WorkflowTaskSearch searchContainer, boolean completedTasks) {
-
-		WorkflowTaskDisplayTerms searchTerms =
-			(WorkflowTaskDisplayTerms)searchContainer.getDisplayTerms();
-
-		if (completedTasks) {
-			searchContainer.setEmptyResultsMessage(
-				"there-are-no-completed-tasks");
-		}
-		else {
-			searchContainer.setEmptyResultsMessage(
-				"there-are-no-pending-tasks-assigned-to-you");
-		}
-
-		if (Validator.isNotNull(searchTerms.getKeywords()) ||
-			Validator.isNotNull(searchTerms.getName()) ||
-			Validator.isNotNull(searchTerms.getType())) {
-
-			searchContainer.setEmptyResultsMessage(
-				searchContainer.getEmptyResultsMessage() +
-					"-with-the-specified-search-criteria");
 		}
 	}
 

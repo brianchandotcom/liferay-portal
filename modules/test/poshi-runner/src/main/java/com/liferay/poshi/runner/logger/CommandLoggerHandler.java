@@ -133,15 +133,13 @@ public final class CommandLoggerHandler {
 		_commandLogLoggerElement = new LoggerElement("commandLog");
 
 		_commandLogLoggerElement.setAttribute("data-logid", "01");
-		_commandLogLoggerElement.setClassName("collapse command-log");
+		_commandLogLoggerElement.setClassName("collapse command-log running");
 		_commandLogLoggerElement.setName("ul");
 		_commandLogLoggerElement.setWrittenToLogger(true);
-
-		_xmlLogLoggerElement.addClassName("running");
 	}
 
 	public static void stopRunning() throws Exception {
-		_xmlLogLoggerElement.removeClassName("running");
+		_commandLogLoggerElement.removeClassName("running");
 
 		_commandLogLoggerElement = null;
 	}
@@ -567,7 +565,5 @@ public final class CommandLoggerHandler {
 	private static int _functionLinkId;
 	private static String _htmlSource;
 	private static LoggerElement _lineGroupLoggerElement;
-	private static final LoggerElement _xmlLogLoggerElement = new LoggerElement(
-		"xml-log");
 
 }

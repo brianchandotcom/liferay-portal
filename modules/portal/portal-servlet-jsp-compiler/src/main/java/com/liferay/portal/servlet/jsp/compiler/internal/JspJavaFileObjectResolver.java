@@ -15,6 +15,8 @@
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,7 +44,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.tools.JavaFileObject;
 
@@ -340,7 +341,8 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 	private final Bundle _bundle;
 	private final Map<String, Collection<JavaFileObject>> _javaFileObjects =
-		new ConcurrentHashMap<>();
+		new ConcurrentReferenceValueHashMap<>(
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
 	private final Bundle _jspBundle;
 	private final Logger _logger;
 	private final ServiceTracker<Map<String, List<URL>>, Map<String, List<URL>>>

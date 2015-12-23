@@ -327,7 +327,7 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#deletePG">
 			<var name="assetType" value="${assetType}" />

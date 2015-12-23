@@ -296,7 +296,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
 			<var name="customFieldText" value="Wiki Text Custom Field" />
@@ -320,7 +320,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -335,7 +335,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 

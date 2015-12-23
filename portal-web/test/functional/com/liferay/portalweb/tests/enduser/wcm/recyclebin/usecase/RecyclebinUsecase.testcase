@@ -821,11 +821,11 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="WikiNode#gotoCP">
+		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesCP" />
+		<execute macro="WikiNavigator#gotoAllPagesCP" />
 
 		<execute macro="WikiPage#addCP">
 			<var name="wikiPageContent" value="Wiki Page Content" />
@@ -837,7 +837,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="WikiNode#gotoCP">
+		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
@@ -897,7 +897,7 @@
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
-		<execute macro="WikiPage#gotoCP">
+		<execute macro="WikiNavigator#gotoCP">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 

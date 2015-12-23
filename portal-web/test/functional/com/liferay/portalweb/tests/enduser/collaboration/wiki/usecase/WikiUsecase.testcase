@@ -91,7 +91,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiTable#gotoEntry">
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -163,11 +163,11 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiNode#gotoCP">
+		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute macro="WikiPage#gotoCP">
+		<execute macro="WikiNavigator#gotoCP">
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
@@ -182,7 +182,7 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiNode#gotoCP">
+		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
@@ -218,11 +218,11 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiNode#gotoCP">
+		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute macro="WikiPage#gotoFrontPageCP" />
+		<execute macro="WikiNavigator#gotoFrontPageCP" />
 
 		<execute macro="WikiPage#viewFrontPageDefaultCP">
 			<var name="wikiPageTitle" value="FrontPage" />
@@ -236,7 +236,7 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiTable#gotoNode">
+		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
@@ -263,7 +263,7 @@
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
-		<execute macro="WikiTable#gotoEntry">
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
@@ -288,7 +288,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute macro="WikiTable#gotoEntry">
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
@@ -307,7 +307,7 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiTable#gotoNode">
+		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
@@ -334,7 +334,7 @@
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
-		<execute macro="WikiTable#gotoEntry">
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
@@ -352,7 +352,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute macro="WikiTable#gotoEntry">
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
@@ -372,11 +372,11 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiNode#gotoCP">
+		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute macro="WikiPage#gotoCP">
+		<execute macro="WikiNavigator#gotoCP">
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
@@ -391,7 +391,7 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiNode#gotoCP">
+		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
@@ -416,11 +416,11 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiNode#gotoCP">
+		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute macro="WikiPage#gotoFrontPageCP" />
+		<execute macro="WikiNavigator#gotoFrontPageCP" />
 
 		<execute macro="WikiPage#viewFrontPageCP">
 			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
@@ -458,7 +458,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki FrontPage Child Page Title" />
 		</execute>
 

@@ -78,7 +78,7 @@
 			<var name="viewCountNumber" value="2" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -92,11 +92,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoChildPagePG">
+		<execute macro="WikiNavigator#gotoChildPagePG">
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
 		</execute>
 
@@ -125,7 +125,7 @@
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -153,7 +153,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoChildPagePG">
+		<execute macro="WikiNavigator#gotoChildPagePG">
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
 		</execute>
 
@@ -174,7 +174,7 @@
 			<var name="wikiPageContent" value="Wiki FrontPage Content" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
@@ -191,11 +191,11 @@
 		</execute>
 
 		<for list="${wikiChildPageCounterList}" param="childPageCount" >
-			<execute macro="WikiPage#gotoPG">
+			<execute macro="WikiNavigator#gotoPG">
 				<var name="wikiPageTitle" value="FrontPage" />
 			</execute>
 
-			<execute macro="WikiPage#gotoChildPagePG">
+			<execute macro="WikiNavigator#gotoChildPagePG">
 				<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page${childPageCount} Title" />
 			</execute>
 
@@ -233,7 +233,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -247,7 +247,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -261,7 +261,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -275,7 +275,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -289,7 +289,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -303,7 +303,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -317,7 +317,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -331,7 +331,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -345,7 +345,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageRevision" value="${wikiPageRevision}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -361,7 +361,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#viewNoChildPagePGViaAllPages">
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
@@ -406,7 +406,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoFrontPagePG" />
+		<execute macro="WikiNavigator#gotoFrontPagePG" />
 
 		<execute macro="WikiPage#viewFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageText}" />
@@ -429,7 +429,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="Wiki FrontPage Content" />
 			<var name="wikiPageRevision" value="1.1" />
 			<var name="wikiPageTitle" value="FrontPage" />
@@ -469,7 +469,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="isOrphanPage" value="true" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -492,7 +492,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
@@ -503,7 +503,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageRevision" value="1.0" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -526,7 +526,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
@@ -537,7 +537,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -551,11 +551,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoChildPagePG">
+		<execute macro="WikiNavigator#gotoChildPagePG">
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
 		</execute>
 
@@ -578,7 +578,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
@@ -606,7 +606,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageRevision" value="1.0" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -626,7 +626,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
@@ -650,14 +650,14 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiTable#viewEntry">
 			<var name="draftStatus" value="Approved" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiTable#gotoEntry">
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -673,7 +673,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesCP" />
+		<execute macro="WikiNavigator#gotoAllPagesCP" />
 
 		<for list="${wikiPageCounterList}" param="entryCount" >
 			<execute macro="WikiPage#addPG">
@@ -687,7 +687,7 @@
 				<var name="pageName" value="${pageName}" />
 			</execute>
 
-			<execute macro="WikiPage#gotoPG">
+			<execute macro="WikiNavigator#gotoPG">
 				<var name="wikiPageContent" value="Wiki Page${entryCount} Content" />
 				<var name="wikiPageRevision" value="1.0" />
 				<var name="wikiPageTitle" value="Wiki Page${entryCount} Title" />
@@ -706,7 +706,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
@@ -730,7 +730,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
@@ -748,9 +748,9 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute macro="WikiTable#gotoEntryEdit">
+		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -794,7 +794,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="${wikiPageContentEdit}" />
 			<var name="wikiPageRevision" value="${wikiPageVersionNew}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -810,7 +810,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -828,7 +828,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
@@ -846,9 +846,9 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute macro="WikiTable#gotoEntryCopy">
+		<execute macro="WikiNavigator#gotoEntryCopyViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -872,7 +872,7 @@
 			<var name="wikiPageTitle" value="Copied Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiTable#gotoEntry">
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
 			<var name="wikiPageTitle" value="Copied Wiki Page Title" />
 		</execute>
 
@@ -898,7 +898,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#deletePG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -913,7 +913,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
@@ -924,7 +924,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#deletePG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -934,7 +934,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#viewNoPagePG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -946,7 +946,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
@@ -964,9 +964,9 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoDraftPages" />
+		<execute macro="WikiNavigator#gotoDraftPagesPG" />
 
-		<execute macro="WikiTable#gotoEntryEdit">
+		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -980,14 +980,14 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiTable#viewEntry">
 			<var name="draftStatus" value="Approved" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiTable#gotoEntry">
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -1024,7 +1024,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="${wikiPageContentEdit}" />
 			<var name="wikiPageRevision" value="${wikiPageRevision}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -1042,7 +1042,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="Wiki Page1 Content" />
@@ -1053,7 +1053,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="Wiki Page2 Content" />
@@ -1064,7 +1064,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page1 Title" />
 		</execute>
 
@@ -1080,11 +1080,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page1 Title" />
 		</execute>
 
-		<execute macro="WikiPage#gotoBodyLinkPG">
+		<execute macro="WikiNavigator#gotoBodyLinkPG">
 			<var name="wikiPageContent" value="Wiki Page2 Title" />
 		</execute>
 
@@ -1099,7 +1099,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
@@ -1117,9 +1117,9 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute macro="WikiTable#gotoEntryEdit">
+		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -1143,7 +1143,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPages" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
@@ -1171,7 +1171,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="Wiki Page Content" />
@@ -1182,7 +1182,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -1191,7 +1191,7 @@
 			<var name="wikiPageTitleRename" value="Wiki Page Rename" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -1205,7 +1205,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -1216,7 +1216,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page Rename" />
 		</execute>
 
@@ -1233,7 +1233,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="Wiki Page Content" />
@@ -1244,7 +1244,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -1253,7 +1253,7 @@
 			<var name="wikiPageTitleRename" value="Wiki Page Rename" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -1266,7 +1266,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Rename" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="Wiki Page Rename" />
 		</execute>
 
@@ -1289,7 +1289,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="${wikiPage1Content}" />
@@ -1300,7 +1300,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoAllPagesPG" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="${wikiPage2Content}" />
@@ -1311,7 +1311,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPage2Title}" />
 		</execute>
 
@@ -1326,7 +1326,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPage2Title}" />
 		</execute>
 
@@ -1342,7 +1342,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="${wikiPage1Content}" />
 			<var name="wikiPageRevision" value="1.0" />
 			<var name="wikiPageTitle" value="${wikiPage1Title}" />
@@ -1358,7 +1358,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="${wikiPage2Content}" />
 			<var name="wikiPageRevision" value="1.2" />
 			<var name="wikiPageTitle" value="${wikiPage2Title}" />
@@ -1402,7 +1402,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="${wikiPageContentEdit}" />
 			<var name="wikiPageRevision" value="${wikiPageRevision}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -1418,7 +1418,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -1434,7 +1434,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
+		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageRevision" value="${wikiPageRevisionNew}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -1472,7 +1472,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute macro="WikiTable#gotoEntryEdit">
+		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
@@ -1493,7 +1493,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiTable#gotoEntry">
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 

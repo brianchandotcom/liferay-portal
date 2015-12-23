@@ -1,6 +1,18 @@
 <definition>
+	<command name="gotoAllPagesCP">
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+	</command>
+
 	<command name="gotoAllPagesPG">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+	</command>
+
+	<command name="gotoAllPagesPGViaWD">
+		<execute function="AssertClick" locator1="PGWikidisplay#NAVIGATION_ALL_PAGES" value1="All Pages" />
+	</command>
+
+	<command name="gotoBodyLinkPG">
+		<execute function="AssertClick" locator1="Wiki#BODY_LINK" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="gotoChangeNode">
@@ -11,16 +23,107 @@
 		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_CHANGE_PARENT" value1="Change Parent" />
 	</command>
 
+	<command name="gotoChildPagePG">
+		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Wiki#CHILD_PAGE_HEADER" value1="Children Pages" />
+		<execute function="AssertClick" locator1="Wiki#CHILD_PAGE_TITLE" value1="${wikiChildPageTitle}" />
+	</command>
+
+	<command name="gotoCP">
+		<if>
+			<equals arg1="${isOrphanPage}" arg2="true" />
+			<then>
+				<execute function="AssertClick" locator1="Wiki#NAVIGATION_ORPHAN_PAGES" value1="Orphan Pages" />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+			</else>
+		</if>
+
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_PAGE_NAME" value1="${wikiPageTitle}" />
+	</command>
+
+	<command name="gotoDetails">
+		<execute function="AssertClick" locator1="Link#DETAILS" value1="Details" />
+	</command>
+
 	<command name="gotoDraftPagesPG">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
+	</command>
+
+	<command name="gotoEntryCopyViaPGTable">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" value1="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
+	</command>
+
+	<command name="gotoEntryEditViaPGTable">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+	</command>
+
+	<command name="gotoEntryMoveViaPGTable">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" value1="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
+	</command>
+
+	<command name="gotoEntryViaPGTable">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+	</command>
+
+	<command name="gotoFrontPageCP">
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_FRONTPAGE" value1="FrontPage" />
 	</command>
 
 	<command name="gotoFrontPagePG">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_FRONTPAGE" value1="FrontPage" />
 	</command>
 
+	<command name="gotoNode">
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+
+		<execute function="AssertClick" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
+	</command>
+
 	<command name="gotoOrphanPagesPG">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ORPHAN_PAGES" value1="Orphan Pages" />
+	</command>
+
+	<command name="gotoPG">
+		<if>
+			<equals arg1="${isOrphanPage}" arg2="true" />
+			<then>
+				<execute function="AssertClick" locator1="Wiki#NAVIGATION_ORPHAN_PAGES" value1="Orphan Pages" />
+			</then>
+			<else>
+				<execute macro="WikiNavigator#gotoAllPagesPG" />
+			</else>
+		</if>
+
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_PAGE_NAME" value1="${wikiPageTitle}" />
+	</command>
+
+	<command name="gotoPGViaWD">
+		<execute function="AssertClick" locator1="PGWikidisplay#NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_PAGE_NAME" value1="${wikiPageTitle}" />
 	</command>
 
 	<command name="gotoRecentChangesPG">

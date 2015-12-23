@@ -850,7 +850,7 @@
 			<var name="wikiPageContent" value="Test Wiki Content" />
 		</execute>
 
-		<execute macro="WikiPage#gotoFrontPagePG" />
+		<execute macro="WikiNavigator#gotoFrontPagePG" />
 
 		<execute macro="WikiPage#viewFrontPageDefaultADTPG">
 			<var name="wikiPageContent" value="Test Wiki Content" />

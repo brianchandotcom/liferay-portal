@@ -7,44 +7,6 @@
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
-	<command name="gotoEntry">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
-	</command>
-
-	<command name="gotoEntryCopy">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" value1="${wikiPageTitle}" />
-
-		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
-	</command>
-
-	<command name="gotoEntryEdit">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" value1="${wikiPageTitle}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-	</command>
-
-	<command name="gotoEntryMove">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" value1="${wikiPageTitle}" />
-
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
-	</command>
-
-	<command name="gotoNode">
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
-
-		<var name="key_wikiNodeName" value="${wikiNodeName}" />
-
-		<execute function="AssertClick" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
-	</command>
-
 	<command name="restoreEntry">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 

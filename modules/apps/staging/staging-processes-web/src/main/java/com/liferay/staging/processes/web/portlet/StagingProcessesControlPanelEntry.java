@@ -12,41 +12,38 @@
  * details.
  */
 
-package com.liferay.staging.processes.web.application.list;
+package com.liferay.staging.processes.web.portlet;
 
-import com.liferay.application.list.BasePanelApp;
-import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.staging.processes.web.constants.StagingProcessesPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Levente Hudák
+ * @author Julio Camarero
  */
 @Component(
 	immediate = true,
-	property = {
-		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS,
-		"service.ranking:Integer=100"
-	},
-	service = PanelApp.class
+	property = {"javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES},
+	service = ControlPanelEntry.class
 )
-public class StagingProcessesPanelApp extends BasePanelApp {
+public class StagingProcessesControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override
-	public String getPortletId() {
-		return StagingProcessesPortletKeys.STAGING_PROCESSES;
-	}
+	protected boolean hasAccessPermissionDenied(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws Exception {
 
-	@Reference(
-		target = "(javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
+		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
+			return true;
+		}
+
+		return super.hasAccessPermissionDenied(
+			permissionChecker, group, portlet);
 	}
 
 }

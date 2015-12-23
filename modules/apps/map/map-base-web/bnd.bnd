@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Map Base Web
-Bundle-SymbolicName: com.liferay.map.base.web
+Bundle-SymbolicName: com.liferay.map.common.web
 Bundle-Version: 1.0.0
 Include-Resource: classes
 JS-Config: /META-INF/resources/js/config.js
-Web-ContextPath: /map-base-web
+Web-ContextPath: /map-common-web

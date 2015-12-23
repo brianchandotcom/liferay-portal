@@ -1,11 +1,11 @@
 ;(function() {
-	var PATH_FRONTEND_MAP_BASE_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/map-base-web';
+	var PATH_FRONTEND_MAP_COMMON_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/map-common-web';
 
 	AUI().applyConfig(
 		{
 			groups: {
 				mapbase: {
-					base: PATH_FRONTEND_MAP_BASE_WEB + '/js/',
+					base: PATH_FRONTEND_MAP_COMMON_WEB + '/js/',
 					modules: {
 						'liferay-map-base': {
 							path: 'map.js',
@@ -14,7 +14,7 @@
 							]
 						}
 					},
-					root: PATH_FRONTEND_MAP_BASE_WEB + '/js/'
+					root: PATH_FRONTEND_MAP_COMMON_WEB + '/js/'
 				}
 			}
 		}

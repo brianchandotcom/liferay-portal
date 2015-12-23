@@ -14,30 +14,29 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.util.FileUtil;
-
-import org.gradle.api.Plugin;
-import org.gradle.api.Project;
+import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class LiferayPlugin implements Plugin<Project> {
-
-	public static final String PLUGIN_NAME = "liferay";
+public class TLDFormatterDefaultsPlugin
+	extends BasePortalToolDefaultsPlugin<TLDFormatterPlugin> {
 
 	@Override
-	public void apply(Project project) {
-		Plugin<Project> plugin = null;
-
-		if (FileUtil.exists(project, "bnd.bnd")) {
-			plugin = new LiferayOSGiPlugin();
-		}
-		else {
-			plugin = new LiferayJavaPlugin();
-		}
-
-		plugin.apply(project);
+	protected Class<TLDFormatterPlugin> getPluginClass() {
+		return TLDFormatterPlugin.class;
 	}
+
+	@Override
+	protected String getPortalToolConfigurationName() {
+		return TLDFormatterPlugin.CONFIGURATION_NAME;
+	}
+
+	@Override
+	protected String getPortalToolName() {
+		return _PORTAL_TOOL_NAME;
+	}
+
+	private static final String _PORTAL_TOOL_NAME = "com.liferay.tld.formatter";
 
 }

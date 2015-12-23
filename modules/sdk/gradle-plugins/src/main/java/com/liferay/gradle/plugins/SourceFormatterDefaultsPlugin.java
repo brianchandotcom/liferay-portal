@@ -14,30 +14,30 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.util.FileUtil;
-
-import org.gradle.api.Plugin;
-import org.gradle.api.Project;
+import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class LiferayPlugin implements Plugin<Project> {
-
-	public static final String PLUGIN_NAME = "liferay";
+public class SourceFormatterDefaultsPlugin
+	extends BasePortalToolDefaultsPlugin<SourceFormatterPlugin> {
 
 	@Override
-	public void apply(Project project) {
-		Plugin<Project> plugin = null;
-
-		if (FileUtil.exists(project, "bnd.bnd")) {
-			plugin = new LiferayOSGiPlugin();
-		}
-		else {
-			plugin = new LiferayJavaPlugin();
-		}
-
-		plugin.apply(project);
+	protected Class<SourceFormatterPlugin> getPluginClass() {
+		return SourceFormatterPlugin.class;
 	}
+
+	@Override
+	protected String getPortalToolConfigurationName() {
+		return SourceFormatterPlugin.CONFIGURATION_NAME;
+	}
+
+	@Override
+	protected String getPortalToolName() {
+		return _PORTAL_TOOL_NAME;
+	}
+
+	private static final String _PORTAL_TOOL_NAME =
+		"com.liferay.source.formatter";
 
 }

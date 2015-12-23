@@ -16,18 +16,13 @@ package com.liferay.gradle.plugins;
 
 import aQute.bnd.osgi.Constants;
 
-import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
-import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
-import com.liferay.gradle.plugins.jasper.jspc.JspCExtension;
-import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
-import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
+import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
@@ -54,7 +49,6 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
@@ -83,17 +77,11 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
-	public static final String UNZIP_JAR_TASK_NAME = "unzipJar";
-
 	@Override
 	public void apply(Project project) {
 		super.apply(project);
 
-		configureJspCExtension(project);
-
 		configureArchivesBaseName(project);
-		configureTaskBuildCSS(project);
-		configureTasksBuildService(project);
 		configureVersion(project);
 
 		project.afterEvaluate(
@@ -136,41 +124,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		};
 
 		delete.delete(closure);
-	}
-
-	@Override
-	protected void addDependenciesJspC(
-		Project project, LiferayExtension liferayExtension) {
-
-		super.addDependenciesJspC(project, liferayExtension);
-
-		FileTree fileTree = getJarsFileTree(
-			project, liferayExtension.getAppServerLibGlobalDir());
-
-		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
-
-		fileTree = getJarsFileTree(
-			project,
-			new File(liferayExtension.getAppServerPortalDir(), "WEB-INF/lib"));
-
-		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
-
-		fileTree = getJarsFileTree(
-			project,
-			new File(liferayExtension.getLiferayHome(), "osgi/modules"));
-
-		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
-
-		ConfigurableFileCollection configurableFileCollection = project.files(
-			getUnzippedJarDir(project));
-
-		configurableFileCollection.builtBy(UNZIP_JAR_TASK_NAME);
-
-		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME, configurableFileCollection);
 	}
 
 	@Override
@@ -494,7 +447,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		addTaskAutoUpdateXml(project);
 		addTaskCopyLibs(project);
-		addTaskUnzipJar(project);
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -508,16 +460,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 				}
 
 			});
-	}
-
-	protected Copy addTaskUnzipJar(final Project project) {
-		Copy copy = GradleUtil.addTask(
-			project, UNZIP_JAR_TASK_NAME, Copy.class);
-
-		copy.dependsOn(JavaPlugin.JAR_TASK_NAME);
-		copy.into(getUnzippedJarDir(project));
-
-		return copy;
 	}
 
 	@Override
@@ -583,45 +525,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 	}
 
-	protected void configureJspCExtension(final Project project) {
-		JspCExtension jspCExtension = GradleUtil.getExtension(
-			project, JspCExtension.class);
-
-		jspCExtension.setModuleWeb(true);
-
-		jspCExtension.setPortalDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					LiferayExtension liferayExtension = GradleUtil.getExtension(
-						project, LiferayExtension.class);
-
-					return liferayExtension.getAppServerPortalDir();
-				}
-
-			});
-
-		jspCExtension.setWebAppDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					File unzippedJarDir = getUnzippedJarDir(project);
-
-					File resourcesDir = new File(
-						unzippedJarDir, "META-INF/resources");
-
-					if (resourcesDir.exists()) {
-						return resourcesDir;
-					}
-
-					return unzippedJarDir;
-				}
-
-			});
-	}
-
 	@Override
 	protected void configureSourceSetMain(Project project) {
 		File docrootDir = project.file("docroot");
@@ -639,35 +542,14 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
-	protected void configureTaskBuildCSS(Project project) {
-		Task task = GradleUtil.getTask(
-			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
+	protected void configureTaskClasses(Project project) {
+		Task classesTask = GradleUtil.getTask(
+			project, JavaPlugin.CLASSES_TASK_NAME);
 
-		if (task instanceof BuildCSSTask) {
-			configureTaskBuildCSSDocrootDir((BuildCSSTask)task);
-		}
+		configureTaskClassesDependsOn(classesTask);
 	}
 
-	protected void configureTaskBuildCSSDocrootDir(BuildCSSTask buildCSSTask) {
-		Project project = buildCSSTask.getProject();
-
-		File docrootDir = project.file("docroot");
-
-		if (docrootDir.exists()) {
-			buildCSSTask.setDocrootDir(docrootDir);
-		}
-	}
-
-	protected void configureTaskBuildServiceOsgiModule(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setOsgiModule(true);
-	}
-
-	@Override
 	protected void configureTaskClassesDependsOn(Task classesTask) {
-		super.configureTaskClassesDependsOn(classesTask);
-
 		classesTask.dependsOn(COPY_LIBS_TASK_NAME);
 	}
 
@@ -745,30 +627,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		super.configureTasks(project, liferayExtension);
 
-		configureTaskUnzipJar(project);
-	}
-
-	protected void configureTasksBuildService(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildServiceTask.class,
-			new Action<BuildServiceTask>() {
-
-				@Override
-				public void execute(BuildServiceTask buildServiceTask) {
-					configureTaskBuildServiceOsgiModule(buildServiceTask);
-				}
-
-			});
-	}
-
-	protected void configureTaskUnzipJar(Project project) {
-		Copy copy = (Copy)GradleUtil.getTask(project, UNZIP_JAR_TASK_NAME);
-
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		copy.from(project.zipTree(jar.getArchivePath()));
+		configureTaskClasses(project);
 	}
 
 	protected void configureVersion(Project project) {
@@ -809,15 +668,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			"." + Jar.DEFAULT_EXTENSION);
 	}
 
-	protected FileTree getJarsFileTree(Project project, File dir) {
-		Map<String, Object> args = new HashMap<>();
-
-		args.put("dir", dir);
-		args.put("include", "*.jar");
-
-		return project.fileTree(args);
-	}
-
 	@Override
 	protected File getLibDir(Project project) {
 		File docrootDir = project.file("docroot");
@@ -827,10 +677,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 
 		return new File(docrootDir, "WEB-INF/lib");
-	}
-
-	protected File getUnzippedJarDir(Project project) {
-		return new File(project.getBuildDir(), "unzipped-jar");
 	}
 
 	protected void replaceJarBuilderFactory(Project project) {

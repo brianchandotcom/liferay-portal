@@ -135,7 +135,8 @@ $horizontal-spacing: 35px;
 			}
 		}
 
-		.liferay-ddm-form-field-checkbox, .lfr-ddm-form-field-validation {
+		.liferay-ddm-form-field-checkbox,
+		.lfr-ddm-form-field-validation {
 			margin-bottom: 20px;
 
 			.form-group {
@@ -264,6 +265,10 @@ $horizontal-spacing: 35px;
 		}
 	}
 
+	.form-inline .checkbox label {
+		padding-left: 0;
+	}
+
 	.modal-body {
 		background-color: #FFF;
 		height: 100%;
@@ -351,6 +356,10 @@ $horizontal-spacing: 35px;
 	.help-block {
 		font-size: 14px;
 		position: absolute;
+	}
+
+	.icon-asterisk {
+		margin-left: 4px;
 	}
 
 	.icon-spinner {

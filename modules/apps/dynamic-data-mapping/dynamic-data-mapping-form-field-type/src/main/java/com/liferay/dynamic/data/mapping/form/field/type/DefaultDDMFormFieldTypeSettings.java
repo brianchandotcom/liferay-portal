@@ -116,7 +116,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(
 		label = "%help-text",
 		properties = {
-			"placeholder=%add-text-to-help-users-better-understand-what-you-want"
+			"placeholder=%enter-text-to-help-users-understand"
 		},
 		tip = "%type-a-short-comment-to-help-users-understand-the-question",
 		type = "text"

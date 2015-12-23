@@ -89,7 +89,7 @@ YUI.add(
 					},
 
 					running: {
-						value: true
+						value: false
 					},
 
 					sidebar: {
@@ -117,14 +117,6 @@ YUI.add(
 						var instance = this;
 
 						var xmlLog = instance.get(STR_XML_LOG);
-
-						if (!xmlLog.hasClass(CSS_RUNNING)) {
-							instance.set(STR_RUNNING, false);
-						}
-					},
-
-					renderUI: function() {
-						var instance = this;
 
 						var sidebar = instance.get(STR_SIDEBAR);
 
@@ -880,6 +872,17 @@ YUI.add(
 						instance.set(STR_FAILS, failNodes);
 
 						instance._transitionCommandLog(commandLog);
+
+						if (commandLog.hasClass(CSS_RUNNING)) {
+							instance.set(STR_RUNNING, true);
+
+							instance.get(STR_CONTENT_BOX).addClass(CSS_RUNNING);
+						}
+						else {
+							instance.set(STR_RUNNING, false);
+
+							instance.get(STR_CONTENT_BOX).removeClass(CSS_RUNNING);
+						}
 
 						if (failNodes.size() > 0) {
 							failNodes.each(instance._displayNode, instance);

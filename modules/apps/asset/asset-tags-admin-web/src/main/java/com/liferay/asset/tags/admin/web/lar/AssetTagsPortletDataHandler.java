@@ -49,6 +49,13 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "asset_tag";
 
+	public static final String SCHEMA_VERSION = "1.0.0";
+
+	@Override
+	public String getSchemaVersion() {
+		return SCHEMA_VERSION;
+	}
+
 	@Activate
 	protected void activate() {
 		setDataAlwaysStaged(true);

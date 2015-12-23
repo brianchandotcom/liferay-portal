@@ -91,6 +91,13 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "document_library";
 
+	public static final String SCHEMA_VERSION = "1.0.0";
+
+	@Override
+	public String getSchemaVersion() {
+		return SCHEMA_VERSION;
+	}
+
 	@Override
 	public String getServiceName() {
 		return DLConstants.SERVICE_NAME;

@@ -33,6 +33,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.MimeResponse;
@@ -276,39 +277,67 @@ public class PortletURLUtil {
 			sb.append(settingsScope);
 		}
 
-		String namespace = PortalUtil.getPortletNamespace(portletId);
-
-		Map<String, String[]> parameters = request.getParameterMap();
+		Map<String, String[]> parameters = getRefreshURLParameters(request);
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			String name = entry.getKey();
+			String[] values = entry.getValue();
 
-			if (name.startsWith(StringPool.UNDERLINE) &&
-				!name.startsWith(namespace)) {
-
-				continue;
-			}
-
-			if (!PortalUtil.isReservedParameter(name) &&
-				!name.equals("currentURL") && !name.equals("settingsScope") &&
-				!isRefreshURLReservedParameter(name, namespace)) {
-
-				String[] values = entry.getValue();
-
-				if (values == null) {
-					continue;
-				}
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append(StringPool.AMPERSAND);
-					sb.append(name);
-					sb.append(StringPool.EQUAL);
-					sb.append(HttpUtil.encodeURL(values[i]));
-				}
+			for (int i = 0; i < values.length; i++) {
+				sb.append(StringPool.AMPERSAND);
+				sb.append(name);
+				sb.append(StringPool.EQUAL);
+				sb.append(HttpUtil.encodeURL(values[i]));
 			}
 		}
 
 		return sb.toString();
+	}
+
+	public static Map<String, String[]> getRefreshURLParameters(
+		HttpServletRequest request) {
+
+		Portlet portlet = (Portlet) request.getAttribute(
+			WebKeys.RENDER_PORTLET);
+
+		String portletId = portlet.getPortletId();
+
+		String ppid = ParamUtil.getString(request, "p_p_id");
+
+		Map<String, String[]> refreshUrlParameters =
+			new HashMap<String, String[]>();
+
+		if (ppid.equals(portletId)) {
+			String namespace = PortalUtil.getPortletNamespace(portletId);
+
+			Map<String, String[]> parameters = request.getParameterMap();
+
+			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+				String name = entry.getKey();
+
+				if (name.startsWith(StringPool.UNDERLINE) &&
+					!name.startsWith(namespace)) {
+
+					continue;
+				}
+
+				if (!PortalUtil.isReservedParameter(name) &&
+					!name.equals("currentURL") &&
+					!name.equals("settingsScope") &&
+					!isRefreshURLReservedParameter(name, namespace)) {
+
+					String[] values = entry.getValue();
+
+					if (values == null) {
+						continue;
+					}
+
+					refreshUrlParameters.put(name, values);
+				}
+			}
+		}
+
+		return refreshUrlParameters;
 	}
 
 	protected static boolean isRefreshURLReservedParameter(

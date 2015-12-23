@@ -726,7 +726,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			// Move file entries between repositories
 
-			return moveFileEntries(
+			return moveFileEntry(
 				userId, fileEntryId, newFolderId, fromLocalRepository,
 				toLocalRepository, serviceContext);
 		}
@@ -744,37 +744,35 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		SystemEventHierarchyEntryThreadLocal.push(Folder.class);
 
 		try {
-			LocalRepository sourceLocalRepository =
+			LocalRepository fromLocalRepository =
 				repositoryProvider.getFolderLocalRepository(folderId);
 
-			LocalRepository destinationLocalRepository =
-				getFolderLocalRepository(
-					parentFolderId, serviceContext.getScopeGroupId());
+			LocalRepository toLocalRepository = getFolderLocalRepository(
+				parentFolderId, serviceContext.getScopeGroupId());
 
 			if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				Folder toFolder = destinationLocalRepository.getFolder(
-					parentFolderId);
+				Folder toFolder = toLocalRepository.getFolder(parentFolderId);
 
 				if (toFolder.isMountPoint()) {
-					destinationLocalRepository = getLocalRepository(
+					toLocalRepository = getLocalRepository(
 						toFolder.getRepositoryId());
 				}
 			}
 
-			if (sourceLocalRepository.getRepositoryId() ==
-					destinationLocalRepository.getRepositoryId()) {
+			if (fromLocalRepository.getRepositoryId() ==
+					toLocalRepository.getRepositoryId()) {
 
 				// Move file entries within repository
 
-				return sourceLocalRepository.moveFolder(
+				return fromLocalRepository.moveFolder(
 					userId, folderId, parentFolderId, serviceContext);
 			}
 
 			// Move file entries between repositories
 
-			return moveFolders(
-				userId, folderId, parentFolderId, sourceLocalRepository,
-				destinationLocalRepository, serviceContext);
+			return moveFolder(
+				userId, folderId, parentFolderId, fromLocalRepository,
+				toLocalRepository, serviceContext);
 		}
 		finally {
 			SystemEventHierarchyEntryThreadLocal.pop(Folder.class);
@@ -1265,6 +1263,85 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		return destinationFileEntry;
 	}
 
+	protected Folder copyFolder(
+			long userId, long folderId, long parentFolderId,
+			LocalRepository fromLocalRepository,
+			LocalRepository toLocalRepository, ServiceContext serviceContext)
+		throws PortalException {
+
+		Folder newFolder = null;
+
+		try {
+			Folder folder = fromLocalRepository.getFolder(folderId);
+
+			newFolder = toLocalRepository.addFolder(
+				userId, parentFolderId, folder.getName(),
+				folder.getDescription(), serviceContext);
+
+			dlAppHelperLocalService.addFolder(
+				userId, newFolder, serviceContext);
+
+			copyFolderDependencies(
+				userId, folder, newFolder, fromLocalRepository,
+				toLocalRepository, serviceContext);
+
+			return newFolder;
+		}
+		catch (PortalException pe) {
+			if (newFolder != null) {
+				toLocalRepository.deleteFolder(newFolder.getFolderId());
+			}
+
+			throw pe;
+		}
+	}
+
+	protected void copyFolderDependencies(
+			long userId, Folder sourceFolder, Folder destinationFolder,
+			LocalRepository fromLocalRepository,
+			LocalRepository toLocalRepository, ServiceContext serviceContext)
+		throws PortalException {
+
+		List<RepositoryEntry> repositoryEntries =
+			fromLocalRepository.getFoldersAndFileEntriesAndFileShortcuts(
+				sourceFolder.getFolderId(), WorkflowConstants.STATUS_ANY, true,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (RepositoryEntry repositoryEntry : repositoryEntries) {
+			if (repositoryEntry instanceof FileEntry) {
+				FileEntry fileEntry = (FileEntry)repositoryEntry;
+
+				copyFileEntry(
+					userId, toLocalRepository, fileEntry,
+					destinationFolder.getFolderId(), serviceContext);
+			}
+			else if (repositoryEntry instanceof Folder) {
+				Folder currentFolder = (Folder)repositoryEntry;
+
+				Folder newFolder = toLocalRepository.addFolder(
+					userId, destinationFolder.getFolderId(),
+					currentFolder.getName(), currentFolder.getDescription(),
+					serviceContext);
+
+				dlAppHelperLocalService.addFolder(
+					userId, newFolder, serviceContext);
+
+				copyFolderDependencies(
+					userId, currentFolder, newFolder, fromLocalRepository,
+					toLocalRepository, serviceContext);
+			}
+			else if (repositoryEntry instanceof FileShortcut) {
+				if (destinationFolder.isSupportsShortcuts()) {
+					FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
+
+					toLocalRepository.addFileShortcut(
+						userId, destinationFolder.getFolderId(),
+						fileShortcut.getToFileEntryId(), serviceContext);
+				}
+			}
+		}
+	}
+
 	protected void deleteFileEntry(
 			long oldFileEntryId, long newFileEntryId,
 			LocalRepository fromLocalRepository,
@@ -1331,7 +1408,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 	}
 
-	protected FileEntry moveFileEntries(
+	protected FileEntry moveFileEntry(
 			long userId, long fileEntryId, long newFolderId,
 			LocalRepository fromLocalRepository,
 			LocalRepository toLocalRepository, ServiceContext serviceContext)
@@ -1351,86 +1428,19 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		return destinationFileEntry;
 	}
 
-	protected Folder moveFolders(
+	protected Folder moveFolder(
 			long userId, long folderId, long parentFolderId,
-			LocalRepository sourceLocalRepository,
-			LocalRepository destinationLocalRepository,
-			ServiceContext serviceContext)
+			LocalRepository fromLocalRepository,
+			LocalRepository toLocalRepository, ServiceContext serviceContext)
 		throws PortalException {
 
-		Folder sourceFolder = sourceLocalRepository.getFolder(folderId);
+		Folder newFolder = copyFolder(
+			userId, folderId, parentFolderId, fromLocalRepository,
+			toLocalRepository, serviceContext);
 
-		Folder destinationFolder = destinationLocalRepository.addFolder(
-			userId, parentFolderId, sourceFolder.getName(),
-			sourceFolder.getDescription(), serviceContext);
+		fromLocalRepository.deleteFolder(folderId);
 
-		dlAppHelperLocalService.addFolder(
-			userId, destinationFolder, serviceContext);
-
-		List<RepositoryEntry> foldersAndFileEntriesAndFileShortcuts =
-			sourceLocalRepository.getFoldersAndFileEntriesAndFileShortcuts(
-				folderId, WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		try {
-			for (RepositoryEntry folderAndFileEntryAndFileShortcut :
-					foldersAndFileEntriesAndFileShortcuts) {
-
-				if (folderAndFileEntryAndFileShortcut instanceof FileEntry) {
-					FileEntry fileEntry =
-						(FileEntry)folderAndFileEntryAndFileShortcut;
-
-					moveFileEntry(
-						userId, fileEntry.getFileEntryId(),
-						destinationFolder.getFolderId(), serviceContext);
-				}
-				else if (folderAndFileEntryAndFileShortcut instanceof Folder) {
-					Folder folder = (Folder)folderAndFileEntryAndFileShortcut;
-
-					moveFolders(
-						userId, folder.getFolderId(),
-						destinationFolder.getFolderId(), sourceLocalRepository,
-						destinationLocalRepository, serviceContext);
-				}
-				else if (folderAndFileEntryAndFileShortcut
-							instanceof FileShortcut) {
-
-					if (destinationFolder.isSupportsShortcuts()) {
-						FileShortcut fileShortcut =
-							(FileShortcut)folderAndFileEntryAndFileShortcut;
-
-						destinationLocalRepository.addFileShortcut(
-							userId, destinationFolder.getFolderId(),
-							fileShortcut.getToFileEntryId(), serviceContext);
-					}
-				}
-			}
-		}
-		catch (PortalException pe) {
-			int fileEntriesAndFileShortcutsCount =
-				destinationLocalRepository.getFileEntriesAndFileShortcutsCount(
-					destinationFolder.getFolderId(),
-					WorkflowConstants.STATUS_ANY);
-
-			if (fileEntriesAndFileShortcutsCount == 0) {
-				destinationLocalRepository.deleteFolder(
-					destinationFolder.getFolderId());
-			}
-
-			throw pe;
-		}
-
-		try {
-			sourceLocalRepository.deleteFolder(folderId);
-		}
-		catch (PortalException pe) {
-			destinationLocalRepository.deleteFolder(
-				destinationFolder.getFolderId());
-
-			throw pe;
-		}
-
-		return destinationFolder;
+		return newFolder;
 	}
 
 	@BeanReference(type = RepositoryProvider.class)

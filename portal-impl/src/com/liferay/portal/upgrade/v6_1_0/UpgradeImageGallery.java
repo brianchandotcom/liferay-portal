@@ -694,19 +694,19 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			if (fileVersionId != 0) {
 				if (smallImageId != 0) {
-					moveThumbnail(
+					migrateThumbnail(
 						companyId, groupId, fileEntryId, fileVersionId,
 						largeImageId, smallImageId, 0, 0);
 				}
 
 				if (custom1ImageId != 0) {
-					moveThumbnail(
+					migrateThumbnail(
 						companyId, groupId, fileEntryId, fileVersionId,
 						largeImageId, custom1ImageId, custom1ImageId, 0);
 				}
 
 				if (custom2ImageId != 0) {
-					moveThumbnail(
+					migrateThumbnail(
 						companyId, groupId, fileEntryId, fileVersionId,
 						largeImageId, custom2ImageId, 0, custom2ImageId);
 				}
@@ -789,7 +789,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		}
 	}
 
-	protected void moveThumbnail(
+	protected void migrateThumbnail(
 			long companyId, long groupId, long fileEntryId, long fileVersionId,
 			long largeImageId, long thumbnailImageId, long custom1ImageId,
 			long custom2ImageId)
@@ -805,18 +805,18 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ImageProcessorUtil.storeThumbnail(
 				companyId, groupId, fileEntryId, fileVersionId, custom1ImageId,
 				custom2ImageId, is, thumbnailImage.getType());
+
+			if (largeImageId != thumbnailImageId) {
+				_sourceHook.deleteImage(thumbnailImage);
+
+				runSQL("delete from Image where imageId = " + thumbnailImageId);
+			}
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Ignoring exception for image " + thumbnailImageId, e);
 			}
-		}
-
-		if (largeImageId != thumbnailImageId) {
-			_sourceHook.deleteImage(thumbnailImage);
-
-			runSQL("delete from Image where imageId = " + thumbnailImageId);
 		}
 	}
 

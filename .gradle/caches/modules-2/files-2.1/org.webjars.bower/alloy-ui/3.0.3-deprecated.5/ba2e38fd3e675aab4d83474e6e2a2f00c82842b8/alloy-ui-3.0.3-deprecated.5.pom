@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <packaging>jar</packaging>
+    <groupId>org.webjars.bower</groupId>
+    <artifactId>alloy-ui</artifactId>
+    <version>3.0.3-deprecated.5</version>
+    <name>alloy-ui</name>
+    <description>WebJar for alloy-ui</description>
+    <url>http://webjars.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <scm>
+        <url>https://github.com/liferay/alloy-ui</url>
+        <connection>git://github.com/liferay/alloy-ui.git</connection>
+        <developerConnection>git://github.com/liferay/alloy-ui.git</developerConnection>
+        <tag>v3.0.3-deprecated.5</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>webjars</id>
+            <url>http://webjars.org</url>
+        </developer>
+    </developers>
+
+    <licenses>
+        
+        <license>
+            <name>BSD</name>
+            <url>https://spdx.org/licenses/BSD#licenseText</url>
+            <distribution>repo</distribution>
+        </license>
+        
+    </licenses>
+
+    <dependencies>
+        
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>github-com-liferay-yui3</artifactId>
+            <version>patched-v3.18.1</version>
+        </dependency>
+        
+    </dependencies>
+
+</project>

@@ -232,7 +232,9 @@ public class JenkinsPerformanceDataUtil {
 			JSONObject childJSONObject = childReportJSONObject.getJSONObject(
 				"child");
 
-			if (!childReportJSONObject.has("result")) {
+			if (!childReportJSONObject.has("result") ||
+				childReportJSONObject.isNull("result")) {
+
 				throw new IllegalArgumentException(
 					"Result is not available for " +
 						childJSONObject.getString("url"));

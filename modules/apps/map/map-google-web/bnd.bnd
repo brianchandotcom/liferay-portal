@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Map Google Web
-Bundle-SymbolicName: com.liferay.map.google.web
-Bundle-Version: 1.0.0
-Include-Resource: classes
-JS-Config: /META-INF/resources/js/config.js
-Web-ContextPath: /map-google-web

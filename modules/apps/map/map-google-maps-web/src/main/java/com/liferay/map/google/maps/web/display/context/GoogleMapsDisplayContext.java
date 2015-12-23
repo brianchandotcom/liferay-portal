@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.map.google.web.display.context;
+package com.liferay.map.google.maps.web.display.context;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -26,9 +26,9 @@ import javax.portlet.PortletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class GoogleMapDisplayContext {
+public class GoogleMapsDisplayContext {
 
-	public GoogleMapDisplayContext(PortletRequest request) {
+	public GoogleMapsDisplayContext(PortletRequest request) {
 		_request = request;
 	}
 

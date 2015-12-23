@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.map.google.web;
+package com.liferay.map.google.maps.web;
 
 import com.liferay.map.BaseJSPMapProvider;
 import com.liferay.map.MapProvider;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = MapProvider.class)
-public class GoogleMapProvider extends BaseJSPMapProvider {
+public class GoogleMapsMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	public String getConfigurationJspPath() {
@@ -50,7 +50,7 @@ public class GoogleMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	public String getKey() {
-		return "Google";
+		return "GoogleMaps";
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class GoogleMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.map.google.web)",
+		target = "(osgi.web.symbolicname=com.liferay.map.google.maps.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

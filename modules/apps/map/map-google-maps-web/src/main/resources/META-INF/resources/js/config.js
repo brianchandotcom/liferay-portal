@@ -1,11 +1,11 @@
 ;(function() {
-	var PATH_FRONTEND_MAP_GOOGLE_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/map-google-web';
+	var PATH_FRONTEND_MAP_GOOGLE_MAPS_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/map-google-maps-web';
 
 	AUI().applyConfig(
 		{
 			groups: {
 				mapgoogle: {
-					base: PATH_FRONTEND_MAP_GOOGLE_WEB + '/js/',
+					base: PATH_FRONTEND_MAP_GOOGLE_MAPS_WEB + '/js/',
 					modules: {
 						'liferay-map-google': {
 							path: 'map.js',
@@ -14,7 +14,7 @@
 							]
 						}
 					},
-					root: PATH_FRONTEND_MAP_GOOGLE_WEB + '/js/'
+					root: PATH_FRONTEND_MAP_GOOGLE_MAPS_WEB + '/js/'
 				}
 			}
 		}

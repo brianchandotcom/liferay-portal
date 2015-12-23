@@ -22,7 +22,7 @@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.map.google.web.display.context.GoogleMapDisplayContext" %><%@
+<%@ page import="com.liferay.map.google.maps.web.display.context.GoogleMapsDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
@@ -38,5 +38,5 @@ page import="com.liferay.taglib.aui.AUIUtil" %>
 <liferay-theme:defineObjects />
 
 <%
-GoogleMapDisplayContext googleMapDisplayContext = new GoogleMapDisplayContext(renderRequest);
+GoogleMapsDisplayContext googleMapDisplayContext = new GoogleMapsDisplayContext(renderRequest);
 %>

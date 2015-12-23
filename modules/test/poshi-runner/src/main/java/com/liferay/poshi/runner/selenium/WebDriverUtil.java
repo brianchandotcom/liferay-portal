@@ -40,6 +40,7 @@ import org.openqa.selenium.safari.SafariDriver;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Kenji Heigel
  * @author Michael Hashimoto
  */
 public class WebDriverUtil extends PropsValues {

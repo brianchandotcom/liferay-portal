@@ -1779,7 +1779,7 @@ tell application "Safari" to quit
 		<sequential>
 			<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}">
 				<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=384m]]></replacetoken>
-				<replacevalue><![CDATA[-verbose:gc -Xloggc:/tmp/tomcat-gc.log -Xms512m -Xmx512m -XX:MaxNewSize=32m -XX:MaxPermSize=200m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=200m -XX:+PrintGCCause -XX:+PrintGCDetails -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:+UseParNewGC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/root]]></replacevalue>
+				<replacevalue><![CDATA[-verbose:gc -Xloggc:/tmp/tomcat-gc.log -Xms768m -Xmx768m -XX:MaxNewSize=32m -XX:MaxPermSize=200m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=200m -XX:+PrintGCCause -XX:+PrintGCDetails -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:+UseParNewGC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/root]]></replacevalue>
 			</replace>
 		</sequential>
 	</macrodef>

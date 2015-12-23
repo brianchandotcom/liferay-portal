@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.map.openstreet.web;
+package com.liferay.map.open.street.map.web;
 
 import com.liferay.map.BaseJSPMapProvider;
 import com.liferay.map.MapProvider;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = MapProvider.class)
-public class OpenstreetMapProvider extends BaseJSPMapProvider {
+public class OpenStreetMapMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	public String getConfigurationJspPath() {
@@ -50,7 +50,7 @@ public class OpenstreetMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	public String getKey() {
-		return "OpenStreet";
+		return "OpenStreetMap";
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class OpenstreetMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.map.openstreet.web)",
+		target = "(osgi.web.symbolicname=com.liferay.map.open.street.map.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

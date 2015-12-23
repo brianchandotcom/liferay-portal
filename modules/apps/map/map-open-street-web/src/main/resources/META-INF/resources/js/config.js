@@ -1,11 +1,11 @@
 ;(function() {
-	var PATH_FRONTEND_MAP_OPENSTREET_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/map-openstreet-web';
+	var PATH_FRONTEND_MAP_OPEN_STREET_MAP_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/map-open-street-map-web';
 
 	AUI().applyConfig(
 		{
 			groups: {
 				mapopenstreet: {
-					base: PATH_FRONTEND_MAP_OPENSTREET_WEB + '/js/',
+					base: PATH_FRONTEND_MAP_OPEN_STREET_MAP_WEB + '/js/',
 					modules: {
 						'liferay-map-openstreet': {
 							path: 'map.js',
@@ -16,7 +16,7 @@
 							]
 						}
 					},
-					root: PATH_FRONTEND_MAP_OPENSTREET_WEB + '/js/'
+					root: PATH_FRONTEND_MAP_OPEN_STREET_MAP_WEB + '/js/'
 				}
 			}
 		}

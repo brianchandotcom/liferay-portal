@@ -3512,6 +3512,48 @@
 		</execute>
 	</command>
 
+	<command name="NavigateResourceViaMaximizedPortlet" priority="3">
+		<description message="This is a use case for LPS-59743." />
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Test Resource" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoResourceCalendars">
+			<var name="calendarResourceName" value="Test Resource" />
+		</execute>
+
+		<execute macro="Calendar#viewCalendarViaTable">
+			<var name="calendarName" value="Test Resource" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="CalendarResource#view">
+			<var name="calendarResourceName" value="Test Resource" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#maximize" />
+
+		<execute macro="CalendarNavigator#gotoResourceCalendars">
+			<var name="calendarResourceName" value="Test Resource" />
+		</execute>
+
+		<execute macro="Calendar#viewCalendarViaTable">
+			<var name="calendarName" value="Test Resource" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="CalendarResource#view">
+			<var name="calendarResourceName" value="Test Resource" />
+		</execute>
+	</command>
+
 	<command name="SearchCalendarEventInSearchPortletWithTag" priority="4">
 		<description message="This is a use case for LPS-54548." />
 
@@ -3554,6 +3596,58 @@
 		<execute macro="Search#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Calendar Event Title" />
 			<var name="searchAssetType" value="Calendar Event" />
+		</execute>
+	</command>
+
+	<command name="SearchCalendarResource" priority="3">
+		<description message="This is a use case for LPS-59743." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Room 1" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Car1" />
+		</execute>
+
+		<execute macro="CalendarResource#add">
+			<var name="calendarResourceName" value="Truck" />
+		</execute>
+
+		<execute macro="CalendarResource#search">
+			<var name="calendarResourceName" value="Room Car " />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceName">
+			<var name="calendarResourceName" value="Room 1" />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceName">
+			<var name="calendarResourceName" value="Car1" />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceNameNotPresent">
+			<var name="calendarResourceName" value="Truck" />
+		</execute>
+
+		<execute macro="CalendarResource#search">
+			<var name="calendarResourceName" value="Room" />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceName">
+			<var name="calendarResourceName" value="Room 1" />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceNameNotPresent">
+			<var name="calendarResourceName" value="Car1" />
+		</execute>
+
+		<execute macro="CalendarResource#viewResourceNameNotPresent">
+			<var name="calendarResourceName" value="Truck" />
 		</execute>
 	</command>
 

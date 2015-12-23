@@ -1,4 +1,6 @@
 <definition>
+	<var name="calendarDefault" value="Yes" />
+	<var name="calendarDescription" value="" />
 	<var name="siteName" value="Liferay" />
 
 	<command name="_deleteCalendar">
@@ -766,6 +768,16 @@
 		<var name="key_color" value="${color}" />
 
 		<execute function="AssertElementPresent" locator1="Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER" />
+	</command>
+
+	<command name="viewCalendarViaTable">
+		<var name="key_calendarName" value="${calendarName}" />
+
+		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_NAME" value1="${calendarName}" />
+		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_DESCRIPTION" value1="${calendarDescription}" />
+		<execute function="AssertElementPresent" locator1="CalendarManageCalendars#CALENDAR_TABLE_COLOR" />
+		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_DEFAULT" value1="${calendarDefault}" />
+		<execute function="AssertElementPresent" locator1="CalendarManageCalendars#CALENDAR_TABLE_ACTIONS" value1="${calendarDefault}" />
 	</command>
 
 	<command name="viewColor">

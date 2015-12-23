@@ -260,6 +260,12 @@
 		</if>
 	</command>
 
+	<command name="maximize">
+		<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#OPTIONS_ICON" />
+
+		<execute function="AssertClick" locator1="BasePortlet#MAXIMIZE" value1="Maximize" />
+	</command>
+
 	<command name="shutdownServer">
 		<description message="This will shutdown the server at ${base_branch}-bundles\tomcat." />
 

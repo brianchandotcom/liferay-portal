@@ -158,6 +158,16 @@
 		<execute function="Click" locator1="Calendar#VIEW_PREVIOUS_BUTTON" />
 	</command>
 
+	<command name="gotoResourceCalendars">
+		<execute macro="CalendarNavigator#gotoResources" />
+
+		<var name="key_calendarResourceName" value="${calendarResourceName}" />
+
+		<execute function="Click" locator1="CalendarResources#RESOURCE_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="CalendarResources#RESOURCE_MENULIST_VIEW_CALENDARS" value1="View Calendars" />
+	</command>
+
 	<command name="gotoResources">
 		<execute function="AssertClick" locator1="Calendar#NAVIGATION_RESOURCES" value1="Resources" />
 	</command>

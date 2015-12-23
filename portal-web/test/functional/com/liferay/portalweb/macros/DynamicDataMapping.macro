@@ -227,6 +227,8 @@
 			</then>
 		</if>
 
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="DDMEditStructure#SETTINGS_NAME" value1="_" />
+
 		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_NAME" />
 		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
@@ -558,6 +560,8 @@
 				<execute function="AssertClick" locator1="DDMEditStructure#FORM_FIELD" value1="${fieldFieldLabel}" />
 			</else>
 		</if>
+
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="DDMEditStructure#SETTINGS_NAME" value1="_" />
 
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${fieldName}" />
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />

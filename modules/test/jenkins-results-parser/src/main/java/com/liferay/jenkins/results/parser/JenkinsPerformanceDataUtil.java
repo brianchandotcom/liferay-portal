@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.FileNotFoundException;
+
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -45,41 +47,56 @@ public class JenkinsPerformanceDataUtil {
 				JenkinsResultsParserUtil.getLocalURL(url + "/api/json"), false);
 
 			_results.add(new Result(jobName, jsonObject));
-		}
-		else {
-			int retryCount = 0;
 
-			while (true) {
+			Collections.sort(_results);
+
+			_truncate(_results, size);
+
+			return;
+		}
+
+		int retryCount = 0;
+
+		while (true) {
+			try {
 				jsonObject = JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(
 						url + "/testReport/api/json"),
 					false);
+			}
+			catch (FileNotFoundException fnfe) {
+				jsonObject = JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(url + "/api/json"),
+					false);
 
-				try {
-					_results.addAll(
-						_getSlowestResults(jobName, jsonObject, size));
+				_results.add(new Result(jobName, jsonObject));
 
-					break;
+				break;
+			}
+
+			try {
+				_results.addAll(_getSlowestResults(jobName, jsonObject, size));
+
+				break;
+			}
+			catch (IllegalArgumentException iae) {
+				String message = iae.getMessage();
+
+				if (!message.contains("Result is not available for ")) {
+					throw iae;
 				}
-				catch (IllegalArgumentException iae) {
-					String message = iae.getMessage();
 
-					if (!message.contains("Result is not available for ")) {
-						throw iae;
-					}
+				retryCount++;
 
-					retryCount++;
+				if (retryCount > 5) {
+					System.out.println("Exceeded max retries");
 
-					if (retryCount > 5) {
-						System.out.println("Exceeded max retries");
-
-						throw iae;
-					}
-
-					System.out.println("Retry in 30 seconds: " + message);
-
-					Thread.sleep(30 * 1000);
+					throw iae;
 				}
+
+				System.out.println("Retry in 30 seconds: " + message);
+
+				Thread.sleep(30 * 1000);
 			}
 		}
 

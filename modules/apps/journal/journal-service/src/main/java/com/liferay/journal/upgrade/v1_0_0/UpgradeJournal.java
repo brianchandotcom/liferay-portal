@@ -15,22 +15,15 @@
 package com.liferay.journal.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,9 +38,6 @@ import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplateManager;
-import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.xml.XMLUtil;
 
@@ -59,8 +49,6 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Gergely Mathe
@@ -70,16 +58,14 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	public UpgradeJournal(
 		CompanyLocalService companyLocalService,
-		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLinkLocalService ddmTemplateLinkLocalService,
-		DDMTemplateLocalService ddmTemplateLocalService,
+		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		GroupLocalService groupLocalService,
 		UserLocalService userLocalService) {
 
 		_companyLocalService = companyLocalService;
-		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
-		_ddmTemplateLocalService = ddmTemplateLocalService;
+		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_groupLocalService = groupLocalService;
 		_userLocalService = userLocalService;
 	}
@@ -89,7 +75,15 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		Group group = _groupLocalService.getCompanyGroup(companyId);
 
-		long groupId = group.getGroupId();
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+
+		_defaultDDMStructureHelper.addDDMStructures(
+			defaultUserId, group.getGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			getClass().getClassLoader(),
+			"com/liferay/journal/upgrade/v1_0_0/dependencies" +
+				"/basic-web-content-structure.xml",
+			new ServiceContext());
 
 		String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
 			companyId);
@@ -100,123 +94,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		Element structureElement = structureElements.get(0);
 
-		Set<Locale> locales = LanguageUtil.getAvailableLocales(groupId);
-
-		String name = structureElement.elementText("name");
-
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			locales, defaultLocale, name);
-
-		String description = structureElement.elementText("description");
-
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				locales, defaultLocale, description);
-
-		Element structureElementDefinitionElement = structureElement.element(
-			"definition");
-
-		String definition = structureElementDefinitionElement.getTextTrim();
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			groupId, PortalUtil.getClassNameId(JournalArticle.class.getName()),
-			name);
-
-		if (ddmStructure != null) {
-			return name;
-		}
-
-		try {
-			ddmStructure = addDDMStructure(
-				null, groupId, companyId, name, nameMap, descriptionMap,
-				definition);
-
-			Element templateElement = structureElement.element("template");
-
-			String fileName = templateElement.elementText("file-name");
-			boolean cacheable = GetterUtil.getBoolean(
-				templateElement.elementText("cacheable"));
-
-			DDMTemplate ddmTemplate = addDDMTemplate(
-				null, groupId, companyId, ddmStructure.getStructureId(), name,
-				nameMap, descriptionMap, getContent(fileName), cacheable);
-
-			if (group.hasStagingGroup()) {
-				Group stagingGroup = group.getStagingGroup();
-
-				ddmStructure = addDDMStructure(
-					ddmStructure.getUuid(), stagingGroup.getGroupId(),
-					companyId, name, nameMap, descriptionMap, definition);
-
-				addDDMTemplate(
-					ddmTemplate.getUuid(), stagingGroup.getGroupId(), companyId,
-					ddmStructure.getStructureId(), name, nameMap,
-					descriptionMap, getContent(fileName), cacheable);
-			}
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to create the basic web content structure and " +
-					"template");
-		}
-
-		return name;
-	}
-
-	protected DDMStructure addDDMStructure(
-			String uuid, long groupId, long companyId, String ddmStructureKey,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String definition)
-		throws Exception {
-
-		long userId = _userLocalService.getDefaultUserId(companyId);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		if (Validator.isNotNull(uuid)) {
-			serviceContext.setUuid(uuid);
-		}
-
-		return _ddmStructureLocalService.addStructure(
-			userId, groupId,
-			DDMStructureManager.STRUCTURE_DEFAULT_PARENT_STRUCTURE_ID,
-			PortalUtil.getClassNameId(JournalArticle.class.getName()),
-			ddmStructureKey, nameMap, descriptionMap, definition,
-			StorageEngineManager.STORAGE_TYPE_DEFAULT,
-			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
-	}
-
-	protected DDMTemplate addDDMTemplate(
-			String uuid, long groupId, long companyId, long ddmStructureId,
-			String templateKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String script,
-			boolean cacheable)
-		throws Exception {
-
-		long userId = _userLocalService.getDefaultUserId(companyId);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		if (Validator.isNotNull(uuid)) {
-			serviceContext.setUuid(uuid);
-		}
-
-		return _ddmTemplateLocalService.addTemplate(
-			userId, groupId,
-			PortalUtil.getClassNameId(DDMStructure.class.getName()),
-			ddmStructureId,
-			PortalUtil.getClassNameId(JournalArticle.class.getName()),
-			templateKey, nameMap, descriptionMap,
-			DDMTemplateManager.TEMPLATE_TYPE_DISPLAY,
-			DDMTemplateManager.TEMPLATE_MODE_CREATE,
-			TemplateConstants.LANG_TYPE_FTL, script, cacheable, false, null,
-			null, serviceContext);
+		return structureElement.elementText("name");
 	}
 
 	protected void addDDMTemplateLinks() throws Exception {
@@ -492,15 +370,12 @@ public class UpgradeJournal extends UpgradeProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
-
 	private static final DateFormat _dateFormat =
 		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
 
 	private final CompanyLocalService _companyLocalService;
-	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
-	private final DDMTemplateLocalService _ddmTemplateLocalService;
+	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final GroupLocalService _groupLocalService;
 	private final UserLocalService _userLocalService;
 

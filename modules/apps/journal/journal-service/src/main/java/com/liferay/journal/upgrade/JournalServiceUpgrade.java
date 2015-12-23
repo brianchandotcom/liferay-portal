@@ -16,7 +16,7 @@ package com.liferay.journal.upgrade;
 
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.upgrade.v0_0_2.UpgradeClassNames;
 import com.liferay.journal.upgrade.v0_0_3.UpgradeJournalArticleType;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeCompanyId;
@@ -72,9 +72,9 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.journal.service", "0.0.3", "1.0.0",
 			new UpgradeSchema(), new UpgradeCompanyId(),
 			new UpgradeJournal(
-				_companyLocalService, _ddmStructureLocalService,
-				_ddmTemplateLinkLocalService, _ddmTemplateLocalService,
-				_groupLocalService, _userLocalService),
+				_companyLocalService, _ddmTemplateLinkLocalService,
+				_defaultDDMStructureHelper, _groupLocalService,
+				_userLocalService),
 			new UpgradeJournalArticles(
 				_assetCategoryLocalService, _ddmStructureLocalService,
 				_groupLocalService, _layoutLocalService),
@@ -157,10 +157,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
+	protected void setDefaultDDMStructureHelper(
+		DefaultDDMStructureHelper defaultDDMStructureHelper) {
 
-		_ddmTemplateLocalService = ddmTemplateLocalService;
+		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -199,7 +199,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private volatile CompanyLocalService _companyLocalService;
 	private volatile DDMStructureLocalService _ddmStructureLocalService;
 	private volatile DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
-	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
+	private volatile DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private volatile GroupLocalService _groupLocalService;
 	private volatile LayoutLocalService _layoutLocalService;
 	private volatile SettingsFactory _settingsFactory;

@@ -149,8 +149,6 @@ public final class CommandLoggerHandler {
 			return;
 		}
 
-		_writeWebPage(_errorLinkId);
-
 		_commandElement = null;
 
 		_warningLineGroupLoggerElement(_lineGroupLoggerElement);
@@ -183,29 +181,6 @@ public final class CommandLoggerHandler {
 			runLineLoggerElement.addClassName("error-line");
 		}
 	}
-
-	private static void _warningLineGroupLoggerElement(
-			LoggerElement lineGroupLoggerElement)
-		throws Exception {
-
-		lineGroupLoggerElement.addClassName("warning");
-
-		lineGroupLoggerElement.addChildLoggerElement(
-			_getErrorContainerLoggerElement());
-
-		LoggerElement childContainerLoggerElement =
-			lineGroupLoggerElement.loggerElement("ul");
-
-		List<LoggerElement> runLineLoggerElements =
-			childContainerLoggerElement.loggerElements("li");
-
-		if (!runLineLoggerElements.isEmpty()) {
-			LoggerElement runLineLoggerElement = runLineLoggerElements.get(
-				runLineLoggerElements.size() - 1);
-
-			runLineLoggerElement.addClassName("warning-line");
-		}
-	}	
 
 	private static LoggerElement _getButtonLoggerElement(int btnLinkId) {
 		LoggerElement loggerElement = new LoggerElement();
@@ -578,6 +553,29 @@ public final class CommandLoggerHandler {
 		LoggerUtil.executeJavaScript(
 			"loggerInterface.fire('command-complete', '" +
 				loggerElement.getID() + "')");
+	}
+
+	private static void _warningLineGroupLoggerElement(
+			LoggerElement lineGroupLoggerElement)
+		throws Exception {
+
+		lineGroupLoggerElement.addClassName("warning");
+
+		lineGroupLoggerElement.addChildLoggerElement(
+			_getErrorContainerLoggerElement());
+
+		LoggerElement childContainerLoggerElement =
+			lineGroupLoggerElement.loggerElement("ul");
+
+		List<LoggerElement> runLineLoggerElements =
+			childContainerLoggerElement.loggerElements("li");
+
+		if (!runLineLoggerElements.isEmpty()) {
+			LoggerElement runLineLoggerElement = runLineLoggerElements.get(
+				runLineLoggerElements.size() - 1);
+
+			runLineLoggerElement.addClassName("warning-line");
+		}
 	}
 
 	private static void _writeWebPage(int errorLinkId) throws Exception {

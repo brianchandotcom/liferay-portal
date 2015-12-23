@@ -377,6 +377,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, AlloyTaglibDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, CSSBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, EclipseDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);

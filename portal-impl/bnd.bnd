@@ -3,6 +3,8 @@ Export-Package:\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache.thread.local,\
 	com.liferay.portal.cluster,\
+	com.liferay.portal.convert,\
+	com.liferay.portal.convert.util,\
 	com.liferay.portal.increment,\
 	com.liferay.portal.dao.jdbc.aop,\
 	com.liferay.portal.dao.orm.hibernate,\

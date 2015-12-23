@@ -151,6 +151,8 @@ public class DDLFormPortlet extends MVCPortlet {
 			LocaleUtil.fromLanguageId(languageId));
 		ddmFormRenderingContext.setPortletNamespace(
 			renderResponse.getNamespace());
+		ddmFormRenderingContext.setReadOnly(
+			ParamUtil.getBoolean(renderRequest, "preview"));
 
 		return ddmFormRenderingContext;
 	}

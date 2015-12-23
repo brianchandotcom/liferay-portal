@@ -83,6 +83,10 @@ public class DDLFormDisplayContext {
 	}
 
 	public boolean isFormAvailable() {
+		if (isPreview()) {
+			return true;
+		}
+
 		if (isSharedURL()) {
 			return isPublished() && isFormShared();
 		}
@@ -95,7 +99,7 @@ public class DDLFormDisplayContext {
 			return _showConfigurationIcon;
 		}
 
-		if (isSharedURL() && isFormShared()) {
+		if (isPreview() || (isSharedURL() && isFormShared())) {
 			_showConfigurationIcon = false;
 
 			return _showConfigurationIcon;
@@ -155,6 +159,10 @@ public class DDLFormDisplayContext {
 
 	protected boolean isFormShared() {
 		return ParamUtil.getBoolean(_renderRequest, "shared");
+	}
+
+	protected boolean isPreview() {
+		return ParamUtil.getBoolean(_renderRequest, "preview");
 	}
 
 	protected boolean isPublished() {

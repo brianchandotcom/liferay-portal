@@ -128,7 +128,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 		<div class="container-fluid-1280 ddl-publish-modal hide" id="<portlet:namespace />publishModal">
 			<div class="alert alert-info">
-				<a href="<%= ddlFormAdminDisplayContext.getPublishedFormURL() %>" target="_blank">
+				<a href="<%= ddlFormAdminDisplayContext.getPreviewFormURL() %>" target="_blank">
 					<liferay-ui:message key="click-here-to-preview-the-form-in-a-new-window" />
 				</a>
 			</div>

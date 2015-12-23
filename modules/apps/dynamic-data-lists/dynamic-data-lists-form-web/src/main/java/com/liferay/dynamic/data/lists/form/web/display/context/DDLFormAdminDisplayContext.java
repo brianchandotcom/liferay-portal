@@ -183,6 +183,16 @@ public class DDLFormAdminDisplayContext {
 		return portletURL;
 	}
 
+	public String getPreviewFormURL() throws PortalException {
+		String publishedFormURL = getPublishedFormURL();
+
+		if (Validator.isNull(publishedFormURL)) {
+			return publishedFormURL;
+		}
+
+		return publishedFormURL.concat("/preview");
+	}
+
 	public String getPublishedFormURL() throws PortalException {
 		if (_recordSet == null) {
 			return StringPool.BLANK;

@@ -7,4 +7,9 @@
 		<implicit-parameter name="p_p_id">com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet</implicit-parameter>
 		<implicit-parameter name="shared">true</implicit-parameter>
 	</route>
+	<route>
+		<pattern>/{recordSetId:\d+}/preview</pattern>
+		<implicit-parameter name="p_p_id">com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet</implicit-parameter>
+		<implicit-parameter name="preview">true</implicit-parameter>
+	</route>
 </routes>

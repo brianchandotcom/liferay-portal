@@ -15,17 +15,28 @@
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.JarURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import java.nio.file.DirectoryStream;
+import java.nio.file.DirectoryStream.Filter;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.spi.FileSystemProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,9 +44,8 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
+
+import javax.tools.JavaFileObject;
 
 import org.apache.felix.utils.log.Logger;
 
@@ -49,9 +59,11 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Raymond Augé
  */
-public class JspClassResolver implements ClassResolver {
+public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
-	public JspClassResolver(Bundle bundle, Bundle jspBundle, Logger logger) {
+	public JspJavaFileObjectResolver(
+		Bundle bundle, Bundle jspBundle, Logger logger) {
+
 		_bundle = bundle;
 		_jspBundle = jspBundle;
 		_logger = logger;
@@ -70,42 +82,26 @@ public class JspClassResolver implements ClassResolver {
 	}
 
 	@Override
-	public URL getClassURL(BundleWiring bundleWiring, String name) {
-		Bundle bundle = bundleWiring.getBundle();
-
-		URL url = bundle.getResource(name);
-
-		if ((url == null) && (bundle.getBundleId() == 0)) {
-			ClassLoader classLoader = bundleWiring.getClassLoader();
-
-			return classLoader.getResource(name);
-		}
-
-		return url;
-	}
-
-	@Override
-	public Collection<String> resolveClasses(
+	public Collection<JavaFileObject> resolveClasses(
 		BundleWiring bundleWiring, String path, int options) {
-
-		Collection<String> resources = null;
 
 		Bundle bundle = bundleWiring.getBundle();
 
 		if (bundle.equals(_bundle) || bundle.equals(_jspBundle)) {
-			resources = bundleWiring.listResources(path, "*.class", options);
-		}
-		else if (isExportsPackage(bundleWiring, path.replace('/', '.'))) {
-			if (bundle.getBundleId() == 0) {
-				resources = handleSystemBundle(bundleWiring, path);
-			}
-			else {
-				resources = bundleWiring.listResources(
-					path, "*.class", options);
-			}
+			return toJavaFileObjects(
+				bundle, bundleWiring.listResources(path, "*.class", options));
 		}
 
-		return resources;
+		if (!isExportsPackage(bundleWiring, path.replace('/', '.'))) {
+			return Collections.emptyList();
+		}
+
+		if (bundle.getBundleId() == 0) {
+			return handleSystemBundle(bundleWiring, path);
+		}
+
+		return toJavaFileObjects(
+			bundle, bundleWiring.listResources(path, "*.class", options));
 	}
 
 	protected String decodePath(String path) {
@@ -120,7 +116,15 @@ public class JspClassResolver implements ClassResolver {
 		return path;
 	}
 
-	protected JarFile getJarFile(URL url) throws IOException {
+	protected String getClassName(String resourceName) {
+		if (resourceName.endsWith(".class")) {
+			resourceName = resourceName.substring(0, resourceName.length() - 6);
+		}
+
+		return resourceName.replace(CharPool.SLASH, CharPool.PERIOD);
+	}
+
+	protected File getFile(URL url) throws IOException {
 		URLConnection urlConnection = url.openConnection();
 
 		String fileName = url.getFile();
@@ -177,18 +181,39 @@ public class JspClassResolver implements ClassResolver {
 			}
 		}
 
-		fileName = decodePath(fileName);
-
-		return new JarFile(fileName);
+		return new File(decodePath(fileName));
 	}
 
-	protected Collection<String> handleSystemBundle(
+	protected JavaFileObject getJavaFileObject(
+		URL resourceURL, String resourceName) {
+
+		String protocol = resourceURL.getProtocol();
+
+		String className = getClassName(resourceName);
+
+		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
+			return new BundleJavaFileObject(className, resourceURL);
+		}
+		else if (protocol.equals("vfs")) {
+			try {
+				return new VfsJavaFileObject(
+					className, resourceURL, resourceName);
+			}
+			catch (MalformedURLException murie) {
+				_logger.log(Logger.LOG_ERROR, murie.getMessage(), murie);
+			}
+		}
+
+		return null;
+	}
+
+	protected Collection<JavaFileObject> handleSystemBundle(
 		BundleWiring bundleWiring, String path) {
 
-		Collection<String> resources = _jspResourceCache.get(path);
+		Collection<JavaFileObject> javaFileObjects = _javaFileObjects.get(path);
 
-		if (resources != null) {
-			return resources;
+		if (javaFileObjects != null) {
+			return javaFileObjects;
 		}
 
 		List<URL> urls = null;
@@ -215,64 +240,68 @@ public class JspClassResolver implements ClassResolver {
 		}
 
 		if ((urls == null) || urls.isEmpty()) {
-			_jspResourceCache.put(path, Collections.<String>emptyList());
+			_javaFileObjects.put(path, Collections.<JavaFileObject>emptyList());
 
-			return null;
+			return Collections.emptyList();
 		}
-
-		int length = path.length();
 
 		for (URL url : urls) {
 			try {
-				JarFile jarFile = getJarFile(url);
+				File file = getFile(url);
 
-				Enumeration<? extends ZipEntry> enumeration = jarFile.entries();
+				try (FileSystem fileSystem = FileSystems.newFileSystem(
+						file.toPath(), null)) {
 
-				while (enumeration.hasMoreElements()) {
-					ZipEntry zipEntry = enumeration.nextElement();
+					FileSystemProvider fileSystemProvider =
+						fileSystem.provider();
 
-					String name = zipEntry.getName();
+					try (DirectoryStream<Path> directoryStream =
+							fileSystemProvider.newDirectoryStream(
+								fileSystem.getPath(path),
+								new Filter<Path>() {
 
-					if (name.length() <= (length + 7)) {
-						continue;
+									@Override
+									public boolean accept(Path entryPath) {
+										Path fileNamePath =
+											entryPath.getFileName();
+
+										String fileName =
+											fileNamePath.toString();
+
+										return fileName.endsWith(".class");
+									}
+
+								})) {
+
+						for (Path entryPath : directoryStream) {
+							if (javaFileObjects == null) {
+								javaFileObjects = new ArrayList<>();
+							}
+
+							String entryPathString = entryPath.toString();
+
+							entryPathString = entryPathString.substring(1);
+
+							javaFileObjects.add(
+								new JarJavaFileObject(
+									getClassName(entryPathString), file,
+									entryPathString));
+						}
 					}
-
-					// Optimized the check to avoid creating a temp string
-
-					if (!name.startsWith(path) ||
-						(name.charAt(length) != CharPool.SLASH)) {
-
-						continue;
-					}
-
-					if (!name.endsWith(".class")) {
-						continue;
-					}
-
-					if (name.indexOf(CharPool.SLASH, length + 1) >= 0) {
-						continue;
-					}
-
-					if (resources == null) {
-						resources = new ArrayList<>();
-					}
-
-					resources.add(name);
 				}
 			}
-			catch (Exception e) {
-				_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+			catch (IOException ioe) {
+				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
 			}
 		}
 
-		if (resources == null) {
-			_jspResourceCache.put(path, Collections.<String>emptyList());
-		}
-		else {
-			_jspResourceCache.put(path, resources);
+		if (javaFileObjects == null) {
+			javaFileObjects = Collections.<JavaFileObject>emptyList();
 		}
 
-		return resources;
+		_javaFileObjects.put(path, javaFileObjects);
+
+		return javaFileObjects;
 	}
 
 	protected boolean isExportsPackage(
@@ -292,10 +321,29 @@ public class JspClassResolver implements ClassResolver {
 		return false;
 	}
 
+	protected Collection<JavaFileObject> toJavaFileObjects(
+		Bundle bundle, Collection<String> resources) {
+
+		if ((resources == null) || resources.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<JavaFileObject> javaFileObjects = new ArrayList<>(
+			resources.size());
+
+		for (String resource : resources) {
+			javaFileObjects.add(
+				getJavaFileObject(bundle.getResource(resource), resource));
+		}
+
+		return javaFileObjects;
+	}
+
 	private final Bundle _bundle;
+	private final Map<String, Collection<JavaFileObject>> _javaFileObjects =
+		new ConcurrentReferenceValueHashMap<>(
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
 	private final Bundle _jspBundle;
-	private final Map<String, Collection<String>> _jspResourceCache =
-		new ConcurrentHashMap<>();
 	private final Logger _logger;
 	private final ServiceTracker<Map<String, List<URL>>, Map<String, List<URL>>>
 		_serviceTracker;

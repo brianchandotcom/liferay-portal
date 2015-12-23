@@ -24,13 +24,17 @@ List<ResultRowSplitterEntry> resultRowSplitterEntries = new ArrayList<ResultRowS
 if (resultRowSplitter != null) {
 	resultRowSplitterEntries = resultRowSplitter.split(searchContainer.getResultRows());
 }
-else {
+else if (!resultRows.isEmpty()) {
 	resultRowSplitterEntries.add(new ResultRowSplitterEntry(StringPool.BLANK, resultRows));
 }
 
-ResultRowSplitterEntry firstResultRowSplitterEntry = resultRowSplitterEntries.get(0);
+List<com.liferay.portal.kernel.dao.search.ResultRow> firstResultRows = Collections.emptyList();
 
-List<com.liferay.portal.kernel.dao.search.ResultRow> firstResultRows = firstResultRowSplitterEntry.getResultRows();
+if (!resultRowSplitterEntries.isEmpty()) {
+	ResultRowSplitterEntry firstResultRowSplitterEntry = resultRowSplitterEntries.get(0);
+
+	firstResultRows = firstResultRowSplitterEntry.getResultRows();
+}
 %>
 
 <table class="table table-list">
@@ -117,7 +121,7 @@ List<com.liferay.portal.kernel.dao.search.ResultRow> firstResultRows = firstResu
 	</c:if>
 
 	<tbody>
-		<c:if test="<%= firstResultRows.isEmpty() && (emptyResultsMessage != null) %>">
+		<c:if test="<%= resultRowSplitterEntries.isEmpty() && (emptyResultsMessage != null) %>">
 			<tr>
 				<td>
 					<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />

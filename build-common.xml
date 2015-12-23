@@ -1429,23 +1429,26 @@ rerun your task.
 				</then>
 			</if>
 
+			<exec executable="git" outputproperty="git.branch">
+				<arg value="rev-parse" />
+				<arg value="--abbrev-ref" />
+				<arg value="HEAD" />
+			</exec>
+
 			<if>
-				<matches pattern="\d\.\d\.\d\d" string="${lp.version}" />
+				<or>
+					<istrue value="${ee.override}" />
+					<matches pattern="ee-.+" string="${git.branch}" />
+				</or>
 				<then>
 					<var name="liferay.releng.app.title.suffix" value="\s EE" />
 					<var name="liferay.releng.public" value="false" />
 					<var name="liferay.releng.supported" value="true" />
 				</then>
-				<elseif>
-					<matches pattern="\d\.\d\.\d" string="${lp.version}" />
-					<then>
-						<var name="liferay.releng.app.title.suffix" value="" />
-						<var name="liferay.releng.public" value="true" />
-						<var name="liferay.releng.supported" value="false" />
-					</then>
-				</elseif>
 				<else>
-					<fail>Please set a valid value for the property "lp.version" in ${basedir}/release.properties.</fail>
+					<var name="liferay.releng.app.title.suffix" value="" />
+					<var name="liferay.releng.public" value="true" />
+					<var name="liferay.releng.supported" value="false" />
 				</else>
 			</if>
 

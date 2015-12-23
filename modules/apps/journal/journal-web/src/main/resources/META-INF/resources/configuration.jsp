@@ -43,6 +43,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 	<liferay-ui:tabs
 		names="<%= tabs1Names %>"
 		refresh="<%= false %>"
+		type="tabs nav-tabs-default"
 	>
 		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
@@ -60,11 +61,13 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		<liferay-ui:error key="emailArticleUpdatedSubject" message="please-enter-a-valid-subject" />
 
 		<liferay-ui:section>
-			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= emailFromName %>" />
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= emailFromName %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= emailFromAddress %>" />
-			</aui:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= emailFromAddress %>" />
+				</aui:fieldset>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<%
@@ -72,84 +75,100 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		%>
 
 		<liferay-ui:section>
-			<liferay-frontend:email-notification-settings
-				emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleAddedBody() %>"
-				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= journalGroupServiceConfiguration.emailArticleAddedEnabled() %>"
-				emailParam="emailArticleAdded"
-				emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleAddedSubject() %>"
-			/>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleAddedBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleAddedEnabled() %>"
+					emailParam="emailArticleAdded"
+					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleAddedSubject() %>"
+				/>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-frontend:email-notification-settings
-				emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleMovedFromFolderBody() %>"
-				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= journalGroupServiceConfiguration.emailArticleMovedFromFolderEnabled() %>"
-				emailParam="emailArticleMovedFromFolder"
-				emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleMovedFromFolderSubject() %>"
-			/>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleMovedFromFolderBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleMovedFromFolderEnabled() %>"
+					emailParam="emailArticleMovedFromFolder"
+					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleMovedFromFolderSubject() %>"
+				/>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-frontend:email-notification-settings
-				emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleMovedToFolderBody() %>"
-				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= journalGroupServiceConfiguration.emailArticleMovedToFolderEnabled() %>"
-				emailParam="emailArticleMovedToFolder"
-				emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleMovedToFolderSubject() %>"
-			/>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleMovedToFolderBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleMovedToFolderEnabled() %>"
+					emailParam="emailArticleMovedToFolder"
+					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleMovedToFolderSubject() %>"
+				/>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-frontend:email-notification-settings
-				emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleReviewBody() %>"
-				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= journalGroupServiceConfiguration.emailArticleReviewEnabled() %>"
-				emailParam="emailArticleReview"
-				emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleReviewSubject() %>"
-			/>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleReviewBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleReviewEnabled() %>"
+					emailParam="emailArticleReview"
+					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleReviewSubject() %>"
+				/>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-frontend:email-notification-settings
-				emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleUpdatedBody() %>"
-				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= journalGroupServiceConfiguration.emailArticleUpdatedEnabled() %>"
-				emailParam="emailArticleUpdated"
-				emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleUpdatedSubject() %>"
-			/>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleUpdatedBody() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleUpdatedEnabled() %>"
+					emailParam="emailArticleUpdated"
+					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleUpdatedSubject() %>"
+				/>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLinksCount(themeDisplay.getCompanyId(), scopeGroupId, JournalFolder.class.getName()) > 0 %>">
 			<liferay-ui:section>
-				<liferay-frontend:email-notification-settings
-					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalDeniedBody() %>"
-					emailDefinitionTerms="<%= emailDefinitionTerms %>"
-					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalDeniedEnabled() %>"
-					emailParam="emailArticleApprovalDenied"
-					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalDeniedSubject() %>"
-				/>
-			</liferay-ui:section>
-
-			<liferay-ui:section>
-				<liferay-frontend:email-notification-settings
-					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalGrantedBody() %>"
-					emailDefinitionTerms="<%= emailDefinitionTerms %>"
-					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalGrantedEnabled() %>"
-					emailParam="emailArticleApprovalGranted"
-					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalGrantedSubject() %>"
+				<aui:fieldset-group markupView="lexicon">
+					<liferay-frontend:email-notification-settings
+						emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalDeniedBody() %>"
+						emailDefinitionTerms="<%= emailDefinitionTerms %>"
+						emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalDeniedEnabled() %>"
+						emailParam="emailArticleApprovalDenied"
+						emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalDeniedSubject() %>"
 					/>
+				</aui:fieldset-group>
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<liferay-frontend:email-notification-settings
-					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedBody() %>"
-					emailDefinitionTerms='<%= JournalUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, "requested") %>'
-					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedEnabled() %>"
-					emailParam="emailArticleApprovalRequested"
-					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedSubject() %>"
-				/>
+				<aui:fieldset-group markupView="lexicon">
+					<liferay-frontend:email-notification-settings
+						emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalGrantedBody() %>"
+						emailDefinitionTerms="<%= emailDefinitionTerms %>"
+						emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalGrantedEnabled() %>"
+						emailParam="emailArticleApprovalGranted"
+						emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalGrantedSubject() %>"
+					/>
+				</aui:fieldset-group>
+			</liferay-ui:section>
+
+			<liferay-ui:section>
+				<aui:fieldset-group markupView="lexicon">
+					<liferay-frontend:email-notification-settings
+						emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedBody() %>"
+						emailDefinitionTerms='<%= JournalUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, "requested") %>'
+						emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedEnabled() %>"
+						emailParam="emailArticleApprovalRequested"
+						emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedSubject() %>"
+					/>
+				</aui:fieldset-group>
 			</liferay-ui:section>
 		</c:if>
 	</liferay-ui:tabs>

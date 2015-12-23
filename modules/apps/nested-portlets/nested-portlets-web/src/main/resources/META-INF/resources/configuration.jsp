@@ -24,42 +24,42 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<aui:fieldset label="layout-template">
-		<table border="0" cellpadding="0" cellspacing="10" style="margin-top: 10px;" width="100%">
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<h4><liferay-ui:message key="layout-template" /></h4>
 
-		<%
-		int CELLS_PER_ROW = 4;
+			<%
+			String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
 
-		String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
+			for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
+			%>
 
-		List<LayoutTemplate> layoutTemplates = nestedPortletsDisplayContext.getLayoutTemplates();
+				<div class="col-md-2 col-sm-4 col-xs-6">
+					<div class="checkbox toggle-card-dm">
+						<label>
+							<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
 
-		int i = 0;
+							<div class="card card-dm toggle-card-container">
+								<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image:url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>')">
+								</div>
+								<div class="card-footer">
+									<div class="card-dm-details">
+										<div class="card-dm-small">
+											<%= layoutTemplate.getName(locale) %>
+										</div>
+									</div>
+								</div>
+							</div>
+						</label>
+					</div>
+				</div>
 
-		for (LayoutTemplate layoutTemplate : layoutTemplates) {
-		%>
+			<%
+			}
+			%>
 
-				<c:if test="<%= (i % CELLS_PER_ROW) == 0 %>">
-					<tr>
-				</c:if>
-
-				<td align="center" width="<%= 100 / CELLS_PER_ROW %>%">
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" onclick="document.getElementById('<portlet:namespace />layoutTemplateId<%= i %>').checked = true;" src="<%= layoutTemplate.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" /><br />
-
-					<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" id='<%= "layoutTemplateId" + i %>' label="<%= layoutTemplate.getName(locale) %>" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
-				</td>
-
-				<c:if test="<%= (i % CELLS_PER_ROW) == (CELLS_PER_ROW - 1) %>">
-					</tr>
-				</c:if>
-
-		<%
-				i++;
-		}
-		%>
-
-		</table>
-	</aui:fieldset>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

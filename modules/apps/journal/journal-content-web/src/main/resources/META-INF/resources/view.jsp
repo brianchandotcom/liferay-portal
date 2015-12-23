@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:dynamic-include key="com.liferay.journal.content#VIEW#pre" />
+
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();
 JournalArticleDisplay articleDisplay = journalContentDisplayContext.getArticleDisplay();
@@ -263,3 +265,5 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 		<liferay-ui:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>" />
 	</div>
 </c:if>
+
+<liferay-util:dynamic-include key="com.liferay.journal.content#VIEW#post" />

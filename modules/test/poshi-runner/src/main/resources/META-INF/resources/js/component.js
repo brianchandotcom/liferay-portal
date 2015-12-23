@@ -481,13 +481,14 @@ YUI.add(
 						if (container.hasClass(CSS_COLLAPSE)) {
 							instance._toggleContainer(container, false);
 
-							timeout = 50;
+							timeout = 10;
 						}
 
 						if (parentContainers.size()) {
-							setTimeout(
-								A.bind('_expandParentContainers', instance, parentContainers, node),
-								timeout
+							A.later(
+								timeout,
+								instance,
+								A.bind('_expandParentContainers', instance, parentContainers, node)
 							);
 						}
 					},
@@ -505,7 +506,7 @@ YUI.add(
 					_getTransition: function(targetNode, height, collapsing) {
 						var instance = this;
 
-						var duration = Math.pow(height, 0.3) / 15;
+						var duration = Math.pow(height, 0.15) / 15;
 
 						var ease = 'ease-in';
 
@@ -534,13 +535,13 @@ YUI.add(
 								},
 
 								marginTop: {
-									duration: 0.1,
+									duration: 0.05,
 									easing: ease,
 									value: margin
 								},
 
 								marginBottom: {
-									duration: 0.1,
+									duration: 0.05,
 									easing: ease,
 									value: margin
 								}
@@ -774,7 +775,7 @@ YUI.add(
 
 								new A.Anim(
 									{
-										duration: 0.075,
+										duration: 0.12,
 										easing: 'easeOutStrong',
 										node: scrollNode,
 										to: {

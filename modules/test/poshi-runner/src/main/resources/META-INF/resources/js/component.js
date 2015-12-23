@@ -17,7 +17,13 @@ YUI.add(
 
 		var CSS_FAIL = 'fail';
 
+		var CSS_FAILED = 'failed';
+
 		var CSS_HIDDEN = 'hidden';
+
+		var CSS_PASS = 'pass';
+
+		var CSS_PENDING = 'pending';
 
 		var CSS_RUNNING = 'running';
 
@@ -26,8 +32,6 @@ YUI.add(
 		var CSS_TRANSITIONING = 'transitioning';
 
 		var CSS_WARNING = 'warning';
-
-		var SELECTOR_WARNING = STR_DOT + CSS_WARNING;
 
 		var STR_BLANK = '';
 
@@ -39,9 +43,15 @@ YUI.add(
 
 		var STR_CURRENT_SCOPE = 'currentScope';
 
+		var SELECTOR_FAIL = STR_DOT + CSS_FAIL;
+
+		var SELECTOR_FAILED = STR_DOT + CSS_FAILED;
+
+		var SELECTOR_WARNING = STR_DOT + CSS_WARNING;
+
 		var STR_DOT = '.';
 
-		var STR_FAILS = 'fails';
+		var STR_ERRORS = 'errors';
 
 		var STR_HEIGHT = 'height';
 
@@ -100,7 +110,7 @@ YUI.add(
 
 					status: {
 						validator: Lang.isArray,
-						value: ['fail', 'pass', 'pending', CSS_WARNING]
+						value: [CSS_FAIL, CSS_PASS, CSS_PENDING, CSS_WARNING]
 					},
 
 					transitioning: {
@@ -157,7 +167,7 @@ YUI.add(
 							instance._displayNode(linkedFunction);
 							instance._setXmlNodeClass(linkedFunction);
 
-							if (latestCommand.hasClass('failed') || latestCommand.hasClass(CSS_WARNING)) {
+							if (latestCommand.hasClass(CSS_FAILED) || latestCommand.hasClass(CSS_WARNING)) {
 								instance._injectXmlError(latestCommand);
 							}
 						}
@@ -251,14 +261,14 @@ YUI.add(
 						var instance = this;
 
 						var currentScope = instance.get(STR_CURRENT_SCOPE);
-						var failNodes = instance.get(STR_FAILS);
+						var errorNodes = instance.get(STR_ERRORS);
 
-						var lastIndex = failNodes.size() - 1;
+						var lastIndex = errorNodes.size() - 1;
 
 						var newIndex = lastIndex;
 
 						if (currentScope) {
-							var index = failNodes.indexOf(currentScope);
+							var index = errorNodes.indexOf(currentScope);
 
 							if (index > -1) {
 								if (index < lastIndex) {
@@ -270,7 +280,7 @@ YUI.add(
 							}
 						}
 
-						var failure = failNodes.item(newIndex);
+						var failure = errorNodes.item(newIndex);
 
 						instance._selectCurrentScope(failure);
 						instance._scrollToNode(failure);
@@ -861,17 +871,17 @@ YUI.add(
 
 							newLogId = logId;
 
-							var commandFailures = commandLog.all('.failed, ' + SELECTOR_WARNING);
+							var commandErrors = commandLog.all(SELECTOR_FAILED + ', ' + SELECTOR_WARNING);
 
-							commandFailures.each(instance._injectXmlError, instance);
+							commandErrors.each(instance._injectXmlError, instance);
 						}
 						else {
 							newLogId = null;
 
-							var fails = instance.get(STR_XML_LOG).all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
+							var errors = instance.get(STR_XML_LOG).all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
 
-							if (fails.size()) {
-								fails.each(instance._clearXmlErrors);
+							if (errors.size()) {
+								errors.each(instance._clearXmlErrors);
 							}
 						}
 
@@ -879,19 +889,19 @@ YUI.add(
 
 						instance._toggleXmlLogClasses(logId);
 
-						var failNodes = instance.get(STR_XML_LOG).all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
+						var errorNodes = instance.get(STR_XML_LOG).all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
 
-						instance.set(STR_FAILS, failNodes);
+						instance.set(STR_ERRORS, errorNodes);
 
 						instance._transitionCommandLog(commandLog);
 
 						if (failNodes.size() > 0) {
 							failNodes.each(instance._displayNode, instance);
 
-							failNodes = failNodes.filter(SELECTOR_FAIL);
+							var lastFailNode = failNodes.first();
 
-							instance._selectCurrentScope(failNodes.last());
-							instance._scrollToNode(failNodes.last());
+							instance._selectCurrentScope(lastFailNode);
+							instance._scrollToNode(lastFailNode);
 						}
 					},
 

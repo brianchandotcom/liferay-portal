@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.convert.util;
+package com.liferay.portal.convert.util.impl;
 
+import com.liferay.portal.convert.util.ModelMigrator;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -70,6 +71,10 @@ public class ModelMigratorImpl implements ModelMigrator {
 			for (Class<? extends BaseModel<?>> model : models) {
 				Map<String, Tuple> modelTableDetails = getModelTableDetails(
 					model);
+
+				MaintenanceUtil.appendStatus(
+					"Processing model " + model +
+						" (1 of " + modelTableDetails.size() + ")");
 
 				migrateModel(
 					modelTableDetails, DBManagerUtil.getDB(dialect, dataSource),
@@ -136,22 +141,20 @@ public class ModelMigratorImpl implements ModelMigrator {
 			Map<String, Tuple> modelTableDetails, DB db, Connection connection)
 		throws IOException {
 
-		int i = 0;
+		MaintenanceUtil.appendStatus("<ul>");
 
 		for (Tuple tuple : modelTableDetails.values()) {
-			if ((i > 0) && (i % (modelTableDetails.size() / 4) == 0)) {
-				MaintenanceUtil.appendStatus(
-					(i * 100 / modelTableDetails.size()) + "%");
-			}
-
 			String table = (String)tuple.getObject(0);
 			Object[][] columns = (Object[][])tuple.getObject(1);
 			String sqlCreate = (String)tuple.getObject(2);
 
-			migrateTable(db, connection, table, columns, sqlCreate);
+			MaintenanceUtil.appendStatus(
+				"<li>Migrating table " + table + "</li>");
 
-			i++;
+			migrateTable(db, connection, table, columns, sqlCreate);
 		}
+
+		MaintenanceUtil.appendStatus("</ul>");
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Migrating database indexes");

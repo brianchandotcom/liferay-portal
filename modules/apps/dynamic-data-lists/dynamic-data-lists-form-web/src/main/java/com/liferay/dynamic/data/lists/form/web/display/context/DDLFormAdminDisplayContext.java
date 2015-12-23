@@ -184,17 +184,13 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public String getPreviewFormURL() throws PortalException {
-		String formURL = getPublishedFormURL();
+		String publishedFormURL = getPublishedFormURL();
 
-		if (formURL.isEmpty()) {
-			return formURL;
+		if (Validator.isNull(publishedFormURL)) {
+			return publishedFormURL;
 		}
 
-		StringBundler sb = new StringBundler(2);
-		sb.append(formURL);
-		sb.append("/preview");
-
-		return sb.toString();
+		return publishedFormURL.concat("/preview");
 	}
 
 	public String getPublishedFormURL() throws PortalException {

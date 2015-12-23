@@ -28,8 +28,10 @@ public class ServiceBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<ServiceBuilderPlugin> {
 
 	@Override
-	protected void configureDefaults(Project project) {
-		super.configureDefaults(project);
+	protected void configureDefaults(
+		Project project, ServiceBuilderPlugin serviceBuilderPlugin) {
+
+		super.configureDefaults(project, serviceBuilderPlugin);
 
 		configureTasksBuildService(project);
 	}

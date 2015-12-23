@@ -76,8 +76,10 @@ public class AlloyTaglibDefaultsPlugin
 	}
 
 	@Override
-	protected void configureDefaults(Project project) {
-		super.configureDefaults(project);
+	protected void configureDefaults(
+		Project project, AlloyTaglibPlugin alloyTaglibPlugin) {
+
+		super.configureDefaults(project, alloyTaglibPlugin);
 
 		configureTasksBuildTaglibs(project);
 	}

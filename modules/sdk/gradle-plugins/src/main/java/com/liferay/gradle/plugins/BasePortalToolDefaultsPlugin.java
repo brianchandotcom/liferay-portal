@@ -45,7 +45,7 @@ public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 	}
 
 	@Override
-	protected void configureDefaults(Project project) {
+	protected void configureDefaults(Project project, T plugin) {
 		addPortalToolDependencies(project);
 	}
 

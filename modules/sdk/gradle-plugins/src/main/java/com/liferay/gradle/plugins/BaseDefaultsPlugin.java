@@ -33,13 +33,13 @@ public abstract class BaseDefaultsPlugin<T extends Plugin<Project>>
 
 				@Override
 				public void execute(T plugin) {
-					configureDefaults(project);
+					configureDefaults(project, plugin);
 				}
 
 			});
 	}
 
-	protected abstract void configureDefaults(Project project);
+	protected abstract void configureDefaults(Project project, T plugin);
 
 	protected abstract Class<T> getPluginClass();
 

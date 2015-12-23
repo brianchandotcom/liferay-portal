@@ -121,8 +121,10 @@ public class XMLFormatterDefaultsPlugin
 	}
 
 	@Override
-	protected void configureDefaults(Project project) {
-		super.configureDefaults(project);
+	protected void configureDefaults(
+		Project project, XMLFormatterPlugin xmlFormatterPlugin) {
+
+		super.configureDefaults(project, xmlFormatterPlugin);
 
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);

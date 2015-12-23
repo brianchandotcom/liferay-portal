@@ -32,8 +32,10 @@ public class CSSBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<CSSBuilderPlugin> {
 
 	@Override
-	protected void configureDefaults(Project project) {
-		super.configureDefaults(project);
+	protected void configureDefaults(
+		Project project, CSSBuilderPlugin cssBuilderPlugin) {
+
+		super.configureDefaults(project, cssBuilderPlugin);
 
 		configureTasksBuildCSS(project);
 	}

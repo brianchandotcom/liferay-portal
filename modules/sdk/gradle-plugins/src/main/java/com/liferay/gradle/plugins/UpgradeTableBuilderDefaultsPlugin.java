@@ -31,8 +31,10 @@ public class UpgradeTableBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<UpgradeTableBuilderPlugin> {
 
 	@Override
-	protected void configureDefaults(Project project) {
-		super.configureDefaults(project);
+	protected void configureDefaults(
+		Project project, UpgradeTableBuilderPlugin upgradeTableBuilderPlugin) {
+
+		super.configureDefaults(project, upgradeTableBuilderPlugin);
 
 		configureTasksBuildUpgradeTable(project);
 	}

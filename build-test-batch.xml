@@ -864,6 +864,8 @@
 							<antcall target="compile" />
 
 							<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
+
+							<prepare-tomcat-setenv />
 						</else>
 					</if>
 

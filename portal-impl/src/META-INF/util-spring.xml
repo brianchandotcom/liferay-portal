@@ -8,13 +8,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean id="com.liferay.mail.util.DummyHook" class="com.liferay.mail.util.DummyHook" />
-	<bean class="com.liferay.portal.convert.DatabaseConvertProcess" />
-	<bean class="com.liferay.portal.convert.DocumentLibraryConvertProcess" />
-	<bean class="com.liferay.portal.convert.DocumentLibraryExtraSettingsConvertProcess" />
 	<bean class="com.liferay.portal.convert.database.PortalDatabaseConverter" >
 		<property name="modelMigrator" ref="com.liferay.portal.convert.util.ModelMigrator" />
 	</bean>
-	<bean id="com.liferay.portal.convert.util.ModelMigrator" class="com.liferay.portal.convert.util.ModelMigratorImpl" />
+	<bean class="com.liferay.portal.convert.documentlibrary.DocumentLibraryConvertProcess" />
+	<bean class="com.liferay.portal.convert.documentlibrary.DocumentLibraryExtraSettingsConvertProcess" />
+	<bean class="com.liferay.portal.convert.process.DatabaseConvertProcess" />
+	<bean id="com.liferay.portal.convert.util.ModelMigrator" class="com.liferay.portal.convert.util.impl.ModelMigratorImpl" />
 	<bean id="com.liferay.portal.events.StartupHelperUtil" class="com.liferay.portal.events.StartupHelperUtil">
 		<property name="startupHelper">
 			<bean class="com.liferay.portal.events.StartupHelper" />

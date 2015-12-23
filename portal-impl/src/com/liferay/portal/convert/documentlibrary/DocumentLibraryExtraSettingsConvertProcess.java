@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.convert;
+package com.liferay.portal.convert.documentlibrary;
 
+import com.liferay.portal.convert.BaseConvertProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;

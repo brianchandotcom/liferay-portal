@@ -19,8 +19,6 @@
 <%
 String randomId = workflowTaskDisplayContext.getWorkflowTaskRandomId();
 
-String tabs1 = ParamUtil.getString(request, "tabs1");
-
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -40,7 +38,6 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
 			<liferay-portlet:actionURL name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">
 				<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
-				<portlet:param name="tabs1" value="<%= tabs1 %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 				<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />

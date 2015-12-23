@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>EDIT_WEB_CONTENT</td>
-	<td>//i[@class='icon-pencil']</td>
+	<td>//span/*[name()='svg'][contains(@class,'lexicon-icon-pencil')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDIT_TEMPLATE</td>
-	<td>//i[@class='icon-edit']</td>
+	<td>//span/*[name()='svg'][contains(@class,'lexicon-icon-pencil')]</td>
 	<td></td>
 </tr>
 <tr>

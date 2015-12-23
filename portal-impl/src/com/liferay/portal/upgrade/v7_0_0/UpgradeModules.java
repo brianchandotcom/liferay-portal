@@ -179,9 +179,9 @@ public class UpgradeModules extends UpgradeProcess {
 		throws IOException, SQLException {
 
 		runSQL(
-			"update Release_ set servletContextName = \"" +
-				newServletContextName + "\" where servletContextName = \"" +
-					oldServletContextName + "\"");
+			"update Release_ set servletContextName = '" +
+				newServletContextName + "' where servletContextName = '" +
+					oldServletContextName + "'");
 	}
 
 	private static final String[] _bundleSymbolicNames = new String[] {

@@ -43,6 +43,14 @@ public class MathUtil {
 		return value1 / value2;
 	}
 
+	public static int quotient(Integer value1, Integer value2, boolean ceil) {
+		if (ceil) {
+			return (value1 + value2 - 1) / value2;
+		}
+
+		return quotient(value1, value2);
+	}
+
 	public static int sum(Integer... values) {
 		int sum = 0;
 

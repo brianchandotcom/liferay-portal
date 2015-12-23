@@ -26,7 +26,7 @@
 	<command name="editName">
 		<var name="key_columnSize" value="${columnSize}" />
 
-		<execute function="AssertElementPresent" locator1="Form#ADD_FIRST_FIELD" />
+		<execute function="AssertElementPresent#assertVisible" locator1="Form#ADD_FIRST_FIELD" />
 
 		<execute function="Type#typeAceEditor" locator1="Form#NAME_FIELD" value1="${formName}" />
 	</command>

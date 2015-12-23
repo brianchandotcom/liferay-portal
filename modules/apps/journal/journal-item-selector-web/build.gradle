@@ -1,0 +1,9 @@
+dependencies {
+	compile project(":apps:item-selector:item-selector-taglib")
+	compile project(":apps:journal:journal-item-selector-api")
+	compile project(":apps:journal:journal-web")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

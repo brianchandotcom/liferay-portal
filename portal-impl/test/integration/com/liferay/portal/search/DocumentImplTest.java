@@ -18,13 +18,13 @@ import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -309,7 +309,7 @@ public class DocumentImplTest {
 
 		Query query = _indexer.getFullQuery(searchContext);
 
-		Hits results = SearchEngineUtil.search(searchContext, query);
+		Hits results = IndexSearcherHelperUtil.search(searchContext, query);
 
 		Assert.assertEquals(screenNames.length, results.getLength());
 

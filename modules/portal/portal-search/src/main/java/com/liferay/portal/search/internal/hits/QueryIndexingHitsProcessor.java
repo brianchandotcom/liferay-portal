@@ -15,9 +15,9 @@
 package com.liferay.portal.search.internal.hits;
 
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
@@ -58,7 +58,7 @@ public class QueryIndexingHitsProcessor implements HitsProcessor {
 	protected void addDocument(long companyId, String keywords, Locale locale)
 		throws SearchException {
 
-		SearchEngineUtil.indexKeyword(
+		IndexWriterHelperUtil.indexKeyword(
 			companyId, keywords, 0, SuggestionConstants.TYPE_QUERY_SUGGESTION,
 			locale);
 	}

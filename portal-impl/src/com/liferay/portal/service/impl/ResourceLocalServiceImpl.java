@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
@@ -843,7 +843,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			PermissionCacheUtil.clearResourcePermissionCache(
 				ResourceConstants.SCOPE_INDIVIDUAL, name, primKey);
 
-			SearchEngineUtil.updatePermissionFields(name, primKey);
+			IndexWriterHelperUtil.updatePermissionFields(name, primKey);
 		}
 	}
 
@@ -983,7 +983,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			PermissionCacheUtil.clearResourcePermissionCache(
 				ResourceConstants.SCOPE_INDIVIDUAL, name, primKey);
 
-			SearchEngineUtil.updatePermissionFields(name, primKey);
+			IndexWriterHelperUtil.updatePermissionFields(name, primKey);
 		}
 	}
 

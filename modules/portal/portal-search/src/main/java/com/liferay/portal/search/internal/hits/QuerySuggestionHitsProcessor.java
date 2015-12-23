@@ -15,9 +15,9 @@
 package com.liferay.portal.search.internal.hits;
 
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -50,8 +50,9 @@ public class QuerySuggestionHitsProcessor implements HitsProcessor {
 			return true;
 		}
 
-		String[] querySuggestions = SearchEngineUtil.suggestKeywordQueries(
-			searchContext, queryConfig.getQuerySuggestionMax());
+		String[] querySuggestions =
+			IndexSearcherHelperUtil.suggestKeywordQueries(
+				searchContext, queryConfig.getQuerySuggestionMax());
 
 		querySuggestions = ArrayUtil.remove(
 			querySuggestions, searchContext.getKeywords());

@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -153,7 +153,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 	protected void doReindex(MBThread mbThread) throws Exception {
 		Document document = getDocument(mbThread);
 
-		SearchEngineUtil.updateDocument(
+		IndexWriterHelperUtil.updateDocument(
 			getSearchEngineId(), mbThread.getCompanyId(), document,
 			isCommitImmediately());
 	}

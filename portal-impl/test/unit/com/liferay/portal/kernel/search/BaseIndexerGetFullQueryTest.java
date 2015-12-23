@@ -50,7 +50,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author André de Oliveira
  */
 @PrepareOnlyThisForTest( {
-	SearchEngineUtil.class
+	SearchEngineHelperUtil.class
 })
 @RunWith(PowerMockRunner.class)
 public class BaseIndexerGetFullQueryTest extends PowerMockito {
@@ -61,7 +61,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		setUpPropsUtil();
 		setUpRegistryUtil();
 		setUpIndexerRegistry();
-		setUpSearchEngineUtil();
+		setUpSearchEngineHelperUtil();
 
 		_indexer = new TestIndexer();
 	}
@@ -175,12 +175,20 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		registry.registerService(Indexer.class, new MBMessageIndexer());
 	}
 
-	protected void setUpSearchEngineUtil() {
-		mockStatic(SearchEngineUtil.class, Mockito.CALLS_REAL_METHODS);
+	protected void setUpSearchEngineHelperUtil() {
+		mockStatic(SearchEngineHelperUtil.class, Mockito.CALLS_REAL_METHODS);
 
 		stub(
 			method(
-				SearchEngineUtil.class, "getEntryClassNames"
+				SearchEngineHelperUtil.class, "getDefaultSearchEngineId"
+			)
+		).toReturn(
+			SearchEngineHelper.SYSTEM_ENGINE_ID
+		);
+
+		stub(
+			method(
+				SearchEngineHelperUtil.class, "getEntryClassNames"
 			)
 		).toReturn(
 			new String[0]
@@ -188,7 +196,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 		stub(
 			method(
-				SearchEngineUtil.class, "getSearchEngine", String.class
+				SearchEngineHelperUtil.class, "getSearchEngine", String.class
 			)
 		).toReturn(
 			new BaseSearchEngine()

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderU
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -468,7 +468,7 @@ public class CMISQueryBuilderTest {
 	protected SearchContext getSearchContext() {
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setSearchEngineId(SearchEngineUtil.GENERIC_ENGINE_ID);
+		searchContext.setSearchEngineId(SearchEngineHelper.GENERIC_ENGINE_ID);
 
 		return searchContext;
 	}

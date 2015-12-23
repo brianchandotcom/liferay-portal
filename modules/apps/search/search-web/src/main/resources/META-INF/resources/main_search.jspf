@@ -160,7 +160,7 @@ Hits hits = indexer.search(searchContext);
 						<td valign="top">
 							<div class="container">
 								<code>
-									<%= HtmlUtil.escape(SearchEngineUtil.getQueryString(searchContext, hits.getQuery())) %>
+									<%= HtmlUtil.escape(IndexSearcherHelperUtil.getQueryString(searchContext, hits.getQuery())) %>
 								</code>
 							</div>
 						</td>

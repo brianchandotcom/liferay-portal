@@ -44,11 +44,11 @@ import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -248,7 +248,7 @@ public class JournalArticleIndexer
 	public void reindexDDMStructures(List<Long> ddmStructureIds)
 		throws SearchException {
 
-		if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+		if (IndexWriterHelperUtil.isIndexReadOnly() || !isIndexerEnabled()) {
 			return;
 		}
 
@@ -448,7 +448,7 @@ public class JournalArticleIndexer
 			return;
 		}
 
-		SearchEngineUtil.updateDocument(
+		IndexWriterHelperUtil.updateDocument(
 			getSearchEngineId(), journalArticle.getCompanyId(),
 			getDocument(latestIndexableArticle), isCommitImmediately());
 	}
@@ -617,7 +617,7 @@ public class JournalArticleIndexer
 
 			Document document = getDocument(article);
 
-			SearchEngineUtil.deleteDocument(
+			IndexWriterHelperUtil.deleteDocument(
 				getSearchEngineId(), article.getCompanyId(),
 				document.get(Field.UID), isCommitImmediately());
 
@@ -824,7 +824,7 @@ public class JournalArticleIndexer
 	protected void reindexArticleVersions(JournalArticle article)
 		throws PortalException {
 
-		SearchEngineUtil.updateDocuments(
+		IndexWriterHelperUtil.updateDocuments(
 			getSearchEngineId(), article.getCompanyId(),
 			getArticleVersions(article), isCommitImmediately());
 	}

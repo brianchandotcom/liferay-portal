@@ -17,9 +17,9 @@ package com.liferay.portal.search.internal.background.task;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 
@@ -50,7 +50,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 				companyIds);
 
 			try {
-				SearchEngineUtil.deleteEntityDocuments(
+				IndexWriterHelperUtil.deleteEntityDocuments(
 					indexer.getSearchEngineId(), companyId, className, true);
 
 				indexer.reindex(new String[] {String.valueOf(companyId)});

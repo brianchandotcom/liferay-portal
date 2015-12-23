@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.CharPool;
@@ -132,7 +132,7 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 	protected void doReindex(BookmarksEntry bookmarksEntry) throws Exception {
 		Document document = getDocument(bookmarksEntry);
 
-		SearchEngineUtil.updateDocument(
+		IndexWriterHelperUtil.updateDocument(
 			getSearchEngineId(), bookmarksEntry.getCompanyId(), document,
 			isCommitImmediately());
 	}

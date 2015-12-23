@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback.SyncHandler;
@@ -189,13 +189,13 @@ public class SynchronousDestinationTestCallback
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 
 			for (String searchEngineId :
-					SearchEngineUtil.getSearchEngineIds()) {
+					SearchEngineHelperUtil.getSearchEngineIds()) {
 
 				replaceDestination(
-					SearchEngineUtil.getSearchReaderDestinationName(
+					SearchEngineHelperUtil.getSearchReaderDestinationName(
 						searchEngineId));
 				replaceDestination(
-					SearchEngineUtil.getSearchWriterDestinationName(
+					SearchEngineHelperUtil.getSearchWriterDestinationName(
 						searchEngineId));
 			}
 		}

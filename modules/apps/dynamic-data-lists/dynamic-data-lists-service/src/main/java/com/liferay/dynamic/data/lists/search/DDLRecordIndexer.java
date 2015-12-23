@@ -42,9 +42,9 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
@@ -208,7 +208,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 					recordVersion.getVersion(),
 					DDLRecordConstants.VERSION_DEFAULT)) {
 
-				SearchEngineUtil.deleteDocument(
+				IndexWriterHelperUtil.deleteDocument(
 					getSearchEngineId(), ddlRecord.getCompanyId(),
 					document.get(Field.UID), isCommitImmediately());
 			}
@@ -216,7 +216,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			return;
 		}
 
-		SearchEngineUtil.updateDocument(
+		IndexWriterHelperUtil.updateDocument(
 			getSearchEngineId(), ddlRecord.getCompanyId(), document,
 			isCommitImmediately());
 	}

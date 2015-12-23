@@ -37,8 +37,8 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -319,7 +319,8 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 				@Override
 				public Void call() throws Exception {
-					Hits hits = SearchEngineUtil.search(searchContext, query);
+					Hits hits = IndexSearcherHelperUtil.search(
+						searchContext, query);
 
 					Assert.assertEquals(length, hits.getLength());
 

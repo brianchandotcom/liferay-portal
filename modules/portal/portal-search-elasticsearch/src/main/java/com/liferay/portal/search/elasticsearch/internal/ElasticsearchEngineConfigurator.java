@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineConfigurator;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
@@ -59,7 +59,7 @@ public class ElasticsearchEngineConfigurator
 
 	@Override
 	protected String getDefaultSearchEngineId() {
-		return SearchEngineUtil.SYSTEM_ENGINE_ID;
+		return SearchEngineHelper.SYSTEM_ENGINE_ID;
 	}
 
 	@Override

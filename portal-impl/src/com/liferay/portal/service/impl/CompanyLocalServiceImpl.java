@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
@@ -281,7 +281,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			_companyProviderWrapper.setCompanyProvider(
 				new CustomCompanyProvider(companyId));
 
-			SearchEngineUtil.initialize(companyId);
+			SearchEngineHelperUtil.initialize(companyId);
 
 			// Key
 
@@ -745,7 +745,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			searchContext.setCompanyId(companyId);
 			searchContext.setEnd(end);
 			searchContext.setEntryClassNames(
-				SearchEngineUtil.getEntryClassNames());
+				SearchEngineHelperUtil.getEntryClassNames());
 
 			if (groupId > 0) {
 				searchContext.setGroupIds(new long[] {groupId});

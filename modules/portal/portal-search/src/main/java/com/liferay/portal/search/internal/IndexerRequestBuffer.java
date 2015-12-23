@@ -16,7 +16,7 @@ package com.liferay.portal.search.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
@@ -140,7 +140,7 @@ public class IndexerRequestBuffer {
 	protected void commit(Set<String> searchEngineIds) {
 		for (String searchEngineId : searchEngineIds) {
 			try {
-				SearchEngineUtil.commit(searchEngineId);
+				IndexWriterHelperUtil.commit(searchEngineId);
 			}
 			catch (SearchException e) {
 				if (_log.isWarnEnabled()) {

@@ -1,0 +1,16 @@
+Started by remote host 10.0.16.208
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-3/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1792/test-portal-acceptance-pullrequest-batch(master)/plugins-compile/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-3
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-16-178 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering 0,!master
+0,!master completed with result SUCCESS
+Finished: SUCCESS

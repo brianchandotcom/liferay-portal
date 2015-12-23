@@ -42,7 +42,11 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		String expectedMessage = read(expectedMessageFile);
 
+		expectedMessage = expectedMessage.replace(" \n", "\n");
+
 		String actualMessage = getMessage(toURLString(caseDir));
+
+		actualMessage = actualMessage.replace(" \n", "\n");
 
 		boolean value = expectedMessage.equals(actualMessage);
 
@@ -145,7 +149,19 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			xml = xml.replace(_XML_REPLACEMENTS[i][0], _XML_REPLACEMENTS[i][1]);
 		}
 
-		Document document = saxReader.read(new StringReader(xml));
+		Document document = null;
+
+		try {
+			document = saxReader.read(new StringReader(xml));
+		}
+		catch (DocumentException de) {
+			DocumentException newDE = new DocumentException(
+				de.getMessage() + "\n" + xml);
+
+			newDE.setStackTrace(de.getStackTrace());
+
+			throw newDE;
+		}
 
 		String formattedXML = JenkinsResultsParserUtil.format(
 			document.getRootElement());

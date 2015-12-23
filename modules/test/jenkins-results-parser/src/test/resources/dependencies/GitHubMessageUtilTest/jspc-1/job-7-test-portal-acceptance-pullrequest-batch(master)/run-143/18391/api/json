@@ -1,0 +1,96 @@
+{
+  "actions" : [
+    {
+      "parameters" : [
+        {
+          "name" : "AXIS_VARIABLES",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_BRANCH_NAME",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+          "value" : ""
+        },
+        {
+          "name" : "JOB_VARIANT",
+          "value" : "functional-tomcat-mysql/5"
+        },
+        {
+          "name" : "TOP_LEVEL_SHARED_DIR",
+          "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-4/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1799"
+        }
+      ]
+    },
+    {
+      
+    },
+    {
+      "causes" : [
+        {
+          "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 18,391",
+          "upstreamBuild" : 18391,
+          "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+          "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+        }
+      ]
+    },
+    null,
+    {
+      
+    },
+    {
+      
+    },
+    {
+      "failCount" : 0,
+      "skipCount" : 0,
+      "totalCount" : 1,
+      "urlName" : "testReport"
+    },
+    {
+      
+    },
+    {
+      
+    },
+    {
+      
+    }
+  ],
+  "artifacts" : [
+    
+  ],
+  "building" : false,
+  "description" : "<strong>brianchandotcom</strong> - <a href=\"https://github.com/brianchandotcom/liferay-portal/pull/33389\">PR#33389</a> - <a href=\"https://test-1-4.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1799/jenkins-report.html\">Jenkins Report</a> - <a href=\"https://test-1-4.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest%28master%29/builds/1799/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGWebcontentdisplay%23RemoveWCDPortletSite,label_exp=!master/functional-tomcat-mysql/5/index.html\">Poshi Report</a> - <a href=\"https://test-1-4.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest%28master%29/builds/1799/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGWebcontentdisplay%23RemoveWCDPortletSite,label_exp=!master/functional-tomcat-mysql/5/summary.html\">Poshi Summary</a>",
+  "duration" : 1521309,
+  "estimatedDuration" : 1446061,
+  "executor" : null,
+  "fullDisplayName" : "test-portal-acceptance-pullrequest-batch(master) » PGWebcontentdisplay#RemoveWCDPortletSite,!master #18391",
+  "id" : "2015-12-15_10-53-24",
+  "keepLog" : false,
+  "number" : 18391,
+  "result" : "SUCCESS",
+  "timestamp" : 1450205604000,
+  "url" : "https://test-1-4.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PGWebcontentdisplay%23RemoveWCDPortletSite,label_exp=!master/18391/",
+  "builtOn" : "cloud-10-0-12-47",
+  "changeSet" : {
+    "items" : [
+      
+    ],
+    "kind" : null
+  },
+  "culprits" : [
+    
+  ]
+}

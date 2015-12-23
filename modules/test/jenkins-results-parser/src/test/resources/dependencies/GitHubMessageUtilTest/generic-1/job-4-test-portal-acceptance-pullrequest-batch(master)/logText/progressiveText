@@ -1,0 +1,62 @@
+Started by remote host 10.0.16.208
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-3/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1792/test-portal-acceptance-pullrequest-batch(master)/functional-tomcat-mysql/2/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-3
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-16-178 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering CPSitememberships#DeleteSiteTeam,!master
+Triggering CPSitepages#AddSitePublicChildPage,!master
+Triggering CPSitememberships#AddSiteTeam,!master
+Triggering CPSites#SearchSite,!master
+Triggering CPSites#AddChildSite,!master
+Triggering CPTags#EditTag,!master
+Triggering CPSitetemplates#DeleteSiteTemplate,!master
+Triggering CPSites#EditSite,!master
+Triggering CPUsergroups#AddUserGroup,!master
+Triggering CPTags#SearchTag,!master
+Triggering CPTags#AddTag,!master
+Triggering CPSitetemplates#AddSiteTemplate,!master
+Triggering CPUsergroups#DeleteUserGroup,!master
+Triggering CPSitememberships#EditSiteTeam,!master
+Triggering CPSitememberships#AssignMembersSiteTeamUser,!master
+Triggering CPSitememberships#AddSiteTeams,!master
+Triggering CPSitememberships#RemoveMember,!master
+Triggering CPSitepages#EditSitePage,!master
+Triggering CPSitepages#AddSitePublicPage,!master
+Triggering CPSites#DeleteSite,!master
+Triggering CPUsergroups#AddMember,!master
+Triggering CPSitetemplates#EditSiteTemplateStatus,!master
+Triggering CPSites#AddSite,!master
+Triggering CPSitepages#DeleteSitePages,!master
+CPSitememberships#DeleteSiteTeam,!master completed with result SUCCESS
+CPSitepages#AddSitePublicChildPage,!master completed with result SUCCESS
+CPSitememberships#AddSiteTeam,!master completed with result SUCCESS
+CPSites#SearchSite,!master completed with result SUCCESS
+CPSites#AddChildSite,!master completed with result SUCCESS
+CPTags#EditTag,!master completed with result SUCCESS
+CPSitetemplates#DeleteSiteTemplate,!master completed with result SUCCESS
+CPSites#EditSite,!master completed with result SUCCESS
+CPUsergroups#AddUserGroup,!master completed with result SUCCESS
+CPTags#SearchTag,!master completed with result SUCCESS
+CPTags#AddTag,!master completed with result SUCCESS
+CPSitetemplates#AddSiteTemplate,!master completed with result SUCCESS
+CPUsergroups#DeleteUserGroup,!master completed with result SUCCESS
+CPSitememberships#EditSiteTeam,!master completed with result SUCCESS
+CPSitememberships#AssignMembersSiteTeamUser,!master completed with result SUCCESS
+CPSitememberships#AddSiteTeams,!master completed with result SUCCESS
+CPSitememberships#RemoveMember,!master completed with result SUCCESS
+CPSitepages#EditSitePage,!master completed with result SUCCESS
+CPSitepages#AddSitePublicPage,!master completed with result SUCCESS
+CPSites#DeleteSite,!master completed with result SUCCESS
+CPUsergroups#AddMember,!master completed with result SUCCESS
+CPSitetemplates#EditSiteTemplateStatus,!master completed with result SUCCESS
+CPSites#AddSite,!master completed with result SUCCESS
+CPSitepages#DeleteSitePages,!master completed with result SUCCESS
+Finished: SUCCESS

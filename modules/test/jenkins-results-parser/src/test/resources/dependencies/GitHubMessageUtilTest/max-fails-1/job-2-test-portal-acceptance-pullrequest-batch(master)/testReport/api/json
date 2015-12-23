@@ -1,0 +1,776 @@
+{
+  "failCount" : 24,
+  "skipCount" : 0,
+  "totalCount" : 24,
+  "urlName" : "testReport",
+  "childReports" : [
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCustomfields%23AddCustomFieldUserBoolean,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPCustomfields#AddCustomFieldUserBoolean,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23MoveToRecycleBinFolder,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPBookmarks#MoveToRecycleBinFolder,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase%23ADTTagsNavigationPortlet,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase#ADTTagsNavigationPortlet,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23AddBookmarks,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPBookmarks#AddBookmarks,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23EditCategory,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPCategories#EditCategory,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23AddCategory,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPCategories#AddCategory,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23DeleteSubcategoryViaMenu,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPCategories#DeleteSubcategoryViaMenu,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23AddSubcategory,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPCategories#AddSubcategory,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23AddBookmark,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPBookmarks#AddBookmark,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23EditSubcategory,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPCategories#EditSubcategory,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase%23ADTCategoriesNavigation,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase#ADTCategoriesNavigation,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase%23AddRSSADTViaPortletConfiguration,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase#AddRSSADTViaPortletConfiguration,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23AddNullFolder,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPBookmarks#AddNullFolder,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23AddVocabulary,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPCategories#AddVocabulary,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=Breadcrumb%23DisableShowCurrentSite,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=Breadcrumb#DisableShowCurrentSite,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23AddFolder,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPBookmarks#AddFolder,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=Breadcrumb%23DisableShowPage,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=Breadcrumb#DisableShowPage,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase%23ADTBreadcrumb,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=ApplicationdisplaytemplatesUsecase#ADTBreadcrumb,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23DeleteVocabulary,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPCategories#DeleteVocabulary,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23DeleteBookmark,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPBookmarks#DeleteBookmark,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23EditBookmark,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPBookmarks#EditBookmark,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23EditVocabulary,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPCategories#EditVocabulary,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=BlogsUsecase%23DeleteBlogsEntry,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=BlogsUsecase#DeleteBlogsEntry,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    },
+    {
+      "child" : {
+        "number" : 9890,
+        "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBookmarks%23EditFolder,label_exp=!master/9890/"
+      },
+      "result" : {
+        "duration" : 0.0,
+        "empty" : false,
+        "failCount" : 1,
+        "passCount" : 0,
+        "skipCount" : 0,
+        "suites" : [
+          {
+            "cases" : [
+              {
+                "age" : 9,
+                "className" : "com.liferay.jenkins.Jenkins",
+                "duration" : 0.0,
+                "failedSince" : 9882,
+                "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPBookmarks#EditFolder,label_exp=!master_functional-tomcat-mysql/0",
+                "skipped" : false,
+                "status" : "FAILED"
+              }
+            ],
+            "duration" : 0.0,
+            "id" : null,
+            "name" : "com.liferay.jenkins.Jenkins",
+            "timestamp" : null
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "actions" : [
+    {
+      "parameters" : [
+        {
+          "name" : "JENKINS_GITHUB_BRANCH_NAME",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+          "value" : ""
+        },
+        {
+          "name" : "JOB_VARIANT",
+          "value" : ""
+        },
+        {
+          "name" : "TOP_LEVEL_SHARED_DIR",
+          "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-4/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1799"
+        }
+      ]
+    },
+    {
+      "causes" : [
+        {
+          "shortDescription" : "Started by remote host 10.0.12.68"
+        }
+      ]
+    },
+    null,
+    {
+      
+    },
+    {
+      
+    },
+    {
+      
+    },
+    {
+      
+    }
+  ],
+  "artifacts" : [
+    
+  ],
+  "building" : false,
+  "description" : "<strong>brianchandotcom</strong> - <a href=\"https://github.com/brianchandotcom/liferay-portal/pull/33389\">PR#33389</a> - <a href=\"https://test-1-4.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1799/jenkins-report.html\">Jenkins Report</a>",
+  "duration" : 91011,
+  "estimatedDuration" : 63533,
+  "executor" : null,
+  "fullDisplayName" : "test-portal-acceptance-pullrequest-source(master) #1769",
+  "id" : "2015-12-15_10-47-47",
+  "keepLog" : false,
+  "number" : 1769,
+  "result" : "SUCCESS",
+  "timestamp" : 1450205267000,
+  "url" : "https://test-1-7.liferay.com/job/test-portal-acceptance-pullrequest-source%28master%29/1769/",
+  "builtOn" : "cloud-10-0-17-162",
+  "changeSet" : {
+    "items" : [
+      
+    ],
+    "kind" : null
+  },
+  "culprits" : [
+    
+  ]
+}

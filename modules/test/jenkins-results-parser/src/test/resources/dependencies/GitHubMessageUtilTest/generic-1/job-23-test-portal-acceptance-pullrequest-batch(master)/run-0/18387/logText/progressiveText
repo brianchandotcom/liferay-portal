@@ -1,0 +1,1245 @@
+Started by upstream project "test-portal-acceptance-pullrequest-batch(master)" build number 18387
+originally caused by:
+ Started by remote host 10.0.16.208
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-3/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1792/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/ruby-sass-compiler/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-2
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-16-96 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+[liferay-jenkins-ee] $ /bin/bash /tmp/hudson8826788896891201689.sh
+Update the workspace repository for build steps.
+No rebase in progress?
+Switched to branch 'master-temp-905018093'
+Switched to branch 'master'
+Deleted branch master-temp-905018093 (was 8f675d0).
+HEAD is now at 8f675d0 LRQA-20349 Regen
+Rebase the workspace repository if needed for build steps.
+Exit shell.
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson1364277490265203395.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-batch.sh start-current-job'
+Execute: test-portal-acceptance-pullrequest-batch.sh start-current-job
++ commands/build-test-portal-acceptance-pullrequest-batch.sh start-current-job
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-batch.xml start-current-job
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-batch.xml
+
+start-current-job:
+
+BUILD SUCCESSFUL
+Total time: 2 seconds
++ echo 'Exit shell.'
+Exit shell.
+[EnvInject] - Injecting environment variables from a build step.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-3/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1792/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/ruby-sass-compiler/start.properties'
+[EnvInject] - Variables injected successfully.
+[description-setter] Description set: <strong>brianchandotcom</strong> - <a href="https://github.com/brianchandotcom/liferay-portal/pull/33341">PR#33341</a> - <a href="https://test-1-3.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1792/jenkins-report.html">Jenkins Report</a>
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson5801183463843311895.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-batch.sh'
+Execute: test-portal-acceptance-pullrequest-batch.sh
++ commands/build-test-portal-acceptance-pullrequest-batch.sh
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-batch.xml 
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-batch.xml
+
+run-current-job:
+
+clean-up-browser-processes:
+     [exec] Killing chrome
+     [exec] Killing firefox
+     [exec] chrome: no process killed
+     [exec] firefox: no process killed
+     [exec] Result: 1
+   [delete] Deleting: /opt/dev/projects/github/liferay-jenkins-ee/clean_up_browser_processes.sh
+
+clean-up-java-processes:
+   [delete] Deleting: /opt/dev/projects/github/liferay-jenkins-ee/clean_up_java_processes.sh
+
+prepare-plugins-repository:
+     [copy] Copying 1 file to /opt/dev/projects/github/liferay-portal
+
+reset-plugins-repository:
+     [exec] HEAD is now at 1114af8 Revert "LPS-51081 Create ext"
+     [exec] fatal: Couldn't find remote ref master-temp-20151215133309767
+     [exec] fatal: Couldn't find remote ref master-temp-20151215133309767
+     [exec] Switched to a new branch 'temp-20151215134231176'
+     [exec] Switched to a new branch 'temp-20151215134231176'
+     [exec] From github.com:liferay/liferay-plugins
+     [exec]    1114af8..525275c  master     -> master
+     [exec] From github.com:liferay/liferay-plugins
+     [exec]    1114af8..525275c  master     -> master
+     [exec] Deleted branch temp-20151215134231176 (was 1114af8).
+     [exec] Switched to branch 'master'
+     [exec] Switched to branch 'master'
+     [exec] commit 1114af8054499476008a7c6494192296ec99d1d3
+     [exec] Author: Andrea Di Giorgi <andrea.digiorgi@liferay.com>
+     [exec] Date:   Fri Dec 11 16:53:12 2015 -0800
+     [exec] 
+     [exec]     Revert "LPS-51081 Create ext"
+     [exec]     
+     [exec]     This reverts commit 7471446d0c4448de682cac4a4dc9aa926bd8cb31.
+
+set-plugins-build-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-plugins/build.cloud-10-0-16-96.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] liferay.home=/opt/dev/projects/github/liferay-portal/bundles
+
+prepare-portal-repository:
+
+reset-portal-repository:
+     [exec] HEAD is now at bbe376f LPS-61295 Refactor naming and remove some non-required code
+     [exec] From github.com:brianchandotcom/liferay-portal
+     [exec]  * branch            master-temp-20151215133309767 -> FETCH_HEAD
+     [exec] From github.com:brianchandotcom/liferay-portal
+     [exec]  * branch            master-temp-20151215133309767 -> FETCH_HEAD
+     [exec] Switched to a new branch 'temp-20151215134237054'
+     [exec] Switched to a new branch 'temp-20151215134237054'
+     [exec] From github.com:liferay/liferay-portal
+     [exec]  + bbe376f...465ecb3 master     -> master  (forced update)
+     [exec] From github.com:liferay/liferay-portal
+     [exec]  + bbe376f...465ecb3 master     -> master  (forced update)
+     [exec] Deleted branch temp-20151215134237054 (was bbe376f).
+     [exec] Switched to branch 'master'
+     [exec] Switched to branch 'master'
+     [exec] commit b235ba718bbba3b3fa85b954be61b38a95abd582
+     [exec] Author: Peter Yoo <peter.yoo@liferay.com>
+     [exec] Date:   Mon Dec 14 14:46:21 2015 -0800
+     [exec] 
+     [exec]     LRQA-18547 SF
+
+set-portal-app-server-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/app.server.cloud-10-0-16-96.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] app.server.parent.dir=/opt/dev/projects/github/liferay-portal/bundles
+     [echo] app.server.type=tomcat
+
+set-portal-build-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/build.cloud-10-0-16-96.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] jsp.precompile=on
+     [echo] liferay.home=/opt/dev/projects/github/liferay-portal/bundles
+     [echo] shell.executable=/bin/bash
+
+set-portal-impl-portal-test-ext-properties:
+Trying to override old definition of task antlib:ise.antelope.tasks:antcallback
+Trying to override old definition of task antlib:ise.antelope.tasks:antfetch
+Trying to override old definition of task antlib:ise.antelope.tasks:assert
+Trying to override old definition of task antlib:ise.antelope.tasks:bool
+Trying to override old definition of task antlib:ise.antelope.tasks:break
+Trying to override old definition of task antlib:ise.antelope.tasks:call
+Trying to override old definition of task antlib:ise.antelope.tasks:case
+Trying to override old definition of task antlib:ise.antelope.tasks:catch
+Trying to override old definition of task antlib:ise.antelope.tasks:default
+Trying to override old definition of task antlib:ise.antelope.tasks:else
+Trying to override old definition of task antlib:ise.antelope.tasks:fileutil
+Trying to override old definition of task antlib:ise.antelope.tasks:finally
+Trying to override old definition of task antlib:ise.antelope.tasks:find
+Trying to override old definition of task antlib:ise.antelope.tasks:foreach
+Trying to override old definition of task antlib:ise.antelope.tasks:grep
+Trying to override old definition of task antlib:ise.antelope.tasks:hostname
+Trying to override old definition of task antlib:ise.antelope.tasks:if
+Trying to override old definition of task antlib:ise.antelope.tasks:limit
+Trying to override old definition of task antlib:ise.antelope.tasks:math
+Trying to override old definition of task antlib:ise.antelope.tasks:new
+Trying to override old definition of task antlib:ise.antelope.tasks:pw
+Trying to override old definition of task antlib:ise.antelope.tasks:post
+Trying to override old definition of task antlib:ise.antelope.tasks:readlog
+Trying to override old definition of task antlib:ise.antelope.tasks:repeat
+Trying to override old definition of task antlib:ise.antelope.tasks:split
+Trying to override old definition of task antlib:ise.antelope.tasks:stopwatch
+Trying to override old definition of task antlib:ise.antelope.tasks:suite
+Trying to override old definition of task antlib:ise.antelope.tasks:stringutil
+Trying to override old definition of task antlib:ise.antelope.tasks:switch
+Trying to override old definition of task antlib:ise.antelope.tasks:testcase
+Trying to override old definition of task antlib:ise.antelope.tasks:try
+Trying to override old definition of task antlib:ise.antelope.tasks:uid
+Trying to override old definition of task antlib:ise.antelope.tasks:unset
+Trying to override old definition of task antlib:ise.antelope.tasks:until
+Trying to override old definition of task antlib:ise.antelope.tasks:var
+Trying to override old definition of task antlib:ise.antelope.tasks:xmlprop
+Trying to override old definition of datatype antlib:ise.antelope.tasks:prop
+Trying to override old definition of datatype antlib:ise.antelope.tasks:contains
+Trying to override old definition of datatype antlib:ise.antelope.tasks:datedifference
+Trying to override old definition of datatype antlib:ise.antelope.tasks:timedifference
+Trying to override old definition of datatype antlib:ise.antelope.tasks:datebefore
+Trying to override old definition of datatype antlib:ise.antelope.tasks:timebefore
+Trying to override old definition of datatype antlib:ise.antelope.tasks:islessthan
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isgreaterthan
+Trying to override old definition of datatype antlib:ise.antelope.tasks:mathequals
+Trying to override old definition of datatype antlib:ise.antelope.tasks:endswith
+Trying to override old definition of datatype antlib:ise.antelope.tasks:startswith
+Trying to override old definition of datatype antlib:ise.antelope.tasks:and
+Trying to override old definition of datatype antlib:ise.antelope.tasks:or
+Trying to override old definition of datatype antlib:ise.antelope.tasks:not
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lowercase
+Trying to override old definition of datatype antlib:ise.antelope.tasks:uppercase
+Trying to override old definition of datatype antlib:ise.antelope.tasks:trim
+Trying to override old definition of datatype antlib:ise.antelope.tasks:substring
+Trying to override old definition of datatype antlib:ise.antelope.tasks:replace
+Trying to override old definition of datatype antlib:ise.antelope.tasks:indexof
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lastindexof
+Trying to override old definition of datatype antlib:ise.antelope.tasks:length
+Trying to override old definition of datatype antlib:ise.antelope.tasks:messagebox
+Trying to override old definition of datatype antlib:ise.antelope.tasks:sort
+Trying to override old definition of datatype antlib:ise.antelope.tasks:canread
+Trying to override old definition of datatype antlib:ise.antelope.tasks:canwrite
+Trying to override old definition of datatype antlib:ise.antelope.tasks:filecount
+Trying to override old definition of datatype antlib:ise.antelope.tasks:filelength
+Trying to override old definition of datatype antlib:ise.antelope.tasks:linecount
+Trying to override old definition of datatype antlib:ise.antelope.tasks:listfiles
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isdirectory
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isfile
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lastmodified
+Trying to override old definition of task propertycopy
+Trying to override old definition of task shellscript
+Trying to override old definition of task pathtofileset
+Trying to override old definition of task runtarget
+Trying to override old definition of task remoteant
+Trying to override old definition of task propertyregex
+Trying to override old definition of task assert
+Trying to override old definition of task math
+Trying to override old definition of task trycatch
+Trying to override old definition of task antserver
+Trying to override old definition of task antcallback
+Trying to override old definition of task compilewithwalls
+Trying to override old definition of task outofdate
+Trying to override old definition of task osfamily
+Trying to override old definition of task stopwatch
+Trying to override old definition of task throw
+Trying to override old definition of task antclipse
+Trying to override old definition of task urlencode
+Trying to override old definition of task timestampselector
+Trying to override old definition of task foreach
+Trying to override old definition of task if
+Trying to override old definition of task propertyselector
+Trying to override old definition of task sortlist
+Trying to override old definition of task antfetch
+Trying to override old definition of task post
+Trying to override old definition of task forget
+Trying to override old definition of task limit
+Trying to override old definition of task switch
+Trying to override old definition of task relentless
+Trying to override old definition of task var
+Trying to override old definition of task inifile
+Trying to override old definition of task verifydesign
+Trying to override old definition of task for
+Trying to override old definition of datatype httpState
+Trying to override old definition of datatype httpClient
+Trying to override old definition of task getCookie
+Trying to override old definition of task addCookie
+Trying to override old definition of task clearCookies
+Trying to override old definition of task addCredentials
+Trying to override old definition of task clearCredentials
+Trying to override old definition of task purgeExpiredCookies
+Trying to override old definition of task postMethod
+Trying to override old definition of task getMethod
+Trying to override old definition of task headMethod
+Trying to override old definition of task importurl
+Trying to override old definition of task beanshell
+
+set-portal-impl-portal-test-ext-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/portal-impl/test/portal-test-ext.properties
+     [echo] ##
+     [echo] 
+     [echo] liferay.home=/opt/dev/projects/github/liferay-portal/bundles
+     [echo] 
+     [echo] jdbc.default.driverClassName=com.mysql.jdbc.Driver
+     [echo] jdbc.default.url=jdbc:mysql://localhost/lportal?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&useFastDateParsing=false&useUnicode=true
+     [echo] jdbc.default.username=root
+     [echo] jdbc.default.password=
+     [echo] 
+     [echo] jdbc.default.maximumPoolSize=20
+     [echo] jdbc.default.minimumIdle=0
+     [echo] 
+     [echo] jdbc.counter.maximumPoolSize=5
+     [echo] jdbc.counter.minimumIdle=0
+     [echo] 
+     [echo] counter.jdbc.prefix=jdbc.counter.
+     [echo] module.framework.base.dir=/opt/dev/projects/github/liferay-portal/bundles/osgi
+
+set-portal-release-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/release.cloud-10-0-16-96.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] lp.plugins.dir=/opt/dev/projects/github/liferay-plugins
+
+set-portal-sql-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/sql/sql.cloud-10-0-16-96.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] db2.executable=db2
+     [echo] mysql.arg.line=-u root
+     [echo] oracle.admin.password=liferay123
+     [echo] sybase.executable=/opt/sybase/OCS-16_0/bin/isql
+
+set-portal-test-properties:
+     [echo] 
+     [echo] ##
+     [echo] ## /opt/dev/projects/github/liferay-portal/test.cloud-10-0-16-96.lax.liferay.com.properties
+     [echo] ##
+     [echo] 
+     [echo] 
+     [echo] 			
+     [echo] 				database.db2.password=I7Oen70215bieRR
+     [echo] database.postgresql.password=liferay123
+     [echo] database.sybase.password=liferay123
+     [echo] test.build.unit=true
+     [echo] test.jdbc.drivers.url=http://files.liferay.com/private/jdbc
+     [echo] 			
+     [echo] 		
+Trying to override old definition of task antlib:ise.antelope.tasks:antcallback
+Trying to override old definition of task antlib:ise.antelope.tasks:antfetch
+Trying to override old definition of task antlib:ise.antelope.tasks:assert
+Trying to override old definition of task antlib:ise.antelope.tasks:bool
+Trying to override old definition of task antlib:ise.antelope.tasks:break
+Trying to override old definition of task antlib:ise.antelope.tasks:call
+Trying to override old definition of task antlib:ise.antelope.tasks:case
+Trying to override old definition of task antlib:ise.antelope.tasks:catch
+Trying to override old definition of task antlib:ise.antelope.tasks:default
+Trying to override old definition of task antlib:ise.antelope.tasks:else
+Trying to override old definition of task antlib:ise.antelope.tasks:fileutil
+Trying to override old definition of task antlib:ise.antelope.tasks:finally
+Trying to override old definition of task antlib:ise.antelope.tasks:find
+Trying to override old definition of task antlib:ise.antelope.tasks:foreach
+Trying to override old definition of task antlib:ise.antelope.tasks:grep
+Trying to override old definition of task antlib:ise.antelope.tasks:hostname
+Trying to override old definition of task antlib:ise.antelope.tasks:if
+Trying to override old definition of task antlib:ise.antelope.tasks:limit
+Trying to override old definition of task antlib:ise.antelope.tasks:math
+Trying to override old definition of task antlib:ise.antelope.tasks:new
+Trying to override old definition of task antlib:ise.antelope.tasks:pw
+Trying to override old definition of task antlib:ise.antelope.tasks:post
+Trying to override old definition of task antlib:ise.antelope.tasks:readlog
+Trying to override old definition of task antlib:ise.antelope.tasks:repeat
+Trying to override old definition of task antlib:ise.antelope.tasks:split
+Trying to override old definition of task antlib:ise.antelope.tasks:stopwatch
+Trying to override old definition of task antlib:ise.antelope.tasks:suite
+Trying to override old definition of task antlib:ise.antelope.tasks:stringutil
+Trying to override old definition of task antlib:ise.antelope.tasks:switch
+Trying to override old definition of task antlib:ise.antelope.tasks:testcase
+Trying to override old definition of task antlib:ise.antelope.tasks:try
+Trying to override old definition of task antlib:ise.antelope.tasks:uid
+Trying to override old definition of task antlib:ise.antelope.tasks:unset
+Trying to override old definition of task antlib:ise.antelope.tasks:until
+Trying to override old definition of task antlib:ise.antelope.tasks:var
+Trying to override old definition of task antlib:ise.antelope.tasks:xmlprop
+Trying to override old definition of datatype antlib:ise.antelope.tasks:prop
+Trying to override old definition of datatype antlib:ise.antelope.tasks:contains
+Trying to override old definition of datatype antlib:ise.antelope.tasks:datedifference
+Trying to override old definition of datatype antlib:ise.antelope.tasks:timedifference
+Trying to override old definition of datatype antlib:ise.antelope.tasks:datebefore
+Trying to override old definition of datatype antlib:ise.antelope.tasks:timebefore
+Trying to override old definition of datatype antlib:ise.antelope.tasks:islessthan
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isgreaterthan
+Trying to override old definition of datatype antlib:ise.antelope.tasks:mathequals
+Trying to override old definition of datatype antlib:ise.antelope.tasks:endswith
+Trying to override old definition of datatype antlib:ise.antelope.tasks:startswith
+Trying to override old definition of datatype antlib:ise.antelope.tasks:and
+Trying to override old definition of datatype antlib:ise.antelope.tasks:or
+Trying to override old definition of datatype antlib:ise.antelope.tasks:not
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lowercase
+Trying to override old definition of datatype antlib:ise.antelope.tasks:uppercase
+Trying to override old definition of datatype antlib:ise.antelope.tasks:trim
+Trying to override old definition of datatype antlib:ise.antelope.tasks:substring
+Trying to override old definition of datatype antlib:ise.antelope.tasks:replace
+Trying to override old definition of datatype antlib:ise.antelope.tasks:indexof
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lastindexof
+Trying to override old definition of datatype antlib:ise.antelope.tasks:length
+Trying to override old definition of datatype antlib:ise.antelope.tasks:messagebox
+Trying to override old definition of datatype antlib:ise.antelope.tasks:sort
+Trying to override old definition of datatype antlib:ise.antelope.tasks:canread
+Trying to override old definition of datatype antlib:ise.antelope.tasks:canwrite
+Trying to override old definition of datatype antlib:ise.antelope.tasks:filecount
+Trying to override old definition of datatype antlib:ise.antelope.tasks:filelength
+Trying to override old definition of datatype antlib:ise.antelope.tasks:linecount
+Trying to override old definition of datatype antlib:ise.antelope.tasks:listfiles
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isdirectory
+Trying to override old definition of datatype antlib:ise.antelope.tasks:isfile
+Trying to override old definition of datatype antlib:ise.antelope.tasks:lastmodified
+Trying to override old definition of task propertycopy
+Trying to override old definition of task shellscript
+Trying to override old definition of task pathtofileset
+Trying to override old definition of task runtarget
+Trying to override old definition of task remoteant
+Trying to override old definition of task propertyregex
+Trying to override old definition of task assert
+Trying to override old definition of task math
+Trying to override old definition of task trycatch
+Trying to override old definition of task antserver
+Trying to override old definition of task antcallback
+Trying to override old definition of task compilewithwalls
+Trying to override old definition of task outofdate
+Trying to override old definition of task osfamily
+Trying to override old definition of task stopwatch
+Trying to override old definition of task throw
+Trying to override old definition of task antclipse
+Trying to override old definition of task urlencode
+Trying to override old definition of task timestampselector
+Trying to override old definition of task foreach
+Trying to override old definition of task if
+Trying to override old definition of task propertyselector
+Trying to override old definition of task sortlist
+Trying to override old definition of task antfetch
+Trying to override old definition of task post
+Trying to override old definition of task forget
+Trying to override old definition of task limit
+Trying to override old definition of task switch
+Trying to override old definition of task relentless
+Trying to override old definition of task var
+Trying to override old definition of task inifile
+Trying to override old definition of task verifydesign
+Trying to override old definition of task for
+Trying to override old definition of datatype httpState
+Trying to override old definition of datatype httpClient
+Trying to override old definition of task getCookie
+Trying to override old definition of task addCookie
+Trying to override old definition of task clearCookies
+Trying to override old definition of task addCredentials
+Trying to override old definition of task clearCredentials
+Trying to override old definition of task purgeExpiredCookies
+Trying to override old definition of task postMethod
+Trying to override old definition of task getMethod
+Trying to override old definition of task headMethod
+Trying to override old definition of task importurl
+Trying to override old definition of task beanshell
+
+ruby-sass-compiler:
+
+clean-up-java-processes:
+   [delete] Deleting: /opt/dev/projects/github/liferay-portal/clean_up_java_processes.sh
+
+setup-sdk:
+    [unzip] Expanding: /opt/dev/projects/github/liferay-portal/tools/liferay-plugins-sdk-7.0.0.zip into /opt/dev/projects/github/liferay-portal/tools
+     [copy] Copying 1 file to /opt/dev/projects/github/liferay-portal/tools/sdk
+     [copy] Copying 1 file to /opt/dev/projects/github/liferay-portal/tools/sdk
+     [exec] Downloading file:/opt/dev/projects/github/liferay-portal/gradle/wrapper/../../tools/gradle-2.8.LIFERAY-PATCHED-2-bin.zip
+     [exec] ..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+     [exec] Unzipping /opt/dev/projects/github/liferay-portal/.gradle/wrapper/dists/gradle-2.8.LIFERAY-PATCHED-2-bin/bvlrrapnk42bbbdf7hezg57wk/gradle-2.8.LIFERAY-PATCHED-2-bin.zip to /opt/dev/projects/github/liferay-portal/.gradle/wrapper/dists/gradle-2.8.LIFERAY-PATCHED-2-bin/bvlrrapnk42bbbdf7hezg57wk
+     [exec] Set executable permissions for: /opt/dev/projects/github/liferay-portal/.gradle/wrapper/dists/gradle-2.8.LIFERAY-PATCHED-2-bin/bvlrrapnk42bbbdf7hezg57wk/gradle-2.8/bin/gradle
+     [exec] Using proxy squid.lax.liferay.com:3128.
+     [exec] Forced cache is enabled.
+     [exec] :setUpPortalToolsCssBuilder
+     [exec] Download http://repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.rtl.css/1.0.2/com.liferay.rtl.css-1.0.2.pom
+     [exec] Download http://repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.rtl.css/1.0.2/com.liferay.rtl.css-1.0.2.jar
+     [exec] :setUpPortalToolsJasperJspc
+     [exec] :setUpPortalToolsJavadocFormatter
+     [exec] :setUpPortalToolsLangBuilder
+     [exec] POM relocation to an other version number is not fully supported in Gradle : xml-apis#xml-apis;2.0.2 relocated to xml-apis#xml-apis;1.0.b2.
+     [exec] :setUpPortalToolsPortalToolsServiceBuilder
+     [exec] Please update your dependency to directly use the correct version 'xml-apis#xml-apis;1.0.b2'.
+     [exec] Resolution will only pick dependencies of the relocated element.  Artifacts and other metadata will be ignored.
+     [exec] :setUpPortalToolsPortalToolsUpgradeTableBuilder
+     [exec] :setUpPortalToolsPortalToolsWsddBuilder
+     [exec] :setUpPortalToolsSonar
+     [exec] :setUpPortalToolsSourceFormatter
+     [exec] :setUpPortalToolsTldFormatter
+     [exec] :setUpPortalToolsWhip
+     [exec] :setUpPortalTools
+     [exec] 
+     [exec] BUILD SUCCESSFUL
+     [exec] 
+     [exec] Total time: 13.803 secs
+     [exec] 
+     [exec] Using proxy squid.lax.liferay.com:3128.
+     [exec] Configuration on demand is an incubating feature.
+     [exec] Forced cache is enabled.
+     [exec] :core:jaxws-osgi-bridge:buildCSS UP-TO-DATE
+     [exec] :core:osgi-service-tracker-collections:buildCSS UP-TO-DATE
+     [exec] :core:portal-app-license-api:buildCSS UP-TO-DATE
+     [exec] :core:portal-app-license-resolver-hook:buildCSS UP-TO-DATE
+     [exec] :core:portal-app-license-test:buildCSS UP-TO-DATE
+     [exec] :core:portal-bootstrap:buildCSS UP-TO-DATE
+     [exec] :core:portal-equinox-log-bridge:buildCSS UP-TO-DATE
+     [exec] :core:portal-log4j-extender:buildCSS UP-TO-DATE
+     [exec] :core:portal-security-pacl:buildCSS UP-TO-DATE
+     [exec] :core:registry-api:buildCSS UP-TO-DATE
+     [exec] :core:registry-impl:buildCSS UP-TO-DATE
+     [exec] :core:registry-test:buildCSS UP-TO-DATE
+     [exec] :core:required-dependencies:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-common-css:buildBourbon
+     [exec] :frontend:frontend-common-css:buildCssCommon
+     [exec] :frontend:frontend-common-css:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] :frontend:frontend-js-web:buildAlloy
+     [exec] :frontend:frontend-css-web:buildAlloyTheme
+     [exec] :frontend:frontend-css-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] WARNING: The box-sizing mixin is deprecated and will be removed in the next major version release. This property can now be used un-prefixed.
+     [exec]          on line 410 of /opt/dev/projects/github/liferay-portal/modules/frontend/frontend-common-css/tmp/META-INF/resources/bourbon/_bourbon-deprecated-upcoming.scss, in `box-sizing'
+     [exec]          from line 36 of /opt/dev/projects/github/liferay-portal/modules/frontend/frontend-css-web/src/main/resources/META-INF/resources/portal/_simulation_device.scss
+     [exec]          from line 27 of /opt/dev/projects/github/liferay-portal/modules/frontend/frontend-css-web/src/main/resources/META-INF/resources/_portal.scss
+     [exec]          from line 1 of /opt/dev/projects/github/liferay-portal/modules/frontend/frontend-css-web/src/main/resources/META-INF/resources/tmp.scss
+     [exec] 
+     [exec] Parsed /META-INF/resources/main.scss in 15966ms
+     [exec] Parsed /META-INF/resources/portal/aui_deprecated.css in 2996ms
+     [exec] :frontend:frontend-js-metal-web:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-js-polyfill-babel-web:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-js-soyutils-web:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-js-web:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-taglib:buildCSS UP-TO-DATE
+     [exec] :portal-cache:portal-cache:buildCSS UP-TO-DATE
+     [exec] :portal-cache:portal-cache-ehcache:buildCSS UP-TO-DATE
+     [exec] :portal-cache:portal-cache-ehcache-cluster:buildCSS UP-TO-DATE
+     [exec] :portal-cache:portal-cache-ehcache-provider:buildCSS UP-TO-DATE
+     [exec] :portal-cache:portal-cache-memory:buildCSS UP-TO-DATE
+     [exec] :portal-cache:portal-cache-test:buildCSS UP-TO-DATE
+     [exec] :portal-security:portal-security-auth-verifier:buildCSS UP-TO-DATE
+     [exec] :portal-security:portal-security-auto-login:buildCSS UP-TO-DATE
+     [exec] :portal-security:portal-security-sso-cas:buildCSS UP-TO-DATE
+     [exec] :portal-security:portal-security-sso-facebook-connect:buildCSS UP-TO-DATE
+     [exec] :portal-security:portal-security-sso-ntlm:buildCSS UP-TO-DATE
+     [exec] :portal-security:portal-security-sso-openid:buildCSS UP-TO-DATE
+     [exec] :portal-security:portal-security-sso-opensso:buildCSS UP-TO-DATE
+     [exec] :portal-security:portal-security-sso-token:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-cmis:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-cmis-test:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-db:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-db-test:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-file-system:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-file-system-test:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-jcr:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-jcr-test:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-s3:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-s3-test:buildCSS UP-TO-DATE
+     [exec] :portal-store:portal-store-safe-file-name-wrapper:buildCSS UP-TO-DATE
+     [exec] :portal:portal-axis-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-background-task-api:buildCSS UP-TO-DATE
+     [exec] :portal:portal-background-task-service:buildCSS UP-TO-DATE
+     [exec] :portal:portal-background-task-test:buildCSS UP-TO-DATE
+     [exec] :portal:portal-cluster:buildCSS UP-TO-DATE
+     [exec] :portal:portal-cluster-single:buildCSS UP-TO-DATE
+     [exec] :portal:portal-compound-session-id:buildCSS UP-TO-DATE
+     [exec] :portal:portal-configuration-cluster:buildCSS UP-TO-DATE
+     [exec] :portal:portal-configuration-persistence:buildCSS UP-TO-DATE
+     [exec] :portal:portal-configuration-persistence-test:buildCSS UP-TO-DATE
+     [exec] :portal:portal-configurator-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-cxf-common:buildCSS UP-TO-DATE
+     [exec] :portal:portal-cxf-jaxrs-common:buildCSS UP-TO-DATE
+     [exec] :portal:portal-dependency-manager-tccl:buildCSS UP-TO-DATE
+     [exec] :portal:portal-executor:buildCSS UP-TO-DATE
+     [exec] :portal:portal-expression:buildCSS UP-TO-DATE
+     [exec] :portal:portal-http-service-api:buildCSS UP-TO-DATE
+     [exec] :portal:portal-http-tunnel-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-jmx:buildCSS UP-TO-DATE
+     [exec] :portal:portal-js-bundle-config-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-js-loader-modules-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-json-web-service-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-language-resource-bundle:buildCSS UP-TO-DATE
+     [exec] :portal:portal-language-servlet-filter:buildCSS UP-TO-DATE
+     [exec] :portal:portal-ldap:buildCSS UP-TO-DATE
+     [exec] :portal:portal-ldap-test:buildCSS UP-TO-DATE
+     [exec] :portal:portal-lock-api:buildCSS UP-TO-DATE
+     [exec] :portal:portal-lock-service:buildCSS UP-TO-DATE
+     [exec] :portal:portal-lock-test:buildCSS UP-TO-DATE
+     [exec] :portal:portal-messaging:buildCSS UP-TO-DATE
+     [exec] :portal:portal-mobile-device-recognition:buildCSS UP-TO-DATE
+     [exec] :portal:portal-module-configuration:buildCSS UP-TO-DATE
+     [exec] :portal:portal-monitoring:buildCSS UP-TO-DATE
+     [exec] :portal:portal-output-stream-container:buildCSS UP-TO-DATE
+     [exec] :portal:portal-parser-bbcode:buildCSS UP-TO-DATE
+     [exec] :portal:portal-pop-notifications:buildCSS UP-TO-DATE
+     [exec] :portal:portal-portlet-configuration-icon-locator:buildCSS UP-TO-DATE
+     [exec] :portal:portal-portlet-container-test:buildCSS UP-TO-DATE
+     [exec] :portal:portal-portlet-toolbar-contributor-locator:buildCSS UP-TO-DATE
+     [exec] :portal:portal-portlet-tracker:buildCSS UP-TO-DATE
+     [exec] :portal:portal-rest-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-rest-extender-test:buildCSS UP-TO-DATE
+     [exec] :portal:portal-rtl-servlet:buildCSS UP-TO-DATE
+     [exec] :portal:portal-scheduler:buildCSS UP-TO-DATE
+     [exec] :portal:portal-scheduler-quartz:buildCSS UP-TO-DATE
+     [exec] :portal:portal-scripting-api:buildCSS UP-TO-DATE
+     [exec] :portal:portal-scripting-beanshell:buildCSS UP-TO-DATE
+     [exec] :portal:portal-scripting-groovy:buildCSS UP-TO-DATE
+     [exec] :portal:portal-scripting-javascript:buildCSS UP-TO-DATE
+     [exec] :portal:portal-scripting-python:buildCSS UP-TO-DATE
+     [exec] :portal:portal-scripting-ruby:buildCSS UP-TO-DATE
+     [exec] :portal:portal-search:buildCSS UP-TO-DATE
+     [exec] :portal:portal-search-elasticsearch:buildCSS UP-TO-DATE
+     [exec] :portal:portal-search-solr:buildCSS UP-TO-DATE
+     [exec] :portal:portal-servlet-jsp-compiler:buildCSS UP-TO-DATE
+     [exec] :portal:portal-servlet-jstl:buildCSS UP-TO-DATE
+     [exec] :portal:portal-settings:buildCSS UP-TO-DATE
+     [exec] :portal:portal-soap-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-soap-extender-test:buildCSS UP-TO-DATE
+     [exec] :portal:portal-spring-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-taglib-aui-form-extension-sample:buildCSS UP-TO-DATE
+     [exec] :portal:portal-template-freemarker:buildCSS UP-TO-DATE
+     [exec] :portal:portal-template-soy:buildCSS UP-TO-DATE
+     [exec] :portal:portal-template-velocity:buildCSS UP-TO-DATE
+     [exec] :portal:portal-template-xsl:buildCSS UP-TO-DATE
+     [exec] :portal:portal-upgrade:buildCSS UP-TO-DATE
+     [exec] :portal:portal-verify-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-wab-extender:buildCSS UP-TO-DATE
+     [exec] :portal:portal-wab-generator:buildCSS UP-TO-DATE
+     [exec] :portal:portal-weblogic-support:buildCSS UP-TO-DATE
+     [exec] :portal:portal-workflow-kaleo-action-executor:buildCSS UP-TO-DATE
+     [exec] :portal:portal-workflow-kaleo-api:buildCSS UP-TO-DATE
+     [exec] :portal:portal-workflow-kaleo-service:buildCSS UP-TO-DATE
+     [exec] :portal:portal-workflow-kaleo-test:buildCSS UP-TO-DATE
+     [exec] :sdk:ant-arquillian:buildCSS UP-TO-DATE
+     [exec] :sdk:ant-beanshell:buildCSS UP-TO-DATE
+     [exec] :sdk:ant-bnd:buildCSS UP-TO-DATE
+     [exec] :sdk:ant-heap-dump:buildCSS UP-TO-DATE
+     [exec] :sdk:ant-jgit:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-alloy-taglib:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-cache:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-css-builder:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-deployment-helper:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-gulp:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-jasper-jspc:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-javadoc-formatter:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-js-module-config-generator:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-js-transpiler:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-lang-builder:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-maven-plugin-builder:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-node:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-patcher:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-poshi-runner:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-service-builder:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-source-formatter:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-soy:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-test-integration:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-tld-formatter:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-upgrade-table-builder:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-whip:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-wsdd-builder:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-wsdl-builder:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-xml-formatter:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-plugins-xsd-builder:buildCSS UP-TO-DATE
+     [exec] :sdk:gradle-util:buildCSS UP-TO-DATE
+     [exec] :test:arquillian-extension-junit-bridge:buildCSS UP-TO-DATE
+     [exec] :test:arquillian-extension-junit-bridge-test:buildCSS UP-TO-DATE
+     [exec] :test:hot-deploy-jmx-listener:buildCSS UP-TO-DATE
+     [exec] :test:jenkins-results-parser:buildCSS UP-TO-DATE
+     [exec] :test:portlet-tck-bridge:buildCSS UP-TO-DATE
+     [exec] :test:poshi-runner:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] :test:whip:buildCSS UP-TO-DATE
+     [exec] :third-party:com-browseengine-bobo:buildCSS UP-TO-DATE
+     [exec] :third-party:com-ctc-wstx:buildCSS UP-TO-DATE
+     [exec] :third-party:com-google-gdata-sample-appsforyourdomain:buildCSS UP-TO-DATE
+     [exec] :third-party:com-google-ical:buildCSS UP-TO-DATE
+     [exec] :third-party:com-ibm-icu:buildCSS UP-TO-DATE
+     [exec] :third-party:com-mockmock:buildCSS UP-TO-DATE
+     [exec] :third-party:com-sforce-soap-partner:buildCSS UP-TO-DATE
+     [exec] :third-party:com-webex-schemas:buildCSS UP-TO-DATE
+     [exec] :third-party:jenkins-core:buildCSS UP-TO-DATE
+     [exec] :third-party:net-sf-jpathwatch:buildCSS UP-TO-DATE
+     [exec] :third-party:org-apache-axis:buildCSS UP-TO-DATE
+     [exec] :third-party:org-apache-commons-fileupload:buildCSS UP-TO-DATE
+     [exec] :third-party:org-apache-felix-configadmin:buildCSS UP-TO-DATE
+     [exec] :third-party:org-apache-ivy:buildCSS UP-TO-DATE
+     [exec] :third-party:org-drools-core:buildCSS UP-TO-DATE
+     [exec] :third-party:org-freemarker:buildCSS UP-TO-DATE
+     [exec] :third-party:org-hibernate-core:buildCSS UP-TO-DATE
+     [exec] :third-party:org-phidias:buildCSS UP-TO-DATE
+     [exec] :util:alloy-taglib:buildCSS UP-TO-DATE
+     [exec] :util:ant-build-logger:buildCSS UP-TO-DATE
+     [exec] :util:css-builder:buildCSS UP-TO-DATE
+     [exec] :util:deployment-helper:buildCSS UP-TO-DATE
+     [exec] :util:freemarker-osgi-bridge:buildCSS UP-TO-DATE
+     [exec] :util:io-delta:buildCSS UP-TO-DATE
+     [exec] :util:ip-geocoder:buildCSS UP-TO-DATE
+     [exec] :util:ip-geocoder-sample-web:buildCSS UP-TO-DATE
+     [exec] :util:jasper-jspc:buildCSS UP-TO-DATE
+     [exec] :util:javadoc-formatter:buildCSS UP-TO-DATE
+     [exec] :util:lang-builder:buildCSS UP-TO-DATE
+     [exec] :util:markdown-converter:buildCSS UP-TO-DATE
+     [exec] :util:osgi-util:buildCSS UP-TO-DATE
+     [exec] :util:pmd:buildCSS UP-TO-DATE
+     [exec] :util:portal-tools-sample-sql-builder:buildCSS UP-TO-DATE
+     [exec] :util:portal-tools-service-builder:buildCSS UP-TO-DATE
+     [exec] :util:portal-tools-upgrade-table-builder:buildCSS UP-TO-DATE
+     [exec] :util:portal-tools-wsdd-builder:buildCSS UP-TO-DATE
+     [exec] :util:rtl-css:buildCSS UP-TO-DATE
+     [exec] :util:ruby-gems:buildCSS UP-TO-DATE
+     [exec] :util:sass-compiler-api:buildCSS UP-TO-DATE
+     [exec] :util:sass-compiler-jni:buildCSS UP-TO-DATE
+     [exec] :util:sass-compiler-ruby:buildCSS UP-TO-DATE
+     [exec] :util:source-formatter:buildCSS UP-TO-DATE
+     [exec] :util:sync-engine:buildCSS UP-TO-DATE
+     [exec] :util:tld-formatter:buildCSS UP-TO-DATE
+     [exec] :util:xml-formatter:buildCSS UP-TO-DATE
+     [exec] :addons:layout-type-controller:layout-type-controller-control-panel:buildCSS UP-TO-DATE
+     [exec] :addons:layout-type-controller:layout-type-controller-full-page-application:buildCSS UP-TO-DATE
+     [exec] :addons:layout-type-controller:layout-type-controller-node:buildCSS UP-TO-DATE
+     [exec] :addons:layout-type-controller:layout-type-controller-shared-portlet:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-close:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-edit:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-edit-defaults:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-edit-guest:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-facebook:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-help:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-igoogle:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-maximize:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-minimize:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-netvibes:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-print:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-refresh:buildCSS UP-TO-DATE
+     [exec] :addons:portlet-configuration-icon:portlet-configuration-icon-widget:buildCSS UP-TO-DATE
+     [exec] :apps:amazon-rankings:amazon-rankings-web:buildCSS UP-TO-DATE
+     [exec] :apps:announcements:announcements-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1041ms
+     [exec] :apps:application-list:application-list-api:buildCSS UP-TO-DATE
+     [exec] :apps:application-list:application-list-taglib:buildCSS UP-TO-DATE
+     [exec] :apps:application-list:application-list-test:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-browser-web:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-categories-admin-web:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-categories-navigation-web:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-categories-service:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-entry-query-processor-custom-user-attributes:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-publisher-layout-prototype:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-publisher-test:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-publisher-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1639ms
+     [exec] :apps:asset:asset-tags-admin-web:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-tags-compiler-web:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-tags-navigation-web:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-tags-service:buildCSS UP-TO-DATE
+     [exec] :apps:asset:asset-test:buildCSS UP-TO-DATE
+     [exec] :apps:blogs:blogs-api:buildCSS UP-TO-DATE
+     [exec] :apps:blogs:blogs-editor-config:buildCSS UP-TO-DATE
+     [exec] :apps:blogs:blogs-item-selector-api:buildCSS UP-TO-DATE
+     [exec] :apps:blogs:blogs-item-selector-web:buildCSS UP-TO-DATE
+     [exec] :apps:blogs:blogs-layout-prototype:buildCSS UP-TO-DATE
+     [exec] :apps:blogs:blogs-portlet-toolbar-contributor:buildCSS UP-TO-DATE
+     [exec] :apps:blogs:blogs-recent-bloggers-web:buildCSS UP-TO-DATE
+     [exec] :apps:blogs:blogs-service:buildCSS UP-TO-DATE
+     [exec] :apps:blogs:blogs-test:buildCSS UP-TO-DATE
+     [exec] :apps:blogs:blogs-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/blogs/css/common_main.scss in 1063ms
+     [exec] Parsed /META-INF/resources/blogs_aggregator/css/main.scss in 681ms
+     [exec] Parsed /META-INF/resources/blogs/css/main.scss in 2121ms
+     [exec] :apps:bookmarks:bookmarks-api:buildCSS UP-TO-DATE
+     [exec] :apps:bookmarks:bookmarks-service:buildCSS UP-TO-DATE
+     [exec] :apps:bookmarks:bookmarks-test:buildCSS UP-TO-DATE
+     [exec] :apps:bookmarks:bookmarks-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/bookmarks/css/main.scss in 3245ms
+     [exec] :apps:calendar:calendar-api:buildCSS UP-TO-DATE
+     [exec] :apps:calendar:calendar-service:buildCSS UP-TO-DATE
+     [exec] :apps:calendar:calendar-test:buildCSS UP-TO-DATE
+     [exec] :apps:calendar:calendar-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 5123ms
+     [exec] :apps:comment:comment-api:buildCSS UP-TO-DATE
+     [exec] :apps:comment:comment-editor-config:buildCSS UP-TO-DATE
+     [exec] :apps:comment:comment-page-comments:buildCSS UP-TO-DATE
+     [exec] :apps:comment:comment-ratings-definition:buildCSS UP-TO-DATE
+     [exec] :apps:comment:comment-sanitizer:buildCSS UP-TO-DATE
+     [exec] :apps:comment:comment-test:buildCSS UP-TO-DATE
+     [exec] :apps:comment:comment-web:buildCSS UP-TO-DATE
+     [exec] :apps:configuration-admin:configuration-admin-annotations:buildCSS UP-TO-DATE
+     [exec] :apps:configuration-admin:configuration-admin-api:buildCSS UP-TO-DATE
+     [exec] :apps:configuration-admin:configuration-admin-equinox:buildCSS UP-TO-DATE
+     [exec] :apps:configuration-admin:configuration-admin-web:buildCSS UP-TO-DATE
+     [exec] :apps:control-menu:control-menu-api:buildCSS UP-TO-DATE
+     [exec] :apps:control-menu:control-menu-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 3927ms
+     [exec] :apps:currency-converter:currency-converter-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1498ms
+     [exec] :apps:dictionary:dictionary-web:buildCSS UP-TO-DATE
+     [exec] :apps:directory:directory-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1754ms
+     [exec] :apps:document-library:document-library-api:buildCSS UP-TO-DATE
+     [exec] :apps:document-library:document-library-google-docs:buildCSS UP-TO-DATE
+     [exec] :apps:document-library:document-library-item-selector-web:buildCSS UP-TO-DATE
+     [exec] :apps:document-library:document-library-layout-set-prototype:buildCSS UP-TO-DATE
+     [exec] :apps:document-library:document-library-repository-cmis-api:buildCSS UP-TO-DATE
+     [exec] :apps:document-library:document-library-repository-cmis-impl:buildCSS UP-TO-DATE
+     [exec] :apps:document-library:document-library-repository-cmis-test:buildCSS UP-TO-DATE
+     [exec] :apps:document-library:document-library-repository-search:buildCSS UP-TO-DATE
+     [exec] :apps:document-library:document-library-service:buildCSS UP-TO-DATE
+     [exec] :apps:document-library:document-library-test:buildCSS UP-TO-DATE
+     [exec] :apps:document-library:document-library-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/document_library/css/main.scss in 4260ms
+     [exec] Parsed /META-INF/resources/image_gallery_display/css/main.scss in 824ms
+     [exec] :apps:dynamic-data-lists:dynamic-data-lists-api:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-lists:dynamic-data-lists-form-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/admin/css/main.scss in 4593ms
+     [exec] :apps:dynamic-data-lists:dynamic-data-lists-service:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-lists:dynamic-data-lists-test:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-lists:dynamic-data-lists-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1367ms
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-api:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-data-provider:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-data-provider-rest:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-data-provider-web:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-form-evaluator:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 3792ms
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-form-values-factory:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-form-values-query:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-io:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-service:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-taglib:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-test:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-test-util:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-type-captcha:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-type-checkbox:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-type-date:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-type-key-value:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-type-options:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-type-paragraph:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-type-radio:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-type-select:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-type-text:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-type-validation:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/validation.css in 738ms
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-validator:buildCSS UP-TO-DATE
+     [exec] :apps:dynamic-data-mapping:dynamic-data-mapping-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 3329ms
+     [exec] :apps:expando:expando-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 883ms
+     [exec] :apps:export-import:export-import-api:buildCSS UP-TO-DATE
+     [exec] :apps:export-import:export-import-service:buildCSS UP-TO-DATE
+     [exec] :apps:export-import:export-import-test:buildCSS UP-TO-DATE
+     [exec] :apps:export-import:export-import-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 2482ms
+     [exec] :apps:flags:flags-api:buildCSS UP-TO-DATE
+     [exec] :apps:flags:flags-service:buildCSS UP-TO-DATE
+     [exec] :apps:flags:flags-web:buildCSS UP-TO-DATE
+     [exec] :apps:hello-velocity:hello-velocity-web:buildCSS UP-TO-DATE
+     [exec] :apps:iframe:iframe-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1042ms
+     [exec] :apps:invitation:invitation-web:buildCSS UP-TO-DATE
+     [exec] :apps:item-selector:item-selector-api:buildCSS UP-TO-DATE
+     [exec] :apps:item-selector:item-selector-criteria-api:buildCSS UP-TO-DATE
+     [exec] :apps:item-selector:item-selector-editor-configuration:buildCSS UP-TO-DATE
+     [exec] :apps:item-selector:item-selector-taglib:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/repository_entry_browser/css/main.scss in 1023ms
+     [exec] :apps:item-selector:item-selector-upload-web:buildCSS UP-TO-DATE
+     [exec] :apps:item-selector:item-selector-url-web:buildCSS UP-TO-DATE
+     [exec] :apps:item-selector:item-selector-web:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-api:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-content-search-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1295ms
+     [exec] :apps:journal:journal-content-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1150ms
+     [exec] :apps:journal:journal-ratings-definition:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-service:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-terms-of-use:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-test:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /com/liferay/journal/web/portlet/template/dependencies/template.css in 75ms
+     [exec] Parsed /META-INF/resources/css/main.scss in 1227ms
+     [exec] :apps:layout:layout-admin-test:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-admin-web:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-impl:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-item-selector-api:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-item-selector-web:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-prototype-api:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-prototype-impl:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-prototype-test:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-prototype-web:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-set-prototype-api:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-set-prototype-impl:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-set-prototype-test:buildCSS UP-TO-DATE
+     [exec] :apps:layout:layout-set-prototype-web:buildCSS UP-TO-DATE
+     [exec] :apps:loan-calculator:loan-calculator-web:buildCSS UP-TO-DATE
+     [exec] :apps:login:login-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 3639ms
+     [exec] :apps:marketplace:marketplace-api:buildCSS UP-TO-DATE
+     [exec] :apps:marketplace:marketplace-app-manager-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1472ms
+     [exec] :apps:marketplace:marketplace-service:buildCSS UP-TO-DATE
+     [exec] :apps:marketplace:marketplace-store-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1075ms
+     [exec] :apps:marketplace:marketplace-test:buildCSS UP-TO-DATE
+     [exec] :apps:mentions:mentions-api:buildCSS UP-TO-DATE
+     [exec] :apps:mentions:mentions-service:buildCSS UP-TO-DATE
+     [exec] :apps:mentions:mentions-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/mentions.scss in 1297ms
+     [exec] :apps:message-boards:message-boards-api:buildCSS UP-TO-DATE
+     [exec] :apps:message-boards:message-boards-comment:buildCSS UP-TO-DATE
+     [exec] :apps:message-boards:message-boards-layout-set-prototype:buildCSS UP-TO-DATE
+     [exec] :apps:message-boards:message-boards-service:buildCSS UP-TO-DATE
+     [exec] :apps:message-boards:message-boards-test:buildCSS UP-TO-DATE
+     [exec] :apps:message-boards:message-boards-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/message_boards/css/main.scss in 3968ms
+     [exec] :apps:microblogs:microblogs-api:buildCSS UP-TO-DATE
+     [exec] :apps:microblogs:microblogs-service:buildCSS UP-TO-DATE
+     [exec] :apps:microblogs:microblogs-test:buildCSS UP-TO-DATE
+     [exec] :apps:microblogs:microblogs-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] WARNING: The box-sizing mixin is deprecated and will be removed in the next major version release. This property can now be used un-prefixed.
+     [exec]          on line 410 of /opt/dev/projects/github/liferay-portal/modules/frontend/frontend-common-css/tmp/META-INF/resources/bourbon/_bourbon-deprecated-upcoming.scss, in `box-sizing'
+     [exec]          from line 300 of /opt/dev/projects/github/liferay-portal/modules/apps/microblogs/microblogs-web/src/main/resources/META-INF/resources/microblogs/css/tmp.scss
+     [exec] 
+     [exec] Parsed /META-INF/resources/microblogs/css/main.scss in 4419ms
+     [exec] :apps:mobile-device-rules:mobile-device-rules-api:buildCSS UP-TO-DATE
+     [exec] :apps:mobile-device-rules:mobile-device-rules-service:buildCSS UP-TO-DATE
+     [exec] :apps:mobile-device-rules:mobile-device-rules-test:buildCSS UP-TO-DATE
+     [exec] :apps:mobile-device-rules:mobile-device-rules-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1689ms
+     [exec] :apps:monitoring:monitoring-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 2552ms
+     [exec] :apps:my-account:my-account-web:buildCSS UP-TO-DATE
+     [exec] :apps:nested-portlets:nested-portlets-web:buildCSS UP-TO-DATE
+     [exec] :apps:network-utilities:network-utilities-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 881ms
+     [exec] :apps:notifications:notifications-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 3245ms
+     [exec] :apps:password-generator:password-generator-web:buildCSS UP-TO-DATE
+     [exec] :apps:password-policies-admin:password-policies-admin-api:buildCSS UP-TO-DATE
+     [exec] :apps:password-policies-admin:password-policies-admin-impl:buildCSS UP-TO-DATE
+     [exec] :apps:password-policies-admin:password-policies-admin-web:buildCSS UP-TO-DATE
+     [exec] :apps:plugins-admin:plugins-admin-web:buildCSS UP-TO-DATE
+     [exec] :apps:polls:polls-api:buildCSS UP-TO-DATE
+     [exec] :apps:polls:polls-service:buildCSS UP-TO-DATE
+     [exec] :apps:polls:polls-test:buildCSS UP-TO-DATE
+     [exec] :apps:polls:polls-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /css/main_polls_display.scss in 175ms
+     [exec] Parsed /css/main.scss in 788ms
+     [exec] :apps:portal-instances:portal-instances-web:buildCSS UP-TO-DATE
+     [exec] :apps:portal-settings:portal-settings-api:buildCSS UP-TO-DATE
+     [exec] :apps:portal-settings:portal-settings-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/users_admin/css/main.scss in 759ms
+     [exec] Parsed /META-INF/resources/css/main.scss in 665ms
+     [exec] :apps:portlet-configuration:portlet-configuration-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 902ms
+     [exec] :apps:portlet-css:portlet-css-web:buildCSS UP-TO-DATE
+     [exec] :apps:portlet-display-template:portlet-display-template:buildCSS UP-TO-DATE
+     [exec] :apps:portlet-display-template:portlet-display-template-test:buildCSS UP-TO-DATE
+     [exec] :apps:portlet-display-template:portlet-display-template-web:buildCSS UP-TO-DATE
+     [exec] :apps:product-navigation:product-navigation-control-panel:buildCSS UP-TO-DATE
+     [exec] :apps:product-navigation:product-navigation-control-panel-menu-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 602ms
+     [exec] :apps:product-navigation:product-navigation-product-menu-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 2303ms
+     [exec] :apps:product-navigation:product-navigation-simulation:buildCSS UP-TO-DATE
+     [exec] :apps:product-navigation:product-navigation-simulation-device:buildCSS UP-TO-DATE
+     [exec] :apps:product-navigation:product-navigation-simulation-web:buildCSS UP-TO-DATE
+     [exec] :apps:product-navigation:product-navigation-site-administration:buildCSS UP-TO-DATE
+     [exec] :apps:product-navigation:product-navigation-site-administration-menu-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 606ms
+     [exec] :apps:product-navigation:product-navigation-user:buildCSS UP-TO-DATE
+     [exec] :apps:product-navigation:product-navigation-user-menu-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 681ms
+     [exec] :apps:product-navigation:product-navigation-user-personal-bar-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 627ms
+     [exec] :apps:quick-note:quick-note-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] 13:54:36,639 ERROR [ParserCSS30TokenManager:11600] Illegal character: <
+     [exec] 13:54:36,641 ERROR [ParserCSS30TokenManager:11600] Illegal character: ?
+     [exec] Parsed /META-INF/resources/css/main.scss in 1543ms
+     [exec] :apps:ratings:ratings-api:buildCSS UP-TO-DATE
+     [exec] :apps:ratings:ratings-page-ratings-web:buildCSS UP-TO-DATE
+     [exec] :apps:ratings:ratings-service:buildCSS UP-TO-DATE
+     [exec] :apps:resources-importer:resources-importer:buildCSS UP-TO-DATE
+     [exec] :apps:roles:roles-admin-api:buildCSS UP-TO-DATE
+     [exec] :apps:roles:roles-admin-impl:buildCSS UP-TO-DATE
+     [exec] :apps:roles:roles-admin-test:buildCSS UP-TO-DATE
+     [exec] :apps:roles:roles-admin-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1207ms
+     [exec] :apps:roles:roles-selector-web:buildCSS UP-TO-DATE
+     [exec] :apps:rss:rss-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 659ms
+     [exec] :apps:search:search-facet:buildCSS UP-TO-DATE
+     [exec] :apps:search:search-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] 13:54:52,102 ERROR [ParserCSS30TokenManager:11600] Illegal character: ?
+     [exec] Parsed /META-INF/resources/css/main.scss in 1075ms
+     [exec] :apps:server-admin:server-admin-web:buildCSS UP-TO-DATE
+     [exec] :apps:service-access-policy:service-access-policy-api:buildCSS UP-TO-DATE
+     [exec] :apps:service-access-policy:service-access-policy-service:buildCSS UP-TO-DATE
+     [exec] :apps:service-access-policy:service-access-policy-test:buildCSS UP-TO-DATE
+     [exec] :apps:service-access-policy:service-access-policy-web:buildCSS UP-TO-DATE
+     [exec] :apps:shopping:shopping-api:buildCSS UP-TO-DATE
+     [exec] :apps:shopping:shopping-service:buildCSS UP-TO-DATE
+     [exec] :apps:shopping:shopping-test:buildCSS UP-TO-DATE
+     [exec] :apps:shopping:shopping-web:buildCSS UP-TO-DATE
+     [exec] :apps:site-navigation:site-navigation-breadcrumb-web:buildCSS UP-TO-DATE
+     [exec] :apps:site-navigation:site-navigation-directory-web:buildCSS UP-TO-DATE
+     [exec] :apps:site-navigation:site-navigation-language-web:buildCSS UP-TO-DATE
+     [exec] :apps:site-navigation:site-navigation-menu-web:buildCSS UP-TO-DATE
+     [exec] :apps:site-navigation:site-navigation-site-map-web:buildCSS UP-TO-DATE
+     [exec] :apps:site:site-admin-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 412ms
+     [exec] :apps:site:site-browser-web:buildCSS UP-TO-DATE
+     [exec] :apps:site:site-memberships-web:buildCSS UP-TO-DATE
+     [exec] :apps:site:site-my-sites-web:buildCSS UP-TO-DATE
+     [exec] :apps:site:site-teams-web:buildCSS UP-TO-DATE
+     [exec] :apps:social:social-activities-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1421ms
+     [exec] :apps:social:social-activity-api:buildCSS UP-TO-DATE
+     [exec] :apps:social:social-activity-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1059ms
+     [exec] :apps:social:social-group-statistics-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 647ms
+     [exec] :apps:social:social-networking-api:buildCSS UP-TO-DATE
+     [exec] :apps:social:social-networking-service:buildCSS UP-TO-DATE
+     [exec] :apps:social:social-networking-test:buildCSS UP-TO-DATE
+     [exec] :apps:social:social-networking-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] 13:55:21,031 ERROR [ParserCSS30TokenManager:11600] Illegal character: !
+     [exec] 13:55:21,034 ERROR [ParserCSS30TokenManager:11600] Illegal character: ?
+     [exec] Parsed /META-INF/resources/members/css/main.scss in 41ms
+     [exec] Parsed /META-INF/resources/meetups/css/main.scss in 209ms
+     [exec] Parsed /META-INF/resources/friends/css/main.scss in 607ms
+     [exec] Parsed /META-INF/resources/summary/css/main.scss in 301ms
+     [exec] :apps:social:social-requests-web:buildCSS UP-TO-DATE
+     [exec] :apps:social:social-user-statistics-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 571ms
+     [exec] :apps:staging:staging-bar-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1674ms
+     [exec] :apps:staging:staging-configuration-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1ms
+     [exec] :apps:staging:staging-lang:buildCSS UP-TO-DATE
+     [exec] :apps:staging:staging-portlet-data-handler:buildCSS UP-TO-DATE
+     [exec] :apps:staging:staging-processes-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.css in 1ms
+     [exec] :apps:staging:staging-taglib:buildCSS UP-TO-DATE
+     [exec] :apps:staging:staging-test:buildCSS UP-TO-DATE
+     [exec] :apps:sync:sync-security:buildCSS UP-TO-DATE
+     [exec] :apps:translator:translator-web:buildCSS UP-TO-DATE
+     [exec] :apps:trash:trash-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 491ms
+     [exec] :apps:unit-converter:unit-converter-web:buildCSS UP-TO-DATE
+     [exec] :apps:user-groups-admin:user-groups-admin-api:buildCSS UP-TO-DATE
+     [exec] :apps:user-groups-admin:user-groups-admin-impl:buildCSS UP-TO-DATE
+     [exec] :apps:user-groups-admin:user-groups-admin-test:buildCSS UP-TO-DATE
+     [exec] :apps:user-groups-admin:user-groups-admin-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1241ms
+     [exec] :apps:users-admin:users-admin-api:buildCSS UP-TO-DATE
+     [exec] :apps:users-admin:users-admin-impl:buildCSS UP-TO-DATE
+     [exec] :apps:users-admin:users-admin-test:buildCSS UP-TO-DATE
+     [exec] :apps:users-admin:users-admin-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1160ms
+     [exec] :apps:web-proxy:web-proxy-web:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-api:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-editor-config:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-engine-creole:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-engine-html:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-engine-input-editor-common:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-engine-jspwiki:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-engine-mediawiki:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-engine-text:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-layout-prototype:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-navigation-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/page_menu/css/main.scss in 590ms
+     [exec] :apps:wiki:wiki-service:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-test:buildCSS UP-TO-DATE
+     [exec] :apps:wiki:wiki-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/wiki/css/main.scss in 2414ms
+     [exec] :apps:workflow:workflow-definition-link-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 718ms
+     [exec] :apps:workflow:workflow-definition-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 771ms
+     [exec] :apps:workflow:workflow-instance-web:buildCSS UP-TO-DATE
+     [exec] :apps:workflow:workflow-task-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] Parsed /META-INF/resources/css/main.scss in 1656ms
+     [exec] :apps:xsl-content:xsl-content-web:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-editor:frontend-editor-alloyeditor-web:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-editor:frontend-editor-bbcode-web:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-editor:frontend-editor-ckeditor-web:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-editor:frontend-editor-lang:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-editor:frontend-editor-simple-web:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-editor:frontend-editor-tinymce-web:buildCSS UP-TO-DATE
+     [exec] :frontend:frontend-theme:frontend-theme-admin-web:buildThumbnails UP-TO-DATE
+     [exec] :frontend:frontend-theme:frontend-theme-admin-web:copyFavicon
+     [exec] :frontend:frontend-theme:frontend-theme-styled:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] :frontend:frontend-theme:frontend-theme-styled:compileJava UP-TO-DATE
+     [exec] :frontend:frontend-theme:frontend-theme-styled:transpileJS SKIPPED
+     [exec] :frontend:frontend-theme:frontend-theme-styled:configJSModules SKIPPED
+     [exec] :frontend:frontend-theme:frontend-theme-styled:copyLibs
+     [exec] :frontend:frontend-theme:frontend-theme-styled:processResources
+     [exec] :frontend:frontend-theme:frontend-theme-styled:classes
+     [exec] :frontend:frontend-theme:frontend-theme-styled:jar
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:buildAlloyTheme
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:buildLexicon
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:buildLexiconIcons
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:buildTheme
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:compileJava UP-TO-DATE
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:transpileJS SKIPPED
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:configJSModules SKIPPED
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:copyLibs
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:processResources
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:classes
+     [exec] :frontend:frontend-theme:frontend-theme-unstyled:jar
+     [exec] :frontend:frontend-theme:frontend-theme-admin-web:buildTheme
+     [exec] :frontend:frontend-theme:frontend-theme-admin-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] 13:57:07,330 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,334 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,335 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,335 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,336 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,336 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,353 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,353 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,353 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,354 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,354 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:07,354 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] Parsed /META-INF/resources/admin/css/main.scss in 2130ms
+     [exec] Parsed /META-INF/resources/admin/css/aui.scss in 14491ms
+     [exec] :frontend:frontend-theme:frontend-theme-classic-web:buildThumbnails
+     [exec] Loading jar:file:/root/.m2/repository/com/liferay/portal/portal-impl/7.0.0-SNAPSHOT/portal-impl-7.0.0-SNAPSHOT.jar!/system.properties
+     [exec] Dec 15, 2015 9:57:10 PM com.liferay.portal.kernel.log.Jdk14LogImpl info
+     [exec] INFO: No server detected
+     [exec] Dec 15, 2015 9:57:10 PM com.liferay.portal.kernel.log.Jdk14LogImpl info
+     [exec] INFO: Global shared lib directory /opt/dev/projects/github/liferay-portal/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.0.1/6bf0ebb7efd993e222fc1112377b5e92a13b38dd/
+     [exec] Dec 15, 2015 9:57:10 PM com.liferay.portal.kernel.log.Jdk14LogImpl info
+     [exec] INFO: Global lib directory /root/.m2/repository/com/liferay/portal/portal-service/7.0.0-SNAPSHOT/
+     [exec] Dec 15, 2015 9:57:10 PM com.liferay.portal.kernel.log.Jdk14LogImpl info
+     [exec] INFO: Portal lib directory /root/.m2/repository/com/liferay/portal/util-java/7.0.0-SNAPSHOT/
+     [exec] Dec 15, 2015 9:57:10 PM com.liferay.portal.kernel.log.Jdk14LogImpl info
+     [exec] INFO: Properties for portal loaded from [jar:file:/root/.m2/repository/com/liferay/portal/portal-impl/7.0.0-SNAPSHOT/portal-impl-7.0.0-SNAPSHOT.jar!/portal.properties]
+     [exec] Loading jar:file:/root/.m2/repository/com/liferay/portal/portal-impl/7.0.0-SNAPSHOT/portal-impl-7.0.0-SNAPSHOT.jar!/portal.properties
+     [exec] :frontend:frontend-theme:frontend-theme-classic-web:copyFavicon
+     [exec] :frontend:frontend-theme:frontend-theme-classic-web:buildTheme
+     [exec] :frontend:frontend-theme:frontend-theme-classic-web:buildCSS
+     [exec] Using Ruby Sass compiler
+     [exec] 13:57:31,402 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,404 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,404 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,404 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,404 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,404 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,437 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,437 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,438 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,438 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,438 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] 13:57:31,438 WARN  [CSSNodeToDomainObject:793] Media expression uses unknown feature '-ms-high-contrast'
+     [exec] Parsed /META-INF/resources/classic/css/aui.scss in 16276ms
+     [exec] Parsed /META-INF/resources/classic/css/main.scss in 2027ms
+     [exec] :third-party:org-gradle:org-gradle-dependency-management:buildCSS UP-TO-DATE
+     [exec] :third-party:org-gradle:org-gradle-resources-http:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-comments:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-common:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-conversions:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-locales:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-print:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-ratings:buildCSS UP-TO-DATE
+     [exec] :apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-related-assets:buildCSS UP-TO-DATE
+     [exec] 
+     [exec] BUILD SUCCESSFUL
+     [exec] 
+     [exec] Total time: 13 mins 30.193 secs
+     [exec] 
+
+build-common-css:
+
+build-css:
+    [mkdir] Created dir: /opt/dev/projects/github/liferay-portal/portal-web/sass_tmp_dir
+   [delete] Deleting directory /opt/dev/projects/github/liferay-portal/portal-web/sass_tmp_dir
+     [echo] Using Ruby Sass compiler
+     [echo] Parsed /html/portlet/recent_documents/css/main.scss in 3005ms
+     [echo] Parsed /html/portlet/image_uploader/css/main.scss in 658ms
+
+BUILD SUCCESSFUL
+Total time: 15 minutes 14 seconds
++ echo 'Exit shell.'
+Exit shell.
+Recording test results
+Liferay patched class hudson.tasks.junit.JUnitResultArchiver
+[PostBuildScript] - Execution post build scripts.
+[liferay-jenkins-ee] $ /bin/bash /tmp/hudson7026056300397660311.sh
+Update the workspace repository for post-build steps.
+No rebase in progress?
+Switched to branch 'master-temp-268415710'
+Switched to branch 'master'
+Deleted branch master-temp-268415710 (was 8f675d0).
+Removing reset.repository.log
+Removing test-results/
+HEAD is now at 8f675d0 LRQA-20349 Regen
+Rebase the workspace repository if needed for post-build steps.
+Exit shell.
+[liferay-jenkins-ee] $ /bin/bash -e -x /tmp/hudson303370784593307383.sh
++ echo 'Execute: test-portal-acceptance-pullrequest-batch.sh stop-current-job'
+Execute: test-portal-acceptance-pullrequest-batch.sh stop-current-job
++ commands/build-test-portal-acceptance-pullrequest-batch.sh stop-current-job
+Execute: ant -f commands/build-test-portal-acceptance-pullrequest-batch.xml stop-current-job
+Buildfile: /opt/dev/projects/github/liferay-jenkins-ee/commands/build-test-portal-acceptance-pullrequest-batch.xml
+
+stop-current-job:
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
++ echo 'Exit shell.'
+Exit shell.
+[EnvInject] - Injecting environment variables from a build step.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-3/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1792/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/ruby-sass-compiler/stop.properties'
+[EnvInject] - Variables injected successfully.
+[description-setter] Description set: <strong>brianchandotcom</strong> - <a href="https://github.com/brianchandotcom/liferay-portal/pull/33341">PR#33341</a> - <a href="https://test-1-3.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1792/jenkins-report.html">Jenkins Report</a>
+Finished: SUCCESS

@@ -53,6 +53,10 @@ AUI.add(
 						value: '.file-name'
 					},
 
+					itemSelectorEventName: {
+						validator: Lang.isString
+					},
+
 					itemSelectorURL: {
 						validator: Lang.isString
 					},
@@ -223,7 +227,7 @@ AUI.add(
 										}
 									}
 								},
-								eventName: instance.ns('selectImage'),
+								eventName: instance.get('itemSelectorEventName'),
 								url: instance.get('itemSelectorURL')
 							}
 						);

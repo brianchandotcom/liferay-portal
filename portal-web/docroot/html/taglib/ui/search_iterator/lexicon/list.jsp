@@ -32,14 +32,6 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 	List<com.liferay.portal.kernel.dao.search.ResultRow> curResultRows = resultRowSplitterEntry.getResultRows();
 %>
 
-	<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
-			</div>
-		</div>
-	</c:if>
-
 	<table class="table table-list">
 		<c:if test="<%= headerNames != null %>">
 			<thead>
@@ -128,6 +120,18 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 				<tr>
 					<td>
 						<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
+					</td>
+				</tr>
+			</c:if>
+
+			<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
+				<tr>
+					<td colspan="<%= (headerNames != null) ? headerNames.size() : StringPool.BLANK %>">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
+							</div>
+						</div>
 					</td>
 				</tr>
 			</c:if>

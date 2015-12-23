@@ -339,7 +339,10 @@ AUI.add(
 								modal: true,
 								portletNamespace: instance.get('portletNamespace'),
 								resizable: false,
-								visible: false
+								visible: false,
+								strings: {
+									addField: 'Choose Field'
+								}
 							}
 						);
 

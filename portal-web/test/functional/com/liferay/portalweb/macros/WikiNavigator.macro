@@ -1,5 +1,5 @@
 <definition>
-	<command name="gotoAllPages">
+	<command name="gotoAllPagesPG">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 	</command>
 
@@ -11,19 +11,19 @@
 		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_CHANGE_PARENT" value1="Change Parent" />
 	</command>
 
-	<command name="gotoDraftPages">
+	<command name="gotoDraftPagesPG">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
 	</command>
 
-	<command name="gotoFrontPage">
+	<command name="gotoFrontPagePG">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_FRONTPAGE" value1="FrontPage" />
 	</command>
 
-	<command name="gotoOrphanPages">
+	<command name="gotoOrphanPagesPG">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ORPHAN_PAGES" value1="Orphan Pages" />
 	</command>
 
-	<command name="gotoRecentChanges">
+	<command name="gotoRecentChangesPG">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
 	</command>
 

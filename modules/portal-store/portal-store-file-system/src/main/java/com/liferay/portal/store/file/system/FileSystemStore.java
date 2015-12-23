@@ -16,7 +16,6 @@ package com.liferay.portal.store.file.system;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.convert.FileSystemStoreRootDirException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration;
 import com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration;
+import com.liferay.portal.store.file.system.exception.FileSystemStoreRootDirException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;

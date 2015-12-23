@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.convert;
+package com.liferay.portal.store.file.system.exception;
+
+import com.liferay.portal.convert.ConvertException;
 
 /**
  * @author László Csontos

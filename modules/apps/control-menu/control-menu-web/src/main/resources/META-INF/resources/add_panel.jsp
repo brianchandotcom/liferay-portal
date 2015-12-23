@@ -38,7 +38,11 @@
 
 			<c:if test="<%= !group.isControlPanel() && (hasLayoutAddPermission || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 				<div class="add-content-menu" id="<portlet:namespace />addPanelContainer">
-					<aui:icon cssClass="close" id="closePanelAdd" image="times" markupView="lexicon" url="javascript:;" />
+					<h4 class="sidebar-header">
+						<span><liferay-ui:message key="add" /></span>
+
+						<aui:icon cssClass="close" id="closePanelAdd" image="times" markupView="lexicon" url="javascript:;" />
+					</h4>
 
 					<%
 					String[] tabs1Names = new String[0];
@@ -61,8 +65,6 @@
 
 					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelTab", "content"));
 					%>
-
-					<h1><liferay-ui:message key="add" /></h1>
 
 					<liferay-ui:tabs
 						names="<%= StringUtil.merge(tabs1Names) %>"

@@ -165,10 +165,6 @@
 			<forward name="portlet.portlet_sharing.view" path="portlet.portlet_sharing.view" />
 		</action>
 
-		<!-- Recent Documents -->
-
-		<action path="/recent_documents/view" forward="portlet.recent_documents.view" />
-
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

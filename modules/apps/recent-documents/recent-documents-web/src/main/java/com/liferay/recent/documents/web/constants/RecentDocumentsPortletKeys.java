@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.recent.documents.web.constants;
 
-<%@ page import="com.liferay.portlet.documentlibrary.model.DLFileRank" %>
+/**
+ * @author Peter Fellwock
+ */
+public class RecentDocumentsPortletKeys {
 
-<%@ include file="/html/portlet/recent_documents/init-ext.jsp" %>
+	public static final String RECENT_DOCUMENTS =
+		"com_liferay_recent_documents_web_portlet_RecentDocumentsPortlet";
+
+}

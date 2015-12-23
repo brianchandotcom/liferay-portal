@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/recent_documents/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 List<DLFileRank> fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId());

@@ -132,7 +132,8 @@ public class PortletKeys {
 
 	public static final long PREFS_PLID_SHARED = 0;
 
-	public static final String RECENT_DOCUMENTS = "64";
+	public static final String RECENT_DOCUMENTS =
+		"com_liferay_recent_documents_web_portlet_RecentDocumentsPortlet";
 
 	public static final String REQUESTS = "121";
 

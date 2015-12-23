@@ -178,14 +178,6 @@
 		<put name="portlet_content" value="/portlet/portlet_sharing/view.jsp" />
 	</definition>
 
-	<!-- Recent Documents -->
-
-	<definition name="portlet.recent_documents" extends="portlet" />
-
-	<definition name="portlet.recent_documents.view" extends="portlet.recent_documents">
-		<put name="portlet_content" value="/portlet/recent_documents/view.jsp" />
-	</definition>
-
 	<!-- User Statistics -->
 
 	<definition name="portlet.user_statistics" extends="portlet" />

@@ -24,27 +24,6 @@
 		<css-class-wrapper>portlet-hello-world</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>64</portlet-name>
-		<icon>/html/icons/recent_documents.png</icon>
-		<struts-path>recent_documents</struts-path>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.documentlibrary.messaging.CheckFileRankMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<property-key>dl.file.rank.check.interval</property-key>
-					<time-unit>minute</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
-		<use-default-template>false</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/recent_documents/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-recent-documents</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>90</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>portal</struts-path>

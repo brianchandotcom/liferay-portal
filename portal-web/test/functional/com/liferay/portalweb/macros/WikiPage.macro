@@ -769,17 +769,6 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="gotoDraftPagesPGViaWD">
-		<execute function="AssertClick" locator1="PGWikidisplay#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
-	</command>
-
-	<command name="gotoPageEditPG">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" />
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-	</command>
-
 	<command name="linkOrphanPageHtmlPG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 

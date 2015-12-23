@@ -87,7 +87,7 @@
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=0" />
 
 		<var name="pageName" value="Language Test Page" />
-		<var name="portletName" value="Language" />
+		<var name="portletName" value="Language Selector" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -132,7 +132,7 @@
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=1" />
 
 		<var name="pageName" value="Language Test Page" />
-		<var name="portletName" value="Language" />
+		<var name="portletName" value="Language Selector" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -177,7 +177,7 @@
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=2" />
 
 		<var name="pageName" value="Language Test Page" />
-		<var name="portletName" value="Language" />
+		<var name="portletName" value="Language Selector" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -396,7 +396,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

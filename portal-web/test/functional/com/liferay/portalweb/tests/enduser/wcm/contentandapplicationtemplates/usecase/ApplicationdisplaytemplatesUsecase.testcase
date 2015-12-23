@@ -63,11 +63,11 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -104,7 +104,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
@@ -136,7 +136,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">

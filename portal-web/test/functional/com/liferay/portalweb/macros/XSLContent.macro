@@ -1,6 +1,6 @@
 <definition>
 	<command name="configureConfigurationAdminXSL">
-		<var name="key_configurationAdminName" value="XSLContent configuration" />
+		<var name="key_configurationAdminName" value="XSL Content Options" />
 
 		<while>
 			<condition function="IsElementNotPresent" locator1="ConfigurationAdmin#CONFIGURATION_ADMIN_NAME_LINK" />

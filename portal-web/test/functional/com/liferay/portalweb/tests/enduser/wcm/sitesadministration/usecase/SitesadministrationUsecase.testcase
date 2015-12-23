@@ -223,14 +223,15 @@
 		<execute function="Select" locator1="SitesEditSite#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site A" />
 			<var name="sitePageName" value="Test Page A" />
+			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -255,14 +256,15 @@
 			<var name="siteName" value="Site B" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site B" />
 			<var name="sitePageName" value="Test Page B" />
+			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1017,10 +1019,16 @@
 
 		<execute macro="Page#changeLogoViaPageCP">
 			<var name="logoFile" value="Document_3.png" />
+			<var name="page" value="Public Pages" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addJavaScript">
 			<var name="javaScript" value="alert('Welcome to Russia.');" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute function="Open#openNoError" locator1="http://localhost:8080/web/russia2018" />
@@ -1048,6 +1056,7 @@
 
 		<execute macro="SitePage#addJavaScript">
 			<var name="javaScript" value=" " />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1119,6 +1128,11 @@
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

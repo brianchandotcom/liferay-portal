@@ -3489,7 +3489,7 @@
 	<command name="ViewRolesDropdownLocalizationGerman" priority="4">
 		<var name="language1" value="German (Germany)" />
 		<var name="language2" value="English (United States)" />
-		<var name="portletName" value="Language" />
+		<var name="portletName" value="Language Selector" />
 		<var name="roleName1" value="Site Owner" />
 		<var name="roleName2" value="Site Administrator" />
 		<var name="roleNameLocalized1" value="Site Owner German" />

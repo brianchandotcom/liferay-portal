@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>BROWSE</td>
-	<td>//input[@id='_195_fileName']</td>
+	<td>//input[contains(@id,'fileName')]</td>
 	<td></td>
 </tr>
 <tr>

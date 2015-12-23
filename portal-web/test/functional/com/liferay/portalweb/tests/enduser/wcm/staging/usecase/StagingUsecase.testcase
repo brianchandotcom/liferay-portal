@@ -2011,7 +2011,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -2579,6 +2579,7 @@
 
 		<execute macro="Page#changeLogoViaPageCP">
 			<var name="logoFile" value="Document_2.png" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

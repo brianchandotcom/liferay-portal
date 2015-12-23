@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>SETTINGS_SECTION</td>
-	<td>//div[contains(@id,'BlogsPortlet_settingsSection')]</td>
+	<td>//div[contains(@id,'Blogs') and contains(@id,'settingsSection')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_TAB</td>
-	<td>//button[contains(@id,'Blogs') and contains(@id,'_settingsIcon')]</td>
+	<td>//button[contains(@id,'Blogs') and contains(@id,'settingsIcon')]</td>
 	<td></td>
 </tr>
 <tr>

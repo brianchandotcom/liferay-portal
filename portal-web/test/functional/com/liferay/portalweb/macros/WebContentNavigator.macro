@@ -28,7 +28,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
-		<execute function="Pause" locator1="3000" />
+		<execute function="AssertVisible" locator1="TextInput#TITLE" />
 	</command>
 
 	<command name="gotoAddTemplate">

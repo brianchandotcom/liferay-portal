@@ -41,7 +41,9 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="Page#tearDownPG" />
+				<execute macro="Page#tearDownPG">
+					<var name="site" value="Liferay" />
+				</execute>
 
 				<execute macro="Site#tearDownCP" />
 			</else>
@@ -56,13 +58,13 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -82,7 +84,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -116,13 +118,13 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -149,7 +151,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -181,13 +183,13 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -221,13 +223,13 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -256,13 +258,13 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -282,7 +284,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -313,7 +315,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -340,13 +342,13 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -370,7 +372,7 @@
 		</for>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -397,13 +399,13 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute macro="RSS#viewDefaultDisplayFeedTitle">
@@ -411,7 +413,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -449,7 +451,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -493,7 +495,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -536,13 +538,13 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute macro="RSS#viewDefaultDisplayFeedTitle">
@@ -550,7 +552,7 @@
 		</execute>
 
 		<execute macro="Portlet#deletePG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -558,7 +560,7 @@
 		</execute>
 
 		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="RSS" />
+			<var name="portletName" value="RSS Publisher" />
 		</execute>
 	</command>
 </definition>

@@ -346,7 +346,7 @@
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
@@ -371,21 +371,21 @@
 		</execute>
 
 		<execute macro="Portlet#deletePG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
@@ -488,7 +488,7 @@
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
@@ -505,7 +505,7 @@
 		</execute>
 
 		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="Portlet#viewSpecificPG">
@@ -517,7 +517,7 @@
 		<execute macro="PageCustomizations#gotoCustomizedPageInfo" />
 
 		<execute macro="Portlet#viewNoSpecificPG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="Portlet#viewNoSpecificPG">
@@ -561,7 +561,7 @@
 		<execute macro="PageCustomizations#gotoCustomizedPageInfo" />
 
 		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Language" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="Portlet#viewSpecificPG">

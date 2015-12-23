@@ -63,9 +63,9 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 				<liferay-ui:message arguments="<%= requiredMark %>" key="all-fields-marked-with-x-are-required" translateArguments="<%= false %>" />
 			</label>
 
-			<aui:input name="name" />
+			<aui:input name="name" type="text" placeholder="enter-the-data-provider-name" />
 
-			<aui:input name="description" />
+			<aui:input name="description" type="text" placeholder="enter-a-short-description" />
 		</aui:fieldset>
 
 		<aui:fieldset>

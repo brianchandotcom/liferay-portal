@@ -53,7 +53,6 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1228,21 +1227,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected File getLibDir(Project project) {
 		return project.file("lib");
-	}
-
-	protected File getResourcesDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		return getSrcDir(sourceSet.getResources());
-	}
-
-	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
-		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		return iterator.next();
 	}
 
 	protected boolean hasSourceFiles(Task task, Spec<File> spec) {

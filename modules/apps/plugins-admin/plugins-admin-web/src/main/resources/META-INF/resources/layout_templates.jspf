@@ -66,25 +66,8 @@ List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
 			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
 				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="plugin-thumbnail" src="<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" />
 
-				<%= HtmlUtil.escape(layoutTemplate.getName(locale)) %>
+				<strong><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></strong>
 			</aui:a>
-
-			<br />
-
-			<liferay-ui:message key="package" />:
-
-			<c:choose>
-				<c:when test="<%= pluginPackage == null %>">
-					<liferay-ui:message key="unknown" />
-				</c:when>
-				<c:otherwise>
-					<%= HtmlUtil.escape(pluginPackage.getName()) %>
-
-					<c:if test="<%= pluginPackage.getContext() != null %>">
-						(<%= pluginPackage.getContext() %>)
-					</c:if>
-				</c:otherwise>
-			</c:choose>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
@@ -96,7 +79,25 @@ List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
 			name="roles"
 			value="<%= HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), StringPool.COMMA_AND_SPACE)) %>"
 		/>
+
+		<liferay-ui:search-container-column-text
+			align="right"
+			cssClass="entry-action"
+			name=""
+		>
+			<liferay-ui:icon-menu
+				direction="down"
+				markupView="lexicon"
+				showWhenSingleIcon="<%= true %>"
+			>
+				<liferay-ui:icon
+					message="edit"
+					method="post"
+					url="<%= rowURL.toString() %>"
+				/>
+			</liferay-ui:icon-menu>
+		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

@@ -15,6 +15,7 @@
 package com.liferay.portal.util.comparator;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.util.PortalUtil;
 
@@ -56,6 +57,20 @@ public class PortletTitleComparator
 		else {
 			portletTitle1 = PortalUtil.getPortletTitle(portlet1, _locale);
 			portletTitle2 = PortalUtil.getPortletTitle(portlet2, _locale);
+		}
+
+		if (Validator.isNull(portletTitle1) &&
+			Validator.isNull(portletTitle2)) {
+
+			return 0;
+		}
+
+		if (Validator.isNull(portletTitle1)) {
+			return 1;
+		}
+
+		if (Validator.isNull(portletTitle2)) {
+			return -1;
 		}
 
 		return portletTitle1.compareTo(portletTitle2);

@@ -39,174 +39,177 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 	active = portlet.isActive();
 	rolesArray = portlet.getRolesArray();
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(title);
 %>
 
 <portlet:actionURL name="/plugins_admin/edit_plugin" var="editPluginURL" />
 
-<aui:form action="<%= editPluginURL %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="pluginId" type="hidden" value="<%= pluginId %>" />
-	<aui:input name="pluginType" type="hidden" value="<%= pluginType %>" />
+<div class="container-fluid-1280">
+	<aui:form action="<%= editPluginURL %>" method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="pluginId" type="hidden" value="<%= pluginId %>" />
+		<aui:input name="pluginType" type="hidden" value="<%= pluginType %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= false %>"
-		title="<%= title %>"
-	/>
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:input name="moduleId" type="resource" value="<%= moduleId %>" />
 
-	<aui:fieldset>
-		<aui:input name="moduleId" type="resource" value="<%= moduleId %>" />
+				<aui:input name="pluginId" type="resource" value="<%= pluginId %>" />
 
-		<aui:input name="pluginId" type="resource" value="<%= pluginId %>" />
+				<aui:input name="active" type="checkbox" value="<%= active %>" />
 
-		<aui:input name="active" type="checkbox" value="<%= active %>" />
+				<c:choose>
+					<c:when test="<%= pluginType.equals(Plugin.TYPE_PORTLET) %>">
+						<aui:field-wrapper helpMessage="edit-plugin-permissions-help" label="permissions">
 
-		<c:choose>
-			<c:when test="<%= pluginType.equals(Plugin.TYPE_PORTLET) %>">
-				<aui:field-wrapper helpMessage="edit-plugin-permissions-help" label="permissions">
+							<%
+							List curActions = ResourceActionsUtil.getResourceActions(portlet.getPortletId(), null);
 
-					<%
-					List curActions = ResourceActionsUtil.getResourceActions(portlet.getPortletId(), null);
+							int maxNumberOfRolesChecked = 500;
 
-					int maxNumberOfRolesChecked = 500;
+							List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), null, null, (Integer[])null, 0, maxNumberOfRolesChecked, new RoleRoleIdComparator(true));
+							int rolesCount = RoleLocalServiceUtil.searchCount(company.getCompanyId(), null, null, (Integer[])null);
 
-					List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), null, null, (Integer[])null, 0, maxNumberOfRolesChecked, new RoleRoleIdComparator(true));
-					int rolesCount = RoleLocalServiceUtil.searchCount(company.getCompanyId(), null, null, (Integer[])null);
+							List<Role> addToPageRoles = null;
+							List<Role> accessInControlPanelRoles = null;
 
-					List<Role> addToPageRoles = null;
-					List<Role> accessInControlPanelRoles = null;
+							if (curActions.contains(ActionKeys.ADD_TO_PAGE)) {
+								addToPageRoles = _filterRoles(roles, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE);
+							}
+							else {
+								addToPageRoles = new ArrayList<Role>();
+							}
 
-					if (curActions.contains(ActionKeys.ADD_TO_PAGE)) {
-						addToPageRoles = _filterRoles(roles, portlet.getPortletId(), ActionKeys.ADD_TO_PAGE);
-					}
-					else {
-						addToPageRoles = new ArrayList<Role>();
-					}
+							if (curActions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+								accessInControlPanelRoles = _filterRoles(roles, portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
+							}
+							else {
+								accessInControlPanelRoles = new ArrayList<Role>();
+							}
+							%>
 
-					if (curActions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
-						accessInControlPanelRoles = _filterRoles(roles, portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
-					}
-					else {
-						accessInControlPanelRoles = new ArrayList<Role>();
-					}
-					%>
+							<c:if test="<%= rolesCount > maxNumberOfRolesChecked %>">
+								<div class="alert alert-warning">
+									<liferay-ui:message arguments="<%= maxNumberOfRolesChecked %>" key="the-portal-has-more-roles-than-the-maximum-that-can-be-checked-x" translateArguments="<%= false %>" />
+								</div>
+							</c:if>
 
-					<c:if test="<%= rolesCount > maxNumberOfRolesChecked %>">
-						<div class="alert alert-warning">
-							<liferay-ui:message arguments="<%= maxNumberOfRolesChecked %>" key="the-portal-has-more-roles-than-the-maximum-that-can-be-checked-x" translateArguments="<%= false %>" />
-						</div>
-					</c:if>
+							<c:if test="<%= !addToPageRoles.isEmpty() %>">
+								<div class="permission-group">
+									<b><liferay-ui:message key="action.ADD_TO_PAGE" /></b>: <liferay-ui:message key="the-users-with-the-following-roles-can-add-this-portlet-to-the-pages-they-manage" />
 
-					<c:if test="<%= !addToPageRoles.isEmpty() %>">
-						<div class="permission-group">
-							<b><liferay-ui:message key="action.ADD_TO_PAGE" /></b>: <liferay-ui:message key="the-users-with-the-following-roles-can-add-this-portlet-to-the-pages-they-manage" />
-
-							<liferay-ui:search-container >
-								<liferay-ui:search-container-results
-									results="<%= addToPageRoles %>"
-								/>
-
-								<liferay-ui:search-container-row
-									className="com.liferay.portal.model.Role"
-									keyProperty="name"
-									modelVar="role"
-
-								>
-									<liferay-ui:search-container-column-text
-										name="role"
-									>
-										<liferay-ui:icon
-											iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
-											label="<%= true %>"
-											message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+									<liferay-ui:search-container >
+										<liferay-ui:search-container-results
+											results="<%= addToPageRoles %>"
 										/>
-									</liferay-ui:search-container-column-text>
 
-									<liferay-ui:search-container-column-text
-										align="right"
-									>
+										<liferay-ui:search-container-row
+											className="com.liferay.portal.model.Role"
+											keyProperty="name"
+											modelVar="role"
 
-										<%
-										PortletURL editURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
+										>
+											<liferay-ui:search-container-column-text
+												name="role"
+											>
+												<liferay-ui:icon
+													iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+													label="<%= true %>"
+													message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+												/>
+											</liferay-ui:search-container-column-text>
 
-										editURL.setParameter(Constants.CMD, "edit");
-										editURL.setParameter("tabs1", "roles");
-										editURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-										editURL.setParameter("portletResource", String.valueOf(portlet.getPortletId()));
-										%>
+											<liferay-ui:search-container-column-text
+												align="right"
+											>
 
-										<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL.toString() %>" />
-									</liferay-ui:search-container-column-text>
-								</liferay-ui:search-container-row>
+												<%
+												PortletURL editURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
 
-								<liferay-ui:search-iterator type="more" />
-							</liferay-ui:search-container>
-						</div>
-					</c:if>
+												editURL.setParameter(Constants.CMD, "edit");
+												editURL.setParameter("tabs1", "roles");
+												editURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+												editURL.setParameter("portletResource", String.valueOf(portlet.getPortletId()));
+												%>
 
-					<c:if test="<%= !accessInControlPanelRoles.isEmpty() %>">
-						<div class="permission-group">
-							<strong><liferay-ui:message key="action.ACCESS_IN_CONTROL_PANEL" /></strong>: <liferay-ui:message key="the-users-with-the-following-roles-can-access-this-portlet-in-the-control-panel" />
+												<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL.toString() %>" />
+											</liferay-ui:search-container-column-text>
+										</liferay-ui:search-container-row>
 
-							<liferay-ui:search-container >
-								<liferay-ui:search-container-results
-									results="<%= accessInControlPanelRoles %>"
-								/>
+										<liferay-ui:search-iterator type="more" />
+									</liferay-ui:search-container>
+								</div>
+							</c:if>
 
-								<liferay-ui:search-container-row
-									className="com.liferay.portal.model.Role"
-									keyProperty="name"
-									modelVar="role"
-								>
-									<liferay-ui:search-container-column-text
-										name="role"
-									>
-										<liferay-ui:icon
-											iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
-											label="<%= true %>"
-											message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+							<c:if test="<%= !accessInControlPanelRoles.isEmpty() %>">
+								<div class="permission-group">
+									<strong><liferay-ui:message key="action.ACCESS_IN_CONTROL_PANEL" /></strong>: <liferay-ui:message key="the-users-with-the-following-roles-can-access-this-portlet-in-the-control-panel" />
+
+									<liferay-ui:search-container >
+										<liferay-ui:search-container-results
+											results="<%= accessInControlPanelRoles %>"
 										/>
-									</liferay-ui:search-container-column-text>
 
-									<liferay-ui:search-container-column-text
-										align="right"
-									>
+										<liferay-ui:search-container-row
+											className="com.liferay.portal.model.Role"
+											keyProperty="name"
+											modelVar="role"
+										>
+											<liferay-ui:search-container-column-text
+												name="role"
+											>
+												<liferay-ui:icon
+													iconCssClass="<%= RolesAdminUtil.getIconCssClass(role) %>"
+													label="<%= true %>"
+													message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+												/>
+											</liferay-ui:search-container-column-text>
 
-										<%
-										PortletURL editURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
+											<liferay-ui:search-container-column-text
+												align="right"
+											>
 
-										editURL.setParameter(Constants.CMD, "edit");
-										editURL.setParameter("tabs1", "roles");
-										editURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-										editURL.setParameter("portletResource", String.valueOf(portlet.getPortletId()));
-										%>
+												<%
+												PortletURL editURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
 
-										<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL.toString() %>" />
-									</liferay-ui:search-container-column-text>
-								</liferay-ui:search-container-row>
+												editURL.setParameter(Constants.CMD, "edit");
+												editURL.setParameter("tabs1", "roles");
+												editURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+												editURL.setParameter("portletResource", String.valueOf(portlet.getPortletId()));
+												%>
 
-								<liferay-ui:search-iterator type="more" />
-							</liferay-ui:search-container>
-						</div>
-					</c:if>
+												<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL.toString() %>" />
+											</liferay-ui:search-container-column-text>
+										</liferay-ui:search-container-row>
 
-					<c:if test="<%= addToPageRoles.isEmpty() && accessInControlPanelRoles.isEmpty() %>">
-						<liferay-ui:message key="only-administrators-can-use-this-portlet" />
-					</c:if>
-				</aui:field-wrapper>
-			</c:when>
-			<c:otherwise>
-				<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-role-name-per-line-a-user-must-belong-to-one-of-these-roles-in-order-to-add-this-plugin-to-a-page" name="roles" type="textarea" value='<%= StringUtil.merge(rolesArray, "\n") %>' />
-			</c:otherwise>
-		</c:choose>
-	</aui:fieldset>
+										<liferay-ui:search-iterator type="more" />
+									</liferay-ui:search-container>
+								</div>
+							</c:if>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+							<c:if test="<%= addToPageRoles.isEmpty() && accessInControlPanelRoles.isEmpty() %>">
+								<liferay-ui:message key="only-administrators-can-use-this-portlet" />
+							</c:if>
+						</aui:field-wrapper>
+					</c:when>
+					<c:otherwise>
+						<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-role-name-per-line-a-user-must-belong-to-one-of-these-roles-in-order-to-add-this-plugin-to-a-page" name="roles" type="textarea" value='<%= StringUtil.merge(rolesArray, "\n") %>' />
+					</c:otherwise>
+				</c:choose>
+			</aui:fieldset>
+		</aui:fieldset-group>
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" />
+
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>
 
 <%!
 private List<Role> _filterRoles(List<Role> roles, String portletId, String actionId) throws Exception {

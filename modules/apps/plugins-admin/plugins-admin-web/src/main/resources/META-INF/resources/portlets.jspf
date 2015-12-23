@@ -68,42 +68,45 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 			href="<%= rowURL %>"
 			name="portlet"
 		>
-			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
-				<%= title %>
-			</aui:a>
+			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>"><strong>
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(title) %>">
+						<%= title %>
+					</c:when>
+					<c:when test="<%= Validator.isNotNull(portlet.getDisplayName()) %>">
+						<%= portlet.getDisplayName() %>
+					</c:when>
+					<c:otherwise>
+						<%= portlet.getPortletName() %>
+					</c:otherwise>
+				</c:choose>
+			</strong></aui:a>
 
-			<br />
-			<liferay-ui:message key="package" />:
-
-			<c:choose>
-				<c:when test="<%= pluginPackage == null %>">
-					<liferay-ui:message key="unknown" />
-				</c:when>
-				<c:otherwise>
-					<%= HtmlUtil.escape(pluginPackage.getName()) %>
-
-					<c:if test="<%= pluginPackage.getContext() != null %>">
-						(<%= pluginPackage.getContext() %>)
-					</c:if>
-				</c:otherwise>
-			</c:choose>
-
-			<%
-			String displayName = portlet.getDisplayName();
-			%>
-
-			<c:if test="<%= Validator.isNotNull(displayName) && !title.equals(displayName) %>">
-				<br />
-
-				<%= displayName %>
-			</c:if>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			name="active"
 			value='<%= LanguageUtil.get(request, (portlet.isActive() ? "yes" : "no")) %>'
 		/>
+
+		<liferay-ui:search-container-column-text
+			align="right"
+			cssClass="entry-action"
+			name=""
+		>
+			<liferay-ui:icon-menu
+				direction="down"
+				markupView="lexicon"
+				showWhenSingleIcon="<%= true %>"
+			>
+				<liferay-ui:icon
+					message="edit"
+					method="post"
+					url="<%= rowURL.toString() %>"
+				/>
+			</liferay-ui:icon-menu>
+		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator/>
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

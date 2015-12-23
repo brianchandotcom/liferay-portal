@@ -28,101 +28,107 @@ else {
 	resultRowSplitterEntries.add(new ResultRowSplitterEntry(StringPool.BLANK, resultRows));
 }
 
-for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
-	List<com.liferay.portal.kernel.dao.search.ResultRow> curResultRows = resultRowSplitterEntry.getResultRows();
+ResultRowSplitterEntry firstResultRowSplitterEntry = resultRowSplitterEntries.get(0);
+
+List<com.liferay.portal.kernel.dao.search.ResultRow> firstResultRows = firstResultRowSplitterEntry.getResultRows();
 %>
 
-	<table class="table table-list">
-		<c:if test="<%= headerNames != null %>">
-			<thead>
-				<tr>
+<table class="table table-list">
+	<c:if test="<%= headerNames != null %>">
+		<thead>
+			<tr>
 
-				<%
-				List entries = Collections.emptyList();
+			<%
+			List entries = Collections.emptyList();
 
-				if (!curResultRows.isEmpty()) {
-					com.liferay.portal.kernel.dao.search.ResultRow row = (com.liferay.portal.kernel.dao.search.ResultRow)curResultRows.get(0);
+			if (!firstResultRows.isEmpty()) {
+				com.liferay.portal.kernel.dao.search.ResultRow row = (com.liferay.portal.kernel.dao.search.ResultRow)firstResultRows.get(0);
 
-					entries = row.getEntries();
+				entries = row.getEntries();
+			}
+
+			for (int i = 0; i < headerNames.size(); i++) {
+				String headerName = headerNames.get(i);
+
+				String normalizedHeaderName = null;
+
+				if (i < normalizedHeaderNames.size()) {
+					normalizedHeaderName = normalizedHeaderNames.get(i);
 				}
 
-				for (int i = 0; i < headerNames.size(); i++) {
-					String headerName = headerNames.get(i);
+				if (Validator.isNull(normalizedHeaderName)) {
+					normalizedHeaderName = String.valueOf(i +1);
+				}
 
-					String normalizedHeaderName = null;
+				String cssClass = StringPool.BLANK;
 
-					if (i < normalizedHeaderNames.size()) {
-						normalizedHeaderName = normalizedHeaderNames.get(i);
-					}
-
-					if (Validator.isNull(normalizedHeaderName)) {
-						normalizedHeaderName = String.valueOf(i +1);
-					}
-
-					String cssClass = StringPool.BLANK;
-
-					if (!entries.isEmpty()) {
-						if (rowChecker != null) {
-							if (i == 0) {
-								cssClass = "checkbox-cell checkbox list-group-item-field";
-							}
-							else {
-								com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i - 1);
-
-								if (entry != null) {
-									cssClass = entry.getCssClass();
-								}
-							}
+				if (!entries.isEmpty()) {
+					if (rowChecker != null) {
+						if (i == 0) {
+							cssClass = "checkbox-cell checkbox list-group-item-field";
 						}
 						else {
-							com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i);
+							com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i - 1);
 
 							if (entry != null) {
 								cssClass = entry.getCssClass();
 							}
 						}
 					}
-				%>
+					else {
+						com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i);
 
-					<th class="<%= cssClass %>" id="<%= namespace + id %>_col-<%= normalizedHeaderName %>">
-
-						<%
-						String headerNameValue = null;
-
-						if ((rowChecker == null) || (i > 0)) {
-							headerNameValue = LanguageUtil.get(request, HtmlUtil.escape(headerName));
+						if (entry != null) {
+							cssClass = entry.getCssClass();
 						}
-						else {
-							headerNameValue = headerName;
-						}
-						%>
-
-						<c:choose>
-							<c:when test="<%= Validator.isNull(headerNameValue) %>">
-								<%= StringPool.NBSP %>
-							</c:when>
-							<c:otherwise>
-								<%= headerNameValue %>
-							</c:otherwise>
-						</c:choose>
-					</th>
-
-				<%
+					}
 				}
-				%>
+			%>
 
-				</tr>
-			</thead>
+				<th class="<%= cssClass %>" id="<%= namespace + id %>_col-<%= normalizedHeaderName %>">
+
+					<%
+					String headerNameValue = null;
+
+					if ((rowChecker == null) || (i > 0)) {
+						headerNameValue = LanguageUtil.get(request, HtmlUtil.escape(headerName));
+					}
+					else {
+						headerNameValue = headerName;
+					}
+					%>
+
+					<c:choose>
+						<c:when test="<%= Validator.isNull(headerNameValue) %>">
+							<%= StringPool.NBSP %>
+						</c:when>
+						<c:otherwise>
+							<%= headerNameValue %>
+						</c:otherwise>
+					</c:choose>
+				</th>
+
+			<%
+			}
+			%>
+
+			</tr>
+		</thead>
+	</c:if>
+
+	<tbody>
+		<c:if test="<%= firstResultRows.isEmpty() && (emptyResultsMessage != null) %>">
+			<tr>
+				<td>
+					<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
+				</td>
+			</tr>
 		</c:if>
 
-		<tbody>
-			<c:if test="<%= curResultRows.isEmpty() && (emptyResultsMessage != null) %>">
-				<tr>
-					<td>
-						<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
-					</td>
-				</tr>
-			</c:if>
+		<%
+		for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
+			List<com.liferay.portal.kernel.dao.search.ResultRow> curResultRows = resultRowSplitterEntry.getResultRows();
+		%>
 
 			<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
 				<tr>
@@ -241,29 +247,28 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 
 				request.removeAttribute("liferay-ui:search-container-row:rowId");
 			}
-			%>
+		}
+		%>
 
-			<c:if test="<%= headerNames != null %>">
-				<tr class="lfr-template">
+		<c:if test="<%= headerNames != null %>">
+			<tr class="lfr-template">
 
-					<%
-					for (int i = 0; i < headerNames.size(); i++) {
-					%>
+				<%
+				for (int i = 0; i < headerNames.size(); i++) {
+				%>
 
-						<td class="table-cell"></td>
+					<td class="table-cell"></td>
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</tr>
-			</c:if>
-		</tbody>
-	</table>
+			</tr>
+		</c:if>
+	</tbody>
+</table>
 
 <%
-}
-
 String rowHtmlTag = "tr";
 %>
 

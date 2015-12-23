@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>SITE_CLONED_FROM_TEMPLATE_MESSAGE</td>
-	<td>//div[contains(@id,'siteTemplate')]//div//div</td>
+	<td>//div[contains(@id,'Site-TemplateContent')]//div//div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TEMPLATE_SITE_CLONED_FROM</td>
-	<td>//div[contains(@id,'siteTemplate')]//div//div/em</td>
+	<td>//div[contains(@id,'Site-TemplateContent')]//div//div/em</td>
 	<td></td>
 </tr>
 </tbody>

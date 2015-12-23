@@ -28,7 +28,7 @@
 		</execute>
 	</set-up>
 
-<!-- 	<tear-down>
+	<tear-down>
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
@@ -60,7 +60,7 @@
 				<execute macro="BlogsEntry#tearDownCP" />
 			</else>
 		</if>
-	</tear-down> -->
+	</tear-down>
 
 	<command name="AddAPMultiplePortlet" priority="4">
 		<execute macro="Page#gotoPG">

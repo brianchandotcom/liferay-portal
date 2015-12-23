@@ -22,8 +22,6 @@ Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 <liferay-ui:error-marker key="errorSection" value="displaySettings" />
 
-<h3><liferay-ui:message key="display-settings" /></h3>
-
 <h3><liferay-ui:message key="language" /></h3>
 
 <%

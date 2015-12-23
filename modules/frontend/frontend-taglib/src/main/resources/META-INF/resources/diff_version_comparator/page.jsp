@@ -212,20 +212,14 @@ if (Validator.isNotNull(languageId)) {
 					/>
 				</div>
 
-				<div class="legend-info">
-					<liferay-ui:icon
-						cssClass="legend-item"
-						iconCssClass="delete icon-stop"
-						label="<%= true %>"
-						message="deleted"
-					/>
+				<div class="legend-info taglib-diff-html">
+					<span class="diff-html-added">
+						<liferay-ui:message key="added" />
+					</span>
 
-					<liferay-ui:icon
-						cssClass="legend-item"
-						iconCssClass="add icon-stop"
-						label="<%= true %>"
-						message="added"
-					/>
+					<span class="diff-html-removed">
+						<liferay-ui:message key="deleted" />
+					</span>
 
 					<span class="diff-html-changed legend-item">
 						<liferay-ui:message key="format-changes" />

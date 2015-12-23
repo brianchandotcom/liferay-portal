@@ -86,13 +86,9 @@ else if (assetRenderer != null) {
 			</a>
 
 			<c:if test="<%= (assetRenderer != null) && Validator.isNotNull(assetRenderer.getURLDownload(themeDisplay)) %>">
-				<liferay-ui:icon
-					iconCssClass="icon-download-alt"
-					label="<%= false %>"
-					message='<%= LanguageUtil.format(request, "download-x", HtmlUtil.escape(summary.getTitle()), false) %>'
-					method="get"
-					url="<%= assetRenderer.getURLDownload(themeDisplay) %>"
-				/>
+				<aui:a href="<%= assetRenderer.getURLDownload(themeDisplay) %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(summary.getTitle()) %>" key="download-x" />
+				</aui:a>
 			</c:if>
 		</span>
 

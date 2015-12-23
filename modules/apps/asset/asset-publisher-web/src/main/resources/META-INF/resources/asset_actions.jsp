@@ -60,8 +60,9 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 
 		<liferay-ui:icon
 			data="<%= data %>"
-			iconCssClass="icon-edit-sign"
+			icon="pencil"
 			label="<%= false %>"
+			markupView="lexicon"
 			message='<%= showIconLabel ? LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) : LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false) %>'
 			method="get"
 			url="<%= editPortletURL.toString() %>"

@@ -328,12 +328,5 @@ public class PortalPreferencesUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(PortalPreferencesPersistence persistence) {
-	}
-
 	private static PortalPreferencesPersistence _persistence;
 }

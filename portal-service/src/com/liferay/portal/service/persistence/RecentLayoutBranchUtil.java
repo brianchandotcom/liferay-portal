@@ -827,12 +827,5 @@ public class RecentLayoutBranchUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(RecentLayoutBranchPersistence persistence) {
-	}
-
 	private static RecentLayoutBranchPersistence _persistence;
 }

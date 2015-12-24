@@ -1295,14 +1295,6 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		return _ddmTemplate.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DDMTemplate getWrappedDDMTemplate() {
-		return _ddmTemplate;
-	}
-
 	@Override
 	public DDMTemplate getWrappedModel() {
 		return _ddmTemplate;

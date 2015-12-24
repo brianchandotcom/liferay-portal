@@ -1011,12 +1011,5 @@ public class DLFileEntryMetadataUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(DLFileEntryMetadataPersistence persistence) {
-	}
-
 	private static DLFileEntryMetadataPersistence _persistence;
 }

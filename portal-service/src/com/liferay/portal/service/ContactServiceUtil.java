@@ -79,12 +79,5 @@ public class ContactServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ContactService service) {
-	}
-
 	private static ContactService _service;
 }

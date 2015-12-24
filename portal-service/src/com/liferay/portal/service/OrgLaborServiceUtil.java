@@ -100,12 +100,5 @@ public class OrgLaborServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(OrgLaborService service) {
-	}
-
 	private static OrgLaborService _service;
 }

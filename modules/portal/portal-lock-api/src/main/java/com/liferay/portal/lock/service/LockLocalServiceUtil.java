@@ -361,13 +361,6 @@ public class LockLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(LockLocalService service) {
-	}
-
 	private static ServiceTracker<LockLocalService, LockLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(LockLocalService.class);
 }

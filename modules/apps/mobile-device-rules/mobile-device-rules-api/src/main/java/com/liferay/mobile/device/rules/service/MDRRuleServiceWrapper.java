@@ -108,22 +108,6 @@ public class MDRRuleServiceWrapper implements MDRRuleService,
 			type, typeSettingsProperties, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MDRRuleService getWrappedMDRRuleService() {
-		return _mdrRuleService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMDRRuleService(MDRRuleService mdrRuleService) {
-		_mdrRuleService = mdrRuleService;
-	}
-
 	@Override
 	public MDRRuleService getWrappedService() {
 		return _mdrRuleService;

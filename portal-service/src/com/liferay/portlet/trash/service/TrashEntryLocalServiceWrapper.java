@@ -464,23 +464,6 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		return _trashEntryLocalService.updateTrashEntry(trashEntry);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public TrashEntryLocalService getWrappedTrashEntryLocalService() {
-		return _trashEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedTrashEntryLocalService(
-		TrashEntryLocalService trashEntryLocalService) {
-		_trashEntryLocalService = trashEntryLocalService;
-	}
-
 	@Override
 	public TrashEntryLocalService getWrappedService() {
 		return _trashEntryLocalService;

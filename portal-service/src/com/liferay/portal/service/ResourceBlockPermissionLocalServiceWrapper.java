@@ -321,23 +321,6 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		return _resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockPermission);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ResourceBlockPermissionLocalService getWrappedResourceBlockPermissionLocalService() {
-		return _resourceBlockPermissionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedResourceBlockPermissionLocalService(
-		ResourceBlockPermissionLocalService resourceBlockPermissionLocalService) {
-		_resourceBlockPermissionLocalService = resourceBlockPermissionLocalService;
-	}
-
 	@Override
 	public ResourceBlockPermissionLocalService getWrappedService() {
 		return _resourceBlockPermissionLocalService;

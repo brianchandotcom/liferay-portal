@@ -6815,13 +6815,6 @@ public class WikiPageUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(WikiPagePersistence persistence) {
-	}
-
 	private static ServiceTracker<WikiPagePersistence, WikiPagePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(WikiPagePersistence.class);
 }

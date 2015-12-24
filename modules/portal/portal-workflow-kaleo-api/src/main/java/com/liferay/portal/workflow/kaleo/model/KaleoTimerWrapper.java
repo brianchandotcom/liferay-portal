@@ -701,14 +701,6 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public KaleoTimer getWrappedKaleoTimer() {
-		return _kaleoTimer;
-	}
-
 	@Override
 	public KaleoTimer getWrappedModel() {
 		return _kaleoTimer;

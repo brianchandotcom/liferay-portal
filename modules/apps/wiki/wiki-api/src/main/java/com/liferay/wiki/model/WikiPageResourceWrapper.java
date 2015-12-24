@@ -365,14 +365,6 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public WikiPageResource getWrappedWikiPageResource() {
-		return _wikiPageResource;
-	}
-
 	@Override
 	public WikiPageResource getWrappedModel() {
 		return _wikiPageResource;

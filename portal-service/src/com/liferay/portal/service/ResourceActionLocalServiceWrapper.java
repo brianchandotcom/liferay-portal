@@ -312,23 +312,6 @@ public class ResourceActionLocalServiceWrapper
 		return _resourceActionLocalService.updateResourceAction(resourceAction);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ResourceActionLocalService getWrappedResourceActionLocalService() {
-		return _resourceActionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedResourceActionLocalService(
-		ResourceActionLocalService resourceActionLocalService) {
-		_resourceActionLocalService = resourceActionLocalService;
-	}
-
 	@Override
 	public ResourceActionLocalService getWrappedService() {
 		return _resourceActionLocalService;

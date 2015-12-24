@@ -848,12 +848,5 @@ public class AssetCategoryPropertyUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(AssetCategoryPropertyPersistence persistence) {
-	}
-
 	private static AssetCategoryPropertyPersistence _persistence;
 }

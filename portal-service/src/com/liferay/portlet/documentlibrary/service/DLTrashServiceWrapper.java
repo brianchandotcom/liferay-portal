@@ -166,22 +166,6 @@ public class DLTrashServiceWrapper implements DLTrashService,
 		_dlTrashService.restoreFolderFromTrash(folderId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLTrashService getWrappedDLTrashService() {
-		return _dlTrashService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLTrashService(DLTrashService dlTrashService) {
-		_dlTrashService = dlTrashService;
-	}
-
 	@Override
 	public DLTrashService getWrappedService() {
 		return _dlTrashService;

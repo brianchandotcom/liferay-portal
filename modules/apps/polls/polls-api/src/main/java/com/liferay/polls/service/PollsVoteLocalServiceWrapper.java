@@ -363,23 +363,6 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 		return _pollsVoteLocalService.updatePollsVote(pollsVote);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PollsVoteLocalService getWrappedPollsVoteLocalService() {
-		return _pollsVoteLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPollsVoteLocalService(
-		PollsVoteLocalService pollsVoteLocalService) {
-		_pollsVoteLocalService = pollsVoteLocalService;
-	}
-
 	@Override
 	public PollsVoteLocalService getWrappedService() {
 		return _pollsVoteLocalService;

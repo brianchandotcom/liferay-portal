@@ -294,23 +294,6 @@ public class KaleoNotificationRecipientLocalServiceWrapper
 		return _kaleoNotificationRecipientLocalService.updateKaleoNotificationRecipient(kaleoNotificationRecipient);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoNotificationRecipientLocalService getWrappedKaleoNotificationRecipientLocalService() {
-		return _kaleoNotificationRecipientLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoNotificationRecipientLocalService(
-		KaleoNotificationRecipientLocalService kaleoNotificationRecipientLocalService) {
-		_kaleoNotificationRecipientLocalService = kaleoNotificationRecipientLocalService;
-	}
-
 	@Override
 	public KaleoNotificationRecipientLocalService getWrappedService() {
 		return _kaleoNotificationRecipientLocalService;

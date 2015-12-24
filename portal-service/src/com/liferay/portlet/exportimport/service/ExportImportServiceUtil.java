@@ -190,12 +190,5 @@ public class ExportImportServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ExportImportService service) {
-	}
-
 	private static ExportImportService _service;
 }

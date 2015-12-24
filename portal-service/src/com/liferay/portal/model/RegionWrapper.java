@@ -365,14 +365,6 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public Region getWrappedRegion() {
-		return _region;
-	}
-
 	@Override
 	public Region getWrappedModel() {
 		return _region;

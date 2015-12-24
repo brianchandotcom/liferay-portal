@@ -141,23 +141,6 @@ public class DLFileEntryTypeServiceWrapper implements DLFileEntryTypeService,
 			descriptionMap, ddmStructureIds, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFileEntryTypeService getWrappedDLFileEntryTypeService() {
-		return _dlFileEntryTypeService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFileEntryTypeService(
-		DLFileEntryTypeService dlFileEntryTypeService) {
-		_dlFileEntryTypeService = dlFileEntryTypeService;
-	}
-
 	@Override
 	public DLFileEntryTypeService getWrappedService() {
 		return _dlFileEntryTypeService;

@@ -222,12 +222,5 @@ public class ResourcePermissionServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ResourcePermissionService service) {
-	}
-
 	private static ResourcePermissionService _service;
 }

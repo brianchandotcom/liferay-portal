@@ -363,23 +363,6 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 		return _ratingsEntryLocalService.updateRatingsEntry(ratingsEntry);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public RatingsEntryLocalService getWrappedRatingsEntryLocalService() {
-		return _ratingsEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedRatingsEntryLocalService(
-		RatingsEntryLocalService ratingsEntryLocalService) {
-		_ratingsEntryLocalService = ratingsEntryLocalService;
-	}
-
 	@Override
 	public RatingsEntryLocalService getWrappedService() {
 		return _ratingsEntryLocalService;

@@ -359,22 +359,6 @@ public class AppLocalServiceWrapper implements AppLocalService,
 			description, category, iconURL, version, file);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AppLocalService getWrappedAppLocalService() {
-		return _appLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAppLocalService(AppLocalService appLocalService) {
-		_appLocalService = appLocalService;
-	}
-
 	@Override
 	public AppLocalService getWrappedService() {
 		return _appLocalService;

@@ -439,14 +439,6 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public RecentLayoutRevision getWrappedRecentLayoutRevision() {
-		return _recentLayoutRevision;
-	}
-
 	@Override
 	public RecentLayoutRevision getWrappedModel() {
 		return _recentLayoutRevision;

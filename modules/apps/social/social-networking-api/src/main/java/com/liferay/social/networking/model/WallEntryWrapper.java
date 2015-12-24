@@ -438,14 +438,6 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public WallEntry getWrappedWallEntry() {
-		return _wallEntry;
-	}
-
 	@Override
 	public WallEntry getWrappedModel() {
 		return _wallEntry;

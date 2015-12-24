@@ -423,13 +423,6 @@ public class ShoppingOrderItemUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ShoppingOrderItemPersistence persistence) {
-	}
-
 	private static ServiceTracker<ShoppingOrderItemPersistence, ShoppingOrderItemPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(ShoppingOrderItemPersistence.class);
 }

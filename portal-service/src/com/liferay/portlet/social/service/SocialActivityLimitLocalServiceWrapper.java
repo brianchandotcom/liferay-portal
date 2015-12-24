@@ -285,23 +285,6 @@ public class SocialActivityLimitLocalServiceWrapper
 		return _socialActivityLimitLocalService.updateSocialActivityLimit(socialActivityLimit);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialActivityLimitLocalService getWrappedSocialActivityLimitLocalService() {
-		return _socialActivityLimitLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialActivityLimitLocalService(
-		SocialActivityLimitLocalService socialActivityLimitLocalService) {
-		_socialActivityLimitLocalService = socialActivityLimitLocalService;
-	}
-
 	@Override
 	public SocialActivityLimitLocalService getWrappedService() {
 		return _socialActivityLimitLocalService;

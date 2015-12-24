@@ -90,22 +90,6 @@ public class WebsiteServiceWrapper implements WebsiteService,
 		return _websiteService.updateWebsite(websiteId, url, typeId, primary);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public WebsiteService getWrappedWebsiteService() {
-		return _websiteService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedWebsiteService(WebsiteService websiteService) {
-		_websiteService = websiteService;
-	}
-
 	@Override
 	public WebsiteService getWrappedService() {
 		return _websiteService;

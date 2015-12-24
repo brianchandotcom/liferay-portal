@@ -1239,12 +1239,5 @@ public class SocialActivityAchievementUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(SocialActivityAchievementPersistence persistence) {
-	}
-
 	private static SocialActivityAchievementPersistence _persistence;
 }

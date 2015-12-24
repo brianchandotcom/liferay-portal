@@ -962,14 +962,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		return _bookmarksFolder.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public BookmarksFolder getWrappedBookmarksFolder() {
-		return _bookmarksFolder;
-	}
-
 	@Override
 	public BookmarksFolder getWrappedModel() {
 		return _bookmarksFolder;

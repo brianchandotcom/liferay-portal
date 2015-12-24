@@ -1264,14 +1264,6 @@ public class ShoppingItemWrapper implements ShoppingItem,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ShoppingItem getWrappedShoppingItem() {
-		return _shoppingItem;
-	}
-
 	@Override
 	public ShoppingItem getWrappedModel() {
 		return _shoppingItem;

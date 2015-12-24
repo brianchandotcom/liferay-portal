@@ -2321,14 +2321,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public Layout getWrappedLayout() {
-		return _layout;
-	}
-
 	@Override
 	public Layout getWrappedModel() {
 		return _layout;

@@ -404,13 +404,6 @@ public class DDMDataProviderInstanceLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DDMDataProviderInstanceLocalService service) {
-	}
-
 	private static ServiceTracker<DDMDataProviderInstanceLocalService, DDMDataProviderInstanceLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(DDMDataProviderInstanceLocalService.class);
 }

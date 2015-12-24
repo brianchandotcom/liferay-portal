@@ -836,12 +836,5 @@ public class MBStatsUserUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(MBStatsUserPersistence persistence) {
-	}
-
 	private static MBStatsUserPersistence _persistence;
 }

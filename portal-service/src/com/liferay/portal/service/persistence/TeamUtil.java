@@ -1340,12 +1340,5 @@ public class TeamUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(TeamPersistence persistence) {
-	}
-
 	private static TeamPersistence _persistence;
 }

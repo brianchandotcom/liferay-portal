@@ -1384,23 +1384,6 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 			cacheable, smallImage, smallImageURL, smallImageFile, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMTemplateLocalService getWrappedDDMTemplateLocalService() {
-		return _ddmTemplateLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
 	@Override
 	public DDMTemplateLocalService getWrappedService() {
 		return _ddmTemplateLocalService;

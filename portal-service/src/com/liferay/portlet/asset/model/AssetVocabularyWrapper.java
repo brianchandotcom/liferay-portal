@@ -941,14 +941,6 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		return _assetVocabulary.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public AssetVocabulary getWrappedAssetVocabulary() {
-		return _assetVocabulary;
-	}
-
 	@Override
 	public AssetVocabulary getWrappedModel() {
 		return _assetVocabulary;

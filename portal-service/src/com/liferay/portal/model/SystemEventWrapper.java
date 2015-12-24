@@ -650,14 +650,6 @@ public class SystemEventWrapper implements SystemEvent,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public SystemEvent getWrappedSystemEvent() {
-		return _systemEvent;
-	}
-
 	@Override
 	public SystemEvent getWrappedModel() {
 		return _systemEvent;

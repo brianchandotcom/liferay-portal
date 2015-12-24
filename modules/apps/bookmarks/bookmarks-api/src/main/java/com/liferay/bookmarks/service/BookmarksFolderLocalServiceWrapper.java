@@ -582,23 +582,6 @@ public class BookmarksFolderLocalServiceWrapper
 		return _bookmarksFolderLocalService.updateStatus(userId, folder, status);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public BookmarksFolderLocalService getWrappedBookmarksFolderLocalService() {
-		return _bookmarksFolderLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedBookmarksFolderLocalService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
-		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
 	@Override
 	public BookmarksFolderLocalService getWrappedService() {
 		return _bookmarksFolderLocalService;

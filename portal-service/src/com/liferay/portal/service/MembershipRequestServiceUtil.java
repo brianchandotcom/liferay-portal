@@ -88,12 +88,5 @@ public class MembershipRequestServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MembershipRequestService service) {
-	}
-
 	private static MembershipRequestService _service;
 }

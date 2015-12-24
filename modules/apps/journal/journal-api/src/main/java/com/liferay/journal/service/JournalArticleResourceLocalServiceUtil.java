@@ -352,13 +352,6 @@ public class JournalArticleResourceLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(JournalArticleResourceLocalService service) {
-	}
-
 	private static ServiceTracker<JournalArticleResourceLocalService, JournalArticleResourceLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(JournalArticleResourceLocalService.class);
 }

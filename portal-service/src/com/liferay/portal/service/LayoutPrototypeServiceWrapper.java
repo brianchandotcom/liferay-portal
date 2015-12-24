@@ -150,23 +150,6 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 			nameMap, descriptionMap, active, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LayoutPrototypeService getWrappedLayoutPrototypeService() {
-		return _layoutPrototypeService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLayoutPrototypeService(
-		LayoutPrototypeService layoutPrototypeService) {
-		_layoutPrototypeService = layoutPrototypeService;
-	}
-
 	@Override
 	public LayoutPrototypeService getWrappedService() {
 		return _layoutPrototypeService;

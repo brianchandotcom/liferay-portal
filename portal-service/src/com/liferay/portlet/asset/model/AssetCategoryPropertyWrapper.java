@@ -468,14 +468,6 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public AssetCategoryProperty getWrappedAssetCategoryProperty() {
-		return _assetCategoryProperty;
-	}
-
 	@Override
 	public AssetCategoryProperty getWrappedModel() {
 		return _assetCategoryProperty;

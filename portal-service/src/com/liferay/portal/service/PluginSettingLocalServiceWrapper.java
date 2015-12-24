@@ -297,23 +297,6 @@ public class PluginSettingLocalServiceWrapper
 		return _pluginSettingLocalService.updatePluginSetting(pluginSetting);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PluginSettingLocalService getWrappedPluginSettingLocalService() {
-		return _pluginSettingLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPluginSettingLocalService(
-		PluginSettingLocalService pluginSettingLocalService) {
-		_pluginSettingLocalService = pluginSettingLocalService;
-	}
-
 	@Override
 	public PluginSettingLocalService getWrappedService() {
 		return _pluginSettingLocalService;

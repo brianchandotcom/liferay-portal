@@ -976,14 +976,6 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		return _bookmarksEntry.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public BookmarksEntry getWrappedBookmarksEntry() {
-		return _bookmarksEntry;
-	}
-
 	@Override
 	public BookmarksEntry getWrappedModel() {
 		return _bookmarksEntry;

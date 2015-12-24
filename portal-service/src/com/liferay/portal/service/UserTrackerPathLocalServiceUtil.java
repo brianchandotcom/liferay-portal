@@ -267,12 +267,5 @@ public class UserTrackerPathLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(UserTrackerPathLocalService service) {
-	}
-
 	private static UserTrackerPathLocalService _service;
 }

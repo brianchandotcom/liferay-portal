@@ -443,23 +443,6 @@ public class ShoppingOrderLocalServiceWrapper
 		return _shoppingOrderLocalService.updateShoppingOrder(shoppingOrder);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ShoppingOrderLocalService getWrappedShoppingOrderLocalService() {
-		return _shoppingOrderLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedShoppingOrderLocalService(
-		ShoppingOrderLocalService shoppingOrderLocalService) {
-		_shoppingOrderLocalService = shoppingOrderLocalService;
-	}
-
 	@Override
 	public ShoppingOrderLocalService getWrappedService() {
 		return _shoppingOrderLocalService;

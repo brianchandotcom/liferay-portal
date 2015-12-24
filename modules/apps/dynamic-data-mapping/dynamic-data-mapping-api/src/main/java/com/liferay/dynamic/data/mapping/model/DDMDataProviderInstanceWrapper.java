@@ -827,14 +827,6 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 		return _ddmDataProviderInstance.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DDMDataProviderInstance getWrappedDDMDataProviderInstance() {
-		return _ddmDataProviderInstance;
-	}
-
 	@Override
 	public DDMDataProviderInstance getWrappedModel() {
 		return _ddmDataProviderInstance;

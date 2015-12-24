@@ -955,12 +955,5 @@ public class DLFileEntryLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DLFileEntryLocalService service) {
-	}
-
 	private static DLFileEntryLocalService _service;
 }

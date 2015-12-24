@@ -675,13 +675,6 @@ public class DDMStructureVersionUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(DDMStructureVersionPersistence persistence) {
-	}
-
 	private static ServiceTracker<DDMStructureVersionPersistence, DDMStructureVersionPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(DDMStructureVersionPersistence.class);
 }

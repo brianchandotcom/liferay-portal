@@ -307,23 +307,6 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 			totalAttendees, maxAttendees, price, thumbnail);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MeetupsEntryLocalService getWrappedMeetupsEntryLocalService() {
-		return _meetupsEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMeetupsEntryLocalService(
-		MeetupsEntryLocalService meetupsEntryLocalService) {
-		_meetupsEntryLocalService = meetupsEntryLocalService;
-	}
-
 	@Override
 	public MeetupsEntryLocalService getWrappedService() {
 		return _meetupsEntryLocalService;

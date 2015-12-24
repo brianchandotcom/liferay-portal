@@ -285,23 +285,6 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 		return _ticketLocalService.updateTicket(ticket);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public TicketLocalService getWrappedTicketLocalService() {
-		return _ticketLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedTicketLocalService(
-		TicketLocalService ticketLocalService) {
-		_ticketLocalService = ticketLocalService;
-	}
-
 	@Override
 	public TicketLocalService getWrappedService() {
 		return _ticketLocalService;

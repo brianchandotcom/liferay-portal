@@ -65,23 +65,6 @@ public class ExportImportConfigurationServiceWrapper
 		return _exportImportConfigurationService.restoreExportImportConfigurationFromTrash(exportImportConfigurationId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ExportImportConfigurationService getWrappedExportImportConfigurationService() {
-		return _exportImportConfigurationService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedExportImportConfigurationService(
-		ExportImportConfigurationService exportImportConfigurationService) {
-		_exportImportConfigurationService = exportImportConfigurationService;
-	}
-
 	@Override
 	public ExportImportConfigurationService getWrappedService() {
 		return _exportImportConfigurationService;

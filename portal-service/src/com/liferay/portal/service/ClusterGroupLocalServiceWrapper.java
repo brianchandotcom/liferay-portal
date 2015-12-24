@@ -274,23 +274,6 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 		return _clusterGroupLocalService.updateClusterGroup(clusterGroup);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ClusterGroupLocalService getWrappedClusterGroupLocalService() {
-		return _clusterGroupLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedClusterGroupLocalService(
-		ClusterGroupLocalService clusterGroupLocalService) {
-		_clusterGroupLocalService = clusterGroupLocalService;
-	}
-
 	@Override
 	public ClusterGroupLocalService getWrappedService() {
 		return _clusterGroupLocalService;

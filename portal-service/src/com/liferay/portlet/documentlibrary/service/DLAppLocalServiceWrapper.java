@@ -822,22 +822,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 			description, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLAppLocalService getWrappedDLAppLocalService() {
-		return _dlAppLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
 	@Override
 	public DLAppLocalService getWrappedService() {
 		return _dlAppLocalService;

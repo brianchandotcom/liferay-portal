@@ -561,23 +561,6 @@ public class BookmarksEntryLocalServiceWrapper
 		return _bookmarksEntryLocalService.updateStatus(userId, entry, status);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public BookmarksEntryLocalService getWrappedBookmarksEntryLocalService() {
-		return _bookmarksEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedBookmarksEntryLocalService(
-		BookmarksEntryLocalService bookmarksEntryLocalService) {
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
-	}
-
 	@Override
 	public BookmarksEntryLocalService getWrappedService() {
 		return _bookmarksEntryLocalService;

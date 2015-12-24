@@ -69,23 +69,6 @@ public class CalendarNotificationTemplateServiceWrapper
 			notificationTypeSettings, subject, body, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CalendarNotificationTemplateService getWrappedCalendarNotificationTemplateService() {
-		return _calendarNotificationTemplateService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCalendarNotificationTemplateService(
-		CalendarNotificationTemplateService calendarNotificationTemplateService) {
-		_calendarNotificationTemplateService = calendarNotificationTemplateService;
-	}
-
 	@Override
 	public CalendarNotificationTemplateService getWrappedService() {
 		return _calendarNotificationTemplateService;

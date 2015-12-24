@@ -348,13 +348,6 @@ public class SAPEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(SAPEntryLocalService service) {
-	}
-
 	private static ServiceTracker<SAPEntryLocalService, SAPEntryLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(SAPEntryLocalService.class);
 }

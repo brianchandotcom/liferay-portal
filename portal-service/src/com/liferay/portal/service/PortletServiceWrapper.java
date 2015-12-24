@@ -52,22 +52,6 @@ public class PortletServiceWrapper implements PortletService,
 		return _portletService.updatePortlet(companyId, portletId, roles, active);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PortletService getWrappedPortletService() {
-		return _portletService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPortletService(PortletService portletService) {
-		_portletService = portletService;
-	}
-
 	@Override
 	public PortletService getWrappedService() {
 		return _portletService;

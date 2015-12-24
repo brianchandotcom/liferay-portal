@@ -484,13 +484,6 @@ public class MDRRuleGroupLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MDRRuleGroupLocalService service) {
-	}
-
 	private static ServiceTracker<MDRRuleGroupLocalService, MDRRuleGroupLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(MDRRuleGroupLocalService.class);
 }

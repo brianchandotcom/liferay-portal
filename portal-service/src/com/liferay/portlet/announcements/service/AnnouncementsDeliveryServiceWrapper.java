@@ -53,23 +53,6 @@ public class AnnouncementsDeliveryServiceWrapper
 			email, sms, website);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AnnouncementsDeliveryService getWrappedAnnouncementsDeliveryService() {
-		return _announcementsDeliveryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAnnouncementsDeliveryService(
-		AnnouncementsDeliveryService announcementsDeliveryService) {
-		_announcementsDeliveryService = announcementsDeliveryService;
-	}
-
 	@Override
 	public AnnouncementsDeliveryService getWrappedService() {
 		return _announcementsDeliveryService;

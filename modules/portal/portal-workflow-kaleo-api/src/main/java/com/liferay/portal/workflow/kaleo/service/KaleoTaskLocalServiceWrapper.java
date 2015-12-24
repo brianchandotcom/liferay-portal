@@ -290,23 +290,6 @@ public class KaleoTaskLocalServiceWrapper implements KaleoTaskLocalService,
 		return _kaleoTaskLocalService.updateKaleoTask(kaleoTask);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoTaskLocalService getWrappedKaleoTaskLocalService() {
-		return _kaleoTaskLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoTaskLocalService(
-		KaleoTaskLocalService kaleoTaskLocalService) {
-		_kaleoTaskLocalService = kaleoTaskLocalService;
-	}
-
 	@Override
 	public KaleoTaskLocalService getWrappedService() {
 		return _kaleoTaskLocalService;

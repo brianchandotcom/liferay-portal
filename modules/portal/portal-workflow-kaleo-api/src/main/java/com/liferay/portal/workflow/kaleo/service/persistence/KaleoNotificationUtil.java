@@ -1001,13 +1001,6 @@ public class KaleoNotificationUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(KaleoNotificationPersistence persistence) {
-	}
-
 	private static ServiceTracker<KaleoNotificationPersistence, KaleoNotificationPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(KaleoNotificationPersistence.class);
 }

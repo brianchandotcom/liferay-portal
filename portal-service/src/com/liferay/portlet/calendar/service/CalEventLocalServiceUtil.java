@@ -576,12 +576,5 @@ public class CalEventLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(CalEventLocalService service) {
-	}
-
 	private static CalEventLocalService _service;
 }

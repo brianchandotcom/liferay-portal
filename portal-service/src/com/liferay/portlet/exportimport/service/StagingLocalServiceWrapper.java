@@ -148,23 +148,6 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 			stagingRequestId, privateLayout, parameterMap);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public StagingLocalService getWrappedStagingLocalService() {
-		return _stagingLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedStagingLocalService(
-		StagingLocalService stagingLocalService) {
-		_stagingLocalService = stagingLocalService;
-	}
-
 	@Override
 	public StagingLocalService getWrappedService() {
 		return _stagingLocalService;

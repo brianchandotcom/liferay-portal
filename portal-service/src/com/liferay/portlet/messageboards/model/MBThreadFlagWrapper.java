@@ -500,14 +500,6 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 		return _mbThreadFlag.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public MBThreadFlag getWrappedMBThreadFlag() {
-		return _mbThreadFlag;
-	}
-
 	@Override
 	public MBThreadFlag getWrappedModel() {
 		return _mbThreadFlag;

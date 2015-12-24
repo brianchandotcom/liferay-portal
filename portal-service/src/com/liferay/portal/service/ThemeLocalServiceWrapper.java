@@ -144,22 +144,6 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 		_themeLocalService.uninstallThemes(themes);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ThemeLocalService getWrappedThemeLocalService() {
-		return _themeLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedThemeLocalService(ThemeLocalService themeLocalService) {
-		_themeLocalService = themeLocalService;
-	}
-
 	@Override
 	public ThemeLocalService getWrappedService() {
 		return _themeLocalService;

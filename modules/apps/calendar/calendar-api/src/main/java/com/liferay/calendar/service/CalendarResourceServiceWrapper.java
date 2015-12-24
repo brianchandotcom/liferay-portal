@@ -127,23 +127,6 @@ public class CalendarResourceServiceWrapper implements CalendarResourceService,
 			nameMap, descriptionMap, active, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CalendarResourceService getWrappedCalendarResourceService() {
-		return _calendarResourceService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCalendarResourceService(
-		CalendarResourceService calendarResourceService) {
-		_calendarResourceService = calendarResourceService;
-	}
-
 	@Override
 	public CalendarResourceService getWrappedService() {
 		return _calendarResourceService;

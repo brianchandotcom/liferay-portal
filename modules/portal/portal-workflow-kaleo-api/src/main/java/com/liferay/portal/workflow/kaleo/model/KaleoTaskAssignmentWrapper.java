@@ -689,14 +689,6 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public KaleoTaskAssignment getWrappedKaleoTaskAssignment() {
-		return _kaleoTaskAssignment;
-	}
-
 	@Override
 	public KaleoTaskAssignment getWrappedModel() {
 		return _kaleoTaskAssignment;

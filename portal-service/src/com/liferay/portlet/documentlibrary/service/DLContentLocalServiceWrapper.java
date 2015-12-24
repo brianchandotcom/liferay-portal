@@ -355,23 +355,6 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 		return _dlContentLocalService.updateDLContent(dlContent);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLContentLocalService getWrappedDLContentLocalService() {
-		return _dlContentLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLContentLocalService(
-		DLContentLocalService dlContentLocalService) {
-		_dlContentLocalService = dlContentLocalService;
-	}
-
 	@Override
 	public DLContentLocalService getWrappedService() {
 		return _dlContentLocalService;

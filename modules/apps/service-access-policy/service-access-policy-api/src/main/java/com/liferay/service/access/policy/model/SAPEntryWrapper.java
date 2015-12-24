@@ -727,14 +727,6 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 		return _sapEntry.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public SAPEntry getWrappedSAPEntry() {
-		return _sapEntry;
-	}
-
 	@Override
 	public SAPEntry getWrappedModel() {
 		return _sapEntry;

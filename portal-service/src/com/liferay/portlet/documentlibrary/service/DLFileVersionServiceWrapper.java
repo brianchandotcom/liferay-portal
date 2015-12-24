@@ -78,23 +78,6 @@ public class DLFileVersionServiceWrapper implements DLFileVersionService,
 		return _dlFileVersionService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFileVersionService getWrappedDLFileVersionService() {
-		return _dlFileVersionService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFileVersionService(
-		DLFileVersionService dlFileVersionService) {
-		_dlFileVersionService = dlFileVersionService;
-	}
-
 	@Override
 	public DLFileVersionService getWrappedService() {
 		return _dlFileVersionService;

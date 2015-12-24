@@ -516,23 +516,6 @@ public class AssetVocabularyLocalServiceWrapper
 			title, titleMap, descriptionMap, settings, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AssetVocabularyLocalService getWrappedAssetVocabularyLocalService() {
-		return _assetVocabularyLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAssetVocabularyLocalService(
-		AssetVocabularyLocalService assetVocabularyLocalService) {
-		_assetVocabularyLocalService = assetVocabularyLocalService;
-	}
-
 	@Override
 	public AssetVocabularyLocalService getWrappedService() {
 		return _assetVocabularyLocalService;

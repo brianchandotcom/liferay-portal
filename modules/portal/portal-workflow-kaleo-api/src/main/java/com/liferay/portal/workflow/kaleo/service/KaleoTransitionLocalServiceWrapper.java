@@ -320,23 +320,6 @@ public class KaleoTransitionLocalServiceWrapper
 		return _kaleoTransitionLocalService.updateKaleoTransition(kaleoTransition);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoTransitionLocalService getWrappedKaleoTransitionLocalService() {
-		return _kaleoTransitionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoTransitionLocalService(
-		KaleoTransitionLocalService kaleoTransitionLocalService) {
-		_kaleoTransitionLocalService = kaleoTransitionLocalService;
-	}
-
 	@Override
 	public KaleoTransitionLocalService getWrappedService() {
 		return _kaleoTransitionLocalService;

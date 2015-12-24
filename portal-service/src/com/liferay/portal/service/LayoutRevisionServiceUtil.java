@@ -80,12 +80,5 @@ public class LayoutRevisionServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(LayoutRevisionService service) {
-	}
-
 	private static LayoutRevisionService _service;
 }

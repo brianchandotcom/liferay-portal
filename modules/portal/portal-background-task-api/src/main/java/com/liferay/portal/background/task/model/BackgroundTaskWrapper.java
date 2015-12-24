@@ -726,14 +726,6 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public BackgroundTask getWrappedBackgroundTask() {
-		return _backgroundTask;
-	}
-
 	@Override
 	public BackgroundTask getWrappedModel() {
 		return _backgroundTask;

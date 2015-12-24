@@ -311,23 +311,6 @@ public class UserNotificationDeliveryLocalServiceWrapper
 			deliver);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public UserNotificationDeliveryLocalService getWrappedUserNotificationDeliveryLocalService() {
-		return _userNotificationDeliveryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedUserNotificationDeliveryLocalService(
-		UserNotificationDeliveryLocalService userNotificationDeliveryLocalService) {
-		_userNotificationDeliveryLocalService = userNotificationDeliveryLocalService;
-	}
-
 	@Override
 	public UserNotificationDeliveryLocalService getWrappedService() {
 		return _userNotificationDeliveryLocalService;

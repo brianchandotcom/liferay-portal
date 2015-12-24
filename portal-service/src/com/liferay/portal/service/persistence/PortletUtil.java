@@ -488,12 +488,5 @@ public class PortletUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(PortletPersistence persistence) {
-	}
-
 	private static PortletPersistence _persistence;
 }

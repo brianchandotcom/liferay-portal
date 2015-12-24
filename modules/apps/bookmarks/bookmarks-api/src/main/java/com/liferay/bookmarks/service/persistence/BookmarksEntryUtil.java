@@ -4030,13 +4030,6 @@ public class BookmarksEntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(BookmarksEntryPersistence persistence) {
-	}
-
 	private static ServiceTracker<BookmarksEntryPersistence, BookmarksEntryPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(BookmarksEntryPersistence.class);
 }

@@ -1262,12 +1262,5 @@ public class LayoutSetPrototypeUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(LayoutSetPrototypePersistence persistence) {
-	}
-
 	private static LayoutSetPrototypePersistence _persistence;
 }

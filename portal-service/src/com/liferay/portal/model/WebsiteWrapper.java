@@ -635,14 +635,6 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 		return _website.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public Website getWrappedWebsite() {
-		return _website;
-	}
-
 	@Override
 	public Website getWrappedModel() {
 		return _website;

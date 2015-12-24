@@ -302,23 +302,6 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 			name, portletId, className);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PortletItemLocalService getWrappedPortletItemLocalService() {
-		return _portletItemLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPortletItemLocalService(
-		PortletItemLocalService portletItemLocalService) {
-		_portletItemLocalService = portletItemLocalService;
-	}
-
 	@Override
 	public PortletItemLocalService getWrappedService() {
 		return _portletItemLocalService;

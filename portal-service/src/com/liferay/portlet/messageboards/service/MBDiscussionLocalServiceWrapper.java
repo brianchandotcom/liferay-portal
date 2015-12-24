@@ -410,23 +410,6 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		return _mbDiscussionLocalService.updateMBDiscussion(mbDiscussion);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MBDiscussionLocalService getWrappedMBDiscussionLocalService() {
-		return _mbDiscussionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
 	@Override
 	public MBDiscussionLocalService getWrappedService() {
 		return _mbDiscussionLocalService;

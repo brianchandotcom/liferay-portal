@@ -421,13 +421,6 @@ public class WikiPageServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(WikiPageService service) {
-	}
-
 	private static ServiceTracker<WikiPageService, WikiPageService> _serviceTracker =
 		ServiceTrackerFactory.open(WikiPageService.class);
 }

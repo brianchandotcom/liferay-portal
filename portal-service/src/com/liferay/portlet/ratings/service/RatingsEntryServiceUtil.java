@@ -71,12 +71,5 @@ public class RatingsEntryServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(RatingsEntryService service) {
-	}
-
 	private static RatingsEntryService _service;
 }

@@ -330,23 +330,6 @@ public class SocialActivityAchievementLocalServiceWrapper
 		return _socialActivityAchievementLocalService.updateSocialActivityAchievement(socialActivityAchievement);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialActivityAchievementLocalService getWrappedSocialActivityAchievementLocalService() {
-		return _socialActivityAchievementLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialActivityAchievementLocalService(
-		SocialActivityAchievementLocalService socialActivityAchievementLocalService) {
-		_socialActivityAchievementLocalService = socialActivityAchievementLocalService;
-	}
-
 	@Override
 	public SocialActivityAchievementLocalService getWrappedService() {
 		return _socialActivityAchievementLocalService;

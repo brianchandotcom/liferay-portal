@@ -183,23 +183,6 @@ public class ExportImportServiceWrapper implements ExportImportService,
 			inputStream);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ExportImportService getWrappedExportImportService() {
-		return _exportImportService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedExportImportService(
-		ExportImportService exportImportService) {
-		_exportImportService = exportImportService;
-	}
-
 	@Override
 	public ExportImportService getWrappedService() {
 		return _exportImportService;

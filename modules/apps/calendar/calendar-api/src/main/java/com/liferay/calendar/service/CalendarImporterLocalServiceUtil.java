@@ -70,13 +70,6 @@ public class CalendarImporterLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(CalendarImporterLocalService service) {
-	}
-
 	private static ServiceTracker<CalendarImporterLocalService, CalendarImporterLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(CalendarImporterLocalService.class);
 }

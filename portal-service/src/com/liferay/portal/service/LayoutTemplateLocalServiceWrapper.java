@@ -116,23 +116,6 @@ public class LayoutTemplateLocalServiceWrapper
 		_layoutTemplateLocalService.uninstallLayoutTemplates(themeId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LayoutTemplateLocalService getWrappedLayoutTemplateLocalService() {
-		return _layoutTemplateLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLayoutTemplateLocalService(
-		LayoutTemplateLocalService layoutTemplateLocalService) {
-		_layoutTemplateLocalService = layoutTemplateLocalService;
-	}
-
 	@Override
 	public LayoutTemplateLocalService getWrappedService() {
 		return _layoutTemplateLocalService;

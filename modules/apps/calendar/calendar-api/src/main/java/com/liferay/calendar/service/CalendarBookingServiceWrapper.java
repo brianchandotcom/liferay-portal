@@ -410,23 +410,6 @@ public class CalendarBookingServiceWrapper implements CalendarBookingService,
 			secondReminder, secondReminderType, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CalendarBookingService getWrappedCalendarBookingService() {
-		return _calendarBookingService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCalendarBookingService(
-		CalendarBookingService calendarBookingService) {
-		_calendarBookingService = calendarBookingService;
-	}
-
 	@Override
 	public CalendarBookingService getWrappedService() {
 		return _calendarBookingService;

@@ -125,23 +125,6 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 			feedVersion, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public JournalFeedService getWrappedJournalFeedService() {
-		return _journalFeedService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedJournalFeedService(
-		JournalFeedService journalFeedService) {
-		_journalFeedService = journalFeedService;
-	}
-
 	@Override
 	public JournalFeedService getWrappedService() {
 		return _journalFeedService;

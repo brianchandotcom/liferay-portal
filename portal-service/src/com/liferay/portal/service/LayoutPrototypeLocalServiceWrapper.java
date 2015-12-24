@@ -417,23 +417,6 @@ public class LayoutPrototypeLocalServiceWrapper
 			nameMap, descriptionMap, active, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LayoutPrototypeLocalService getWrappedLayoutPrototypeLocalService() {
-		return _layoutPrototypeLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLayoutPrototypeLocalService(
-		LayoutPrototypeLocalService layoutPrototypeLocalService) {
-		_layoutPrototypeLocalService = layoutPrototypeLocalService;
-	}
-
 	@Override
 	public LayoutPrototypeLocalService getWrappedService() {
 		return _layoutPrototypeLocalService;

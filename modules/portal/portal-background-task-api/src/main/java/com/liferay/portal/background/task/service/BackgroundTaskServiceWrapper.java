@@ -55,23 +55,6 @@ public class BackgroundTaskServiceWrapper implements BackgroundTaskService,
 		return _backgroundTaskService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public BackgroundTaskService getWrappedBackgroundTaskService() {
-		return _backgroundTaskService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedBackgroundTaskService(
-		BackgroundTaskService backgroundTaskService) {
-		_backgroundTaskService = backgroundTaskService;
-	}
-
 	@Override
 	public BackgroundTaskService getWrappedService() {
 		return _backgroundTaskService;

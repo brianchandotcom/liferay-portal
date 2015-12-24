@@ -281,23 +281,6 @@ public class BrowserTrackerLocalServiceWrapper
 			browserKey);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public BrowserTrackerLocalService getWrappedBrowserTrackerLocalService() {
-		return _browserTrackerLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedBrowserTrackerLocalService(
-		BrowserTrackerLocalService browserTrackerLocalService) {
-		_browserTrackerLocalService = browserTrackerLocalService;
-	}
-
 	@Override
 	public BrowserTrackerLocalService getWrappedService() {
 		return _browserTrackerLocalService;

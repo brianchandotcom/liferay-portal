@@ -1987,12 +1987,5 @@ public class SocialRelationUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(SocialRelationPersistence persistence) {
-	}
-
 	private static SocialRelationPersistence _persistence;
 }

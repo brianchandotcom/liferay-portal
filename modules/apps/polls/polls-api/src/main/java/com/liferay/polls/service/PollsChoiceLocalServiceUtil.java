@@ -349,13 +349,6 @@ public class PollsChoiceLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(PollsChoiceLocalService service) {
-	}
-
 	private static ServiceTracker<PollsChoiceLocalService, PollsChoiceLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(PollsChoiceLocalService.class);
 }

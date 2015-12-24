@@ -312,12 +312,5 @@ public class UserNotificationDeliveryLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(UserNotificationDeliveryLocalService service) {
-	}
-
 	private static UserNotificationDeliveryLocalService _service;
 }

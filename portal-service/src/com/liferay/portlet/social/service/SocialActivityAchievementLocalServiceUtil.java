@@ -314,12 +314,5 @@ public class SocialActivityAchievementLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(SocialActivityAchievementLocalService service) {
-	}
-
 	private static SocialActivityAchievementLocalService _service;
 }

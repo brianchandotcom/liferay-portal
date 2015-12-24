@@ -102,12 +102,5 @@ public class PortletPreferencesServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(PortletPreferencesService service) {
-	}
-
 	private static PortletPreferencesService _service;
 }

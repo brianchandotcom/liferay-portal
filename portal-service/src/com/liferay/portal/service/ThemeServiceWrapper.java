@@ -51,22 +51,6 @@ public class ThemeServiceWrapper implements ThemeService,
 		return _themeService.getWARThemes();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ThemeService getWrappedThemeService() {
-		return _themeService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedThemeService(ThemeService themeService) {
-		_themeService = themeService;
-	}
-
 	@Override
 	public ThemeService getWrappedService() {
 		return _themeService;

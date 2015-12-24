@@ -1743,12 +1743,5 @@ public class ExpandoValueUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ExpandoValuePersistence persistence) {
-	}
-
 	private static ExpandoValuePersistence _persistence;
 }

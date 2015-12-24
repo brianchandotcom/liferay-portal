@@ -383,13 +383,6 @@ public class KaleoLogLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(KaleoLogLocalService service) {
-	}
-
 	private static ServiceTracker<KaleoLogLocalService, KaleoLogLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(KaleoLogLocalService.class);
 }

@@ -117,13 +117,6 @@ public class MDRRuleServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MDRRuleService service) {
-	}
-
 	private static ServiceTracker<MDRRuleService, MDRRuleService> _serviceTracker =
 		ServiceTrackerFactory.open(MDRRuleService.class);
 }

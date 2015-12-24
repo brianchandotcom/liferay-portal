@@ -711,14 +711,6 @@ public class KaleoActionWrapper implements KaleoAction,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public KaleoAction getWrappedKaleoAction() {
-		return _kaleoAction;
-	}
-
 	@Override
 	public KaleoAction getWrappedModel() {
 		return _kaleoAction;

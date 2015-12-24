@@ -61,22 +61,6 @@ public class ContactServiceWrapper implements ContactService,
 		return _contactService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ContactService getWrappedContactService() {
-		return _contactService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedContactService(ContactService contactService) {
-		_contactService = contactService;
-	}
-
 	@Override
 	public ContactService getWrappedService() {
 		return _contactService;

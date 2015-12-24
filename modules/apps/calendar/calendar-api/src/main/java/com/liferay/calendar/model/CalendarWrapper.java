@@ -1018,14 +1018,6 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 		return _calendar.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public Calendar getWrappedCalendar() {
-		return _calendar;
-	}
-
 	@Override
 	public Calendar getWrappedModel() {
 		return _calendar;

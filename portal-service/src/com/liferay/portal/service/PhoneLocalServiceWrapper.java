@@ -340,22 +340,6 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 			typeId, primary);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PhoneLocalService getWrappedPhoneLocalService() {
-		return _phoneLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPhoneLocalService(PhoneLocalService phoneLocalService) {
-		_phoneLocalService = phoneLocalService;
-	}
-
 	@Override
 	public PhoneLocalService getWrappedService() {
 		return _phoneLocalService;

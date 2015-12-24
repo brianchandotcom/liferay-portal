@@ -99,13 +99,6 @@ public class MDRRuleGroupInstanceServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MDRRuleGroupInstanceService service) {
-	}
-
 	private static ServiceTracker<MDRRuleGroupInstanceService, MDRRuleGroupInstanceService> _serviceTracker =
 		ServiceTrackerFactory.open(MDRRuleGroupInstanceService.class);
 }

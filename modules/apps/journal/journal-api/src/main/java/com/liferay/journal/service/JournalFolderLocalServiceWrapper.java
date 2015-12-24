@@ -648,23 +648,6 @@ public class JournalFolderLocalServiceWrapper
 			parentFolderId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public JournalFolderLocalService getWrappedJournalFolderLocalService() {
-		return _journalFolderLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
-		_journalFolderLocalService = journalFolderLocalService;
-	}
-
 	@Override
 	public JournalFolderLocalService getWrappedService() {
 		return _journalFolderLocalService;

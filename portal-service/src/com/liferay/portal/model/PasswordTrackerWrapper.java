@@ -384,14 +384,6 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public PasswordTracker getWrappedPasswordTracker() {
-		return _passwordTracker;
-	}
-
 	@Override
 	public PasswordTracker getWrappedModel() {
 		return _passwordTracker;

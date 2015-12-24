@@ -1223,13 +1223,6 @@ public class DDMDataProviderInstanceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(DDMDataProviderInstancePersistence persistence) {
-	}
-
 	private static ServiceTracker<DDMDataProviderInstancePersistence, DDMDataProviderInstancePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(DDMDataProviderInstancePersistence.class);
 }

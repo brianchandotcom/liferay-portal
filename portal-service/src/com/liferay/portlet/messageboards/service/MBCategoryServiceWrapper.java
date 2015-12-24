@@ -309,22 +309,6 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MBCategoryService getWrappedMBCategoryService() {
-		return _mbCategoryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMBCategoryService(MBCategoryService mbCategoryService) {
-		_mbCategoryService = mbCategoryService;
-	}
-
 	@Override
 	public MBCategoryService getWrappedService() {
 		return _mbCategoryService;

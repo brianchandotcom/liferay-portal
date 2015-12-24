@@ -112,22 +112,6 @@ public class MDRActionServiceWrapper implements MDRActionService,
 			descriptionMap, type, typeSettingsProperties, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MDRActionService getWrappedMDRActionService() {
-		return _mdrActionService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMDRActionService(MDRActionService mdrActionService) {
-		_mdrActionService = mdrActionService;
-	}
-
 	@Override
 	public MDRActionService getWrappedService() {
 		return _mdrActionService;

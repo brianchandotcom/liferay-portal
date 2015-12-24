@@ -642,12 +642,5 @@ public class AssetTagStatsUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(AssetTagStatsPersistence persistence) {
-	}
-
 	private static AssetTagStatsPersistence _persistence;
 }

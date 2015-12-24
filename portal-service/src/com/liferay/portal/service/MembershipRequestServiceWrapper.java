@@ -72,23 +72,6 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 			reviewComments, statusId, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MembershipRequestService getWrappedMembershipRequestService() {
-		return _membershipRequestService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMembershipRequestService(
-		MembershipRequestService membershipRequestService) {
-		_membershipRequestService = membershipRequestService;
-	}
-
 	@Override
 	public MembershipRequestService getWrappedService() {
 		return _membershipRequestService;

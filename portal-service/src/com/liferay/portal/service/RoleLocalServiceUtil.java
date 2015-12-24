@@ -1232,12 +1232,5 @@ public class RoleLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(RoleLocalService service) {
-	}
-
 	private static RoleLocalService _service;
 }

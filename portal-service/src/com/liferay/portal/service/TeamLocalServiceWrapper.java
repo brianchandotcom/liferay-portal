@@ -603,22 +603,6 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 		return _teamLocalService.updateTeam(teamId, name, description);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public TeamLocalService getWrappedTeamLocalService() {
-		return _teamLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedTeamLocalService(TeamLocalService teamLocalService) {
-		_teamLocalService = teamLocalService;
-	}
-
 	@Override
 	public TeamLocalService getWrappedService() {
 		return _teamLocalService;

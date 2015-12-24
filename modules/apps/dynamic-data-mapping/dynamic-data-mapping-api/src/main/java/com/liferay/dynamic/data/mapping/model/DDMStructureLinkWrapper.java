@@ -359,14 +359,6 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DDMStructureLink getWrappedDDMStructureLink() {
-		return _ddmStructureLink;
-	}
-
 	@Override
 	public DDMStructureLink getWrappedModel() {
 		return _ddmStructureLink;

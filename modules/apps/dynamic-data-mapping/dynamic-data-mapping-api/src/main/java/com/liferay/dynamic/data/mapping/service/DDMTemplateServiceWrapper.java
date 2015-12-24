@@ -835,23 +835,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 			smallImage, smallImageURL, smallImageFile, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMTemplateService getWrappedDDMTemplateService() {
-		return _ddmTemplateService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMTemplateService(
-		DDMTemplateService ddmTemplateService) {
-		_ddmTemplateService = ddmTemplateService;
-	}
-
 	@Override
 	public DDMTemplateService getWrappedService() {
 		return _ddmTemplateService;

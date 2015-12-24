@@ -1051,23 +1051,6 @@ public class SocialActivityLocalServiceWrapper
 		return _socialActivityLocalService.updateSocialActivity(socialActivity);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialActivityLocalService getWrappedSocialActivityLocalService() {
-		return _socialActivityLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialActivityLocalService(
-		SocialActivityLocalService socialActivityLocalService) {
-		_socialActivityLocalService = socialActivityLocalService;
-	}
-
 	@Override
 	public SocialActivityLocalService getWrappedService() {
 		return _socialActivityLocalService;

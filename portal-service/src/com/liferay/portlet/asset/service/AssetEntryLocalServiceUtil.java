@@ -862,12 +862,5 @@ public class AssetEntryLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AssetEntryLocalService service) {
-	}
-
 	private static AssetEntryLocalService _service;
 }

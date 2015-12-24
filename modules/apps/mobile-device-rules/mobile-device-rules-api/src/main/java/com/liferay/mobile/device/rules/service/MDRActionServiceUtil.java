@@ -121,13 +121,6 @@ public class MDRActionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MDRActionService service) {
-	}
-
 	private static ServiceTracker<MDRActionService, MDRActionService> _serviceTracker =
 		ServiceTrackerFactory.open(MDRActionService.class);
 }

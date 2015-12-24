@@ -617,14 +617,6 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		return _layoutFriendlyURL.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public LayoutFriendlyURL getWrappedLayoutFriendlyURL() {
-		return _layoutFriendlyURL;
-	}
-
 	@Override
 	public LayoutFriendlyURL getWrappedModel() {
 		return _layoutFriendlyURL;

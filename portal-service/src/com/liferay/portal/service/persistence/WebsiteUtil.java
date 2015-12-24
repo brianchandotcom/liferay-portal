@@ -1488,12 +1488,5 @@ public class WebsiteUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(WebsitePersistence persistence) {
-	}
-
 	private static WebsitePersistence _persistence;
 }

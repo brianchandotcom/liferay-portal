@@ -2139,12 +2139,5 @@ public class LayoutRevisionUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(LayoutRevisionPersistence persistence) {
-	}
-
 	private static LayoutRevisionPersistence _persistence;
 }

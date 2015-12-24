@@ -80,13 +80,6 @@ public class DDLRecordVersionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DDLRecordVersionService service) {
-	}
-
 	private static ServiceTracker<DDLRecordVersionService, DDLRecordVersionService> _serviceTracker =
 		ServiceTrackerFactory.open(DDLRecordVersionService.class);
 }

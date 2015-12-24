@@ -451,12 +451,5 @@ public class TrashEntryLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(TrashEntryLocalService service) {
-	}
-
 	private static TrashEntryLocalService _service;
 }

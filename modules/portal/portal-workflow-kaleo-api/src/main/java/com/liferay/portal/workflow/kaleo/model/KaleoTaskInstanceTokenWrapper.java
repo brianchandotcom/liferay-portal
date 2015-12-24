@@ -786,14 +786,6 @@ public class KaleoTaskInstanceTokenWrapper implements KaleoTaskInstanceToken,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public KaleoTaskInstanceToken getWrappedKaleoTaskInstanceToken() {
-		return _kaleoTaskInstanceToken;
-	}
-
 	@Override
 	public KaleoTaskInstanceToken getWrappedModel() {
 		return _kaleoTaskInstanceToken;

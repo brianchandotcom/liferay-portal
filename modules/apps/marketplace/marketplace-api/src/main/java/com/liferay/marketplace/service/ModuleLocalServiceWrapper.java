@@ -281,23 +281,6 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 		return _moduleLocalService.updateModule(module);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ModuleLocalService getWrappedModuleLocalService() {
-		return _moduleLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedModuleLocalService(
-		ModuleLocalService moduleLocalService) {
-		_moduleLocalService = moduleLocalService;
-	}
-
 	@Override
 	public ModuleLocalService getWrappedService() {
 		return _moduleLocalService;

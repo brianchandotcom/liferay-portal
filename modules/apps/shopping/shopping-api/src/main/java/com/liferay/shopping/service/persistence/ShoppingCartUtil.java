@@ -633,13 +633,6 @@ public class ShoppingCartUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ShoppingCartPersistence persistence) {
-	}
-
 	private static ServiceTracker<ShoppingCartPersistence, ShoppingCartPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(ShoppingCartPersistence.class);
 }

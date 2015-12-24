@@ -1517,14 +1517,6 @@ public class CalendarBookingWrapper implements CalendarBooking,
 		return _calendarBooking.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public CalendarBooking getWrappedCalendarBooking() {
-		return _calendarBooking;
-	}
-
 	@Override
 	public CalendarBooking getWrappedModel() {
 		return _calendarBooking;

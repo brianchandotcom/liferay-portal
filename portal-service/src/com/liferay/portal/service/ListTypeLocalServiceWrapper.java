@@ -282,23 +282,6 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 		_listTypeLocalService.validate(listTypeId, type);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ListTypeLocalService getWrappedListTypeLocalService() {
-		return _listTypeLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedListTypeLocalService(
-		ListTypeLocalService listTypeLocalService) {
-		_listTypeLocalService = listTypeLocalService;
-	}
-
 	@Override
 	public ListTypeLocalService getWrappedService() {
 		return _listTypeLocalService;

@@ -826,14 +826,6 @@ public class ExportImportConfigurationWrapper
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ExportImportConfiguration getWrappedExportImportConfiguration() {
-		return _exportImportConfiguration;
-	}
-
 	@Override
 	public ExportImportConfiguration getWrappedModel() {
 		return _exportImportConfiguration;

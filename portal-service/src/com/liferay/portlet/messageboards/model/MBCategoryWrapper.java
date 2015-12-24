@@ -1003,14 +1003,6 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		return _mbCategory.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public MBCategory getWrappedMBCategory() {
-		return _mbCategory;
-	}
-
 	@Override
 	public MBCategory getWrappedModel() {
 		return _mbCategory;

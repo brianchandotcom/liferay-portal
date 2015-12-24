@@ -329,22 +329,6 @@ public class RoleServiceWrapper implements RoleService,
 			subtype, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public RoleService getWrappedRoleService() {
-		return _roleService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedRoleService(RoleService roleService) {
-		_roleService = roleService;
-	}
-
 	@Override
 	public RoleService getWrappedService() {
 		return _roleService;

@@ -485,13 +485,6 @@ public class WikiNodeLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(WikiNodeLocalService service) {
-	}
-
 	private static ServiceTracker<WikiNodeLocalService, WikiNodeLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(WikiNodeLocalService.class);
 }

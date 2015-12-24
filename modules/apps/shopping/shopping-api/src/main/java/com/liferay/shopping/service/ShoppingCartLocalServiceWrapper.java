@@ -294,23 +294,6 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 		return _shoppingCartLocalService.updateShoppingCart(shoppingCart);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ShoppingCartLocalService getWrappedShoppingCartLocalService() {
-		return _shoppingCartLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedShoppingCartLocalService(
-		ShoppingCartLocalService shoppingCartLocalService) {
-		_shoppingCartLocalService = shoppingCartLocalService;
-	}
-
 	@Override
 	public ShoppingCartLocalService getWrappedService() {
 		return _shoppingCartLocalService;

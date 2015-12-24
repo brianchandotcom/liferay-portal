@@ -950,14 +950,6 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 		return _mdrAction.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public MDRAction getWrappedMDRAction() {
-		return _mdrAction;
-	}
-
 	@Override
 	public MDRAction getWrappedModel() {
 		return _mdrAction;

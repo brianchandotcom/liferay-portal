@@ -135,23 +135,6 @@ public class LayoutSetPrototypeServiceWrapper
 			settings);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LayoutSetPrototypeService getWrappedLayoutSetPrototypeService() {
-		return _layoutSetPrototypeService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLayoutSetPrototypeService(
-		LayoutSetPrototypeService layoutSetPrototypeService) {
-		_layoutSetPrototypeService = layoutSetPrototypeService;
-	}
-
 	@Override
 	public LayoutSetPrototypeService getWrappedService() {
 		return _layoutSetPrototypeService;

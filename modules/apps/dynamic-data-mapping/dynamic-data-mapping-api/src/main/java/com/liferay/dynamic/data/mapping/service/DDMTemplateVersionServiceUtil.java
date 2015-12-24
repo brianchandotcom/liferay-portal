@@ -80,13 +80,6 @@ public class DDMTemplateVersionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DDMTemplateVersionService service) {
-	}
-
 	private static ServiceTracker<DDMTemplateVersionService, DDMTemplateVersionService> _serviceTracker =
 		ServiceTrackerFactory.open(DDMTemplateVersionService.class);
 }

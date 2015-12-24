@@ -401,23 +401,6 @@ public class ExportImportConfigurationLocalServiceWrapper
 			exportImportConfigurationId, status);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ExportImportConfigurationLocalService getWrappedExportImportConfigurationLocalService() {
-		return _exportImportConfigurationLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService exportImportConfigurationLocalService) {
-		_exportImportConfigurationLocalService = exportImportConfigurationLocalService;
-	}
-
 	@Override
 	public ExportImportConfigurationLocalService getWrappedService() {
 		return _exportImportConfigurationLocalService;

@@ -289,23 +289,6 @@ public class RecentLayoutBranchLocalServiceWrapper
 		return _recentLayoutBranchLocalService.updateRecentLayoutBranch(recentLayoutBranch);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public RecentLayoutBranchLocalService getWrappedRecentLayoutBranchLocalService() {
-		return _recentLayoutBranchLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedRecentLayoutBranchLocalService(
-		RecentLayoutBranchLocalService recentLayoutBranchLocalService) {
-		_recentLayoutBranchLocalService = recentLayoutBranchLocalService;
-	}
-
 	@Override
 	public RecentLayoutBranchLocalService getWrappedService() {
 		return _recentLayoutBranchLocalService;

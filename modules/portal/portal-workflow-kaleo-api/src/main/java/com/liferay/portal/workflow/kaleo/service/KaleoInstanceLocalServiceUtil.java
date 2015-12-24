@@ -354,13 +354,6 @@ public class KaleoInstanceLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(KaleoInstanceLocalService service) {
-	}
-
 	private static ServiceTracker<KaleoInstanceLocalService, KaleoInstanceLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(KaleoInstanceLocalService.class);
 }

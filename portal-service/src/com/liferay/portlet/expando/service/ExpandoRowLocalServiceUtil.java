@@ -398,12 +398,5 @@ public class ExpandoRowLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ExpandoRowLocalService service) {
-	}
-
 	private static ExpandoRowLocalService _service;
 }

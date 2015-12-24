@@ -272,12 +272,5 @@ public class ClusterGroupLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ClusterGroupLocalService service) {
-	}
-
 	private static ClusterGroupLocalService _service;
 }

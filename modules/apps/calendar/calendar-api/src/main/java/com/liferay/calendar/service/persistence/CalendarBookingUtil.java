@@ -1928,13 +1928,6 @@ public class CalendarBookingUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(CalendarBookingPersistence persistence) {
-	}
-
 	private static ServiceTracker<CalendarBookingPersistence, CalendarBookingPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(CalendarBookingPersistence.class);
 }

@@ -146,12 +146,5 @@ public class SocialRequestInterpreterLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(SocialRequestInterpreterLocalService service) {
-	}
-
 	private static SocialRequestInterpreterLocalService _service;
 }

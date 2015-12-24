@@ -455,23 +455,6 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		_assetLinkLocalService.updateLinks(userId, entryId, linkEntryIds, typeId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AssetLinkLocalService getWrappedAssetLinkLocalService() {
-		return _assetLinkLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAssetLinkLocalService(
-		AssetLinkLocalService assetLinkLocalService) {
-		_assetLinkLocalService = assetLinkLocalService;
-	}
-
 	@Override
 	public AssetLinkLocalService getWrappedService() {
 		return _assetLinkLocalService;

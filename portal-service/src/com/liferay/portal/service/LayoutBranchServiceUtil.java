@@ -85,12 +85,5 @@ public class LayoutBranchServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(LayoutBranchService service) {
-	}
-
 	private static LayoutBranchService _service;
 }

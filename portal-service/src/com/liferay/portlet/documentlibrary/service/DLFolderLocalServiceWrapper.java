@@ -1017,23 +1017,6 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		return _dlFolderLocalService.verifyInheritableLock(folderId, lockUuid);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFolderLocalService getWrappedDLFolderLocalService() {
-		return _dlFolderLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFolderLocalService(
-		DLFolderLocalService dlFolderLocalService) {
-		_dlFolderLocalService = dlFolderLocalService;
-	}
-
 	@Override
 	public DLFolderLocalService getWrappedService() {
 		return _dlFolderLocalService;

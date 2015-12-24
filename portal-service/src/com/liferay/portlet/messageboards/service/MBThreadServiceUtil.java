@@ -184,12 +184,5 @@ public class MBThreadServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MBThreadService service) {
-	}
-
 	private static MBThreadService _service;
 }

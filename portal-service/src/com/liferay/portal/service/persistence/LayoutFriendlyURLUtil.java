@@ -1675,12 +1675,5 @@ public class LayoutFriendlyURLUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(LayoutFriendlyURLPersistence persistence) {
-	}
-
 	private static LayoutFriendlyURLPersistence _persistence;
 }

@@ -101,22 +101,6 @@ public class CountryServiceWrapper implements CountryService,
 		return _countryService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CountryService getWrappedCountryService() {
-		return _countryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCountryService(CountryService countryService) {
-		_countryService = countryService;
-	}
-
 	@Override
 	public CountryService getWrappedService() {
 		return _countryService;

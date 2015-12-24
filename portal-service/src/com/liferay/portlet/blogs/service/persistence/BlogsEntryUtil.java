@@ -5576,12 +5576,5 @@ public class BlogsEntryUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(BlogsEntryPersistence persistence) {
-	}
-
 	private static BlogsEntryPersistence _persistence;
 }

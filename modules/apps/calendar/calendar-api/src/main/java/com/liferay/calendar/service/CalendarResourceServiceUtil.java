@@ -131,13 +131,6 @@ public class CalendarResourceServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(CalendarResourceService service) {
-	}
-
 	private static ServiceTracker<CalendarResourceService, CalendarResourceService> _serviceTracker =
 		ServiceTrackerFactory.open(CalendarResourceService.class);
 }

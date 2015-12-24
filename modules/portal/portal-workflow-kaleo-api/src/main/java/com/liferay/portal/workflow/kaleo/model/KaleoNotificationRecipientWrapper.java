@@ -695,14 +695,6 @@ public class KaleoNotificationRecipientWrapper
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public KaleoNotificationRecipient getWrappedKaleoNotificationRecipient() {
-		return _kaleoNotificationRecipient;
-	}
-
 	@Override
 	public KaleoNotificationRecipient getWrappedModel() {
 		return _kaleoNotificationRecipient;

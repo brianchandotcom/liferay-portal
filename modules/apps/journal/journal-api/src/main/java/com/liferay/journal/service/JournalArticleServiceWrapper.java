@@ -2039,23 +2039,6 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			status, articleURL, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public JournalArticleService getWrappedJournalArticleService() {
-		return _journalArticleService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedJournalArticleService(
-		JournalArticleService journalArticleService) {
-		_journalArticleService = journalArticleService;
-	}
-
 	@Override
 	public JournalArticleService getWrappedService() {
 		return _journalArticleService;

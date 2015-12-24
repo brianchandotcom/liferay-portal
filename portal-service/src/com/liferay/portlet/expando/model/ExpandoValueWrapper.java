@@ -731,14 +731,6 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ExpandoValue getWrappedExpandoValue() {
-		return _expandoValue;
-	}
-
 	@Override
 	public ExpandoValue getWrappedModel() {
 		return _expandoValue;

@@ -191,12 +191,5 @@ public class AssetEntryServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AssetEntryService service) {
-	}
-
 	private static AssetEntryService _service;
 }

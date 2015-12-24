@@ -114,23 +114,6 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ShoppingOrderService getWrappedShoppingOrderService() {
-		return _shoppingOrderService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedShoppingOrderService(
-		ShoppingOrderService shoppingOrderService) {
-		_shoppingOrderService = shoppingOrderService;
-	}
-
 	@Override
 	public ShoppingOrderService getWrappedService() {
 		return _shoppingOrderService;

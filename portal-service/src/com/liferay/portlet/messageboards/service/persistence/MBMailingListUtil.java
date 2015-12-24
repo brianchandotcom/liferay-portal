@@ -882,12 +882,5 @@ public class MBMailingListUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(MBMailingListPersistence persistence) {
-	}
-
 	private static MBMailingListPersistence _persistence;
 }

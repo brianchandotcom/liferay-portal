@@ -1245,14 +1245,6 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		return _blogsEntry.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public BlogsEntry getWrappedBlogsEntry() {
-		return _blogsEntry;
-	}
-
 	@Override
 	public BlogsEntry getWrappedModel() {
 		return _blogsEntry;

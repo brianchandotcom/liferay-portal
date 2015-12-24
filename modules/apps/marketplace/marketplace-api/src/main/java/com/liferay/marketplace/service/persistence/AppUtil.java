@@ -959,13 +959,6 @@ public class AppUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(AppPersistence persistence) {
-	}
-
 	private static ServiceTracker<AppPersistence, AppPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(AppPersistence.class);
 }

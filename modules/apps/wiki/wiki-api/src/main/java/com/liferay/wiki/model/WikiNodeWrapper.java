@@ -888,14 +888,6 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 		return _wikiNode.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public WikiNode getWrappedWikiNode() {
-		return _wikiNode;
-	}
-
 	@Override
 	public WikiNode getWrappedModel() {
 		return _wikiNode;

@@ -1245,14 +1245,6 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return _mbMessage.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public MBMessage getWrappedMBMessage() {
-		return _mbMessage;
-	}
-
 	@Override
 	public MBMessage getWrappedModel() {
 		return _mbMessage;

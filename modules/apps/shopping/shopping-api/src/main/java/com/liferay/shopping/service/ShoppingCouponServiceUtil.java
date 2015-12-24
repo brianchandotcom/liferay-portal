@@ -110,13 +110,6 @@ public class ShoppingCouponServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ShoppingCouponService service) {
-	}
-
 	private static ServiceTracker<ShoppingCouponService, ShoppingCouponService> _serviceTracker =
 		ServiceTrackerFactory.open(ShoppingCouponService.class);
 }

@@ -2769,22 +2769,6 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.updateSite(groupId, site);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public GroupLocalService getWrappedGroupLocalService() {
-		return _groupLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	@Override
 	public GroupLocalService getWrappedService() {
 		return _groupLocalService;

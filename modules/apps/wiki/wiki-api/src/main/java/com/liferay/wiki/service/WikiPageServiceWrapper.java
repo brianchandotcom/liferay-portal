@@ -449,22 +449,6 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public WikiPageService getWrappedWikiPageService() {
-		return _wikiPageService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedWikiPageService(WikiPageService wikiPageService) {
-		_wikiPageService = wikiPageService;
-	}
-
 	@Override
 	public WikiPageService getWrappedService() {
 		return _wikiPageService;

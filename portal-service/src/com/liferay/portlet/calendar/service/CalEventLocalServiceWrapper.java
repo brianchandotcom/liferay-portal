@@ -607,23 +607,6 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService,
 			firstReminder, secondReminder, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CalEventLocalService getWrappedCalEventLocalService() {
-		return _calEventLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCalEventLocalService(
-		CalEventLocalService calEventLocalService) {
-		_calEventLocalService = calEventLocalService;
-	}
-
 	@Override
 	public CalEventLocalService getWrappedService() {
 		return _calEventLocalService;

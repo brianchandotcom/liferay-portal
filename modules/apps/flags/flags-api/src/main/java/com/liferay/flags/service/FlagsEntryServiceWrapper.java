@@ -52,22 +52,6 @@ public class FlagsEntryServiceWrapper implements FlagsEntryService,
 		return _flagsEntryService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public FlagsEntryService getWrappedFlagsEntryService() {
-		return _flagsEntryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedFlagsEntryService(FlagsEntryService flagsEntryService) {
-		_flagsEntryService = flagsEntryService;
-	}
-
 	@Override
 	public FlagsEntryService getWrappedService() {
 		return _flagsEntryService;

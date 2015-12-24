@@ -1668,13 +1668,6 @@ public class JournalContentSearchUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(JournalContentSearchPersistence persistence) {
-	}
-
 	private static ServiceTracker<JournalContentSearchPersistence, JournalContentSearchPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(JournalContentSearchPersistence.class);
 }

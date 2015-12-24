@@ -62,23 +62,6 @@ public class CalendarImporterLocalServiceWrapper
 		_calendarImporterLocalService.importRolePermissions();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CalendarImporterLocalService getWrappedCalendarImporterLocalService() {
-		return _calendarImporterLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCalendarImporterLocalService(
-		CalendarImporterLocalService calendarImporterLocalService) {
-		_calendarImporterLocalService = calendarImporterLocalService;
-	}
-
 	@Override
 	public CalendarImporterLocalService getWrappedService() {
 		return _calendarImporterLocalService;

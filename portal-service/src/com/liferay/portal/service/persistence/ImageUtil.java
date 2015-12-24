@@ -418,12 +418,5 @@ public class ImageUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ImagePersistence persistence) {
-	}
-
 	private static ImagePersistence _persistence;
 }

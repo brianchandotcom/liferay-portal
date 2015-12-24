@@ -1095,23 +1095,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		_wikiPageLocalService.validateTitle(title);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public WikiPageLocalService getWrappedWikiPageLocalService() {
-		return _wikiPageLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
 	@Override
 	public WikiPageLocalService getWrappedService() {
 		return _wikiPageLocalService;

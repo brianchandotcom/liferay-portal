@@ -225,13 +225,6 @@ public class BookmarksFolderServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(BookmarksFolderService service) {
-	}
-
 	private static ServiceTracker<BookmarksFolderService, BookmarksFolderService> _serviceTracker =
 		ServiceTrackerFactory.open(BookmarksFolderService.class);
 }

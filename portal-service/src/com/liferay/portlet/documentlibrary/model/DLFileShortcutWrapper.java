@@ -927,14 +927,6 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		return _dlFileShortcut.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DLFileShortcut getWrappedDLFileShortcut() {
-		return _dlFileShortcut;
-	}
-
 	@Override
 	public DLFileShortcut getWrappedModel() {
 		return _dlFileShortcut;

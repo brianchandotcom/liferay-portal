@@ -423,13 +423,6 @@ public class MicroblogsEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MicroblogsEntryLocalService service) {
-	}
-
 	private static ServiceTracker<MicroblogsEntryLocalService, MicroblogsEntryLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(MicroblogsEntryLocalService.class);
 }

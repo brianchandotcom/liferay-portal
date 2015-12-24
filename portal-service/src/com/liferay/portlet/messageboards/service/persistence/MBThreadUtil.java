@@ -3954,12 +3954,5 @@ public class MBThreadUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(MBThreadPersistence persistence) {
-	}
-
 	private static MBThreadPersistence _persistence;
 }

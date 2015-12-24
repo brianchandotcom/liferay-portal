@@ -380,23 +380,6 @@ public class DDMStructureLayoutLocalServiceWrapper
 			ddmFormLayout, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMStructureLayoutLocalService getWrappedDDMStructureLayoutLocalService() {
-		return _ddmStructureLayoutLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMStructureLayoutLocalService(
-		DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
-		_ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
-	}
-
 	@Override
 	public DDMStructureLayoutLocalService getWrappedService() {
 		return _ddmStructureLayoutLocalService;

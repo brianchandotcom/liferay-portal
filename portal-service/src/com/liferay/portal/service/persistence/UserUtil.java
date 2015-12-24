@@ -3304,12 +3304,5 @@ public class UserUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(UserPersistence persistence) {
-	}
-
 	private static UserPersistence _persistence;
 }

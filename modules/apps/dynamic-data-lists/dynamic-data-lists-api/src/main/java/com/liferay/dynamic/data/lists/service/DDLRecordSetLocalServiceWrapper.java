@@ -503,23 +503,6 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 			settingsDDMFormValues);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDLRecordSetLocalService getWrappedDDLRecordSetLocalService() {
-		return _ddlRecordSetLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDLRecordSetLocalService(
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-	}
-
 	@Override
 	public DDLRecordSetLocalService getWrappedService() {
 		return _ddlRecordSetLocalService;

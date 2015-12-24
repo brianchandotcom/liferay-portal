@@ -335,23 +335,6 @@ public class PortalPreferencesLocalServiceWrapper
 			ownerType, xml);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PortalPreferencesLocalService getWrappedPortalPreferencesLocalService() {
-		return _portalPreferencesLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPortalPreferencesLocalService(
-		PortalPreferencesLocalService portalPreferencesLocalService) {
-		_portalPreferencesLocalService = portalPreferencesLocalService;
-	}
-
 	@Override
 	public PortalPreferencesLocalService getWrappedService() {
 		return _portalPreferencesLocalService;

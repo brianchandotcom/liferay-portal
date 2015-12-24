@@ -65,22 +65,6 @@ public class ListTypeServiceWrapper implements ListTypeService,
 		_listTypeService.validate(listTypeId, type);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ListTypeService getWrappedListTypeService() {
-		return _listTypeService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedListTypeService(ListTypeService listTypeService) {
-		_listTypeService = listTypeService;
-	}
-
 	@Override
 	public ListTypeService getWrappedService() {
 		return _listTypeService;

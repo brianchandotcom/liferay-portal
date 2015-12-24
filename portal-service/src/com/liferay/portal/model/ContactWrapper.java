@@ -1037,14 +1037,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public Contact getWrappedContact() {
-		return _contact;
-	}
-
 	@Override
 	public Contact getWrappedModel() {
 		return _contact;

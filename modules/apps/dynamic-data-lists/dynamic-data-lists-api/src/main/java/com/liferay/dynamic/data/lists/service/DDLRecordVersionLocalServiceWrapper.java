@@ -300,23 +300,6 @@ public class DDLRecordVersionLocalServiceWrapper
 		return _ddlRecordVersionLocalService.updateDDLRecordVersion(ddlRecordVersion);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDLRecordVersionLocalService getWrappedDDLRecordVersionLocalService() {
-		return _ddlRecordVersionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDLRecordVersionLocalService(
-		DDLRecordVersionLocalService ddlRecordVersionLocalService) {
-		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
-	}
-
 	@Override
 	public DDLRecordVersionLocalService getWrappedService() {
 		return _ddlRecordVersionLocalService;

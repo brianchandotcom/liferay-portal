@@ -1395,12 +1395,5 @@ public class ExpandoValueLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ExpandoValueLocalService service) {
-	}
-
 	private static ExpandoValueLocalService _service;
 }

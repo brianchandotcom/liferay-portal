@@ -643,14 +643,6 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public KaleoNode getWrappedKaleoNode() {
-		return _kaleoNode;
-	}
-
 	@Override
 	public KaleoNode getWrappedModel() {
 		return _kaleoNode;

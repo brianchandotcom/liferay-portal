@@ -46,22 +46,6 @@ public class ClassNameServiceWrapper implements ClassNameService,
 		return _classNameService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ClassNameService getWrappedClassNameService() {
-		return _classNameService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedClassNameService(ClassNameService classNameService) {
-		_classNameService = classNameService;
-	}
-
 	@Override
 	public ClassNameService getWrappedService() {
 		return _classNameService;

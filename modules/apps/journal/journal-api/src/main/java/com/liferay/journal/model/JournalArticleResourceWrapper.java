@@ -339,14 +339,6 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public JournalArticleResource getWrappedJournalArticleResource() {
-		return _journalArticleResource;
-	}
-
 	@Override
 	public JournalArticleResource getWrappedModel() {
 		return _journalArticleResource;

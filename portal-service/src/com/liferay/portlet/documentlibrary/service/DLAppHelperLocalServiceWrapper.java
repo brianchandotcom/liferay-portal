@@ -369,23 +369,6 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 			workflowContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLAppHelperLocalService getWrappedDLAppHelperLocalService() {
-		return _dlAppHelperLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLAppHelperLocalService(
-		DLAppHelperLocalService dlAppHelperLocalService) {
-		_dlAppHelperLocalService = dlAppHelperLocalService;
-	}
-
 	@Override
 	public DLAppHelperLocalService getWrappedService() {
 		return _dlAppHelperLocalService;

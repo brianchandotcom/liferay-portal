@@ -73,23 +73,6 @@ public class DDMStructureVersionServiceWrapper
 		return _ddmStructureVersionService.getStructureVersionsCount(structureId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMStructureVersionService getWrappedDDMStructureVersionService() {
-		return _ddmStructureVersionService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMStructureVersionService(
-		DDMStructureVersionService ddmStructureVersionService) {
-		_ddmStructureVersionService = ddmStructureVersionService;
-	}
-
 	@Override
 	public DDMStructureVersionService getWrappedService() {
 		return _ddmStructureVersionService;

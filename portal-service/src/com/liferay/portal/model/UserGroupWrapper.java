@@ -623,14 +623,6 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		return _userGroup.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public UserGroup getWrappedUserGroup() {
-		return _userGroup;
-	}
-
 	@Override
 	public UserGroup getWrappedModel() {
 		return _userGroup;

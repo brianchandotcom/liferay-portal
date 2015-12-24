@@ -329,14 +329,6 @@ public class ExpandoTableWrapper implements ExpandoTable,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ExpandoTable getWrappedExpandoTable() {
-		return _expandoTable;
-	}
-
 	@Override
 	public ExpandoTable getWrappedModel() {
 		return _expandoTable;

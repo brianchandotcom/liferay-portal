@@ -369,23 +369,6 @@ public class KaleoInstanceLocalServiceWrapper
 			workflowContext, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoInstanceLocalService getWrappedKaleoInstanceLocalService() {
-		return _kaleoInstanceLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoInstanceLocalService(
-		KaleoInstanceLocalService kaleoInstanceLocalService) {
-		_kaleoInstanceLocalService = kaleoInstanceLocalService;
-	}
-
 	@Override
 	public KaleoInstanceLocalService getWrappedService() {
 		return _kaleoInstanceLocalService;

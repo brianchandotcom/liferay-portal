@@ -897,23 +897,6 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 		_mbMessageLocalService.updateUserName(userId, userName);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MBMessageLocalService getWrappedMBMessageLocalService() {
-		return _mbMessageLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
 	@Override
 	public MBMessageLocalService getWrappedService() {
 		return _mbMessageLocalService;

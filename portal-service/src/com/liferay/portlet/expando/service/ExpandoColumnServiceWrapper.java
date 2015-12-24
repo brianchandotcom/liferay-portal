@@ -94,23 +94,6 @@ public class ExpandoColumnServiceWrapper implements ExpandoColumnService,
 		return _expandoColumnService.updateTypeSettings(columnId, typeSettings);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ExpandoColumnService getWrappedExpandoColumnService() {
-		return _expandoColumnService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedExpandoColumnService(
-		ExpandoColumnService expandoColumnService) {
-		_expandoColumnService = expandoColumnService;
-	}
-
 	@Override
 	public ExpandoColumnService getWrappedService() {
 		return _expandoColumnService;

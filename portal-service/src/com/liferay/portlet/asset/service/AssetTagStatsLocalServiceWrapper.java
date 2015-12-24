@@ -376,23 +376,6 @@ public class AssetTagStatsLocalServiceWrapper
 		return _assetTagStatsLocalService.updateTagStats(tagId, classNameId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AssetTagStatsLocalService getWrappedAssetTagStatsLocalService() {
-		return _assetTagStatsLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAssetTagStatsLocalService(
-		AssetTagStatsLocalService assetTagStatsLocalService) {
-		_assetTagStatsLocalService = assetTagStatsLocalService;
-	}
-
 	@Override
 	public AssetTagStatsLocalService getWrappedService() {
 		return _assetTagStatsLocalService;

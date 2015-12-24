@@ -2720,13 +2720,6 @@ public class BackgroundTaskUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(BackgroundTaskPersistence persistence) {
-	}
-
 	private static ServiceTracker<BackgroundTaskPersistence, BackgroundTaskPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(BackgroundTaskPersistence.class);
 }

@@ -115,22 +115,6 @@ public class RepositoryServiceWrapper implements RepositoryService,
 		_repositoryService.updateRepository(repositoryId, name, description);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public RepositoryService getWrappedRepositoryService() {
-		return _repositoryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedRepositoryService(RepositoryService repositoryService) {
-		_repositoryService = repositoryService;
-	}
-
 	@Override
 	public RepositoryService getWrappedService() {
 		return _repositoryService;

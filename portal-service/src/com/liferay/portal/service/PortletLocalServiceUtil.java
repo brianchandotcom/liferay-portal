@@ -448,12 +448,5 @@ public class PortletLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(PortletLocalService service) {
-	}
-
 	private static PortletLocalService _service;
 }

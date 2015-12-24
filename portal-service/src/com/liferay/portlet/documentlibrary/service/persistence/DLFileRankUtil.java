@@ -1017,12 +1017,5 @@ public class DLFileRankUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(DLFileRankPersistence persistence) {
-	}
-
 	private static DLFileRankPersistence _persistence;
 }

@@ -82,23 +82,6 @@ public class DLFileShortcutServiceWrapper implements DLFileShortcutService,
 			newToFileEntryId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFileShortcutService getWrappedDLFileShortcutService() {
-		return _dlFileShortcutService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFileShortcutService(
-		DLFileShortcutService dlFileShortcutService) {
-		_dlFileShortcutService = dlFileShortcutService;
-	}
-
 	@Override
 	public DLFileShortcutService getWrappedService() {
 		return _dlFileShortcutService;

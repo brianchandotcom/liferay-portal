@@ -425,14 +425,6 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public Image getWrappedImage() {
-		return _image;
-	}
-
 	@Override
 	public Image getWrappedModel() {
 		return _image;

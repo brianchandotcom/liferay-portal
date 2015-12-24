@@ -357,23 +357,6 @@ public class DDMStorageLinkLocalServiceWrapper
 			classNameId, classPK);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMStorageLinkLocalService getWrappedDDMStorageLinkLocalService() {
-		return _ddmStorageLinkLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMStorageLinkLocalService(
-		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
-		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
-	}
-
 	@Override
 	public DDMStorageLinkLocalService getWrappedService() {
 		return _ddmStorageLinkLocalService;

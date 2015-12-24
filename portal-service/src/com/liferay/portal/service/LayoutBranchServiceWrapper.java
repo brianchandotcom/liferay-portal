@@ -66,23 +66,6 @@ public class LayoutBranchServiceWrapper implements LayoutBranchService,
 			description, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LayoutBranchService getWrappedLayoutBranchService() {
-		return _layoutBranchService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLayoutBranchService(
-		LayoutBranchService layoutBranchService) {
-		_layoutBranchService = layoutBranchService;
-	}
-
 	@Override
 	public LayoutBranchService getWrappedService() {
 		return _layoutBranchService;

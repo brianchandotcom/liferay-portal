@@ -420,23 +420,6 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 			virtualHostname);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LayoutSetLocalService getWrappedLayoutSetLocalService() {
-		return _layoutSetLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-		_layoutSetLocalService = layoutSetLocalService;
-	}
-
 	@Override
 	public LayoutSetLocalService getWrappedService() {
 		return _layoutSetLocalService;

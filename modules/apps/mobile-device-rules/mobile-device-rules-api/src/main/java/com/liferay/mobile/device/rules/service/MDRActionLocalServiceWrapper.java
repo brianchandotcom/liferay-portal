@@ -426,23 +426,6 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		return _mdrActionLocalService.updateMDRAction(mdrAction);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MDRActionLocalService getWrappedMDRActionLocalService() {
-		return _mdrActionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMDRActionLocalService(
-		MDRActionLocalService mdrActionLocalService) {
-		_mdrActionLocalService = mdrActionLocalService;
-	}
-
 	@Override
 	public MDRActionLocalService getWrappedService() {
 		return _mdrActionLocalService;

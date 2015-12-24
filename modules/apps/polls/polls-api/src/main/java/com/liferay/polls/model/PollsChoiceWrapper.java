@@ -703,14 +703,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 		return _pollsChoice.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public PollsChoice getWrappedPollsChoice() {
-		return _pollsChoice;
-	}
-
 	@Override
 	public PollsChoice getWrappedModel() {
 		return _pollsChoice;

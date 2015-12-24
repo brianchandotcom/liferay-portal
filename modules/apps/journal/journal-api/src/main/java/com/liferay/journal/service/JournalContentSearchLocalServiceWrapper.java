@@ -377,23 +377,6 @@ public class JournalContentSearchLocalServiceWrapper
 		return _journalContentSearchLocalService.updateJournalContentSearch(journalContentSearch);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public JournalContentSearchLocalService getWrappedJournalContentSearchLocalService() {
-		return _journalContentSearchLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedJournalContentSearchLocalService(
-		JournalContentSearchLocalService journalContentSearchLocalService) {
-		_journalContentSearchLocalService = journalContentSearchLocalService;
-	}
-
 	@Override
 	public JournalContentSearchLocalService getWrappedService() {
 		return _journalContentSearchLocalService;

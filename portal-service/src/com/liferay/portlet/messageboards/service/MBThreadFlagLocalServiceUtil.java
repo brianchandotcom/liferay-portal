@@ -360,12 +360,5 @@ public class MBThreadFlagLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MBThreadFlagLocalService service) {
-	}
-
 	private static MBThreadFlagLocalService _service;
 }

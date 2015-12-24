@@ -369,13 +369,6 @@ public class DDMContentLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DDMContentLocalService service) {
-	}
-
 	private static ServiceTracker<DDMContentLocalService, DDMContentLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(DDMContentLocalService.class);
 }

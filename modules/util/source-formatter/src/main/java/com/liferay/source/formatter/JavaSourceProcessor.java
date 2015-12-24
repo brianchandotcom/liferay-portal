@@ -3762,16 +3762,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
-	private List<String> _secureDeserializationExclusionFiles;
-	private List<String> _secureRandomExclusionFiles;
-	private List<String> _secureXmlExclusionFiles;
-	private Pattern _serviceUtilImportPattern = Pattern.compile(
-		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private Pattern _referenceMethodContentPattern = Pattern.compile(
 		"^(\\w+) =\\s+\\w+;$");
 	private Pattern _referenceMethodPattern = Pattern.compile(
 		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
+	private List<String> _secureDeserializationExclusionFiles;
+	private List<String> _secureRandomExclusionFiles;
+	private List<String> _secureXmlExclusionFiles;
+	private Pattern _serviceUtilImportPattern = Pattern.compile(
+		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;

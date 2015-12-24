@@ -43,8 +43,6 @@
 
 		<action path="/shopping/notify" type="com.liferay.shopping.web.portlet.action.PayPalNotificationAction" />
 
-		<action path="/shopping/search" forward="portlet.shopping.search" />
-
 		<action path="/shopping/select_category" type="com.liferay.shopping.web.portlet.action.EditCategoryAction">
 			<forward name="portlet.shopping.edit_category" path="/portlet/shopping/select_category.jsp" />
 			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />

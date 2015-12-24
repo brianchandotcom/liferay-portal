@@ -27,36 +27,37 @@ portletURL.setParameter("configurationCategory", configurationCategory);
 %>
 
 <aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+	<c:if test="<%= configurationCategories != null %>">
+		<aui:nav cssClass="navbar-nav">
 
-		<%
-		for (String curConfigurationCategory : configurationCategories) {
-		%>
+			<%
+			for (String curConfigurationCategory : configurationCategories) {
+			%>
 
-			<portlet:renderURL var="configurationCategoryURL">
-				<portlet:param name="configurationCategory" value="<%= curConfigurationCategory %>" />
-			</portlet:renderURL>
+				<portlet:renderURL var="configurationCategoryURL">
+					<portlet:param name="configurationCategory" value="<%= curConfigurationCategory %>" />
+				</portlet:renderURL>
 
-			<aui:nav-item
-				cssClass='<%= curConfigurationCategory.equals(configurationCategory) ? "active" : "" %>'
-				href="<%= configurationCategoryURL %>"
-				label="<%= curConfigurationCategory %>"
-			/>
+				<aui:nav-item
+					cssClass='<%= curConfigurationCategory.equals(configurationCategory) ? "active" : "" %>'
+					href="<%= configurationCategoryURL %>"
+					label="<%= curConfigurationCategory %>"
+				/>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</aui:nav>
+		</aui:nav>
+	</c:if>
 
 	<aui:nav-bar-search>
-		<portlet:actionURL name="search" var="searchURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</portlet:actionURL>
+		<portlet:renderURL var="searchURL">
+			<portlet:param name="mvcRenderCommandName" value="/search" />
+		</portlet:renderURL>
 
 		<aui:form action="<%= searchURL %>" name="searchFm">
-			<liferay-ui:input-search autoFocus="<%= true %>"
-									 markupView="lexicon" />
+			<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
@@ -92,10 +93,10 @@ portletURL.setParameter("configurationCategory", configurationCategory);
 			<liferay-ui:search-container-column-text name="name">
 				<c:choose>
 					<c:when test="<%= configurationModel.isFactory() %>">
-						<aui:a href="<%= viewFactoryInstancesURL %>"><%= configurationModel.getName() %></aui:a>
+						<aui:a href="<%= viewFactoryInstancesURL %>"><strong><%= configurationModel.getName() %></strong></aui:a>
 					</c:when>
 					<c:otherwise>
-						<aui:a href="<%= editURL %>"><%= configurationModel.getName() %></aui:a>
+						<aui:a href="<%= editURL %>"><strong><%= configurationModel.getName() %></strong></aui:a>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>

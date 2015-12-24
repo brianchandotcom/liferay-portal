@@ -20,8 +20,7 @@ import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.search.FieldNames;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -35,9 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,16 +48,16 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN,
-		"mvc.command.name=search"
+		"mvc.command.name=/search"
 	},
-	service = MVCActionCommand.class
+	service = MVCRenderCommand.class
 )
-public class SearchMVCActionCommand extends BaseMVCActionCommand {
+public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		Indexer indexer = _indexerRegistry.nullSafeGetIndexer(
 			ConfigurationModel.class);
@@ -69,7 +68,7 @@ public class SearchMVCActionCommand extends BaseMVCActionCommand {
 
 		searchContext.setCompanyId(CompanyConstants.SYSTEM);
 
-		String keywords = actionRequest.getParameter("keywords");
+		String keywords = renderRequest.getParameter("keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);
@@ -106,13 +105,15 @@ public class SearchMVCActionCommand extends BaseMVCActionCommand {
 			ConfigurationModelIterator configurationModelIterator =
 				new ConfigurationModelIterator(searchResults);
 
-			actionRequest.setAttribute(
+			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
 				configurationModelIterator);
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
+
+		return "/view.jsp";
 	}
 
 	@Reference(unbind = "-")

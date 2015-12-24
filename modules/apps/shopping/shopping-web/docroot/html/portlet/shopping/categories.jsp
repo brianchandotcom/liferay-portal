@@ -28,6 +28,8 @@ portletURL.setParameter("tabs1", "cateogires");
 portletURL.setParameter("categoryId", String.valueOf(categoryId));
 %>
 
+<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>" />
+
 <liferay-portlet:renderURL varImpl="searchURL">
 	<portlet:param name="struts_action" value="/shopping/search" />
 </liferay-portlet:renderURL>

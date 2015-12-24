@@ -18,6 +18,7 @@
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "categories");
+boolean showSearch = ParamUtil.getBoolean(request, "showSearch", false);
 
 PortletURL viewURL = renderResponse.createRenderURL();
 
@@ -65,4 +66,19 @@ viewURL.setParameter("struts_action", "/shopping/view");
 			<aui:nav-item href="<%= couponsURL.toString() %>" label="coupons" selected='<%= tabs1.equals("coupons") %>' />
 		</c:if>
 	</aui:nav>
+
+	<c:if test="<%= showSearch %>">
+
+		<%
+		PortletURL searchURL = PortletURLUtil.clone(viewURL, renderResponse);
+
+		searchURL.setParameter("tabs1", tabs1);
+		%>
+
+		<aui:nav-bar-search>
+			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>

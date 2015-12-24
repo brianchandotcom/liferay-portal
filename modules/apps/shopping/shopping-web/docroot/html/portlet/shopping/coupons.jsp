@@ -23,6 +23,8 @@ portletURL.setParameter("struts_action", "/shopping/view");
 portletURL.setParameter("tabs1", "coupons");
 %>
 
+<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>" />
+
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="deleteCouponIds" type="hidden" />

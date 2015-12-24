@@ -32,11 +32,11 @@ if (Validator.isNotNull(keywords)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 
-	renderResponse.setTitle("search-results");
+	renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 }
 %>
 
-<aui:nav-bar markupView="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<c:if test="<%= configurationCategories != null %>">
 		<aui:nav cssClass="navbar-nav">
 

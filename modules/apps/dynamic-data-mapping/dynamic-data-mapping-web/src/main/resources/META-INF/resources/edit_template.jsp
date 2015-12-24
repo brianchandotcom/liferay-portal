@@ -57,6 +57,9 @@ if (Validator.isNull(script) && type.equals(DDMTemplateConstants.TEMPLATE_TYPE_D
 	}
 
 	if (templateHandler != null) {
+		 if (Validator.isNull(templateHandler.getTemplatesHelpPath(language))) {
+			 language = "ftl";
+		}
 		script = templateHandler.getTemplatesHelpContent(language);
 	}
 	else {

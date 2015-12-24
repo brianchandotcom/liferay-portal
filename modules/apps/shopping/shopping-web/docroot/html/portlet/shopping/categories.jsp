@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/html/portlet/shopping/init.jsp" %>
+
 <%
 ShoppingCategory category = (ShoppingCategory)request.getAttribute(WebKeys.SHOPPING_CATEGORY);
 
@@ -22,7 +24,7 @@ long categoryId = BeanParamUtil.getLong(category, request, "categoryId", Shoppin
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/shopping/view");
-portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("tabs1", "cateogires");
 portletURL.setParameter("categoryId", String.valueOf(categoryId));
 %>
 

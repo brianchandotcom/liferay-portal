@@ -14,11 +14,13 @@
  */
 --%>
 
+<%@ include file="/html/portlet/shopping/init.jsp" %>
+
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/shopping/view");
-portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("tabs1", "order");
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

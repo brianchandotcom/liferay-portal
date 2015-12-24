@@ -74,6 +74,11 @@ else {
 }
 
 int priceId = ParamUtil.getInteger(request, "priceId", -1);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((item == null) ? LanguageUtil.get(request, "new-item") : item.getName()));
 %>
 
 <portlet:actionURL var="editItemURL">
@@ -94,11 +99,6 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 	<aui:input name="fieldsQuantities" type="hidden" value="<%= fieldsQuantities %>" />
 	<aui:input name="pricesCount" type="hidden" value="<%= pricesCount %>" />
 	<aui:input name="priceId" type="hidden" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="item"
-	/>
 
 	<liferay-ui:error exception="<%= DuplicateItemSKUException.class %>" message="the-item-sku-you-requested-is-already-taken" />
 	<liferay-ui:error exception="<%= ItemNameException.class %>" message="please-enter-a-valid-name" />

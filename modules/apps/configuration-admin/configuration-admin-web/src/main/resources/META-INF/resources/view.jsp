@@ -17,6 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String keywords = renderRequest.getParameter("keywords");
+String redirect = renderRequest.getParameter("redirect");
+
 List<String> configurationCategories = (List<String>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES);
 String configurationCategory = (String)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY);
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
@@ -24,6 +27,13 @@ ConfigurationModelIterator configurationModelIterator = (ConfigurationModelItera
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("configurationCategory", configurationCategory);
+
+if (Validator.isNotNull(keywords)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle("search-results");
+}
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -54,6 +64,7 @@ portletURL.setParameter("configurationCategory", configurationCategory);
 	<aui:nav-bar-search>
 		<portlet:renderURL var="searchURL">
 			<portlet:param name="mvcRenderCommandName" value="/search" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<aui:form action="<%= searchURL %>" name="searchFm">

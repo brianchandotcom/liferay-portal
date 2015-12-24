@@ -153,6 +153,11 @@
 </tr>
 <!--PERMISSIONS-->
 <tr>
+	<td>PERMISSIONS_HEADER</td>
+	<td>//div[@id='PermissionsTitle']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS_VIEWABLE_BY_SELECT</td>
 	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
 	<td></td>

@@ -1682,9 +1682,7 @@
 	</command>
 
 	<command name="viewWCViewableByPermissions">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Permissions" />
-		</execute>
+		<execute function="AssertClick" locator1="WCEditWebContent#PERMISSIONS_HEADER" value1="Permissions" />
 
 		<execute function="AssertSelectedLabel" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Site Members" />
 	</command>

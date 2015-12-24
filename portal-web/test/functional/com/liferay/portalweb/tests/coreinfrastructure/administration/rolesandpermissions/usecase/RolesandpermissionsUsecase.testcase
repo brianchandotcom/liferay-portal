@@ -2541,13 +2541,17 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddCP" />
+		<execute function="AssertVisible" locator1="Button#PLUS" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="WebContent#viewWCViewableByPermissions" />
 	</command>

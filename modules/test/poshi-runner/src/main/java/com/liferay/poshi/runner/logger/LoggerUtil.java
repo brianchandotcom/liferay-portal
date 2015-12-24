@@ -169,6 +169,10 @@ public final class LoggerUtil {
 	}
 
 	public static void pauseLoggerCheck() throws Exception {
+		if (!isLoggerStarted()) {
+			return;
+		}
+
 		WebElement webElement = _webDriver.findElement(By.id("commandLog"));
 
 		String classAttribute = webElement.getAttribute("class");

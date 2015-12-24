@@ -36,9 +36,8 @@ viewURL.setParameter("struts_action", "/shopping/view");
 		<aui:nav-item href="<%= categoriesURL.toString() %>" label="categories" selected='<%= tabs1.equals("categories") %>' />
 
 		<%
-		PortletURL cartURL = renderResponse.createRenderURL();
+		PortletURL cartURL = PortletURLUtil.clone(viewURL, renderResponse);
 
-		cartURL.setParameter("struts_action", "/shopping/cart");
 		cartURL.setParameter("tabs1", "cart");
 		%>
 

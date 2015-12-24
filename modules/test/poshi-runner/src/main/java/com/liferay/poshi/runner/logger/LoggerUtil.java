@@ -29,10 +29,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -163,6 +165,24 @@ public final class LoggerUtil {
 		}
 		catch (Exception e) {
 			return false;
+		}
+	}
+
+	public static void pauseLoggerCheck() throws Exception {
+		if (!isLoggerStarted()) {
+			return;
+		}
+
+		WebElement webElement = _webDriver.findElement(By.id("commandLog"));
+
+		String classAttribute = webElement.getAttribute("class");
+
+		while (classAttribute.contains("paused")) {
+			webElement = _webDriver.findElement(By.id("commandLog"));
+
+			classAttribute = webElement.getAttribute("class");
+
+			Thread.sleep(1000);
 		}
 	}
 

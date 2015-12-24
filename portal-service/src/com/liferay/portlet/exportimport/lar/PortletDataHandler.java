@@ -174,6 +174,8 @@ public interface PortletDataHandler {
 
 	public int getRank();
 
+	public String getSchemaVersion();
+
 	public String getServiceName();
 
 	/**
@@ -254,5 +256,7 @@ public interface PortletDataHandler {
 	public void setPortletId(String portletId);
 
 	public void setRank(int rank);
+
+	public boolean validateSchemaVersion(String schemaVersion);
 
 }

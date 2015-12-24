@@ -59,6 +59,13 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "calendar";
 
+	public static final String SCHEMA_VERSION = "1.0.0";
+
+	@Override
+	public String getSchemaVersion() {
+		return SCHEMA_VERSION;
+	}
+
 	@Activate
 	protected void activate() {
 		setDataLocalized(true);

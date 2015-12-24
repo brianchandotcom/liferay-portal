@@ -839,6 +839,12 @@ public class PortletExportController implements ExportController {
 		element.addAttribute("path", path);
 		element.addAttribute("portlet-data", String.valueOf(exportPortletData));
 
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		element.addAttribute(
+			"schema-version", portletDataHandler.getSchemaVersion());
+
 		StringBundler configurationOptionsSB = new StringBundler(6);
 
 		if (exportPortletSetup) {

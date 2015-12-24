@@ -30,7 +30,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 	<portlet:param name="struts_action" value="/shopping/edit_category" />
 </portlet:actionURL>
 
-<aui:form action="<%= editCategoryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCategory();" %>'>
+<aui:form action="<%= editCategoryURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCategory();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
@@ -51,46 +51,48 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 	<aui:model-context bean="<%= category %>" model="<%= ShoppingCategory.class %>" />
 
-	<aui:fieldset>
-		<c:if test="<%= category != null %>">
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<c:if test="<%= category != null %>">
 
-			<%
-			String parentCategoryName = "";
+				<%
+				String parentCategoryName = "";
 
-			try {
-				ShoppingCategory parentCategory = ShoppingCategoryServiceUtil.getCategory(parentCategoryId);
+				try {
+					ShoppingCategory parentCategory = ShoppingCategoryServiceUtil.getCategory(parentCategoryId);
 
-				parentCategoryName = parentCategory.getName();
-			}
-			catch (NoSuchCategoryException nsce) {
-			}
-			%>
+					parentCategoryName = parentCategory.getName();
+				}
+				catch (NoSuchCategoryException nsce) {
+				}
+				%>
 
-			<div class="form-group">
-				<aui:input label="parent-category" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
+				<div class="form-group">
+					<aui:input label="parent-category" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 
-				<aui:button id="selectCategoryButton" value="select" />
+					<aui:button id="selectCategoryButton" value="select" />
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory(this);" %>' value="remove" />
-			</div>
+					<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory(this);" %>' value="remove" />
+				</div>
 
-			<div class="<%= (category.getParentCategoryId() == ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "hide" : "" %>" id="<portlet:namespace />mergeParentCheckboxDiv">
-				<aui:input name="mergeWithParentCategory" type="checkbox" />
-			</div>
-		</c:if>
+				<div class="<%= (category.getParentCategoryId() == ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "hide" : "" %>" id="<portlet:namespace />mergeParentCheckboxDiv">
+					<aui:input name="mergeWithParentCategory" type="checkbox" />
+				</div>
+			</c:if>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="lfr-input-text-container" name="name" />
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="lfr-input-text-container" name="name" />
 
-		<aui:input cssClass="lfr-textarea-container" name="description" />
+			<aui:input cssClass="lfr-textarea-container" name="description" />
+		</aui:fieldset>
 
 		<c:if test="<%= category == null %>">
-			<aui:field-wrapper label="permissions">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 				<liferay-ui:input-permissions
 					modelName="<%= ShoppingCategory.class.getName() %>"
 				/>
-			</aui:field-wrapper>
+			</aui:fieldset>
 		</c:if>
-	</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

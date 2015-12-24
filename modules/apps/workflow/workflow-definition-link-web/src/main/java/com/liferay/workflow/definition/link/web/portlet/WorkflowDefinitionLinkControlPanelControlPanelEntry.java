@@ -21,15 +21,15 @@ import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefini
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marcellus Tavares
+ * @author Julio Camarero
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK
+		"javax.portlet.name=" + WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK_CONTROL_PANEL
 	},
 	service = ControlPanelEntry.class
 )
-public class WorkflowDefinitionLinkControlPanelEntry
+public class WorkflowDefinitionLinkControlPanelControlPanelEntry
 	extends WorkflowControlPanelEntry {
 }

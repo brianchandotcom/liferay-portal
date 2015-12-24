@@ -29,8 +29,7 @@ public interface PanelEntry {
 
 	public String getLabel(Locale locale);
 
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException;
 
 }

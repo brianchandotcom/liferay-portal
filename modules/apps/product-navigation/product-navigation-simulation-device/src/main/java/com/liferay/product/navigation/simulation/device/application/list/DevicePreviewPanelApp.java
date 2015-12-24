@@ -57,8 +57,7 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 	}
 
 	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
 		if (group.isControlPanel()) {
@@ -69,7 +68,7 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 			return false;
 		}
 
-		return super.hasAccessPermission(permissionChecker, group);
+		return super.isShow(permissionChecker, group);
 	}
 
 	@Override

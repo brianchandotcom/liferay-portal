@@ -18,10 +18,7 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,14 +40,6 @@ public class MarketplaceAppManagerPanelApp extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return MarketplaceAppManagerPortletKeys.MARKETPLACE_APP_MANAGER;
-	}
-
-	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		return permissionChecker.isOmniadmin();
 	}
 
 	@Override

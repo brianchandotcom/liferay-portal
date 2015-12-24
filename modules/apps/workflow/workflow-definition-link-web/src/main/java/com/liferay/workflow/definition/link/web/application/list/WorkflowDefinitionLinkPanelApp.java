@@ -17,10 +17,7 @@ package com.liferay.workflow.definition.link.web.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,18 +39,6 @@ public class WorkflowDefinitionLinkPanelApp extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK;
-	}
-
-	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
-			return false;
-		}
-
-		return super.hasAccessPermission(permissionChecker, group);
 	}
 
 	@Override

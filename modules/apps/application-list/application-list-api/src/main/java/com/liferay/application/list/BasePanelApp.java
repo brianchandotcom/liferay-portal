@@ -88,8 +88,15 @@ public abstract class BasePanelApp implements PanelApp {
 	}
 
 	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		return false;
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
 		try {
@@ -108,14 +115,6 @@ public abstract class BasePanelApp implements PanelApp {
 		catch (Exception e) {
 			throw new PortalException(e);
 		}
-	}
-
-	@Override
-	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		return false;
 	}
 
 	@Override

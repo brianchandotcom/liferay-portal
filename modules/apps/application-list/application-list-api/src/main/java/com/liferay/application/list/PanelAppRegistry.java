@@ -54,7 +54,7 @@ public class PanelAppRegistry {
 
 		for (PanelApp panelApp : panelApps) {
 			try {
-				if (panelApp.hasAccessPermission(permissionChecker, group)) {
+				if (panelApp.isShow(permissionChecker, group)) {
 					return panelApp;
 				}
 			}
@@ -106,8 +106,7 @@ public class PanelAppRegistry {
 				@Override
 				public boolean filter(PanelApp panelApp) {
 					try {
-						return panelApp.hasAccessPermission(
-							permissionChecker, group);
+						return panelApp.isShow(permissionChecker, group);
 					}
 					catch (PortalException pe) {
 						_log.error(pe, pe);

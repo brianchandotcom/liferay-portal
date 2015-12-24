@@ -17,10 +17,7 @@ package com.liferay.server.admin.web.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,14 +39,6 @@ public class ServerAdminPanelApp extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return PortletKeys.SERVER_ADMIN;
-	}
-
-	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		return permissionChecker.isOmniadmin();
 	}
 
 	@Override

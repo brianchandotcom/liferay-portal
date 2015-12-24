@@ -17,10 +17,7 @@ package com.liferay.product.navigation.site.administration.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.Locale;
 
@@ -53,18 +50,6 @@ public class PublishingToolsPanelCategory extends BasePanelCategory {
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
 			locale, "category.site_administration.publishing_tools");
-	}
-
-	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
-			return false;
-		}
-
-		return true;
 	}
 
 }

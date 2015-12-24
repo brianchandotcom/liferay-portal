@@ -12,24 +12,20 @@
  * details.
  */
 
-package com.liferay.workflow.definition.link.web.portlet;
+package com.liferay.exportimport.web.portlet;
 
-import com.liferay.portal.workflow.WorkflowControlPanelEntry;
+import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portlet.ControlPanelEntry;
-import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marcellus Tavares
+ * @author Julio Camarero
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK
-	},
+	property = {"javax.portlet.name=" + ExportImportPortletKeys.IMPORT},
 	service = ControlPanelEntry.class
 )
-public class WorkflowDefinitionLinkControlPanelEntry
-	extends WorkflowControlPanelEntry {
+public class ImportControlPanelEntry extends ExportImportControlPanelEntry {
 }

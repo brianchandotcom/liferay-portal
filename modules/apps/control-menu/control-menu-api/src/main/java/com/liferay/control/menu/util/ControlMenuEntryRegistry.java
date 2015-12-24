@@ -74,7 +74,7 @@ public class ControlMenuEntryRegistry {
 				@Override
 				public boolean filter(ControlMenuEntry controlMenuEntry) {
 					try {
-						return controlMenuEntry.hasAccessPermission(request);
+						return controlMenuEntry.isShow(request);
 					}
 					catch (PortalException pe) {
 						_log.error(pe, pe);

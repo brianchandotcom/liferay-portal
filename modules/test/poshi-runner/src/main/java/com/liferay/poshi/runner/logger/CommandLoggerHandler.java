@@ -140,8 +140,6 @@ public final class CommandLoggerHandler {
 
 	public static void stopRunning() throws Exception {
 		_commandLogLoggerElement.removeClassName("running");
-
-		_commandLogLoggerElement = null;
 	}
 
 	public static void warnCommand(Element element) throws Exception {

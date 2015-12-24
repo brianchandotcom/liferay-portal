@@ -75,11 +75,6 @@ import org.osgi.framework.wiring.BundleWiring;
  */
 public class JspServlet extends HttpServlet {
 
-	public JspServlet() {
-		_jspBundle = FrameworkUtil.getBundle(
-			com.liferay.portal.servlet.jsp.compiler.JspServlet.class);
-	}
-
 	@Override
 	public void destroy() {
 		_jspServlet.destroy();
@@ -444,12 +439,13 @@ public class JspServlet extends HttpServlet {
 
 	private static final Class<?>[] _INTERFACES = {ServletContext.class};
 
+	private static final Bundle _jspBundle = FrameworkUtil.getBundle(
+		JspServlet.class);
 	private static final Pattern _originalJspPattern = Pattern.compile(
 		"^(?<file>.*)(\\.(portal|original))(?<extension>\\.(jsp|jspf))$");
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
-	private final Bundle _jspBundle;
 	private JspBundleClassloader _jspBundleClassloader;
 	private final HttpServlet _jspServlet =
 		new org.apache.jasper.servlet.JspServlet();

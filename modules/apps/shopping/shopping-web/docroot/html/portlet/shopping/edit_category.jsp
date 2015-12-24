@@ -24,6 +24,11 @@ ShoppingCategory category = (ShoppingCategory)request.getAttribute(WebKeys.SHOPP
 long categoryId = BeanParamUtil.getLong(category, request, "categoryId");
 
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId", ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "new-category") : category.getName()));
 %>
 
 <portlet:actionURL var="editCategoryURL">
@@ -35,11 +40,6 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="category"
-	/>
 
 	<liferay-ui:error exception="<%= CategoryNameException.class %>" message="please-enter-a-valid-name" />
 

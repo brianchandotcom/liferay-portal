@@ -108,49 +108,17 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 			resultRows.add(row);
 		}
-
-		boolean showPermissionsButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.PERMISSIONS);
-		boolean showSearch = !results.isEmpty();
 		%>
 
 		<liferay-ui:panel-container extended="<%= true %>" id="shoppingCategoriesPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCategoriesPanel" persistState="<%= true %>" title="categories">
-				<c:if test="<%= showPermissionsButton || showSearch %>">
+				<c:if test="<%= !results.isEmpty() %>">
 					<aui:fieldset>
-						<c:if test="<%= showSearch %>">
-							<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" label="search" name="keywords" size="30" type="text" />
-						</c:if>
+						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" label="search" name="keywords" size="30" type="text" />
 					</aui:fieldset>
 
 					<aui:button-row>
-						<c:if test="<%= showSearch %>">
-							<aui:button cssClass="btn-lg" type="submit" value="search-categories" />
-						</c:if>
-
-						<c:if test="<%= showPermissionsButton %>">
-
-							<%
-							String modelResource = "com.liferay.shopping";
-							String modelResourceDescription = themeDisplay.getScopeGroupName();
-							String resourcePrimKey = String.valueOf(scopeGroupId);
-
-							if (category != null) {
-								modelResource = ShoppingCategory.class.getName();
-								modelResourceDescription = category.getName();
-								resourcePrimKey = String.valueOf(category.getCategoryId());
-							}
-							%>
-
-							<liferay-security:permissionsURL
-								modelResource="<%= modelResource %>"
-								modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
-								resourcePrimKey="<%= resourcePrimKey %>"
-								var="permissionsURL"
-								windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-							/>
-
-							<aui:button cssClass="btn-lg" href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
-						</c:if>
+						<aui:button cssClass="btn-lg" type="submit" value="search-categories" />
 					</aui:button-row>
 				</c:if>
 

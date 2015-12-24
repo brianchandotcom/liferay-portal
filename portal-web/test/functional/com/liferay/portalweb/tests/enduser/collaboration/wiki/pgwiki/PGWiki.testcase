@@ -48,6 +48,8 @@
 	</tear-down>
 
 	<command name="AddWikiFrontPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
 		<execute macro="Page#gotoPG">
@@ -107,6 +109,8 @@
 	</command>
 
 	<command name="AddWikiFrontPageChildPageFormatHTML" priority="4">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="welcomeToLiferay">
 			<![CDATA[
 				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
@@ -882,6 +886,8 @@
 	</command>
 
 	<command name="DeleteWikiFrontPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 		<var name="wikiPageTitle" value="FrontPage" />
 
@@ -997,6 +1003,8 @@
 	</command>
 
 	<command name="EditWikiFrontPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 		<var name="wikiPageContentEdit" value="Wiki FrontPage Content Edit" />
 		<var name="wikiPageRevision" value="1.2" />

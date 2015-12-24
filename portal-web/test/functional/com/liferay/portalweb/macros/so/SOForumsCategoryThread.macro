@@ -99,12 +99,12 @@
 				<if>
 					<equals arg1="${currentUser}" arg2="${adminName}" />
 					<then>
-						<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
+						<execute function="AssertElementPresent" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
 					</then>
 					<elseif>
 						<equals arg1="${siteMember}" arg2="true" />
 						<then>
-							<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
+							<execute function="AssertElementPresent" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
 						</then>
 					</elseif>
 					<else>

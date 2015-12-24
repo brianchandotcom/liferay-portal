@@ -319,16 +319,17 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<while>
-			<condition function="IsElementPresent" locator1="Bookmarks#DESCRIPTIVE_ENTRY_GENERIC" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
 			<then>
-				<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
-				<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute function="Click" locator1="Icon#DELETE" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 			</then>
-		</while>
+		</if>
 
 		<execute macro="Navigator#openURL" />
 

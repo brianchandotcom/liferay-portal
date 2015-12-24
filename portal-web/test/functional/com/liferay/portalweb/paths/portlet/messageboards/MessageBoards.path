@@ -44,6 +44,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VERTICAL_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERTICAL_ELLIPSIS_GENERIC</td>
+	<td>//tr//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

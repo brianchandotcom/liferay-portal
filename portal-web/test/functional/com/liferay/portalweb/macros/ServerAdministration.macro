@@ -40,6 +40,15 @@
 		</if>
 
 		<if>
+			<equals arg1="${installNativeLibraries}" arg2="true" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Xuggler requires the installation of native libraries that are distributed under the GPL license. If you are able to find your environment specified below, the server can automatically download and install the libraries for you. You will subsequently be required to restart the server. If your environment is not listed below, you will need to compile and install the libraries manually. Read more."  />
+				<execute function="AssertClick" locator1="ServerAdministrationExternalServices#XUGGLER_INSTALL_BUTTON" value1="Install" />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Xuggler has been installed. You need to reboot your server to apply changes." />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${enableXuggler}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Xuggler appears to be installed correctly. Enable to allow audio and video preview generation."  />

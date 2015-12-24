@@ -562,6 +562,25 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">
+			<var name="installNativeLibraries" value="true" />
+		</execute>
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureExternalServices">
 			<var name="enableXuggler" value="true" />
 		</execute>
 
@@ -581,6 +600,10 @@
 			<var name="columnNumberFrom" value="1" />
 			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
@@ -966,6 +989,10 @@
 		</execute>
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
 
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 

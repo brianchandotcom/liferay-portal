@@ -410,7 +410,7 @@
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${dmFolderName} was moved to the Recycle Bin. Undo" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 	</command>
 
 	<command name="removeFolderViewPermissionsPG">
@@ -445,7 +445,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementNotPresent" locator1="Message#INFO" />
+			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
 			<then>
 				<execute function="Check" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
 				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" value1="Actions" />

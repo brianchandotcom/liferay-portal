@@ -21,22 +21,22 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PERMISSIONS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
+	<td>//ul[contains(@id,'nav')]//span[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_COMMUNICATION</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Communication')]</td>
+	<td>//ul[contains(@id,'nav')]//span[contains(.,'Communication')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SHARING</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
+	<td>//ul[contains(@id,'nav')]//span[contains(.,'Sharing')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SCOPE</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
+	<td>//ul[contains(@id,'nav')]//span[contains(.,'Scope')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,12 +47,12 @@
 <!--SCOPE-->
 <tr>
 	<td>SCOPE_DROPDOWN</td>
-	<td>//div[contains(@class,'btn-group') and contains(@class,'lfr-icon-menu')]/a</td>
+	<td>//select[contains(@id,'PortletConfigurationPortlet_scope')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCOPE_MENULIST</td>
-	<td>//ul[@role='menu']/li/a[contains(.,'${key_scopeName}')]</td>
+	<td>//select[contains(@id,'PortletConfigurationPortlet_scope')]//option[contains(.,'${key_scopeName}')]</td>
 	<td></td>
 </tr>
 </tbody>

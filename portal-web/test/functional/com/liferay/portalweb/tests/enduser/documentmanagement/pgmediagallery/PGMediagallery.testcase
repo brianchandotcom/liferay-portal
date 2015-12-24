@@ -274,6 +274,8 @@
 	</command>
 
 	<command name="DeleteFolderDocument" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="mgDocumentDescription" value="DM Document Description" />
 		<var name="mgDocumentFile" value="Document_1.jpg" />
 		<var name="mgDocumentTitle" value="DM Document Title" />
@@ -313,6 +315,8 @@
 	</command>
 
 	<command name="EditFolder" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="mgFolderDescription" value="DM Folder Description" />
 		<var name="mgFolderDescriptionEdit" value="DM Folder Description Edit" />
 		<var name="mgFolderName" value="DM Folder Name" />

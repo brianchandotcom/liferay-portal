@@ -346,7 +346,7 @@
 		</execute>
 
 		<execute macro="MessageboardsPortlet#configureScopePG">
-			<var name="scopeName" value="Message Boards Page 2" />
+			<var name="scopeName" value="Message Boards Page 2 (Create New)" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1351,7 +1351,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
+		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
 		<execute function="AssertTextEquals" locator1="MenuItem#UNSUBSCRIBE" value1="Unsubscribe" />
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_ACTIONS_UNSUBSCRIBE" value1="Unsubscribe" />
@@ -1386,7 +1386,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
+		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS" />
 		<execute function="AssertElementNotPresent" locator1="MenuItem#UNSUBSCRIBE" />
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#THREAD_ACTIONS_UNSUBSCRIBE" value1="Unsubscribe" />

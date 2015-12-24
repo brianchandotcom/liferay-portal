@@ -183,12 +183,13 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="MessageBoardsConfiguration#IFRAME" />
+
 		<execute function="AssertClick" locator1="MessageBoardsConfiguration#NAVIGATION_SCOPE" value1="Scope" />
 
-		<var name="key_scopeName" value="${scopeName}" />
+		<execute function="Select" locator1="Select#SCOPE" value1="${scopeName}" />
 
-		<execute function="Click" locator1="MessageBoardsConfiguration#SCOPE_DROPDOWN" />
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="MessageBoardsConfiguration#SCOPE_MENULIST" value1="${scopeName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="PGMessageboardsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 

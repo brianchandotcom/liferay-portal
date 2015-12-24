@@ -1,27 +1,15 @@
 import com.liferay.gradle.util.StringUtil
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
-import java.util.regex.Matcher
-
 buildscript {
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
-	}
-
-	repositories {
-		mavenLocal()
-
-		maven {
-			url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
-		}
-	}
+	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
 }
 
 task setUpPortalTools
 task wrapper(type: Wrapper)
 
 File portalToolsDir = rootProject.file("../tools/sdk/tmp/portal-tools")
-Map<String, String> portalToolVersions = _getPortalToolVersions(rootProject.file("build-module.gradle"))
+Properties portalToolVersions = _getPortalToolVersions()
 
 configurations {
 	all {
@@ -124,17 +112,14 @@ portalToolsConfigurations.each {
 	setUpPortalTools.dependsOn configurationTask
 }
 
-private Map<String, String> _getPortalToolVersions(File buildGradleFile) {
-	Map<String, String> portalToolVersions = [:]
+private Properties _getPortalToolVersions() {
+	Properties properties = new Properties()
 
-	Matcher matcher = (buildGradleFile.text =~ /group: "com\.liferay", name: "(.+)", version: "(.+)"/)
+	InputStream inputStream = buildscript.classLoader.getResourceAsStream("com/liferay/gradle/plugins/dependencies/portal-tools.properties")
 
-	matcher.each {
-		String name = it[1]
-		String version = it[2]
-
-		portalToolVersions[name] = version
+	inputStream.withCloseable {
+		properties.load it
 	}
 
-	portalToolVersions
+	return properties
 }

@@ -109,14 +109,13 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 			resultRows.add(row);
 		}
 
-		boolean showAddCategoryButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY);
 		boolean showPermissionsButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.PERMISSIONS);
 		boolean showSearch = !results.isEmpty();
 		%>
 
 		<liferay-ui:panel-container extended="<%= true %>" id="shoppingCategoriesPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCategoriesPanel" persistState="<%= true %>" title="categories">
-				<c:if test="<%= showAddCategoryButton || showPermissionsButton || showSearch %>">
+				<c:if test="<%= showPermissionsButton || showSearch %>">
 					<aui:fieldset>
 						<c:if test="<%= showSearch %>">
 							<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" label="search" name="keywords" size="30" type="text" />
@@ -126,16 +125,6 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 					<aui:button-row>
 						<c:if test="<%= showSearch %>">
 							<aui:button cssClass="btn-lg" type="submit" value="search-categories" />
-						</c:if>
-
-						<c:if test="<%= showAddCategoryButton %>">
-							<portlet:renderURL var="addCategoriesURL">
-								<portlet:param name="struts_action" value="/shopping/edit_category" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
-							</portlet:renderURL>
-
-							<aui:button cssClass="btn-lg" href="<%= addCategoriesURL %>" value='<%= (category == null) ? "add-category" : "add-subcategory" %>' />
 						</c:if>
 
 						<c:if test="<%= showPermissionsButton %>">
@@ -307,34 +296,17 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 			resultRows.add(row);
 		}
-
-		boolean showAddItemButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_ITEM);
-		boolean showSearch = !results.isEmpty();
 		%>
 
 		<liferay-ui:panel-container extended="<%= true %>" id="shoppingItemsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingItemsPanel" persistState="<%= true %>" title="items">
-				<c:if test="<%= showAddItemButton || showSearch %>">
+				<c:if test="<%= !results.isEmpty() %>">
 					<aui:fieldset>
-						<c:if test="<%= showSearch %>">
-							<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords2" label="search" name="keywords" size="30" type="text" />
-						</c:if>
+						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords2" label="search" name="keywords" size="30" type="text" />
 					</aui:fieldset>
 
 					<aui:button-row>
-						<c:if test="<%= showSearch %>">
-							<aui:button cssClass="btn-lg" type="submit" value="search-this-category" />
-						</c:if>
-
-						<c:if test="<%= showAddItemButton %>">
-							<portlet:renderURL var="addItemURL">
-								<portlet:param name="struts_action" value="/shopping/edit_item" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-							</portlet:renderURL>
-
-							<aui:button cssClass="btn-lg" href="<%= addItemURL %>" value="add-item" />
-						</c:if>
+						<aui:button cssClass="btn-lg" type="submit" value="search-this-category" />
 					</aui:button-row>
 				</c:if>
 
@@ -343,3 +315,32 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 		</liferay-ui:panel-container>
 	</aui:form>
 </liferay-ui:panel-container>
+
+<%
+boolean showAddCategoryButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY);
+boolean showAddItemButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_ITEM);
+%>
+
+<c:if test="<%= showAddCategoryButton || showAddItemButton %>">
+	<liferay-frontend:add-menu>
+		<c:if test="<%= showAddCategoryButton %>">
+			<portlet:renderURL var="addCategoriesURL">
+				<portlet:param name="struts_action" value="/shopping/edit_category" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-category") %>' url="<%= addCategoriesURL.toString() %>" />
+		</c:if>
+
+		<c:if test="<%= showAddItemButton %>">
+			<portlet:renderURL var="addItemURL">
+				<portlet:param name="struts_action" value="/shopping/edit_item" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-item") %>' url="<%= addItemURL.toString() %>" />
+		</c:if>
+	</liferay-frontend:add-menu>
+</c:if>

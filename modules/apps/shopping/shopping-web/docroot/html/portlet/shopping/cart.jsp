@@ -104,6 +104,8 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	}
 </aui:script>
 
+<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>" />
+
 <portlet:actionURL var="cartURL">
 	<portlet:param name="struts_action" value="/shopping/cart" />
 </portlet:actionURL>

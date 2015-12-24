@@ -153,13 +153,6 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 		</#if>
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(${entity.name}${sessionTypeName}Service service) {
-	}
-
 	<#if osgiModule>
 		private static ServiceTracker<${entity.name}${sessionTypeName}Service, ${entity.name}${sessionTypeName}Service> _serviceTracker =
 			ServiceTrackerFactory.open(${entity.name}${sessionTypeName}Service.class);

@@ -205,15 +205,6 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 			return _${entity.varName}.getStagedModelType();
 		}
 	</#if>
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ${entity.name} getWrapped${entity.name}() {
-		return _${entity.varName};
-	}
-
 	@Override
 	public ${entity.name} getWrappedModel() {
 		return _${entity.varName};

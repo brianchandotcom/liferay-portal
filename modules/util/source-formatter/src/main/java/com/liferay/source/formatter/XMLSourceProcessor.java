@@ -331,11 +331,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			newContent = formatPortletXML(fileName, absolutePath, newContent);
 		}
-		else if (portalSource &&
-				 (fileName.endsWith(".action") ||
-				  fileName.endsWith(".function") ||
-				  fileName.endsWith(".macro") ||
-				  fileName.endsWith(".testcase"))) {
+		else if (fileName.endsWith(".action") ||
+				 fileName.endsWith(".function") ||
+				 fileName.endsWith(".macro") ||
+				 fileName.endsWith(".testcase")) {
 
 			newContent = formatPoshiXML(fileName, newContent);
 		}

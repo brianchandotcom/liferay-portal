@@ -26,12 +26,12 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "categories");
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("categories") %>'>
-		<%@ include file="/html/portlet/shopping/categories.jspf" %>
+		<liferay-util:include page="/html/portlet/shopping/categories.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= tabs1.equals("orders") && !user.isDefaultUser() %>'>
-		<%@ include file="/html/portlet/shopping/orders.jspf" %>
+		<liferay-util:include page="/html/portlet/shopping/orders.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= tabs1.equals("coupons") %>'>
-		<%@ include file="/html/portlet/shopping/coupons.jspf" %>
+		<liferay-util:include page="/html/portlet/shopping/coupons.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>

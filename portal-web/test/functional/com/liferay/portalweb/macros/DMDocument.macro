@@ -1723,7 +1723,9 @@
 		</execute>
 
 		<for list="${categoryNameList}" param="categoryName">
-			<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES" value1="Topic: ${categoryName}" />
+			<var name="key_categoryName" value="${categoryName}" />
+
+			<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
 		</for>
 	</command>
 

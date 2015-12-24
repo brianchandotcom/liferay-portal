@@ -19,40 +19,51 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "categories");
 
-String tabs1Names = "categories,cart";
-
-if (!user.isDefaultUser()) {
-	tabs1Names += ",orders";
-}
-
-if (ShoppingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_COUPONS)) {
-	tabs1Names += ",coupons";
-}
-
-// View
-
 PortletURL viewURL = renderResponse.createRenderURL();
 
 viewURL.setParameter("struts_action", "/shopping/view");
-
-// Cart
-
-PortletURL cartURL = renderResponse.createRenderURL();
-
-cartURL.setParameter("struts_action", "/shopping/cart");
-
-if (!tabs1.equals("cart")) {
-	cartURL.setParameter("redirect", currentURL);
-}
-
-// Back URL
-
-String backURL = ParamUtil.getString(request, "backURL");
 %>
 
-<liferay-ui:tabs
-	backURL="<%= backURL %>"
-	names="<%= tabs1Names %>"
-	url="<%= viewURL.toString() %>"
-	urls="<%= new String[] {StringPool.BLANK, cartURL.toString()} %>"
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		PortletURL categoriesURL = PortletURLUtil.clone(viewURL, renderResponse);
+
+		categoriesURL.setParameter("tabs1", "categories");
+		%>
+
+		<aui:nav-item href="<%= categoriesURL.toString() %>" label="categories" selected='<%= tabs1.equals("categories") %>' />
+
+		<%
+		PortletURL cartURL = renderResponse.createRenderURL();
+
+		cartURL.setParameter("struts_action", "/shopping/cart");
+		cartURL.setParameter("tabs1", "cart");
+		%>
+
+		<aui:nav-item href="<%= cartURL.toString() %>" label="cart" selected='<%= tabs1.equals("cart") %>' />
+
+		<c:if test="<%= !user.isDefaultUser() %>">
+
+			<%
+			PortletURL ordersURL = PortletURLUtil.clone(viewURL, renderResponse);
+
+			ordersURL.setParameter("tabs1", "orders");
+			%>
+
+			<aui:nav-item href="<%= ordersURL.toString() %>" label="orders" selected='<%= tabs1.equals("orders") %>' />
+		</c:if>
+
+		<c:if test="<%= ShoppingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_COUPONS) %>">
+
+			<%
+			PortletURL couponsURL = PortletURLUtil.clone(viewURL, renderResponse);
+
+			couponsURL.setParameter("tabs1", "coupons");
+			%>
+
+			<aui:nav-item href="<%= couponsURL.toString() %>" label="coupons" selected='<%= tabs1.equals("coupons") %>' />
+		</c:if>
+	</aui:nav>
+</aui:nav-bar>

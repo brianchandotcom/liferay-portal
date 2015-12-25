@@ -21,6 +21,8 @@ ShoppingCategory category = (ShoppingCategory)request.getAttribute(WebKeys.SHOPP
 
 long categoryId = BeanParamUtil.getLong(category, request, "categoryId", ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
+
 String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -59,6 +61,16 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 <liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="showSearch" value="<%= String.valueOf(showSearch) %>" />
 </liferay-util:include>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"descriptive"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<div class="breadcrumbs">
@@ -242,7 +254,7 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new ShoppingResultRowSplitter() %>" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new ShoppingResultRowSplitter() %>" />
 	</liferay-ui:search-container>
 </div>
 

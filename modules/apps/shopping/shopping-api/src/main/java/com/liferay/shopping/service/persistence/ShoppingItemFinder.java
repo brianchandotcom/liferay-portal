@@ -30,6 +30,10 @@ public interface ShoppingItemFinder {
 	public int countByKeywords(long groupId, long[] categoryIds,
 		java.lang.String keywords);
 
+	public int countByKeywords(long groupId, long[] categoryIds,
+		java.lang.String keywords,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc);
+
 	public int countBySale(long groupId, long[] categoryIds);
 
 	public int filterCountByG_C(long groupId,
@@ -41,6 +45,11 @@ public interface ShoppingItemFinder {
 	public java.util.List<com.liferay.shopping.model.ShoppingItem> findByKeywords(
 		long groupId, long[] categoryIds, java.lang.String keywords, int start,
 		int end);
+
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> findByKeywords(
+		long groupId, long[] categoryIds, java.lang.String keywords, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc);
 
 	public java.util.List<com.liferay.shopping.model.ShoppingItem> findBySale(
 		long groupId, long[] categoryIds, int numOfItems);

@@ -128,6 +128,21 @@ public class ShoppingCategoryServiceSoap {
 		}
 	}
 
+	public static int getCategoriesAndItemsCount(long groupId, long categoryId)
+		throws RemoteException {
+		try {
+			int returnValue = ShoppingCategoryServiceUtil.getCategoriesAndItemsCount(groupId,
+					categoryId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getCategoriesCount(long groupId, long parentCategoryId)
 		throws RemoteException {
 		try {

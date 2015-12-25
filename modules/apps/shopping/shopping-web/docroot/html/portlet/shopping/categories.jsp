@@ -60,189 +60,191 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 	<liferay-util:param name="showSearch" value="<%= String.valueOf(showSearch) %>" />
 </liferay-util:include>
 
-<div class="breadcrumbs">
-	<%= ShoppingUtil.getBreadcrumbs(category, renderRequest, renderResponse) %>
-</div>
+<div class="container-fluid-1280">
+	<div class="breadcrumbs">
+		<%= ShoppingUtil.getBreadcrumbs(category, renderRequest, renderResponse) %>
+	</div>
 
-<liferay-ui:search-container
-	searchContainer="<%= categoriesSearch %>"
->
-	<liferay-ui:search-container-row
-		className="Object"
-		modelVar="object"
+	<liferay-ui:search-container
+		searchContainer="<%= categoriesSearch %>"
 	>
+		<liferay-ui:search-container-row
+			className="Object"
+			modelVar="object"
+		>
 
-		<%
-		ShoppingCategory curCategory = null;
-		ShoppingItem curItem = null;
+			<%
+			ShoppingCategory curCategory = null;
+			ShoppingItem curItem = null;
 
-		Object result = row.getObject();
+			Object result = row.getObject();
 
-		if (result instanceof ShoppingCategory) {
-			curCategory = (ShoppingCategory)result;
-		}
-		else {
-			curItem = (ShoppingItem)result;
-		}
-		%>
+			if (result instanceof ShoppingCategory) {
+				curCategory = (ShoppingCategory)result;
+			}
+			else {
+				curItem = (ShoppingItem)result;
+			}
+			%>
 
-		<c:choose>
-			<c:when test="<%= curItem != null %>">
-
-				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
-
-				rowURL.setParameter("struts_action", "/shopping/view_item");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("itemId", String.valueOf(curItem.getItemId()));
-				%>
-
-				<c:choose>
-					<c:when test="<%= curItem.isSmallImage() %>">
-						<liferay-ui:search-container-column-image
-							src="<%= curItem.getShoppingItemImageURL(themeDisplay) %>"
-						/>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:search-container-column-icon
-							icon="tags"
-						/>
-					</c:otherwise>
-				</c:choose>
-
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
+			<c:choose>
+				<c:when test="<%= curItem != null %>">
 
 					<%
-					Date createDate = curItem.getModifiedDate();
+					PortletURL rowURL = renderResponse.createRenderURL();
 
-					String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+					rowURL.setParameter("struts_action", "/shopping/view_item");
+					rowURL.setParameter("redirect", currentURL);
+					rowURL.setParameter("itemId", String.valueOf(curItem.getItemId()));
 					%>
 
-					<h6 class="text-default">
-						<liferay-ui:message arguments="<%= new String[] {curItem.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
-					</h6>
+					<c:choose>
+						<c:when test="<%= curItem.isSmallImage() %>">
+							<liferay-ui:search-container-column-image
+								src="<%= curItem.getShoppingItemImageURL(themeDisplay) %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:search-container-column-icon
+								icon="tags"
+							/>
+						</c:otherwise>
+					</c:choose>
 
-					<h5>
-						<aui:a href="<%= rowURL != null ? rowURL.toString() : null %>">
-							<%= HtmlUtil.escape(curItem.getName()) %>
-						</aui:a>
-					</h5>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
 
-					<h6 class="text-default">
-						<span><%= HtmlUtil.escape(curItem.getDescription()) %></span>
-					</h6>
+						<%
+						Date createDate = curItem.getModifiedDate();
+
+						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+						%>
+
+						<h6 class="text-default">
+							<liferay-ui:message arguments="<%= new String[] {curItem.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+						</h6>
+
+						<h5>
+							<aui:a href="<%= rowURL != null ? rowURL.toString() : null %>">
+								<%= HtmlUtil.escape(curItem.getName()) %>
+							</aui:a>
+						</h5>
+
+						<h6 class="text-default">
+							<span><%= HtmlUtil.escape(curItem.getDescription()) %></span>
+						</h6>
+
+						<%
+						Properties props = new OrderedProperties();
+
+						PropertiesUtil.load(props, curItem.getProperties());
+
+						Enumeration enu = props.propertyNames();
+
+						StringBundler sb = new StringBundler();
+
+						while (enu.hasMoreElements()) {
+							String propsKey = (String)enu.nextElement();
+							String propsValue = props.getProperty(propsKey, StringPool.BLANK);
+
+							sb.append("<br />");
+							sb.append(propsKey);
+							sb.append(": ");
+							sb.append(propsValue);
+						}
+						%>
+
+						<h6 class="text-default">
+							<span><%= sb.toString() %></span>
+						</h6>
+
+						<h6 class="text-default">
+							<span><%= curItem.getMinQuantity() %></span>
+						</h6>
+
+						<h6 class="text-default">
+							<c:choose>
+								<c:when test="<%= curItem.getDiscount() <= 0 %>">
+									<span><%= currencyFormat.format(curItem.getPrice()) %></span>
+								</c:when>
+								<c:otherwise>
+									<span><%= currencyFormat.format(ShoppingUtil.calculateActualPrice(curItem)) %></span>
+								</c:otherwise>
+							</c:choose>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="list-group-item-field"
+						path="/html/portlet/shopping/item_action.jsp"
+					/>
+				</c:when>
+				<c:when test="<%= curCategory != null %>">
 
 					<%
-					Properties props = new OrderedProperties();
+					PortletURL rowURL = renderResponse.createRenderURL();
 
-					PropertiesUtil.load(props, curItem.getProperties());
-
-					Enumeration enu = props.propertyNames();
-
-					StringBundler sb = new StringBundler();
-
-					while (enu.hasMoreElements()) {
-						String propsKey = (String)enu.nextElement();
-						String propsValue = props.getProperty(propsKey, StringPool.BLANK);
-
-						sb.append("<br />");
-						sb.append(propsKey);
-						sb.append(": ");
-						sb.append(propsValue);
-					}
+					rowURL.setParameter("struts_action", "/shopping/view");
+					rowURL.setParameter("categoryId", String.valueOf(curCategory.getCategoryId()));
 					%>
 
-					<h6 class="text-default">
-						<span><%= sb.toString() %></span>
-					</h6>
+					<liferay-ui:search-container-column-icon
+						icon="categories"
+					/>
 
-					<h6 class="text-default">
-						<span><%= curItem.getMinQuantity() %></span>
-					</h6>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
 
-					<h6 class="text-default">
-						<c:choose>
-							<c:when test="<%= curItem.getDiscount() <= 0 %>">
-								<span><%= currencyFormat.format(curItem.getPrice()) %></span>
-							</c:when>
-							<c:otherwise>
-								<span><%= currencyFormat.format(ShoppingUtil.calculateActualPrice(curItem)) %></span>
-							</c:otherwise>
-						</c:choose>
-					</h6>
-				</liferay-ui:search-container-column-text>
+						<%
+						Date createDate = curCategory.getCreateDate();
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="list-group-item-field"
-					path="/html/portlet/shopping/item_action.jsp"
-				/>
-			</c:when>
-			<c:when test="<%= curCategory != null %>">
+						String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+						%>
 
-				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
+						<h6 class="text-default">
+							<liferay-ui:message arguments="<%= new String[] {curCategory.getUserName(), createDateDescription} %>" key="x-modified-x-ago" />
+						</h6>
 
-				rowURL.setParameter("struts_action", "/shopping/view");
-				rowURL.setParameter("categoryId", String.valueOf(curCategory.getCategoryId()));
-				%>
+						<h5>
+							<aui:a href="<%= rowURL != null ? rowURL.toString() : null %>">
+								<%= curCategory.getName() %>
+							</aui:a>
+						</h5>
 
-				<liferay-ui:search-container-column-icon
-					icon="categories"
-				/>
+						<h6 class="text-default">
+							<span><%= curCategory.getDescription() %></span>
+						</h6>
 
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
+						<%
+						List subcategoryIds = new ArrayList();
 
-					<%
-					Date createDate = curCategory.getCreateDate();
+						subcategoryIds.add(Long.valueOf(curCategory.getCategoryId()));
 
-					String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-					%>
+						ShoppingCategoryServiceUtil.getSubcategoryIds(subcategoryIds, scopeGroupId, curCategory.getCategoryId());
 
-					<h6 class="text-default">
-						<liferay-ui:message arguments="<%= new String[] {curCategory.getUserName(), createDateDescription} %>" key="x-modified-x-ago" />
-					</h6>
+						int subCategoriesCount = subcategoryIds.size() - 1;
+						int subItemsCount = ShoppingItemServiceUtil.getCategoriesItemsCount(scopeGroupId, subcategoryIds);
+						%>
 
-					<h5>
-						<aui:a href="<%= rowURL != null ? rowURL.toString() : null %>">
-							<%= curCategory.getName() %>
-						</aui:a>
-					</h5>
+						<h6 class="text-default">
+							<liferay-ui:message key="categories" />: <span><%= subCategoriesCount %></span>
+							<liferay-ui:message key="items" />: <span><%= subItemsCount %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
 
-					<h6 class="text-default">
-						<span><%= curCategory.getDescription() %></span>
-					</h6>
+					<liferay-ui:search-container-column-jsp
+						cssClass="list-group-item-field"
+						path="/html/portlet/shopping/category_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
+		</liferay-ui:search-container-row>
 
-					<%
-					List subcategoryIds = new ArrayList();
-
-					subcategoryIds.add(Long.valueOf(curCategory.getCategoryId()));
-
-					ShoppingCategoryServiceUtil.getSubcategoryIds(subcategoryIds, scopeGroupId, curCategory.getCategoryId());
-
-					int subCategoriesCount = subcategoryIds.size() - 1;
-					int subItemsCount = ShoppingItemServiceUtil.getCategoriesItemsCount(scopeGroupId, subcategoryIds);
-					%>
-
-					<h6 class="text-default">
-						<liferay-ui:message key="categories" />: <span><%= subCategoriesCount %></span>
-						<liferay-ui:message key="items" />: <span><%= subItemsCount %></span>
-					</h6>
-				</liferay-ui:search-container-column-text>
-
-				<liferay-ui:search-container-column-jsp
-					cssClass="list-group-item-field"
-					path="/html/portlet/shopping/category_action.jsp"
-				/>
-			</c:when>
-		</c:choose>
-	</liferay-ui:search-container-row>
-
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>
 
 <%
 boolean showAddCategoryButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY);

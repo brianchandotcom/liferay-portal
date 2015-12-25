@@ -29,6 +29,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.service.ShoppingItemService;
+import com.liferay.shopping.service.persistence.ShoppingCategoryFinder;
 import com.liferay.shopping.service.persistence.ShoppingCategoryPersistence;
 import com.liferay.shopping.service.persistence.ShoppingItemFieldPersistence;
 import com.liferay.shopping.service.persistence.ShoppingItemFinder;
@@ -339,6 +340,25 @@ public abstract class ShoppingItemServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the shopping category finder.
+	 *
+	 * @return the shopping category finder
+	 */
+	public ShoppingCategoryFinder getShoppingCategoryFinder() {
+		return shoppingCategoryFinder;
+	}
+
+	/**
+	 * Sets the shopping category finder.
+	 *
+	 * @param shoppingCategoryFinder the shopping category finder
+	 */
+	public void setShoppingCategoryFinder(
+		ShoppingCategoryFinder shoppingCategoryFinder) {
+		this.shoppingCategoryFinder = shoppingCategoryFinder;
+	}
+
+	/**
 	 * Returns the shopping item field local service.
 	 *
 	 * @return the shopping item field local service
@@ -492,6 +512,8 @@ public abstract class ShoppingItemServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.shopping.service.ShoppingCategoryService shoppingCategoryService;
 	@BeanReference(type = ShoppingCategoryPersistence.class)
 	protected ShoppingCategoryPersistence shoppingCategoryPersistence;
+	@BeanReference(type = ShoppingCategoryFinder.class)
+	protected ShoppingCategoryFinder shoppingCategoryFinder;
 	@BeanReference(type = com.liferay.shopping.service.ShoppingItemFieldLocalService.class)
 	protected com.liferay.shopping.service.ShoppingItemFieldLocalService shoppingItemFieldLocalService;
 	@BeanReference(type = ShoppingItemFieldPersistence.class)

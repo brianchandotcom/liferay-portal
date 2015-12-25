@@ -242,7 +242,7 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new ShoppingResultRowSplitter() %>" />
 	</liferay-ui:search-container>
 </div>
 

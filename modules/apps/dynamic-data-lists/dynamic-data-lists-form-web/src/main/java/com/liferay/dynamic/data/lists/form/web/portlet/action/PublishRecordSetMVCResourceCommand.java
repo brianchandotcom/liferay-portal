@@ -17,13 +17,17 @@ package com.liferay.dynamic.data.lists.form.web.portlet.action;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuery;
+import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -55,13 +59,13 @@ public class PublishRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
-		UnicodeProperties settingsProperties =
-			recordSet.getSettingsProperties();
+		DDMFormValues settingsDDMFormValues =
+			recordSet.getSettingsDDMFormValues();
 
-		settingsProperties.setProperty("published", String.valueOf(published));
+		updatePublishedDDMFormFieldValue(settingsDDMFormValues, published);
 
 		_ddlRecordSetService.updateRecordSet(
-			recordSetId, settingsProperties.toString());
+			recordSetId, settingsDDMFormValues);
 	}
 
 	protected DDMForm getDDMForm(DDLRecordSet recordSet)
@@ -79,6 +83,30 @@ public class PublishRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMFormValuesQueryFactory(
+		DDMFormValuesQueryFactory ddmFormValuesQueryFactory) {
+
+		_ddmFormValuesQueryFactory = ddmFormValuesQueryFactory;
+	}
+
+	protected void updatePublishedDDMFormFieldValue(
+			DDMFormValues ddmFormValues, boolean published)
+		throws PortalException {
+
+		DDMFormValuesQuery ddmFormValuesQuery =
+			_ddmFormValuesQueryFactory.create(ddmFormValues, "/published");
+
+		DDMFormFieldValue ddmFormFieldValue =
+			ddmFormValuesQuery.selectSingleDDMFormFieldValue();
+
+		Value value = ddmFormFieldValue.getValue();
+
+		value.addString(
+			ddmFormValues.getDefaultLocale(), Boolean.toString(published));
+	}
+
 	private volatile DDLRecordSetService _ddlRecordSetService;
+	private volatile DDMFormValuesQueryFactory _ddmFormValuesQueryFactory;
 
 }

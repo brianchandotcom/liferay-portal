@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
-import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys;
-import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationUtil;
+import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration;
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.exception.InvalidTemplateVersionException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.RequiredTemplateException;
@@ -33,6 +33,9 @@ import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.Constants;
@@ -51,6 +54,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.service.persistence.ImageUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.xml.XMLUtil;
 
@@ -1345,12 +1349,12 @@ public class DDMTemplateLocalServiceImpl
 		catch (IOException ioe) {
 		}
 
-		validate(
-			nameMap, script, smallImage, smallImageURL, smallImageFile,
-			smallImageBytes);
-
 		DDMTemplate template = ddmTemplateLocalService.getDDMTemplate(
 			templateId);
+
+		validate(
+			template.getGroupId(), nameMap, script, smallImage, smallImageURL,
+			smallImageFile, smallImageBytes);
 
 		if ((template.getClassPK() == 0) && (classPK > 0)) {
 
@@ -1515,6 +1519,15 @@ public class DDMTemplateLocalServiceImpl
 		return script;
 	}
 
+	protected DDMServiceConfiguration getDDMServiceConfiguration(long groupId)
+		throws ConfigurationException {
+
+		return configurationFactory.getConfiguration(
+			DDMServiceConfiguration.class,
+			new GroupServiceSettingsLocator(
+				groupId, DDMConstants.SERVICE_NAME));
+	}
+
 	protected String getNextVersion(String version, boolean majorVersion) {
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 
@@ -1585,8 +1598,58 @@ public class DDMTemplateLocalServiceImpl
 		}
 
 		validate(
-			nameMap, script, smallImage, smallImageURL, smallImageFile,
+			groupId, nameMap, script, smallImage, smallImageURL, smallImageFile,
 			smallImageBytes);
+	}
+
+	protected void validate(
+			long groupId, Map<Locale, String> nameMap, String script,
+			boolean smallImage, String smallImageURL, File smallImageFile,
+			byte[] smallImageBytes)
+		throws PortalException {
+
+		validate(nameMap, script);
+
+		if (!smallImage || Validator.isNotNull(smallImageURL) ||
+			(smallImageFile == null) || (smallImageBytes == null)) {
+
+			return;
+		}
+
+		String smallImageName = smallImageFile.getName();
+
+		boolean validSmallImageExtension = false;
+
+		DDMServiceConfiguration ddmServiceConfiguration =
+			getDDMServiceConfiguration(groupId);
+
+		for (String smallImageExtension :
+				ddmServiceConfiguration.smallImageExtensions()) {
+
+			if (StringPool.STAR.equals(smallImageExtension) ||
+				StringUtil.endsWith(
+					smallImageName, smallImageExtension)) {
+
+				validSmallImageExtension = true;
+
+				break;
+			}
+		}
+
+		if (!validSmallImageExtension) {
+			throw new TemplateSmallImageNameException(smallImageName);
+		}
+
+		long smallImageMaxSize = ddmServiceConfiguration.smallImageMaxSize();
+
+		if ((smallImageMaxSize > 0) &&
+			(smallImageBytes.length > smallImageMaxSize)) {
+
+			throw new TemplateSmallImageSizeException(
+				"Image " + smallImageName + " has " + smallImageBytes.length +
+					" bytes and exceeds the maximum size of " +
+						smallImageMaxSize);
+		}
 	}
 
 	protected void validate(Map<Locale, String> nameMap, String script)
@@ -1599,56 +1662,6 @@ public class DDMTemplateLocalServiceImpl
 		}
 	}
 
-	protected void validate(
-			Map<Locale, String> nameMap, String script, boolean smallImage,
-			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
-		throws PortalException {
-
-		validate(nameMap, script);
-
-		String[] imageExtensions = DDMServiceConfigurationUtil.getArray(
-			DDMServiceConfigurationKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS);
-
-		if (!smallImage || Validator.isNotNull(smallImageURL) ||
-			(smallImageFile == null) || (smallImageBytes == null)) {
-
-			return;
-		}
-
-		String smallImageName = smallImageFile.getName();
-
-		boolean validSmallImageExtension = false;
-
-		for (String imageExtension : imageExtensions) {
-			if (StringPool.STAR.equals(imageExtension) ||
-				StringUtil.endsWith(
-					smallImageName, imageExtension)) {
-
-				validSmallImageExtension = true;
-
-				break;
-			}
-		}
-
-		if (!validSmallImageExtension) {
-			throw new TemplateSmallImageNameException(smallImageName);
-		}
-
-		long smallImageMaxSize = GetterUtil.getLong(
-			DDMServiceConfigurationUtil.get(
-				DDMServiceConfigurationKeys.
-					DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE));
-
-		if ((smallImageMaxSize > 0) &&
-			(smallImageBytes.length > smallImageMaxSize)) {
-
-			throw new TemplateSmallImageSizeException(
-				"Image " + smallImageName + " has " + smallImageBytes.length +
-					" bytes and exceeds the maximum size of " +
-						smallImageMaxSize);
-		}
-	}
-
 	protected void validateName(Map<Locale, String> nameMap)
 		throws PortalException {
 
@@ -1658,6 +1671,9 @@ public class DDMTemplateLocalServiceImpl
 			throw new TemplateNameException("Name is null");
 		}
 	}
+
+	@ServiceReference(type = ConfigurationFactory.class)
+	protected ConfigurationFactory configurationFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMTemplateLocalServiceImpl.class);

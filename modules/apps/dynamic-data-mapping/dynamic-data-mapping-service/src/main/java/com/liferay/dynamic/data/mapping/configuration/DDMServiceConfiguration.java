@@ -29,4 +29,17 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 	localization = "content/Language", name = "%ddm.service.configuration.name"
 )
 public interface DDMServiceConfiguration {
+
+	@Meta.AD(
+		deflt = ".gif|.jpeg|.jpg|.png",
+		description ="%small.image.extensions.description", required = false
+	)
+	public String[] smallImageExtensions();
+
+	@Meta.AD(
+		deflt = "51200", description ="%small.image.max.size.description",
+		required = false
+	)
+	public int smallImageMaxSize();
+
 }

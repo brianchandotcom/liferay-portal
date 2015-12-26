@@ -18,14 +18,12 @@ import java.util.Collection;
 
 import javax.tools.JavaFileObject;
 
-import org.osgi.framework.wiring.BundleWiring;
-
 /**
  * @author Raymond Augé
  */
 public interface JavaFileObjectResolver {
 
 	public Collection<JavaFileObject> resolveClasses(
-		BundleWiring bundleWiring, String path, int options);
+		boolean recurse, String packagePath);
 
 }

@@ -14,6 +14,9 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -31,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -145,9 +148,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		JspCompilationContext jspCompilationContext,
 		ErrorDispatcher errorDispatcher, boolean suppressLogging) {
 
-		BundleContext bundleContext = _jspBundle.getBundleContext();
+		Bundle jspBundle = _jspBundleWiring.getBundle();
 
-		_logger = new Logger(bundleContext);
+		_logger = new Logger(jspBundle.getBundleContext());
 
 		ServletContext servletContext =
 			jspCompilationContext.getServletContext();
@@ -164,10 +167,50 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		_allParticipatingBundles = jspBundleClassloader.getBundles();
 
-		_bundle = _allParticipatingBundles[0];
+		Bundle bundle = _allParticipatingBundles[0];
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		_classLoader = bundleWiring.getClassLoader();
+
+		for (BundleWire bundleWire : bundleWiring.getRequiredWires(null)) {
+			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
+
+			_bundleWiringPackageNames.put(
+				providedBundleWiring,
+				_collectPackageNames(providedBundleWiring));
+		}
+
+		_bundleWiringPackageNames.putAll(_jspBundleWiringPackageNames);
+
+		if (options.contains(BundleJavaFileManager.OPT_VERBOSE)) {
+			StringBundler sb = new StringBundler(
+				_bundleWiringPackageNames.size() * 4 + 6);
+
+			sb.append("Jsp compiler for bundle ");
+			sb.append(bundle.getSymbolicName());
+			sb.append(StringPool.DASH);
+			sb.append(bundle.getVersion());
+			sb.append(" has dependent bundle wirings: ");
+
+			for (BundleWiring curBundleWiring :
+					_bundleWiringPackageNames.keySet()) {
+
+				Bundle currentBundle = curBundleWiring.getBundle();
+
+				sb.append(currentBundle.getSymbolicName());
+				sb.append(StringPool.DASH);
+				sb.append(currentBundle.getVersion());
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			_logger.log(Logger.LOG_INFO, sb.toString());
+		}
 
 		_javaFileObjectResolver = new JspJavaFileObjectResolver(
-			_bundle, _jspBundle, _logger);
+			bundleWiring, _jspBundleWiring, _bundleWiringPackageNames, _logger);
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
@@ -277,9 +320,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			}
 
 			javaFileManager = new BundleJavaFileManager(
-				_bundle, _jspBundleWirings, _systemPackageNames,
-				standardJavaFileManager, _logger,
-				options.contains(BundleJavaFileManager.OPT_VERBOSE),
+				_classLoader, _systemPackageNames, standardJavaFileManager,
+				_logger, options.contains(BundleJavaFileManager.OPT_VERBOSE),
 				_javaFileObjectResolver);
 		}
 
@@ -373,43 +415,11 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			url.toString(), "Unknown protocol " + protocol);
 	}
 
-	private static final String[] _JSP_COMPILER_DEPENDENCIES = {
-		"com.liferay.portal.kernel.exception.PortalException",
-		"com.liferay.portal.util.PortalImpl", "javax.portlet.PortletException",
-		"javax.servlet.ServletException"
-	};
-
-	private static final Bundle _jspBundle = FrameworkUtil.getBundle(
-		JspCompiler.class);
-	private static final Set<BundleWiring> _jspBundleWirings =
-		new LinkedHashSet<>();
-	private static final Set<Object> _systemPackageNames = new HashSet<>();
-
-	static {
-		BundleWiring bundleWiring = _jspBundle.adapt(BundleWiring.class);
-
-		_jspBundleWirings.add(bundleWiring);
-
-		for (BundleWire bundleWire : bundleWiring.getRequiredWires(null)) {
-			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
-
-			_jspBundleWirings.add(providedBundleWiring);
-		}
-
-		BundleContext bundleContext = _jspBundle.getBundleContext();
-
-		Bundle systemBundle = bundleContext.getBundle(0);
-
-		if (systemBundle == null) {
-			throw new ExceptionInInitializerError(
-				"Unable to access to system bundle");
-		}
-
-		BundleWiring systemBundleWiring = systemBundle.adapt(
-			BundleWiring.class);
+	private static Set<String> _collectPackageNames(BundleWiring bundleWiring) {
+		Set<String> packageNames = new HashSet<>();
 
 		for (BundleCapability bundleCapability :
-				systemBundleWiring.getCapabilities(
+				bundleWiring.getCapabilities(
 					BundleRevision.PACKAGE_NAMESPACE)) {
 
 			Map<String, Object> attributes = bundleCapability.getAttributes();
@@ -418,13 +428,54 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				BundleRevision.PACKAGE_NAMESPACE);
 
 			if (packageName != null) {
-				_systemPackageNames.add(packageName);
+				packageNames.add((String)packageName);
 			}
 		}
+
+		return packageNames;
+	}
+
+	private static final String[] _JSP_COMPILER_DEPENDENCIES = {
+		"com.liferay.portal.kernel.exception.PortalException",
+		"com.liferay.portal.util.PortalImpl", "javax.portlet.PortletException",
+		"javax.servlet.ServletException"
+	};
+
+	private static final BundleWiring _jspBundleWiring;
+	private static final Map<BundleWiring, Set<String>>
+		_jspBundleWiringPackageNames = new LinkedHashMap<>();
+	private static final Set<String> _systemPackageNames;
+
+	static {
+		Bundle jspBundle = FrameworkUtil.getBundle(JspCompiler.class);
+
+		_jspBundleWiring = jspBundle.adapt(BundleWiring.class);
+
+		for (BundleWire bundleWire : _jspBundleWiring.getRequiredWires(null)) {
+			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
+
+			_jspBundleWiringPackageNames.put(
+				providedBundleWiring,
+				_collectPackageNames(providedBundleWiring));
+		}
+
+		BundleContext bundleContext = jspBundle.getBundleContext();
+
+		Bundle systemBundle = bundleContext.getBundle(0);
+
+		if (systemBundle == null) {
+			throw new ExceptionInInitializerError(
+				"Unable to access to system bundle");
+		}
+
+		_systemPackageNames = _collectPackageNames(
+			systemBundle.adapt(BundleWiring.class));
 	}
 
 	private Bundle[] _allParticipatingBundles;
-	private Bundle _bundle;
+	private final Map<BundleWiring, Set<String>> _bundleWiringPackageNames =
+		new LinkedHashMap<>();
+	private ClassLoader _classLoader;
 	private final List<File> _classPath = new ArrayList<>();
 	private JavaFileObjectResolver _javaFileObjectResolver;
 	private Logger _logger;

@@ -19,18 +19,7 @@ package com.liferay.dynamic.data.mapping.web.configuration;
  */
 public class DDMWebConfigurationKeys {
 
-	public static final String
-		DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY =
-			"dynamic.data.mapping.structure.force.autogenerate.key";
-
-	public static final String
-		DYNAMIC_DATA_MAPPING_TEMPLATE_FORCE_AUTOGENERATE_KEY =
-			"dynamic.data.mapping.template.force.autogenerate.key";
-
 	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT =
 		"dynamic.data.mapping.template.language.content";
-
-	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_DEFAULT =
-		"dynamic.data.mapping.template.language.default";
 
 }

@@ -23,16 +23,8 @@ import com.liferay.portal.kernel.configuration.Filter;
  */
 public class DDMWebConfigurationUtil {
 
-	public static String get(String key) {
-		return _configuration.get(key);
-	}
-
 	public static String get(String key, Filter filter) {
 		return _configuration.get(key, filter);
-	}
-
-	public static String[] getArray(String key) {
-		return _configuration.getArray(key);
 	}
 
 	private static final Configuration _configuration =

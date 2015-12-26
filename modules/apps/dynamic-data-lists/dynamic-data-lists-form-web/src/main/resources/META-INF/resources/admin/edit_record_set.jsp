@@ -143,7 +143,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 						<small><liferay-ui:message key="make-this-form-public" /></small>
 					</span>
 
-					<aui:input label="" name="publishCheckbox" type="toggle-switch" value="<%= ddlFormAdminDisplayContext.isRecordSetPublished() %>" />
+					<aui:input label="" name="publishCheckbox" type="toggle-switch" value="<%= ddlFormAdminDisplayContext.isFormPublished() %>" />
 				</label>
 			</div>
 

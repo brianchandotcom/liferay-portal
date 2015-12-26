@@ -14,7 +14,7 @@ String ckEditorWscUrl = "http://download.ckeditor.com/wsc/releases/wsc_${ckEdito
 
 File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")
-File thirdPartyDir = file("../../../../portal-web/third-party")
+File thirdPartyDir = file("third-party")
 
 buildCKEditor {
 	File ckEditorDestinationDir = new File(editorDestinationDir, "ckeditor")
@@ -28,7 +28,7 @@ buildCKEditor {
 
 	from(zipTree(ckEditorZipFile)) {
 		eachFile new StripPathSegmentsAction(1)
-		include "ckeditor/**"
+		include "ckeditor/"
 	}
 
 	from new File(editorSrcDir, "_diffs")

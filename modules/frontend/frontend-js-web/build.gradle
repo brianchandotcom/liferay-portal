@@ -1,15 +1,16 @@
 import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
+	alloyUI
 	jQuery
+	lexicon
 	lfrAMDLoader
 	lodash
 	svg4everybody
 }
 
-task buildAlloy(type: Copy)
+task buildAlloyUI(type: Copy)
 task buildJQuery(type: Copy)
 task buildJQueryPluginsForm
 task buildLexicon(type: Copy)
@@ -17,20 +18,18 @@ task buildLfrAMDLoader(type: Copy)
 task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
 
-String alloyVersion = "3.0"
+String alloyUIVersion = "3.0.3-deprecated.5"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
-String lexiconVersion = "0.1"
+String lexiconVersion = "0.1.28"
 String lfrAMDLoaderVersion = "1.3.5"
 String lodashVersion = "3.10.1"
 String svg4everybodyVersion = "2.0.0"
 
 File jsDestinationDir = file("tmp/META-INF/resources")
-File thirdPartyDir = file("../../../portal-web/third-party")
 
-buildAlloy {
+buildAlloyUI {
 	File alloyDestinationDir = new File(jsDestinationDir, "aui")
-	FileTree alloyZipFileTree = fileTree(dir: thirdPartyDir, include: "alloy-${alloyVersion}*.zip")
 
 	doFirst {
 		delete alloyDestinationDir
@@ -54,15 +53,15 @@ buildAlloy {
 		}
 	}
 
-	eachFile new StripPathSegmentsAction(1)
-	from zipTree(alloyZipFileTree.singleFile)
-	include "build/**"
+	eachFile new StripPathSegmentsAction(6)
+
+	from {
+		zipTree(configurations.alloyUI.singleFile)
+	}
+
+	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/"
 	includeEmptyDirs = false
 	into alloyDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, alloyZipFileTree.singleFile, alloyDestinationDir)
-	}
 }
 
 buildJQuery {
@@ -99,20 +98,20 @@ buildJQueryPluginsForm {
 
 buildLexicon {
 	File lexiconDestinationDir = new File(jsDestinationDir, "lexicon")
-	FileTree lexiconZipFileTree = fileTree(dir: thirdPartyDir, include: "lexicon-${lexiconVersion}*.zip")
 
 	doFirst {
 		delete lexiconDestinationDir
 	}
 
-	eachFile new ReplaceLeadingPathAction("js": lexiconDestinationDir.name)
-	from zipTree(lexiconZipFileTree.singleFile)
-	includeEmptyDirs = false
-	into jsDestinationDir
+	eachFile new StripPathSegmentsAction(7)
 
-	onlyIf {
-		!FileUtil.isUpToDate(project, lexiconZipFileTree.singleFile, lexiconDestinationDir)
+	from {
+		zipTree(configurations.lexicon.singleFile)
 	}
+
+	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/js/"
+	includeEmptyDirs = false
+	into lexiconDestinationDir
 }
 
 buildLfrAMDLoader {
@@ -158,7 +157,7 @@ buildSvg4everybody {
 }
 
 classes {
-	dependsOn buildAlloy
+	dependsOn buildAlloyUI
 	dependsOn buildJQuery
 	dependsOn buildJQueryPluginsForm
 	dependsOn buildLexicon
@@ -168,6 +167,8 @@ classes {
 }
 
 dependencies {
+	alloyUI group: "org.webjars.bower", name: "alloy-ui", transitive: false, version: alloyUIVersion
+
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
@@ -177,6 +178,8 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 
 	jQuery group: "org.webjars.npm", name: "jquery", transitive: false, version: jQueryVersion
+
+	lexicon group: "org.webjars.bower", name: "lexicon", transitive: false, version: lexiconVersion
 
 	lfrAMDLoader group: "org.webjars.npm", name: "lfr-amd-loader", transitive: false, version: lfrAMDLoaderVersion
 

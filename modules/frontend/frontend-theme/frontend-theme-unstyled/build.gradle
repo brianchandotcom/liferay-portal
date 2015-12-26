@@ -1,41 +1,46 @@
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
-import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-task buildAlloyTheme(type: Copy)
+configurations {
+	alloyUI
+	lexicon
+}
+
+task buildAlloyUITheme(type: Copy)
 task buildLexicon(type: Copy)
+task buildLexiconFonts(type: Copy)
 task buildLexiconIcons(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
-String alloyVersion = "3.0"
-String lexiconVersion = "0.1"
+String alloyUIVersion = "3.0.3-deprecated.5"
+String lexiconVersion = "0.1.28"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
-File thirdPartyDir = file("../../../../portal-web/third-party")
 
-buildAlloyTheme {
+buildAlloyUITheme {
 	File alloyThemeDestinationDir = new File(themeDestinationDir, "images/aui")
-	FileTree alloyZipFileTree = fileTree(dir: thirdPartyDir, include: "alloy-${alloyVersion}*.zip")
 
 	doFirst {
 		delete alloyThemeDestinationDir
 	}
 
-	filesMatching "build/aui-*/assets/skins/sam/**", new StripPathSegmentsAction(5)
-	filesMatching "build/aui-skin-deprecated/images/**", new StripPathSegmentsAction(3)
+	eachFile new StripPathSegmentsAction(6)
 
-	from zipTree(alloyZipFileTree.singleFile)
+	filesMatching "build/aui-*/assets/skins/sam/", new StripPathSegmentsAction(5)
+	filesMatching "build/aui-skin-deprecated/images/", new StripPathSegmentsAction(3)
 
-	include "build/aui-*/assets/skins/sam/**.gif", "build/aui-*/assets/skins/sam/**.jpg", "build/aui-*/assets/skins/sam/**.png"
-	include "build/aui-skin-deprecated/images/**"
+	from {
+		zipTree(configurations.alloyUI.singleFile)
+	}
+
+	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-*/assets/skins/sam/**.gif"
+	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-*/assets/skins/sam/**.jpg"
+	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-*/assets/skins/sam/**.png"
+	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-skin-deprecated/images/"
 
 	includeEmptyDirs = false
 	into alloyThemeDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, alloyZipFileTree.singleFile, alloyThemeDestinationDir)
-	}
 }
 
 buildCSS {
@@ -44,7 +49,6 @@ buildCSS {
 
 buildLexicon {
 	File lexiconDestinationDir = new File(themeDestinationDir, "css/aui/lexicon")
-	FileTree lexiconZipFileTree = fileTree(dir: thirdPartyDir, include: "lexicon-${lexiconVersion}*.zip")
 
 	doFirst {
 		delete lexiconDestinationDir
@@ -91,43 +95,58 @@ buildLexicon {
 		}
 	}
 
-	filesMatching "scss/**", new StripPathSegmentsAction(1)
-	from zipTree(lexiconZipFileTree.singleFile)
+	eachFile new StripPathSegmentsAction(7)
 
-	include "fonts/**"
-	include "scss/**"
+	from {
+		zipTree(configurations.lexicon.singleFile)
+	}
 
+	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/scss/"
 	includeEmptyDirs = false
 	into lexiconDestinationDir
+}
 
-	onlyIf {
-		!FileUtil.isUpToDate(project, lexiconZipFileTree.singleFile, lexiconDestinationDir)
+buildLexiconFonts {
+	File lexiconFontsDestinationDir = new File(themeDestinationDir, "css/aui/lexicon/fonts")
+
+	dependsOn buildLexicon
+
+	doFirst {
+		delete lexiconFontsDestinationDir
 	}
+
+	eachFile new StripPathSegmentsAction(7)
+
+	from {
+		zipTree(configurations.lexicon.singleFile)
+	}
+
+	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/fonts/"
+	includeEmptyDirs = false
+	into lexiconFontsDestinationDir
 }
 
 buildLexiconIcons {
 	File lexiconIconsDestinationDir = new File(themeDestinationDir, "images/lexicon")
-	FileTree lexiconZipFileTree = fileTree(dir: thirdPartyDir, include: "lexicon-${lexiconVersion}*.zip")
 
 	doFirst {
 		delete lexiconIconsDestinationDir
 	}
 
-	filesMatching "images/icons/**", new StripPathSegmentsAction(2)
-	from zipTree(lexiconZipFileTree.singleFile)
+	eachFile new StripPathSegmentsAction(8)
 
-	include "images/icons/**"
+	from {
+		zipTree(configurations.lexicon.singleFile)
+	}
+
+	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/images/icons/"
 	includeEmptyDirs = false
 	into lexiconIconsDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, lexiconZipFileTree.singleFile, lexiconIconsDestinationDir)
-	}
 }
 
 buildTheme {
-	dependsOn buildAlloyTheme
-	dependsOn buildLexicon
+	dependsOn buildAlloyUITheme
+	dependsOn buildLexiconFonts
 	dependsOn buildLexiconIcons
 }
 
@@ -136,10 +155,14 @@ classes {
 }
 
 dependencies {
+	alloyUI group: "org.webjars.bower", name: "alloy-ui", transitive: false, version: alloyUIVersion
+
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	lexicon group: "org.webjars.bower", name: "lexicon", transitive: false, version: lexiconVersion
 }
 
 liferay {

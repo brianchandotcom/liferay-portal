@@ -53,7 +53,7 @@ downloadSrc {
 	include "gdata/java/lib/gdata-client-1.0.jar"
 	include "gdata/java/lib/gdata-core-1.0.jar"
 	include "gdata/java/lib/gdata-media-1.0.jar"
-	include "gdata/java/sample/appsforyourdomain/**"
+	include "gdata/java/sample/appsforyourdomain/"
 	include "gdata/java/sample/util/lib/sample-util.jar"
 
 	includeEmptyDirs = false

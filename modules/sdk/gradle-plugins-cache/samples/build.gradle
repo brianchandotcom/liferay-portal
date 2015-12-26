@@ -31,7 +31,7 @@ buildBabelCore {
 cache {
 	task(classes) {
 		baseDir = sourceSets.main.output.resourcesDir
-		include "META-INF/resources/**"
+		include "META-INF/resources/"
 		skipTaskDependency buildBabelCore
 		testFile "build.gradle"
 	}

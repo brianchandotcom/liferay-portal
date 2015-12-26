@@ -37,8 +37,8 @@ buildMetalComponents {
 		zipTree(configurations.metalComponents.singleFile)
 	}
 
-	include "META-INF/resources/webjars/metal-components/${metalComponentsVersion}/build/amd-jquery/**"
-	include "META-INF/resources/webjars/metal-components/${metalComponentsVersion}/build/soy/**"
+	include "META-INF/resources/webjars/metal-components/${metalComponentsVersion}/build/amd-jquery/"
+	include "META-INF/resources/webjars/metal-components/${metalComponentsVersion}/build/soy/"
 
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"

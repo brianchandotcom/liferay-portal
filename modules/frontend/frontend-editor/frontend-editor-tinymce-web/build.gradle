@@ -7,7 +7,7 @@ String tinyMCEVersion = "4.1.7"
 
 File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")
-File thirdPartyDir = file("../../../../portal-web/third-party")
+File thirdPartyDir = file("third-party")
 
 buildTinyMCE {
 	File tinyMCEDestinationDir = new File(editorDestinationDir, "tiny_mce")
@@ -23,7 +23,7 @@ buildTinyMCE {
 
 	from(zipTree(tinyMCEZipFile)) {
 		eachFile new StripPathSegmentsAction(3)
-		include "tinymce/js/tinymce/**"
+		include "tinymce/js/tinymce/"
 	}
 
 	includeEmptyDirs = false

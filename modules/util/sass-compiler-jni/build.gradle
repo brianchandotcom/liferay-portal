@@ -96,7 +96,7 @@ downloadSassSpec {
 		zipTree(FileUtil.get(project, sassSpecUrl))
 	}
 
-	include "**/spec/basic/**"
+	include "**/spec/basic/"
 	into sassSpecDir
 
 	onlyIf {

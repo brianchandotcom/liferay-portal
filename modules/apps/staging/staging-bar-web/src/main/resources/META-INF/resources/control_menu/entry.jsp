@@ -17,25 +17,5 @@
 <%@ include file="/init.jsp" %>
 
 <li>
-	<liferay-ui:icon
-		iconCssClass="icon-circle-blank icon-monospaced"
-		id="stagingBarButton"
-		label="staging"
-		linkCssClass="control-menu-icon"
-		url="javascript:;"
-	/>
-
-	<liferay-util:buffer var="stagingContent">
-		<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
-	</liferay-util:buffer>
-
-	<aui:script sandbox="<%= true %>">
-		$('#<portlet:namespace />stagingBarButton').popover(
-			{
-				content: '<%= HtmlUtil.escapeJS(stagingContent) %>',
-				html: true,
-				placement: 'bottom'
-			}
-		);
-	</aui:script>
+	<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
 </li>

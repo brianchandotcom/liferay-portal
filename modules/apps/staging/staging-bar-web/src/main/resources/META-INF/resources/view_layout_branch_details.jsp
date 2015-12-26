@@ -28,20 +28,19 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 %>
 
 <li class="control-menu-nav-item">
-	<label>
-		<liferay-ui:message key="page-variations" />
-	</label>
+	<li class="control-menu-nav-item">
+		<a class="staging-variation-label" href="javascript:;" onclick='<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>'>
+			<liferay-ui:message key="page-variations" />
+		</a>
 
-	<liferay-util:buffer var="taglibMessage">
-		<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" />
-	</liferay-util:buffer>
+		<div class="dropdown">
+			<a class="dropdown-toggle layout-set-branch-selector staging-variation-selector" data-toggle="dropdown" href="#1">
+				<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" />
 
-	<c:choose>
-		<c:when test="<%= layoutRevisions.size() == 1 %>">
-			<span class="layout-branch-selector staging-variation-selector"><i class="icon-file"></i> <%= taglibMessage %></span>
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:icon-menu cssClass="layout-branch-selector staging-variation-selector" direction="down" extended="<%= false %>" icon="../aui/file" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
+				<aui:icon image="caret-double-l" markupView="lexicon" />
+			</a>
+
+			<ul class="dropdown-menu">
 
 				<%
 				for (LayoutRevision rootLayoutRevision : layoutRevisions) {
@@ -50,65 +49,52 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 					boolean selected = (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
 				%>
 
-					<portlet:actionURL name="selectLayoutBranch" var="curLayoutBranchURL">
-						<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(curLayoutBranch.getGroupId()) %>" />
-						<portlet:param name="layoutBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutBranchId()) %>" />
-						<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutSetBranchId()) %>" />
-					</portlet:actionURL>
+				<portlet:actionURL name="selectLayoutBranch" var="curLayoutBranchURL">
+					<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(curLayoutBranch.getGroupId()) %>" />
+					<portlet:param name="layoutBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutBranchId()) %>" />
+					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutSetBranchId()) %>" />
+				</portlet:actionURL>
 
-					<liferay-ui:icon
-						cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
-						message="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>"
-						url='<%= selected ? "javascript:;" : curLayoutBranchURL %>'
-					/>
+				<li>
+					<a class='<%= selected ? "disabled" : StringPool.BLANK %>' href='<%= selected ? "javascript:;" : curLayoutBranchURL %>'>
+						<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" />
+					</a>
+				</li>
 
 				<%
 				}
 				%>
 
-			</liferay-ui:icon-menu>
-		</c:otherwise>
-	</c:choose>
-
-	<portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="viewLayoutBranches" />
-		<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
-	</portlet:renderURL>
-
-	<div class="manage-page-variations page-variations">
-		<liferay-ui:icon
-			iconCssClass="icon-cog"
-			id="manageLayoutRevisions"
-			message="manage-page-variations"
-			url="<%= layoutBranchesURL %>"
-		/>
-	</div>
+			</ul>
+		</div>
+	</li>
 </li>
 
-<aui:script sandbox="<%= true %>">
+<aui:script>
+	function <portlet:namespace />openPageVariationsDialog() {
+		var pageVariationsDialog = Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true
+				},
+				id: 'pagesVariationsDialog',
+				title: '<liferay-ui:message key="page-variations" />',
+
+				<liferay-portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcRenderCommandName" value="viewLayoutBranches" />
+					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
+				</liferay-portlet:renderURL>
+
+				uri: '<%= HtmlUtil.escapeJS(layoutBranchesURL) %>'
+			}
+		);
+	}
+
 	$('.layout-branch-selector').on(
 		'mouseenter',
 		function(event) {
 			Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="page-variation" />');
 		}
 	);
-
-	var layoutRevisionsLink = $('#<portlet:namespace />manageLayoutRevisions');
-
-	layoutRevisionsLink.on(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			Liferay.Util.openWindow(
-				{
-					id: '<portlet:namespace />layoutRevisions',
-					title: '<%= UnicodeLanguageUtil.get(request, "manage-page-variations") %>',
-					uri: layoutRevisionsLink.attr('href')
-				}
-			);
-		}
-	);
-
 </aui:script>

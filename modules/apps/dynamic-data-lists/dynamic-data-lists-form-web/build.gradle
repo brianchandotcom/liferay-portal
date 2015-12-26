@@ -12,6 +12,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-values-query")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }

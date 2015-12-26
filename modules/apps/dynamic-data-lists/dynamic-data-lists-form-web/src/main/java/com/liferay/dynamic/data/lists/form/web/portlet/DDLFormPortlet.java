@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -268,10 +268,9 @@ public class DDLFormPortlet extends MVCPortlet {
 	}
 
 	protected boolean isCaptchaRequired(DDLRecordSet recordSet) {
-		String requireCaptcha = recordSet.getSettingsProperty(
-			"requireCaptcha", Boolean.FALSE.toString());
+		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsObj();
 
-		return GetterUtil.getBoolean(requireCaptcha);
+		return recordSetSettings.requireCaptcha();
 	}
 
 	@Override

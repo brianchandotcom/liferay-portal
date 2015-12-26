@@ -184,11 +184,14 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 
 		ddlRecordSetImpl.resetOriginalValues();
 
+		ddlRecordSetImpl.setDDMFormValues(_ddmFormValues);
+
 		return ddlRecordSetImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
 		uuid = objectInput.readUTF();
 		recordSetId = objectInput.readLong();
 		groupId = objectInput.readLong();
@@ -205,6 +208,8 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		scope = objectInput.readInt();
 		settings = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+
+		_ddmFormValues = (com.liferay.dynamic.data.mapping.storage.DDMFormValues)objectInput.readObject();
 	}
 
 	@Override
@@ -265,6 +270,8 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeObject(_ddmFormValues);
 	}
 
 	public String uuid;
@@ -283,4 +290,5 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 	public int scope;
 	public String settings;
 	public long lastPublishDate;
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues _ddmFormValues;
 }

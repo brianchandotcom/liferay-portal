@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetServiceBaseImpl;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -124,6 +125,18 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 
 	@Override
 	public DDLRecordSet updateRecordSet(
+			long recordSetId, DDMFormValues settingsDDMFormValues)
+		throws PortalException {
+
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), recordSetId, ActionKeys.UPDATE);
+
+		return ddlRecordSetLocalService.updateRecordSet(
+			recordSetId, settingsDDMFormValues);
+	}
+
+	@Override
+	public DDLRecordSet updateRecordSet(
 			long recordSetId, long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, int minDisplayRows,
 			ServiceContext serviceContext)
@@ -150,16 +163,6 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 		return ddlRecordSetLocalService.updateRecordSet(
 			groupId, ddmStructureId, recordSetKey, nameMap, descriptionMap,
 			minDisplayRows, serviceContext);
-	}
-
-	@Override
-	public DDLRecordSet updateRecordSet(long recordSetId, String settings)
-		throws PortalException {
-
-		DDLRecordSetPermission.check(
-			getPermissionChecker(), recordSetId, ActionKeys.UPDATE);
-
-		return ddlRecordSetLocalService.updateRecordSet(recordSetId, settings);
 	}
 
 }

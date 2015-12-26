@@ -499,19 +499,13 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
-		return _ddlRecordSet.getSettingsProperties();
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getSettingsDDMFormValues() {
+		return _ddlRecordSet.getSettingsDDMFormValues();
 	}
 
 	@Override
-	public java.lang.String getSettingsProperty(java.lang.String key) {
-		return _ddlRecordSet.getSettingsProperty(key);
-	}
-
-	@Override
-	public java.lang.String getSettingsProperty(java.lang.String key,
-		java.lang.String defaultValue) {
-		return _ddlRecordSet.getSettingsProperty(key, defaultValue);
+	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getSettingsObj() {
+		return _ddlRecordSet.getSettingsObj();
 	}
 
 	/**

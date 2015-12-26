@@ -9,6 +9,7 @@ dependencies {
 	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-validator")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":portal:portal-upgrade")

@@ -90,7 +90,7 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 	}
 
 	@Override
-	public DDLRecordSetSettings getSettingsObj() {
+	public DDLRecordSetSettings getSettingsModel() {
 		if (_recordSetSettings == null) {
 			_recordSetSettings = DDMFormInstanceFactory.create(
 				DDLRecordSetSettings.class, getSettingsDDMFormValues());

@@ -354,7 +354,7 @@ public class DDLFormAdminDisplayContext {
 			return false;
 		}
 
-		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsObj();
+		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsModel();
 
 		return recordSetSettings.published();
 	}

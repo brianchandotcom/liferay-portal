@@ -94,7 +94,7 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, ddlRecord);
 		}
 
-		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsObj();
+		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsModel();
 
 		String redirectURL = recordSetSettings.redirectURL();
 
@@ -149,7 +149,7 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, DDLRecordSet recordSet)
 		throws Exception {
 
-		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsObj();
+		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsModel();
 
 		if (recordSetSettings.requireCaptcha()) {
 			try {

@@ -89,7 +89,7 @@ public class DDLFormDisplayContext {
 			return null;
 		}
 
-		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsObj();
+		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsModel();
 
 		return recordSetSettings.redirectURL();
 	}
@@ -176,7 +176,7 @@ public class DDLFormDisplayContext {
 			return false;
 		}
 
-		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsObj();
+		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsModel();
 
 		return recordSetSettings.published();
 	}

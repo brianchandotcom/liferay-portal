@@ -504,8 +504,8 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getSettingsObj() {
-		return _ddlRecordSet.getSettingsObj();
+	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getSettingsModel() {
+		return _ddlRecordSet.getSettingsModel();
 	}
 
 	/**

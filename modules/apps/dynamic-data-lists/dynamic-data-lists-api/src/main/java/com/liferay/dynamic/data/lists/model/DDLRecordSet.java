@@ -63,5 +63,5 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getSettingsDDMFormValues();
 
-	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getSettingsObj();
+	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getSettingsModel();
 }

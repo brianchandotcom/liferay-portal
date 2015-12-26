@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
 public class DDLFormEmailNotificationUtil {
 
 	public static String getEmailFromAddress(DDLRecordSet recordSet) {
-		DDLRecordSetSettings recordSettings = recordSet.getSettingsObj();
+		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
 
 		String defaultEmailFromAddress = PrefsPropsUtil.getString(
 			recordSet.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
@@ -47,7 +47,7 @@ public class DDLFormEmailNotificationUtil {
 	}
 
 	public static String getEmailFromName(DDLRecordSet recordSet) {
-		DDLRecordSetSettings recordSettings = recordSet.getSettingsObj();
+		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
 
 		String defaultEmailFromName = PrefsPropsUtil.getString(
 			recordSet.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
@@ -59,7 +59,7 @@ public class DDLFormEmailNotificationUtil {
 	public static String getEmailSubject(DDLRecordSet recordSet)
 		throws PortalException {
 
-		DDLRecordSetSettings recordSettings = recordSet.getSettingsObj();
+		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
@@ -81,7 +81,7 @@ public class DDLFormEmailNotificationUtil {
 	public static String getEmailToAddress(DDLRecordSet recordSet) {
 		String defaultEmailToAddress = StringPool.BLANK;
 
-		DDLRecordSetSettings recordSettings = recordSet.getSettingsObj();
+		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
 
 		User user = UserLocalServiceUtil.fetchUser(recordSet.getUserId());
 
@@ -94,7 +94,7 @@ public class DDLFormEmailNotificationUtil {
 	}
 
 	public static boolean isEmailNotificationEnabled(DDLRecordSet recordSet) {
-		DDLRecordSetSettings recordSettings = recordSet.getSettingsObj();
+		DDLRecordSetSettings recordSettings = recordSet.getSettingsModel();
 
 		return recordSettings.sendEmailNotification();
 	}

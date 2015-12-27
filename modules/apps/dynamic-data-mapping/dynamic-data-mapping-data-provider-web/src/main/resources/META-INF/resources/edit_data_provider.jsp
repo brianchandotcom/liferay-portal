@@ -49,8 +49,6 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 	<aui:input name="languageId" type="hidden" value="<%= String.valueOf(themeDisplay.getLanguageId()) %>" />
 
-	<aui:model-context bean="<%= ddmDataProviderInstance %>" model="<%= DDMDataProviderInstance.class %>" />
-
 	<div class="container-fluid-1280">
 		<aui:fieldset>
 			<liferay-util:buffer var="requiredMark">
@@ -63,9 +61,9 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 				<liferay-ui:message arguments="<%= requiredMark %>" key="all-fields-marked-with-x-are-required" translateArguments="<%= false %>" />
 			</label>
 
-			<aui:input name="name" type="text" placeholder="enter-the-data-provider-name" />
+			<aui:input name="name" placeholder="enter-the-data-provider-name" required="<%= true %>" type="text" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceName() %>" />
 
-			<aui:input name="description" type="text" placeholder="enter-a-short-description" />
+			<aui:input name="description" placeholder="enter-a-short-description" type="textarea" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceDescription() %>" />
 		</aui:fieldset>
 
 		<aui:fieldset>

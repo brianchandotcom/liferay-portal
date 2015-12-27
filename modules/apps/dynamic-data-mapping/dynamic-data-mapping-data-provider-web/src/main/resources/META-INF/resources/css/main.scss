@@ -19,7 +19,7 @@
 		}
 
 		.help-block {
-			position: absolute;	
+			position: absolute;
 		}
 
 		.input-localized {
@@ -31,7 +31,7 @@
 
 	.form-control {
 		font-size: 14px;
-    	height: 40px;
+		height: 40px;
 	}
 
 	@include sm {
@@ -41,7 +41,7 @@
 	}
 }
 
-.portal-popup.dialog-iframe-popup > #main-content, 
+.portal-popup.dialog-iframe-popup > #main-content,
 .portal-popup.dialog-iframe-popup > #wrapper {
 	overflow-x: hidden;
 }

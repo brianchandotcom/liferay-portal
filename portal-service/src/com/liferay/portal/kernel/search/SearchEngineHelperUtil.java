@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.model.CompanyConstants;
 
 import java.util.Collection;
 import java.util.Set;
@@ -98,6 +99,8 @@ public class SearchEngineHelperUtil {
 		String searchEngineId, SearchEngine searchEngine) {
 
 		_searchEngineHelper.setSearchEngine(searchEngineId, searchEngine);
+
+		searchEngine.initialize(CompanyConstants.SYSTEM);
 	}
 
 	private static final SearchEngineHelper _searchEngineHelper =

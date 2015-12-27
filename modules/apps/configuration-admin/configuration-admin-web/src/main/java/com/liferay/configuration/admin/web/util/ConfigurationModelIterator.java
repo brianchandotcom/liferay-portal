@@ -17,6 +17,8 @@ package com.liferay.configuration.admin.web.util;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,9 +28,19 @@ import java.util.List;
 public class ConfigurationModelIterator {
 
 	public ConfigurationModelIterator(
+		Collection<ConfigurationModel> configurationModels) {
+
+		_configurationModels = new ArrayList<>(configurationModels);
+	}
+
+	public ConfigurationModelIterator(
 		List<ConfigurationModel> configurationModels) {
 
 		_configurationModels = configurationModels;
+	}
+
+	public List<ConfigurationModel> getResults() {
+		return _configurationModels;
 	}
 
 	public List<ConfigurationModel> getResults(int start, int end) {

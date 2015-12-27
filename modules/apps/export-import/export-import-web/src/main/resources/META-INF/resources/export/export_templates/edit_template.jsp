@@ -30,8 +30,6 @@ if (liveGroup == null) {
 	liveGroupId = groupId;
 }
 
-String exportConfigurationButtons = ParamUtil.getString(request, "exportConfigurationButtons", "custom");
-
 long exportImportConfigurationId = 0;
 
 ExportImportConfiguration exportImportConfiguration = null;
@@ -88,14 +86,7 @@ if (!cmd.equals(Constants.UPDATE)) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-	portletURL.setParameter("mvcRenderCommandName", "exportLayouts");
-	portletURL.setParameter("exportConfigurationButtons", "saved");
-}
-else {
-	portletURL.setParameter("mvcRenderCommandName", "exportLayoutsView");
-}
-
+portletURL.setParameter("mvcRenderCommandName", "viewExportConfigurations");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
@@ -103,7 +94,7 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 <div class="container-fluid-1280">
 	<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
-		<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
+		<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 	</portlet:actionURL>
 
@@ -111,27 +102,12 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 		portletURL="<%= restoreTrashEntriesURL %>"
 	/>
 
-	<%
-	int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR, false);
-	%>
-
-	<div class='<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>' id="<portlet:namespace />incompleteProcessMessage">
-		<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
-		</liferay-util:include>
-	</div>
-
-	<div <%= exportConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
+	<div id="<portlet:namespace />customConfiguration">
 		<portlet:actionURL name="editExportConfiguration" var="updateExportConfigurationURL">
-			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
+			<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
 		</portlet:actionURL>
 
-		<portlet:actionURL name="exportLayouts" var="exportPagesURL">
-			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
-			<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:actionURL>
-
-		<aui:form action='<%= cmd.equals(Constants.EXPORT) ? exportPagesURL : updateExportConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
+		<aui:form action='<%= updateExportConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 			<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
@@ -176,16 +152,9 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 			</div>
 
 			<aui:button-row>
-				<c:choose>
-					<c:when test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
-						<aui:button type="submit" value="save" />
-					</c:when>
-					<c:otherwise>
-						<aui:button type="submit" value="export" />
-					</c:otherwise>
-				</c:choose>
+				<aui:button type="submit" value="save" />
 
-				<aui:button href="<%= portletURL.toString() %>" type="cancel" />
+				<aui:button href="<%= portletURL.toString() %>" type="reset" value="cancel" />
 			</aui:button-row>
 		</aui:form>
 	</div>
@@ -260,8 +229,6 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 			savedConfigurations.show();
 		}
 	};
-
-	A.one('#<portlet:namespace />exportConfigurationButtons').delegate('click', clickHandler, 'li a');
 </aui:script>
 
 <aui:script>

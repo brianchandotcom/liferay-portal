@@ -39,7 +39,10 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 })
 public interface DDMRESTDataProviderSettings {
 
-	@DDMFormField
+	@DDMFormField(
+		label = "%cache-data-on-the-first-request",
+		properties = "showAsSwitcher=true"
+	)
 	public boolean cacheable();
 
 	@DDMFormField(

@@ -1,13 +1,8 @@
 diff --git a/org/gradle/api/internal/artifacts/ivyservice/ivyresolve/parser/GradlePomModuleDescriptorBuilder.java b/org/gradle/api/internal/artifacts/ivyservice/ivyresolve/parser/GradlePomModuleDescriptorBuilder.java
-index 123b029..01dad3d 100644
+index 123b029..1f60a43 100644
 --- a/org/gradle/api/internal/artifacts/ivyservice/ivyresolve/parser/GradlePomModuleDescriptorBuilder.java
 +++ b/org/gradle/api/internal/artifacts/ivyservice/ivyresolve/parser/GradlePomModuleDescriptorBuilder.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- /*
-  * Copyright 2011 the original author or authors.
-  *
-@@ -183,7 +184,7 @@ public class GradlePomModuleDescriptorBuilder {
+@@ -183,7 +183,7 @@ public class GradlePomModuleDescriptorBuilder {
              }
          }
  
@@ -16,3 +11,11 @@ index 123b029..01dad3d 100644
          ivyModuleDescriptor.setModuleRevisionId(mrid);
  
          if (effectiveVersion != null && effectiveVersion.endsWith("SNAPSHOT")) {
+@@ -398,4 +398,5 @@ public class GradlePomModuleDescriptorBuilder {
+     private PomDependencyMgt findDependencyDefault(PomDependencyData dependency) {
+         return pomReader.findDependencyDefaults(dependency.getId());
+     }
+-}
++}
++/* @generated */
+\ No newline at end of file

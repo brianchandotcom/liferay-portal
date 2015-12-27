@@ -122,6 +122,29 @@ public class DDMDataProviderDisplayContext {
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
+	public String getDataProviderInstanceDescription() throws PortalException {
+		DDMDataProviderInstance ddmDataProviderInstance =
+			fetchDataProviderInstance();
+
+		if (ddmDataProviderInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		return ddmDataProviderInstance.getDescription(
+			_renderRequest.getLocale());
+	}
+
+	public String getDataProviderInstanceName() throws PortalException {
+		DDMDataProviderInstance ddmDataProviderInstance =
+			fetchDataProviderInstance();
+
+		if (ddmDataProviderInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		return ddmDataProviderInstance.getName(_renderRequest.getLocale());
+	}
+
 	public Set<String> getDDMDataProviderTypes() {
 		return _ddmDataProviderTracker.getDDMDataProviderTypes();
 	}

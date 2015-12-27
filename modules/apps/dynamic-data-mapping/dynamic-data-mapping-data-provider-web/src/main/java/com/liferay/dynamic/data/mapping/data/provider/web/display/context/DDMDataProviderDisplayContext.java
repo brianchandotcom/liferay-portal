@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.UserLocalService;
@@ -72,7 +73,7 @@ public class DDMDataProviderDisplayContext {
 			renderRequest);
 	}
 
-	public DDMDataProviderInstance getDataProviderInstance()
+	public DDMDataProviderInstance fetchDataProviderInstance()
 		throws PortalException {
 
 		if (_ddmDataProviderInstance != null) {
@@ -90,11 +91,11 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public String getDataProviderInstanceDDMFormHTML() throws PortalException {
-		DDMDataProviderInstance dataProviderInstance =
-			getDataProviderInstance();
+		DDMDataProviderInstance ddmDataProviderInstance =
+			fetchDataProviderInstance();
 
 		String type = BeanParamUtil.getString(
-			dataProviderInstance, _renderRequest, "type");
+			ddmDataProviderInstance, _renderRequest, "type");
 
 		DDMDataProvider ddmDataProvider =
 			_ddmDataProviderTracker.getDDMDataProvider(type);

@@ -26,24 +26,8 @@ _setPropertyDefault project, "nodejs.npm.module.bugs.url", "https://issues.lifer
 _setPropertyDefault project, "nodejs.npm.module.license", "LGPL"
 _setPropertyDefault project, "nodejs.npm.module.repository", "liferay/liferay-portal"
 
+apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
-apply plugin: "eclipse"
-apply plugin: "findbugs"
-apply plugin: "idea"
-
-if (FileUtil.exists(project, "service.xml")) {
-	apply plugin: "com.liferay.portal.tools.service.builder"
-	apply plugin: "com.liferay.portal.tools.upgrade.table.builder"
-	apply plugin: "com.liferay.portal.tools.wsdd.builder"
-}
-
-if (FileUtil.exists(project, "wsdl")) {
-	apply plugin: "com.liferay.wsdl.builder"
-}
-
-if (FileUtil.exists(project, "xsd")) {
-	apply plugin: "com.liferay.xsd.builder"
-}
 
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File portalRootDir = _getPortalRootDir(project)
@@ -52,10 +36,6 @@ if (portalRootDir) {
 	distsDirName = FileUtil.relativize(new File(portalRootDir, "tools/sdk/dist"), buildDir)
 	libsDirName = distsDirName
 }
-
-group = "com.liferay"
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
 
 afterEvaluate {
 	project.ext.set "app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir)
@@ -187,16 +167,6 @@ javadoc {
 	}
 }
 
-repositories {
-	if (!Boolean.getBoolean("maven.local.ignore")) {
-		mavenLocal()
-	}
-
-	maven {
-		url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
-	}
-}
-
 sourceSets {
 	test {
 		compileClasspath = configurations.compile + configurations.portal + compileClasspath + configurations.portalTest
@@ -244,20 +214,6 @@ if (portalRootDir) {
 			serviceBuilder fileTree(dir: new File(portalRootDir, "tools/sdk/tmp/portal-tools/portal-tools-service-builder"), include: "*.jar")
 		}
 	}
-}
-
-tasks.withType(FindBugs) {
-	maxHeapSize = "1g"
-
-	reports {
-		html.enabled = true
-		xml.enabled = false
-	}
-}
-
-tasks.withType(JavaCompile) {
-	options.encoding = "UTF-8"
-	options.warnings = false
 }
 
 private File _getPortalRootDir(Project project) {

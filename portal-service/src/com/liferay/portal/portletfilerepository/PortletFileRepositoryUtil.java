@@ -316,6 +316,15 @@ public class PortletFileRepositoryUtil {
 			groupId, userId, folderId, fileName);
 	}
 
+	public static Folder movePortletFolder(
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getPortletFileRepository().movePortletFolder(
+			userId, folderId, parentFolderId, serviceContext);
+	}
+
 	public static void restorePortletFileEntryFromTrash(
 			long userId, long fileEntryId)
 		throws PortalException {

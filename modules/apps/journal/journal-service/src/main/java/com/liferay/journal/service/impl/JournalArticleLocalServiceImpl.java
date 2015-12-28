@@ -5965,55 +5965,6 @@ public class JournalArticleLocalServiceImpl
 			groupId, classNameId, oldDDMTemplateKey, newDDMTemplateKey);
 	}
 
-	public void validateReferences(
-			long groupId, String ddmStructureKey, String ddmTemplateKey,
-			String layoutUuid, boolean smallImage, String smallImageURL,
-			byte[] smallImageBytes, String content)
-		throws PortalException {
-
-		long classNameId = classNameLocalService.getClassNameId(
-			JournalArticle.class.getName());
-
-		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			groupId, classNameId, ddmStructureKey, true);
-
-		if (ddmStructure == null) {
-			throw new NoSuchStructureException();
-		}
-
-		classNameId = classNameLocalService.getClassNameId(
-			DDMStructure.class.getName());
-
-		DDMTemplate ddmTemplate = ddmTemplateLocalService.fetchTemplate(
-			groupId, classNameId, ddmTemplateKey, true);
-
-		if (ddmTemplate == null) {
-			throw new NoSuchTemplateException();
-		}
-
-		if (Validator.isNotNull(layoutUuid)) {
-			Layout layout = JournalUtil.getArticleLayout(layoutUuid, groupId);
-
-			if (layout == null) {
-				throw new NoSuchLayoutException(
-					JournalArticleConstants.DISPLAY_PAGE);
-			}
-		}
-
-		if (smallImage && Validator.isNull(smallImageURL) &&
-			ArrayUtil.isEmpty(smallImageBytes)) {
-
-			throw new NoSuchImageException();
-		}
-
-		ExportImportContentProcessor exportImportContentProcessor =
-			ExportImportContentProcessorRegistryUtil.
-				getExportImportContentProcessor(JournalArticle.class.getName());
-
-		exportImportContentProcessor.validateContentReferences(
-			groupId, content);
-	}
-
 	protected String buildArticleURL(
 		String articleURL, long groupId, long folderId, String articleId) {
 
@@ -7864,6 +7815,55 @@ public class JournalArticleLocalServiceImpl
 		throw new InvalidDDMStructureException(
 			"Invalid structure " + ddmStructure.getStructureId() +
 				" for folder " + folderId);
+	}
+
+	protected void validateReferences(
+			long groupId, String ddmStructureKey, String ddmTemplateKey,
+			String layoutUuid, boolean smallImage, String smallImageURL,
+			byte[] smallImageBytes, String content)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			JournalArticle.class.getName());
+
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
+			groupId, classNameId, ddmStructureKey, true);
+
+		if (ddmStructure == null) {
+			throw new NoSuchStructureException();
+		}
+
+		classNameId = classNameLocalService.getClassNameId(
+			DDMStructure.class.getName());
+
+		DDMTemplate ddmTemplate = ddmTemplateLocalService.fetchTemplate(
+			groupId, classNameId, ddmTemplateKey, true);
+
+		if (ddmTemplate == null) {
+			throw new NoSuchTemplateException();
+		}
+
+		if (Validator.isNotNull(layoutUuid)) {
+			Layout layout = JournalUtil.getArticleLayout(layoutUuid, groupId);
+
+			if (layout == null) {
+				throw new NoSuchLayoutException(
+					JournalArticleConstants.DISPLAY_PAGE);
+			}
+		}
+
+		if (smallImage && Validator.isNull(smallImageURL) &&
+			ArrayUtil.isEmpty(smallImageBytes)) {
+
+			throw new NoSuchImageException();
+		}
+
+		ExportImportContentProcessor exportImportContentProcessor =
+			ExportImportContentProcessorRegistryUtil.
+				getExportImportContentProcessor(JournalArticle.class.getName());
+
+		exportImportContentProcessor.validateContentReferences(
+			groupId, content);
 	}
 
 	@ServiceReference(type = ConfigurationFactory.class)

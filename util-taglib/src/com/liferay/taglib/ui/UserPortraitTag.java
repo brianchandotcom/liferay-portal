@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -70,7 +71,7 @@ public class UserPortraitTag extends IncludeTag {
 	}
 
 	protected String getUserInitials(User user) {
-		if (Validator.isNull(_userName) && (user != null)) {
+		if (user != null) {
 			return user.getInitials();
 		}
 
@@ -81,6 +82,8 @@ public class UserPortraitTag extends IncludeTag {
 		}
 
 		String[] userNames = StringUtil.split(userName, StringPool.SPACE);
+
+		userNames = ArrayUtil.subset(userNames, 0, 2);
 
 		StringBundler sb = new StringBundler(userNames.length);
 

@@ -205,6 +205,7 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 			return _${entity.varName}.getStagedModelType();
 		}
 	</#if>
+
 	@Override
 	public ${entity.name} getWrappedModel() {
 		return _${entity.varName};

@@ -84,6 +84,7 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 			}
 		</#if>
 	</#list>
+
 	@Override
 	public ${entity.name}${sessionTypeName}Service getWrappedService() {
 		return _${entity.varName}${sessionTypeName}Service;

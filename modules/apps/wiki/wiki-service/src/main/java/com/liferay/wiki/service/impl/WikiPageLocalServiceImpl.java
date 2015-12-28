@@ -534,18 +534,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	 *             double)}
-	 */
-	@Deprecated
-	@Override
-	public void deletePage(long nodeId, String title, double version)
-		throws PortalException {
-
-		discardDraft(nodeId, title, version);
-	}
-
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP, send = false,

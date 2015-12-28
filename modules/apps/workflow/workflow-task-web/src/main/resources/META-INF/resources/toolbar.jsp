@@ -23,8 +23,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1", tabs1);
-
-WorkflowTaskDisplayTerms workflowTaskDisplayTerms = workflowTaskDisplayContext.getWorkflowTaskDisplayTerms();
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
@@ -53,33 +51,10 @@ WorkflowTaskDisplayTerms workflowTaskDisplayTerms = workflowTaskDisplayContext.g
 			/>
 		</aui:nav>
 		<aui:nav-bar-search>
-			<liferay-ui:search-toggle
-				autoFocus="<%= workflowTaskDisplayContext.getWindowState().equals(WindowState.MAXIMIZED) %>"
-				buttonLabel="search"
-				displayTerms="<%= workflowTaskDisplayTerms %>"
-				id="toggle_id_workflow_task_search"
-				markupView="lexicon"
-			>
-
-				<aui:fieldset>
-					<aui:input inlineField="<%= true %>" label="task" name="name" size="20" value="<%= workflowTaskDisplayTerms.getName() %>" />
-
-					<aui:select inlineField="<%= true %>" name="type">
-
-						<%
-						for (WorkflowHandler<?> workflowHandler : workflowTaskDisplayContext.getSearchableAssetsWorkflowHandlers()) {
-							String className = workflowHandler.getClassName();
-						%>
-
-							<aui:option label="<%= workflowHandler.getType(locale) %>" selected="<%= className.equals(workflowTaskDisplayTerms.getType()) %>" value="<%= workflowHandler.getClassName() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-				</aui:fieldset>
-			</liferay-ui:search-toggle>
+			<liferay-ui:search-form
+				page="/search.jsp"
+				servletContext="<%= application %>"
+			/>
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 </aui:form>

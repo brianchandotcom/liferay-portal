@@ -138,6 +138,15 @@ if (editorOptions != null) {
 <liferay-util:buffer var="editor">
 	<c:choose>
 		<c:when test="<%= showSource %>">
+			<div class="alloy-editor-switch hide">
+				<button class="btn btn-default btn-xs hide icon-fullscreen" id="<%= name %>Fullscreen" type="button"></button>
+
+				<button class="btn btn-default btn-xs hide icon-moon" id="<%= name %>SwitchTheme" type="button"></button>
+
+				<button class="btn btn-default btn-xs" id="<%= name %>Switch" type="button">
+					&lt;&#47;&gt;
+				</button>
+			</div>
 			<div class="alloy-editor-wrapper" id="<%= name %>Wrapper">
 				<div class="wrapper">
 					<%= alloyEditor %>
@@ -146,13 +155,6 @@ if (editorOptions != null) {
 						<div class="lfr-source-editor-code"></div>
 					</div>
 				</div>
-			</div>
-			<div class="alloy-editor-switch hide">
-				<button class="btn btn-default btn-xs hide icon-fullscreen" id="<%= name %>Fullscreen" type="button"></button>
-
-				<button class="btn btn-default btn-xs" id="<%= name %>Switch" type="button">
-					&lt;&#47;&gt;
-				</button>
 			</div>
 		</c:when>
 		<c:otherwise>

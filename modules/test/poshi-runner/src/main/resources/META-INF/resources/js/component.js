@@ -43,12 +43,6 @@ YUI.add(
 
 		var STR_CURRENT_SCOPE = 'currentScope';
 
-		var SELECTOR_FAIL = STR_DOT + CSS_FAIL;
-
-		var SELECTOR_FAILED = STR_DOT + CSS_FAILED;
-
-		var SELECTOR_WARNING = STR_DOT + CSS_WARNING;
-
 		var STR_DOT = '.';
 
 		var STR_ERRORS = 'errors';
@@ -66,6 +60,12 @@ YUI.add(
 		var STR_TRANSITIONING = 'transitioning';
 
 		var STR_XML_LOG = 'xmlLog';
+
+		var SELECTOR_FAIL = STR_DOT + CSS_FAIL;
+
+		var SELECTOR_FAILED = STR_DOT + CSS_FAILED;
+
+		var SELECTOR_WARNING = STR_DOT + CSS_WARNING;
 
 		var TPL_ERROR_BUTTONS = '<button class="btn {cssClass}" data-errorlinkid="{linkId}" onclick="loggerInterface.handleErrorBtns">' +
 				'<div class="btn-content"></div>' +
@@ -802,8 +802,6 @@ YUI.add(
 										}
 									}
 								).run();
-									}
-								);
 							}
 						}
 					},
@@ -895,10 +893,10 @@ YUI.add(
 
 						instance._transitionCommandLog(commandLog);
 
-						if (failNodes.size() > 0) {
-							failNodes.each(instance._displayNode, instance);
+						if (errorNodes.size() > 0) {
+							errorNodes.each(instance._displayNode, instance);
 
-							var lastFailNode = failNodes.first();
+							var lastFailNode = errorNodes.first();
 
 							instance._selectCurrentScope(lastFailNode);
 							instance._scrollToNode(lastFailNode);

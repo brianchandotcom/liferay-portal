@@ -57,6 +57,7 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 
 		Role role = RoleLocalServiceUtil.getRole(
 			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
 		long[] userIds = UserLocalServiceUtil.getRoleUserIds(role.getRoleId());
 
 		return userIds[0];
@@ -115,7 +116,7 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 	}
 
 	protected void upgradeCalendarResourceUserId(
-			long groupClassNameId, long defaultUserId, long adminUserId)
+			long groupClassNameId, long defaultUserId, long companyAdminUserId)
 		throws SQLException {
 
 		PreparedStatement ps = null;
@@ -129,7 +130,7 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 
 			ps = connection.prepareStatement(sb.toString());
 
-			ps.setLong(1, adminUserId);
+			ps.setLong(1, companyAdminUserId);
 			ps.setLong(2, defaultUserId);
 			ps.setLong(3, groupClassNameId);
 
@@ -144,15 +145,17 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 		throws PortalException, SQLException {
 
 		for (Company company : _companyLocaService.getCompanies()) {
-			long adminUserId = getCompanyAdminUserId(company);
 			long classNameId = _classNameLocalService.getClassNameId(
 				Group.class);
 			long defaultUserId = _userLocalService.getDefaultUserId(
 				company.getCompanyId());
+			long companyAdminUserId = getCompanyAdminUserId(company);
 
 			upgradeCalendarResourceUserId(
-				classNameId, defaultUserId, adminUserId);
-			updateCalendarUserIds(classNameId, defaultUserId, adminUserId);
+				classNameId, defaultUserId, companyAdminUserId);
+
+			updateCalendarUserIds(
+				classNameId, defaultUserId, companyAdminUserId);
 		}
 	}
 

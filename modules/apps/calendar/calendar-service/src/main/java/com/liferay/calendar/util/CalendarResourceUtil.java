@@ -102,6 +102,7 @@ public class CalendarResourceUtil {
 		if ((user == null) || user.isDefaultUser()) {
 			Role role = RoleLocalServiceUtil.getRole(
 				group.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
 			long[] userIds = UserLocalServiceUtil.getRoleUserIds(
 				role.getRoleId());
 

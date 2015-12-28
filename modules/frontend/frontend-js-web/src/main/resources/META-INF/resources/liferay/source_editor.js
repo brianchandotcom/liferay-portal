@@ -177,6 +177,40 @@ AUI.add(
 						return instance.editor;
 					},
 
+					switchTheme: function(themeToSwitch) {
+						var instance = this;
+
+						var themes = instance.get(STR_THEMES);
+
+						var currentThemeIndex = instance._currentThemeIndex || 0;
+
+						var nextThemeIndex = themeToSwitch || (currentThemeIndex + 1) % themes.length;
+
+						var currentTheme = themes[currentThemeIndex];
+						var nextTheme = themes[nextThemeIndex];
+
+						var boundingBox = instance.get(STR_BOUNDING_BOX);
+
+						boundingBox.replaceClass(currentTheme.cssClass, nextTheme.cssClass);
+
+						var prevThemeIndex = currentThemeIndex;
+
+						currentThemeIndex = nextThemeIndex;
+						nextThemeIndex = (currentThemeIndex + 1) % themes.length;
+
+						instance._currentThemeIndex = currentThemeIndex;
+
+						instance.fire(
+							'themeSwitched',
+							{
+								currentThemeIndex: currentThemeIndex,
+								nextThemeIndex: nextThemeIndex,
+								prevThemeIndex: prevThemeIndex,
+								themes: themes
+							}
+						);
+					},
+
 					_getButtonsMarkup: function() {
 						var instance = this;
 
@@ -241,31 +275,8 @@ AUI.add(
 						var action = currentTarget.attr('data-action');
 
 						if (action === STR_THEMES) {
-							instance._switchTheme(currentTarget);
+							instance.switchTheme(currentTarget);
 						}
-					},
-
-					_switchTheme: function(themeSelector) {
-						var instance = this;
-
-						var themes = instance.get(STR_THEMES);
-
-						var currentThemeIndex = Lang.toInt(themeSelector.attr(STR_DATA_CURRENT_THEME));
-
-						var nextThemeIndex = (currentThemeIndex + 1) % themes.length;
-
-						var currentTheme = themes[currentThemeIndex];
-						var nextTheme = themes[nextThemeIndex];
-
-						var nextThemeIcon = themes[(currentThemeIndex + 2) % themes.length].iconCssClass;
-
-						themeSelector.attr(STR_DATA_CURRENT_THEME, nextThemeIndex);
-
-						themeSelector.one('i').replaceClass(nextTheme.iconCssClass, nextThemeIcon);
-
-						var boundingBox = instance.get(STR_BOUNDING_BOX);
-
-						boundingBox.replaceClass(currentTheme.cssClass, nextTheme.cssClass);
 					},
 
 					_updateActiveLine: function() {

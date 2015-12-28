@@ -106,8 +106,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
 
-	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
-
 	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
 
 	public static final String PORTAL_CONFIGURATION_NAME = "portal";

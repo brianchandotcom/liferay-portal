@@ -103,22 +103,6 @@ public class JournalFeedServiceSoap {
 		}
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
-	*/
-	@Deprecated
-	public static void deleteFeed(long groupId, long feedId)
-		throws RemoteException {
-		try {
-			JournalFeedServiceUtil.deleteFeed(groupId, feedId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void deleteFeed(long groupId, java.lang.String feedId)
 		throws RemoteException {
 		try {

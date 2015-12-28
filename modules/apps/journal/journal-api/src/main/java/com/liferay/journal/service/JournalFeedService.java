@@ -65,13 +65,6 @@ public interface JournalFeedService extends BaseService {
 
 	public void deleteFeed(long feedId) throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
-	*/
-	@java.lang.Deprecated
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public void deleteFeed(long groupId, long feedId) throws PortalException;
-
 	public void deleteFeed(long groupId, java.lang.String feedId)
 		throws PortalException;
 

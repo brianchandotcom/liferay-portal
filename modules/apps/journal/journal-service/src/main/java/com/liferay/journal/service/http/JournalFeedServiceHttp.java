@@ -126,38 +126,11 @@ public class JournalFeedServiceHttp {
 	}
 
 	public static void deleteFeed(HttpPrincipal httpPrincipal, long groupId,
-		long feedId) throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
-					"deleteFeed", _deleteFeedParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					feedId);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static void deleteFeed(HttpPrincipal httpPrincipal, long groupId,
 		java.lang.String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
-					"deleteFeed", _deleteFeedParameterTypes3);
+					"deleteFeed", _deleteFeedParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					feedId);
@@ -185,7 +158,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
-					"getFeed", _getFeedParameterTypes4);
+					"getFeed", _getFeedParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, feedId);
 
@@ -216,7 +189,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
-					"getFeed", _getFeedParameterTypes5);
+					"getFeed", _getFeedParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					feedId);
@@ -248,7 +221,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
-					"getFeed", _getFeedParameterTypes6);
+					"getFeed", _getFeedParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					feedId);
@@ -288,7 +261,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
-					"updateFeed", _updateFeedParameterTypes7);
+					"updateFeed", _updateFeedParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					feedId, name, description, ddmStructureKey, ddmTemplateKey,
@@ -333,21 +306,18 @@ public class JournalFeedServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _deleteFeedParameterTypes2 = new Class[] {
-			long.class, long.class
-		};
-	private static final Class<?>[] _deleteFeedParameterTypes3 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _getFeedParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getFeedParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getFeedParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getFeedParameterTypes4 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _getFeedParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getFeedParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _updateFeedParameterTypes7 = new Class[] {
+	private static final Class<?>[] _updateFeedParameterTypes6 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, int.class,

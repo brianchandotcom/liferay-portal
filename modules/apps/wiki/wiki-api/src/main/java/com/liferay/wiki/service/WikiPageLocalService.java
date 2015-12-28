@@ -138,14 +138,6 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public void deletePage(long nodeId, java.lang.String title)
 		throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	double)}
-	*/
-	@java.lang.Deprecated
-	public void deletePage(long nodeId, java.lang.String title, double version)
-		throws PortalException;
-
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false, type = SystemEventConstants.TYPE_DELETE)
 	public void deletePage(com.liferay.wiki.model.WikiPage page)
 		throws PortalException;

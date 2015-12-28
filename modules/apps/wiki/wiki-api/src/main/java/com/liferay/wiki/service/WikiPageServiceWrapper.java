@@ -126,17 +126,6 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		_wikiPageService.deletePage(nodeId, title);
 	}
 
-	/**
-	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	double)}
-	*/
-	@Deprecated
-	@Override
-	public void deletePage(long nodeId, java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageService.deletePage(nodeId, title, version);
-	}
-
 	@Override
 	public void deletePageAttachment(long nodeId, java.lang.String title,
 		java.lang.String fileName)

@@ -103,14 +103,6 @@ public interface WikiPageService extends BaseService {
 	public void deletePage(long nodeId, java.lang.String title)
 		throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	double)}
-	*/
-	@java.lang.Deprecated
-	public void deletePage(long nodeId, java.lang.String title, double version)
-		throws PortalException;
-
 	public void deletePageAttachment(long nodeId, java.lang.String title,
 		java.lang.String fileName) throws PortalException;
 

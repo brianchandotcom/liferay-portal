@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping;
 
-import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
@@ -715,16 +714,14 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 		when(
 			props.get(
-				DDMServiceConfigurationKeys.
-					DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS)
+				"dynamic.data.mapping.image.extensions")
 		).thenReturn(
 			".gif,.jpeg,.jpg,.png"
 		);
 
 		when(
 			props.get(
-				DDMServiceConfigurationKeys.
-					DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE)
+				"dynamic.data.mapping.image.small.max.size")
 		).thenReturn(
 			"51200"
 		);

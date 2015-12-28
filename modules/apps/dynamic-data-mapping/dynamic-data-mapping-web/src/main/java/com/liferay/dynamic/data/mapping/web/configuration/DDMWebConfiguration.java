@@ -54,20 +54,4 @@ public interface DDMWebConfiguration {
 	)
 	public boolean autogenerateTemplateKey();
 
-	/**
-	 * Returns the code (e.g., <code>ftl</code>, <code>vm</code>, or
-	 * <code>xls</code>) of the default template language.
-	 *
-	 * @return the code (e.g., <code>ftl</code>, <code>vm</code>, or
-	 *         <code>xls</code>) of the default template language
-	 */
-	@Meta.AD(
-		deflt = "ftl",
-		optionLabels = {
-			"FreeMarker", "Velocity", "Extensible Stylesheet Language"
-		},
-		optionValues = {"ftl", "vm", "xls"}, required = false
-	)
-	public String defaultTemplateLanguage();
-
 }

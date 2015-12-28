@@ -121,5 +121,13 @@ private Properties _getPortalToolVersions() {
 		properties.load it
 	}
 
+	for (String name in properties.stringPropertyNames()) {
+		String version = project.properties[name + ".version"]
+
+		if (version) {
+			properties.setProperty name, version
+		}
+	}
+
 	return properties
 }

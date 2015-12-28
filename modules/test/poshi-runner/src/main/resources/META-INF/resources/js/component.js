@@ -116,8 +116,6 @@ YUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var xmlLog = instance.get(STR_XML_LOG);
-
 						var sidebar = instance.get(STR_SIDEBAR);
 
 						var commandLog = sidebar.one('.command-log');

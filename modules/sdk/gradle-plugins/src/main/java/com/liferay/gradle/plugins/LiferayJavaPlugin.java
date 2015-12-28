@@ -19,8 +19,6 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
-import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
-import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorExtension;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerExtension;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
@@ -134,12 +132,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		applyConfigScripts(project);
 
-		configureJSModuleConfigGenerator(project);
 		configureJSTranspiler(project);
 		configureTestIntegrationTomcat(project, liferayExtension);
 
 		configureTaskClean(project);
-		configureTaskConfigJSModules(project);
 		configureTaskSetupTestableTomcat(project, liferayExtension);
 		configureTaskStartTestableTomcat(project, liferayExtension);
 		configureTaskStopTestableTomcat(project, liferayExtension);
@@ -378,6 +374,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, EclipseDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaDefaultsPlugin.class);
+		GradleUtil.applyPlugin(
+			project, JSModuleConfigGeneratorDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterDefaultsPlugin.class);
@@ -521,20 +519,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configurationContainer.all(action);
 	}
 
-	protected void configureJSModuleConfigGenerator(final Project project) {
-		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
-			GradleUtil.getExtension(
-				project, JSModuleConfigGeneratorExtension.class);
-
-		String version = GradleUtil.getProperty(
-			project, "nodejs.lfr.module.config.generator.version",
-			(String)null);
-
-		if (Validator.isNotNull(version)) {
-			jsModuleConfigGeneratorExtension.setVersion(version);
-		}
-	}
-
 	protected void configureJSTranspiler(Project project) {
 		JSTranspilerExtension jsTranspilerExtension = GradleUtil.getExtension(
 			project, JSTranspilerExtension.class);
@@ -667,42 +651,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		};
 
 		delete.dependsOn(closure);
-	}
-
-	protected void configureTaskConfigJSModules(Project project) {
-		ConfigJSModulesTask configJSModulesTask =
-			(ConfigJSModulesTask)GradleUtil.getTask(
-				project,
-				JSModuleConfigGeneratorPlugin.CONFIG_JS_MODULES_TASK_NAME);
-
-		configureTaskConfigJSModulesConfigVariable(configJSModulesTask);
-		configureTaskConfigJSModulesIgnorePath(configJSModulesTask);
-		configureTaskConfigJSModulesModuleExtension(configJSModulesTask);
-		configureTaskConfigJSModulesModuleFormat(configJSModulesTask);
-	}
-
-	protected void configureTaskConfigJSModulesConfigVariable(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.setConfigVariable("");
-	}
-
-	protected void configureTaskConfigJSModulesIgnorePath(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.setIgnorePath(true);
-	}
-
-	protected void configureTaskConfigJSModulesModuleExtension(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.setModuleExtension("");
-	}
-
-	protected void configureTaskConfigJSModulesModuleFormat(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.setModuleFormat("/_/g,-");
 	}
 
 	protected void configureTaskDeploy(

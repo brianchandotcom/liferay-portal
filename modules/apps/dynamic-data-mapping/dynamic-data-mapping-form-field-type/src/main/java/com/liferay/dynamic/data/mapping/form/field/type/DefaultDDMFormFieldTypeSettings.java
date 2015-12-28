@@ -80,8 +80,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	public String indexType();
 
 	@DDMFormField(
-		label = "%label",
-		properties = { "placeholder=%enter-a-field-label" },
+		label = "%label", properties = { "placeholder=%enter-a-field-label" },
 		required = true,
 		tip = "%enter-a-descriptive-field-label-that-guides-users-to-enter-the-information-you-want",
 		type = "key-value"
@@ -115,9 +114,7 @@ public interface DefaultDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%help-text",
-		properties = {
-			"placeholder=%enter-text-to-help-users-understand"
-		},
+		properties = {"placeholder=%enter-text-to-help-users-understand"},
 		tip = "%type-a-short-comment-to-help-users-understand-the-question",
 		type = "text"
 	)

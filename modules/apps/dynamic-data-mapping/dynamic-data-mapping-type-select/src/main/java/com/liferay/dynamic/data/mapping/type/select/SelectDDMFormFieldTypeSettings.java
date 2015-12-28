@@ -77,8 +77,7 @@ public interface SelectDDMFormFieldTypeSettings
 	public String dataSourceType();
 
 	@DDMFormField(
-		label = "%choose-a-data-provider",
-		type = "select",
+		label = "%choose-a-data-provider", type = "select",
 		visibilityExpression = "dataSourceType.equals(\"data-provider\")"
 	)
 	public long ddmDataProviderInstanceId();

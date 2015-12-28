@@ -49,6 +49,8 @@ YUI.add(
 
 		var STR_HEIGHT = 'height';
 
+		var STR_PAUSED = 'paused';
+
 		var STR_RUNNING = 'running';
 
 		var STR_SIDEBAR = 'sidebar';
@@ -98,6 +100,10 @@ YUI.add(
 
 							return xmlLog.all(SELECTOR_FAIL + ', ' + SELECTOR_WARNING);
 						}
+					},
+
+					paused: {
+						value: false
 					},
 
 					running: {
@@ -299,6 +305,12 @@ YUI.add(
 						instance._minimizeSidebar(event.currentTarget);
 					},
 
+					handlePauseBtn: function(event) {
+						var instance = this;
+
+						instance._togglePauseTest()
+					},
+
 					handleToggleCollapseBtn: function(event, inSidebar) {
 						var instance = this;
 
@@ -378,6 +390,15 @@ YUI.add(
 							jumpToError.on(
 								'click',
 								A.bind('handleGoToErrorBtn', instance)
+							);
+						}
+
+						var pause = sidebar.one('.btn-pause');
+
+						if (pause) {
+							pause.on(
+								'click',
+								A.bind('handlePauseBtn', instance)
 							);
 						}
 					},
@@ -921,6 +942,22 @@ YUI.add(
 						if (collapsed && collapsibleBtn) {
 							collapsibleBtn.toggleClass(CSS_TOGGLE);
 						}
+					},
+
+					_togglePauseTest: function() {
+						var instance = this;
+
+						var commandLogId = instance.get(STR_COMMAND_LOG_ID);
+
+						var sidebar = instance.get(STR_SIDEBAR);
+
+						var commandLogNode = sidebar.one('.command-log[data-logId="' + commandLogId + '"]');
+
+						commandLogNode.toggleClass('paused');
+
+						sidebar.one('.btn-pause').toggleClass(CSS_TOGGLE);
+
+						instance.set(STR_PAUSED, !instance.get(STR_PAUSED));
 					},
 
 					_toggleXmlLogClasses: function(logId) {

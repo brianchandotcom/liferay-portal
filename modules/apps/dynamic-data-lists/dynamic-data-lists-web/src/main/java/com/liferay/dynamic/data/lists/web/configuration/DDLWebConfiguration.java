@@ -31,9 +31,6 @@ public interface DDLWebConfiguration {
 	@Meta.AD(deflt = "list", required = false)
 	public String defaultDisplayView();
 
-	@Meta.AD(deflt = "json", required = false)
-	public String storageType();
-
 	@Meta.AD(deflt = "descriptive | list", required = false)
 	public String[] supportedDisplayView();
 

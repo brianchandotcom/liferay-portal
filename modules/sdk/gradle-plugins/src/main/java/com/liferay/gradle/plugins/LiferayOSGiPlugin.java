@@ -18,13 +18,11 @@ import aQute.bnd.osgi.Constants;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
-import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
 
@@ -581,44 +579,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		};
 
 		copy.rename(closure);
-	}
-
-	@Override
-	protected void configureTaskPublishNodeModule(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		super.configureTaskPublishNodeModule(publishNodeModuleTask);
-
-		configureTaskPublishNodeModuleDescription(publishNodeModuleTask);
-		configureTaskPublishNodeModuleName(publishNodeModuleTask);
-	}
-
-	protected void configureTaskPublishNodeModuleDescription(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		if (Validator.isNotNull(publishNodeModuleTask.getModuleDescription())) {
-			return;
-		}
-
-		String bundleName = getBundleInstruction(
-			publishNodeModuleTask.getProject(), Constants.BUNDLE_NAME);
-
-		publishNodeModuleTask.setModuleDescription(bundleName);
-	}
-
-	protected void configureTaskPublishNodeModuleName(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		String bundleSymbolicName = getBundleInstruction(
-			publishNodeModuleTask.getProject(), Constants.BUNDLE_SYMBOLICNAME);
-
-		int pos = bundleSymbolicName.indexOf('.');
-
-		String moduleName = bundleSymbolicName.substring(pos + 1);
-
-		moduleName = moduleName.replace('.', '-');
-
-		publishNodeModuleTask.setModuleName(moduleName);
 	}
 
 	@Override

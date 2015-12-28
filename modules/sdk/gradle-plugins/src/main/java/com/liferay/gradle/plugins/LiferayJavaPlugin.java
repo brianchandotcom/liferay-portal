@@ -1011,10 +1011,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return sourceFile.getName();
 	}
 
-	protected File getLibDir(Project project) {
-		return project.file("lib");
-	}
-
 	protected boolean hasSourceFiles(Task task, Spec<File> spec) {
 		TaskInputs taskInputs = task.getInputs();
 

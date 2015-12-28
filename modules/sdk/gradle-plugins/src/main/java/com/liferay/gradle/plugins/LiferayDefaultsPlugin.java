@@ -21,19 +21,31 @@ import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
+import com.liferay.gradle.util.copy.RenameDependencyClosure;
+
+import groovy.lang.Closure;
+
+import java.io.File;
 
 import java.nio.charset.StandardCharsets;
+
+import org.dm.gradle.plugins.bundle.BundlePlugin;
 
 import org.gradle.api.Action;
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.quality.FindBugs;
 import org.gradle.api.plugins.quality.FindBugsPlugin;
 import org.gradle.api.plugins.quality.FindBugsReports;
 import org.gradle.api.reporting.SingleFileReport;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -44,6 +56,35 @@ import org.gradle.plugins.ide.idea.IdeaPlugin;
  * @author Andrea Di Giorgi
  */
 public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
+
+	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
+
+	protected Copy addTaskCopyLibs(Project project) {
+		Copy copy = GradleUtil.addTask(
+			project, COPY_LIBS_TASK_NAME, Copy.class);
+
+		File libDir = getLibDir(project);
+
+		copy.eachFile(new ExcludeExistingFileAction(libDir));
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
+
+		copy.from(configuration);
+		copy.into(libDir);
+
+		Closure<String> closure = new RenameDependencyClosure(
+			project, configuration.getName());
+
+		copy.rename(closure);
+
+		Task classesTask = GradleUtil.getTask(
+			project, JavaPlugin.CLASSES_TASK_NAME);
+
+		classesTask.dependsOn(copy);
+
+		return copy;
+	}
 
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
@@ -67,7 +108,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	@Override
 	protected void configureDefaults(
-		Project project, LiferayPlugin liferayPlugin) {
+		final Project project, LiferayPlugin liferayPlugin) {
 
 		applyPlugins(project);
 
@@ -76,6 +117,17 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		configureRepositories(project);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
+
+		withPlugin(
+			project, BundlePlugin.class,
+			new Action<BundlePlugin>() {
+
+				@Override
+				public void execute(BundlePlugin bundlePlugin) {
+					addTaskCopyLibs(project);
+				}
+
+			});
 	}
 
 	protected void configureJavaPlugin(Project project) {
@@ -159,6 +211,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+	}
+
+	protected File getLibDir(Project project) {
+		File docrootDir = project.file("docroot");
+
+		if (docrootDir.exists()) {
+			return new File(docrootDir, "WEB-INF/lib");
+		}
+
+		return project.file("lib");
 	}
 
 	@Override

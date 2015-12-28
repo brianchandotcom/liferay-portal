@@ -23,8 +23,6 @@ import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
-import com.liferay.gradle.util.copy.RenameDependencyClosure;
 
 import groovy.lang.Closure;
 
@@ -46,7 +44,6 @@ import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
@@ -72,8 +69,6 @@ import org.gradle.internal.Factory;
 public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 	public static final String AUTO_UPDATE_XML_TASK_NAME = "autoUpdateXml";
-
-	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
 	@Override
 	public void apply(Project project) {
@@ -417,34 +412,11 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return jar;
 	}
 
-	protected Copy addTaskCopyLibs(final Project project) {
-		Copy copy = GradleUtil.addTask(
-			project, COPY_LIBS_TASK_NAME, Copy.class);
-
-		File libDir = getLibDir(project);
-
-		copy.eachFile(new ExcludeExistingFileAction(libDir));
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
-
-		copy.from(configuration);
-		copy.into(libDir);
-
-		Closure<String> closure = new RenameDependencyClosure(
-			project, configuration.getName());
-
-		copy.rename(closure);
-
-		return copy;
-	}
-
 	@Override
 	protected void addTasks(Project project) {
 		super.addTasks(project);
 
 		addTaskAutoUpdateXml(project);
-		addTaskCopyLibs(project);
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -540,17 +512,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
-	protected void configureTaskClasses(Project project) {
-		Task classesTask = GradleUtil.getTask(
-			project, JavaPlugin.CLASSES_TASK_NAME);
-
-		configureTaskClassesDependsOn(classesTask);
-	}
-
-	protected void configureTaskClassesDependsOn(Task classesTask) {
-		classesTask.dependsOn(COPY_LIBS_TASK_NAME);
-	}
-
 	@Override
 	protected void configureTaskDeploy(
 		Project project, LiferayExtension liferayExtension) {
@@ -579,15 +540,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		};
 
 		copy.rename(closure);
-	}
-
-	@Override
-	protected void configureTasks(
-		Project project, LiferayExtension liferayExtension) {
-
-		super.configureTasks(project, liferayExtension);
-
-		configureTaskClasses(project);
 	}
 
 	protected void configureVersion(Project project) {
@@ -626,17 +578,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return sourceFileName.replace(
 			"-" + project.getVersion() + "." + Jar.DEFAULT_EXTENSION,
 			"." + Jar.DEFAULT_EXTENSION);
-	}
-
-	@Override
-	protected File getLibDir(Project project) {
-		File docrootDir = project.file("docroot");
-
-		if (!docrootDir.exists()) {
-			return super.getLibDir(project);
-		}
-
-		return new File(docrootDir, "WEB-INF/lib");
 	}
 
 	protected void replaceJarBuilderFactory(Project project) {

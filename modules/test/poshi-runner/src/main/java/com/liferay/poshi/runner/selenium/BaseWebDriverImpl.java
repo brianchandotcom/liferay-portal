@@ -23,6 +23,7 @@ import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
@@ -331,6 +332,15 @@ public abstract class BaseWebDriverImpl
 		Calendar calendar = Calendar.getInstance();
 
 		return StringUtil.valueOf(calendar.get(Calendar.DATE));
+	}
+
+	@Override
+	public String getCurrentDayName() {
+		Calendar calendar = Calendar.getInstance();
+
+		return StringUtil.valueOf(
+			calendar.getDisplayName(
+				Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US));
 	}
 
 	@Override

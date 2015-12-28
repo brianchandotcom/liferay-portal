@@ -73,18 +73,6 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 		return journalFeedLocalService.getFeed(feedId);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
-	 */
-	@Deprecated
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	@Override
-	public JournalFeed getFeed(long groupId, long feedId)
-		throws PortalException {
-
-		return getFeed(groupId, String.valueOf(feedId));
-	}
-
 	@Override
 	public JournalFeed getFeed(long groupId, String feedId)
 		throws PortalException {

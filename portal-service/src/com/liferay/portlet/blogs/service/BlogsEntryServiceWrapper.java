@@ -294,22 +294,6 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public BlogsEntryService getWrappedBlogsEntryService() {
-		return _blogsEntryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedBlogsEntryService(BlogsEntryService blogsEntryService) {
-		_blogsEntryService = blogsEntryService;
-	}
-
 	@Override
 	public BlogsEntryService getWrappedService() {
 		return _blogsEntryService;

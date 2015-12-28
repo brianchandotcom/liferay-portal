@@ -501,14 +501,6 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ShoppingOrderItem getWrappedShoppingOrderItem() {
-		return _shoppingOrderItem;
-	}
-
 	@Override
 	public ShoppingOrderItem getWrappedModel() {
 		return _shoppingOrderItem;

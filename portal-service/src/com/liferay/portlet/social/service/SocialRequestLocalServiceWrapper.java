@@ -626,23 +626,6 @@ public class SocialRequestLocalServiceWrapper
 		return _socialRequestLocalService.updateSocialRequest(socialRequest);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialRequestLocalService getWrappedSocialRequestLocalService() {
-		return _socialRequestLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialRequestLocalService(
-		SocialRequestLocalService socialRequestLocalService) {
-		_socialRequestLocalService = socialRequestLocalService;
-	}
-
 	@Override
 	public SocialRequestLocalService getWrappedService() {
 		return _socialRequestLocalService;

@@ -846,23 +846,6 @@ public class SocialActivityCounterLocalServiceWrapper
 		return _socialActivityCounterLocalService.updateSocialActivityCounter(socialActivityCounter);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialActivityCounterLocalService getWrappedSocialActivityCounterLocalService() {
-		return _socialActivityCounterLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialActivityCounterLocalService(
-		SocialActivityCounterLocalService socialActivityCounterLocalService) {
-		_socialActivityCounterLocalService = socialActivityCounterLocalService;
-	}
-
 	@Override
 	public SocialActivityCounterLocalService getWrappedService() {
 		return _socialActivityCounterLocalService;

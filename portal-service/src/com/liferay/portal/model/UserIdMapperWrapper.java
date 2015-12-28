@@ -408,14 +408,6 @@ public class UserIdMapperWrapper implements UserIdMapper,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public UserIdMapper getWrappedUserIdMapper() {
-		return _userIdMapper;
-	}
-
 	@Override
 	public UserIdMapper getWrappedModel() {
 		return _userIdMapper;

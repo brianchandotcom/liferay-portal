@@ -1521,13 +1521,6 @@ public class WikiNodeUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(WikiNodePersistence persistence) {
-	}
-
 	private static ServiceTracker<WikiNodePersistence, WikiNodePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(WikiNodePersistence.class);
 }

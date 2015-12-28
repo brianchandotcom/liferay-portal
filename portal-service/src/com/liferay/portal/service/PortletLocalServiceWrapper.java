@@ -477,23 +477,6 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		return _portletLocalService.updatePortlet(portlet);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PortletLocalService getWrappedPortletLocalService() {
-		return _portletLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPortletLocalService(
-		PortletLocalService portletLocalService) {
-		_portletLocalService = portletLocalService;
-	}
-
 	@Override
 	public PortletLocalService getWrappedService() {
 		return _portletLocalService;

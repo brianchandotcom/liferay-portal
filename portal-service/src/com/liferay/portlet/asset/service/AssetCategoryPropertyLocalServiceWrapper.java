@@ -343,23 +343,6 @@ public class AssetCategoryPropertyLocalServiceWrapper
 			categoryPropertyId, key, value);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AssetCategoryPropertyLocalService getWrappedAssetCategoryPropertyLocalService() {
-		return _assetCategoryPropertyLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAssetCategoryPropertyLocalService(
-		AssetCategoryPropertyLocalService assetCategoryPropertyLocalService) {
-		_assetCategoryPropertyLocalService = assetCategoryPropertyLocalService;
-	}
-
 	@Override
 	public AssetCategoryPropertyLocalService getWrappedService() {
 		return _assetCategoryPropertyLocalService;

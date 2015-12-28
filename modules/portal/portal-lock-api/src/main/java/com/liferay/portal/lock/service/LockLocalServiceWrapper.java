@@ -381,22 +381,6 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		return _lockLocalService.updateLock(lock);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LockLocalService getWrappedLockLocalService() {
-		return _lockLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLockLocalService(LockLocalService lockLocalService) {
-		_lockLocalService = lockLocalService;
-	}
-
 	@Override
 	public LockLocalService getWrappedService() {
 		return _lockLocalService;

@@ -296,13 +296,6 @@ public class MeetupsEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MeetupsEntryLocalService service) {
-	}
-
 	private static ServiceTracker<MeetupsEntryLocalService, MeetupsEntryLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(MeetupsEntryLocalService.class);
 }

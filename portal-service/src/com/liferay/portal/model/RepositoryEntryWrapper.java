@@ -591,14 +591,6 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		return _repositoryEntry.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public RepositoryEntry getWrappedRepositoryEntry() {
-		return _repositoryEntry;
-	}
-
 	@Override
 	public RepositoryEntry getWrappedModel() {
 		return _repositoryEntry;

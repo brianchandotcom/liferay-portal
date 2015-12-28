@@ -654,13 +654,6 @@ public class KaleoConditionUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(KaleoConditionPersistence persistence) {
-	}
-
 	private static ServiceTracker<KaleoConditionPersistence, KaleoConditionPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(KaleoConditionPersistence.class);
 }

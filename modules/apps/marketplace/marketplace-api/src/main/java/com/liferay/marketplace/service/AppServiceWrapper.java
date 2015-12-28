@@ -66,22 +66,6 @@ public class AppServiceWrapper implements AppService,
 		return _appService.updateApp(file);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AppService getWrappedAppService() {
-		return _appService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAppService(AppService appService) {
-		_appService = appService;
-	}
-
 	@Override
 	public AppService getWrappedService() {
 		return _appService;

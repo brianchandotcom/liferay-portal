@@ -721,14 +721,6 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		return _announcementsEntry.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public AnnouncementsEntry getWrappedAnnouncementsEntry() {
-		return _announcementsEntry;
-	}
-
 	@Override
 	public AnnouncementsEntry getWrappedModel() {
 		return _announcementsEntry;

@@ -276,23 +276,6 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public JournalFolderService getWrappedJournalFolderService() {
-		return _journalFolderService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedJournalFolderService(
-		JournalFolderService journalFolderService) {
-		_journalFolderService = journalFolderService;
-	}
-
 	@Override
 	public JournalFolderService getWrappedService() {
 		return _journalFolderService;

@@ -118,22 +118,6 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SAPEntryService getWrappedSAPEntryService() {
-		return _sapEntryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSAPEntryService(SAPEntryService sapEntryService) {
-		_sapEntryService = sapEntryService;
-	}
-
 	@Override
 	public SAPEntryService getWrappedService() {
 		return _sapEntryService;

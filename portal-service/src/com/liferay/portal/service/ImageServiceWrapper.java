@@ -46,22 +46,6 @@ public class ImageServiceWrapper implements ImageService,
 		return _imageService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ImageService getWrappedImageService() {
-		return _imageService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedImageService(ImageService imageService) {
-		_imageService = imageService;
-	}
-
 	@Override
 	public ImageService getWrappedService() {
 		return _imageService;

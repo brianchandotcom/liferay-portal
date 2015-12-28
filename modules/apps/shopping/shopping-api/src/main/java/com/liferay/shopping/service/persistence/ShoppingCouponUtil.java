@@ -478,13 +478,6 @@ public class ShoppingCouponUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ShoppingCouponPersistence persistence) {
-	}
-
 	private static ServiceTracker<ShoppingCouponPersistence, ShoppingCouponPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(ShoppingCouponPersistence.class);
 }

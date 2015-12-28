@@ -876,13 +876,6 @@ public class PollsChoiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(PollsChoicePersistence persistence) {
-	}
-
 	private static ServiceTracker<PollsChoicePersistence, PollsChoicePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(PollsChoicePersistence.class);
 }

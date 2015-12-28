@@ -296,23 +296,6 @@ public class UserIdMapperLocalServiceWrapper implements UserIdMapperLocalService
 		return _userIdMapperLocalService.updateUserIdMapper(userIdMapper);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public UserIdMapperLocalService getWrappedUserIdMapperLocalService() {
-		return _userIdMapperLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedUserIdMapperLocalService(
-		UserIdMapperLocalService userIdMapperLocalService) {
-		_userIdMapperLocalService = userIdMapperLocalService;
-	}
-
 	@Override
 	public UserIdMapperLocalService getWrappedService() {
 		return _userIdMapperLocalService;

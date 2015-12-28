@@ -83,12 +83,5 @@ public class DLTrashLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DLTrashLocalService service) {
-	}
-
 	private static DLTrashLocalService _service;
 }

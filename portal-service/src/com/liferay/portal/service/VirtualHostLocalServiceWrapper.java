@@ -295,23 +295,6 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 		return _virtualHostLocalService.updateVirtualHost(virtualHost);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public VirtualHostLocalService getWrappedVirtualHostLocalService() {
-		return _virtualHostLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedVirtualHostLocalService(
-		VirtualHostLocalService virtualHostLocalService) {
-		_virtualHostLocalService = virtualHostLocalService;
-	}
-
 	@Override
 	public VirtualHostLocalService getWrappedService() {
 		return _virtualHostLocalService;

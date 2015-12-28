@@ -250,12 +250,5 @@ public class TrashEntryServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(TrashEntryService service) {
-	}
-
 	private static TrashEntryService _service;
 }

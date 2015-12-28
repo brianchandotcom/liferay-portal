@@ -206,22 +206,6 @@ public class AssetTagServiceWrapper implements AssetTagService,
 		return _assetTagService.updateTag(tagId, name, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AssetTagService getWrappedAssetTagService() {
-		return _assetTagService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAssetTagService(AssetTagService assetTagService) {
-		_assetTagService = assetTagService;
-	}
-
 	@Override
 	public AssetTagService getWrappedService() {
 		return _assetTagService;

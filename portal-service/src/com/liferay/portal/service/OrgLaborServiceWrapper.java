@@ -81,22 +81,6 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 			thuOpen, thuClose, friOpen, friClose, satOpen, satClose);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public OrgLaborService getWrappedOrgLaborService() {
-		return _orgLaborService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedOrgLaborService(OrgLaborService orgLaborService) {
-		_orgLaborService = orgLaborService;
-	}
-
 	@Override
 	public OrgLaborService getWrappedService() {
 		return _orgLaborService;

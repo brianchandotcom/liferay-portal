@@ -395,23 +395,6 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 		return _kaleoLogLocalService.updateKaleoLog(kaleoLog);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoLogLocalService getWrappedKaleoLogLocalService() {
-		return _kaleoLogLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoLogLocalService(
-		KaleoLogLocalService kaleoLogLocalService) {
-		_kaleoLogLocalService = kaleoLogLocalService;
-	}
-
 	@Override
 	public KaleoLogLocalService getWrappedService() {
 		return _kaleoLogLocalService;

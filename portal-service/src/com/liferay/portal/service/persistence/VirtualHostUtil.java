@@ -383,12 +383,5 @@ public class VirtualHostUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(VirtualHostPersistence persistence) {
-	}
-
 	private static VirtualHostPersistence _persistence;
 }

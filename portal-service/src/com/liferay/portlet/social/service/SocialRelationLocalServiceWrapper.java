@@ -556,23 +556,6 @@ public class SocialRelationLocalServiceWrapper
 		return _socialRelationLocalService.updateSocialRelation(socialRelation);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialRelationLocalService getWrappedSocialRelationLocalService() {
-		return _socialRelationLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialRelationLocalService(
-		SocialRelationLocalService socialRelationLocalService) {
-		_socialRelationLocalService = socialRelationLocalService;
-	}
-
 	@Override
 	public SocialRelationLocalService getWrappedService() {
 		return _socialRelationLocalService;

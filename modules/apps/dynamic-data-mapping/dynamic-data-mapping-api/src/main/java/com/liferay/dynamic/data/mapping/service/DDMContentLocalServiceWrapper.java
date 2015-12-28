@@ -392,23 +392,6 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 		return _ddmContentLocalService.updateDDMContent(ddmContent);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMContentLocalService getWrappedDDMContentLocalService() {
-		return _ddmContentLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMContentLocalService(
-		DDMContentLocalService ddmContentLocalService) {
-		_ddmContentLocalService = ddmContentLocalService;
-	}
-
 	@Override
 	public DDMContentLocalService getWrappedService() {
 		return _ddmContentLocalService;

@@ -2009,12 +2009,5 @@ public class DLFileShortcutUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(DLFileShortcutPersistence persistence) {
-	}
-
 	private static DLFileShortcutPersistence _persistence;
 }

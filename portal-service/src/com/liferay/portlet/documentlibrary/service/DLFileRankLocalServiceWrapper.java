@@ -335,23 +335,6 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 			userId, fileEntryId, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFileRankLocalService getWrappedDLFileRankLocalService() {
-		return _dlFileRankLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFileRankLocalService(
-		DLFileRankLocalService dlFileRankLocalService) {
-		_dlFileRankLocalService = dlFileRankLocalService;
-	}
-
 	@Override
 	public DLFileRankLocalService getWrappedService() {
 		return _dlFileRankLocalService;

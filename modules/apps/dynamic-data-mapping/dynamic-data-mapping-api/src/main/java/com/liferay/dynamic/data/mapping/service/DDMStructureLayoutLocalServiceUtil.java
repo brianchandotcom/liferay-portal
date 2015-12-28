@@ -362,13 +362,6 @@ public class DDMStructureLayoutLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DDMStructureLayoutLocalService service) {
-	}
-
 	private static ServiceTracker<DDMStructureLayoutLocalService, DDMStructureLayoutLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(DDMStructureLayoutLocalService.class);
 }

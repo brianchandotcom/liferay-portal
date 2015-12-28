@@ -510,13 +510,6 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(KaleoTaskInstanceTokenLocalService service) {
-	}
-
 	private static ServiceTracker<KaleoTaskInstanceTokenLocalService, KaleoTaskInstanceTokenLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(KaleoTaskInstanceTokenLocalService.class);
 }

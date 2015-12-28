@@ -1043,13 +1043,6 @@ public class ModuleUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ModulePersistence persistence) {
-	}
-
 	private static ServiceTracker<ModulePersistence, ModulePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(ModulePersistence.class);
 }

@@ -550,14 +550,6 @@ public class KaleoConditionWrapper implements KaleoCondition,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public KaleoCondition getWrappedKaleoCondition() {
-		return _kaleoCondition;
-	}
-
 	@Override
 	public KaleoCondition getWrappedModel() {
 		return _kaleoCondition;

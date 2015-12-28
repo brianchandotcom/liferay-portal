@@ -272,23 +272,6 @@ public class ShoppingItemPriceLocalServiceWrapper
 		return _shoppingItemPriceLocalService.updateShoppingItemPrice(shoppingItemPrice);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ShoppingItemPriceLocalService getWrappedShoppingItemPriceLocalService() {
-		return _shoppingItemPriceLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedShoppingItemPriceLocalService(
-		ShoppingItemPriceLocalService shoppingItemPriceLocalService) {
-		_shoppingItemPriceLocalService = shoppingItemPriceLocalService;
-	}
-
 	@Override
 	public ShoppingItemPriceLocalService getWrappedService() {
 		return _shoppingItemPriceLocalService;

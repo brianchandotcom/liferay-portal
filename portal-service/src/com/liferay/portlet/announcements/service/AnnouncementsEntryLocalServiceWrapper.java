@@ -491,23 +491,6 @@ public class AnnouncementsEntryLocalServiceWrapper
 			priority);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AnnouncementsEntryLocalService getWrappedAnnouncementsEntryLocalService() {
-		return _announcementsEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAnnouncementsEntryLocalService(
-		AnnouncementsEntryLocalService announcementsEntryLocalService) {
-		_announcementsEntryLocalService = announcementsEntryLocalService;
-	}
-
 	@Override
 	public AnnouncementsEntryLocalService getWrappedService() {
 		return _announcementsEntryLocalService;

@@ -70,12 +70,5 @@ public class PluginSettingServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(PluginSettingService service) {
-	}
-
 	private static PluginSettingService _service;
 }

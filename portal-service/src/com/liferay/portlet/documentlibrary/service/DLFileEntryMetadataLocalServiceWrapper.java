@@ -398,23 +398,6 @@ public class DLFileEntryMetadataLocalServiceWrapper
 			fileEntryId, fileVersionId, ddmFormValuesMap, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFileEntryMetadataLocalService getWrappedDLFileEntryMetadataLocalService() {
-		return _dlFileEntryMetadataLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFileEntryMetadataLocalService(
-		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
-		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
-	}
-
 	@Override
 	public DLFileEntryMetadataLocalService getWrappedService() {
 		return _dlFileEntryMetadataLocalService;

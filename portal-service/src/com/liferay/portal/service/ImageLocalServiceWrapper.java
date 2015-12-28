@@ -318,22 +318,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 		return _imageLocalService.updateImage(imageId, is, cleanUpStream);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ImageLocalService getWrappedImageLocalService() {
-		return _imageLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedImageLocalService(ImageLocalService imageLocalService) {
-		_imageLocalService = imageLocalService;
-	}
-
 	@Override
 	public ImageLocalService getWrappedService() {
 		return _imageLocalService;

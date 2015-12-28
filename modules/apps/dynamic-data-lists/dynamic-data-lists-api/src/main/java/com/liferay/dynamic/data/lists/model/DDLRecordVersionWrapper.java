@@ -741,14 +741,6 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DDLRecordVersion getWrappedDDLRecordVersion() {
-		return _ddlRecordVersion;
-	}
-
 	@Override
 	public DDLRecordVersion getWrappedModel() {
 		return _ddlRecordVersion;

@@ -433,23 +433,6 @@ public class CalendarResourceLocalServiceWrapper
 			nameMap, descriptionMap, active, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CalendarResourceLocalService getWrappedCalendarResourceLocalService() {
-		return _calendarResourceLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCalendarResourceLocalService(
-		CalendarResourceLocalService calendarResourceLocalService) {
-		_calendarResourceLocalService = calendarResourceLocalService;
-	}
-
 	@Override
 	public CalendarResourceLocalService getWrappedService() {
 		return _calendarResourceLocalService;

@@ -690,23 +690,6 @@ public class ResourceBlockLocalServiceWrapper
 			primKey);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ResourceBlockLocalService getWrappedResourceBlockLocalService() {
-		return _resourceBlockLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedResourceBlockLocalService(
-		ResourceBlockLocalService resourceBlockLocalService) {
-		_resourceBlockLocalService = resourceBlockLocalService;
-	}
-
 	@Override
 	public ResourceBlockLocalService getWrappedService() {
 		return _resourceBlockLocalService;

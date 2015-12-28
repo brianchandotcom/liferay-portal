@@ -411,14 +411,6 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ExpandoColumn getWrappedExpandoColumn() {
-		return _expandoColumn;
-	}
-
 	@Override
 	public ExpandoColumn getWrappedModel() {
 		return _expandoColumn;

@@ -456,23 +456,6 @@ public class LayoutRevisionLocalServiceWrapper
 			layoutRevisionId, status, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LayoutRevisionLocalService getWrappedLayoutRevisionLocalService() {
-		return _layoutRevisionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLayoutRevisionLocalService(
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-		_layoutRevisionLocalService = layoutRevisionLocalService;
-	}
-
 	@Override
 	public LayoutRevisionLocalService getWrappedService() {
 		return _layoutRevisionLocalService;

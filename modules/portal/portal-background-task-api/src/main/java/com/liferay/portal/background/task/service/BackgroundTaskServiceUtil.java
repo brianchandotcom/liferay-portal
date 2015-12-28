@@ -66,13 +66,6 @@ public class BackgroundTaskServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(BackgroundTaskService service) {
-	}
-
 	private static ServiceTracker<BackgroundTaskService, BackgroundTaskService> _serviceTracker =
 		ServiceTrackerFactory.open(BackgroundTaskService.class);
 }

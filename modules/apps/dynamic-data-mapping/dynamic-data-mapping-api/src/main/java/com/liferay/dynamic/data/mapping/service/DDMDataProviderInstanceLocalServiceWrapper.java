@@ -425,23 +425,6 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMDataProviderInstanceLocalService getWrappedDDMDataProviderInstanceLocalService() {
-		return _ddmDataProviderInstanceLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMDataProviderInstanceLocalService(
-		DDMDataProviderInstanceLocalService ddmDataProviderInstanceLocalService) {
-		_ddmDataProviderInstanceLocalService = ddmDataProviderInstanceLocalService;
-	}
-
 	@Override
 	public DDMDataProviderInstanceLocalService getWrappedService() {
 		return _ddmDataProviderInstanceLocalService;

@@ -527,23 +527,6 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 		return _kaleoTaskInstanceTokenLocalService.updateKaleoTaskInstanceToken(kaleoTaskInstanceToken);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoTaskInstanceTokenLocalService getWrappedKaleoTaskInstanceTokenLocalService() {
-		return _kaleoTaskInstanceTokenLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoTaskInstanceTokenLocalService(
-		KaleoTaskInstanceTokenLocalService kaleoTaskInstanceTokenLocalService) {
-		_kaleoTaskInstanceTokenLocalService = kaleoTaskInstanceTokenLocalService;
-	}
-
 	@Override
 	public KaleoTaskInstanceTokenLocalService getWrappedService() {
 		return _kaleoTaskInstanceTokenLocalService;

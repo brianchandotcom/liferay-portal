@@ -1015,14 +1015,6 @@ public class CalendarResourceWrapper implements CalendarResource,
 		return _calendarResource.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public CalendarResource getWrappedCalendarResource() {
-		return _calendarResource;
-	}
-
 	@Override
 	public CalendarResource getWrappedModel() {
 		return _calendarResource;

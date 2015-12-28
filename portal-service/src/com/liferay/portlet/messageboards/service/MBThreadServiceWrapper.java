@@ -184,22 +184,6 @@ public class MBThreadServiceWrapper implements MBThreadService,
 		_mbThreadService.unlockThread(threadId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MBThreadService getWrappedMBThreadService() {
-		return _mbThreadService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMBThreadService(MBThreadService mbThreadService) {
-		_mbThreadService = mbThreadService;
-	}
-
 	@Override
 	public MBThreadService getWrappedService() {
 		return _mbThreadService;

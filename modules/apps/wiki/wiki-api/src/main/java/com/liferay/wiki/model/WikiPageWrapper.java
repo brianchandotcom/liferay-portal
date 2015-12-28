@@ -1230,14 +1230,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public WikiPage getWrappedWikiPage() {
-		return _wikiPage;
-	}
-
 	@Override
 	public WikiPage getWrappedModel() {
 		return _wikiPage;

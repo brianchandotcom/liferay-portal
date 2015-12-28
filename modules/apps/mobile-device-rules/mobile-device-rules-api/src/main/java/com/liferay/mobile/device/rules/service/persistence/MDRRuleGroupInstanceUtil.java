@@ -1607,13 +1607,6 @@ public class MDRRuleGroupInstanceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(MDRRuleGroupInstancePersistence persistence) {
-	}
-
 	private static ServiceTracker<MDRRuleGroupInstancePersistence, MDRRuleGroupInstancePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(MDRRuleGroupInstancePersistence.class);
 }

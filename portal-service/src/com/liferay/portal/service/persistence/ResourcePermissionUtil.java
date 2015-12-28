@@ -1823,12 +1823,5 @@ public class ResourcePermissionUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ResourcePermissionPersistence persistence) {
-	}
-
 	private static ResourcePermissionPersistence _persistence;
 }

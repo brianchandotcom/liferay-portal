@@ -377,23 +377,6 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		return _mbThreadFlagLocalService.updateMBThreadFlag(mbThreadFlag);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MBThreadFlagLocalService getWrappedMBThreadFlagLocalService() {
-		return _mbThreadFlagLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMBThreadFlagLocalService(
-		MBThreadFlagLocalService mbThreadFlagLocalService) {
-		_mbThreadFlagLocalService = mbThreadFlagLocalService;
-	}
-
 	@Override
 	public MBThreadFlagLocalService getWrappedService() {
 		return _mbThreadFlagLocalService;

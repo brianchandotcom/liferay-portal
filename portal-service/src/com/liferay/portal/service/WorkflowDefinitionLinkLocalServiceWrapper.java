@@ -395,23 +395,6 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 			companyId, groupId, className, classPK, workflowDefinitionOVPs);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public WorkflowDefinitionLinkLocalService getWrappedWorkflowDefinitionLinkLocalService() {
-		return _workflowDefinitionLinkLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-		_workflowDefinitionLinkLocalService = workflowDefinitionLinkLocalService;
-	}
-
 	@Override
 	public WorkflowDefinitionLinkLocalService getWrappedService() {
 		return _workflowDefinitionLinkLocalService;

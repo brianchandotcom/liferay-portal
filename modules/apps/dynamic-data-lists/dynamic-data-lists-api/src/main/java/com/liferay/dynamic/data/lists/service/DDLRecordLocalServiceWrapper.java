@@ -606,23 +606,6 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			status, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDLRecordLocalService getWrappedDDLRecordLocalService() {
-		return _ddlRecordLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-		_ddlRecordLocalService = ddlRecordLocalService;
-	}
-
 	@Override
 	public DDLRecordLocalService getWrappedService() {
 		return _ddlRecordLocalService;

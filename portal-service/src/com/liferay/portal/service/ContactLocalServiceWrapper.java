@@ -300,23 +300,6 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 			jabberSn, skypeSn, twitterSn, jobTitle);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ContactLocalService getWrappedContactLocalService() {
-		return _contactLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedContactLocalService(
-		ContactLocalService contactLocalService) {
-		_contactLocalService = contactLocalService;
-	}
-
 	@Override
 	public ContactLocalService getWrappedService() {
 		return _contactLocalService;

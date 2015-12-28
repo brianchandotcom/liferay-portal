@@ -536,14 +536,6 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public WorkflowInstanceLink getWrappedWorkflowInstanceLink() {
-		return _workflowInstanceLink;
-	}
-
 	@Override
 	public WorkflowInstanceLink getWrappedModel() {
 		return _workflowInstanceLink;

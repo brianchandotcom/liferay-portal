@@ -1022,12 +1022,5 @@ public class SocialActivityCounterUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(SocialActivityCounterPersistence persistence) {
-	}
-
 	private static SocialActivityCounterPersistence _persistence;
 }

@@ -100,22 +100,6 @@ public class AddressServiceWrapper implements AddressService,
 			street3, city, zip, regionId, countryId, typeId, mailing, primary);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AddressService getWrappedAddressService() {
-		return _addressService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAddressService(AddressService addressService) {
-		_addressService = addressService;
-	}
-
 	@Override
 	public AddressService getWrappedService() {
 		return _addressService;

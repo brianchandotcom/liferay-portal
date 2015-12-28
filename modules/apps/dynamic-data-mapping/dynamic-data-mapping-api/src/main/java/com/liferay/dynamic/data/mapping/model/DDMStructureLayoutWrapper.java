@@ -506,14 +506,6 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 		return _ddmStructureLayout.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DDMStructureLayout getWrappedDDMStructureLayout() {
-		return _ddmStructureLayout;
-	}
-
 	@Override
 	public DDMStructureLayout getWrappedModel() {
 		return _ddmStructureLayout;

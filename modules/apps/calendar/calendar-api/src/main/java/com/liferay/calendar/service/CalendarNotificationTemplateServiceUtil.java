@@ -79,13 +79,6 @@ public class CalendarNotificationTemplateServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(CalendarNotificationTemplateService service) {
-	}
-
 	private static ServiceTracker<CalendarNotificationTemplateService, CalendarNotificationTemplateService> _serviceTracker =
 		ServiceTrackerFactory.open(CalendarNotificationTemplateService.class);
 }

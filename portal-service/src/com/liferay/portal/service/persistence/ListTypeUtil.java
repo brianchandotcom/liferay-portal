@@ -486,12 +486,5 @@ public class ListTypeUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ListTypePersistence persistence) {
-	}
-
 	private static ListTypePersistence _persistence;
 }

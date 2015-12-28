@@ -301,23 +301,6 @@ public class DDMTemplateVersionLocalServiceWrapper
 		return _ddmTemplateVersionLocalService.updateDDMTemplateVersion(ddmTemplateVersion);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMTemplateVersionLocalService getWrappedDDMTemplateVersionLocalService() {
-		return _ddmTemplateVersionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMTemplateVersionLocalService(
-		DDMTemplateVersionLocalService ddmTemplateVersionLocalService) {
-		_ddmTemplateVersionLocalService = ddmTemplateVersionLocalService;
-	}
-
 	@Override
 	public DDMTemplateVersionLocalService getWrappedService() {
 		return _ddmTemplateVersionLocalService;

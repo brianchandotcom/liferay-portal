@@ -401,23 +401,6 @@ public class DLFileVersionLocalServiceWrapper
 		return _dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFileVersionLocalService getWrappedDLFileVersionLocalService() {
-		return _dlFileVersionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFileVersionLocalService(
-		DLFileVersionLocalService dlFileVersionLocalService) {
-		_dlFileVersionLocalService = dlFileVersionLocalService;
-	}
-
 	@Override
 	public DLFileVersionLocalService getWrappedService() {
 		return _dlFileVersionLocalService;

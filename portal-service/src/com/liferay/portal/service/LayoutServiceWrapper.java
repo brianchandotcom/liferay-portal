@@ -1542,22 +1542,6 @@ public class LayoutServiceWrapper implements LayoutService,
 			portletId, parameterMap, inputStream);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LayoutService getWrappedLayoutService() {
-		return _layoutService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLayoutService(LayoutService layoutService) {
-		_layoutService = layoutService;
-	}
-
 	@Override
 	public LayoutService getWrappedService() {
 		return _layoutService;

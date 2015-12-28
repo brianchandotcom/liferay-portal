@@ -67,23 +67,6 @@ public class DLTrashLocalServiceWrapper implements DLTrashLocalService,
 			fileEntryId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLTrashLocalService getWrappedDLTrashLocalService() {
-		return _dlTrashLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLTrashLocalService(
-		DLTrashLocalService dlTrashLocalService) {
-		_dlTrashLocalService = dlTrashLocalService;
-	}
-
 	@Override
 	public DLTrashLocalService getWrappedService() {
 		return _dlTrashLocalService;

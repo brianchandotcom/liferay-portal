@@ -518,14 +518,6 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 		return _mbBan.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public MBBan getWrappedMBBan() {
-		return _mbBan;
-	}
-
 	@Override
 	public MBBan getWrappedModel() {
 		return _mbBan;

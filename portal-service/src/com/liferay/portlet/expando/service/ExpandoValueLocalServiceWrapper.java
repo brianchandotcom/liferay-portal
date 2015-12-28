@@ -1443,23 +1443,6 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 		return _expandoValueLocalService.updateExpandoValue(expandoValue);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ExpandoValueLocalService getWrappedExpandoValueLocalService() {
-		return _expandoValueLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedExpandoValueLocalService(
-		ExpandoValueLocalService expandoValueLocalService) {
-		_expandoValueLocalService = expandoValueLocalService;
-	}
-
 	@Override
 	public ExpandoValueLocalService getWrappedService() {
 		return _expandoValueLocalService;

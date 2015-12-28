@@ -812,13 +812,6 @@ public class MDRRuleUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(MDRRulePersistence persistence) {
-	}
-
 	private static ServiceTracker<MDRRulePersistence, MDRRulePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(MDRRulePersistence.class);
 }

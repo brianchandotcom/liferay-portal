@@ -421,14 +421,6 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DLFileRank getWrappedDLFileRank() {
-		return _dlFileRank;
-	}
-
 	@Override
 	public DLFileRank getWrappedModel() {
 		return _dlFileRank;

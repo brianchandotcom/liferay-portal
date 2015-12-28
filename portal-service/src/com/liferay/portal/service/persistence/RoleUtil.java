@@ -2829,12 +2829,5 @@ public class RoleUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(RolePersistence persistence) {
-	}
-
 	private static RolePersistence _persistence;
 }

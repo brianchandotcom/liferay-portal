@@ -244,23 +244,6 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 			name, description, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public BookmarksFolderService getWrappedBookmarksFolderService() {
-		return _bookmarksFolderService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedBookmarksFolderService(
-		BookmarksFolderService bookmarksFolderService) {
-		_bookmarksFolderService = bookmarksFolderService;
-	}
-
 	@Override
 	public BookmarksFolderService getWrappedService() {
 		return _bookmarksFolderService;

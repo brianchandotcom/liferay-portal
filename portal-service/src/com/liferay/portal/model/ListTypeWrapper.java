@@ -306,14 +306,6 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ListType getWrappedListType() {
-		return _listType;
-	}
-
 	@Override
 	public ListType getWrappedModel() {
 		return _listType;

@@ -1933,14 +1933,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public LayoutRevision getWrappedLayoutRevision() {
-		return _layoutRevision;
-	}
-
 	@Override
 	public LayoutRevision getWrappedModel() {
 		return _layoutRevision;

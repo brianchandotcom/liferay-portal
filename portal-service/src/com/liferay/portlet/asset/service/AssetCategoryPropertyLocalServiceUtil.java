@@ -325,12 +325,5 @@ public class AssetCategoryPropertyLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AssetCategoryPropertyLocalService service) {
-	}
-
 	private static AssetCategoryPropertyLocalService _service;
 }

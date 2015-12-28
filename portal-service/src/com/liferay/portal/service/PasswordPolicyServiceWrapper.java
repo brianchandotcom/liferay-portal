@@ -150,23 +150,6 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PasswordPolicyService getWrappedPasswordPolicyService() {
-		return _passwordPolicyService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPasswordPolicyService(
-		PasswordPolicyService passwordPolicyService) {
-		_passwordPolicyService = passwordPolicyService;
-	}
-
 	@Override
 	public PasswordPolicyService getWrappedService() {
 		return _passwordPolicyService;

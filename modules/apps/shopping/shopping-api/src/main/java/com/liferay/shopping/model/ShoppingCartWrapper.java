@@ -550,14 +550,6 @@ public class ShoppingCartWrapper implements ShoppingCart,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ShoppingCart getWrappedShoppingCart() {
-		return _shoppingCart;
-	}
-
 	@Override
 	public ShoppingCart getWrappedModel() {
 		return _shoppingCart;

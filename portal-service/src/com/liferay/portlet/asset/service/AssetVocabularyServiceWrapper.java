@@ -269,23 +269,6 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 			titleMap, descriptionMap, settings, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AssetVocabularyService getWrappedAssetVocabularyService() {
-		return _assetVocabularyService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAssetVocabularyService(
-		AssetVocabularyService assetVocabularyService) {
-		_assetVocabularyService = assetVocabularyService;
-	}
-
 	@Override
 	public AssetVocabularyService getWrappedService() {
 		return _assetVocabularyService;

@@ -483,12 +483,5 @@ public class SubscriptionLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(SubscriptionLocalService service) {
-	}
-
 	private static SubscriptionLocalService _service;
 }

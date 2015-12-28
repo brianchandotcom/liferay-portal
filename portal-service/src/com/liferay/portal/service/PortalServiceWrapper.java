@@ -109,22 +109,6 @@ public class PortalServiceWrapper implements PortalService,
 		return _portalService.testHasClassName();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PortalService getWrappedPortalService() {
-		return _portalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPortalService(PortalService portalService) {
-		_portalService = portalService;
-	}
-
 	@Override
 	public PortalService getWrappedService() {
 		return _portalService;

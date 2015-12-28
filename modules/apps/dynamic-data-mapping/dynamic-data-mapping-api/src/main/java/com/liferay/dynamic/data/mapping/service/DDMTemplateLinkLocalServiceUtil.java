@@ -305,13 +305,6 @@ public class DDMTemplateLinkLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DDMTemplateLinkLocalService service) {
-	}
-
 	private static ServiceTracker<DDMTemplateLinkLocalService, DDMTemplateLinkLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(DDMTemplateLinkLocalService.class);
 }

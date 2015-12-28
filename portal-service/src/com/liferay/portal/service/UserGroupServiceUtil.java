@@ -248,12 +248,5 @@ public class UserGroupServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(UserGroupService service) {
-	}
-
 	private static UserGroupService _service;
 }

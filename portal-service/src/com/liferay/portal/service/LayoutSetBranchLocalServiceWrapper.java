@@ -373,23 +373,6 @@ public class LayoutSetBranchLocalServiceWrapper
 			name, description, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LayoutSetBranchLocalService getWrappedLayoutSetBranchLocalService() {
-		return _layoutSetBranchLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLayoutSetBranchLocalService(
-		LayoutSetBranchLocalService layoutSetBranchLocalService) {
-		_layoutSetBranchLocalService = layoutSetBranchLocalService;
-	}
-
 	@Override
 	public LayoutSetBranchLocalService getWrappedService() {
 		return _layoutSetBranchLocalService;

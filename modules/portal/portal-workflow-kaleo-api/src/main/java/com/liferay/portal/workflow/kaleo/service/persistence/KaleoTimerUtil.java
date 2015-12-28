@@ -654,13 +654,6 @@ public class KaleoTimerUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(KaleoTimerPersistence persistence) {
-	}
-
 	private static ServiceTracker<KaleoTimerPersistence, KaleoTimerPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(KaleoTimerPersistence.class);
 }

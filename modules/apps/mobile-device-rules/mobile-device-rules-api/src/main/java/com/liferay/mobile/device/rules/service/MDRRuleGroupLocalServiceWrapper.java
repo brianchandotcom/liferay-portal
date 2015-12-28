@@ -522,23 +522,6 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 			descriptionMap, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MDRRuleGroupLocalService getWrappedMDRRuleGroupLocalService() {
-		return _mdrRuleGroupLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMDRRuleGroupLocalService(
-		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
-		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
-	}
-
 	@Override
 	public MDRRuleGroupLocalService getWrappedService() {
 		return _mdrRuleGroupLocalService;

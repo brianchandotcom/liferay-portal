@@ -517,13 +517,6 @@ public class BackgroundTaskLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(BackgroundTaskLocalService service) {
-	}
-
 	private static ServiceTracker<BackgroundTaskLocalService, BackgroundTaskLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(BackgroundTaskLocalService.class);
 }

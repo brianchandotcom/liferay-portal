@@ -339,12 +339,5 @@ public class UserGroupGroupRoleLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(UserGroupGroupRoleLocalService service) {
-	}
-
 	private static UserGroupGroupRoleLocalService _service;
 }

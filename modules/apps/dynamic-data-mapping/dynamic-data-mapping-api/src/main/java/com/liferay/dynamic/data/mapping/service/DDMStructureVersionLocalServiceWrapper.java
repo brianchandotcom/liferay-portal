@@ -308,23 +308,6 @@ public class DDMStructureVersionLocalServiceWrapper
 		return _ddmStructureVersionLocalService.updateDDMStructureVersion(ddmStructureVersion);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMStructureVersionLocalService getWrappedDDMStructureVersionLocalService() {
-		return _ddmStructureVersionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMStructureVersionLocalService(
-		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
-		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
-	}
-
 	@Override
 	public DDMStructureVersionLocalService getWrappedService() {
 		return _ddmStructureVersionLocalService;

@@ -406,14 +406,6 @@ public class RatingsStatsWrapper implements RatingsStats,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public RatingsStats getWrappedRatingsStats() {
-		return _ratingsStats;
-	}
-
 	@Override
 	public RatingsStats getWrappedModel() {
 		return _ratingsStats;

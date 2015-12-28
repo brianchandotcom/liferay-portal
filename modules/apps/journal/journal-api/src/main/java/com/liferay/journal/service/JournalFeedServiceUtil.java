@@ -129,13 +129,6 @@ public class JournalFeedServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(JournalFeedService service) {
-	}
-
 	private static ServiceTracker<JournalFeedService, JournalFeedService> _serviceTracker =
 		ServiceTrackerFactory.open(JournalFeedService.class);
 }

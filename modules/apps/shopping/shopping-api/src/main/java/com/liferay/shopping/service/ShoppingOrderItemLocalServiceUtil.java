@@ -261,13 +261,6 @@ public class ShoppingOrderItemLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ShoppingOrderItemLocalService service) {
-	}
-
 	private static ServiceTracker<ShoppingOrderItemLocalService, ShoppingOrderItemLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(ShoppingOrderItemLocalService.class);
 }

@@ -285,23 +285,6 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 		return _counterLocalService.updateCounter(counter);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CounterLocalService getWrappedCounterLocalService() {
-		return _counterLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCounterLocalService(
-		CounterLocalService counterLocalService) {
-		_counterLocalService = counterLocalService;
-	}
-
 	@Override
 	public CounterLocalService getWrappedService() {
 		return _counterLocalService;

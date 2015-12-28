@@ -803,12 +803,5 @@ public class AssetTagLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AssetTagLocalService service) {
-	}
-
 	private static AssetTagLocalService _service;
 }

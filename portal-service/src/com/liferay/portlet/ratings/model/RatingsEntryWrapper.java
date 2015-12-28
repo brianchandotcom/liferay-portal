@@ -515,14 +515,6 @@ public class RatingsEntryWrapper implements RatingsEntry,
 		return _ratingsEntry.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public RatingsEntry getWrappedRatingsEntry() {
-		return _ratingsEntry;
-	}
-
 	@Override
 	public RatingsEntry getWrappedModel() {
 		return _ratingsEntry;

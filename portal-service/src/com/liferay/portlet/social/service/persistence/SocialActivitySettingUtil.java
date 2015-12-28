@@ -1072,12 +1072,5 @@ public class SocialActivitySettingUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(SocialActivitySettingPersistence persistence) {
-	}
-
 	private static SocialActivitySettingPersistence _persistence;
 }

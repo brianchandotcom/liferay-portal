@@ -359,14 +359,6 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DDMTemplateLink getWrappedDDMTemplateLink() {
-		return _ddmTemplateLink;
-	}
-
 	@Override
 	public DDMTemplateLink getWrappedModel() {
 		return _ddmTemplateLink;

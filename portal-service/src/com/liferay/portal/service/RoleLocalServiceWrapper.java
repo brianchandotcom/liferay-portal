@@ -1309,22 +1309,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 			descriptionMap, subtype, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public RoleLocalService getWrappedRoleLocalService() {
-		return _roleLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
-
 	@Override
 	public RoleLocalService getWrappedService() {
 		return _roleLocalService;

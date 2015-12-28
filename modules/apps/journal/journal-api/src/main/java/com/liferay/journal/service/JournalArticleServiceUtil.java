@@ -2004,13 +2004,6 @@ public class JournalArticleServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(JournalArticleService service) {
-	}
-
 	private static ServiceTracker<JournalArticleService, JournalArticleService> _serviceTracker =
 		ServiceTrackerFactory.open(JournalArticleService.class);
 }

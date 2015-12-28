@@ -372,12 +372,5 @@ public class MBBanLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MBBanLocalService service) {
-	}
-
 	private static MBBanLocalService _service;
 }

@@ -944,13 +944,6 @@ public class JournalFeedUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(JournalFeedPersistence persistence) {
-	}
-
 	private static ServiceTracker<JournalFeedPersistence, JournalFeedPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(JournalFeedPersistence.class);
 }

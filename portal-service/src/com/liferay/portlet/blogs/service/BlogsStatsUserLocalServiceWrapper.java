@@ -374,23 +374,6 @@ public class BlogsStatsUserLocalServiceWrapper
 		_blogsStatsUserLocalService.updateStatsUser(groupId, userId, displayDate);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public BlogsStatsUserLocalService getWrappedBlogsStatsUserLocalService() {
-		return _blogsStatsUserLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedBlogsStatsUserLocalService(
-		BlogsStatsUserLocalService blogsStatsUserLocalService) {
-		_blogsStatsUserLocalService = blogsStatsUserLocalService;
-	}
-
 	@Override
 	public BlogsStatsUserLocalService getWrappedService() {
 		return _blogsStatsUserLocalService;

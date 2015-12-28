@@ -8822,13 +8822,6 @@ public class JournalArticleUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(JournalArticlePersistence persistence) {
-	}
-
 	private static ServiceTracker<JournalArticlePersistence, JournalArticlePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(JournalArticlePersistence.class);
 }

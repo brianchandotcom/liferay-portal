@@ -313,23 +313,6 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 		return _wallEntryLocalService.updateWallEntry(wallEntryId, comments);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public WallEntryLocalService getWrappedWallEntryLocalService() {
-		return _wallEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedWallEntryLocalService(
-		WallEntryLocalService wallEntryLocalService) {
-		_wallEntryLocalService = wallEntryLocalService;
-	}
-
 	@Override
 	public WallEntryLocalService getWrappedService() {
 		return _wallEntryLocalService;

@@ -340,23 +340,6 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 			primary);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public WebsiteLocalService getWrappedWebsiteLocalService() {
-		return _websiteLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedWebsiteLocalService(
-		WebsiteLocalService websiteLocalService) {
-		_websiteLocalService = websiteLocalService;
-	}
-
 	@Override
 	public WebsiteLocalService getWrappedService() {
 		return _websiteLocalService;

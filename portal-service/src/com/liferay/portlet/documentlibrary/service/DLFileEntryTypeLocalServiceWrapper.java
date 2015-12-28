@@ -631,23 +631,6 @@ public class DLFileEntryTypeLocalServiceWrapper
 			fileEntryTypeIds, defaultFileEntryTypeId, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFileEntryTypeLocalService getWrappedDLFileEntryTypeLocalService() {
-		return _dlFileEntryTypeLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFileEntryTypeLocalService(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
-	}
-
 	@Override
 	public DLFileEntryTypeLocalService getWrappedService() {
 		return _dlFileEntryTypeLocalService;

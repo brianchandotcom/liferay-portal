@@ -138,23 +138,6 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 			name, primKey, roleIdsToActionIds);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ResourceBlockService getWrappedResourceBlockService() {
-		return _resourceBlockService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedResourceBlockService(
-		ResourceBlockService resourceBlockService) {
-		_resourceBlockService = resourceBlockService;
-	}
-
 	@Override
 	public ResourceBlockService getWrappedService() {
 		return _resourceBlockService;

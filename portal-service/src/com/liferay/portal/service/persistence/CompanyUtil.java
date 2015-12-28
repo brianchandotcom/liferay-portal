@@ -587,12 +587,5 @@ public class CompanyUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(CompanyPersistence persistence) {
-	}
-
 	private static CompanyPersistence _persistence;
 }

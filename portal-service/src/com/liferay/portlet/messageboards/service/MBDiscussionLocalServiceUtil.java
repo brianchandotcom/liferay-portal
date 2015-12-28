@@ -391,12 +391,5 @@ public class MBDiscussionLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(MBDiscussionLocalService service) {
-	}
-
 	private static MBDiscussionLocalService _service;
 }

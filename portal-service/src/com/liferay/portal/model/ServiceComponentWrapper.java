@@ -378,14 +378,6 @@ public class ServiceComponentWrapper implements ServiceComponent,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ServiceComponent getWrappedServiceComponent() {
-		return _serviceComponent;
-	}
-
 	@Override
 	public ServiceComponent getWrappedModel() {
 		return _serviceComponent;

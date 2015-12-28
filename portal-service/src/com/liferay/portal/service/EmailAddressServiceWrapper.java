@@ -108,23 +108,6 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 			typeId, primary);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public EmailAddressService getWrappedEmailAddressService() {
-		return _emailAddressService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedEmailAddressService(
-		EmailAddressService emailAddressService) {
-		_emailAddressService = emailAddressService;
-	}
-
 	@Override
 	public EmailAddressService getWrappedService() {
 		return _emailAddressService;

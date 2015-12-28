@@ -536,23 +536,6 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 		return _wikiNodeLocalService.updateWikiNode(wikiNode);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public WikiNodeLocalService getWrappedWikiNodeLocalService() {
-		return _wikiNodeLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
 	@Override
 	public WikiNodeLocalService getWrappedService() {
 		return _wikiNodeLocalService;

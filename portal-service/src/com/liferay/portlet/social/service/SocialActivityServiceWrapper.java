@@ -635,23 +635,6 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 		return _socialActivityService.getUserOrganizationsActivitiesCount(userId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialActivityService getWrappedSocialActivityService() {
-		return _socialActivityService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialActivityService(
-		SocialActivityService socialActivityService) {
-		_socialActivityService = socialActivityService;
-	}
-
 	@Override
 	public SocialActivityService getWrappedService() {
 		return _socialActivityService;

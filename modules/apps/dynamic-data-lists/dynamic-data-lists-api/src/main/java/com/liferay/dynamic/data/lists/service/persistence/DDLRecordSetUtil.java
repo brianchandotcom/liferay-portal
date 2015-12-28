@@ -1089,13 +1089,6 @@ public class DDLRecordSetUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(DDLRecordSetPersistence persistence) {
-	}
-
 	private static ServiceTracker<DDLRecordSetPersistence, DDLRecordSetPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(DDLRecordSetPersistence.class);
 }

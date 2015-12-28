@@ -2108,22 +2108,6 @@ public class DLAppServiceWrapper implements DLAppService,
 			lockUuid);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLAppService getWrappedDLAppService() {
-		return _dlAppService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
 	@Override
 	public DLAppService getWrappedService() {
 		return _dlAppService;

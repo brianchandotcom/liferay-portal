@@ -322,12 +322,5 @@ public class ClassNameUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ClassNamePersistence persistence) {
-	}
-
 	private static ClassNamePersistence _persistence;
 }

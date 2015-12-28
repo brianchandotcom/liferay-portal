@@ -347,23 +347,6 @@ public class ShoppingCouponLocalServiceWrapper
 		return _shoppingCouponLocalService.updateShoppingCoupon(shoppingCoupon);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ShoppingCouponLocalService getWrappedShoppingCouponLocalService() {
-		return _shoppingCouponLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedShoppingCouponLocalService(
-		ShoppingCouponLocalService shoppingCouponLocalService) {
-		_shoppingCouponLocalService = shoppingCouponLocalService;
-	}
-
 	@Override
 	public ShoppingCouponLocalService getWrappedService() {
 		return _shoppingCouponLocalService;

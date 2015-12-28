@@ -512,12 +512,5 @@ public class TicketUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(TicketPersistence persistence) {
-	}
-
 	private static TicketPersistence _persistence;
 }

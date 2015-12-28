@@ -886,12 +886,5 @@ public class RepositoryUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(RepositoryPersistence persistence) {
-	}
-
 	private static RepositoryPersistence _persistence;
 }

@@ -876,14 +876,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		return _pollsQuestion.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public PollsQuestion getWrappedPollsQuestion() {
-		return _pollsQuestion;
-	}
-
 	@Override
 	public PollsQuestion getWrappedModel() {
 		return _pollsQuestion;

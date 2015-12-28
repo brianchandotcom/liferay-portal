@@ -1304,13 +1304,6 @@ public class SAPEntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(SAPEntryPersistence persistence) {
-	}
-
 	private static ServiceTracker<SAPEntryPersistence, SAPEntryPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(SAPEntryPersistence.class);
 }

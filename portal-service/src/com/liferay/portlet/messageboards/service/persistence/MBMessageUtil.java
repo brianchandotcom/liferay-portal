@@ -5911,12 +5911,5 @@ public class MBMessageUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(MBMessagePersistence persistence) {
-	}
-
 	private static MBMessagePersistence _persistence;
 }

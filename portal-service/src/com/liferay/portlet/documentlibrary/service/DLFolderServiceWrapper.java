@@ -348,22 +348,6 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		return _dlFolderService.verifyInheritableLock(folderId, lockUuid);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFolderService getWrappedDLFolderService() {
-		return _dlFolderService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFolderService(DLFolderService dlFolderService) {
-		_dlFolderService = dlFolderService;
-	}
-
 	@Override
 	public DLFolderService getWrappedService() {
 		return _dlFolderService;

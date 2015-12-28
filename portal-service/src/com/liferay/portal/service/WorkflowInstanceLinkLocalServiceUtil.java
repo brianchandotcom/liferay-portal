@@ -344,12 +344,5 @@ public class WorkflowInstanceLinkLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(WorkflowInstanceLinkLocalService service) {
-	}
-
 	private static WorkflowInstanceLinkLocalService _service;
 }

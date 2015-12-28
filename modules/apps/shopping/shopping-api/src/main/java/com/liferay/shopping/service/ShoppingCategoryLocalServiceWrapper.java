@@ -400,23 +400,6 @@ public class ShoppingCategoryLocalServiceWrapper
 		return _shoppingCategoryLocalService.updateShoppingCategory(shoppingCategory);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ShoppingCategoryLocalService getWrappedShoppingCategoryLocalService() {
-		return _shoppingCategoryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedShoppingCategoryLocalService(
-		ShoppingCategoryLocalService shoppingCategoryLocalService) {
-		_shoppingCategoryLocalService = shoppingCategoryLocalService;
-	}
-
 	@Override
 	public ShoppingCategoryLocalService getWrappedService() {
 		return _shoppingCategoryLocalService;

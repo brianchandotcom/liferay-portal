@@ -68,12 +68,5 @@ public class SocialRequestServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(SocialRequestService service) {
-	}
-
 	private static SocialRequestService _service;
 }

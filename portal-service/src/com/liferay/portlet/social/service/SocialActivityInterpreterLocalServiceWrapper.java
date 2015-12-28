@@ -131,23 +131,6 @@ public class SocialActivityInterpreterLocalServiceWrapper
 		_socialActivityInterpreterLocalService.updateActivitySet(activityId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialActivityInterpreterLocalService getWrappedSocialActivityInterpreterLocalService() {
-		return _socialActivityInterpreterLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialActivityInterpreterLocalService(
-		SocialActivityInterpreterLocalService socialActivityInterpreterLocalService) {
-		_socialActivityInterpreterLocalService = socialActivityInterpreterLocalService;
-	}
-
 	@Override
 	public SocialActivityInterpreterLocalService getWrappedService() {
 		return _socialActivityInterpreterLocalService;

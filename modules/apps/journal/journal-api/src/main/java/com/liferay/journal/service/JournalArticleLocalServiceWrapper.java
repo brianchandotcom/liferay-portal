@@ -3940,23 +3940,6 @@ public class JournalArticleLocalServiceWrapper
 			oldDDMTemplateKey, newDDMTemplateKey);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public JournalArticleLocalService getWrappedJournalArticleLocalService() {
-		return _journalArticleLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
 	@Override
 	public JournalArticleLocalService getWrappedService() {
 		return _journalArticleLocalService;

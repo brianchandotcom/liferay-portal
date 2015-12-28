@@ -65,23 +65,6 @@ public class UserGroupRoleServiceWrapper implements UserGroupRoleService,
 		return _userGroupRoleService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public UserGroupRoleService getWrappedUserGroupRoleService() {
-		return _userGroupRoleService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedUserGroupRoleService(
-		UserGroupRoleService userGroupRoleService) {
-		_userGroupRoleService = userGroupRoleService;
-	}
-
 	@Override
 	public UserGroupRoleService getWrappedService() {
 		return _userGroupRoleService;

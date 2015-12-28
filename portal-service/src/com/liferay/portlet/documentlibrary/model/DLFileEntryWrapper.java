@@ -1293,14 +1293,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DLFileEntry getWrappedDLFileEntry() {
-		return _dlFileEntry;
-	}
-
 	@Override
 	public DLFileEntry getWrappedModel() {
 		return _dlFileEntry;

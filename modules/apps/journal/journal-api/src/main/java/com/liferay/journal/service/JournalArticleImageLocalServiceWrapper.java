@@ -344,23 +344,6 @@ public class JournalArticleImageLocalServiceWrapper
 		return _journalArticleImageLocalService.updateJournalArticleImage(journalArticleImage);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public JournalArticleImageLocalService getWrappedJournalArticleImageLocalService() {
-		return _journalArticleImageLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedJournalArticleImageLocalService(
-		JournalArticleImageLocalService journalArticleImageLocalService) {
-		_journalArticleImageLocalService = journalArticleImageLocalService;
-	}
-
 	@Override
 	public JournalArticleImageLocalService getWrappedService() {
 		return _journalArticleImageLocalService;

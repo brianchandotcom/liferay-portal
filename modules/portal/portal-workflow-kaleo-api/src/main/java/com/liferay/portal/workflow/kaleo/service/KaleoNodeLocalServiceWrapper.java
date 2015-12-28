@@ -289,23 +289,6 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 		return _kaleoNodeLocalService.updateKaleoNode(kaleoNode);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public KaleoNodeLocalService getWrappedKaleoNodeLocalService() {
-		return _kaleoNodeLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedKaleoNodeLocalService(
-		KaleoNodeLocalService kaleoNodeLocalService) {
-		_kaleoNodeLocalService = kaleoNodeLocalService;
-	}
-
 	@Override
 	public KaleoNodeLocalService getWrappedService() {
 		return _kaleoNodeLocalService;

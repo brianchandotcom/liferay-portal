@@ -290,12 +290,5 @@ public class UserIdMapperLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(UserIdMapperLocalService service) {
-	}
-
 	private static UserIdMapperLocalService _service;
 }

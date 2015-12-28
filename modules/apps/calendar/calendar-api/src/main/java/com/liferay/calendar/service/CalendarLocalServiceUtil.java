@@ -428,13 +428,6 @@ public class CalendarLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(CalendarLocalService service) {
-	}
-
 	private static ServiceTracker<CalendarLocalService, CalendarLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(CalendarLocalService.class);
 }

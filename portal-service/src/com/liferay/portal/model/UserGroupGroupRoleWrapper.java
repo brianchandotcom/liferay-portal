@@ -355,14 +355,6 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public UserGroupGroupRole getWrappedUserGroupGroupRole() {
-		return _userGroupGroupRole;
-	}
-
 	@Override
 	public UserGroupGroupRole getWrappedModel() {
 		return _userGroupGroupRole;

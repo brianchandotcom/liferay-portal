@@ -709,23 +709,6 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		return _mbThreadLocalService.updateThread(threadId, viewCount);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public MBThreadLocalService getWrappedMBThreadLocalService() {
-		return _mbThreadLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
 	@Override
 	public MBThreadLocalService getWrappedService() {
 		return _mbThreadLocalService;

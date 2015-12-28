@@ -489,23 +489,6 @@ public class ExpandoColumnLocalServiceWrapper
 			typeSettings);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ExpandoColumnLocalService getWrappedExpandoColumnLocalService() {
-		return _expandoColumnLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedExpandoColumnLocalService(
-		ExpandoColumnLocalService expandoColumnLocalService) {
-		_expandoColumnLocalService = expandoColumnLocalService;
-	}
-
 	@Override
 	public ExpandoColumnLocalService getWrappedService() {
 		return _expandoColumnLocalService;

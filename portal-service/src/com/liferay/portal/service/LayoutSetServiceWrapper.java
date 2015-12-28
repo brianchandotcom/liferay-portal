@@ -120,22 +120,6 @@ public class LayoutSetServiceWrapper implements LayoutSetService,
 			virtualHost);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public LayoutSetService getWrappedLayoutSetService() {
-		return _layoutSetService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedLayoutSetService(LayoutSetService layoutSetService) {
-		_layoutSetService = layoutSetService;
-	}
-
 	@Override
 	public LayoutSetService getWrappedService() {
 		return _layoutSetService;

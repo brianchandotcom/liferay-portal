@@ -73,23 +73,6 @@ public class DDMTemplateVersionServiceWrapper
 		return _ddmTemplateVersionService.getTemplateVersionsCount(templateId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMTemplateVersionService getWrappedDDMTemplateVersionService() {
-		return _ddmTemplateVersionService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMTemplateVersionService(
-		DDMTemplateVersionService ddmTemplateVersionService) {
-		_ddmTemplateVersionService = ddmTemplateVersionService;
-	}
-
 	@Override
 	public DDMTemplateVersionService getWrappedService() {
 		return _ddmTemplateVersionService;

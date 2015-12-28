@@ -982,14 +982,6 @@ public class MBMailingListWrapper implements MBMailingList,
 		return _mbMailingList.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public MBMailingList getWrappedMBMailingList() {
-		return _mbMailingList;
-	}
-
 	@Override
 	public MBMailingList getWrappedModel() {
 		return _mbMailingList;

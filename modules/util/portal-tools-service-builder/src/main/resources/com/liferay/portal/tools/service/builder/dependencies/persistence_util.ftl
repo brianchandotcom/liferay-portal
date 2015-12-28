@@ -174,13 +174,6 @@ public class ${entity.name}Util {
 		</#if>
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(${entity.name}Persistence persistence) {
-	}
-
 	<#if osgiModule>
 		private static ServiceTracker<${entity.name}Persistence, ${entity.name}Persistence> _serviceTracker = ServiceTrackerFactory.open(${entity.name}Persistence.class);
 	<#else>

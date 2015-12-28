@@ -472,13 +472,6 @@ public class DDLRecordSetLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DDLRecordSetLocalService service) {
-	}
-
 	private static ServiceTracker<DDLRecordSetLocalService, DDLRecordSetLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(DDLRecordSetLocalService.class);
 }

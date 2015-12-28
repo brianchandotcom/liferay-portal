@@ -360,23 +360,6 @@ public class DDMStructureLinkLocalServiceWrapper
 			classNameId, classPK, structureId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DDMStructureLinkLocalService getWrappedDDMStructureLinkLocalService() {
-		return _ddmStructureLinkLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDDMStructureLinkLocalService(
-		DDMStructureLinkLocalService ddmStructureLinkLocalService) {
-		_ddmStructureLinkLocalService = ddmStructureLinkLocalService;
-	}
-
 	@Override
 	public DDMStructureLinkLocalService getWrappedService() {
 		return _ddmStructureLinkLocalService;

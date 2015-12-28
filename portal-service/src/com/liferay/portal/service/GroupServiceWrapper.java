@@ -808,22 +808,6 @@ public class GroupServiceWrapper implements GroupService,
 		_groupService.updateStagedPortlets(groupId, stagedPortletIds);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public GroupService getWrappedGroupService() {
-		return _groupService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedGroupService(GroupService groupService) {
-		_groupService = groupService;
-	}
-
 	@Override
 	public GroupService getWrappedService() {
 		return _groupService;

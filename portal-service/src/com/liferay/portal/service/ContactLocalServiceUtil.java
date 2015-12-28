@@ -302,12 +302,5 @@ public class ContactLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ContactLocalService service) {
-	}
-
 	private static ContactLocalService _service;
 }

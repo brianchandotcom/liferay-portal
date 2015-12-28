@@ -1520,12 +1520,5 @@ public class AssetVocabularyUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(AssetVocabularyPersistence persistence) {
-	}
-
 	private static AssetVocabularyPersistence _persistence;
 }

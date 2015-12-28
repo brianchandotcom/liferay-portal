@@ -113,23 +113,6 @@ public class AnnouncementsEntryServiceWrapper
 			expirationDateHour, expirationDateMinute, priority);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AnnouncementsEntryService getWrappedAnnouncementsEntryService() {
-		return _announcementsEntryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAnnouncementsEntryService(
-		AnnouncementsEntryService announcementsEntryService) {
-		_announcementsEntryService = announcementsEntryService;
-	}
-
 	@Override
 	public AnnouncementsEntryService getWrappedService() {
 		return _announcementsEntryService;

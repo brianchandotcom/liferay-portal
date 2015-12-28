@@ -88,23 +88,6 @@ public class AssetCategoryPropertyServiceWrapper
 			categoryPropertyId, key, value);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AssetCategoryPropertyService getWrappedAssetCategoryPropertyService() {
-		return _assetCategoryPropertyService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAssetCategoryPropertyService(
-		AssetCategoryPropertyService assetCategoryPropertyService) {
-		_assetCategoryPropertyService = assetCategoryPropertyService;
-	}
-
 	@Override
 	public AssetCategoryPropertyService getWrappedService() {
 		return _assetCategoryPropertyService;

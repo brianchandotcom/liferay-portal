@@ -1106,12 +1106,5 @@ public class UserGroupGroupRoleUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(UserGroupGroupRolePersistence persistence) {
-	}
-
 	private static UserGroupGroupRolePersistence _persistence;
 }

@@ -448,23 +448,6 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 		return _expandoTableLocalService.updateTable(tableId, name);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ExpandoTableLocalService getWrappedExpandoTableLocalService() {
-		return _expandoTableLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedExpandoTableLocalService(
-		ExpandoTableLocalService expandoTableLocalService) {
-		_expandoTableLocalService = expandoTableLocalService;
-	}
-
 	@Override
 	public ExpandoTableLocalService getWrappedService() {
 		return _expandoTableLocalService;

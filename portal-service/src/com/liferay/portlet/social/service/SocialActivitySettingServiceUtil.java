@@ -109,12 +109,5 @@ public class SocialActivitySettingServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(SocialActivitySettingService service) {
-	}
-
 	private static SocialActivitySettingService _service;
 }

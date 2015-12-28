@@ -149,12 +149,5 @@ public class ThemeLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ThemeLocalService service) {
-	}
-
 	private static ThemeLocalService _service;
 }

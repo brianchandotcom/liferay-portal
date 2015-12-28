@@ -1053,14 +1053,6 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public KaleoLog getWrappedKaleoLog() {
-		return _kaleoLog;
-	}
-
 	@Override
 	public KaleoLog getWrappedModel() {
 		return _kaleoLog;

@@ -301,13 +301,6 @@ public class KaleoTaskAssignmentLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(KaleoTaskAssignmentLocalService service) {
-	}
-
 	private static ServiceTracker<KaleoTaskAssignmentLocalService, KaleoTaskAssignmentLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(KaleoTaskAssignmentLocalService.class);
 }

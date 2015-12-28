@@ -521,14 +521,6 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ShoppingItemPrice getWrappedShoppingItemPrice() {
-		return _shoppingItemPrice;
-	}
-
 	@Override
 	public ShoppingItemPrice getWrappedModel() {
 		return _shoppingItemPrice;

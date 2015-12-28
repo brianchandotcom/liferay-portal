@@ -500,23 +500,6 @@ public class DLFileShortcutLocalServiceWrapper
 			status, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFileShortcutLocalService getWrappedDLFileShortcutLocalService() {
-		return _dlFileShortcutLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFileShortcutLocalService(
-		DLFileShortcutLocalService dlFileShortcutLocalService) {
-		_dlFileShortcutLocalService = dlFileShortcutLocalService;
-	}
-
 	@Override
 	public DLFileShortcutLocalService getWrappedService() {
 		return _dlFileShortcutLocalService;

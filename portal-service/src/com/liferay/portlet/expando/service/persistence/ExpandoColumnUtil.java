@@ -674,12 +674,5 @@ public class ExpandoColumnUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ExpandoColumnPersistence persistence) {
-	}
-
 	private static ExpandoColumnPersistence _persistence;
 }

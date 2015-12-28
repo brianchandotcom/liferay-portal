@@ -286,12 +286,5 @@ public class TicketLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(TicketLocalService service) {
-	}
-
 	private static TicketLocalService _service;
 }

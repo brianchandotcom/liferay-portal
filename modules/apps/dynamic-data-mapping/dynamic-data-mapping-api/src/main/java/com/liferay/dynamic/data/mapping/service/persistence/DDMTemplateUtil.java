@@ -3600,13 +3600,6 @@ public class DDMTemplateUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(DDMTemplatePersistence persistence) {
-	}
-
 	private static ServiceTracker<DDMTemplatePersistence, DDMTemplatePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(DDMTemplatePersistence.class);
 }

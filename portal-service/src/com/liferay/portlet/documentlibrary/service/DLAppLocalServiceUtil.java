@@ -815,12 +815,5 @@ public class DLAppLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DLAppLocalService service) {
-	}
-
 	private static DLAppLocalService _service;
 }

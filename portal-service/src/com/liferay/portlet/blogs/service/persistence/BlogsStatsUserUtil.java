@@ -1171,12 +1171,5 @@ public class BlogsStatsUserUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(BlogsStatsUserPersistence persistence) {
-	}
-
 	private static BlogsStatsUserPersistence _persistence;
 }

@@ -1559,23 +1559,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.updateOrganization(organization);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public OrganizationLocalService getWrappedOrganizationLocalService() {
-		return _organizationLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedOrganizationLocalService(
-		OrganizationLocalService organizationLocalService) {
-		_organizationLocalService = organizationLocalService;
-	}
-
 	@Override
 	public OrganizationLocalService getWrappedService() {
 		return _organizationLocalService;

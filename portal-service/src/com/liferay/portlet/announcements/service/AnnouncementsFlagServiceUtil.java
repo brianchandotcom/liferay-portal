@@ -76,12 +76,5 @@ public class AnnouncementsFlagServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AnnouncementsFlagService service) {
-	}
-
 	private static AnnouncementsFlagService _service;
 }

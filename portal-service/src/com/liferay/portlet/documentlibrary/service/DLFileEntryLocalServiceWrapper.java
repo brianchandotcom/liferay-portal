@@ -1048,23 +1048,6 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			lockUuid);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFileEntryLocalService getWrappedDLFileEntryLocalService() {
-		return _dlFileEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFileEntryLocalService(
-		DLFileEntryLocalService dlFileEntryLocalService) {
-		_dlFileEntryLocalService = dlFileEntryLocalService;
-	}
-
 	@Override
 	public DLFileEntryLocalService getWrappedService() {
 		return _dlFileEntryLocalService;

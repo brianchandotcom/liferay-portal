@@ -1330,22 +1330,6 @@ public class UserServiceWrapper implements UserService,
 			phones, websites, announcementsDelivers, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public UserService getWrappedUserService() {
-		return _userService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedUserService(UserService userService) {
-		_userService = userService;
-	}
-
 	@Override
 	public UserService getWrappedService() {
 		return _userService;

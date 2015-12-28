@@ -97,12 +97,5 @@ public class AssetCategoryPropertyServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AssetCategoryPropertyService service) {
-	}
-
 	private static AssetCategoryPropertyService _service;
 }

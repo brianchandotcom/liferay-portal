@@ -64,13 +64,6 @@ public class KaleoDefinitionServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(KaleoDefinitionService service) {
-	}
-
 	private static ServiceTracker<KaleoDefinitionService, KaleoDefinitionService> _serviceTracker =
 		ServiceTrackerFactory.open(KaleoDefinitionService.class);
 }

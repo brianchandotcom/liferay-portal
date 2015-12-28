@@ -464,23 +464,6 @@ public class PasswordPolicyLocalServiceWrapper
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PasswordPolicyLocalService getWrappedPasswordPolicyLocalService() {
-		return _passwordPolicyLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPasswordPolicyLocalService(
-		PasswordPolicyLocalService passwordPolicyLocalService) {
-		_passwordPolicyLocalService = passwordPolicyLocalService;
-	}
-
 	@Override
 	public PasswordPolicyLocalService getWrappedService() {
 		return _passwordPolicyLocalService;

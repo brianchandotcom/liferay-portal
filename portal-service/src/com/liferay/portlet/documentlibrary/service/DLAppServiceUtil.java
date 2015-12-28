@@ -2065,12 +2065,5 @@ public class DLAppServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DLAppService service) {
-	}
-
 	private static DLAppService _service;
 }

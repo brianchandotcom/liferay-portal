@@ -299,12 +299,5 @@ public class TrashVersionLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(TrashVersionLocalService service) {
-	}
-
 	private static TrashVersionLocalService _service;
 }

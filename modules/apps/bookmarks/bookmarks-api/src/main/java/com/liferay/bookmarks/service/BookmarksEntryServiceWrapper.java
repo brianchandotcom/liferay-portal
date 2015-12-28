@@ -207,23 +207,6 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 			name, url, description, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public BookmarksEntryService getWrappedBookmarksEntryService() {
-		return _bookmarksEntryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedBookmarksEntryService(
-		BookmarksEntryService bookmarksEntryService) {
-		_bookmarksEntryService = bookmarksEntryService;
-	}
-
 	@Override
 	public BookmarksEntryService getWrappedService() {
 		return _bookmarksEntryService;

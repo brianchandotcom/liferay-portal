@@ -2212,12 +2212,5 @@ public class SocialActivityUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(SocialActivityPersistence persistence) {
-	}
-
 	private static SocialActivityPersistence _persistence;
 }

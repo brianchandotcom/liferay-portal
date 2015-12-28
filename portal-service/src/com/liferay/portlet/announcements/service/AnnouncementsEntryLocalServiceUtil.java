@@ -469,12 +469,5 @@ public class AnnouncementsEntryLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AnnouncementsEntryLocalService service) {
-	}
-
 	private static AnnouncementsEntryLocalService _service;
 }

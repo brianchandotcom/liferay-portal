@@ -795,14 +795,6 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 		return _mdrRuleGroup.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public MDRRuleGroup getWrappedMDRRuleGroup() {
-		return _mdrRuleGroup;
-	}
-
 	@Override
 	public MDRRuleGroup getWrappedModel() {
 		return _mdrRuleGroup;

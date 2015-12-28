@@ -502,23 +502,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		return _subscriptionLocalService.updateSubscription(subscription);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SubscriptionLocalService getWrappedSubscriptionLocalService() {
-		return _subscriptionLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
 	@Override
 	public SubscriptionLocalService getWrappedService() {
 		return _subscriptionLocalService;

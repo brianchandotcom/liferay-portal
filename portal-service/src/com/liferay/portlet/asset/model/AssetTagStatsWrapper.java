@@ -352,14 +352,6 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public AssetTagStats getWrappedAssetTagStats() {
-		return _assetTagStats;
-	}
-
 	@Override
 	public AssetTagStats getWrappedModel() {
 		return _assetTagStats;

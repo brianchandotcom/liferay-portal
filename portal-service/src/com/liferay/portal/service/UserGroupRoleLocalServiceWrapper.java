@@ -396,23 +396,6 @@ public class UserGroupRoleLocalServiceWrapper
 		return _userGroupRoleLocalService.updateUserGroupRole(userGroupRole);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public UserGroupRoleLocalService getWrappedUserGroupRoleLocalService() {
-		return _userGroupRoleLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedUserGroupRoleLocalService(
-		UserGroupRoleLocalService userGroupRoleLocalService) {
-		_userGroupRoleLocalService = userGroupRoleLocalService;
-	}
-
 	@Override
 	public UserGroupRoleLocalService getWrappedService() {
 		return _userGroupRoleLocalService;

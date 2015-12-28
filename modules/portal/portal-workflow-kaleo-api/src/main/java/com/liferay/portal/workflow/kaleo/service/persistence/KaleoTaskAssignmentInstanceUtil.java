@@ -1524,14 +1524,6 @@ public class KaleoTaskAssignmentInstanceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(
-		KaleoTaskAssignmentInstancePersistence persistence) {
-	}
-
 	private static ServiceTracker<KaleoTaskAssignmentInstancePersistence, KaleoTaskAssignmentInstancePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(KaleoTaskAssignmentInstancePersistence.class);
 }

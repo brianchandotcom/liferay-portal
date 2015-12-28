@@ -469,12 +469,5 @@ public class CompanyServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(CompanyService service) {
-	}
-
 	private static CompanyService _service;
 }

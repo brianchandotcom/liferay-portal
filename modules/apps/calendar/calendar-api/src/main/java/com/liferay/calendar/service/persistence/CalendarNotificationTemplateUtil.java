@@ -938,14 +938,6 @@ public class CalendarNotificationTemplateUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(
-		CalendarNotificationTemplatePersistence persistence) {
-	}
-
 	private static ServiceTracker<CalendarNotificationTemplatePersistence, CalendarNotificationTemplatePersistence> _serviceTracker =
 		ServiceTrackerFactory.open(CalendarNotificationTemplatePersistence.class);
 }

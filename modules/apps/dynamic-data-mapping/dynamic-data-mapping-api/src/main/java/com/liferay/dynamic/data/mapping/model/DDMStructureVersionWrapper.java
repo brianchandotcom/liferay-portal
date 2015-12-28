@@ -1096,14 +1096,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DDMStructureVersion getWrappedDDMStructureVersion() {
-		return _ddmStructureVersion;
-	}
-
 	@Override
 	public DDMStructureVersion getWrappedModel() {
 		return _ddmStructureVersion;

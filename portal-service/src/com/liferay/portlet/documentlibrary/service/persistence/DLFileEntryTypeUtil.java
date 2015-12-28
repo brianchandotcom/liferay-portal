@@ -1303,12 +1303,5 @@ public class DLFileEntryTypeUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(DLFileEntryTypePersistence persistence) {
-	}
-
 	private static DLFileEntryTypePersistence _persistence;
 }

@@ -286,23 +286,6 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 		return _dlSyncEventLocalService.updateDLSyncEvent(dlSyncEvent);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLSyncEventLocalService getWrappedDLSyncEventLocalService() {
-		return _dlSyncEventLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLSyncEventLocalService(
-		DLSyncEventLocalService dlSyncEventLocalService) {
-		_dlSyncEventLocalService = dlSyncEventLocalService;
-	}
-
 	@Override
 	public DLSyncEventLocalService getWrappedService() {
 		return _dlSyncEventLocalService;

@@ -1177,13 +1177,6 @@ public class KaleoInstanceTokenUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(KaleoInstanceTokenPersistence persistence) {
-	}
-
 	private static ServiceTracker<KaleoInstanceTokenPersistence, KaleoInstanceTokenPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(KaleoInstanceTokenPersistence.class);
 }

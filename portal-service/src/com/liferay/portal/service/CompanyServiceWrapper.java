@@ -459,22 +459,6 @@ public class CompanyServiceWrapper implements CompanyService,
 			sendPassword, strangers, strangersWithMx, strangersVerify, siteLogo);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CompanyService getWrappedCompanyService() {
-		return _companyService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCompanyService(CompanyService companyService) {
-		_companyService = companyService;
-	}
-
 	@Override
 	public CompanyService getWrappedService() {
 		return _companyService;

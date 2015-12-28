@@ -1532,12 +1532,5 @@ public class LayoutServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(LayoutService service) {
-	}
-
 	private static LayoutService _service;
 }

@@ -49,22 +49,6 @@ public class PollsVoteServiceWrapper implements PollsVoteService,
 		return _pollsVoteService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PollsVoteService getWrappedPollsVoteService() {
-		return _pollsVoteService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPollsVoteService(PollsVoteService pollsVoteService) {
-		_pollsVoteService = pollsVoteService;
-	}
-
 	@Override
 	public PollsVoteService getWrappedService() {
 		return _pollsVoteService;

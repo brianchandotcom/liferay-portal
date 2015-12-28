@@ -180,22 +180,6 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 			width, priority, sync);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AssetEntryService getWrappedAssetEntryService() {
-		return _assetEntryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAssetEntryService(AssetEntryService assetEntryService) {
-		_assetEntryService = assetEntryService;
-	}
-
 	@Override
 	public AssetEntryService getWrappedService() {
 		return _assetEntryService;

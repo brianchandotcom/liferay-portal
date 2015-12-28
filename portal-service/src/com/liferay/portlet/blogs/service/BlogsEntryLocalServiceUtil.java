@@ -949,12 +949,5 @@ public class BlogsEntryLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(BlogsEntryLocalService service) {
-	}
-
 	private static BlogsEntryLocalService _service;
 }

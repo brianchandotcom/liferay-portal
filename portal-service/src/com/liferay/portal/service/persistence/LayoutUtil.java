@@ -2505,12 +2505,5 @@ public class LayoutUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(LayoutPersistence persistence) {
-	}
-
 	private static LayoutPersistence _persistence;
 }

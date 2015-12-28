@@ -1304,12 +1304,5 @@ public class UserServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(UserService service) {
-	}
-
 	private static UserService _service;
 }

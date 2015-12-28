@@ -387,23 +387,6 @@ public class RepositoryEntryLocalServiceWrapper
 			mappedId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public RepositoryEntryLocalService getWrappedRepositoryEntryLocalService() {
-		return _repositoryEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedRepositoryEntryLocalService(
-		RepositoryEntryLocalService repositoryEntryLocalService) {
-		_repositoryEntryLocalService = repositoryEntryLocalService;
-	}
-
 	@Override
 	public RepositoryEntryLocalService getWrappedService() {
 		return _repositoryEntryLocalService;

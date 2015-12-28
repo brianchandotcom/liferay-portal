@@ -535,14 +535,6 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public SocialActivitySet getWrappedSocialActivitySet() {
-		return _socialActivitySet;
-	}
-
 	@Override
 	public SocialActivitySet getWrappedModel() {
 		return _socialActivitySet;

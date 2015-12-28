@@ -569,14 +569,6 @@ public class MBDiscussionWrapper implements MBDiscussion,
 		return _mbDiscussion.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public MBDiscussion getWrappedMBDiscussion() {
-		return _mbDiscussion;
-	}
-
 	@Override
 	public MBDiscussion getWrappedModel() {
 		return _mbDiscussion;

@@ -3303,22 +3303,6 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		_userLocalService.verifyEmailAddress(ticketKey);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public UserLocalService getWrappedUserLocalService() {
-		return _userLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	@Override
 	public UserLocalService getWrappedService() {
 		return _userLocalService;

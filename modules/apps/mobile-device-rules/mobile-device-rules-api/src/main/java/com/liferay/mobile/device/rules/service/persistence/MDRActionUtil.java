@@ -826,13 +826,6 @@ public class MDRActionUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(MDRActionPersistence persistence) {
-	}
-
 	private static ServiceTracker<MDRActionPersistence, MDRActionPersistence> _serviceTracker =
 		ServiceTrackerFactory.open(MDRActionPersistence.class);
 }

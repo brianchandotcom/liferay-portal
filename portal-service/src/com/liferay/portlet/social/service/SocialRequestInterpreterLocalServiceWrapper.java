@@ -137,23 +137,6 @@ public class SocialRequestInterpreterLocalServiceWrapper
 			themeDisplay);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialRequestInterpreterLocalService getWrappedSocialRequestInterpreterLocalService() {
-		return _socialRequestInterpreterLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialRequestInterpreterLocalService(
-		SocialRequestInterpreterLocalService socialRequestInterpreterLocalService) {
-		_socialRequestInterpreterLocalService = socialRequestInterpreterLocalService;
-	}
-
 	@Override
 	public SocialRequestInterpreterLocalService getWrappedService() {
 		return _socialRequestInterpreterLocalService;

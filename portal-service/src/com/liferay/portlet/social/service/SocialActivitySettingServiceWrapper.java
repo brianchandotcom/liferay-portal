@@ -101,23 +101,6 @@ public class SocialActivitySettingServiceWrapper
 			className, activityType, activityCounterDefinitions);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public SocialActivitySettingService getWrappedSocialActivitySettingService() {
-		return _socialActivitySettingService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedSocialActivitySettingService(
-		SocialActivitySettingService socialActivitySettingService) {
-		_socialActivitySettingService = socialActivitySettingService;
-	}
-
 	@Override
 	public SocialActivitySettingService getWrappedService() {
 		return _socialActivitySettingService;

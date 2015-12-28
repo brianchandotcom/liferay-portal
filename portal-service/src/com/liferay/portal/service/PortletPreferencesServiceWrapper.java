@@ -85,23 +85,6 @@ public class PortletPreferencesServiceWrapper
 			name, portletId, preferences);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PortletPreferencesService getWrappedPortletPreferencesService() {
-		return _portletPreferencesService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPortletPreferencesService(
-		PortletPreferencesService portletPreferencesService) {
-		_portletPreferencesService = portletPreferencesService;
-	}
-
 	@Override
 	public PortletPreferencesService getWrappedService() {
 		return _portletPreferencesService;

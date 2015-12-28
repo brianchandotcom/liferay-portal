@@ -1143,14 +1143,6 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		return _dlFileVersion.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public DLFileVersion getWrappedDLFileVersion() {
-		return _dlFileVersion;
-	}
-
 	@Override
 	public DLFileVersion getWrappedModel() {
 		return _dlFileVersion;

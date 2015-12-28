@@ -408,14 +408,6 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ResourceTypePermission getWrappedResourceTypePermission() {
-		return _resourceTypePermission;
-	}
-
 	@Override
 	public ResourceTypePermission getWrappedModel() {
 		return _resourceTypePermission;

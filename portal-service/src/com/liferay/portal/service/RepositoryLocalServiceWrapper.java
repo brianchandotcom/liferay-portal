@@ -426,23 +426,6 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 			typeSettingsProperties);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public RepositoryLocalService getWrappedRepositoryLocalService() {
-		return _repositoryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedRepositoryLocalService(
-		RepositoryLocalService repositoryLocalService) {
-		_repositoryLocalService = repositoryLocalService;
-	}
-
 	@Override
 	public RepositoryLocalService getWrappedService() {
 		return _repositoryLocalService;

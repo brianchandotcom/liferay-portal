@@ -129,22 +129,6 @@ public class TeamServiceWrapper implements TeamService,
 		return _teamService.updateTeam(teamId, name, description);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public TeamService getWrappedTeamService() {
-		return _teamService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedTeamService(TeamService teamService) {
-		_teamService = teamService;
-	}
-
 	@Override
 	public TeamService getWrappedService() {
 		return _teamService;

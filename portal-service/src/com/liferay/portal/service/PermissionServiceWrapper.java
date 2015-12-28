@@ -68,22 +68,6 @@ public class PermissionServiceWrapper implements PermissionService,
 		return _permissionService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PermissionService getWrappedPermissionService() {
-		return _permissionService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPermissionService(PermissionService permissionService) {
-		_permissionService = permissionService;
-	}
-
 	@Override
 	public PermissionService getWrappedService() {
 		return _permissionService;

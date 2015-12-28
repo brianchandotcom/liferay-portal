@@ -1771,14 +1771,6 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public JournalArticle getWrappedJournalArticle() {
-		return _journalArticle;
-	}
-
 	@Override
 	public JournalArticle getWrappedModel() {
 		return _journalArticle;

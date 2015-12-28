@@ -432,23 +432,6 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		return _dlFileEntryService.verifyFileEntryLock(fileEntryId, lockUuid);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public DLFileEntryService getWrappedDLFileEntryService() {
-		return _dlFileEntryService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedDLFileEntryService(
-		DLFileEntryService dlFileEntryService) {
-		_dlFileEntryService = dlFileEntryService;
-	}
-
 	@Override
 	public DLFileEntryService getWrappedService() {
 		return _dlFileEntryService;

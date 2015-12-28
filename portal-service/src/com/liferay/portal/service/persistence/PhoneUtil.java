@@ -1482,12 +1482,5 @@ public class PhoneUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(PhonePersistence persistence) {
-	}
-
 	private static PhonePersistence _persistence;
 }

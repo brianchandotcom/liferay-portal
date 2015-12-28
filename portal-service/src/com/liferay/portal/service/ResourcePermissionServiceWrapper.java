@@ -203,23 +203,6 @@ public class ResourcePermissionServiceWrapper
 			companyId, name, primKey, roleIdsToActionIds);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ResourcePermissionService getWrappedResourcePermissionService() {
-		return _resourcePermissionService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedResourcePermissionService(
-		ResourcePermissionService resourcePermissionService) {
-		_resourcePermissionService = resourcePermissionService;
-	}
-
 	@Override
 	public ResourcePermissionService getWrappedService() {
 		return _resourcePermissionService;

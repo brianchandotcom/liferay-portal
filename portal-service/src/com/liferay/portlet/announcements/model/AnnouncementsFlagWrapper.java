@@ -386,14 +386,6 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public AnnouncementsFlag getWrappedAnnouncementsFlag() {
-		return _announcementsFlag;
-	}
-
 	@Override
 	public AnnouncementsFlag getWrappedModel() {
 		return _announcementsFlag;

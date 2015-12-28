@@ -342,13 +342,6 @@ public class AppLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AppLocalService service) {
-	}
-
 	private static ServiceTracker<AppLocalService, AppLocalService> _serviceTracker =
 		ServiceTrackerFactory.open(AppLocalService.class);
 }

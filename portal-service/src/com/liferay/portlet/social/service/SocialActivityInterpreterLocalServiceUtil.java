@@ -137,12 +137,5 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(SocialActivityInterpreterLocalService service) {
-	}
-
 	private static SocialActivityInterpreterLocalService _service;
 }

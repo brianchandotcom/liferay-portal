@@ -377,12 +377,5 @@ public class DLFileVersionLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(DLFileVersionLocalService service) {
-	}
-
 	private static DLFileVersionLocalService _service;
 }

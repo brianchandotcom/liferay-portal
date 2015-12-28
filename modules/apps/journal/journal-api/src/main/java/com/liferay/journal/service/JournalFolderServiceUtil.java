@@ -258,13 +258,6 @@ public class JournalFolderServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(JournalFolderService service) {
-	}
-
 	private static ServiceTracker<JournalFolderService, JournalFolderService> _serviceTracker =
 		ServiceTrackerFactory.open(JournalFolderService.class);
 }

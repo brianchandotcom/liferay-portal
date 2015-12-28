@@ -508,12 +508,5 @@ public class ServiceComponentUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ServiceComponentPersistence persistence) {
-	}
-
 	private static ServiceComponentPersistence _persistence;
 }

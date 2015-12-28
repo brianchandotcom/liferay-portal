@@ -333,23 +333,6 @@ public class PasswordPolicyRelLocalServiceWrapper
 		return _passwordPolicyRelLocalService.updatePasswordPolicyRel(passwordPolicyRel);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public PasswordPolicyRelLocalService getWrappedPasswordPolicyRelLocalService() {
-		return _passwordPolicyRelLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedPasswordPolicyRelLocalService(
-		PasswordPolicyRelLocalService passwordPolicyRelLocalService) {
-		_passwordPolicyRelLocalService = passwordPolicyRelLocalService;
-	}
-
 	@Override
 	public PasswordPolicyRelLocalService getWrappedService() {
 		return _passwordPolicyRelLocalService;

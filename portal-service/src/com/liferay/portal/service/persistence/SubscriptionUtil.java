@@ -1151,12 +1151,5 @@ public class SubscriptionUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(SubscriptionPersistence persistence) {
-	}
-
 	private static SubscriptionPersistence _persistence;
 }

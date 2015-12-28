@@ -1264,14 +1264,6 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		return _passwordPolicy.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public PasswordPolicy getWrappedPasswordPolicy() {
-		return _passwordPolicy;
-	}
-
 	@Override
 	public PasswordPolicy getWrappedModel() {
 		return _passwordPolicy;

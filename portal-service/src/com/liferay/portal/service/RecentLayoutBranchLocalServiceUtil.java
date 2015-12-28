@@ -284,12 +284,5 @@ public class RecentLayoutBranchLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(RecentLayoutBranchLocalService service) {
-	}
-
 	private static RecentLayoutBranchLocalService _service;
 }

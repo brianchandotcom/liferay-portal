@@ -399,12 +399,5 @@ public class LayoutSetPrototypeLocalServiceUtil {
 		return _service;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(LayoutSetPrototypeLocalService service) {
-	}
-
 	private static LayoutSetPrototypeLocalService _service;
 }

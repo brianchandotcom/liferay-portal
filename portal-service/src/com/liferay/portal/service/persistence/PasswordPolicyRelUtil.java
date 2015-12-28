@@ -503,12 +503,5 @@ public class PasswordPolicyRelUtil {
 		return _persistence;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(PasswordPolicyRelPersistence persistence) {
-	}
-
 	private static PasswordPolicyRelPersistence _persistence;
 }

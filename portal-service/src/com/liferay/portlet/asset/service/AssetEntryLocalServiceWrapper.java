@@ -944,23 +944,6 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			categoryIds, tagNames);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AssetEntryLocalService getWrappedAssetEntryLocalService() {
-		return _assetEntryLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
 	@Override
 	public AssetEntryLocalService getWrappedService() {
 		return _assetEntryLocalService;

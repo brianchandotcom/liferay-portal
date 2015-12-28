@@ -21,15 +21,14 @@
 					<input class="hide toggle-switch" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
 
 					<span aria-hidden="true" class="toggle-switch-bar">
-						<span class="toggle-switch-handle">
-							<span class="toggle-switch-text">
-								{$label}
+						<span class="toggle-switch-handle"></span>
+					</span>
+					<span class="toggle-switch-text toggle-switch-text-right">
+						{$label}
 
-								{if $required}
-									<span class="icon-asterisk text-warning"></span>
-								{/if}
-							</span>
-						</span>
+						{if $required}
+							<span class="icon-asterisk text-warning"></span>
+						{/if}
 					</span>
 				</label>
 			</div>

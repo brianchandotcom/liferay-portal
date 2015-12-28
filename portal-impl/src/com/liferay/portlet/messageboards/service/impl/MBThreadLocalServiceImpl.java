@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -1153,6 +1154,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			message.setSubject(subject);
 		}
 
+		// Move the message's attachments to the new thread
+
+		moveAttachmentsFolders(message, thread, serviceContext);
+
 		message.setThreadId(thread.getThreadId());
 		message.setRootMessageId(thread.getRootMessageId());
 		message.setParentMessageId(0);
@@ -1298,6 +1303,31 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		mbThreadPersistence.update(thread);
 
 		return thread;
+	}
+
+	protected void moveAttachmentsFolders(
+			MBMessage message, MBThread newThread,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		long folderId = message.getAttachmentsFolderId();
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder newThreadFolder = newThread.addAttachmentsFolder();
+
+			long newThreadFolderId = newThreadFolder.getFolderId();
+
+			PortletFileRepositoryUtil.movePortletFolder(
+				message.getUserId(), folderId, newThreadFolderId,
+				serviceContext);
+		}
+
+		List<MBMessage> childMessages = mbMessagePersistence.findByT_P(
+			message.getThreadId(), message.getMessageId());
+
+		for (MBMessage childMessage : childMessages) {
+			moveAttachmentsFolders(childMessage, newThread, serviceContext);
+		}
 	}
 
 	protected void moveChildrenMessages(

@@ -308,7 +308,7 @@ YUI.add(
 					handlePauseBtn: function(event) {
 						var instance = this;
 
-						instance._togglePauseTest()
+						instance._togglePauseTest();
 					},
 
 					handleToggleCollapseBtn: function(event, inSidebar) {

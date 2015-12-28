@@ -25,7 +25,8 @@ $off-white-subtle: #FBFBFB;
 
 $failed-color: #FF8787;
 $passed-color: #00FEA3;
-$pending-color: #FFFA89;
+$pending-color: #DDE1E3;
+$warning-color: #FFB879;
 
 /* ---------- Syntax highlight variables ---------- */
 
@@ -123,6 +124,5 @@ $command-log-expand-toggle-color: $neutral;
 $button-border-color: $neutral-med;
 $button-toggle-bg-color: $neutral-light;
 
-$button-error-border-color: $failed-color;
-$button-error-color: $failed-color;
 $button-error-toggle-bg-color: lighten($failed-color, 16);
+$button-warning-toggle-bg-color: lighten($warning-color, 16);

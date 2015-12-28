@@ -51,16 +51,25 @@
 	strong {
 		font-weight: inherit;
 
-		> .status {
-			border-color: $failed-color;
-			color: $failed-color;
-		}
-
 		em {
 			font-family: $monospaced-font;
 			font-size: 12px;
 			font-style: normal;
 			font-weight: 300;
+		}
+	}
+
+	.summary-failure {
+		strong > .status {
+			border-color: $failed-color;
+			color: $failed-color;
+		}
+	}
+
+	.summary-warning {
+		strong > .status {
+			border-color: $warning-color;
+			color: $warning-color;
 		}
 	}
 }

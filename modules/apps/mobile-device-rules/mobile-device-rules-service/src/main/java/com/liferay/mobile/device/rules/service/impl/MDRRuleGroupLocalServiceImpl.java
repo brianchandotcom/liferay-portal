@@ -226,24 +226,6 @@ public class MDRRuleGroupLocalServiceImpl
 			groupId, name, params, andOperator, start, end);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
-	 *             String, LinkedHashMap, boolean, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<MDRRuleGroup> searchByKeywords(
-		long groupId, String keywords, boolean andOperator, int start,
-		int end) {
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("includeGlobalScope", Boolean.TRUE);
-
-		return mdrRuleGroupFinder.findByKeywords(
-			groupId, keywords, params, start, end);
-	}
-
 	@Override
 	public List<MDRRuleGroup> searchByKeywords(
 		long groupId, String keywords, LinkedHashMap<String, Object> params,

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOADING_ANIMATION</td>
+	<td>//div[@class='loading-animation']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -48,6 +53,16 @@
 <tr>
 	<td>ADD_PORTLET_LINK</td>
 	<td>//span[contains(@data-search,'-${portletName}') and contains(@class,'add-content-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_PANEL_HEADING_COLLAPSED</td>
+	<td>//div[@aria-expanded='false' and contains(.,'${key_panelHeading}')]</td>]
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_PANEL_HEADING_EXPANDED</td>
+	<td>//div[@aria-expanded='true' and contains(.,'${key_panelHeading}')]</td>
 	<td></td>
 </tr>
 </tbody>

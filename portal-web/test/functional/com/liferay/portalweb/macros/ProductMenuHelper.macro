@@ -96,8 +96,8 @@
 	<command name="openProductMenu">
 		<if>
 			<and>
-				<condition function="IsElementPresent" locator1="DockbarAddpanelcontent#CONTENT_TAB" />
-				<condition function="IsVisible" locator1="DockbarAddpanelcontent#CONTENT_TAB" />
+				<condition function="IsElementPresent" locator1="Button#CLOSE_PANEL" />
+				<condition function="IsVisible" locator1="Button#CLOSE_PANEL" />
 			</and>
 			<then>
 				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />

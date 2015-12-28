@@ -1,8 +1,12 @@
 <definition>
 	<command name="addNewPG">
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" value1="Add" />
+		<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
 
-		<execute function="AssertClick#assertTextClickAtAddApplication" locator1="NavPill#CONTENT" value1="Content" />
+		<execute function="AssertElementNotPresent" locator1="ControlMenuAddPanel#LOADING_ANIMATION" />
+
+		<execute macro="Panel#expandSidebarPanel">
+			<var name="panelHeading" value="Content" />
+		</execute>
 
 		<var name="key_assetType" value="${assetType}" />
 

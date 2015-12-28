@@ -195,7 +195,7 @@
 </tr>
 <tr>
 	<td>CLOSE_PANEL</td>
-	<td>//button[contains(@id,'closePanelAdd')]</td>
+	<td>//a[contains(@id,'closePanelAdd')]</td>
 	<td></td>
 </tr>
 <tr>

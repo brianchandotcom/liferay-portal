@@ -45,8 +45,6 @@
 					</h4>
 
 					<%
-					String[] tabs1Names = new String[0];
-
 					boolean stateMaximized = ParamUtil.getBoolean(request, "stateMaximized");
 
 					LayoutTypeController layoutTypeController = layoutTypePortlet.getLayoutTypeController();
@@ -55,35 +53,46 @@
 
 					boolean hasAddContentPermission = hasAddApplicationsPermission && !group.isLayoutPrototype();
 
-					if (hasAddContentPermission) {
-						tabs1Names = ArrayUtil.append(tabs1Names, "content");
-					}
-
-					if (hasAddApplicationsPermission) {
-						tabs1Names = ArrayUtil.append(tabs1Names, "applications");
-					}
-
 					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelTab", "content"));
 					%>
 
-					<liferay-ui:tabs
-						names="<%= StringUtil.merge(tabs1Names) %>"
-						refresh="<%= false %>"
-						type="pills"
-						value="<%= selectedTab %>"
-					>
-						<c:if test="<%= hasAddContentPermission %>">
-							<liferay-ui:section>
-								<liferay-util:include page="/add_content.jsp" servletContext="<%= application %>" />
-							</liferay-ui:section>
+					<div aria-multiselectable="true" class="panel-group" id="<portlet:namespace />Accordion" role="tablist">
+						<c:if test="<%= hasAddApplicationsPermission %>">
+							<div class="panel">
+								<div class="panel-heading" id="<portlet:namespace />addApplicationHeading" role="tab">
+									<div class="panel-title">
+										<div aria-controls="#<portlet:namespace />addApplicationCollapse" aria-expanded="<%= selectedTab.equals("applications") %>" class="panel-toggler collapse-icon <%= selectedTab.equals("applications") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace />addApplicationCollapse" role="button">
+											<span><liferay-ui:message key="applications" /></span>
+										</div>
+									</div>
+								</div>
+
+								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addApplicationHeading" class="panel-collapse collapse <%= selectedTab.equals("applications") ? "in" : StringPool.BLANK %>" id="<portlet:namespace />addApplicationCollapse" role="tabpanel">
+									<div class="panel-body">
+										<liferay-util:include page="/add_application.jsp" servletContext="<%= application %>" />
+									</div>
+								</div>
+							</div>
 						</c:if>
 
-						<c:if test="<%= hasAddApplicationsPermission %>">
-							<liferay-ui:section>
-								<liferay-util:include page="/add_application.jsp" servletContext="<%= application %>" />
-							</liferay-ui:section>
+						<c:if test="<%= hasAddContentPermission %>">
+							<div class="panel">
+								<div class="panel-heading" id="<portlet:namespace />addContentHeading" role="tab">
+									<div class="panel-title">
+										<div aria-controls="#<portlet:namespace />addContentCollapse" aria-expanded="<%= selectedTab.equals("content") %>" class="panel-toggler collapse-icon <%= selectedTab.equals("content") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace />addContentCollapse" role="button">
+										<span><liferay-ui:message key="content" /></span>
+									</div>
+									</div>
+								</div>
+
+								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addContentHeading" class="panel-collapse collapse <%= selectedTab.equals("content") ? "in" : StringPool.BLANK %>" id="<portlet:namespace />addContentCollapse" role="tabpanel">
+									<div class="panel-body">
+										<liferay-util:include page="/add_content.jsp" servletContext="<%= application %>" />
+									</div>
+								</div>
+							</div>
 						</c:if>
-					</liferay-ui:tabs>
+					</div>
 
 					<span class="added-message hide" id="<portlet:namespace />addedMessage">
 						<span class="alert-success message">

@@ -14,4 +14,20 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="expandSidebarPanel">
+		<var name="key_panelHeading" value="${panelHeading}" />
+
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_PANEL_HEADING_COLLAPSED" />
+				<condition function="IsVisible" locator1="ControlMenuAddPanel#SIDEBAR_PANEL_HEADING_COLLAPSED" />
+			</and>
+			<then>
+				<execute function="AssertClick" locator1="ControlMenuAddPanel#SIDEBAR_PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
+
+				<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_PANEL_HEADING_EXPANDED" />
+			</then>
+		</if>
+	</command>
 </definition>

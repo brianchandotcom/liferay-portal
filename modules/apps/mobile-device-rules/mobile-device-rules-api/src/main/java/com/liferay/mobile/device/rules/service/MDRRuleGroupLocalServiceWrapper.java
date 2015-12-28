@@ -428,19 +428,6 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 			andOperator, start, end);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
-	String, LinkedHashMap, boolean, int, int)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
-		long groupId, java.lang.String keywords, boolean andOperator,
-		int start, int end) {
-		return _mdrRuleGroupLocalService.searchByKeywords(groupId, keywords,
-			andOperator, start, end);
-	}
-
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
 		long groupId, java.lang.String keywords,

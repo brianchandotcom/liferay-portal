@@ -689,6 +689,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBCATEGORY</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Subcategory')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIBE</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Subscribe')]</td>
 	<td></td>

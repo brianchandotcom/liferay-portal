@@ -64,7 +64,9 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORY" value1="${categoryName}" />
 
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORIES_ADD_SUBCATEGORY_BUTTON" value1="Add Subcategory" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#SUBCATEGORY" value1="Subcategory" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
@@ -78,7 +80,9 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORY" value1="${categoryName}" />
 
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORIES_ADD_SUBCATEGORY_BUTTON" value1="Add Subcategory" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#SUBCATEGORY" value1="Subcategory" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryNullName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
@@ -92,7 +96,9 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORIES_ADD_SUBCATEGORY_BUTTON" value1="Add Subcategory" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#SUBCATEGORY" value1="Subcategory" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryNullName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
@@ -106,7 +112,9 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORIES_ADD_SUBCATEGORY_BUTTON" value1="Add Subcategory" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#SUBCATEGORY" value1="Subcategory" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
@@ -120,7 +128,9 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC" value1="${categoryName}" />
 
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORIES_ADD_SUBCATEGORY_BUTTON" value1="Add Subcategory" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#SUBCATEGORY" value1="Subcategory" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />

@@ -38,6 +38,8 @@
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />
+
+		<execute function="Pause" locator1="1000" />
 	</command>
 
 	<command name="gotoHomeCP">

@@ -5,7 +5,9 @@
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#FOLDER" value1="Folder" />
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute function="Type" locator1="DocumentsAndMediaEditFolder#NAME_FIELD" value1="${dmFolderName}" />
 
@@ -26,7 +28,9 @@
 	<command name="addPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#FOLDER" value1="Folder" />
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute function="Type" locator1="DocumentsAndMediaEditFolder#NAME_FIELD" value1="${dmFolderName}" />
 		<execute function="Type" locator1="DocumentsAndMediaEditFolder#DESCRIPTION_FIELD" value1="${dmFolderDescription}" />
@@ -66,7 +70,9 @@
 	<command name="addPGViaMG">
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ADD_FOLDER" value1="Add Folder" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#ADD_FOLDER" value1="Add Folder" />
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${mgFolderName}" />
 
@@ -85,7 +91,9 @@
 	<command name="addSubfolderCP">
 		<execute function="Click#makeVisibleClickAt" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute function="Type" locator1="DocumentsAndMediaEditFolder#NAME_FIELD" value1="${dmSubFolderName}" />
 
@@ -120,7 +128,9 @@
 	<command name="addSubfolderPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="AssertClick" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute function="Type" locator1="DocumentsAndMediaEditFolder#NAME_FIELD" value1="${dmSubFolderName}" />
 
@@ -155,7 +165,9 @@
 	<command name="addSubfolderPGViaMG">
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ADD_SUBFOLDER" value1="Add Subfolder" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#ADD_SUBFOLDER" value1="Add Subfolder" />
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${mgSubfolderName}" />
 
@@ -227,7 +239,7 @@
 	<command name="deleteCP">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 
 		<if>
 			<isset var="recycleBinDisabled" />
@@ -260,8 +272,8 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName}" />
 
 		<execute function="MouseOver" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
-		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertElementPresent" locator1="MenuItem#EDIT" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -279,7 +291,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -324,7 +336,7 @@
 		<var name="key_dmFolderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${folderName}" />
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
@@ -340,7 +352,7 @@
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName1}" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName2}" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" value1="${dmFolderName2}" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" value1="${dmFolderName2}" />
 		<execute function="AssertElementPresent" locator1="MenuItem#MOVE" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
@@ -405,7 +417,7 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
@@ -418,7 +430,7 @@
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
 		<execute function="Check" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
@@ -525,7 +537,7 @@
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
 		<execute function="Check" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />

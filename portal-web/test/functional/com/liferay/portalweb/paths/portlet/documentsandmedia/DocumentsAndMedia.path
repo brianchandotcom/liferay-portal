@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>PORTLET_TITLE</td>
-	<td>//span[contains(@class,'portlet-title-text')]</td>
+	<td>//span[contains(@class,'header-toolbar-title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -173,7 +173,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS</td>
-	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//div[contains(@class,'list-group-item-field')]/div[contains(@class,'dropdown')]/a[contains(@class,'dropdown-toggle')]</td>
+	<td>//li[contains(.,'${key_dmDocumentTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -184,7 +184,7 @@
 <!--DESCRIPTIVE_LIST_FOLDER-->
 <tr>
 	<td>DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS</td>
-	<td>//li[contains(@data-title,'${key_dmFolderName}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//li[contains(.,'${key_dmFolderName}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

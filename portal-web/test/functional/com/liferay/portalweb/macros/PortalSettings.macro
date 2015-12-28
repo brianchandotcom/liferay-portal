@@ -14,16 +14,28 @@
 			<equals arg1="${enableAcrossSite}" arg2="true" />
 			<then>
 				<execute function="Check" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
+
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Content Sharing" />
+				</execute>
+
 				<execute function="AssertChecked" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${enableAcrossSite}" arg2="false" />
 				<then>
 					<execute function="Uncheck#clickAt" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
+
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute macro="Panel#expandPanel">
+						<var name="panelHeading" value="Content Sharing" />
+					</execute>
+
 					<execute function="AssertNotChecked" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
 				</then>
 			</elseif>
@@ -39,16 +51,28 @@
 			<equals arg1="${subSites}" arg2="enabledByDefault" />
 			<then>
 				<execute function="Select" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
+
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Content Sharing" />
+				</execute>
+
 				<execute function="AssertSelectedLabel" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
 			</then>
 			<elseif>
 				<equals arg1="${subSites}" arg2="disabledByDefault" />
 				<then>
 					<execute function="Select" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
+
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute macro="Panel#expandPanel">
+						<var name="panelHeading" value="Content Sharing" />
+					</execute>
+
 					<execute function="AssertSelectedLabel" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
 				</then>
 			</elseif>
@@ -56,8 +80,14 @@
 				<equals arg1="${subSites}" arg2="disabled" />
 				<then>
 					<execute function="Select" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled" />
+
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute macro="Panel#expandPanel">
+						<var name="panelHeading" value="Content Sharing" />
+					</execute>
+
 					<execute function="AssertSelectedLabel" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled" />
 				</then>
 			</elseif>
@@ -198,11 +228,20 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER" value1="Organization Sites" />
+
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="${orgName}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Users" />
+		</execute>
+
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="${orgName}" />
 	</command>
 
@@ -212,11 +251,20 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER" value1="Roles" />
+
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Users" />
+		</execute>
+
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="Type#clickAtSendKeys" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
 	</command>
 
@@ -226,11 +274,20 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER" value1="Sites" />
+
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="${siteName}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Users" />
+		</execute>
+
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="${siteName}" />
 	</command>
 
@@ -240,11 +297,19 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER" value1="User Groups" />
+
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Users" />
+		</execute>
+
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
 	</command>
 
@@ -313,11 +378,20 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER" value1="Email Addresses" />
+
 		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="${userEmailAddress}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Users" />
+		</execute>
+
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="${userEmailAddress}" />
 	</command>
 
@@ -327,11 +401,20 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER" value1="Screen Names" />
+
 		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Users" />
+		</execute>
+
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
 	</command>
 
@@ -511,6 +594,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="${orgName}" />
 	</command>
 

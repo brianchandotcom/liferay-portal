@@ -1062,8 +1062,6 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute function="Pause" locator1="1000" />
-
 		<execute macro="DMFolder#addSubfolderPG">
 			<var name="dmSubFolderDescription" value="DM Subfolder Description" />
 			<var name="dmSubFolderName" value="DM Subfolder Name" />
@@ -1076,6 +1074,8 @@
 		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="DMFolder#deletePG">
 			<var name="dmFolderName" value="DM Subfolder Name" />
@@ -1096,8 +1096,6 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute function="Pause" locator1="1000" />
-
 		<execute macro="DMFolder#addSubfolderPG">
 			<var name="dmSubFolderDescription" value="DM SubFolder Description" />
 			<var name="dmSubFolderName" value="DM SubFolder Name" />
@@ -1106,8 +1104,6 @@
 		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
-
-		<execute function="Pause" locator1="1000" />
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Image Description" />

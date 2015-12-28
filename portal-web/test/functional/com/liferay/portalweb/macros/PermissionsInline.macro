@@ -176,7 +176,7 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />

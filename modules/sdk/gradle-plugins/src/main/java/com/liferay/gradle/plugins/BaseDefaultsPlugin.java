@@ -27,7 +27,7 @@ public abstract class BaseDefaultsPlugin<T extends Plugin<Project>>
 
 	@Override
 	public void apply(final Project project) {
-		_withPlugin(
+		withPlugin(
 			project, getPluginClass(),
 			new Action<T>() {
 
@@ -46,10 +46,10 @@ public abstract class BaseDefaultsPlugin<T extends Plugin<Project>>
 	protected void withLiferayPlugin(
 		Project project, Action<LiferayPlugin> action) {
 
-		_withPlugin(project, LiferayPlugin.class, action);
+		withPlugin(project, LiferayPlugin.class, action);
 	}
 
-	private <P extends Plugin<Project>> void _withPlugin(
+	protected <P extends Plugin<Project>> void withPlugin(
 		Project project, Class<P> pluginClass, Action<P> action) {
 
 		PluginContainer pluginContainer = project.getPlugins();

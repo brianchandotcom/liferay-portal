@@ -17,23 +17,11 @@ AUI.add(
 
 		var STR_CODE = 'code';
 
-		var STR_DATA_CURRENT_THEME = 'data-currenttheme';
-
 		var STR_DOT = '.';
 
 		var STR_THEMES = 'themes';
 
-		var STR_TOOLBAR = 'toolbar';
-
 		var TPL_CODE_CONTAINER = '<div class="{cssClass}"></div>';
-
-		var TPL_THEME_BUTTON = '<li data-action="{action}">' +
-				'<button type="button" class="btn btn-default btn-lg">' +
-					'<i class="{iconCssClass}"></i>' +
-				'</button>' +
-			'</li>';
-
-		var TPL_TOOLBAR = '<ul class="{cssClass}">{buttons}</ul>';
 
 		var LiferaySourceEditor = A.Component.create(
 			{
@@ -116,12 +104,6 @@ AUI.add(
 						aceEditor.selection.on(STR_CHANGE_CURSOR, updateActiveLineFn);
 						aceEditor.session.on(STR_CHANGE_FOLD, updateActiveLineFn);
 						aceEditor.session.on(STR_CHANGE, A.bind('_notifyEditorChange', instance));
-
-						var toolbar = instance.get(STR_BOUNDING_BOX).one(STR_DOT + instance.getClassName(STR_TOOLBAR));
-
-						instance._eventHandles = [
-							toolbar.delegate('click', A.bind('_onToolbarClick', instance), 'li[data-action]')
-						];
 					},
 
 					destructor: function() {
@@ -155,20 +137,6 @@ AUI.add(
 								);
 
 								boundingBox.append(codeContainer);
-							}
-
-							var toolbarContainer = boundingBox.one(STR_DOT + instance.getClassName(STR_TOOLBAR));
-
-							if (!toolbarContainer) {
-								boundingBox.append(
-									Lang.sub(
-										TPL_TOOLBAR,
-										{
-											buttons: instance._getButtonsMarkup(),
-											cssClass: instance.getClassName(STR_TOOLBAR)
-										}
-									)
-								);
 							}
 
 							instance.editor = ace.edit(codeContainer.getDOM());
@@ -211,26 +179,6 @@ AUI.add(
 						);
 					},
 
-					_getButtonsMarkup: function() {
-						var instance = this;
-
-						var toolbarButtons = '';
-
-						var themes = instance.get(STR_THEMES);
-
-						if (themes.length > 1) {
-							toolbarButtons += Lang.sub(
-								TPL_THEME_BUTTON,
-								{
-									action: STR_THEMES,
-									iconCssClass: themes[1].iconCssClass || 'icon-adjust'
-								}
-							);
-						}
-
-						return toolbarButtons;
-					},
-
 					_highlightActiveGutterLine: function(line) {
 						var instance = this;
 
@@ -265,18 +213,6 @@ AUI.add(
 								newVal: instance.get('value')
 							}
 						);
-					},
-
-					_onToolbarClick: function(event) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						var action = currentTarget.attr('data-action');
-
-						if (action === STR_THEMES) {
-							instance.switchTheme(currentTarget);
-						}
 					},
 
 					_updateActiveLine: function() {

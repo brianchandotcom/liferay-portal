@@ -1,28 +1,10 @@
 .lfr-source-editor {
 	border: solid 0 transparent;
 	border-bottom-width: 2px;
-	padding-right: 30px;
 	position: relative;
 
 	.ace_editor {
 		height: 100%;
-	}
-
-	.lfr-source-editor-toolbar {
-		padding: 0;
-		position: absolute;
-		right: 0;
-		text-align: center;
-		top: 0;
-		width: 30px;
-
-		li {
-			list-style-type: none;
-
-			.btn {
-				padding: 0 5px;
-			}
-		}
 	}
 }
 

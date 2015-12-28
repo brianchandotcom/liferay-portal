@@ -302,6 +302,17 @@
 	<td>//div[@class='entry-tags']//span[contains(@class,'tag') and contains(.,'Tags: ${key_tagText}')]</td>
 	<td></td>
 </tr>
+<!--REPEAT_SUMMARY-->
+<tr>
+	<td>REPEAT_OCCURRENCE_SUMMARY</td>
+	<td>//dl[contains(@class,'property-list')]/dd[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_EVENT_DESCRIPTION</td>
+	<td>//p[contains(.,'${key_calendarEventDescription}')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

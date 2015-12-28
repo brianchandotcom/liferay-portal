@@ -815,6 +815,13 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+
+		<execute macro="CalendarEvent#viewRepeatingEventViaViewDetails">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Daily" />
+			<var name="numberOfOccurrences" value="1" />
+		</execute>
 	</command>
 
 	<command name="AddCalendarEventRepeatingCommentToCurrentSiteCalendars" priority="3">
@@ -969,6 +976,13 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+
+		<execute macro="CalendarEvent#viewRepeatingEventViaViewDetails">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Weekly" />
+			<var name="numberOfOccurrences" value="2" />
+		</execute>
 	</command>
 
 	<command name="AddCalendarEventRepeatingWithEndDateBeforeStartDate" priority="3">
@@ -1214,6 +1228,13 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+
+		<execute macro="CalendarEvent#viewRepeatingEventViaViewDetails">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="frequency" value="Yearly" />
+			<var name="yearlyRecurrenceSummary" value="Yearly, on the Third Sunday of February" />
+		</execute>
 
 		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
 			<var name="deleteOptionSet" value="All Events in the Series" />

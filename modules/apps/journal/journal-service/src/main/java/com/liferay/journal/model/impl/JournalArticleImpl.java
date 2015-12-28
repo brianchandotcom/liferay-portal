@@ -157,8 +157,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 		Set<String> availableLanguageIds = new TreeSet<>();
 
-		for (int i = 0; i < availableLanguageIdsArray.length; i++) {
-			availableLanguageIds.add(availableLanguageIdsArray[i]);
+		for (String availableLanguageId : availableLanguageIdsArray) {
+			availableLanguageIds.add(availableLanguageId);
 		}
 
 		Document document = getDocument();

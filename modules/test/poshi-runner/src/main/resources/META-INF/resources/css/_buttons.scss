@@ -4,7 +4,7 @@
 	font-family: 'FontAwesome' !important;
 }
 
-.xml-log, .sidebar-btn-container {
+.xml-log, .sidebar-btn-container, .sidebar-toolbar {
 	.btn {
 		background-color: transparentize($off-white, 0.84);
 		border: 1px solid $button-border-color;
@@ -50,6 +50,16 @@
 				transform: rotate(0);
 			}
 		}
+	}
+
+	.btn-label {
+		display: inline-block;
+		font-family: $general-font;
+		font-size: 15px;
+		font-weight: 100;
+		line-height: 0.6em;
+		text-align: center;
+		text-transform: lowercase;
 	}
 }
 
@@ -126,6 +136,71 @@
 
 .command-logger .btn.btn-jump-to-error {
 	display: block;
+}
+
+.sidebar-toolbar {
+	.btn {
+		font-size: 11px;
+		height: 45px;
+		line-height: 1em;
+		margin: 17px 15px;
+		width: 150px;
+	}
+
+	.btn-pause {
+		position: relative;
+
+		.btn-label {
+			&.pause {
+				opacity: 1;
+				height: auto;
+				animation: fadeIn 0.15s ease-in both;
+				transition: opacity 0s, height 0s;
+
+
+				&:after {
+					margin-left: 14px;
+					content: '\f04c';
+				}
+			}
+
+			&.continue {
+				opacity: 0;
+				height: 0;
+				animation: fadeOut 0.15s ease-in both;
+				transition: opacity 0s 0.15s, height 0s 0.15s;
+			}
+
+			&:after {
+				font-family: 'FontAwesome';
+			}
+		}
+
+		&.toggle {
+			background-color: transparentize($off-white, 0.84);
+
+			.btn-label {
+				&.pause {
+					animation: fadeOut 0.15s ease-in both;
+					height: 0;
+					opacity: 0;
+					transition: height 0s 0.15s, opacity 0s 0.15s;
+				}
+
+				&.continue {
+					opacity: 1;
+					height: auto;
+					animation: fadeIn 0.15s ease-in both;
+					transition: height 0s, opacity 0s;
+
+					&:after {
+						margin-left: 14px;
+						content: '\f04b';
+					}
+				}
+			}
+		}
+	}
 }
 
 /* ---------- Button icons ---------- */

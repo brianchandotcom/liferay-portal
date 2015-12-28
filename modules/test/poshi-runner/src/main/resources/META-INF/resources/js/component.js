@@ -877,16 +877,11 @@ YUI.add(
 
 						instance._transitionCommandLog(commandLog);
 
-						if (commandLog.hasClass(CSS_RUNNING)) {
-							instance.set(STR_RUNNING, true);
+						var running = commandLog.hasClass(CSS_RUNNING);
 
-							instance.get(STR_CONTENT_BOX).addClass(CSS_RUNNING);
-						}
-						else {
-							instance.set(STR_RUNNING, false);
+						instance.set(STR_RUNNING, running);
 
-							instance.get(STR_CONTENT_BOX).removeClass(CSS_RUNNING);
-						}
+						instance.get(STR_CONTENT_BOX).toggleClass(CSS_RUNNING, running);
 
 						if (failNodes.size() > 0) {
 							failNodes.each(instance._displayNode, instance);

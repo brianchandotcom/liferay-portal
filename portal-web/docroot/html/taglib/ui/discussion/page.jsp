@@ -237,7 +237,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 						var randomNamespaceNodes = AUI.$('input[id^="<%= namespace %>randomNamespace"]');
 
 						randomNamespaceNodes.each(
-							function(index, item) {
+							function(item) {
 								var randomId = item.value;
 
 								var currentMessageSelector = '#' + randomId + 'message_' + response.commentId;

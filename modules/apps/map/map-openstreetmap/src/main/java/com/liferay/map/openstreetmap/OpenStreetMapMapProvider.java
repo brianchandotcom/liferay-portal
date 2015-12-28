@@ -63,7 +63,7 @@ public class OpenStreetMapMapProvider extends BaseJSPMapProvider {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.map.open.street.map.web)",
+		target = "(osgi.web.symbolicname=com.liferay.map.openstreetmap)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

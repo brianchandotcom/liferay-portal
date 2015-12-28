@@ -20,7 +20,6 @@ import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerExtension;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.patcher.PatchTask;
@@ -132,7 +131,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		applyConfigScripts(project);
 
-		configureJSTranspiler(project);
 		configureTestIntegrationTomcat(project, liferayExtension);
 
 		configureTaskClean(project);
@@ -377,6 +375,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(
 			project, JSModuleConfigGeneratorDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);
+		GradleUtil.applyPlugin(project, JSTranspilerDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
@@ -517,25 +516,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project.getConfigurations();
 
 		configurationContainer.all(action);
-	}
-
-	protected void configureJSTranspiler(Project project) {
-		JSTranspilerExtension jsTranspilerExtension = GradleUtil.getExtension(
-			project, JSTranspilerExtension.class);
-
-		String babelVersion = GradleUtil.getProperty(
-			project, "nodejs.babel.version", (String)null);
-
-		if (Validator.isNotNull(babelVersion)) {
-			jsTranspilerExtension.setBabelVersion(babelVersion);
-		}
-
-		String lfrAmdLoaderVersion = GradleUtil.getProperty(
-			project, "nodejs.lfr.amd.loader.version", (String)null);
-
-		if (Validator.isNotNull(lfrAmdLoaderVersion)) {
-			jsTranspilerExtension.setLfrAmdLoaderVersion(lfrAmdLoaderVersion);
-		}
 	}
 
 	protected void configureProperties(Project project) {

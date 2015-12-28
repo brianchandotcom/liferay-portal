@@ -57,16 +57,6 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 		journalFeedLocalService.deleteFeed(feedId);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
-	 */
-	@Deprecated
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	@Override
-	public void deleteFeed(long groupId, long feedId) throws PortalException {
-		deleteFeed(groupId, String.valueOf(feedId));
-	}
-
 	@Override
 	public void deleteFeed(long groupId, String feedId) throws PortalException {
 		JournalFeedPermission.check(

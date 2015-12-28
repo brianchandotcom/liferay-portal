@@ -185,43 +185,11 @@ public class JournalFeedServiceHttp {
 	}
 
 	public static com.liferay.journal.model.JournalFeed getFeed(
-		HttpPrincipal httpPrincipal, long groupId, long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
-					"getFeed", _getFeedParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					feedId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.journal.model.JournalFeed)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.journal.model.JournalFeed getFeed(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
-					"getFeed", _getFeedParameterTypes5);
+					"getFeed", _getFeedParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					feedId);
@@ -261,7 +229,7 @@ public class JournalFeedServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
-					"updateFeed", _updateFeedParameterTypes6);
+					"updateFeed", _updateFeedParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					feedId, name, description, ddmStructureKey, ddmTemplateKey,
@@ -312,12 +280,9 @@ public class JournalFeedServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getFeedParameterTypes4 = new Class[] {
-			long.class, long.class
-		};
-	private static final Class<?>[] _getFeedParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _updateFeedParameterTypes6 = new Class[] {
+	private static final Class<?>[] _updateFeedParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, int.class,

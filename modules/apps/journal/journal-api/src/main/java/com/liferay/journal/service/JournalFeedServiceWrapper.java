@@ -77,16 +77,6 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.journal.model.JournalFeed getFeed(long groupId,
-		long feedId) throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFeedService.getFeed(groupId, feedId);
-	}
-
-	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier

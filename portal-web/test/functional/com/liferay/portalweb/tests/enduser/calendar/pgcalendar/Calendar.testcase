@@ -804,6 +804,17 @@
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectEvent">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
 	</command>
 
 	<command name="AddCalendarEventRepeatingCommentToCurrentSiteCalendars" priority="3">
@@ -947,6 +958,17 @@
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectEvent">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
 	</command>
 
 	<command name="AddCalendarEventRepeatingWithEndDateBeforeStartDate" priority="3">
@@ -1182,6 +1204,16 @@
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
 			<var name="deleteOptionSet" value="All Events in the Series" />

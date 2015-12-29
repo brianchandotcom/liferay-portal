@@ -4926,8 +4926,10 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.batch.max.group.size=${test.batch.max.group.size}
+					test.batch.max.subgroup.size=${test.batch.max.subgroup.size}
 					test.batch.property.names=${test.batch.property.names}
 					test.batch.property.values=${test.batch.property.values}
+					test.batch.run.type=${test.batch.run.type}
 				</echo>
 			</then>
 		</if>

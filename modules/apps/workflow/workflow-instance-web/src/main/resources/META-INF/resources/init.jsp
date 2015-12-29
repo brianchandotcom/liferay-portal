@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
@@ -37,8 +38,10 @@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
+page import="com.liferay.taglib.search.DateSearchEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys" %><%@
+page import="com.liferay.workflow.instance.web.dao.search.WorkflowInstanceResultRowSplitter" %><%@
 page import="com.liferay.workflow.instance.web.display.context.MyWorkflowInstanceEditDisplayContext" %><%@
 page import="com.liferay.workflow.instance.web.display.context.MyWorkflowInstanceViewDisplayContext" %><%@
 page import="com.liferay.workflow.instance.web.display.context.WorkflowInstanceEditDisplayContext" %><%@

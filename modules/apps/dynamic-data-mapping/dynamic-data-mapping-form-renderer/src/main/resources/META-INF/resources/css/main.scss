@@ -1,10 +1,6 @@
 @import "bourbon";
 
 .lfr-ddm-form-container {
-	.lfr-ddm-form-page-title + .row {
-		margin-top: 40px;
-	}
-
 	.form-control-feedback {
 		margin-left: -20px;
 	}
@@ -64,12 +60,26 @@
 		margin-bottom: 40px;
 	}
 
-	.row {
-		min-height: auto;
+	.lfr-ddm-form-page-title + .row {
+		margin-top: 40px;
 	}
 
 	.lfr-ddm-form-pagination-controls {
 		padding-top: 20px;
+	}
+
+	.row {
+		min-height: auto;
+	}
+}
+
+.multi-step-progress-bar {
+	> .complete {
+		color: #65B6F0;
+
+		.divider {
+			background-color: #65B6F0;
+		}
 	}
 }
 
@@ -81,19 +91,9 @@
 		padding: 0;
 	}
 
-	.lfr-ddm-form-page-title,
-	.lfr-ddm-form-page-description {
+	.lfr-ddm-form-page-description,
+	.lfr-ddm-form-page-title {
 		padding-left: $side-spacing;
 		padding-right: $side-spacing;
-	}
-}
-
-.multi-step-progress-bar {
-	> .complete {
-		color: #65B6F0;
-
-		.divider {
-			background-color: #65B6F0;
-		}
 	}
 }

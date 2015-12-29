@@ -328,6 +328,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				@Override
 				public void execute(Project project) {
 					configureArtifacts(project);
+					configureProjectVersion(project);
 				}
 
 			});
@@ -369,6 +370,21 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	protected void configureProject(Project project) {
 		project.setGroup(_GROUP);
+	}
+
+	protected void configureProjectVersion(Project project) {
+		boolean snapshot = false;
+
+		if (project.hasProperty(_SNAPSHOT_PROPERTY_NAME)) {
+			snapshot = GradleUtil.getProperty(
+				project, _SNAPSHOT_PROPERTY_NAME, true);
+		}
+
+		String version = String.valueOf(project.getVersion());
+
+		if (snapshot && !version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
+			project.setVersion(version + _SNAPSHOT_VERSION_SUFFIX);
+		}
 	}
 
 	protected void configureRepositories(Project project) {
@@ -524,5 +540,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	private static final String _REPOSITORY_URL = System.getProperty(
 		"repository.url",
 		"http://cdn.repository.liferay.com/nexus/content/groups/public");
+
+	private static final String _SNAPSHOT_PROPERTY_NAME = "snapshot";
+
+	private static final String _SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
 
 }

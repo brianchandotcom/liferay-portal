@@ -44,14 +44,14 @@
 		<if>
 			<equals arg1="${showUnusedTags}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="TagsNavigationConfiguration#SHOW_UNUSED_TAGS_CHECKBOX" value1="Show Unused Tags" />
+				<execute function="Check#checkToggleSwitch" locator1="TagsNavigationConfiguration#SHOW_UNUSED_TAGS_CHECKBOX" value1="Show Unused Tags" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${showAssetCount}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="TagsNavigationConfiguration#SHOW_ASSET_COUNT_CHECKBOX" value1="Show Asset Count" />
+				<execute function="Check#checkToggleSwitch" locator1="TagsNavigationConfiguration#SHOW_ASSET_COUNT_CHECKBOX" value1="Show Asset Count" />
 			</then>
 		</if>
 

@@ -1178,6 +1178,14 @@
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
 			<var name="globalSite" value="Global" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
 			<var name="otherSite" value="Liferay" />
 		</execute>
 

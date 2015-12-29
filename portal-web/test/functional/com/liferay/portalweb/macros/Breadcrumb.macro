@@ -8,7 +8,7 @@
 				<for list="${checkSetupName}" param="checkSetupName">
 					<var name="key_checkSetupName" value="${checkSetupName}" />
 
-					<execute function="Check" locator1="BreadcrumbConfiguration#SHOW_SPECIFIC_CHECKBOX" />
+					<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH" />
 				</for>
 			</then>
 		</if>
@@ -19,7 +19,7 @@
 				<for list="${uncheckSetupName}" param="uncheckSetupName">
 					<var name="key_checkSetupName" value="${uncheckSetupName}" />
 
-					<execute function="Uncheck" locator1="BreadcrumbConfiguration#SHOW_SPECIFIC_CHECKBOX" />
+					<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH" />
 				</for>
 			</then>
 		</if>
@@ -78,7 +78,7 @@
 				<for list="${checkSetupName}" param="checkSetupName">
 					<var name="key_checkSetupName" value="${checkSetupName}" />
 
-					<execute function="AssertChecked" locator1="BreadcrumbConfiguration#SHOW_SPECIFIC_CHECKBOX" />
+					<execute function="AssertChecked#assertCheckedToggleSwitch" locator1="ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH" />
 				</for>
 			</then>
 		</if>
@@ -89,7 +89,7 @@
 				<for list="${uncheckSetupName}" param="uncheckSetupName">
 					<var name="key_checkSetupName" value="${uncheckSetupName}" />
 
-					<execute function="AssertNotChecked" locator1="BreadcrumbConfiguration#SHOW_SPECIFIC_CHECKBOX" />
+					<execute function="AssertNotChecked#assertNotCheckedToggleSwitch" locator1="ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH" />
 				</for>
 			</then>
 		</if>

@@ -43,6 +43,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.quality.FindBugs;
@@ -53,6 +54,7 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
@@ -126,6 +128,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		configureSourceSetMain(project);
 		configureSourceSetTest(project);
 		configureSourceSetTestIntegration(project);
+		configureTaskJar(project);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
 
@@ -223,6 +226,22 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		xmlReport.setEnabled(false);
 	}
 
+	protected void configureTaskJar(Project project) {
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		if (isTestProject(project)) {
+			jar.dependsOn(JavaPlugin.TEST_CLASSES_TASK_NAME);
+
+			SourceSet sourceSet = GradleUtil.getSourceSet(
+				project,
+				TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
+
+			jar.dependsOn(sourceSet.getClassesTaskName());
+		}
+
+		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
+	}
+
 	protected void configureTaskJavaCompile(JavaCompile javaCompile) {
 		CompileOptions compileOptions = javaCompile.getOptions();
 
@@ -273,6 +292,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	@Override
 	protected Class<LiferayPlugin> getPluginClass() {
 		return LiferayPlugin.class;
+	}
+
+	protected boolean isTestProject(Project project) {
+		String projectName = project.getName();
+
+		if (projectName.endsWith("-test")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _GROUP = "com.liferay";

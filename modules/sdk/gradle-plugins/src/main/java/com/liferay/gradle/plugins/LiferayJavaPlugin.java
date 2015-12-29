@@ -628,36 +628,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskJar(Project project) {
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		configureTaskJarDependsOn(jar);
-		configureTaskJarDuplicatesStrategy(jar);
-	}
-
-	protected void configureTaskJarDependsOn(Jar jar) {
-		Project project = jar.getProject();
-
-		if (isTestProject(project)) {
-			jar.dependsOn(JavaPlugin.TEST_CLASSES_TASK_NAME);
-
-			SourceSet sourceSet = GradleUtil.getSourceSet(
-				project,
-				TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
-
-			jar.dependsOn(sourceSet.getClassesTaskName());
-		}
-	}
-
-	protected void configureTaskJarDuplicatesStrategy(Jar jar) {
-		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
-	}
-
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
 		configureTaskDeploy(project, liferayExtension);
-		configureTaskJar(project);
 
 		configureTasksDirectDeploy(project);
 	}

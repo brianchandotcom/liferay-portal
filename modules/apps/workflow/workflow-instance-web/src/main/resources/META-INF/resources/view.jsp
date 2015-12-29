@@ -19,14 +19,6 @@
 <%
 String tabs2 = ParamUtil.getString(renderRequest, "tabs2", "pending");
 
-WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
-
-if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
-	workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(renderRequest, renderResponse);
-}
-else {
-	workflowInstanceViewDisplayContext = new MyWorkflowInstanceViewDisplayContext(renderRequest, renderResponse);
-}
 %>
 
 <aui:nav-bar markupView="lexicon">

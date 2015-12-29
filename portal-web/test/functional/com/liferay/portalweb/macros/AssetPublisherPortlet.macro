@@ -358,6 +358,8 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="configureSiteScopePG">
@@ -384,6 +386,8 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="APConfiguration#SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
 		<execute function="AssertElementPresent" locator1="APConfiguration#SOURCE_SCOPE_DELETE" />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="configureSiteScopeRemoveSitePG">
@@ -403,6 +407,8 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="AssertTextNotPresent" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 		<execute function="AssertTextNotPresent" locator1="APConfiguration#SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="deleteArchivedSetupPG">
@@ -426,6 +432,8 @@
 		<execute function="AssertClick" locator1="NavTab#SUBSCRIPTIONS" value1="Subscriptions" />
 		<execute function="AssertTextEquals" locator1="APConfiguration#SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION_LABEL" value1="Enable RSS Subscription" />
 		<execute function="Check" locator1="APConfiguration#SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION" />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="gotoConfigurationPG">
@@ -452,6 +460,8 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="restoreArchivedSetupPG">
@@ -485,6 +495,8 @@
 
 		<execute function="AssertTextEquals" locator1="APConfigurationArchivedsetup#ARCHIVED_SETUPS_TABLE_NAME" value1="${archiveName}" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewAssetDetailsPG">
@@ -526,7 +538,7 @@
 
 		<execute function="AssertTextNotEquals" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${assetType}" />
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewConfigureAPDisplayTemplateFullContentBookmarksPG">
@@ -588,6 +600,8 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewConfigureSiteScopeContentSharingPG">
@@ -711,6 +725,8 @@
 		<execute function="AssertElementPresent" locator1="APConfiguration#FILTER_DROPDOWN" />
 		<execute function="AssertElementPresent" locator1="APConfiguration#CUSTOM_USER_DROPDOWN" />
 		<execute function="AssertElementPresent" locator1="APConfiguration#ORDERING_AND_GROUPING_DROPDOWN" />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewEditLinkPG">
@@ -747,6 +763,8 @@
 				</for>
 			</else>
 		</if>
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewManualAssetSelectionConfigurationPG">
@@ -765,6 +783,8 @@
 		<execute function="AssertElementNotPresent" locator1="APConfiguration#CUSTOM_USER_DROPDOWN_COLLAPSED" />
 		<execute function="AssertElementNotPresent" locator1="APConfiguration#ORDERING_AND_GROUPING_DROPDOWN" />
 		<execute function="AssertElementNotPresent" locator1="APConfiguration#ORDERING_AND_GROUPING_DROPDOWN_COLLAPSED" />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewMultipleAssetOrderPGViaAP">
@@ -883,6 +903,8 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No assets selected." />
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewSelectedPG">
@@ -903,6 +925,8 @@
 				<execute function="AssertSelectedLabel" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAssetConfiguration}" />
 			</else>
 		</if>
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewTagFocusPG">

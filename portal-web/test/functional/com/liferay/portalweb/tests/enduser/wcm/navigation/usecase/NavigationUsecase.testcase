@@ -225,6 +225,8 @@
 			</execute>
 		</for>
 
+		<execute macro="IFrame#selectTopFrame" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>

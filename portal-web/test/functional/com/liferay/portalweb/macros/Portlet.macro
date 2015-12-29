@@ -256,7 +256,7 @@
 			<elseif>
 				<equals arg1="${portletOption}" arg2="Export / Import" />
 				<then>
-					<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
+					<execute function="AssertClick" locator1="MenuItem#EXPORT_IMPORT" value1="Export / Import" />
 				</then>
 			</elseif>
 			<else>

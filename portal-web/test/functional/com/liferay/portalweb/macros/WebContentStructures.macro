@@ -235,6 +235,8 @@
 
 			<execute function="AssertTextEquals" locator1="DDMField#DDM_INPUT" value1="Edited ${structureFieldName} Field" />
 		</for>
+
+		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="gotoCP">

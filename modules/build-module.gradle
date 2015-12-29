@@ -36,18 +36,6 @@ if (portalRootDir) {
 	libsDirName = distsDirName
 }
 
-afterEvaluate {
-	if (!project.version.endsWith("-SNAPSHOT")) {
-		Iterable<Task> publishNodeModuleTasks = tasks.matching {
-			it.class.name.startsWith "com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask"
-		}
-
-		publishNodeModuleTasks.each {
-			uploadArchives.dependsOn it
-		}
-	}
-}
-
 Project frontendCommonCssProject = findProject(":frontend:frontend-common-css")
 
 if (frontendCommonCssProject) {

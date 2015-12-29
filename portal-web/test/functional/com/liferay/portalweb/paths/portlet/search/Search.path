@@ -44,6 +44,11 @@
 	<td>//button[contains(.,'${key_searchIDName}')] | //button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEARCH_PORTLET_SEARCH_BUTTON</td>
+	<td>//a[contains(@onclick,'SearchPortlet_search')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

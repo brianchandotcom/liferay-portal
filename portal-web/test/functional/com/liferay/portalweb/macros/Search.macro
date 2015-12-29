@@ -80,7 +80,7 @@
 				<execute function="KeyPress" locator1="Search#SEARCH_FIELD" value1="\RETURN" />
 			</then>
 			<else>
-				<execute function="Click" locator1="Search#SEARCH_BUTTON" />
+				<execute function="Click" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />
 			</else>
 		</if>
 	</command>

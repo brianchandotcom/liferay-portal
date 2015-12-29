@@ -17,39 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(renderRequest, "tabs2", "pending");
 PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 
 String displayStyle = workflowInstanceViewDisplayContext.getDisplayStyle();
 
 DateSearchEntry dateSearchEntry = new DateSearchEntry();
 %>
-
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewPendingURL">
-			<portlet:param name="mvcPath" value="/view.jsp" />
-			<portlet:param name="tabs2" value="pending" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewPendingURL %>"
-			label="pending"
-			selected='<%= tabs2.equals("pending") %>'
-		/>
-
-		<portlet:renderURL var="viewCompletedURL">
-			<portlet:param name="mvcPath" value="/view.jsp" />
-			<portlet:param name="tabs2" value="completed" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewCompletedURL %>"
-			label="completed"
-			selected='<%= tabs2.equals("completed") %>'
-		/>
-	</aui:nav>
-</aui:nav-bar>
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

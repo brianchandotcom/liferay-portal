@@ -89,7 +89,7 @@ YUI.add(
 					},
 
 					running: {
-						value: true
+						value: false
 					},
 
 					sidebar: {
@@ -114,16 +114,6 @@ YUI.add(
 
 				prototype: {
 					initializer: function() {
-						var instance = this;
-
-						var xmlLog = instance.get(STR_XML_LOG);
-
-						if (!xmlLog.hasClass(CSS_RUNNING)) {
-							instance.set(STR_RUNNING, false);
-						}
-					},
-
-					renderUI: function() {
 						var instance = this;
 
 						var sidebar = instance.get(STR_SIDEBAR);
@@ -179,8 +169,7 @@ YUI.add(
 
 							var linkedFunction = xmlLog.one('.line-group[data-functionLinkId="' + functionLinkId + '"]');
 
-							instance._displayNode(linkedFunction);
-							instance._scrollToNode(linkedFunction);
+							instance._displayNode(linkedFunction, true);
 							instance._selectCurrentScope(linkedFunction);
 						}
 					},
@@ -195,8 +184,7 @@ YUI.add(
 								event.halt(true);
 							}
 
-							instance._displayNode(currentTargetAncestor);
-							instance._scrollToNode(currentTargetAncestor);
+							instance._displayNode(currentTargetAncestor, true);
 							instance._selectCurrentScope(currentTargetAncestor);
 						}
 					},
@@ -271,7 +259,7 @@ YUI.add(
 						var failure = failNodes.item(newIndex);
 
 						instance._selectCurrentScope(failure);
-						instance._scrollToNode(failure);
+						instance._displayNode(failure, true);
 					},
 
 					handleLineTrigger: function(id, starting) {
@@ -465,7 +453,7 @@ YUI.add(
 						return returnVal;
 					},
 
-					_displayNode: function(node) {
+					_displayNode: function(node, scrollTo) {
 						var instance = this;
 
 						node = node || instance.get(STR_FAILS).last();
@@ -474,12 +462,12 @@ YUI.add(
 							var parentContainers = node.ancestors('.child-container');
 
 							if (parentContainers) {
-								instance._expandParentContainers(parentContainers, node);
+								instance._expandParentContainers(parentContainers, node, scrollTo);
 							}
 						}
 					},
 
-					_expandParentContainers: function(parentContainers, node) {
+					_expandParentContainers: function(parentContainers, node, scrollTo) {
 						var instance = this;
 
 						var timeout = 0;
@@ -489,15 +477,21 @@ YUI.add(
 						if (container.hasClass(CSS_COLLAPSE)) {
 							instance._toggleContainer(container, false);
 
-							timeout = 50;
+							timeout = 10;
 						}
 
-						if (parentContainers.size()) {
-							setTimeout(
-								A.bind('_expandParentContainers', instance, parentContainers, node),
-								timeout
-							);
-						}
+						A.later(
+							timeout,
+							instance,
+							function() {
+								if (parentContainers.size()) {
+									instance._expandParentContainers(parentContainers, node, scrollTo);
+								}
+								else if (scrollTo) {
+									instance._scrollToNode(node);
+								}
+							}
+						);
 					},
 
 					_getCommandLogNode: function(logId) {
@@ -513,7 +507,7 @@ YUI.add(
 					_getTransition: function(targetNode, height, collapsing) {
 						var instance = this;
 
-						var duration = Math.pow(height, 0.3) / 15;
+						var duration = Math.pow(height, 0.15) / 15;
 
 						var ease = 'ease-in';
 
@@ -542,13 +536,13 @@ YUI.add(
 								},
 
 								marginTop: {
-									duration: 0.1,
+									duration: 0.05,
 									easing: ease,
 									value: margin
 								},
 
 								marginBottom: {
-									duration: 0.1,
+									duration: 0.05,
 									easing: ease,
 									value: margin
 								}
@@ -782,7 +776,7 @@ YUI.add(
 
 								new A.Anim(
 									{
-										duration: 0.075,
+										duration: 0.12,
 										easing: 'easeOutStrong',
 										node: scrollNode,
 										to: {
@@ -880,6 +874,12 @@ YUI.add(
 						instance.set(STR_FAILS, failNodes);
 
 						instance._transitionCommandLog(commandLog);
+
+						var running = commandLog.hasClass(CSS_RUNNING);
+
+						instance.set(STR_RUNNING, running);
+
+						instance.get(STR_CONTENT_BOX).toggleClass(CSS_RUNNING, running);
 
 						if (failNodes.size() > 0) {
 							failNodes.each(instance._displayNode, instance);

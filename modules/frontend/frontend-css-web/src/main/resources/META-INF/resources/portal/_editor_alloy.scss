@@ -2,47 +2,69 @@
 	z-index: 501;
 }
 
-.alloy-editor {
-	overflow: hidden;
+.alloy-editor-container {
+	position: relative;
 
-	&.alloy-editor-placeholder {
-		&:empty:not(:focus):not(.form-control) {
-			border-left: 2px solid;
-			padding-left: 10px;
+	.alloy-editor-icon {
+		bottom: 8px;
+		display: none;
+		position: absolute;
+		right: 8px;
+	}
+
+	.alloy-editor {
+		overflow: hidden;
+
+		&.alloy-editor-placeholder {
+			&:empty:not(:focus):not(.form-control) {
+				border-left: 2px solid;
+				padding-left: 10px;
+			}
+		}
+
+		a {
+			cursor: auto;
+		}
+
+		p:only-child {
+			margin-bottom: 0;
+		}
+
+		&.form-control {
+			height: auto;
+
+			~ .alloy-editor-icon {
+				display: block;
+			}
 		}
 	}
 
-	a {
-		cursor: auto;
+	.alloy-editor-switch {
+		position: absolute;
+		text-align: right;
+		top: 0;
+		width: 100%;
+
+		.btn {
+			margin-top: 0;
+		}
 	}
 
-	p:only-child {
-		margin-bottom: 0;
-	}
+	.alloy-editor-wrapper {
+		padding-top: 44px;
 
-	&.form-control {
-		height: auto;
-	}
-}
-
-.alloy-editor-switch {
-	position: absolute;
-	right: 0;
-	top: 0;
-}
-
-.alloy-editor-wrapper {
-	.lfr-source-editor {
-		display: none;
-	}
-
-	&.show-source {
-		.alloy-editor-placeholder {
+		.lfr-source-editor {
 			display: none;
 		}
 
-		.lfr-source-editor {
-			display: block;
+		&.show-source {
+			.alloy-editor-placeholder {
+				display: none;
+			}
+
+			.lfr-source-editor {
+				display: block;
+			}
 		}
 	}
 }

@@ -3,6 +3,15 @@ AUI.add(
 	function(A) {
 		var CSS_SHOW_SOURCE = 'show-source';
 
+		var MAP_TOGGLE_STATE = {
+			false: {
+				iconCssClass: 'code'
+			},
+			true: {
+				iconCssClass: 'format'
+			}
+		};
+
 		var STR_HOST = 'host';
 
 		var STRINGS = 'strings';
@@ -36,6 +45,7 @@ AUI.add(
 						instance._editorFullscreen = host.one('#Fullscreen');
 						instance._editorSource = host.one('#Source');
 						instance._editorSwitch = host.one('#Switch');
+						instance._editorSwitchTheme = host.one('#SwitchTheme');
 						instance._editorWrapper = host.one('#Wrapper');
 
 						instance._toggleSourceSwitchFn = A.debounce(instance._toggleSourceSwitch, 100, instance);
@@ -47,6 +57,7 @@ AUI.add(
 							instance._editorSwitch.on('blur', instance._onSwitchBlur, instance),
 							instance._editorSwitch.on('click', instance._switchMode, instance),
 							instance._editorSwitch.on('focus', instance._onSwitchFocus, instance),
+							instance._editorSwitchTheme.on('click', instance._switchTheme, instance),
 							instance.doAfter('getHTML', instance._getHTML, instance)
 						];
 					},
@@ -84,6 +95,11 @@ AUI.add(
 							{
 								boundingBox: instance._editorSource,
 								mode: 'html',
+								on: {
+									themeSwitched: function(event) {
+										instance._editorSwitchTheme.one('.lexicon-icon').replace(event.themes[event.nextThemeIndex].icon);
+									}
+								},
 								value: host.getHTML()
 							}
 						).render();
@@ -91,6 +107,22 @@ AUI.add(
 						instance._toggleEditorModeUI();
 
 						instance._sourceEditor = sourceEditor;
+					},
+
+					_getEditorStateLexiconIcon: function() {
+						var instance = this;
+
+						var currentState = MAP_TOGGLE_STATE[instance._isVisible];
+
+						var icon = currentState.icon;
+
+						if (!icon) {
+							icon = Liferay.Util.getLexiconIcon(currentState.iconCssClass);
+
+							currentState.icon = icon;
+						}
+
+						return icon;
 					},
 
 					_getHTML: function() {
@@ -234,21 +266,29 @@ AUI.add(
 						}
 					},
 
+					_switchTheme: function(event) {
+						var instance = this;
+
+						instance._sourceEditor.switchTheme();
+					},
+
 					_toggleEditorModeUI: function() {
 						var instance = this;
 
 						var editorFullscreen = instance._editorFullscreen;
 						var editorSwitch = instance._editorSwitch;
 						var editorSwitchContainer = editorSwitch.ancestor();
+						var editorSwitchTheme = instance._editorSwitchTheme;
 						var editorWrapper = instance._editorWrapper;
 
 						editorWrapper.toggleClass(CSS_SHOW_SOURCE);
 						editorSwitchContainer.toggleClass(CSS_SHOW_SOURCE);
 						editorFullscreen.toggleClass('hide');
+						editorSwitchTheme.toggleClass('hide');
 
 						instance._isVisible = editorWrapper.hasClass(CSS_SHOW_SOURCE);
 
-						editorSwitch.setHTML(instance._isVisible ? 'abc' : '&lt;/&gt;');
+						editorSwitch.one('.lexicon-icon').replace(instance._getEditorStateLexiconIcon());
 
 						instance._toggleSourceSwitchFn(
 							{

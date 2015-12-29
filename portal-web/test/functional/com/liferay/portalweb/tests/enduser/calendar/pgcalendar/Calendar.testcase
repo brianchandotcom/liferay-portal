@@ -1207,22 +1207,21 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute macro="CalendarNavigator#gotoEventDetails">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
 		</execute>
+
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewRepeatingEventViaViewDetails">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="frequency" value="Yearly" />
 			<var name="yearlyRecurrenceSummary" value="Yearly, on the Third Sunday of February" />
-		</execute>
-
-		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
-			<var name="deleteOptionSet" value="All Events in the Series" />
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 		</execute>
 	</command>
 

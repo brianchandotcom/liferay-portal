@@ -115,54 +115,6 @@ idea {
 	}
 }
 
-javadoc {
-	String exportPackages = bundle.instructions["Export-Package"]
-
-	if (exportPackages) {
-		List<String> exportPackagesList = exportPackages.tokenize("," as char)
-
-		exportPackagesList*.trim()
-
-		exportPackagesList.each {
-			String pattern ->
-
-			boolean excludePattern = false
-
-			int start = 0
-
-			if (pattern.startsWith("!")) {
-				excludePattern = true
-
-				start = 1
-			}
-
-			int end = pattern.indexOf(";")
-
-			if (end == -1) {
-				end = pattern.length()
-			}
-
-			pattern = pattern[start .. (end - 1)]
-
-			pattern = "**/" + pattern.replace("." as char, "/" as char)
-
-			if (pattern.endsWith("/*")) {
-				pattern = pattern[0 .. -2]
-			}
-			else {
-				pattern += "/*"
-			}
-
-			if (excludePattern) {
-				exclude pattern
-			}
-			else {
-				include pattern
-			}
-		}
-	}
-}
-
 sourceSets {
 	test {
 		compileClasspath = configurations.compile + configurations.portal + compileClasspath + configurations.portalTest

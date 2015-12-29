@@ -23,7 +23,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.gradle.api.Project;
+import org.gradle.api.Task;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.TaskInputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -44,6 +48,20 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		args.put("include", "*.jar");
 
 		return project.fileTree(args);
+	}
+
+	public static boolean hasSourceFiles(Task task, Spec<File> spec) {
+		TaskInputs taskInputs = task.getInputs();
+
+		FileCollection fileCollection = taskInputs.getSourceFiles();
+
+		fileCollection = fileCollection.filter(spec);
+
+		if (fileCollection.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
@@ -31,6 +32,9 @@ import java.io.File;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.Map;
+import java.util.concurrent.Callable;
+
 import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
@@ -41,22 +45,33 @@ import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
+import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
+import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.plugins.MavenPluginConvention;
 import org.gradle.api.plugins.quality.FindBugs;
 import org.gradle.api.plugins.quality.FindBugsPlugin;
 import org.gradle.api.plugins.quality.FindBugsReports;
 import org.gradle.api.reporting.SingleFileReport;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
+import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
+import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
 
@@ -66,6 +81,10 @@ import org.gradle.plugins.ide.idea.IdeaPlugin;
 public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
+
+	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
+
+	public static final String ZIP_JAVADOC_TASK_NAME = "zipJavadoc";
 
 	protected Copy addTaskCopyLibs(Project project) {
 		Copy copy = GradleUtil.addTask(
@@ -94,10 +113,103 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return copy;
 	}
 
+	protected Jar addTaskJarSources(Project project, boolean testProject) {
+		final Jar jar = GradleUtil.addTask(
+			project, JAR_SOURCES_TASK_NAME, Jar.class);
+
+		jar.setClassifier("sources");
+		jar.setGroup(BasePlugin.BUILD_GROUP);
+		jar.setDescription(
+			"Assembles a jar archive containing the main source files.");
+		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
+
+		File docrootDir = project.file("docroot");
+
+		if (docrootDir.exists()) {
+			jar.from(docrootDir);
+		}
+		else {
+			SourceSet sourceSet = GradleUtil.getSourceSet(
+				project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+			jar.from(sourceSet.getAllSource());
+
+			if (testProject) {
+				sourceSet = GradleUtil.getSourceSet(
+					project, SourceSet.TEST_SOURCE_SET_NAME);
+
+				jar.from(sourceSet.getAllSource());
+
+				sourceSet = GradleUtil.getSourceSet(
+					project,
+					TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
+
+				jar.from(sourceSet.getAllSource());
+			}
+		}
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			PatchTask.class,
+			new Action<PatchTask>() {
+
+				@Override
+				public void execute(final PatchTask patchTask) {
+					jar.from(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								return patchTask.getPatchesDir();
+							}
+
+						},
+						new Closure<Void>(null) {
+
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								copySpec.into("META-INF/patches");
+							}
+
+						});
+				}
+
+			});
+
+		return jar;
+	}
+
+	protected Zip addTaskZipJavadoc(Project project) {
+		Zip zip = GradleUtil.addTask(project, ZIP_JAVADOC_TASK_NAME, Zip.class);
+
+		zip.setClassifier("javadoc");
+		zip.setDescription(
+			"Assembles a zip archive containing the Javadoc files for this " +
+				"project.");
+		zip.setGroup(BasePlugin.BUILD_GROUP);
+
+		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
+			project, JavaPlugin.JAVADOC_TASK_NAME);
+
+		zip.dependsOn(javadoc);
+		zip.from(javadoc);
+
+		return zip;
+	}
+
+	protected void applyConfigScripts(Project project) {
+		GradleUtil.applyScript(
+			project,
+			"com/liferay/gradle/plugins/dependencies/config-maven.gradle",
+			project);
+	}
+
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, FindBugsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
+		GradleUtil.applyPlugin(project, MavenPlugin.class);
 		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
@@ -116,19 +228,86 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 	}
 
+	protected void configureArtifacts(Project project) {
+		ArtifactHandler artifactHandler = project.getArtifacts();
+
+		Task jarSourcesTask = GradleUtil.getTask(
+			project, JAR_SOURCES_TASK_NAME);
+
+		Spec<File> spec = new Spec<File>() {
+
+			@Override
+			public boolean isSatisfiedBy(File file) {
+				String fileName = file.getName();
+
+				if (fileName.equals("MANIFEST.MF")) {
+					return false;
+				}
+
+				return true;
+			}
+
+		};
+
+		if (FileUtil.hasSourceFiles(jarSourcesTask, spec)) {
+			artifactHandler.add(
+				Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
+		}
+
+		Task javadocTask = GradleUtil.getTask(
+			project, JavaPlugin.JAVADOC_TASK_NAME);
+
+		spec = new Spec<File>() {
+
+			@Override
+			public boolean isSatisfiedBy(File file) {
+				String fileName = file.getName();
+
+				if (fileName.endsWith(".java")) {
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		if (FileUtil.hasSourceFiles(javadocTask, spec)) {
+			Task zipJavadocTask = GradleUtil.getTask(
+				project, ZIP_JAVADOC_TASK_NAME);
+
+			artifactHandler.add(
+				Dependency.ARCHIVES_CONFIGURATION, zipJavadocTask);
+		}
+	}
+
 	@Override
 	protected void configureDefaults(
 		final Project project, LiferayPlugin liferayPlugin) {
 
 		applyPlugins(project);
 
+		// applyConfigScripts configures the "install" and "uploadArchives"
+		// tasks, and this causes the conf2ScopeMappings.mappings convention
+		// property to be cloned in a second map. Because we want to change
+		// the default mappings, we must call configureMavenConf2ScopeMappings
+		// before applyConfigScripts.
+
+		configureMavenConf2ScopeMappings(project);
+
+		applyConfigScripts(project);
+
+		boolean testProject = isTestProject(project);
+
+		addTaskJarSources(project, testProject);
+		addTaskZipJavadoc(project);
 		configureJavaPlugin(project);
 		configureProject(project);
 		configureRepositories(project);
 		configureSourceSetMain(project);
 		configureSourceSetTest(project);
 		configureSourceSetTestIntegration(project);
-		configureTaskJar(project);
+		configureTaskJar(project, testProject);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
 
@@ -139,6 +318,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				@Override
 				public void execute(BundlePlugin bundlePlugin) {
 					addTaskCopyLibs(project);
+				}
+
+			});
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					configureArtifacts(project);
 				}
 
 			});
@@ -155,6 +344,27 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		javaPluginConvention.setTestResultsDirName(
 			FileUtil.relativize(testResultsDir, project.getBuildDir()));
+	}
+
+	protected void configureMavenConf2ScopeMappings(Project project) {
+		MavenPluginConvention mavenPluginConvention = GradleUtil.getConvention(
+			project, MavenPluginConvention.class);
+
+		Conf2ScopeMappingContainer conf2ScopeMappingContainer =
+			mavenPluginConvention.getConf2ScopeMappings();
+
+		Map<Configuration, Conf2ScopeMapping> mappings =
+			conf2ScopeMappingContainer.getMappings();
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME);
+
+		mappings.remove(configuration);
+
+		configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
+
+		mappings.remove(configuration);
 	}
 
 	protected void configureProject(Project project) {
@@ -226,10 +436,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		xmlReport.setEnabled(false);
 	}
 
-	protected void configureTaskJar(Project project) {
+	protected void configureTaskJar(Project project, boolean testProject) {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
-		if (isTestProject(project)) {
+		if (testProject) {
 			jar.dependsOn(JavaPlugin.TEST_CLASSES_TASK_NAME);
 
 			SourceSet sourceSet = GradleUtil.getSourceSet(

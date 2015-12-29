@@ -17,6 +17,8 @@ package com.liferay.workflow.instance.web.display.context;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -49,8 +51,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletPreferences;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Leonardo Barros
@@ -59,9 +62,13 @@ public class WorkflowInstanceEditDisplayContext
 	extends BaseWorkflowInstanceDisplayContext {
 
 	public WorkflowInstanceEditDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		PortletPreferences portletPreferences) {
 
-		super(renderRequest, renderResponse);
+		super(
+			request, liferayPortletRequest, liferayPortletResponse,
+			portletPreferences);
 	}
 
 	public AssetEntry getAssetEntry() throws PortalException {
@@ -379,7 +386,7 @@ public class WorkflowInstanceEditDisplayContext
 	}
 
 	protected WorkflowInstance getWorkflowInstance() {
-		return (WorkflowInstance)renderRequest.getAttribute(
+		return (WorkflowInstance)liferayPortletRequest.getAttribute(
 			WebKeys.WORKFLOW_INSTANCE);
 	}
 

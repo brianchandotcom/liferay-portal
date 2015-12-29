@@ -16,6 +16,8 @@ package com.liferay.workflow.instance.web.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -39,8 +41,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Leonardo Barros
@@ -49,16 +51,29 @@ public class WorkflowInstanceViewDisplayContext
 	extends BaseWorkflowInstanceDisplayContext {
 
 	public WorkflowInstanceViewDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			HttpServletRequest request,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			PortletPreferences portletPreferences)
 		throws PortalException {
 
-		super(renderRequest, renderResponse);
+		super(
+			request, liferayPortletRequest, liferayPortletResponse,
+			portletPreferences);
+
+		_request = request;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
+		_portletPreferences = portletPreferences;
+
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_request);
 
 		PortletURL portletURL = PortletURLUtil.getCurrent(
-			renderRequest, renderResponse);
+			_liferayPortletRequest, _liferayPortletResponse);
 
 		_searchContainer = new WorkflowInstanceSearch(
-			renderRequest, portletURL);
+			_liferayPortletRequest, portletURL);
 		_searchContainer.setEmptyResultsMessage(
 			getSearchContainerEmptyResultsMessage());
 
@@ -127,7 +142,7 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public PortletURL getViewPortletURL() {
-		PortletURL portletURL = renderResponse.createRenderURL();
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("tabs1", "submissions");
 		portletURL.setParameter("tabs2", getTabs2());
@@ -220,6 +235,11 @@ public class WorkflowInstanceViewDisplayContext
 		return false;
 	}
 
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
+	private final PortalPreferences _portalPreferences;
+	private final PortletPreferences _portletPreferences;
+	private final HttpServletRequest _request;
 	private final WorkflowInstanceSearch _searchContainer;
 
 }

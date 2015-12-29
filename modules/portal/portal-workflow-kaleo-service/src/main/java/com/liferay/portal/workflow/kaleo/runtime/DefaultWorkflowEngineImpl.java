@@ -327,6 +327,47 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
+	@Override
+	public List<WorkflowInstance> search(
+			Long userId, String assetType, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			OrderByComparator<WorkflowInstance> orderByComparator,
+			ServiceContext serviceContext)
+		throws WorkflowException {
+
+		try {
+			List<KaleoInstance> kaleoInstances =
+				kaleoInstanceLocalService.search(
+					userId, assetType, nodeName, kaleoDefinitionName, completed,
+					start, end,
+					KaleoInstanceOrderByComparator.getOrderByComparator(
+						orderByComparator, serviceContext),
+					serviceContext);
+
+			return toWorkflowInstances(kaleoInstances, serviceContext);
+		}
+		catch (Exception e) {
+			throw new WorkflowException(e);
+		}
+	}
+
+	@Override
+	public int searchCount(
+			Long userId, String assetType, String nodeName,
+			String kaleoDefinitionName, Boolean completed,
+			ServiceContext serviceContext)
+		throws WorkflowException {
+
+		try {
+			return kaleoInstanceLocalService.searchCount(
+				userId, assetType, nodeName, kaleoDefinitionName, completed,
+				serviceContext);
+		}
+		catch (Exception e) {
+			throw new WorkflowException(e);
+		}
+	}
+
 	public void setKaleoSignaler(KaleoSignaler kaleoSignaler) {
 		_kaleoSignaler = kaleoSignaler;
 	}

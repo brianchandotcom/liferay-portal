@@ -58,8 +58,6 @@ public abstract class Watcher implements Runnable {
 
 		init();
 
-		walkFileTree(_baseFilePath);
-
 		WatcherRegistry.register(_watchEventListener.getSyncAccountId(), this);
 	}
 

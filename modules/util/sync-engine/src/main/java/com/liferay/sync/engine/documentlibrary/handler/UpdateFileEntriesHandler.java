@@ -58,11 +58,11 @@ public class UpdateFileEntriesHandler extends BaseJSONHandler {
 		Iterator<Map.Entry<String, JsonNode>> fields = rootJsonNode.fields();
 
 		while (fields.hasNext()) {
+			Map.Entry<String, JsonNode> field = fields.next();
+
+			Handler handler = handlers.get(field.getKey());
+
 			try {
-				Map.Entry<String, JsonNode> field = fields.next();
-
-				Handler handler = handlers.get(field.getKey());
-
 				JsonNode fieldValue = field.getValue();
 
 				String exception = handler.getException(fieldValue.textValue());
@@ -85,6 +85,9 @@ public class UpdateFileEntriesHandler extends BaseJSONHandler {
 				if (_logger.isDebugEnabled()) {
 					_logger.debug(e.getMessage(), e);
 				}
+			}
+			finally {
+				handler.removeEvent();
 			}
 		}
 

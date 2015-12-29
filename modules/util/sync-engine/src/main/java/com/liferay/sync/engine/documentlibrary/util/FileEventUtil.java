@@ -341,6 +341,17 @@ public class FileEventUtil {
 			syncAccountId, SyncFile.UI_EVENT_DELETED_LOCAL, "syncFileId", true);
 
 		for (SyncFile deletingSyncFile : deletingSyncFiles) {
+			if (!Files.notExists(
+					Paths.get(deletingSyncFile.getFilePathName()))) {
+
+				deletingSyncFile.setState(SyncFile.STATE_SYNCED);
+				deletingSyncFile.setUiEvent(SyncFile.UI_EVENT_NONE);
+
+				SyncFileService.update(deletingSyncFile);
+
+				continue;
+			}
+
 			if (deletingSyncFile.isFolder()) {
 				deleteFolder(syncAccountId, deletingSyncFile);
 			}

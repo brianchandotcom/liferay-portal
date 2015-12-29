@@ -149,6 +149,13 @@ public class UpgradeProcess_3_0_10 extends UpgradeProcess {
 				syncAccount.getSyncAccountId());
 
 			for (SyncSite syncSite : syncSites) {
+				if (syncSite.isActive() &&
+					!Files.exists(Paths.get(syncSite.getFilePathName()))) {
+
+					Files.createDirectories(
+						Paths.get(syncSite.getFilePathName()));
+				}
+
 				SyncFile syncFile = SyncFileService.fetchSyncFile(
 					syncSite.getFilePathName());
 

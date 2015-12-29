@@ -38,6 +38,8 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -83,6 +85,9 @@ import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.JUnitXmlReport;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.TestTaskReports;
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat;
+import org.gradle.api.tasks.testing.logging.TestLogEvent;
+import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
 import org.gradle.plugins.ide.eclipse.model.EclipseModel;
@@ -369,6 +374,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		configureSourceSetTestIntegration(
 			project, portalConfiguration, portalTestConfiguration);
 		configureTaskJar(project, testProject);
+		configureTaskTest(project);
 		configureTaskTestIntegration(project);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
@@ -714,9 +720,18 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			});
 	}
 
+	protected void configureTaskTest(Project project) {
+		Test test = (Test)GradleUtil.getTask(
+			project, JavaPlugin.TEST_TASK_NAME);
+
+		configureTestLogging(test);
+	}
+
 	protected void configureTaskTestIntegration(Project project) {
 		Test test = (Test)GradleUtil.getTask(
 			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
+
+		configureTestLogging(test);
 
 		File resultsDir = project.file("test-results/integration");
 
@@ -745,6 +760,14 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			taskContainer.withType(PublishNodeModuleTask.class);
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
+	}
+
+	protected void configureTestLogging(Test test) {
+		TestLoggingContainer testLoggingContainer = test.getTestLogging();
+
+		testLoggingContainer.setEvents(EnumSet.allOf(TestLogEvent.class));
+		testLoggingContainer.setExceptionFormat(TestExceptionFormat.FULL);
+		testLoggingContainer.setStackTraceFilters(Collections.emptyList());
 	}
 
 	protected String getBundleInstruction(Project project, String key) {

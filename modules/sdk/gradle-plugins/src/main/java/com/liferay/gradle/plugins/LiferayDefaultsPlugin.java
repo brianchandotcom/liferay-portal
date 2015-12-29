@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import aQute.bnd.osgi.Constants;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
@@ -71,6 +72,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskCollection;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.Zip;
@@ -336,6 +338,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					configureArtifacts(project);
 					configureProjectBndProperties(project);
 					configureProjectVersion(project);
+
+					// configureProjectVersion must be called before
+					// configureTaskUploadArchives, because the latter one needs
+					// to know if we are publishing a snapshot or not.
+
+					configureTaskUploadArchives(project);
 				}
 
 			});
@@ -584,6 +592,24 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+	}
+
+	protected void configureTaskUploadArchives(Project project) {
+		String version = String.valueOf(project.getVersion());
+
+		if (version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
+			return;
+		}
+
+		Task uploadArchivesTask = GradleUtil.getTask(
+			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+
+		TaskContainer taskContainer = project.getTasks();
+
+		TaskCollection<PublishNodeModuleTask> publishNodeModuleTasks =
+			taskContainer.withType(PublishNodeModuleTask.class);
+
+		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
 	}
 
 	protected String getBundleInstruction(Project project, String key) {

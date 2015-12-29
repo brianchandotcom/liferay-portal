@@ -50,20 +50,6 @@ if (frontendCommonCssProject) {
 	}
 }
 
-configurations {
-	all {
-		resolutionStrategy {
-			eachDependency {
-				DependencyResolveDetails dependencyResolveDetails ->
-
-				if (dependencyResolveDetails.requested.group == "com.liferay.portal") {
-					dependencyResolveDetails.useVersion liferay.portalVersion
-				}
-			}
-		}
-	}
-}
-
 pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 	afterEvaluate {
 		buildPluginDescriptor {

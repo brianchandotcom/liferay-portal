@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -130,15 +129,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 	}
 
 	protected String decodePath(String path) {
-		path = StringUtil.replace(
-			path, StringPool.SLASH, "_LIFERAY_TEMP_SLASH_");
-
-		path = URLCodec.decodeURL(path, StringPool.UTF8);
-
-		path = StringUtil.replace(
-			path, "_LIFERAY_TEMP_SLASH_", StringPool.SLASH);
-
-		return path;
+		return URLCodec.decodeURL(path, StringPool.UTF8);
 	}
 
 	protected Collection<JavaFileObject> doResolveClasses(

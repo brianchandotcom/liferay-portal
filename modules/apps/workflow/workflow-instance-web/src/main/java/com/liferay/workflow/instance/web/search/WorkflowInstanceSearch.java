@@ -70,7 +70,8 @@ public class WorkflowInstanceSearch extends SearchContainer<WorkflowInstance> {
 		}
 		else {
 			orderByCol = preferences.getValue(
-				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-col", "last-activity-date");
+				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-col",
+				"last-activity-date");
 			orderByType = preferences.getValue(
 				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-type", "asc");
 		}

@@ -54,7 +54,11 @@ import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.DependencyResolveDetails;
+import org.gradle.api.artifacts.ModuleVersionSelector;
+import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
@@ -336,6 +340,46 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 	}
 
+	protected void configureConfigurations(Project project) {
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		Action<Configuration> action = new Action<Configuration>() {
+
+			@Override
+			public void execute(Configuration configuration) {
+				ResolutionStrategy resolutionStrategy =
+					configuration.getResolutionStrategy();
+
+				resolutionStrategy.eachDependency(
+					new Action<DependencyResolveDetails>() {
+
+						@Override
+						public void execute(
+							DependencyResolveDetails dependencyResolveDetails) {
+
+							ModuleVersionSelector moduleVersionSelector =
+								dependencyResolveDetails.getRequested();
+
+							String group = moduleVersionSelector.getGroup();
+
+							if (group.equals("com.liferay.portal")) {
+								dependencyResolveDetails.useVersion(
+									liferayExtension.getPortalVersion());
+							}
+						}
+
+					});
+			}
+
+		};
+
+		configurationContainer.all(action);
+	}
+
 	@Override
 	protected void configureDefaults(
 		final Project project, LiferayPlugin liferayPlugin) {
@@ -363,6 +407,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		addDependenciesTestCompile(project);
 		addTaskJarSources(project, testProject);
 		addTaskZipJavadoc(project);
+		configureConfigurations(project);
 		configureEclipse(project, portalTestConfiguration);
 		configureIdea(project, portalTestConfiguration);
 		configureJavaPlugin(project);

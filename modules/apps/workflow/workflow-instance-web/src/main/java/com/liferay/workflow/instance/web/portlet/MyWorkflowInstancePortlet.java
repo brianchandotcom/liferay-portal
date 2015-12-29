@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Leonardo Barros
  */
 @Component(
+	configurationPid = "com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",

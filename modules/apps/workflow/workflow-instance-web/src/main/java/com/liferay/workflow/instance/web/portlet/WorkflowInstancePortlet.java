@@ -53,8 +53,10 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration",
 	immediate = true,
 	property = {
+		"com.liferay.portlet.css-class-wrapper=portlet-workflow-instance",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.friendly-url-mapping=workflow_instance",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/workflow_instance.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",

@@ -422,7 +422,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
+	<td>//tbody//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -438,12 +438,17 @@
 <!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//input[contains(@value,'documentlibraryADD_DOCUMENT')]</td>
+	<td>//tbody//input[contains(@value,'documentlibraryADD_DOCUMENT')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_FOLDER_CHECKBOX</td>
 	<td>//input[contains(@value,'documentlibraryADD_FOLDER')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER-->
@@ -569,7 +574,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_DELETE_CHECKBOX</td>
-	<td>//input[contains(@value,'BlogsEntryDELETE')]</td>
+	<td>//tbody//input[contains(@value,'BlogsEntryDELETE')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -850,12 +855,12 @@
 <!--SITE_ADMIN_APPLICATIONS_BLOGS-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_CONFIGURATION_CHECKBOX</td>
-	<td>//input[contains(@value,'BlogsPortletCONFIGURATION')]</td>
+	<td>//tbody//input[contains(@value,'BlogsPortletCONFIGURATION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//input[contains(@value,'BlogsPortletPERMISSIONS')]</td>
+	<td>//tbody//input[contains(@value,'BlogsPortletPERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -929,7 +934,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX</td>
-	<td>//input[contains(@value,'documentlibraryADD_REPOSITORY')]</td>
+	<td>//tbody//input[contains(@value,'documentlibraryADD_REPOSITORY')]</td>
 	<td></td>
 </tr>
 <tr>

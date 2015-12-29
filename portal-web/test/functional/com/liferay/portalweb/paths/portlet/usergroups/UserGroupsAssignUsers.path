@@ -100,7 +100,6 @@
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

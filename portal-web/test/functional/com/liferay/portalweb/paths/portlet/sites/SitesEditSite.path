@@ -131,23 +131,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_ADVANCED_STAGING</td>
-	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Staging')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MENU_ADVANCED_ANALYTICS</td>
-	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Analytics')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MENU_ADVANCED_CONTENT_SHARING</td>
-	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Content Sharing')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MENU_ADVANCED_RECYCLE_BIN</td>
-	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Recycle Bin')]</td>
+	<td>MENU_ADVANCED_TAB</td>
+	<td>//li[contains(@id,'SiteSettingsPortlet')]/a[contains(.,'Advanced')]</td>
 	<td></td>
 </tr>
 <tr>

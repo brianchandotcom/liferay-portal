@@ -250,7 +250,7 @@
 <!--AUTHENTICATION_NTLM-->
 <tr>
 	<td>AUTHENTICATION_NTLM_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'ntlm-auth-enabled')]</td>
+	<td>//input[contains(@name,'ntlm--enabled')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -311,7 +311,7 @@
 <!--AUTHENTICATION_OPEN_ID-->
 <tr>
 	<td>AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'open-id-auth-enabled')]</td>
+	<td>//input[contains(@name,'openid--enabled')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -322,7 +322,7 @@
 <!--AUTHENTICATION_OPEN_SSO-->
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'open-sso-auth-enabled')]</td>
+	<td>//input[contains(@name,'opensso--enabled')]</td>
 	<td></td>
 </tr>
 <tr>

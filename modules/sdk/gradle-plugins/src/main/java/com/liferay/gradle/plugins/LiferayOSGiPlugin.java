@@ -29,10 +29,12 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.dm.gradle.plugins.bundle.BundleExtension;
@@ -46,6 +48,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
@@ -75,6 +78,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.apply(project);
 
 		configureArchivesBaseName(project);
+		configureSourceSetMain(project);
 		configureVersion(project);
 
 		project.afterEvaluate(
@@ -495,21 +499,35 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 	}
 
-	@Override
 	protected void configureSourceSetMain(Project project) {
 		File docrootDir = project.file("docroot");
 
 		if (!docrootDir.exists()) {
-			super.configureSourceSetMain(project);
-
 			return;
 		}
 
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
 		File classesDir = new File(docrootDir, "WEB-INF/classes");
+
+		sourceSetOutput.setClassesDir(classesDir);
+		sourceSetOutput.setResourcesDir(classesDir);
+
+		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
+
 		File srcDir = new File(docrootDir, "WEB-INF/src");
 
-		configureSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
+		Set<File> srcDirs = Collections.singleton(srcDir);
+
+		javaSourceDirectorySet.setSrcDirs(srcDirs);
+
+		SourceDirectorySet resourcesSourceDirectorySet =
+			sourceSet.getResources();
+
+		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
 	}
 
 	@Override

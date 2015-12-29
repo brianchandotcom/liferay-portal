@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
+import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
@@ -46,6 +47,8 @@ import org.gradle.api.plugins.quality.FindBugsPlugin;
 import org.gradle.api.plugins.quality.FindBugsReports;
 import org.gradle.api.reporting.SingleFileReport;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -115,6 +118,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		configureJavaPlugin(project);
 		configureProject(project);
 		configureRepositories(project);
+		configureSourceSetMain(project);
+		configureSourceSetTest(project);
+		configureSourceSetTestIntegration(project);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
 
@@ -136,6 +142,11 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		javaPluginConvention.setSourceCompatibility(_JAVA_VERSION);
 		javaPluginConvention.setTargetCompatibility(_JAVA_VERSION);
+
+		File testResultsDir = project.file("test-results/unit");
+
+		javaPluginConvention.setTestResultsDirName(
+			FileUtil.relativize(testResultsDir, project.getBuildDir()));
 	}
 
 	protected void configureProject(Project project) {
@@ -160,6 +171,37 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+	}
+
+	protected void configureSourceSetClassesDir(
+		Project project, String name, String classesDirName) {
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(project, name);
+
+		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+		if (FileUtil.isChild(
+				sourceSetOutput.getClassesDir(), project.getBuildDir())) {
+
+			sourceSetOutput.setClassesDir(classesDirName);
+			sourceSetOutput.setResourcesDir(classesDirName);
+		}
+	}
+
+	protected void configureSourceSetMain(Project project) {
+		configureSourceSetClassesDir(
+			project, SourceSet.MAIN_SOURCE_SET_NAME, "classes");
+	}
+
+	protected void configureSourceSetTest(Project project) {
+		configureSourceSetClassesDir(
+			project, SourceSet.TEST_SOURCE_SET_NAME, "test-classes/unit");
+	}
+
+	protected void configureSourceSetTestIntegration(Project project) {
+		configureSourceSetClassesDir(
+			project, TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME,
+			"test-classes/integration");
 	}
 
 	protected void configureTaskFindBugs(FindBugs findBugs) {

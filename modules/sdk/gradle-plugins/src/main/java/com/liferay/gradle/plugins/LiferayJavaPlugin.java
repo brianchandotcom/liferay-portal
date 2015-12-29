@@ -75,17 +75,14 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
-import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
-import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
@@ -122,8 +119,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureConf2ScopeMappings(project);
 		configureConfigurations(project);
-		configureProperties(project);
-		configureSourceSets(project);
 
 		addTasks(project);
 
@@ -514,64 +509,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project.getConfigurations();
 
 		configurationContainer.all(action);
-	}
-
-	protected void configureProperties(Project project) {
-		configureTestResultsDir(project);
-	}
-
-	protected void configureSourceSet(
-		Project project, String name, File classesDir, File srcDir) {
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(project, name);
-
-		if (classesDir != null) {
-			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-			sourceSetOutput.setClassesDir(classesDir);
-			sourceSetOutput.setResourcesDir(classesDir);
-		}
-
-		if (srcDir != null) {
-			SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
-
-			Set<File> srcDirs = Collections.singleton(srcDir);
-
-			javaSourceDirectorySet.setSrcDirs(srcDirs);
-
-			SourceDirectorySet resourcesSourceDirectorySet =
-				sourceSet.getResources();
-
-			resourcesSourceDirectorySet.setSrcDirs(srcDirs);
-		}
-	}
-
-	protected void configureSourceSetMain(Project project) {
-		File classesDir = project.file("classes");
-
-		configureSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, null);
-	}
-
-	protected void configureSourceSets(Project project) {
-		configureSourceSetMain(project);
-		configureSourceSetTest(project);
-		configureSourceSetTestIntegration(project);
-	}
-
-	protected void configureSourceSetTest(Project project) {
-		File classesDir = project.file("test-classes/unit");
-
-		configureSourceSet(
-			project, SourceSet.TEST_SOURCE_SET_NAME, classesDir, null);
-	}
-
-	protected void configureSourceSetTestIntegration(Project project) {
-		File classesDir = project.file("test-classes/integration");
-
-		configureSourceSet(
-			project, TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME,
-			classesDir, null);
 	}
 
 	protected void configureTaskClean(Project project) {
@@ -988,16 +925,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	protected void configureTestResultsDir(Project project) {
-		JavaPluginConvention javaPluginConvention = GradleUtil.getConvention(
-			project, JavaPluginConvention.class);
-
-		File testResultsDir = project.file("test-results/unit");
-
-		javaPluginConvention.setTestResultsDirName(
-			FileUtil.relativize(testResultsDir, project.getBuildDir()));
 	}
 
 	protected void configureVersion(

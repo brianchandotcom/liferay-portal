@@ -29,8 +29,10 @@ public class LangBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<LangBuilderPlugin> {
 
 	@Override
-	protected void configureDefaults(Project project) {
-		super.configureDefaults(project);
+	protected void configureDefaults(
+		Project project, LangBuilderPlugin langBuilderPlugin) {
+
+		super.configureDefaults(project, langBuilderPlugin);
 
 		configureTasksBuildLang(project);
 	}

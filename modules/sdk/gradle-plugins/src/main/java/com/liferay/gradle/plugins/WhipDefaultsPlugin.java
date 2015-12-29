@@ -30,8 +30,8 @@ public class WhipDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<WhipPlugin> {
 
 	@Override
-	protected void configureDefaults(Project project) {
-		super.configureDefaults(project);
+	protected void configureDefaults(Project project, WhipPlugin whipPlugin) {
+		super.configureDefaults(project, whipPlugin);
 
 		configureTasksTest(project);
 	}

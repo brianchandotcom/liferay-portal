@@ -19,13 +19,9 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
-import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
-import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorExtension;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerExtension;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
-import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.soy.BuildSoyTask;
@@ -110,8 +106,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
 
-	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
-
 	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
 
 	public static final String PORTAL_CONFIGURATION_NAME = "portal";
@@ -135,12 +129,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		applyConfigScripts(project);
 
-		configureJSModuleConfigGenerator(project);
-		configureJSTranspiler(project);
 		configureTestIntegrationTomcat(project, liferayExtension);
 
 		configureTaskClean(project);
-		configureTaskConfigJSModules(project);
 		configureTaskSetupTestableTomcat(project, liferayExtension);
 		configureTaskStartTestableTomcat(project, liferayExtension);
 		configureTaskStopTestableTomcat(project, liferayExtension);
@@ -377,7 +368,12 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, AlloyTaglibDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, CSSBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, EclipseDefaultsPlugin.class);
+		GradleUtil.applyPlugin(project, IdeaDefaultsPlugin.class);
+		GradleUtil.applyPlugin(
+			project, JSModuleConfigGeneratorDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);
+		GradleUtil.applyPlugin(project, JSTranspilerDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
@@ -385,6 +381,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, ServiceBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
@@ -519,39 +516,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configurationContainer.all(action);
 	}
 
-	protected void configureJSModuleConfigGenerator(final Project project) {
-		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
-			GradleUtil.getExtension(
-				project, JSModuleConfigGeneratorExtension.class);
-
-		String version = GradleUtil.getProperty(
-			project, "nodejs.lfr.module.config.generator.version",
-			(String)null);
-
-		if (Validator.isNotNull(version)) {
-			jsModuleConfigGeneratorExtension.setVersion(version);
-		}
-	}
-
-	protected void configureJSTranspiler(Project project) {
-		JSTranspilerExtension jsTranspilerExtension = GradleUtil.getExtension(
-			project, JSTranspilerExtension.class);
-
-		String babelVersion = GradleUtil.getProperty(
-			project, "nodejs.babel.version", (String)null);
-
-		if (Validator.isNotNull(babelVersion)) {
-			jsTranspilerExtension.setBabelVersion(babelVersion);
-		}
-
-		String lfrAmdLoaderVersion = GradleUtil.getProperty(
-			project, "nodejs.lfr.amd.loader.version", (String)null);
-
-		if (Validator.isNotNull(lfrAmdLoaderVersion)) {
-			jsTranspilerExtension.setLfrAmdLoaderVersion(lfrAmdLoaderVersion);
-		}
-	}
-
 	protected void configureProperties(Project project) {
 		configureTestResultsDir(project);
 	}
@@ -667,42 +631,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		delete.dependsOn(closure);
 	}
 
-	protected void configureTaskConfigJSModules(Project project) {
-		ConfigJSModulesTask configJSModulesTask =
-			(ConfigJSModulesTask)GradleUtil.getTask(
-				project,
-				JSModuleConfigGeneratorPlugin.CONFIG_JS_MODULES_TASK_NAME);
-
-		configureTaskConfigJSModulesConfigVariable(configJSModulesTask);
-		configureTaskConfigJSModulesIgnorePath(configJSModulesTask);
-		configureTaskConfigJSModulesModuleExtension(configJSModulesTask);
-		configureTaskConfigJSModulesModuleFormat(configJSModulesTask);
-	}
-
-	protected void configureTaskConfigJSModulesConfigVariable(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.setConfigVariable("");
-	}
-
-	protected void configureTaskConfigJSModulesIgnorePath(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.setIgnorePath(true);
-	}
-
-	protected void configureTaskConfigJSModulesModuleExtension(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.setModuleExtension("");
-	}
-
-	protected void configureTaskConfigJSModulesModuleFormat(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configJSModulesTask.setModuleFormat("/_/g,-");
-	}
-
 	protected void configureTaskDeploy(
 		Project project, LiferayExtension liferayExtension) {
 
@@ -794,130 +722,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 	}
 
-	protected void configureTaskPublishNodeModule(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		configureTaskPublishNodeModuleAuthor(publishNodeModuleTask);
-		configureTaskPublishNodeModuleBugsUrl(publishNodeModuleTask);
-		configureTaskPublishNodeModuleLicense(publishNodeModuleTask);
-		configureTaskPublishNodeModuleNpmEmailAddress(publishNodeModuleTask);
-		configureTaskPublishNodeModuleNpmPassword(publishNodeModuleTask);
-		configureTaskPublishNodeModuleNpmUserName(publishNodeModuleTask);
-		configureTaskPublishNodeModuleRepository(publishNodeModuleTask);
-	}
-
-	protected void configureTaskPublishNodeModuleAuthor(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		if (Validator.isNotNull(publishNodeModuleTask.getModuleAuthor())) {
-			return;
-		}
-
-		String author = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.module.author",
-			(String)null);
-
-		if (Validator.isNotNull(author)) {
-			publishNodeModuleTask.setModuleAuthor(author);
-		}
-	}
-
-	protected void configureTaskPublishNodeModuleBugsUrl(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		if (Validator.isNotNull(publishNodeModuleTask.getModuleBugsUrl())) {
-			return;
-		}
-
-		String bugsUrl = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.module.bugs.url",
-			(String)null);
-
-		if (Validator.isNotNull(bugsUrl)) {
-			publishNodeModuleTask.setModuleBugsUrl(bugsUrl);
-		}
-	}
-
-	protected void configureTaskPublishNodeModuleLicense(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		if (Validator.isNotNull(publishNodeModuleTask.getModuleLicense())) {
-			return;
-		}
-
-		String license = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.module.license",
-			(String)null);
-
-		if (Validator.isNotNull(license)) {
-			publishNodeModuleTask.setModuleLicense(license);
-		}
-	}
-
-	protected void configureTaskPublishNodeModuleNpmEmailAddress(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		if (Validator.isNotNull(publishNodeModuleTask.getNpmEmailAddress())) {
-			return;
-		}
-
-		String emailAddress = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.email",
-			(String)null);
-
-		if (Validator.isNotNull(emailAddress)) {
-			publishNodeModuleTask.setNpmEmailAddress(emailAddress);
-		}
-	}
-
-	protected void configureTaskPublishNodeModuleNpmPassword(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		if (Validator.isNotNull(publishNodeModuleTask.getNpmPassword())) {
-			return;
-		}
-
-		String password = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.password",
-			(String)null);
-
-		if (Validator.isNotNull(password)) {
-			publishNodeModuleTask.setNpmPassword(password);
-		}
-	}
-
-	protected void configureTaskPublishNodeModuleNpmUserName(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		if (Validator.isNotNull(publishNodeModuleTask.getNpmUserName())) {
-			return;
-		}
-
-		String userName = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.user",
-			(String)null);
-
-		if (Validator.isNotNull(userName)) {
-			publishNodeModuleTask.setNpmUserName(userName);
-		}
-	}
-
-	protected void configureTaskPublishNodeModuleRepository(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		if (Validator.isNotNull(publishNodeModuleTask.getModuleRepository())) {
-			return;
-		}
-
-		String repository = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.module.repository",
-			(String)null);
-
-		if (Validator.isNotNull(repository)) {
-			publishNodeModuleTask.setModuleRepository(repository);
-		}
-	}
-
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
@@ -925,7 +729,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskJar(project);
 
 		configureTasksDirectDeploy(project);
-		configureTasksPublishNodeModule(project);
 	}
 
 	protected void configureTasksDirectDeploy(Project project) {
@@ -969,23 +772,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				@Override
 				public String call() throws Exception {
 					return tomcatAppServer.getZipUrl();
-				}
-
-			});
-	}
-
-	protected void configureTasksPublishNodeModule(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			PublishNodeModuleTask.class,
-			new Action<PublishNodeModuleTask>() {
-
-				@Override
-				public void execute(
-					PublishNodeModuleTask publishNodeModuleTask) {
-
-					configureTaskPublishNodeModule(publishNodeModuleTask);
 				}
 
 			});

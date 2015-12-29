@@ -17,6 +17,8 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 
+import org.dm.gradle.plugins.bundle.BundlePlugin;
+
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
@@ -28,19 +30,30 @@ public class ServiceBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<ServiceBuilderPlugin> {
 
 	@Override
-	protected void configureDefaults(Project project) {
-		super.configureDefaults(project);
+	protected void configureDefaults(
+		final Project project, ServiceBuilderPlugin serviceBuilderPlugin) {
 
-		configureTasksBuildService(project);
+		super.configureDefaults(project, serviceBuilderPlugin);
+
+		withPlugin(
+			project, BundlePlugin.class,
+			new Action<BundlePlugin>() {
+
+				@Override
+				public void execute(BundlePlugin bundlePlugin) {
+					configureTasksBuildServiceForBundlePlugin(project);
+				}
+
+			});
 	}
 
-	protected void configureTaskBuildService(
+	protected void configureTaskBuildServiceForBundlePlugin(
 		BuildServiceTask buildServiceTask) {
 
 		buildServiceTask.setOsgiModule(true);
 	}
 
-	protected void configureTasksBuildService(Project project) {
+	protected void configureTasksBuildServiceForBundlePlugin(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -49,7 +62,7 @@ public class ServiceBuilderDefaultsPlugin
 
 				@Override
 				public void execute(BuildServiceTask buildServiceTask) {
-					configureTaskBuildService(buildServiceTask);
+					configureTaskBuildServiceForBundlePlugin(buildServiceTask);
 				}
 
 			});

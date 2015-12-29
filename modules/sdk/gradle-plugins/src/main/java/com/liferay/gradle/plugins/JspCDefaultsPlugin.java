@@ -120,8 +120,8 @@ public class JspCDefaultsPlugin
 	}
 
 	@Override
-	protected void configureDefaults(Project project) {
-		super.configureDefaults(project);
+	protected void configureDefaults(Project project, JspCPlugin jspCPlugin) {
+		super.configureDefaults(project, jspCPlugin);
 
 		final Copy unzipJarTask = addTaskUnzipJar(project);
 

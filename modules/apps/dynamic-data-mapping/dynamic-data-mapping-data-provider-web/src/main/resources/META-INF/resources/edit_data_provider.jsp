@@ -109,7 +109,7 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 						label: '<liferay-ui:message key="cancel" />',
 						on: {
 							click: function() {
-								location.href = '<%= viewDataProviderURL.toString() %>'
+								location.href = '<%= viewDataProviderURL.toString() %>';
 							}
 						}
 					}

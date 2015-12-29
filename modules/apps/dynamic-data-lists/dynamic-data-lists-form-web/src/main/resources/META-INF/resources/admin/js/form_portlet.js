@@ -39,7 +39,7 @@ AUI.add(
 				NAME: 'liferay-ddl-portlet',
 
 				openDDMDataProvider: function(dataProviderURL) {
-					var modal = Liferay.Util.openWindow(
+					Liferay.Util.openWindow(
 						{
 							dialog: {
 								cssClass: 'dynamic-data-mapping-data-providers-modal',
@@ -85,8 +85,6 @@ AUI.add(
 						var editForm = instance.get('editForm');
 
 						editForm.set('onSubmit', A.bind('_onSubmitEditForm', instance));
-
-						var rootNode = instance.get('rootNode');
 
 						instance._eventHandlers = [
 							instance.one('#publishCheckbox').on('change', A.bind('_onChangePublishCheckbox', instance)),
@@ -194,8 +192,8 @@ AUI.add(
 
 						var payload = instance.ns(
 							{
-								recordSetId: instance.get('recordSetId'),
-								published: publishCheckbox.attr('checked')
+								published: publishCheckbox.attr('checked'),
+								recordSetId: instance.get('recordSetId')
 							}
 						);
 

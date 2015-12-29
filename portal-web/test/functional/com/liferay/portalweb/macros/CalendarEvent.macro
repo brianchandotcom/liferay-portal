@@ -1713,7 +1713,7 @@
 	</command>
 
 	<command name="viewTitleViaDetails">
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
 
 		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#EVENT_TITLE" value1="${eventTitle}" />
 	</command>

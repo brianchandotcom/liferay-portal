@@ -1928,7 +1928,7 @@
 			<var name="startDateTime" value="9:00am" />
 		</execute>
 
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewTimesViaDetails">
 			<var name="endDateTime" value="10:00 AM" />
@@ -1971,7 +1971,7 @@
 			<var name="startDateTime" value="pm" />
 		</execute>
 
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewTimesViaDetails">
 			<var name="endDateTime" value="PM" />
@@ -3971,7 +3971,7 @@
 			<var name="startDateTime" value="21:00" />
 		</execute>
 
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewTimesViaDetails">
 			<var name="endDateTime" value="23:00" />
@@ -4025,7 +4025,7 @@
 			<var name="startDateTime" value="9:00pm" />
 		</execute>
 
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewTimesViaDetails">
 			<var name="endDateTime" value="11:00 PM" />

@@ -11,12 +11,6 @@
 		</if>
 	</command>
 
-	<command name="_gotoDetailsViaDialogBox">
-		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
-
-		<execute function="SelectFrame" locator1="CalendarViewEventDetails#VIEW_EVENT_IFRAME" />
-	</command>
-
 	<command name="_selectSpecificEventCurrentDay">
 		<var name="key_eventTitle" value="${eventTitle}" />
 
@@ -147,6 +141,12 @@
 
 	<command name="gotoAddViaDayView">
 		<execute function="SikuliClick" locator1="PGCalendar#SCHEDULER_DAY_VIEW_PNG" />
+	</command>
+
+	<command name="gotoDetailsViaDialogBox">
+		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
+
+		<execute function="SelectFrame" locator1="CalendarViewEventDetails#VIEW_EVENT_IFRAME" />
 	</command>
 
 	<command name="gotoEdit">

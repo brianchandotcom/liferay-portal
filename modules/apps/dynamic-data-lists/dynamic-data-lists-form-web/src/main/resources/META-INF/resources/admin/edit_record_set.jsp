@@ -261,7 +261,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 						width: 720
 					},
 					id: '<portlet:namespace />settingsModal',
-					title: '<liferay-ui:message key="settings" />'
+					title: '<liferay-ui:message key="form-settings" />'
 				},
 				function(dialogWindow) {
 					var bodyNode = dialogWindow.bodyNode;

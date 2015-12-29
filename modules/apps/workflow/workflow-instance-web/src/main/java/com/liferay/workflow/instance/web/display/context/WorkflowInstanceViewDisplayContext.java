@@ -243,25 +243,10 @@ public class WorkflowInstanceViewDisplayContext
 			HtmlUtil.escape(workflowInstance.getState()));
 	}
 
-	public String getTabs2() {
-		return ParamUtil.getString(renderRequest, "tabs2", "pending");
-	}
-
 	public PortletURL getViewPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("tabs1", "submissions");
-		portletURL.setParameter("tabs2", getTabs2());
-
 		return portletURL;
-	}
-
-	public boolean isShowEntryAction() {
-		if (isShowCompletedInstances()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	public boolean isNavigationAll() {
@@ -398,15 +383,6 @@ public class WorkflowInstanceViewDisplayContext
 		return WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
 	}
 
-	protected boolean isShowCompletedInstances() {
-		String tabs2 = getTabs2();
-
-		if (tabs2.equals("completed")) {
-			return true;
-		}
-
-		return false;
-	}
 
 	private String _displayStyle;
 	private String[] _displayViews;

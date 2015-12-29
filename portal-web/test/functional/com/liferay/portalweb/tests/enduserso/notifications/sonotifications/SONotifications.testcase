@@ -5124,14 +5124,14 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOProfile#addProfilePicture">
 			<var name="imageFileName" value="${imageFileName}" />
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOProfile#viewProfilePicture" />
 

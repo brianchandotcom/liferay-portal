@@ -169,7 +169,7 @@
 			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOStatusUpdate#configureStatusUpdateDisplayPG" />
 

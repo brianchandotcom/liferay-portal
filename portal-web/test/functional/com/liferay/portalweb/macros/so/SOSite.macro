@@ -453,7 +453,7 @@
 		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_WIKI" value1="Wiki" />
 		<execute function="Click" locator1="SOSite#NAVIGATION_MEMBERS" value1="Members" />
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute function="AssertClick" locator1="SOProfile#PROFILE_INFO_SITES" value1="${siteName}" />
 
@@ -602,7 +602,7 @@
 			</then>
 		</if>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute function="AssertTextNotPresent" value1="${siteName}" />
 	</command>

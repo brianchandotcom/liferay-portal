@@ -36,12 +36,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_MY_PROFILE</td>
-	<td>//li[contains(@id,'tabs')]/a[contains(.,'My Profile')]</td>
+	<td>//li[contains(@id,'tabs')]/a[contains(.,'Profile')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MY_DASHBOARD</td>
-	<td>//li[contains(@id,'tabs')]/a[contains(.,'My Dashboard')]</td>
+	<td>//li[contains(@id,'tabs')]/a[contains(.,'Dashboard')]</td>
 	<td></td>
 </tr>
 <tr>

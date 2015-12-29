@@ -109,7 +109,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="&lt;userfn&gt; userln" />
 	</command>
@@ -491,7 +491,7 @@
 			<var name="site" value="Organization Name 2" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Site#viewNoMySitesViaMySitesPG">
 			<var name="siteName" value="Organization Name 1" />
@@ -512,7 +512,7 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Site#viewNoMySitesViaMySitesPG">
 			<var name="siteName" value="Organization Name 1" />

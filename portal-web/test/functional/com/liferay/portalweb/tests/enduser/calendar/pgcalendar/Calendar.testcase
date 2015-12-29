@@ -4067,7 +4067,7 @@
 			<var name="userLoginFullName" value="${userLoginFullName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Calendar" />
@@ -4903,13 +4903,13 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Calendar" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Calendar#searchOtherCalendars">
 			<var name="searchValue" value="site" />

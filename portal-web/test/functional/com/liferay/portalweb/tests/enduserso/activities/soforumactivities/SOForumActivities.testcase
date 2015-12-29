@@ -172,7 +172,7 @@
 
 		<execute function="AssertTextNotPresent" value1="${userName}" />
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Replied to Anonymous's forum post in ${categoryName}." />
@@ -243,7 +243,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute function="AssertTextEquals" locator1="SOActivities#NO_ACTIVITIES" value1="There are no activities." />
 	</command>

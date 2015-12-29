@@ -5,7 +5,7 @@
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
 		<execute function="AssertClick" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_PAGES" value1="Pages" />
 
-		<execute function="AssertClick" locator1="SitePages#NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="AssertClick" locator1="SitePages#NAVIGATION_MY_DASHBOARD" value1="Dashboard" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_8" />

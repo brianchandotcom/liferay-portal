@@ -128,7 +128,7 @@
 		</execute>
 
 		<execute macro="UserGroup#addPageCP">
-			<var name="page" value="My Dashboard" />
+			<var name="page" value="Dashboard" />
 			<var name="sitePageName" value="Test User Group Private Page" />
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
@@ -149,7 +149,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 

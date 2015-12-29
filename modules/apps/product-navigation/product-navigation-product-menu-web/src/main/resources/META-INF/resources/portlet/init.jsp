@@ -37,6 +37,9 @@ page import="com.liferay.product.navigation.product.menu.web.display.context.Pro
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
+<%@ page
+import="com.liferay.application.list.constants.PanelCategoryKeys" %>
+
 <%@ page import="java.util.List" %>
 
 <portlet:defineObjects />

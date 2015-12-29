@@ -1,42 +1,101 @@
 <definition>
+	<command name="gotoDashboard">
+		<description message="Navigate to Dashboard." />
+
+		<execute macro="Navigator#openURL" />
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
+			<then>
+				<if>
+					<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+					<then>
+						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+
+						<execute function="AssertClick" locator1="UserBar#USER_DASHBOARD" value1="Dashboard" />
+					</then>
+				</if>
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="UserBar#USER_DASHBOARD" value1="Dashboard" />
+			</else>
+		</if>
+	</command>
+
 	<command name="gotoMyAccount">
-		<description message="Navigate to My Account via the User Bar." />
+		<description message="Navigate to Account via the User Bar." />
 
 		<execute macro="Navigator#openURL" />
 
-		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
+			<then>
+				<if>
+					<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+					<then>
+						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
-		<execute function="AssertClick" locator1="UserBar#USER_MY_ACCOUNT" value1="My Account" />
+						<execute macro="ProductMenuHelper#expandCategory">
+							<var name="category" value="My Account" />
+						</execute>
+
+						<execute macro="ProductMenuHelper#gotoPortlet">
+							<var name="portlet" value="Account Settings" />
+						</execute>
+					</then>
+				</if>
+			</then>
+			<else>
+				<execute macro="ProductMenuHelper#expandCategory">
+					<var name="category" value="My Account" />
+				</execute>
+
+				<execute macro="ProductMenuHelper#gotoPortlet">
+					<var name="portlet" value="Account Settings" />
+				</execute>
+			</else>
+		</if>
 	</command>
 
-	<command name="gotoMyDashboard">
-		<description message="Navigate to My Dashboard." />
+	<command name="gotoProfile">
+		<description message="Navigate to Profile." />
 
 		<execute macro="Navigator#openURL" />
 
-		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
+			<then>
+				<if>
+					<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+					<then>
+						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
-		<execute function="AssertClick" locator1="UserBar#USER_MY_DASHBOARD" value1="My Dashboard" />
-	</command>
-
-	<command name="gotoMyProfile">
-		<description message="Navigate to My Profile." />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
-
-		<execute function="AssertClick" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
+						<execute function="AssertClick" locator1="UserBar#USER_PROFILE" value1="Profile" />
+					</then>
+				</if>
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="UserBar#USER_PROFILE" value1="Profile" />
+			</else>
+		</if>
 	</command>
 
 	<command name="signOut">
 		<if>
-			<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
 			<then>
-				<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
+				<if>
+					<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+					<then>
+						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
-				<execute function="Click" locator1="UserBar#USER_SIGN_OUT" />
+						<execute function="Click" locator1="UserBar#USER_SIGN_OUT" />
+					</then>
+				</if>
 			</then>
+			<else>
+				<execute function="Click" locator1="UserBar#USER_SIGN_OUT" />
+			</else>
 		</if>
 	</command>
 
@@ -45,7 +104,7 @@
 
 		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
-		<execute function="AssertTextNotPresent" locator1="UserBar#USER_MY_PROFILE" value1="My Profile" />
-		<execute function="AssertTextNotPresent" locator1="UserBar#USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="AssertTextNotPresent" locator1="UserBar#USER_PROFILE" value1="Profile" />
+		<execute function="AssertTextNotPresent" locator1="UserBar#USER_DASHBOARD" value1="Dashboard" />
 	</command>
 </definition>

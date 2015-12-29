@@ -532,7 +532,7 @@
 
 		<execute function="SikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_NORMAL_PNG" />
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Created a new task." />
@@ -643,7 +643,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Resolved a task." />
@@ -762,7 +762,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Updated a task." />
@@ -852,7 +852,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Created a new task." />
@@ -965,7 +965,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Updated a task." />
@@ -1085,7 +1085,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Updated a task." />
@@ -1177,7 +1177,7 @@
 
 		<execute function="SikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_HIGH_PNG" />
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Created a new task." />
@@ -1261,7 +1261,7 @@
 
 		<execute function="SikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_LOW_PNG" />
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Created a new task." />
@@ -1402,7 +1402,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Reopened a task." />
@@ -1530,7 +1530,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Resolved a task." />
@@ -1727,7 +1727,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Resolved a task." />
@@ -1805,7 +1805,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Made 2 updates to a task." />
@@ -1992,7 +1992,7 @@
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="SOActivities#viewTasksActivityEntry">
 			<var name="action" value="Created a new task." />

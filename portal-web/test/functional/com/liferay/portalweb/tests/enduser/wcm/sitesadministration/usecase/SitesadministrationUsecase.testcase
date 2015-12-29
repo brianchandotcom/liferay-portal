@@ -769,7 +769,7 @@
 		</execute>
 
 		<execute macro="UserGroup#addPageCP">
-			<var name="page" value="My Profile" />
+			<var name="page" value="Profile" />
 			<var name="sitePageName" value="site Page Name" />
 			<var name="userGroupName" value="User Group Name" />
 		</execute>
@@ -808,7 +808,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute function="AssertLocation" value1="http://localhost:8080/user/usersn" />
 

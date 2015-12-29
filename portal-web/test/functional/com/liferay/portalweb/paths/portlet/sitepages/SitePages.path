@@ -36,12 +36,12 @@
 </tr>
 <tr>
 	<td>NAVIGATION_MY_PROFILE</td>
-	<td>//a[contains(@title,'My Profile')]/span[contains(@class,'icon-cog')]</td>
+	<td>//a[contains(@title,'Profile')]/span[contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MY_DASHBOARD</td>
-	<td>//a[contains(@title,'My Dashboard')]/span[contains(@class,'icon-cog')]</td>
+	<td>//a[contains(@title,'Dashboard')]/span[contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>

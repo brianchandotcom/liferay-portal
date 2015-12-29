@@ -69,7 +69,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Site#joinViaMySitesPG">
 			<var name="siteName" value="Site Name" />
@@ -124,7 +124,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Site#joinViaMySitesPG">
 			<var name="membershipType" value="Private" />
@@ -178,7 +178,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Site#joinViaMySitesPG">
 			<var name="membershipType" value="Restricted" />
@@ -213,7 +213,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
 			<var name="memberCount" value="2" />
@@ -268,13 +268,13 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Site#joinViaMySitesPG">
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyDashboard" />
+		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Site#leaveViaMySitesPG">
 			<var name="siteName" value="Site Name" />

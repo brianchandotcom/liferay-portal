@@ -71,9 +71,11 @@
 	</div>
 
 	<aui:script use="liferay-store">
-		AUI.$('#sidenavToggleId').sideNavigation();
+		var sidenavToggle = $('#sidenavToggleId');
 
-		var sidenavSlider = AUI.$('#sidenavSliderId');
+		sidenavToggle.sideNavigation();
+
+		var sidenavSlider = $('#sidenavSliderId');
 
 		sidenavSlider.off('closed.lexicon.sidenav');
 		sidenavSlider.off('open.lexicon.sidenav');
@@ -89,6 +91,29 @@
 			'open.lexicon.sidenav',
 			function(event) {
 				Liferay.Store('com.liferay.control.menu.web_productMenuState', 'open');
+			}
+		);
+
+		Liferay.on(
+			'ProductMenu:openUserMenu',
+			function(event) {
+				var userCollapse = $('#<portlet:namespace /><%= AUIUtil.normalizeId(PanelCategoryKeys.USER) %>Collapse');
+
+				if ($('body').hasClass('open')) {
+					if (userCollapse.hasClass('in')) {
+						userCollapse.collapse('hide');
+
+						sidenavToggle.sideNavigation('hide');
+					}
+					else {
+						userCollapse.collapse('show');
+					}
+				}
+				else {
+					sidenavToggle.sideNavigation('show');
+
+					userCollapse.collapse('show');
+				}
 			}
 		);
 	</aui:script>

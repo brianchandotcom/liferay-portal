@@ -292,10 +292,10 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="UserBar#gotoMyProfile" />
+		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="My Profile" />
+			<var name="page" value="Profile" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoAddPage" />

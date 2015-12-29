@@ -602,6 +602,12 @@
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
 	</command>
 
+	<command name="gotoMyCalendarsManage">
+		<execute function="Click" locator1="Calendar#MY_CALENDARS_MENULIST_ARROW" />
+
+		<execute function="AssertClick" locator1="Calendar#MY_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
+	</command>
+
 	<command name="importCalendarFile">
 		<var name="key_calendarName" value="${calendarName}" />
 

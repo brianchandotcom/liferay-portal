@@ -128,10 +128,6 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		return javaFileObjects;
 	}
 
-	protected String decodePath(String path) {
-		return URLCodec.decodeURL(path, StringPool.UTF8);
-	}
-
 	protected Collection<JavaFileObject> doResolveClasses(
 		BundleWiring bundleWiring, String path, int options) {
 
@@ -210,7 +206,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			}
 		}
 
-		return new File(decodePath(fileName));
+		return new File(URLCodec.decodeURL(fileName, StringPool.UTF8));
 	}
 
 	protected JavaFileObject getJavaFileObject(

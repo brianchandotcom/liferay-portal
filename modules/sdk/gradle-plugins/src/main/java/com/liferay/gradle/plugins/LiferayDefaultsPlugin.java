@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
@@ -333,6 +334,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				@Override
 				public void execute(Project project) {
 					configureArtifacts(project);
+					configureProjectBndProperties(project);
 					configureProjectVersion(project);
 				}
 
@@ -375,6 +377,28 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	protected void configureProject(Project project) {
 		project.setGroup(_GROUP);
+	}
+
+	protected void configureProjectBndProperties(Project project) {
+		LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		File appServerPortalDir = liferayExtension.getAppServerPortalDir();
+
+		GradleUtil.setProperty(
+			project, "app.server.portal.dir",
+			project.relativePath(appServerPortalDir));
+
+		File appServerLibPortalDir = new File(
+			appServerPortalDir, "WEB-INF/lib");
+
+		GradleUtil.setProperty(
+			project, "app.server.lib.portal.dir",
+			project.relativePath(appServerLibPortalDir));
+
+		GradleUtil.setProperty(
+			project, "plugin.full.version",
+			String.valueOf(project.getVersion()));
 	}
 
 	protected void configureProjectVersion(Project project) {

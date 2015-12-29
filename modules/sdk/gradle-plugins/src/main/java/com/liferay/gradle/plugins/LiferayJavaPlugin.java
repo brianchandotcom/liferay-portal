@@ -273,6 +273,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureConfigurations(final Project project) {
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
 		Action<Configuration> action = new Action<Configuration>() {
 
 			@Override
@@ -295,10 +298,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 								if (group.equals("com.liferay.portal") &&
 									version.equals("default")) {
-
-									LiferayExtension liferayExtension =
-										GradleUtil.getExtension(
-											project, LiferayExtension.class);
 
 									dependencyResolveDetails.useVersion(
 										liferayExtension.getPortalVersion());

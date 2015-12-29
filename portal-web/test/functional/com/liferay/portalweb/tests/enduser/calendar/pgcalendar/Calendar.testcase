@@ -805,16 +805,10 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarNavigator#gotoEventDetails">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 		</execute>
-
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewRepeatingEventViaViewDetails">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -966,16 +960,10 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarNavigator#gotoEventDetails">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 		</execute>
-
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewRepeatingEventViaViewDetails">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -1219,15 +1207,10 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectSpecificEvent">
+		<execute macro="CalendarNavigator#gotoEventDetails">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
-
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewRepeatingEventViaViewDetails">
 			<var name="eventTitle" value="${eventTitle}" />

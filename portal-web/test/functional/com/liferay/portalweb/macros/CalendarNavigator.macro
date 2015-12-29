@@ -33,6 +33,19 @@
 		<execute macro="CalendarEvent#_viewNewEventIframe" />
 	</command>
 
+	<command name="gotoEventDetails">
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectEvent">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+	</command>
+
 	<command name="gotoAddEventOnSpecifcDayOfWeekViaWeekView">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />

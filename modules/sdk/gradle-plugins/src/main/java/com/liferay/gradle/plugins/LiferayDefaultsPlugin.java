@@ -37,6 +37,7 @@ import java.io.File;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -80,7 +81,11 @@ import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
+import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
+import org.gradle.plugins.ide.eclipse.model.EclipseModel;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
+import org.gradle.plugins.ide.idea.model.IdeaModel;
+import org.gradle.plugins.ide.idea.model.IdeaModule;
 
 /**
  * @author Andrea Di Giorgi
@@ -91,7 +96,27 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
 
+	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
+
 	public static final String ZIP_JAVADOC_TASK_NAME = "zipJavadoc";
+
+	protected Configuration addConfigurationPortalTest(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, PORTAL_TEST_CONFIGURATION_NAME);
+
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
+	protected void addDependenciesPortalTest(Project project) {
+		GradleUtil.addDependency(
+			project, PORTAL_TEST_CONFIGURATION_NAME, "com.liferay.portal",
+			"portal-test", "default");
+		GradleUtil.addDependency(
+			project, PORTAL_TEST_CONFIGURATION_NAME, "com.liferay.portal",
+			"portal-test-internal", "default");
+	}
 
 	protected Copy addTaskCopyLibs(Project project) {
 		Copy copy = GradleUtil.addTask(
@@ -292,6 +317,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	protected void configureDefaults(
 		final Project project, LiferayPlugin liferayPlugin) {
 
+		boolean testProject = isTestProject(project);
+
 		applyPlugins(project);
 
 		// applyConfigScripts configures the "install" and "uploadArchives"
@@ -304,16 +331,24 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		applyConfigScripts(project);
 
-		boolean testProject = isTestProject(project);
+		Configuration portalConfiguration = GradleUtil.getConfiguration(
+			project, LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
+		Configuration portalTestConfiguration = addConfigurationPortalTest(
+			project);
 
+		addDependenciesPortalTest(project);
 		addTaskJarSources(project, testProject);
 		addTaskZipJavadoc(project);
+		configureEclipse(project, portalTestConfiguration);
+		configureIdea(project, portalTestConfiguration);
 		configureJavaPlugin(project);
 		configureProject(project);
 		configureRepositories(project);
 		configureSourceSetMain(project);
-		configureSourceSetTest(project);
-		configureSourceSetTestIntegration(project);
+		configureSourceSetTest(
+			project, portalConfiguration, portalTestConfiguration);
+		configureSourceSetTestIntegration(
+			project, portalConfiguration, portalTestConfiguration);
 		configureTaskJar(project, testProject);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
@@ -347,6 +382,37 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+	}
+
+	protected void configureEclipse(
+		Project project, Configuration portalTestConfiguration) {
+
+		EclipseModel eclipseModel = GradleUtil.getExtension(
+			project, EclipseModel.class);
+
+		EclipseClasspath eclipseClasspath = eclipseModel.getClasspath();
+
+		Collection<Configuration> plusConfigurations =
+			eclipseClasspath.getPlusConfigurations();
+
+		plusConfigurations.add(portalTestConfiguration);
+	}
+
+	protected void configureIdea(
+		Project project, Configuration portalTestConfiguration) {
+
+		IdeaModel ideaModel = GradleUtil.getExtension(project, IdeaModel.class);
+
+		IdeaModule ideaModule = ideaModel.getModule();
+
+		Map<String, Map<String, Collection<Configuration>>> scopes =
+			ideaModule.getScopes();
+
+		Map<String, Collection<Configuration>> testScope = scopes.get("TEST");
+
+		Collection<Configuration> plusConfigurations = testScope.get("plus");
+
+		plusConfigurations.add(portalTestConfiguration);
 	}
 
 	protected void configureJavaPlugin(Project project) {
@@ -445,9 +511,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void configureSourceSetClassesDir(
-		Project project, String name, String classesDirName) {
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(project, name);
+		Project project, SourceSet sourceSet, String classesDirName) {
 
 		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
@@ -460,19 +524,55 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void configureSourceSetMain(Project project) {
-		configureSourceSetClassesDir(
-			project, SourceSet.MAIN_SOURCE_SET_NAME, "classes");
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		configureSourceSetClassesDir(project, sourceSet, "classes");
 	}
 
-	protected void configureSourceSetTest(Project project) {
-		configureSourceSetClassesDir(
-			project, SourceSet.TEST_SOURCE_SET_NAME, "test-classes/unit");
+	protected void configureSourceSetTest(
+		Project project, Configuration portalConfiguration,
+		Configuration portalTestConfiguration) {
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.TEST_SOURCE_SET_NAME);
+
+		configureSourceSetClassesDir(project, sourceSet, "test-classes/unit");
+
+		Configuration compileConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+
+		sourceSet.setCompileClasspath(
+			FileUtil.join(
+				compileConfiguration, portalConfiguration,
+				sourceSet.getCompileClasspath(), portalTestConfiguration));
+
+		sourceSet.setRuntimeClasspath(
+			FileUtil.join(
+				compileConfiguration, portalConfiguration,
+				sourceSet.getRuntimeClasspath(), portalTestConfiguration));
 	}
 
-	protected void configureSourceSetTestIntegration(Project project) {
+	protected void configureSourceSetTestIntegration(
+		Project project, Configuration portalConfiguration,
+		Configuration portalTestConfiguration) {
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project,
+			TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
+
 		configureSourceSetClassesDir(
-			project, TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME,
-			"test-classes/integration");
+			project, sourceSet, "test-classes/integration");
+
+		sourceSet.setCompileClasspath(
+			FileUtil.join(
+				portalConfiguration, sourceSet.getCompileClasspath(),
+				portalTestConfiguration));
+
+		sourceSet.setRuntimeClasspath(
+			FileUtil.join(
+				portalConfiguration, sourceSet.getRuntimeClasspath(),
+				portalTestConfiguration));
 	}
 
 	protected void configureTaskFindBugs(FindBugs findBugs) {

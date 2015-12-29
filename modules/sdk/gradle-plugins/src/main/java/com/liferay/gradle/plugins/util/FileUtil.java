@@ -64,4 +64,20 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		return true;
 	}
 
+	public static FileCollection join(FileCollection ... fileCollections) {
+		FileCollection joinedFileCollection = null;
+
+		for (FileCollection fileCollection : fileCollections) {
+			if (joinedFileCollection == null) {
+				joinedFileCollection = fileCollection;
+			}
+			else {
+				joinedFileCollection = joinedFileCollection.plus(
+					fileCollection);
+			}
+		}
+
+		return joinedFileCollection;
+	}
+
 }

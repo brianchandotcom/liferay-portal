@@ -118,6 +118,21 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			"portal-test-internal", "default");
 	}
 
+	protected void addDependenciesTestCompile(Project project) {
+		GradleUtil.addDependency(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+			"org.powermock", "powermock-api-mockito", "1.6.1");
+		GradleUtil.addDependency(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+			"org.powermock", "powermock-core", "1.6.1");
+		GradleUtil.addDependency(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+			"org.powermock", "powermock-module-junit4", "1.6.1");
+		GradleUtil.addDependency(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+			"org.springframework", "spring-test", "3.2.15.RELEASE");
+	}
+
 	protected Copy addTaskCopyLibs(Project project) {
 		Copy copy = GradleUtil.addTask(
 			project, COPY_LIBS_TASK_NAME, Copy.class);
@@ -337,6 +352,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			project);
 
 		addDependenciesPortalTest(project);
+		addDependenciesTestCompile(project);
 		addTaskJarSources(project, testProject);
 		addTaskZipJavadoc(project);
 		configureEclipse(project, portalTestConfiguration);

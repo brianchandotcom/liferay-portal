@@ -109,7 +109,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesCP" />
 
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -123,12 +123,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Main" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Page" />
 		</execute>
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />

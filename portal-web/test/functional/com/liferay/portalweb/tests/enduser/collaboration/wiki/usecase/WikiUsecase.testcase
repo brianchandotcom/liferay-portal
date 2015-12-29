@@ -50,7 +50,7 @@
 	<command name="AddPageWithCustomContentHeading" priority="4">
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -240,7 +240,7 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page 1" />
@@ -311,7 +311,7 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page 1" />

@@ -107,7 +107,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
@@ -292,20 +292,8 @@
 		<execute function="AssertTextEquals" locator1="Wiki#HTML_BODY" value1="${wikiPageContent}" />
 	</command>
 
-	<command name="addPagePGViaWD">
-		<execute function="AssertClick" locator1="PGWikidisplayAllpages#ADD_PAGE_BUTTON" value1="Add Page" />
-
-		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
-
-		<execute function="Type#typeAlloyEditor" locator1="Wiki#RICH_TEXT_EDITOR" value1="${wikiPageContent}" />
-
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute function="AssertTextEquals" locator1="PGWikidisplayAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
 	<command name="addPageWithWorkflowPG">
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
 
@@ -317,7 +305,7 @@
 	</command>
 
 	<command name="addPageWithWorkflowPGViaWD">
-		<execute function="AssertClick" locator1="PGWikidisplayAllpages#ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
 
@@ -355,7 +343,7 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
 
@@ -524,21 +512,21 @@
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
 		<execute function="AssertClick" locator1="Wiki#LINK_DETAILS" value1="Details" />
+
 		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_HISTORY" value1="History" />
+
+		<execute function="AssertClick" locator1="Wiki#HISTORY_VERSIONS_TAB" value1="Versions" />
 
 		<var name="key_wikiPageVersionNew" value="${wikiPageVersionNew}" />
 
-		<execute function="AssertClick" locator1="Wiki#HISTORY_ACTIVITIES_TABLE_COMPARE_TO" value1="Compare to..." />
-
-		<execute function="SelectFrame" locator1="PGWikiWikipageHistorySelectversion#SELECT_VERSION_IFRAME" />
-		<execute function="AssertTextEquals" locator1="PGWikiWikipageHistorySelectversion#SELECT_VERSION_VERSION_NEW" value1="${wikiPageVersionNew}" />
-		<execute function="AssertElementPresent" locator1="PGWikiWikipageHistorySelectversion#SELECT_VERSION_DATE_NEW" />
+		<execute function="Check" locator1="Wiki#SELECT_VERSION_VERSION_NEW_CHECKBOX" value1="${wikiPageVersionNew}" />
 
 		<var name="key_wikiPageVersionOld" value="${wikiPageVersionOld}" />
 
-		<execute function="AssertTextEquals" locator1="PGWikiWikipageHistorySelectversion#SELECT_VERSION_VERSION_OLD" value1="${wikiPageVersionOld}" />
-		<execute function="AssertElementPresent" locator1="PGWikiWikipageHistorySelectversion#SELECT_VERSION_DATE_OLD" />
-		<execute function="AssertClick" locator1="PGWikiWikipageHistorySelectversion#SELECT_VERSION_CHOOSE_BUTTON_OLD" value1="Choose" />
+		<execute function="Check" locator1="Wiki#SELECT_VERSION_VERSION_OLD_CHECKBOX" value1="${wikiPageVersionOld}" />
+
+		<execute function="AssertClick" locator1="Button#COMPARE_VERSIONS" value1="Compare Versions" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<if>

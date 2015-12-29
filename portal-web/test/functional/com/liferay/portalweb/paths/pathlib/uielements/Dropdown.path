@@ -24,6 +24,11 @@
 	<td>//*[@data-qa-id='orderBy']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILTER_VALUES</td>
+	<td>//*[@data-qa-id='filterValues']/li[contains(.,'${key_filterValue}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -376,7 +377,11 @@ public class DDMFormFactoryHelper {
 
 	protected void setDefaultLocale() {
 		if (Validator.isNull(_ddmForm.defaultLanguageId())) {
-			_defaultLocale = LocaleUtil.getDefault();
+			_defaultLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
+			if (_defaultLocale == null) {
+				_defaultLocale = LocaleUtil.getDefault();
+			}
 
 			return;
 		}

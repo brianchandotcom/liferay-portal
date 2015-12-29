@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.web.ddm;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,6 +42,11 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
 	}
 
+	@Override
+	public String getStorageType() {
+		return StorageType.JSON.getValue();
+	}
+	
 	@Override
 	public String getStructureName(Locale locale) {
 		return LanguageUtil.get(locale, "data-definition");

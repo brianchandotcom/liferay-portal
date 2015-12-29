@@ -109,7 +109,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 		<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
 
 			<%
-			String[] imageExtensions = PrefsPropsUtil.getStringArray(DDMServiceConfigurationKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS, ",");
+			String[] imageExtensions = ddmServiceConfiguration.smallImageExtensions();
 			%>
 
 			<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, StringPool.COMMA) %>.
@@ -118,7 +118,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 		<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
 
 			<%
-			long imageMaxSize = PrefsPropsUtil.getLong(DDMServiceConfigurationKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE);
+			long imageMaxSize = ddmServiceConfiguration.smallImageMaxSize();
 			%>
 
 			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />

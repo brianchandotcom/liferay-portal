@@ -93,16 +93,6 @@ public class DDLDisplayContext {
 	}
 
 	public String[] getDDLRecordSetDisplayViews() {
-		if (_ddlRecordDisplayViews == null) {
-
-			_ddlRecordDisplayViews = StringUtil.split(
-				PrefsParamUtil.getString(
-					_ddlRequestHelper.getPortletPreferences(),
-					_ddlRequestHelper.getRenderRequest(), "displayViews",
-					StringUtil.merge(
-							_ddlWebConfiguration.supportedDisplayView())));
-		}
-
 		return _ddlRecordDisplayViews;
 	}
 
@@ -392,7 +382,7 @@ public class DDLDisplayContext {
 
 	private DDLWebConfiguration _ddlWebConfiguration;
 	private String _ddlRecordDisplayStyle;
-	private String[] _ddlRecordDisplayViews;
+	private final String[] _ddlRecordDisplayViews = {"list", "descriptive"};
 	private final DDLRequestHelper _ddlRequestHelper;
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;

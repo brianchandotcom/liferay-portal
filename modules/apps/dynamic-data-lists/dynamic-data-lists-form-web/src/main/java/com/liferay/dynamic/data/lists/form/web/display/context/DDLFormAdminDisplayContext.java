@@ -154,20 +154,6 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public String[] getDisplayViews() {
-		if (_displayViews == null) {
-			DDLFormWebRequestHelper ddlFormWebRequestHelper =
-				new DDLFormWebRequestHelper(
-					PortalUtil.getHttpServletRequest(_renderRequest));
-
-			DDLFormWebConfiguration ddlFormWebConfiguration =
-				ddlFormWebRequestHelper.getDDLFormWebConfiguration();
-
-			_displayViews = StringUtil.split(
-				PrefsParamUtil.getString(
-					_portletPreferences, _renderRequest, "displayViews",
-					StringUtil.merge(
-						ddlFormWebConfiguration.supportedDisplayView())));
-		}
 
 		return _displayViews;
 	}
@@ -488,7 +474,7 @@ public class DDLFormAdminDisplayContext {
 	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
 	private DDMStructure _ddmStucture;
 	private String _displayStyle;
-	private String[] _displayViews;
+	private final String[] _displayViews = {"descriptive", "list", "icon"};
 	private final PortletPreferences _portletPreferences;
 	private DDLRecordSet _recordSet;
 	private final RenderRequest _renderRequest;

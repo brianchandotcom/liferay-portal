@@ -30,10 +30,13 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 )
 public interface DDLFormWebConfiguration {
 
-	@Meta.AD(deflt = "descriptive", required = false)
+	@Meta.AD(
+		deflt = "descriptive",
+		optionLabels = {
+			"Descriptive","List","Icon"
+		},
+		optionValues = {"descriptive", "list", "icon"}, required = false
+	)
 	public String defaultDisplayView();
-
-	@Meta.AD(deflt = "icon | descriptive | list", required = false)
-	public String[] supportedDisplayView();
 
 }

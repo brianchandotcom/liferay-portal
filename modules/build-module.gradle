@@ -1,7 +1,5 @@
 import com.liferay.gradle.util.FileUtil
 
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-
 buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
@@ -49,14 +47,6 @@ if (frontendCommonCssProject) {
 		}
 
 		portalCommonDir = new File(frontendCommonCssProject.projectDir, "tmp/META-INF/resources")
-	}
-}
-
-configure([test, testIntegration]) {
-	testLogging {
-		events = EnumSet.allOf(TestLogEvent)
-		exceptionFormat = "full"
-		stackTraceFilters = []
 	}
 }
 

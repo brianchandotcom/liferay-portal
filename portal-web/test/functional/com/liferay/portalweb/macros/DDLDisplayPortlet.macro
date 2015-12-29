@@ -31,15 +31,7 @@
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_TABLE_DISPLAY_FIELD" value1="${key_ddlRecordFieldData}" />
 	</command>
 
-	<command name="viewSpreadsheetConfiguration">
-		<if>
-			<equals arg1="${configureChecked}" arg2="false" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No ${ddlDataDefinitionName} records were found" />
-			</then>
-			<else>
-				<execute function="AssertElementPresent" locator1="DDLSpreadsheet#SPREADSHEET_CONTAINER" />
-			</else>
-		</if>
+	<command name="viewSpreadsheetContainer">
+		<execute function="AssertElementPresent" locator1="DDLSpreadsheet#SPREADSHEET_CONTAINER" />
 	</command>
 </definition>

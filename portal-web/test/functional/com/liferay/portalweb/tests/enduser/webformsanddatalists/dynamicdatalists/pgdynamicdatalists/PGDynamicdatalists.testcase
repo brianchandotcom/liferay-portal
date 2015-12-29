@@ -2241,9 +2241,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLDisplayPortlet#viewSpreadsheetConfiguration">
-			<var name="configureChecked" value="true" />
-		</execute>
+		<execute macro="DDLDisplayPortlet#viewSpreadsheetContainer" />
 
 		<execute macro="DDLDisplayPortlet#configureListViewPG">
 			<var name="configureCheckBoxName" value="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
@@ -2255,8 +2253,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLDisplayPortlet#viewSpreadsheetConfiguration">
-			<var name="configureChecked" value="false" />
+		<execute macro="DDLRecord#viewNoRecords">
 			<var name="ddlDataDefinitionName" value="To Do" />
 		</execute>
 	</command>

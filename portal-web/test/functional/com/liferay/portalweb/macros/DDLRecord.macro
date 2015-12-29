@@ -672,6 +672,10 @@
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_VISUAL_GROUPING_DDL_DISPLAY_PNG" />
 	</command>
 
+	<command name="viewNoRecords">
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No ${ddlDataDefinitionName} records were found" />
+	</command>
+
 	<command name="viewPopulatedField">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 

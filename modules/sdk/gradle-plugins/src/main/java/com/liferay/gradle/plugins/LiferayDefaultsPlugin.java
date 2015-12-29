@@ -31,6 +31,9 @@ import java.io.File;
 
 import java.nio.charset.StandardCharsets;
 
+import nebula.plugin.extraconfigurations.OptionalBasePlugin;
+import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
+
 import org.dm.gradle.plugins.bundle.BundlePlugin;
 
 import org.gradle.api.Action;
@@ -93,6 +96,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, FindBugsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
+		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
+		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
 		if (FileUtil.exists(project, "service.xml")) {
 			GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);

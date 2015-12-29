@@ -54,9 +54,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import nebula.plugin.extraconfigurations.OptionalBasePlugin;
-import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
-
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -356,9 +353,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
-
-		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
-		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
 		GradleUtil.applyPlugin(project, AlloyTaglibDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, CSSBuilderDefaultsPlugin.class);

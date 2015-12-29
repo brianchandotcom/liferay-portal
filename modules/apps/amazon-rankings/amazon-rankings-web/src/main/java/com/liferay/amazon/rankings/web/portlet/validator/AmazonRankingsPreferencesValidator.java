@@ -32,6 +32,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
 
+import org.apache.commons.validator.routines.ISBNValidator;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -60,16 +61,22 @@ public class AmazonRankingsPreferencesValidator
 			"isbns", StringPool.EMPTY_ARRAY);
 
 		for (String isbn : isbns) {
-			AmazonRankings amazonRankings =
-				AmazonRankingsUtil.getAmazonRankings(
-					_amazonRankingsConfiguration, isbn);
+			ISBNValidator isbnValidator = new ISBNValidator();
 
-			if (amazonRankings == null) {
-				badIsbns.add(isbn);
+			if (isbnValidator.isValid(isbn)) {
+				AmazonRankings amazonRankings =
+					AmazonRankingsUtil.getAmazonRankings(
+						_amazonRankingsConfiguration, isbn);
 
-				if (_log.isInfoEnabled()) {
-					_log.info("Invalid ISBN " + isbn);
+				if (amazonRankings != null) {
+					continue;
 				}
+			}
+
+			badIsbns.add(isbn);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Invalid ISBN " + isbn);
 			}
 		}
 

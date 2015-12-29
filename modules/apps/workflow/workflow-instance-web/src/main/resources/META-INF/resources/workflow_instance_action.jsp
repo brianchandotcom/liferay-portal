@@ -35,7 +35,6 @@ else {
 	<c:if test="<%= !workflowInstance.isComplete() %>">
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />
-			<portlet:param name="tabs2" value="pending" />
 		</portlet:renderURL>
 
 		<portlet:actionURL name="deleteWorkflowInstance" var="deleteURL">

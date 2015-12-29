@@ -29,7 +29,6 @@ _setPropertyDefault project, "nodejs.npm.module.repository", "liferay/liferay-po
 apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
 
-File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File portalRootDir = _getPortalRootDir(project)
 
 if (portalRootDir) {
@@ -38,10 +37,6 @@ if (portalRootDir) {
 }
 
 afterEvaluate {
-	project.ext.set "app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir)
-	project.ext.set "app.server.portal.dir", project.relativePath(liferay.appServerPortalDir)
-	project.ext.set "plugin.full.version", project.version.toString()
-
 	if (!project.version.endsWith("-SNAPSHOT")) {
 		Iterable<Task> publishNodeModuleTasks = tasks.matching {
 			it.class.name.startsWith "com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask"

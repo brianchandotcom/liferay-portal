@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins;
 
+import aQute.bnd.osgi.Constants;
+
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
@@ -23,6 +25,7 @@ import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
 
@@ -38,6 +41,7 @@ import java.util.concurrent.Callable;
 import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
+import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
 
 import org.gradle.api.Action;
@@ -318,6 +322,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				@Override
 				public void execute(BundlePlugin bundlePlugin) {
 					addTaskCopyLibs(project);
+					configureTaskJavadoc(project);
 				}
 
 			});
@@ -475,6 +480,58 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		compileOptions.setWarnings(false);
 	}
 
+	protected void configureTaskJavadoc(Project project) {
+		String exportPackage = getBundleInstruction(
+			project, Constants.EXPORT_PACKAGE);
+
+		if (Validator.isNull(exportPackage)) {
+			return;
+		}
+
+		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
+			project, JavaPlugin.JAVADOC_TASK_NAME);
+
+		String[] exportPackageArray = exportPackage.split(",");
+
+		for (String pattern : exportPackageArray) {
+			pattern = pattern.trim();
+
+			boolean excludePattern = false;
+
+			int start = 0;
+
+			if (pattern.startsWith("!")) {
+				excludePattern = true;
+
+				start = 1;
+			}
+
+			int end = pattern.indexOf(';');
+
+			if (end == -1) {
+				end = pattern.length();
+			}
+
+			pattern = pattern.substring(start, end);
+
+			pattern = "**/" + pattern.replace('.', '/');
+
+			if (pattern.endsWith("/*")) {
+				pattern = pattern.substring(0, pattern.length() - 1);
+			}
+			else {
+				pattern += "/*";
+			}
+
+			if (excludePattern) {
+				javadoc.exclude(pattern);
+			}
+			else {
+				javadoc.include(pattern);
+			}
+		}
+	}
+
 	protected void configureTasksFindBugs(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -503,6 +560,19 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+	}
+
+	protected String getBundleInstruction(Project project, String key) {
+		Map<String, String> bundleInstructions = getBundleInstructions(project);
+
+		return bundleInstructions.get(key);
+	}
+
+	protected Map<String, String> getBundleInstructions(Project project) {
+		BundleExtension bundleExtension = GradleUtil.getExtension(
+			project, BundleExtension.class);
+
+		return (Map<String, String>)bundleExtension.getInstructions();
 	}
 
 	protected File getLibDir(Project project) {

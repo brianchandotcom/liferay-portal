@@ -54,6 +54,15 @@ page import="com.liferay.workflow.instance.web.display.context.WorkflowInstanceV
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();
+
+WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
+
+if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
+	workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(request, liferayPortletRequest, liferayPortletResponse, portletPreferences);
+}
+else {
+	workflowInstanceViewDisplayContext = new MyWorkflowInstanceViewDisplayContext(request, liferayPortletRequest, liferayPortletResponse, portletPreferences);
+}
 %>
 
 <%@ include file="/init-ext.jsp" %>

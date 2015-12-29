@@ -15,6 +15,8 @@
 package com.liferay.workflow.instance.web.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -22,8 +24,9 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 
 import java.util.List;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletPreferences;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -32,10 +35,15 @@ public class MyWorkflowInstanceViewDisplayContext
 	extends WorkflowInstanceViewDisplayContext {
 
 	public MyWorkflowInstanceViewDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			HttpServletRequest request,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			PortletPreferences portletPreferences)
 		throws PortalException {
 
-		super(renderRequest, renderResponse);
+		super(
+			request, liferayPortletRequest, liferayPortletResponse,
+			portletPreferences);
 	}
 
 	@Override

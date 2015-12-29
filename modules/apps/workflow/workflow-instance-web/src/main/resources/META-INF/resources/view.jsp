@@ -61,6 +61,8 @@ DateSearchEntry dateSearchEntry = new DateSearchEntry();
 			</aui:nav-bar-search>
 		</aui:nav-bar>
 
+		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+
 		<%@ include file="/workflow_instance.jspf" %>
 	</aui:form>
 </div>

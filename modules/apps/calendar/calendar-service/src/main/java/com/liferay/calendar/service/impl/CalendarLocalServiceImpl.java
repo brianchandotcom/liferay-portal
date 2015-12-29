@@ -20,8 +20,10 @@ import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
+import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -29,9 +31,11 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.Date;
@@ -178,6 +182,30 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 			groupId, calendarResourceId, defaultCalendar);
 	}
 
+	public boolean hasStagingCalendar(Calendar calendar)
+		throws PortalException {
+
+		long liveGroupId = calendar.getGroupId();
+
+		try {
+			Group stagingGroup = GroupLocalServiceUtil.getStagingGroup(
+				liveGroupId);
+
+			Calendar stagedCalendar =
+				CalendarLocalServiceUtil.fetchCalendarByUuidAndGroupId(
+					calendar.getUuid(), stagingGroup.getGroupId());
+
+			if (stagedCalendar == null) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (NoSuchGroupException nsge) {
+			return false;
+		}
+	}
+
 	@Override
 	public void importCalendar(long calendarId, String data, String type)
 		throws Exception {
@@ -189,6 +217,18 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 				calendarDataFormat);
 
 		calendarDataHandler.importCalendar(calendarId, data);
+	}
+
+	public boolean isStagingCalendar(Calendar calendar) {
+		long groupId = calendar.getGroupId();
+
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			return group.isStagingGroup();
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override

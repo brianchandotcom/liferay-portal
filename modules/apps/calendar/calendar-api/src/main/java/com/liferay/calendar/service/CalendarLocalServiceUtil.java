@@ -21,7 +21,7 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the local service utility for Calendar. This utility wraps
+ * Provides the local service utility for Calendar. This utility wrapsz
  * {@link com.liferay.calendar.service.impl.CalendarLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks

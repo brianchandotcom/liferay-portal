@@ -42,10 +42,6 @@ afterEvaluate {
 	project.ext.set "app.server.portal.dir", project.relativePath(liferay.appServerPortalDir)
 	project.ext.set "plugin.full.version", project.version.toString()
 
-	if (project.hasProperty("snapshot") && !project.version.endsWith("-SNAPSHOT")) {
-		project.version = project.version + "-SNAPSHOT"
-	}
-
 	if (!project.version.endsWith("-SNAPSHOT")) {
 		Iterable<Task> publishNodeModuleTasks = tasks.matching {
 			it.class.name.startsWith "com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask"

@@ -80,6 +80,9 @@ import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
+import org.gradle.api.tasks.testing.JUnitXmlReport;
+import org.gradle.api.tasks.testing.Test;
+import org.gradle.api.tasks.testing.TestTaskReports;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
 import org.gradle.plugins.ide.eclipse.model.EclipseModel;
@@ -366,6 +369,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		configureSourceSetTestIntegration(
 			project, portalConfiguration, portalTestConfiguration);
 		configureTaskJar(project, testProject);
+		configureTaskTestIntegration(project);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
 
@@ -708,6 +712,21 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+	}
+
+	protected void configureTaskTestIntegration(Project project) {
+		Test test = (Test)GradleUtil.getTask(
+			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
+
+		File resultsDir = project.file("test-results/integration");
+
+		test.setBinResultsDir(new File(resultsDir, "binary/testIntegration"));
+
+		TestTaskReports testTaskReports = test.getReports();
+
+		JUnitXmlReport jUnitXmlReport = testTaskReports.getJunitXml();
+
+		jUnitXmlReport.setDestination(resultsDir);
 	}
 
 	protected void configureTaskUploadArchives(Project project) {

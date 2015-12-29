@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
@@ -49,9 +51,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import java.io.IOException;
+
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -72,8 +73,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
-	immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.autopropagated-parameters=refererPortletName",
@@ -108,13 +108,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DDMPortlet extends MVCPortlet {
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ddmWebConfiguration = Configurable.createConfigurable(
-			DDMWebConfiguration.class, properties);
-	}
-	
 	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -177,9 +170,9 @@ public class DDMPortlet extends MVCPortlet {
 			setDDMTemplateRequestAttribute(request);
 
 			setDDMStructureRequestAttribute(request);
-			
+
 			request.setAttribute(
-					DDMWebConfiguration.class.getName(), _ddmWebConfiguration);
+				DDMWebConfiguration.class.getName(), ddmWebConfiguration);
 		}
 		catch (NoSuchStructureException nsse) {
 
@@ -210,6 +203,13 @@ public class DDMPortlet extends MVCPortlet {
 		}
 
 		super.render(request, response);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		ddmWebConfiguration = Configurable.createConfigurable(
+			DDMWebConfiguration.class, properties);
 	}
 
 	@Reference(unbind = "-")
@@ -261,9 +261,9 @@ public class DDMPortlet extends MVCPortlet {
 		}
 	}
 
-	protected volatile DDMWebConfiguration _ddmWebConfiguration;
 	protected DDMStructureLocalService ddmStructureLocalService;
 	protected DDMTemplateLocalService ddmTemplateLocalService;
+	protected volatile DDMWebConfiguration ddmWebConfiguration;
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMPortlet.class);
 

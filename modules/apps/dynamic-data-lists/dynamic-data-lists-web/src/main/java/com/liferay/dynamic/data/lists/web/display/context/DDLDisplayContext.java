@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -57,10 +56,9 @@ public class DDLDisplayContext {
 	public DDLDisplayContext(HttpServletRequest request) {
 		_ddlRequestHelper = new DDLRequestHelper(request);
 
-		_ddlWebConfiguration =
-				(DDLWebConfiguration)request.getAttribute(
-						DDLWebConfiguration.class.getName());
-		
+		_ddlWebConfiguration = (DDLWebConfiguration)request.getAttribute(
+					DDLWebConfiguration.class.getName());
+
 		if (Validator.isNotNull(getPortletResource())) {
 			return;
 		}
@@ -380,10 +378,10 @@ public class DDLDisplayContext {
 		return _hasViewPermission;
 	}
 
-	private DDLWebConfiguration _ddlWebConfiguration;
 	private String _ddlRecordDisplayStyle;
 	private final String[] _ddlRecordDisplayViews = {"list", "descriptive"};
 	private final DDLRequestHelper _ddlRequestHelper;
+	private final DDLWebConfiguration _ddlWebConfiguration;
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;
 	private Boolean _hasAddDDMTemplatePermission;

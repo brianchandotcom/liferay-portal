@@ -23,12 +23,10 @@ import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetCreateDateComp
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetModifiedDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
 import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration;
-import com.liferay.dynamic.data.lists.web.display.context.util.DDLRequestHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
@@ -70,10 +68,9 @@ public class DDLPortletUtil {
 			portletRequest, "displayStyle");
 
 		if (Validator.isNull(displayStyle)) {
-
 			DDLWebConfiguration ddlWebConfiguration =
 					(DDLWebConfiguration)portletRequest.getAttribute(
-							DDLWebConfiguration.class.getName());
+						DDLWebConfiguration.class.getName());
 
 			displayStyle = portalPreferences.getValue(
 				DDLPortletKeys.DYNAMIC_DATA_LISTS, "display-style",

@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DDLDDMDisplay extends BaseDDMDisplay {
 
-	
 	@Override
 	public String getPortletId() {
 		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
@@ -46,7 +45,7 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 	public String getStorageType() {
 		return StorageType.JSON.getValue();
 	}
-	
+
 	@Override
 	public String getStructureName(Locale locale) {
 		return LanguageUtil.get(locale, "data-definition");
@@ -63,7 +62,5 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 
 		return PortalUtil.getClassNameId(DDLRecordSet.class);
 	}
-	
-	
 
 }

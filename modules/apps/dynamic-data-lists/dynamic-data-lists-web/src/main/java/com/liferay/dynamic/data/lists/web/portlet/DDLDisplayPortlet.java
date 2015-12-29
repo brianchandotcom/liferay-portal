@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.lists.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
@@ -32,9 +34,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import java.io.IOException;
+
 import java.util.Map;
 
 import javax.portlet.Portlet;
@@ -53,8 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
-	immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-lists-display",
@@ -85,13 +85,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DDLDisplayPortlet extends MVCPortlet {
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ddlWebConfiguration = Configurable.createConfigurable(
-			DDLWebConfiguration.class, properties);
-	}
-	
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -101,9 +94,9 @@ public class DDLDisplayPortlet extends MVCPortlet {
 			setDDLRecordRequestAttribute(renderRequest);
 
 			setDDLRecordSetRequestAttribute(renderRequest);
-			
+
 			renderRequest.setAttribute(
-					DDLWebConfiguration.class.getName(), _ddlWebConfiguration);
+				DDLWebConfiguration.class.getName(), _ddlWebConfiguration);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -126,6 +119,13 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	public void setDDLRecordService(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ddlWebConfiguration = Configurable.createConfigurable(
+			DDLWebConfiguration.class, properties);
 	}
 
 	@Override
@@ -201,8 +201,8 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLDisplayPortlet.class);
 
-	private volatile DDLWebConfiguration _ddlWebConfiguration;
 	private volatile DDLRecordService _ddlRecordService;
 	private volatile DDLRecordSetService _ddlRecordSetService;
+	private volatile DDLWebConfiguration _ddlWebConfiguration;
 
 }

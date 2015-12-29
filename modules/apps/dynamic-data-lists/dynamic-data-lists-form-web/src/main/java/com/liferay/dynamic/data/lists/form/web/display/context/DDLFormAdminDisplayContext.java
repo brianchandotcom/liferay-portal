@@ -16,9 +16,7 @@ package com.liferay.dynamic.data.lists.form.web.display.context;
 
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
-import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
 import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormAdminRequestHelper;
-import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormWebRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
 import com.liferay.dynamic.data.lists.form.web.util.DDLFormPortletUtil;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
@@ -52,10 +50,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -154,7 +150,6 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public String[] getDisplayViews() {
-
 		return _displayViews;
 	}
 

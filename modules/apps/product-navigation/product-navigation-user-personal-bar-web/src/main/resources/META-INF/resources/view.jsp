@@ -39,7 +39,7 @@
 			%>
 
 			<c:if test="<%= notificationsCount > 0 %>">
-				<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
+				<span class="panel-notifications-count sticker sticker-outside sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
 			</c:if>
 		</liferay-util:buffer>
 
@@ -49,9 +49,9 @@
 
 		<c:choose>
 			<c:when test='<%= Validator.equals(displayStyle, "button") %>'>
-				<a class="user-avatar-link" data-qa-id="openUserMenu" href="javascript:;" id="<portlet:namespace />sidenavUserToggle">
+				<li class="user-avatar-link" data-qa-id="openUserMenu" href="javascript:;" id="<portlet:namespace />sidenavUserToggle">
 					<%= userName %>
-				</a>
+				</li>
 
 				<aui:script sandbox="<%= true %>">
 					var sidenavUserToggle = $('#<portlet:namespace />sidenavUserToggle');

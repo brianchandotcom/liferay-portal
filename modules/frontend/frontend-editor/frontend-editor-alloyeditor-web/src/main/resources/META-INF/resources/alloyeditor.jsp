@@ -133,18 +133,23 @@ if (editorOptions != null) {
 
 <liferay-util:buffer var="alloyEditor">
 	<div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
+	<aui:icon cssClass="alloy-editor-icon" image="format" markupView="lexicon" />
 </liferay-util:buffer>
 
 <liferay-util:buffer var="editor">
 	<c:choose>
 		<c:when test="<%= showSource %>">
 			<div class="alloy-editor-switch hide">
-				<button class="btn btn-default btn-xs hide icon-fullscreen" id="<%= name %>Fullscreen" type="button"></button>
+				<button class="btn btn-default btn-xs hide" id="<%= name %>Fullscreen" type="button">
+					<aui:icon cssClass="icon-monospaced" image="expand" markupView="lexicon" />
+				</button>
 
-				<button class="btn btn-default btn-xs hide icon-moon" id="<%= name %>SwitchTheme" type="button"></button>
+				<button class="btn btn-default btn-xs hide" id="<%= name %>SwitchTheme" type="button">
+					<aui:icon cssClass="icon-monospaced" image="moon" markupView="lexicon" />
+				</button>
 
 				<button class="btn btn-default btn-xs" id="<%= name %>Switch" type="button">
-					&lt;&#47;&gt;
+					<aui:icon cssClass="icon-monospaced" image="code" markupView="lexicon" />
 				</button>
 			</div>
 			<div class="alloy-editor-wrapper" id="<%= name %>Wrapper">
@@ -163,7 +168,7 @@ if (editorOptions != null) {
 	</c:choose>
 </liferay-util:buffer>
 
-<div id="<%= name %>Container">
+<div class="alloy-editor-container" id="<%= name %>Container">
 	<c:if test="<%= autoCreate %>">
 		<%= editor %>
 	</c:if>

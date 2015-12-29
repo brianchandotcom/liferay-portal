@@ -4,7 +4,15 @@ AUI.add(
 		var Lang = A.Lang;
 
 		var CONTENT_TEMPLATE = '<div class="lfr-fullscreen-source-editor-header row">' +
-				'<div class="col-md-6">HTML</div>' +
+				'<div class="col-md-6">' +
+					'<button class="btn btn-default btn-xs pull-right" id="switchTheme" type="button">' +
+						'<span class="icon-monospaced">' +
+							'<svg class="lexicon-icon lexicon-icon-moon" role="img">' +
+								'<use xlink:href="{pathThemeImages}/lexicon/icons.svg#moon" />' +
+							'</svg>' +
+						'</span>' +
+					'</button>' +
+				'</div>' +
 				'<div class="col-md-6 layout-selector">' +
 					'<span class="icon-pause" data-layout="vertical"></span>' +
 					'<span class="icon-pause icon-rotate-90" data-layout="horizontal"></span>' +
@@ -78,7 +86,12 @@ AUI.add(
 				NS: 'liferayfullscreensourceeditor',
 
 				prototype: {
-					CONTENT_TEMPLATE: CONTENT_TEMPLATE,
+					CONTENT_TEMPLATE: Lang.sub(
+						CONTENT_TEMPLATE,
+						{
+							pathThemeImages: themeDisplay.getPathThemeImages()
+						}
+					),
 
 					renderUI: function() {
 						var instance = this;
@@ -87,12 +100,19 @@ AUI.add(
 
 						boundingBox.one(STR_DOT + instance.getClassName('content')).addClass(instance.get(STR_LAYOUT));
 
+						instance._editorSwitchTheme = boundingBox.one('#switchTheme');
+
 						instance._editor = new A.LiferaySourceEditor(
 							{
 								aceOptions: instance.get('aceOptions'),
 								boundingBox: boundingBox.one('.source-html'),
 								height: '100%',
 								mode: 'html',
+								on: {
+									themeSwitched: function(event) {
+										instance._editorSwitchTheme.one('.lexicon-icon').replace(event.themes[event.nextThemeIndex].icon);
+									}
+								},
 								value: instance.get(STR_VALUE)
 							}
 						).render();
@@ -114,6 +134,7 @@ AUI.add(
 							instance._editor.on('change', onChangeTask),
 							instance.on('layoutChange', instance._onLayoutChange),
 							instance.on('valueChange', instance._onValueChange),
+							instance._editorSwitchTheme.on('click', instance._switchTheme, instance),
 							boundingBox.one(STR_DOT + instance.getClassName('header')).delegate(STR_CLICK, instance._onLayoutClick, '[data-layout]', instance),
 							boundingBox.one(CSS_PREVIEW_PANEL).delegate(STR_CLICK, instance._onPreviewLink, 'a', instance)
 						];
@@ -183,6 +204,12 @@ AUI.add(
 						var instance = this;
 
 						instance._editor.set(STR_VALUE, event.newVal);
+					},
+
+					_switchTheme: function(event) {
+						var instance = this;
+
+						instance._editor.switchTheme();
 					}
 				}
 			}

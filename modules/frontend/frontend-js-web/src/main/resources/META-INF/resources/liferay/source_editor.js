@@ -52,16 +52,18 @@ AUI.add(
 
 					themes: {
 						validator: Array.isArray,
-						value: [
-							{
-								cssClass: '',
-								iconCssClass: 'icon-sun'
-							},
-							{
-								cssClass: 'ace_dark',
-								iconCssClass: 'icon-moon'
-							}
-						]
+						valueFn: function() {
+							return [
+								{
+									cssClass: '',
+									icon: A.one(Liferay.Util.getLexiconIcon('sun'))
+								},
+								{
+									cssClass: 'ace_dark',
+									icon: A.one(Liferay.Util.getLexiconIcon('moon'))
+								}
+							];
+						}
 					},
 
 					width: {

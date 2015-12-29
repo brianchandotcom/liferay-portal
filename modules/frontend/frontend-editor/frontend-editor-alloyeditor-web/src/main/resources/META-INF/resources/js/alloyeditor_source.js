@@ -3,6 +3,15 @@ AUI.add(
 	function(A) {
 		var CSS_SHOW_SOURCE = 'show-source';
 
+		var MAP_TOGGLE_STATE = {
+			false: {
+				iconCssClass: 'code'
+			},
+			true: {
+				iconCssClass: 'format'
+			}
+		};
+
 		var STR_HOST = 'host';
 
 		var STRINGS = 'strings';
@@ -86,17 +95,34 @@ AUI.add(
 							{
 								boundingBox: instance._editorSource,
 								mode: 'html',
+								on: {
+									themeSwitched: function(event) {
+										instance._editorSwitchTheme.one('.lexicon-icon').replace(event.themes[event.nextThemeIndex].icon);
+									}
+								},
 								value: host.getHTML()
 							}
 						).render();
 
-						instance._eventHandles.push(
-							sourceEditor.on('themeSwitched', instance._onEditorThemeSwitched, instance)
-						);
-
 						instance._toggleEditorModeUI();
 
 						instance._sourceEditor = sourceEditor;
+					},
+
+					_getEditorStateLexiconIcon: function() {
+						var instance = this;
+
+						var currentState = MAP_TOGGLE_STATE[instance._isVisible];
+
+						var icon = currentState.icon;
+
+						if (!icon) {
+							icon = Liferay.Util.getLexiconIcon(currentState.iconCssClass);
+
+							currentState.icon = icon;
+						}
+
+						return icon;
 					},
 
 					_getHTML: function() {
@@ -112,17 +138,6 @@ AUI.add(
 								text
 							);
 						}
-					},
-
-					_onEditorThemeSwitched: function(event) {
-						var instance = this;
-
-						var themes = event.themes;
-
-						instance._editorSwitchTheme.replaceClass(
-							themes[event.currentThemeIndex].iconCssClass,
-							themes[event.nextThemeIndex].iconCssClass
-						);
 					},
 
 					_onEditorUpdate: function(event) {
@@ -273,7 +288,7 @@ AUI.add(
 
 						instance._isVisible = editorWrapper.hasClass(CSS_SHOW_SOURCE);
 
-						editorSwitch.setHTML(instance._isVisible ? 'abc' : '&lt;/&gt;');
+						editorSwitch.one('.lexicon-icon').replace(instance._getEditorStateLexiconIcon());
 
 						instance._toggleSourceSwitchFn(
 							{

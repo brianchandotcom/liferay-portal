@@ -695,7 +695,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	private String _rootPath = "/";
 	private String _servletContextName = StringPool.BLANK;
 	private final Map<String, SpriteImage> _spriteImagesMap = new HashMap<>();
-	private String _templateExtension = "vm";
+	private String _templateExtension = "ftl";
 	private String _templatesPath = "${root-path}/templates";
 	private ThemeCompanyLimit _themeCompanyLimit;
 	private ThemeGroupLimit _themeGroupLimit;

@@ -444,7 +444,7 @@ public class MicroblogsEntryLocalServiceImpl
 			"entryTitle",
 			MicroblogsUtil.getProcessedContent(
 				StringUtil.shorten(microblogsEntry.getContent(), 50),
-			serviceContext));
+				serviceContext));
 
 		AssetRendererFactory<MicroblogsEntry> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(

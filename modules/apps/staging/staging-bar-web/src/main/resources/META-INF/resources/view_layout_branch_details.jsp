@@ -28,47 +28,45 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 %>
 
 <li class="control-menu-nav-item">
-	<li class="control-menu-nav-item">
-		<a class="staging-variation-label" href="javascript:;" onclick='<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>'>
-			<liferay-ui:message key="page-variations" />
+	<a class="staging-variation-label" href="javascript:;" onclick='<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>'>
+		<liferay-ui:message key="page-variations" />
+	</a>
+
+	<div class="dropdown">
+		<a class="dropdown-toggle layout-set-branch-selector staging-variation-selector" data-toggle="dropdown" href="#1">
+			<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" />
+
+			<aui:icon image="caret-double-l" markupView="lexicon" />
 		</a>
 
-		<div class="dropdown">
-			<a class="dropdown-toggle layout-set-branch-selector staging-variation-selector" data-toggle="dropdown" href="#1">
-				<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" />
+		<ul class="dropdown-menu">
 
-				<aui:icon image="caret-double-l" markupView="lexicon" />
-			</a>
+			<%
+			for (LayoutRevision rootLayoutRevision : layoutRevisions) {
+				LayoutBranch curLayoutBranch = rootLayoutRevision.getLayoutBranch();
 
-			<ul class="dropdown-menu">
+				boolean selected = (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
+			%>
 
-				<%
-				for (LayoutRevision rootLayoutRevision : layoutRevisions) {
-					LayoutBranch curLayoutBranch = rootLayoutRevision.getLayoutBranch();
+			<portlet:actionURL name="selectLayoutBranch" var="curLayoutBranchURL">
+				<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(curLayoutBranch.getGroupId()) %>" />
+				<portlet:param name="layoutBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutBranchId()) %>" />
+				<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutSetBranchId()) %>" />
+			</portlet:actionURL>
 
-					boolean selected = (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
-				%>
+			<li>
+				<a class='<%= selected ? "disabled" : StringPool.BLANK %>' href='<%= selected ? "javascript:;" : curLayoutBranchURL %>'>
+					<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" />
+				</a>
+			</li>
 
-				<portlet:actionURL name="selectLayoutBranch" var="curLayoutBranchURL">
-					<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(curLayoutBranch.getGroupId()) %>" />
-					<portlet:param name="layoutBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutBranchId()) %>" />
-					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutSetBranchId()) %>" />
-				</portlet:actionURL>
+			<%
+			}
+			%>
 
-				<li>
-					<a class='<%= selected ? "disabled" : StringPool.BLANK %>' href='<%= selected ? "javascript:;" : curLayoutBranchURL %>'>
-						<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" />
-					</a>
-				</li>
-
-				<%
-				}
-				%>
-
-			</ul>
-		</div>
-	</li>
+		</ul>
+	</div>
 </li>
 
 <aui:script>

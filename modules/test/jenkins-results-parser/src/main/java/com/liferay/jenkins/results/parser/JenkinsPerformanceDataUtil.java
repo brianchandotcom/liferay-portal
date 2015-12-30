@@ -94,9 +94,9 @@ public class JenkinsPerformanceDataUtil {
 					throw iae;
 				}
 
-				System.out.println("Retry in 30 seconds: " + message);
+				System.out.println("Retry in 60 seconds: " + message);
 
-				Thread.sleep(30 * 1000);
+				Thread.sleep(60 * 1000);
 			}
 		}
 

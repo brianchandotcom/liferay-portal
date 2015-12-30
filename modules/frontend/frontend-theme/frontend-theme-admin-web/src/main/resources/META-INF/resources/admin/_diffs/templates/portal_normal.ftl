@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 
-#parse ($init)
+<#include init />
 
-<html class="$root_css_class" dir="#language ("lang.dir")" lang="$w3c_language_id">
+<html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 
 <head>
-	<title>$the_title - $company_name</title>
+	<title>${the_title} - ${company_name}</title>
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
-	$theme.include($top_head_include)
+	${theme.include(top_head_include)}
 </head>
 
-<body class="$css_class">
+<body class="${css_class}">
 
-#quick_access("#main-content")
+<@liferay.quick_access content_id="#main-content" />
 
-$theme.include($body_top_include)
+${theme.include(body_top_include)}
 
-#set ($scope_group = $theme_display.getScopeGroup())
+<#assign scope_group = theme_display.getScopeGroup()>
 
-#product_menu_sidebar($liferay_product_menu_state)
+<@liferay.product_menu_sidebar state="${liferay_product_menu_state}" />
 
 <div id="wrapper">
 	<div id="content-wrapper">
 		<div id="content">
-			#if ($selectable)
-				$theme.include($content_include)
-			#else
-				$portletDisplay.recycle()
+			<#if selectable>
+				${theme.include(content_include)}
+			<#else>
+				${portletDisplay.recycle()}
 
-				$portletDisplay.setTitle($the_title)
+				${portletDisplay.setTitle(the_title)}
 
-				$theme.wrapPortlet("portlet.vm", $content_include)
-			#end
+				${theme.wrapPortlet("portlet.ftl", content_include)}
+			</#if>
 
 			<div class="clear"></div>
 		</div>
 	</div>
 </div>
 
-#control_menu()
+<@liferay.control_menu />
 
-$theme.include($body_bottom_include)
+${theme.include(body_bottom_include)}
 
-$theme.include($bottom_include)
+${theme.include(bottom_include)}
 
 </body>
 

@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 
-#parse ($init)
+<#include init />
 
-<html class="$root_css_class" dir="#language ("lang.dir")" lang="$w3c_language_id">
+<html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 
 <head>
-	<title>$the_title - $company_name</title>
+	<title>${the_title} - ${company_name}</title>
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
-	$theme.include($top_head_include)
+	${theme.include(top_head_include)}
 </head>
 
-<body class="$css_class">
+<body class="${css_class}">
 
-#quick_access("#main-content")
+<@liferay.quick_access content_id="#main-content" />
 
-$theme.include($body_top_include)
+${theme.include(body_top_include)}
 
-#product_menu_sidebar($liferay_product_menu_state)
+<@liferay.product_menu_sidebar state="${liferay_product_menu_state}" />
 
-#control_menu()
+<@liferay.control_menu />
 
 <div id="wrapper">
 	<header class="container-fluid-1280" id="banner" role="banner">
@@ -34,45 +34,45 @@ $theme.include($body_top_include)
 					<span class="icon-bar"></span>
 				</button>
 
-				<a class="$logo_css_class" href="$site_default_url" title="#language_format ("go-to-x", [$site_name])">
-					<img alt="$logo_description" height="64" src="$site_logo" width="64" />
+				<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
+					<img alt="${logo_description}" height="64" src="${site_logo}" width="64" />
 				</a>
 
-				#if ($show_site_name)
-					<span class="site-name" title="#language_format ("go-to-x", [$site_name])">
-						$site_name
+				<#if show_site_name>
+					<span class="site-name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
+						${site_name}
 					</span>
-				#end
+				</#if>
 			</div>
 
-			#parse ("$full_templates_path/navigation.vm")
+			<#include "${full_templates_path}/navigation.ftl" />
 		</div>
 	</header>
 
 	<section class="container-fluid-1280" id="content">
-		<h1 class="hide-accessible">$the_title</h1>
+		<h1 class="hide-accessible">${the_title}</h1>
 
-		#if ($selectable)
-			$theme.include($content_include)
-		#else
-			$portletDisplay.recycle()
+		<#if selectable>
+			${theme.include(content_include)}
+		<#else>
+			${portletDisplay.recycle()}
 
-			$portletDisplay.setTitle($the_title)
+			${portletDisplay.setTitle(the_title)}
 
-			$theme.wrapPortlet("portlet.vm", $content_include)
-		#end
+			${theme.wrapPortlet("portlet.ftl", content_include)}
+		</#if>
 	</section>
 
 	<footer class="container-fluid-1280" id="footer" role="contentinfo">
 		<div class="row">
-			#language ("powered-by") <a href="http://www.liferay.com" rel="external">Liferay</a>
+			<@liferay.language key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a>
 		</div>
 	</footer>
 </div>
 
-$theme.include($body_bottom_include)
+${theme.include(body_bottom_include)}
 
-$theme.include($bottom_include)
+${theme.include(bottom_include)}
 
 </body>
 

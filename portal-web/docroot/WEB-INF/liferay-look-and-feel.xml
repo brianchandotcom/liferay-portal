@@ -13,7 +13,6 @@
 		<root-path>/classic</root-path>
 		<templates-path>${root-path}/templates</templates-path>
 		<images-path>${root-path}/images</images-path>
-		<template-extension>vm</template-extension>
 		<settings>
 			<setting configurable="true" key="bullet-style" options="dots,arrows" type="select" value="dots" />
 			<setting configurable="false" key="show-site-name-default" value="true" />

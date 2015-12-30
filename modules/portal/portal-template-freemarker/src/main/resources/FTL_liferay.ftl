@@ -153,8 +153,10 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 </#macro>
 
 <#macro user_personal_bar>
-	<@liferay_portlet["runtime"]
-		portletProviderAction=portletProviderAction.VIEW
-		portletProviderClassName="com.liferay.admin.kernel.util.PortalUserPersonalBarApplicationType$UserPersonalBar"
-	/>
+	<#if themeDisplay.isImpersonated() || (is_setup_complete && is_signed_in)>
+		<@liferay_portlet["runtime"]
+			portletProviderAction=portletProviderAction.VIEW
+			portletProviderClassName="com.liferay.admin.kernel.util.PortalUserPersonalBarApplicationType$UserPersonalBar"
+		/>
+	</#if>
 </#macro>

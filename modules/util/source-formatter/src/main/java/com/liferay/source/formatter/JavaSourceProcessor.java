@@ -2869,6 +2869,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			(previousLineTabCount == lineTabCount) &&
 			!previousLine.contains(StringPool.CLOSE_CURLY_BRACE) &&
 			!line.endsWith(StringPool.EQUAL) &&
+			!line.endsWith(StringPool.QUESTION) &&
 			(line.endsWith(") {") ||
 			 !line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
 

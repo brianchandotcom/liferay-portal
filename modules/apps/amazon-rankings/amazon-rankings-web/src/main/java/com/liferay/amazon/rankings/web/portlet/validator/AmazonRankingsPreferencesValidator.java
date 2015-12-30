@@ -18,11 +18,11 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
 import com.liferay.amazon.rankings.web.constants.AmazonRankingsPortletKeys;
-import com.liferay.amazon.rankings.web.model.AmazonRankings;
 import com.liferay.amazon.rankings.web.util.AmazonRankingsUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,7 @@ import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
 
 import org.apache.commons.validator.routines.ISBNValidator;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -60,23 +61,18 @@ public class AmazonRankingsPreferencesValidator
 		String[] isbns = portletPreferences.getValues(
 			"isbns", StringPool.EMPTY_ARRAY);
 
+		ISBNValidator isbnValidator = new ISBNValidator();
+
 		for (String isbn : isbns) {
-			ISBNValidator isbnValidator = new ISBNValidator();
+			if (!isbnValidator.isValid(isbn) ||
+				Validator.isNull(AmazonRankingsUtil.getAmazonRankings(
+					_amazonRankingsConfiguration, isbn))) {
 
-			if (isbnValidator.isValid(isbn)) {
-				AmazonRankings amazonRankings =
-					AmazonRankingsUtil.getAmazonRankings(
-						_amazonRankingsConfiguration, isbn);
+				badIsbns.add(isbn);
 
-				if (amazonRankings != null) {
-					continue;
+				if (_log.isInfoEnabled()) {
+					_log.info("Invalid ISBN " + isbn);
 				}
-			}
-
-			badIsbns.add(isbn);
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Invalid ISBN " + isbn);
 			}
 		}
 

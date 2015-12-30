@@ -590,8 +590,8 @@ public class WorkflowTaskDisplayContext {
 		Map<String, Serializable> workflowContext =
 			workflowInstance.getWorkflowContext();
 
-		return GetterUtil.getLong((String)workflowContext.get(
-			WorkflowConstants.CONTEXT_COMPANY_ID));
+		return GetterUtil.getLong(
+			(String)workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
 	}
 
 	public String getWorkflowContextEntryClassName(WorkflowTask workflowTask)
@@ -623,8 +623,8 @@ public class WorkflowTaskDisplayContext {
 		Map<String, Serializable> workflowContext =
 			workflowInstance.getWorkflowContext();
 
-		return GetterUtil.getLong((String)workflowContext.get(
-			WorkflowConstants.CONTEXT_GROUP_ID));
+		return GetterUtil.getLong(
+			(String)workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
 	}
 
 	public WorkflowHandler<?> getWorkflowHandler(WorkflowTask workflowTask)
@@ -966,7 +966,7 @@ public class WorkflowTaskDisplayContext {
 
 			searchContainer.setEmptyResultsMessage(
 				searchContainer.getEmptyResultsMessage() +
-				"-with-the-specified-search-criteria");
+					"-with-the-specified-search-criteria");
 		}
 	}
 
@@ -991,7 +991,7 @@ public class WorkflowTaskDisplayContext {
 
 			searchContainer.setEmptyResultsMessage(
 				searchContainer.getEmptyResultsMessage() +
-				"-with-the-specified-search-criteria");
+					"-with-the-specified-search-criteria");
 		}
 	}
 

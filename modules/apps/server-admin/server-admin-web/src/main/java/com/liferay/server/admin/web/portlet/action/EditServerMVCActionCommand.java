@@ -403,8 +403,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 				int status = message.getInteger("status");
 
-				if ((status ==
-						BackgroundTaskConstants.STATUS_CANCELLED) ||
+				if ((status == BackgroundTaskConstants.STATUS_CANCELLED) ||
 					(status == BackgroundTaskConstants.STATUS_FAILED) ||
 					(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
 

@@ -77,8 +77,8 @@ public class WikiPageAssetRenderer
 		_wikiGroupServiceOverriddenConfiguration =
 			ConfigurationFactoryUtil.getConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
-			new GroupServiceSettingsLocator(
-				page.getGroupId(), WikiConstants.SERVICE_NAME));
+				new GroupServiceSettingsLocator(
+					page.getGroupId(), WikiConstants.SERVICE_NAME));
 	}
 
 	@Override

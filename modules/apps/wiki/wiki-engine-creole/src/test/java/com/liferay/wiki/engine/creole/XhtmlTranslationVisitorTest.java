@@ -526,7 +526,7 @@ public class XhtmlTranslationVisitorTest {
 					"<li> Divider 2b<ul><li> Divider 3</li></ul></li>" +
 						"</ul></li></ul><ol><li> T3.2</li>" +
 							"<li> T3.3</li></ol>",
-		translate("mixed-list-3.creole"));
+			translate("mixed-list-3.creole"));
 	}
 
 	@Test

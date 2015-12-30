@@ -52,11 +52,11 @@ public class JournalWebRequestHelper {
 					_journalGroupServiceConfiguration =
 						ConfigurationFactoryUtil.getConfiguration(
 							JournalGroupServiceConfiguration.class,
-						new ParameterMapSettingsLocator(
-							_request.getParameterMap(),
-							new GroupServiceSettingsLocator(
-								themeDisplay.getSiteGroupId(),
-								JournalConstants.SERVICE_NAME)));
+							new ParameterMapSettingsLocator(
+								_request.getParameterMap(),
+								new GroupServiceSettingsLocator(
+									themeDisplay.getSiteGroupId(),
+									JournalConstants.SERVICE_NAME)));
 				}
 				else {
 					_journalGroupServiceConfiguration =

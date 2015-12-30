@@ -926,10 +926,9 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		long[] ddmStructureIds = StringUtil.split(
-				ParamUtil.getString(
-						actionRequest,
-						"ddmStructuresSearchContainerPrimaryKeys"),
-				0L);
+			ParamUtil.getString(
+				actionRequest, "ddmStructuresSearchContainerPrimaryKeys"),
+			0L);
 		int restrinctionType = ParamUtil.getInteger(
 			actionRequest, "restrictionType");
 

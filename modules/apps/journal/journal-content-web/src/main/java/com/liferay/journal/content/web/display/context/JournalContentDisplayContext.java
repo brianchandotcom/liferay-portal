@@ -169,8 +169,9 @@ public class JournalContentDisplayContext {
 				_articleDisplay =
 					JournalArticleLocalServiceUtil.getArticleDisplay(
 						article, null, null, themeDisplay.getLanguageId(), 1,
-					new PortletRequestModel(_portletRequest, _portletResponse),
-					themeDisplay);
+						new PortletRequestModel(
+							_portletRequest, _portletResponse),
+						themeDisplay);
 			}
 			catch (PortalException pe) {
 				_log.error(pe, pe);

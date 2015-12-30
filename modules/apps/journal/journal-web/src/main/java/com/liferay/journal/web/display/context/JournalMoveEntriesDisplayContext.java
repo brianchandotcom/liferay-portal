@@ -107,8 +107,9 @@ public class JournalMoveEntriesDisplayContext {
 	}
 
 	public List<JournalArticle> getMoveArticles() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)
-			_liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<JournalArticle> articles = new ArrayList<>();
 

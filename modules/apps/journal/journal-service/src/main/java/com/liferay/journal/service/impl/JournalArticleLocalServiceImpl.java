@@ -7513,19 +7513,18 @@ public class JournalArticleLocalServiceImpl
 			LocalizedValue ddmFormFieldValue = fieldValue.getValue();
 
 			updateDDMFormFieldPredefinedValue(
-					fullHierarchyDDMFormFieldsMap.get(ddmFormFieldName),
-					ddmFormFieldValue);
+				fullHierarchyDDMFormFieldsMap.get(ddmFormFieldName),
+				ddmFormFieldValue);
 
 			if (ddmFormFieldsMap.containsKey(ddmFormFieldName)) {
 				updateDDMFormFieldPredefinedValue(
-						ddmFormFieldsMap.get(ddmFormFieldName),
-						ddmFormFieldValue);
+					ddmFormFieldsMap.get(ddmFormFieldName), ddmFormFieldValue);
 			}
 		}
 
 		ddmStructureLocalService.updateStructure(
-				serviceContext.getUserId(), ddmStructureId, ddmForm,
-				ddmStructure.getDDMFormLayout(), serviceContext);
+			serviceContext.getUserId(), ddmStructureId, ddmForm,
+			ddmStructure.getDDMFormLayout(), serviceContext);
 	}
 
 	protected void updatePreviousApprovedArticle(JournalArticle article)

@@ -210,7 +210,7 @@ public class ShoppingOrderLocalServiceImpl
 					try {
 						int quantity =
 							GetterUtil.getInteger(fieldsQuantities[rowPos]) -
-							orderItem.getQuantity();
+								orderItem.getQuantity();
 
 						fieldsQuantities[rowPos] = String.valueOf(quantity);
 

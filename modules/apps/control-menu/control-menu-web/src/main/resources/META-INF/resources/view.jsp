@@ -25,13 +25,15 @@ Group group = null;
 if (layout != null) {
 	group = layout.getGroup();
 }
+
+String controlMenuEntryCssClass = "";
 %>
 
 <c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() && !controlMenuCategories.isEmpty() %>">
 	<div class="control-menu" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
 		<div class="control-menu-level-1">
 			<div class="container-fluid-1280">
-				<ul class="control-menu-nav" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
+				<ul class="control-menu-nav control-menu-nav-level-1" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
 
 					<%
 					for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
@@ -41,10 +43,18 @@ if (layout != null) {
 							if (controlMenuEntry.include(request, new PipingServletResponse(pageContext))) {
 								continue;
 							}
+
+							if (controlMenuEntry.getKey() == "com.liferay.control.menu.web.ToggleControlsControlMenuEntry") {
+								controlMenuEntryCssClass = "edit-controls-toggle visible-xs";
+							}
+							else if (controlMenuEntry.getKey() == "com.liferay.control.menu.web.ManageLayoutControlMenuEntry") {
+								controlMenuEntryCssClass = "edit-layout-link";
+							}
 					%>
 
-							<li>
+							<li class='<%= controlMenuEntryCssClass %>'>
 								<liferay-ui:icon
+									cssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
 									data="<%= controlMenuEntry.getData(request) %>"
 									icon="<%= controlMenuEntry.getIconCssClass(request) %>"
 									label="<%= false %>"

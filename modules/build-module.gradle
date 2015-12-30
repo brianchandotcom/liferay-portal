@@ -1,7 +1,5 @@
 import com.liferay.gradle.util.FileUtil
 
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-
 buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
@@ -21,60 +19,14 @@ buildscript {
 _setPropertyDefault project, "junit.java.integration.gc", "-Xms512m -Xmx512m -XX:MaxNewSize=32m -XX:MaxPermSize=200m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=200m -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:-UseAdaptiveSizePolicy -XX:+UseParallelOldGC"
 _setPropertyDefault project, "junit.java.unit.gc", "-Xms256m -Xmx256m -XX:MaxNewSize=32m -XX:MaxPermSize=64m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=64m -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:-UseAdaptiveSizePolicy -XX:+UseParallelOldGC -XX:-UseSplitVerifier"
 
-_setPropertyDefault project, "nodejs.npm.module.author", "Nathan Cavanaugh <nathan.cavanaugh@liferay.com> (https://github.com/natecavanaugh)"
-_setPropertyDefault project, "nodejs.npm.module.bugs.url", "https://issues.liferay.com/"
-_setPropertyDefault project, "nodejs.npm.module.license", "LGPL"
-_setPropertyDefault project, "nodejs.npm.module.repository", "liferay/liferay-portal"
-
+apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
-apply plugin: "eclipse"
-apply plugin: "findbugs"
-apply plugin: "idea"
 
-if (FileUtil.exists(project, "service.xml")) {
-	apply plugin: "com.liferay.portal.tools.service.builder"
-	apply plugin: "com.liferay.portal.tools.upgrade.table.builder"
-	apply plugin: "com.liferay.portal.tools.wsdd.builder"
-}
-
-if (FileUtil.exists(project, "wsdl")) {
-	apply plugin: "com.liferay.wsdl.builder"
-}
-
-if (FileUtil.exists(project, "xsd")) {
-	apply plugin: "com.liferay.xsd.builder"
-}
-
-File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File portalRootDir = _getPortalRootDir(project)
 
 if (portalRootDir) {
 	distsDirName = FileUtil.relativize(new File(portalRootDir, "tools/sdk/dist"), buildDir)
 	libsDirName = distsDirName
-}
-
-group = "com.liferay"
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
-afterEvaluate {
-	project.ext.set "app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir)
-	project.ext.set "app.server.portal.dir", project.relativePath(liferay.appServerPortalDir)
-	project.ext.set "plugin.full.version", project.version.toString()
-
-	if (project.hasProperty("snapshot") && !project.version.endsWith("-SNAPSHOT")) {
-		project.version = project.version + "-SNAPSHOT"
-	}
-
-	if (!project.version.endsWith("-SNAPSHOT")) {
-		Iterable<Task> publishNodeModuleTasks = tasks.matching {
-			it.class.name.startsWith "com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask"
-		}
-
-		publishNodeModuleTasks.each {
-			uploadArchives.dependsOn it
-		}
-	}
 }
 
 Project frontendCommonCssProject = findProject(":frontend:frontend-common-css")
@@ -91,129 +43,6 @@ if (frontendCommonCssProject) {
 
 		portalCommonDir = new File(frontendCommonCssProject.projectDir, "tmp/META-INF/resources")
 	}
-}
-
-configure([test, testIntegration]) {
-	testLogging {
-		events = EnumSet.allOf(TestLogEvent)
-		exceptionFormat = "full"
-		stackTraceFilters = []
-	}
-}
-
-configurations {
-	all {
-		resolutionStrategy {
-			eachDependency {
-				DependencyResolveDetails dependencyResolveDetails ->
-
-				if (dependencyResolveDetails.requested.group == "com.liferay.portal") {
-					dependencyResolveDetails.useVersion liferay.portalVersion
-				}
-			}
-		}
-	}
-
-	portalTest
-}
-
-dependencies {
-	portalTest group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion
-	portalTest group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
-
-	testCompile group: "org.powermock", name: "powermock-api-mockito", version: "1.6.1"
-	testCompile group: "org.powermock", name: "powermock-core", version: "1.6.1"
-	testCompile group: "org.powermock", name: "powermock-module-junit4", version: "1.6.1"
-	testCompile group: "org.springframework", name: "spring-test", version: "3.2.15.RELEASE"
-}
-
-eclipse {
-	classpath {
-		plusConfigurations += [configurations.portalTest]
-	}
-}
-
-idea {
-	module {
-		scopes.TEST.plus += [configurations.portalTest]
-	}
-}
-
-javadoc {
-	String exportPackages = bundle.instructions["Export-Package"]
-
-	if (exportPackages) {
-		List<String> exportPackagesList = exportPackages.tokenize("," as char)
-
-		exportPackagesList*.trim()
-
-		exportPackagesList.each {
-			String pattern ->
-
-			boolean excludePattern = false
-
-			int start = 0
-
-			if (pattern.startsWith("!")) {
-				excludePattern = true
-
-				start = 1
-			}
-
-			int end = pattern.indexOf(";")
-
-			if (end == -1) {
-				end = pattern.length()
-			}
-
-			pattern = pattern[start .. (end - 1)]
-
-			pattern = "**/" + pattern.replace("." as char, "/" as char)
-
-			if (pattern.endsWith("/*")) {
-				pattern = pattern[0 .. -2]
-			}
-			else {
-				pattern += "/*"
-			}
-
-			if (excludePattern) {
-				exclude pattern
-			}
-			else {
-				include pattern
-			}
-		}
-	}
-}
-
-repositories {
-	if (!Boolean.getBoolean("maven.local.ignore")) {
-		mavenLocal()
-	}
-
-	maven {
-		url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
-	}
-}
-
-sourceSets {
-	test {
-		compileClasspath = configurations.compile + configurations.portal + compileClasspath + configurations.portalTest
-		runtimeClasspath = configurations.compile + configurations.portal + runtimeClasspath + configurations.portalTest
-	}
-
-	testIntegration {
-		compileClasspath = configurations.portal + compileClasspath + configurations.portalTest
-		runtimeClasspath = configurations.portal + runtimeClasspath + configurations.portalTest
-	}
-}
-
-testIntegration {
-	File testIntegrationResultsDir = file("test-results/integration")
-
-	binResultsDir = new File(testIntegrationResultsDir, "binary/testIntegration")
-	reports.junitXml.destination = testIntegrationResultsDir
 }
 
 pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
@@ -244,20 +73,6 @@ if (portalRootDir) {
 			serviceBuilder fileTree(dir: new File(portalRootDir, "tools/sdk/tmp/portal-tools/portal-tools-service-builder"), include: "*.jar")
 		}
 	}
-}
-
-tasks.withType(FindBugs) {
-	maxHeapSize = "1g"
-
-	reports {
-		html.enabled = true
-		xml.enabled = false
-	}
-}
-
-tasks.withType(JavaCompile) {
-	options.encoding = "UTF-8"
-	options.warnings = false
 }
 
 private File _getPortalRootDir(Project project) {

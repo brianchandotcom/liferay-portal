@@ -43,20 +43,20 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addBuildPluginDescriptorTask(project);
+		addTaskBuildPluginDescriptor(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					configureBuildPluginDescriptorTask(project);
+					configureTasksBuildPluginDescriptor(project);
 				}
 
 			});
 	}
 
-	protected BuildPluginDescriptorTask addBuildPluginDescriptorTask(
+	protected BuildPluginDescriptorTask addTaskBuildPluginDescriptor(
 		Project project) {
 
 		BuildPluginDescriptorTask buildPluginDescriptorTask =
@@ -73,40 +73,21 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		return buildPluginDescriptorTask;
 	}
 
-	protected void configureBuildPluginDescriptorTask(
+	protected void configureTaskBuildPluginDescriptor(
 		BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
-		configureBuildPluginDescriptorTaskClassesDir(buildPluginDescriptorTask);
-		configureBuildPluginDescriptorTaskConfigurationScopeMappings(
+		configureTaskBuildPluginDescriptorClassesDir(buildPluginDescriptorTask);
+		configureTaskBuildPluginDescriptorConfigurationScopeMappings(
 			buildPluginDescriptorTask);
-		configureBuildPluginDescriptorTaskOutputDir(buildPluginDescriptorTask);
-		configureBuildPluginDescriptorTaskPomArtifactId(
+		configureTaskBuildPluginDescriptorOutputDir(buildPluginDescriptorTask);
+		configureTaskBuildPluginDescriptorPomArtifactId(
 			buildPluginDescriptorTask);
-		configureBuildPluginDescriptorTaskPomGroupId(buildPluginDescriptorTask);
-		configureBuildPluginDescriptorTaskPomVersion(buildPluginDescriptorTask);
-		configureBuildPluginDescriptorTaskSourceDir(buildPluginDescriptorTask);
+		configureTaskBuildPluginDescriptorPomGroupId(buildPluginDescriptorTask);
+		configureTaskBuildPluginDescriptorPomVersion(buildPluginDescriptorTask);
+		configureTaskBuildPluginDescriptorSourceDir(buildPluginDescriptorTask);
 	}
 
-	protected void configureBuildPluginDescriptorTask(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildPluginDescriptorTask.class,
-			new Action<BuildPluginDescriptorTask>() {
-
-				@Override
-				public void execute(
-					BuildPluginDescriptorTask
-						buildPluginDescriptorTask) {
-
-					configureBuildPluginDescriptorTask(
-						buildPluginDescriptorTask);
-				}
-
-			});
-	}
-
-	protected void configureBuildPluginDescriptorTaskClassesDir(
+	protected void configureTaskBuildPluginDescriptorClassesDir(
 		BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
 		if (buildPluginDescriptorTask.getClassesDir() != null) {
@@ -123,7 +104,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 			sourceSetOutput.getClassesDir());
 	}
 
-	protected void configureBuildPluginDescriptorTaskOutputDir(
+	protected void configureTaskBuildPluginDescriptorOutputDir(
 		BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
 		if (buildPluginDescriptorTask.getOutputDir() != null) {
@@ -145,7 +126,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		buildPluginDescriptorTask.setOutputDir(outputDir);
 	}
 
-	protected void configureBuildPluginDescriptorTaskPomArtifactId(
+	protected void configureTaskBuildPluginDescriptorPomArtifactId(
 		BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
 		if (Validator.isNotNull(buildPluginDescriptorTask.getPomArtifactId())) {
@@ -157,7 +138,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		buildPluginDescriptorTask.setPomArtifactId(project.getName());
 	}
 
-	protected void configureBuildPluginDescriptorTaskPomGroupId(
+	protected void configureTaskBuildPluginDescriptorPomGroupId(
 		BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
 		if (Validator.isNotNull(buildPluginDescriptorTask.getPomGroupId())) {
@@ -173,7 +154,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureBuildPluginDescriptorTaskPomVersion(
+	protected void configureTaskBuildPluginDescriptorPomVersion(
 		BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
 		if (Validator.isNotNull(buildPluginDescriptorTask.getPomVersion())) {
@@ -189,7 +170,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureBuildPluginDescriptorTaskSourceDir(
+	protected void configureTaskBuildPluginDescriptorSourceDir(
 		BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
 		if (buildPluginDescriptorTask.getSourceDir() != null) {
@@ -209,7 +190,26 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		buildPluginDescriptorTask.setSourceDir(iterator.next());
 	}
 
-	private void configureBuildPluginDescriptorTaskConfigurationScopeMappings(
+	protected void configureTasksBuildPluginDescriptor(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildPluginDescriptorTask.class,
+			new Action<BuildPluginDescriptorTask>() {
+
+				@Override
+				public void execute(
+					BuildPluginDescriptorTask
+						buildPluginDescriptorTask) {
+
+					configureTaskBuildPluginDescriptor(
+						buildPluginDescriptorTask);
+				}
+
+			});
+	}
+
+	private void configureTaskBuildPluginDescriptorConfigurationScopeMappings(
 		BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
 		Map<String, String> configurationScopeMappings =

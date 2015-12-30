@@ -92,9 +92,8 @@ public class MBCategoryStagedModelDataHandlerTest
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		return MBCategoryServiceUtil.addCategory(
-				TestPropsValues.getUserId(), category.getCategoryId(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				serviceContext);
+			TestPropsValues.getUserId(), category.getCategoryId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
 
 	@Override

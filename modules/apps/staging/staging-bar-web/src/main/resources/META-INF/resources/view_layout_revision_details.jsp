@@ -190,7 +190,7 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 			</span>
 		</a>
 
-		<ul class="dropdown-menu" role="menu">
+		<ul class="dropdown-menu dropdown-menu-right" role="menu">
 			<c:if test="<%= !layoutRevision.isIncomplete() %>">
 
 				<%

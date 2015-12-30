@@ -27,8 +27,9 @@ data.put("panelURL", simulationPanelURL);
 data.put("qa-id", "simulation");
 %>
 
-<li>
+<li class="hidden-xs simulation-menu-toggle">
 	<liferay-ui:icon
+		cssClass="control-menu-icon"
 		data="<%= data %>"
 		icon="simulation-menu-closed"
 		id="simulationPanel"

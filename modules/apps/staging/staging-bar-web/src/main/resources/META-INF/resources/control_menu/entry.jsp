@@ -16,6 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<li>
+<li class="staging-links">
 	<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
 </li>

@@ -42,9 +42,9 @@ public class FieldsToDDMFormValuesConverterUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static final ServiceTracker<FieldsToDDMFormValuesConverter,
-		FieldsToDDMFormValuesConverter> _serviceTracker =
-			ServiceTrackerFactory.open(
+	private static final ServiceTracker
+		<FieldsToDDMFormValuesConverter, FieldsToDDMFormValuesConverter>
+			_serviceTracker = ServiceTrackerFactory.open(
 				FrameworkUtil.getBundle(
 					FieldsToDDMFormValuesConverterUtil.class),
 				FieldsToDDMFormValuesConverter.class);

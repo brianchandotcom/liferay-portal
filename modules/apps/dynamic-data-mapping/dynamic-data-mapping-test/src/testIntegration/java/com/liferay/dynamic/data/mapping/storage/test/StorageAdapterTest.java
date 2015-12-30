@@ -120,7 +120,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Field fieldsDisplayField = createFieldsDisplayField(
 			structure.getStructureId(),
 			"boolean_INSTANCE_rztm,boolean_INSTANCE_ovho," +
-			"boolean_INSTANCE_krvx");
+				"boolean_INSTANCE_krvx");
 
 		fields.put(fieldsDisplayField);
 
@@ -220,7 +220,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Field fieldsDisplayField = createFieldsDisplayField(
 			structure.getStructureId(),
 			"decimal_INSTANCE_rztm,decimal_INSTANCE_ovho," +
-			"decimal_INSTANCE_krvx");
+				"decimal_INSTANCE_krvx");
 
 		fields.put(fieldsDisplayField);
 
@@ -316,7 +316,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Field fieldsDisplayField = createFieldsDisplayField(
 			structure.getStructureId(),
 			"integer_INSTANCE_rztm,integer_INSTANCE_ovho," +
-			"integer_INSTANCE_krvx");
+				"integer_INSTANCE_krvx");
 
 		fields.put(fieldsDisplayField);
 
@@ -390,7 +390,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Field fieldsDisplayField = createFieldsDisplayField(
 			structure.getStructureId(),
 			"number_INSTANCE_rztm,number_INSTANCE_ovho," +
-			"number_INSTANCE_krvx");
+				"number_INSTANCE_krvx");
 
 		fields.put(fieldsDisplayField);
 

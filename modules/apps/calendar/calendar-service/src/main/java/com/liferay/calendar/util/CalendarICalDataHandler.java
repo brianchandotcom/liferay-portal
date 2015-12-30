@@ -522,7 +522,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 
 		ProdId prodId = new ProdId(
 			"-//Liferay Inc//Liferay Portal " + ReleaseInfo.getVersion() +
-			"//EN");
+				"//EN");
 
 		propertiesList.add(prodId);
 
@@ -646,7 +646,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 					company.getPortalURL(calendarBooking.getGroupId()) + "/",
 				"src=\"" +
 					company.getPortalURL(calendarBooking.getGroupId()) + "/"
-		});
+			});
 
 		Description description = new Description(calendarBookingDescription);
 

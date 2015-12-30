@@ -72,12 +72,14 @@ import org.powermock.reflect.Whitebox;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest( {
-	BlogsEntryLocalServiceUtil.class, BlogsUtil.class,
-	PortalSocketPermission.class, PortletLocalServiceUtil.class,
-	PortletProviderUtil.class, PropsValues.class,
-	ServiceTrackerCollections.class, UserLocalServiceUtil.class
-})
+@PrepareForTest(
+	{
+		BlogsEntryLocalServiceUtil.class, BlogsUtil.class,
+		PortalSocketPermission.class, PortletLocalServiceUtil.class,
+		PortletProviderUtil.class, PropsValues.class,
+		ServiceTrackerCollections.class, UserLocalServiceUtil.class
+	}
+)
 @RunWith(PowerMockRunner.class)
 public class PingbackMethodImplTest extends PowerMockito {
 
@@ -605,8 +607,9 @@ public class PingbackMethodImplTest extends PowerMockito {
 				public Void answer(InvocationOnMock invocationOnMock)
 					throws Throwable {
 
-					Map<String, String[]> params = (Map<String, String[]>)
-						invocationOnMock.getArguments()[1];
+					Map<String, String[]> params =
+						(Map<String, String[]>)
+							invocationOnMock.getArguments()[1];
 
 					params.put(name, new String[] {value});
 

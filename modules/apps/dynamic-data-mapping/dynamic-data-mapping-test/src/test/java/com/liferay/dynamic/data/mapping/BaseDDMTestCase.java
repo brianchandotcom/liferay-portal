@@ -164,8 +164,8 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 		Element metadataElement = dynamicElement.addElement("meta-data");
 
-		metadataElement.addAttribute("locale", LocaleUtil.toLanguageId(
-			LocaleUtil.US));
+		metadataElement.addAttribute(
+			"locale", LocaleUtil.toLanguageId(LocaleUtil.US));
 
 		Element entryElement = metadataElement.addElement("entry");
 
@@ -803,7 +803,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		when(
 			language.getLanguageId(Matchers.eq(locale))
 		).thenReturn(
-				languageId
+			languageId
 		);
 	}
 

@@ -69,9 +69,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, ServiceTrackerCollections.class
-})
+@PrepareForTest(
+	{AssetRendererFactoryRegistryUtil.class, ServiceTrackerCollections.class}
+)
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilDLFileEntryTest
 	extends BaseSearchResultUtilTestCase {

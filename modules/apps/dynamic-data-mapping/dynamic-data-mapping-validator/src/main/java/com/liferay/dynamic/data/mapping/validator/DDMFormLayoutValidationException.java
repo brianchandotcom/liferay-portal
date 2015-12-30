@@ -70,7 +70,7 @@ public class DDMFormLayoutValidationException extends PortalException {
 			super(
 				String.format(
 					"Field names %s were defined more than once",
-						duplicatedFieldNames));
+					duplicatedFieldNames));
 
 			_duplicatedFieldNames = duplicatedFieldNames;
 		}

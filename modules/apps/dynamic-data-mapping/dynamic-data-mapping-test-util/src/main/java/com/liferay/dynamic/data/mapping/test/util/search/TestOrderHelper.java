@@ -247,7 +247,8 @@ public abstract class TestOrderHelper {
 	protected abstract String getSearchableAssetEntryClassName();
 
 	protected abstract BaseModel<?> getSearchableAssetEntryParentBaseModel(
-		Group group, ServiceContext serviceContext) throws Exception;
+			Group group, ServiceContext serviceContext)
+		throws Exception;
 
 	protected abstract String getSearchableAssetEntryStructureClassName();
 

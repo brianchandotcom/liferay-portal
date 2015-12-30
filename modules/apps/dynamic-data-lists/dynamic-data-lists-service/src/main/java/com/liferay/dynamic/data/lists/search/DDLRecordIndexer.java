@@ -320,7 +320,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 						recordSetProperty.in(recordSetDynamicQuery));
 				}
 
-		});
+			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DDLRecord>() {
@@ -347,7 +347,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 					}
 				}
 
-		});
+			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();

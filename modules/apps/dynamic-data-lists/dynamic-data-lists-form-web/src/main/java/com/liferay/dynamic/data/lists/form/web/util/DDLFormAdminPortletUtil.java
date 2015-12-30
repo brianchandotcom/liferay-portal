@@ -104,7 +104,7 @@ public class DDLFormAdminPortletUtil {
 		for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
 			String value =
 				workflowDefinition.getName() + StringPool.AT +
-				workflowDefinition.getVersion();
+					workflowDefinition.getVersion();
 
 			String version = LanguageUtil.format(
 				locale, "version-x", workflowDefinition.getVersion(), false);

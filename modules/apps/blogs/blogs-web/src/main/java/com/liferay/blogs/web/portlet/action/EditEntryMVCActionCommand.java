@@ -193,10 +193,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					_transactionAttribute, updateEntryCallable);
 
 				entry = (BlogsEntry)returnValue[0];
-				oldUrlTitle = ((String)returnValue[1]);
+				oldUrlTitle = (String)returnValue[1];
 				blogsEntryAttachmentFileEntryReferences =
-					((List<BlogsEntryAttachmentFileEntryReference>)
-						returnValue[2]);
+					(List<BlogsEntryAttachmentFileEntryReference>)
+						returnValue[2];
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteEntries(actionRequest, false);

@@ -1191,7 +1191,7 @@ public class CalendarPortlet extends MVCPortlet {
 			}
 			catch (Exception e) {
 				String message = themeDisplay.translate(
-						"an-unexpected-error-occurred-while-importing-your-" +
+					"an-unexpected-error-occurred-while-importing-your-" +
 						"file");
 
 				jsonObject.put("error", message);

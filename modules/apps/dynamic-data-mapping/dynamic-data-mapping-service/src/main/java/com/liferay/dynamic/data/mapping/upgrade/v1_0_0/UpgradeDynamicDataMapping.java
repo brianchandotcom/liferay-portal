@@ -1395,8 +1395,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			Map<String, Integer> dynamicContentValuesMap = new HashMap<>();
 
-			for (Element dynamicContentElement : dynamicElementElement.elements(
-				"dynamic-content")) {
+			for (Element dynamicContentElement :
+					dynamicElementElement.elements("dynamic-content")) {
 
 				String languageId = dynamicContentElement.attributeValue(
 					"language-id");
@@ -1935,9 +1935,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				}
 
 				_resourcePermissionLocalService.addResourcePermissions(
-						DLFileEntry.class.getName(), RoleConstants.GUEST,
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						getActionIdsLong(_guestPermissions));
+					DLFileEntry.class.getName(), RoleConstants.GUEST,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					getActionIdsLong(_guestPermissions));
 
 				// File version
 

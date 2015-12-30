@@ -15,7 +15,7 @@ body {
 
 	&.sidenav-transition .header-toolbar {
 		@include sm() {
-			@include transition($control-menu-css-transition);
+			@include transition(all 0.5s ease);
 		}
 	}
 }

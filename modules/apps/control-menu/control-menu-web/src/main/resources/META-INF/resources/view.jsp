@@ -36,6 +36,9 @@ String controlMenuEntryCssClass = "";
 				<ul class="control-menu-nav control-menu-nav-level-1" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
 
 					<%
+					String toggleControlsControlMenuEntryClassName = ToggleControlsControlMenuEntry.class.getName();
+					String manageLayoutControlMenuEntryClassName = ManageLayoutControlMenuEntry.class.getName();
+
 					for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
 						List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
 
@@ -44,15 +47,17 @@ String controlMenuEntryCssClass = "";
 								continue;
 							}
 
-							if (controlMenuEntry.getKey() == "com.liferay.control.menu.web.ToggleControlsControlMenuEntry") {
+							String controlMenuEntryKey = controlMenuEntry.getKey();
+
+							if (toggleControlsControlMenuEntryClassName.equals(controlMenuEntryKey)) {
 								controlMenuEntryCssClass = "edit-controls-toggle visible-xs";
 							}
-							else if (controlMenuEntry.getKey() == "com.liferay.control.menu.web.ManageLayoutControlMenuEntry") {
+							else if (manageLayoutControlMenuEntryClassName.equals(controlMenuEntryKey)) {
 								controlMenuEntryCssClass = "edit-layout-link";
 							}
 					%>
 
-							<li class='<%= controlMenuEntryCssClass %>'>
+							<li class="<%= controlMenuEntryCssClass %>">
 								<liferay-ui:icon
 									cssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
 									data="<%= controlMenuEntry.getData(request) %>"

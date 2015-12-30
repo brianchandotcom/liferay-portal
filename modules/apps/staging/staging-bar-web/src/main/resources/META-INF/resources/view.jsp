@@ -249,7 +249,6 @@ if (layout != null) {
 											<liferay-staging:menu cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" />
 										</c:if>
 
-
 										<li class="control-menu-nav-item">
 											<c:choose>
 												<c:when test="<%= liveLayout == null %>">

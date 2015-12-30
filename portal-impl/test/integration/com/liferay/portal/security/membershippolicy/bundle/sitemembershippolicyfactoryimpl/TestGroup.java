@@ -516,15 +516,6 @@ public class TestGroup implements Group {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
-	@Override
-	public boolean isCommunity() {
-		return false;
-	}
-
 	@Override
 	public boolean isCompany() {
 		return false;

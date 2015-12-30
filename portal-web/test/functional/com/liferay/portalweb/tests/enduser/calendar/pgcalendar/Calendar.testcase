@@ -3260,6 +3260,37 @@
 		</execute>
 	</command>
 
+	<command name="ExportUserCalendarAsICS" priority="4">
+		<description message="This is a use case for LPS-57992." />
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="calendarName" value="Test Test" />
+			<var name="eventTitle" value="Event For Export" />
+			<var name="eventType" value="Regular" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoMyCalendarsManage" />
+
+		<execute macro="Calendar#exportCalendarFile">
+			<var name="calendarName" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Event For Export" />
+		</execute>
+	</command>
+
 	<command name="ImportCalendarAndViewCalendarEventRegularComment" priority="4">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />

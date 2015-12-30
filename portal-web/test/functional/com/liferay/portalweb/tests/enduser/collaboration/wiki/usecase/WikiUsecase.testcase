@@ -240,6 +240,8 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute macro="WikiEntry#addPageTitle">
@@ -310,6 +312,8 @@
 		<execute macro="WikiNavigator#gotoNode">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 

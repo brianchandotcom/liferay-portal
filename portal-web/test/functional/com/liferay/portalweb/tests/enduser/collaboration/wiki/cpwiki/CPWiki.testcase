@@ -296,17 +296,10 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
-
-		<execute macro="WikiEntry#addPageTitle">
+		<execute macro="WikiPage#addCP">
+			<var name="wikiPageContent" value="Wiki Page Content 1" />
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-		</execute>
-
-		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -318,17 +311,10 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
-
-		<execute macro="WikiEntry#addPageTitle">
+		<execute macro="WikiPage#addCP">
+			<var name="wikiPageContent" value="Wiki Page Content 2" />
 			<var name="wikiPageTitle" value="Wiki Page 2" />
 		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content 2" />
-		</execute>
-
-		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -452,17 +438,10 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
-
-		<execute macro="WikiEntry#addPageTitle">
+		<execute macro="WikiPage#addCP">
+			<var name="wikiPageContent" value="Wiki Page Content 1" />
 			<var name="wikiPageTitle" value="Wiki Page 1 Original" />
 		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-		</execute>
-
-		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -488,17 +467,10 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
-
-		<execute macro="WikiEntry#addPageTitle">
+		<execute macro="WikiPage#addCP">
+			<var name="wikiPageContent" value="Wiki Page Content 1" />
 			<var name="wikiPageTitle" value="Wiki Page 1 Original" />
 		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content 1" />
-		</execute>
-
-		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -558,17 +530,10 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
-
-		<execute macro="WikiEntry#addPageTitle">
+		<execute macro="WikiPage#addCP">
+			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page RSS" />
 		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
-
-		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 

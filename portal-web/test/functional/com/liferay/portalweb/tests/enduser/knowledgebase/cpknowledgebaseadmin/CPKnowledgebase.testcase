@@ -987,8 +987,8 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowResourceValue" value="Knowledge Base Article" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceValue" value="Knowledge Base Article" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

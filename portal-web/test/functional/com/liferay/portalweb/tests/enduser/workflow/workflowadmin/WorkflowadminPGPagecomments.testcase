@@ -21,8 +21,8 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowResourceValue" value="Comments" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceValue" value="Comments" />
 		</execute>
 
 		<execute macro="Page#addPG">

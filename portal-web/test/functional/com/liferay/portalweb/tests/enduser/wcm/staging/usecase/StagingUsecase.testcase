@@ -2020,8 +2020,8 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowResourceValue" value="Page Revision" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceValue" value="Page Revision" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -2064,8 +2064,8 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowResourceValue" value="Page Revision" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceValue" value="Page Revision" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -2249,8 +2249,8 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowResourceValue" value="Page Revision" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceValue" value="Page Revision" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

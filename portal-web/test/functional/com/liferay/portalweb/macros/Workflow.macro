@@ -521,7 +521,7 @@
 
 		<var name="workflowResourceValue" value="Knowledge Base Article" />
 		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<if>	
+		<if>
 			<condition function="IsElementPresent" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 			<then>
 				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
@@ -563,14 +563,14 @@
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#EDIT" />
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${defaultWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />	
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<var name="workflowResourceValue" value="User" />
 		<var name="key_listEntry" value="${workflowResourceValue}" />
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#EDIT" />
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />	
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<var name="workflowResourceValue" value="Wiki Page" />
 		<var name="key_listEntry" value="${workflowResourceValue}" />

@@ -87,23 +87,23 @@ if (layout != null) {
 	%>
 
 	<c:if test="<%= liveGroup != null %>">
-		<ul>
+		<ul class="control-menu-nav">
 			<li class="dropdown staging-options-toggle visible-xs">
 				<a class="control-menu-icon dropdown-toggle" data-toggle="dropdown" value="staging">
 					<span class="control-menu-icon-label">
 						<c:choose>
 							<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 								<c:if test="<%= stagingGroup != null %>">
-									<liferay-ui:message key="live" />
+									<liferay-ui:message key="staging" />
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:message key="staging" />
+								<liferay-ui:message key="live" />
 							</c:otherwise>
 						</c:choose>
 					</span>
 
-					<aui:icon image="caret-double-l" label="staging" markupView="lexicon" />
+					<aui:icon image="caret-double-l" markupView="lexicon" />
 				</a>
 
 				<ul class="dropdown-menu">
@@ -201,10 +201,8 @@ if (layout != null) {
 					</li>
 				</c:otherwise>
 			</c:choose>
-		</ul>
 
-		<ul>
-			<div class="staging-bar">
+			<li class="staging-bar">
 				<div class="control-menu-level-2">
 					<div class="container-fluid-1280">
 						<div class="control-menu-level-2-heading visible-xs">
@@ -215,8 +213,8 @@ if (layout != null) {
 							</button>
 						</div>
 
-						<c:if test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && (stagingGroup != null) %>">
-							<ul class="control-menu-nav">
+						<ul class="control-menu-nav control-menu-nav-level-2">
+							<c:if test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && (stagingGroup != null) %>">
 								<c:choose>
 									<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">
 
@@ -235,11 +233,9 @@ if (layout != null) {
 											<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
 										</c:if>
 
-										<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
-											<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+										<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-											<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
-										</div>
+										<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
 									</c:when>
 									<c:otherwise>
 										<li class="control-menu-nav-item">
@@ -273,25 +269,25 @@ if (layout != null) {
 										</li>
 									</c:otherwise>
 								</c:choose>
-							</ul>
-						</c:if>
+							</c:if>
 
-						<c:if test="<%= !group.isStagedRemotely() && !group.isStagingGroup() %>">
-							<li class="control-menu-nav-item">
-								<div class="alert alert-warning hide warning-content" id="<portlet:namespace />warningMessage">
-									<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
-								</div>
+							<c:if test="<%= !group.isStagedRemotely() && !group.isStagingGroup() %>">
+								<li class="control-menu-nav-item">
+									<div class="alert alert-warning hide warning-content" id="<portlet:namespace />warningMessage">
+										<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
+									</div>
 
-								<%
-								request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
-								%>
+									<%
+									request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
+									%>
 
-								<liferay-util:include page="/last_publication_date_message.jsp" servletContext="<%= application %>" />
-							</li>
-						</c:if>
+									<liferay-util:include page="/last_publication_date_message.jsp" servletContext="<%= application %>" />
+								</li>
+							</c:if>
+						</ul>
 					</div>
 				</div>
-			</div>
+			</li>
 		</ul>
 	</c:if>
 

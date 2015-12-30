@@ -34,7 +34,7 @@ data.put("qa-id", "info");
 data.put("title", HtmlUtil.escape(LanguageUtil.get(request, "additional-information")));
 %>
 
-<li>
+<li class="info-link">
 	<aui:icon
 		cssClass="control-menu-icon"
 		data="<%= data %>"

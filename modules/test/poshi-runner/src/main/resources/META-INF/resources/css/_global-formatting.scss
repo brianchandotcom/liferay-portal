@@ -1,5 +1,9 @@
 /* ---------- Global ---------- */
 
+* {
+	box-sizing: border-box;
+}
+
 body {
 	background-color: $body-bg-color;
 	font-family: $monospaced-font;
@@ -32,6 +36,6 @@ span {
 	display: inline;
 }
 
-* {
-	box-sizing: border-box;
+.hidden {
+	display: none;
 }

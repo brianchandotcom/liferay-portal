@@ -55,16 +55,33 @@
 
 .xml-log {
 	.btn-error, .btn-screenshot {
-		background-color: transparentize($failed-color, 0.84);
-		border-color: $button-error-color;
 		bottom: 0;
-		color: $button-error-border-color;
 		display: inline-block;
 		font-family: $monospaced-font;
 		font-size: 17px;
+	}
 
-		&.toggle {
-			background: $button-error-toggle-bg-color;
+	.fail {
+		.btn-error, .btn-screenshot {
+			background-color: transparentize($failed-color, 0.84);
+			border-color: $failed-color;
+			color: $failed-color;
+
+			&.toggle {
+				background: $button-error-toggle-bg-color;
+			}
+		}
+	}
+
+	.warning {
+		.btn-error, .btn-screenshot {
+			background-color: transparentize($warning-color, 0.84);
+			border-color: $warning-color;
+			color: $warning-color;
+
+			&.toggle {
+				background: $button-warning-toggle-bg-color;
+			}
 		}
 	}
 }

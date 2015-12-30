@@ -13,6 +13,11 @@
 	<td>//ul[@role='menubar']//a[@role='menuitem' and contains(.,'${key_category}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LDAP_ENTRY</td>
+	<td>//table[contains(@data-searchcontainerid,'ConfigurationAdminPortlet')]//td</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

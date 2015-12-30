@@ -1983,6 +1983,8 @@
 			<var name="pageName" value="Sites Directory Page" />
 		</execute>
 
+		<var name="key_siteName" value="Liferay" />
+
 		<var name="key_orgName" value="Organization Name 1" />
 
 		<execute function="AssertTextEquals" locator1="SitesDirectory#SITE_ENTRY" value1="Liferay" />
@@ -2013,7 +2015,5 @@
 			<var name="breadcrumbListVisible" value="Test Page" />
 			<var name="pathLocator" value="PAGE" />
 		</execute>
-
-		<execute macro="Page#tearDownPG" />
 	</command>
 </definition>

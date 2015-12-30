@@ -412,9 +412,8 @@
 		<execute function="AssertElementPresent" locator1="Button#PLUS" />
 		<execute function="AssertElementPresent" locator1="TextInput#SEARCH" />
 		<execute function="AssertElementPresent" locator1="Button#SUBMIT" value1="Search" />
-		<execute function="AssertElementPresent" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
 		<execute function="AssertElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertElementPresent" locator1="Message#INFO" value1="No user groups were found." />
+		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
 	</command>
 
 	<command name="viewRemoveMemberCP">

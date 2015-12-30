@@ -1752,17 +1752,6 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.UserGroupFinder.findByC_N">
-		<![CDATA[
-			SELECT
-				{UserGroup.*}
-			FROM
-				UserGroup
-			WHERE
-				(UserGroup.companyId = ?) AND
-				(lower(UserGroup.name) = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserGroupFinder.findByC_N_D">
 		<![CDATA[
 			SELECT

@@ -233,21 +233,22 @@ if (layout != null) {
 											<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
 										</c:if>
 
-										<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+										<div class="control-menu-nav-item" id="<portlet:namespace />layoutRevisionDetails">
+											<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-										<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
+											<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
+										</div>
 									</c:when>
 									<c:otherwise>
-										<li class="control-menu-nav-item">
-											<c:if test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
+										<c:if test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 
-												<%
-												request.setAttribute("branchingEnabled", String.valueOf(false));
-												%>
+											<%
+											request.setAttribute("branchingEnabled", String.valueOf(false));
+											%>
 
-												<liferay-staging:menu cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" />
-											</c:if>
-										</li>
+											<liferay-staging:menu cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" />
+										</c:if>
+
 
 										<li class="control-menu-nav-item">
 											<c:choose>

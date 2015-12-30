@@ -50,9 +50,9 @@ else {
 }
 %>
 
-<li class="control-menu-nav-item">
-	<c:if test="<%= !hasWorkflowTask %>">
-		<c:if test="<%= !layoutRevision.isHead() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
+<c:if test="<%= !hasWorkflowTask %>">
+	<c:if test="<%= !layoutRevision.isHead() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
+		<li class="control-menu-nav-item">
 			<c:if test="<%= layoutRevision.isIncomplete() %>">
 				<p>
 					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(layoutRevision.getName(locale)), HtmlUtil.escape(layoutSetBranch.getName())} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
@@ -116,9 +116,9 @@ else {
 					</a>
 				</c:otherwise>
 			</c:choose>
-		</c:if>
+		</li>
 	</c:if>
-</li>
+</c:if>
 
 <li class="control-menu-nav-item">
 	<c:if test="<%= !layoutRevision.isIncomplete() %>">

@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var CSS_FIELD_SETTINGS_SAVE = A.getClassName('form', 'builder', 'field', 'settings', 'save');
+		var CSS_FIELD_SETTINGS_SAVE = A.getClassName('lfr', 'ddl', 'field', 'settings', 'save');
 
 		var TPL_MODE_TOGGLER = '<a class="settings-toggler" href="javascript:;"></a>';
 
@@ -40,6 +40,14 @@ AUI.add(
 							labelField.on('keyChange', A.bind('_onLabelFieldKeyChange', instance)),
 							labelField.on(A.bind('_onLabelFieldNormalizeKey', instance), labelField, 'normalizeKey')
 						);
+					},
+
+					getSubmitButton: function() {
+						var instance = this;
+
+						var footerNode = instance._getModalStdModeNode(A.WidgetStdMod.FOOTER);
+
+						return footerNode.one('.' + CSS_FIELD_SETTINGS_SAVE);
 					},
 
 					submit: function(callback) {
@@ -211,14 +219,6 @@ AUI.add(
 						var settingsModal = field.getSettingsModal();
 
 						return settingsModal._modal.getStdModNode(mode);
-					},
-
-					_getSubmitButton: function() {
-						var instance = this;
-
-						var footerNode = instance._getModalStdModeNode(A.WidgetStdMod.FOOTER);
-
-						return footerNode.one('.' + CSS_FIELD_SETTINGS_SAVE);
 					},
 
 					_handleValidationResponse: function(hasErrors) {

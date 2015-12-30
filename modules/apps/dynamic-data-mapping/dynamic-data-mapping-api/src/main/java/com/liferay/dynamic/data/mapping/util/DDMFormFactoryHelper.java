@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -31,7 +32,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -308,11 +311,15 @@ public class DDMFormFactoryHelper {
 		ResourceBundle portalResourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
 
-		return new AggregateResourceBundle(
-			portalResourceBundle,
-			ResourceBundleUtil.getBundle(
-				getResourceBundleBaseName(_clazz), locale,
-				_clazz.getClassLoader()));
+		List<ResourceBundle> resourceBundles = new ArrayList<>();
+		resourceBundles.add(portalResourceBundle);
+
+		mountResourceBundleHierarchy(_clazz, resourceBundles, locale);
+
+		ResourceBundle[] resourceBundleArray = resourceBundles.toArray(
+			new ResourceBundle[resourceBundles.size()]);
+
+		return new AggregateResourceBundle(resourceBundleArray);
 	}
 
 	protected String getResourceBundleBaseName(Class<?> clazz) {
@@ -327,6 +334,28 @@ public class DDMFormFactoryHelper {
 		}
 
 		return "content.Language";
+	}
+
+	protected void mountResourceBundleHierarchy(
+		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
+
+		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+			mountResourceBundleHierarchy(
+				interfaceClass, resourceBundles, locale);
+		}
+
+		String baseName = getResourceBundleBaseName(clazz);
+
+		if (Validator.isNull(baseName)) {
+			return;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			baseName, locale, clazz.getClassLoader());
+
+		if (resourceBundle != null) {
+			resourceBundles.add(resourceBundle);
+		}
 	}
 
 	protected void setAvailableLocales() {
@@ -348,7 +377,11 @@ public class DDMFormFactoryHelper {
 
 	protected void setDefaultLocale() {
 		if (Validator.isNull(_ddmForm.defaultLanguageId())) {
-			_defaultLocale = LocaleUtil.getDefault();
+			_defaultLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
+			if (_defaultLocale == null) {
+				_defaultLocale = LocaleUtil.getDefault();
+			}
 
 			return;
 		}

@@ -1,11 +1,8 @@
---- a/src/main/java/freemarker/core/DebugBreak.java
-+++ src/freemarker/core/DebugBreak.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- /*
-  * Copyright (c) 2003 The Visigoth Software Society. All rights
-  * reserved.
-@@ -63,16 +63,19 @@
+diff --git a/freemarker/core/DebugBreak.java b/freemarker/core/DebugBreak.java
+index 5142b7f..0119733 100644
+--- a/freemarker/core/DebugBreak.java
++++ b/freemarker/core/DebugBreak.java
+@@ -63,16 +63,19 @@ import freemarker.template.TemplateException;
   */
  public class DebugBreak extends TemplateElement
  {
@@ -27,36 +24,17 @@
          {
              nestedBlock.accept(env);
          }
---- a/src/main/java/freemarker/debug/impl/RmiDebuggerImpl.java
-+++ src/freemarker/debug/impl/RmiDebuggerImpl.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- package freemarker.debug.impl;
- 
- import java.rmi.RemoteException;
-@@ -28,9 +28,12 @@ implements
-         this.service = service;
+@@ -92,3 +95,4 @@ public class DebugBreak extends TemplateElement
+         return nestedBlock.getCanonicalForm();
      }
- 
--    public void addBreakpoint(Breakpoint breakpoint)
-+    public void addBreakpoint(Breakpoint breakpoint) throws RemoteException
-     {
--        service.addBreakpoint(breakpoint);
-+        if(!service.addBreakpoint(breakpoint))
-+        {
-+            throw new RemoteException("unable to add breakpoint");
-+        }
-     }
- 
-     public Object addDebuggerListener(DebuggerListener listener)
---- a/src/main/java/freemarker/debug/EnvironmentSuspendedEvent.java
-+++ src/freemarker/debug/EnvironmentSuspendedEvent.java
-@@ -1,3 +1,4 @@
+ }
 +/* @generated */
- package freemarker.debug;
- 
- import java.util.EventObject;
-@@ -12,17 +12,36 @@
+\ No newline at end of file
+diff --git a/freemarker/debug/EnvironmentSuspendedEvent.java b/freemarker/debug/EnvironmentSuspendedEvent.java
+index 0a60429..17b84ec 100644
+--- a/freemarker/debug/EnvironmentSuspendedEvent.java
++++ b/freemarker/debug/EnvironmentSuspendedEvent.java
+@@ -12,17 +12,36 @@ public class EnvironmentSuspendedEvent extends EventObject
  {
      private static final long serialVersionUID = 1L;
  
@@ -94,14 +72,17 @@
       * The line number in the template where the execution of the environment
       * was suspended.
       * @return int the line number
---- a/src/main/java/freemarker/debug/impl/DebuggerServer.java
-+++ src/freemarker/debug/impl/DebuggerServer.java
-@@ -1,3 +1,4 @@
+@@ -41,3 +60,4 @@ public class EnvironmentSuspendedEvent extends EventObject
+         return env;
+     }
+ }
 +/* @generated */
- /*
-  * Copyright (c) 2003 The Visigoth Software Society. All rights
-  * reserved.
-@@ -82,6 +82,8 @@
+\ No newline at end of file
+diff --git a/freemarker/debug/impl/DebuggerServer.java b/freemarker/debug/impl/DebuggerServer.java
+index 9e66550..573db22 100644
+--- a/freemarker/debug/impl/DebuggerServer.java
++++ b/freemarker/debug/impl/DebuggerServer.java
+@@ -82,6 +82,8 @@ class DebuggerServer
      private final byte[] password;
      private final int port;
      private final Serializable debuggerStub;
@@ -110,7 +91,7 @@
      
      public DebuggerServer(Serializable debuggerStub)
      {
-@@ -112,10 +114,10 @@ private void startInternal()
+@@ -112,10 +114,10 @@ class DebuggerServer
      {
          try
          {
@@ -124,7 +105,7 @@
                  new Thread(new DebuggerAuthProtocol(s)).start();
              }
          }
-@@ -164,4 +166,20 @@ public void run()
+@@ -164,4 +166,21 @@ class DebuggerServer
          }
  
      }
@@ -145,14 +126,13 @@
 +        }
 +    }
  }
---- a/src/main/java/freemarker/debug/impl/DebuggerService.java
-+++ src/freemarker/debug/impl/DebuggerService.java
-@@ -1,3 +1,4 @@
 +/* @generated */
- /*
-  * Copyright (c) 2003 The Visigoth Software Society. All rights
-  * reserved.
-@@ -96,17 +96,24 @@ public static void registerTemplate(Template template)
+\ No newline at end of file
+diff --git a/freemarker/debug/impl/DebuggerService.java b/freemarker/debug/impl/DebuggerService.java
+index ad9fccd..2f91dff 100644
+--- a/freemarker/debug/impl/DebuggerService.java
++++ b/freemarker/debug/impl/DebuggerService.java
+@@ -96,17 +96,24 @@ public abstract class DebuggerService
      
      abstract void registerTemplateSpi(Template template);
      
@@ -180,7 +160,7 @@
      private static class NoOpDebuggerService extends DebuggerService
      {
          List getBreakpointsSpi(String templateName)
-@@ -114,7 +121,7 @@ List getBreakpointsSpi(String templateName)
+@@ -114,7 +121,7 @@ public abstract class DebuggerService
              return Collections.EMPTY_LIST;
          }
          
@@ -189,7 +169,7 @@
          {
              throw new UnsupportedOperationException();
          }
-@@ -122,5 +129,9 @@ boolean suspendEnvironmentSpi(Environment env, int line)
+@@ -122,5 +129,10 @@ public abstract class DebuggerService
          void registerTemplateSpi(Template template)
          {
          }
@@ -198,15 +178,14 @@
 +        {
 +        }
      }
- }
-\ No newline at end of file
---- a/src/main/java/freemarker/debug/impl/RmiDebuggedEnvironmentImpl.java
-+++ src/freemarker/debug/impl/RmiDebuggedEnvironmentImpl.java
-@@ -1,3 +1,4 @@
+-}
++}
 +/* @generated */
- package freemarker.debug.impl;
- 
- import java.rmi.Remote;
+\ No newline at end of file
+diff --git a/freemarker/debug/impl/RmiDebuggedEnvironmentImpl.java b/freemarker/debug/impl/RmiDebuggedEnvironmentImpl.java
+index 84451db..5d7fb02 100644
+--- a/freemarker/debug/impl/RmiDebuggedEnvironmentImpl.java
++++ b/freemarker/debug/impl/RmiDebuggedEnvironmentImpl.java
 @@ -1,12 +1,16 @@
  package freemarker.debug.impl;
  
@@ -224,7 +203,7 @@
  
  import freemarker.cache.CacheStorage;
  import freemarker.cache.SoftCacheStorage;
-@@ -40,6 +44,8 @@
+@@ -40,6 +44,8 @@ implements
      private static final CacheStorage storage = new SoftCacheStorage(new IdentityHashMap());
      private static final Object idLock = new Object();
      private static long nextId = 1;
@@ -233,7 +212,7 @@
      
      private boolean stopped = false;
      private final long id;
-@@ -90,6 +96,14 @@ else if(key instanceof Configuration)
+@@ -90,6 +96,14 @@ implements
                  value = new DebugConfigurationModel((Configuration)key);
              }
          }
@@ -248,7 +227,7 @@
          return value;
      }
  
-@@ -350,4 +364,18 @@ public TemplateModel get(String key) throws TemplateModelException
+@@ -350,4 +364,19 @@ implements
              return super.get(key);
          }
      }
@@ -267,14 +246,38 @@
 +        }
 +    }
  }
---- a/src/main/java/freemarker/debug/impl/RmiDebuggerService.java
-+++ src/freemarker/debug/impl/RmiDebuggerService.java
-@@ -1,3 +1,4 @@
 +/* @generated */
- /*
-  * Copyright (c) 2003 The Visigoth Software Society. All rights
-  * reserved.
-@@ -55,8 +55,11 @@
+\ No newline at end of file
+diff --git a/freemarker/debug/impl/RmiDebuggerImpl.java b/freemarker/debug/impl/RmiDebuggerImpl.java
+index be2fcd3..d455b71 100644
+--- a/freemarker/debug/impl/RmiDebuggerImpl.java
++++ b/freemarker/debug/impl/RmiDebuggerImpl.java
+@@ -28,9 +28,12 @@ implements
+         this.service = service;
+     }
+ 
+-    public void addBreakpoint(Breakpoint breakpoint)
++    public void addBreakpoint(Breakpoint breakpoint) throws RemoteException
+     {
+-        service.addBreakpoint(breakpoint);
++        if(!service.addBreakpoint(breakpoint))
++        {
++            throw new RemoteException("unable to add breakpoint");
++        }
+     }
+ 
+     public Object addDebuggerListener(DebuggerListener listener)
+@@ -73,3 +76,4 @@ implements
+         service.removeBreakpoints(templateName);
+     }
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/freemarker/debug/impl/RmiDebuggerService.java b/freemarker/debug/impl/RmiDebuggerService.java
+index a5b64ed..4d0b34c 100644
+--- a/freemarker/debug/impl/RmiDebuggerService.java
++++ b/freemarker/debug/impl/RmiDebuggerService.java
+@@ -55,8 +55,11 @@ package freemarker.debug.impl;
  import java.io.Serializable;
  import java.lang.ref.ReferenceQueue;
  import java.lang.ref.WeakReference;
@@ -286,7 +289,7 @@
  import java.util.ArrayList;
  import java.util.Collection;
  import java.util.Collections;
-@@ -66,13 +69,17 @@
+@@ -66,13 +69,17 @@ import java.util.HashSet;
  import java.util.Iterator;
  import java.util.List;
  import java.util.Map;
@@ -304,7 +307,7 @@
  import freemarker.template.Template;
  import freemarker.template.utility.UndeclaredThrowableException;
  
-@@ -89,11 +96,17 @@
+@@ -89,11 +96,17 @@ extends
      private final Map listeners = new HashMap();
      private final ReferenceQueue refQueue = new ReferenceQueue();
       
@@ -323,7 +326,7 @@
          }
          catch(RemoteException e)
          {
-@@ -125,7 +138,7 @@ List getBreakpointsSpi()
+@@ -125,7 +138,7 @@ extends
          return sumlist;
      }
  
@@ -332,7 +335,7 @@
      throws
          RemoteException
      {
-@@ -140,7 +153,7 @@ boolean suspendEnvironmentSpi(Environment env, int line)
+@@ -140,7 +153,7 @@ extends
          try
          {
              EnvironmentSuspendedEvent breakpointEvent = 
@@ -341,7 +344,7 @@
      
              synchronized(listeners)
              {
-@@ -212,7 +225,7 @@
+@@ -212,7 +225,7 @@ extends
          }
      }
  
@@ -350,7 +353,7 @@
      {
          String templateName = breakpoint.getTemplateName();
          synchronized(templateDebugInfos)
-@@ -235,44 +248,90 @@
+@@ -235,26 +248,45 @@ extends
                      }
                      else
                      {
@@ -377,11 +380,11 @@
 +            return false;
          }
          TemplateElement parent = (TemplateElement)te.getParent();
+-        DebugBreak db = new DebugBreak(te);
 +        if( parent instanceof DebugBreak)
 +        {
 +            return false;
 +        }
--        DebugBreak db = new DebugBreak(te);
 +        while(parent != null)
 +        {
 +            if( parent instanceof DebugBreak)
@@ -400,9 +403,7 @@
      }
  
      private static TemplateElement findTemplateElement(TemplateElement te, int line)
-     {
-         if(te.getBeginLine() > line || te.getEndLine() < line)
-         {
+@@ -264,15 +296,42 @@ extends
              return null;
          }
          // Find the narrowest match
@@ -446,7 +447,7 @@
          // If no child provides narrower match, return this
          return te;
      }
-@@ -467,4 +534,18 @@ private void processRefQueue()
+@@ -467,4 +526,19 @@ extends
              }
          }
      }
@@ -465,4 +466,5 @@
 +        RmiDebuggedEnvironmentImpl.cleanup();
 +    }
  }
- 
++/* @generated */
+\ No newline at end of file

@@ -1,4 +1,3 @@
-/* @generated */
 package freemarker.debug.impl;
 
 import java.rmi.Remote;
@@ -380,3 +379,4 @@ implements
         }
     }
 }
+/* @generated */

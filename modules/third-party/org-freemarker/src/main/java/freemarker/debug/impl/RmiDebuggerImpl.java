@@ -1,4 +1,3 @@
-/* @generated */
 package freemarker.debug.impl;
 
 import java.rmi.RemoteException;
@@ -77,3 +76,4 @@ implements
         service.removeBreakpoints(templateName);
     }
 }
+/* @generated */

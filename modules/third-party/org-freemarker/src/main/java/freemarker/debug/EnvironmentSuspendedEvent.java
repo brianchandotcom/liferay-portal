@@ -1,4 +1,3 @@
-/* @generated */
 package freemarker.debug;
 
 import java.util.EventObject;
@@ -61,3 +60,4 @@ public class EnvironmentSuspendedEvent extends EventObject
         return env;
     }
 }
+/* @generated */

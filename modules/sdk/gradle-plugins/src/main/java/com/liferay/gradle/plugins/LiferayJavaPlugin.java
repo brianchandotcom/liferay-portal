@@ -597,31 +597,12 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureTaskTestDefaultCharacterEncoding(test);
 		configureTaskTestIgnoreFailures(test);
-		configureTaskTestJvmArgs(test);
 	}
 
 	protected void configureTaskTestJvmArgs(Test test) {
-		String name = test.getName();
-
-		if (name.equals(JavaPlugin.TEST_TASK_NAME)) {
-			name = "junit.java.unit.gc";
-
-			test.jvmArgs("-Djava.net.preferIPv4Stack=true");
-			test.jvmArgs("-Dliferay.mode=test");
-			test.jvmArgs("-Duser.timezone=GMT");
-		}
-		else if (name.equals(
-					TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME)) {
-
-			name = "junit.java.integration.gc";
-		}
-
-		String value = GradleUtil.getProperty(
-			test.getProject(), name, (String)null);
-
-		if (Validator.isNotNull(value)) {
-			test.jvmArgs((Object[])value.split("\\s+"));
-		}
+		test.jvmArgs("-Djava.net.preferIPv4Stack=true");
+		test.jvmArgs("-Dliferay.mode=test");
+		test.jvmArgs("-Duser.timezone=GMT");
 	}
 
 	protected void configureTestIntegrationTomcat(

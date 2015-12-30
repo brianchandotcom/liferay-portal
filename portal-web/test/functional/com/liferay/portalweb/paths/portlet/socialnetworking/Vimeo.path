@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>URL_LABEL</td>
-	<td>//label[@for='_86_url']</td>
+	<td>//label[contains(@for,'url')]</td>
 	<td></td>
 </tr>
 <tr>

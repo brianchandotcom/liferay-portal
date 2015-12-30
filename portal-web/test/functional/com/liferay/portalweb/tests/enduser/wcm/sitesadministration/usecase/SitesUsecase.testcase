@@ -66,9 +66,9 @@
 		</execute>
 
 		<execute macro="SitePage#addPageTranslations">
+			<var name="page" value="Home" />
 			<var name="pageTranslation" value="es_ES" />
-			<var name="PageTranslationName" value="Casa" />
-			<var name="sitePageName" value="Home" />
+			<var name="pageTranslationName" value="Casa" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -84,8 +84,8 @@
 			<var name="sitePageURL" value="http://localhost:8080/es/web/site-name/home" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
@@ -93,6 +93,7 @@
 			<var name="siteChildPageName" value="Blog Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Home" />
+			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
@@ -100,10 +101,9 @@
 		</execute>
 
 		<execute macro="SitePage#addPageTranslations">
-			<var name="childPageName" value="true" />
+			<var name="page" value="Blog Page" />
 			<var name="pageTranslation" value="es_ES" />
-			<var name="PageTranslationName" value="Blog Página" />
-			<var name="sitePageName" value="Blog Page" />
+			<var name="pageTranslationName" value="Blog Página" />
 		</execute>
 
 		<execute macro="Page#openURL">

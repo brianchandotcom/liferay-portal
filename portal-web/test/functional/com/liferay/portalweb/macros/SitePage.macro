@@ -157,22 +157,14 @@
 	</command>
 
 	<command name="addPageTranslations">
-		<var name="key_sitePageName" value="${sitePageName}" />
-
-		<if>
-			<isset var="childPageName" />
-			<then>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
-			</then>
-			<else>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
-			</else>
-		</if>
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${page}" />
+		</execute>
 
 		<var name="key_pageTranslation" value="${pageTranslation}" />
 
 		<execute function="Click" locator1="SitePages#DETAILS_LANGAUGE_TRANSLATIONS" />
-		<execute function="Type" locator1="TextInput#NAME" value1="${PageTranslationName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${pageTranslationName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>

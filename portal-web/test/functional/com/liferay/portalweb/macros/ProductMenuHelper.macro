@@ -33,14 +33,6 @@
 		</if>
 	</command>
 
-	<command name="gotoEditPage">
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<var name="key_page" value="${page}" />
-
-		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" value1="${page}" />
-	</command>
-
 	<command name="gotoEditPublicPages">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 

@@ -105,6 +105,8 @@
 			<var name="siteTemplate" value="Zoe Healthcare Theme" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -122,11 +124,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="Click#textClickAtClickDockbar" locator1="ControlMenu#MY_SITES" value1="My Sites" />
-
-		<for list="${allSiteNameLists}" param="allSiteNameListsCount" >
-			<execute macro="Dockbar#viewSitesViaMySitesDropDown">
-				<var name="siteName" value="${allSiteNameListsCount}" />
+		<for list="${allSiteNameLists}" param="site" >
+			<execute macro="ProductMenu#viewSite">
+				<var name="site" value="${site}" />
 			</execute>
 		</for>
 
@@ -138,7 +138,9 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute function="AssertClick" locator1="SitePages#SITE_PAGES_LINK" value1="Site Pages" />
+		<execute macro="ProductMenu#gotoSiteViaLink">
+			<var name="site" value="Site Template Name" />
+		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
@@ -152,10 +154,19 @@
 
 		<execute function="Refresh" />
 
-		<execute macro="Page#addPG">
-			<var name="defaultURL" value="false" />
-			<var name="pageName" value="Video" />
-			<var name="pageType" value="2 Columns (70/30)" />
+		<execute macro="SitePage#addCP">
+			<var name="page" value="Pages" />
+			<var name="sitePageName" value="Video" />
+			<var name="sitePageType" value="2 Columns (70/30)" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSiteViaLink">
+			<var name="site" value="Site Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Video" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -171,7 +182,7 @@
 		</execute>
 
 		<execute macro="Vimeo#addURL">
-			<var name="vimeoURL" value="http://vimeo.com/45677716" />
+			<var name="vimeoURL" value="http://vimeo.com/73779692" />
 		</execute>
 
 		<execute function="Refresh" />
@@ -187,9 +198,8 @@
 			<var name="enabledCheckbox" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="false" />
-			<var name="pageName" value="home" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="home" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">

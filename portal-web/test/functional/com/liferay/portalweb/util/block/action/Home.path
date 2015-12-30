@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_EXPIRED_SESSION</td>
-	<td>//div[contains(@class,'popup-alert-warning')]</td>
+	<td>//div[contains(@class,'liferayalert-content')]</td>
 	<td></td>
 </tr>
 <tr>

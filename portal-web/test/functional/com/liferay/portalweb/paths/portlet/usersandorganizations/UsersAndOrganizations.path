@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGN_USERS</td>
+	<td>//tr[contains(.,'${key_orgName}')]//a[@role='menuitem' and contains(.,'Assign Users')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

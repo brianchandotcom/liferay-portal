@@ -55,7 +55,9 @@
 				<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_EDIT_1" value1="Edit" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+				<execute function="Click" locator1="Button#PLUS" />
+
+				<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 			</else>
 		</if>
 

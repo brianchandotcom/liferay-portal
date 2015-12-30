@@ -295,40 +295,23 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
+		<var name="count" value="1" />
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="6" />
+			</not>
+			<then>
+				<execute macro="User#addCP">
+					<var name="userEmailAddress" value="userea${count}@liferay.com" />
+					<var name="userFirstName" value="userfn${count}" />
+					<var name="userLastName" value="userln${count}" />
+					<var name="userScreenName" value="usersn${count}" />
+				</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea3@liferay.com" />
-			<var name="userFirstName" value="userfn3" />
-			<var name="userLastName" value="userln3" />
-			<var name="userScreenName" value="usersn3" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea4@liferay.com" />
-			<var name="userFirstName" value="userfn4" />
-			<var name="userLastName" value="userln4" />
-			<var name="userScreenName" value="usersn4" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea5@liferay.com" />
-			<var name="userFirstName" value="userfn5" />
-			<var name="userLastName" value="userln5" />
-			<var name="userScreenName" value="usersn5" />
-		</execute>
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -371,32 +354,41 @@
 			<var name="tagName" value="bravo" />
 		</execute>
 
-		<for list="Suborganization Name 1,Suborganization Name 2,Suborganization Name 3,Suborganization Name 4" param="orgName">
-			<execute macro="Organization#addCP">
-				<var name="orgName" value="${orgName}" />
-				<var name="orgType" value="Regular Organization" />
-			</execute>
+		<var name="count" value="1" />
 
-			<execute macro="ProductMenu#gotoControlPanelUsers">
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="5" />
+			</not>
+			<then>
+				<execute macro="Organization#addCP">
+					<var name="orgName" value="Suborganization Name ${count}" />
+					<var name="orgType" value="Regular Organization" />
+				</execute>
 
-			<execute macro="Organization#selectParentOrganizationCP">
-				<var name="orgName" value="${orgName}" />
-				<var name="parentOrgName" value="Organization Name 2" />
-			</execute>
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
 
-			<execute macro="ProductMenu#gotoControlPanelUsers">
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
+				<execute macro="Organization#selectParentOrganizationCP">
+					<var name="orgName" value="Suborganization Name ${count}" />
+					<var name="parentOrgName" value="Organization Name 2" />
+				</execute>
 
-			<execute macro="Organization#viewParentOrganizationCP">
-				<var name="orgName" value="${orgName}" />
-				<var name="parentOrgExist" value="true" />
-				<var name="parentOrgName" value="Organization Name 2" />
-				<var name="subOrgName" value="${orgName}" />
-			</execute>
-		</for>
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
+
+				<execute macro="Organization#viewParentOrganizationCP">
+					<var name="orgName" value="Suborganization Name ${count}" />
+					<var name="parentOrgExist" value="true" />
+					<var name="parentOrgName" value="Organization Name 2" />
+					<var name="subOrgName" value="Suborganization Name ${count}" />
+				</execute>
+
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

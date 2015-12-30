@@ -9,6 +9,8 @@
 
 	<command name="gotoAllPagesPG">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="All Pages" />
 	</command>
 
 	<command name="gotoAllPagesPGViaWD">

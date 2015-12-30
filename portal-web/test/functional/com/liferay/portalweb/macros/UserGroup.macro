@@ -132,18 +132,21 @@
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
+
 		<execute function="Click" locator1="Button#SUBMIT" />
+
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
-		<execute function="AssertClick" locator1="UserGroupsAssignUsers#AVAILABLE_TAB" value1="Available" />
-		<execute function="Check" locator1="Checkbox#SELECT_ALL" />
-		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#ADD_USER" value1="Add Users" />
 
-		<execute function="AssertClick" locator1="UserGroupsAssignUsers#CURRENT_TAB" value1="Current" />
-		<execute function="AssertChecked" locator1="Checkbox#SELECT_ALL" />
+		<execute function="Check" locator1="Checkbox#SELECT_ALL" />
+
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="assignMemberCP">

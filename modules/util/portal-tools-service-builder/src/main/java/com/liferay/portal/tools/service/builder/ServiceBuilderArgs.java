@@ -110,6 +110,10 @@ public class ServiceBuilderArgs {
 		return _sqlIndexesFileName;
 	}
 
+	public String getSqlRulesFileName() {
+		return _sqlRulesFileName;
+	}
+
 	public String getSqlSequencesFileName() {
 		return _sqlSequencesFileName;
 	}
@@ -274,6 +278,10 @@ public class ServiceBuilderArgs {
 		_sqlIndexesFileName = sqlIndexesFileName;
 	}
 
+	public void setSqlRulesFileName(String sqlRulesFileName) {
+		_sqlRulesFileName = sqlRulesFileName;
+	}
+
 	public void setSqlSequencesFileName(String sqlSequencesFileName) {
 		_sqlSequencesFileName = sqlSequencesFileName;
 	}
@@ -362,6 +370,7 @@ public class ServiceBuilderArgs {
 	private String _sqlDirName = "../sql";
 	private String _sqlFileName = "portal-tables.sql";
 	private String _sqlIndexesFileName = "indexes.sql";
+	private String _sqlRulesFileName = "rules.sql";
 	private String _sqlSequencesFileName = "sequences.sql";
 	private String _targetEntityName;
 	private String _testDirName = "test/integration";

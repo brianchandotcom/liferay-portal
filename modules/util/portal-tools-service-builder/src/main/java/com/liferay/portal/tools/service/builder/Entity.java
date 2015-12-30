@@ -93,7 +93,7 @@ public class Entity {
 			null, null, null, name, null, null, null, false, false, false, true,
 			null, null, null, null, null, true, false, false, false, false,
 			false, null, null, null, null, null, null, null, null, null, null,
-			false);
+			null, false);
 	}
 
 	public Entity(
@@ -108,7 +108,8 @@ public class Entity {
 		List<EntityColumn> collectionList, List<EntityColumn> columnList,
 		EntityOrder order, List<EntityFinder> finderList,
 		List<Entity> referenceList, List<String> unresolvedReferenceList,
-		List<String> txRequiredList, boolean resourceActionModel) {
+		List<EntityRule> ruleList, List<String> txRequiredList,
+		boolean resourceActionModel) {
 
 		_packagePath = packagePath;
 		_portletName = portletName;
@@ -142,6 +143,7 @@ public class Entity {
 		_finderList = finderList;
 		_referenceList = referenceList;
 		_unresolvedReferenceList = unresolvedReferenceList;
+		_ruleList = ruleList;
 		_txRequiredList = txRequiredList;
 		_resourceActionModel = resourceActionModel;
 
@@ -397,6 +399,10 @@ public class Entity {
 		return _regularColList;
 	}
 
+	public List<EntityRule> getRuleList() {
+		return _ruleList;
+	}
+
 	public String getSessionFactory() {
 		return _sessionFactory;
 	}
@@ -580,6 +586,15 @@ public class Entity {
 
 	public boolean hasRemoteService() {
 		return _remoteService;
+	}
+
+	public boolean hasRules() {
+		if (ListUtil.isEmpty(_ruleList)) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	public boolean hasUuid() {
@@ -924,6 +939,7 @@ public class Entity {
 	private final List<EntityColumn> _regularColList;
 	private final boolean _remoteService;
 	private final boolean _resourceActionModel;
+	private final List<EntityRule> _ruleList;
 	private final String _sessionFactory;
 	private final String _table;
 	private List<String> _transients;

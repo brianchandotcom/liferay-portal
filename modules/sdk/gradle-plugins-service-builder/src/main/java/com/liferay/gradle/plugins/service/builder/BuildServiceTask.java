@@ -148,6 +148,11 @@ public class BuildServiceTask extends JavaExec {
 	}
 
 	@Input
+	public String getSqlRulesFileName() {
+		return GradleUtil.toString(_sqlRulesFileName);
+	}
+
+	@Input
 	public String getSqlSequencesFileName() {
 		return GradleUtil.toString(_sqlSequencesFileName);
 	}
@@ -338,6 +343,10 @@ public class BuildServiceTask extends JavaExec {
 		_sqlIndexesFileName = sqlIndexesFileName;
 	}
 
+	public void setSqlRulesFileName(Object sqlRulesFileName) {
+		_sqlRulesFileName = sqlRulesFileName;
+	}
+
 	public void setSqlSequencesFileName(Object sqlSequencesFileName) {
 		_sqlSequencesFileName = sqlSequencesFileName;
 	}
@@ -398,6 +407,7 @@ public class BuildServiceTask extends JavaExec {
 		args.add("service.sql.dir=" + _relativize(getSqlDir()));
 		args.add("service.sql.file=" + getSqlFileName());
 		args.add("service.sql.indexes.file=" + getSqlIndexesFileName());
+		args.add("service.sql.rules.file=" + getSqlRulesFileName());
 		args.add("service.sql.sequences.file=" + getSqlSequencesFileName());
 
 		String targetEntityName = getTargetEntityName();
@@ -475,6 +485,7 @@ public class BuildServiceTask extends JavaExec {
 	private Object _sqlDir;
 	private Object _sqlFileName = "tables.sql";
 	private Object _sqlIndexesFileName = "indexes.sql";
+	private Object _sqlRulesFileName = "rules.sql";
 	private Object _sqlSequencesFileName = "sequences.sql";
 	private Object _targetEntityName;
 	private Object _testDir;

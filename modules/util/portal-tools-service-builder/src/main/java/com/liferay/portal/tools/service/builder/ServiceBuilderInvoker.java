@@ -71,6 +71,7 @@ public class ServiceBuilderInvoker {
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getSqlDirName()),
 			serviceBuilderArgs.getSqlFileName(),
 			serviceBuilderArgs.getSqlIndexesFileName(),
+			serviceBuilderArgs.getSqlRulesFileName(),
 			serviceBuilderArgs.getSqlSequencesFileName(),
 			serviceBuilderArgs.getTargetEntityName(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getTestDirName()),

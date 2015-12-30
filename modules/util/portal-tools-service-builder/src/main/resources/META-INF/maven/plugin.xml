@@ -200,6 +200,13 @@
 					<description/>
 				</parameter>
 				<parameter>
+					<name>sqlRulesFileName</name>
+					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
 					<name>sqlSequencesFileName</name>
 					<type>java.lang.String</type>
 					<required>false</required>

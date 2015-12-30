@@ -798,12 +798,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		Test test = (Test)GradleUtil.getTask(
 			project, JavaPlugin.TEST_TASK_NAME);
 
+		test.jvmArgs(_TEST_JVM_ARGS);
+
 		configureTestLogging(test);
 	}
 
 	protected void configureTaskTestIntegration(Project project) {
 		Test test = (Test)GradleUtil.getTask(
 			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
+
+		test.jvmArgs(_TEST_INTEGRATION_JVM_ARGS);
 
 		configureTestLogging(test);
 
@@ -896,5 +900,22 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	private static final String _SNAPSHOT_PROPERTY_NAME = "snapshot";
 
 	private static final String _SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
+
+	private static final Object[] _TEST_INTEGRATION_JVM_ARGS = {
+		"-Xms512m", "-Xmx512m", "-XX:MaxNewSize=32m", "-XX:MaxPermSize=200m",
+		"-XX:MaxTenuringThreshold=0", "-XX:NewSize=32m",
+		"-XX:ParallelGCThreads=2", "-XX:PermSize=200m",
+		"-XX:SurvivorRatio=65536", "-XX:TargetSurvivorRatio=0",
+		"-XX:-UseAdaptiveSizePolicy", "-XX:+UseParallelOldGC"
+	};
+
+	private static final Object[] _TEST_JVM_ARGS = {
+		"-Xms256m", "-Xmx256m", "-XX:MaxNewSize=32m", "-XX:MaxPermSize=64m",
+		"-XX:MaxTenuringThreshold=0", "-XX:NewSize=32m",
+		"-XX:ParallelGCThreads=2", "-XX:PermSize=64m",
+		"-XX:SurvivorRatio=65536", "-XX:TargetSurvivorRatio=0",
+		"-XX:-UseAdaptiveSizePolicy", "-XX:+UseParallelOldGC",
+		"-XX:-UseSplitVerifier"
+	};
 
 }

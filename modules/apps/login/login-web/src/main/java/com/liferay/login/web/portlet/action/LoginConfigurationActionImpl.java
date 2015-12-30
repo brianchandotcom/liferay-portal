@@ -34,12 +34,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Julio Camarero
  */
 @Component(
-		property = {
-			"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
-			"javax.portlet.name=" + LoginPortletKeys.LOGIN
-		},
-		service = ConfigurationAction.class
-	)
+	property = {
+		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.LOGIN
+	},
+	service = ConfigurationAction.class
+)
 public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override

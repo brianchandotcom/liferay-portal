@@ -747,8 +747,8 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return updateArticle(
-				article.getUserId(), article, titleMap, content,
-				workflowEnabled, approved, serviceContext);
+			article.getUserId(), article, titleMap, content, workflowEnabled,
+			approved, serviceContext);
 	}
 
 	public static JournalArticle updateArticle(

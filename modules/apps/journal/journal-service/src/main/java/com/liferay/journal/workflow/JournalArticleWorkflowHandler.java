@@ -123,7 +123,7 @@ public class JournalArticleWorkflowHandler
 			serviceContext.getScopeGroupId(),
 			PortletProviderUtil.getPortletId(
 				JournalArticle.class.getName(), PortletProvider.Action.EDIT),
-				null);
+			null);
 
 		return _journalArticleLocalService.updateStatus(
 			userId, article, status, articleURL, serviceContext,

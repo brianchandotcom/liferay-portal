@@ -110,9 +110,10 @@ public class WikiDisplayContextProvider {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		for (Map.Entry<ServiceReference<WikiDisplayContextFactory>,
-				WikiDisplayContextFactory> entry :
-					_wikiDisplayContextFactories.entrySet()) {
+		for (Map.Entry
+				<ServiceReference<WikiDisplayContextFactory>,
+					WikiDisplayContextFactory> entry :
+						_wikiDisplayContextFactories.entrySet()) {
 
 			if (entry.getValue() != null) {
 				continue;
@@ -156,8 +157,8 @@ public class WikiDisplayContextProvider {
 	}
 
 	private BundleContext _bundleContext;
-	private final Map<ServiceReference<WikiDisplayContextFactory>,
-		WikiDisplayContextFactory> _wikiDisplayContextFactories =
-			new ConcurrentSkipListMap<>();
+	private final Map
+		<ServiceReference<WikiDisplayContextFactory>, WikiDisplayContextFactory>
+			_wikiDisplayContextFactories = new ConcurrentSkipListMap<>();
 
 }

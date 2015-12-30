@@ -35,7 +35,7 @@ import org.mockito.Mockito;
 public class CreoleTestUtil {
 
 	public static WikiEngineCreoleComponentProvider
-			getWikiEngineCreoleComponentProvider() {
+		getWikiEngineCreoleComponentProvider() {
 
 		WikiEngineCreoleComponentProvider wikiEngineCreoleComponentProvider =
 			new WikiEngineCreoleComponentProvider();

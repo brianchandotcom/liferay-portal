@@ -165,8 +165,8 @@ public class AntlrCreoleParserTest {
 
 		Assert.assertNotNull(wikiPageNode);
 
-		ParagraphNode paragraphNode = (ParagraphNode)
-			wikiPageNode.getChildASTNode(0);
+		ParagraphNode paragraphNode =
+			(ParagraphNode)wikiPageNode.getChildASTNode(0);
 
 		LineNode lineNode = (LineNode)paragraphNode.getChildASTNode(0);
 

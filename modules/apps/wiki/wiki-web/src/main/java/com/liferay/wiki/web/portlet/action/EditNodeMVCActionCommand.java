@@ -184,8 +184,8 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected WikiPortletInstanceOverriddenConfiguration
-		getWikiPortletInstanceOverriddenConfiguration(
-			ActionRequest actionRequest)
+			getWikiPortletInstanceOverriddenConfiguration(
+				ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

@@ -243,8 +243,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			Layout copyLayout = null;
 
 			String layoutTemplateId = ParamUtil.getString(
-					uploadPortletRequest, "layoutTemplateId",
-					PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+				uploadPortletRequest, "layoutTemplateId",
+				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 
 			if (copyLayoutId > 0) {
 				copyLayout = layoutLocalService.fetchLayout(

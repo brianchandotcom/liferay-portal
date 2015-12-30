@@ -9,6 +9,8 @@
 				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="Click" locator1="MenuItem#EDIT" />
 
+				<var name="key_workflowResourceValue" value="Knowledge Base Article" />
+
 				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}"  />
 
 				<execute macro="Button#clickSave" />
@@ -21,6 +23,8 @@
 			<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 
 			<execute function="Click" locator1="MenuItem#EDIT" />
+
+			<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
 
 			<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
 

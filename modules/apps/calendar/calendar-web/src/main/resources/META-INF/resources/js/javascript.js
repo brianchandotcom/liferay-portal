@@ -1838,6 +1838,16 @@ AUI.add(
 							color: instance.get('color')
 						};
 
+						var event = instance.get('event');
+
+						if (event) {
+							var calendar = CalendarUtil.availableCalendars[event.get('calendarId')];
+
+							if (calendar) {
+								attrMap['color'] = calendar.get('color');
+							}
+						}
+
 						return SchedulerEventRecorder.superclass.getUpdatedSchedulerEvent.call(instance, A.merge(attrMap, optAttrMap));
 					},
 

@@ -20,22 +20,22 @@
 </tr>
 <!--PENDING_TABLE-->
 <tr>
-	<td>PENDING_TABLE_DEFINITION</td>
+	<td>PENDING_TABLE_ASSET_TITLE</td>
 	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PENDING_TABLE_ASSET_TITLE</td>
+	<td>PENDING_TABLE_ASSET_TYPE</td>
 	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PENDING_TABLE_ASSET_TYPE</td>
+	<td>PENDING_TABLE_STATUS</td>
 	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PENDING_TABLE_STATUS</td>
+	<td>PENDING_TABLE_DEFINITION</td>
 	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[4]/a</td>
 	<td></td>
 </tr>

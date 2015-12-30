@@ -14,12 +14,22 @@
 
 package com.liferay.workflow.definition.link.web.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.workflow.definition.link.web.display.context.WorkflowDefinitionLinkDisplayContext;
 import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -48,4 +58,36 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class WorkflowDefinitionLinkPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			WorkflowDefinitionLinkDisplayContext displayContext =
+				new WorkflowDefinitionLinkDisplayContext(
+					renderRequest, _workflowDefinitionLinkLocalService);
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT, displayContext);
+		}
+		catch (PortalException e) {
+			throw new PortletException(e);
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference(unbind = "-")
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
+	}
+
+	private volatile WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
 }

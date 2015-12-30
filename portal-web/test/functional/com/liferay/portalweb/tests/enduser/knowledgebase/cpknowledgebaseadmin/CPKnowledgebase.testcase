@@ -988,7 +988,7 @@
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT" />
+			<var name="workflowResourceValue" value="Knowledge Base Article" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

@@ -21,7 +21,7 @@
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
+			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 	</set-up>
 
@@ -65,7 +65,7 @@
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Join Xor (Version 1)" />
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
+			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

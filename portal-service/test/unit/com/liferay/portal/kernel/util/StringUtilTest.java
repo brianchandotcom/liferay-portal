@@ -81,6 +81,16 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testContainsIgnoreCase() {
+		Assert.assertFalse(StringUtil.containsIgnoreCase(null, null));
+		Assert.assertFalse(StringUtil.containsIgnoreCase("one,two", null));
+		Assert.assertFalse(StringUtil.containsIgnoreCase(null, "one"));
+		Assert.assertTrue(StringUtil.containsIgnoreCase("one", "one"));
+		Assert.assertTrue(StringUtil.containsIgnoreCase("one,two", "Two"));
+		Assert.assertTrue(StringUtil.containsIgnoreCase("one,two", "onE"));
+	}
+
+	@Test
 	public void testEqualsIgnoreBreakLine() throws Exception {
 		Assert.assertTrue(
 			StringUtil.equalsIgnoreBreakLine("Hello\n World", "Hello World"));

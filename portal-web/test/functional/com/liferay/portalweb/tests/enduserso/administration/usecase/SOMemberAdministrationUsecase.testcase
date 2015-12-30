@@ -63,7 +63,7 @@
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_USER_SELECT" />
+			<var name="workflowResourceValue" value="User" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

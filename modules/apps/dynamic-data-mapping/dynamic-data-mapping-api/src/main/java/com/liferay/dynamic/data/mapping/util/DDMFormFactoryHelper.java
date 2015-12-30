@@ -277,6 +277,27 @@ public class DDMFormFactoryHelper {
 		return false;
 	}
 
+	protected void collectResourceBundles(
+		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
+
+		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+			collectResourceBundles(interfaceClass, resourceBundles, locale);
+		}
+
+		String baseName = getResourceBundleBaseName(clazz);
+
+		if (Validator.isNull(baseName)) {
+			return;
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			baseName, locale, clazz.getClassLoader());
+
+		if (resourceBundle != null) {
+			resourceBundles.add(resourceBundle);
+		}
+	}
+
 	protected LocalizedValue createLocalizedValue(String property) {
 		LocalizedValue localizedValue = new LocalizedValue(_defaultLocale);
 
@@ -312,9 +333,10 @@ public class DDMFormFactoryHelper {
 			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
 
 		List<ResourceBundle> resourceBundles = new ArrayList<>();
+
 		resourceBundles.add(portalResourceBundle);
 
-		mountResourceBundleHierarchy(_clazz, resourceBundles, locale);
+		collectResourceBundles(_clazz, resourceBundles, locale);
 
 		ResourceBundle[] resourceBundleArray = resourceBundles.toArray(
 			new ResourceBundle[resourceBundles.size()]);
@@ -334,28 +356,6 @@ public class DDMFormFactoryHelper {
 		}
 
 		return "content.Language";
-	}
-
-	protected void mountResourceBundleHierarchy(
-		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
-
-		for (Class<?> interfaceClass : clazz.getInterfaces()) {
-			mountResourceBundleHierarchy(
-				interfaceClass, resourceBundles, locale);
-		}
-
-		String baseName = getResourceBundleBaseName(clazz);
-
-		if (Validator.isNull(baseName)) {
-			return;
-		}
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			baseName, locale, clazz.getClassLoader());
-
-		if (resourceBundle != null) {
-			resourceBundles.add(resourceBundle);
-		}
 	}
 
 	protected void setAvailableLocales() {

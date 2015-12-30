@@ -25,37 +25,39 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
  * @author Bruno Basto
  */
 @DDMForm
-@DDMFormLayout( {
-	@DDMFormLayoutPage(
-		title = "%form-options", value = {
-			@DDMFormLayoutRow(
-				{
-					@DDMFormLayoutColumn(
-						size = 12, value = {
-							"requireCaptcha", "redirectURL",
-							"workflowDefinition"
-						}
-					)
-				}
-			)
-		}
-	),
-	@DDMFormLayoutPage(
-		title = "%email-notifications", value = {
-			@DDMFormLayoutRow(
-				{
-					@DDMFormLayoutColumn(
-						size = 12, value = {
-							"sendEmailNotification", "emailFromName",
-							"emailFromAddress", "emailToAddress",
-							"emailSubject", "published"
-						}
-					)
-				}
-			)
-		}
-	)
-})
+@DDMFormLayout(
+	{
+		@DDMFormLayoutPage(
+			title = "%form-options", value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12, value = {
+								"requireCaptcha", "redirectURL",
+								"workflowDefinition"
+							}
+						)
+					}
+				)
+			}
+		),
+		@DDMFormLayoutPage(
+			title = "%email-notifications", value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12, value = {
+								"sendEmailNotification", "emailFromName",
+								"emailFromAddress", "emailToAddress",
+								"emailSubject", "published"
+							}
+						)
+					}
+				)
+			}
+		)
+	}
+)
 public interface DDLRecordSetSettings {
 
 	@DDMFormField(

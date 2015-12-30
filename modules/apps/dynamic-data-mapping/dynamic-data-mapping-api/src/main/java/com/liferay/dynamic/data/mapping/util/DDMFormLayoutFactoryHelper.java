@@ -64,6 +64,21 @@ public class DDMFormLayoutFactoryHelper {
 		return ddmFormLayout;
 	}
 
+	protected void collectResourceBundles(
+		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
+
+		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+			collectResourceBundles(interfaceClass, resourceBundles, locale);
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, clazz.getClassLoader());
+
+		if (resourceBundle != null) {
+			resourceBundles.add(resourceBundle);
+		}
+	}
+
 	protected com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn
 		createDDMFormLayoutColumn(DDMFormLayoutColumn ddmFormLayoutColumnAnnotation) {
 
@@ -171,9 +186,10 @@ public class DDMFormLayoutFactoryHelper {
 			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
 
 		List<ResourceBundle> resourceBundles = new ArrayList<>();
+
 		resourceBundles.add(portalResourceBundle);
 
-		mountResourceBundleHierarchy(_clazz, resourceBundles, locale);
+		collectResourceBundles(_clazz, resourceBundles, locale);
 
 		ResourceBundle[] resourceBundleArray = resourceBundles.toArray(
 			new ResourceBundle[resourceBundles.size()]);
@@ -187,22 +203,6 @@ public class DDMFormLayoutFactoryHelper {
 		}
 
 		return false;
-	}
-
-	protected void mountResourceBundleHierarchy(
-		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
-
-		for (Class<?> interfaceClass : clazz.getInterfaces()) {
-			mountResourceBundleHierarchy(
-				interfaceClass, resourceBundles, locale);
-		}
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
-
-		if (resourceBundle != null) {
-			resourceBundles.add(resourceBundle);
-		}
 	}
 
 	protected void setDefaultLocale() {

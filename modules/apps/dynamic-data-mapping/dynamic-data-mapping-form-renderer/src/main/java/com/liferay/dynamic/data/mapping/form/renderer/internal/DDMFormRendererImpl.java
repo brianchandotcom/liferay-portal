@@ -117,6 +117,21 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		_templateResource = getTemplateResource(templatePath);
 	}
 
+	protected void collectResourceBundles(
+		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
+
+		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+			collectResourceBundles(interfaceClass, resourceBundles, locale);
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, clazz.getClassLoader());
+
+		if (resourceBundle != null) {
+			resourceBundles.add(resourceBundle);
+		}
+	}
+
 	protected String doRender(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
@@ -142,9 +157,10 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
 
 		List<ResourceBundle> resourceBundles = new ArrayList<>();
+
 		resourceBundles.add(portalResourceBundle);
 
-		mountResourceBundleHierarchy(getClass(), resourceBundles, locale);
+		collectResourceBundles(getClass(), resourceBundles, locale);
 
 		ResourceBundle[] resourceBundleArray = resourceBundles.toArray(
 			new ResourceBundle[resourceBundles.size()]);
@@ -210,22 +226,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		URL templateURL = classLoader.getResource(templatePath);
 
 		return new URLTemplateResource(templateURL.getPath(), templateURL);
-	}
-
-	protected void mountResourceBundleHierarchy(
-		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
-
-		for (Class<?> interfaceClass : clazz.getInterfaces()) {
-			mountResourceBundleHierarchy(
-				interfaceClass, resourceBundles, locale);
-		}
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
-
-		if (resourceBundle != null) {
-			resourceBundles.add(resourceBundle);
-		}
 	}
 
 	protected void populateCommonContext(

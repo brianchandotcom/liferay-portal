@@ -14,11 +14,11 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/asset_categories_navigation/init.jsp" %>
+<%@ include file="/asset_categories_navigation/init.jsp" %>
 
 <%
-boolean hidePortletWhenEmpty = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:asset-tags-navigation:hidePortletWhenEmpty"));
-long[] vocabularyIds = (long[])request.getAttribute("liferay-ui:asset-tags-navigation:vocabularyIds");
+boolean hidePortletWhenEmpty = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-navigation:hidePortletWhenEmpty"));
+long[] vocabularyIds = (long[])request.getAttribute("liferay-asset:asset-tags-navigation:vocabularyIds");
 
 long categoryId = ParamUtil.getLong(request, "categoryId");
 

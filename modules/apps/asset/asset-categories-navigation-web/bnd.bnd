@@ -2,6 +2,9 @@ Bundle-Name: Liferay Asset Categories Navigation Web
 Bundle-SymbolicName: com.liferay.asset.categories.navigation.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.asset.categories.navigation.web.constants.*
+Import-Package:\
+	com.liferay.asset.taglib.servlet.taglib,\
+	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources

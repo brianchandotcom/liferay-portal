@@ -25,12 +25,12 @@ contextObjects.put("assetCategoriesNavigationDisplayContext", assetCategoriesNav
 <liferay-ddm:template-renderer className="<%= AssetCategory.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetCategoriesNavigationDisplayContext.getDDMTemplateAssetVocabularies() %>">
 	<c:choose>
 		<c:when test="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>">
-			<liferay-ui:asset-categories-navigation
+			<liferay-asset:asset-categories-navigation
 				hidePortletWhenEmpty="<%= true %>"
 			/>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:asset-categories-navigation
+			<liferay-asset:asset-categories-navigation
 				hidePortletWhenEmpty="<%= true %>"
 				vocabularyIds="<%= assetCategoriesNavigationDisplayContext.getAssetVocabularyIds() %>"
 			/>

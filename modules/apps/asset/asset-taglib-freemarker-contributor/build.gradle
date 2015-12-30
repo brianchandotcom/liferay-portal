@@ -1,0 +1,7 @@
+dependencies {
+	compile project(":apps:asset:asset-taglib")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

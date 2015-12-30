@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+	<description>Provides the Liferay Asset component tags, prefixed with <![CDATA[<code>liferay-asset:</code>]]>.</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-asset</short-name>
+	<uri>http://liferay.com/tld/asset</uri>
+	<tag>
+		<name>asset-categories-navigation</name>
+		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetCategoriesNavigationTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>hidePortletWhenEmpty</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>vocabularyIds</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

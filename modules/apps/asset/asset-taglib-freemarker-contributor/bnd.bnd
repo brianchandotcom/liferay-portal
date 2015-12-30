@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Asset Taglib FreeMarker Contributor
+Bundle-SymbolicName: com.liferay.asset.taglib.freemarker.contributor
+Fragment-Host: com.liferay.portal.template.freemarker
+Bundle-Version: 1.0.0
+Import-Package: com.liferay.asset.taglib.servlet.taglib
+Include-Resource: @lib/com.liferay.asset.taglib.jar!/META-INF/resources/liferay-asset.tld

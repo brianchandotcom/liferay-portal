@@ -3196,3 +3196,28 @@ This change was made as a part of the ongoing strategy to modularize Liferay
 Portal by means of an OSGi container.
 
 ---------------------------------------
+
+### The liferay-ui:asset-categories-navigation taglib has been removed and replaced with liferay-asset:asset-categories-navigation taglib
+- **Date:** 2015-Nov-25
+- **JIRA Ticket:** LPS-60753
+
+#### What changed?
+
+The `liferay-ui:asset-categories-navigation` taglib has been removed and
+replaced with `liferay-asset:asset-categories-navigation` taglib.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:asset-categories-navigation`
+tag need to update their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-asset` tag library if it isn't already and update
+the tag namespace from `liferay-ui:asset-categories-navigation` to
+`liferay-asset:asset-categories-navigation`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.

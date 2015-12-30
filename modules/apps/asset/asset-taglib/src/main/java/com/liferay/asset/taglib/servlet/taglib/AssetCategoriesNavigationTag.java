@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.asset.taglib.servlet.taglib;
 
+import com.liferay.asset.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Alvaro del Castillo
@@ -27,6 +29,13 @@ public class AssetCategoriesNavigationTag extends IncludeTag {
 
 	public void setHidePortletWhenEmpty(boolean hidePortletWhenEmpty) {
 		_hidePortletWhenEmpty = hidePortletWhenEmpty;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setVocabularyIds(long[] vocabularyIds) {
@@ -47,14 +56,14 @@ public class AssetCategoriesNavigationTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:asset-tags-navigation:hidePortletWhenEmpty",
+			"liferay-asset:asset-tags-navigation:hidePortletWhenEmpty",
 			String.valueOf(_hidePortletWhenEmpty));
 		request.setAttribute(
-			"liferay-ui:asset-tags-navigation:vocabularyIds", _vocabularyIds);
+			"liferay-asset:asset-tags-navigation:vocabularyIds",
+			_vocabularyIds);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/asset_categories_navigation/page.jsp";
+	private static final String _PAGE = "/asset_categories_navigation/page.jsp";
 
 	private boolean _hidePortletWhenEmpty;
 	private long[] _vocabularyIds;

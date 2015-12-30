@@ -313,7 +313,7 @@ public class AssetPublisherUtil {
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod
-					<com.liferay.portal.model.PortletPreferences>() {
+				<com.liferay.portal.model.PortletPreferences>() {
 
 				@Override
 				public void performAction(
@@ -1227,7 +1227,7 @@ public class AssetPublisherUtil {
 
 		return getSubscriptionClassPK(
 			PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
 	}
 
 	public static boolean isScopeIdSelectable(

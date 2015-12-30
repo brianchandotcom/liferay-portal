@@ -801,7 +801,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 					_log.info(
 						"Ignoring scope " + newValue + " because the " +
 							"referenced parent group no longer allows " +
-							"sharing content with child sites",
+								"sharing content with child sites",
 						pe);
 				}
 			}

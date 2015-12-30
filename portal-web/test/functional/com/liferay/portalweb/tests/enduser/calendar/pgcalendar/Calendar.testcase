@@ -3360,7 +3360,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Calendar#gotoCurrentSiteCalendarsManage" />
+		<execute macro="CalendarNavigator#gotoCurrentSiteCalendarsManage" />
 
 		<execute macro="Calendar#importCalendarFile">
 			<var name="calendarFile" value="calendar_microsoft_outlook_calendar.ics" />

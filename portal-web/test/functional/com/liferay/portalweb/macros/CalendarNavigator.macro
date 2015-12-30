@@ -96,6 +96,13 @@
 		<execute function="SelectFrame" locator1="CalendarConfiguration#CALENDAR_CONFIGURATION_IFRAME" />
 	</command>
 
+	<command name="gotoCurrentSiteCalendarsManage">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
+		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
+	</command>
+
 	<command name="gotoEditEvent">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
@@ -149,6 +156,12 @@
 				<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_NEXT" />
 			</then>
 		</while>
+	</command>
+
+	<command name="gotoMyCalendarsManage">
+		<execute function="Click" locator1="Calendar#MY_CALENDARS_MENULIST_ARROW" />
+
+		<execute function="AssertClick" locator1="Calendar#MY_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
 	</command>
 
 	<command name="gotoNextDay">

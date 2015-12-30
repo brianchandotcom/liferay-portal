@@ -20,7 +20,7 @@
 String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
 %>
 
-<li class="<%= Validator.equals(productMenuState, "open") ? "active" : StringPool.BLANK %>">
+<li class="product-menu-toggle">
 	<a class="control-menu-icon sidenav-toggler" data-content="body" data-qa-id="productMenu" data-target="#sidenavSliderId,#wrapper" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "menu")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" href="#sidenavSliderId" id="sidenavToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "menu")) %>')">
 		<div class="toast-animation">
 			<div class="pm"></div>

@@ -1,223 +1,100 @@
 @import "bourbon";
 @import "mixins";
 
-.portlet-staging-bar {
-	button.history {
-		float: right;
+.control-menu-nav {
+	.staging-bar {
+		position: static;
 	}
+}
 
-	button.mark-as-ready {
-		float: left;
-	}
+.control-menu-nav-level-1 .staging-links {
+	position: static;
 
-	.button-holder {
-		margin: 20px 0 10px;
-	}
+	&:nth-last-of-type(2) {
+		@include flex(0 1 auto);
 
-	.layout-actions .taglib-workflow-status {
-		margin: 0;
-
-		.workflow-id, .workflow-version, .workflow-status {
-			color: inherit;
-			display: block;
-			padding: 0;
+		+ .edit-layout-link {
+			@include flex(1);
 		}
 	}
+}
 
-	.row .layout-revision-info {
-		float: right;
-		line-height: 16px;
-		padding-left: 5px;
-
-		@include respond-to(phone) {
-			float: none;
-			padding: 0 0 5px 10px;
-		}
-
-		&.incomplete {
-			float: none;
-			padding: 0 5px;
-
-			.label.label-submit {
-				float: right;
-				margin-top: 10px;
-			}
-
-			&.loading {
-				.label.label-submit {
-					background-color: transparent;
-				}
-			}
-		}
-
-		.layout-revision-version {
-			display: block;
-			font-size: 0.8em;
-
-			label {
-				display: inline;
-				font-size: 0.9em;
-			}
-		}
-
-		.submit-link {
-			margin-left: 1em;
-		}
-
-		.workflow-status, .taglib-workflow-status {
-			margin: 0;
-			padding: 0;
-		}
-
-		a.taglib-icon:hover .taglib-text {
-			text-decoration: none;
-		}
-	}
-
-	.layout-revision-actions {
-		font-size: 17px;
-
-		[class^="icon-"] {
-			margin-left: 5px;
-
-			&.icon-time {
-				padding-left: 5px;
-			}
-
-			@include respond-to(phone, tablet) {
-				margin-left: -5px;
-
-				&.icon-time {
-					padding-left: 0;
-				}
-			}
-		}
-	}
-
-	.layout-revision-details.alert-danger {
-		float: right;
-		margin: 10px 5px 0;
-		padding: 0 5px;
-	}
-
-	.page-variation-label, .site-pages-variation-label {
-		font-weight: 300;
-	}
-
-	.page-variations-options, .site-pages-variation-options, .staging-details {
-		padding: 0 5px;
-	}
-
-	.staging-details {
-		line-height: 20px;
-	}
-
-	.staging-toggle .variations-options {
-		position: relative;
-
-		.staging-variation-selector {
-			display: block;
-			margin: 0 15px 0 0;
-
-			.icon-globe, .icon-file {
-				padding: 7px;
-			}
-
-			.dropdown-toggle {
-				display: block;
-			}
-
-			@include respond-to(phone, tablet) {
-				margin-bottom: 5px;
-			}
-		}
-
-		.page-variations {
-			font-size: 17px;
-			position: absolute;
-			right: -5px;
-			top: 0;
-		}
-
-		.lfr-icon-menu-text {
-			display: inline-block;
-
-			@include ellipsis;
-
-			max-width: 75%;
-			padding-left: 5px;
-			vertical-align: bottom;
-		}
-	}
-
-	.dropdown-menu {
-		li.row {
-			margin: 0;
-			padding: 10px 0;
-		}
-
-		.publish-link-container {
-			padding-left: 5px;
-			width: auto;
-
-			&.branching-enabled {
-				bottom: 5px;
-				position: absolute;
-
-				@include respond-to(phone) {
-					bottom: 0;
-					display: inline-block;
-					position: static;
-				}
-
-				@include respond-to(tablet) {
-					bottom: inherit;
-				}
-			}
-
-			.publish-link {
-				@include ellipsis;
-
-				padding: 5px;
-
-				em {
-					display: inline-block;
-
-					@include ellipsis;
-
-					max-width: 100px;
-					vertical-align: bottom;
-				}
-
-				&.btn.btn-success:hover {
-					background-color: #0ABA1D;
-					text-decoration: none;
-				}
-			}
-		}
-	}
-
-	.site-pages-variation-options {
-		position: relative;
-
-		.icon-angle-right {
-			font-size: 30px;
-			position: absolute;
-			right: -14px;
-			top: 38px;
-		}
-	}
-
-	.status-message {
-		float: left;
-		line-height: 20px;
-	}
-
-	.toolbar-spacer {
+.control-menu-level-2 {
+	@media screen and (max-width: 767px) {
+		bottom: 0;
 		display: none;
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: 1;
 	}
 
-	.variations-content {
-		clear: both;
+	&.open {
+		@media screen and (max-width: 767px) {
+			display: block;
+			overflow: auto;
+		}
+	}
+}
+
+.control-menu-nav-level-2 {
+	@include flex-wrap(wrap);
+	@include justify-content(space-between);
+
+	> li {
+		margin-bottom: 5px;
+		margin-left: 0;
+		padding-bottom: 8px;
+		padding-top: 8px;
+
+		@media screen and (min-width: 768px) {
+			margin-bottom: 0;
+		}
+
+		@media screen and (max-width: 767px) {
+			display: block;
+			float: none;
+			padding: 10px 0;
+			text-align: left;
+			width: 100%;
+		}
+	}
+}
+
+.add-menu-toggle,
+.edit-controls-toggle,
+.edit-layout-link,
+.info-link,
+.simulation-menu-toggle {
+	padding-bottom: 15px;
+	padding-top: 15px;
+
+	.taglib-icon-label {
+		border: 0;
+		clip: rect(0, 0, 0, 0);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+	}
+}
+
+.live-link,
+.staging-link,
+.staging-options-toggle {
+	padding: 15px 5px 15px 2px;
+}
+
+.live-link {
+	margin-right: 24px;
+}
+
+.publish-btn-group {
+	@media screen and (min-width: 768px) {
+		border-radius: 4px;
+		overflow: hidden;
 	}
 }

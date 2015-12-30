@@ -64,7 +64,6 @@ import com.liferay.portal.util.PortalUtil;
 import java.util.List;
 import java.util.Locale;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -87,8 +86,6 @@ public class DDLFormAdminDisplayContext {
 
 		_ddlFormAdminRequestHelper = new DDLFormAdminRequestHelper(
 			renderRequest);
-
-		_portletPreferences = _renderRequest.getPreferences();
 	}
 
 	public JSONArray getDDMFormFieldTypesJSONArray() throws PortalException {
@@ -150,7 +147,7 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public String[] getDisplayViews() {
-		return _displayViews;
+		return _DISPLAY_VIEWS;
 	}
 
 	public PortletURL getPortletURL() {
@@ -460,6 +457,9 @@ public class DDLFormAdminDisplayContext {
 		return jsonObject;
 	}
 
+	private static final String[] _DISPLAY_VIEWS =
+		{"descriptive", "list", "icon"};
+
 	private static final ServiceTracker
 		<DDMFormRenderer, DDMFormRenderer> _ddmFormRendererServiceTracker =
 			ServiceTrackerFactory.open(
@@ -469,8 +469,6 @@ public class DDLFormAdminDisplayContext {
 	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
 	private DDMStructure _ddmStucture;
 	private String _displayStyle;
-	private final String[] _displayViews = {"descriptive", "list", "icon"};
-	private final PortletPreferences _portletPreferences;
 	private DDLRecordSet _recordSet;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

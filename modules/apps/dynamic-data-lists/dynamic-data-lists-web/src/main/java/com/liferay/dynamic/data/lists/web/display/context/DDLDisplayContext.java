@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
-import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration;
 import com.liferay.dynamic.data.lists.web.display.context.util.DDLRequestHelper;
 import com.liferay.dynamic.data.lists.web.portlet.DDLPortletUtil;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -56,9 +55,6 @@ public class DDLDisplayContext {
 	public DDLDisplayContext(HttpServletRequest request) {
 		_ddlRequestHelper = new DDLRequestHelper(request);
 
-		_ddlWebConfiguration = (DDLWebConfiguration)request.getAttribute(
-					DDLWebConfiguration.class.getName());
-
 		if (Validator.isNotNull(getPortletResource())) {
 			return;
 		}
@@ -91,7 +87,7 @@ public class DDLDisplayContext {
 	}
 
 	public String[] getDDLRecordSetDisplayViews() {
-		return _ddlRecordDisplayViews;
+		return _DISPLAY_VIEWS;
 	}
 
 	public long getDisplayDDMTemplateId() {
@@ -378,10 +374,10 @@ public class DDLDisplayContext {
 		return _hasViewPermission;
 	}
 
+	private static final String[] _DISPLAY_VIEWS = {"list", "descriptive"};
+
 	private String _ddlRecordDisplayStyle;
-	private final String[] _ddlRecordDisplayViews = {"list", "descriptive"};
 	private final DDLRequestHelper _ddlRequestHelper;
-	private final DDLWebConfiguration _ddlWebConfiguration;
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;
 	private Boolean _hasAddDDMTemplatePermission;

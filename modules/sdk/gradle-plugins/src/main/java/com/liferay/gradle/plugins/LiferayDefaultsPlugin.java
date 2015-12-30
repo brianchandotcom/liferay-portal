@@ -423,6 +423,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		configureTaskTestIntegration(project);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
+		configureTasksPublishNodeModule(project);
 
 		withPlugin(
 			project, BundlePlugin.class,
@@ -735,6 +736,17 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 	}
 
+	protected void configureTaskPublishNodeModule(
+		PublishNodeModuleTask publishNodeModuleTask) {
+
+		publishNodeModuleTask.setModuleAuthor(
+			"Nathan Cavanaugh <nathan.cavanaugh@liferay.com> " +
+				"(https://github.com/natecavanaugh)");
+		publishNodeModuleTask.setModuleBugsUrl("https://issues.liferay.com/");
+		publishNodeModuleTask.setModuleLicense("LGPL");
+		publishNodeModuleTask.setModuleRepository("liferay/liferay-portal");
+	}
+
 	protected void configureTasksFindBugs(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -760,6 +772,23 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				@Override
 				public void execute(JavaCompile javaCompile) {
 					configureTaskJavaCompile(javaCompile);
+				}
+
+			});
+	}
+
+	protected void configureTasksPublishNodeModule(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			PublishNodeModuleTask.class,
+			new Action<PublishNodeModuleTask>() {
+
+				@Override
+				public void execute(
+					PublishNodeModuleTask publishNodeModuleTask) {
+
+					configureTaskPublishNodeModule(publishNodeModuleTask);
 				}
 
 			});

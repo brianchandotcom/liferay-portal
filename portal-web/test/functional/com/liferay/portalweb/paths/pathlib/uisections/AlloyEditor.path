@@ -130,7 +130,7 @@
 <!--CONTENT_EDITOR-->
 <tr>
 	<td>CONTENT_EDITOR_SWITCH_ACE_EDITOR</td>
-	<td>//button[contains(@id,'editorSwitch') and contains(.,'&lt;/&gt;')]</td>
+	<td>//button[contains(@id,'editorSwitch')]/span/*[name()='svg'][contains(@class,'icon-code')]</td>
 	<td></td>
 </tr>
 <tr>

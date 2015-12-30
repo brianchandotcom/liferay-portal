@@ -428,19 +428,6 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 			andOperator, start, end);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
-	String, LinkedHashMap, boolean, int, int)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
-		long groupId, java.lang.String keywords, boolean andOperator,
-		int start, int end) {
-		return _mdrRuleGroupLocalService.searchByKeywords(groupId, keywords,
-			andOperator, start, end);
-	}
-
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
 		long groupId, java.lang.String keywords,
@@ -460,35 +447,12 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 			params, andOperator, start, end, obc);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
-	String, LinkedHashMap, boolean)}
-	*/
-	@Deprecated
-	@Override
-	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
-		boolean andOperator) {
-		return _mdrRuleGroupLocalService.searchByKeywordsCount(groupId,
-			keywords, andOperator);
-	}
-
 	@Override
 	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator) {
 		return _mdrRuleGroupLocalService.searchByKeywordsCount(groupId,
 			keywords, params, andOperator);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #searchCount(long, String,
-	LinkedHashMap, boolean)}
-	*/
-	@Deprecated
-	@Override
-	public int searchCount(long groupId, java.lang.String name,
-		boolean andOperator) {
-		return _mdrRuleGroupLocalService.searchCount(groupId, name, andOperator);
 	}
 
 	@Override

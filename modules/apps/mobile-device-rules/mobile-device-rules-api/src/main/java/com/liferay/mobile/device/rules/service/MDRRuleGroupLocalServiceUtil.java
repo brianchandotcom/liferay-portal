@@ -393,18 +393,6 @@ public class MDRRuleGroupLocalServiceUtil {
 				   .search(groupId, name, params, andOperator, start, end);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
-	String, LinkedHashMap, boolean, int, int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
-		long groupId, java.lang.String keywords, boolean andOperator,
-		int start, int end) {
-		return getService()
-				   .searchByKeywords(groupId, keywords, andOperator, start, end);
-	}
-
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
 		long groupId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
@@ -424,32 +412,12 @@ public class MDRRuleGroupLocalServiceUtil {
 			start, end, obc);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
-	String, LinkedHashMap, boolean)}
-	*/
-	@Deprecated
-	public static int searchByKeywordsCount(long groupId,
-		java.lang.String keywords, boolean andOperator) {
-		return getService().searchByKeywordsCount(groupId, keywords, andOperator);
-	}
-
 	public static int searchByKeywordsCount(long groupId,
 		java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator) {
 		return getService()
 				   .searchByKeywordsCount(groupId, keywords, params, andOperator);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #searchCount(long, String,
-	LinkedHashMap, boolean)}
-	*/
-	@Deprecated
-	public static int searchCount(long groupId, java.lang.String name,
-		boolean andOperator) {
-		return getService().searchCount(groupId, name, andOperator);
 	}
 
 	public static int searchCount(long groupId, java.lang.String name,

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -65,13 +64,6 @@ public interface JournalFeedService extends BaseService {
 
 	public void deleteFeed(long feedId) throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
-	*/
-	@java.lang.Deprecated
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public void deleteFeed(long groupId, long feedId) throws PortalException;
-
 	public void deleteFeed(long groupId, java.lang.String feedId)
 		throws PortalException;
 
@@ -82,15 +74,6 @@ public interface JournalFeedService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalFeed getFeed(long groupId,
 		java.lang.String feedId) throws PortalException;
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
-	*/
-	@java.lang.Deprecated
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFeed getFeed(long groupId,
-		long feedId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

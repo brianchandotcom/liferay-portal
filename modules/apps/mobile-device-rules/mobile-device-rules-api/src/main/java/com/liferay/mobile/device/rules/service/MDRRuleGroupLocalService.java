@@ -338,16 +338,6 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end);
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
-	String, LinkedHashMap, boolean, int, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
-		long groupId, java.lang.String keywords, boolean andOperator,
-		int start, int end);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
 		long groupId, java.lang.String keywords,
@@ -361,27 +351,9 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> obc);
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
-	String, LinkedHashMap, boolean)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
-		boolean andOperator);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #searchCount(long, String,
-	LinkedHashMap, boolean)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, java.lang.String name,
 		boolean andOperator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

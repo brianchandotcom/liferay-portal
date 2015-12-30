@@ -768,33 +768,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.getVersion();
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserId()}
-	*/
-	@Deprecated
-	@Override
-	public long getVersionUserId() {
-		return _dlFileEntry.getVersionUserId();
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserName()}
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getVersionUserName() {
-		return _dlFileEntry.getVersionUserName();
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserUuid()}
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getVersionUserUuid() {
-		return _dlFileEntry.getVersionUserUuid();
-	}
-
 	@Override
 	public boolean hasLock() {
 		return _dlFileEntry.hasLock();

@@ -185,17 +185,6 @@ public class WikiPageLocalServiceUtil {
 		getService().deletePage(nodeId, title);
 	}
 
-	/**
-	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
-	double)}
-	*/
-	@Deprecated
-	public static void deletePage(long nodeId, java.lang.String title,
-		double version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deletePage(nodeId, title, version);
-	}
-
 	public static void deletePage(com.liferay.wiki.model.WikiPage page)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deletePage(page);

@@ -812,15 +812,6 @@ public class GroupImpl extends GroupBaseImpl {
 		return hasAncestor(groupId);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link #isRegularSite}
-	 */
-	@Deprecated
-	@Override
-	public boolean isCommunity() {
-		return isRegularSite();
-	}
-
 	@Override
 	public boolean isCompany() {
 		return hasClassName(Company.class) || isCompanyStagingGroup();

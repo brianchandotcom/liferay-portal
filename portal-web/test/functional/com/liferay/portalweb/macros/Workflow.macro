@@ -1,6 +1,19 @@
 <definition>
 	<command name="_tearDownWorkflow">
+		<var name="key_listEntry" value="Knowledge Base Article" />
 		<var name="noWorkflow" value="No Workflow" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+			<then>
+				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+				<execute function="Click" locator1="MenuItem#EDIT" />
+
+				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}"  />
+
+				<execute macro="Button#clickSave" />
+			</then>
+		</if>
 
 		<for list="Blogs Entry,Calendar Event,Comments,Message Boards Message,Page Revision,User,Wiki Page" param="workflowResourceValue">
 			<var name="key_listEntry" value="${workflowResourceValue}" />
@@ -484,20 +497,6 @@
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
-
-		<var name="key_listEntry" value="Knowledge Base Article" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-			<then>
-				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-				<execute function="Click" locator1="MenuItem#EDIT" />
-
-				<var name="defaultWorkflow" value="No Workflow" />
-
-				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${defaultWorkflow}"  />
-			</then>
-		</if>
 
 		<execute macro="Workflow#_tearDownWorkflow" />
 

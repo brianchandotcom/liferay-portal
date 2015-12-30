@@ -18,7 +18,6 @@
 			<@liferay.user_personal_bar />
 		</ul>
 	<nav>
-
 </div>
 
 <#assign VOID = freeMarkerPortletPreferences.reset()>

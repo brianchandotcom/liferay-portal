@@ -113,6 +113,8 @@
 
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
+		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
+
 		<execute function="AssertClick" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
 
 		<var name="key_filterValue" value="All Pages" />

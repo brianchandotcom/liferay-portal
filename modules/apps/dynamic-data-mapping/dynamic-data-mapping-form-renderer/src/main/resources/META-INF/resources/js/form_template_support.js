@@ -21,6 +21,10 @@ AUI.add(
 				value: false
 			},
 
+			submitLabel: {
+				value: Liferay.Language.get('submit')
+			},
+
 			templateNamespace: {
 				value: 'ddm.paginated_form'
 			}
@@ -45,7 +49,8 @@ AUI.add(
 				return {
 					pages: normalizedLayout.pages,
 					readOnly: instance.get('readOnly'),
-					strings: instance.get('strings')
+					strings: instance.get('strings'),
+					submitLabel: instance.get('submitLabel')
 				};
 			},
 

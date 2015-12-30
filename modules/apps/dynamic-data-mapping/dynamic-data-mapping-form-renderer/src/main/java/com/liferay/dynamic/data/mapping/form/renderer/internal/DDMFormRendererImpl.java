@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -147,7 +148,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		stringsMap.put("next", LanguageUtil.get(resourceBundle, "next"));
 		stringsMap.put(
 			"previous", LanguageUtil.get(resourceBundle, "previous"));
-		stringsMap.put("submit", LanguageUtil.get(resourceBundle, "submit"));
 
 		return stringsMap;
 	}
@@ -260,6 +260,12 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 		template.put("readOnly", ddmFormRenderingContext.isReadOnly());
 		template.put("strings", getLanguageStringsMap(locale));
+
+		String submitLabel = GetterUtil.getString(
+			ddmFormRenderingContext.getSubmitLabel(),
+			LanguageUtil.get(locale, "submit"));
+
+		template.put("submitLabel", submitLabel);
 		template.put("templateNamespace", getTemplateNamespace(ddmFormLayout));
 
 		if (ddmFormValues != null) {

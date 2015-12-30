@@ -34,6 +34,7 @@
  * @param layout
  * @param portletNamespace
  * @param readOnly
+ * @param submitLabel
  * @param templateNamespace
  * @param values
  */
@@ -61,6 +62,7 @@
 
 							portletNamespace: '{$portletNamespace}',
 							readOnly: {$readOnly},
+							submitLabel: '{$submitLabel}',
 							templateNamespace: '{$templateNamespace}',
 							values: {$values|noAutoescape}
 						{rb}
@@ -118,6 +120,7 @@
  * @param containerId
  * @param pages
  * @param readOnly
+ * @param submitLabel
  * @param strings
  */
 {template .paginated_form}
@@ -168,7 +171,7 @@
 			</button>
 
 			{if not $readOnly}
-				<button class="btn btn-lg btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">{$strings.submit}</button>
+				<button class="btn btn-lg btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">{$submitLabel}</button>
 			{/if}
 		</div>
 	</div>

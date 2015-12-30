@@ -27,6 +27,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
@@ -133,9 +134,10 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 			return;
 		}
 
-		Project project = buildPluginDescriptorTask.getProject();
+		String bundleSymbolicName = _osgiHelper.getBundleSymbolicName(
+			buildPluginDescriptorTask.getProject());
 
-		buildPluginDescriptorTask.setPomArtifactId(project.getName());
+		buildPluginDescriptorTask.setPomArtifactId(bundleSymbolicName);
 	}
 
 	protected void configureTaskBuildPluginDescriptorPomGroupId(
@@ -222,5 +224,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		configurationScopeMappings.put(
 			JavaPlugin.COMPILE_CONFIGURATION_NAME, "compile");
 	}
+
+	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
 }

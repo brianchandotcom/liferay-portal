@@ -328,8 +328,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HISTORY_ACTIVITIES_TABLE_COMPARE_TO</td>
-	<td>//tr[contains(.,'${key_wikiPageVersionNew}')]//span[@class='compare-to-link']/a/span</td>
+	<td>HISTORY_ACTIVITIES_TABLE_COMPARE_TO_LINK</td>
+	<td>//ul/li[contains(@class,'compare-to-link')]/a[contains(@class,' taglib-icon')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -381,7 +381,7 @@
 <!--COMPARE_VERSIONS-->
 <tr>
 	<td>COMPARE_VERSIONS_DIFF</td>
-	<td>//span[contains(@class,'diff-html')]</td>
+	<td>//span[contains(@class,'diff-html') and contains(.,'${key_wikiPageVersionDiff}')]</td>
 	<td></td>
 </tr>
 <tr>

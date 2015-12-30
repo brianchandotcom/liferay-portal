@@ -61,8 +61,6 @@ import org.w3c.dom.Element;
 public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public BuildPluginDescriptorTask() {
-		_project = getProject();
-
 		if (OSDetector.isWindows()) {
 			_mavenExecutable = "mvn.cmd";
 		}
@@ -73,7 +71,9 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	@TaskAction
 	public void buildPluginDescriptor() {
-		File pomFile = _project.file(System.currentTimeMillis() + ".xml");
+		Project project = getProject();
+
+		File pomFile = project.file(System.currentTimeMillis() + ".xml");
 		File preparedSourceDir = null;
 
 		try {
@@ -93,10 +93,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		}
 		finally {
 			if (preparedSourceDir != null) {
-				_project.delete(preparedSourceDir);
+				project.delete(preparedSourceDir);
 			}
 
-			_project.delete(pomFile);
+			project.delete(pomFile);
 		}
 	}
 
@@ -189,8 +189,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		Document doc, Element dependenciesEl, String configurationName,
 		String scope) {
 
+		Project project = getProject();
+
 		ConfigurationContainer configurationContainer =
-			_project.getConfigurations();
+			project.getConfigurations();
 
 		Configuration configuration = configurationContainer.findByName(
 			configurationName);
@@ -217,7 +219,9 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	protected void buildPluginDescriptor(final File pomFile) throws Exception {
-		_project.exec(
+		final Project project = getProject();
+
+		project.exec(
 			new Action<ExecSpec>() {
 
 				@Override
@@ -227,7 +231,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 					execSpec.args("-e");
 
 					execSpec.args("-f");
-					execSpec.args(_project.relativePath(pomFile));
+					execSpec.args(project.relativePath(pomFile));
 
 					execSpec.args("-Dencoding=UTF-8");
 
@@ -236,7 +240,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 							getMavenVersion() + ":descriptor");
 
 					execSpec.setExecutable(getMavenExecutable());
-					execSpec.setWorkingDir(_project.getProjectDir());
+					execSpec.setWorkingDir(project.getProjectDir());
 				}
 
 			});
@@ -244,12 +248,14 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		File dir = new File(getClassesDir(), "META-INF/maven");
 		File outputDir = getOutputDir();
 
-		_project.delete(outputDir);
+		project.delete(outputDir);
 
 		Files.move(dir.toPath(), outputDir.toPath());
 	}
 
 	protected void buildPomFile(File pomFile, File sourceDir) throws Exception {
+		Project project = getProject();
+
 		if (sourceDir == null) {
 			sourceDir = getSourceDir();
 		}
@@ -278,10 +284,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		XMLUtil.appendElement(
 			document, buildElement, "outputDirectory",
-			_project.relativePath(getClassesDir()));
+			project.relativePath(getClassesDir()));
 		XMLUtil.appendElement(
 			document, buildElement, "sourceDirectory",
-			_project.relativePath(sourceDir));
+			project.relativePath(sourceDir));
 
 		Element dependenciesElement = document.createElement("dependencies");
 
@@ -368,6 +374,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	protected void prepareSources(final File preparedSourceDir)
 		throws Exception {
 
+		Project project = getProject();
+
 		Closure<Void> closure = new Closure<Void>(null) {
 
 			@SuppressWarnings("unused")
@@ -379,7 +387,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		};
 
-		_project.copy(closure);
+		project.copy(closure);
 
 		JavaDocBuilder javaDocBuilder = new JavaDocBuilder();
 
@@ -399,7 +407,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private String _pomArtifactId;
 	private String _pomGroupId;
 	private String _pomVersion;
-	private final Project _project;
 	private File _sourceDir;
 	private boolean _useSetterComments = true;
 

@@ -7,8 +7,8 @@
  */
 {template .field}
 	{if isNonnull($field)}
-		<p class="question" style="color: #9aa2a6; font-size: 18px; margin: 32px 0 16px 0;">{$field.label}</p>
-		<p class="answer" style="font-size: 16px; margin: 0;">{$field.value}</p>
+		<p style="color: #9aa2a6; font-size: 18px; margin: 32px 0 16px 0;">{$field.label}</p>
+		<p style="font-size: 16px; margin: 0;">{$field.value}</p>
 	{/if}
 {/template}
 
@@ -48,32 +48,32 @@
 			<table style="background-color: #e4e9ec; padding: 40px;">
 			    <tr>
 			       <td>
-			          <div class="block" id="introduction" style="background-color: #fff; border-radius: 4px; margin: 0 auto 24px auto; padding: 40px;">
+			          <div id="introduction" style="background-color: #fff; border-radius: 4px; margin: 0 auto 24px auto; padding: 40px;">
 			          	 <h1 align="center" style="margin-bottom: 24px; margin-top: 0;">{$siteName}</h1>
 			             <h2 align="center" style="margin-bottom: 24px; margin-top: 0;">Hi, {$authorName}</h2>
 			             <p style="line-height: 30px; margin-bottom: 24px; margin-top: 0;">
 			                <b>{$userName}</b> submitted an entry for the {$formName} form in the {$siteName} site. View all the form's entries by clicking <a href="{$viewFormEntriesURL}" style="color: #7bc4f4; text-decoration: none;" target="_blank">here</a>.
 			             </p>
-			
-			             <a class="button text-center" href="{$viewFormURL}" style="background: #65b4f1; border-radius: 4px; color: #fff; display: block; padding: 18px; text-align: center; text-decoration: none;" target="_blank">Click here to access the form</a>
+
+			             <a href="{$viewFormURL}" style="background: #65b4f1; border-radius: 4px; color: #fff; display: block; padding: 18px; text-align: center; text-decoration: none;" target="_blank">Click here to access the form</a>
 			          </div>
 			       </td>
 			    </tr>
 	            <tr>
                		<td>
-                  		<h3 class="section-title text-center" style="color: #9aa2a6; font-weight: 300; margin: 8px 0 8px; text-align: center;">Here's what <b>{$userName}</b> entered into the form:</h3>
+                  		<h3 style="color: #9aa2a6; font-weight: 300; margin: 8px 0 8px; text-align: center;">Here's what <b>{$userName}</b> entered into the form:</h3>
 
 						{call form.pages data="all"}
 							{param pages: $pages /}
 						{/call}
-		
-						<a class="button text-center" href="{$viewFormURL}" style="background: #65b4f1; border-radius: 4px; color: #fff; display: block; padding: 18px; text-align: center; text-decoration: none;" target="_blank">Click here to access the form</a>
+
+						<a href="{$viewFormURL}" style="background: #65b4f1; border-radius: 4px; color: #fff; display: block; padding: 18px; text-align: center; text-decoration: none;" target="_blank">Click here to access the form</a>
 					</td>
-				</tr>	
-			 </table>   
+				</tr>
+			 </table>
 		</div>
-	</body> 	
-</html>	
+	</body>
+</html>
 {/template}
 
 /**
@@ -83,8 +83,8 @@
  */
 {template .pages}
 	{foreach $page in $pages}
-		<div class="block" style="background-color: #fff; border-radius: 4px; margin: 0 auto 24px auto; padding: 40px;">
-			<h4 class="page-title" style="color: #9aa2a6; font-size: 21px; font-weight: 500; margin: 0;">{$page.title}</h4>
+		<div style="background-color: #fff; border-radius: 4px; margin: 0 auto 24px auto; padding: 40px;">
+			<h4 style="color: #9aa2a6; font-size: 21px; font-weight: 500; margin: 0;">{$page.title}</h4>
 			{call form.fields data="all"}
 				{param fields: $page.fields /}
 			{/call}

@@ -103,6 +103,7 @@ public class StringUtilTest {
 			StringUtil.equalsIgnoreCase("Hello \n World", "hello \n worlD"));
 		Assert.assertFalse(StringUtil.equalsIgnoreCase("Hello \n World", ""));
 		Assert.assertFalse(StringUtil.equalsIgnoreCase("Hello \n World", null));
+		Assert.assertFalse(StringUtil.equalsIgnoreCase("!", "A"));
 	}
 
 	@Test

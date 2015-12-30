@@ -441,6 +441,8 @@ public class StringUtil {
 				continue;
 			}
 
+			// Fast fallback for non-acsii code.
+
 			if ((c1 > 127) || (c2 > 127)) {
 
 				// Georgian alphabet needs to check both upper and lower case
@@ -450,6 +452,14 @@ public class StringUtil {
 
 					continue;
 				}
+
+				return false;
+			}
+
+			// Fast fallback for non-letter ascii code
+
+			if ((c1 < CharPool.UPPER_CASE_A) || (c1 > CharPool.LOWER_CASE_Z) ||
+				(c2 < CharPool.UPPER_CASE_A) || (c2 > CharPool.LOWER_CASE_Z)) {
 
 				return false;
 			}

@@ -340,7 +340,7 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoEntryMoveViaPGTable">
+		<execute macro="WikiNavigator#gotoEntryMoveViaTable">
 			<var name="wikiPageTitle" value="Wiki Page 2" />
 		</execute>
 

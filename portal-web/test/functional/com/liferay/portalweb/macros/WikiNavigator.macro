@@ -80,7 +80,7 @@
 		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
 	</command>
 
-	<command name="gotoEntryMoveViaPGTable">
+	<command name="gotoEntryMoveViaTable">
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />

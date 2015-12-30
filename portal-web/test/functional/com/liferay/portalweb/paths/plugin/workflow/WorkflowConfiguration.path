@@ -11,17 +11,17 @@
 <!--RESOURCE_TABLE-->
 <tr>
 	<td>RESOURCE_TABLE_RESOURCE</td>
-	<td>//div[contains(@id,'WorkflowDefinitionLink')]//tr[contains(.,'${workflowResourceValue}')]/td[1]</td>
+	<td>//div[contains(@id,'WorkflowDefinitionLink')]//tr[contains(.,'${key_workflowResourceValue}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_WORKFLOW</td>
-	<td>//div[contains(@id,'WorkflowDefinitionLink')]//tr[contains(.,'${workflowResourceValue}')]/td[2]</td>
+	<td>//div[contains(@id,'WorkflowDefinitionLink')]//tr[contains(.,'${key_workflowResourceValue}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_SELECT</td>
-	<td>//div[contains(.,'${workflowResourceValue}')]/select</td>
+	<td>//div[contains(.,'${key_workflowResourceValue}')]/select</td>
 	<td></td>
 </tr>
 </tbody>

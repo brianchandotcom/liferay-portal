@@ -9,6 +9,8 @@
 				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="Click" locator1="MenuItem#EDIT" />
 
+				<var name="key_workflowResourceValue" value="Knowledge Base Article" />
+
 				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}"  />
 
 				<execute macro="Button#clickSave" />
@@ -21,6 +23,8 @@
 			<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 
 			<execute function="Click" locator1="MenuItem#EDIT" />
+
+			<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
 
 			<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
 
@@ -248,6 +252,8 @@
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${workflowResourceValue}" />
+
+		<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
 
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${workflowDefinition}" />
 
@@ -498,6 +504,8 @@
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="MenuItem#EDIT" />
+
+		<var name="key_workflowResourceValue" value="User" />
 
 		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
 

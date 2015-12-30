@@ -231,6 +231,7 @@
 		<var name="key_listEntry" value="${workflowResourceValue}" />
 
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${workflowResourceValue}" />

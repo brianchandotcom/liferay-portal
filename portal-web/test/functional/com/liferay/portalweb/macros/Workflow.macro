@@ -1,4 +1,20 @@
 <definition>
+	<command name="_tearDownWorkflow">
+		<var name="noWorkflow" value="No Workflow" />
+
+		<for list="Blogs Entry,Calendar Event,Comments,Message Boards Message,Page Revision,User,Wiki Page" param="workflowResourceValue">
+			<var name="key_listEntry" value="${workflowResourceValue}" />
+
+			<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+
+			<execute function="Click" locator1="MenuItem#EDIT" />
+
+			<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
+
+			<execute macro="Button#clickSave" />
+		</for>
+	</command>
+
 	<command name="approveTaskByActions">
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -460,56 +476,7 @@
 			<var name="portlet" value="Workflow Configuration" />
 		</execute>
 
-		<var name="noWorkflow" value="No Workflow" />
-
-		<var name="workflowResourceValue" value="Blogs Entry" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="Calendar Event" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="Comments" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="Message Boards Message" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="Page Revision" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="User" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="Wiki Page" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Workflow#_tearDownWorkflow" />
 	</command>
 
 	<command name="tearDownSiteWorkflow">
@@ -530,54 +497,7 @@
 			</then>
 		</if>
 
-		<var name="workflowResourceValue" value="Blogs Entry" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${defaultWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="Calendar Event" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${defaultWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="Comments" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${defaultWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="Message Boards Message" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${defaultWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="Page Revision" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${defaultWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="User" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<var name="workflowResourceValue" value="Wiki Page" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${defaultWorkflow}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Workflow#_tearDownWorkflow" />
 
 		<execute macro="Navigator#openURL" />
 

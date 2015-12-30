@@ -59,7 +59,7 @@
 	<command name="gotoAddEventToday">
 		<var method="StringUtil#upperCase('${viewType}')" name="viewTypeUppercase" />
 
-		<execute function="Click" locator1="PGCalendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY" />
+		<execute function="Click" locator1="Calendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY" />
 	</command>
 
 	<command name="gotoAddMyCalendars">

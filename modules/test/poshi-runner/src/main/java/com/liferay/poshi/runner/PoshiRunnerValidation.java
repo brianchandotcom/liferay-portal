@@ -183,6 +183,13 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	protected static void validateArgElement(Element element, String filePath) {
+		List<String> attributes = Arrays.asList("line-number", "value");
+
+		validatePossibleAttributeNames(element, attributes, filePath);
+		validateRequiredAttributeNames(element, attributes, filePath);
+	}
+
 	protected static void validateClassCommandName(
 		Element element, String classCommandName, String classType,
 		String filePath) {
@@ -474,8 +481,8 @@ public class PoshiRunnerValidation {
 		List<String> multiplePrimaryAttributeNames = null;
 
 		List<String> primaryAttributeNames = Arrays.asList(
-			"function", "macro", "macro-desktop", "macro-mobile", "selenium",
-			"test-case");
+			"function", "macro", "macro-desktop", "macro-mobile", "method",
+			"selenium", "test-case");
 
 		if (filePath.endsWith(".function")) {
 			primaryAttributeNames = Arrays.asList("function", "selenium");
@@ -492,7 +499,7 @@ public class PoshiRunnerValidation {
 				"macro-desktop", "macro-mobile");
 
 			primaryAttributeNames = Arrays.asList(
-				"function", "macro", "macro-desktop", "macro-mobile",
+				"function", "macro", "macro-desktop", "macro-mobile", "method",
 				"test-case");
 		}
 
@@ -562,7 +569,7 @@ public class PoshiRunnerValidation {
 
 		if (!childElements.isEmpty()) {
 			primaryAttributeNames = Arrays.asList(
-				"function", "macro", "macro-desktop", "macro-mobile",
+				"function", "macro", "macro-desktop", "macro-mobile", "method",
 				"selenium", "test-case");
 
 			validateHasPrimaryAttributeName(
@@ -570,7 +577,7 @@ public class PoshiRunnerValidation {
 				filePath);
 
 			List<String> possibleChildElementNames = Arrays.asList(
-				"var", "return");
+				"arg", "return", "var");
 
 			for (Element childElement : childElements) {
 				String childElementName = childElement.getName();
@@ -583,30 +590,49 @@ public class PoshiRunnerValidation {
 				}
 			}
 
-			List<Element> varElements = element.elements("var");
+			List<Element> argElements = element.elements("arg");
 
-			for (Element varElement : varElements) {
-				validateVarElement(varElement, filePath);
+			for (Element argElement : argElements) {
+				validateArgElement(argElement, filePath);
 			}
 
 			List<Element> returnElements = element.elements("return");
 
 			for (Element returnElement : returnElements) {
-				validateExecuteReturnElement(returnElement, filePath);
-
 				if (primaryAttributeName.equals("macro")) {
-					validateMacroReturns(
+					validateExecuteReturnMacroElement(returnElement, filePath);
+
+					validateMacroReturnsAttribute(
 						element, "macro", returnElement, filePath);
 				}
+				else if (primaryAttributeName.equals("method")) {
+					validateExecuteReturnMethodElement(returnElement, filePath);
+				}
+			}
+
+			List<Element> varElements = element.elements("var");
+
+			for (Element varElement : varElements) {
+				validateVarElement(varElement, filePath);
 			}
 		}
 	}
 
-	protected static void validateExecuteReturnElement(
+	protected static void validateExecuteReturnMacroElement(
 		Element element, String filePath) {
 
 		List<String> attributeNames = Arrays.asList(
 			"from", "line-number", "name");
+
+		validateHasNoChildElements(element, filePath);
+		validatePossibleAttributeNames(element, attributeNames, filePath);
+		validateRequiredAttributeNames(element, attributeNames, filePath);
+	}
+
+	protected static void validateExecuteReturnMethodElement(
+		Element element, String filePath) {
+
+		List<String> attributeNames = Arrays.asList("line-number", "name");
 
 		validateHasNoChildElements(element, filePath);
 		validatePossibleAttributeNames(element, attributeNames, filePath);
@@ -928,7 +954,7 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	protected static void validateMacroReturns(
+	protected static void validateMacroReturnsAttribute(
 		Element element, String macroType, Element returnElement,
 		String filePath) {
 

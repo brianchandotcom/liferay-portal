@@ -490,11 +490,16 @@
 		<execute function="AssertClick" locator1="Wiki#LINK_DETAILS" value1="Details" />
 		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_HISTORY" value1="History" />
 
-		<var name="key_wikiPageVersionNew" value="${wikiPageVersionNew}" />
+		<var name="key_wikiActivity" value="${wikiPageVersionNew}" />
 
-		<execute function="AssertClick" locator1="Wiki#HISTORY_ACTIVITIES_TABLE_COMPARE_TO" value1="Compare to..." />
+		<execute function="Click" locator1="Wiki#HISTORY_ACTIVITIES_ACTIONS" />
+
+		<execute function="AssertClick" locator1="Wiki#HISTORY_ACTIVITIES_TABLE_COMPARE_TO_LINK" value1="Compare to..." />
 
 		<execute function="SelectFrame" locator1="WikiCompareVersions#IFRAME" />
+
+		<var name="key_wikiPageVersionNew" value="${wikiPageVersionNew}" />
+
 		<execute function="AssertTextEquals" locator1="WikiCompareVersions#NEW_VERSION" value1="${wikiPageVersionNew}" />
 		<execute function="AssertElementPresent" locator1="WikiCompareVersions#NEW_VERSION_DATE" />
 
@@ -502,7 +507,9 @@
 
 		<execute function="AssertTextEquals" locator1="WikiCompareVersions#OLD_VERSION" value1="${wikiPageVersionOld}" />
 		<execute function="AssertElementPresent" locator1="WikiCompareVersions#OLD_VERSION_DATE" />
+
 		<execute function="AssertClick" locator1="WikiCompareVersions#CHOOSE_BUTTON" value1="Choose" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<var name="key_wikiPageVersionDiff" value="${wikiPageVersionDiff}" />

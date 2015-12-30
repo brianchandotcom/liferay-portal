@@ -96,7 +96,7 @@ public class CalendarImporterLocalServiceImpl
 
 		long endTime =
 			startTime + calEvent.getDurationHour() * Time.HOUR +
-			calEvent.getDurationMinute() * Time.MINUTE;
+				calEvent.getDurationMinute() * Time.MINUTE;
 
 		if (calEvent.isAllDay()) {
 			endTime = endTime - 1;

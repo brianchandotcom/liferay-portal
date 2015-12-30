@@ -484,15 +484,16 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<var name="defaultWorkflow" value="No Workflow" />
+		<var name="key_listEntry" value="Knowledge Base Article" />
 
-		<var name="workflowResourceValue" value="Knowledge Base Article" />
-		<var name="key_listEntry" value="${workflowResourceValue}" />
 		<if>
 			<condition function="IsElementPresent" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 			<then>
 				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="Click" locator1="MenuItem#EDIT" />
+
+				<var name="defaultWorkflow" value="No Workflow" />
+
 				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${defaultWorkflow}"  />
 			</then>
 		</if>

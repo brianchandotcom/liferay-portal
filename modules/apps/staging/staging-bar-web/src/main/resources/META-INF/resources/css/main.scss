@@ -60,6 +60,19 @@
 			width: 100%;
 		}
 	}
+
+	.control-menu-nav {
+		@media screen and (max-width: 767px) {
+			display: block;
+		}
+
+		li {
+			@media screen and (max-width: 767px) {
+				margin-left: 0;
+				width: 100%;
+			}
+		}
+	}
 }
 
 .add-menu-toggle,

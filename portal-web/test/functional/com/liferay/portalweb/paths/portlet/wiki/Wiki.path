@@ -147,22 +147,22 @@
 </tr>
 <tr>
 	<td>ALL_PAGES_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span//strong</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/span//strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALL_PAGES_TABLE_REVISION</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALL_PAGES_TABLE_USER</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[4]</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[5]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALL_PAGES_TABLE_DATE</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/a</td>
 	<td></td>
 </tr>
 <tr>

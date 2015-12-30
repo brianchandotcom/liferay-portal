@@ -29,41 +29,40 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
  */
 @DDMForm
 @DDMFormLayout(
-		{
-			@DDMFormLayoutPage(
-				title = "basic",
-				value = {
-					@DDMFormLayoutRow(
-						{
-							@DDMFormLayoutColumn(
-								size = 12,
-								value = {"label", "text", "tip", "required"}
-							)
-						}
-					)
-				}
-			),
-			@DDMFormLayoutPage(
-				title = "advanced",
-				value = {
-					@DDMFormLayoutRow(
-						{
-							@DDMFormLayoutColumn(
-								size = 12,
-								value = {
-									"validation", "showLabel", "repeatable",
-									"predefinedValue", "visibilityExpression",
-									"fieldNamespace", "indexType",
-									"localizable", "readOnly", "dataType",
-									"type", "name"
-								}
-							)
-						}
-					)
-				}
-			)
-		}
-	)
+	{
+		@DDMFormLayoutPage(
+			title = "basic",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {"label", "text", "tip", "required"}
+						)
+					}
+				)
+			}
+		),
+		@DDMFormLayoutPage(
+			title = "advanced",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {
+								"validation", "showLabel", "repeatable",
+								"predefinedValue", "visibilityExpression",
+								"fieldNamespace", "indexType", "localizable",
+								"readOnly", "dataType", "type", "name"
+							}
+						)
+					}
+				)
+			}
+		)
+	}
+)
 public interface ParagraphDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 

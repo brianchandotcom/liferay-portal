@@ -28,31 +28,41 @@ import com.liferay.portal.kernel.util.StringPool;
  * @author Marcellus Tavares
  */
 @DDMForm
-@DDMFormLayout( {
-	@DDMFormLayoutPage(title = "basic", value = {
-		@DDMFormLayoutRow(
-			{
-				@DDMFormLayoutColumn(
-					size = 12,
-					value = {"label", "predefinedValue", "required", "tip"}
+@DDMFormLayout(
+	{
+		@DDMFormLayoutPage(
+			title = "basic",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {
+								"label", "predefinedValue", "required", "tip"
+							}
+						)
+					}
 				)
 			}
-		)
-	}),
-	@DDMFormLayoutPage(title = "advanced", value = {
-		@DDMFormLayoutRow(
-			{
-				@DDMFormLayoutColumn(
-					size = 12,
-					value = {
-						"repeatable", "showLabel", "validation",
-						"visibilityExpression"
+		),
+		@DDMFormLayoutPage(
+			title = "advanced",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {
+								"repeatable", "showLabel", "validation",
+								"visibilityExpression"
+							}
+						)
 					}
 				)
 			}
 		)
-	})
-})
+	}
+)
 public interface DefaultDDMFormFieldTypeSettings
 	extends DDMFormFieldTypeSettings {
 

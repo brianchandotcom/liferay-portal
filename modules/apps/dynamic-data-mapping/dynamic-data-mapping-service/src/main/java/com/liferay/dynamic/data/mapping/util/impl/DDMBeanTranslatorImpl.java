@@ -94,7 +94,8 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 			translateLocalizedValue(ddmFormField.getTip()));
 
 		for (com.liferay.portlet.dynamicdatamapping.DDMFormField
-			nestedDDMFormField : ddmFormField.getNestedDDMFormFields()) {
+				nestedDDMFormField :
+					ddmFormField.getNestedDDMFormFields()) {
 
 			translatedDDMFormField.addNestedDDMFormField(
 				translate(nestedDDMFormField));
@@ -120,7 +121,8 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 			ddmFormValues.getDefaultLocale());
 
 		for (com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue
-			ddmFormFieldValue : ddmFormValues.getDDMFormFieldValues()) {
+				ddmFormFieldValue :
+					ddmFormValues.getDDMFormFieldValues()) {
 
 			translatedDDMFormValues.addDDMFormFieldValue(
 				translate(ddmFormFieldValue));
@@ -277,8 +279,8 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 			translate(ddmFormFieldValue.getValue()));
 
 		for (com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue
-			nestedFormFieldValue :
-				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
+				nestedFormFieldValue :
+					ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
 			translatedDDMFormFieldValue.addNestedDDMFormFieldValue(
 				translate(nestedFormFieldValue));

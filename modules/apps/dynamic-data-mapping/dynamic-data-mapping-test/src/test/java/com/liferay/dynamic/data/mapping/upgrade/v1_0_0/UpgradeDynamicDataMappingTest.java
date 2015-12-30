@@ -180,8 +180,8 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			rootElement, "_fieldsDisplay",
 			new String[] {
 				"Text_INSTANCE_srfa,TextArea_INSTANCE_elcy," +
-				"TextArea_INSTANCE_uxyj,Text_INSTANCE_ealq," +
-				"TextArea_INSTANCE_eepy"
+					"TextArea_INSTANCE_uxyj,Text_INSTANCE_ealq," +
+						"TextArea_INSTANCE_eepy"
 			}
 		);
 
@@ -306,8 +306,8 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			rootElement, "_fieldsDisplay",
 			new String[] {
 				"Text_INSTANCE_srfa,Text_INSTANCE_ealq," +
-				"TextArea_INSTANCE_elcy,TextArea_INSTANCE_uxyj," +
-				"TextArea_INSTANCE_eepy,Integer_INSTANCE_ckkp"
+					"TextArea_INSTANCE_elcy,TextArea_INSTANCE_uxyj," +
+						"TextArea_INSTANCE_eepy,Integer_INSTANCE_ckkp"
 			}
 		);
 
@@ -394,7 +394,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			rootElement, "_fieldsDisplay",
 			new String[] {
 				"Text_INSTANCE_hcxo,TextArea_INSTANCE_vfqd," +
-				"TextArea_INSTANCE_ycey,TextArea_INSTANCE_habt"
+					"TextArea_INSTANCE_ycey,TextArea_INSTANCE_habt"
 			}
 		);
 
@@ -640,7 +640,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		when(
 			_language.getLanguageId(Matchers.eq(locale))
 		).thenReturn(
-				languageId
+			languageId
 		);
 	}
 

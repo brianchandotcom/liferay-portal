@@ -605,8 +605,8 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 
 		mockHttpServletRequest.addParameter(
 			"availableLanguageIds", "en_US,pt_BR");
-			mockHttpServletRequest.addParameter(
-				"defaultLanguageId", LocaleUtil.toLanguageId(LocaleUtil.US));
+		mockHttpServletRequest.addParameter(
+			"defaultLanguageId", LocaleUtil.toLanguageId(LocaleUtil.US));
 
 		// Name
 

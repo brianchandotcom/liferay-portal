@@ -85,7 +85,8 @@ public class DDMStructurePermission {
 			ServiceWrapper<DDMStructurePermissionSupport>
 				structurePermissionSupportServiceWrapper =
 					_ddmPermissionSupportTracker.
-					getDDMStructurePermissionSupportServiceWrapper(classNameId);
+						getDDMStructurePermissionSupportServiceWrapper(
+							classNameId);
 
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker,
@@ -172,7 +173,7 @@ public class DDMStructurePermission {
 		ServiceWrapper<DDMStructurePermissionSupport>
 			structurePermissionSupportServiceWrapper =
 				_ddmPermissionSupportTracker.
-				getDDMStructurePermissionSupportServiceWrapper(classNameId);
+					getDDMStructurePermissionSupportServiceWrapper(classNameId);
 
 		return permissionChecker.hasPermission(
 			groupId, getResourceName(structurePermissionSupportServiceWrapper),

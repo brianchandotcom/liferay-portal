@@ -354,8 +354,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 	protected OrderByComparator
 		<com.liferay.dynamic.data.mapping.model.DDMStructure>
-		getStructureOrderByComparator(
-			int structureComparator) {
+			getStructureOrderByComparator(int structureComparator) {
 
 		if (structureComparator ==
 				DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY) {

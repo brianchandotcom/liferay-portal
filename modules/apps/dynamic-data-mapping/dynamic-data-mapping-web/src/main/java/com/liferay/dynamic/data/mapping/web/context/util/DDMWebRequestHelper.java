@@ -44,10 +44,11 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 					_ddmServiceConfiguration =
 						ConfigurationFactoryUtil.getConfiguration(
 							DDMServiceConfiguration.class,
-						new ParameterMapSettingsLocator(
-							request.getParameterMap(),
-							new GroupServiceSettingsLocator(
-								getSiteGroupId(), DDMConstants.SERVICE_NAME)));
+							new ParameterMapSettingsLocator(
+								request.getParameterMap(),
+								new GroupServiceSettingsLocator(
+									getSiteGroupId(),
+									DDMConstants.SERVICE_NAME)));
 				}
 				else {
 					_ddmServiceConfiguration =

@@ -129,8 +129,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		Field fieldsDisplayField = createFieldsDisplayField(
 			ddmStructure.getStructureId(),
 			"Name_INSTANCE_rztm,Phone_INSTANCE_ovho,Phone_INSTANCE_krvx," +
-			"Name_INSTANCE_rght,Phone_INSTANCE_latb,Phone_INSTANCE_jewp," +
-			"Phone_INSTANCE_mkar");
+				"Name_INSTANCE_rght,Phone_INSTANCE_latb,Phone_INSTANCE_jewp," +
+					"Phone_INSTANCE_mkar");
 
 		Fields fields = createFields(nameField, phoneField, fieldsDisplayField);
 

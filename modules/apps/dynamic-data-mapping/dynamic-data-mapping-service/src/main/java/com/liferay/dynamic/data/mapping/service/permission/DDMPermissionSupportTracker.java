@@ -92,9 +92,9 @@ public class DDMPermissionSupportTracker {
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMTemplatePermissionSupport.class,
 				"model.class.name",
-					ServiceTrackerCustomizerFactory.
-						<DDMTemplatePermissionSupport>serviceWrapper(
-							bundleContext));
+				ServiceTrackerCustomizerFactory.
+					<DDMTemplatePermissionSupport>serviceWrapper(
+						bundleContext));
 	}
 
 	@Deactivate
@@ -106,9 +106,9 @@ public class DDMPermissionSupportTracker {
 
 	private ServiceTrackerMap
 		<String, ServiceWrapper<DDMStructurePermissionSupport>>
-		_ddmStructurePermissionSupportServiceTrackerMap;
+			_ddmStructurePermissionSupportServiceTrackerMap;
 	private ServiceTrackerMap
 		<String, ServiceWrapper<DDMTemplatePermissionSupport>>
-		_ddmTemplatePermissionSupportServiceTrackerMap;
+			_ddmTemplatePermissionSupportServiceTrackerMap;
 
 }

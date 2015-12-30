@@ -34,23 +34,28 @@ public class DDMFormFieldTypeSettingsTestUtil {
 	}
 
 	@DDMForm
-	@DDMFormLayout( {
-		@DDMFormLayoutPage( {
-			@DDMFormLayoutRow(
+	@DDMFormLayout(
+		{
+			@DDMFormLayoutPage(
 				{
-					@DDMFormLayoutColumn(
-							{
-								"dataType", "fieldNamespace", "indexType",
-								"label", "localizable", "name", "multiple",
-								"options", "predefinedValue", "readOnly",
-								"repeatable", "required", "showLabel", "tip",
-								"type", "validation", "visibilityExpression"
-							}
-						)
+					@DDMFormLayoutRow(
+						{
+							@DDMFormLayoutColumn(
+								{
+									"dataType", "fieldNamespace", "indexType",
+									"label", "localizable", "name", "multiple",
+									"options", "predefinedValue", "readOnly",
+									"repeatable", "required", "showLabel",
+									"tip", "type", "validation",
+									"visibilityExpression"
+								}
+							)
+						}
+					)
 				}
 			)
-		})
-	})
+		}
+	)
 	private interface AllBasicPropertiesSettings
 		extends DefaultDDMFormFieldTypeSettings {
 

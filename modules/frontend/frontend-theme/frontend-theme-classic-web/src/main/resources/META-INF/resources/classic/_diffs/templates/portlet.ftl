@@ -1,3 +1,5 @@
+<#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
+
 <#assign portlet_display = portletDisplay>
 
 <#assign portlet_back_url = htmlUtil.escapeHREF(portlet_display.getURLBack())>

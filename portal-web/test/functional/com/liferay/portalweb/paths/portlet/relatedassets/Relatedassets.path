@@ -30,22 +30,22 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/span/a/span[contains(.,'${key_assetTitle}')]</td>
+	<td>//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_1</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/span/a/span)[1]</td>
+	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_2</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/span/a/span)[2]</td>
+	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_3</td>
-	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/span/a/span)[3]</td>
+	<td>xpath=(//ul[contains(@class,'asset-links-list') or contains(@class,'title-list')]/li/a)[3]</td>
 	<td></td>
 </tr>
 <tr>

@@ -45,10 +45,7 @@
 	</command>
 
 	<command name="gotoWebContentSelectionCP">
-		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
-
-		<var name="key_assetType" value="${assetType}" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Related Assets" />

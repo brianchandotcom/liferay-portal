@@ -48,50 +48,6 @@
 		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
 	</command>
 
-	<command name="ManualChangesToDisplayStyle" priority="3">
-		<property name="custom.properties" value="display.style.options=from-level-1-to-all-sublevels${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Navigation Display Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Navigation Menu" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Navigation Display Test Page" />
-		</execute>
-
-		<var name="key_pageName" value="Navigation Display Test Page" />
-
-		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
-
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Navigation Menu" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<execute function="AssertTextEquals" locator1="NavigationConfiguration#PREVIEW_BREADCRUMB_HEADER2_ENTRY" value1="Navigation Display Test Page" />
-		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Custom" />
-		<execute function="AssertSelectedLabel" locator1="Select#HEADER" value1="Root Page" />
-		<execute function="AssertSelectedLabel" locator1="Select#ROOT_PAGE" value1="Parent at Level" />
-		<execute function="AssertSelectedLabel" locator1="Select#ROOT_PAGE_LEVEL" value1="1" />
-		<execute function="AssertSelectedLabel" locator1="Select#INCLUDED_PAGES" value1="Auto" />
-		<execute function="AssertSelectedLabel" locator1="Select#NESTED_CHILDREN" value1="Yes" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Navigation Display Test Page" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_HEADER2_ENTRY" value1="Navigation Display Test Page" />
-	</command>
-
 	<command name="UserPersonalSiteUserGroupPrivatePage" priority="4">
 		<property name="custom.properties" value="layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false" />
 
@@ -193,7 +149,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Relative with Breadcrumb" />
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Bar minimally styled" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
@@ -202,7 +158,7 @@
 			<var name="pageName" value="Navigation Display Test Page" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="NAVIGATION DISPLAY TEST PAGE" />
+		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
 	</command>
 
 	<command name="ViewNoAddPagePermissionsPG" priority="4">

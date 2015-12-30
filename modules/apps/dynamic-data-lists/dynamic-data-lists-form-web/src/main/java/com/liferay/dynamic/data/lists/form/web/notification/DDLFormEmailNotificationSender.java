@@ -171,7 +171,7 @@ public class DDLFormEmailNotificationSender {
 
 		Map<String, Object> fieldMap = new HashMap<>();
 
-		String label = null;
+		String labelString = null;
 
 		int total = (ddmFormFieldValues.size() * 2) - 1;
 
@@ -182,12 +182,13 @@ public class DDLFormEmailNotificationSender {
 
 			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
-			if (label == null) {
-				LocalizedValue labelValue = ddmFormField.getLabel();
-				label = labelValue.getString(locale);
+			if (labelString == null) {
+				LocalizedValue label = ddmFormField.getLabel();
+
+				labelString = label.getString(locale);
 
 				if (ddmFormField.isRequired()) {
-					label = label.concat("*");
+					labelString = labelString.concat("*");
 				}
 			}
 
@@ -198,7 +199,7 @@ public class DDLFormEmailNotificationSender {
 			}
 		}
 
-		fieldMap.put("label", label);
+		fieldMap.put("label", labelString);
 		fieldMap.put("value", sb.toString());
 
 		return fieldMap;
@@ -230,6 +231,7 @@ public class DDLFormEmailNotificationSender {
 		for (String fieldName : fieldNames) {
 			Map<String, Object> field = getField(
 				ddmFormFieldValuesMap.get(fieldName), locale);
+
 			fields.add(field);
 		}
 
@@ -318,7 +320,6 @@ public class DDLFormEmailNotificationSender {
 		params.put(
 			portletNamespace.concat("mvcPath"),
 			new String[] {"/admin/view_records.jsp"});
-
 		params.put(
 			portletNamespace.concat("recordSetId"),
 			new String[] {String.valueOf(recordSet.getRecordSetId())});
@@ -343,11 +344,9 @@ public class DDLFormEmailNotificationSender {
 		params.put(
 			portletNamespace.concat("mvcPath"),
 			new String[] {"/admin/view_record.jsp"});
-
 		params.put(
 			portletNamespace.concat("recordId"),
 			new String[] {String.valueOf(record.getRecordId())});
-
 		params.put(
 			portletNamespace.concat("recordSetId"),
 			new String[] {String.valueOf(recordSet.getRecordSetId())});
@@ -366,16 +365,12 @@ public class DDLFormEmailNotificationSender {
 
 		template.put("authorName", recordSet.getUserName());
 		template.put("formName", recordSet.getName(locale));
-
 		template.put("pages", getPages(recordSet, record));
-
 		template.put("siteName", getSiteName(portletRequest, locale));
 		template.put("userName", record.getUserName());
-
 		template.put(
 			"viewFormEntriesURL",
 			getViewFormEntriesURL(portletRequest, recordSet));
-
 		template.put(
 			"viewFormURL", getViewFormURL(portletRequest, recordSet, record));
 	}
@@ -415,7 +410,7 @@ public class DDLFormEmailNotificationSender {
 	private static final String _NAMESPACE = "form.form_entry";
 
 	private static final String _TEMPLATE_PATH =
-		"/META-INF/resources/form_entry_add_body.soy";
+		"/META-INF/resources/notification/form_entry_add_body.soy";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormEmailNotificationSender.class);

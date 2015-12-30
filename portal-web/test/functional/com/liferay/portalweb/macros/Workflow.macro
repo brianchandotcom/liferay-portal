@@ -15,7 +15,7 @@
 			</then>
 		</if>
 
-		<for list="Blogs Entry,Calendar Event,Comments,Message Boards Message,Page Revision,User,Wiki Page" param="workflowResourceValue">
+		<for list="Blogs Entry,Calendar Event,Comments,Message Boards Message,Page Revision,Wiki Page" param="workflowResourceValue">
 			<var name="key_listEntry" value="${workflowResourceValue}" />
 
 			<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
@@ -491,6 +491,17 @@
 		</execute>
 
 		<execute macro="Workflow#_tearDownWorkflow" />
+
+		<var name="key_listEntry" value="User" />
+		<var name="noWorkflow" value="No Workflow" />
+
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="MenuItem#EDIT" />
+
+		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
+
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="tearDownSiteWorkflow">

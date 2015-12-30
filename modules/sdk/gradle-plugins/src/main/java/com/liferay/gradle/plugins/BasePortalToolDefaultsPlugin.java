@@ -34,15 +34,23 @@ public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 	public static final String PORTAL_TOOL_GROUP = "com.liferay";
 
 	protected void addPortalToolDependencies(Project project) {
-		String name = getPortalToolName();
+		addPortalToolDependencies(
+			project, getPortalToolConfigurationName(), getPortalToolName());
+	}
 
-		String version = GradleUtil.getProperty(
-			project, name + ".version", getPortalToolVersion());
+	protected void addPortalToolDependencies(
+		Project project, String configurationName, String portalToolName) {
 
-		if (Validator.isNotNull(version)) {
+		String portalToolVersion = _portalToolVersions.getProperty(
+			portalToolName);
+
+		portalToolVersion = GradleUtil.getProperty(
+			project, portalToolName + ".version", portalToolVersion);
+
+		if (Validator.isNotNull(portalToolVersion)) {
 			GradleUtil.addDependency(
-				project, getPortalToolConfigurationName(), getPortalToolGroup(),
-				name, version);
+				project, configurationName, PORTAL_TOOL_GROUP, portalToolName,
+				portalToolVersion);
 		}
 	}
 
@@ -53,15 +61,7 @@ public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 
 	protected abstract String getPortalToolConfigurationName();
 
-	protected String getPortalToolGroup() {
-		return PORTAL_TOOL_GROUP;
-	}
-
 	protected abstract String getPortalToolName();
-
-	protected String getPortalToolVersion() {
-		return _portalToolVersions.getProperty(getPortalToolName());
-	}
 
 	private static final Properties _portalToolVersions = new Properties();
 

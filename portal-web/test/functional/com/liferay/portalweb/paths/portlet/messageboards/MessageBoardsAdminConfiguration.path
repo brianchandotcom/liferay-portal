@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">MessageBoardsAdminConfiguration</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>IFRAME</td>
-	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'portlet_configuration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--GENERAL-->
 <tr>
 	<td>GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX</td>

@@ -1345,7 +1345,7 @@
 		<execute function="Click" locator1="MessageBoards#CATEGORY_TABLE_ACTIONS" />
 		<execute function="AssertTextEquals" locator1="MenuItem#SUBSCRIBE" value1="Subscribe" />
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute function="AssertTextEquals" locator1="Link#SUBSCRIBE" value1="Subscribe" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1380,7 +1380,7 @@
 		<execute function="Click" locator1="MessageBoards#CATEGORY_TABLE_ACTIONS" />
 		<execute function="AssertElementNotPresent" locator1="MenuItem#SUBSCRIBE" />
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboardsCategory#SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute function="AssertElementNotPresent" locator1="Link#SUBSCRIBE" value1="Subscribe" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

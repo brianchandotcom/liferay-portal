@@ -457,8 +457,9 @@
 			</else>
 		</if>
 
-		<execute function="Click" locator1="PGMessageboardsCategory#THREAD_TABLE_ACTIONS_GENERIC" />
-		<execute function="AssertClick" locator1="PGMessageboardsCategory#THREAD_MENULIST_MOVE" value1="Move" />
+		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
@@ -503,8 +504,8 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="PGMessageboardsCategory#THREAD_TABLE_ACTIONS_GENERIC" value1="Actions" />
-		<execute function="AssertClick" locator1="PGMessageboardsCategory#THREAD_MENULIST_MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 

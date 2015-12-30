@@ -1907,7 +1907,7 @@
 		<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_POSTS" value1="0" />
 		<execute function="AssertClick" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
 
-		<execute function="AssertTextEquals#assertText" locator1="PGMessageboardsCategory#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+		<execute function="AssertTextEquals#assertText" locator1="Message#INFO_LINK" value1="There are no threads in this category." />
 		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
 	</command>
 
@@ -3727,19 +3727,19 @@
 
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#CATEGORIES_ADD_SUBCATEGORY_BUTTON" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#PERMISSIONS_BUTTON" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#RSS_LINK" value1="RSS" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute function="AssertTextEquals" locator1="Link#RSS" value1="RSS" />
+		<execute function="AssertTextEquals" locator1="Link#SUBSCRIBE" value1="Subscribe" />
 
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertClick" locator1="PGMessageboardsCategory#THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#THREAD_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#THREAD_MENULIST_RSS" value1="RSS (Opens New Window)" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#THREAD_MENULIST_EDIT" value1="Edit" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboardsCategory#THREAD_MENULIST_MOVE" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#THREAD_MENULIST_PERMISSIONS" value1="Permissions" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#THREAD_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertTextEquals" locator1="MenuItem#UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute function="AssertTextEquals" locator1="MenuItem#RSS" value1="RSS (Opens New Window)" />
+		<execute function="AssertTextEquals" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#MOVE" />
+		<execute function="AssertTextEquals" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertTextEquals" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />

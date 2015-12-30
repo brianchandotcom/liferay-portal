@@ -372,12 +372,7 @@
 </tr>
 <tr>
 	<td>THREAD_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//a[contains(@class,'btn')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>THREAD_TABLE_ACTIONS_GENERIC</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[1]//a[contains(@class,'btn')]</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]/div/table/tbody/tr[contains(.,'${key_threadSubject}')]/td[7]/div/a/span</td>
 	<td></td>
 </tr>
 <tr>

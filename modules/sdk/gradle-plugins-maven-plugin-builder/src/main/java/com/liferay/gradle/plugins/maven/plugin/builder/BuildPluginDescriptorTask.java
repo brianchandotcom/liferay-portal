@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.maven.plugin.builder;
 
 import com.liferay.gradle.plugins.maven.plugin.builder.util.XMLUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -116,7 +117,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	@InputDirectory
 	public File getClassesDir() {
-		return _classesDir;
+		return GradleUtil.toFile(getProject(), _classesDir);
 	}
 
 	public Map<String, String> getConfigurationScopeMappings() {
@@ -124,68 +125,68 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	public String getMavenExecutable() {
-		return _mavenExecutable;
+		return GradleUtil.toString(_mavenExecutable);
 	}
 
 	public String getMavenVersion() {
-		return _mavenVersion;
+		return GradleUtil.toString(_mavenVersion);
 	}
 
 	@OutputDirectory
 	public File getOutputDir() {
-		return _outputDir;
+		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
 	public String getPomArtifactId() {
-		return _pomArtifactId;
+		return GradleUtil.toString(_pomArtifactId);
 	}
 
 	public String getPomGroupId() {
-		return _pomGroupId;
+		return GradleUtil.toString(_pomGroupId);
 	}
 
 	public String getPomVersion() {
-		return _pomVersion;
+		return GradleUtil.toString(_pomVersion);
 	}
 
 	@InputDirectory
 	public File getSourceDir() {
-		return _sourceDir;
+		return GradleUtil.toFile(getProject(), _sourceDir);
 	}
 
 	public boolean isUseSetterComments() {
 		return _useSetterComments;
 	}
 
-	public void setClassesDir(File classesDir) {
+	public void setClassesDir(Object classesDir) {
 		_classesDir = classesDir;
 	}
 
-	public void setMavenExecutable(String mavenExecutable) {
+	public void setMavenExecutable(Object mavenExecutable) {
 		_mavenExecutable = mavenExecutable;
 	}
 
-	public void setMavenVersion(String mavenVersion) {
+	public void setMavenVersion(Object mavenVersion) {
 		_mavenVersion = mavenVersion;
 	}
 
-	public void setOutputDir(File outputDir) {
+	public void setOutputDir(Object outputDir) {
 		_outputDir = outputDir;
 	}
 
-	public void setPomArtifactId(String pomArtifactId) {
+	public void setPomArtifactId(Object pomArtifactId) {
 		_pomArtifactId = pomArtifactId;
 	}
 
-	public void setPomGroupId(String pomGroupId) {
+	public void setPomGroupId(Object pomGroupId) {
 		_pomGroupId = pomGroupId;
 	}
 
-	public void setPomVersion(String pomVersion) {
+	public void setPomVersion(Object pomVersion) {
 		_pomVersion = pomVersion;
 	}
 
-	public void setSourceDir(File sourceDir) {
+	public void setSourceDir(Object sourceDir) {
 		_sourceDir = sourceDir;
 	}
 
@@ -406,16 +407,16 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		}
 	}
 
-	private File _classesDir;
+	private Object _classesDir;
 	private final Map<String, String> _configurationScopeMappings =
 		new HashMap<>();
-	private String _mavenExecutable;
-	private String _mavenVersion = "3.4";
-	private File _outputDir;
-	private String _pomArtifactId;
-	private String _pomGroupId;
-	private String _pomVersion;
-	private File _sourceDir;
+	private Object _mavenExecutable;
+	private Object _mavenVersion = "3.4";
+	private Object _outputDir;
+	private Object _pomArtifactId;
+	private Object _pomGroupId;
+	private Object _pomVersion;
+	private Object _sourceDir;
 	private boolean _useSetterComments = true;
 
 }

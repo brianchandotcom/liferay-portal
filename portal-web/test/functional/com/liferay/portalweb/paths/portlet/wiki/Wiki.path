@@ -255,6 +255,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTIVE_VIEW_ACTIONS</td>
+	<td>//li[contains(.,'${key_wikiPageTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

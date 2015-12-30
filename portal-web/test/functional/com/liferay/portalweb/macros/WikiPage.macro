@@ -719,7 +719,7 @@
 	<command name="editPageCP">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" />
+		<execute function="Click" locator1="Wiki#DESCRIPTIVE_VIEW_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type#typeAlloyEditor" locator1="Wiki#RICH_TEXT_EDITOR" value1="${wikiPageContentEdit}" />
@@ -880,7 +880,7 @@
 	<command name="moveToRecycleBinCP">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" />
+		<execute function="Click" locator1="Wiki#DESCRIPTIVE_VIEW_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
 	</command>

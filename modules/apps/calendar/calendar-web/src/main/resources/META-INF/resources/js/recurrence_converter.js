@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var LString = Lang.String;
+
 		var EXDATE = 'EXDATE';
 
 		var RRULE = 'RRULE';
@@ -19,7 +21,9 @@ AUI.add(
 
 		var WEEKLY = 'WEEKLY';
 
-		var padNumber = A.rbind('padNumber', A.Lang.String, 2);
+		var padNumber = A.rbind('padNumber', LString, 2);
+
+		var startsWith = A.rbind('startsWith', LString);
 
 		var RecurrenceConverter = function() {
 		};
@@ -144,7 +148,7 @@ AUI.add(
 
 					var exDate = null;
 
-					if (string && string.startsWith(EXDATE + STR_SEMICOLON)) {
+					if (string && startsWith(string, EXDATE + STR_SEMICOLON)) {
 						exDate = string.slice(7);
 					}
 
@@ -167,7 +171,7 @@ AUI.add(
 
 					var rrule = null;
 
-					if (string && string.startsWith(RRULE + STR_COLON)) {
+					if (string && startsWith(string, RRULE + STR_COLON)) {
 						string = string.slice(6);
 
 						var params = string.split(STR_SEMICOLON);

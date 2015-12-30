@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.DuplicateUserGroupException;
-import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.RequiredUserGroupException;
 import com.liferay.portal.UserGroupNameException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -1151,7 +1150,9 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		UserGroup userGroup = fetchUserGroup(companyId, name);
 
-		if ((userGroup != null) && (userGroup.getUserGroupId() != userGroupId)) {
+		if ((userGroup != null) &&
+			(userGroup.getUserGroupId() != userGroupId)) {
+
 			throw new DuplicateUserGroupException("{name=" + name + "}");
 		}
 	}

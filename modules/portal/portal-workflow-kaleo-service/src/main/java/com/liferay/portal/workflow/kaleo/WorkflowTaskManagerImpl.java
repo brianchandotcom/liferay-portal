@@ -651,10 +651,10 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Override
 	public List<WorkflowTask> search(
-			long companyId, long userId, String taskName, String assetTitle,
-			String assetType, Long[] assetPrimaryKey, Date dueDateGT,
-			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
-			boolean andOperator, int start, int end,
+			long companyId, long userId, String taskName, String assetType,
+			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
+			Boolean completed, Boolean searchByUserRoles, boolean andOperator,
+			int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
@@ -666,9 +666,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
 				KaleoTaskInstanceTokenLocalServiceUtil.search(
-					taskName, assetTitle, assetType, assetPrimaryKey, dueDateGT,
-					dueDateLT, completed, searchByUserRoles, andOperator, start,
-					end,
+					taskName, assetType, assetPrimaryKey, dueDateGT, dueDateLT,
+					completed, searchByUserRoles, andOperator, start, end,
 					KaleoTaskInstanceTokenOrderByComparator.
 						getOrderByComparator(orderByComparator),
 					serviceContext);
@@ -682,9 +681,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Override
 	public List<WorkflowTask> search(
-			long companyId, long userId, String keywords, String assetTitle,
-			String[] assetTypes, Boolean completed, Boolean searchByUserRoles,
-			int start, int end,
+			long companyId, long userId, String keywords, String[] assetTypes,
+			Boolean completed, Boolean searchByUserRoles, int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
@@ -696,8 +694,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
 				KaleoTaskInstanceTokenLocalServiceUtil.search(
-					keywords, assetTitle, assetTypes, completed,
-					searchByUserRoles, start, end,
+					keywords, assetTypes, completed, searchByUserRoles, start,
+					end,
 					KaleoTaskInstanceTokenOrderByComparator.
 						getOrderByComparator(orderByComparator),
 					serviceContext);
@@ -731,10 +729,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Override
 	public int searchCount(
-			long companyId, long userId, String taskName, String assetTitle,
-			String assetType, Long[] assetPrimaryKey, Date dueDateGT,
-			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
-			boolean andOperator)
+			long companyId, long userId, String taskName, String assetType,
+			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
+			Boolean completed, Boolean searchByUserRoles, boolean andOperator)
 		throws WorkflowException {
 
 		try {
@@ -744,9 +741,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			serviceContext.setUserId(userId);
 
 			return KaleoTaskInstanceTokenLocalServiceUtil.searchCount(
-				taskName, assetTitle, assetType, assetPrimaryKey, dueDateGT,
-				dueDateLT, completed, searchByUserRoles, andOperator,
-				serviceContext);
+				taskName, assetType, assetPrimaryKey, dueDateGT, dueDateLT,
+				completed, searchByUserRoles, andOperator, serviceContext);
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -755,8 +751,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Override
 	public int searchCount(
-			long companyId, long userId, String keywords, String assetTitle,
-			String[] assetTypes, Boolean completed, Boolean searchByUserRoles)
+			long companyId, long userId, String keywords, String[] assetTypes,
+			Boolean completed, Boolean searchByUserRoles)
 		throws WorkflowException {
 
 		try {
@@ -766,7 +762,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			serviceContext.setUserId(userId);
 
 			return KaleoTaskInstanceTokenLocalServiceUtil.searchCount(
-				keywords, assetTitle, assetTypes, completed, searchByUserRoles,
+				keywords, assetTypes, completed, searchByUserRoles,
 				serviceContext);
 		}
 		catch (Exception e) {

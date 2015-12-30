@@ -1285,7 +1285,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					if (matcher.find()) {
 						String match = matcher.group();
 
-						if (!match.endsWith("\n)\n") &&
+						int closeParenthesesCount = StringUtil.count(
+							match, StringPool.CLOSE_PARENTHESIS);
+						int openParenthesesCount = StringUtil.count(
+							match, StringPool.OPEN_PARENTHESIS);
+
+						if ((closeParenthesesCount == openParenthesesCount) &&
+							!match.endsWith("\n)\n") &&
 							!match.endsWith("\t)\n")) {
 
 							String tabs = matcher.group(1);

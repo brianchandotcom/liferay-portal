@@ -667,8 +667,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
 		}
 		else {
-			ThemeDisplay themeDisplay = (ThemeDisplay)
-				portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

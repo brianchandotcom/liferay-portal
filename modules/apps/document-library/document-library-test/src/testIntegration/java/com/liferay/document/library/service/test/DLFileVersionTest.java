@@ -459,7 +459,7 @@ public class DLFileVersionTest {
 			DDMFormValues ddmFormValues =
 				(DDMFormValues)_serviceContext.getAttribute(
 					DDMFormValues.class.getName() +
-					ddmStructure.getStructureId());
+						ddmStructure.getStructureId());
 
 			for (DDMFormFieldValue ddmFormFieldValue :
 					ddmFormValues.getDDMFormFieldValues()) {

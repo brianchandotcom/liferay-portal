@@ -29,6 +29,9 @@ import org.gradle.api.tasks.TaskContainer;
 public class ServiceBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<ServiceBuilderPlugin> {
 
+	public static final String PORTAL_TOOL_NAME =
+		"com.liferay.portal.tools.service.builder";
+
 	@Override
 	protected void configureDefaults(
 		final Project project, ServiceBuilderPlugin serviceBuilderPlugin) {
@@ -80,10 +83,7 @@ public class ServiceBuilderDefaultsPlugin
 
 	@Override
 	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
+		return PORTAL_TOOL_NAME;
 	}
-
-	private static final String _PORTAL_TOOL_NAME =
-		"com.liferay.portal.tools.service.builder";
 
 }

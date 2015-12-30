@@ -31,6 +31,8 @@ import org.gradle.api.Project;
 public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 	extends BaseDefaultsPlugin<T> {
 
+	public static final String PORTAL_TOOL_GROUP = "com.liferay";
+
 	protected void addPortalToolDependencies(Project project) {
 		String name = getPortalToolName();
 
@@ -52,7 +54,7 @@ public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 	protected abstract String getPortalToolConfigurationName();
 
 	protected String getPortalToolGroup() {
-		return _PORTAL_TOOL_GROUP;
+		return PORTAL_TOOL_GROUP;
 	}
 
 	protected abstract String getPortalToolName();
@@ -60,8 +62,6 @@ public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 	protected String getPortalToolVersion() {
 		return _portalToolVersions.getProperty(getPortalToolName());
 	}
-
-	private static final String _PORTAL_TOOL_GROUP = "com.liferay";
 
 	private static final Properties _portalToolVersions = new Properties();
 

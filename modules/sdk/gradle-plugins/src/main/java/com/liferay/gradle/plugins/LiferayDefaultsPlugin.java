@@ -40,6 +40,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -66,6 +67,7 @@ import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
@@ -384,6 +386,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	protected void configureDefaults(
 		final Project project, LiferayPlugin liferayPlugin) {
 
+		final File portalRootDir = getPortalRootDir(project);
 		boolean testProject = isTestProject(project);
 
 		applyPlugins(project);
@@ -433,6 +436,21 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				public void execute(BundlePlugin bundlePlugin) {
 					addTaskCopyLibs(project);
 					configureTaskJavadoc(project);
+				}
+
+			});
+
+		withPlugin(
+			project, ServiceBuilderPlugin.class,
+			new Action<ServiceBuilderPlugin>() {
+
+				@Override
+				public void execute(ServiceBuilderPlugin serviceBuilderPlugin) {
+					configureLocalPortalTool(
+						project, portalRootDir,
+						ServiceBuilderPlugin.CONFIGURATION_NAME,
+						ServiceBuilderDefaultsPlugin.PORTAL_TOOL_NAME,
+						"portal-tools-service-builder");
 				}
 
 			});
@@ -498,6 +516,32 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		javaPluginConvention.setTestResultsDirName(
 			FileUtil.relativize(testResultsDir, project.getBuildDir()));
+	}
+
+	protected void configureLocalPortalTool(
+		Project project, File portalRootDir, String configurationName,
+		String portalToolName, String portalToolDirName) {
+
+		if (portalRootDir == null) {
+			return;
+		}
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, configurationName);
+
+		Map<String, String> args = new HashMap<>();
+
+		args.put("group", BasePortalToolDefaultsPlugin.PORTAL_TOOL_GROUP);
+		args.put("module", portalToolName);
+
+		configuration.exclude(args);
+
+		File dir = new File(
+			portalRootDir, "tools/sdk/tmp/portal-tools/" + portalToolDirName);
+
+		FileTree fileTree = FileUtil.getJarsFileTree(project, dir);
+
+		GradleUtil.addDependency(project, configuration.getName(), fileTree);
 	}
 
 	protected void configureMavenConf2ScopeMappings(Project project) {
@@ -874,6 +918,26 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	@Override
 	protected Class<LiferayPlugin> getPluginClass() {
 		return LiferayPlugin.class;
+	}
+
+	protected File getPortalRootDir(Project project) {
+		File dir = project.getRootDir();
+
+		dir = dir.getParentFile();
+
+		while (true) {
+			File portalImplDir = new File(dir, "portal-impl");
+
+			if (portalImplDir.exists()) {
+				return dir;
+			}
+
+			dir = dir.getParentFile();
+
+			if (dir == null) {
+				return null;
+			}
+		}
 	}
 
 	protected boolean isTestProject(Project project) {

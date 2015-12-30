@@ -69,6 +69,7 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
@@ -342,6 +343,22 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 	}
 
+	protected void configureBasePlugin(Project project, File portalRootDir) {
+		if (portalRootDir == null) {
+			return;
+		}
+
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		File dir = new File(portalRootDir, "tools/sdk/dist");
+
+		String dirName = FileUtil.relativize(dir, project.getBuildDir());
+
+		basePluginConvention.setDistsDirName(dirName);
+		basePluginConvention.setLibsDirName(dirName);
+	}
+
 	protected void configureConfigurations(Project project) {
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
@@ -410,6 +427,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		addDependenciesTestCompile(project);
 		addTaskJarSources(project, testProject);
 		addTaskZipJavadoc(project);
+		configureBasePlugin(project, portalRootDir);
 		configureConfigurations(project);
 		configureEclipse(project, portalTestConfiguration);
 		configureIdea(project, portalTestConfiguration);

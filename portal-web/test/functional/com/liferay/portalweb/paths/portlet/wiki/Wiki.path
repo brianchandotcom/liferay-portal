@@ -323,6 +323,11 @@
 </tr>
 <!--HISTORY-->
 <tr>
+	<td>HISTORY_ACTIVITIES_ACTIONS</td>
+	<td>//tr[contains(.,'${key_wikiActivity}')]//td/div/a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HISTORY_ACTIVITIES_TAB</td>
 	<td>//li[@class='tab']//a[contains(.,'Activities')]</td>
 	<td></td>

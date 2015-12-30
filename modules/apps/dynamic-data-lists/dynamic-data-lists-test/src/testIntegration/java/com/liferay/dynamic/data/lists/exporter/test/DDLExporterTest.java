@@ -377,7 +377,7 @@ public class DDLExporterTest {
 					return true;
 				}
 
-		});
+			});
 	}
 
 	private Set<Locale> _availableLocales;

@@ -403,9 +403,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 		List<Team> teams = new ArrayList<>();
 
 		long[] teamsTeamIds = ArrayUtil.unique(
-				StringUtil.split(
-						ParamUtil.getString(portletRequest, "teamsTeamIds"), 0L)
-		);
+			StringUtil.split(
+				ParamUtil.getString(portletRequest, "teamsTeamIds"), 0L));
 
 		for (long teamsTeamId : teamsTeamIds) {
 			if (teamsTeamId == 0) {

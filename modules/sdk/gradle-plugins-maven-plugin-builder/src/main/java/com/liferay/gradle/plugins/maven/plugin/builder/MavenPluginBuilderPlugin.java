@@ -20,7 +20,6 @@ import com.liferay.gradle.util.Validator;
 import java.io.File;
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.Action;
@@ -78,8 +77,6 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
 		configureTaskBuildPluginDescriptorClassesDir(buildPluginDescriptorTask);
-		configureTaskBuildPluginDescriptorConfigurationScopeMappings(
-			buildPluginDescriptorTask);
 		configureTaskBuildPluginDescriptorOutputDir(buildPluginDescriptorTask);
 		configureTaskBuildPluginDescriptorPomArtifactId(
 			buildPluginDescriptorTask);
@@ -209,20 +206,6 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private void configureTaskBuildPluginDescriptorConfigurationScopeMappings(
-		BuildPluginDescriptorTask buildPluginDescriptorTask) {
-
-		Map<String, String> configurationScopeMappings =
-			buildPluginDescriptorTask.getConfigurationScopeMappings();
-
-		if (!configurationScopeMappings.isEmpty()) {
-			return;
-		}
-
-		configurationScopeMappings.put(
-			JavaPlugin.COMPILE_CONFIGURATION_NAME, "compile");
 	}
 
 	private static final OsgiHelper _osgiHelper = new OsgiHelper();

@@ -46,7 +46,9 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
@@ -61,6 +63,12 @@ import org.w3c.dom.Element;
 public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public BuildPluginDescriptorTask() {
+		_configurationScopeMappings.put(
+			JavaPlugin.COMPILE_CONFIGURATION_NAME,
+			Conf2ScopeMappingContainer.COMPILE);
+		_configurationScopeMappings.put(
+			"provided", Conf2ScopeMappingContainer.PROVIDED);
+
 		if (OSDetector.isWindows()) {
 			_mavenExecutable = "mvn.cmd";
 		}

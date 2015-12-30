@@ -152,8 +152,7 @@ public class DDMFormFieldTypeSettingsSerializerHelperTest
 				value = {
 					@DDMFormLayoutRow(
 						{
-							@DDMFormLayoutColumn(value = {"a", "b"}
-	)
+							@DDMFormLayoutColumn(value = {"a", "b"})
 						}
 					)
 				}

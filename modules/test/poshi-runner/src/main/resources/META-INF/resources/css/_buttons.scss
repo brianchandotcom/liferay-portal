@@ -151,24 +151,24 @@
 		position: relative;
 
 		.btn-label {
-			&.pause {
-				opacity: 1;
-				height: auto;
-				animation: fadeIn 0.15s ease-in both;
-				transition: opacity 0s, height 0s;
+			position: absolute;
+			top: 16px;
 
+			&.pause {
+				animation: fadeIn 0.15s ease-in both;
+				left: 23px;
+				opacity: 1;
 
 				&:after {
-					margin-left: 14px;
 					content: '\f04c';
+					margin-left: 14px;
 				}
 			}
 
 			&.continue {
+				animation: fadeOut 0.15s ease-out both;
+				left: 14px;
 				opacity: 0;
-				height: 0;
-				animation: fadeOut 0.15s ease-in both;
-				transition: opacity 0s 0.15s, height 0s 0.15s;
 			}
 
 			&:after {
@@ -181,21 +181,18 @@
 
 			.btn-label {
 				&.pause {
-					animation: fadeOut 0.15s ease-in both;
-					height: 0;
+					animation: fadeOut 0.15s ease-out both;
 					opacity: 0;
-					transition: height 0s 0.15s, opacity 0s 0.15s;
+					transition: height 0s 0.15s;
 				}
 
 				&.continue {
-					opacity: 1;
-					height: auto;
 					animation: fadeIn 0.15s ease-in both;
-					transition: height 0s, opacity 0s;
+					opacity: 1;
 
 					&:after {
-						margin-left: 14px;
 						content: '\f04b';
+						margin-left: 14px;
 					}
 				}
 			}

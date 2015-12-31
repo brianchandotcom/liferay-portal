@@ -677,7 +677,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoAllPagesCP" />
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
 		<for list="${wikiPageCounterList}" param="entryCount" >
 			<execute macro="WikiPage#addPG">

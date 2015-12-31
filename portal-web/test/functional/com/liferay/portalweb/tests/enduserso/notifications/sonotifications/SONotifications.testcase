@@ -3995,19 +3995,17 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="add" />
 			<var name="contentType" value="Blogs" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="update" />
 			<var name="contentType" value="Blogs" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -4135,19 +4133,17 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="adds" />
 			<var name="contentType" value="Message Boards" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="updates" />
 			<var name="contentType" value="Message Boards" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -4244,10 +4240,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="sends" />
 			<var name="contentType" value="Social Office Announcements" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -4351,19 +4346,17 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="adds" />
 			<var name="contentType" value="Documents and Media" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="updates" />
 			<var name="contentType" value="Documents and Media" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -4489,10 +4482,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="sends" />
 			<var name="contentType" value="Private Messaging" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Email" />
 		</execute>
 
@@ -4503,10 +4495,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="sends" />
 			<var name="contentType" value="Private Messaging" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Email" />
 		</execute>
 
@@ -4610,10 +4601,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="sends" />
 			<var name="contentType" value="Private Messaging" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -4624,10 +4614,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="sends" />
 			<var name="contentType" value="Private Messaging" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -4774,10 +4763,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="comments" />
 			<var name="contentType" value="Microblogs" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -4842,10 +4830,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="comments" />
 			<var name="contentType" value="Microblogs" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -4923,10 +4910,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="comments" />
 			<var name="contentType" value="Microblogs" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -4997,10 +4983,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="sends" />
 			<var name="contentType" value="Social Office Announcements" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -5060,10 +5045,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="assigns" />
 			<var name="contentType" value="Tasks" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -5244,19 +5228,17 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="adds" />
 			<var name="contentType" value="Wiki" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="updates" />
 			<var name="contentType" value="Wiki" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 

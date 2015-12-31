@@ -36,12 +36,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_MY_PROFILE</td>
-	<td>//li[contains(@id,'tabs')]/a[contains(.,'Profile')]</td>
+	<td>//a[contains(@title,'Profile')]//span/*[name()='svg'][contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MY_DASHBOARD</td>
-	<td>//li[contains(@id,'tabs')]/a[contains(.,'Dashboard')]</td>
+	<td>//a[contains(@title,'Dashboard')]//span/*[name()='svg'][contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>

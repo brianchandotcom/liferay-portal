@@ -91,10 +91,9 @@
 
 		<execute macro="IFrame#selectConfigurationFrame" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="adds" />
 			<var name="contentType" value="Documents and Media" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 
@@ -165,10 +164,9 @@
 
 		<execute macro="IFrame#selectConfigurationFrame" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="updates" />
 			<var name="contentType" value="Documents and Media" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 

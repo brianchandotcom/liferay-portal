@@ -1,4 +1,29 @@
 <definition>
+	<command name="disableUserDeliveries">
+		<var name="key_contentType" value="${contentType}" />
+
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="${contentType}" />
+
+		<var name="key_actionType" value="${actionType}" />
+		<var method="StringUtil#replace('${contentType}',' ','-')" name="key_contentType" />
+
+		<if>
+			<equals arg1="${notificationType}" arg2="Website" />
+			<then>
+				<execute function="Click" locator1="Notifications#NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${notificationType}" arg2="Email" />
+			<then>
+				<execute function="Click" locator1="Notifications#NOTIFICATIONS_CONFIGURATION_EMAIL_SWITCH" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+	</command>
+
 	<command name="gotoNotificationDelivery">
 		<execute macro="ProductMenu#gotoUserMyAccount">
 			<var name="portlet" value="Notifications" />
@@ -7,25 +32,6 @@
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
-	</command>
-
-	<command name="setUserDeliveries">
-		<var name="key_actionType" value="${actionType}" />
-		<var name="key_contentType" value="${contentType}" />
-		<var name="key_notificationType" value="${notificationType}" />
-
-		<if>
-			<equals arg1="${enableDelivery}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${enableDelivery}" arg2="false" />
-				<then>
-					<execute function="Uncheck" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
 	</command>
 
 	<command name="tearDownUserDeliveries">
@@ -55,71 +61,86 @@
 
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new blog entry in a blog you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a blog entry you are subscribed to." />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
 		<var name="key_contentType" value="Bookmarks" />
 
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Bookmarks" />
+
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new bookmark in a folder you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a bookmark you are subscribed to." />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
 		<var name="key_contentType" value="Comments" />
 
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Comments" />
+
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a comment to comments you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a comment you are subscribed to." />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
 		<var name="key_contentType" value="Documents and Media" />
 
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Documents and Media" />
+
+		<var method="StringUtil#replace('${key_contentType}',' ','-')" name="key_contentType" />
+
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new document in a folder you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a document you are subscribed to." />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
 		<var name="key_contentType" value="Mentions" />
 
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="mentions you in a blogs entry, a comment, or a message boards message." />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Mentions" />
+
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Mentions you in a blogs entry, comment, or message boards message." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
 		<var name="key_contentType" value="Message Boards" />
 
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Message Boards" />
+
+		<var method="StringUtil#replace('${key_contentType}',' ','-')" name="key_contentType" />
+
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new post in a thread or category you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a post you are subscribed to." />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
+
+		<var name="key_contentType" value="Microblogs" />
+
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Microblogs" />
+
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="comments on a microblog you commented on." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="comments on a microblog you are tagged in." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_3" value1="comments on your microblog." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_4" value1="tags you in a microblog." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="mobile" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
 		<var name="key_contentType" value="Web Content" />
 
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new content in a folder you are subscribed to." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a web content you are subscribed to." />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Web Content" />
+
+		<var method="StringUtil#replace('${key_contentType}',' ','-')" name="key_contentType" />
+
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Adds new web content in a folder you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Updates web content you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
 		<var name="key_contentType" value="Wiki" />
 
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Wiki" />
+
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new wiki page in a wiki you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a wiki page you are subscribed to." />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_1" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1" value1="Email" />
-		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_2" />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2" value1="Website" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 	</command>
 </definition>

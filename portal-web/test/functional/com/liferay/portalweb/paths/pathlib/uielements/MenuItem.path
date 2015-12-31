@@ -744,6 +744,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_GROUP_PAGES_PERMISSIONS</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'User Group Pages Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_GROUPS</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User Groups')]</td>
 	<td></td>

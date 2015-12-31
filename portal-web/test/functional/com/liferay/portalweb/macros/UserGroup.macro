@@ -350,24 +350,24 @@
 		<if>
 			<equals arg1="${userGroupNameVariation}" arg2="Asterik" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No user groups were found." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
 			</then>
 			<elseif>
 				<equals arg1="${userGroupNameVariation}" arg2="Comma" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No user groups were found." />
+					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${userGroupNameVariation}" arg2="Null" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No user groups were found." />
+					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${userGroupNameVariation}" arg2="Number" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No user groups were found." />
+					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
 				</then>
 			</elseif>
 			<else>

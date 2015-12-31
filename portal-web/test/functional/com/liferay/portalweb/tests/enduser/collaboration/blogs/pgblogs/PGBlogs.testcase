@@ -1033,11 +1033,11 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
 		<for list="${blogsEntrySearchResult}" param="searchTerm">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Search Page" />
+			</execute>
+
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1049,11 +1049,11 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
 		<for list="${blogsEntrySearchNoResult}" param="searchTerm">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Search Page" />
+			</execute>
+
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1083,11 +1083,11 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
 		<for list="${blogsEntrySearchResult}" param="searchTerm">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Search Page" />
+			</execute>
+
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1099,11 +1099,11 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
 		<for list="${blogsEntrySearchNoResult}" param="searchTerm">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Search Page" />
+			</execute>
+
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1133,11 +1133,11 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
 		<for list="${blogsEntrySearchResult}" param="searchTerm">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Search Page" />
+			</execute>
+
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1149,11 +1149,11 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
 		<for list="${blogsEntrySearchNoResult}" param="searchTerm">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Search Page" />
+			</execute>
+
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1187,11 +1187,11 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
 		<for list="${blogsEntrySearchResult}" param="searchTerm" >
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Search Page" />
+			</execute>
+
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1203,11 +1203,11 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
 		<for list="${blogsEntrySearchNoResult}" param="searchTerm" >
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Search Page" />
+			</execute>
+
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>

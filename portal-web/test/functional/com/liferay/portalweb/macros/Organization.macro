@@ -444,11 +444,12 @@
 		<if>
 			<equals arg1="${allowManualMembershipManagement}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT" />
+				<execute function="Check#checkToggleSwitch" locator1="Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT" />
 			</then>
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 

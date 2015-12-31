@@ -345,7 +345,8 @@
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="Click" locator1="UserGroups#USER_GROUP_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#SITE_PERMISSIONS" value1="Site Permissions" />
+
+		<execute function="AssertClick" locator1="MenuItem#USER_GROUP_PAGES_PERMISSIONS" value1="User Group Pages Permissions" />
 	</command>
 
 	<command name="gotoWCArticle">

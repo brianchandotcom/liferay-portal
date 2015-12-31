@@ -145,10 +145,9 @@
 
 		<execute macro="IFrame#selectConfigurationFrame" />
 
-		<execute macro="NotificationsPortlet#setUserDeliveries">
+		<execute macro="NotificationsPortlet#disableUserDeliveries">
 			<var name="actionType" value="add" />
 			<var name="contentType" value="Blogs" />
-			<var name="enableDelivery" value="false" />
 			<var name="notificationType" value="Website" />
 		</execute>
 

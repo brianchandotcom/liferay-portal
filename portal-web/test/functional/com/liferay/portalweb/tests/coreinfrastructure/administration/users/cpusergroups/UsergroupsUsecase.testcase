@@ -108,6 +108,7 @@
 		<execute macro="UserGroup#addPageCP">
 			<var name="page" value="Dashboard" />
 			<var name="sitePageName" value="Test User Group Page 1" />
+			<var name="sitePagePrivacy" value="Private" />
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
@@ -138,17 +139,18 @@
 		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="userfn" />
+
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_userScreenName" value="usersn" />
 
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_PAGES" value1="Manage Pages" />
 
-		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+		<var name="key_page" value="Test User Group Page 1" />
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsManagepages#NAVIGATION_MY_DASHBOARD" value1="Dashboard" />
-		<execute function="AssertTextNotEquals" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_EDIT_COG" value1="Test User Group Page 1" />
+		<execute function="AssertElementNotPresent" locator1="ProductMenu#PAGES" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
@@ -168,8 +170,7 @@
 
 		<execute macro="UserBar#gotoDashboard" />
 
-		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_2" value1="Test User Group Page 1" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_1" value1="Test User Group Page 1" />
 
 		<execute macro="User#logoutUserPG" />
 

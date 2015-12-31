@@ -1568,7 +1568,7 @@
 
 				<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${mgDocumentTitle}" />
 
-				<execute function="Click" locator1="Search#SEARCH_BUTTON" />
+				<execute function="Click" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />
 
 				<execute macro="Search#viewSearchResultsPG">
 					<var name="searchAssetTitle1" value="${mgDocumentTitle}" />
@@ -1582,7 +1582,7 @@
 
 					<execute function="Type" locator1="Search#SEARCH_FIELD" value1="asdf" />
 
-					<execute function="Click" locator1="Search#SEARCH_BUTTON" />
+					<execute function="Click" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />
 
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No results were found that matched the keywords: asdf." />
 				</then>
@@ -1595,7 +1595,7 @@
 
 					<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${quotes}" />
 
-					<execute function="Click" locator1="Search#SEARCH_BUTTON" />
+					<execute function="Click" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />
 
 					<execute macro="Search#viewSearchResultsPG">
 						<var name="searchAssetTitle1" value="${mgDocumentTitle}" />

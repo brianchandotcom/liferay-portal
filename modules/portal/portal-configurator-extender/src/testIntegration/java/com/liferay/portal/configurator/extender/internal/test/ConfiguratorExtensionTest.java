@@ -152,9 +152,12 @@ public class ConfiguratorExtensionTest {
 			_configurationAdmin.createFactoryConfiguration(
 				"test.factory.pid", null);
 
-		configuration.update(new Hashtable<String, Object>() { {
-			put("key", "value");
-		}});
+		configuration.update(
+			new Hashtable<String, Object>() {
+				{
+					put("key", "value");
+				}
+			});
 
 		_startExtension(
 			"aBundle",
@@ -250,9 +253,12 @@ public class ConfiguratorExtensionTest {
 
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			"test.pid", null);
-		configuration.update(new Hashtable<String, Object>() { {
-			put("key", "value");
-		}});
+		configuration.update(
+			new Hashtable<String, Object>() {
+				{
+					put("key", "value");
+				}
+			});
 
 		_startExtension(
 			"aBundle",
@@ -397,20 +403,21 @@ public class ConfiguratorExtensionTest {
 					sfncc._factoryPid, sfncc._pid,
 					new Supplier<Dictionary<String, Object>>() {
 
-					@Override
-					public Dictionary<String, Object> get() {
-						try {
-							Dictionary<?, ?> properties = PropertiesUtil.load(
-								sfncc.getInputStream(), "UTF-8");
+						@Override
+						public Dictionary<String, Object> get() {
+							try {
+								Dictionary<?, ?> properties =
+									PropertiesUtil.load(
+										sfncc.getInputStream(), "UTF-8");
 
-							return (Dictionary<String, Object>)properties;
+								return (Dictionary<String, Object>)properties;
+							}
+							catch (IOException e) {
+								throw new RuntimeException(e);
+							}
 						}
-						catch (IOException e) {
-							throw new RuntimeException(e);
-						}
-					}
 
-				});
+					});
 			}
 		}
 

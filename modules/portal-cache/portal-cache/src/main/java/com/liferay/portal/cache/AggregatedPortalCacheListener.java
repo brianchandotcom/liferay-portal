@@ -79,7 +79,7 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		throws PortalCacheException {
 
 		for (Map.Entry<PortalCacheListener<K, V>, PortalCacheListenerScope>
-			entry : _portalCacheListeners.entrySet()) {
+				entry : _portalCacheListeners.entrySet()) {
 
 			PortalCacheListener<K, V> portalCacheListener = entry.getKey();
 
@@ -96,7 +96,7 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		throws PortalCacheException {
 
 		for (Map.Entry<PortalCacheListener<K, V>, PortalCacheListenerScope>
-			entry : _portalCacheListeners.entrySet()) {
+				entry : _portalCacheListeners.entrySet()) {
 
 			PortalCacheListener<K, V> portalCacheListener = entry.getKey();
 

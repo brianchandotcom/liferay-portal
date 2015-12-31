@@ -74,9 +74,9 @@ public abstract class BaseNotificationSender implements NotificationSender {
 		throws Exception;
 
 	protected Map<NotificationReceptionType, Set<NotificationRecipient>>
-		getNotificationRecipientsMap(
-			List<KaleoNotificationRecipient> kaleoNotificationRecipients,
-			ExecutionContext executionContext)
+			getNotificationRecipientsMap(
+				List<KaleoNotificationRecipient> kaleoNotificationRecipients,
+				ExecutionContext executionContext)
 		throws Exception {
 
 		Map<NotificationReceptionType, Set<NotificationRecipient>>

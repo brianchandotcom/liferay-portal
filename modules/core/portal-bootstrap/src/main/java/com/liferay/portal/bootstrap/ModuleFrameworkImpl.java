@@ -746,20 +746,20 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
 					_framework.getBundleContext(), Bundle.ACTIVE, null) {
 
-						@Override
-						public Void addingBundle(
-							Bundle trackedBundle, BundleEvent bundleEvent) {
+					@Override
+					public Void addingBundle(
+						Bundle trackedBundle, BundleEvent bundleEvent) {
 
-							if (trackedBundle == bundle) {
-								countDownLatch.countDown();
+						if (trackedBundle == bundle) {
+							countDownLatch.countDown();
 
-								close();
-							}
-
-							return null;
+							close();
 						}
 
-					};
+						return null;
+					}
+
+				};
 
 				bundleTracker.open();
 

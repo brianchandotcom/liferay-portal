@@ -93,7 +93,7 @@ public class GitUpToDateCacheTask extends Task {
 				cacheFile.deleteOnExit();
 
 				try (OutputStream outputStream = new FileOutputStream(
-					cacheFile)) {
+						cacheFile)) {
 
 					properties.store(outputStream, null);
 				}
@@ -122,7 +122,7 @@ public class GitUpToDateCacheTask extends Task {
 
 	protected String getModuleSnapshotGitHash(Path path) throws IOException {
 		try (InputStream inputStream = Files.newInputStream(
-			path.resolve(_snapshotFileName))) {
+				path.resolve(_snapshotFileName))) {
 
 			Properties properties = new Properties();
 

@@ -70,7 +70,7 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 	public ObjectInstance register(
 			String objectNameCacheKey, Object object, ObjectName objectName)
 		throws InstanceAlreadyExistsException, MBeanRegistrationException,
-			NotCompliantMBeanException {
+			   NotCompliantMBeanException {
 
 		ObjectInstance objectInstance = _mBeanServer.registerMBean(
 			object, objectName);

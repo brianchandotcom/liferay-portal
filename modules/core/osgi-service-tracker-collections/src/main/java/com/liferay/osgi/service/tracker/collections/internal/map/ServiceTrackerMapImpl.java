@@ -280,12 +280,12 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 				(ServiceReference)serviceReference,
 				new ServiceReferenceMapper.Emitter<K>() {
 
-				@Override
-				public void emit(K key) {
-					storeKey(key, keyedServiceReferenceServiceTuple);
-				}
+					@Override
+					public void emit(K key) {
+						storeKey(key, keyedServiceReferenceServiceTuple);
+					}
 
-			});
+				});
 		}
 
 		@Override

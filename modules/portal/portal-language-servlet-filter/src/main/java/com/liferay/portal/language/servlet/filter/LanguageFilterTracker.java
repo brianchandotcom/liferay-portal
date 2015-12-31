@@ -78,7 +78,7 @@ public class LanguageFilterTracker {
 						"Language Filter");
 					properties.put(
 						HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
-							new String[] {"*.css", "*.js"});
+						new String[] {"*.css", "*.js"});
 
 					return bundleContext.registerService(
 						Filter.class, filter, properties);

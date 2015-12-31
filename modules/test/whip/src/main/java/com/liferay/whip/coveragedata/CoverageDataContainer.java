@@ -25,8 +25,8 @@ import java.util.concurrent.ConcurrentMap;
  * @author Shuyang Zhou
  */
 public abstract class CoverageDataContainer
-		<K, V extends CoverageData<V>, T extends CoverageDataContainer<K, V, T>>
-	implements CoverageData<T>, Serializable {
+	<K, V extends CoverageData<V>, T extends CoverageDataContainer<K, V, T>>
+		implements CoverageData<T>, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {

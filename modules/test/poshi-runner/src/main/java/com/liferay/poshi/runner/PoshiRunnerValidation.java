@@ -213,7 +213,7 @@ public class PoshiRunnerValidation {
 				new Exception(
 					"Invalid " + classType + " command " + classCommandName +
 						"\n" + filePath + ":" +
-						element.attributeValue("line-number")));
+							element.attributeValue("line-number")));
 		}
 	}
 
@@ -416,7 +416,7 @@ public class PoshiRunnerValidation {
 				new Exception(
 					"Missing " + possibleElementNames + " element\n" +
 						filePath + ":" +
-						element.attributeValue("line-number")));
+							element.attributeValue("line-number")));
 		}
 	}
 
@@ -688,7 +688,7 @@ public class PoshiRunnerValidation {
 						new Exception(
 							"Invalid path locator " + locator + "\n" +
 								filePath + ":" +
-								element.attributeValue("line-number")));
+									element.attributeValue("line-number")));
 				}
 			}
 		}
@@ -884,7 +884,7 @@ public class PoshiRunnerValidation {
 						new Exception(
 							"Missing or invalid if condition element\n" +
 								filePath + ":" +
-								element.attributeValue("line-number")));
+									element.attributeValue("line-number")));
 				}
 			}
 			else if (childElementName.equals("else")) {
@@ -910,7 +910,7 @@ public class PoshiRunnerValidation {
 					new Exception(
 						"Invalid " + childElementName + " element\n" +
 							filePath + ":" +
-							childElement.attributeValue("line-number")));
+								childElement.attributeValue("line-number")));
 			}
 		}
 	}
@@ -939,7 +939,7 @@ public class PoshiRunnerValidation {
 					new Exception(
 						"Invalid " + childElementName + " element\n" +
 							filePath + ":" +
-							childElement.attributeValue("line-number")));
+								childElement.attributeValue("line-number")));
 			}
 
 			if (childElementName.equals("command")) {
@@ -1145,7 +1145,7 @@ public class PoshiRunnerValidation {
 				new Exception(
 					"Thead class name does not match file name\n" +
 						filePath + ":" +
-						trElement.attributeValue("line-number")));
+							trElement.attributeValue("line-number")));
 		}
 
 		Element headElement = element.element("head");
@@ -1230,7 +1230,7 @@ public class PoshiRunnerValidation {
 					new Exception(
 						"Missing " + requiredAttributeName + " attribute\n" +
 							filePath + ":" +
-							element.attributeValue("line-number")));
+								element.attributeValue("line-number")));
 			}
 		}
 	}
@@ -1255,7 +1255,7 @@ public class PoshiRunnerValidation {
 				new Exception(
 					"Missing required " + requiredElementName +
 						" child element\n" + filePath + ":" +
-						element.attributeValue("line-number")));
+							element.attributeValue("line-number")));
 		}
 	}
 
@@ -1370,7 +1370,8 @@ public class PoshiRunnerValidation {
 						new Exception(
 							"Duplicate property name " + propertyName + "\n" +
 								filePath + ":" +
-								childElement.attributeValue("line-number")));
+									childElement.attributeValue(
+										"line-number")));
 				}
 			}
 			else if (childElementName.equals("set-up") ||
@@ -1530,7 +1531,7 @@ public class PoshiRunnerValidation {
 						new Exception(
 							"Missing while condition element\n" +
 								filePath + ":" +
-								element.attributeValue("line-number")));
+									element.attributeValue("line-number")));
 				}
 			}
 			else if (childElementName.equals("then")) {
@@ -1544,7 +1545,7 @@ public class PoshiRunnerValidation {
 					new Exception(
 						"Invalid " + childElementName + " element\n" +
 							filePath + ":" +
-							childElement.attributeValue("line-number")));
+								childElement.attributeValue("line-number")));
 			}
 		}
 	}

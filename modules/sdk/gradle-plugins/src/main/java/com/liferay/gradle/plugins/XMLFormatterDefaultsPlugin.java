@@ -55,12 +55,12 @@ public class XMLFormatterDefaultsPlugin
 		formatXMLTask.source(
 			new Callable<File>() {
 
-			@Override
-			public File call() throws Exception {
-				return buildWSDLTask.getInputDir();
-			}
+				@Override
+				public File call() throws Exception {
+					return buildWSDLTask.getInputDir();
+				}
 
-		});
+			});
 
 		return formatXMLTask;
 	}

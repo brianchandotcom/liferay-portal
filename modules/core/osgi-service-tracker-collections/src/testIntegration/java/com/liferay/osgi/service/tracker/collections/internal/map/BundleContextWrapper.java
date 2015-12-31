@@ -149,7 +149,7 @@ public class BundleContextWrapper implements BundleContext {
 	public Map<ServiceReference<?>, AtomicInteger>
 		getServiceReferenceCountsMap() {
 
-			return _serviceReferenceCountsMap;
+		return _serviceReferenceCountsMap;
 	}
 
 	@Override

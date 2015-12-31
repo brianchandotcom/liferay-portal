@@ -53,8 +53,8 @@ public class JenkinsResultsParserUtilTest
 		Assert.assertEquals(
 			"cloud-10-50-0-47,cloud-10-50-0-0,cloud-10-50-0-1," +
 				"cloud-10-50-0-2,cloud-10-50-0-49,cloud-10-50-0-50",
-				JenkinsResultsParserUtil.expandSlaveRange(
-					"cloud-10-50-0-47, cloud-10-50-0-0..2, " +
+			JenkinsResultsParserUtil.expandSlaveRange(
+				"cloud-10-50-0-47, cloud-10-50-0-0..2, " +
 					"cloud-10-50-0-49..50"));
 	}
 

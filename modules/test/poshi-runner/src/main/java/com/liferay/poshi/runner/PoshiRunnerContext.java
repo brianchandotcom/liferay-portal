@@ -894,7 +894,7 @@ public class PoshiRunnerContext {
 
 				_commandReturns.put(
 					classType + "#" + classCommandName,
-						_getCommandReturns(commandElement));
+					_getCommandReturns(commandElement));
 
 				if (Validator.equals(classType, "test-case") &&
 					Validator.isNotNull(

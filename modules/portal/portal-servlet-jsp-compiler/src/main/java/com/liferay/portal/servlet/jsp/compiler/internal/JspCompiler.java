@@ -104,7 +104,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 
 		try (JavaFileManager javaFileManager = getJavaFileManager(
-			standardJavaFileManager)) {
+				standardJavaFileManager)) {
 
 			CompilationTask compilationTask = javaCompiler.getTask(
 				null, javaFileManager, diagnosticCollector, options, null,

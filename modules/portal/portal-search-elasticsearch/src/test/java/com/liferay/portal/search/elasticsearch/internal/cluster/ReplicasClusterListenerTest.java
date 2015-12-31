@@ -127,8 +127,9 @@ public class ReplicasClusterListenerTest {
 		Mockito.doThrow(
 			throwable
 		).when(
-			_replicasManager).updateNumberOfReplicas(
-				Mockito.anyInt(), (String[])Mockito.anyVararg()
+			_replicasManager
+		).updateNumberOfReplicas(
+			Mockito.anyInt(), (String[])Mockito.anyVararg()
 		);
 
 		try (CaptureHandler captureHandler =

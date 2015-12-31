@@ -68,7 +68,7 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 
 	private Object _invokeConfigurationOverride(Method method, Object[] args)
 		throws IllegalAccessException, InvocationTargetException,
-			NoSuchMethodException {
+			   NoSuchMethodException {
 
 		Class<?> clazz = _configurationOverrideInstance.getClass();
 
@@ -79,7 +79,7 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 
 	private Object _invokeTypedSettings(Method method)
 		throws NoSuchMethodException, IllegalAccessException,
-			InvocationTargetException, InstantiationException {
+			   InvocationTargetException, InstantiationException {
 
 		Class<?> returnType = method.getReturnType();
 

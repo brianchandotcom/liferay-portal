@@ -172,7 +172,7 @@ public class FailureMessageUtil {
 		Pattern.compile(
 			"(?<snippet>^\\s+\\[exec\\] " +
 				"com.liferay.source.formatter.SourceFormatterTest > " +
-				"testSourceFormatter FAILED.*?)^\\s+\\[exec\\]\\s+\\:",
+					"testSourceFormatter FAILED.*?)^\\s+\\[exec\\]\\s+\\:",
 			Pattern.DOTALL | Pattern.MULTILINE)
 	};
 	private static final Pattern _pattern = Pattern.compile(

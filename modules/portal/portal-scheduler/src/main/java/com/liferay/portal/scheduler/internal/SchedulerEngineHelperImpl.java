@@ -983,8 +983,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>
 			_serviceRegistrations = new HashMap<>();
 	private volatile ServiceTracker
-			<SchedulerEventMessageListener, SchedulerEventMessageListener>
-		_serviceTracker;
+		<SchedulerEventMessageListener, SchedulerEventMessageListener>
+			_serviceTracker;
 
 	private class SchedulerEventMessageListenerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

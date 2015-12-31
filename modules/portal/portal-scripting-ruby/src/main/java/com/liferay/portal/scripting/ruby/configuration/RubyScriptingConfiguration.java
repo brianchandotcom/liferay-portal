@@ -42,7 +42,7 @@ public interface RubyScriptingConfiguration {
 	@Meta.AD(
 		deflt =
 			"classpath:/META-INF/jruby.home/lib/ruby/2.0," +
-			"classpath:/META-INF/jruby.home/lib/ruby/shared,",
+				"classpath:/META-INF/jruby.home/lib/ruby/shared,",
 		required = false
 	)
 	public String loadPaths();

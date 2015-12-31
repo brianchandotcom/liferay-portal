@@ -50,6 +50,7 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
@@ -124,10 +125,12 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return _configurationScopeMappings;
 	}
 
+	@Input
 	public String getMavenExecutable() {
 		return GradleUtil.toString(_mavenExecutable);
 	}
 
+	@Input
 	public String getMavenVersion() {
 		return GradleUtil.toString(_mavenVersion);
 	}
@@ -137,14 +140,17 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
+	@Input
 	public String getPomArtifactId() {
 		return GradleUtil.toString(_pomArtifactId);
 	}
 
+	@Input
 	public String getPomGroupId() {
 		return GradleUtil.toString(_pomGroupId);
 	}
 
+	@Input
 	public String getPomVersion() {
 		return GradleUtil.toString(_pomVersion);
 	}
@@ -154,6 +160,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}
 
+	@Input
 	public boolean isUseSetterComments() {
 		return _useSetterComments;
 	}

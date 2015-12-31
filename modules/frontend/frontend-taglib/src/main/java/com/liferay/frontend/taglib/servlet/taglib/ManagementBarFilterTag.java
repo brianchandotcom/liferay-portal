@@ -86,7 +86,7 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 			"liferay-frontend:management-bar-filter:label", _label);
 		request.setAttribute(
 			"liferay-frontend:management-bar-filter:managementBarFilterItems",
-				_managementBarFilterItems);
+			_managementBarFilterItems);
 		request.setAttribute(
 			"liferay-frontend:management-bar-filter:value", _value);
 	}

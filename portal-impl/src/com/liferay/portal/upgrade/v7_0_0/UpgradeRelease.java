@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,13 +56,13 @@ public class UpgradeRelease extends UpgradeProcess {
 	protected String toSchemaVersion(String buildNumber) {
 		char[] chars = buildNumber.toCharArray();
 
-		StringBundler sb = new StringBundler(2 * chars.length - 1);
+		StringBuilder sb = new StringBuilder(2 * chars.length - 1);
 
 		int i = 0;
 
 		for (; i < chars.length - 1; i++) {
 			sb.append(chars[i]);
-			sb.append(".");
+			sb.append('.');
 		}
 
 		sb.append(chars[i]);

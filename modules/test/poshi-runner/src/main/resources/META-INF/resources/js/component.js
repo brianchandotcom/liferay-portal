@@ -948,14 +948,19 @@ YUI.add(
 						var instance = this;
 
 						var commandLogId = instance.get(STR_COMMAND_LOG_ID);
-
 						var sidebar = instance.get(STR_SIDEBAR);
 
 						var commandLogNode = sidebar.one('.command-log[data-logId="' + commandLogId + '"]');
 
-						commandLogNode.toggleClass('paused');
+						if (commandLogNode) {
+							commandLogNode.toggleClass('paused');
+						}
 
-						sidebar.one('.btn-pause').toggleClass(CSS_TOGGLE);
+						var pauseBtn = sidebar.one('.btn-pause');
+
+						if (pauseBtn) {
+							pauseBtn.toggleClass(CSS_TOGGLE);
+						}
 
 						instance.set(STR_PAUSED, !instance.get(STR_PAUSED));
 					},

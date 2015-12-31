@@ -11,6 +11,10 @@
 	padding: 0;
 	transition: height 0.5s ease-in-out;
 
+	&.running {
+		height: calc(100% - 80px);
+	}
+
 	.status div {
 		display: inline;
 	}

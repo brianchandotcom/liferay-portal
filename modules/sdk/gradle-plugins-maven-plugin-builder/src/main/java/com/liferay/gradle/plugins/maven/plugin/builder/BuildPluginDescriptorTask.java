@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.maven.plugin.builder;
 
 import com.liferay.gradle.plugins.maven.plugin.builder.util.XMLUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -46,7 +47,10 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
@@ -61,7 +65,11 @@ import org.w3c.dom.Element;
 public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public BuildPluginDescriptorTask() {
-		_project = getProject();
+		_configurationScopeMappings.put(
+			JavaPlugin.COMPILE_CONFIGURATION_NAME,
+			Conf2ScopeMappingContainer.COMPILE);
+		_configurationScopeMappings.put(
+			"provided", Conf2ScopeMappingContainer.PROVIDED);
 
 		if (OSDetector.isWindows()) {
 			_mavenExecutable = "mvn.cmd";
@@ -73,7 +81,9 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	@TaskAction
 	public void buildPluginDescriptor() {
-		File pomFile = _project.file(System.currentTimeMillis() + ".xml");
+		Project project = getProject();
+
+		File pomFile = project.file(System.currentTimeMillis() + ".xml");
 		File preparedSourceDir = null;
 
 		try {
@@ -93,10 +103,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		}
 		finally {
 			if (preparedSourceDir != null) {
-				_project.delete(preparedSourceDir);
+				project.delete(preparedSourceDir);
 			}
 
-			_project.delete(pomFile);
+			project.delete(pomFile);
 		}
 	}
 
@@ -108,76 +118,82 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	@InputDirectory
 	public File getClassesDir() {
-		return _classesDir;
+		return GradleUtil.toFile(getProject(), _classesDir);
 	}
 
 	public Map<String, String> getConfigurationScopeMappings() {
 		return _configurationScopeMappings;
 	}
 
+	@Input
 	public String getMavenExecutable() {
-		return _mavenExecutable;
+		return GradleUtil.toString(_mavenExecutable);
 	}
 
+	@Input
 	public String getMavenVersion() {
-		return _mavenVersion;
+		return GradleUtil.toString(_mavenVersion);
 	}
 
 	@OutputDirectory
 	public File getOutputDir() {
-		return _outputDir;
+		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
+	@Input
 	public String getPomArtifactId() {
-		return _pomArtifactId;
+		return GradleUtil.toString(_pomArtifactId);
 	}
 
+	@Input
 	public String getPomGroupId() {
-		return _pomGroupId;
+		return GradleUtil.toString(_pomGroupId);
 	}
 
+	@Input
 	public String getPomVersion() {
-		return _pomVersion;
+		return GradleUtil.toString(_pomVersion);
 	}
 
 	@InputDirectory
 	public File getSourceDir() {
-		return _sourceDir;
+		return GradleUtil.toFile(getProject(), _sourceDir);
 	}
 
+	@Input
 	public boolean isUseSetterComments() {
 		return _useSetterComments;
 	}
 
-	public void setClassesDir(File classesDir) {
+	public void setClassesDir(Object classesDir) {
 		_classesDir = classesDir;
 	}
 
-	public void setMavenExecutable(String mavenExecutable) {
+	public void setMavenExecutable(Object mavenExecutable) {
 		_mavenExecutable = mavenExecutable;
 	}
 
-	public void setMavenVersion(String mavenVersion) {
+	public void setMavenVersion(Object mavenVersion) {
 		_mavenVersion = mavenVersion;
 	}
 
-	public void setOutputDir(File outputDir) {
+	public void setOutputDir(Object outputDir) {
 		_outputDir = outputDir;
 	}
 
-	public void setPomArtifactId(String pomArtifactId) {
+	public void setPomArtifactId(Object pomArtifactId) {
 		_pomArtifactId = pomArtifactId;
 	}
 
-	public void setPomGroupId(String pomGroupId) {
+	public void setPomGroupId(Object pomGroupId) {
 		_pomGroupId = pomGroupId;
 	}
 
-	public void setPomVersion(String pomVersion) {
+	public void setPomVersion(Object pomVersion) {
 		_pomVersion = pomVersion;
 	}
 
-	public void setSourceDir(File sourceDir) {
+	public void setSourceDir(Object sourceDir) {
 		_sourceDir = sourceDir;
 	}
 
@@ -189,8 +205,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		Document doc, Element dependenciesEl, String configurationName,
 		String scope) {
 
+		Project project = getProject();
+
 		ConfigurationContainer configurationContainer =
-			_project.getConfigurations();
+			project.getConfigurations();
 
 		Configuration configuration = configurationContainer.findByName(
 			configurationName);
@@ -217,7 +235,9 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	protected void buildPluginDescriptor(final File pomFile) throws Exception {
-		_project.exec(
+		final Project project = getProject();
+
+		project.exec(
 			new Action<ExecSpec>() {
 
 				@Override
@@ -227,7 +247,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 					execSpec.args("-e");
 
 					execSpec.args("-f");
-					execSpec.args(_project.relativePath(pomFile));
+					execSpec.args(project.relativePath(pomFile));
 
 					execSpec.args("-Dencoding=UTF-8");
 
@@ -236,7 +256,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 							getMavenVersion() + ":descriptor");
 
 					execSpec.setExecutable(getMavenExecutable());
-					execSpec.setWorkingDir(_project.getProjectDir());
+					execSpec.setWorkingDir(project.getProjectDir());
 				}
 
 			});
@@ -244,12 +264,14 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		File dir = new File(getClassesDir(), "META-INF/maven");
 		File outputDir = getOutputDir();
 
-		_project.delete(outputDir);
+		project.delete(outputDir);
 
 		Files.move(dir.toPath(), outputDir.toPath());
 	}
 
 	protected void buildPomFile(File pomFile, File sourceDir) throws Exception {
+		Project project = getProject();
+
 		if (sourceDir == null) {
 			sourceDir = getSourceDir();
 		}
@@ -278,10 +300,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		XMLUtil.appendElement(
 			document, buildElement, "outputDirectory",
-			_project.relativePath(getClassesDir()));
+			project.relativePath(getClassesDir()));
 		XMLUtil.appendElement(
 			document, buildElement, "sourceDirectory",
-			_project.relativePath(sourceDir));
+			project.relativePath(sourceDir));
 
 		Element dependenciesElement = document.createElement("dependencies");
 
@@ -368,6 +390,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	protected void prepareSources(final File preparedSourceDir)
 		throws Exception {
 
+		Project project = getProject();
+
 		Closure<Void> closure = new Closure<Void>(null) {
 
 			@SuppressWarnings("unused")
@@ -379,7 +403,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		};
 
-		_project.copy(closure);
+		project.copy(closure);
 
 		JavaDocBuilder javaDocBuilder = new JavaDocBuilder();
 
@@ -390,17 +414,16 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		}
 	}
 
-	private File _classesDir;
+	private Object _classesDir;
 	private final Map<String, String> _configurationScopeMappings =
 		new HashMap<>();
-	private String _mavenExecutable;
-	private String _mavenVersion = "3.4";
-	private File _outputDir;
-	private String _pomArtifactId;
-	private String _pomGroupId;
-	private String _pomVersion;
-	private final Project _project;
-	private File _sourceDir;
+	private Object _mavenExecutable;
+	private Object _mavenVersion = "3.4";
+	private Object _outputDir;
+	private Object _pomArtifactId;
+	private Object _pomGroupId;
+	private Object _pomVersion;
+	private Object _sourceDir;
 	private boolean _useSetterComments = true;
 
 }

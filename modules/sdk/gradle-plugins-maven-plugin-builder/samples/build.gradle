@@ -11,7 +11,6 @@ buildscript {
 
 apply plugin: "com.liferay.maven.plugin.builder"
 apply plugin: "eclipse"
-apply plugin: "java"
 
 dependencies {
 	compile group: "org.apache.maven", name: "maven-plugin-api", version: "2.0"

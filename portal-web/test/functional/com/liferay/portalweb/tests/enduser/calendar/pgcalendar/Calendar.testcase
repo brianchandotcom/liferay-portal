@@ -2964,6 +2964,151 @@
 		</execute>
 	</command>
 
+	<command name="EditEventAndViewRSVP" priority="4">
+		<description message="This is a use case for LPS-59097." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#addRegular">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
+			<var name="pageName" value="${pageName}" />
+			<var name="specificOptionSetValue" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#hideCurrentSiteCalendar" />
+
+		<execute macro="CalendarEvent#addRSVP">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="rsvp" value="Yes" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewRSVP">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="rsvp" value="Yes" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#showCurrentSiteCalendar" />
+
+		<execute macro="Calendar#hideMyCalendarsCalendar" />
+
+		<execute macro="CalendarNavigator#gotoEditEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+		</execute>
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="10:00 AM" />
+			<var name="startDateTime" value="06:00 AM" />
+		</execute>
+
+		<execute macro="CalendarEvent#publishWithUserNotification" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#showMyCalendarsCalendar" />
+
+		<execute macro="Calendar#hideCurrentSiteCalendar" />
+
+		<execute macro="CalendarScheduler#viewNoRSVP">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addRSVP">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="rsvp" value="Yes" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#showCurrentSiteCalendar" />
+
+		<execute macro="Calendar#hideMyCalendarsCalendar" />
+
+		<execute macro="CalendarScheduler#gotoEditSpecific">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Edited Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#publishWithUserNotification" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#showMyCalendarsCalendar" />
+
+		<execute macro="Calendar#hideCurrentSiteCalendar" />
+
+		<execute macro="CalendarScheduler#viewRSVP">
+			<var name="eventTitle" value="Edited Event Title" />
+			<var name="rsvp" value="Yes" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#showCurrentSiteCalendar" />
+
+		<execute macro="Calendar#hideMyCalendarsCalendar" />
+
+		<execute macro="CalendarScheduler#gotoEditSpecific">
+			<var name="eventTitle" value="Edited Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#setDates">
+			<var name="endDate" value="12/29/2015" />
+			<var name="startDate" value="12/29/2015" />
+		</execute>
+
+		<execute macro="CalendarEvent#publishWithUserNotification" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoMonthViaSmallCalendar">
+			<var name="dateMonth" value="December 2015" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoSpecificBusyDayViaSmallCalendar">
+			<var name="dateNumber" value="29" />
+		</execute>
+
+		<execute macro="Calendar#showMyCalendarsCalendar" />
+
+		<execute macro="Calendar#hideCurrentSiteCalendar" />
+
+		<execute macro="CalendarScheduler#viewNoRSVP">
+			<var name="eventTitle" value="Edited Event Title" />
+		</execute>
+	</command>
+
 	<command name="EditInviteEmailTemplateForCalendarResourceCalendar" priority="3">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="calendarType" value="Other Calendars" />

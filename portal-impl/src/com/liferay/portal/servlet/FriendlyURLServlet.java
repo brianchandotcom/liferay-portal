@@ -399,6 +399,10 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		Locale i18nLocale = LanguageUtil.getLocale(i18nLanguageId);
 
+		if (i18nLocale == null) {
+			i18nLocale = LocaleUtil.fromLanguageId(i18nLanguageId, true, false);
+		}
+
 		if (LanguageUtil.isAvailableLocale(groupId, i18nLocale)) {
 			return false;
 		}

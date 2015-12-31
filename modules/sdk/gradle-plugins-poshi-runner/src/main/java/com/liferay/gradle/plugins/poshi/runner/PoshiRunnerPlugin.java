@@ -272,7 +272,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 					}
 				}
 
-		});
+			});
 
 		return test;
 	}

@@ -182,7 +182,7 @@ public class NodePlugin implements Plugin<Project> {
 					return project.getDescription();
 				}
 
-		});
+			});
 	}
 
 	protected void configureTaskPublishNodeModuleName(

@@ -289,19 +289,19 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 						@Override
 						public void execute(
 							DependencyResolveDetails dependencyResolveDetails) {
-								ModuleVersionSelector moduleVersionSelector =
-									dependencyResolveDetails.getRequested();
 
-								String group = moduleVersionSelector.getGroup();
-								String version =
-									moduleVersionSelector.getVersion();
+							ModuleVersionSelector moduleVersionSelector =
+								dependencyResolveDetails.getRequested();
 
-								if (group.equals("com.liferay.portal") &&
-									version.equals("default")) {
+							String group = moduleVersionSelector.getGroup();
+							String version = moduleVersionSelector.getVersion();
 
-									dependencyResolveDetails.useVersion(
-										liferayExtension.getPortalVersion());
-								}
+							if (group.equals("com.liferay.portal") &&
+								version.equals("default")) {
+
+								dependencyResolveDetails.useVersion(
+									liferayExtension.getPortalVersion());
+							}
 						}
 
 					});

@@ -595,6 +595,18 @@
 		<execute function="AssertConsoleTextNotPresent" value1="ClassNotFoundException" />
 	</command>
 
+	<command name="hideCurrentSiteCalendar">
+		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
+
+		<execute function="AssertElementPresent" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_HIDDEN" />
+	</command>
+
+	<command name="hideMyCalendarsCalendar">
+		<execute function="Click" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
+
+		<execute function="AssertElementPresent" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_HIDDEN" />
+	</command>
+
 	<command name="importCalendarFile">
 		<var name="key_calendarName" value="${calendarName}" />
 
@@ -669,6 +681,14 @@
 
 	<command name="searchOtherCalendars">
 		<execute function="Type" locator1="Calendar#OTHER_CALENDARS_SEARCH" value1="${searchValue}" />
+	</command>
+
+	<command name="showCurrentSiteCalendar">
+		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_HIDDEN" />
+	</command>
+
+	<command name="showMyCalendarsCalendar">
+		<execute function="Click" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_HIDDEN" />
 	</command>
 
 	<command name="tearDown">

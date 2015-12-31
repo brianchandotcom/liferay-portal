@@ -40,6 +40,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -66,7 +67,9 @@ import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
@@ -340,6 +343,22 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 	}
 
+	protected void configureBasePlugin(Project project, File portalRootDir) {
+		if (portalRootDir == null) {
+			return;
+		}
+
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		File dir = new File(portalRootDir, "tools/sdk/dist");
+
+		String dirName = FileUtil.relativize(dir, project.getBuildDir());
+
+		basePluginConvention.setDistsDirName(dirName);
+		basePluginConvention.setLibsDirName(dirName);
+	}
+
 	protected void configureConfigurations(Project project) {
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
@@ -384,6 +403,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	protected void configureDefaults(
 		final Project project, LiferayPlugin liferayPlugin) {
 
+		final File portalRootDir = getPortalRootDir(project);
 		boolean testProject = isTestProject(project);
 
 		applyPlugins(project);
@@ -407,6 +427,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		addDependenciesTestCompile(project);
 		addTaskJarSources(project, testProject);
 		addTaskZipJavadoc(project);
+		configureBasePlugin(project, portalRootDir);
 		configureConfigurations(project);
 		configureEclipse(project, portalTestConfiguration);
 		configureIdea(project, portalTestConfiguration);
@@ -433,6 +454,21 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				public void execute(BundlePlugin bundlePlugin) {
 					addTaskCopyLibs(project);
 					configureTaskJavadoc(project);
+				}
+
+			});
+
+		withPlugin(
+			project, ServiceBuilderPlugin.class,
+			new Action<ServiceBuilderPlugin>() {
+
+				@Override
+				public void execute(ServiceBuilderPlugin serviceBuilderPlugin) {
+					configureLocalPortalTool(
+						project, portalRootDir,
+						ServiceBuilderPlugin.CONFIGURATION_NAME,
+						ServiceBuilderDefaultsPlugin.PORTAL_TOOL_NAME,
+						"portal-tools-service-builder");
 				}
 
 			});
@@ -498,6 +534,32 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		javaPluginConvention.setTestResultsDirName(
 			FileUtil.relativize(testResultsDir, project.getBuildDir()));
+	}
+
+	protected void configureLocalPortalTool(
+		Project project, File portalRootDir, String configurationName,
+		String portalToolName, String portalToolDirName) {
+
+		if (portalRootDir == null) {
+			return;
+		}
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, configurationName);
+
+		Map<String, String> args = new HashMap<>();
+
+		args.put("group", BasePortalToolDefaultsPlugin.PORTAL_TOOL_GROUP);
+		args.put("module", portalToolName);
+
+		configuration.exclude(args);
+
+		File dir = new File(
+			portalRootDir, "tools/sdk/tmp/portal-tools/" + portalToolDirName);
+
+		FileTree fileTree = FileUtil.getJarsFileTree(project, dir);
+
+		GradleUtil.addDependency(project, configuration.getName(), fileTree);
 	}
 
 	protected void configureMavenConf2ScopeMappings(Project project) {
@@ -798,12 +860,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		Test test = (Test)GradleUtil.getTask(
 			project, JavaPlugin.TEST_TASK_NAME);
 
+		test.jvmArgs(_TEST_JVM_ARGS);
+
 		configureTestLogging(test);
 	}
 
 	protected void configureTaskTestIntegration(Project project) {
 		Test test = (Test)GradleUtil.getTask(
 			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
+
+		test.jvmArgs(_TEST_INTEGRATION_JVM_ARGS);
 
 		configureTestLogging(test);
 
@@ -872,6 +938,26 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return LiferayPlugin.class;
 	}
 
+	protected File getPortalRootDir(Project project) {
+		File dir = project.getRootDir();
+
+		dir = dir.getParentFile();
+
+		while (true) {
+			File portalImplDir = new File(dir, "portal-impl");
+
+			if (portalImplDir.exists()) {
+				return dir;
+			}
+
+			dir = dir.getParentFile();
+
+			if (dir == null) {
+				return null;
+			}
+		}
+	}
+
 	protected boolean isTestProject(Project project) {
 		String projectName = project.getName();
 
@@ -896,5 +982,22 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	private static final String _SNAPSHOT_PROPERTY_NAME = "snapshot";
 
 	private static final String _SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
+
+	private static final Object[] _TEST_INTEGRATION_JVM_ARGS = {
+		"-Xms512m", "-Xmx512m", "-XX:MaxNewSize=32m", "-XX:MaxPermSize=200m",
+		"-XX:MaxTenuringThreshold=0", "-XX:NewSize=32m",
+		"-XX:ParallelGCThreads=2", "-XX:PermSize=200m",
+		"-XX:SurvivorRatio=65536", "-XX:TargetSurvivorRatio=0",
+		"-XX:-UseAdaptiveSizePolicy", "-XX:+UseParallelOldGC"
+	};
+
+	private static final Object[] _TEST_JVM_ARGS = {
+		"-Xms256m", "-Xmx256m", "-XX:MaxNewSize=32m", "-XX:MaxPermSize=64m",
+		"-XX:MaxTenuringThreshold=0", "-XX:NewSize=32m",
+		"-XX:ParallelGCThreads=2", "-XX:PermSize=64m",
+		"-XX:SurvivorRatio=65536", "-XX:TargetSurvivorRatio=0",
+		"-XX:-UseAdaptiveSizePolicy", "-XX:+UseParallelOldGC",
+		"-XX:-UseSplitVerifier"
+	};
 
 }

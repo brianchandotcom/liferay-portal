@@ -233,7 +233,7 @@ public class PoshiRunnerGetterUtil {
 							line = StringUtil.replace(
 								line, matcher.group(),
 								matcher.group() + " line-number=\"" +
-								lineNumber + "\"");
+									lineNumber + "\"");
 
 							break;
 						}
@@ -248,7 +248,7 @@ public class PoshiRunnerGetterUtil {
 						line = StringUtil.replace(
 							line, matcher.group(),
 							matcher.group() + " line-number=\"" +
-							lineNumber + "\"");
+								lineNumber + "\"");
 
 						tagIsReservedTag = true;
 

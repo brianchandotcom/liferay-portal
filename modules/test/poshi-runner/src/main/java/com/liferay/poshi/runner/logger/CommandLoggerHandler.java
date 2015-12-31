@@ -586,7 +586,7 @@ public final class CommandLoggerHandler {
 		WebDriverHelper.saveWebPage(
 			PoshiRunnerGetterUtil.getCanonicalPath(".") + "/test-results/" +
 				testClassCommandName + "/web-pages/index" + errorLinkId +
-				".html",
+					".html",
 			_htmlSource);
 	}
 

@@ -398,7 +398,7 @@ public class LoadBalancerUtil {
 				computerJSONObject = JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(
 						url + "/computer/api/json?pretty&tree=computer" +
-						"[displayName,idle,offline]"),
+							"[displayName,idle,offline]"),
 					false, 5000);
 				queueJSONObject = JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(

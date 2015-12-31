@@ -46,8 +46,8 @@ public class TestItemHelper {
 
 	public void write(String s) throws IOException {
 		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
-			_path, Charset.defaultCharset(), StandardOpenOption.APPEND,
-			StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
+				_path, Charset.defaultCharset(), StandardOpenOption.APPEND,
+				StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
 
 			bufferedWriter.write(s);
 

@@ -55,6 +55,7 @@ import java.io.Writer;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -116,6 +117,21 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		_templateResource = getTemplateResource(templatePath);
 	}
 
+	protected void collectResourceBundles(
+		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
+
+		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+			collectResourceBundles(interfaceClass, resourceBundles, locale);
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, clazz.getClassLoader());
+
+		if (resourceBundle != null) {
+			resourceBundles.add(resourceBundle);
+		}
+	}
+
 	protected String doRender(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
@@ -140,10 +156,17 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		ResourceBundle portalResourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
 
+		List<ResourceBundle> resourceBundles = new ArrayList<>();
+
+		resourceBundles.add(portalResourceBundle);
+
+		collectResourceBundles(getClass(), resourceBundles, locale);
+
+		ResourceBundle[] resourceBundleArray = resourceBundles.toArray(
+			new ResourceBundle[resourceBundles.size()]);
+
 		ResourceBundle resourceBundle = new AggregateResourceBundle(
-			portalResourceBundle,
-			ResourceBundleUtil.getBundle(
-				"content.Language", locale, getClass()));
+			resourceBundleArray);
 
 		stringsMap.put("next", LanguageUtil.get(resourceBundle, "next"));
 		stringsMap.put(

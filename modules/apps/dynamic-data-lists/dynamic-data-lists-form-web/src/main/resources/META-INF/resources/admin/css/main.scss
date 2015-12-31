@@ -65,11 +65,15 @@ $horizontal-spacing: 35px;
 		}
 	}
 
+	.icon-asterisk {
+		margin-left: 4px;
+	}
+
 	.icon-spinner {
 		@include animation(spin 1000ms infinite linear);
 	}
 
-	.form-builder-field-settings-save .icon-spinner {
+	.lfr-ddl-field-settings-save .icon-spinner {
 		display: inline-block;
 		margin: -2px 0 0 4px;
 	}
@@ -91,12 +95,6 @@ $horizontal-spacing: 35px;
 	.liferay-ddm-form-field-checkbox .toggle-switch-handle .toggle-switch-text {
 		margin-left: 6px;
 		text-transform: none;
-	}
-}
-
-@include sm {
-	.lfr-ddl-form-builder-field-types-modal {
-		padding-top: 85px;
 	}
 }
 
@@ -225,6 +223,10 @@ $horizontal-spacing: 35px;
 		outline: none;
 	}
 
+	.form-inline .checkbox label {
+		padding-left: 0;
+	}
+
 	.modal-body {
 		background-color: #FFF;
 		height: 100%;
@@ -247,6 +249,11 @@ $horizontal-spacing: 35px;
 
 		.btn {
 			width: auto;
+		}
+
+		.lfr-ddl-field-settings-confirmation-message {
+			float: left;
+			margin: 13px 20px 0 0;
 		}
 	}
 
@@ -279,6 +286,10 @@ $horizontal-spacing: 35px;
 	}
 
 	.form-builder-field-settings-content {
+		.form-group {
+			margin-bottom: 40px;
+		}
+
 		.has-error .key-value-editor {
 			display: none
 		}
@@ -324,9 +335,22 @@ $horizontal-spacing: 35px;
 			}
 		}
 
-		.liferay-ddm-form-field-key-value .help-block {
-			height: 22px;
-			position: relative;
+		.liferay-ddm-form-field-checkbox, .lfr-ddm-form-field-validation {
+			margin-bottom: 20px;
+
+			.form-group {
+				line-height: 0;
+				margin-bottom: 0;
+			}
+		}
+
+		.liferay-ddm-form-field-key-value {
+			margin-bottom: 20px;
+
+			.help-block {
+				height: 22px;
+				position: relative;
+			}
 		}
 
 		.liferay-ddm-form-field-options {
@@ -440,26 +464,15 @@ $horizontal-spacing: 35px;
 	}
 }
 
-@include sm {
-	.lfr-ddl-field-settings-modal.form-builder-field-settings {
-		height: 670px;
-		padding-top: 85px;
-		width: 390px;
-	}
-}
-
-@include md {
-	.lfr-ddl-field-settings-modal.form-builder-field-settings {
-		height: 676px;
-		width: 720px;
-	}
-}
-
 .lfr-ddl-form-builder-field-types-modal {
-	max-height: 550px;
+	height: 100%;
+	margin: 0;
 	outline: none;
-	padding-top: 73px;
-	width: 500px;
+	width: 100%;
+
+	&.modal-dialog {
+		width: 100%;
+	}
 
 	@include sm {
 		&.modal-dialog {
@@ -752,5 +765,26 @@ $horizontal-spacing: 35px;
 		line-height: 16px;
 		list-style-type: none;
 		padding: 11px 0 11px 0;
+	}
+}
+
+@include md {
+	.lfr-ddl-field-settings-modal.form-builder-field-settings {
+		height: 676px;
+		width: 720px;
+	}
+}
+
+@include sm {
+	.lfr-ddl-field-settings-modal.form-builder-field-settings {
+		height: 670px;
+		padding-top: 85px;
+		width: 390px;
+	}
+
+	.lfr-ddl-form-builder-field-types-modal {
+		max-height: 550px;
+		padding-top: 85px;
+		width: 500px;
 	}
 }

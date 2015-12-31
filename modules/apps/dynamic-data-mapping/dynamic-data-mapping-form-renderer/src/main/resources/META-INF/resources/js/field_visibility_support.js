@@ -12,7 +12,7 @@ AUI.add(
 
 		FieldVisibilitySupport.ATTRS = {
 			visibilityExpression: {
-				value: 'true'
+				value: ''
 			},
 
 			visible: {

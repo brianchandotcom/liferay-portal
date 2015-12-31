@@ -1,13 +1,8 @@
 diff --git a/name/pachler/nio/file/impl/BSDPathWatchService.java b/name/pachler/nio/file/impl/BSDPathWatchService.java
-index 2dca7c2..d9fa9ac 100755
+index 2dca7c2..678e558 100644
 --- a/name/pachler/nio/file/impl/BSDPathWatchService.java
 +++ b/name/pachler/nio/file/impl/BSDPathWatchService.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- /*
-  * Copyright 2008-2011 Uwe Pachler
-  *
-@@ -27,8 +28,10 @@ import java.io.FileNotFoundException;
+@@ -27,8 +27,10 @@ import java.io.FileNotFoundException;
  import java.io.IOException;
  import java.util.HashMap;
  import java.util.HashSet;
@@ -18,7 +13,7 @@ index 2dca7c2..d9fa9ac 100755
  import java.util.Queue;
  import java.util.Set;
  import java.util.concurrent.TimeUnit;
-@@ -175,7 +178,7 @@ public class BSDPathWatchService extends PathWatchService{
+@@ -175,7 +177,7 @@ public class BSDPathWatchService extends PathWatchService{
  		byte[] b = new byte[1];
  		write(closePipeWriteFd, b, 1);
  		synchronized(changeLock){
@@ -27,7 +22,7 @@ index 2dca7c2..d9fa9ac 100755
  			if(eventsAdded)
  				queueKey(pathWatchKey);
  			
-@@ -185,7 +188,7 @@ public class BSDPathWatchService extends PathWatchService{
+@@ -185,7 +187,7 @@ public class BSDPathWatchService extends PathWatchService{
  		}
  	}
  
@@ -36,7 +31,7 @@ index 2dca7c2..d9fa9ac 100755
  		PathImpl pathImpl = (PathImpl)pathWatchKey.getPath();
  		String pathString = pathImpl.getFile().getPath();
  		Integer dirfdInteger = dirs.get(pathString);
-@@ -220,7 +223,10 @@ public class BSDPathWatchService extends PathWatchService{
+@@ -220,7 +222,10 @@ public class BSDPathWatchService extends PathWatchService{
  		if((key.getFlags() & FLAG_FILTER_ENTRY_MODIFY) != 0)
  			--numKeysRequiringPolling;
  		
@@ -48,7 +43,7 @@ index 2dca7c2..d9fa9ac 100755
  		dirs.remove(pathString);
  		
  		return eventAdded;
-@@ -369,13 +375,13 @@ public class BSDPathWatchService extends PathWatchService{
+@@ -369,13 +374,13 @@ public class BSDPathWatchService extends PathWatchService{
  
  						// check if watch key has become invalid
  						if( (fflags & NOTE_DELETE)!=0 || (fflags & NOTE_REVOKE)!=0)
@@ -64,7 +59,7 @@ index 2dca7c2..d9fa9ac 100755
  							}
  						}
  						if(eventsAdded)
-@@ -383,7 +389,16 @@ public class BSDPathWatchService extends PathWatchService{
+@@ -383,7 +388,16 @@ public class BSDPathWatchService extends PathWatchService{
  					}
  				} else if(numKeysRequiringPolling > 0){
  					// if we timed out and we have keys that need to be polled
@@ -82,7 +77,7 @@ index 2dca7c2..d9fa9ac 100755
  						// only poll keys that have the modification flag set -
  						// CREATE/DELETE are flagged in kevent
  						if((key.getFlags() & FLAG_FILTER_ENTRY_MODIFY) == 0)
-@@ -392,7 +407,9 @@ public class BSDPathWatchService extends PathWatchService{
+@@ -392,7 +406,9 @@ public class BSDPathWatchService extends PathWatchService{
  						try {
  							eventsAdded = key.poll();
  						} catch (FileNotFoundException ex) {
@@ -93,16 +88,17 @@ index 2dca7c2..d9fa9ac 100755
  						}
  						if(eventsAdded)
  							queueKey(key);
+@@ -421,3 +437,4 @@ public class BSDPathWatchService extends PathWatchService{
+ 
+ 
+ }
++/* @generated */
+\ No newline at end of file
 diff --git a/name/pachler/nio/file/impl/LinuxPathWatchService.java b/name/pachler/nio/file/impl/LinuxPathWatchService.java
-index c095299..0d8dd15 100755
+index c095299..8539137 100644
 --- a/name/pachler/nio/file/impl/LinuxPathWatchService.java
 +++ b/name/pachler/nio/file/impl/LinuxPathWatchService.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- /*
-  * Copyright 2008-2011 Uwe Pachler
-  *
-@@ -28,6 +29,7 @@ import java.io.File;
+@@ -28,6 +28,7 @@ import java.io.File;
  import java.io.IOException;
  import java.util.HashMap;
  import java.util.HashSet;
@@ -110,7 +106,7 @@ index c095299..0d8dd15 100755
  import java.util.LinkedList;
  import java.util.Map;
  import java.util.Map.Entry;
-@@ -441,15 +443,20 @@ public class LinuxPathWatchService extends PathWatchService
+@@ -441,15 +442,20 @@ public class LinuxPathWatchService extends PathWatchService
  			throw new ClosedWatchServiceException();
  		int wd = -1;
  
@@ -134,3 +130,9 @@ index c095299..0d8dd15 100755
  				break;
  			}
  		}
+@@ -502,3 +508,4 @@ public class LinuxPathWatchService extends PathWatchService
+ 		commandPipeWriteFd = -1;
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

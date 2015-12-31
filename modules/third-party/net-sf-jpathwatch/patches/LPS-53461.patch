@@ -1,8 +1,8 @@
 diff --git a/name/pachler/nio/file/impl/BSDPathWatchService.java b/name/pachler/nio/file/impl/BSDPathWatchService.java
-index d9fa9ac..a79442e 100755
+index 678e558..8b51ca4 100644
 --- a/name/pachler/nio/file/impl/BSDPathWatchService.java
 +++ b/name/pachler/nio/file/impl/BSDPathWatchService.java
-@@ -374,7 +374,7 @@ public class BSDPathWatchService extends PathWatchService{
+@@ -373,7 +373,7 @@ public class BSDPathWatchService extends PathWatchService{
  						boolean eventsAdded;
  
  						// check if watch key has become invalid

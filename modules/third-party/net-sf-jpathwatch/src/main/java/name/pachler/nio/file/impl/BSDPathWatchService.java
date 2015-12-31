@@ -1,4 +1,3 @@
-/* @generated */
 /*
  * Copyright 2008-2011 Uwe Pachler
  *
@@ -438,3 +437,4 @@ public class BSDPathWatchService extends PathWatchService{
 
 
 }
+/* @generated */

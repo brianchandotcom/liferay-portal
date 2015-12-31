@@ -1,4 +1,3 @@
-/* @generated */
 /*
  * Copyright 2008-2011 Uwe Pachler
  *
@@ -509,3 +508,4 @@ public class LinuxPathWatchService extends PathWatchService
 		commandPipeWriteFd = -1;
 	}
 }
+/* @generated */

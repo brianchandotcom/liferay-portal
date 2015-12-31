@@ -15,8 +15,6 @@
 package com.liferay.dynamic.data.mapping.data.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.annotations.DDMForm;
-import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -61,8 +59,10 @@ public class DDMRESTDataProviderTest {
 
 	@Test
 	public void testGetCountries() throws Exception {
+		Class<?> ddmDataProviderSettings = _ddmDataProvider.getSettings();
+
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
-			DDMFormFactory.create(DDMRESTDataProviderSettings.class);
+			DDMFormFactory.create(ddmDataProviderSettings);
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -116,28 +116,5 @@ public class DDMRESTDataProviderTest {
 	}
 
 	private DDMDataProvider _ddmDataProvider;
-
-	@DDMForm
-	private interface DDMRESTDataProviderSettings {
-
-		@DDMFormField
-		public boolean cacheable();
-
-		@DDMFormField
-		public String key();
-
-		@DDMFormField
-		public String password();
-
-		@DDMFormField
-		public String url();
-
-		@DDMFormField
-		public String username();
-
-		@DDMFormField
-		public String value();
-
-	}
 
 }

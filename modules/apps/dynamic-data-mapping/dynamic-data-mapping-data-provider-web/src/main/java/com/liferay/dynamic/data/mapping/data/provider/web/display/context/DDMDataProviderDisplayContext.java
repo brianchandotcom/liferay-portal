@@ -24,15 +24,18 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.service.permission.DDMDataProviderInstancePermission;
 import com.liferay.dynamic.data.mapping.service.permission.DDMPermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.UserLocalService;
@@ -70,7 +73,7 @@ public class DDMDataProviderDisplayContext {
 			renderRequest);
 	}
 
-	public DDMDataProviderInstance getDataProviderInstance()
+	public DDMDataProviderInstance fetchDataProviderInstance()
 		throws PortalException {
 
 		if (_ddmDataProviderInstance != null) {
@@ -88,11 +91,11 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public String getDataProviderInstanceDDMFormHTML() throws PortalException {
-		DDMDataProviderInstance dataProviderInstance =
-			getDataProviderInstance();
+		DDMDataProviderInstance ddmDataProviderInstance =
+			fetchDataProviderInstance();
 
 		String type = BeanParamUtil.getString(
-			dataProviderInstance, _renderRequest, "type");
+			ddmDataProviderInstance, _renderRequest, "type");
 
 		DDMDataProvider ddmDataProvider =
 			_ddmDataProviderTracker.getDDMDataProvider(type);
@@ -112,7 +115,35 @@ public class DDMDataProviderDisplayContext {
 			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 		}
 
-		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(clazz);
+
+		ddmFormLayout.setPaginationMode(DDMFormLayout.SINGLE_PAGE_MODE);
+
+		return _ddmFormRenderer.render(
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
+	}
+
+	public String getDataProviderInstanceDescription() throws PortalException {
+		DDMDataProviderInstance ddmDataProviderInstance =
+			fetchDataProviderInstance();
+
+		if (ddmDataProviderInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		return ddmDataProviderInstance.getDescription(
+			_renderRequest.getLocale());
+	}
+
+	public String getDataProviderInstanceName() throws PortalException {
+		DDMDataProviderInstance ddmDataProviderInstance =
+			fetchDataProviderInstance();
+
+		if (ddmDataProviderInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		return ddmDataProviderInstance.getName(_renderRequest.getLocale());
 	}
 
 	public Set<String> getDDMDataProviderTypes() {

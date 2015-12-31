@@ -1,0 +1,47 @@
+@import "mixins";
+
+.portal-popup.dialog-iframe-popup > #main-content,
+.portal-popup.dialog-iframe-popup > #wrapper {
+	overflow-x: hidden;
+}
+
+.portlet-dynamic-data-mapping-data-provider {
+	.btn-action {
+		height: 64px;
+		line-height: 60px;
+		width: 64px;
+	}
+
+	.form  {
+		padding: 25px 20px;
+
+		.form-group {
+			margin-bottom: 50px;
+		}
+
+		.help-block {
+			position: absolute;
+		}
+
+		.input-localized {
+			.help-block {
+				margin-top: 21px;
+			}
+		}
+	}
+
+	.form-control {
+		font-size: 14px;
+		height: 40px;
+	}
+
+	@include sm {
+		.form-control {
+			font-size: 16px;
+		}
+	}
+
+	.required-warning {
+		margin-bottom: 20px;
+	}
+}

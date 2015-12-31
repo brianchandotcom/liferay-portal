@@ -68,7 +68,9 @@ public class JspC extends org.apache.jasper.JspC {
 		while (iterator.hasNext()) {
 			String page = iterator.next();
 
-			page = page.replace(File.separator, "/");
+			if (File.separatorChar != '/') {
+				page = page.replace(File.separatorChar, '/');
+			}
 
 			if (page.contains("/docroot/META-INF/custom_jsps/")) {
 				iterator.remove();

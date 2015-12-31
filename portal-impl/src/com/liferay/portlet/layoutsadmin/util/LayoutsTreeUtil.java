@@ -268,7 +268,7 @@ public class LayoutsTreeUtil {
 			session, key, JSONFactoryUtil.getNullJSON());
 
 		if (_log.isDebugEnabled()) {
-			sb = new StringBundler(6);
+			sb = new StringBundler(9);
 
 			sb.append("_getLoadedLayoutsCount(key=");
 			sb.append(key);

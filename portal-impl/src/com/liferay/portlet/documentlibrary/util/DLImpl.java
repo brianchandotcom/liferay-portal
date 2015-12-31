@@ -867,7 +867,7 @@ public class DLImpl implements DL {
 			boolean manualCheckInRequired, boolean openDocumentUrl)
 		throws PortalException {
 
-		StringBundler webDavURL = new StringBundler(6);
+		StringBundler webDavURL = new StringBundler(7);
 
 		boolean secure = false;
 

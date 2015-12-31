@@ -59,7 +59,7 @@ numberFormat.setMinimumIntegerDigits(2);
 			String offsetHour = numberFormat.format(totalOffset / Time.HOUR);
 			String offsetMinute = numberFormat.format(Math.abs(totalOffset % Time.HOUR) / Time.MINUTE);
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append(StringPool.SPACE);
 

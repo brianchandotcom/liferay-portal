@@ -24,7 +24,6 @@ Import-Package:\
 	!javax.imageio.*,\
 	!javax.mail.*,\
 	!javax.naming.*,\
-	!javax.sql,\
 	!junit.framework.*,\
 	!net.sf.akismet.*,\
 	!net.sf.ehcache.*,\

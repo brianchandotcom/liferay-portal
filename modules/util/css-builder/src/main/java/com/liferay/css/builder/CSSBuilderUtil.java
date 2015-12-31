@@ -49,7 +49,7 @@ public class CSSBuilderUtil {
 
 		return cacheFileName.substring(0, x + 1) + ".sass-cache/" +
 			cacheFileName.substring(x + 1, y) + suffix +
-			cacheFileName.substring(y);
+				cacheFileName.substring(y);
 	}
 
 	public static String getRtlCustomFileName(String fileName) {

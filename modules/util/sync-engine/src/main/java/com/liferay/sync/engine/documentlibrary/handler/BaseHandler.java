@@ -177,7 +177,7 @@ public class BaseHandler implements Handler<Void> {
 				if (syncFile != null) {
 					_logger.trace(
 						"Handling response {} file path {}",
-							clazz.getSimpleName(), syncFile.getFilePathName());
+						clazz.getSimpleName(), syncFile.getFilePathName());
 				}
 				else {
 					_logger.trace(

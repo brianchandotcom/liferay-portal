@@ -5,7 +5,7 @@
 .btn-command-log, .btn-error, .btn-jump-to-error, .btn-screenshot, .btn-sidebar {
   font-family: 'FontAwesome' !important; }
 
-.xml-log .btn, .sidebar-btn-container .btn {
+.sidebar-btn-container .btn, .sidebar-toolbar .btn, .xml-log .btn {
   background-color: rgba(247, 247, 247, 0.16);
   border: 1px solid #CDCDCD;
   border-radius: 4px;
@@ -22,31 +22,49 @@
   text-align: center;
   transition: opacity 0.2s ease;
   width: 32px; }
-  .xml-log .btn:active:focus, .xml-log .btn:focus, .xml-log .btn:hover, .sidebar-btn-container .btn:active:focus, .sidebar-btn-container .btn:focus, .sidebar-btn-container .btn:hover {
+  .sidebar-btn-container .btn:active:focus, .sidebar-btn-container .btn:focus, .sidebar-btn-container .btn:hover, .sidebar-toolbar .btn:active:focus, .sidebar-toolbar .btn:focus, .sidebar-toolbar .btn:hover, .xml-log .btn:active:focus, .xml-log .btn:focus, .xml-log .btn:hover {
     box-shadow: none;
     outline: 0; }
-  .xml-log .btn .btn-content, .sidebar-btn-container .btn .btn-content {
+  .sidebar-btn-container .btn .btn-content, .sidebar-toolbar .btn .btn-content, .xml-log .btn .btn-content {
     transition: transform 0.2s ease; }
-  .xml-log .btn:hover, .sidebar-btn-container .btn:hover {
+  .sidebar-btn-container .btn:hover, .sidebar-toolbar .btn:hover, .xml-log .btn:hover {
     opacity: 1; }
-  .xml-log .btn.toggle, .sidebar-btn-container .btn.toggle {
+  .sidebar-btn-container .btn.toggle, .sidebar-toolbar .btn.toggle, .xml-log .btn.toggle {
     background-color: #E0E0E0; }
-  .xml-log .btn.btn-sidebar:before, .sidebar-btn-container .btn.btn-sidebar:before {
+  .sidebar-btn-container .btn.btn-sidebar:before, .sidebar-toolbar .btn.btn-sidebar:before, .xml-log .btn.btn-sidebar:before {
     transform: rotate(180deg);
     transition: transform 0.5s ease-in-out; }
-  .xml-log .btn.btn-sidebar.toggle:before, .sidebar-btn-container .btn.btn-sidebar.toggle:before {
+  .sidebar-btn-container .btn.btn-sidebar.toggle:before, .sidebar-toolbar .btn.btn-sidebar.toggle:before, .xml-log .btn.btn-sidebar.toggle:before {
     transform: rotate(0); }
 
+.sidebar-btn-container .btn-label, .sidebar-toolbar .btn-label, .xml-log .btn-label {
+  display: inline-block;
+  font-family: "Open Sans", "Verdana", "Geneva", sans-serif;
+  font-size: 15px;
+  font-weight: 100;
+  line-height: 0.6em;
+  text-align: center;
+  text-transform: lowercase; }
+
 .xml-log .btn-error, .xml-log .btn-screenshot {
-  background-color: rgba(255, 135, 135, 0.16);
-  border-color: #FF8787;
   bottom: 0;
-  color: #FF8787;
   display: inline-block;
   font-family: "Source Code Pro", "Menlo", "Lucia Console", Monaco, monospace;
   font-size: 17px; }
-  .xml-log .btn-error.toggle, .xml-log .btn-screenshot.toggle {
+
+.xml-log .fail .btn-error, .xml-log .fail .btn-screenshot {
+  background-color: rgba(255, 135, 135, 0.16);
+  border-color: #FF8787;
+  color: #FF8787; }
+  .xml-log .fail .btn-error.toggle, .xml-log .fail .btn-screenshot.toggle {
     background: #ffd9d9; }
+
+.xml-log .warning .btn-error, .xml-log .warning .btn-screenshot {
+  background-color: rgba(255, 184, 121, 0.16);
+  border-color: #FFB879;
+  color: #FFB879; }
+  .xml-log .warning .btn-error.toggle, .xml-log .warning .btn-screenshot.toggle {
+    background: #ffe3cb; }
 
 /* ---------- Sidebar buttons ---------- */
 .sidebar-btn-container {
@@ -74,6 +92,44 @@
 .command-logger .btn.btn-jump-to-error {
   display: block; }
 
+.sidebar-toolbar .btn {
+  font-size: 11px;
+  height: 45px;
+  line-height: 1em;
+  margin: 17px 15px;
+  width: 150px; }
+
+.sidebar-toolbar .btn-pause {
+  position: relative; }
+  .sidebar-toolbar .btn-pause .btn-label {
+    position: absolute;
+    top: 16px; }
+    .sidebar-toolbar .btn-pause .btn-label.pause {
+      animation: fadeIn 0.15s ease-in both;
+      left: 23px;
+      opacity: 1; }
+      .sidebar-toolbar .btn-pause .btn-label.pause:after {
+        content: '\f04c';
+        margin-left: 14px; }
+    .sidebar-toolbar .btn-pause .btn-label.continue {
+      animation: fadeOut 0.15s ease-out both;
+      left: 14px;
+      opacity: 0; }
+    .sidebar-toolbar .btn-pause .btn-label:after {
+      font-family: 'FontAwesome'; }
+  .sidebar-toolbar .btn-pause.toggle {
+    background-color: rgba(247, 247, 247, 0.16); }
+    .sidebar-toolbar .btn-pause.toggle .btn-label.pause {
+      animation: fadeOut 0.15s ease-out both;
+      opacity: 0;
+      transition: height 0s 0.15s; }
+    .sidebar-toolbar .btn-pause.toggle .btn-label.continue {
+      animation: fadeIn 0.15s ease-in both;
+      opacity: 1; }
+      .sidebar-toolbar .btn-pause.toggle .btn-label.continue:after {
+        content: '\f04b';
+        margin-left: 14px; }
+
 /* ---------- Button icons ---------- */
 .btn-collapse:before {
   content: '+'; }
@@ -100,8 +156,9 @@
   position: absolute;
   width: 96%; }
   .console.toggle {
+    max-height: 0;
     transform: translate(calc(-100% + 4%));
-    transition: transform 0.2s ease, visibility 0s 0.15s;
+    transition: transform 0.2s ease, max-height 0s 0.15s, visibility 0s 0.15s;
     visibility: hidden;
     will-change: initial; }
 
@@ -115,9 +172,10 @@
   font-size: 17px;
   letter-spacing: 0.08em;
   margin-top: 11px;
+  max-height: 100%;
   padding: 14px 52px 56px;
   transform-origin: top left;
-  transition: transform 0.15s ease, visibility 0s;
+  transition: transform 0.15s ease, max-height 0s, visibility 0s;
   will-change: transform;
   word-wrap: break-word;
   z-index: 900; }
@@ -137,14 +195,17 @@
     width: 134px; }
   .summary-log strong {
     font-weight: inherit; }
-    .summary-log strong > .status {
-      border-color: #FF8787;
-      color: #FF8787; }
     .summary-log strong em {
       font-family: "Source Code Pro", "Menlo", "Lucia Console", Monaco, monospace;
       font-size: 12px;
       font-style: normal;
       font-weight: 300; }
+  .summary-log .summary-failure strong > .status {
+    border-color: #FF8787;
+    color: #FF8787; }
+  .summary-log .summary-warning strong > .status {
+    border-color: #FFB879;
+    color: #FFB879; }
 
 .steps {
   font-size: 15px;
@@ -251,6 +312,9 @@
       transition: all 0s ease 0.5s; }
 
 /* ---------- Global ---------- */
+* {
+  box-sizing: border-box; }
+
 body {
   background-color: #F7F7F7;
   font-family: "Source Code Pro", "Menlo", "Lucia Console", Monaco, monospace;
@@ -272,11 +336,14 @@ li {
   display: block;
   transition: background 0.2s ease-in-out; }
 
+.hidden {
+  display: none; }
+
 span {
   display: inline; }
 
-* {
-  box-sizing: border-box; }
+.hidden {
+  display: none; }
 
 /* ---------- Scope selection ---------- */
 .current-scope .line-number {
@@ -326,6 +393,8 @@ span {
   overflow-y: scroll;
   padding: 0;
   transition: height 0.5s ease-in-out; }
+  .command-log.running {
+    height: calc(100% - 80px); }
   .command-log .status div {
     display: inline; }
   .command-log.collapse {
@@ -411,8 +480,10 @@ span {
     background-color: rgba(255, 135, 135, 0.14); }
     .command-log .failed.line-group.linkable:hover {
       background-color: rgba(255, 135, 135, 0.1); }
-  .command-log .current-scope.failed {
-    border-color: rgba(255, 135, 135, 0.4); }
+  .command-log .warning {
+    background-color: rgba(255, 184, 121, 0.14); }
+    .command-log .warning.line-group.linkable:hover {
+      background-color: rgba(255, 184, 121, 0.1); }
   .command-log .title-line {
     display: none; }
 
@@ -471,6 +542,25 @@ span {
   .sidebar .parameter-value {
     font-size: 11px;
     margin: 10px 30px; }
+
+.sidebar-toolbar {
+  background-color: #f7f7f7;
+  border-top: 1px solid #e3e3e3;
+  display: none;
+  font-family: "Open Sans", "Verdana", "Geneva", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  height: 80px;
+  letter-spacing: 0.06em;
+  margin: 0;
+  padding: 0;
+  transition: height 0.5s ease-in-out; }
+
+.command-logger.running .sidebar-toolbar {
+  display: block; }
+
+.running .sidebar-toolbar {
+  display: block; }
 
 /* ---------- Syntax highlight ---------- */
 /* ---------- Breaks ---------- */
@@ -664,22 +754,31 @@ span {
     opacity: 1; }
 
 /* ---------- Command-logger mode ---------- */
-.command-logger .fail:not(.current-scope) > .line-container, .command-logger .pass:not(.current-scope) > .line-container, .command-logger .pending:not(.current-scope) > .line-container {
+.command-logger .xml-log .fail:not(.current-scope) > .line-container, .command-logger .xml-log .pass:not(.current-scope) > .line-container, .command-logger .xml-log .pending:not(.current-scope) > .line-container, .command-logger .xml-log .warning:not(.current-scope) > .line-container {
   box-shadow: -2px 0 0 0 rgba(0, 0, 0, 0.03), -1px 0 1px 0 rgba(0, 0, 0, 0.08); }
 
-.command-logger .fail > .line-container, .command-logger .pass > .line-container, .command-logger .pending > .line-container {
+.command-logger .xml-log .fail > .line-container, .command-logger .xml-log .pass > .line-container, .command-logger .xml-log .pending > .line-container, .command-logger .xml-log .warning > .line-container {
   border-left: 7px solid transparent; }
 
-.command-logger .pass.conditional-failed > .line-container {
+.command-logger .xml-log .pass.conditional-failed > .line-container {
   background: transparent; }
 
-.command-logger .pass > .line-container {
+.command-logger .xml-log .pass > .line-container {
   border-left-color: #00FEA3; }
 
-.command-logger .pending > .line-container {
-  border-left-color: #FFFA89; }
+.command-logger .xml-log .pending > .line-container {
+  border-left-color: #DDE1E3; }
 
-.command-logger .function.fail:not(.macro) > .line-container:hover, .command-logger .function.fail.hover > .line-container, .command-logger .function.pass:not(.macro) > .line-container:hover, .command-logger .function.pass.hover > .line-container, .command-logger .function.pending:not(.macro) > .line-container:hover, .command-logger .function.pending.hover > .line-container, .command-logger .macro.fail:not(.macro) > .line-container:hover, .command-logger .macro.fail.hover > .line-container, .command-logger .macro.pass:not(.macro) > .line-container:hover, .command-logger .macro.pass.hover > .line-container, .command-logger .macro.pending:not(.macro) > .line-container:hover, .command-logger .macro.pending.hover > .line-container {
+.command-logger .xml-log .warning > .line-container {
+  border-left-color: #FFB879; }
+
+.command-logger .xml-log .fail .line-number {
+  color: #FF8787; }
+
+.command-logger .xml-log .fail > .line-container {
+  border-left-color: #FF8787; }
+
+.command-logger .xml-log .function.fail:not(.macro) > .line-container:hover, .command-logger .xml-log .function.fail.hover > .line-container, .command-logger .xml-log .function.pass:not(.macro) > .line-container:hover, .command-logger .xml-log .function.pass.hover > .line-container, .command-logger .xml-log .function.pending:not(.macro) > .line-container:hover, .command-logger .xml-log .function.pending.hover > .line-container, .command-logger .xml-log .function.warning:not(.macro) > .line-container:hover, .command-logger .xml-log .function.warning.hover > .line-container, .command-logger .xml-log .macro.fail:not(.macro) > .line-container:hover, .command-logger .xml-log .macro.fail.hover > .line-container, .command-logger .xml-log .macro.pass:not(.macro) > .line-container:hover, .command-logger .xml-log .macro.pass.hover > .line-container, .command-logger .xml-log .macro.pending:not(.macro) > .line-container:hover, .command-logger .xml-log .macro.pending.hover > .line-container, .command-logger .xml-log .macro.warning:not(.macro) > .line-container:hover, .command-logger .xml-log .macro.warning.hover > .line-container {
   -webkit-filter: blur(0);
   background-color: #F7F7F7;
   box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.04), -1px 1px 3px 1px rgba(0, 0, 0, 0.1);
@@ -687,28 +786,53 @@ span {
   transition: transform 0.15s cubic-bezier(1, 0.51, 0.44, 1.21) 0.1s, box-shadow 0.14s cubic-bezier(1, 0.12, 0.51, 0.98) 0.1s, background-color 0.2s cubic-bezier(1, 0.44, 1, 1);
   z-index: 2; }
 
-.command-logger .current-scope.pass.function {
+.command-logger .xml-log .function.fail > .line-container:nth-child(2):before, .command-logger .xml-log .function.warning > .line-container:nth-child(2):before, .command-logger .xml-log .macro.fail > .line-container:nth-child(2):before, .command-logger .xml-log .macro.warning > .line-container:nth-child(2):before {
+  background-repeat: no-repeat;
+  background-size: calc(100vw - 32px);
+  content: '';
+  height: 100%;
+  left: calc(-100vw - 7px);
+  position: absolute;
+  top: 0;
+  width: 100vw; }
+
+.command-logger .xml-log .function.fail > .line-container:nth-child(2):before, .command-logger .xml-log .macro.fail > .line-container:nth-child(2):before {
+  background-color: rgba(255, 135, 135, 0.16); }
+
+.command-logger .xml-log .function.warning > .line-container:nth-child(2):before, .command-logger .xml-log .macro.warning > .line-container:nth-child(2):before {
+  background-color: rgba(255, 184, 121, 0.16); }
+
+.command-logger .xml-log .current-scope.pass.function {
   background: transparent;
   outline-width: 0; }
 
-.command-logger .current-scope.fail > .line-container:nth-child(2):before {
+.command-logger .xml-log .current-scope.fail > .line-container:nth-child(2):before {
   background: linear-gradient(transparent 23px, #FF8787 24px, rgba(27, 27, 27, 0) 25px);
   background-color: rgba(255, 135, 135, 0.16);
   top: 50%; }
 
-.command-logger .current-scope.fail > .line-container:nth-child(2):after {
+.command-logger .xml-log .current-scope.fail > .line-container:nth-child(2):after {
   background-color: #FF8787;
   border-color: #FF8787; }
 
-.command-logger .current-scope.pass > .line-container:nth-child(2):before, .command-logger .current-scope.pending > .line-container:nth-child(2):before {
+.command-logger .xml-log .current-scope.warning > .line-container:nth-child(2):before {
+  background: linear-gradient(transparent 23px, #FFB879 24px, rgba(27, 27, 27, 0) 25px);
+  background-color: rgba(255, 184, 121, 0.16);
+  top: 50%; }
+
+.command-logger .xml-log .current-scope.warning > .line-container:nth-child(2):after {
+  background-color: #FFB879;
+  border-color: #FFB879; }
+
+.command-logger .xml-log .current-scope.pass > .line-container:nth-child(2):before, .command-logger .xml-log .current-scope.pending > .line-container:nth-child(2):before {
   background: linear-gradient(transparent 24px, #9FA2A6 25px, rgba(27, 27, 27, 0) 26px);
   background-color: rgba(159, 162, 166, 0.16); }
 
-.command-logger .current-scope.pass > .line-container:nth-child(2):after, .command-logger .current-scope.pending > .line-container:nth-child(2):after {
+.command-logger .xml-log .current-scope.pass > .line-container:nth-child(2):after, .command-logger .xml-log .current-scope.pending > .line-container:nth-child(2):after {
   background-color: #9FA2A6;
   border-color: #9FA2A6; }
 
-.command-logger .current-scope.fail > .line-container:nth-child(2):before, .command-logger .current-scope.pass > .line-container:nth-child(2):before, .command-logger .current-scope.pending > .line-container:nth-child(2):before {
+.command-logger .xml-log .current-scope.fail > .line-container:nth-child(2):before, .command-logger .xml-log .current-scope.pass > .line-container:nth-child(2):before, .command-logger .xml-log .current-scope.pending > .line-container:nth-child(2):before, .command-logger .xml-log .current-scope.warning > .line-container:nth-child(2):before {
   background-repeat: no-repeat;
   background-size: calc(100vw - 32px);
   content: '';
@@ -717,12 +841,6 @@ span {
   position: absolute;
   top: 50%;
   width: 100vw; }
-
-.command-logger .fail .line-number {
-  color: #FF8787; }
-
-.command-logger .fail .line-container {
-  border-left-color: #FF8787; }
 
 .collapse .fail:after, .transitioning .fail:after, .transitioning .fail .line-container:before {
   opacity: 0; }
@@ -744,6 +862,26 @@ span {
     transform: rotate(180deg) translateY(-50%); }
   100% {
     transform: rotate(360deg) translateY(-50%); } }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px); }
+  40% {
+    opacity: 0; }
+  100% {
+    opacity: 1;
+    transform: translateY(0); } }
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0); }
+  60% {
+    opacity: 0; }
+  100% {
+    opacity: 0;
+    transform: translateY(20px); } }
 
 .running *:not(.transitioning) .current-scope.pending > .line-container:nth-child(2):after {
   animation: loop 1s cubic-bezier(0.41, 0.35, 0.63, 0.88) 0.1s infinite, ping 0.25s cubic-bezier(1, 0.9, 0.47, 1.92);

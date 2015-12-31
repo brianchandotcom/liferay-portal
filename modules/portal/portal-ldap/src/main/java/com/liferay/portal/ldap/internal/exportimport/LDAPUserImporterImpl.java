@@ -304,12 +304,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			if (Validator.isNotNull(emailAddress)) {
 				_log.debug(
 					"User with the email address " + emailAddress +
-				" was not found in any LDAP servers");
+						" was not found in any LDAP servers");
 			}
 			else {
 				_log.debug(
 					"User with the screen name " + screenName +
-				" was not found in any LDAP servers");
+						" was not found in any LDAP servers");
 			}
 		}
 

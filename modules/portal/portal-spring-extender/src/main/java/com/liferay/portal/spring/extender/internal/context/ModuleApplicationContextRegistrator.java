@@ -74,7 +74,7 @@ public class ModuleApplicationContextRegistrator {
 			_applicationContextServicePublisher =
 				new ApplicationContextServicePublisher(
 					_configurableApplicationContext,
-				_extendeeBundle.getBundleContext());
+					_extendeeBundle.getBundleContext());
 
 			_applicationContextServicePublisher.register();
 		}

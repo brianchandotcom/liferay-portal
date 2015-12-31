@@ -81,7 +81,7 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 				"xsi:schemaLocation",
 				"urn:liferay.com:liferay-workflow_" + _version +
 					" http://www.liferay.com/dtd/liferay-workflow-definition_" +
-					_schemaVersion + ".xsd");
+						_schemaVersion + ".xsd");
 			workflowDefinitionElement.addNamespace(
 				"", "urn:liferay.com:liferay-workflow_" + _version);
 

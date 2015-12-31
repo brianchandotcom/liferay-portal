@@ -124,9 +124,9 @@ public class VelocityTemplateTest {
 			String.valueOf(cacheEnabled));
 		extendedProperties.setProperty(
 			"liferay." + VelocityEngine.RESOURCE_LOADER +
-			".resourceModificationCheckInterval",
+				".resourceModificationCheckInterval",
 			_velocityEngineConfiguration.resourceModificationCheckInterval() +
-			"");
+				"");
 		extendedProperties.setProperty(
 			"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
 			LiferayResourceLoader.class.getName());
@@ -135,9 +135,9 @@ public class VelocityTemplateTest {
 			LiferayResourceManager.class.getName());
 		extendedProperties.setProperty(
 			"liferay." + VelocityEngine.RESOURCE_MANAGER_CLASS +
-			".resourceModificationCheckInterval",
+				".resourceModificationCheckInterval",
 			_velocityEngineConfiguration.resourceModificationCheckInterval() +
-			"");
+				"");
 		extendedProperties.setProperty(
 			VelocityTemplateResourceLoader.class.getName(),
 			_templateResourceLoader);

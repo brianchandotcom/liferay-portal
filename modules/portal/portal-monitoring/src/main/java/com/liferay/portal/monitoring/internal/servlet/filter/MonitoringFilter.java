@@ -159,13 +159,15 @@ public class MonitoringFilter
 		incrementProcessFilterCount();
 
 		if (_monitorPortalRequest) {
-			portalRequestDataSample = (PortalRequestDataSample)
-				_dataSampleFactory.createPortalRequestDataSample(
-					companyId, groupId, request.getHeader(HttpHeaders.REFERER),
-					request.getRemoteAddr(), request.getRemoteUser(),
-					request.getRequestURI(),
-					GetterUtil.getString(request.getRequestURL()),
-					request.getHeader(HttpHeaders.USER_AGENT));
+			portalRequestDataSample =
+				(PortalRequestDataSample)
+					_dataSampleFactory.createPortalRequestDataSample(
+						companyId, groupId,
+						request.getHeader(HttpHeaders.REFERER),
+						request.getRemoteAddr(), request.getRemoteUser(),
+						request.getRequestURI(),
+						GetterUtil.getString(request.getRequestURL()),
+						request.getHeader(HttpHeaders.USER_AGENT));
 
 			DataSampleThreadLocal.initialize();
 		}

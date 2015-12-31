@@ -39,7 +39,8 @@ import org.osgi.service.cm.Configuration;
  */
 public abstract class CompanyScopedConfigurationProvider
 	<T extends CompanyScopedConfiguration>
-	extends BaseConfigurationProvider<T> implements ConfigurationProvider<T> {
+		extends BaseConfigurationProvider<T>
+		implements ConfigurationProvider<T> {
 
 	@Override
 	public boolean delete(long companyId) {

@@ -177,7 +177,8 @@ public class HttpTunnelExtender extends AbstractExtender {
 			properties.put(
 				HttpWhiteboardConstants.
 					HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX +
-					"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed",
+						"auth.verifier.TunnelingServletAuthVerifier.hosts." +
+							"allowed",
 				StringUtil.merge(
 					_httpTunnelExtenderConfiguration.hostsAllowed()));
 			properties.put(

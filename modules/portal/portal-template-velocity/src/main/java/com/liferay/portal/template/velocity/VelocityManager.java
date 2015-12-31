@@ -174,7 +174,7 @@ public class VelocityManager extends BaseSingleTemplateManager {
 
 			extendedProperties.setProperty(
 				"liferay." + VelocityEngine.RESOURCE_LOADER +
-				".resourceModificationCheckInterval",
+					".resourceModificationCheckInterval",
 				_velocityEngineConfiguration.
 					resourceModificationCheckInterval() + "");
 
@@ -188,7 +188,7 @@ public class VelocityManager extends BaseSingleTemplateManager {
 
 			extendedProperties.setProperty(
 				"liferay." + VelocityEngine.RESOURCE_MANAGER_CLASS +
-				".resourceModificationCheckInterval",
+					".resourceModificationCheckInterval",
 				_velocityEngineConfiguration.
 					resourceModificationCheckInterval() + "");
 

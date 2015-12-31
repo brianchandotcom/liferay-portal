@@ -215,7 +215,7 @@ public class EmbeddedElasticsearchConnection
 			_log.debug(
 				"Finished starting " +
 					elasticsearchConfiguration.clusterName() + " in " +
-					stopWatch.getTime() + " ms");
+						stopWatch.getTime() + " ms");
 		}
 
 		return client;

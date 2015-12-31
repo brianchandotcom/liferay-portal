@@ -85,9 +85,9 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		ldapGroup.setDescription(description);
 
-		String groupName = LDAPUtil.getAttributeString(
-			attributes, groupMappings, GroupConverterKeys.GROUP_NAME).
-				toLowerCase();
+		String groupName = StringUtil.toLowerCase(
+			LDAPUtil.getAttributeString(
+				attributes, groupMappings, GroupConverterKeys.GROUP_NAME));
 
 		ldapGroup.setGroupName(groupName);
 
@@ -104,9 +104,9 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		boolean autoScreenName = PrefsPropsUtil.getBoolean(
 			companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE);
 
-		String screenName = LDAPUtil.getAttributeString(
-			attributes, userMappings, UserConverterKeys.SCREEN_NAME).
-				toLowerCase();
+		String screenName = StringUtil.toLowerCase(
+			LDAPUtil.getAttributeString(
+				attributes, userMappings, UserConverterKeys.SCREEN_NAME));
 		String emailAddress = LDAPUtil.getAttributeString(
 			attributes, userMappings, UserConverterKeys.EMAIL_ADDRESS);
 

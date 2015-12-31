@@ -407,7 +407,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		int count = 0;
 
 		for (int i = content.indexOf(expected); i != -1;
-			 i = content.indexOf(expected, i + 1)) {
+				i = content.indexOf(expected, i + 1)) {
 
 			count++;
 		}
@@ -539,7 +539,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		doReturn(
 			capability ?
 				Arrays.asList(mockBundleCapability(bsn)) :
-				Collections.emptyList()
+					Collections.emptyList()
 		).when(
 			bundleWiring
 		).getCapabilities(

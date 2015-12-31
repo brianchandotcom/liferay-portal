@@ -24,7 +24,7 @@ import com.liferay.portal.ldap.configuration.CompanyScopedConfiguration;
  */
 @ConfigurationAdmin(
 	category = "platform", factoryInstanceLabelAttribute = "companyId",
-		scope = ConfigurationAdmin.Scope.COMPANY
+	scope = ConfigurationAdmin.Scope.COMPANY
 )
 @Meta.OCD(
 	factory = true,

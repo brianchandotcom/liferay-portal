@@ -58,16 +58,16 @@ public class WaiterUtil {
 			new ServiceTracker<Object, Object>(
 				bundleContext, bundleContext.createFilter(filterString), null) {
 
-			@Override
-			public void removedService(
-				ServiceReference<Object> reference, Object service) {
+				@Override
+				public void removedService(
+					ServiceReference<Object> reference, Object service) {
 
-				countDownLatch.countDown();
+					countDownLatch.countDown();
 
-				close();
-			}
+					close();
+				}
 
-		};
+			};
 
 		serviceTracker.open();
 

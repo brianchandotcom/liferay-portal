@@ -45,7 +45,7 @@ public class CopyMethodImpl implements Method {
 		StringBundler sb = null;
 
 		if (_log.isInfoEnabled()) {
-			sb = new StringBundler(6);
+			sb = new StringBundler(8);
 
 			sb.append("Destination is ");
 			sb.append(destination);

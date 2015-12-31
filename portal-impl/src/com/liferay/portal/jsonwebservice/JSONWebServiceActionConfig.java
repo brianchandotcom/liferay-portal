@@ -105,7 +105,7 @@ public class JSONWebServiceActionConfig
 
 		_realActionMethod = realActionMethod;
 
-		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 4);
+		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 3);
 
 		sb.append(_path);
 		sb.append(CharPool.MINUS);

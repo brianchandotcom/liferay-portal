@@ -456,7 +456,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			DataAccess.cleanUp(ps, rs);
 
-			StringBundler sb = new StringBundler(12);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("select groupId from SocialActivitySetting where ");
 			sb.append("activityType = 0 and name = 'enabled' and ");

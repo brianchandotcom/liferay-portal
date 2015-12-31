@@ -57,7 +57,7 @@ public class UpgradeRelease extends UpgradeProcess {
 	protected String toSchemaVersion(String buildNumber) {
 		char[] chars = buildNumber.toCharArray();
 
-		StringBundler sb = new StringBundler(2 * chars.length);
+		StringBundler sb = new StringBundler(2 * chars.length - 1);
 
 		int i = 0;
 

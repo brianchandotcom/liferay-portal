@@ -151,7 +151,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(7);
+			StringBundler sb = new StringBundler(9);
 
 			sb.append("insert into ");
 			sb.append(tableName);

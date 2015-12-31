@@ -161,7 +161,7 @@ public class SetupWizardSampleDataUtil {
 			for (int i = 1; i <= 10; i++) {
 				String screenName = organizationPrefix + i;
 
-				StringBundler sb = new StringBundler(4);
+				StringBundler sb = new StringBundler(5);
 
 				sb.append("test.");
 				sb.append(organizationPrefix);

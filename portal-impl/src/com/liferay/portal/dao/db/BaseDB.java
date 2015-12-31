@@ -877,7 +877,7 @@ public abstract class BaseDB implements DB {
 		throws SQLException {
 
 		if (_log.isDebugEnabled()) {
-			StringBundler sb = new StringBundler(18);
+			StringBundler sb = new StringBundler(10);
 
 			sb.append("SQL: ");
 			sb.append(sql);
@@ -1136,7 +1136,7 @@ public abstract class BaseDB implements DB {
 		"SPECIFIC_TIMESTAMP_\\d+");
 
 	static {
-		StringBundler sb = new StringBundler(TEMPLATE.length * 3 - 3);
+		StringBundler sb = new StringBundler(TEMPLATE.length * 5 - 1);
 
 		for (int i = 0; i < TEMPLATE.length; i++) {
 			String variable = TEMPLATE[i];

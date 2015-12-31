@@ -294,7 +294,7 @@ public class AssetEntryFinderImpl
 	protected SQLQuery buildAssetQuerySQL(
 		AssetEntryQuery entryQuery, boolean count, Session session) {
 
-		StringBundler sb = new StringBundler(64);
+		StringBundler sb = new StringBundler(52);
 
 		if (count) {
 			sb.append(

@@ -227,7 +227,7 @@ public class HttpImpl implements Http {
 
 		String anchor = urlArray[1];
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(url);
 

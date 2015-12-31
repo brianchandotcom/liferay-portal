@@ -344,7 +344,7 @@ public class DLFolderFinderImpl
 		try {
 			session = openSession();
 
-			StringBundler sb = new StringBundler(7);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
@@ -739,7 +739,7 @@ public class DLFolderFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(mimeTypes.length * 2 - 1);
+		StringBundler sb = new StringBundler(mimeTypes.length * 3 - 1);
 
 		for (int i = 0; i < mimeTypes.length; i++) {
 			sb.append(tableName);

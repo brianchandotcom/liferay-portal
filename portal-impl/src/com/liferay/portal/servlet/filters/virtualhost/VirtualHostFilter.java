@@ -266,7 +266,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 			request.setAttribute(WebKeys.LAST_PATH, lastPath);
 
-			StringBundler forwardURL = new StringBundler(5);
+			StringBundler forwardURL = new StringBundler(4);
 
 			if (i18nLanguageId != null) {
 				forwardURL.append(i18nLanguageId);

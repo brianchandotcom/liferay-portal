@@ -103,7 +103,7 @@ public class TemplateProcessor implements ColumnProcessor {
 
 		List<Portlet> portlets = layoutTypePortlet.getAllPortlets(columnId);
 
-		StringBundler sb = new StringBundler(portlets.size() + 11);
+		StringBundler sb = new StringBundler(portlets.size() * 3 + 11);
 
 		sb.append("<div class=\"");
 		sb.append("portlet-dropzone");

@@ -65,7 +65,7 @@ public class UpgradePortletDisplayTemplatePreferences
 
 	@Override
 	protected String getUpdatePortletPreferencesWhereClause() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("(preferences like '%");
 		sb.append(DISPLAY_STYLE_PREFIX_6_2);

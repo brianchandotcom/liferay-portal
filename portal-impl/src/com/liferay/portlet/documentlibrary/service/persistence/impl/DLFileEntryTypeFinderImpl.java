@@ -331,7 +331,7 @@ public class DLFileEntryTypeFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(groupIds.length * 2);
+		StringBundler sb = new StringBundler(groupIds.length * 2 + 1);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 

@@ -59,7 +59,7 @@ public class SQLServerLimitStringUtil {
 		String innerSelectFrom = _getInnerSelectFrom(
 			selectFrom, innerOrderBy, limit);
 
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("select * from (");
 		sb.append("select *, row_number() over (");

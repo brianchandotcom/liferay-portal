@@ -119,7 +119,7 @@ public class SPIConfigurationTest {
 
 		Assert.assertEquals(sb.toString(), spiConfiguration.toString());
 
-		sb = new StringBundler(13);
+		sb = new StringBundler(14);
 
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		sb.append("<SPIConfiguration><id>spiId</id>");

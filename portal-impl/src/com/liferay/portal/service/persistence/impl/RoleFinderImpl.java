@@ -935,7 +935,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(types.length * 2);
+		StringBundler sb = new StringBundler(types.length * 2 + 1);
 
 		sb.append(" AND (");
 

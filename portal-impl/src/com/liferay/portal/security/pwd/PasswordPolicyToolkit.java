@@ -200,7 +200,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			passwordPolicy.getMinLength(),
 			alphanumericMinLength + passwordPolicy.getMinSymbols());
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
 		if (passwordPolicy.getMinLowerCase() > 0) {
 			sb.append(

@@ -204,7 +204,7 @@ public class UpgradePortletPreferences
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append("select portletPreferencesId, plid, portletId, ");
 			sb.append("preferences from PortletPreferences where ownerId = ");

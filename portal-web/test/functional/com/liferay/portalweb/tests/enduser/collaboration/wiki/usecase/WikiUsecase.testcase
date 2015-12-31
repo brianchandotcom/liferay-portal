@@ -240,19 +240,10 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute function="Pause" locator1="3000" />
-
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute macro="WikiEntry#addPageTitle">
+		<execute macro="WikiPage#addCP">
 			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
 			<var name="wikiPageContent" value="Wiki Page Content 1" />
 		</execute>
-
-		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
@@ -313,19 +304,10 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<execute function="Pause" locator1="3000" />
-
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute macro="WikiEntry#addPageTitle">
+		<execute macro="WikiPage#addCP">
 			<var name="wikiPageTitle" value="Wiki Page 1" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
 			<var name="wikiPageContent" value="Wiki Page Content 1" />
 		</execute>
-
-		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />

@@ -124,26 +124,6 @@ public interface PortletDataContext extends Serializable {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addClassedModel(Element,
-	 *             String, ClassedModel, Class)}
-	 */
-	@Deprecated
-	public void addClassedModel(
-			Element element, String path, ClassedModel classedModel,
-			Class<?> clazz, String namespace)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addClassedModel(Element,
-	 *             String, ClassedModel)}
-	 */
-	@Deprecated
-	public void addClassedModel(
-			Element element, String path, ClassedModel classedModel,
-			String namespace)
-		throws PortalException;
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             BaseStagedModelDataHandler#exportComments(PortletDataContext,
 	 *             StagedModel)}
@@ -249,14 +229,6 @@ public interface PortletDataContext extends Serializable {
 	public ServiceContext createServiceContext(
 		Element element, ClassedModel classedModel);
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #createServiceContext(Element, ClassedModel)}
-	 */
-	@Deprecated
-	public ServiceContext createServiceContext(
-		Element element, ClassedModel classedModel, String namespace);
-
 	public ServiceContext createServiceContext(StagedModel stagedModel);
 
 	public ServiceContext createServiceContext(
@@ -264,14 +236,6 @@ public interface PortletDataContext extends Serializable {
 
 	public ServiceContext createServiceContext(
 		String path, ClassedModel classedModel);
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #createServiceContext(String,
-	 *             ClassedModel)}
-	 */
-	@Deprecated
-	public ServiceContext createServiceContext(
-		String path, ClassedModel classedModel, String namespace);
 
 	public Object fromXML(byte[] bytes);
 
@@ -366,13 +330,6 @@ public interface PortletDataContext extends Serializable {
 
 	public Element getImportDataStagedModelElement(StagedModel stagedModel);
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getLayoutPath(PortletDataContext, long)}
-	 */
-	@Deprecated
-	public String getLayoutPath(long plid);
-
 	public Map<String, Lock> getLocks();
 
 	public ManifestSummary getManifestSummary();
@@ -405,14 +362,6 @@ public interface PortletDataContext extends Serializable {
 	public long getPlid();
 
 	public String getPortletId();
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getPortletPath(PortletDataContext,
-	 *             String)}
-	 */
-	@Deprecated
-	public String getPortletPath(String portletId);
 
 	public Set<String> getPrimaryKeys();
 
@@ -468,13 +417,6 @@ public interface PortletDataContext extends Serializable {
 	public List<Element> getReferenceElements(
 		StagedModel parentStagedModel, Class<?> clazz);
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getRootPath(PortletDataContext)}
-	 */
-	@Deprecated
-	public String getRootPath();
-
 	public String getRootPortletId();
 
 	/**
@@ -494,29 +436,6 @@ public interface PortletDataContext extends Serializable {
 	public long getSourceCompanyId();
 
 	public long getSourceGroupId();
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getSourceLayoutPath(PortletDataContext,
-	 *             long)}
-	 */
-	@Deprecated
-	public String getSourceLayoutPath(long layoutId);
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getSourcePortletPath(PortletDataContext,
-	 *             String)}
-	 */
-	@Deprecated
-	public String getSourcePortletPath(String portletId);
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getSourceRootPath(PortletDataContext)}
-	 */
-	@Deprecated
-	public String getSourceRootPath();
 
 	public long getSourceUserPersonalSiteGroupId();
 
@@ -571,26 +490,6 @@ public interface PortletDataContext extends Serializable {
 	public void importClassedModel(
 			ClassedModel classedModel, ClassedModel newClassedModel,
 			Class<?> clazz)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #importClassedModel(ClassedModel, ClassedModel, Class)}
-	 */
-	@Deprecated
-	public void importClassedModel(
-			ClassedModel classedModel, ClassedModel newClassedModel,
-			Class<?> clazz, String namespace)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #importClassedModel(ClassedModel, ClassedModel)}
-	 */
-	@Deprecated
-	public void importClassedModel(
-			ClassedModel classedModel, ClassedModel newClassedModel,
-			String namespace)
 		throws PortalException;
 
 	/**

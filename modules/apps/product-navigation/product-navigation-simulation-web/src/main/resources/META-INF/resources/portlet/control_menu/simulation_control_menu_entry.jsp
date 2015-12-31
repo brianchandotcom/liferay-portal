@@ -28,7 +28,7 @@ data.put("qa-id", "simulation");
 data.put("title", HtmlUtil.escape(LanguageUtil.get(request, "simulation")));
 %>
 
-<li>
+<li class="hidden-xs simulation-menu-toggle">
 	<aui:icon
 		cssClass="control-menu-icon"
 		data="<%= data %>"

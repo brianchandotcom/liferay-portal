@@ -30,7 +30,7 @@ data.put("qa-id", "add");
 data.put("title", HtmlUtil.escape(LanguageUtil.get(request, "add")));
 %>
 
-<li>
+<li class="add-menu-toggle">
 	<aui:icon
 		cssClass="control-menu-icon"
 		data="<%= data %>"

@@ -241,8 +241,8 @@
 		</execute>
 
 		<execute macro="WikiPage#addCP">
-			<var name="wikiPageTitle" value="Wiki Page 1" />
 			<var name="wikiPageContent" value="Wiki Page Content 1" />
+			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -305,8 +305,8 @@
 		</execute>
 
 		<execute macro="WikiPage#addCP">
-			<var name="wikiPageTitle" value="Wiki Page 1" />
 			<var name="wikiPageContent" value="Wiki Page Content 1" />
+			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

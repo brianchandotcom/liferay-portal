@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Set;
 
 import javax.tools.ForwardingJavaFileManager;
@@ -110,7 +111,7 @@ public class BundleJavaFileManager
 			StringBundler sb = new StringBundler(9);
 
 			sb.append("List for {kinds=");
-			sb.append(kinds);
+			sb.append(_kinds);
 			sb.append(", location=");
 			sb.append(location);
 			sb.append(", packageName=");
@@ -138,9 +139,10 @@ public class BundleJavaFileManager
 			}
 		}
 
-		return fileManager.list(location, packagePath, kinds, recurse);
+		return fileManager.list(location, packagePath, _kinds, recurse);
 	}
 
+	private static final Set<Kind> _kinds = EnumSet.of(Kind.CLASS);
 	private static final Field _nameField;
 	private static final Class<?> _zipFileIndexFileObjectClass;
 

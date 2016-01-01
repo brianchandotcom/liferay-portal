@@ -141,12 +141,11 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			bundle, bundleWiring.listResources(path, "*.class", options));
 	}
 
-	protected String getClassName(String resourceName) {
-		if (resourceName.endsWith(".class")) {
-			resourceName = resourceName.substring(0, resourceName.length() - 6);
-		}
+	protected String getClassName(String classResourceName) {
+		classResourceName = classResourceName.substring(
+			0, classResourceName.length() - 6);
 
-		return resourceName.replace(CharPool.SLASH, CharPool.PERIOD);
+		return classResourceName.replace(CharPool.SLASH, CharPool.PERIOD);
 	}
 
 	protected File getFile(URL url) throws IOException {

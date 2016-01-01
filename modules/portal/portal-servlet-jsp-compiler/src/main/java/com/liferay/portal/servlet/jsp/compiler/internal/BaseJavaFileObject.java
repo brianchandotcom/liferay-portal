@@ -36,15 +36,6 @@ public abstract class BaseJavaFileObject implements JavaFileObject {
 	public BaseJavaFileObject(Kind kind, String className) {
 		this.kind = kind;
 		this.className = className;
-
-		int index = className.lastIndexOf('.');
-
-		if (index >= 0) {
-			simpleName = className.substring(index + 1);
-		}
-		else {
-			simpleName = className;
-		}
 	}
 
 	@Override
@@ -78,6 +69,17 @@ public abstract class BaseJavaFileObject implements JavaFileObject {
 
 	@Override
 	public String getName() {
+		int index = className.lastIndexOf('.');
+
+		String simpleName = null;
+
+		if (index >= 0) {
+			simpleName = className.substring(index + 1);
+		}
+		else {
+			simpleName = className;
+		}
+
 		return simpleName.concat(kind.extension);
 	}
 
@@ -88,11 +90,7 @@ public abstract class BaseJavaFileObject implements JavaFileObject {
 
 	@Override
 	public boolean isNameCompatible(String simpleName, Kind kind) {
-		if ((kind == Kind.SOURCE) && this.simpleName.equals(simpleName)) {
-			return true;
-		}
-
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -134,6 +132,5 @@ public abstract class BaseJavaFileObject implements JavaFileObject {
 
 	protected final String className;
 	protected final Kind kind;
-	protected final String simpleName;
 
 }

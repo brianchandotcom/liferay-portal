@@ -1,5 +1,11 @@
 apply plugin: "com.liferay.maven.plugin.builder"
 
+buildPluginDescriptor {
+	ext {
+		autoClean = false
+	}
+}
+
 dependencies {
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion

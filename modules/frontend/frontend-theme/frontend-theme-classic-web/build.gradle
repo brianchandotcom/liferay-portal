@@ -26,7 +26,7 @@ buildTheme {
 	frontendThemeFiles = configurations.frontendThemes
 	themeParent = "_styled"
 	themeRootDir = themeDestinationDir
-	themeTypes = ["ftl", "vm"]
+	themeTypes = ["ftl"]
 }
 
 buildThumbnails {

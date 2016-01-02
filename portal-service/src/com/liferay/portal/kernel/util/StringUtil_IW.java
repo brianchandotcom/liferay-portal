@@ -59,6 +59,15 @@ public class StringUtil_IW {
 		return StringUtil.contains(s, text, delimiter);
 	}
 
+	public boolean containsIgnoreCase(java.lang.String s, java.lang.String text) {
+		return StringUtil.containsIgnoreCase(s, text);
+	}
+
+	public boolean containsIgnoreCase(java.lang.String s,
+		java.lang.String text, java.lang.String delimiter) {
+		return StringUtil.containsIgnoreCase(s, text, delimiter);
+	}
+
 	public int count(java.lang.String s, java.lang.String text) {
 		return StringUtil.count(s, text);
 	}

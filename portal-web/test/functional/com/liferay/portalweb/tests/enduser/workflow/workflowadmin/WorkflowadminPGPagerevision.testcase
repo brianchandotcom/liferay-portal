@@ -55,7 +55,7 @@
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
+			<var name="workflowResourceValue" value="Page Revision" />
 		</execute>
 	</set-up>
 
@@ -370,8 +370,8 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflow">
-			<var name="workflowDefinition" value="Default: No Workflow" />
-			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
+			<var name="workflowDefinition" value="No Workflow" />
+			<var name="workflowResourceValue" value="Page Revision" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

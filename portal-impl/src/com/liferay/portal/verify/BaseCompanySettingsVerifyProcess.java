@@ -73,6 +73,10 @@ public abstract class BaseCompanySettingsVerifyProcess extends VerifyProcess {
 		for (String name : settingsDescriptor.getAllKeys()) {
 			String value = dictionary.get(name);
 
+			if (value == null) {
+				continue;
+			}
+
 			String oldValue = settings.getValue(name, null);
 
 			if (!value.equals(oldValue)) {

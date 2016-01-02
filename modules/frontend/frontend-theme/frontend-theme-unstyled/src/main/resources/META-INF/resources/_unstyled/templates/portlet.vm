@@ -13,12 +13,6 @@
 			<span class="portlet-name-text">$portlet_display_name</span>
 		</div>
 
-		#foreach ($portletTitleMenu in $portlet_toolbar.getPortletTitleMenus($portlet_display_root_portlet_id, $renderRequest))
-			<menu class="portlet-title-menu portlet-topper-toolbar" id="portlet-title-menu_${portlet_id}_${velocityCount}" type="toolbar">
-				#menu($portletTitleMenu)
-			</menu>
-		#end
-
 		<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_$portlet_id" type="toolbar">
 			#if ($portlet_display.isShowBackIcon())
 				<a class="portlet-icon-back" href="$portlet_back_url">#language ("return-to-full-page")</a>

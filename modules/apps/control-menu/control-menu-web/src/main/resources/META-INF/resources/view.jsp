@@ -27,7 +27,7 @@ if (layout != null) {
 }
 %>
 
-<c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() && !controlMenuCategories.isEmpty() %>">
+<c:if test="<%= !controlMenuCategories.isEmpty() %>">
 	<div class="control-menu" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
 		<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && themeDisplay.isShowStagingIcon() %>">
 			<div class="control-menu-level-2">

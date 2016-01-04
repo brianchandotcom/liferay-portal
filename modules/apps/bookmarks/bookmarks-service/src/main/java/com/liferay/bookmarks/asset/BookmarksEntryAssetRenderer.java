@@ -148,6 +148,7 @@ public class BookmarksEntryAssetRenderer
 		portletURL.setParameter(
 			"folderId", String.valueOf(_entry.getFolderId()));
 		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
+		portletURL.setParameter("showFolderSelector", Boolean.TRUE.toString());
 
 		return portletURL;
 	}

@@ -713,20 +713,6 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		Props props = mock(Props.class);
 
 		when(
-			props.get(
-				"dynamic.data.mapping.image.extensions")
-		).thenReturn(
-			".gif,.jpeg,.jpg,.png"
-		);
-
-		when(
-			props.get(
-				"dynamic.data.mapping.image.small.max.size")
-		).thenReturn(
-			"51200"
-		);
-
-		when(
 			props.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN)
 		).thenReturn(
 			"yyyyMMddHHmmss"

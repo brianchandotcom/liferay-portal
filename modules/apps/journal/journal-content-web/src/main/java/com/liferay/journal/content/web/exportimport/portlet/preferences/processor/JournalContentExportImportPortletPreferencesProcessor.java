@@ -157,10 +157,18 @@ public class JournalContentExportImportPortletPreferencesProcessor
 			!defaultDDMTemplateKey.equals(preferenceDDMTemplateKey)) {
 
 			try {
-				DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
-					article.getGroupId(),
+				DDMTemplate ddmTemplate =
+					_ddmTemplateLocalService.fetchTemplate(
+						article.getGroupId(),
 					PortalUtil.getClassNameId(DDMStructure.class),
 					preferenceDDMTemplateKey, true);
+
+				if (ddmTemplate == null) {
+					ddmTemplate = _ddmTemplateLocalService.getTemplate(
+						article.getGroupId(),
+						PortalUtil.getClassNameId(DDMStructure.class),
+						defaultDDMTemplateKey, true);
+				}
 
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, article, ddmTemplate,

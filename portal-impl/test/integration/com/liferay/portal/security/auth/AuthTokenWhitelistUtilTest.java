@@ -180,17 +180,19 @@ public class AuthTokenWhitelistUtilTest {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			TestMVCActionCommand.TEST_PORTLET);
 
-		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
 		String namespace = PortalUtil.getPortletNamespace(
 			TestMVCActionCommand.TEST_PORTLET);
 
-		request.setParameter(
+		mockHttpServletRequest.setParameter(
 			namespace + ActionRequest.ACTION_NAME,
 			TestMVCActionCommand.TEST_MVC_COMMAND_NAME);
 
 		Assert.assertTrue(
-			AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(request, portlet));
+			AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
+				mockHttpServletRequest, portlet));
 	}
 
 	@Test
@@ -198,22 +200,25 @@ public class AuthTokenWhitelistUtilTest {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			TestMVCActionCommand.TEST_PORTLET);
 
-		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
 		String namespace = PortalUtil.getPortletNamespace(
 			TestMVCActionCommand.TEST_PORTLET);
 
-		request.setParameter(
+		mockHttpServletRequest.setParameter(
 			namespace + ActionRequest.ACTION_NAME,
 			TestMVCActionCommand.TEST_MVC_COMMAND_NAME);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 		themeDisplay.setLifecycleAction(true);
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		Assert.assertTrue(
 			AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
-				request, portlet));
+				mockHttpServletRequest, portlet));
 	}
 
 	@Test
@@ -221,22 +226,25 @@ public class AuthTokenWhitelistUtilTest {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			TestMVCRenderCommand.TEST_PORTLET);
 
-		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
 		String namespace = PortalUtil.getPortletNamespace(
 			TestMVCRenderCommand.TEST_PORTLET);
 
-		request.setParameter(
+		mockHttpServletRequest.setParameter(
 			namespace + "mvcRenderCommandName",
 			TestMVCRenderCommand.TEST_MVC_COMMAND_NAME);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 		themeDisplay.setLifecycleRender(true);
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		Assert.assertTrue(
 			AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
-				request, portlet));
+				mockHttpServletRequest, portlet));
 	}
 
 	@Test
@@ -244,20 +252,24 @@ public class AuthTokenWhitelistUtilTest {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			TestMVCResourceCommand.TEST_PORTLET);
 
-		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-		request.setParameter("p_p_id", TestMVCResourceCommand.TEST_PORTLET);
+		mockHttpServletRequest.setParameter(
+			"p_p_id", TestMVCResourceCommand.TEST_PORTLET);
 
-		request.setParameter(
+		mockHttpServletRequest.setParameter(
 			"p_p_resource_id", TestMVCResourceCommand.TEST_MVC_COMMAND_NAME);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 		themeDisplay.setLifecycleResource(true);
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		Assert.assertTrue(
 			AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
-				request, portlet));
+				mockHttpServletRequest, portlet));
 	}
 
 	@Test

@@ -19,6 +19,12 @@
 		<execute function="AssertClick" locator1="Form#PAGE_CONTROLS_ADD_NEW_PAGE" value1="Add new page" />
 	</command>
 
+	<command name="configureWorkflow">
+		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+
+		<execute macro="Button#clickDone" />
+	</command>
+
 	<command name="editDescription">
 		<execute function="Type#typeAceEditor" locator1="Form#DESCRIPTION_FIELD" value1="${formDescription}" />
 	</command>

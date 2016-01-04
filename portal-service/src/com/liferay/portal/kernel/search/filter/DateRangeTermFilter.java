@@ -54,7 +54,7 @@ public class DateRangeTermFilter extends RangeTermFilter {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{(");
 		sb.append(super.toString());

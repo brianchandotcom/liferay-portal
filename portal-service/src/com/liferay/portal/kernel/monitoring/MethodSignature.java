@@ -106,7 +106,7 @@ public class MethodSignature {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{className=");
 		sb.append(_className);

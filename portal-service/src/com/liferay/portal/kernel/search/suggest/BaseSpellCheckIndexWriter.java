@@ -192,10 +192,10 @@ public abstract class BaseSpellCheckIndexWriter
 		uidSB.append(Field.SPELL_CHECK_WORD);
 		uidSB.append(StringPool.UNDERLINE);
 
-		int length = 4;
+		int length = 5;
 
 		if (parameters != null) {
-			length += parameters.length;
+			length += 2 * parameters.length;
 		}
 
 		try {

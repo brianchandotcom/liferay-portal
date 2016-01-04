@@ -35,7 +35,7 @@ public abstract class AbstractDevice implements Device {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{brand=");
 		sb.append(getBrand());

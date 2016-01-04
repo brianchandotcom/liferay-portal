@@ -80,6 +80,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, rootBreadcrumbEntry, redirect);
 PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 %>
 
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.get(request, "add-assignees") %>' url="javascript:;" />
+</liferay-frontend:add-menu>
+
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item href="<%= portletURL.toString() %>" label="assignees" selected="<%= true %>" />
@@ -162,7 +166,38 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 	</c:choose>
 </aui:form>
 
-<aui:script>
+<aui:script use="liferay-item-selector-dialog">
+	<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/select_assignees.jsp" />
+		<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
+	</portlet:renderURL>
+
+	$('#<portlet:namespace />addUsers').on(
+		'click',
+		function(event) {
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectUsers',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							if (selectedItem) {
+								form.fm('addUserIds').val(selectedItem.value);
+
+								submitForm(form, '<portlet:actionURL name="editUserGroupAssignments" />');
+							}
+						}
+					},
+					title: '<liferay-ui:message arguments="<%= role.getName() %>" key="add-users-to-x" />',
+					url: '<%= selectUsersURL %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+
 	function <portlet:namespace />updateRoleGroups(assignmentsRedirect) {
 		var Util = Liferay.Util;
 

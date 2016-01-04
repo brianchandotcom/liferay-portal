@@ -65,11 +65,5 @@ OrganizationRoleChecker rowChecker = new OrganizationRoleChecker(renderResponse,
 		<%@ include file="/organization_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<%
-	String taglibOnClick = renderResponse.getNamespace() + "updateRoleGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-	%>
-
-	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
 	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>

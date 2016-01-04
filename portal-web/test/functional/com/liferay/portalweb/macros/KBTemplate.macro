@@ -21,8 +21,10 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
 		</execute>
 
 		<execute function="AssertClick" locator1="KnowledgeBase#ADMIN_TABS_TEMPLATES" value1="Templates" />

@@ -39,8 +39,10 @@
 
 		<execute macro="Portlet#startServer" />
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
 		</execute>
 	</command>
 </definition>

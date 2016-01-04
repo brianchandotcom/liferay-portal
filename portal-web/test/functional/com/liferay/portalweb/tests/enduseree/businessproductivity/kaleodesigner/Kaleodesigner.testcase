@@ -1632,8 +1632,10 @@
 	<command name="ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin" priority="4">
 		<description message="This is a use case for LPS-47352 and LPS-48912." />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Kaleo Forms Admin" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addProcess" />

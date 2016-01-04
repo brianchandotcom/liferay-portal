@@ -38,8 +38,10 @@
 	<command name="AddDefinitionNoTemplate" priority="4">
 		<description message="This is a use case for LPS-51226." />
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Reports Admin" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -52,8 +54,10 @@
 	</command>
 
 	<command name="DownloadReportPG" priority="4">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Reports Admin" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -93,8 +97,10 @@
 	<command name="ViewDefinitionsPagination" priority="4">
 		<description message="This is a use case for LPS-50501." />
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Reports Admin" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<for list="1,2,3,4,5,6" param="number">
@@ -147,8 +153,10 @@
 			<var name="userPassword" value="${emailPassword1}" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Reports Admin" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoConfiguration" />
@@ -182,8 +190,10 @@ Thanks,<br/>
 [$FROM_ADDRESS$]			<br/>]]>			</var>
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Reports Admin" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -251,16 +261,20 @@ Thanks,<br/>
 
 		<execute function="Open" locator1="http://localhost:8080" />
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Reports Admin" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#tearDownConfiguration" />
 	</command>
 
 	<command name="ViewReportPG" priority="4">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Reports Admin" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />

@@ -397,8 +397,10 @@
 		</execute>
 
 		<for list="first tag,second tag,third tag" param="tagName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Tags" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Tags" />
 			</execute>
 
 			<execute macro="Tag#addCP">
@@ -487,8 +489,10 @@
 		</execute>
 
 		<for list="first tag,second tag,third tag" param="tagName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Tags" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Tags" />
 			</execute>
 
 			<execute macro="Tag#addCP">
@@ -556,8 +560,10 @@
 		</execute>
 
 		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Tags" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Tags" />
 			</execute>
 
 			<execute macro="Tag#addCP">
@@ -928,8 +934,10 @@
 		</execute>
 
 		<for list="first tag,second tag,third tag" param="tagName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Tags" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Tags" />
 			</execute>
 
 			<execute macro="Tag#addCP">

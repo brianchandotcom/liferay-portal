@@ -135,8 +135,10 @@
 			<var name="wikiPageRevision" value="1.0" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Spam Moderation" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Spam Moderation" />
 		</execute>
 
 		<execute macro="SpamModerationPortlet#navigateToWikis" />
@@ -148,8 +150,10 @@
 			<var name="wikiPageUsername" value="userfn userln" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Spam Moderation" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Spam Moderation" />
 		</execute>
 
 		<execute macro="SpamModerationPortlet#viewDefault">
@@ -276,8 +280,10 @@
 			<var name="wikiPageRevision" value="1.0" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Spam Moderation" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Spam Moderation" />
 		</execute>
 
 		<execute macro="SpamModerationPortlet#navigateToWikis" />

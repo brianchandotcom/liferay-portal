@@ -40,8 +40,10 @@
 		<var name="entryTitle3" value="Blogs Entry3 Title" />
 
 		<task summary="Add a blogs entry called '${entryTitle1}' with content '${entryContent1}'">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Blogs" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Blogs" />
 			</execute>
 
 			<execute macro="Blogs#addEntry">
@@ -51,8 +53,10 @@
 		</task>
 
 		<task summary="Add a blogs entry called '${entryTitle2}' with content '${entryContent2}'">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Blogs" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Blogs" />
 			</execute>
 
 			<execute macro="Blogs#addEntry">
@@ -62,8 +66,10 @@
 		</task>
 
 		<task summary="Add a blogs entry called '${entryTitle3}' with content '${entryContent3}'">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Blogs" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Blogs" />
 			</execute>
 
 			<execute macro="Blogs#addEntry">
@@ -73,8 +79,10 @@
 		</task>
 
 		<task summary="Ensure blogs entry '${entryTitle1}' with content '${entryContent1}' can be found">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Blogs" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Blogs" />
 			</execute>
 
 			<execute macro="BlogsNavigator#gotoEntryCP">
@@ -88,8 +96,10 @@
 		</task>
 
 		<task summary="Ensure blogs entry '${entryTitle2}' with content '${entryContent2}' can be found">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Blogs" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Blogs" />
 			</execute>
 
 			<execute macro="BlogsNavigator#gotoEntryCP">
@@ -103,8 +113,10 @@
 		</task>
 
 		<task summary="Ensure blogs entry '${entryTitle3}' with content '${entryContent3}' can be found">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Blogs" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Blogs" />
 			</execute>
 
 			<execute macro="BlogsNavigator#gotoEntryCP">
@@ -263,8 +275,10 @@
 		<var name="blogsEntryCounterList" value="1,2,3" />
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Blogs" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Blogs" />
 			</execute>
 
 			<execute macro="Blogs#addEntry">
@@ -274,8 +288,10 @@
 		</for>
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Blogs" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Blogs" />
 			</execute>
 
 			<execute macro="BlogsNavigator#gotoEntryCP">
@@ -290,8 +306,10 @@
 		</for>
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Blogs" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Blogs" />
 			</execute>
 
 			<execute macro="BlogsNavigator#moveToRecycleBinCP">

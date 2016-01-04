@@ -10,8 +10,10 @@
 
 		<var name="appName" value="Message Boards Subscription Manager" />
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Message Boards Subscription Manager" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Message Boards Subscription Manager" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelApps">

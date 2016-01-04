@@ -307,8 +307,10 @@
 		<var name="font" value="5" />
 		<var name="portletName" value="Message Boards" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="${portletName}" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#configureGeneralCP">
@@ -316,8 +318,10 @@
 			<var name="messageFormatBBCodeEnabled" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="${portletName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -328,8 +332,10 @@
 
 		<execute macro="MessageboardsThread#assertAlertNotPresent" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="${portletName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
@@ -338,8 +344,10 @@
 			<var name="threadSubject" value="New Thread Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="${portletName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -349,8 +357,10 @@
 			<var name="threadSubject" value="New Thread Subject 2" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="${portletName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
@@ -366,8 +376,10 @@
 		<var name="threadReplyBody" value="Thread Reply Body" />
 		<var name="threadSubject" value="New Thread Subject" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="${portletName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewMarkAsQuestionNotCheckedCP" />
@@ -376,8 +388,10 @@
 			<var name="threadAsQuestionByDefaultEnabled" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="${portletName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewMarkAsQuestionCheckedCP" />
@@ -387,8 +401,10 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="${portletName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#replyCP">
@@ -398,8 +414,10 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="${portletName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewAnswerCP">

@@ -26,8 +26,10 @@
 			<var name="portletName" value="OpenSocial Gadget" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="OpenSocial Gadget Editor" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="OpenSocial Gadget Editor" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelApps">

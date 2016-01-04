@@ -143,8 +143,10 @@
 	</command>
 
 	<command name="gotoMentionsViaSiteSettings">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Site Settings" />
 		</execute>
 
 		<execute function="AssertClick" locator1="NavListItem#MENTIONS" value1="Mentions" />

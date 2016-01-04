@@ -846,8 +846,10 @@
 			<var name="userScreenName" value="test1test" />
 		</execute>
 
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Memberships" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesUsers">
+			<var name="portlet" value="Site Memberships" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -1543,8 +1545,10 @@
 				<var name="vocabularyName" value="Vocabulary Name" />
 			</execute>
 
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 		</for>
 
@@ -1589,8 +1593,10 @@
 
 	<command name="ViewMultipleVocabulariesViaAddWebContent" priority="4">
 		<for list="Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5" param="vocabularyName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Categories" />
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Categories" />
 			</execute>
 
 			<execute macro="Vocabulary#addCP">

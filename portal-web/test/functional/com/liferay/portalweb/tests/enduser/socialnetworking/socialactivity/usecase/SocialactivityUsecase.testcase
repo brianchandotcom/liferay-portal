@@ -75,8 +75,10 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Social Activity" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Social Activity" />
 		</execute>
 
 		<execute macro="SocialActivity#enableCP" />
@@ -339,8 +341,10 @@
 			<var name="language" value="English (United States)" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Social Activity" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Social Activity" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

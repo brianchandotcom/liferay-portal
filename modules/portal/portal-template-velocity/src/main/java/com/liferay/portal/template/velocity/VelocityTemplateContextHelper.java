@@ -18,7 +18,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -79,25 +78,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
-
-			// Init
-
-			contextObjects.put(
-				"init",
-				themeDisplay.getPathContext() +
-					TemplateConstants.SERVLET_SEPARATOR +
-						"/classic/templates/init.vm");
-		}
-
-		// Theme
-
-		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
-
-		if ((theme == null) && (themeDisplay != null)) {
-			theme = themeDisplay.getTheme();
-		}
-
-		if (theme != null) {
+			Theme theme = themeDisplay.getTheme();
 
 			// Full css and templates path
 
@@ -109,10 +90,15 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 				servletContextName + theme.getVelocityResourceListener() +
 					theme.getCssPath());
 
-			contextObjects.put(
-				"fullTemplatesPath",
+			String fullTemplatesPath =
 				servletContextName + theme.getVelocityResourceListener() +
-					theme.getTemplatesPath());
+					theme.getTemplatesPath();
+
+			contextObjects.put("fullTemplatesPath", fullTemplatesPath);
+
+			// Init
+
+			contextObjects.put("init", fullTemplatesPath + "/init.vm");
 		}
 
 		// Insert custom vm variables

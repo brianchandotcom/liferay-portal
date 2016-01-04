@@ -188,33 +188,6 @@
 		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
 	</command>
 
-	<command name="flagAllDisplaySettingsCheckboxes">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="Configuration#SETUP_DISPLAY_SETTINGS" />
-			<then>
-				<execute function="AssertClick" locator1="Configuration#SETUP_DISPLAY_SETTINGS" value1="Display Settings" />
-			</then>
-		</if>
-
-		<execute function="Check" locator1="Checkbox#ENABLE_PRINT" />
-		<execute function="Check" locator1="Checkbox#ENABLE_FLAGS" />
-		<execute function="Check" locator1="Checkbox#ENABLE_RELATED_ASSETS" />
-		<execute function="Check" locator1="Checkbox#ENABLE_RATINGS" />
-		<execute function="Check" locator1="Checkbox#ENABLE_COMMENTS" />
-		<execute function="Check" locator1="Checkbox#ENABLE_COMMENT_RATINGS" />
-		<execute function="Check" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
-		<execute function="SelectFrameTop" value1="relative=top" />
-	</command>
-
 	<command name="gotoPortletOptions">
 		<if>
 			<isset var="portletName" />

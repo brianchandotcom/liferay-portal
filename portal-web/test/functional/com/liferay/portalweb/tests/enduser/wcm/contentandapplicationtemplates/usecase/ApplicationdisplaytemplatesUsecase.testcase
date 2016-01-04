@@ -223,7 +223,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Portlet#flagAllDisplaySettingsCheckboxes" />
+		<execute macro="AssetPublisherPortlet#configureFlagAllDisplaySettingsCheckboxes" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />

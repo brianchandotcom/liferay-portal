@@ -93,6 +93,10 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 			_log.debug("Sanitizing " + className + "#" + classPK);
 		}
 
+		if (s == null) {
+			return null;
+		}
+
 		if (Validator.isNull(contentType) ||
 			!contentType.equals(ContentTypes.TEXT_HTML)) {
 

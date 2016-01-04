@@ -218,12 +218,12 @@
 	</command>
 
 	<command name="deletePG">
-		<var name="key_assetEntry" value="${bookmarkName}" />
 		<var name="key_assetName" value="${bookmarkName}" />
+		<var name="key_rowEntry" value="${bookmarkName}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
@@ -241,9 +241,9 @@
 	<command name="editCP">
 		<var name="bookmarkName" value="${bookmarkName}" />
 		<var name="bookmarkURL" value="${bookmarkURL}" />
-		<var name="key_assetEntry" value="${bookmarkName}" />
+		<var name="key_rowEntry" value="${bookmarkName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -271,9 +271,9 @@
 	<command name="editPG">
 		<var name="bookmarkName" value="${bookmarkName}" />
 		<var name="bookmarkURL" value="${bookmarkURL}" />
-		<var name="key_assetEntry" value="${bookmarkName}" />
+		<var name="key_rowEntry" value="${bookmarkName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -309,9 +309,9 @@
 			</then>
 		</if>
 
-		<var name="key_assetEntry" value="${bookmarkName}" />
+		<var name="key_rowEntry" value="${bookmarkName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -346,9 +346,9 @@
 			</then>
 		</if>
 
-		<var name="key_assetEntry" value="${bookmarkName}" />
+		<var name="key_rowEntry" value="${bookmarkName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -391,9 +391,9 @@
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
 
-		<var name="key_assetEntry" value="${bookmarkName}" />
+		<var name="key_rowEntry" value="${bookmarkName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
@@ -404,7 +404,7 @@
 	<command name="moveToRecycleBinPG">
 		<var name="key_assetName" value="${bookmarkName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 

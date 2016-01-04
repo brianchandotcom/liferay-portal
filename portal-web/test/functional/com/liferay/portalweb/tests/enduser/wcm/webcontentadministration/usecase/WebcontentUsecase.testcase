@@ -141,8 +141,8 @@
 
 		<execute macro="WebContentTemplates#save" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS">
-			<var name="key_listEntry" value="WC Template Name" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="WC Template Name" />
 		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />

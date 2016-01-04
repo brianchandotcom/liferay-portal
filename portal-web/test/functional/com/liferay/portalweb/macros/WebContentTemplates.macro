@@ -67,9 +67,9 @@
 	</command>
 
 	<command name="addRoleViewPermissions">
-		<var name="key_listEntry" value="${templateName}" />
+		<var name="key_rowEntry" value="${templateName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 

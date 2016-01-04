@@ -115,12 +115,12 @@
 	</command>
 
 	<command name="deletePG">
-		<var name="key_assetEntry" value="${folderName}" />
 		<var name="key_assetName" value="${folderName}" />
+		<var name="key_rowEntry" value="${folderName}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
@@ -136,9 +136,9 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_assetEntry" value="${folderName}" />
+		<var name="key_rowEntry" value="${folderName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -156,9 +156,9 @@
 	</command>
 
 	<command name="editPG">
-		<var name="key_assetEntry" value="${folderName}" />
+		<var name="key_rowEntry" value="${folderName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -176,16 +176,16 @@
 	</command>
 
 	<command name="editSubfolderCP">
-		<var name="key_assetEntry" value="${folderName}" />
 		<var name="key_assetName" value="${folderName}" />
+		<var name="key_rowEntry" value="${folderName}" />
 
 		<execute function="AssertClick" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${folderName}" />
 
-		<var name="key_assetEntry" value="${subfolderName}" />
+		<var name="key_rowEntry" value="${subfolderName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -248,9 +248,9 @@
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${folderName}" />
 
-		<var name="key_assetEntry" value="${subfolderName}" />
+		<var name="key_rowEntry" value="${subfolderName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -290,9 +290,9 @@
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
 
-		<var name="key_assetEntry" value="${folderName}" />
+		<var name="key_rowEntry" value="${folderName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
@@ -305,7 +305,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#DESCRIPTIVE_ENTRY_DESCRIPTION" value1="${folderDescription}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#SUBSCRIBE" value1="Subscribe" />
 

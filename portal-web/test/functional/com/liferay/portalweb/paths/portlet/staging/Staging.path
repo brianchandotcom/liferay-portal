@@ -97,12 +97,12 @@
 </tr>
 <tr>
 	<td>PAGE_VARIATION</td>
-	<td>//span[contains(.,'${key_pageVariationName}')]</td>
+	<td>//a[contains(.,'${key_pageVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATION</td>
-	<td>//div[contains(@class,'layout-set-branch-selector')]/a//span[contains(.,'${key_sitePagesVariationName}')]</td>
+	<td>//a[contains(@class,'layout-set-branch-selector')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>MANAGE_VARIATIONS</td>
-	<td>//a[contains(@id,'manageLayoutSetBranches')]</td>
+	<td>//a[contains(@id,'manageLayoutSetRevisions')]</td>
 	<td></td>
 </tr>
 <tr>

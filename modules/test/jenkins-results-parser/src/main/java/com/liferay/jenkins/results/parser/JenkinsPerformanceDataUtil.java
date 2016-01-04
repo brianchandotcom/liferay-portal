@@ -246,6 +246,12 @@ public class JenkinsPerformanceDataUtil {
 			JSONObject childReportJSONObject =
 				childReportsJSONArray.getJSONObject(i);
 
+			if (!childReportJSONObject.has("child") ||
+				childReportJSONObject.isNull("child")) {
+
+				throw new IllegalArgumentException("Child is not available.");
+			}
+
 			JSONObject childJSONObject = childReportJSONObject.getJSONObject(
 				"child");
 

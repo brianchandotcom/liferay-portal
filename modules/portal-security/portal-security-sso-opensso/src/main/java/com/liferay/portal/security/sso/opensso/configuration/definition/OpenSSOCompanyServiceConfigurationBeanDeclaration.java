@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.opensso.module.configuration.definition;
+package com.liferay.portal.security.sso.opensso.configuration.definition;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
-import com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component
-public class OpenSSOCompanyServiceConfigurationPidMapping
-	implements ConfigurationPidMapping {
+public class OpenSSOCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return OpenSSOConfiguration.class;
-	}
-
-	@Override
-	public String getConfigurationPid() {
-		return OpenSSOConstants.SERVICE_NAME;
 	}
 
 }

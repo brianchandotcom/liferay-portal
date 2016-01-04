@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.opensso.auto.login;
+package com.liferay.portal.security.sso.opensso.internal.auto.login;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -34,8 +34,8 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
+import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
-import com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Prashant Dighe
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
 	immediate = true, service = AutoLogin.class
 )
 public class OpenSSOAutoLogin extends BaseAutoLogin {

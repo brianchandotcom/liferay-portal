@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.opensso;
+package com.liferay.portal.security.sso.opensso.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration;
+import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
 
 import java.util.Map;
 
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
 	immediate = true, service = SSO.class
 )
 public class SSOImpl implements SSO {

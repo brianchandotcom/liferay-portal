@@ -167,7 +167,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:renderURL var="selectAssigneesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/select_assignees.jsp" />
 		<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
 	</portlet:renderURL>
@@ -185,12 +185,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 							if (selectedItem) {
 								form.fm('addUserIds').val(selectedItem.value);
 
-								submitForm(form, '<portlet:actionURL name="editUserGroupAssignments" />');
+								submitForm(form, '<%= editRoleAssignmentsURL %>');
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= role.getName() %>" key="add-users-to-x" />',
-					url: '<%= selectUsersURL %>'
+					title: '<liferay-ui:message arguments="<%= role.getName() %>" key="add-assignees-to-x" />',
+					url: '<%= selectAssigneesURL %>'
 				}
 			);
 

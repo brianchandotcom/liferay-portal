@@ -208,7 +208,7 @@ public class DDMPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		ddmWebConfiguration = Configurable.createConfigurable(
+		this.ddmWebConfiguration = Configurable.createConfigurable(
 			DDMWebConfiguration.class, properties);
 	}
 
@@ -261,8 +261,8 @@ public class DDMPortlet extends MVCPortlet {
 		}
 	}
 
-	protected DDMStructureLocalService ddmStructureLocalService;
-	protected DDMTemplateLocalService ddmTemplateLocalService;
+	protected volatile DDMStructureLocalService ddmStructureLocalService;
+	protected volatile DDMTemplateLocalService ddmTemplateLocalService;
 	protected volatile DDMWebConfiguration ddmWebConfiguration;
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMPortlet.class);

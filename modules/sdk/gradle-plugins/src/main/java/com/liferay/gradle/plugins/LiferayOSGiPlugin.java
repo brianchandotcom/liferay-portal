@@ -627,6 +627,10 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 				}
 
 				_classPathReferences.add(file);
+
+				if (_logger.isInfoEnabled()) {
+					_logger.info("CLASSPATH: {}", file.getAbsolutePath());
+				}
 			}
 
 			return super.withClasspath(list.toArray(new File[list.size()]));
@@ -648,6 +652,10 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 				}
 
 				_classPathReferences.add(file);
+
+				if (_logger.isInfoEnabled()) {
+					_logger.info("RESOURCE: {}", file.getAbsolutePath());
+				}
 			}
 
 			return super.withResources(list.toArray(new File[list.size()]));

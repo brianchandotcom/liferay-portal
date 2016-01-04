@@ -1,12 +1,12 @@
 <definition>
 	<command name="_tearDownWorkflow">
-		<var name="key_listEntry" value="Knowledge Base Article" />
+		<var name="key_rowEntry" value="Knowledge Base Article" />
 		<var name="noWorkflow" value="No Workflow" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+			<condition function="IsElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 			<then>
-				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 				<execute function="Click" locator1="MenuItem#EDIT" />
 
 				<var name="key_workflowResourceValue" value="Knowledge Base Article" />
@@ -18,9 +18,9 @@
 		</if>
 
 		<for list="Blogs Entry,Calendar Event,Comments,Message Boards Message,Page Revision,Wiki Page" param="workflowResourceValue">
-			<var name="key_listEntry" value="${workflowResourceValue}" />
+			<var name="key_rowEntry" value="${workflowResourceValue}" />
 
-			<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+			<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 			<execute function="Click" locator1="MenuItem#EDIT" />
 
@@ -245,9 +245,9 @@
 	</command>
 
 	<command name="configureWorkflow">
-		<var name="key_listEntry" value="${workflowResourceValue}" />
+		<var name="key_rowEntry" value="${workflowResourceValue}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
@@ -498,10 +498,10 @@
 
 		<execute macro="Workflow#_tearDownWorkflow" />
 
-		<var name="key_listEntry" value="User" />
+		<var name="key_rowEntry" value="User" />
 		<var name="noWorkflow" value="No Workflow" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="MenuItem#EDIT" />
 

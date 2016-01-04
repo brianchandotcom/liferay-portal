@@ -1,8 +1,8 @@
 <definition>
 	<command name="editConfiguration">
-		<var name="key_assetEntry" value="${configurationName}" />
+		<var name="key_rowEntry" value="${configurationName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
@@ -18,9 +18,9 @@
 			<var name="category" value="${category}" />
 		</execute>
 
-		<var name="key_assetEntry" value="${configurationName}" />
+		<var name="key_rowEntry" value="${configurationName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#RESET_DEFAULT_VALUES" value1="Reset Default Values" />
 
@@ -28,16 +28,16 @@
 	</command>
 
 	<command name="viewPlatformSettingCP">
-		<var name="key_assetEntry" value="${configurationName}" />
+		<var name="key_rowEntry" value="${configurationName}" />
 
 		<while>
-			<condition function="IsElementNotPresent" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+			<condition function="IsElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 			<then>
 				<execute function="Click" locator1="Pagination#NEXT_LINK" />
 			</then>
 		</while>
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 

@@ -195,18 +195,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CARD_VERTICAL_ELLIPSIS</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DESCRIPTIVE_HEADER_VERTICAL_ELLIPSIS</td>
 	<td>//h2[contains(.,'${key_assetHeader}')]//..//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DESCRIPTIVE_VERTICAL_ELLIPSIS</td>
-	<td>//li[@data-title='${key_assetEntry}']//span/*[name()='svg'][contains(@class,'icon-ellipsis')] | //div[contains(@class,'entry-display') and contains(.,'${key_assetEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')] | //div[contains(@class,'entry-title') and contains(.,'${key_assetEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')] | //li[contains(.,'${key_assetEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')] | //tr[contains(.,'${key_assetEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -215,8 +205,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_VERTICAL_ELLIPSIS</td>
-	<td>//tr[td[contains(.,'${key_listEntry}')]]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>ROW_VERTICAL_ELLIPSIS</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROW_VERTICAL_ELLIPSIS_N</td>
+	<td>xpath=(//*[@data-qa-id='row']//span/*[name()='svg'][contains(@class,'icon-ellipsis')])[${key_rowIndexNumber}]</td>
 	<td></td>
 </tr>
 </tbody>

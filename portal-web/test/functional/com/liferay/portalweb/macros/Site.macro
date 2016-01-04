@@ -696,9 +696,9 @@
 					<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 					<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
 
-					<var name="key_listEntry" value="${siteName}" />
+					<var name="key_rowEntry" value="${siteName}" />
 
-					<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+					<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 					<execute function="AssertClick" locator1="MenuItem#REQUEST_MEMBERSHIP" value1="Request Membership" />
 
@@ -720,9 +720,9 @@
 				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
 
-				<var name="key_listEntry" value="${siteName}" />
+				<var name="key_rowEntry" value="${siteName}" />
 
-				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 				<execute function="AssertClick" locator1="MenuItem#JOIN" value1="Join" />
 
@@ -730,7 +730,7 @@
 				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
 
-				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 				<execute function="AssertVisible" locator1="MenuItem#LEAVE" />
 			</else>
@@ -754,9 +754,9 @@
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
 
-		<var name="key_listEntry" value="${siteName}" />
+		<var name="key_rowEntry" value="${siteName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#LEAVE" value1="Leave" />
 
@@ -764,7 +764,7 @@
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertVisible" locator1="MenuItem#JOIN" />
 	</command>
@@ -817,9 +817,9 @@
 
 		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
 
-		<var name="key_cardEntry" value="${key_cardText}" />
+		<var name="key_rowEntry" value="${key_cardText}" />
 
-		<execute function="Click" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#REMOVE_MEMBERSHIP" value1="Remove Membership" />
 
@@ -1148,9 +1148,9 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
 
-		<var name="key_cardEntry" value="${key_cardText}" />
+		<var name="key_rowEntry" value="${key_cardText}" />
 
-		<execute function="AssertVisible" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
+		<execute function="AssertVisible" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 	</command>
 
 	<command name="viewMemberListCP">

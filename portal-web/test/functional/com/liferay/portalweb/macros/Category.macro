@@ -3,9 +3,9 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<var name="key_listEntry" value="${vocabularyName}" />
+		<var name="key_rowEntry" value="${vocabularyName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
@@ -34,9 +34,9 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<var name="key_listEntry" value="${vocabularyName}" />
+		<var name="key_rowEntry" value="${vocabularyName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
@@ -84,9 +84,9 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<var name="key_listEntry" value="${vocabularyName}" />
+		<var name="key_rowEntry" value="${vocabularyName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
@@ -111,9 +111,9 @@
 				<execute function="AssertClick" locator1="Categories#ADD_CATEGORY_BUTTON" value1="Add Category" />
 			</then>
 			<else>
-				<var name="key_listEntry" value="${vocabularyName}" />
+				<var name="key_rowEntry" value="${vocabularyName}" />
 
-				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 			</else>
 		</if>
@@ -135,9 +135,9 @@
 	<command name="addWithNullTitleCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<var name="key_listEntry" value="${vocabularyName}" />
+		<var name="key_rowEntry" value="${vocabularyName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1=" " />
@@ -176,9 +176,9 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
-		<var name="key_listEntry" value="${categoryName}" />
+		<var name="key_rowEntry" value="${categoryName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -193,9 +193,9 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_CATEGORY" value1="${categoryName}" />
 
-		<var name="key_listEntry" value="${categoryName}" />
+		<var name="key_rowEntry" value="${categoryName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute macro="Panel#expandPanel">
@@ -229,9 +229,9 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_CATEGORY" value1="${categoryName}" />
 
-		<var name="key_listEntry" value="${categoryName}" />
+		<var name="key_rowEntry" value="${categoryName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryNameEdit}" />
@@ -253,9 +253,9 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
-		<var name="key_listEntry" value="${categoryName}" />
+		<var name="key_rowEntry" value="${categoryName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryNameEdit}" />
@@ -270,9 +270,9 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
-		<var name="key_listEntry" value="${categoryName}" />
+		<var name="key_rowEntry" value="${categoryName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="Select" locator1="CategoriesEditCategory#VOCABULARY_SELECT" value1="${vocabularyName2}" />
@@ -299,9 +299,9 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
-		<var name="key_listEntry" value="${categoryName}" />
+		<var name="key_rowEntry" value="${categoryName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute macro="Panel#expandPanel">
@@ -348,9 +348,9 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
-		<var name="key_listEntry" value="${categoryName}" />
+		<var name="key_rowEntry" value="${categoryName}" />
 
-		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="AssetPermissions#IFRAME" />

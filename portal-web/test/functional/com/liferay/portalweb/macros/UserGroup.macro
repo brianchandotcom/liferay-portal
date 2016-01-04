@@ -154,9 +154,9 @@
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 
-		<var name="key_assetEntry" value="${userGroupName}" />
+		<var name="key_rowEntry" value="${userGroupName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
@@ -190,9 +190,9 @@
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
-		<var name="key_assetEntry" value="${userGroupName}" />
+		<var name="key_rowEntry" value="${userGroupName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
@@ -212,9 +212,9 @@
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
-		<var name="key_assetEntry" value="${userGroupName}" />
+		<var name="key_rowEntry" value="${userGroupName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
@@ -335,9 +335,9 @@
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
-		<var name="key_assetEntry" value="${userGroupName}" />
+		<var name="key_rowEntry" value="${userGroupName}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm.servlet.filter;
+package com.liferay.portal.security.sso.ntlm.internal.servlet.filter;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
@@ -32,7 +32,7 @@ import com.liferay.portal.security.sso.ntlm.NtlmManager;
 import com.liferay.portal.security.sso.ntlm.NtlmUserAccount;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmWebKeys;
-import com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration;
+import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.Map;
@@ -88,7 +88,7 @@ import org.osgi.service.component.annotations.Reference;
  * authentication is successful and the request attribute
  * <code>NTLM_REMOTE_USER</code> is set equal to the username (known as screen
  * name in Liferay terminology), in preparation for the
- * {@link com.liferay.portal.security.sso.ntlm.auto.login.NTLMAutoLogin} class
+ * {@link com.liferay.portal.security.sso.ntlm.internal.auto.login.NTLMAutoLogin} class
  * to log the user in (see above).
  * </li>
  *
@@ -100,7 +100,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration",
 	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",

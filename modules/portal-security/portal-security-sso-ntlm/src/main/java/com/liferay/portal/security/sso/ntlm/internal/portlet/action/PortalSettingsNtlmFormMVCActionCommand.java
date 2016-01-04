@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm.portlet.action;
+package com.liferay.portal.security.sso.ntlm.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm.servlet.filter;
+package com.liferay.portal.security.sso.ntlm.internal.servlet.filter;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
-import com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration;
+import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.util.PortalInstances;
 
 import javax.servlet.Filter;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration",
 	immediate = true,
 	property = {
 		"servlet-context-name=", "servlet-filter-name=SSO Ntlm Post Filter",

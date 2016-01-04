@@ -15,8 +15,6 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -321,7 +319,7 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	}
 
 	protected ServiceTracker<Object, Object> trackWhitelistServices(
-		String whitelistName, Class serviceClass, Set whiteList) {
+		String whitelistName, Class serviceClass, Set<String> whiteList) {
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -329,15 +327,12 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			registry.getFilter(
 				"(&(&(" + whitelistName + "=*)(javax.portlet.name=*))" +
 				"(objectClass=" + serviceClass.getName() + "))"),
-			new TokenWhitelistTrackerCustomizer(whitelistName, whiteList));
+			new TokenWhitelistTrackerCustomizer(whiteList));
 
 		serviceTracker.open();
 
 		return serviceTracker;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MVCPortletAuthTokenWhitelist.class);
 
 	private final ServiceTracker<Object, Object> _csrfTokenServiceTracker;
 	private final Set<String> _portletCSRFWhitelistActions =
@@ -358,10 +353,7 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	private class TokenWhitelistTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {
 
-		public TokenWhitelistTrackerCustomizer(
-			String whitelistName, Set whitelist) {
-
-			_whitelistName = whitelistName;
+		public TokenWhitelistTrackerCustomizer(Set<String> whitelist) {
 			_whitelist = whitelist;
 		}
 
@@ -410,8 +402,7 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			}
 		}
 
-		private final Set _whitelist;
-		private final String _whitelistName;
+		private final Set<String> _whitelist;
 
 	}
 

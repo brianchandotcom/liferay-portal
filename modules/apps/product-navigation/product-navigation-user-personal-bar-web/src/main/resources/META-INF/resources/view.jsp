@@ -39,7 +39,7 @@
 			%>
 
 			<c:if test="<%= notificationsCount > 0 %>">
-				<span class="panel-notifications-count sticker sticker-outside sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
+				<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
 			</c:if>
 		</liferay-util:buffer>
 

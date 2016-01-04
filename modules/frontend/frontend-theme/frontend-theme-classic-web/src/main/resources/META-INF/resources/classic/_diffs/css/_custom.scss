@@ -126,7 +126,12 @@ body {
 
 		.panel-notifications-count {
 			top: 50%;
-			transform: translateY(-50%);
+
+			@include transform(translateY(-50%));
+
+			@include sm {
+    			right: -15px;
+			}
 		}
 
 		.sign-in > a, .user-avatar-link {

@@ -349,7 +349,11 @@
 #set ($body_top_include = "$dir_include/common/themes/body_top.jsp")
 #set ($bottom_include = "$dir_include/common/themes/bottom.jsp")
 #set ($bottom_ext_include = $bottom_include)
-#set ($content_include = "$dir_include$tilesContent")
+
+#if ($tilesContent)
+	#set ($content_include = "$dir_include$tilesContent")
+#end
+
 #set ($top_head_include = "$dir_include/common/themes/top_head.jsp")
 #set ($top_messages_include = "$dir_include/common/themes/top_messages.jsp")
 

@@ -558,7 +558,7 @@
 		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
-		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
+		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
 	</command>
 
 	<command name="gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG">
@@ -567,8 +567,8 @@
 		<var name="key_kbGrandchildArticleTitle" value="${kbGrandchildArticleTitle}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
-		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
-		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_GRANDCHILD" value1="${kbGrandchildArticleTitle}" />
+		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
+		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_GRANDCHILD" value1="${kbGrandchildArticleTitle}" />
 	</command>
 
 	<command name="gotoNextArticlePG">
@@ -1051,7 +1051,7 @@
 					<then>
 						<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 
-						<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
+						<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
 					</then>
 				</if>
 			</then>
@@ -1062,7 +1062,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${key_kbChildArticleTitle}" />
+		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${key_kbChildArticleTitle}" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbChildArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_CONTENT" value1="${kbChildArticleContent}" />

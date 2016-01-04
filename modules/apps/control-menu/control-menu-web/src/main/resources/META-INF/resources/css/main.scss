@@ -15,76 +15,14 @@ body.open {
 	right: 0;
 	top: 0;
 	z-index: 500;
-}
 
-.control-menu-level-1,
-.control-menu-level-2 {
-	position: relative;
-}
-
-.control-menu-level-1 {
-	padding-bottom: 8px;
-	padding-top: 8px;
-
-	@include sm() {
-		padding-bottom: 16px;
-		padding-top: 16px;
-
-		.container-fluid-1280 {
-			padding-left: 24px;
-			padding-right: 24px;
-		}
-	}
-
-	.control-menu-nav {
-		@include media-query(null, 279px) {
-			@include flex-wrap(wrap);
-		}
-
-		> li {
-			@include media-query(null, 279px) {
-				margin-bottom: 2px;
-				margin-left: 2px;
-			}
-
-			&:first-child {
-				@include flex(1);
-
-				margin-left: 0;
-
-				@include media-query(null, 279px) {
-					@include flex(0 1 auto);
-				}
-			}
-
-			&:nth-last-child(2) {
-				@include flex(1);
-
-				@include media-query(null, 279px) {
-					@include flex(0 1 auto);
-				}
-			}
-		}
+	.taglib-icon-label {
+		display: inline-block;
 	}
 }
 
-.control-menu-level-2 {
-	border-bottom: 1px solid #EEE;
-
-	.control-menu-nav {
-		@include flex-wrap(wrap);
-		@include justify-content(space-between);
-
-		> li {
-			margin-bottom: 5px;
-			margin-left: 0;
-			text-align: center;
-
-			@include sm() {
-				margin-bottom: 0;
-			}
-		}
-	}
+.control-menu-icon {
+	display: inline-block;
 }
 
 .control-menu-nav {
@@ -103,10 +41,57 @@ body.open {
 	}
 }
 
-.control-menu-icon {
-	display: inline-block;
+.control-menu-nav-level-1 {
+	@media screen and (max-width: 767px) {
+		@include justify-content(space-between);
+	}
+
+	@media screen and (max-width: 279px) {
+		@include flex-wrap(wrap);
+	}
+
+	> li {
+		@media screen and (max-width: 279px) {
+			margin-bottom: 2px;
+			margin-left: 2px;
+		}
+	}
 }
 
-.control-menu-icon-label {
-	display: block;
+.control-menu-nav-level-1 > li:nth-last-of-type(2) {
+	@include flex(1);
+
+	@media screen and (max-width: 279px) {
+		@include flex(0 1 auto);
+	}
+}
+
+.add-menu-toggle,
+.edit-controls-toggle,
+.edit-layout-link,
+.info-link,
+.simulation-menu-toggle {
+	padding-bottom: 15px;
+	padding-top: 15px;
+
+	.taglib-icon-label {
+		border: 0;
+		clip: rect(0, 0, 0, 0);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+	}
+}
+
+.product-menu-toggle {
+	@include flex(1);
+
+	margin-left: 0;
+
+	@media screen and (max-width: 279px) {
+		@include flex(0 1 auto);
+	}
 }

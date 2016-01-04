@@ -676,7 +676,7 @@ public abstract class BaseDB implements DB {
 			template = applyMaxStringIndexLengthLimitation(
 				_columnLengthPattern.matcher(template));
 
-			if (this instanceof SybaseDB) {
+			if (getDBType() == DBType.SYBASE) {
 				template = removeBooleanIndexes(sqlDir, template);
 			}
 		}

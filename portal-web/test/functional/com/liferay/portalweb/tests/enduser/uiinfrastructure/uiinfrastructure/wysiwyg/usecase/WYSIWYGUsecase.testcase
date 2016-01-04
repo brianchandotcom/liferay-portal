@@ -168,9 +168,9 @@
 		</execute>
 
 		<execute macro="WikiPage#addLocalizedFrontPagePG">
-			<var name="emptyPageMessage" value="هذه الص�?حة �?ارغة. قم بتحريرها لإضا�?ة نص." />
+			<var name="emptyPageMessage" value="هذه الصفحة فارغة. قم بتحريرها لإضافة نص." />
 			<var name="rtl" value="true" />
-			<var name="successMessage" value="تم تن�?يذ طلبك بنجاح." />
+			<var name="successMessage" value="تم تنفيذ طلبك بنجاح." />
 			<var name="wikiPageContent" value="Wiki Right to Left محتوى" />
 		</execute>
 

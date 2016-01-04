@@ -28,11 +28,15 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 	<%
 	FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME);
+
+	String btnCssClass = StringPool.BLANK;
+
+	if (fileEntry == null) {
+		btnCssClass = "hide";
+	}
 	%>
 
-	<aui:button-row>
-		<aui:button cssClass='btn-lg <%= fileEntry == null ? "hide" : StringPool.BLANK %>' name="continueButton" type="submit" value="continue" />
-	</aui:button-row>
+	<aui:button cssClass="btn-lg <%= btnCssClass %>" name="continueButton" type="submit" value="continue" />
 
 	<%
 	Date expirationDate = new Date(System.currentTimeMillis() + PropsValues.SESSION_TIMEOUT * Time.MINUTE);

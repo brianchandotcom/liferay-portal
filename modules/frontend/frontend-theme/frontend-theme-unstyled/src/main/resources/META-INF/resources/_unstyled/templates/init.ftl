@@ -258,7 +258,7 @@
 	<#assign the_title = pageSubtitle + " - " + the_title />
 </#if>
 
-<#if tilesTitle != "">
+<#if tilesTitle?has_content>
 	<#assign the_title = languageUtil.get(locale, tilesTitle) />
 </#if>
 
@@ -266,11 +266,11 @@
 	<#assign the_title = page_group.getDescriptiveName(locale) />
 </#if>
 
-<#if tilesTitle == "">
+<#if !tilesTitle?has_content>
 	<#assign the_title = htmlUtil.escape(the_title) />
 </#if>
 
-<#if the_title != "" && company_name != site_name && !page_group.isLayoutPrototype()>
+<#if the_title ?has_content && company_name != site_name && !page_group.isLayoutPrototype()>
 	<#assign the_title = the_title + " - " + site_name />
 </#if>
 

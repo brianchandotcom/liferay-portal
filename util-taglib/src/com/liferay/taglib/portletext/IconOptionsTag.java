@@ -25,12 +25,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class IconOptionsTag extends IconTag {
 
-	public static void setPortletRequest(PortletRequest portletRequest) {
-		_portletRequest = portletRequest;
-	}
-
 	public void setDirection(String direction) {
 		_direction = direction;
+	}
+
+	public void setPortletRequest(PortletRequest portletRequest) {
+		_portletRequest = portletRequest;
 	}
 
 	public void setShowArrow(boolean showArrow) {
@@ -61,8 +61,8 @@ public class IconOptionsTag extends IconTag {
 			"liferay-ui:icon:showArrow", String.valueOf(_showArrow));
 	}
 
-	private static String _direction = "down";
-	private static PortletRequest _portletRequest;
-	private static boolean _showArrow = true;
+	private String _direction = "down";
+	private PortletRequest _portletRequest;
+	private boolean _showArrow = true;
 
 }

@@ -101,6 +101,10 @@ portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 %>
 
+<liferay-util:include page="/export/new_export/navigation.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="processName" value="<%= (exportImportConfiguration != null) ? exportImportConfiguration.getName() : StringPool.BLANK %>" />
+</liferay-util:include>
+
 <div class="container-fluid-1280">
 	<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
 		<portlet:param name="mvcRenderCommandName" value="exportLayouts" />

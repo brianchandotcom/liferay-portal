@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
+import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.util.PortalInstances;
 
 import javax.servlet.Filter;

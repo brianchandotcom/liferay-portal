@@ -15,8 +15,8 @@
 package com.liferay.portal.security.sso.ntlm.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
+import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 
 import org.osgi.service.component.annotations.Component;
 

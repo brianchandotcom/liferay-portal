@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.cas.module.configuration;
+package com.liferay.portal.security.sso.cas.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -31,7 +31,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration",
+	id = "com.liferay.portal.security.sso.cas.configuration.CASConfiguration",
 	localization = "content/Language", name ="%cas.configuration.name"
 )
 public interface CASConfiguration {
@@ -54,7 +54,7 @@ public interface CASConfiguration {
 	public String loginURL();
 
 	@Meta.AD(
-		deflt = "http://localhost:8080",
+		deflt = "false",
 		description = "Set this to true to log out the user from CAS when the portal session expires.",
 		required = false
 	)

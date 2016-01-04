@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.cas.module.configuration.definition;
+package com.liferay.portal.security.sso.cas.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
-import com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

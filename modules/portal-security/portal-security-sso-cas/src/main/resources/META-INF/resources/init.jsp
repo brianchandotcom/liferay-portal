@@ -29,8 +29,8 @@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.security.sso.cas.constants.CASConstants" %><%@
-page import="com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration" %>
+page import="com.liferay.portal.security.sso.cas.configuration.CASConfiguration" %><%@
+page import="com.liferay.portal.security.sso.cas.constants.CASConstants" %>
 
 <%@ page import="java.net.HttpURLConnection" %><%@
 page import="java.net.MalformedURLException" %><%@

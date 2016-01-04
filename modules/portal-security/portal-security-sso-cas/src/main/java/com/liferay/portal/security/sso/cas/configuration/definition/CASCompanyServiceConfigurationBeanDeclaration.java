@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.cas.module.configuration.definition;
+package com.liferay.portal.security.sso.cas.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration;
+import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

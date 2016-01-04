@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
-import com.liferay.dynamic.data.lists.form.web.util.DDLFormPortletUtil;
+import com.liferay.dynamic.data.lists.form.web.util.DDLFormAdminPortletUtil;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -67,7 +67,6 @@ import java.util.Locale;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.FrameworkUtil;
@@ -139,7 +138,7 @@ public class DDLFormAdminDisplayContext {
 
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
-			_displayStyle = DDLFormPortletUtil.getDisplayStyle(
+			_displayStyle = DDLFormAdminPortletUtil.getDisplayStyle(
 				_renderRequest, getDisplayViews());
 		}
 

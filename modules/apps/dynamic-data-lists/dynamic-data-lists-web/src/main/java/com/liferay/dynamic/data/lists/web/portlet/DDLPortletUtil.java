@@ -69,8 +69,8 @@ public class DDLPortletUtil {
 
 		if (Validator.isNull(displayStyle)) {
 			DDLWebConfiguration ddlWebConfiguration =
-					(DDLWebConfiguration)portletRequest.getAttribute(
-						DDLWebConfiguration.class.getName());
+				(DDLWebConfiguration)portletRequest.getAttribute(
+					DDLWebConfiguration.class.getName());
 
 			displayStyle = portalPreferences.getValue(
 				DDLPortletKeys.DYNAMIC_DATA_LISTS, "display-style",

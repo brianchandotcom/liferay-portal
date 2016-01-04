@@ -14,10 +14,16 @@
 
 package com.liferay.dynamic.data.lists.form.web.util;
 
+import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordIdComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordModifiedDateComparator;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetCreateDateComparator;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetModifiedDateComparator;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -25,18 +31,26 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+
 /**
  * @author Leonardo Barros
+ * @author Rafael Praxedes
  */
 public class DDLFormAdminPortletUtil {
 
@@ -59,6 +73,64 @@ public class DDLFormAdminPortletUtil {
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 
 		return ddmForm;
+	}
+
+	public static OrderByComparator<DDLRecordSet>
+		getDDLRecordSetOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<DDLRecordSet> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new DDLRecordSetCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("modified-date")) {
+			orderByComparator = new DDLRecordSetModifiedDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new DDLRecordSetNameComparator(orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static String getDisplayStyle(
+		PortletRequest portletRequest, String[] displayViews) {
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
+
+		String displayStyle = ParamUtil.getString(
+			portletRequest, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			DDLFormWebConfiguration ddlFormWebConfiguration =
+				(DDLFormWebConfiguration)portletRequest.getAttribute(
+					DDLFormWebConfiguration.class.getName());
+
+			displayStyle = portalPreferences.getValue(
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+				"display-style", ddlFormWebConfiguration.defaultDisplayView());
+		}
+		else if (ArrayUtil.contains(displayViews, displayStyle)) {
+			portalPreferences.setValue(
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+				"display-style", displayStyle);
+		}
+
+		if (!ArrayUtil.contains(displayViews, displayStyle)) {
+			displayStyle = displayViews[0];
+		}
+
+		return displayStyle;
 	}
 
 	public static OrderByComparator<DDLRecord> getRecordOrderByComparator(

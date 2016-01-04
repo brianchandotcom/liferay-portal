@@ -31,6 +31,8 @@ public class JournalArticleConstants {
 
 	public static final long DDM_STRUCTURE_ID_ALL = -1;
 
+	public static final String DISPLAY_PAGE = "display-page";
+
 	public static final String PORTLET = "portlet";
 
 	public static final String STAND_ALONE = "stand-alone";

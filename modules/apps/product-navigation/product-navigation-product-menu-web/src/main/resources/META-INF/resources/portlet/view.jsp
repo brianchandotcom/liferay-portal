@@ -21,9 +21,14 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 %>
 
 <div class="<%= Validator.equals(productMenuState, "open") ? "content-loaded" : StringPool.BLANK %>" id="productMenuSidebar">
-	<c:if test='<%= Validator.equals(productMenuState, "open") %>'>
-		<liferay-util:include page="/portlet/product_menu.jsp" servletContext="<%= application %>" />
-	</c:if>
+	<c:choose>
+		<c:when test='<%= Validator.equals(productMenuState, "open") %>'>
+			<liferay-util:include page="/portlet/product_menu.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:otherwise>
+			<div class="loading-animation"></div>
+		</c:otherwise>
+	</c:choose>
 </div>
 
 <aui:script use="liferay-store,io-request,parse-content">

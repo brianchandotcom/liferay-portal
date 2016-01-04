@@ -36,7 +36,7 @@ import org.junit.Assert;
 public abstract class BaseStatisticsTestCase extends BaseIndexingTestCase {
 
 	protected static String toString(StatsResults statsResults) {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{count=");
 		sb.append(statsResults.getCount());

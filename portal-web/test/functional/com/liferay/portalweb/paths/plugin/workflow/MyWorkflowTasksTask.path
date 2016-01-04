@@ -102,6 +102,11 @@
 </tr>
 <!--PREVIEW-->
 <tr>
+	<td>PREVIEW_FIELD_CONTENT</td>
+	<td>//input[@aria-label='${key_fieldLabel}' and @value='${key_fieldValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW</td>
 	<td>//div[@class='panel-toggle' and contains(.,'Preview')]</td>
 	<td></td>
@@ -114,6 +119,16 @@
 <tr>
 	<td>PREVIEW_CONTENT</td>
 	<td>//h3[@class='task-content-title']/../div[2] | //h3[@class='task-content-title']/../../div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_VIEW</td>
+	<td>//div[@class='task-content-actions']/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_VIEW_CONTENT</td>
+	<td>//div[contains(.,'${key_workflowAssetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

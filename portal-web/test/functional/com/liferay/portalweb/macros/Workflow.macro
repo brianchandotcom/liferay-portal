@@ -230,6 +230,24 @@
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 
 		<if>
+			<isset var="fieldValue" />
+			<then>
+				<var name="key_fieldLabel" value="${fieldLabel}" />
+				<var name="key_fieldValue" value="${fieldValue}" />
+
+				<execute function="AssertElementPresent" locator1="MyWorkflowTasksTask#PREVIEW_FIELD_CONTENT" value1="${fieldValue}" />
+
+				<execute function="AssertClick" locator1="MyWorkflowTasksTask#PREVIEW_VIEW" value1="View" />
+
+				<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+				<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_FIELD_CONTENT" value1="${fieldValue}" />
+
+				<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${assignToMeKey}" arg2="ASSIGN_TO_ME" />
 			<then>
 				<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />

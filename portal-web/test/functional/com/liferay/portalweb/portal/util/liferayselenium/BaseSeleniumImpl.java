@@ -515,7 +515,7 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void makeVisible(String locator) {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("var xpathResult = document.evaluate(");
 		sb.append(locator);

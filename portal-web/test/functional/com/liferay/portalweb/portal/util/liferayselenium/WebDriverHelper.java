@@ -365,7 +365,7 @@ public class WebDriverHelper {
 		JavascriptExecutor javascriptExecutor =
 			(JavascriptExecutor)wrappedWebDriver;
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("var element = arguments[0];");
 		sb.append("element.style.cssText = 'display:inline !important';");

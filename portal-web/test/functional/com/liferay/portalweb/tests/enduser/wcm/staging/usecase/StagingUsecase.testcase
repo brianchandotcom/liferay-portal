@@ -330,8 +330,6 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedView" />
-
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#addPublishTemplate">

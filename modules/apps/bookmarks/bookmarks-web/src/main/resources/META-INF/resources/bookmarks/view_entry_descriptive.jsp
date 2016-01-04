@@ -41,18 +41,16 @@ rowURL.setParameter("redirect", currentURL);
 rowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 %>
 
-<liferay-ui:app-view-entry
-	assetCategoryClassName="<%= BookmarksEntry.class.getName() %>"
-	assetCategoryClassPK="<%= entry.getEntryId() %>"
-	assetTagClassName="<%= BookmarksEntry.class.getName() %>"
-	assetTagClassPK="<%= entry.getEntryId() %>"
-	author="<%= entry.getUserName() %>"
-	createDate="<%= entry.getCreateDate() %>"
-	description="<%= entry.getDescription() %>"
-	displayStyle="descriptive"
-	markupView="lexicon"
-	modifiedDate="<%= entry.getModifiedDate() %>"
-	showCheckbox="<%= true %>"
-	title="<%= entry.getName() %>"
-	url="<%= rowURL.toString() %>"
-/>
+<h4>
+	<aui:a href="<%= rowURL.toString() %>">
+		<%= entry.getName() %>
+	</aui:a>
+</h4>
+
+<h5 class="text-default">
+	<%= entry.getDescription() %>
+</h5>
+
+<span class="h6">
+	<liferay-ui:message arguments="<%= entry.getVisits() %>" key='<%= entry.getVisits() == 1 ? "x-visit" : "x-visits" %>' />
+</span>

@@ -7826,21 +7826,25 @@ public class JournalArticleLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
 
-		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			groupId, classNameId, ddmStructureKey, true);
+		if (Validator.isNotNull(ddmStructureKey)) {
+			DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
+				groupId, classNameId, ddmStructureKey, true);
 
-		if (ddmStructure == null) {
-			throw new NoSuchStructureException();
+			if (ddmStructure == null) {
+				throw new NoSuchStructureException();
+			}
 		}
 
 		classNameId = classNameLocalService.getClassNameId(
 			DDMStructure.class.getName());
 
-		DDMTemplate ddmTemplate = ddmTemplateLocalService.fetchTemplate(
-			groupId, classNameId, ddmTemplateKey, true);
+		if (Validator.isNotNull(ddmTemplateKey)) {
+			DDMTemplate ddmTemplate = ddmTemplateLocalService.fetchTemplate(
+				groupId, classNameId, ddmTemplateKey, true);
 
-		if (ddmTemplate == null) {
-			throw new NoSuchTemplateException();
+			if (ddmTemplate == null) {
+				throw new NoSuchTemplateException();
+			}
 		}
 
 		if (Validator.isNotNull(layoutUuid)) {

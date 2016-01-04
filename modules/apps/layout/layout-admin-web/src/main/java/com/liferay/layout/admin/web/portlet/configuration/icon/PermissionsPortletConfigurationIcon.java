@@ -72,9 +72,13 @@ public class PermissionsPortletConfigurationIcon
 		try {
 			Layout layout = getLayout();
 
+			if (layout == null) {
+				return false;
+			}
+
 			Group group = layout.getGroup();
 
-			if (group.isLayoutPrototype() || (layout == null)) {
+			if (group.isLayoutPrototype()) {
 				return false;
 			}
 

@@ -100,7 +100,7 @@
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" />
 
-		<execute function="AssertElementPresent" locator1="NavPill#CONTENT" />
+		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" />
 
 		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#EDIT" />
 

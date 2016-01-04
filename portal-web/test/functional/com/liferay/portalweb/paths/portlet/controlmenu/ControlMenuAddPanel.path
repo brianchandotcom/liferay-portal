@@ -25,6 +25,11 @@
 </tr>
 <!--CONTENT-->
 <tr>
+	<td>CONTENT_ACCORDION_PANEL_TITLE</td>
+	<td>//div[contains(@id,'Accordion')]//div[@class='panel-title' and contains(.,'Content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_TITLE</td>
 	<td>//div[contains(@class,'add-content-details')]/div[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
@@ -45,6 +50,11 @@
 	<td></td>
 </tr>
 <!--APPLICATIONS-->
+<tr>
+	<td>APPLICATIONS_ACCORDION_PANEL_TITLE</td>
+	<td>//div[contains(@id,'Accordion')]//div[@class='panel-title' and contains(.,'Applications')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>COLLAPSED_CATEGORY</td>
 	<td>//div[contains(@class,'toggler-header-collapsed')]/div</td>

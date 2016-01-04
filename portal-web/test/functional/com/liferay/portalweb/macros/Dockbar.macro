@@ -13,8 +13,7 @@
 	<command name="viewAddTabsWithNoAddPagePermission">
 		<execute function="Click" locator1="ControlMenu#ADD" />
 
-		<execute function="AssertTextEquals" locator1="NavPill#APPLICATIONS" value1="Applications" />
-		<execute function="AssertElementNotPresent" locator1="NavPill#PAGE" value1="Page" />
+		<execute function="AssertTextEquals" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" value1="Applications" />
 	</command>
 
 	<command name="viewLocalizationOptionsAdd">

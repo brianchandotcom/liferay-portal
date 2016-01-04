@@ -20,6 +20,7 @@
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+int total = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -28,6 +29,7 @@ portletURL.setParameter("tag", StringPool.BLANK);
 %>
 
 <liferay-frontend:management-bar
+	checkBoxDisabled="<%= total == 0 %>"
 	includeCheckBox="<%= BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId) > 0 %>"
 	searchContainerId="<%= searchContainerId %>"
 >

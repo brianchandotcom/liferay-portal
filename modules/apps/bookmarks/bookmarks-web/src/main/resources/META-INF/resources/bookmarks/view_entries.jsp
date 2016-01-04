@@ -17,19 +17,9 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "all");
-
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-boolean useAssetEntryQuery = GetterUtil.getBoolean((String)request.getAttribute("view.jsp-useAssetEntryQuery"));
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
-portletURL.setParameter("navigation", navigation);
-portletURL.setParameter("folderId", String.valueOf(folderId));
-
-SearchContainer bookmarksSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-bookmarks-in-this-folder");
+SearchContainer bookmarksSearchContainer = (SearchContainer)request.getAttribute("view.jsp-bookmarksSearchContainer");
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
@@ -38,36 +28,6 @@ bookmarksSearchContainer.setRowChecker(entriesChecker);
 entriesChecker.setCssClass("entry-selector");
 
 String displayStyle = GetterUtil.getString((String)request.getAttribute("view.jsp-displayStyle"));
-
-List results = null;
-int total = 0;
-
-if (navigation.equals("mine") || navigation.equals("recent")) {
-	long groupEntriesUserId = 0;
-
-	if (navigation.equals("mine") && themeDisplay.isSignedIn()) {
-		groupEntriesUserId = user.getUserId();
-	}
-
-	results = BookmarksEntryServiceUtil.getGroupEntries(scopeGroupId, groupEntriesUserId, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd());
-	total = BookmarksEntryServiceUtil.getGroupEntriesCount(scopeGroupId, groupEntriesUserId);
-}
-else {
-	if (useAssetEntryQuery) {
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BookmarksEntry.class.getName(), bookmarksSearchContainer);
-
-		assetEntryQuery.setEnablePermissions(true);
-		assetEntryQuery.setExcludeZeroViewCount(false);
-		assetEntryQuery.setEnd(bookmarksSearchContainer.getEnd());
-		assetEntryQuery.setStart(bookmarksSearchContainer.getStart());
-
-		results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
-	}
-	else {
-		results = BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd());
-		total = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId);
-	}
-}
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
@@ -90,11 +50,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 <liferay-ui:search-container
 	id="<%= searchContainerId %>"
 	searchContainer="<%= bookmarksSearchContainer %>"
-	total="<%= total %>"
 	totalVar="bookmarksSearchContainerTotal"
 >
 	<liferay-ui:search-container-results
-		results="<%= results %>"
 		resultsVar="bookmarksSearchContainerResults"
 	/>
 

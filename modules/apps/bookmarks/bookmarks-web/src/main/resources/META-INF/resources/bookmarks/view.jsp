@@ -62,6 +62,48 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 	displayStyle = displayViews[0];
 }
 
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+portletURL.setParameter("navigation", navigation);
+portletURL.setParameter("folderId", String.valueOf(folderId));
+
+SearchContainer bookmarksSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-bookmarks-in-this-folder");
+
+List results = null;
+int total = 0;
+
+if (navigation.equals("mine") || navigation.equals("recent")) {
+	long groupEntriesUserId = 0;
+
+	if (navigation.equals("mine") && themeDisplay.isSignedIn()) {
+		groupEntriesUserId = user.getUserId();
+	}
+
+	total = BookmarksEntryServiceUtil.getGroupEntriesCount(scopeGroupId, groupEntriesUserId);
+
+	bookmarksSearchContainer.setTotal(total);
+	bookmarksSearchContainer.setResults(BookmarksEntryServiceUtil.getGroupEntries(scopeGroupId, groupEntriesUserId, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
+}
+else {
+	if (useAssetEntryQuery) {
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BookmarksEntry.class.getName(), bookmarksSearchContainer);
+
+		assetEntryQuery.setEnablePermissions(true);
+		assetEntryQuery.setExcludeZeroViewCount(false);
+		assetEntryQuery.setEnd(bookmarksSearchContainer.getEnd());
+		assetEntryQuery.setStart(bookmarksSearchContainer.getStart());
+
+		bookmarksSearchContainer.setResults(AssetEntryServiceUtil.getEntries(assetEntryQuery));
+	}
+	else {
+		total = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId);
+
+		bookmarksSearchContainer.setTotal(total);
+		bookmarksSearchContainer.setResults(BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
+	}
+}
+
 request.setAttribute("view.jsp-folder", folder);
 
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
@@ -70,7 +112,9 @@ request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
 
 request.setAttribute("view.jsp-displayStyle", displayStyle);
 
-request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
+request.setAttribute("view.jsp-bookmarksSearchContainer", bookmarksSearchContainer);
+
+request.setAttribute("view.jsp-total", String.valueOf(total));
 
 BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 %>

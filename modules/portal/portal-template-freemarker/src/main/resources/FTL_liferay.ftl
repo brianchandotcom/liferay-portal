@@ -143,12 +143,6 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	</#if>
 </#macro>
 
-<#macro quick_access
-	content_id
->
-	<@liferay_ui["quick-access"] contentId=content_id />
-</#macro>
-
 <#macro search
 	default_preferences = ""
 >

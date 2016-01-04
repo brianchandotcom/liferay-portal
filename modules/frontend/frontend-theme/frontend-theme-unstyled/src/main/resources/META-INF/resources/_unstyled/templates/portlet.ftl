@@ -1,3 +1,4 @@
+<#assign liferay_portlet=PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"]>
 <#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
 
 <#assign portlet_display = portletDisplay />
@@ -25,7 +26,7 @@
 			<#if portlet_display.isShowBackIcon()>
 				<a class="portlet-icon-back" href="${portlet_back_url}"><@liferay.language key="return-to-full-page" /></a>
 			<#else>
-				${theme.portletIconOptions()}
+				<@liferay_portlet["icon-options"] />
 			</#if>
 		</menu>
 	</header>

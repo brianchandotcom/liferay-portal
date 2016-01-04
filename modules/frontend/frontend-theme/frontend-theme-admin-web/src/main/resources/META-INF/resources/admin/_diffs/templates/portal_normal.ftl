@@ -9,14 +9,14 @@
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
-	${theme.include(top_head_include)}
+	<@liferay_util["include"] page=top_head_include />
 </head>
 
 <body class="${css_class}">
 
-<@liferay.quick_access content_id="#main-content" />
+<@liferay_ui["quick-access"] contentId="#main-content" />
 
-${theme.include(body_top_include)}
+<@liferay_util["include"] page=body_top_include />
 
 <#assign scope_group = theme_display.getScopeGroup()>
 
@@ -26,13 +26,15 @@ ${theme.include(body_top_include)}
 	<div id="content-wrapper">
 		<div id="content">
 			<#if selectable>
-				${theme.include(content_include)}
+				<@liferay_util["include"] page=content_include />
 			<#else>
 				${portletDisplay.recycle()}
 
 				${portletDisplay.setTitle(the_title)}
 
-				${theme.wrapPortlet("portlet.ftl", content_include)}
+				<@liferay_theme["wrap-portlet"] page="portlet.ftl">
+					<@liferay_util["include"] page=content_include />
+				</@>
 			</#if>
 
 			<div class="clear"></div>
@@ -42,9 +44,9 @@ ${theme.include(body_top_include)}
 
 <@liferay.control_menu />
 
-${theme.include(body_bottom_include)}
+<@liferay_util["include"] page=body_bottom_include />
 
-${theme.include(bottom_include)}
+<@liferay_util["include"] page=bottom_include />
 
 </body>
 

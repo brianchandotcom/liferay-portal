@@ -1,3 +1,6 @@
+<#assign liferay_portlet=PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"]>
+<#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
+
 <#assign portlet_display = portletDisplay>
 
 <#assign portlet_icon_options_view = "lexicon">
@@ -32,7 +35,7 @@
 
 			<div class="toolbar-group-right">
 				<div class="toolbar-group-content" data-qa-id="headerOptions">
-					${theme.portletIconOptions("right", "lexicon")}
+					<@liferay_portlet["icon-options"] direction="right" markupView="lexicon" />
 				</div>
 			</div>
 
@@ -40,7 +43,7 @@
 				<span class="header-toolbar-title" title="${portlet_title}">${portlet_title}</span>
 
 				<#if valid_portlet_description>
-					${theme.iconHelp(portlet_description)}
+					<@liferay_ui["icon-help"] message=portlet_description />
 				</#if>
 			</div>
 		</div>

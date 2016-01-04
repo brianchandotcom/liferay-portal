@@ -403,7 +403,7 @@ public class IncludeTag extends AttributesTagSupport {
 			contextPath = StringPool.SLASH;
 		}
 
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("Unable to find ");
 		sb.append(page);

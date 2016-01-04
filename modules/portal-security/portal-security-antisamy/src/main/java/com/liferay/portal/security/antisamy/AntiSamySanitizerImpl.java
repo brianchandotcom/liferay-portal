@@ -16,15 +16,12 @@ package com.liferay.portal.security.antisamy;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.net.URL;
 
@@ -38,7 +35,7 @@ import org.owasp.validator.html.Policy;
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
  */
-public class AntiSamySanitizerImpl implements Sanitizer {
+public class AntiSamySanitizerImpl extends BaseSanitizer {
 
 	public AntiSamySanitizerImpl(URL url) {
 		try (InputStream inputstream = url.openStream()) {
@@ -46,39 +43,6 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		}
 		catch (Exception e) {
 			throw new IllegalStateException("Unable to initialize policy", e);
-		}
-	}
-
-	@Override
-	public byte[] sanitize(
-		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes, byte[] bytes,
-		Map<String, Object> options) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Sanitizing " + className + "#" + classPK);
-		}
-
-		return bytes;
-	}
-
-	@Override
-	public void sanitize(
-			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, String[] modes,
-			InputStream inputStream, OutputStream outputStream,
-			Map<String, Object> options)
-		throws SanitizerException {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Sanitizing " + className + "#" + classPK);
-		}
-
-		try {
-			StreamUtil.transfer(inputStream, outputStream);
-		}
-		catch (IOException ioe) {
-			throw new SanitizerException(ioe);
 		}
 	}
 

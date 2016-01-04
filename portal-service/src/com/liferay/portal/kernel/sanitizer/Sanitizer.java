@@ -58,7 +58,9 @@ public interface Sanitizer {
 	 * @param  options a map of options for the sanitizer
 	 * @return the sanitized content
 	 * @throws SanitizerException if a sanitizer exception occurred
+	 * @deprecated As of 7.0.0 please use {@link #sanitize(long, long, long, String, long, String, String[], String, Map)}
 	 */
+	@Deprecated
 	public byte[] sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes, byte[] bytes,
@@ -83,7 +85,9 @@ public interface Sanitizer {
 	 * @param  outputStream the result of the sanitizing process
 	 * @param  options a map of options for the sanitizer
 	 * @throws SanitizerException if a sanitizer exception occurred
+	 * @deprecated As of 7.0.0 please use {@link #sanitize(long, long, long, String, long, String, String[], String, Map)}
 	 */
+	@Deprecated
 	public void sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes,

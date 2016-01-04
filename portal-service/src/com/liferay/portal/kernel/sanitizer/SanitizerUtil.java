@@ -33,6 +33,11 @@ public class SanitizerUtil {
 		return _sanitizer;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 please use {@link
+	 *             #sanitize(long, long, long, String, long, String, String)}
+	 */
+	@Deprecated
 	public static byte[] sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, byte[] bytes)
@@ -43,6 +48,11 @@ public class SanitizerUtil {
 			Sanitizer.MODE_ALL, bytes, null);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 please use {@link
+	 *             #sanitize(long, long, long, String, long, String, String)}
+	 */
+	@Deprecated
 	public static void sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, InputStream inputStream,
@@ -64,6 +74,11 @@ public class SanitizerUtil {
 			Sanitizer.MODE_ALL, s, null);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 please use {@link
+	 *             #sanitize(long, long, long, String, long, String, String, String, Map)}
+	 */
+	@Deprecated
 	public static byte[] sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String mode, byte[] bytes,
@@ -75,6 +90,11 @@ public class SanitizerUtil {
 			new String[] {mode}, bytes, options);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 please use {@link
+	 *             #sanitize(long, long, long, String, long, String, String, String, Map)}
+	 */
+	@Deprecated
 	public static void sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String mode,
@@ -98,6 +118,11 @@ public class SanitizerUtil {
 			new String[] {mode}, s, options);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 please use {@link
+	 *             #sanitize(long, long, long, String, long, String, String[], String, Map)}
+	 */
+	@Deprecated
 	public static byte[] sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes, byte[] bytes,
@@ -109,6 +134,11 @@ public class SanitizerUtil {
 			bytes, options);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 please use {@link
+	 *             #sanitize(long, long, long, String, long, String, String[], String, Map)}
+	 */
+	@Deprecated
 	public static void sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes,

@@ -14,14 +14,12 @@
 
 package com.liferay.comment.sanitizer;
 
+import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.util.Map;
 
@@ -33,29 +31,12 @@ import org.owasp.html.PolicyFactory;
 /**
  * @author Sergio González
  */
-@Component(immediate = true)
-public class CommentSanitizerImpl implements Sanitizer {
+@Component(immediate = true, service = Sanitizer.class)
+public class CommentSanitizerImpl extends BaseSanitizer {
 
 	public CommentSanitizerImpl() {
 		_commentAllowedContent = new CommentAllowedContent(
 			PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
-	}
-
-	@Override
-	public byte[] sanitize(
-		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes, byte[] bytes,
-		Map<String, Object> options) {
-
-		return bytes;
-	}
-
-	@Override
-	public void sanitize(
-		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes,
-		InputStream inputStream, OutputStream outputStream,
-		Map<String, Object> options) {
 	}
 
 	@Override

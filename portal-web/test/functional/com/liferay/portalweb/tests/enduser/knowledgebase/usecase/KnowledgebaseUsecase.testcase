@@ -51,6 +51,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -133,6 +139,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -202,6 +214,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Article Page" />
 		</execute>
@@ -212,6 +230,12 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Knowledge Base Article" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -226,6 +250,12 @@
 			<var name="portletName" value="Knowledge Base Search" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Section Page" />
 		</execute>
@@ -236,6 +266,12 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Knowledge Base Section" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -425,6 +461,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -550,6 +592,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -612,6 +660,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -646,6 +700,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
@@ -716,6 +776,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -770,6 +836,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
@@ -838,6 +910,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -885,6 +963,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
@@ -973,6 +1057,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="KBArticle#viewKBDisplayPG">
 			<var name="history" value="${history}" />
 			<var name="print" value="${print}" />
@@ -996,6 +1086,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
@@ -1197,6 +1293,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Knowledge Base Display" />
 			<var name="portletOption" value="Configuration" />
@@ -1212,6 +1314,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
@@ -1287,6 +1395,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1341,6 +1455,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
@@ -1449,6 +1569,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
@@ -1710,6 +1836,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="KBArticleSuggestion#addPG">
 			<var name="kbArticleTitle" value="${kbArticleTitle}" />
 			<var name="kbSuggestionBody" value="${kbSuggestionBody}" />
@@ -1775,6 +1907,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
@@ -1944,6 +2082,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -2057,6 +2201,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
@@ -2303,6 +2453,12 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -2422,6 +2578,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 

@@ -13,7 +13,7 @@ task buildLexiconIcons(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
-String alloyUIVersion = "3.0.3-deprecated.5"
+String alloyUIVersion = "3.0.3-deprecated.6"
 String lexiconVersion = "0.1.28"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");

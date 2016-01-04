@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.lists.web.display.context;
 
-import com.liferay.dynamic.data.lists.configuration.DDLServiceConfiguration;
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -89,19 +87,7 @@ public class DDLDisplayContext {
 	}
 
 	public String[] getDDLRecordSetDisplayViews() {
-		if (_ddlRecordDisplayViews == null) {
-			DDLServiceConfiguration ddlServiceConfiguration =
-				_ddlRequestHelper.getDDLServiceConfiguration();
-
-			_ddlRecordDisplayViews = StringUtil.split(
-				PrefsParamUtil.getString(
-					_ddlRequestHelper.getPortletPreferences(),
-					_ddlRequestHelper.getRenderRequest(), "displayViews",
-					StringUtil.merge(
-						ddlServiceConfiguration.supportedDisplayView())));
-		}
-
-		return _ddlRecordDisplayViews;
+		return _DISPLAY_VIEWS;
 	}
 
 	public long getDisplayDDMTemplateId() {
@@ -388,8 +374,9 @@ public class DDLDisplayContext {
 		return _hasViewPermission;
 	}
 
+	private static final String[] _DISPLAY_VIEWS = {"list", "descriptive"};
+
 	private String _ddlRecordDisplayStyle;
-	private String[] _ddlRecordDisplayViews;
 	private final DDLRequestHelper _ddlRequestHelper;
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;

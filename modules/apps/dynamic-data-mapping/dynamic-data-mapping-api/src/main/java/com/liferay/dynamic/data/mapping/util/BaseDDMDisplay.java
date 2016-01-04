@@ -57,6 +57,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
+	public String getDefaultTemplateLanguage() {
+		return TemplateConstants.LANG_TYPE_FTL;
+	}
+
+	@Override
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,

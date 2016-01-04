@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.configuration;
+package com.liferay.dynamic.data.lists.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -21,22 +21,17 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 /**
  * @author Lino Alves
  */
-@ConfigurationAdmin(
-	category = "productivity", scope = ConfigurationAdmin.Scope.GROUP
-)
+@ConfigurationAdmin(category = "productivity")
 @Meta.OCD(
-	id = "com.liferay.dynamic.data.lists.configuration.DDLServiceConfiguration",
-	localization = "content/Language", name = "%ddl.service.configuration.name"
+	id = "com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration",
+	localization = "content/Language", name = "%ddl.web.configuration.name"
 )
-public interface DDLServiceConfiguration {
+public interface DDLWebConfiguration {
 
-	@Meta.AD(deflt = "list", required = false)
+	@Meta.AD(
+		deflt = "list", optionLabels = {"List", "Descriptive"},
+		optionValues = {"list", "descriptive"}, required = false
+	)
 	public String defaultDisplayView();
-
-	@Meta.AD(deflt = "json", required = false)
-	public String storageType();
-
-	@Meta.AD(deflt = "descriptive | list", required = false)
-	public String[] supportedDisplayView();
 
 }

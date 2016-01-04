@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.lists.web.portlet;
 
-import com.liferay.dynamic.data.lists.configuration.DDLServiceConfiguration;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -23,12 +22,11 @@ import com.liferay.dynamic.data.lists.util.comparator.DDLRecordModifiedDateCompa
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetCreateDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetModifiedDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
-import com.liferay.dynamic.data.lists.web.display.context.util.DDLRequestHelper;
+import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
@@ -70,15 +68,13 @@ public class DDLPortletUtil {
 			portletRequest, "displayStyle");
 
 		if (Validator.isNull(displayStyle)) {
-			DDLRequestHelper ddlRequestHelper = new DDLRequestHelper(
-				PortalUtil.getHttpServletRequest(portletRequest));
-
-			DDLServiceConfiguration ddlServiceConfiguration =
-				ddlRequestHelper.getDDLServiceConfiguration();
+			DDLWebConfiguration ddlWebConfiguration =
+				(DDLWebConfiguration)portletRequest.getAttribute(
+					DDLWebConfiguration.class.getName());
 
 			displayStyle = portalPreferences.getValue(
 				DDLPortletKeys.DYNAMIC_DATA_LISTS, "display-style",
-				ddlServiceConfiguration.defaultDisplayView());
+				ddlWebConfiguration.defaultDisplayView());
 		}
 		else if (ArrayUtil.contains(displayViews, displayStyle)) {
 			portalPreferences.setValue(

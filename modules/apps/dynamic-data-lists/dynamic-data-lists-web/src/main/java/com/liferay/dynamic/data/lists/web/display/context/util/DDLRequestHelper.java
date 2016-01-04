@@ -14,14 +14,7 @@
 
 package com.liferay.dynamic.data.lists.web.display.context.util;
 
-import com.liferay.dynamic.data.lists.configuration.DDLServiceConfiguration;
-import com.liferay.dynamic.data.lists.constants.DDLConstants;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.util.JavaConstants;
 
 import javax.portlet.PortletPreferences;
@@ -43,38 +36,6 @@ public class DDLRequestHelper extends BaseRequestHelper {
 		_portletPreferences = _renderRequest.getPreferences();
 	}
 
-	public DDLServiceConfiguration getDDLServiceConfiguration() {
-		if (_ddlServiceConfiguration != null) {
-			return _ddlServiceConfiguration;
-		}
-
-		try {
-			if (getPortletResource() != null) {
-				HttpServletRequest request = getRequest();
-
-				_ddlServiceConfiguration =
-					ConfigurationFactoryUtil.getConfiguration(
-						DDLServiceConfiguration.class,
-						new ParameterMapSettingsLocator(
-							request.getParameterMap(),
-							new GroupServiceSettingsLocator(
-								getSiteGroupId(), DDLConstants.SERVICE_NAME)));
-			}
-			else {
-				_ddlServiceConfiguration =
-					ConfigurationFactoryUtil.getConfiguration(
-						DDLServiceConfiguration.class,
-						new GroupServiceSettingsLocator(
-							getSiteGroupId(), DDLConstants.SERVICE_NAME));
-			}
-
-			return _ddlServiceConfiguration;
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
-	}
-
 	public PortletPreferences getPortletPreferences() {
 		return _portletPreferences;
 	}
@@ -83,7 +44,6 @@ public class DDLRequestHelper extends BaseRequestHelper {
 		return _renderRequest;
 	}
 
-	private DDLServiceConfiguration _ddlServiceConfiguration;
 	private final PortletPreferences _portletPreferences;
 	private final RenderRequest _renderRequest;
 

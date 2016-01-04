@@ -16,8 +16,8 @@ package com.liferay.dynamic.data.lists.web.ddm;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationValues;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -43,7 +43,7 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getStorageType() {
-		return DDLWebConfigurationValues.DYNAMIC_DATA_LISTS_STORAGE_TYPE;
+		return StorageType.JSON.getValue();
 	}
 
 	@Override

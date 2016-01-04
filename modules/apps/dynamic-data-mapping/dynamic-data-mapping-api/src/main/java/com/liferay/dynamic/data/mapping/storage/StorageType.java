@@ -20,17 +20,11 @@ package com.liferay.dynamic.data.mapping.storage;
  */
 public enum StorageType {
 
-	EXPANDO("expando"), JSON("json"), XML("xml");
+	JSON("json");
 
 	public static StorageType parse(String value) {
-		if (EXPANDO.getValue().equals(value)) {
-			return EXPANDO;
-		}
-		else if (JSON.getValue().equals(value)) {
+		if (JSON.getValue().equals(value)) {
 			return JSON;
-		}
-		else if (XML.getValue().equals(value)) {
-			return XML;
 		}
 		else {
 			throw new IllegalArgumentException("Invalid value " + value);

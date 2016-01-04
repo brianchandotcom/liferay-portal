@@ -43,6 +43,8 @@ import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
@@ -340,6 +342,40 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			getPermissionChecker(), group, ActionKeys.VIEW);
 
 		return group;
+	}
+
+	/**
+	 * Returns the display URL of the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout set is private to the group
+	 * @param  secureConnection whether the generate URL uses secure connection
+	 * @return the display URL o the group
+	 */
+	@Override
+	public String getGroupDisplayURL(
+			long groupId, boolean privateLayout, boolean secureConnection)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.VIEW);
+
+		if (!privateLayout && (group.getPublicLayoutsPageCount() > 0)) {
+			return PortalUtil.getLayoutSetDisplayURL(
+				group.getPublicLayoutSet(), secureConnection);
+		}
+		else if (privateLayout && (group.getPrivateLayoutsPageCount() > 0)) {
+			return PortalUtil.getLayoutSetDisplayURL(
+				group.getPrivateLayoutSet(), secureConnection);
+		}
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.UPDATE);
+
+		return PortalUtil.getControlPanelFullURL(
+			groupId, PortletKeys.LAYOUTS_ADMIN, null);
 	}
 
 	/**

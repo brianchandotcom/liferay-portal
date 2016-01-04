@@ -105,21 +105,8 @@ if (layout != null) {
 
 			<c:choose>
 				<c:when test="<%= group.isStagedRemotely() %>">
-
-					<%
-					UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
-
-					String remoteAddress = typeSettingsProperties.getProperty("remoteAddress");
-					int remotePort = GetterUtil.getInteger(typeSettingsProperties.getProperty("remotePort"));
-					String remotePathContext = typeSettingsProperties.getProperty("remotePathContext");
-					boolean secureConnection = GetterUtil.getBoolean(typeSettingsProperties.getProperty("secureConnection"));
-					long remoteGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("remoteGroupId"));
-
-					String remoteURL = StagingUtil.buildRemoteURL(remoteAddress, remotePort, remotePathContext, secureConnection, remoteGroupId, layout.isPrivateLayout());
-					%>
-
 					<li class="control-menu-nav-item">
-						<a href="<%= remoteURL %>" icon="icon-external-link-sign" value="go-to-remote-live">
+						<a href="<%= StagingUtil.getRemoteSiteURL(group, layout.isPrivateLayout()) %>" icon="icon-external-link-sign" value="go-to-remote-live">
 							<liferay-ui:message key="go-to-remote-live" />
 						</a>
 					</li>

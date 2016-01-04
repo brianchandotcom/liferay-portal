@@ -1184,6 +1184,13 @@ public class PortalUtil {
 		return getPortal().getLayoutRelativeURL(layout, themeDisplay, doAsUser);
 	}
 
+	public static String getLayoutSetDisplayURL(
+			LayoutSet layoutSet, boolean secureConnection)
+		throws PortalException {
+
+		return getPortal().getLayoutSetDisplayURL(layoutSet, secureConnection);
+	}
+
 	public static String getLayoutSetFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException {

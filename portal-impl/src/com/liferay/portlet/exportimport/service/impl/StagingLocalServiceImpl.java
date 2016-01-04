@@ -345,8 +345,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			stagingGroup.getTypeSettingsProperties();
 
 		String remoteURL = StagingUtil.buildRemoteURL(
-			remoteAddress, remotePort, remotePathContext, secureConnection,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
+			remoteAddress, remotePort, remotePathContext, secureConnection);
 
 		if (stagedRemotely) {
 			long oldRemoteGroupId = GetterUtil.getLong(

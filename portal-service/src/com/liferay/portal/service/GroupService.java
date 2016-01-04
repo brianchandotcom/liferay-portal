@@ -206,6 +206,19 @@ public interface GroupService extends BaseService {
 		throws PortalException;
 
 	/**
+	* Returns the display URL of the group.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout set is private to the group
+	* @param secureConnection whether the generate URL uses secure connection
+	* @return the display URL o the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getGroupDisplayURL(long groupId,
+		boolean privateLayout, boolean secureConnection)
+		throws PortalException;
+
+	/**
 	* Returns all the groups that are direct children of the parent group.
 	*
 	* @param companyId the primary key of the company

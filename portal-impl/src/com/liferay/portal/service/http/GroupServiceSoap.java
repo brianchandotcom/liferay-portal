@@ -386,6 +386,30 @@ public class GroupServiceSoap {
 	}
 
 	/**
+	* Returns the display URL of the group.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout set is private to the group
+	* @param secureConnection whether the generate URL uses secure connection
+	* @return the display URL o the group
+	*/
+	public static java.lang.String getGroupDisplayURL(long groupId,
+		boolean privateLayout, boolean secureConnection)
+		throws RemoteException {
+		try {
+			java.lang.String returnValue = GroupServiceUtil.getGroupDisplayURL(groupId,
+					privateLayout, secureConnection);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns all the groups that are direct children of the parent group.
 	*
 	* @param companyId the primary key of the company

@@ -52,6 +52,15 @@ public interface Staging {
 
 	public String buildRemoteURL(
 		String remoteAddress, int remotePort, String remotePathContext,
+		boolean secureConnection);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getRemoteSiteURL(Group,
+	 *             boolean)}
+	 */
+	@Deprecated
+	public String buildRemoteURL(
+		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection, long remoteGroupId, boolean privateLayout);
 
 	public String buildRemoteURL(UnicodeProperties typeSettingsProperties);
@@ -259,6 +268,9 @@ public interface Staging {
 		HttpServletRequest request, long layoutSetId);
 
 	public long getRecentLayoutSetBranchId(User user, long layoutSetId);
+
+	public String getRemoteSiteURL(Group stagingGroup, boolean privateLayout)
+		throws PortalException;
 
 	public String getSchedulerGroupName(String destinationName, long groupId);
 

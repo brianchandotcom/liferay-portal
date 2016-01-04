@@ -127,6 +127,7 @@ import com.liferay.portlet.exportimport.staging.LayoutStagingUtil;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.Staging;
 import com.liferay.portlet.exportimport.staging.StagingConstants;
+import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.io.Serializable;
 
@@ -162,9 +163,9 @@ public class StagingImpl implements Staging {
 	@Override
 	public String buildRemoteURL(
 		String remoteAddress, int remotePort, String remotePathContext,
-		boolean secureConnection, long remoteGroupId, boolean privateLayout) {
+		boolean secureConnection) {
 
-		StringBundler sb = new StringBundler((remoteGroupId > 0) ? 4 : 9);
+		StringBundler sb = new StringBundler(5);
 
 		if (secureConnection) {
 			sb.append(Http.HTTPS_WITH_SLASH);
@@ -184,15 +185,21 @@ public class StagingImpl implements Staging {
 			sb.append(remotePathContext);
 		}
 
-		if (remoteGroupId > 0) {
-			sb.append("/c/my_sites/view?");
-			sb.append("groupId=");
-			sb.append(remoteGroupId);
-			sb.append("&amp;privateLayout=");
-			sb.append(privateLayout);
-		}
-
 		return sb.toString();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getRemoteSiteURL(Group,
+	 *             boolean)}
+	 */
+	@Deprecated
+	@Override
+	public String buildRemoteURL(
+		String remoteAddress, int remotePort, String remotePathContext,
+		boolean secureConnection, long remoteGroupId, boolean privateLayout) {
+
+		return buildRemoteURL(
+			remoteAddress, remotePort, remotePathContext, secureConnection);
 	}
 
 	@Override
@@ -207,8 +214,7 @@ public class StagingImpl implements Staging {
 			typeSettingsProperties.getProperty("secureConnection"));
 
 		return buildRemoteURL(
-			remoteAddress, remotePort, remotePathContext, secureConnection,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
+			remoteAddress, remotePort, remotePathContext, secureConnection);
 	}
 
 	/**
@@ -1067,6 +1073,35 @@ public class StagingImpl implements Staging {
 		}
 
 		return 0;
+	}
+
+	@Override
+	public String getRemoteSiteURL(Group stagingGroup, boolean privateLayout)
+		throws PortalException {
+
+		if (!stagingGroup.isStagedRemotely()) {
+			return StringPool.BLANK;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		User user = permissionChecker.getUser();
+
+		UnicodeProperties typeSettingsProperties =
+			stagingGroup.getTypeSettingsProperties();
+
+		HttpPrincipal httpPrincipal = new HttpPrincipal(
+			StagingUtil.buildRemoteURL(typeSettingsProperties), user.getLogin(),
+			user.getPassword(), user.getPasswordEncrypted());
+
+		long remoteGroupId = GetterUtil.getLong(
+			typeSettingsProperties.getProperty("remoteGroupId"));
+		boolean secureConnection = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("secureConnection"));
+
+		return GroupServiceHttp.getGroupDisplayURL(
+			httpPrincipal, remoteGroupId, privateLayout, secureConnection);
 	}
 
 	@Override

@@ -19,12 +19,12 @@
 <%
 String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
-String className = (String)request.getAttribute("liferay-ui:flags:className");
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:flags:classPK"));
-String contentTitle = GetterUtil.getString((String)request.getAttribute("liferay-ui:flags:contentTitle"));
-boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:flags:label"), true);
-String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:flags:message"), "flag[action]");
-long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:flags:reportedUserId"));
+String className = (String)request.getAttribute("liferay-flags:flags:className");
+long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-flags:flags:classPK"));
+String contentTitle = GetterUtil.getString((String)request.getAttribute("liferay-flags:flags:contentTitle"));
+boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-flags:flags:label"), true);
+String message = GetterUtil.getString((String)request.getAttribute("liferay-flags:flags:message"), "flag[action]");
+long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-flags:flags:reportedUserId"));
 
 String cssClass = randomNamespace;
 

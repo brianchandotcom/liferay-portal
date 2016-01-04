@@ -14,6 +14,9 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -34,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -180,8 +182,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				providedBundleWiring,
 				_collectPackageNames(providedBundleWiring));
 		}
-
-		_bundleWiringPackageNames.putAll(_jspBundleWiringPackageNames);
 
 		if (options.contains(BundleJavaFileManager.OPT_VERBOSE)) {
 			StringBundler sb = new StringBundler(
@@ -416,7 +416,14 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	}
 
 	private static Set<String> _collectPackageNames(BundleWiring bundleWiring) {
-		Set<String> packageNames = new HashSet<>();
+		Set<String> packageNames = _bundleWiringPackageNamesCache.get(
+			bundleWiring);
+
+		if (packageNames != null) {
+			return packageNames;
+		}
+
+		packageNames = new HashSet<>();
 
 		for (BundleCapability bundleCapability :
 				bundleWiring.getCapabilities(
@@ -432,6 +439,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			}
 		}
 
+		_bundleWiringPackageNamesCache.put(bundleWiring, packageNames);
+
 		return packageNames;
 	}
 
@@ -441,9 +450,14 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		"javax.servlet.ServletException"
 	};
 
+	private static final Map<BundleWiring, Set<String>>
+		_bundleWiringPackageNamesCache = new ConcurrentReferenceKeyHashMap<>(
+			new ConcurrentReferenceValueHashMap<BundleWiring, Set<String>>(
+				FinalizeManager.SOFT_REFERENCE_FACTORY),
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final BundleWiring _jspBundleWiring;
 	private static final Map<BundleWiring, Set<String>>
-		_jspBundleWiringPackageNames = new LinkedHashMap<>();
+		_jspBundleWiringPackageNames = new HashMap<>();
 	private static final Set<String> _systemPackageNames;
 
 	static {
@@ -451,30 +465,44 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		_jspBundleWiring = jspBundle.adapt(BundleWiring.class);
 
+		Set<String> systemPackageNames = null;
+
 		for (BundleWire bundleWire : _jspBundleWiring.getRequiredWires(null)) {
 			BundleWiring providedBundleWiring = bundleWire.getProviderWiring();
 
+			Set<String> packageNames = _collectPackageNames(
+				providedBundleWiring);
+
+			Bundle bundle = providedBundleWiring.getBundle();
+
+			if (bundle.getBundleId() == 0) {
+				systemPackageNames = packageNames;
+			}
+
 			_jspBundleWiringPackageNames.put(
-				providedBundleWiring,
-				_collectPackageNames(providedBundleWiring));
+				providedBundleWiring, packageNames);
 		}
 
-		BundleContext bundleContext = jspBundle.getBundleContext();
+		if (systemPackageNames == null) {
+			BundleContext bundleContext = jspBundle.getBundleContext();
 
-		Bundle systemBundle = bundleContext.getBundle(0);
+			Bundle systemBundle = bundleContext.getBundle(0);
 
-		if (systemBundle == null) {
-			throw new ExceptionInInitializerError(
-				"Unable to access to system bundle");
+			if (systemBundle == null) {
+				throw new ExceptionInInitializerError(
+					"Unable to access to system bundle");
+			}
+
+			systemPackageNames = _collectPackageNames(
+				systemBundle.adapt(BundleWiring.class));
 		}
 
-		_systemPackageNames = _collectPackageNames(
-			systemBundle.adapt(BundleWiring.class));
+		_systemPackageNames = systemPackageNames;
 	}
 
 	private Bundle[] _allParticipatingBundles;
 	private final Map<BundleWiring, Set<String>> _bundleWiringPackageNames =
-		new LinkedHashMap<>();
+		new HashMap<>(_jspBundleWiringPackageNames);
 	private ClassLoader _classLoader;
 	private final List<File> _classPath = new ArrayList<>();
 	private JavaFileObjectResolver _javaFileObjectResolver;

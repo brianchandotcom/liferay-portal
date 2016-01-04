@@ -286,13 +286,11 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 									@Override
 									public boolean accept(Path entryPath) {
-										Path fileNamePath =
-											entryPath.getFileName();
+										String entryPathString =
+											entryPath.toString();
 
-										String fileName =
-											fileNamePath.toString();
-
-										return fileName.endsWith(".class");
+										return entryPathString.endsWith(
+											".class");
 									}
 
 								})) {

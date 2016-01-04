@@ -208,7 +208,8 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		FullNameDefinition fullNameDefinition =
 			FullNameDefinitionFactory.getInstance(locale);
 
-		List<FullNameField> fullNameFields = fullNameDefinition.getFullNameFields();
+		List<FullNameField> fullNameFields =
+			fullNameDefinition.getFullNameFields();
 
 		StringBundler sb = new StringBundler(2 * fullNameFields.size());
 

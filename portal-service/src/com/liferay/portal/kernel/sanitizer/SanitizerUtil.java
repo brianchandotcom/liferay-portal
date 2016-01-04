@@ -15,7 +15,13 @@
 package com.liferay.portal.kernel.sanitizer;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -27,10 +33,12 @@ import java.util.Map;
  */
 public class SanitizerUtil {
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public static Sanitizer getSanitizer() {
-		PortalRuntimePermission.checkGetBeanProperty(SanitizerUtil.class);
-
-		return _sanitizer;
+		return null;
 	}
 
 	/**
@@ -129,9 +137,15 @@ public class SanitizerUtil {
 			Map<String, Object> options)
 		throws SanitizerException {
 
-		return getSanitizer().sanitize(
-			companyId, groupId, userId, className, classPK, contentType, modes,
-			bytes, options);
+		PortalRuntimePermission.checkGetBeanProperty(SanitizerUtil.class);
+
+		for (Sanitizer sanitizer : _sanitizers) {
+			bytes = sanitizer.sanitize(
+				companyId, groupId, userId, className, classPK, contentType,
+				modes, bytes, options);
+		}
+
+		return bytes;
 	}
 
 	/**
@@ -146,9 +160,29 @@ public class SanitizerUtil {
 			Map<String, Object> options)
 		throws SanitizerException {
 
-		getSanitizer().sanitize(
-			companyId, groupId, userId, className, classPK, contentType, modes,
-			inputStream, outputStream, options);
+		PortalRuntimePermission.checkGetBeanProperty(SanitizerUtil.class);
+
+		InputStream in = inputStream;
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+		for (Sanitizer sanitizer : _sanitizers) {
+			sanitizer.sanitize(
+				companyId, groupId, userId, className, classPK, contentType,
+				modes, in, out, options);
+
+			in = new ByteArrayInputStream(out.toByteArray());
+
+			out.reset();
+		}
+
+		try {
+			StreamUtil.transfer(in, outputStream);
+		}
+		catch (IOException e) {
+			throw new SanitizerException(e);
+		}
+
+		return;
 	}
 
 	public static String sanitize(
@@ -157,17 +191,25 @@ public class SanitizerUtil {
 			Map<String, Object> options)
 		throws SanitizerException {
 
-		return getSanitizer().sanitize(
-			companyId, groupId, userId, className, classPK, contentType, modes,
-			content, options);
+		PortalRuntimePermission.checkGetBeanProperty(SanitizerUtil.class);
+
+		for (Sanitizer sanitizer : _sanitizers) {
+			content = sanitizer.sanitize(
+				companyId, groupId, userId, className, classPK, contentType,
+				modes, content, options);
+		}
+
+		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public void setSanitizer(Sanitizer sanitizer) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_sanitizer = sanitizer;
 	}
 
-	private static Sanitizer _sanitizer;
+	private static final ServiceTrackerList<Sanitizer> _sanitizers =
+		ServiceTrackerCollections.openList(Sanitizer.class);
 
 }

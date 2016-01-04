@@ -37,7 +37,7 @@ import org.junit.Test;
 /**
  * @author Peter Fellwock
  */
-public class SanitizerImplTest {
+public class SanitizerUtilTest {
 
 	@ClassRule
 	@Rule

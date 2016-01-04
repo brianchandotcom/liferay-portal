@@ -27,6 +27,8 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", B
 
 boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWithParentFolderDisabled");
 
+boolean showFolderSelector = ParamUtil.getBoolean(request, "showFolderSelector");
+
 if (folder != null) {
 	BookmarksUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
@@ -69,6 +71,7 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 		<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
+		<aui:input name="showFolderSelector" type="hidden" value="<%= showFolderSelector %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<liferay-ui:header
@@ -92,7 +95,7 @@ if (portletTitleBasedNavigation) {
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<c:if test="<%= folder != null %>">
+				<c:if test="<%= showFolderSelector %>">
 
 					<%
 					String parentFolderName = LanguageUtil.get(request, "home");

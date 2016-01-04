@@ -22,7 +22,7 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="folders" selected="<%= true %>" />
+		<aui:nav-item label="bookmarks" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.showFoldersSearch() %>">

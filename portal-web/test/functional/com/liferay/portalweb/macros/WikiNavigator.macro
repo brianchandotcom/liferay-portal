@@ -77,7 +77,9 @@
 	<command name="gotoEntryEditViaPGTable">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" value1="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
 	<command name="gotoEntryMoveViaTable">

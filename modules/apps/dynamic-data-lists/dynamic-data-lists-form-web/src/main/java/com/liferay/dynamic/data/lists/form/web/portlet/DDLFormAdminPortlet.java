@@ -14,6 +14,9 @@
 
 package com.liferay.dynamic.data.lists.form.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.util.DDLFormAdminPortletUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -39,19 +42,25 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-forms-admin",
 		"com.liferay.portlet.display-category=category.hidden",
@@ -100,6 +109,13 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ddlFormWebConfiguration = Configurable.createConfigurable(
+			DDLFormWebConfiguration.class, properties);
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
@@ -179,11 +195,15 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
+
+		renderRequest.setAttribute(
+			DDLFormWebConfiguration.class.getName(), _ddlFormWebConfiguration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormAdminPortlet.class);
 
+	private volatile DDLFormWebConfiguration _ddlFormWebConfiguration;
 	private volatile DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private volatile DDMFormRenderer _ddmFormRenderer;
 

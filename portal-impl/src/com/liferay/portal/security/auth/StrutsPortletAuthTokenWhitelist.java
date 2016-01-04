@@ -15,7 +15,6 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -147,14 +146,11 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 			long plid = liferayPortletURL.getPlid();
 
-			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
-				companyId = layout.getCompanyId();
-			}
-			catch (PortalException e) {
+			if (layout == null) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to load layout " + plid, e);
+					_log.debug("Unable to load layout " + plid);
 				}
 
 				return false;
@@ -189,14 +185,11 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 			long plid = liferayPortletURL.getPlid();
 
-			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
-				companyId = layout.getCompanyId();
-			}
-			catch (PortalException e) {
+			if (layout == null) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to load layout " + plid, e);
+					_log.debug("Unable to load layout " + plid);
 				}
 
 				return false;
@@ -233,6 +226,9 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			}
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return false;

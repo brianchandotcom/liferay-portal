@@ -95,7 +95,7 @@
 		modelVar="result"
 	>
 
-		<%@ include file="/message_boards/cast_result.jspf" %>
+		<%@ include file="/message_boards/thread_cast_result.jspf" %>
 
 		<%
 		MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(thread.getRootMessageId());

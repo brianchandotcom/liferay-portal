@@ -162,5 +162,5 @@ List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(MBMessage.class.getN
 
 PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
 
-MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
+MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 %>

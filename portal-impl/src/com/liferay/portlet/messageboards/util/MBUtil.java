@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -63,7 +62,6 @@ import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -101,8 +99,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -118,98 +114,6 @@ public class MBUtil {
 	public static final String EMOTICONS = "/emoticons";
 
 	public static final String MESSAGE_POP_PORTLET_PREFIX = "mb_message.";
-
-	public static void addPortletBreadcrumbEntries(
-			long categoryId, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		if ((categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
-			(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			return;
-		}
-
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-			categoryId);
-
-		addPortletBreadcrumbEntries(category, request, renderResponse);
-	}
-
-	public static void addPortletBreadcrumbEntries(
-			MBCategory category, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		String mvcRenderCommandName = ParamUtil.getString(
-			request, "mvcRenderCommandName");
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		if (mvcRenderCommandName.equals("/message_boards/select_category")) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/select_category");
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("categories"),
-				portletURL.toString());
-		}
-		else {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/view");
-		}
-
-		List<MBCategory> ancestorCategories = category.getAncestors();
-
-		Collections.reverse(ancestorCategories);
-
-		for (MBCategory curCategory : ancestorCategories) {
-			portletURL.setParameter(
-				"mbCategoryId", String.valueOf(curCategory.getCategoryId()));
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, curCategory.getName(), portletURL.toString());
-		}
-
-		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(category.getCategoryId()));
-
-		PortalUtil.addPortletBreadcrumbEntry(
-			request, category.getName(), portletURL.toString());
-	}
-
-	public static void addPortletBreadcrumbEntries(
-			MBMessage message, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		if (message.getCategoryId() ==
-				MBCategoryConstants.DISCUSSION_CATEGORY_ID) {
-
-			return;
-		}
-
-		if (message.getCategoryId() !=
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-			addPortletBreadcrumbEntries(
-				message.getCategory(), request, renderResponse);
-		}
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/view_message");
-		portletURL.setParameter(
-			"messageId", String.valueOf(message.getMessageId()));
-
-		PortalUtil.addPortletBreadcrumbEntry(
-			request, message.getSubject(), portletURL.toString());
-	}
 
 	public static void collectMultipartContent(
 			MimeMultipart multipart, MBMailMessage collector)

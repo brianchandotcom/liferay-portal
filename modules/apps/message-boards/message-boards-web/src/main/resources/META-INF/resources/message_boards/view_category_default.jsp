@@ -29,7 +29,7 @@ Set<Long> threadSubscriptionClassPKs = (Set<Long>)request.getAttribute("view.jsp
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 if ((category != null) && layout.isTypeControlPanel()) {
-	MBUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
 }
 %>
 

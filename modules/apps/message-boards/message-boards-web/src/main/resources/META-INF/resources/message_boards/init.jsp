@@ -31,9 +31,12 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.message.boards.display.context.MBHomeDisplayContext" %><%@
 page import="com.liferay.message.boards.web.constants.MBPortletKeys" %><%@
 page import="com.liferay.message.boards.web.constants.MBWebKeys" %><%@
+page import="com.liferay.message.boards.web.dao.search.MBResultRowSplitter" %><%@
 page import="com.liferay.message.boards.web.display.context.MBDisplayContextProvider" %><%@
 page import="com.liferay.message.boards.web.display.context.util.MBRequestHelper" %><%@
 page import="com.liferay.message.boards.web.portlet.toolbar.contributor.MBPortletToolbarContributor" %><%@
+page import="com.liferay.message.boards.web.search.EntriesChecker" %><%@
+page import="com.liferay.message.boards.web.util.MBBreadcrumbUtil" %><%@
 page import="com.liferay.message.boards.web.util.MBWebComponentProvider" %><%@
 page import="com.liferay.portal.NoSuchUserException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -41,7 +44,7 @@ page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaConfigurationException" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %><%@
-page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
+page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
@@ -94,6 +97,8 @@ page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.Portal" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.portlet.PortalPreferences" %><%@
+page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
@@ -232,6 +237,8 @@ MBWebComponentProvider mbWebComponentProvider = MBWebComponentProvider.getMBWebC
 MBDisplayContextProvider mbDisplayContextProvider = mbWebComponentProvider.getMBDisplayContextProvider();
 
 MBHomeDisplayContext mbHomeDisplayContext = mbDisplayContextProvider.getMBHomeDisplayContext(request, response);
+
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

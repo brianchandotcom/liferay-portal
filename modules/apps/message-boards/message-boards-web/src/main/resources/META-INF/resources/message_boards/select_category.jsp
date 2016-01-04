@@ -28,9 +28,9 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, cate
 
 String categoryName = null;
 
-if (category != null) {
-	MBUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
+MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
 
+if (category != null) {
 	categoryName = category.getName();
 }
 else {

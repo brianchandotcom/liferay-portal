@@ -142,9 +142,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 </div>
 
 <%
-if (breadcrumbsCategoryId > 0) {
-	MBUtil.addPortletBreadcrumbEntries(breadcrumbsCategoryId, request, renderResponse);
-}
+MBBreadcrumbUtil.addPortletBreadcrumbEntries(breadcrumbsCategoryId, request, renderResponse);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search") + ": " + keywords, currentURL);
 %>

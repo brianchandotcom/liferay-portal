@@ -30,7 +30,7 @@ if (Validator.isNull(displayStyle)) {
 }
 
 if ((message != null) && layout.isTypeControlPanel()) {
-	MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 }
 
 AssetEntryServiceUtil.incrementViewCounter(MBMessage.class.getName(), message.getMessageId());

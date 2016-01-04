@@ -83,12 +83,23 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void unbanUser(ActionRequest actionRequest) throws Exception {
+		long banUserIds[] = null;
+
 		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");
+
+		if (banUserId > 0) {
+			banUserIds = new long[] {banUserId};
+		}
+		else {
+			banUserIds = ParamUtil.getLongValues(actionRequest, "rowIds");
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MBBan.class.getName(), actionRequest);
 
-		_mbBanService.deleteBan(banUserId, serviceContext);
+		for (long curBanUserId : banUserIds) {
+			_mbBanService.deleteBan(curBanUserId, serviceContext);
+		}
 	}
 
 	private volatile MBBanService _mbBanService;

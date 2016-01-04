@@ -69,6 +69,7 @@ public class MBPortletToolbarContributor implements PortletToolbarContributor {
 		menu.setIcon("../aui/plus-sign-2");
 		menu.setMenuItems(getPortletTitleMenuItems(portletRequest));
 		menu.setShowArrow(false);
+		menu.setShowWhenSingleIcon(true);
 
 		menus.add(menu);
 

@@ -48,16 +48,14 @@ if ((category == null) && (mailingList == null)) {
 }
 
 if (category != null) {
-	MBUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 	}
 }
 else {
-	if (parentCategoryId > 0) {
-		MBUtil.addPortletBreadcrumbEntries(parentCategoryId, request, renderResponse);
-	}
+	MBBreadcrumbUtil.addPortletBreadcrumbEntries(parentCategoryId, request, renderResponse);
 
 	if (!layout.isTypeControlPanel()) {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-category[message-board]"), currentURL);
@@ -65,16 +63,25 @@ else {
 }
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(LanguageUtil.get(request, mbHomeDisplayContext.getTitle()));
+}
 %>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
+	<c:if test="<%= !portletTitleBasedNavigation %>">
+		<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (category == null) %>"
-		title="<%= mbHomeDisplayContext.getTitle() %>"
-	/>
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= (category == null) %>"
+			title="<%= mbHomeDisplayContext.getTitle() %>"
+		/>
+	</c:if>
 
 	<portlet:actionURL name="/message_boards/edit_category" var="editCategoryURL">
 		<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />
@@ -99,129 +106,127 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 		<aui:model-context bean="<%= category %>" model="<%= MBCategory.class %>" />
 
-		<aui:fieldset>
-			<c:if test="<%= parentCategoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<c:if test="<%= parentCategoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
 
-				<%
-				String parentCategoryName = StringPool.BLANK;
+					<%
+					String parentCategoryName = StringPool.BLANK;
 
-				try {
-					MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
+					try {
+						MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
 
-					parentCategoryName = parentCategory.getName();
-				}
-				catch (NoSuchCategoryException nsce) {
-				}
-				%>
+						parentCategoryName = parentCategory.getName();
+					}
+					catch (NoSuchCategoryException nsce) {
+					}
+					%>
 
-				<c:if test="<%= category != null %>">
-					<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
+					<c:if test="<%= category != null %>">
+						<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
+					</c:if>
 				</c:if>
-			</c:if>
 
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
-			<aui:input name="description" />
+				<aui:input name="description" />
 
-			<aui:select name="displayStyle">
+				<aui:select name="displayStyle">
 
-				<%
-				for (int i = 0; i < MBCategoryConstants.DISPLAY_STYLES.length; i++) {
-				%>
+					<%
+					for (int i = 0; i < MBCategoryConstants.DISPLAY_STYLES.length; i++) {
+					%>
 
-					<aui:option label="<%= MBCategoryConstants.DISPLAY_STYLES[i] %>" selected="<%= displayStyle.equals(MBCategoryConstants.DISPLAY_STYLES[i]) %>" />
+						<aui:option label="<%= MBCategoryConstants.DISPLAY_STYLES[i] %>" selected="<%= displayStyle.equals(MBCategoryConstants.DISPLAY_STYLES[i]) %>" />
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:select>
+				</aui:select>
+			</aui:fieldset>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="mailing-list">
+				<aui:model-context bean="<%= mailingList %>" model="<%= MBMailingList.class %>" />
+
+				<aui:input fieldParam="mailingListActive" name="active" />
+
+				<aui:input label="allow-anonymous-emails" name="allowAnonymous" />
+
+				<div id="<portlet:namespace />mailingListSettings">
+					<aui:input name="emailAddress" />
+
+					<br />
+
+					<aui:fieldset label="incoming">
+
+						<%
+						String protocol = BeanParamUtil.getString(mailingList, request, "inProtocol", "pop3");
+						%>
+
+						<aui:field-wrapper label="protocol">
+							<aui:input checked='<%= protocol.startsWith("pop3") %>' label="pop" name="inProtocol" type="radio" value="pop3" />
+							<aui:input checked='<%= protocol.startsWith("imap") %>' label="imap" name="inProtocol" type="radio" value="imap" />
+						</aui:field-wrapper>
+
+						<aui:input label="server-name" name="inServerName" />
+
+						<aui:input label="server-port" name="inServerPort" value="110" />
+
+						<aui:input label="use-a-secure-network-connection" name="inUseSSL" />
+
+						<aui:input label="user-name" name="inUserName" />
+
+						<aui:input label="password" name="inPassword" />
+
+						<aui:input label="read-interval-minutes" name="inReadInterval" value="5" />
+					</aui:fieldset>
+
+					<aui:fieldset label="outgoing">
+						<aui:input label="email-address" name="outEmailAddress" />
+
+						<aui:input label="use-custom-outgoing-server" name="outCustom" />
+
+						<div id="<portlet:namespace />outCustomSettings">
+							<aui:input label="server-name" name="outServerName" />
+
+							<aui:input label="server-port" name="outServerPort" value="25" />
+
+							<aui:input label="use-a-secure-network-connection" name="outUseSSL" />
+
+							<aui:input label="user-name" name="outUserName" />
+
+							<aui:input label="password" name="outPassword" />
+						</div>
+					</aui:fieldset>
+				</div>
+
+				<c:if test="<%= (category == null) && PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY %>">
+					<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
+
+					<liferay-ui:captcha url="<%= captchaURL %>" />
+				</c:if>
+			</aui:fieldset>
 
 			<liferay-ui:custom-attributes-available className="<%= MBCategory.class.getName() %>">
-				<liferay-ui:custom-attribute-list
-					className="<%= MBCategory.class.getName() %>"
-					classPK="<%= (category != null) ? category.getCategoryId() : 0 %>"
-					editable="<%= true %>"
-					label="<%= true %>"
-				/>
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+					<liferay-ui:custom-attribute-list
+						className="<%= MBCategory.class.getName() %>"
+						classPK="<%= (category != null) ? category.getCategoryId() : 0 %>"
+						editable="<%= true %>"
+						label="<%= true %>"
+					/>
+				</aui:fieldset>
 			</liferay-ui:custom-attributes-available>
 
 			<c:if test="<%= category == null %>">
-				<aui:field-wrapper label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= MBCategory.class.getName() %>"
 					/>
-				</aui:field-wrapper>
+				</aui:fieldset>
 			</c:if>
-
-			<br />
-
-			<liferay-ui:panel-container extended="<%= true %>" id="messageBoardsCategoryPanelContainer" persistState="<%= true %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="messageBoardsMailingListPanel" persistState="<%= true %>" title="mailing-list">
-					<aui:model-context bean="<%= mailingList %>" model="<%= MBMailingList.class %>" />
-
-					<aui:input fieldParam="mailingListActive" name="active" />
-
-					<aui:input label="allow-anonymous-emails" name="allowAnonymous" />
-
-					<div id="<portlet:namespace />mailingListSettings">
-						<aui:input name="emailAddress" />
-
-						<br />
-
-						<aui:fieldset label="incoming">
-
-							<%
-							String protocol = BeanParamUtil.getString(mailingList, request, "inProtocol", "pop3");
-							%>
-
-							<aui:field-wrapper label="protocol">
-								<aui:input checked='<%= protocol.startsWith("pop3") %>' label="pop" name="inProtocol" type="radio" value="pop3" />
-								<aui:input checked='<%= protocol.startsWith("imap") %>' label="imap" name="inProtocol" type="radio" value="imap" />
-							</aui:field-wrapper>
-
-							<aui:input label="server-name" name="inServerName" />
-
-							<aui:input label="server-port" name="inServerPort" value="110" />
-
-							<aui:input label="use-a-secure-network-connection" name="inUseSSL" />
-
-							<aui:input label="user-name" name="inUserName" />
-
-							<aui:input label="password" name="inPassword" />
-
-							<aui:input label="read-interval-minutes" name="inReadInterval" value="5" />
-						</aui:fieldset>
-
-						<aui:fieldset label="outgoing">
-							<aui:input label="email-address" name="outEmailAddress" />
-
-							<aui:input label="use-custom-outgoing-server" name="outCustom" />
-
-							<div id="<portlet:namespace />outCustomSettings">
-								<aui:input label="server-name" name="outServerName" />
-
-								<aui:input label="server-port" name="outServerPort" value="25" />
-
-								<aui:input label="use-a-secure-network-connection" name="outUseSSL" />
-
-								<aui:input label="user-name" name="outUserName" />
-
-								<aui:input label="password" name="outPassword" />
-							</div>
-						</aui:fieldset>
-					</div>
-				</liferay-ui:panel>
-			</liferay-ui:panel-container>
-		</aui:fieldset>
-
-		<br />
-
-		<c:if test="<%= (category == null) && PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY %>">
-			<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
-
-			<liferay-ui:captcha url="<%= captchaURL %>" />
-		</c:if>
+		</aui:fieldset-group>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" />

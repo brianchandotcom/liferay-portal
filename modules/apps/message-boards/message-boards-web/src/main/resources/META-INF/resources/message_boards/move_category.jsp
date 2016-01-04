@@ -26,14 +26,25 @@ long categoryId = MBUtil.getCategoryId(request, category);
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+String headerTitle = LanguageUtil.format(request, "move-x", category.getName(), false);
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (category == null) %>"
-		title='<%= LanguageUtil.format(request, "move-x", category.getName(), false) %>'
-	/>
+	<c:if test="<%= !portletTitleBasedNavigation %>">
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= (category == null) %>"
+			title='<%= LanguageUtil.format(request, "move-x", category.getName(), false) %>'
+		/>
+	</c:if>
 
 	<portlet:actionURL name="/message_boards/move_category" var="moveCategoryURL" />
 
@@ -44,34 +55,36 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 		<aui:model-context bean="<%= category %>" model="<%= MBCategory.class %>" />
 
-		<aui:fieldset>
-
-			<%
-			String parentCategoryName = StringPool.BLANK;
-
-			try {
-				MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
-
-				parentCategoryName = parentCategory.getName();
-			}
-			catch (NoSuchCategoryException nsce) {
-			}
-			%>
-
-			<div class="form-group">
-				<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
-
-				<aui:button name="selectCategoryButton" value="select" />
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
 
 				<%
-				String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentCategoryId', 'parentCategoryName', this, '" + renderResponse.getNamespace() + "');";
+				String parentCategoryName = StringPool.BLANK;
+
+				try {
+					MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
+
+					parentCategoryName = parentCategory.getName();
+				}
+				catch (NoSuchCategoryException nsce) {
+				}
 				%>
 
-				<aui:button disabled="<%= (parentCategoryId <= 0) %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-			</div>
+				<div class="form-group">
+					<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 
-			<aui:input label="merge-with-parent-category" name="mergeWithParentCategory" type="checkbox" />
-		</aui:fieldset>
+					<aui:button name="selectCategoryButton" value="select" />
+
+					<%
+					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentCategoryId', 'parentCategoryName', this, '" + renderResponse.getNamespace() + "');";
+					%>
+
+					<aui:button disabled="<%= (parentCategoryId <= 0) %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+				</div>
+
+				<aui:input label="merge-with-parent-category" name="mergeWithParentCategory" type="checkbox" />
+			</aui:fieldset>
+		</aui:fieldset-group>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" value="move" />
@@ -82,11 +95,9 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 </div>
 
 <%
-if (category != null) {
-	MBUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
+MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"), currentURL);
-}
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"), currentURL);
 %>
 
 <aui:script sandbox="<%= true %>">

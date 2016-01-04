@@ -27,6 +27,10 @@ bookmarksSearchContainer.setRowChecker(entriesChecker);
 
 entriesChecker.setCssClass("entry-selector");
 
+EntriesMover entriesMover = new EntriesMover(scopeGroupId);
+
+bookmarksSearchContainer.setRowMover(entriesMover);
+
 String displayStyle = GetterUtil.getString((String)request.getAttribute("view.jsp-displayStyle"));
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
@@ -66,6 +70,14 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			<c:when test="<%= curFolder != null %>">
 
 				<%
+				Map<String, Object> rowData = new HashMap<String, Object>();
+
+				rowData.put("folder", true);
+				rowData.put("folder-id", curFolder.getFolderId());
+				rowData.put("title", curFolder.getName());
+
+				row.setData(rowData);
+
 				row.setPrimaryKey(String.valueOf(curFolder.getFolderId()));
 				%>
 
@@ -99,6 +111,12 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			<c:otherwise>
 
 				<%
+				Map<String, Object> rowData = new HashMap<String, Object>();
+
+				rowData.put("title", entry.getName());
+
+				row.setData(rowData);
+
 				row.setPrimaryKey(String.valueOf(entry.getEntryId()));
 				%>
 

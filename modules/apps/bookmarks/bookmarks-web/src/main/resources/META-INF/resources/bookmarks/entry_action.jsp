@@ -55,6 +55,17 @@ else {
 			message="edit"
 			url="<%= editURL %>"
 		/>
+
+		<portlet:renderURL var="moveURL">
+			<portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="rowIdsBookmarksEntry" value="<%= String.valueOf(entry.getEntryId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="move"
+			url="<%= moveURL %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) %>">

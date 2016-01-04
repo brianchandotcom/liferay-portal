@@ -329,6 +329,26 @@ public class KaleoInstanceLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstance> search(
+		java.lang.Long userId, java.lang.String assetType,
+		java.lang.String nodeName, java.lang.String kaleoDefinitionName,
+		java.lang.Boolean completed, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoInstance> orderByComparator,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .search(userId, assetType, nodeName, kaleoDefinitionName,
+			completed, start, end, orderByComparator, serviceContext);
+	}
+
+	public static int searchCount(java.lang.Long userId,
+		java.lang.String assetType, java.lang.String nodeName,
+		java.lang.String kaleoDefinitionName, java.lang.Boolean completed,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .searchCount(userId, assetType, nodeName,
+			kaleoDefinitionName, completed, serviceContext);
+	}
+
 	/**
 	* Updates the kaleo instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Security SSO OpenSSO Test
+Bundle-SymbolicName: com.liferay.portal.security.sso.opensso.test
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	test-classes/integration

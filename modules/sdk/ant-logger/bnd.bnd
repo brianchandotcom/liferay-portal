@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Ant Logger
+Bundle-SymbolicName: com.liferay.ant.logger
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.ant.logger
+Include-Resource: classes

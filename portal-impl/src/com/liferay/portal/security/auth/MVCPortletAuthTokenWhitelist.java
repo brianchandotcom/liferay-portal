@@ -95,21 +95,12 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 		String[] actionNames = StringUtil.split(actionNameParameterValue);
 
-		if (actionNames.length > 0) {
-			String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-			for (String actionName : actionNames) {
-				if (!_portletCSRFWhitelistActions.contains(
-						getWhitelistValue(rootPortletId, actionName))) {
-
-					return false;
-				}
-			}
-
-			return true;
+		if (actionNames.length == 0) {
+			return false;
 		}
 
-		return false;
+		return containsCSRFWhitelistActions(
+			portletId, _portletCSRFWhitelistActions, actionNames);
 	}
 
 	@Override
@@ -153,21 +144,12 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 		String[] actionNames = StringUtil.split(actionNameParameterValue);
 
-		if (actionNames.length > 0) {
-			String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-			for (String actionName : actionNames) {
-				if (!_portletCSRFWhitelistActions.contains(
-						getWhitelistValue(rootPortletId, actionName))) {
-
-					return false;
-				}
-			}
-
-			return true;
+		if (actionNames.length == 0) {
+			return false;
 		}
 
-		return false;
+		return containsCSRFWhitelistActions(
+			portletId, _portletCSRFWhitelistActions, actionNames);
 	}
 
 	@Override
@@ -194,6 +176,22 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		return false;
 	}
 
+	protected boolean containsCSRFWhitelistActions(
+		String portletId, Set<String> whitelistActions, String[] actionNames) {
+
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		for (String actionName : actionNames) {
+			if (!whitelistActions.contains(
+					getWhitelistValue(rootPortletId, actionName))) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	protected String getWhitelistValue(
 		String portletName, String whitelistAction) {
 
@@ -214,22 +212,13 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		String[] mvcActionCommandNames = StringUtil.split(
 			actionNameParameterValue);
 
-		if (mvcActionCommandNames.length > 0) {
-			String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-			for (String mvcActionCommandName : mvcActionCommandNames) {
-				if (!_portletInvocationActionWhitelistActions.contains(
-						getWhitelistValue(
-							rootPortletId, mvcActionCommandName))) {
-
-					return false;
-				}
-			}
-
-			return true;
+		if (mvcActionCommandNames.length == 0) {
+			return false;
 		}
 
-		return false;
+		return containsCSRFWhitelistActions(
+			portletId, _portletInvocationActionWhitelistActions,
+			mvcActionCommandNames);
 	}
 
 	protected boolean isActionInvocationWhitelisted(
@@ -247,22 +236,13 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		String[] mvcActionCommandNames = StringUtil.split(
 			actionNameParameterValue);
 
-		if (mvcActionCommandNames.length > 0) {
-			String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-			for (String mvcActionCommandName : mvcActionCommandNames) {
-				if (!_portletInvocationActionWhitelistActions.contains(
-						getWhitelistValue(
-							rootPortletId, mvcActionCommandName))) {
-
-					return false;
-				}
-			}
-
-			return true;
+		if (mvcActionCommandNames.length == 0) {
+			return false;
 		}
 
-		return false;
+		return containsCSRFWhitelistActions(
+			portletId, _portletInvocationActionWhitelistActions,
+			mvcActionCommandNames);
 	}
 
 	protected boolean isRenderInvocationWhitelisted(

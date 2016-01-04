@@ -186,20 +186,6 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		return _wikiPageService.getNodePages(nodeId, max);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getNodePagesRSS(long, int,
-	String, double, String, String, String, String)}
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getNodePagesRSS(long nodeId, int max,
-		java.lang.String type, double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageService.getNodePagesRSS(nodeId, max, type, version,
-			displayStyle, feedURL, entryURL);
-	}
-
 	@Override
 	public java.lang.String getNodePagesRSS(long nodeId, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
@@ -303,21 +289,6 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		return _wikiPageService.getPagesCount(groupId, userId, nodeId, status);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, String,
-	int, String, double, String, String, String, String, Locale)}
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getPagesRSS(long companyId, long nodeId,
-		java.lang.String title, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageService.getPagesRSS(companyId, nodeId, title, max,
-			type, version, displayStyle, feedURL, entryURL, locale);
-	}
-
 	@Override
 	public java.lang.String getPagesRSS(long nodeId, java.lang.String title,
 		int max, java.lang.String type, double version,
@@ -347,19 +318,6 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		java.lang.String folderName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.getTempFileNames(nodeId, folderName);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
-	String, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public void movePage(long nodeId, java.lang.String title,
-		java.lang.String newTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageService.movePage(nodeId, title, newTitle, serviceContext);
 	}
 
 	@Override

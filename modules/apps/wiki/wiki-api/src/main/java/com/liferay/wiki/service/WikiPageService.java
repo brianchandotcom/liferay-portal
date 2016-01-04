@@ -135,17 +135,6 @@ public interface WikiPageService extends BaseService {
 	public java.util.List<com.liferay.wiki.model.WikiPage> getNodePages(
 		long nodeId, int max) throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getNodePagesRSS(long, int,
-	String, double, String, String, String, String)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getNodePagesRSS(long nodeId, int max,
-		java.lang.String type, double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getNodePagesRSS(long nodeId, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
@@ -208,18 +197,6 @@ public interface WikiPageService extends BaseService {
 	public int getPagesCount(long groupId, long userId, long nodeId, int status)
 		throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, String,
-	int, String, double, String, String, String, String, Locale)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getPagesRSS(long companyId, long nodeId,
-		java.lang.String title, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, java.util.Locale locale)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getPagesRSS(long nodeId, java.lang.String title,
 		int max, java.lang.String type, double version,
@@ -239,16 +216,6 @@ public interface WikiPageService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getTempFileNames(long nodeId,
 		java.lang.String folderName) throws PortalException;
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
-	String, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public void movePage(long nodeId, java.lang.String title,
-		java.lang.String newTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileEntry movePageAttachmentToTrash(
 		long nodeId, java.lang.String title, java.lang.String fileName)

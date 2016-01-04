@@ -655,29 +655,8 @@ public class WikiPageLocalServiceUtil {
 		return getService().getRecentChanges(groupId, nodeId, start, end);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long,
-	int, int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(
-		long nodeId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRecentChanges(nodeId, start, end);
-	}
-
 	public static int getRecentChangesCount(long groupId, long nodeId) {
 		return getService().getRecentChangesCount(groupId, nodeId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getRecentChangesCount(long,
-	long)}
-	*/
-	@Deprecated
-	public static int getRecentChangesCount(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRecentChangesCount(nodeId);
 	}
 
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getRedirectorPages(
@@ -798,19 +777,6 @@ public class WikiPageLocalServiceUtil {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().movePage(userId, nodeId, title, newTitle, serviceContext);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
-	String, String, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	public static void movePage(long userId, long nodeId,
-		java.lang.String title, java.lang.String newTitle, boolean strict,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.movePage(userId, nodeId, title, newTitle, strict, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry movePageAttachmentToTrash(

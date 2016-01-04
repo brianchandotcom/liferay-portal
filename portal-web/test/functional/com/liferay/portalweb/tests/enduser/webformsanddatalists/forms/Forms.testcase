@@ -992,9 +992,11 @@
 		</execute>
 
 		<execute macro="FormFields#viewTextLabel">
-			<var name="fieldLabel" value="Text Field*" />
+			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
 		</execute>
+
+		<execute macro="FormFields#viewRequiredAsterisk" />
 
 		<execute macro="FormFields#editBlankMultiTextFieldWithEnterKey">
 			<var name="fieldName" value="TextField" />
@@ -1100,9 +1102,11 @@
 		</execute>
 
 		<execute macro="FormFields#viewRadioLabel">
-			<var name="fieldLabel" value="Radio Field*" />
+			<var name="fieldLabel" value="Radio Field" />
 			<var name="fieldName" value="RadioField" />
 		</execute>
+
+		<execute macro="FormFields#viewRequiredAsterisk" />
 
 		<execute macro="FormPortlet#submitWithValidationError" />
 
@@ -1291,9 +1295,11 @@
 		</execute>
 
 		<execute macro="FormFields#viewTextLabel">
-			<var name="fieldLabel" value="Text Field*" />
+			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
 		</execute>
+
+		<execute macro="FormFields#viewRequiredAsterisk" />
 
 		<execute macro="FormPortlet#submitWithValidationError" />
 

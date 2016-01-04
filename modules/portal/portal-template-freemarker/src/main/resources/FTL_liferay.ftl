@@ -138,5 +138,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 </#macro>
 
 <#macro user_personal_bar>
-	${theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", portletProviderAction.VIEW)}
+	<#if is_setup_complete && is_signed_in>
+		${theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", portletProviderAction.VIEW)}
+	</#if>
 </#macro>

@@ -49,6 +49,14 @@ public class PortletDisplay implements Serializable {
 		}
 	}
 
+	public Object clone() {
+		PortletDisplay portletDisplay = new PortletDisplay();
+
+		portletDisplay.copyFrom(this);
+
+		return portletDisplay;
+	}
+
 	public void copyFrom(PortletDisplay master) {
 		_active = master.isActive();
 		_columnCount = master.getColumnCount();

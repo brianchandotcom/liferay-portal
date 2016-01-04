@@ -6,7 +6,7 @@ Bundle-ClassPath:\
 	lib/google-http-client-jackson2.jar,\
 	lib/google-http-client.jar,\
 	lib/google-oauth-client.jar
-Bundle-Name: Liferay Portal SSO Google
+Bundle-Name: Liferay Portal Security SSO Google
 Bundle-SymbolicName: com.liferay.portal.security.sso.google
 Bundle-Version: 1.0.0
 Import-Package:\

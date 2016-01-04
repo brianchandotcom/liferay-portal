@@ -104,33 +104,33 @@
 </tr>
 <!--ASSIGNED_TO_ME_TABLE-->
 <tr>
-	<td>ASSIGNED_TO_ME_TABLE_TASK</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[1]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSIGNED_TO_ME_TABLE_ASSET_TITLE</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[2]/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_ASSET_TYPE</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[3]/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_TASK</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[4]/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_DUE_DATE</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[5]/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_ACTIONS</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[6]/div/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[6]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -171,17 +171,17 @@
 </tr>
 <!--ASSIGNED_TO_MY_ROLES_TABLE-->
 <tr>
-	<td>ASSIGNED_TO_MY_ROLES_TABLE_TASK</td>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE</td>
 	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE</td>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE</td>
 	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE</td>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_TASK</td>
 	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowTask}') and contains (.,'${key_workflowAssetTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
@@ -270,17 +270,17 @@
 </tr>
 <!--COMPLETED_TABLE-->
 <tr>
-	<td>COMPLETED_TABLE_TASK</td>
-	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COMPLETED_TABLE_ASSET_TITLE</td>
-	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMPLETED_TABLE_ASSET_TYPE</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPLETED_TABLE_TASK</td>
 	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>

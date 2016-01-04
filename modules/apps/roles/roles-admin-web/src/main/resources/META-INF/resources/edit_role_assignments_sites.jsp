@@ -60,11 +60,7 @@ GroupRoleChecker rowChecker = new GroupRoleChecker(renderResponse, role);
 
 	<%
 	portletURL.setParameter("cur", String.valueOf(cur));
-
-	String taglibOnClick = renderResponse.getNamespace() + "updateRoleGroups('" + portletURL.toString() + "');";
 	%>
-
-	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.Group"

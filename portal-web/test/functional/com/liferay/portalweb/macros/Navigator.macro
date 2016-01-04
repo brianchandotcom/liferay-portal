@@ -56,7 +56,7 @@
 	</command>
 
 	<command name="gotoStagedView">
-		<execute function="Click" locator1="Radio#STAGING" />
+		<execute function="Click" locator1="Link#STAGING" />
 	</command>
 
 	<command name="gotoStagingPage">

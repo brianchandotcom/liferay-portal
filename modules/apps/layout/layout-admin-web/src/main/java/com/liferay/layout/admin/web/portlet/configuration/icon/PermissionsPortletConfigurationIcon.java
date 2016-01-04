@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -71,7 +72,9 @@ public class PermissionsPortletConfigurationIcon
 		try {
 			Layout layout = getLayout();
 
-			if (layout == null) {
+			Group group = layout.getGroup();
+
+			if (group.isLayoutPrototype() || (layout == null)) {
 				return false;
 			}
 

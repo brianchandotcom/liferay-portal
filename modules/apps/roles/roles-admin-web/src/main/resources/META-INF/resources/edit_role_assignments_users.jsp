@@ -63,11 +63,5 @@ UserRoleChecker rowChecker = new UserRoleChecker(renderResponse, role);
 		<%@ include file="/user_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<%
-	String taglibOnClick = renderResponse.getNamespace() + "updateRoleUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-	%>
-
-	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
 	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>

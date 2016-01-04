@@ -144,6 +144,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>portletRequest</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>showArrow</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

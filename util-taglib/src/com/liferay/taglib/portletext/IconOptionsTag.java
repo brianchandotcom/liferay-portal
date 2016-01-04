@@ -16,12 +16,18 @@ package com.liferay.taglib.portletext;
 
 import com.liferay.taglib.ui.IconTag;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class IconOptionsTag extends IconTag {
+
+	public static void setPortletRequest(PortletRequest portletRequest) {
+		_portletRequest = portletRequest;
+	}
 
 	public void setDirection(String direction) {
 		_direction = direction;
@@ -36,6 +42,7 @@ public class IconOptionsTag extends IconTag {
 		super.cleanUp();
 
 		_direction = "down";
+		_portletRequest = null;
 		_showArrow = true;
 	}
 
@@ -49,11 +56,13 @@ public class IconOptionsTag extends IconTag {
 		super.setAttributes(request);
 
 		request.setAttribute("liferay-ui:icon:direction", _direction);
+		request.setAttribute("liferay-ui:icon:portletRequest", _portletRequest);
 		request.setAttribute(
 			"liferay-ui:icon:showArrow", String.valueOf(_showArrow));
 	}
 
 	private static String _direction = "down";
+	private static PortletRequest _portletRequest;
 	private static boolean _showArrow = true;
 
 }

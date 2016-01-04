@@ -31,7 +31,7 @@ public class JenkinsPerformanceTableUtil {
 			JenkinsPerformanceDataUtil.getSlowestResults();
 
 		if (results == null) {
-			return "";
+			return "<p>No performance data found.</p>";
 		}
 
 		Element element = new DefaultElement("table");

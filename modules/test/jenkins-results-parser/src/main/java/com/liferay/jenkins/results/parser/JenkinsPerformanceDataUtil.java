@@ -33,79 +33,94 @@ import org.json.JSONObject;
 public class JenkinsPerformanceDataUtil {
 
 	public static List<Result> getSlowestResults() {
+		if (_broken) {
+			return null;
+		}
+
 		return _results;
 	}
 
 	public static void processPerformanceData(
-			String jobName, String url, int size)
-		throws Exception {
+		String jobName, String url, int size) {
 
-		JSONObject jsonObject = null;
-
-		if (url.contains("-source")) {
-			jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(url + "/api/json"), false);
-
-			_results.add(new Result(jobName, jsonObject));
-
-			Collections.sort(_results);
-
-			_truncate(_results, size);
-
+		if (_broken) {
 			return;
 		}
 
-		int retryCount = 0;
+		try {
+			JSONObject jsonObject = null;
 
-		while (true) {
-			try {
-				jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.getLocalURL(
-						url + "/testReport/api/json"),
-					false);
-			}
-			catch (FileNotFoundException fnfe) {
+			if (url.contains("-source")) {
 				jsonObject = JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(url + "/api/json"),
 					false);
 
 				_results.add(new Result(jobName, jsonObject));
 
-				break;
+				Collections.sort(_results);
+
+				_truncate(_results, size);
+
+				return;
 			}
 
-			try {
-				_results.addAll(_getSlowestResults(jobName, jsonObject, size));
+			int retryCount = 0;
 
-				break;
-			}
-			catch (IllegalArgumentException iae) {
-				String message = iae.getMessage();
+			while (true) {
+				try {
+					jsonObject = JenkinsResultsParserUtil.toJSONObject(
+						JenkinsResultsParserUtil.getLocalURL(
+							url + "/testReport/api/json"),
+						false);
+				}
+				catch (FileNotFoundException fnfe) {
+					jsonObject = JenkinsResultsParserUtil.toJSONObject(
+						JenkinsResultsParserUtil.getLocalURL(url + "/api/json"),
+						false);
 
-				if (!message.contains("Result is not available for ")) {
-					throw iae;
+					_results.add(new Result(jobName, jsonObject));
+
+					break;
 				}
 
-				retryCount++;
+				try {
+					_results.addAll(
+						_getSlowestResults(jobName, jsonObject, size));
 
-				if (retryCount > 5) {
-					System.out.println("Exceeded max retries");
-
-					throw iae;
+					break;
 				}
+				catch (IllegalArgumentException iae) {
+					retryCount++;
 
-				System.out.println("Retry in 60 seconds: " + message);
+					if (retryCount > 5) {
+						System.out.println("Exceeded max retries");
 
-				Thread.sleep(60 * 1000);
+						throw iae;
+					}
+
+					System.out.println(
+						"Retry in 60 seconds: " + iae.getMessage());
+
+					Thread.sleep(60 * 1000);
+				}
 			}
+
+			Collections.sort(_results);
+
+			_truncate(_results, size);
 		}
+		catch (Exception e) {
+			System.out.println("WARNING: Exception occurred while parsing" +
+				" performance data.");
 
-		Collections.sort(_results);
+			e.printStackTrace();
 
-		_truncate(_results, size);
+			_broken = true;
+		}
 	}
 
 	public static void reset() {
+		_broken = false;
 		_results.clear();
 	}
 
@@ -303,6 +318,7 @@ public class JenkinsPerformanceDataUtil {
 		subList.clear();
 	}
 
+	private static boolean _broken = false;
 	private static final List<Result> _results = new ArrayList<>();
 
 }

@@ -17,7 +17,7 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "home");
+String navigation = ParamUtil.getString(request, "navigation", "all");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
@@ -160,7 +160,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						<liferay-ui:search-container-column-jsp
 							colspan="2"
 							path="/bookmarks/view_entry_descriptive.jsp"
-							/>
+						/>
 
 						<liferay-ui:search-container-column-jsp
 							path="/bookmarks/entry_action.jsp"

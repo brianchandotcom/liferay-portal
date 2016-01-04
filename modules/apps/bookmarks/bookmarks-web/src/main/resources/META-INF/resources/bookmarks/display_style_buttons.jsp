@@ -17,7 +17,7 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "home");
+String navigation = ParamUtil.getString(request, "navigation", "all");
 
 int curEntry = ParamUtil.getInteger(request, "curEntry");
 int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");

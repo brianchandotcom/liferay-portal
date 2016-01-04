@@ -486,6 +486,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>href</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -520,6 +525,11 @@
 		<name>management-bar-display-buttons</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarDisplayButtonsTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 		<attribute>
 			<name>displayViews</name>
 			<required>true</required>

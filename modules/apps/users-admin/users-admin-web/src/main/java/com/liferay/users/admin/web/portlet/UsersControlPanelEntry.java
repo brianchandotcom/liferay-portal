@@ -39,7 +39,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN},
+	property = {
+		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN +
+		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS
+	},
 	service = ControlPanelEntry.class
 )
 public class UsersControlPanelEntry extends BaseControlPanelEntry {

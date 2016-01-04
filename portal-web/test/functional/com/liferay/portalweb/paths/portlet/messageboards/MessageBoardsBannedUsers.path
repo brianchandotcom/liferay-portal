@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>BANNED_USERS_TABLE_UNBAN_THIS_USER</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[5]/span/a[contains(@id,'mbBansSearchContainer')]</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[5]/span/a/i[contains(@class,'icon-ok-sign')]</td>
 	<td></td>
 </tr>
 </tbody>

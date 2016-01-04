@@ -165,7 +165,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	protected ServiceTracker<Object, Object> trackWhitelistServices(
-		String whitelistName, Set whiteList) {
+		String whitelistName, Set<String> whiteList) {
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -185,7 +185,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		implements ServiceTrackerCustomizer<Object, Object> {
 
 		public TokenWhitelistTrackerCustomizer(
-			String whitelistName, Set whitelist) {
+			String whitelistName, Set<String> whitelist) {
 
 			_whitelistName = whitelistName;
 			_whitelist = whitelist;
@@ -220,7 +220,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 			_whitelist.removeAll(authTokenIgnoreActions);
 		}
 
-		private final Set _whitelist;
+		private final Set<String> _whitelist;
 		private final String _whitelistName;
 
 	}

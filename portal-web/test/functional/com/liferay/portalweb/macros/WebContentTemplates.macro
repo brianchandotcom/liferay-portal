@@ -104,6 +104,8 @@
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
+		<execute macro="WebContentNavigator#showTemplateDetails" />
+
 		<execute function="AssertTextEquals#assertValue" locator1="TextInput#STRUCTURE" value1="${structureName}" />
 
 		<if>

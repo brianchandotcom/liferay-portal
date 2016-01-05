@@ -526,10 +526,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		StringBundler sb = new StringBundler(12);
 
-		if (themeDisplay != null) {
-			if (absoluteURL) {
-				sb.append(themeDisplay.getPortalURL());
-			}
+		if ((themeDisplay != null) && absoluteURL) {
+			sb.append(themeDisplay.getPortalURL());
 		}
 
 		sb.append(PortalUtil.getPathContext());

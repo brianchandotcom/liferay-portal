@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portal Module Configuration
 Bundle-SymbolicName: com.liferay.portal.module.configuration
 Bundle-Version: 1.0.0
+DynamicImport-Package: *
 Export-Package:\
 	aQute.bnd.annotation.metatype
 Include-Resource:\

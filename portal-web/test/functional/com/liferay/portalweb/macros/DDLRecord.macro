@@ -188,8 +188,21 @@
 
 	<command name="populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_parentFieldName" value="${parentFieldName}" />
 
-		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Choose from Document Library" />
+		<var name="i" value="1" />
+
+		<if>
+			<isset var="parentFieldName" />
+			<then>
+				<var method="MathUtil#sum('${i}', '1')" name="i" />
+
+				<execute function="AssertClick" locator1="xpath=(//div[@data-fieldname='${key_parentFieldName}'][${i}]//a[contains(@class,'ddm-repeatable-add-button')]/../div//span)" value1="Choose from Document Library" />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Choose from Document Library" />
+			</else>
+		</if>
 
 		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME" />
 

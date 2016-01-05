@@ -185,6 +185,19 @@ public class LayoutsTreeDisplayContext {
 		return data;
 	}
 
+	public Map<String, Object> getLayoutSetData(boolean privateLayout) {
+		Map<String, Object> data = new HashMap<>();
+
+		if (privateLayout) {
+			data.put("qa-id", "privatePages");
+		}
+		else {
+			data.put("qa-id", "publicPages");
+		}
+
+		return data;
+	}
+
 	public String getLayoutSetName(boolean privateLayout) {
 		Group liveGroup = getLiveGroup();
 

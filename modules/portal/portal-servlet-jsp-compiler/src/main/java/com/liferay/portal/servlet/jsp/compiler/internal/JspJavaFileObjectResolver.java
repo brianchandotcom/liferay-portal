@@ -218,6 +218,15 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		if (protocol.equals("bundle") || protocol.equals("bundleresource")) {
 			return new BundleJavaFileObject(className, resourceURL);
 		}
+		else if (protocol.equals("jar")) {
+			try {
+				return new JarJavaFileObject(
+					className, getFile(resourceURL), resourceName);
+			}
+			catch (IOException ioe) {
+				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
+			}
+		}
 		else if (protocol.equals("vfs")) {
 			try {
 				return new VfsJavaFileObject(
@@ -354,8 +363,12 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			resources.size());
 
 		for (String resource : resources) {
-			javaFileObjects.add(
-				getJavaFileObject(bundle.getResource(resource), resource));
+			JavaFileObject javaFileObject = getJavaFileObject(
+				bundle.getResource(resource), resource);
+
+			if (javaFileObject != null) {
+				javaFileObjects.add(javaFileObject);
+			}
 		}
 
 		return javaFileObjects;

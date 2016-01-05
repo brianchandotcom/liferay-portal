@@ -31,9 +31,10 @@ public class Distance {
 
 		double miles =
 			3963.4 *
-			Math.acos(
-				(Math.sin(lat1) * Math.sin(lat2)) +
-				(Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2)));
+				Math.acos(
+					(Math.sin(lat1) * Math.sin(lat2)) +
+						(Math.cos(lat1) * Math.cos(lat2) *
+							Math.cos(lon1 - lon2)));
 
 		return miles;
 	}

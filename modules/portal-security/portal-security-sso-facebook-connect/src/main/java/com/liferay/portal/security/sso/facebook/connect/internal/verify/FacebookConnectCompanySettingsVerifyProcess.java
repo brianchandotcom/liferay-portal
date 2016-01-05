@@ -63,44 +63,42 @@ public class FacebookConnectCompanySettingsVerifyProcess
 				StringPool.FALSE));
 
 		dictionary.put(
-				FacebookConnectConstants.APP_ID,
-				_prefsProps.getString(
-					companyId, LegacyFacebookConnectPropsKeys.APP_ID, ""));
+			FacebookConnectConstants.APP_ID,
+			_prefsProps.getString(
+				companyId, LegacyFacebookConnectPropsKeys.APP_ID, ""));
 
 		dictionary.put(
-				FacebookConnectConstants.APP_SECRET,
-				_prefsProps.getString(
-					companyId, LegacyFacebookConnectPropsKeys.APP_SECRET, ""));
+			FacebookConnectConstants.APP_SECRET,
+			_prefsProps.getString(
+				companyId, LegacyFacebookConnectPropsKeys.APP_SECRET, ""));
 
 		dictionary.put(
-				FacebookConnectConstants.GRAPH_URL,
-				_prefsProps.getString(
-					companyId, LegacyFacebookConnectPropsKeys.GRAPH_URL, ""));
+			FacebookConnectConstants.GRAPH_URL,
+			_prefsProps.getString(
+				companyId, LegacyFacebookConnectPropsKeys.GRAPH_URL, ""));
 
 		dictionary.put(
-				FacebookConnectConstants.OAUTH_AUTH_URL,
-				_prefsProps.getString(
-					companyId, LegacyFacebookConnectPropsKeys.OAUTH_AUTH_URL,
-					""));
+			FacebookConnectConstants.OAUTH_AUTH_URL,
+			_prefsProps.getString(
+				companyId, LegacyFacebookConnectPropsKeys.OAUTH_AUTH_URL, ""));
 
 		dictionary.put(
-				FacebookConnectConstants.OAUTH_REDIRECT_URL,
-				_prefsProps.getString(
-					companyId,
-					LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL, ""));
+			FacebookConnectConstants.OAUTH_REDIRECT_URL,
+			_prefsProps.getString(
+				companyId, LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
+				""));
 
 		dictionary.put(
-				FacebookConnectConstants.OAUTH_TOKEN_URL,
-				_prefsProps.getString(
-					companyId, LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL,
-					""));
+			FacebookConnectConstants.OAUTH_TOKEN_URL,
+			_prefsProps.getString(
+				companyId, LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL, ""));
 
 		dictionary.put(
-				FacebookConnectConstants.VERIFIED_ACCOUNT_REQUIRED,
-				_prefsProps.getString(
-					companyId,
-					LegacyFacebookConnectPropsKeys.VERIFIED_ACCOUNT_REQUIRED,
-					StringPool.FALSE));
+			FacebookConnectConstants.VERIFIED_ACCOUNT_REQUIRED,
+			_prefsProps.getString(
+				companyId,
+				LegacyFacebookConnectPropsKeys.VERIFIED_ACCOUNT_REQUIRED,
+				StringPool.FALSE));
 
 		return dictionary;
 	}

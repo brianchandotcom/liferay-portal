@@ -25,17 +25,17 @@ Map<String, Object> data = new HashMap<String, Object>();
 
 data.put("panelURL", simulationPanelURL);
 data.put("qa-id", "simulation");
-data.put("title", HtmlUtil.escape(LanguageUtil.get(request, "simulation")));
 %>
 
 <li>
-	<aui:icon
-		cssClass="control-menu-icon"
+	<liferay-ui:icon
 		data="<%= data %>"
+		icon="simulation-menu-closed"
 		id="simulationPanel"
-		image="simulation-menu-closed"
-		label="simulation"
+		label="<%= false %>"
+		linkCssClass="control-menu-icon"
 		markupView="lexicon"
+		message="simulation"
 		url="javascript:;"
 	/>
 </li>

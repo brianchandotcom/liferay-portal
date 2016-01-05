@@ -64,12 +64,13 @@ if (layout != null) {
 					%>
 
 							<li>
-								<aui:icon
-									cssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
+								<liferay-ui:icon
 									data="<%= controlMenuEntry.getData(request) %>"
-									image="<%= controlMenuEntry.getIconCssClass(request) %>"
-									label="<%= controlMenuEntry.getLabel(locale) %>"
+									icon="<%= controlMenuEntry.getIconCssClass(request) %>"
+									label="<%= false %>"
+									linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
 									markupView="lexicon"
+									message="<%= controlMenuEntry.getLabel(locale) %>"
 									url="<%= controlMenuEntry.getURL(request) %>"
 								/>
 							</li>
@@ -85,20 +86,6 @@ if (layout != null) {
 	</div>
 
 	<aui:script position="inline" use="liferay-control-menu">
-		var controlMenu = A.one('#<portlet:namespace/>ControlMenu');
-
-		controlMenu.delegate(
-			'mouseover',
-			function(event) {
-				var title = event.currentTarget.attr('data-title');
-
-				if (title) {
-					Liferay.Portal.ToolTip.show(this, title);
-				}
-			},
-			'.control-menu-icon'
-		);
-
 		Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
 	</aui:script>
 </c:if>

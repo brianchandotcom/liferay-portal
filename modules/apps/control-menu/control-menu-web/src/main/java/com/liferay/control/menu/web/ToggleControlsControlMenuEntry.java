@@ -57,11 +57,6 @@ public class ToggleControlsControlMenuEntry
 
 		data.put("qa-id", "showControls");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		data.put("title", getLabel(themeDisplay.getLocale()));
-
 		return data;
 	}
 

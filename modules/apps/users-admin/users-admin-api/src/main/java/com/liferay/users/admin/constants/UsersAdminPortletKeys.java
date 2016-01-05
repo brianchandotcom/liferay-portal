@@ -19,6 +19,9 @@ package com.liferay.users.admin.constants;
  */
 public class UsersAdminPortletKeys {
 
+	public static final String MY_ORGANIZATIONS =
+		"com_liferay_users_admin_web_portlet_MyOrganizationsPortlet";
+
 	public static final String USERS_ADMIN =
 		"com_liferay_users_admin_web_portlet_UsersAdminPortlet";
 

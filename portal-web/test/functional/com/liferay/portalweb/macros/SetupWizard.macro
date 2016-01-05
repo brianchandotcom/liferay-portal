@@ -6,7 +6,7 @@
 	<command name="configureAdministratorUserPG">
 		<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${administratorFirstName}" />
 		<execute function="Type" locator1="TextInput#LAST_NAME" value1="${administratorLastName}" />
-		<execute function="Type" locator1="TextInput#EMAIL" value1="${administratorEmail}" />
+		<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${administratorScreenName}" />
 	</command>
 
 	<command name="configureDatabasePG">
@@ -174,7 +174,7 @@
 		<execute function="AssertSelectedLabel" locator1="Select#DEFAULT_LANGUAGE" value1="English (United States)" />
 		<execute function="AssertTextEquals#assertValue" locator1="TextInput#FIRST_NAME" value1="Test" />
 		<execute function="AssertTextEquals#assertValue" locator1="TextInput#LAST_NAME" value1="Test" />
-		<execute function="AssertTextEquals#assertValue" locator1="TextInput#EMAIL" value1="test@liferay.com" />
+		<execute function="AssertTextEquals#assertValue" locator1="TextInput#SCREEN_NAME" value1="test" />
 	</command>
 
 	<command name="viewDefaultDatabasePG">

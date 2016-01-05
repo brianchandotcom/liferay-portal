@@ -6,7 +6,7 @@
 		<property name="portal.acceptance.tomcat.hypersonic" value="true" />
 
 		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorScreenName" value="test" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databasePassword" property-value="database.hypersonic.password" />
@@ -25,7 +25,7 @@
 		<property name="portal.acceptance.tomcat.mysql" value="true" />
 
 		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorScreenName" value="test" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databasePassword" property-value="database.mysql.password" />

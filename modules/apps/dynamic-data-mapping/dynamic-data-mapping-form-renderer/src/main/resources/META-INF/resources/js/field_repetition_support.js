@@ -139,11 +139,9 @@ AUI.add(
 				var instance = this;
 
 				if (!instance.get('readOnly')) {
-
 					var container = instance.get('container');
 
 					container.one('.lfr-ddm-form-field-repeatable-delete-button').toggle(instance.get('repeatedIndex') > 0);
-
 				}
 			},
 
@@ -155,13 +153,11 @@ AUI.add(
 				instance.renderRepeatable();
 
 				if (!instance.get('readOnly')) {
-
 					(new A.EventHandle(instance._DOMEventHandlers)).detach();
 
 					instance._DOMEventHandlers = [
 						container.delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance)
 					];
-
 				}
 			},
 

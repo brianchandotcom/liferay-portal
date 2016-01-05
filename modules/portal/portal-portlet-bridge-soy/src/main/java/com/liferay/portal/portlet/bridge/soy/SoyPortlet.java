@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.bridges.soy;
+package com.liferay.portal.portlet.bridge.soy;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.util.bridges.soy.internal.SoyTemplateResourcesCollector;
+import com.liferay.portal.portlet.bridge.soy.internal.SoyTemplateResourcesCollector;
 
 import java.io.IOException;
 import java.io.Writer;

@@ -107,7 +107,7 @@ String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAY
 				String backgroundTaskName = backgroundTask.getName();
 
 				if (backgroundTaskName.equals(StringPool.BLANK)) {
-					backgroundTaskName = "untitled";
+					backgroundTaskName = LanguageUtil.get(request, "untitled");
 				}
 				%>
 

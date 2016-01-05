@@ -69,12 +69,6 @@ public class SyncSitePersistence extends BasePersistenceImpl<SyncSite, Long> {
 		return where.queryForFirst();
 	}
 
-	public List<SyncSite> findBySyncAccountId(long syncAccountId)
-		throws SQLException {
-
-		return queryForEq("syncAccountId", syncAccountId);
-	}
-
 	public List<Long> findByA_S(boolean active, long syncAccountId)
 		throws SQLException {
 
@@ -103,6 +97,12 @@ public class SyncSitePersistence extends BasePersistenceImpl<SyncSite, Long> {
 			});
 
 		return genericRawResults.getResults();
+	}
+
+	public List<SyncSite> findBySyncAccountId(long syncAccountId)
+		throws SQLException {
+
+		return queryForEq("syncAccountId", syncAccountId);
 	}
 
 }

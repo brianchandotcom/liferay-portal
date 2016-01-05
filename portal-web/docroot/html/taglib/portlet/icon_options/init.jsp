@@ -18,7 +18,6 @@
 
 <%@ page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon" %><%@
 page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory" %><%@
-page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
 page import="com.liferay.util.PropertyComparator" %>
 
@@ -27,5 +26,12 @@ page import="com.liferay.util.PropertyComparator" %>
 <%
 String direction = (String)request.getAttribute("liferay-ui:icon:direction");
 String markupView = (String)request.getAttribute("liferay-ui:icon:markupView");
+PortletRequest taglibPortletRequest = (PortletRequest)request.getAttribute("liferay-ui:icon:portletRequest");
 boolean showArrow = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:showArrow"));
+
+if (taglibPortletRequest != null) {
+	portletRequest = taglibPortletRequest;
+}
+
+List<PortletConfigurationIconFactory> portletConfigurationIconFactories = (List<PortletConfigurationIconFactory>)request.getAttribute("liferay-ui:icon-options:portletConfigurationIconFactories");
 %>

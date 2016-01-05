@@ -1,3 +1,4 @@
+<#assign liferay_portlet=PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"]>
 <#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
 
 <#assign portlet_display = portletDisplay>
@@ -24,7 +25,7 @@
 			</#foreach>
 
 			<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
-				${theme.portletIconOptions()}
+				<@liferay_portlet["icon-options"] />
 			</menu>
 		</header>
 

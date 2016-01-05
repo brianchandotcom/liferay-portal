@@ -7,14 +7,14 @@
 <head>
 	<title>${the_title}</title>
 
-	${theme.include(top_head_include)}
+	<@liferay_util["include"] page=top_head_include />
 </head>
 
 <body class="portal-popup ${css_class}">
 
-${theme.include(content_include)}
+<@liferay_util["include"] page=content_include />
 
-${theme.include(bottom_ext_include)}
+<@liferay_util["include"] page=bottom_ext_include />
 
 </body>
 

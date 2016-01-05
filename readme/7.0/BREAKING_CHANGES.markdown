@@ -3221,3 +3221,53 @@ the tag namespace from `liferay-ui:asset-categories-navigation` to
 
 This change was made as a part of the ongoing strategy to modularize Liferay
 Portal by means of an OSGi container.
+
+---------------------------------------
+
+### The `${theme}` variable is no longer injected in the Freemarker context
+- **Date:** 2016-Jan-06
+- **JIRA Ticket:** LPS-61683
+
+#### What changed?
+
+The `${theme}` variable that was injected in the freemarker context providing access to some taglibs or utils is no longer being injected.
+
+#### Who is affected?
+
+Freemarker templates that are using the `${theme}` variable to access any of its provided methods.
+
+#### How should I update my code?
+
+All the provided functionality available in the `${theme}` variable can be replaced by the direct usage of a taglib. For example:
+
+- `${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW, "", default_preferences)}` can be replaced by:
+```
+<@liferay_portlet["runtime"]
+    defaultPreferences=default_preferences
+    portletProviderAction=portletProviderAction.VIEW
+    portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
+/>
+```
+
+- `${theme.include(content_include)}` can be replaced by:
+```
+<@liferay_util["include"] page=content_include />
+```
+
+- `${theme.wrapPortlet("portlet.ftl", content_include)}` can be replaced by:
+```
+<@liferay_theme["wrap-portlet"] page="portlet.ftl">
+    <@liferay_util["include"] page=content_include />
+</@>
+```
+
+- `${theme.iconHelp(portlet_description)}` can be replaced by:
+```
+<@liferay_ui["icon-help"] message=portlet_description />
+```
+
+#### Why was this change made?
+
+For historic reasons, the `{$theme} variable was being injected with the `VelocityTaglibImpl` class. This was creating some coupling between the template engines and between some specific taglibs and the template engines at the same time.
+
+Freemarker already offers native support for taglibs which cover all the functionality originally provided by the `{$theme}` variable. Removing this coupling would help future developments while still keeping all the existing functionality.

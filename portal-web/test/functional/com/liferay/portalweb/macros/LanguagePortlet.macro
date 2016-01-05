@@ -2,6 +2,10 @@
 	<command name="configureViewAvailableLanguages">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Languages" />
+		</execute>
+
 		<for list="${availableLanguages}" param="availableLanguage">
 			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_AVAILABLE" value1="${availableLanguage}" />
 		</for>
@@ -12,6 +16,10 @@
 	<command name="configureViewCurrentLanguages">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Languages" />
+		</execute>
+
 		<for list="${currentLanguages}" param="currentLanguage">
 			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_CURRENT" value1="${currentLanguage}" />
 		</for>
@@ -21,6 +29,10 @@
 
 	<command name="moveLanguagesToAvailable">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Languages" />
+		</execute>
 
 		<while>
 			<condition function="IsElementPresent" locator1="LanguageConfiguration#LANGUAGES_CURRENT_SELECT" />
@@ -122,6 +134,10 @@
 
 	<command name="toggleDisplayTemplate">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Languages" />
+		</execute>
 
 		<execute function="Select" locator1="LanguageConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${displayStyle}" />
 

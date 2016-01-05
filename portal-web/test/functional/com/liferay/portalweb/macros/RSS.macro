@@ -5,6 +5,11 @@
 		<var name="key_feedTitle" value="${feedTitle}" />
 
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
+
 		<execute function="Click" locator1="RSSFeed#FEEDS_ADD_ROW_BUTTON" />
 		<execute function="Type" locator1="RSSFeed#FEEDS_TITLE_NAME_FIELD" value1="${feedTitle}" />
 		<execute function="Type" locator1="RSSFeed#FEEDS_URL_NAME_FIELD" value1="${feedUrlLink}" />
@@ -14,12 +19,20 @@
 		<var name="key_fromRowNumber" value="${fromRowNumber}" />
 		<var name="key_toRowNumber" value="${toRowNumber}" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
+
 		<execute function="DragAndDrop" locator1="RSSFeed#FEEDS_1" locator2="RSSFeed#FEEDS_2" value1="${rowLocation}" />
 	</command>
 
 	<command name="configureFeedDisplayStyle">
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
 
 		<execute function="Select" locator1="RSSFeed#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_OPTION" value1="${feedDisplayStyle}" />
 	</command>
@@ -28,12 +41,22 @@
 		<var name="key_buttonRowIndexNumber" value="${buttonRowIndexNumber}" />
 
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
+
 		<execute function="Click" locator1="RSSFeed#FEEDS_DELETE_ROW_BUTTON" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#UNDO_LINK" value1="Undo" />
 	</command>
 
 	<command name="disableShowFeedTitle">
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
+
 		<execute function="Uncheck" locator1="RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_TITLE" value1="Show Feed Title" />
 		<execute function="Uncheck" locator1="RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION" value1="Show Feed Description" />
 	</command>
@@ -100,6 +123,10 @@
 
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="RSSFeed#FEEDS_DEFAULT" />
 		<execute function="AssertTextEquals" locator1="RSSFeed#FEEDS_URL_NAME_FIELD" value1="${feedUrlLink}" />

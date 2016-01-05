@@ -2,6 +2,10 @@
 	<command name="assertSiteScopeSearch">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
+
 		<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
 		<execute function="AssertClick" locator1="MenuItem#OTHER_SITE" value1="Other Site..." />
 		<execute function="SelectFrame" value1="relative=top" />
@@ -20,6 +24,10 @@
 
 	<command name="configureAddSiteScopes">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
 
 		<if>
 			<isset var="globalSite" />
@@ -63,6 +71,10 @@
 	<command name="configureAnyCategoriesFilterPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Filter" />
+		</execute>
+
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Categories" />
 		<execute function="Click" locator1="APConfiguration#FILTER_CATEGORIES_SELECT_BUTTON" />
 
@@ -83,6 +95,10 @@
 	<command name="configureAnyTagsFilterPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Filter" />
+		</execute>
+
 		<execute function="Type" locator1="APConfiguration#FILTER_TAGS_FIELD" value1="${tagNames}" />
 		<execute function="Type" locator1="Button#ADD_TAGS" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -96,6 +112,11 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
+
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="Select More Than One..." />
 
 		<for list="${selectContent}" param="contentName">
@@ -121,6 +142,10 @@
 	<command name="configureAssetDisplayOrderPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Ordering and Grouping" />
+		</execute>
+
 		<execute function="Select" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_BY_SELECT" value1="${fieldNameOrder}" />
 		<execute function="Select" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTION_SELECT" value1="${sortOrder}" />
 
@@ -141,6 +166,10 @@
 
 	<command name="configureAssetTypePG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT" value1="${assetSubtype}" />
@@ -189,6 +218,10 @@
 	<command name="configureDisplayPagePG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
+
 		<execute function="Check#checkToggleSwitch" locator1="APConfiguration#FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX" value1="Show only assets with Test Page as its display page." />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
@@ -207,6 +240,10 @@
 
 	<command name="configureFilterByFieldPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT" value1="${assetSubtype}" />
@@ -313,6 +350,10 @@
 		<if>
 			<isset var="assetTitle" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Asset Entries" />
+				</execute>
+
 				<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_BUTTON" />
 
 				<var name="key_assetType" value="${assetType}" />
@@ -353,6 +394,10 @@
 	<command name="configureSelectedPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
+
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -363,6 +408,10 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Show Metadata" />
+		</execute>
 
 		<if>
 			<equals arg1="${addMetadata}" arg2="true" />
@@ -393,6 +442,10 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
 		<execute function="AssertClick" locator1="MenuItem#OTHER_SITE" value1="Other Site..." />
@@ -426,6 +479,10 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -470,10 +527,6 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
-		</execute>
 	</command>
 
 	<command name="rate4StarsPG">
@@ -482,6 +535,10 @@
 
 	<command name="removeSiteScope">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
 
 		<for list="${removeSiteScopes}" param="removeSiteScope">
 			<var name="key_siteName" value="${removeSiteScope}" />
@@ -569,6 +626,10 @@
 	<command name="viewAssetTypeNotAvailable">
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
+
 		<execute function="AssertTextNotEquals" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${assetType}" />
 
 		<execute function="SelectFrameTop" />
@@ -640,6 +701,10 @@
 
 	<command name="viewConfigureSiteScopeContentSharingPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
 		<execute function="AssertClick" locator1="MenuItem#OTHER_SITE" value1="Other Site..." />
@@ -774,6 +839,10 @@
 
 	<command name="viewFilterAndFieldsPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Source" />
+		</execute>
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT" value1="${assetSubtype}" />
@@ -937,6 +1006,10 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Asset Entries" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No assets selected." />
 
 		<execute function="SelectFrameTop" />
@@ -950,12 +1023,20 @@
 
 				<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Source" />
+				</execute>
+
 				<execute function="AssertSelectedLabel" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAssetConfiguration}" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="AP#ADD_NEW_DROPDOWN" value1="Add ${selectedAsset}" />
 
 				<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Source" />
+				</execute>
 
 				<execute function="AssertSelectedLabel" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAssetConfiguration}" />
 			</else>

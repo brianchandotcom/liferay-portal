@@ -10,13 +10,11 @@
 		<property name="hook.plugins.includes" value="email-to-mb-filter-hook" />
 
 		<var name="appName" value="Email to Message Boards Filter" />
+		<var name="portletName" value="email-to-mb-filter-hook" />
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="App Manager" />
+		<execute macro="OSGiSmoke#Smoke">
+			<var name="appName" value="${portletName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
-
-		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
-
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=email-to-mb-filter-hook" />
 	</command>
 </definition>

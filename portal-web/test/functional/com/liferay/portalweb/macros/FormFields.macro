@@ -21,6 +21,12 @@
 		<execute function="KeyPress" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="\RETURN" />
 	</command>
 
+	<command name="editDate">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+
+		<execute function="Type" locator1="FormFields#DATE_FIELD" value1="${fieldValue}" />
+	</command>
+
 	<command name="editOptionsRow">
 		<var name="key_rowNumber" value="${rowNumber}" />
 
@@ -104,6 +110,13 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#CHECKBOX_LABEL" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewDateLabel">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#DATE_LABEL" value1="${fieldLabel}" />
 	</command>
 
 	<command name="viewFormName">

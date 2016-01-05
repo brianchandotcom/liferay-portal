@@ -26,7 +26,7 @@ if (group.isUser()) {
 }
 %>
 
-<liferay-ui:flags
+<liferay-flags:flags
 	className="<%= Layout.class.getName() %>"
 	classPK="<%= layout.getPlid() %>"
 	contentTitle="<%= layout.getHTMLTitle(LocaleUtil.getDefault()) %>"

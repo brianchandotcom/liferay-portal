@@ -1,3 +1,9 @@
+clean {
+	ext {
+		cleanDeployed = false
+	}
+}
+
 dependencies {
 	compile group: "log4j", name: "log4j", version: "1.2.17"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
@@ -8,24 +14,5 @@ dependencies {
 }
 
 liferay {
-	deployDir = file("../../../tools/sdk/dependencies/${bundle.instructions['Bundle-SymbolicName']}/lib")
-}
-
-task deployJar(type: Copy)
-
-deploy {
-	finalizedBy deployJar
-}
-
-deployJar {
-	ext {
-		autoClean = false
-	}
-
-	from jar
-	into "../../../lib/development"
-
-	rename {
-		project.name + ".jar"
-	}
+	deployDir = file("../../../lib/development")
 }

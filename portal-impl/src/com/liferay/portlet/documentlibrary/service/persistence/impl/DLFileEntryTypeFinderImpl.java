@@ -331,18 +331,15 @@ public class DLFileEntryTypeFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(groupIds.length * 2 + 1);
+		StringBundler sb = new StringBundler(groupIds.length + 1);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		for (int i = 0; i < groupIds.length; i++) {
-			sb.append("DLFileEntryType.groupId = ?");
-			sb.append(" OR ");
+		for (int i = 0; i < groupIds.length - 1; i++) {
+			sb.append("DLFileEntryType.groupId = ? OR ");
 		}
 
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(") AND");
+		sb.append("DLFileEntryType.groupId = ?) AND");
 
 		return sb.toString();
 	}

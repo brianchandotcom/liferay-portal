@@ -410,7 +410,6 @@
 	<bean id="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" class="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" factory-method="createPortalResiliencyPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerImpl" />
 	</bean>
-	<bean id="com.liferay.portal.sanitizer.DummySanitizerImpl" class="com.liferay.portal.sanitizer.DummySanitizerImpl" />
 	<bean id="com.liferay.portal.service.permission.AccountPermissionUtil" class="com.liferay.portal.service.permission.AccountPermissionUtil">
 		<property name="accountPermission">
 			<bean class="com.liferay.portal.service.permission.AccountPermissionImpl" />

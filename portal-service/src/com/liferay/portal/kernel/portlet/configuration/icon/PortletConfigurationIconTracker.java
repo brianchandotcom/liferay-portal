@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfi
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -38,14 +35,13 @@ import javax.portlet.PortletRequest;
 public class PortletConfigurationIconTracker {
 
 	public static List<PortletConfigurationIconFactory>
-		getPortletConfigurationIcons(PortletRequest portletRequest) {
+		getPortletConfigurationIcons(
+			String portletId, PortletRequest portletRequest) {
 
 		List<PortletConfigurationIconFactory>
 			portletConfigurationIconFactories = new ArrayList<>();
 
-		String portletId = getPortletId(portletRequest);
-
-		for (String path : getPaths(portletRequest)) {
+		for (String path : getPaths(portletId, portletRequest)) {
 			List<PortletConfigurationIconFactory>
 				portletPortletConfigurationIconFactories =
 					_serviceTrackerMap.getService(
@@ -72,10 +68,10 @@ public class PortletConfigurationIconTracker {
 		return portletId + StringPool.COLON + path;
 	}
 
-	protected static Set<String> getPaths(PortletRequest portletRequest) {
-		Set<String> paths = new HashSet<>();
+	protected static Set<String> getPaths(
+		String portletId, PortletRequest portletRequest) {
 
-		String portletId = getPortletId(portletRequest);
+		Set<String> paths = new HashSet<>();
 
 		for (PortletConfigurationIconLocator portletConfigurationIconLocator :
 				_serviceTrackerList) {
@@ -100,15 +96,6 @@ public class PortletConfigurationIconTracker {
 		}
 
 		return paths;
-	}
-
-	protected static String getPortletId(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getRootPortletId();
 	}
 
 	private static final ServiceTrackerList<PortletConfigurationIconLocator>

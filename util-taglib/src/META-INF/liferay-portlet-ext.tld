@@ -133,6 +133,21 @@
 		<name>icon-back</name>
 		<tag-class>com.liferay.taglib.portletext.IconBackTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>direction</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showArrow</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>icon-options</name>

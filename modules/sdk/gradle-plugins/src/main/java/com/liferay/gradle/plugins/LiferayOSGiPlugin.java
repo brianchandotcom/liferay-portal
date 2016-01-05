@@ -44,6 +44,7 @@ import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
 import org.dm.gradle.plugins.bundle.BundleUtils;
 import org.dm.gradle.plugins.bundle.JarBuilder;
+
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -661,8 +662,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			return super.withResources(list.toArray(new File[list.size()]));
 		}
 
-		private Set<File> _classPathReferences = new HashSet<>();
-		private Set<File> _resourceReferences = new HashSet<>();
+		private final Set<File> _classPathReferences = new HashSet<>();
+		private final Set<File> _resourceReferences = new HashSet<>();
 
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.extensions;
 
 import aQute.bnd.osgi.Constants;
+
 import aQute.lib.spring.SpringComponent;
 
 import com.liferay.ant.bnd.bower.BowerAnalyzerPlugin;

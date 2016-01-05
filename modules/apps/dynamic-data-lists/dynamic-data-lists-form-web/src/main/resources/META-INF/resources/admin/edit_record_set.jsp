@@ -209,8 +209,6 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 					initHandler.detach();
 
-					Liferay.Util.getWindow('<portlet:namespace />settingsModal').destroy();
-
 					Liferay.detach('destroyPortlet', clearPortletHandlers);
 				}
 			};

@@ -131,6 +131,10 @@
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL_2" value1="${fieldLabel}" />
 	</command>
 
+	<command name="viewRequiredAsterisk">
+		<execute function="AssertElementPresent#assertVisible" locator1="Icon#ASTERISK" />
+	</command>
+
 	<command name="viewSelectLabel">
 		<var name="key_fieldName" value="${fieldName}" />
 

@@ -99,11 +99,27 @@ String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAY
 				/>
 			</liferay-ui:search-container-column-text>
 
+			<liferay-ui:search-container-column-text
+				name="title"
+			>
+
+				<%
+				String backgroundTaskName = backgroundTask.getName();
+
+				if (backgroundTaskName.equals(StringPool.BLANK)) {
+					backgroundTaskName = "untitled";
+				}
+				%>
+
+				<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
+			</liferay-ui:search-container-column-text>
+
 			<liferay-ui:search-container-column-jsp
 				cssClass="background-task-status-column"
 				name="status"
 				path="/processes_list/publish_process_message.jsp"
 			/>
+
 			<liferay-ui:search-container-column-date
 				name="create-date"
 				orderable="<%= true %>"

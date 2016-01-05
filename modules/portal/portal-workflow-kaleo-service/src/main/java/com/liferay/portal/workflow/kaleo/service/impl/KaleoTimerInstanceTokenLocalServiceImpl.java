@@ -311,7 +311,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 				recurrenceDelayDuration.getDurationScale();
 
 			timeUnit = TimeUnit.valueOf(
-				StringUtil.toLowerCase(durationScale.getValue()));
+				StringUtil.toUpperCase(durationScale.getValue()));
 		}
 
 		Trigger trigger = TriggerFactoryUtil.createTrigger(

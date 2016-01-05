@@ -114,7 +114,8 @@ public class PortletKeys {
 		"com_liferay_dynamic_data_mapping_web_portlet_" +
 			"PortletDisplayTemplatePortlet";
 
-	public static final String PORTLET_SHARING = "133";
+	public static final String PORTLET_SHARING =
+		"com_liferay_portlet_sharing_web_portlet_PortletSharingPortlet";
 
 	public static final long PREFS_OWNER_ID_DEFAULT = 0;
 

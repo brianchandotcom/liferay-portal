@@ -22,7 +22,7 @@
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
 if (Validator.isNull(cmd)) {
-	cmd = Constants.EXPORT;
+	cmd = Constants.ADD;
 }
 
 if (liveGroup == null) {
@@ -123,9 +123,7 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 			<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 			<div class="export-dialog-tree">
-				<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
-					<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" label='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>' />
-				</c:if>
+				<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" label='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>' />
 
 				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 					<aui:fieldset cssClass="options-group" label="pages">
@@ -207,28 +205,6 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 			submitForm(form, form.attr('action'), false);
 		}
 	);
-
-	var clickHandler = function(event) {
-		var dataValue = event.target.ancestor('li').attr('data-value');
-
-		processDataValue(dataValue);
-	};
-
-	var processDataValue = function(dataValue) {
-		var customConfiguration = A.one('#<portlet:namespace />customConfiguration');
-		var savedConfigurations = A.one('#<portlet:namespace />savedConfigurations');
-
-		if (dataValue === 'custom') {
-			savedConfigurations.hide();
-
-			customConfiguration.show();
-		}
-		else if (dataValue === 'saved') {
-			customConfiguration.hide();
-
-			savedConfigurations.show();
-		}
-	};
 </aui:script>
 
 <aui:script>

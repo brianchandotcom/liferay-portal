@@ -19,49 +19,9 @@
 <liferay-staging:defineObjects />
 
 <%
-String cmd = ParamUtil.getString(request, Constants.CMD);
-
-if (Validator.isNull(cmd)) {
-	cmd = Constants.EXPORT;
-}
-
 if (liveGroup == null) {
 	liveGroup = group;
 	liveGroupId = groupId;
-}
-
-String exportConfigurationButtons = ParamUtil.getString(request, "exportConfigurationButtons", "custom");
-
-long exportImportConfigurationId = 0;
-
-ExportImportConfiguration exportImportConfiguration = null;
-Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.emptyMap();
-Map<String, String[]> parameterMap = Collections.emptyMap();
-long[] selectedLayoutIds = null;
-
-if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
-	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
-
-	if (exportImportConfigurationId > 0) {
-		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
-	}
-
-	exportImportConfigurationSettingsMap = (Map<String, Serializable>)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "settingsMap");
-
-	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
-	selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
-}
-else {
-	exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
-
-	if (exportImportConfigurationId > 0) {
-		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
-
-		exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
-
-		parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
-		selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
-	}
 }
 
 String rootNodeName = StringPool.BLANK;
@@ -75,34 +35,29 @@ else {
 
 String treeId = "layoutsExportTree" + liveGroupId + privateLayout;
 
-if (!cmd.equals(Constants.UPDATE)) {
-	String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
+String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
 
-	if (openNodes == null) {
-		selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(liveGroupId, privateLayout);
-	}
-	else {
-		selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
-	}
+long[] selectedLayoutIds = null;
+
+if (openNodes == null) {
+	selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(liveGroupId, privateLayout);
+}
+else {
+	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-	portletURL.setParameter("mvcRenderCommandName", "exportLayouts");
-	portletURL.setParameter("exportConfigurationButtons", "saved");
-}
-else {
-	portletURL.setParameter("mvcRenderCommandName", "exportLayoutsView");
-}
-
+portletURL.setParameter("mvcRenderCommandName", "exportLayoutsView");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
+
+Map<String, String[]> parameterMap = Collections.emptyMap();
 %>
 
 <liferay-util:include page="/export/new_export/navigation.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="processName" value="<%= (exportImportConfiguration != null) ? exportImportConfiguration.getName() : StringPool.BLANK %>" />
+	<liferay-util:param name="processName" value="<%= StringPool.BLANK %>" />
 </liferay-util:include>
 
 <div class="container-fluid-1280">
@@ -125,20 +80,15 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 		</liferay-util:include>
 	</div>
 
-	<div <%= exportConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
-		<portlet:actionURL name="editExportConfiguration" var="updateExportConfigurationURL">
-			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
-		</portlet:actionURL>
-
+	<div id="<portlet:namespace />customConfiguration">
 		<portlet:actionURL name="exportLayouts" var="exportPagesURL">
 			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 			<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 		</portlet:actionURL>
 
-		<aui:form action='<%= cmd.equals(Constants.EXPORT) ? exportPagesURL : updateExportConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
+		<aui:form action='<%= exportPagesURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EXPORT %>" />
 			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-			<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
 			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 			<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
 			<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />
@@ -151,10 +101,6 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 			<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 			<div class="export-dialog-tree">
-				<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
-					<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" label='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>' />
-				</c:if>
-
 				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 					<aui:fieldset cssClass="options-group" label="pages">
 
@@ -172,7 +118,7 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 					</aui:fieldset>
 				</c:if>
 
-				<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
+				<liferay-staging:content cmd="<%= Constants.EXPORT %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
 
 				<aui:fieldset cssClass="options-group" label="permissions">
 					<%@ include file="/permissions.jspf" %>
@@ -180,14 +126,7 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 			</div>
 
 			<aui:button-row>
-				<c:choose>
-					<c:when test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE) %>">
-						<aui:button type="submit" value="save" />
-					</c:when>
-					<c:otherwise>
-						<aui:button type="submit" value="export" />
-					</c:otherwise>
-				</c:choose>
+				<aui:button type="submit" value="export" />
 
 				<aui:button href="<%= portletURL.toString() %>" type="cancel" />
 			</aui:button-row>
@@ -242,30 +181,6 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 			submitForm(form, form.attr('action'), false);
 		}
 	);
-
-	var clickHandler = function(event) {
-		var dataValue = event.target.ancestor('li').attr('data-value');
-
-		processDataValue(dataValue);
-	};
-
-	var processDataValue = function(dataValue) {
-		var customConfiguration = A.one('#<portlet:namespace />customConfiguration');
-		var savedConfigurations = A.one('#<portlet:namespace />savedConfigurations');
-
-		if (dataValue === 'custom') {
-			savedConfigurations.hide();
-
-			customConfiguration.show();
-		}
-		else if (dataValue === 'saved') {
-			customConfiguration.hide();
-
-			savedConfigurations.show();
-		}
-	};
-
-	A.one('#<portlet:namespace />exportConfigurationButtons').delegate('click', clickHandler, 'li a');
 </aui:script>
 
 <aui:script>

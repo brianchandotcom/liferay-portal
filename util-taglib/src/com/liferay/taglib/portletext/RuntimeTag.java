@@ -289,10 +289,11 @@ public class RuntimeTag extends TagSupport {
 
 			if (Validator.isNotNull(_portletProviderClassName) &&
 				(_portletProviderAction != null)) {
-					doTag(
-						_portletProviderClassName, _portletProviderAction,
-						_instanceId, _queryString, _defaultPreferences,
-						pageContext, request, response);
+
+				doTag(
+					_portletProviderClassName, _portletProviderAction,
+					_instanceId, _queryString, _defaultPreferences, pageContext,
+					request, response);
 			}
 			else {
 				doTag(

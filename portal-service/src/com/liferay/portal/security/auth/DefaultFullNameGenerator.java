@@ -214,9 +214,11 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		StringBundler sb = new StringBundler(2 * fullNameFields.size());
 
 		for (FullNameField fullNameField : fullNameFields) {
-			if (namesMap.containsKey(fullNameField.getName())) {
+			String name = namesMap.get(fullNameField.getName());
+
+			if (name != null) {
 				sb.append(StringPool.SPACE);
-				sb.append(namesMap.get(fullNameField.getName()));
+				sb.append(name);
 			}
 		}
 

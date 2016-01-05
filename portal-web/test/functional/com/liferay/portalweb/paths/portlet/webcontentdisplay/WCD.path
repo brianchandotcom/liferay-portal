@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>EDIT_TEMPLATE</td>
-	<td>//span/*[name()='svg'][contains(@class,'lexicon-icon-pencil')]</td>
+	<td>//span[contains(.,'Edit Template')]//*[name()='svg'][contains(@class,'lexicon-icon-pencil')]</td>
 	<td></td>
 </tr>
 <tr>

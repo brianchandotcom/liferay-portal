@@ -136,17 +136,15 @@
 	</command>
 
 	<command name="AddWebContentPortalScopeCurrentPage" priority="3">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
+		<for list="1,2,3" param="i">
+			<execute macro="Page#addPG">
+				<var name="pageName" value="Web Content Display Page${i}" />
+			</execute>
 
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Web Content Display Page1" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
+			<execute macro="Portlet#addPG">
+				<var name="portletName" value="Web Content Display" />
+			</execute>
+		</for>
 
 		<execute macro="WebContentDisplayPortlet#configureScopePG">
 			<var name="scopeSelection" value="Web Content Display Page1" />
@@ -160,12 +158,8 @@
 			<var name="scopeSelection" value="Web Content Display Page1" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page2" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#configureScopePG">
@@ -178,14 +172,6 @@
 
 		<execute macro="WebContentDisplayPortlet#viewConfigureScopePG">
 			<var name="scopeSelection" value="Web Content Display Page1" />
-		</execute>
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Web Content Display Page3" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -235,24 +221,7 @@
 		<execute macro="WebContent#viewDefaultPGViaWCD" />
 
 		<execute macro="WebContent#viewSelectNoPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page1" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#tearDownScopePG" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page2" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#tearDownScopePG" />
-
-		<execute macro="WebContent#tearDownCP">
-			<var name="contentScopeName" value="Web Content Display Page1" />
 		</execute>
 	</command>
 

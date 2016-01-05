@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_3_ALT</td>
+	<td>//div[@class='alert alert-warning']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_3_LINK</td>
 	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning'))]/a)</td>
 	<td></td>

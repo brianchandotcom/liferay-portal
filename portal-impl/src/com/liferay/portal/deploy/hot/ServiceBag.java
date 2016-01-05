@@ -45,8 +45,8 @@ public class ServiceBag<V> {
 
 			previousService = ProxyUtil.newProxyInstance(
 				previousServiceClassLoader, new Class<?>[] {serviceTypeClass},
-					new ClassLoaderBeanHandler(
-						previousService, previousServiceClassLoader));
+				new ClassLoaderBeanHandler(
+					previousService, previousServiceClassLoader));
 
 			serviceWrapper.setWrappedService((V)previousService);
 		}

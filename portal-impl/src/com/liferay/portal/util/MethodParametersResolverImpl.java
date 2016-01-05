@@ -39,19 +39,19 @@ public class MethodParametersResolverImpl implements MethodParametersResolver {
 			return methodParameters;
 		}
 
-			Class<?>[] methodParameterTypes = method.getParameterTypes();
+		Class<?>[] methodParameterTypes = method.getParameterTypes();
 
-			jodd.paramo.MethodParameter[] joddMethodParameters =
-				Paramo.resolveParameters(method);
+		jodd.paramo.MethodParameter[] joddMethodParameters =
+			Paramo.resolveParameters(method);
 
-			methodParameters = new MethodParameter[joddMethodParameters.length];
+		methodParameters = new MethodParameter[joddMethodParameters.length];
 
-			for (int i = 0; i < joddMethodParameters.length; i++) {
-				methodParameters[i] = new MethodParameter(
-					joddMethodParameters[i].getName(),
-					joddMethodParameters[i].getSignature(),
-					methodParameterTypes[i], true);
-			}
+		for (int i = 0; i < joddMethodParameters.length; i++) {
+			methodParameters[i] = new MethodParameter(
+				joddMethodParameters[i].getName(),
+				joddMethodParameters[i].getSignature(), methodParameterTypes[i],
+				true);
+		}
 
 		_methodParameters.put(method, methodParameters);
 

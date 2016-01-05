@@ -537,10 +537,10 @@ public class PortalImpl implements Portal {
 			ServiceTracker
 				<PortalInetSocketAddressEventListener,
 					PortalInetSocketAddressEventListener>
-				portalInetSocketAddressEventListenerServiceTracker =
-					registry.trackServices(
-						PortalInetSocketAddressEventListener.class,
-						new PortalInetSocketAddressEventListenerServiceTrackerCustomizer());
+						portalInetSocketAddressEventListenerServiceTracker =
+							registry.trackServices(
+								PortalInetSocketAddressEventListener.class,
+								new PortalInetSocketAddressEventListenerServiceTrackerCustomizer());
 
 			portalInetSocketAddressEventListenerServiceTracker.open();
 		}
@@ -1288,7 +1288,7 @@ public class PortalImpl implements Portal {
 			0,
 			GroupLocalServiceUtil.search(
 				companyId, null, null, params, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS));
+				QueryUtil.ALL_POS));
 
 		List<Organization> organizations =
 			OrganizationLocalServiceUtil.getUserOrganizations(userId);
@@ -4205,9 +4205,10 @@ public class PortalImpl implements Portal {
 	}
 
 	public LayoutQueryStringComposite
-		getPortletFriendlyURLMapperLayoutQueryStringComposite(
-			long groupId, boolean privateLayout, String url,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			getPortletFriendlyURLMapperLayoutQueryStringComposite(
+				long groupId, boolean privateLayout, String url,
+				Map<String, String[]> params,
+				Map<String, Object> requestContext)
 		throws PortalException {
 
 		boolean foundFriendlyURLMapper = false;
@@ -4710,8 +4711,8 @@ public class PortalImpl implements Portal {
 
 					Layout liveGroupLayout =
 						LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-								layout.getUuid(), liveGroup.getGroupId(),
-								layout.isPrivateLayout());
+							layout.getUuid(), liveGroup.getGroupId(),
+							layout.isPrivateLayout());
 
 					if ((liveGroupLayout != null) &&
 						liveGroupLayout.hasScopeGroup()) {

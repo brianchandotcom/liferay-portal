@@ -406,8 +406,9 @@ public class PortalInstances {
 				String xml = HttpUtil.URLtoString(
 					servletContext.getResource("/WEB-INF/liferay-display.xml"));
 
-				PortletCategory portletCategory = (PortletCategory)
-					WebAppPool.get(companyId, WebKeys.PORTLET_CATEGORY);
+				PortletCategory portletCategory =
+					(PortletCategory)WebAppPool.get(
+						companyId, WebKeys.PORTLET_CATEGORY);
 
 				if (portletCategory == null) {
 					portletCategory = new PortletCategory();

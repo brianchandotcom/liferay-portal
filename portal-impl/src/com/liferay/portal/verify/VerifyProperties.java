@@ -120,7 +120,7 @@ public class VerifyProperties extends VerifyProcess {
 
 		for (String propertyResourceName : propertiesResourceNames) {
 			try (InputStream inputStream = getPropertiesResourceAsStream(
-				propertyResourceName)) {
+					propertyResourceName)) {
 
 				if (inputStream != null) {
 					properties.load(inputStream);
@@ -1684,8 +1684,8 @@ public class VerifyProperties extends VerifyProcess {
 		"editor.wysiwyg.portal-web.docroot.html.portlet.bookmarks." +
 			"configuration.jsp",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.document_library." +
-		"editor.wysiwyg.portal-web.docroot.html.portlet.invitation." +
-			"configuration.jsp",
+			"editor.wysiwyg.portal-web.docroot.html.portlet.invitation." +
+				"configuration.jsp",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.journal." +
 			"configuration.jsp",
 		"editor.wysiwyg.portal-web.docroot.html.portlet.login.configuration." +

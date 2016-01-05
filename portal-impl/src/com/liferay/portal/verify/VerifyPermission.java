@@ -68,8 +68,8 @@ public class VerifyPermission extends VerifyProcess {
 			List<String> actionIds =
 				ResourceActionsUtil.getModelResourceActions(modelName);
 
-				ResourceActionLocalServiceUtil.checkResourceActions(
-					modelName, actionIds, true);
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				modelName, actionIds, true);
 		}
 
 		List<String> portletNames = ResourceActionsUtil.getPortletNames();

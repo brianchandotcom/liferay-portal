@@ -956,8 +956,8 @@ public class IntrabandProxyUtil {
 			try {
 				Datagram responseDatagram = _intraband.sendSyncDatagram(
 					_registrationReference,
-						Datagram.createRequestDatagram(
-							_PROXY_TYPE, serializer.toByteBuffer()));
+					Datagram.createRequestDatagram(
+						_PROXY_TYPE, serializer.toByteBuffer()));
 
 				Deserializer deserializer = new Deserializer(
 					responseDatagram.getDataByteBuffer());

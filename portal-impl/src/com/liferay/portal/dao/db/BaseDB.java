@@ -815,8 +815,8 @@ public abstract class BaseDB implements DB {
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-			new UnsyncBufferedReader(
-				new UnsyncStringReader(unsyncStringWriter.toString()))) {
+				new UnsyncBufferedReader(
+					new UnsyncStringReader(unsyncStringWriter.toString()))) {
 
 			String line = null;
 

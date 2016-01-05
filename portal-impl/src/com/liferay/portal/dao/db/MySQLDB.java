@@ -187,7 +187,8 @@ public class MySQLDB extends BaseDB {
 
 					line =
 						line.substring(0, pos) + " engine " +
-						PropsValues.DATABASE_MYSQL_ENGINE + line.substring(pos);
+							PropsValues.DATABASE_MYSQL_ENGINE +
+								line.substring(pos);
 				}
 
 				sb.append(line);

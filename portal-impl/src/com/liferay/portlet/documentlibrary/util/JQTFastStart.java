@@ -136,8 +136,10 @@ public class JQTFastStart {
 				randomAccessOutputFile.write(buffer, 0, read);
 			}
 
-			int bufferSize = (int)
-				(moovAtom.getOffset() - randomAccessInputFile.getFilePointer());
+			int bufferSize =
+				(int)
+					(moovAtom.getOffset() -
+						randomAccessInputFile.getFilePointer());
 
 			buffer = new byte[bufferSize];
 

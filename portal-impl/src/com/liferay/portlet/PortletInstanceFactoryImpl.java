@@ -257,8 +257,8 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		_serviceTracker;
 
 	private class InvokerPortletFactoryTrackerCustomizer
-		implements ServiceTrackerCustomizer<InvokerPortletFactory,
-			InvokerPortletFactory> {
+		implements ServiceTrackerCustomizer
+			<InvokerPortletFactory, InvokerPortletFactory> {
 
 		@Override
 		public InvokerPortletFactory addingService(

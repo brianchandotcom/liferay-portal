@@ -75,11 +75,11 @@ public class TemplatePortletPreferences {
 			new AutoResetThreadLocal<PortletPreferencesImpl>(
 				TemplatePortletPreferences.class.getName()) {
 
-			@Override
-			protected PortletPreferencesImpl initialValue() {
-				return new PortletPreferencesImpl();
-			}
+				@Override
+				protected PortletPreferencesImpl initialValue() {
+					return new PortletPreferencesImpl();
+				}
 
-		};
+			};
 
 }

@@ -1282,19 +1282,20 @@ public class SocialActivityCounterLocalServiceImpl
 				PropsValues.SOCIAL_ACTIVITY_LOCK_TIMEOUT,
 				PropsValues.SOCIAL_ACTIVITY_LOCK_RETRY_DELAY) {
 
-			@Override
-			protected SocialActivityCounter performProtectedAction()
-				throws PortalException {
+				@Override
+				protected SocialActivityCounter performProtectedAction()
+					throws PortalException {
 
-				SocialActivityCounter activityCounter =
-					socialActivityCounterLocalService.addActivityCounter(
-						groupId, classNameId, classPK, name, ownerType,
-						totalValue, previousActivityCounterId, periodLength);
+					SocialActivityCounter activityCounter =
+						socialActivityCounterLocalService.addActivityCounter(
+							groupId, classNameId, classPK, name, ownerType,
+							totalValue, previousActivityCounterId,
+							periodLength);
 
-				return activityCounter;
-			}
+					return activityCounter;
+				}
 
-		};
+			};
 
 		lockProtectedAction.performAction();
 
@@ -1322,30 +1323,31 @@ public class SocialActivityCounterLocalServiceImpl
 				PropsValues.SOCIAL_ACTIVITY_LOCK_TIMEOUT,
 				PropsValues.SOCIAL_ACTIVITY_LOCK_RETRY_DELAY) {
 
-			@Override
-			protected SocialActivityLimit performProtectedAction()
-				throws PortalException {
+				@Override
+				protected SocialActivityLimit performProtectedAction()
+					throws PortalException {
 
-				SocialActivityLimit activityLimit =
-					socialActivityLimitPersistence.fetchByG_U_C_C_A_A(
-						groupId, user.getUserId(), activity.getClassNameId(),
-						classPK, activity.getType(),
-						activityCounterDefinition.getName());
-
-				if (activityLimit == null) {
-					activityLimit =
-						socialActivityLimitLocalService.addActivityLimit(
-							user.getUserId(), activity.getGroupId(),
+					SocialActivityLimit activityLimit =
+						socialActivityLimitPersistence.fetchByG_U_C_C_A_A(
+							groupId, user.getUserId(),
 							activity.getClassNameId(), classPK,
 							activity.getType(),
-							activityCounterDefinition.getName(),
-							activityCounterDefinition.getLimitPeriod());
+							activityCounterDefinition.getName());
+
+					if (activityLimit == null) {
+						activityLimit =
+							socialActivityLimitLocalService.addActivityLimit(
+								user.getUserId(), activity.getGroupId(),
+								activity.getClassNameId(), classPK,
+								activity.getType(),
+								activityCounterDefinition.getName(),
+								activityCounterDefinition.getLimitPeriod());
+					}
+
+					return activityLimit;
 				}
 
-				return activityLimit;
-			}
-
-		};
+			};
 
 		lockProtectedAction.performAction();
 

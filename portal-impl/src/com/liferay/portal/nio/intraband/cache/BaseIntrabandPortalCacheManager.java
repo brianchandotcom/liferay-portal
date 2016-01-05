@@ -29,8 +29,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Shuyang Zhou
  */
 public abstract class BaseIntrabandPortalCacheManager
-		<K extends Serializable, V extends Serializable>
-	implements PortalCacheManager<K, V> {
+	<K extends Serializable, V extends Serializable>
+		implements PortalCacheManager<K, V> {
 
 	public static Class<? extends PortalCache<?, ?>> getPortalCacheStubClass() {
 		return _STUB_CLASS;

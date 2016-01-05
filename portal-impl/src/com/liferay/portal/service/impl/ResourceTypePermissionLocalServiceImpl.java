@@ -70,8 +70,8 @@ public class ResourceTypePermissionLocalServiceImpl
 
 	@Override
 	public ResourceBlockPermissionsContainer
-			getResourceBlockPermissionsContainer(
-				long companyId, long groupId, String name) {
+		getResourceBlockPermissionsContainer(
+			long companyId, long groupId, String name) {
 
 		List<ResourceTypePermission> resourceTypePermissions =
 			resourceTypePermissionFinder.findByEitherScopeC_G_N(

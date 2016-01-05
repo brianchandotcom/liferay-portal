@@ -46,8 +46,7 @@ import java.util.Set;
 /**
  * @author Jorge Ferrer
  */
-public class
-	MembershipRequestLocalServiceImpl
+public class MembershipRequestLocalServiceImpl
 	extends MembershipRequestLocalServiceBaseImpl {
 
 	@Override

@@ -227,8 +227,8 @@ public class XugglerAutoInstallHelper {
 		currentThread.setContextClassLoader(urlClassLoader);
 
 		try {
-			Class<Callable<Boolean>> clazz = (Class<Callable<Boolean>>)
-				urlClassLoader.loadClass(
+			Class<Callable<Boolean>> clazz =
+				(Class<Callable<Boolean>>)urlClassLoader.loadClass(
 					IsNativeLibraryInstalledCallable.class.getName());
 
 			Callable<Boolean> callable = clazz.newInstance();

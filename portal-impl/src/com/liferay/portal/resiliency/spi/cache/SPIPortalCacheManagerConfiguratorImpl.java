@@ -42,10 +42,10 @@ public class SPIPortalCacheManagerConfiguratorImpl
 
 	@Override
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
-		createSPIPortalCacheManager(
-			PortalCacheManager
-				<? extends Serializable, ? extends Serializable>
-					portalCacheManager)
+			createSPIPortalCacheManager(
+				PortalCacheManager
+					<? extends Serializable, ? extends Serializable>
+						portalCacheManager)
 		throws Exception {
 
 		if (!SPIUtil.isSPI()) {

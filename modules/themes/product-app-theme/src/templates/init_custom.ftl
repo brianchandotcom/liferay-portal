@@ -1,18 +1,20 @@
-#set ($fullScreenNavigation = $theme.getSetting("full-screen-navigation"))
-#set ($socialMediaFacebook = $theme.getSetting("social-media-facebook"))
-#set ($socialMediaTwitter = $theme.getSetting("social-media-twitter"))
-#set ($socialMediaFacebookUrl = $theme.getSetting("social-media-facebook-url"))
-#set ($socialMediaTwitterUrl = $theme.getSetting("social-media-twitter-url"))
-#set ($siteLogoRetina = $theme.getSetting("site-logo-retina"))
+<#assign fullScreenNavigation = theme.getSetting("full-screen-navigation")>
+<#assign socialMediaFacebook = theme.getSetting("social-media-facebook")>
+<#assign socialMediaTwitter = theme.getSetting("social-media-twitter")>
+<#assign socialMediaFacebookUrl = theme.getSetting("social-media-facebook-url")>
+<#assign socialMediaTwitterUrl = theme.getSetting("social-media-twitter-url")>
+<#assign siteLogoRetina = theme.getSetting("site-logo-retina")>
 
-#if ($fullScreenNavigation == true)
-	#set ($css_class = "$css_class full-screen-navigation")
-#else
-	#set ($nav_css_right = "navbar-right")
-	#set ($nav_collapse = "navbar-collapse")
-#end
+<#if fullScreenNavigation == "true">
+	<#assign css_class = css_class + " full-screen-navigation">
+	<#assign nav_collapse = "">
+	<#assign nav_css_right = "">
+<#else>
+	<#assign nav_css_right = "navbar-right">
+	<#assign nav_collapse = "navbar-collapse">
+</#if>
 
-#if ($siteLogoRetina == true)
-	#set ($company_logo_height = ($company_logo_height/2))
-	#set ($company_logo_width = ($company_logo_width/2))
-#end
+<#if siteLogoRetina == "true">
+	<#assign company_logo_height = company_logo_height/2>
+	<#assign company_logo_width = company_logo_width/2>
+</#if>

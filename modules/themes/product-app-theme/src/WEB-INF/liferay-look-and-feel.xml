@@ -6,7 +6,7 @@
 		<version>7.0.0+</version>
 	</compatibility>
 	<theme id="product-app" name="Product App">
-		<template-extension>vm</template-extension>
+		<template-extension>ftl</template-extension>
 		<settings>
 			<setting configurable="true" key="full-screen-navigation" type="checkbox" value="false" />
 			<setting configurable="true" key="site-logo-retina" type="checkbox" value="true" />

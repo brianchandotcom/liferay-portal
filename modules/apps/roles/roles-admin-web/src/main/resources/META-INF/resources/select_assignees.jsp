@@ -32,6 +32,8 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectAssignees");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_assignees.jsp");
@@ -106,6 +108,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 
 	<liferay-frontend:management-bar
 		includeCheckBox="<%= true %>"
+		searchContainerId="assigneesSearch"
 	>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-filters>
@@ -140,3 +143,36 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 		</c:when>
 	</c:choose>
 </aui:form>
+
+<aui:script>
+	var A = AUI();
+
+	var <portlet:namespace />assigneeIds = [];
+
+	$('input[name="<portlet:namespace />rowIds"]').on(
+		'change',
+		function(event) {
+			var target = event.target;
+
+			if (target.checked) {
+				<portlet:namespace />assigneeIds.push(target.value);
+			}
+			else {
+				A.Array.removeItem(<portlet:namespace />assigneeIds, target.value);
+			}
+
+			var result = {};
+
+			if (<portlet:namespace />assigneeIds.length > 0) {
+				result = {
+					data: {
+						type: '<%= tabs2 %>',
+						value: <portlet:namespace />assigneeIds.join(',')
+					}
+				};
+			}
+
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+		}
+	);
+</aui:script>

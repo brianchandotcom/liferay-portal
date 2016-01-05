@@ -36,6 +36,7 @@ UserRoleChecker rowChecker = new UserRoleChecker(renderResponse, role);
 <liferay-ui:membership-policy-error />
 
 <liferay-ui:search-container
+	id="assigneesSearch"
 	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 	var="userSearchContainer"

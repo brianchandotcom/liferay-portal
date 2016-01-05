@@ -34,6 +34,7 @@ OrganizationRoleChecker rowChecker = new OrganizationRoleChecker(renderResponse,
 <aui:input name="removeGroupIds" type="hidden" />
 
 <liferay-ui:search-container
+	id="assigneesSearch"
 	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 	var="organizationSearchContainer"

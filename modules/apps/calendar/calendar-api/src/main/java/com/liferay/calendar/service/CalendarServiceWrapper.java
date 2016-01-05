@@ -103,6 +103,12 @@ public class CalendarServiceWrapper implements CalendarService,
 	}
 
 	@Override
+	public boolean isManageableFromGroup(long calendarId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendarService.isManageableFromGroup(calendarId, groupId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.calendar.model.Calendar> search(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
 		java.lang.String keywords, boolean andOperator, int start, int end,

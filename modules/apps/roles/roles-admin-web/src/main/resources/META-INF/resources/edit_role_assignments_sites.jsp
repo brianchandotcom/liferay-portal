@@ -27,7 +27,11 @@ String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-di
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
 
-GroupRoleChecker rowChecker = new GroupRoleChecker(renderResponse, role);
+EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+
+if (tabs3.equals("available")) {
+	rowChecker = new GroupRoleChecker(renderResponse, role);
+}
 %>
 
 <aui:input name="addGroupIds" type="hidden" />

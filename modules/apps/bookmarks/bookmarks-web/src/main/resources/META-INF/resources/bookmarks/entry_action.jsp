@@ -36,7 +36,7 @@ if (row != null) {
 	}
 }
 else {
-	entry = (BookmarksEntry)request.getAttribute("view_entry.jsp-entry");
+	entry = (BookmarksEntry)request.getAttribute("info_panel.jsp-entry");
 
 	view = true;
 }

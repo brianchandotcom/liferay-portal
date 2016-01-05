@@ -134,11 +134,17 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 </liferay-util:include>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<div class="sidenav-menu-slider">
-		<div class="sidebar sidebar-default sidenav-menu">
-			<liferay-util:include page="/bookmarks/info_panel.jsp" servletContext="<%= application %>" />
-		</div>
-	</div>
+	<portlet:resourceURL id="/bookmarks/info_panel" var="sidebarPanelURL">
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+	</portlet:resourceURL>
+
+	<liferay-frontend:sidebar-panel
+		resourceURL="<%= sidebarPanelURL %>"
+		searchContainerId="entries"
+	>
+		<liferay-util:include page="/bookmarks/info_panel.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:sidebar-panel>
+
 	<div class="sidenav-content">
 		<div class="bookmakrs-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 			<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") %>'>

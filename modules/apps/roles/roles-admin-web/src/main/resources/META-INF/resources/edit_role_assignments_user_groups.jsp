@@ -34,6 +34,7 @@ UserGroupRoleChecker rowChecker = new UserGroupRoleChecker(renderResponse, role)
 <aui:input name="removeGroupIds" type="hidden" />
 
 <liferay-ui:search-container
+	id="assigneesSearch"
 	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >

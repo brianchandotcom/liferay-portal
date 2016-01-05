@@ -109,6 +109,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 
 	<liferay-frontend:management-bar
 		includeCheckBox="<%= true %>"
+		searchContainerId="assigneesSearch"
 	>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-filters>
@@ -132,6 +133,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>
+
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="unsetRoleAssignments" label="delete" />
+		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 
 	<%
@@ -160,9 +165,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
+	var form = AUI.$(document.<portlet:namespace />fm);
+
 	<portlet:renderURL var="selectAssigneesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/select_assignees.jsp" />
 		<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
+		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+		<portlet:param name="tabs2" value="<%= tabs2 %>" />
 	</portlet:renderURL>
 
 	$('#<portlet:namespace />addUsers').on(
@@ -170,13 +179,20 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 		function(event) {
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
-					eventName: '<portlet:namespace />selectUsers',
+					eventName: '<portlet:namespace />selectAssignees',
 					on: {
 						selectedItemChange: function(event) {
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								form.fm('addUserIds').val(selectedItem.value);
+								if (selectedItem.type === 'users') {
+									form.fm('addUserIds').val(selectedItem.value);
+								}
+								else {
+									form.fm('addGroupIds').val(selectedItem.value);
+								}
+
+								form.fm('assignmentsRedirect').val('<%= portletURL.toString() %>');
 
 								submitForm(form, '<%= editRoleAssignmentsURL %>');
 							}
@@ -191,29 +207,23 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 		}
 	);
 
-	function <portlet:namespace />updateRoleGroups(assignmentsRedirect) {
-		var Util = Liferay.Util;
+	$('#<portlet:namespace />unsetRoleAssignments').on(
+		'click',
+		function() {
+			var ids = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+			form.fm('assignmentsRedirect').val('<%= portletURL.toString() %>');
 
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+			if ('<%= tabs2 %>' === 'users') {
+				form.fm('removeUserIds').val(ids);
+			}
+			else {
+				form.fm('removeGroupIds').val(ids);
+			}
 
-		submitForm(form, '<%= editRoleAssignmentsURL %>');
-	}
-
-	function <portlet:namespace />updateRoleUsers(assignmentsRedirect) {
-		var Util = Liferay.Util;
-
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-		submitForm(form, '<%= editRoleAssignmentsURL %>');
-	}
+			submitForm(form, '<%= editRoleAssignmentsURL %>');
+		}
+	);
 </aui:script>
 
 <%

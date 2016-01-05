@@ -1847,10 +1847,21 @@ this task.
 			};
 		</echo>
 
-		<replace file="${app.server.tomcat.dir}/conf/catalina.properties">
-			<replacetoken><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar]]></replacetoken>
-			<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/lib/ext,${catalina.home}/lib/ext/*.jar]]></replacevalue>
-		</replace>
+		<if>
+			<equals arg1="${app.server.tomcat.version}" arg2="8.0.30" />
+			<then>
+				<replace file="${app.server.tomcat.dir}/conf/catalina.properties">
+					<replacetoken><![CDATA[common.loader="${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar"]]></replacetoken>
+					<replacevalue><![CDATA[common.loader="${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar","${catalina.home}/lib/ext","${catalina.home}/lib/ext/*.jar"]]></replacevalue>
+				</replace>
+			</then>
+			<else>
+				<replace file="${app.server.tomcat.dir}/conf/catalina.properties">
+					<replacetoken><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar]]></replacetoken>
+					<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/lib/ext,${catalina.home}/lib/ext/*.jar]]></replacevalue>
+				</replace>
+			</else>
+		</if>
 
 		<replace file="${app.server.tomcat.dir}/conf/server.xml">
 			<replacetoken><![CDATA[redirectPort="8443" />]]></replacetoken>

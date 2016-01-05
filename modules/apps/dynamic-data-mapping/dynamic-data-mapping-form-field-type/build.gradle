@@ -8,7 +8,7 @@ dependencies {
 	compile project(":core:osgi-service-tracker-collections")
 	compile project(":core:registry-api")
 
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0-SNAPSHOT"
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }
 
 liferay {

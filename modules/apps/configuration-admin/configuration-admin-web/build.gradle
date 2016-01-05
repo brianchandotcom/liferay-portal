@@ -8,7 +8,7 @@ dependencies {
 	provided group: "com.liferay.portal", name: "util-bridges", version: liferay.portalVersion
 	provided group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", transitive: false, version: "1.2.3"
 
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0-SNAPSHOT"
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }
 
 liferay {

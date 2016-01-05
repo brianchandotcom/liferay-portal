@@ -4,7 +4,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0-SNAPSHOT"
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }
 
 liferay {

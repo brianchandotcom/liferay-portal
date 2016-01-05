@@ -4,9 +4,9 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0-SNAPSHOT"
 	testCompile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }
 
 liferay {

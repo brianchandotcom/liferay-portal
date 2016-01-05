@@ -54,3 +54,24 @@ gradle.buildFinished {
 		}
 	}
 }
+
+if (Boolean.getBoolean("build.performance.logger")) {
+
+	gradle.taskGraph.addTaskExecutionListener(new TaskExecutionListener() {
+
+		public void afterExecute(Task task, TaskState taskState) {
+			long end = System.currentTimeMillis();
+			long duration = end - start;
+
+			println(task.path + " end: " + end + " duration: " + duration);
+		}
+
+		public void beforeExecute(Task task) {
+			start = System.currentTimeMillis();
+
+			println(task.path + " start: " + start);
+		}
+
+		long start;
+	})
+}

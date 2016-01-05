@@ -15,85 +15,106 @@
 package com.liferay.portal.security.sso.opensso.internal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.security.sso.opensso.constants.LegacyOpenSSOPropsKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
-import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.VerifyException;
-import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
-
-import java.io.IOException;
-
-import java.util.List;
+import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
 
 import javax.portlet.PortletPreferences;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Brian Greenwald
  */
 @RunWith(Arquillian.class)
 public class OpenSSOCompanySettingsVerifyProcessTest
-	extends BaseVerifyProcessTestCase {
+	extends BaseCompanySettingsVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws PortalException {
-		Bundle bundle = FrameworkUtil.getBundle(
-			OpenSSOCompanySettingsVerifyProcessTest.class);
+	protected void doVerify(
+		PortletPreferences portletPreferences, Settings settings) {
 
-		_bundleContext = bundle.getBundleContext();
+		for (String key : LegacyOpenSSOPropsKeys.TOTAL_OPENSSO_KEYS) {
+			Assert.assertTrue(
+				Validator.isNull(
+					portletPreferences.getValue(key, StringPool.BLANK)));
+		}
 
-		ServiceReference<CompanyLocalService> companyLocalServiceReference =
-			_bundleContext.getServiceReference(CompanyLocalService.class);
+		Assert.assertEquals(
+			"testEmailAddressAttr",
+			settings.getValue(
+				OpenSSOConstants.EMAIL_ADDRESS_ATTR, StringPool.BLANK));
 
-		_companyLocalService = _bundleContext.getService(
-			companyLocalServiceReference);
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				settings.getValue(
+					OpenSSOConstants.AUTH_ENABLED, StringPool.FALSE)));
 
-		ServiceReference<PrefsProps> prefsPropsServiceReference =
-			_bundleContext.getServiceReference(PrefsProps.class);
+		Assert.assertEquals(
+			"testFirstNameAttr",
+			settings.getValue(
+				OpenSSOConstants.FIRST_NAME_ATTR, StringPool.BLANK));
 
-		_prefsProps = _bundleContext.getService(prefsPropsServiceReference);
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				settings.getValue(
+					OpenSSOConstants.IMPORT_FROM_LDAP, StringPool.FALSE)));
 
-		ServiceReference<SettingsFactory> configurationAdminServiceReference =
-			_bundleContext.getServiceReference(SettingsFactory.class);
+		Assert.assertEquals(
+			"testLastNameAttr",
+			settings.getValue(
+				OpenSSOConstants.LAST_NAME_ATTR, StringPool.BLANK));
 
-		_settingsFactory = _bundleContext.getService(
-			configurationAdminServiceReference);
+		Assert.assertEquals(
+			"http://test.com/login/url",
+			settings.getValue(OpenSSOConstants.LOGIN_URL, StringPool.BLANK));
 
-		UnicodeProperties properties = new UnicodeProperties();
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				settings.getValue(
+					OpenSSOConstants.LOGOUT_ON_SESSION_EXPIRATION,
+					StringPool.FALSE)));
 
+		Assert.assertEquals(
+			"http://test.com/logout/url",
+			settings.getValue(OpenSSOConstants.LOGOUT_URL, StringPool.BLANK));
+
+		Assert.assertEquals(
+			"testScreenNameAttr",
+			settings.getValue(
+				OpenSSOConstants.SCREEN_NAME_ATTR, StringPool.BLANK));
+
+		Assert.assertEquals(
+			"http://test.com/service/url",
+			settings.getValue(OpenSSOConstants.SERVICE_URL, StringPool.BLANK));
+	}
+
+	@Override
+	protected String getSettingsId() {
+		return OpenSSOConstants.SERVICE_NAME;
+	}
+
+	@Override
+	protected String getVerifyProcessName() {
+		return "com.liferay.portal.security.sso.opensso";
+	}
+
+	@Override
+	protected void populateLegacyProperties(UnicodeProperties properties) {
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_EMAIL_ADDRESS_ATTR,
 			"testEmailAddressAttr");
@@ -130,141 +151,6 @@ public class OpenSSOCompanySettingsVerifyProcessTest
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_SERVICE_URL,
 			"http://test.com/service/url");
-
-		List<Company> companies = _companyLocalService.getCompanies(false);
-
-		for (Company company : companies) {
-			_companyLocalService.updatePreferences(
-				company.getCompanyId(), properties);
-		}
 	}
-
-	@AfterClass
-	public static void tearDownClass()
-		throws InvalidSyntaxException, IOException {
-
-		List<Company> companies = _companyLocalService.getCompanies(false);
-
-		for (Company company : companies) {
-			Settings settings = getSettings(company.getCompanyId());
-
-			ModifiableSettings modifiableSettings =
-				settings.getModifiableSettings();
-
-			modifiableSettings.reset();
-		}
-
-		_bundleContext = null;
-	}
-
-	protected static Settings getSettings(long companyId) {
-		try {
-			Settings settings = _settingsFactory.getSettings(
-				new CompanyServiceSettingsLocator(
-					companyId, OpenSSOConstants.SERVICE_NAME));
-
-			return settings;
-		}
-		catch (SettingsException e) {
-			throw new IllegalStateException(e);
-		}
-	}
-
-	protected void doVerify() throws VerifyException {
-		super.doVerify();
-
-		List<Company> companies = _companyLocalService.getCompanies(false);
-
-		for (Company company : companies) {
-			PortletPreferences portletPreferences = _prefsProps.getPreferences(
-				company.getCompanyId(), true);
-
-			for (String key : LegacyOpenSSOPropsKeys.TOTAL_OPENSSO_KEYS) {
-				Assert.assertTrue(
-					Validator.isNull(
-						portletPreferences.getValue(key, StringPool.BLANK)));
-			}
-
-			Settings settings = getSettings(company.getCompanyId());
-
-			Assert.assertEquals(
-				"testEmailAddressAttr",
-				settings.getValue(
-					OpenSSOConstants.EMAIL_ADDRESS_ATTR, StringPool.BLANK));
-
-			Assert.assertTrue(
-				GetterUtil.getBoolean(
-					settings.getValue(
-						OpenSSOConstants.AUTH_ENABLED, StringPool.FALSE)));
-
-			Assert.assertEquals(
-				"testFirstNameAttr",
-				settings.getValue(
-					OpenSSOConstants.FIRST_NAME_ATTR, StringPool.BLANK));
-
-			Assert.assertTrue(
-				GetterUtil.getBoolean(
-					settings.getValue(
-						OpenSSOConstants.IMPORT_FROM_LDAP, StringPool.FALSE)));
-
-			Assert.assertEquals(
-				"testLastNameAttr",
-				settings.getValue(
-					OpenSSOConstants.LAST_NAME_ATTR, StringPool.BLANK));
-
-			Assert.assertEquals(
-				"http://test.com/login/url",
-				settings.getValue(
-					OpenSSOConstants.LOGIN_URL, StringPool.BLANK));
-
-			Assert.assertTrue(
-				GetterUtil.getBoolean(
-					settings.getValue(
-						OpenSSOConstants.LOGOUT_ON_SESSION_EXPIRATION,
-						StringPool.FALSE)));
-
-			Assert.assertEquals(
-				"http://test.com/logout/url",
-				settings.getValue(
-					OpenSSOConstants.LOGOUT_URL, StringPool.BLANK));
-
-			Assert.assertEquals(
-				"testScreenNameAttr",
-				settings.getValue(
-					OpenSSOConstants.SCREEN_NAME_ATTR, StringPool.BLANK));
-
-			Assert.assertEquals(
-				"http://test.com/service/url",
-				settings.getValue(
-					OpenSSOConstants.SERVICE_URL, StringPool.BLANK));
-		}
-	}
-
-	@Override
-	protected VerifyProcess getVerifyProcess() {
-		try {
-			ServiceReference<?>[] serviceReferences =
-				_bundleContext.getAllServiceReferences(
-					VerifyProcess.class.getName(),
-					"(&(objectClass=" + VerifyProcess.class.getName() +
-						")(verify.process.name=" +
-							"com.liferay.portal.security.sso.opensso))");
-
-			if (ArrayUtil.isEmpty(serviceReferences)) {
-				throw new IllegalStateException("Unable to get verify process");
-			}
-
-			return (VerifyProcess)_bundleContext.getService(
-				serviceReferences[0]);
-		}
-		catch (InvalidSyntaxException ise) {
-			throw new IllegalStateException("Unable to get verify process");
-		}
-	}
-
-	private static BundleContext _bundleContext;
-	private static volatile CompanyLocalService _companyLocalService;
-	private static volatile PrefsProps _prefsProps;
-	private static volatile SettingsFactory _settingsFactory;
 
 }

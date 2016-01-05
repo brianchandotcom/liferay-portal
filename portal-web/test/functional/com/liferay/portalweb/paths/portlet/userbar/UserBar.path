@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>USER_SIGN_OUT</td>
-	<td>//a[contains(.,'Sign Out')]</td>
+	<td>//a[contains(.,'Sign Out')] | //a[@href='/c/portal/logout']</td>
 	<td></td>
 </tr>
 <tr>

@@ -127,7 +127,7 @@
 <!--ALL_PAGES_TABLE-->
 <tr>
 	<td>ALL_PAGES_TABLE_PAGE_NAME</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
+	<td>//a[contains(.,'${key_wikiPageTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

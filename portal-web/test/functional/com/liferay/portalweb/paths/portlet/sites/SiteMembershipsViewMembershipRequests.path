@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>REPLY</td>
-	<td>//span[contains(.,'Reply')]/a/i[contains(@class,'icon-reply')]</td>
+	<td>//span/*[name()='svg'][contains(@class,'icon-reply')]</td>
 	<td></td>
 </tr>
 <tr>

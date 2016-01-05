@@ -259,7 +259,7 @@ public class UpgradePortletId extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			StringBundler sb = new StringBundler(14);
+			StringBundler sb = new StringBundler(18);
 
 			sb.append("select plid, typeSettings from Layout where ");
 			sb.append("typeSettings like '%=");

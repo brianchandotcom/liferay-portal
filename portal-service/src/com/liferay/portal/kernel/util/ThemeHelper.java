@@ -39,7 +39,7 @@ public class ThemeHelper {
 		ServletContext servletContext, Theme theme, String portletId,
 		String path) {
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		String themeContextName = GetterUtil.getString(
 			theme.getServletContextName());

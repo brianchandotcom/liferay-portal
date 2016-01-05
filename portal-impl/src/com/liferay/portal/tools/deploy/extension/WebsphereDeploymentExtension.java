@@ -151,7 +151,7 @@ public class WebsphereDeploymentExtension implements DeploymentExtension {
 		commands.add(wsadminFileName);
 
 		if (_log.isInfoEnabled()) {
-			StringBundler sb = new StringBundler(commands.size() + 1);
+			StringBundler sb = new StringBundler(commands.size() * 2 + 1);
 
 			sb.append("Installing plugin by executing");
 

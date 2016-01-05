@@ -705,7 +705,7 @@ public class CustomSQL {
 			oldSql.append(" [$AND_OR_CONNECTOR$]");
 		}
 
-		StringBundler newSql = new StringBundler(values.length * 6 + 3);
+		StringBundler newSql = new StringBundler(values.length * 6 + 2);
 
 		newSql.append(StringPool.OPEN_PARENTHESIS);
 

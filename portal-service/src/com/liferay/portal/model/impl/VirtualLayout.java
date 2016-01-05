@@ -66,7 +66,7 @@ public class VirtualLayout extends LayoutWrapper {
 
 	@Override
 	public String getFriendlyURL(Locale locale) {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
 

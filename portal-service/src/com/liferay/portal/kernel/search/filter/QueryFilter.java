@@ -42,7 +42,7 @@ public class QueryFilter extends BaseFilter {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("{(query=");
 		sb.append(_query);

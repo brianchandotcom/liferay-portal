@@ -67,7 +67,7 @@ public class ClusterNodeResponse implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{clusterNode=");
 		sb.append(_clusterNode);

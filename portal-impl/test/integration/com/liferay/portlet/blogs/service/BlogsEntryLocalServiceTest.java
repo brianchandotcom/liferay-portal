@@ -816,7 +816,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	private static String repeat(String string, int times) {
-		StringBundler sb = new StringBundler(string.length() * times);
+		StringBundler sb = new StringBundler(times);
 
 		for (int i = 0; i < times; i++) {
 			sb.append(string);

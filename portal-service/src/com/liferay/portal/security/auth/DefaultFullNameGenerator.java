@@ -29,6 +29,7 @@ import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.service.ListTypeServiceUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -144,8 +145,6 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		String firstName, String middleName, String lastName, Locale locale,
 		long prefixId, long suffixId, boolean useInitials) {
 
-		StringBundler sb = new StringBundler(5);
-
 		Map<String, String> namesMap = new HashMap<>();
 
 		if (Validator.isNotNull(firstName)) {
@@ -209,12 +208,17 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		FullNameDefinition fullNameDefinition =
 			FullNameDefinitionFactory.getInstance(locale);
 
-		for (FullNameField fullNameField :
-				fullNameDefinition.getFullNameFields()) {
+		List<FullNameField> fullNameFields =
+			fullNameDefinition.getFullNameFields();
 
-			if (namesMap.containsKey(fullNameField.getName())) {
+		StringBundler sb = new StringBundler(2 * fullNameFields.size());
+
+		for (FullNameField fullNameField : fullNameFields) {
+			String name = namesMap.get(fullNameField.getName());
+
+			if (name != null) {
 				sb.append(StringPool.SPACE);
-				sb.append(namesMap.get(fullNameField.getName()));
+				sb.append(name);
 			}
 		}
 

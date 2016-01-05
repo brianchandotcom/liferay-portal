@@ -132,13 +132,7 @@ public abstract class BaseSandboxHandler implements SandboxHandler {
 		String displayName = dirName.substring(
 			0, dirName.length() - (_pluginType.length() + 1));
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(displayName);
-		sb.append(SANDBOX_MARKER);
-		sb.append(_pluginType);
-
-		return sb.toString();
+		return displayName.concat(SANDBOX_MARKER).concat(_pluginType);
 	}
 
 	public String getPluginName(String dirName) {

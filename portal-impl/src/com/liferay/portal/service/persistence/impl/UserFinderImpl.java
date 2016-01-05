@@ -173,10 +173,10 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 			boolean sybase = db.getDBType() == DBType.SYBASE;
 
 			if (sybase) {
-				sb = new StringBundler(19);
+				sb = new StringBundler(25);
 			}
 			else {
-				sb = new StringBundler(13);
+				sb = new StringBundler(17);
 			}
 
 			sb.append("SELECT groupId, COUNT(DISTINCT userId) FROM (");
@@ -901,7 +901,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
 			}
 
-			StringBundler sb = new StringBundler(14);
+			StringBundler sb = new StringBundler(20);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(replaceJoinAndWhere(sql, params1));

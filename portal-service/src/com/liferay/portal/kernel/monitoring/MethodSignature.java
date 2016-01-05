@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.monitoring;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Method;
 
@@ -106,20 +107,23 @@ public class MethodSignature {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(
+			_parameterTypeNames.length * 2 + 5);
 
 		sb.append("{className=");
 		sb.append(_className);
 		sb.append(", methodName=");
 		sb.append(_methodName);
-		sb.append(", parameterTypeNames=");
+		sb.append(", parameterTypeNames=[");
 
-		StringBundler parameterTypeNamesSB = new StringBundler(
-			_parameterTypeNames);
+		for (String parameterTypeName : _parameterTypeNames) {
+			sb.append(parameterTypeName);
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
 
-		sb.append(parameterTypeNamesSB.toString());
+		sb.setIndex(sb.index() - 1);
 
-		sb.append("}");
+		sb.append("]}");
 
 		return sb.toString();
 	}

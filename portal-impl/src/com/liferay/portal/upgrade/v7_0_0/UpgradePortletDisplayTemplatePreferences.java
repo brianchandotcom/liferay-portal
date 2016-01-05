@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
@@ -65,13 +64,7 @@ public class UpgradePortletDisplayTemplatePreferences
 
 	@Override
 	protected String getUpdatePortletPreferencesWhereClause() {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("(preferences like '%");
-		sb.append(DISPLAY_STYLE_PREFIX_6_2);
-		sb.append("%')");
-
-		return sb.toString();
+		return UPDATE_PORTLET_PREFERENCES_WHERE_CLAUSE;
 	}
 
 	protected void upgradeDisplayStyle(PortletPreferences portletPreferences)
@@ -115,5 +108,8 @@ public class UpgradePortletDisplayTemplatePreferences
 	}
 
 	protected static final String DISPLAY_STYLE_PREFIX_6_2 = "ddmTemplate_";
+
+	protected static final String UPDATE_PORTLET_PREFERENCES_WHERE_CLAUSE =
+		"(preferences like '%" + DISPLAY_STYLE_PREFIX_6_2 + "%')";
 
 }

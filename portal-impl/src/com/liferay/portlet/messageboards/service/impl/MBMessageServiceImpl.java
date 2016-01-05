@@ -777,7 +777,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		if (LockManagerUtil.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append("Thread is locked for class name ");
 			sb.append(MBThread.class.getName());

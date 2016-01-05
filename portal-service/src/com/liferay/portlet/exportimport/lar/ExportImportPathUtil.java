@@ -114,7 +114,7 @@ public class ExportImportPathUtil {
 	public static String getLayoutPath(
 		PortletDataContext portletDataContext, long plid) {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(getRootPath(portletDataContext));
 		sb.append(StringPool.FORWARD_SLASH);

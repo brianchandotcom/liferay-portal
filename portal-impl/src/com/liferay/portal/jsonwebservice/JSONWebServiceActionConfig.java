@@ -15,7 +15,6 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
@@ -105,14 +104,14 @@ public class JSONWebServiceActionConfig
 
 		_realActionMethod = realActionMethod;
 
-		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 4);
+		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 3);
 
 		sb.append(_path);
-		sb.append(CharPool.MINUS);
+		sb.append(StringPool.MINUS);
 		sb.append(_methodParameters.length);
 
 		for (MethodParameter methodParameter : _methodParameters) {
-			sb.append(CharPool.MINUS);
+			sb.append(StringPool.MINUS);
 			sb.append(methodParameter.getName());
 		}
 

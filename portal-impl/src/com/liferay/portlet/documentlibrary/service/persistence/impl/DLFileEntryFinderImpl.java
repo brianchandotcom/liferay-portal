@@ -743,7 +743,7 @@ public class DLFileEntryFinderImpl
 				groupId);
 		}
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(12);
 
 		if (ListUtil.isNotEmpty(repositoryIds) ||
 			ListUtil.isNotEmpty(folderIds) || ArrayUtil.isNotEmpty(mimeTypes)) {
@@ -804,7 +804,7 @@ public class DLFileEntryFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(mimeTypes.length * 2 - 1);
+		StringBundler sb = new StringBundler(mimeTypes.length * 3 - 1);
 
 		for (int i = 0; i < mimeTypes.length; i++) {
 			sb.append(tableName);

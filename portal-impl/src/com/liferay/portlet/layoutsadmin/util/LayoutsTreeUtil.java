@@ -267,6 +267,9 @@ public class LayoutsTreeUtil {
 		String paginationJSON = SessionClicks.get(
 			session, key, JSONFactoryUtil.getNullJSON());
 
+		JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
+			paginationJSON);
+
 		if (_log.isDebugEnabled()) {
 			sb = new StringBundler(9);
 
@@ -276,12 +279,6 @@ public class LayoutsTreeUtil {
 			sb.append(layoutId);
 			sb.append(", paginationJSON=");
 			sb.append(paginationJSON);
-		}
-
-		JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
-			paginationJSON);
-
-		if (_log.isDebugEnabled()) {
 			sb.append(", paginationJSONObject");
 			sb.append(paginationJSONObject);
 			sb.append(StringPool.CLOSE_PARENTHESIS);

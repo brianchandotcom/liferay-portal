@@ -42,7 +42,7 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("insert into LayoutFriendlyURL (uuid_, ");
 			sb.append("layoutFriendlyURLId, groupId, companyId, userId, ");

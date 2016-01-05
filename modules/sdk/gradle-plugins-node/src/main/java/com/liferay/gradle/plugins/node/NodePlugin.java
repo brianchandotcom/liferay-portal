@@ -107,7 +107,7 @@ public class NodePlugin implements Plugin<Project> {
 		return executeNpmTask;
 	}
 
-	protected void configureTaskDownloadNodeDir(
+	protected void configureTaskDownloadNode(
 		DownloadNodeTask downloadNodeTask, final NodeExtension nodeExtension) {
 
 		downloadNodeTask.setNodeDir(
@@ -119,10 +119,16 @@ public class NodePlugin implements Plugin<Project> {
 				}
 
 			});
-	}
 
-	protected void configureTaskDownloadNodeNpmUrl(
-		DownloadNodeTask downloadNodeTask, final NodeExtension nodeExtension) {
+		downloadNodeTask.setNodeUrl(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return nodeExtension.getNodeUrl();
+				}
+
+			});
 
 		downloadNodeTask.setNpmUrl(
 			new Callable<String>() {
@@ -135,21 +141,7 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskDownloadNodeUrl(
-		DownloadNodeTask downloadNodeTask, final NodeExtension nodeExtension) {
-
-		downloadNodeTask.setNodeUrl(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return nodeExtension.getNodeUrl();
-				}
-
-			});
-	}
-
-	protected void configureTaskExecuteNodeDir(
+	protected void configureTaskExecuteNode(
 		ExecuteNodeTask executeNodeTask, final NodeExtension nodeExtension) {
 
 		executeNodeTask.setNodeDir(
@@ -163,13 +155,13 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskExecuteNpmArgs(
+	protected void configureTaskExecuteNpm(
 		ExecuteNpmTask executeNpmTask, NodeExtension nodeExtension) {
 
 		executeNpmTask.args(nodeExtension.getNpmArgs());
 	}
 
-	protected void configureTaskPublishNodeModuleDescription(
+	protected void configureTaskPublishNodeModule(
 		PublishNodeModuleTask publishNodeModuleTask) {
 
 		final Project project = publishNodeModuleTask.getProject();
@@ -183,12 +175,6 @@ public class NodePlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	protected void configureTaskPublishNodeModuleName(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		final Project project = publishNodeModuleTask.getProject();
 
 		publishNodeModuleTask.setModuleName(
 			new Callable<String>() {
@@ -199,12 +185,6 @@ public class NodePlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	protected void configureTaskPublishNodeModuleVersion(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		final Project project = publishNodeModuleTask.getProject();
 
 		publishNodeModuleTask.setModuleVersion(
 			new Callable<Object>() {
@@ -228,12 +208,7 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DownloadNodeTask downloadNodeTask) {
-					configureTaskDownloadNodeDir(
-						downloadNodeTask, nodeExtension);
-					configureTaskDownloadNodeNpmUrl(
-						downloadNodeTask, nodeExtension);
-					configureTaskDownloadNodeUrl(
-						downloadNodeTask, nodeExtension);
+					configureTaskDownloadNode(downloadNodeTask, nodeExtension);
 				}
 
 			});
@@ -250,7 +225,7 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNodeTask executeNodeTask) {
-					configureTaskExecuteNodeDir(executeNodeTask, nodeExtension);
+					configureTaskExecuteNode(executeNodeTask, nodeExtension);
 				}
 
 			});
@@ -267,7 +242,7 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNpmTask executeNpmTask) {
-					configureTaskExecuteNpmArgs(executeNpmTask, nodeExtension);
+					configureTaskExecuteNpm(executeNpmTask, nodeExtension);
 				}
 
 			});
@@ -284,11 +259,7 @@ public class NodePlugin implements Plugin<Project> {
 				public void execute(
 					PublishNodeModuleTask publishNodeModuleTask) {
 
-					configureTaskPublishNodeModuleDescription(
-						publishNodeModuleTask);
-					configureTaskPublishNodeModuleName(publishNodeModuleTask);
-					configureTaskPublishNodeModuleVersion(
-						publishNodeModuleTask);
+					configureTaskPublishNodeModule(publishNodeModuleTask);
 				}
 
 			});

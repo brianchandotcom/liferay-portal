@@ -17,7 +17,3 @@ dependencies {
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 }
-
-liferay {
-	deployDir = file("../../../tools/sdk/dependencies/${bundle.instructions['Bundle-SymbolicName']}/lib")
-}

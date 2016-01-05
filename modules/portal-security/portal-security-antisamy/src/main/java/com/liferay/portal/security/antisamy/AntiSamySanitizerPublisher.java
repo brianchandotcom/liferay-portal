@@ -63,7 +63,9 @@ public class AntiSamySanitizerPublisher {
 					antiSamyConfiguration.configurationFileURL());
 		}
 
-		Sanitizer sanitizer = new AntiSamySanitizerImpl(url);
+		Sanitizer sanitizer = new AntiSamySanitizerImpl(
+			antiSamyConfiguration.blacklist(), url,
+			antiSamyConfiguration.whitelist());
 
 		_sanitizerServiceRegistration = bundleContext.registerService(
 			Sanitizer.class, sanitizer, null);

@@ -19,12 +19,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.owasp.validator.html.AntiSamy;
@@ -37,12 +40,34 @@ import org.owasp.validator.html.Policy;
  */
 public class AntiSamySanitizerImpl extends BaseSanitizer {
 
-	public AntiSamySanitizerImpl(URL url) {
+	public AntiSamySanitizerImpl(
+		String[] blacklist, URL url, String[] whitelist) {
+
 		try (InputStream inputstream = url.openStream()) {
 			_policy = Policy.getInstance(inputstream);
 		}
 		catch (Exception e) {
 			throw new IllegalStateException("Unable to initialize policy", e);
+		}
+
+		if (blacklist != null) {
+			for (String blacklistItem : blacklist) {
+				String trimmedItem = blacklistItem.trim();
+
+				if (!trimmedItem.isEmpty()) {
+					_blacklist.add(trimmedItem);
+				}
+			}
+		}
+
+		if (whitelist != null) {
+			for (String whitelistItem : whitelist) {
+				String trimmedItem = whitelistItem.trim();
+
+				if (!trimmedItem.isEmpty()) {
+					_whitelist.add(trimmedItem);
+				}
+			}
 		}
 	}
 
@@ -67,6 +92,10 @@ public class AntiSamySanitizerImpl extends BaseSanitizer {
 			return content;
 		}
 
+		if (isWhitelisted(className, classPK)) {
+			return content;
+		}
+
 		try {
 			AntiSamy antiSamy = new AntiSamy();
 
@@ -81,9 +110,29 @@ public class AntiSamySanitizerImpl extends BaseSanitizer {
 		}
 	}
 
+	protected boolean isWhitelisted(String className, long classPK) {
+		String classNameAndPK = className + StringPool.POUND + classPK;
+
+		for (String blacklistEntry : _blacklist) {
+			if (classNameAndPK.startsWith(blacklistEntry)) {
+				return false;
+			}
+		}
+
+		for (String whitelistEntry : _whitelist) {
+			if (classNameAndPK.startsWith(whitelistEntry)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AntiSamySanitizerImpl.class);
 
+	private final List<String> _blacklist = new ArrayList<>();
 	private final Policy _policy;
+	private final List<String> _whitelist = new ArrayList<>();
 
 }

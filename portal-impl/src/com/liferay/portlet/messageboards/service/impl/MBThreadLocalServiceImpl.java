@@ -1105,6 +1105,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		MBThread oldThread = message.getThread();
 		MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
 			oldThread.getRootMessageId());
+		long oldAttachmentsFolderId = message.getAttachmentsFolderId();
 
 		// Message flags
 
@@ -1154,15 +1155,16 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			message.setSubject(subject);
 		}
 
-		// Move the message's attachments to the new thread
-
-		moveAttachmentsFolders(message, thread, serviceContext);
-
 		message.setThreadId(thread.getThreadId());
 		message.setRootMessageId(thread.getRootMessageId());
 		message.setParentMessageId(0);
 
 		mbMessagePersistence.update(message);
+
+		// Attachments
+
+		moveAttachmentsFolders(
+			message, oldAttachmentsFolderId, thread, serviceContext);
 
 		// Indexer
 
@@ -1306,27 +1308,28 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	protected void moveAttachmentsFolders(
-			MBMessage message, MBThread newThread,
+			MBMessage message, long oldAttachmentsFolderId, MBThread newThread,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		long folderId = message.getAttachmentsFolderId();
+		if (oldAttachmentsFolderId !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			Folder newThreadFolder = newThread.addAttachmentsFolder();
 
-			long newThreadFolderId = newThreadFolder.getFolderId();
-
 			PortletFileRepositoryUtil.movePortletFolder(
-				message.getGroupId(), message.getUserId(), folderId,
-				newThreadFolderId, serviceContext);
+				message.getGroupId(), message.getUserId(),
+				oldAttachmentsFolderId, newThreadFolder.getFolderId(),
+				serviceContext);
 		}
 
 		List<MBMessage> childMessages = mbMessagePersistence.findByT_P(
 			message.getThreadId(), message.getMessageId());
 
 		for (MBMessage childMessage : childMessages) {
-			moveAttachmentsFolders(childMessage, newThread, serviceContext);
+			moveAttachmentsFolders(
+				childMessage, childMessage.getAttachmentsFolderId(), newThread,
+				serviceContext);
 		}
 	}
 

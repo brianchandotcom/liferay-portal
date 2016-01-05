@@ -132,20 +132,23 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			throw new JasperException(ioe);
 		}
 
-		List<JavacErrorDetail> javacErrorDetails = new ArrayList<>();
+		List<Diagnostic<? extends JavaFileObject>> diagnostics =
+			diagnosticCollector.getDiagnostics();
 
-		for (Diagnostic<? extends JavaFileObject> diagnostic :
-				diagnosticCollector.getDiagnostics()) {
+		JavacErrorDetail[] javacErrorDetails = new JavacErrorDetail[
+			diagnostics.size()];
 
-			javacErrorDetails.add(
-				ErrorDispatcher.createJavacError(
-					javaFileName, pageNodes,
-					new StringBuilder(diagnostic.getMessage(null)),
-					(int)diagnostic.getLineNumber()));
+		for (int i = 0; i < diagnostics.size(); i++) {
+			Diagnostic<? extends JavaFileObject> diagnostic = diagnostics.get(
+				i);
+
+			javacErrorDetails[i] = ErrorDispatcher.createJavacError(
+				javaFileName, pageNodes,
+				new StringBuilder(diagnostic.getMessage(null)),
+				(int)diagnostic.getLineNumber());
 		}
 
-		return javacErrorDetails.toArray(
-			new JavacErrorDetail[javacErrorDetails.size()]);
+		return javacErrorDetails;
 	}
 
 	@Override

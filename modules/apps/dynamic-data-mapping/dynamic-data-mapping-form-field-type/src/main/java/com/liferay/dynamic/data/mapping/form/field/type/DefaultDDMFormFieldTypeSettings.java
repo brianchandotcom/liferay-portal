@@ -80,8 +80,10 @@ public interface DefaultDDMFormFieldTypeSettings
 	public String indexType();
 
 	@DDMFormField(
-		label = "%question", properties = {"placeholder=%type-your-question"},
-		required = true, tip = "%type-what-you-want-to-ask", type = "key-value"
+		label = "%label", properties = { "placeholder=%enter-a-field-label" },
+		required = true,
+		tip = "%enter-a-descriptive-field-label-that-guides-users-to-enter-the-information-you-want",
+		type = "key-value"
 	)
 	public LocalizedValue label();
 
@@ -89,7 +91,9 @@ public interface DefaultDDMFormFieldTypeSettings
 	public boolean localizable();
 
 	@DDMFormField(
-		label = "%predefined-value", tip = "%set-the-default-value-of-a-field",
+		label = "%predefined-value",
+		properties = { "placeholder=%enter-a-default-value" },
+		tip = "%a-default-value-that-is-submitted-if-no-other-value-is-entered",
 		type = "text"
 	)
 	public LocalizedValue predefinedValue();
@@ -100,7 +104,9 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(label = "%repeatable", properties = {"showAsSwitcher=true"})
 	public boolean repeatable();
 
-	@DDMFormField(label = "%required", properties = {"showAsSwitcher=true"})
+	@DDMFormField(
+		label = "%required-field", properties = { "showAsSwitcher=true" }
+	)
 	public boolean required();
 
 	@DDMFormField(label = "%show-label", properties = {"showAsSwitcher=true"})
@@ -108,9 +114,7 @@ public interface DefaultDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%help-text",
-		properties = {
-			"placeholder=%add-text-to-help-users-better-understand-what-you-want"
-		},
+		properties = {"placeholder=%enter-text-to-help-users-understand"},
 		tip = "%type-a-short-comment-to-help-users-understand-the-question",
 		type = "text"
 	)
@@ -121,7 +125,11 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public DDMFormFieldValidation validation();
 
-	@DDMFormField(label = "%visibility")
+	@DDMFormField(
+		label = "%field-visibility-expression",
+		properties = { "placeholder=%Country.equals(\"US\")" },
+		tip = "%write-a-conditional-expression-to-control-whether-this-field-is-displayed"
+	)
 	public String visibilityExpression();
 
 }

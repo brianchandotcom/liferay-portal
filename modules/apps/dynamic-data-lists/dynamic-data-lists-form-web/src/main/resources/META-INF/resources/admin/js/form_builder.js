@@ -168,7 +168,10 @@ AUI.add(
 
 						instance.showFieldSettingsPanel(
 							instance.createField(fieldType),
-							fieldType.get('label')
+							Lang.sub(
+								Liferay.Language.get('add-x-field'),
+								[fieldType.get('label')]
+							)
 						);
 					},
 
@@ -336,7 +339,10 @@ AUI.add(
 								modal: true,
 								portletNamespace: instance.get('portletNamespace'),
 								resizable: false,
-								visible: false
+								visible: false,
+								strings: {
+									addField: 'Choose Field'
+								}
 							}
 						);
 

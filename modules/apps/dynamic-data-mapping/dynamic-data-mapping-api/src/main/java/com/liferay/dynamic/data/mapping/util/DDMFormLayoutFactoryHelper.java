@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -60,6 +62,21 @@ public class DDMFormLayoutFactoryHelper {
 		}
 
 		return ddmFormLayout;
+	}
+
+	protected void collectResourceBundles(
+		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
+
+		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+			collectResourceBundles(interfaceClass, resourceBundles, locale);
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, clazz.getClassLoader());
+
+		if (resourceBundle != null) {
+			resourceBundles.add(resourceBundle);
+		}
 	}
 
 	protected com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn
@@ -168,10 +185,16 @@ public class DDMFormLayoutFactoryHelper {
 		ResourceBundle portalResourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
 
-		return new AggregateResourceBundle(
-			portalResourceBundle,
-			ResourceBundleUtil.getBundle(
-				"content.Language", locale, _clazz.getClassLoader()));
+		List<ResourceBundle> resourceBundles = new ArrayList<>();
+
+		resourceBundles.add(portalResourceBundle);
+
+		collectResourceBundles(_clazz, resourceBundles, locale);
+
+		ResourceBundle[] resourceBundleArray = resourceBundles.toArray(
+			new ResourceBundle[resourceBundles.size()]);
+
+		return new AggregateResourceBundle(resourceBundleArray);
 	}
 
 	protected boolean isLocalizableValue(String value) {

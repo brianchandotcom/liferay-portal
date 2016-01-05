@@ -14,8 +14,6 @@
 
 <body class="$css_class">
 
-#quick_access("#main-content")
-
 $theme.include($body_top_include)
 
 #product_menu_sidebar($liferay_product_menu_state)

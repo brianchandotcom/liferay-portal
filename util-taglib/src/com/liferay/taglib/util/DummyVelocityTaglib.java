@@ -15,7 +15,6 @@
 package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -29,10 +28,8 @@ import com.liferay.taglib.ui.DiscussionTag;
 import com.liferay.taglib.ui.FlagsTag;
 import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
-import com.liferay.taglib.ui.MenuTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
-import com.liferay.taglib.ui.QuickAccessTag;
 import com.liferay.taglib.ui.RatingsTag;
 
 import javax.portlet.PortletURL;
@@ -206,11 +203,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public MenuTag getMenuTag() {
-		return null;
-	}
-
-	@Override
 	public MySitesTag getMySitesTag() {
 		return null;
 	}
@@ -222,11 +214,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public PngImageTag getPngImageTag() {
-		return null;
-	}
-
-	@Override
-	public QuickAccessTag getQuickAccessTag() {
 		return null;
 	}
 
@@ -331,10 +318,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public void menu(Menu menu) {
-	}
-
-	@Override
 	public void metaTags() {
 	}
 
@@ -402,14 +385,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public void portletIconPortlet(Portlet portlet) {
-	}
-
-	@Override
-	public void quickAccess() {
-	}
-
-	@Override
-	public void quickAccess(String contentId) {
 	}
 
 	@Override

@@ -337,11 +337,10 @@ public class DLFileEntryTypeFinderImpl
 
 		for (int i = 0; i < groupIds.length; i++) {
 			sb.append("DLFileEntryType.groupId = ?");
-
-			if ((i + 1) < groupIds.length) {
-				sb.append(" OR ");
-			}
+			sb.append(" OR ");
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		sb.append(") AND");
 

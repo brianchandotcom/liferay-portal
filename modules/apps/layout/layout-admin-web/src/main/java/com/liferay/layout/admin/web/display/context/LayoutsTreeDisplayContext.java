@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -67,40 +65,24 @@ public class LayoutsTreeDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public PortletURL getAddLayoutURL() {
-		PortletURL addPagesURL = getCommonAddLayoutURL();
+	public PortletURL getAddLayoutURL(Boolean privateLayout, long selPlid) {
+		PortletURL addPagesURL = PortalUtil.getControlPanelPortletURL(
+			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
 
-		addPagesURL.setParameter("selPlid", String.valueOf(getCurSelPlid()));
-		addPagesURL.setParameter(
-			"privateLayout", String.valueOf(isPrivateLayout()));
+		addPagesURL.setParameter("mvcPath", "/add_layout.jsp");
+		addPagesURL.setParameter("groupId", String.valueOf(getSelGroupId()));
+
+		if (selPlid > LayoutConstants.DEFAULT_PLID) {
+			addPagesURL.setParameter("selPlid", String.valueOf(selPlid));
+		}
+
+		if (privateLayout != null) {
+			addPagesURL.setParameter(
+				"privateLayout", String.valueOf(privateLayout));
+		}
 
 		return addPagesURL;
-	}
-
-	public Map<String, Object> getAddLayoutURLData() {
-		Map<String, Object> data = new HashMap<>();
-
-		Layout selLayout = getSelLayout();
-
-		data.put("privateLayout", String.valueOf(isPrivateLayout()));
-		data.put(
-			"selPlid",
-			(selLayout != null) ?
-				String.valueOf(selLayout.getPlid()) : StringPool.BLANK);
-
-		PortletURL genericAddLayoutURL = getCommonAddLayoutURL();
-
-		data.put(
-			"url",
-			StringUtil.replace(
-				genericAddLayoutURL.toString(),
-				new String[] {
-					HttpUtil.encodePath("{selPlid}"),
-					HttpUtil.encodePath("{privateLayout}")
-				},
-				new String[] {"{selPlid}", "{privateLayout}"}));
-
-		return data;
 	}
 
 	public Long getCurSelPlid() {
@@ -120,13 +102,15 @@ public class LayoutsTreeDisplayContext {
 		return curSelPlid;
 	}
 
-	public PortletURL getEditLayoutURL(boolean privateLayout) {
+	public PortletURL getEditLayoutURL(Boolean privateLayout) {
 		PortletURL editPublicLayoutURL = PortalUtil.getControlPanelPortletURL(
 			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
 
-		editPublicLayoutURL.setParameter(
-			"privateLayout", String.valueOf(privateLayout));
+		if (privateLayout != null) {
+			editPublicLayoutURL.setParameter(
+				"privateLayout", String.valueOf(privateLayout));
+		}
 
 		Group liveGroup = getLiveGroup();
 
@@ -135,13 +119,6 @@ public class LayoutsTreeDisplayContext {
 		editPublicLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
 		return editPublicLayoutURL;
-	}
-
-	public String getLayoutRootNodeName(boolean privateLayout) {
-		Group liveGroup = getLiveGroup();
-
-		return liveGroup.getLayoutRootNodeName(
-			privateLayout, _themeDisplay.getLocale());
 	}
 
 	public String getLayoutSetBranchCssClass(LayoutSetBranch layoutSetBranch)
@@ -208,22 +185,53 @@ public class LayoutsTreeDisplayContext {
 		return data;
 	}
 
-	public Group getSelGroup() {
-		if (_selGroup != null) {
-			return _selGroup;
+	public String getLayoutSetName(boolean privateLayout) {
+		Group liveGroup = getLiveGroup();
+
+		return liveGroup.getLayoutRootNodeName(
+			privateLayout, _themeDisplay.getLocale());
+	}
+
+	public Map<String, PortletURL> getPortletURLs() {
+		Map<String, PortletURL> portletURLs = new HashMap<>();
+
+		portletURLs.put(
+			"addLayoutURL",
+			getAddLayoutURL(null, LayoutConstants.DEFAULT_PLID));
+
+		portletURLs.put("editLayoutURL", getEditLayoutURL(null));
+
+		return portletURLs;
+	}
+
+	public String getPrivateLayoutsURL() {
+		Group selGroup = getSelGroup();
+
+		if (!selGroup.hasPrivateLayouts()) {
+			return null;
 		}
 
-		_selGroup = _themeDisplay.getScopeGroup();
+		return selGroup.getDisplayURL(_themeDisplay, true);
+	}
 
-		if (_selGroup.isControlPanel()) {
-			HttpServletRequest httpServletRequest =
-				PortalUtil.getHttpServletRequest(_liferayPortletRequest);
+	public String getPublicLayoutsURL() {
+		Group selGroup = getSelGroup();
 
-			_selGroup = LatentGroupManagerUtil.getLatentGroup(
-				httpServletRequest.getSession());
+		if (!selGroup.hasPublicLayouts()) {
+			return null;
 		}
 
-		return _selGroup;
+		return selGroup.getDisplayURL(_themeDisplay, false);
+	}
+
+	public long getSelGroupId() {
+		Group selGroup = getSelGroup();
+
+		if (selGroup != null) {
+			return selGroup.getGroupId();
+		}
+
+		return 0;
 	}
 
 	public boolean isPrivateLayout() {
@@ -264,16 +272,21 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	public boolean isShowAddLayoutButton() throws PortalException {
-		if (getSelLayout() == null) {
-			return GroupPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), getSelGroup(),
-				ActionKeys.ADD_LAYOUT);
-		}
-		else {
-			return LayoutPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), getSelLayout(),
-				ActionKeys.ADD_LAYOUT);
-		}
+		return LayoutPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), getSelLayout(),
+			ActionKeys.ADD_LAYOUT);
+	}
+
+	public boolean isShowAddRootLayoutButton() throws PortalException {
+		return GroupPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), getSelGroup(),
+			ActionKeys.ADD_LAYOUT);
+	}
+
+	public boolean isShowEditLayoutSetButton() throws PortalException {
+		return GroupPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), getSelGroup(),
+			ActionKeys.MANAGE_LAYOUTS);
 	}
 
 	public boolean isShowLayoutSetBranchesSelector() {
@@ -294,7 +307,7 @@ public class LayoutsTreeDisplayContext {
 		return true;
 	}
 
-	public boolean isShowPublicLayoutsTree() {
+	public boolean isShowLayoutTabs() {
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
@@ -304,17 +317,14 @@ public class LayoutsTreeDisplayContext {
 		return true;
 	}
 
-	protected PortletURL getCommonAddLayoutURL() {
-		PortletURL addPagesURL = PortalUtil.getControlPanelPortletURL(
-			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
+	public boolean isShowPublicLayoutsTree() {
+		Group selGroup = getSelGroup();
 
-		addPagesURL.setParameter("mvcPath", "/add_layout.jsp");
-		addPagesURL.setParameter("groupId", String.valueOf(getSelGroupId()));
-		addPagesURL.setParameter("selPlid", "{selPlid}");
-		addPagesURL.setParameter("privateLayout", "{privateLayout}");
+		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
+			return false;
+		}
 
-		return addPagesURL;
+		return true;
 	}
 
 	protected LayoutSetBranch getLayoutSetBranch() throws PortalException {
@@ -363,14 +373,22 @@ public class LayoutsTreeDisplayContext {
 		return _liveGroup;
 	}
 
-	protected long getSelGroupId() {
-		Group selGroup = getSelGroup();
-
-		if (selGroup != null) {
-			return selGroup.getGroupId();
+	protected Group getSelGroup() {
+		if (_selGroup != null) {
+			return _selGroup;
 		}
 
-		return 0;
+		_selGroup = _themeDisplay.getScopeGroup();
+
+		if (_selGroup.isControlPanel()) {
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(_liferayPortletRequest);
+
+			_selGroup = LatentGroupManagerUtil.getLatentGroup(
+				httpServletRequest.getSession());
+		}
+
+		return _selGroup;
 	}
 
 	protected Layout getSelLayout() {

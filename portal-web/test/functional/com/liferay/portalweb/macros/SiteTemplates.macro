@@ -13,7 +13,7 @@
 
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click#makeVisibleClickAt" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<execute function="Pause" locator1="3000" />
 		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />

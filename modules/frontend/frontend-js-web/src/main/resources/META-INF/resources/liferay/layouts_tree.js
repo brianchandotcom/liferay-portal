@@ -51,10 +51,6 @@ AUI.add(
 				validator: Lang.isObject
 			},
 
-			layoutURL: {
-				validator: Lang.isString
-			},
-
 			linkTemplate: {
 				validator: Lang.isString,
 				value: NODE_LINK_TPL
@@ -77,6 +73,10 @@ AUI.add(
 			type: {
 				validator: Lang.isString,
 				value: 'pages'
+			},
+
+			urls: {
+				validator: Lang.isArray
 			}
 		};
 
@@ -176,12 +176,16 @@ AUI.add(
 
 				data.cssClass = data.cssClass ? className + data.cssClass : className;
 
-				data.layoutURL = A.Lang.sub(
-					instance.get('layoutURL'),
-					{
-						selPlid: data.plid
-					}
-				);
+				var urls = instance.get('urls');
+
+				urls.forEach(function(url) {
+					data[url.name] = A.Lang.sub(
+						url.value,
+						{
+							selPlid: data.plid
+						}
+					);
+				});
 
 				data.id = data.url ? LString.escapeHTML(instance._treeId + '_layout_' + data.url.substring(1)) : STR_EMPTY;
 

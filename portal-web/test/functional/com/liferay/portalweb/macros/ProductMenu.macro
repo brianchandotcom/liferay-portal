@@ -53,7 +53,7 @@
 
 		<var name="key_page" value="${page}" />
 
-		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" value1="${page}" />
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 	</command>
 
 	<command name="gotoEditPublicPages" summary="Navigate to Product Menu > Sites > Pages > Public Pages > ${page}">

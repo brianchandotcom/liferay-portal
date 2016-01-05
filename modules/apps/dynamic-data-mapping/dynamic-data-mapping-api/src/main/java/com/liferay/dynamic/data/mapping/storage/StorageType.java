@@ -14,23 +14,23 @@
 
 package com.liferay.dynamic.data.mapping.storage;
 
+import java.util.Set;
+
 /**
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
  */
 public enum StorageType {
 
-	EXPANDO("expando"), JSON("json"), XML("xml");
+	JSON("json");
+
+	public static Set<String> getTypes() {
+		return StorageAdapterRegistryUtil.getStorageTypes();
+	}
 
 	public static StorageType parse(String value) {
-		if (EXPANDO.getValue().equals(value)) {
-			return EXPANDO;
-		}
-		else if (JSON.getValue().equals(value)) {
+		if (JSON.getValue().equals(value)) {
 			return JSON;
-		}
-		else if (XML.getValue().equals(value)) {
-			return XML;
 		}
 		else {
 			throw new IllegalArgumentException("Invalid value " + value);

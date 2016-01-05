@@ -51,7 +51,7 @@ public class ExportImportPortletConfigurationIcon
 	public String getOnClick() {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(12);
 
 		sb.append("Liferay.Portlet.openWindow({bodyCssClass: ");
 		sb.append("'dialog-with-footer', namespace: '");

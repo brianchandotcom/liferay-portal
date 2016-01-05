@@ -943,7 +943,7 @@ public class DataFactory {
 	}
 
 	public void initJournalArticleContent(int maxJournalArticleSize) {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
 		sb.append("default-locale=\"en_US\"><dynamic-element name=\"content");
@@ -1290,7 +1290,7 @@ public class DataFactory {
 	}
 
 	public DDMStructureModel newDDLDDMStructureModel(long groupId) {
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 9);
+		StringBundler sb = new StringBundler(2 + _maxDDLCustomFieldCount * 9);
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fields\": [");
@@ -1427,7 +1427,7 @@ public class DataFactory {
 	public DDMContentModel newDDMContentModel(
 		DDLRecordModel ddlRecordModel, int currentIndex) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 8);
+		StringBundler sb = new StringBundler(2 + _maxDDLCustomFieldCount * 8);
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fieldValues\": [");

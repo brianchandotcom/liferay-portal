@@ -384,7 +384,7 @@ public class CalendarFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(calendarResourceIds.length * 2);
+		StringBundler sb = new StringBundler(calendarResourceIds.length * 2 + 1);
 
 		sb.append("(");
 

@@ -259,7 +259,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	}
 
 	protected String getHeadingMarkup(String prefix, String text) {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(_HEADING_ANCHOR_PREFIX);
 		sb.append(prefix);

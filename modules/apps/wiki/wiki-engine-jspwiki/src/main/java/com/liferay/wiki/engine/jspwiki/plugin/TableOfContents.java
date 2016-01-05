@@ -57,7 +57,7 @@ public class TableOfContents extends com.ecyrd.jspwiki.plugin.TableOfContents {
 		int y = x + "</h4>".length();
 
 		if ((x != -1) && (y != -1)) {
-			StringBundler sb = new StringBundler(15);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append(result.substring(0, x));
 			sb.append(StringPool.NBSP);

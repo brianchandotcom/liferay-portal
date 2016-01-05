@@ -48,7 +48,7 @@ public class BaseTinyMCEEditorConfigConfigurator
 
 		jsonObject.put("convert_urls", Boolean.FALSE);
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("a[name|href|target|title|onclick],img[class|src|border=0");
 		sb.append("|alt|title|hspace|vspace|width|height|align|onmouseover");

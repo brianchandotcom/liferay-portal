@@ -415,7 +415,7 @@ public class ActionUtil {
 				List<Serializable> values = valuesMap.get(locale);
 
 				for (int i = 0; i < values.size(); i++) {
-					StringBundler sb = new StringBundler(6);
+					StringBundler sb = new StringBundler(7);
 
 					sb.append(
 						getElementInstanceId(content, field.getName(), i));

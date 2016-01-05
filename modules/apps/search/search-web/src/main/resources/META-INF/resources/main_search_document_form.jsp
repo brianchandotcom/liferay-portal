@@ -142,7 +142,7 @@ if (assetRendererFactory != null) {
 							<code>
 
 								<%
-								StringBundler sb = new StringBundler(2 + (4 * values.length));
+								StringBundler sb = new StringBundler(4 * values.length);
 
 								for (int i = 0; i < values.length; i++) {
 									if (field.isNumeric()) {

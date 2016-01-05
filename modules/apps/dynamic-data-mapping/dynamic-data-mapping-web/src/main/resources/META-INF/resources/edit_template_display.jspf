@@ -457,7 +457,7 @@ private String _getAccessor(String accessor, String language) {
 
 		StringTokenizer st = new StringTokenizer(accessor, "(,");
 
-		StringBundler sb = new StringBundler(st.countTokens() * 2);
+		StringBundler sb = new StringBundler(st.countTokens() * 2 + 2);
 
 		sb.append(st.nextToken());
 		sb.append(StringPool.OPEN_PARENTHESIS);

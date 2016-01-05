@@ -111,7 +111,7 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
-		StringBundler sb = new StringBundler(jsonArray.length() * 2);
+		StringBundler sb = new StringBundler(jsonArray.length() * 2 - 1);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			LocalizedValue label = getFieldOptionLabel(

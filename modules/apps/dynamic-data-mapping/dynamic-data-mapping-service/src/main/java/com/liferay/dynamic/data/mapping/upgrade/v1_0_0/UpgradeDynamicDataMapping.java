@@ -238,7 +238,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append("insert into DDMTemplateVersion (templateVersionId, ");
 			sb.append("groupId, companyId, userId, userName, createDate, ");

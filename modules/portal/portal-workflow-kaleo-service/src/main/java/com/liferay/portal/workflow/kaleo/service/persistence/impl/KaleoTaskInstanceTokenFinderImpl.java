@@ -422,7 +422,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(2);
 
 		if (!firstCriteria) {
 			sb.append("[$AND_OR_CONNECTOR$] (");
@@ -446,7 +446,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(2);
 
 		if (!firstCriteria) {
 			sb.append("[$AND_OR_CONNECTOR$] (");

@@ -1014,7 +1014,7 @@ public class DDMTemplateFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(classNameIds.length * 2);
+		StringBundler sb = new StringBundler(classNameIds.length * 2 + 1);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
@@ -1036,7 +1036,7 @@ public class DDMTemplateFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(classPKs.length * 2);
+		StringBundler sb = new StringBundler(classPKs.length * 2 + 1);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
@@ -1058,7 +1058,7 @@ public class DDMTemplateFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(groupIds.length * 2);
+		StringBundler sb = new StringBundler(groupIds.length * 2 + 1);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 

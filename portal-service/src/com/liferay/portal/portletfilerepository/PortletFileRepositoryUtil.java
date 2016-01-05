@@ -317,12 +317,12 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static Folder movePortletFolder(
-			long userId, long folderId, long parentFolderId,
+			long groupId, long userId, long folderId, long parentFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getPortletFileRepository().movePortletFolder(
-			userId, folderId, parentFolderId, serviceContext);
+			groupId, userId, folderId, parentFolderId, serviceContext);
 	}
 
 	public static void restorePortletFileEntryFromTrash(

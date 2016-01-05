@@ -1318,8 +1318,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			long newThreadFolderId = newThreadFolder.getFolderId();
 
 			PortletFileRepositoryUtil.movePortletFolder(
-				message.getUserId(), folderId, newThreadFolderId,
-				serviceContext);
+				message.getGroupId(), message.getUserId(), folderId,
+				newThreadFolderId, serviceContext);
 		}
 
 		List<MBMessage> childMessages = mbMessagePersistence.findByT_P(

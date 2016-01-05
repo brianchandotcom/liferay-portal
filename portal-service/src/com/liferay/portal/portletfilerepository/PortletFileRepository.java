@@ -170,7 +170,7 @@ public interface PortletFileRepository {
 		throws PortalException;
 
 	public Folder movePortletFolder(
-			long userId, long folderId, long parentFolderId,
+			long groupId, long userId, long folderId, long parentFolderId,
 			ServiceContext serviceContext)
 		throws PortalException;
 

@@ -33,6 +33,19 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 }
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String navigation = ParamUtil.getString(request, "navigation");
+
+if (navigation.equals("active")) {
+	status = WorkflowConstants.STATUS_APPROVED;
+	searchTerms.setStatus(WorkflowConstants.STATUS_APPROVED);
+}
+else if (navigation.equals("inactive")) {
+	status = WorkflowConstants.STATUS_INACTIVE;
+	searchTerms.setStatus(WorkflowConstants.STATUS_INACTIVE);
+}
+
+portletURL.setParameter("navigation", navigation);
+portletURL.setParameter("status", String.valueOf(status));
 
 boolean showDeleteButton = (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && (searchTerms.isActive() || (!searchTerms.isActive() && PropsValues.USERS_DELETE));
 boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && !searchTerms.isActive();
@@ -44,7 +57,7 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
+			navigationKeys='<%= new String[] {"active", "inactive"} %>'
 			portletURL="<%= renderResponse.createRenderURL() %>"
 		/>
 
@@ -66,6 +79,7 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 
 	<liferay-frontend:management-bar-action-buttons>
 		<c:if test="<%= showRestoreButton %>">
+
 			<%
 			String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "deleteUsers('" + Constants.RESTORE + "');";
 			%>
@@ -74,6 +88,7 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 		</c:if>
 
 		<c:if test="<%= showDeleteButton %>">
+
 			<%
 			String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "deleteUsers('" + (searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE) + "');";
 			%>
@@ -276,19 +291,6 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 	showDeleteButton = !results.isEmpty() && showDeleteButton;
 	showRestoreButton = !results.isEmpty() && showRestoreButton;
 	%>
-
-	<c:if test="<%= showDeleteButton || showRestoreButton %>">
-		<div class="clearfix user-table">
-			<c:if test="<%= (inactiveUsersCount > 0) && (usersCount > 0) %>">
-				<div class="user-status-selector">
-					<aui:select changesContext="<%= true %>" inlineField="<%= true %>" inlineLabel="left" label="show" name="userStatusSelect" onChange='<%= renderResponse.getNamespace() + "showUsers(this);" %>'>
-						<aui:option label="active" selected="<%= status == WorkflowConstants.STATUS_APPROVED %>" value="<%= WorkflowConstants.STATUS_APPROVED %>" />
-						<aui:option label="inactive" selected="<%= status == WorkflowConstants.STATUS_INACTIVE %>" value="<%= WorkflowConstants.STATUS_INACTIVE %>" />
-					</aui:select>
-				</div>
-			</c:if>
-		</div>
-	</c:if>
 
 	<%
 	if (!showDeleteButton && !showRestoreButton) {

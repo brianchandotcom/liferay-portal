@@ -1,7 +1,3 @@
 dependencies {
 	compile group: "org.ow2.asm", name: "asm-debug-all", version: "5.0.1"
 }
-
-liferay {
-	deployDir = file("../../../tools/sdk/dependencies/${bundle.instructions['Bundle-SymbolicName']}/lib")
-}

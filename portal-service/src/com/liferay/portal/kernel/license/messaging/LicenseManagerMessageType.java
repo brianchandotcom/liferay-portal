@@ -31,13 +31,21 @@ public enum LicenseManagerMessageType {
 	public static String MESSAGE_BUS_DESTINATION_STATUS = "liferay/lcs_status";
 
 	public static JSONObject getMessagePayload(Message message) {
-		if (!(message.getPayload() instanceof String)) {
-			return null;
+		return getMessagePayload(message.getPayload());
+	}
+
+	public static JSONObject getMessagePayload(Object object) {
+		if (object instanceof String) {
+			return getMessagePayload((String)object);
 		}
 
+		return null;
+	}
+
+	public static JSONObject getMessagePayload(String jsonString) {
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				(String)message.getPayload());
+				jsonString);
 
 			valueOf(jsonObject);
 
@@ -46,14 +54,6 @@ public enum LicenseManagerMessageType {
 		catch (Exception e) {
 			return null;
 		}
-	}
-
-	public static JSONObject getMessagePayload(Object object) {
-		if (!(object instanceof Message)) {
-			return null;
-		}
-
-		return getMessagePayload((Message)object);
 	}
 
 	public static LicenseManagerMessageType valueOf(JSONObject jsonObject) {

@@ -174,22 +174,22 @@ public class FileHelperUtil {
 						return FileVisitResult.CONTINUE;
 					}
 
-				@Override
-				public FileVisitResult preVisitDirectory(
-						Path dir, BasicFileAttributes basicFileAttributes)
-					throws IOException {
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path dir, BasicFileAttributes basicFileAttributes)
+						throws IOException {
 
-					Files.copy(
-						dir, toPath.resolve(fromPath.relativize(dir)),
-						StandardCopyOption.COPY_ATTRIBUTES,
-						StandardCopyOption.REPLACE_EXISTING);
+						Files.copy(
+							dir, toPath.resolve(fromPath.relativize(dir)),
+							StandardCopyOption.COPY_ATTRIBUTES,
+							StandardCopyOption.REPLACE_EXISTING);
 
-					fileTimes.put(dir, Files.getLastModifiedTime(dir));
+						fileTimes.put(dir, Files.getLastModifiedTime(dir));
 
-					return FileVisitResult.CONTINUE;
-				}
+						return FileVisitResult.CONTINUE;
+					}
 
-			});
+				});
 		}
 		catch (IOException ioe) {
 			delete(true, toPath);

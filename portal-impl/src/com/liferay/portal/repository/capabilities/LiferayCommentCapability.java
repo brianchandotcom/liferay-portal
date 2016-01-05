@@ -48,18 +48,18 @@ public class LiferayCommentCapability
 				new RepositoryEventListener
 					<RepositoryEventType.Add, FileEntry>() {
 
-						@Override
-						public void execute(FileEntry fileEntry)
-							throws PortalException {
+					@Override
+					public void execute(FileEntry fileEntry)
+						throws PortalException {
 
-							CommentManagerUtil.addDiscussion(
-								fileEntry.getUserId(), fileEntry.getGroupId(),
-								DLFileEntryConstants.getClassName(),
-								fileEntry.getFileEntryId(),
-								fileEntry.getUserName());
-						}
+						CommentManagerUtil.addDiscussion(
+							fileEntry.getUserId(), fileEntry.getGroupId(),
+							DLFileEntryConstants.getClassName(),
+							fileEntry.getFileEntryId(),
+							fileEntry.getUserName());
+					}
 
-					};
+				};
 
 	private static final RepositoryEventListener
 		<RepositoryEventType.Delete, FileEntry>
@@ -67,15 +67,15 @@ public class LiferayCommentCapability
 				new RepositoryEventListener
 					<RepositoryEventType.Delete, FileEntry>() {
 
-						@Override
-						public void execute(FileEntry fileEntry)
-							throws PortalException {
+					@Override
+					public void execute(FileEntry fileEntry)
+						throws PortalException {
 
-							CommentManagerUtil.deleteDiscussion(
-								DLFileEntryConstants.getClassName(),
-								fileEntry.getFileEntryId());
-						}
+						CommentManagerUtil.deleteDiscussion(
+							DLFileEntryConstants.getClassName(),
+							fileEntry.getFileEntryId());
+					}
 
-					};
+				};
 
 }

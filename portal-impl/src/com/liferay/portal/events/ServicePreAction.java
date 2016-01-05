@@ -1423,31 +1423,35 @@ public class ServicePreAction extends Action {
 			new IntervalActionProcessor.PerformIntervalActionMethod
 				<LayoutComposite>() {
 
-			@Override
-			public LayoutComposite performIntervalAction(int start, int end) {
-				List<Group> groups = GroupLocalServiceUtil.search(
-					user.getCompanyId(), null, null, groupParams, start, end);
+				@Override
+				public LayoutComposite performIntervalAction(
+					int start, int end) {
 
-				for (Group group : groups) {
-					List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-						group.getGroupId(), true,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+					List<Group> groups = GroupLocalServiceUtil.search(
+						user.getCompanyId(), null, null, groupParams, start,
+						end);
 
-					if (layouts.isEmpty()) {
-						layouts = LayoutLocalServiceUtil.getLayouts(
-							group.getGroupId(), false,
-							LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+					for (Group group : groups) {
+						List<Layout> layouts =
+							LayoutLocalServiceUtil.getLayouts(
+								group.getGroupId(), true,
+								LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+						if (layouts.isEmpty()) {
+							layouts = LayoutLocalServiceUtil.getLayouts(
+								group.getGroupId(), false,
+								LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+						}
+
+						if (!layouts.isEmpty()) {
+							return new LayoutComposite(layouts.get(0), layouts);
+						}
 					}
 
-					if (!layouts.isEmpty()) {
-						return new LayoutComposite(layouts.get(0), layouts);
-					}
+					return null;
 				}
 
-				return null;
-			}
-
-		});
+			});
 
 		LayoutComposite layoutComposite =
 			intervalActionProcessor.performIntervalActions();

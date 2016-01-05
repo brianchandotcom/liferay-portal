@@ -79,7 +79,7 @@ public class VerifyMySQL extends VerifyProcess {
 		throws Exception {
 
 		try (ResultSet rs = databaseMetaData.getTables(
-			null, null, null, null)) {
+				null, null, null, null)) {
 
 			while (rs.next()) {
 				verifyDatetimePrecisionForTable(

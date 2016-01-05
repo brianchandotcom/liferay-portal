@@ -162,7 +162,7 @@ public class I18nServlet extends HttpServlet {
 		if (!PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE &&
 			!LanguageUtil.isAvailableLocale(i18nLanguageId)) {
 
-				return null;
+			return null;
 		}
 
 		String redirect = path;

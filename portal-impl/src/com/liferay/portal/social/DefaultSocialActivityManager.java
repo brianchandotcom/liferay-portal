@@ -24,8 +24,8 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
  * @author Adolfo Pérez
  */
 public class DefaultSocialActivityManager
-		<T extends ClassedModel & GroupedModel>
-	extends BaseSocialActivityManager<T> {
+	<T extends ClassedModel & GroupedModel>
+		extends BaseSocialActivityManager<T> {
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {

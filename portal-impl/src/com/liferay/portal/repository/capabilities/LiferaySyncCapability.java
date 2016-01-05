@@ -243,8 +243,8 @@ public class LiferaySyncCapability
 	private final GroupServiceAdapter _groupServiceAdapter;
 
 	private class SyncFileEntryRepositoryEventListener
-			<S extends RepositoryEventType>
-		implements RepositoryEventListener<S, FileEntry> {
+		<S extends RepositoryEventType>
+			implements RepositoryEventListener<S, FileEntry> {
 
 		public SyncFileEntryRepositoryEventListener(String syncEvent) {
 			_syncEvent = syncEvent;
@@ -260,8 +260,8 @@ public class LiferaySyncCapability
 	}
 
 	private class SyncFolderRepositoryEventListener
-			<S extends RepositoryEventType>
-		implements RepositoryEventListener<S, Folder> {
+		<S extends RepositoryEventType>
+			implements RepositoryEventListener<S, Folder> {
 
 		public SyncFolderRepositoryEventListener(String syncEvent) {
 			_syncEvent = syncEvent;

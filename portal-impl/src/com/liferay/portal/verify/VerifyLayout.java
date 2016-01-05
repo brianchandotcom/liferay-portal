@@ -192,7 +192,7 @@ public class VerifyLayout extends VerifyProcess {
 		runSQL(
 			"update Layout set layoutPrototypeLinkEnabled = [$FALSE$] where " +
 				"type_ = 'link_to_layout' and layoutPrototypeLinkEnabled = " +
-				"[$TRUE$]");
+					"[$TRUE$]");
 	}
 
 	protected void verifyUuid() throws Exception {

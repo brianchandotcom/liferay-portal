@@ -4365,8 +4365,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (!autoPassword) {
 				if (Validator.isNull(password1) ||
 					Validator.isNull(password2)) {
-						throw new UserPasswordException.MustNotBeNull(
-							user.getUserId());
+
+					throw new UserPasswordException.MustNotBeNull(
+						user.getUserId());
 				}
 			}
 

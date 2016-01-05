@@ -59,8 +59,9 @@ public class SessionLayoutClone implements LayoutClone {
 				return sharedSessionServletRequest.getSharedSession();
 			}
 
-			originalRequest = (HttpServletRequest)
-				((HttpServletRequestWrapper)originalRequest).getRequest();
+			originalRequest =
+				(HttpServletRequest)
+					((HttpServletRequestWrapper)originalRequest).getRequest();
 		}
 
 		return request.getSession();

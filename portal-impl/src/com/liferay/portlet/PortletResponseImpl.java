@@ -651,12 +651,13 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 						Class<?> portletURLClassObj = Class.forName(
 							portletURLClass);
 
-						constructor = (Constructor<? extends PortletURLImpl>)
-							portletURLClassObj.getConstructor(
-								new Class[] {
-									PortletResponseImpl.class, long.class,
-									String.class
-								});
+						constructor =
+							(Constructor<? extends PortletURLImpl>)
+								portletURLClassObj.getConstructor(
+									new Class[] {
+										PortletResponseImpl.class, long.class,
+										String.class
+									});
 
 						_constructors.put(portletURLClass, constructor);
 					}

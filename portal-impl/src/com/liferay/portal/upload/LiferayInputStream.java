@@ -64,7 +64,7 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		boolean createTempFile = GetterUtil.getBoolean(
 			request.getAttribute(
 				UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE),
-				Boolean.TRUE);
+			Boolean.TRUE);
 
 		if ((_totalSize >= THRESHOLD_SIZE) && createTempFile) {
 			_tempFile = FileUtil.createTempFile();

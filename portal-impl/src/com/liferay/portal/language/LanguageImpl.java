@@ -179,14 +179,13 @@ public class LanguageImpl implements Language, Serializable {
 					if (translateArguments) {
 						formattedArguments[i] =
 							arguments[i].getBefore() +
-							get(request, arguments[i].getText()) +
-							arguments[i].getAfter();
+								get(request, arguments[i].getText()) +
+									arguments[i].getAfter();
 					}
 					else {
 						formattedArguments[i] =
-							arguments[i].getBefore() +
-							arguments[i].getText() +
-							arguments[i].getAfter();
+							arguments[i].getBefore() + arguments[i].getText() +
+								arguments[i].getAfter();
 					}
 				}
 

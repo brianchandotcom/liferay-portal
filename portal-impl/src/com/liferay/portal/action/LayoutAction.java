@@ -103,7 +103,7 @@ public class LayoutAction extends Action {
 					redirectParam =
 						PortalUtil.getPortletNamespace(
 							PropsValues.AUTH_LOGIN_PORTLET_NAME) +
-						redirectParam;
+								redirectParam;
 				}
 
 				String authLoginURL = SSOUtil.getSignInURL(

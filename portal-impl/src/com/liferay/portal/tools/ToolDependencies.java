@@ -228,8 +228,8 @@ public class ToolDependencies {
 		@Deprecated
 		@Override
 		public PortalCacheManager
-				<? extends Serializable, ? extends Serializable>
-			getCacheManager() {
+			<? extends Serializable, ? extends Serializable>
+				getCacheManager() {
 
 			return getPortalCacheManager();
 		}
@@ -262,7 +262,7 @@ public class ToolDependencies {
 		@Override
 		public PortalCacheManager
 			<? extends Serializable, ? extends Serializable>
-			 getPortalCacheManager() {
+				getPortalCacheManager() {
 
 			return null;
 		}

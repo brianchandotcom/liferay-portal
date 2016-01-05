@@ -129,7 +129,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 	@Override
 	public ResourceBlockPermissionsContainer
-			getResourceBlockPermissionsContainer(long resourceBlockId) {
+		getResourceBlockPermissionsContainer(long resourceBlockId) {
 
 		List<ResourceBlockPermission> resourceBlockPermissions =
 			resourceBlockPermissionPersistence.findByResourceBlockId(

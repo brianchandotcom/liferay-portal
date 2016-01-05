@@ -303,9 +303,9 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<ExportImportConfiguration>
-		searchExportImportConfigurations(
-			long companyId, long groupId, int type, String keywords, int start,
-			int end, Sort sort)
+			searchExportImportConfigurations(
+				long companyId, long groupId, int type, String keywords,
+				int start, int end, Sort sort)
 		throws PortalException {
 
 		String description = null;
@@ -327,10 +327,10 @@ public class ExportImportConfigurationLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<ExportImportConfiguration>
-		searchExportImportConfigurations(
-			long companyId, long groupId, int type, String name,
-			String description, boolean andSearch, int start, int end,
-			Sort sort)
+			searchExportImportConfigurations(
+				long companyId, long groupId, int type, String name,
+				String description, boolean andSearch, int start, int end,
+				Sort sort)
 		throws PortalException {
 
 		Indexer<ExportImportConfiguration> indexer =

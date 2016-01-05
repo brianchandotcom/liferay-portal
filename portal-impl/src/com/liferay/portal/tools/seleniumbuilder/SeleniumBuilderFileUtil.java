@@ -2118,14 +2118,14 @@ public class SeleniumBuilderFileUtil {
 			new String[] {
 				"arg1", "arg2", "delimiter", "message", "string", "substring",
 				"value"
-		});
+			});
 	private static final List<String> _allowedVarAttributes =
 		ListUtil.fromArray(
 			new String[] {
 				"attribute", "group", "input", "line-number", "locator",
 				"locator-key", "method", "name", "path", "pattern",
 				"property-value", "value"
-		});
+			});
 	private static final List<String> _methodNames = ListUtil.fromArray(
 		new String[] {
 			"getFirstNumber", "getIPAddress", "increment", "length",

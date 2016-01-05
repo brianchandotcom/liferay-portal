@@ -411,8 +411,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			params.put("site", Boolean.TRUE);
 
 			return ListUtil.unique(
-				groupLocalService.search(permissionChecker.getCompanyId(), null,
-				null, null, params, true, 0, max));
+				groupLocalService.search(
+					permissionChecker.getCompanyId(), null, null, null, params,
+					true, 0, max));
 		}
 
 		Set<Group> groups = new LinkedHashSet<>();

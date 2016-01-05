@@ -916,7 +916,7 @@ public class SitesImpl implements Sites {
 		int groupContentSharingEnabled = GetterUtil.getInteger(
 			typeSettingsProperties.getProperty(
 				"contentSharingWithChildrenEnabled"),
-				CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE);
+			CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE);
 
 		if ((groupContentSharingEnabled ==
 				CONTENT_SHARING_WITH_CHILDREN_ENABLED) ||

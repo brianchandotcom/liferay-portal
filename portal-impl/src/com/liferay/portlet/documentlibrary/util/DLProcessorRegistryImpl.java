@@ -291,7 +291,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 						}
 					}
 
-			});
+				});
 
 	private final StringServiceRegistrationMap<DLProcessor>
 		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();

@@ -1077,7 +1077,8 @@ public class ResourceBlockLocalServiceImpl
 	protected void updatePermissionsHash(ResourceBlock resourceBlock) {
 		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
 			resourceBlockPermissionLocalService.
-			getResourceBlockPermissionsContainer(resourceBlock.getPrimaryKey());
+				getResourceBlockPermissionsContainer(
+					resourceBlock.getPrimaryKey());
 
 		String permissionsHash =
 			resourceBlockPermissionsContainer.getPermissionsHash();

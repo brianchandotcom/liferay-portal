@@ -99,8 +99,8 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 	private final ProcessConfig _processConfig;
 
 	private static class NettyFabricWorkerProcessCallable
-			<T extends Serializable>
-		implements ProcessCallable<T> {
+		<T extends Serializable>
+			implements ProcessCallable<T> {
 
 		public NettyFabricWorkerProcessCallable(
 			ProcessCallable<T> processCallable) {

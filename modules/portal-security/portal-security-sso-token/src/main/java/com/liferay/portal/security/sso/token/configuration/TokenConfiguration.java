@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.module.configuration;
+package com.liferay.portal.security.sso.token.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -25,7 +25,7 @@ import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.security.sso.token.internal.module.configuration.TokenConfiguration",
+	id = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration",
 	localization = "content/Language", name = "%token.configuration.name"
 )
 public interface TokenConfiguration {

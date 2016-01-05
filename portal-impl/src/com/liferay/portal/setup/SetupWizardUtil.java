@@ -225,9 +225,9 @@ public class SetupWizardUtil {
 		String paramValue = ParamUtil.getString(
 			request, requestKey, propDefaultValue);
 
-		 if (!paramValue.equals(propDefaultValue)) {
-			 unicodeProperties.put(propKey, paramValue);
-		 }
+		if (!paramValue.equals(propDefaultValue)) {
+			unicodeProperties.put(propKey, paramValue);
+		}
 	}
 
 	private static void _testConnection(

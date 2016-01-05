@@ -19,12 +19,6 @@
 <%
 List<ControlMenuCategory> controlMenuCategories = (List<ControlMenuCategory>)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_CATEGORIES);
 ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_ENTRY_REGISTRY);
-
-Group group = null;
-
-if (layout != null) {
-	group = layout.getGroup();
-}
 %>
 
 <c:if test="<%= !controlMenuCategories.isEmpty() %>">

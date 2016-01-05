@@ -164,8 +164,8 @@ public class DataSourceFactoryImplTest {
 		DataSource dataSource = null;
 
 		try (CaptureAppender captureAppender =
-			Log4JLoggerTestUtil.configureLog4JLogger(
-				JarUtil.class.getName(), Level.INFO)) {
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					JarUtil.class.getName(), Level.INFO)) {
 
 			dataSource = DataSourceFactoryUtil.initDataSource(_properties);
 

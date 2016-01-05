@@ -69,7 +69,7 @@ public class NettyChannelAttributesTest {
 
 		Assert.assertSame(
 			asyncBroker,
-				NettyChannelAttributes.getAsyncBroker(_embeddedChannel));
+			NettyChannelAttributes.getAsyncBroker(_embeddedChannel));
 
 		// Get from cache
 

@@ -112,8 +112,9 @@ public class LocalFabricAgentTest {
 		Assert.assertEquals(1, fabricWorkers.size());
 		Assert.assertTrue(fabricWorkers.contains(fabricWorker));
 
-		defaultNoticeableFuture = (DefaultNoticeableFuture<String>)
-			fabricWorker.getProcessNoticeableFuture();
+		defaultNoticeableFuture =
+			(DefaultNoticeableFuture<String>)
+				fabricWorker.getProcessNoticeableFuture();
 
 		defaultNoticeableFuture.run();
 

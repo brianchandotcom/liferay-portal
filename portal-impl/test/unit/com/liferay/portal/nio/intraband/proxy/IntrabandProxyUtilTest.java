@@ -528,7 +528,7 @@ public class IntrabandProxyUtilTest {
 			new MethodHandler(
 				IntrabandProxyUtil.class.getDeclaredMethod(
 					"getSkeletonClass", ClassLoader.class, Class.class),
-			classLoader, TestClass.class));
+				classLoader, TestClass.class));
 
 		// getStubClass()
 
@@ -537,7 +537,7 @@ public class IntrabandProxyUtilTest {
 			new MethodHandler(
 				IntrabandProxyUtil.class.getMethod(
 					"getStubClass", Class.class, String.class),
-			TestClass.class, "skeletonId"));
+				TestClass.class, "skeletonId"));
 	}
 
 	@Test
@@ -732,8 +732,8 @@ public class IntrabandProxyUtilTest {
 
 			@Override
 			protected void doDispatch(
-					RegistrationReference registrationReference,
-					Datagram datagram, Deserializer deserializer) {
+				RegistrationReference registrationReference, Datagram datagram,
+				Deserializer deserializer) {
 
 				int i = deserializer.readInt();
 

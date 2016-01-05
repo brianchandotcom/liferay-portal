@@ -71,8 +71,8 @@ public class SQLTransformerOracleCastClobTextTest {
 		String createTableSQL = "insert into TestCastClobText values (?, ?)";
 
 		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement =
-				connection.prepareStatement(createTableSQL)) {
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(createTableSQL)) {
 
 			preparedStatement.setLong(1, 1);
 			preparedStatement.setClob(
@@ -180,8 +180,9 @@ public class SQLTransformerOracleCastClobTextTest {
 					"id";
 
 		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(sql))) {
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						SQLTransformer.transform(sql))) {
 
 			Clob clob1 = connection.createClob();
 

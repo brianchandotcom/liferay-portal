@@ -311,7 +311,7 @@ public class PortalResiliencyActionTest {
 
 			newLifecycles[ordinal] = ReflectionTestUtil.newEnumElement(
 				SPIAgent.Lifecycle.class, new Class<?>[] {String.class},
-					"UNKNOWN", ordinal, "UNKNOWN");
+				"UNKNOWN", ordinal, "UNKNOWN");
 
 			return newLifecycles;
 		}

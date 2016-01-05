@@ -94,7 +94,7 @@ public class SeleniumBuilderContextTest {
 			"ActionCommandElementInvalidCommandName.action",
 			"Error 2001: Action command nameFail does not match a function " +
 				"name at " + _DIR_NAME +
-				"/ActionCommandElementInvalidCommandName.action:2");
+					"/ActionCommandElementInvalidCommandName.action:2");
 	}
 
 	@Test
@@ -103,7 +103,7 @@ public class SeleniumBuilderContextTest {
 			"ActionCommandElementMissingPath.action",
 			"Error 2002: Missing matching " +
 				"ActionCommandElementMissingPath.path for " + _DIR_NAME +
-				"/ActionCommandElementMissingPath.action");
+					"/ActionCommandElementMissingPath.action");
 	}
 
 	@Test

@@ -42,10 +42,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-@PrepareForTest( {
-	LayoutPermissionUtil.class, PermissionThreadLocal.class,
-	PortletLocalServiceUtil.class
-})
+@PrepareForTest(
+	{
+		LayoutPermissionUtil.class, PermissionThreadLocal.class,
+		PortletLocalServiceUtil.class
+	}
+)
 @RunWith(PowerMockRunner.class)
 public class PortletPreferencesFactoryImplGetPreferencesIdsUnitTest {
 

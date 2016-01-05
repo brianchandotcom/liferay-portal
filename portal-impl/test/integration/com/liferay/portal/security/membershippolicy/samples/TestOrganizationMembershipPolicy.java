@@ -161,13 +161,13 @@ public class TestOrganizationMembershipPolicy
 		List<AssetCategory> oldAssetCategories, List<AssetTag> oldAssetTags,
 		Map<String, Serializable> oldExpandoAttributes) {
 
-			Assert.assertNotNull(organization);
-			Assert.assertNotNull(oldOrganization);
-			Assert.assertNotNull(oldAssetCategories);
-			Assert.assertNotNull(oldAssetTags);
-			Assert.assertNotNull(oldExpandoAttributes);
+		Assert.assertNotNull(organization);
+		Assert.assertNotNull(oldOrganization);
+		Assert.assertNotNull(oldAssetCategories);
+		Assert.assertNotNull(oldAssetTags);
+		Assert.assertNotNull(oldExpandoAttributes);
 
-			verifyPolicy(organization);
+		verifyPolicy(organization);
 	}
 
 	@Override

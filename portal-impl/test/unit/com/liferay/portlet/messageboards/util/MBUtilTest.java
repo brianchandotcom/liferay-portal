@@ -28,9 +28,7 @@ import org.powermock.reflect.Whitebox;
 /**
  * @author John Zhao
  */
-@PrepareForTest( {
-	MBUtil.class, StringPool.class, PropsValues.class
-})
+@PrepareForTest({MBUtil.class, StringPool.class, PropsValues.class})
 @RunWith(PowerMockRunner.class)
 public class MBUtilTest {
 

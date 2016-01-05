@@ -327,9 +327,8 @@ public class ComboServletStaticURLGeneratorTest {
 
 		assertURLs(
 			urls,
-			_URL_PREFIX + "&" + PortletKeys.PORTAL +
-				":%2Fcss%2Fmain.css&" + PortletKeys.PORTAL +
-				":%2Fcss%2Fmore.css&t=0");
+			_URL_PREFIX + "&" + PortletKeys.PORTAL + ":%2Fcss%2Fmain.css&" +
+				PortletKeys.PORTAL + ":%2Fcss%2Fmore.css&t=0");
 	}
 
 	@Test

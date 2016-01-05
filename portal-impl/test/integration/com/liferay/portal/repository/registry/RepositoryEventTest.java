@@ -157,8 +157,8 @@ public class RepositoryEventTest {
 	}
 
 	private static class AlwaysFailingRepositoryEventListener
-			<S extends RepositoryEventType, T>
-		implements RepositoryEventListener<S, T> {
+		<S extends RepositoryEventType, T>
+			implements RepositoryEventListener<S, T> {
 
 		@Override
 		public void execute(T model) {
@@ -168,8 +168,8 @@ public class RepositoryEventTest {
 	}
 
 	private static class CounterRepositoryEventListener
-			<S extends RepositoryEventType, T>
-		implements RepositoryEventListener<S, T> {
+		<S extends RepositoryEventType, T>
+			implements RepositoryEventListener<S, T> {
 
 		public CounterRepositoryEventListener(AtomicInteger count) {
 			_count = count;
@@ -185,8 +185,8 @@ public class RepositoryEventTest {
 	}
 
 	private static class NoOpRepositoryEventListener
-			<S extends RepositoryEventType, T>
-		implements RepositoryEventListener<S, T> {
+		<S extends RepositoryEventType, T>
+			implements RepositoryEventListener<S, T> {
 
 		@Override
 		public void execute(T model) {

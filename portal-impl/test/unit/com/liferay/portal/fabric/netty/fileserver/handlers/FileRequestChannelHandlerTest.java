@@ -235,8 +235,8 @@ public class FileRequestChannelHandlerTest {
 	private byte[] _readFileRegion(FileRegion fileRegion) throws IOException {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
-			WritableByteChannel writableByteChannel = Channels.newChannel(
-				unsyncByteArrayOutputStream)) {
+					WritableByteChannel writableByteChannel =
+						Channels.newChannel(unsyncByteArrayOutputStream)) {
 
 			while (fileRegion.transfered() < fileRegion.count()) {
 				fileRegion.transferTo(

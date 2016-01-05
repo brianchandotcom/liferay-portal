@@ -544,10 +544,8 @@ public class DLImpl implements DL {
 
 		StringBundler sb = new StringBundler(15);
 
-		if (themeDisplay != null) {
-			if (absoluteURL) {
-				sb.append(themeDisplay.getPortalURL());
-			}
+		if ((themeDisplay != null) && absoluteURL) {
+			sb.append(themeDisplay.getPortalURL());
 		}
 
 		sb.append(PortalUtil.getPathContext());

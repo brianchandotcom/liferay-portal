@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.facebook.connect;
+package com.liferay.portal.security.sso.facebook.connect.internal;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;

@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.facebook.connect.module.configuration.definition;
+package com.liferay.portal.security.sso.facebook.connect.internal.module.configuration.definition;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.security.sso.facebook.connect.module.configuration.FacebookConnectConfiguration;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,17 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component
-public class FacebookConnectCompanyServiceConfigurationPidMapping
-	implements ConfigurationPidMapping {
+public class FacebookConnectCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return FacebookConnectConfiguration.class;
-	}
-
-	@Override
-	public String getConfigurationPid() {
-		return FacebookConnectConstants.SERVICE_NAME;
 	}
 
 }

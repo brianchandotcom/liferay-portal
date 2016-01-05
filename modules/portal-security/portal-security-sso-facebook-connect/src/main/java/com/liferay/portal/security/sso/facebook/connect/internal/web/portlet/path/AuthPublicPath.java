@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.facebook.connect.web.portlet.path;
+package com.liferay.portal.security.sso.facebook.connect.internal.web.portlet.path;
 
 import org.osgi.service.component.annotations.Component;
 

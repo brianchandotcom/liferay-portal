@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.facebook.connect.portlet.action;
+package com.liferay.portal.security.sso.facebook.connect.internal.portlet.action;
 
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;

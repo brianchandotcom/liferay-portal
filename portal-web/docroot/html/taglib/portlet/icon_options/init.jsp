@@ -18,7 +18,6 @@
 
 <%@ page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon" %><%@
 page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory" %><%@
-page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
 page import="com.liferay.util.PropertyComparator" %>
 
@@ -33,4 +32,6 @@ boolean showArrow = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 if (taglibPortletRequest != null) {
 	portletRequest = taglibPortletRequest;
 }
+
+List<PortletConfigurationIconFactory> portletConfigurationIconFactories = (List<PortletConfigurationIconFactory>)request.getAttribute("liferay-ui:icon-options:portletConfigurationIconFactories");
 %>

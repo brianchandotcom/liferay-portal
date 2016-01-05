@@ -14,7 +14,17 @@
 
 package com.liferay.taglib.portletext;
 
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.ui.IconTag;
+
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -27,6 +37,11 @@ public class IconOptionsTag extends IconTag {
 
 	public void setDirection(String direction) {
 		_direction = direction;
+	}
+
+	@Override
+	public void setPortletId(String portletId) {
+		_portletId = portletId;
 	}
 
 	public void setPortletRequest(PortletRequest portletRequest) {
@@ -42,6 +57,7 @@ public class IconOptionsTag extends IconTag {
 		super.cleanUp();
 
 		_direction = "down";
+		_portletId = null;
 		_portletRequest = null;
 		_showArrow = true;
 	}
@@ -51,17 +67,53 @@ public class IconOptionsTag extends IconTag {
 		return "/html/taglib/portlet/icon_options/page.jsp";
 	}
 
+	protected List<PortletConfigurationIconFactory>
+		getPortletConfigurationIconFactories() {
+
+		return ListUtil.copy(
+			PortletConfigurationIconTracker.getPortletConfigurationIcons(
+				getPortletId(), getPortletRequest()));
+	}
+
+	protected String getPortletId() {
+		if (Validator.isNotNull(_portletId)) {
+			return _portletId;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getRootPortletId();
+	}
+
+	protected PortletRequest getPortletRequest() {
+		if (_portletRequest != null) {
+			return _portletRequest;
+		}
+
+		return (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
 		request.setAttribute("liferay-ui:icon:direction", _direction);
-		request.setAttribute("liferay-ui:icon:portletRequest", _portletRequest);
+		request.setAttribute(
+			"liferay-ui:icon:portletRequest", getPortletRequest());
 		request.setAttribute(
 			"liferay-ui:icon:showArrow", String.valueOf(_showArrow));
+
+		request.setAttribute(
+			"liferay-ui:icon-options:portletConfigurationIconFactories",
+			getPortletConfigurationIconFactories());
 	}
 
 	private String _direction = "down";
+	private String _portletId;
 	private PortletRequest _portletRequest;
 	private boolean _showArrow = true;
 

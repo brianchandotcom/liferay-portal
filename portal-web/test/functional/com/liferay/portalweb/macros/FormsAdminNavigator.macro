@@ -12,6 +12,8 @@
 	</command>
 
 	<command name="gotoViewEntries">
+		<execute function="AssertElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<var name="key_formName" value="${formName}" />

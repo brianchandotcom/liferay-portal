@@ -21,8 +21,8 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.internal.ServiceTrackerCollectionImpl;
 
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,14 +33,14 @@ public class ServiceTrackerCollections {
 
 	public static <S> ServiceTrackerList<S> list(Class<S> clazz) {
 		return new ServiceTrackerCollectionImpl<>(
-			clazz, (Filter)null, null, new HashMap<String, Object>());
+			clazz, null, null, Collections.<String, Object>emptyMap());
 	}
 
 	public static <S> ServiceTrackerList<S> list(
 		Class<S> clazz, Filter filter) {
 
 		return new ServiceTrackerCollectionImpl<>(
-			clazz, filter, null, new HashMap<String, Object>());
+			clazz, filter, null, Collections.<String, Object>emptyMap());
 	}
 
 	public static <S> ServiceTrackerList<S> list(
@@ -54,9 +54,9 @@ public class ServiceTrackerCollections {
 		Class<S> clazz, Filter filter,
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
 
-		return new ServiceTrackerCollectionImpl<S>(
+		return new ServiceTrackerCollectionImpl<>(
 			clazz, filter, serviceTrackerCustomizer,
-			new HashMap<String, Object>());
+			Collections.<String, Object>emptyMap());
 	}
 
 	public static <S> ServiceTrackerList<S> list(
@@ -72,16 +72,16 @@ public class ServiceTrackerCollections {
 		Class<S> clazz, Map<String, Object> properties) {
 
 		return new ServiceTrackerCollectionImpl<>(
-			clazz, (Filter)null, null, properties);
+			clazz, null, null, properties);
 	}
 
 	public static <S> ServiceTrackerList<S> list(
 		Class<S> clazz,
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
 
-		return new ServiceTrackerCollectionImpl<S>(
-			clazz, (Filter)null, serviceTrackerCustomizer,
-			new HashMap<String, Object>());
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, null, serviceTrackerCustomizer,
+			Collections.<String, Object>emptyMap());
 	}
 
 	public static <S> ServiceTrackerList<S> list(
@@ -89,31 +89,26 @@ public class ServiceTrackerCollections {
 		Map<String, Object> properties) {
 
 		return new ServiceTrackerCollectionImpl<>(
-			clazz, (Filter)null, serviceTrackerCustomizer, properties);
+			clazz, null, serviceTrackerCustomizer, properties);
 	}
 
 	public static <S> ServiceTrackerList<S> list(
 		Class<S> clazz, String filterString) {
 
-		return new ServiceTrackerCollectionImpl<S>(
-			clazz, _getFilter(filterString), null,
-			new HashMap<String, Object>());
+		return list(clazz, _getFilter(filterString));
 	}
 
 	public static <S> ServiceTrackerList<S> list(
 		Class<S> clazz, String filterString, Map<String, Object> properties) {
 
-		return new ServiceTrackerCollectionImpl<>(
-			clazz, _getFilter(filterString), null, properties);
+		return list(clazz, _getFilter(filterString), properties);
 	}
 
 	public static <S> ServiceTrackerList<S> list(
 		Class<S> clazz, String filterString,
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
 
-		return new ServiceTrackerCollectionImpl<S>(
-			clazz, _getFilter(filterString), serviceTrackerCustomizer,
-			new HashMap<String, Object>());
+		return list(clazz, _getFilter(filterString), serviceTrackerCustomizer);
 	}
 
 	public static <S> ServiceTrackerList<S> list(
@@ -121,7 +116,7 @@ public class ServiceTrackerCollections {
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
 		Map<String, Object> properties) {
 
-		return new ServiceTrackerCollectionImpl<S>(
+		return list(
 			clazz, _getFilter(filterString), serviceTrackerCustomizer,
 			properties);
 	}

@@ -296,9 +296,9 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	}
 
 	private Filter _getFilter(Filter filter, Class<S> clazz) {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("objectClass", clazz.getName());
+		Map<String, Object> properties =
+			Collections.<String, Object>singletonMap(
+				"objectClass", clazz.getName());
 
 		if (filter.matches(properties)) {
 			return filter;

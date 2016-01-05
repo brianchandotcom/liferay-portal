@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Soy Portlet Bridge
-Bundle-SymbolicName: com.liferay.util.bridges.soy
+Bundle-Name: Liferay Portal Soy Portlet Bridge
+Bundle-SymbolicName: com.liferay.portal.soy.portlet.bridge
 Bundle-Version: 1.0.0
 Import-Package:\
 	org.osgi.framework,\

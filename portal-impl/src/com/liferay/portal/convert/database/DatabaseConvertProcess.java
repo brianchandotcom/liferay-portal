@@ -59,23 +59,7 @@ public class DatabaseConvertProcess extends BaseConvertProcess {
 		return true;
 	}
 
-	@Override
-	protected void doConvert() throws Exception {
-		MaintenanceUtil.appendStatus("Starting database migration.");
-
-		DataSource dataSource = getDataSource();
-
-		for (DatabaseConverter databaseConverter : _databaseConverters) {
-			databaseConverter.convert(dataSource);
-		}
-
-		MaintenanceUtil.appendStatus(
-			"Please change your JDBC settings before restarting server");
-
-		ShutdownUtil.shutdown(0);
-	}
-
-	protected DataSource getDataSource() throws Exception {
+	protected DataSource buildDatasource() throws Exception {
 		String[] values = getParameterValues();
 
 		String driverClassName = values[0];
@@ -86,6 +70,22 @@ public class DatabaseConvertProcess extends BaseConvertProcess {
 
 		return DataSourceFactoryUtil.initDataSource(
 			driverClassName, url, userName, password, jndiName);
+	}
+
+	@Override
+	protected void doConvert() throws Exception {
+		MaintenanceUtil.appendStatus("Starting database migration.");
+
+		DataSource dataSource = buildDatasource();
+
+		for (DatabaseConverter databaseConverter : _databaseConverters) {
+			databaseConverter.convert(dataSource);
+		}
+
+		MaintenanceUtil.appendStatus(
+			"Please change your JDBC settings before restarting server");
+
+		ShutdownUtil.shutdown(0);
 	}
 
 	private List<DatabaseConverter> _databaseConverters =

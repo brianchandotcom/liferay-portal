@@ -106,13 +106,13 @@ public class IntrabandTestUtil {
 	private static final ServerSocketConfigurator _serverSocketConfigurator =
 		new ServerSocketConfigurator() {
 
-		@Override
-		public void configure(ServerSocket serverSocket)
-			throws SocketException {
+			@Override
+			public void configure(ServerSocket serverSocket)
+				throws SocketException {
 
-			serverSocket.setReuseAddress(true);
-		}
+				serverSocket.setReuseAddress(true);
+			}
 
-	};
+		};
 
 }

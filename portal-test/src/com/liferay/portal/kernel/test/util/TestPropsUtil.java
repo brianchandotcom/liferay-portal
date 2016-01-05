@@ -57,7 +57,7 @@ public class TestPropsUtil {
 		}
 
 		try (InputStream is = TestPropsUtil.class.getResourceAsStream(
-			"/test-portal-impl-ext.properties")) {
+				"/test-portal-impl-ext.properties")) {
 
 			if (is != null) {
 				_props.load(is);

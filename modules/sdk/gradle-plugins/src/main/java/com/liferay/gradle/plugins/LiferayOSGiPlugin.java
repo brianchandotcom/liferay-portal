@@ -80,6 +80,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.apply(project);
 
 		configureArchivesBaseName(project);
+		configureDescription(project);
 		configureSourceSetMain(project);
 		configureVersion(project);
 
@@ -499,6 +500,13 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 				bundleInstructions.put(key, entry.getValue());
 			}
 		}
+	}
+
+	protected void configureDescription(Project project) {
+		String bundleName = getBundleInstruction(
+			project, Constants.BUNDLE_NAME);
+
+		project.setDescription(bundleName);
 	}
 
 	protected void configureSourceSetMain(Project project) {

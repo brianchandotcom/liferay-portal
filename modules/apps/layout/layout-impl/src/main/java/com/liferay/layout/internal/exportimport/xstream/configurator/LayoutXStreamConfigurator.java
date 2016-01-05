@@ -16,9 +16,13 @@ package com.liferay.layout.internal.exportimport.xstream.configurator;
 
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetStagingHandler;
 import com.liferay.portal.model.LayoutStagingHandler;
+import com.liferay.portal.model.impl.LayoutBranchImpl;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.model.impl.LayoutRevisionImpl;
+import com.liferay.portal.model.impl.LayoutSetBranchImpl;
 import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portlet.exportimport.xstream.XStreamAlias;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
@@ -57,6 +61,10 @@ public class LayoutXStreamConfigurator implements XStreamConfigurator {
 		};
 
 		_xStreamTypes = new XStreamType[] {
+			new XStreamType(LayoutBranchImpl.class),
+			new XStreamType(LayoutRevisionImpl.class),
+			new XStreamType(LayoutSet.class),
+			new XStreamType(LayoutSetBranchImpl.class),
 			new XStreamType(LayoutSetImpl.class),
 			new XStreamType(LayoutSetStagingHandler.class),
 			new XStreamType(LayoutStagingHandler.class)

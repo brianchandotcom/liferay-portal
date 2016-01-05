@@ -251,8 +251,8 @@ public class OpenSSOImpl implements OpenSSO {
 		}
 
 		if (!hasCookieNames) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
+			if (_log.isInfoEnabled()) {
+				_log.info(
 					"User is not logged in because he has no OpenSSO cookies");
 			}
 

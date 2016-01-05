@@ -19,24 +19,24 @@
 <%
 String namespace = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletResponse);
 
-boolean checkContentDisplayPage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:checkContentDisplayPage"));
-String checkedNodes = (String)request.getAttribute("liferay-ui:layouts-tree:checkedNodes");
-boolean defaultStateChecked = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:defaultStateChecked"));
-boolean draggableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:draggableTree"));
-boolean expandFirstNode = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:expandFirstNode"));
-long groupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:layouts-tree:groupId"));
-boolean incomplete = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:incomplete"));
-String linkTemplate = (String)request.getAttribute("liferay-ui:layouts-tree:linkTemplate");
-String modules = (String)request.getAttribute("liferay-ui:layouts-tree:modules");
-Map<String, PortletURL> portletURLs = (Map<String, PortletURL>)request.getAttribute("liferay-ui:layouts-tree:portletURLs");
-JSONArray portletURLsJSONArray = (JSONArray)request.getAttribute("liferay-ui:layouts-tree:portletURLsJSONArray");
-boolean privateLayout = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:privateLayout"));
-String rootLinkTemplate = (String)request.getAttribute("liferay-ui:layouts-tree:rootLinkTemplate");
-String rootNodeName = (String)request.getAttribute("liferay-ui:layouts-tree:rootNodeName");
-boolean saveState = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:saveState"));
-boolean selectableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:selectableTree"));
-Long selPlid = (Long)request.getAttribute("liferay-ui:layouts-tree:selPlid");
-String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
+boolean checkContentDisplayPage = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:checkContentDisplayPage"));
+String checkedNodes = (String)request.getAttribute("liferay-layout:layouts-tree:checkedNodes");
+boolean defaultStateChecked = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:defaultStateChecked"));
+boolean draggableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:draggableTree"));
+boolean expandFirstNode = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:expandFirstNode"));
+long groupId = GetterUtil.getLong((String)request.getAttribute("liferay-layout:layouts-tree:groupId"));
+boolean incomplete = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:incomplete"));
+String linkTemplate = (String)request.getAttribute("liferay-layout:layouts-tree:linkTemplate");
+String modules = (String)request.getAttribute("liferay-layout:layouts-tree:modules");
+Map<String, PortletURL> portletURLs = (Map<String, PortletURL>)request.getAttribute("liferay-layout:layouts-tree:portletURLs");
+JSONArray portletURLsJSONArray = (JSONArray)request.getAttribute("liferay-layout:layouts-tree:portletURLsJSONArray");
+boolean privateLayout = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:privateLayout"));
+String rootLinkTemplate = (String)request.getAttribute("liferay-layout:layouts-tree:rootLinkTemplate");
+String rootNodeName = (String)request.getAttribute("liferay-layout:layouts-tree:rootNodeName");
+boolean saveState = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:saveState"));
+boolean selectableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-layout:layouts-tree:selectableTree"));
+Long selPlid = (Long)request.getAttribute("liferay-layout:layouts-tree:selPlid");
+String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId");
 %>
 
 <aui:script use="<%= modules %>">

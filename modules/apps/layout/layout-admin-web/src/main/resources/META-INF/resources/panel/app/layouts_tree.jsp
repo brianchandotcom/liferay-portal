@@ -89,7 +89,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	</div>
 </c:if>
 
-<liferay-ui:layouts-tree
+<liferay-layout:layouts-tree
 	expandFirstNode="<%= true %>"
 	groupId="<%= layoutsTreeDisplayContext.getSelGroupId() %>"
 	linkTemplate="<%= linkTemplate %>"

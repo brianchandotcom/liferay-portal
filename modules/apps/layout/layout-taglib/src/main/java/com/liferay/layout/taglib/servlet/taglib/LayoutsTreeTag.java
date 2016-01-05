@@ -232,27 +232,29 @@ public class LayoutsTreeTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:layouts-tree:checkedNodes", getCheckedNodes());
+			"liferay-layout:layouts-tree:checkedNodes", getCheckedNodes());
 		request.setAttribute(
-			"liferay-ui:layouts-tree:checkContentDisplayPage",
+			"liferay-layout:layouts-tree:checkContentDisplayPage",
 			String.valueOf(_checkContentDisplayPage));
 		request.setAttribute(
-			"liferay-ui:layouts-tree:defaultStateChecked",
+			"liferay-layout:layouts-tree:defaultStateChecked",
 			String.valueOf(_defaultStateChecked));
 		request.setAttribute(
-			"liferay-ui:layouts-tree:draggableTree",
+			"liferay-layout:layouts-tree:draggableTree",
 			String.valueOf(_draggableTree));
 		request.setAttribute(
-			"liferay-ui:layouts-tree:expandFirstNode",
+			"liferay-layout:layouts-tree:expandFirstNode",
 			String.valueOf(_expandFirstNode));
 		request.setAttribute(
-			"liferay-ui:layouts-tree:groupId", String.valueOf(_groupId));
+			"liferay-layout:layouts-tree:groupId", String.valueOf(_groupId));
 		request.setAttribute(
-			"liferay-ui:layouts-tree:incomplete", String.valueOf(_incomplete));
+			"liferay-layout:layouts-tree:incomplete",
+			String.valueOf(_incomplete));
 		request.setAttribute(
-			"liferay-ui:layouts-tree:linkTemplate",
+			"liferay-layout:layouts-tree:linkTemplate",
 			String.valueOf(_linkTemplate));
-		request.setAttribute("liferay-ui:layouts-tree:modules", getModules());
+		request.setAttribute(
+			"liferay-layout:layouts-tree:modules", getModules());
 
 		Map<String, PortletURL> portletURLs = _portletURLs;
 
@@ -265,27 +267,29 @@ public class LayoutsTreeTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:layouts-tree:portletURLs", portletURLs);
+			"liferay-layout:layouts-tree:portletURLs", portletURLs);
 		request.setAttribute(
-			"liferay-ui:layouts-tree:portletURLsJSONArray",
+			"liferay-layout:layouts-tree:portletURLsJSONArray",
 			getPortletURLsJSONArray(portletURLs));
 
 		request.setAttribute(
-			"liferay-ui:layouts-tree:privateLayout",
+			"liferay-layout:layouts-tree:privateLayout",
 			String.valueOf(_privateLayout));
 		request.setAttribute(
-			"liferay-ui:layouts-tree:rootLinkTemplate", _rootLinkTemplate);
+			"liferay-layout:layouts-tree:rootLinkTemplate", _rootLinkTemplate);
 		request.setAttribute(
-			"liferay-ui:layouts-tree:rootNodeName", _rootNodeName);
+			"liferay-layout:layouts-tree:rootNodeName", _rootNodeName);
 		request.setAttribute(
-			"liferay-ui:layouts-tree:saveState", String.valueOf(_saveState));
+			"liferay-layout:layouts-tree:saveState",
+			String.valueOf(_saveState));
 		request.setAttribute(
-			"liferay-ui:layouts-tree:selectableTree",
+			"liferay-layout:layouts-tree:selectableTree",
 			String.valueOf(_selectableTree));
 		request.setAttribute(
-			"liferay-ui:layouts-tree:selectedLayoutIds", _selectedLayoutIds);
-		request.setAttribute("liferay-ui:layouts-tree:selPlid", _selPlid);
-		request.setAttribute("liferay-ui:layouts-tree:treeId", _treeId);
+			"liferay-layout:layouts-tree:selectedLayoutIds",
+			_selectedLayoutIds);
+		request.setAttribute("liferay-layout:layouts-tree:selPlid", _selPlid);
+		request.setAttribute("liferay-layout:layouts-tree:treeId", _treeId);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

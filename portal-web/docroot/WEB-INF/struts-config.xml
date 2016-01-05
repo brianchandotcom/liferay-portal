@@ -159,12 +159,6 @@
 
 		<action path="/our_activities/view" forward="portlet.our_activities.view" />
 
-		<!-- Portlet Sharing -->
-
-		<action path="/portlet_sharing/view" type="com.liferay.portlet.portletsharing.action.ViewAction">
-			<forward name="portlet.portlet_sharing.view" path="portlet.portlet_sharing.view" />
-		</action>
-
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

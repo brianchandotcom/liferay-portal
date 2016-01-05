@@ -12,31 +12,43 @@
  * details.
  */
 
-package com.liferay.portlet.portletsharing.action;
+package com.liferay.portlet.sharing.web.portlet.action;
 
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portlet.sharing.web.constants.PortletSharingPortletKeys;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
-public class ViewAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + PortletSharingPortletKeys.PORTLET_SHARING,
+		"mvc.command.name=/portlet_sharing/view"
+	},
+	service = MVCResourceCommand.class
+)
+public class ViewActionMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		String path = "/html/portlet/portlet_sharing/view.jsp";
+		String path = "/view.jsp";
+
+		PortletConfig portletConfig =
+			(PortletConfig)resourceRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			portletConfig.getPortletContext().getRequestDispatcher(path);

@@ -49,17 +49,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>133</portlet-name>
-		<icon>/html/icons/portlet_sharing.png</icon>
-		<struts-path>portlet_sharing</struts-path>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>176</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>license_manager</struts-path>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portlet_sharing/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String netvibesURL = ParamUtil.getString(request, "netvibesURL");

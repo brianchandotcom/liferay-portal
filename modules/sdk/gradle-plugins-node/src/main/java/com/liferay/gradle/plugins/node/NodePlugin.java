@@ -27,6 +27,7 @@ import java.util.concurrent.Callable;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
@@ -181,7 +182,18 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return project.getName();
+					String moduleName = _osgiHelper.getBundleSymbolicName(
+						project);
+
+					int pos = moduleName.indexOf('.');
+
+					if (pos != -1) {
+						moduleName = moduleName.substring(pos + 1);
+
+						moduleName = moduleName.replace('.', '-');
+					}
+
+					return moduleName;
 				}
 
 			});
@@ -264,5 +276,7 @@ public class NodePlugin implements Plugin<Project> {
 
 			});
 	}
+
+	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
 }

@@ -563,6 +563,12 @@
 							'transition'
 						]
 					},
+					'liferay-notification': {
+						path: 'notification.js',
+						requires: [
+							'liferay-alert'
+						]
+					},
 					'liferay-pagination': {
 						path: 'pagination.js',
 						requires: [
@@ -686,7 +692,7 @@
 							'aui-io-request',
 							'aui-timer',
 							'cookie',
-							'liferay-alert'
+							'liferay-notification'
 						]
 					},
 					'liferay-sign-in-modal': {

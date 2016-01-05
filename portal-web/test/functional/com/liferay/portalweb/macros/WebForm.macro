@@ -58,7 +58,7 @@
 
 	<command name="sendPG">
 		<execute function="AssertClick" locator1="Button#SEND" value1="Send" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="The form information was sent successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The form information was sent successfully." />
 	</command>
 
 	<command name="viewFormFieldCheckBox">

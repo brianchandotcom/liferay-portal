@@ -193,7 +193,7 @@
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#EMAIL_FROM_NAME_FIELD" value1="${userName}" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${userEmailAddress}" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 			</then>
 		</if>
 
@@ -203,7 +203,7 @@
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminConfiguration#NAVIGATION_SUGGESTION_RECEIVED_TAB" value1="Suggestion Received Email" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#SUGGESTION_RECEIVED_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 			</then>
 		</if>
 
@@ -213,7 +213,7 @@
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminConfiguration#NAVIGATION_SUGGESTION_IN_PROGRESS_TAB" value1="Suggestion in Progress Email" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#SUGGESTION_IN_PROGRESS_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 			</then>
 		</if>
 
@@ -223,7 +223,7 @@
 				<execute function="AssertClick" locator1="CPKnowledgebaseadminConfiguration#NAVIGATION_SUGGESTION_RESOLVED_TAB" value1="Suggestion Resolved Email" />
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#SUGGESTION_RESOLVED_EMAIL_BODY_FIELD" value1="[$COMMENT_CREATE_DATE$] &lt;a href=&quot;[$ARTICLE_URL$]&quot;&gt;Article Link &lt;/a&gt;" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 			</then>
 		</if>
 
@@ -267,7 +267,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -321,7 +321,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -343,7 +343,7 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureKBRatingTypePG">
@@ -482,7 +482,7 @@
 		<execute function="Type" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbNewPriority}" />
 		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ACTIONS" value1="Actions" />
 		<execute function="AssertClick" locator1="MenuItem#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbNewPriority}" />
 	</command>
 
@@ -502,7 +502,7 @@
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContentEdit}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editPGViaLocalizedKBDisplay">
@@ -518,7 +518,7 @@
 
 		<execute function="AssertClick" locator1="xpath=//button[contains(@id,'_knowledgebaseportlet_publish')]" value1="Publicar" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="${localizedSuccessMessage}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="${localizedSuccessMessage}" />
 	</command>
 
 	<command name="enableSocialBookmarkSites">
@@ -799,7 +799,7 @@
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute function="Click" locator1="Button#MOVE" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -855,7 +855,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -895,7 +895,7 @@
 	<command name="subscribeCP">
 		<execute function="AssertClick" locator1="KnowledgeBase#LINK_SUBSCRIBE" value1="Subscribe" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="AssertElementPresent" locator1="KnowledgeBase#LINK_UNSUBSCRIBE" />
 	</command>

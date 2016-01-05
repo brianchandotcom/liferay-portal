@@ -215,7 +215,7 @@
 		<execute function="Type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type" locator1="PGBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="AssertClick" locator1="PGBlogsAdd#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
-		<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="AssertTextEquals" locator1="PGBlogsEdit#DRAFT_STATUS" value1="Draft" />
 		<execute function="AssertTextEquals" locator1="PGBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
@@ -480,7 +480,7 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_WORKFLOW_STATUS_1" value1="Pending Approval" />
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
@@ -579,7 +579,7 @@
 			<else>
 				<execute function="AssertClick" locator1="PGBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
 
-				<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -636,7 +636,7 @@
 			<else>
 				<execute function="AssertClick" locator1="PGBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
 
-				<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -694,7 +694,7 @@
 			<else>
 				<execute function="AssertClick" locator1="PGBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
 
-				<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -856,7 +856,7 @@
 	<command name="publish">
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="publishCP">
@@ -922,7 +922,7 @@
 
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="rate4StarsCP">
@@ -981,7 +981,7 @@
 	<command name="saveAsDraft">
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="scheduleBlogEntry">
@@ -1110,7 +1110,7 @@
 	<command name="subscribePG">
 		<execute function="AssertClick" locator1="Link#SUBSCRIBE" value1="Subscribe" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">

@@ -44,7 +44,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureMessageAddedEmailCP">
@@ -214,7 +214,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertClick" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertElementNotPresent" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_BANNED_USER" />
 		<execute function="AssertTextNotPresent" value1="${userScreenName}" />
 	</command>

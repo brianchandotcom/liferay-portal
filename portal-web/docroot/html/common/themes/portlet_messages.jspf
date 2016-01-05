@@ -59,12 +59,12 @@ else if (group.isStagingGroup()) {
 </c:if>
 
 <c:if test='<%= MultiSessionMessages.contains(renderRequest, "requestProcessed") && !MultiSessionMessages.contains(renderRequest, portlet.getPortletId() + SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE) %>'>
-	<div class="alert alert-success">
 
-		<%
-		String successMessage = (String)MultiSessionMessages.get(renderRequest, "requestProcessed");
-		%>
+	<%
+	String successMessage = (String)MultiSessionMessages.get(renderRequest, "requestProcessed");
+	%>
 
+	<liferay-util:buffer var="successHtml">
 		<c:choose>
 			<c:when test='<%= Validator.isNotNull(successMessage) && !successMessage.equals("request_processed") %>'>
 				<%= HtmlUtil.escape(successMessage) %>
@@ -82,7 +82,12 @@ else if (group.isStagingGroup()) {
 
 			<liferay-ui:message arguments="<%= taglibMessage %>" key="the-page-will-be-refreshed-when-you-close-this-dialog.alternatively-you-can-hide-this-dialog-x" translateArguments="<%= false %>" />
 		</c:if>
-	</div>
+	</liferay-util:buffer>
+
+	<liferay-ui:success
+		key="requestProcessed"
+		message="<%= successHtml %>"
+	/>
 </c:if>
 
 <liferay-ui:success key="<%= portlet.getPortletId() + SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION %>" message="you-have-successfully-updated-the-setup" />

@@ -9,7 +9,7 @@
 
 		<execute function="Check" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN" value1="Customizable" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertChecked" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN" value1="Customizable" />
 	</command>
 

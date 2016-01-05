@@ -131,7 +131,7 @@
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_VARIATION" value1="Add Page Variation" />
 		<execute function="Type" locator1="StagingManageVariations#MANAGE_VARIATION" value1="${pageVariationName}" />
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Page variation was added." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Page variation was added." />
 	</command>
 
 	<command name="addPublishTemplate">
@@ -167,7 +167,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Site page variation was added." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Site page variation was added." />
 	</command>
 
 	<command name="changePageVariationPG">
@@ -400,7 +400,7 @@
 				<execute function="Check" locator1="SiteSettingsStaging#NONE_RADIO" />
 				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 				<execute function="Confirm" value1="Are you sure you want to deactivate staging for ${siteName}?" />
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</if>
 
@@ -438,7 +438,7 @@
 		<execute function="AssertClick" locator1="Button#UPDATE" value1="Update" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Site page variation was updated." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Site page variation was updated." />
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
@@ -537,7 +537,7 @@
 		<execute function="Confirm" value1="Are you sure you want to merge changes from ${sitePagesVariationMergeName}?" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Site page variation was merged." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Site page variation was merged." />
 	</command>
 
 	<command name="moveToTheRecycleBinPublishTemplate">

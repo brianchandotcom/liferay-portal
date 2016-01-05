@@ -523,7 +523,7 @@ AUI.add(
 						var banner = instance._banner;
 
 						if (!banner) {
-							banner = new Liferay.Alert(
+							banner = new Liferay.Notification(
 								{
 									closeable: true,
 									delay: {
@@ -615,6 +615,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-timer', 'cookie', 'liferay-alert']
+		requires: ['aui-io-request', 'aui-timer', 'cookie', 'liferay-notification']
 	}
 );

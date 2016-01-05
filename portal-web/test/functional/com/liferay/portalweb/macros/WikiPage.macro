@@ -38,7 +38,7 @@
 
 		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addChildPagePGViaWD">
@@ -62,7 +62,7 @@
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Button#REPLY" value1="Reply" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCommentPG">
@@ -103,7 +103,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCP">
@@ -117,7 +117,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addFrontPageChildPageInvalidTitle">
@@ -157,7 +157,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addFrontPageDraftPG">
@@ -174,7 +174,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS"  value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS"  value1="Your request completed successfully." />
 	</command>
 
 	<command name="addFrontPagePG">
@@ -227,7 +227,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addFrontPagePGHTMLSourceViaWD">
@@ -644,7 +644,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteCP">
@@ -711,7 +711,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editFrontPagePG">
@@ -722,7 +722,7 @@
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContentEdit}" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editPageCP">
@@ -735,7 +735,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editPagePG">
@@ -763,7 +763,7 @@
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContentEdit}" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="linkOrphanPageHtmlPG">
@@ -856,7 +856,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="linkPG">
@@ -882,7 +882,7 @@
 
 	<command name="markAsSpamCP">
 		<execute function="AssertClick" locator1="Wiki#LINK_MARK_AS_SPAM" value1="Mark as Spam" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Version ${wikiPageRevision} was marked as spam." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Version ${wikiPageRevision} was marked as spam." />
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="This version has been flagged as spam. An administrator will review your version as soon as possible." />
 	</command>
 
@@ -917,7 +917,7 @@
 
 		<execute function="AssertClick" locator1="Button#CHANGE" value1="Change Parent" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="rate4StarsPG">
@@ -969,7 +969,7 @@
 
 		<execute function="AssertClick" locator1="Button#RENAME" value1="Rename" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request has been completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request has been completed successfully." />
 	</command>
 
 	<command name="renameWikiPagePG">
@@ -1044,7 +1044,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS"  value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS"  value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Wiki#WORKFLOW_STATUS" value1="Draft" />
 
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
@@ -1074,7 +1074,7 @@
 	<command name="submitForPublication">
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="subscribeToPagePG">

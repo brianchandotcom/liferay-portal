@@ -58,7 +58,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -124,7 +124,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${dataDefinitionTemplateCopyName}" />
 		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog." />
 		<execute function="AssertClick" locator1="Button#CLOSE" value1="Close" />
 
 		<var name="key_ddlTemplateName" value="${dataDefinitionTemplateCopyName}" />
@@ -148,7 +148,7 @@
 		<execute function="Check#checkAll" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -194,7 +194,7 @@
 		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScriptEdit}" />
 		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -257,7 +257,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE_AND_CONTINUE" value1="Save and Continue" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -267,7 +267,7 @@
 
 		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -284,7 +284,7 @@
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Select" locator1="DDLConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="AssertSelectedLabel" locator1="DDLConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
 
 		<execute function="SelectFrameTop" />
@@ -297,7 +297,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="AssertSelectedLabel" locator1="DDLConfiguration#TEMPLATES_FORM_TEMPLATE_SELECT" value1="${ddlFormTemplateName}" />
 
 		<execute function="SelectFrameTop" />
@@ -336,7 +336,7 @@
 						<execute function="Check#checkAll" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
 						<execute function="ClickNoError" locator1="Icon#DELETE" />
 						<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-						<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+						<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 					</then>
 				</if>
 			</then>

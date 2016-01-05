@@ -121,7 +121,7 @@
 	</command>
 
 	<command name="viewConfigurationSavedPG">
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your configuration was saved successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your configuration was saved successfully." />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SetupWizard#CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SetupWizard#CONFIGURATION_SAVE_LOCATION" value1="portal-setup-wizard.properties" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Changes will take effect once the portal is restarted. Please restart the portal now." />

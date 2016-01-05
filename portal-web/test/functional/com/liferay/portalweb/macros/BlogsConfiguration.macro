@@ -110,7 +110,7 @@
 
 		<execute function="Click" locator1="Button#SAVE" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
 		<execute macro="BlogsConfiguration#viewScopeSelection">
 			<var name="scopeSelection" value="${scopeSelection}" />

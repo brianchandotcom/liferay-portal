@@ -79,7 +79,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="The role permissions were updated." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The role permissions were updated." />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
@@ -377,7 +377,7 @@
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="Page#openURL" />
 

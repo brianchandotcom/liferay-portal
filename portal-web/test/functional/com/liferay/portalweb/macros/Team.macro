@@ -9,7 +9,7 @@
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${teamDescription}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="assignMembersCP">
@@ -49,7 +49,7 @@
 
 				<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 				<execute function="AssertElementPresent" locator1="Card#SPECIFIC_LARGE_TEXT" />
 			</else>
@@ -99,7 +99,7 @@
 
 				<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -121,7 +121,7 @@
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editCP">
@@ -137,7 +137,7 @@
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${teamDescriptionEdit}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="removePermissionPG">
@@ -157,7 +157,7 @@
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>

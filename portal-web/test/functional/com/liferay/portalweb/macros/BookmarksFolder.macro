@@ -11,7 +11,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescription}" />
@@ -60,7 +60,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescription}" />
@@ -86,7 +86,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${subfolderDescription}" />
@@ -106,7 +106,7 @@
 
 		<execute function="AssertClick" locator1="PGBookmarksAddSubfolder#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${subfolderDescription}" />
@@ -147,7 +147,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescriptionEdit}" />
@@ -167,7 +167,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${folderDescriptionEdit}" />
@@ -196,7 +196,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="BookmarksFolder#viewFolder">
 			<var name="folderDescription" value="${editSubfolderDescription}" />
@@ -264,7 +264,7 @@
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="${bookmarkName}" />
@@ -309,7 +309,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#SUBSCRIBE" value1="Subscribe" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">

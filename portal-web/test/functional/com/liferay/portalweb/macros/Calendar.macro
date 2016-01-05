@@ -228,7 +228,7 @@
 				<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
 				<execute function="Type" locator1="TextInput#NAME" value1="${calendarNameEdit}" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
@@ -247,7 +247,7 @@
 					<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
 					<execute function="Type" locator1="TextInput#NAME" value1="${calendarNameEdit}" />
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 					<execute function="SelectFrame" value1="relative=top" />
 				</then>
@@ -263,7 +263,7 @@
 					<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
 					<execute function="Type" locator1="TextInput#NAME" value1="${calendarNameEdit}" />
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 					<execute function="SelectFrame" value1="relative=top" />
 				</then>
@@ -398,13 +398,13 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 			<else>
 				<execute function="SelectFrame" value1="relative=top" />
 
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 
@@ -461,13 +461,13 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 			<else>
 				<execute function="SelectFrame" value1="relative=top" />
 
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -521,13 +521,13 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 			<else>
 				<execute function="SelectFrame" value1="relative=top" />
 
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -657,7 +657,7 @@
 	<command name="save">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="searchOtherCalendars">

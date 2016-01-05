@@ -20,17 +20,17 @@
 String key = (String)request.getAttribute("liferay-ui:success:key");
 String message = (String)request.getAttribute("liferay-ui:success:message");
 boolean translateMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:success:translateMessage"));
+
+if (translateMessage) {
+	message = LanguageUtil.get(request, message);
+}
 %>
 
 <c:if test="<%= MultiSessionMessages.contains(portletRequest, key) %>">
-	<div class="alert alert-success">
-		<c:choose>
-			<c:when test="<%= translateMessage %>">
-				<%= LanguageUtil.get(request, message) %>
-			</c:when>
-			<c:otherwise>
-				<%= message %>
-			</c:otherwise>
-		</c:choose>
-	</div>
+	<liferay-ui:alert
+		message="<%= message %>"
+		timeout="5000"
+		title='<%= LanguageUtil.get(request, "success") %>'
+		type="success"
+	/>
 </c:if>

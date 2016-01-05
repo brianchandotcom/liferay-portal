@@ -1,0 +1,12 @@
+.lfr-notification-container {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 400px;
+	z-index: 1000;
+
+	.lfr-notification-wrapper {
+		margin-bottom: 5px;
+		overflow: hidden;
+	}
+}

@@ -11,7 +11,7 @@
 		<execute function="Type#typeCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCPWithAttachment">
@@ -29,7 +29,7 @@
 		<execute function="UploadCommonFile" locator1="MessageBoardsEditMessage#ATTACHMENTS_BROWSE_FIELD" value1="${mbAttachmentFile}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addInvalidAttachmentPG">
@@ -217,7 +217,7 @@
 		<execute function="Type#typeCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
 		<execute function="Click" locator1="Button#SUBMIT_FOR_PUBLICATION" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addWithWorkflowPG">
@@ -247,7 +247,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_BAN_THIS_USER" value1="Ban This User" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deletePG">
@@ -425,7 +425,7 @@
 		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_ACTIONS_LOCK_THREAD" value1="Lock Thread" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="markAsAnswerCP">
@@ -557,7 +557,7 @@
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadReplyBody}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="ratePG">
@@ -606,7 +606,7 @@
 		<execute function="Type#typeCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadReplyBody}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<if>
 			<equals arg1="${markAsAnswer}" arg2="true" />

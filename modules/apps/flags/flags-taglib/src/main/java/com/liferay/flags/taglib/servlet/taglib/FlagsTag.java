@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.flags.taglib.servlet.taglib;
 
 import com.liferay.taglib.util.IncludeTag;
 

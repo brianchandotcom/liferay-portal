@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.jasper.jspc;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -51,9 +52,16 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 
 	@Override
 	public void exec() {
-		super.setClasspath(getClasspath());
-
 		setArgs(getCompleteArgs());
+
+		FileCollection jspCClasspath = getJspCClasspath();
+
+		if (jspCClasspath != null) {
+			String jspClasspath = jspCClasspath.getAsPath();
+
+			setStandardInput(new ByteArrayInputStream(jspClasspath.getBytes()));
+		}
+
 		setSystemProperties(getCompleteSystemProperties());
 
 		OutputStream taskErrorOutput = getErrorOutput();
@@ -92,6 +100,11 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 	@OutputDirectory
 	public File getDestinationDir() {
 		return GradleUtil.toFile(getProject(), _destinationDir);
+	}
+
+	@InputFiles
+	public FileCollection getJspCClasspath() {
+		return _jspCClasspath;
 	}
 
 	@InputFiles
@@ -135,6 +148,10 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 
 	public void setDestinationDir(Object destinationDir) {
 		_destinationDir = destinationDir;
+	}
+
+	public void setJspCClasspath(FileCollection jspCClasspath) {
+		_jspCClasspath = jspCClasspath;
 	}
 
 	@Override
@@ -189,6 +206,7 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 		CompileJSPTask.class);
 
 	private Object _destinationDir;
+	private FileCollection _jspCClasspath;
 	private boolean _moduleWeb;
 	private Object _portalDir;
 	private Object _webAppDir;

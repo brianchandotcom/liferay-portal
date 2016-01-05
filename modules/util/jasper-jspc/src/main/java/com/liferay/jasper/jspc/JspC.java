@@ -14,8 +14,10 @@
 
 package com.liferay.jasper.jspc;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import java.net.MalformedURLException;
@@ -46,7 +48,16 @@ public class JspC extends org.apache.jasper.JspC {
 		JspC jspc = new JspC();
 
 		try {
+			BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(System.in));
+
+			String classPath = bufferedReader.readLine();
+
 			jspc.setArgs(args);
+
+			if ((classPath != null) && !classPath.isEmpty()) {
+				jspc.setClassPath(classPath);
+			}
 
 			jspc.execute();
 		}

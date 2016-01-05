@@ -13,7 +13,6 @@ buildscript {
 }
 
 apply plugin: "com.liferay.jasper.jspc"
-apply plugin: "java"
 
 File liferayHome = file("../../../../../bundles")
 String tomcatVersion = "7.0.62"

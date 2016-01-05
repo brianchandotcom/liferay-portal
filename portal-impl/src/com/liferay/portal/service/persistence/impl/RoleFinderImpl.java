@@ -941,11 +941,10 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 
 		for (int i = 0; i < types.length; i++) {
 			sb.append("Role_.type_ = ?");
-
-			if ((i + 1) < types.length) {
-				sb.append(" OR ");
-			}
+			sb.append(" OR ");
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 

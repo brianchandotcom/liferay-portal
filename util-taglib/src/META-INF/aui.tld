@@ -2475,6 +2475,13 @@
 		<tag-class>com.liferay.taglib.aui.ValidatorTagImpl</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description><![CDATA[Sets whether custom validator rules force a field to be required. The default value is <code>true</code>.]]></description>
+			<name>customValidatorRequired</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[Sets a custom error message to replace the default validation error message.]]></description>
 			<name>errorMessage</name>
 			<required>false</required>

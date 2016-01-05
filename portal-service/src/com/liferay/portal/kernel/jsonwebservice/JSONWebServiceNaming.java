@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.jsonwebservice;
 
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.MethodParameter;
+import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -85,19 +87,47 @@ public class JSONWebServiceNaming {
 			return false;
 		}
 
-		if (excludedTypes == null) {
+		if (excludedTypesNames == null) {
 			return true;
 		}
 
+		MethodParameter[] methodParameters =
+			MethodParametersResolverUtil.resolveMethodParameters(method);
+
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
-		for (Class<?> parameterType : parameterTypes) {
+		for (int i = 0; i < parameterTypes.length; i++) {
+			MethodParameter methodParameter = methodParameters[i];
+
+			Class<?> parameterType = parameterTypes[i];
+
 			if (parameterType.isArray()) {
 				parameterType = parameterType.getComponentType();
 			}
 
-			if (excludedTypes.contains(parameterType)) {
-				return false;
+			String parameterTypeName = parameterType.getName();
+
+			for (String excludedTypesName : excludedTypesNames) {
+				String signature = methodParameter.getSignature();
+
+				if (signature.contains(StringPool.LESS_THAN)) {
+					String excludedName = 'L' + excludedTypesName;
+
+					if (!excludedName.endsWith(StringPool.PERIOD)) {
+						excludedName = excludedName.concat(
+							StringPool.SEMICOLON);
+					}
+
+					excludedName = StringUtil.replace(excludedName, '.', '/');
+
+					if (signature.contains(excludedName)) {
+						return false;
+					}
+				}
+
+				if (parameterTypeName.startsWith(excludedTypesName)) {
+					return false;
+				}
 			}
 		}
 
@@ -107,8 +137,12 @@ public class JSONWebServiceNaming {
 			returnType = returnType.getComponentType();
 		}
 
-		if (excludedTypes.contains(returnType)) {
-			return false;
+		String returnTypeName = returnType.getName();
+
+		for (String excludedTypesName : excludedTypesNames) {
+			if (excludedTypesName.startsWith(returnTypeName)) {
+				return false;
+			}
 		}
 
 		return true;
@@ -170,8 +204,8 @@ public class JSONWebServiceNaming {
 		new String[] {"getBeanIdentifier", "setBeanIdentifier"});
 	protected String[] excludedPaths = PropsUtil.getArray(
 		PropsKeys.JSONWS_WEB_SERVICE_PATHS_EXCLUDES);
-	protected Set<Class<?>> excludedTypes = SetUtil.fromArray(
-		new Class<?>[] {InputStream.class, OutputStream.class});
+	protected String[] excludedTypesNames =
+		{InputStream.class.getName(), OutputStream.class.getName(), "javax."};
 	protected String[] includedPaths = PropsUtil.getArray(
 		PropsKeys.JSONWS_WEB_SERVICE_PATHS_INCLUDES);
 	protected Set<String> invalidHttpMethods = SetUtil.fromArray(

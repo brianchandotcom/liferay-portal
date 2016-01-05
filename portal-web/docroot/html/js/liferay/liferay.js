@@ -88,9 +88,11 @@ Liferay = window.Liferay || {};
 
 				var ioConfig = payload.io || {};
 
+				var form = args[1] || {};
+
 				delete payload.io;
 
-				if (!(ioConfig.on && ioConfig.on.success)) {
+				if (!(ioConfig.on && (ioConfig.on.success || ioConfig.on.complete))) {
 					var callbacks = A.Array.filter(args, Lang.isFunction);
 
 					var callbackSuccess = callbacks[0];
@@ -101,6 +103,24 @@ Liferay = window.Liferay || {};
 					}
 
 					A.namespace.call(ioConfig, 'on');
+
+					if (form.enctype == 'multipart/form-data') {
+						ioConfig.on.complete = function(event) {
+							 var responseText = event.details[1].responseText;
+							 var responseData = JSON.parse(responseText);
+
+							 if ((responseData !== null) && !owns(responseData, 'exception')) {
+								 if (callbackSuccess) {
+								 	callbackSuccess.call(this, responseData);
+								 }
+							 }
+							 else if (callbackException) {
+								 var exception = responseData ? responseData.exception : 'The server returned an empty response';
+
+								 callbackException.call(this, exception, responseData);
+							 }
+						 };
+					}
 
 					ioConfig.on.success = function(event) {
 						var responseData = this.get('responseData');
@@ -138,6 +158,10 @@ Liferay = window.Liferay || {};
 					A.namespace.call(ioConfig, 'form');
 
 					ioConfig.form.id = form._node || form;
+
+					if (ioConfig.form.id.enctype == 'multipart/form-data') {
+						ioConfig.form.upload = true;
+					}
 				}
 			},
 

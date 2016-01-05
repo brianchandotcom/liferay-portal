@@ -95,6 +95,18 @@ public class MBMessageServiceUtil {
 
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, java.lang.String fileName, java.io.File file,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.FileNotFoundException {
+		return getService()
+				   .addMessage(groupId, categoryId, subject, body, fileName,
+			file, serviceContext);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
+		long groupId, long categoryId, java.lang.String subject,
 		java.lang.String body, java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
@@ -104,6 +116,20 @@ public class MBMessageServiceUtil {
 		return getService()
 				   .addMessage(groupId, categoryId, subject, body, format,
 			inputStreamOVPs, anonymous, priority, allowPingbacks, serviceContext);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
+		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, java.lang.String format,
+		java.lang.String fileName, java.io.File file, boolean anonymous,
+		double priority, boolean allowPingbacks,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			java.io.FileNotFoundException {
+		return getService()
+				   .addMessage(groupId, categoryId, subject, body, format,
+			fileName, file, anonymous, priority, allowPingbacks, serviceContext);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(

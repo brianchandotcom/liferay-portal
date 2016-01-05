@@ -58,6 +58,9 @@ import com.sun.syndication.feed.synd.SyndLink;
 import com.sun.syndication.feed.synd.SyndLinkImpl;
 import com.sun.syndication.io.FeedException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -114,6 +117,18 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	@Override
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
+			String fileName, File file, ServiceContext serviceContext)
+		throws FileNotFoundException, PortalException, SystemException {
+
+		return addMessage(
+			groupId, categoryId, subject, body,
+			MBMessageConstants.DEFAULT_FORMAT, fileName, file, false,
+			MBThreadConstants.PRIORITY_NOT_GIVEN, false, serviceContext);
+	}
+
+	@Override
+	public MBMessage addMessage(
+			long groupId, long categoryId, String subject, String body,
 			String format,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
 			boolean anonymous, double priority, boolean allowPingbacks,
@@ -142,6 +157,29 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			getGuestOrUserId(), null, groupId, categoryId, subject, body,
 			format, inputStreamOVPs, anonymous, priority, allowPingbacks,
 			serviceContext);
+	}
+
+	@Override
+	public MBMessage addMessage(
+			long groupId, long categoryId, String subject, String body,
+			String format, String fileName, File file, boolean anonymous,
+			double priority, boolean allowPingbacks,
+			ServiceContext serviceContext)
+		throws FileNotFoundException, PortalException, SystemException {
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			new ArrayList<ObjectValuePair<String, InputStream>>();
+
+		InputStream inputStream = new FileInputStream(file);
+
+		ObjectValuePair<String, InputStream> inputStreamOVP =
+			new ObjectValuePair<String, InputStream>(fileName, inputStream);
+
+		inputStreamOVPs.add(inputStreamOVP);
+
+		return addMessage(
+			groupId, categoryId, subject, body, format, inputStreamOVPs,
+			anonymous, priority, allowPingbacks, serviceContext);
 	}
 
 	@Override

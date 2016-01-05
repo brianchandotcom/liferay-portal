@@ -87,10 +87,12 @@ public class InputTag extends BaseInputTag {
 			String validatorErrorMessage = (String)modelValidator.getObject(2);
 			String validatorValue = (String)modelValidator.getObject(3);
 			boolean customValidator = (Boolean)modelValidator.getObject(4);
+			boolean customValidatorRequired = (Boolean)modelValidator.getObject(
+				5);
 
 			ValidatorTag validatorTag = new ValidatorTagImpl(
 				validatorName, validatorErrorMessage, validatorValue,
-				customValidator);
+				customValidator, customValidatorRequired);
 
 			addValidatorTag(validatorName, validatorTag);
 		}

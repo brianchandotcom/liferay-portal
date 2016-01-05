@@ -480,7 +480,7 @@ public class JavaClass {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(javaTermName.length());
+		StringBuilder sb = new StringBuilder(javaTermName.length());
 
 		for (int i = 0; i < javaTermName.length(); i++) {
 			char c = javaTermName.charAt(i);

@@ -44,7 +44,7 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		int stateMask = (Bundle.ACTIVE | Bundle.RESOLVED);
+		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, stateMask,

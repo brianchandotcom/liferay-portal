@@ -27,8 +27,8 @@ import java.util.Date;
  * @author Adolfo Pérez
  */
 public abstract class BaseSocialActivityManager
-		<T extends ClassedModel & GroupedModel>
-	implements SocialActivityManager<T> {
+	<T extends ClassedModel & GroupedModel>
+		implements SocialActivityManager<T> {
 
 	@Override
 	public void addActivity(

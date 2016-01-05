@@ -135,14 +135,14 @@ public class TermsOfUseContentProviderRegistryUtil {
 
 	private final ServiceRegistrationMap<TermsOfUseContentProvider>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
-	private final ServiceTracker<TermsOfUseContentProvider,
-		TermsOfUseContentProvider> _serviceTracker;
+	private final ServiceTracker
+		<TermsOfUseContentProvider, TermsOfUseContentProvider> _serviceTracker;
 	private final Map<String, TermsOfUseContentProvider>
 		_termsOfUseContentProviders = new ConcurrentHashMap<>();
 
 	private class TermsOfUseContentProviderServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<TermsOfUseContentProvider,
-			TermsOfUseContentProvider> {
+		implements ServiceTrackerCustomizer
+			<TermsOfUseContentProvider, TermsOfUseContentProvider> {
 
 		@Override
 		public TermsOfUseContentProvider addingService(

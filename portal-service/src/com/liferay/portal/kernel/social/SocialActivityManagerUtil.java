@@ -36,9 +36,9 @@ public class SocialActivityManagerUtil {
 	}
 
 	public static <T extends ClassedModel & GroupedModel>
-		void addUniqueActivity(
-			long userId, Date createDate, T classedModel, int type,
-			String extraData, long receiverUserId)
+			void addUniqueActivity(
+				long userId, Date createDate, T classedModel, int type,
+				String extraData, long receiverUserId)
 		throws PortalException {
 
 		getSocialActivityManager().addUniqueActivity(
@@ -46,9 +46,9 @@ public class SocialActivityManagerUtil {
 	}
 
 	public static <T extends ClassedModel & GroupedModel>
-		void addUniqueActivity(
-			long userId, T classedModel, int type, String extraData,
-			long receiverUserId)
+			void addUniqueActivity(
+				long userId, T classedModel, int type, String extraData,
+				long receiverUserId)
 		throws PortalException {
 
 		getSocialActivityManager().addUniqueActivity(
@@ -72,8 +72,8 @@ public class SocialActivityManagerUtil {
 	}
 
 	public static <T extends ClassedModel & GroupedModel>
-		void updateLastSocialActivity(
-			long userId, T classedModel, int type, Date createDate)
+			void updateLastSocialActivity(
+				long userId, T classedModel, int type, Date createDate)
 		throws PortalException {
 
 		getSocialActivityManager().updateLastSocialActivity(

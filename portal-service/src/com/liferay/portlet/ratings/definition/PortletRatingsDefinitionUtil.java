@@ -71,79 +71,84 @@ public class PortletRatingsDefinitionUtil {
 					<PortletRatingsDefinition,
 						PortletRatingsDefinitionValues>() {
 
-		@Override
-		public PortletRatingsDefinitionValues addingService(
-			ServiceReference<PortletRatingsDefinition> serviceReference) {
+					@Override
+					public PortletRatingsDefinitionValues addingService(
+						ServiceReference<PortletRatingsDefinition>
+							serviceReference) {
 
-			String[] classNames = null;
+						String[] classNames = null;
 
-			Object modelClassName = serviceReference.getProperty(
-				"model.class.name");
+						Object modelClassName = serviceReference.getProperty(
+							"model.class.name");
 
-			if (modelClassName instanceof Object[]) {
-				classNames = (String[])modelClassName;
-			}
-			else {
-				classNames = new String[] {(String)modelClassName};
-			}
+						if (modelClassName instanceof Object[]) {
+							classNames = (String[])modelClassName;
+						}
+						else {
+							classNames = new String[] {(String)modelClassName};
+						}
 
-			if (ArrayUtil.isEmpty(classNames)) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Property \"model.class.name\" is not set");
-				}
+						if (ArrayUtil.isEmpty(classNames)) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Property \"model.class.name\" is not set");
+							}
 
-				return null;
-			}
+							return null;
+						}
 
-			Registry registry = RegistryUtil.getRegistry();
+						Registry registry = RegistryUtil.getRegistry();
 
-			PortletRatingsDefinition portletRatingsDefinition =
-				registry.getService(serviceReference);
+						PortletRatingsDefinition portletRatingsDefinition =
+							registry.getService(serviceReference);
 
-			RatingsType defaultRatingsType =
-				portletRatingsDefinition.getDefaultRatingsType();
+						RatingsType defaultRatingsType =
+							portletRatingsDefinition.getDefaultRatingsType();
 
-			if (defaultRatingsType == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Default ratings type is null");
-				}
+						if (defaultRatingsType == null) {
+							if (_log.isWarnEnabled()) {
+								_log.warn("Default ratings type is null");
+							}
 
-				return null;
-			}
+							return null;
+						}
 
-			String portletId = portletRatingsDefinition.getPortletId();
+						String portletId =
+							portletRatingsDefinition.getPortletId();
 
-			if (Validator.isNull(portletId)) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Portlet ID is null");
-				}
+						if (Validator.isNull(portletId)) {
+							if (_log.isWarnEnabled()) {
+								_log.warn("Portlet ID is null");
+							}
 
-				return null;
-			}
+							return null;
+						}
 
-			return new PortletRatingsDefinitionValues(
-				classNames, defaultRatingsType, portletId);
-		}
+						return new PortletRatingsDefinitionValues(
+							classNames, defaultRatingsType, portletId);
+					}
 
-		@Override
-		public void modifiedService(
-			ServiceReference<PortletRatingsDefinition> serviceReference,
-			PortletRatingsDefinitionValues
-				portletRatingsDefinitionValues) {
-		}
+					@Override
+					public void modifiedService(
+						ServiceReference<PortletRatingsDefinition>
+							serviceReference,
+						PortletRatingsDefinitionValues
+							portletRatingsDefinitionValues) {
+					}
 
-		@Override
-		public void removedService(
-			ServiceReference<PortletRatingsDefinition> serviceReference,
-			PortletRatingsDefinitionValues
-				portletRatingsDefinitionValues) {
+					@Override
+					public void removedService(
+						ServiceReference<PortletRatingsDefinition>
+							serviceReference,
+						PortletRatingsDefinitionValues
+							portletRatingsDefinitionValues) {
 
-			Registry registry = RegistryUtil.getRegistry();
+						Registry registry = RegistryUtil.getRegistry();
 
-			registry.ungetService(serviceReference);
-		}
+						registry.ungetService(serviceReference);
+					}
 
-	};
+				};
 
 	private static final ServiceTrackerMap
 		<String, PortletRatingsDefinitionValues> _serviceTrackerMap =

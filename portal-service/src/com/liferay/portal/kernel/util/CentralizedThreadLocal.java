@@ -272,7 +272,7 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 			int index = key._hashCode & (_table.length - 1);
 
 			for (Entry entry = _table[index]; entry != null;
-				entry = entry._next) {
+					entry = entry._next) {
 
 				if (entry._key == key) {
 					entry._value = value;

@@ -24,10 +24,10 @@ import java.io.Serializable;
 public interface SPIPortalCacheManagerConfigurator {
 
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
-		createSPIPortalCacheManager(
-			PortalCacheManager
-				<? extends Serializable, ? extends Serializable>
-					portalCacheManager)
+			createSPIPortalCacheManager(
+				PortalCacheManager
+					<? extends Serializable, ? extends Serializable>
+						portalCacheManager)
 		throws Exception;
 
 }

@@ -53,7 +53,7 @@ public class SendPasswordException extends PortalException {
 				String.format(
 					"The Forgot Password notification must be enabled for " +
 						"company %s",
-				company));
+					company));
 
 			this.company = company;
 		}

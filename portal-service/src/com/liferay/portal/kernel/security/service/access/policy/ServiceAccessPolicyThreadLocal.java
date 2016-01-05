@@ -51,7 +51,6 @@ public class ServiceAccessPolicyThreadLocal {
 
 	private static final ThreadLocal<List<String>>
 		_activeServiceAccessPolicyNames = new AutoResetThreadLocal<>(
-			AutoResetThreadLocal.class +
-			"._activeServiceAccessPolicyNames");
+			AutoResetThreadLocal.class + "._activeServiceAccessPolicyNames");
 
 }

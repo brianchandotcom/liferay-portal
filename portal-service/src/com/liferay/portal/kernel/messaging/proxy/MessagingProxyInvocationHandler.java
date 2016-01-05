@@ -53,12 +53,12 @@ public class MessagingProxyInvocationHandler implements InvocationHandler {
 	private static final InvocationHandlerFactory _invocationHandlerFactory =
 		new InvocationHandlerFactory() {
 
-		@Override
-		public InvocationHandler createInvocationHandler(Object obj) {
-			return new MessagingProxyInvocationHandler((BaseProxyBean)obj);
-		}
+			@Override
+			public InvocationHandler createInvocationHandler(Object obj) {
+				return new MessagingProxyInvocationHandler((BaseProxyBean)obj);
+			}
 
-	};
+		};
 
 	private final BaseProxyBean _baseProxyBean;
 

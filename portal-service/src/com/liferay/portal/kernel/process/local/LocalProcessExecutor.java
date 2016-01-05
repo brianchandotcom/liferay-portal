@@ -196,27 +196,25 @@ public class LocalProcessExecutor implements ProcessExecutor {
 						<T, ProcessCallable<? extends Serializable>>(
 							processCallableNoticeableFuture) {
 
-							@Override
-							protected T convert(
-									ProcessCallable<? extends Serializable>
-										processCallable)
-								throws ProcessException {
+						@Override
+						protected T convert(
+								ProcessCallable<? extends Serializable>
+									processCallable)
+							throws ProcessException {
 
-								if (processCallable instanceof
-										ReturnProcessCallable<?>) {
+							if (processCallable instanceof
+									ReturnProcessCallable<?>) {
 
-									return (T)processCallable.call();
-								}
-
-								ExceptionProcessCallable
-									exceptionProcessCallable =
-										(ExceptionProcessCallable)
-											processCallable;
-
-								throw exceptionProcessCallable.call();
+								return (T)processCallable.call();
 							}
 
-						};
+							ExceptionProcessCallable exceptionProcessCallable =
+								(ExceptionProcessCallable)processCallable;
+
+							throw exceptionProcessCallable.call();
+						}
+
+					};
 
 				return new LocalProcessChannel<>(
 					noticeableFuture, objectOutputStream, asyncBroker);

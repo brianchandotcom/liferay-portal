@@ -80,7 +80,7 @@ public class QueryConfig implements Serializable {
 			_attributes.get(
 				PropsKeys.
 					INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD),
-				_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD);
+			_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD);
 	}
 
 	public String[] getHighlightFieldNames() {

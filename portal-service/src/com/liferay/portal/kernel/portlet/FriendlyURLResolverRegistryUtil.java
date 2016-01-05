@@ -113,8 +113,8 @@ public class FriendlyURLResolverRegistryUtil {
 		_serviceTracker;
 
 	private class FriendlyURLResolverServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<FriendlyURLResolver,
-			FriendlyURLResolver> {
+		implements ServiceTrackerCustomizer
+			<FriendlyURLResolver, FriendlyURLResolver> {
 
 		@Override
 		public FriendlyURLResolver addingService(

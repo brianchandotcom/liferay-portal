@@ -226,8 +226,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			facetBooleanFilter =
 				searchPermissionChecker.getPermissionBooleanFilter(
 					searchContext.getCompanyId(), groupIds,
-				searchContext.getUserId(), className, facetBooleanFilter,
-				searchContext);
+					searchContext.getUserId(), className, facetBooleanFilter,
+					searchContext);
 		}
 
 		return facetBooleanFilter;
@@ -1732,7 +1732,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		String localizedAssetCategoryTitlesName =
 			prefix +
-			DocumentImpl.getLocalizedName(locale, Field.ASSET_CATEGORY_TITLES);
+				DocumentImpl.getLocalizedName(
+					locale, Field.ASSET_CATEGORY_TITLES);
 		String localizedContentName =
 			prefix + DocumentImpl.getLocalizedName(locale, Field.CONTENT);
 		String localizedDescriptionName =

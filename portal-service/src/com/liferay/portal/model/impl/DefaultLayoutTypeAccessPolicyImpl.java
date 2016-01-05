@@ -66,8 +66,8 @@ public class DefaultLayoutTypeAccessPolicyImpl
 		}
 
 		throw new PrincipalException.MustHavePermission(
-				PortalUtil.getUserId(request), portlet.getDisplayName(),
-				portlet.getPortletId(), ActionKeys.ACCESS);
+			PortalUtil.getUserId(request), portlet.getDisplayName(),
+			portlet.getPortletId(), ActionKeys.ACCESS);
 	}
 
 	@Override

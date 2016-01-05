@@ -61,8 +61,8 @@ public class BaseDisplayContextProvider<T extends DisplayContextFactory>
 	private final ServiceTracker<T, T> _serviceTracker;
 
 	private static class DisplayContextFactoriesIterable
-			<T extends DisplayContextFactory>
-		implements Iterable<T>, Iterator<T> {
+		<T extends DisplayContextFactory>
+			implements Iterable<T>, Iterator<T> {
 
 		public DisplayContextFactoriesIterable(
 			Iterable<DisplayContextFactoryReference<T>> iterable) {

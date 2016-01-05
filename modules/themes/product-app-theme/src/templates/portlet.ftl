@@ -1,3 +1,6 @@
+<#assign liferay_portlet = ThemeJspTaglibs["/WEB-INF/tld/liferay-portlet-ext.tld"]>
+<#assign liferay_ui = ThemeJspTaglibs["/WEB-INF/tld/liferay-ui.tld"]>
+
 <#assign portlet_display = portletDisplay>
 <#assign portlet_back_url = htmlUtil.escapeHREF(portlet_display.getURLBack())>
 <#assign portlet_content_css_class = "portlet-content">
@@ -21,7 +24,7 @@
 			</#foreach>
 
 			<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
-				${theme.portletIconOptions()}
+				<@liferay_portlet["icon-options"] />
 			</menu>
 		</header>
 

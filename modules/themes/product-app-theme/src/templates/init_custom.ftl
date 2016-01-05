@@ -1,3 +1,6 @@
+<#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
+<#assign liferay_util=PortalJspTagLibs["/WEB-INF/tld/liferay-util.tld"]>
+
 <#assign fullScreenNavigation = theme.getSetting("full-screen-navigation")>
 <#assign socialMediaFacebook = theme.getSetting("social-media-facebook")>
 <#assign socialMediaTwitter = theme.getSetting("social-media-twitter")>

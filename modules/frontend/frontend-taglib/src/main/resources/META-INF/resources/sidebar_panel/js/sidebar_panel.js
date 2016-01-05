@@ -88,6 +88,8 @@ AUI.add(
 
 							instance._detachSearchContainerRegisterHandle();
 
+							instance.get('targetNode').plug(A.Plugin.ParseContent);
+
 							instance._bindUI();
 						}
 					}
@@ -99,6 +101,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-io-request', 'liferay-portlet-base']
+		requires: ['aui-base', 'aui-io-request', 'aui-parse-content', 'liferay-portlet-base']
 	}
 );

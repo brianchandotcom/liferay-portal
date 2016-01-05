@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.CharPool;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,7 +61,7 @@ public class UpgradeRelease extends UpgradeProcess {
 
 		for (int i = 0; i < chars.length; i++) {
 			sb.append(chars[i]);
-			sb.append('.');
+			sb.append(CharPool.PERIOD);
 		}
 
 		if (chars.length > 0) {

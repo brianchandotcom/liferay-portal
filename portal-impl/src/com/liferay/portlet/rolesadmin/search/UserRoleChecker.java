@@ -55,19 +55,13 @@ public class UserRoleChecker extends EmptyOnClickRowChecker {
 		User user = (User)obj;
 
 		try {
-			if (isChecked(user)) {
-				if (RoleMembershipPolicyUtil.isRoleRequired(
-						user.getUserId(), _role.getRoleId())) {
+			if (isChecked(user) ||
+				RoleMembershipPolicyUtil.isRoleRequired(
+					user.getUserId(), _role.getRoleId()) ||
+				!RoleMembershipPolicyUtil.isRoleAllowed(
+					user.getUserId(), _role.getRoleId())) {
 
-					return true;
-				}
-			}
-			else {
-				if (!RoleMembershipPolicyUtil.isRoleAllowed(
-						user.getUserId(), _role.getRoleId())) {
-
-					return true;
-				}
+				return true;
 			}
 		}
 		catch (Exception e) {

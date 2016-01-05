@@ -51,10 +51,9 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append(", description=");
-		sb.append(", eventListenerClass=");
+		sb.append(", description=, eventListenerClass=");
 		sb.append(_eventListenerClass);
 		sb.append(", trigger=");
 		sb.append(_trigger);

@@ -95,13 +95,8 @@ public class SoyTemplateResourcesCollector {
 	protected String getCapabilityPrefix(BundleCapability bundleCapability) {
 		Map<String, Object> attributes = bundleCapability.getAttributes();
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(attributes.get("type"));
-		sb.append(StringPool.UNDERLINE);
-		sb.append(attributes.get("version"));
-
-		return sb.toString();
+		return attributes.get("type") + StringPool.UNDERLINE +
+			attributes.get("version");
 	}
 
 	protected Bundle getProviderBundle(BundleWire bundleWire) {

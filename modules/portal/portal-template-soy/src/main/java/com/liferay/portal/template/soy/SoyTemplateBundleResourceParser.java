@@ -87,13 +87,8 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 	protected String getCapabilityPrefix(BundleCapability bundleCapability) {
 		Map<String, Object> attributes = bundleCapability.getAttributes();
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(attributes.get("type"));
-		sb.append(StringPool.UNDERLINE);
-		sb.append(attributes.get("version"));
-
-		return sb.toString();
+		return attributes.get("type") + StringPool.UNDERLINE +
+			attributes.get("version");
 	}
 
 	private final Map<String, Bundle> _bundleProvidersMap =
@@ -108,13 +103,13 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 		}
 
 		@Override
-		public Bundle addingBundle(Bundle bundle, BundleEvent event) {
+		public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-			List<BundleCapability> capabilities = bundleWiring.getCapabilities(
-				_namespace);
+			List<BundleCapability> bundleCapabilities =
+				bundleWiring.getCapabilities(_namespace);
 
-			for (BundleCapability bundleCapability : capabilities) {
+			for (BundleCapability bundleCapability : bundleCapabilities) {
 				String providerBundleKey = getCapabilityPrefix(
 					bundleCapability);
 
@@ -126,19 +121,19 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 
 		@Override
 		public void modifiedBundle(
-			Bundle bundle, BundleEvent event, Bundle object) {
+			Bundle bundle, BundleEvent bundleEvent, Bundle object) {
 		}
 
 		@Override
 		public void removedBundle(
-			Bundle bundle, BundleEvent event, Bundle object) {
+			Bundle bundle, BundleEvent bundleEvent, Bundle object) {
 
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-			List<BundleCapability> capabilities = bundleWiring.getCapabilities(
-				_namespace);
+			List<BundleCapability> bundleCapabilities =
+				bundleWiring.getCapabilities(_namespace);
 
-			for (BundleCapability bundleCapability : capabilities) {
+			for (BundleCapability bundleCapability : bundleCapabilities) {
 				String providerBundleKey = getCapabilityPrefix(
 					bundleCapability);
 

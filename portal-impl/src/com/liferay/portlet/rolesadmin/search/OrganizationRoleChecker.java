@@ -52,6 +52,13 @@ public class OrganizationRoleChecker extends EmptyOnClickRowChecker {
 		}
 	}
 
+	@Override
+	public boolean isDisabled(Object obj) {
+		Organization organization = (Organization)obj;
+
+		return isChecked(organization);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationRoleChecker.class);
 

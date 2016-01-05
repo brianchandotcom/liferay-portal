@@ -91,8 +91,8 @@ public class SyntheticBundleTestCallback extends BaseTestCallback<Long, Long> {
 		File baseDir = new File(basePath);
 
 		try (Builder builder = new Builder();
-			InputStream inputStream = clazz.getResourceAsStream(
-				_bundlePackageName.replace('.', '/') + "/bnd.bnd")) {
+				InputStream inputStream = clazz.getResourceAsStream(
+					_bundlePackageName.replace('.', '/') + "/bnd.bnd")) {
 
 			builder.setBundleSymbolicName(clazz.getName());
 			builder.setBase(baseDir);

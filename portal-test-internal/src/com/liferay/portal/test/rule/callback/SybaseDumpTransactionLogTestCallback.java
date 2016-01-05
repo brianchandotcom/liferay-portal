@@ -44,7 +44,7 @@ public class SybaseDumpTransactionLogTestCallback
 		}
 
 		try (Connection connection = DataAccess.getConnection();
-			Statement statement = connection.createStatement()) {
+				Statement statement = connection.createStatement()) {
 
 			statement.execute(
 				"dump transaction " + connection.getCatalog() + " with no_log");

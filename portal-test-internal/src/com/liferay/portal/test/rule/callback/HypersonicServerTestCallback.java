@@ -81,7 +81,7 @@ public class HypersonicServerTestCallback
 			@Override
 			public int stop() {
 				try (PrintWriter logPrintWriter = getLogWriter();
-					PrintWriter errPrintWriter = getErrWriter()) {
+						PrintWriter errPrintWriter = getErrWriter()) {
 
 					int state = super.stop();
 

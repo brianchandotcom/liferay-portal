@@ -270,7 +270,7 @@ public abstract class BaseStoreTestCase {
 		addVersions(fileName, 1);
 
 		try (InputStream inputStream = store.getFileAsStream(
-			companyId, repositoryId, fileName)) {
+				companyId, repositoryId, fileName)) {
 
 			for (int i = 0; i < _DATA_SIZE; i++) {
 				Assert.assertEquals(
@@ -290,7 +290,7 @@ public abstract class BaseStoreTestCase {
 		addVersions(fileName, 5);
 
 		try (InputStream inputStream = store.getFileAsStream(
-			companyId, repositoryId, fileName, "1.5")) {
+				companyId, repositoryId, fileName, "1.5")) {
 
 			for (int i = 0; i < _DATA_SIZE; i++) {
 				Assert.assertEquals(

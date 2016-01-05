@@ -104,7 +104,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="tabs3" type="hidden" value="current" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
 	<aui:input name="addUserIds" type="hidden" />
 	<aui:input name="removeUserIds" type="hidden" />
@@ -168,7 +167,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 	</c:choose>
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
+<aui:script use="liferay-item-selector-dialog,liferay-portlet-url">
 	var form = AUI.$(document.<portlet:namespace />fm);
 
 	<portlet:renderURL var="selectAssigneesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -189,6 +188,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
+								var assignmentsRedirect = Liferay.PortletURL.createURL('<%= portletURL.toString() %>');
+
 								if (selectedItem.type === 'users') {
 									form.fm('addUserIds').val(selectedItem.value);
 								}
@@ -196,7 +197,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 									form.fm('addGroupIds').val(selectedItem.value);
 								}
 
-								form.fm('assignmentsRedirect').val('<%= portletURL.toString() %>');
+								assignmentsRedirect.setParameter('tabs2', selectedItem.type);
+
+								form.fm('redirect').val(assignmentsRedirect.toString());
 
 								submitForm(form, '<%= editRoleAssignmentsURL %>');
 							}

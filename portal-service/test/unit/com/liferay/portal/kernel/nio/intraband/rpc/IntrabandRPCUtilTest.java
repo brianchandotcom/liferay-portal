@@ -188,8 +188,9 @@ public class IntrabandRPCUtilTest {
 		byteBuffer.put(76, (byte)CharPool.UPPER_CASE_S);
 
 		futureCompletionHandler.replied(
-			null, Datagram.createRequestDatagram(SystemDataType.RPC.getValue(),
-			byteBuffer));
+			null,
+			Datagram.createRequestDatagram(
+				SystemDataType.RPC.getValue(), byteBuffer));
 
 		try {
 			defaultNoticeableFuture.get();

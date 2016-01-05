@@ -1537,8 +1537,8 @@ public class LocalProcessExecutorTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				unsyncByteArrayOutputStream) {
+		try (ObjectOutputStream objectOutputStream =
+				new ObjectOutputStream(unsyncByteArrayOutputStream) {
 
 					@Override
 					protected void writeStreamHeader() {
@@ -1602,14 +1602,14 @@ public class LocalProcessExecutorTest {
 	private static final ServerSocketConfigurator _serverSocketConfigurator =
 		new ServerSocketConfigurator() {
 
-		@Override
-		public void configure(ServerSocket serverSocket)
-			throws SocketException {
+			@Override
+			public void configure(ServerSocket serverSocket)
+				throws SocketException {
 
-			serverSocket.setReuseAddress(true);
-		}
+				serverSocket.setReuseAddress(true);
+			}
 
-	};
+		};
 
 	private final LocalProcessExecutor _localProcessExecutor =
 		new LocalProcessExecutor();

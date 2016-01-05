@@ -216,7 +216,7 @@ public class IntervalActionProcessorTest {
 					return null;
 				}
 
-		});
+			});
 
 		Assert.assertTrue(intervalActionProcessor.performIntervalActions());
 	}
@@ -234,7 +234,7 @@ public class IntervalActionProcessorTest {
 					return false;
 				}
 
-		});
+			});
 
 		Assert.assertNull(intervalSearcher.performIntervalActions());
 	}

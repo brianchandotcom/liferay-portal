@@ -33,19 +33,19 @@ public class BaseOutputProcessorTestCase {
 		InputStream inputStream = new UnsyncFilterInputStream(
 			new UnsyncByteArrayInputStream(new byte[0])) {
 
-				@Override
-				public int read() throws IOException {
-					throw ioException;
-				}
+			@Override
+			public int read() throws IOException {
+				throw ioException;
+			}
 
-				@Override
-				public int read(byte[] bytes, int offset, int length)
-					throws IOException {
+			@Override
+			public int read(byte[] bytes, int offset, int length)
+				throws IOException {
 
-					throw ioException;
-				}
+				throw ioException;
+			}
 
-			};
+		};
 
 		try {
 			outputProcessor.processStdErr(inputStream);
@@ -68,12 +68,12 @@ public class BaseOutputProcessorTestCase {
 		inputStream = new UnsyncFilterInputStream(
 			new UnsyncByteArrayInputStream(new byte[0])) {
 
-				@Override
-				public void close() throws IOException {
-					throw ioException;
-				}
+			@Override
+			public void close() throws IOException {
+				throw ioException;
+			}
 
-			};
+		};
 
 		try {
 			outputProcessor.processStdErr(inputStream);

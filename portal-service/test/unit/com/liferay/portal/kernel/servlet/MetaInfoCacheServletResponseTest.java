@@ -1227,36 +1227,36 @@ public class MetaInfoCacheServletResponseTest {
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse() {
 
-			@Override
-			public boolean isCommitted() {
-				return false;
-			}
+				@Override
+				public boolean isCommitted() {
+					return false;
+				}
 
-			@Override
-			public void resetBuffer() {
-			}
+				@Override
+				public void resetBuffer() {
+				}
 
-			@Override
-			public void sendRedirect(String location) {
-				locationReference.set(location);
-			}
+				@Override
+				public void sendRedirect(String location) {
+					locationReference.set(location);
+				}
 
-			@Override
-			public void setStatus(int status) {
-				statusReference.set(status);
-			}
+				@Override
+				public void setStatus(int status) {
+					statusReference.set(status);
+				}
 
-			/**
-			 * @deprecated As of 7.0.0
-			 */
-			@Deprecated
-			@Override
-			public void setStatus(int status, String message) {
-				statusReference.set(status);
-				messageReference.set(message);
-			}
+				/**
+				 * @deprecated As of 7.0.0
+				 */
+				@Deprecated
+				@Override
+				public void setStatus(int status, String message) {
+					statusReference.set(status);
+					messageReference.set(message);
+				}
 
-		};
+			};
 
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
 			new MetaInfoCacheServletResponse(stubHttpServletResponse);

@@ -345,12 +345,15 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the display URL of the group.
+	 * Returns the group's display URL.
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout set is private to the group
-	 * @param  secureConnection whether the generate URL uses secure connection
-	 * @return the display URL o the group
+	 * @param  secureConnection whether the generated URL uses a secure
+	 *         connection
+	 * @return the group's display URL
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found or if a portal exception occurred
 	 */
 	@Override
 	public String getGroupDisplayURL(

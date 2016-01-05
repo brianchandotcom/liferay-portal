@@ -34,9 +34,6 @@ if (tabs3.equals("available")) {
 }
 %>
 
-<aui:input name="addUserIds" type="hidden" />
-<aui:input name="removeUserIds" type="hidden" />
-
 <liferay-ui:membership-policy-error />
 
 <liferay-ui:search-container

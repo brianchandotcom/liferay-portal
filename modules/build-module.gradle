@@ -1,2 +1,10 @@
 apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
+
+File changelogFile = new File(rootProject.projectDir, "build-changelog.xml")
+
+ant {
+	basedir = projectDir
+
+	importBuild changelogFile
+}

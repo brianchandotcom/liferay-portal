@@ -63,8 +63,10 @@ public class DatabaseConvertProcess extends BaseConvertProcess {
 	protected void doConvert() throws Exception {
 		MaintenanceUtil.appendStatus("Starting database migration.");
 
+		DataSource dataSource = getDataSource();
+
 		for (DatabaseConverter databaseConverter : _databaseConverters) {
-			databaseConverter.convert(getDataSource());
+			databaseConverter.convert(dataSource);
 		}
 
 		MaintenanceUtil.appendStatus(

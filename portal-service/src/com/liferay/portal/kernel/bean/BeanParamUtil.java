@@ -120,8 +120,8 @@ public class BeanParamUtil {
 	public static double getDouble(
 		Object bean, HttpServletRequest request, String param, Locale locale) {
 
-			return getDouble(
-				bean, request, param, GetterUtil.DEFAULT_DOUBLE, locale);
+		return getDouble(
+			bean, request, param, GetterUtil.DEFAULT_DOUBLE, locale);
 	}
 
 	public static double getDouble(

@@ -53,8 +53,9 @@ public interface RatingsDataTransformer {
 	 *         changes.
 	 */
 	public ActionableDynamicQuery.PerformActionMethod<RatingsEntry>
-		transformRatingsData(
-			final RatingsType fromRatingsType, final RatingsType toRatingsType)
+			transformRatingsData(
+				final RatingsType fromRatingsType,
+				final RatingsType toRatingsType)
 		throws PortalException;
 
 }

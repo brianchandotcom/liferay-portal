@@ -72,8 +72,8 @@ public class LogAssertionTestCallback
 
 		for (CaptureAppender captureAppender : captureAppenders) {
 			try {
-				for (LoggingEvent loggingEvent
-					 : captureAppender.getLoggingEvents()) {
+				for (LoggingEvent loggingEvent :
+						captureAppender.getLoggingEvents()) {
 
 					String renderedMessage = loggingEvent.getRenderedMessage();
 

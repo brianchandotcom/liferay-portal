@@ -157,18 +157,18 @@ public class MailServiceTestUtil {
 
 	private static int _getFreePort() throws IOException {
 		try (ServerSocketChannel serverSocketChannel =
-			SocketUtil.createServerSocketChannel(
-				InetAddress.getLocalHost(), _START_PORT,
-				new ServerSocketConfigurator() {
+				SocketUtil.createServerSocketChannel(
+					InetAddress.getLocalHost(), _START_PORT,
+					new ServerSocketConfigurator() {
 
-					@Override
-					public void configure(ServerSocket serverSocket)
-						throws SocketException {
+						@Override
+						public void configure(ServerSocket serverSocket)
+							throws SocketException {
 
-						serverSocket.setReuseAddress(true);
-					}
+							serverSocket.setReuseAddress(true);
+						}
 
-				})) {
+					})) {
 
 			ServerSocket serverSocket = serverSocketChannel.socket();
 

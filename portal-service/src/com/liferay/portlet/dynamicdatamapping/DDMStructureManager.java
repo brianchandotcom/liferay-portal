@@ -39,7 +39,7 @@ public interface DDMStructureManager {
 
 	public static final String STRUCTURE_INDEXER_FIELD_PREFIX =
 		DDMStructureManager.STRUCTURE_INDEXER_FIELD_NAMESPACE +
-		DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR;
+			DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR;
 
 	public static final String STRUCTURE_INDEXER_FIELD_SEPARATOR =
 		StringPool.DOUBLE_UNDERLINE;

@@ -36,7 +36,7 @@ public class AssertUtils {
 		throws Exception {
 
 		try (InputStream expectInputStream = expectedBlob.getBinaryStream();
-			InputStream actualInputStream = actualBlob.getBinaryStream()) {
+				InputStream actualInputStream = actualBlob.getBinaryStream()) {
 
 			while (true) {
 				int expectValue = expectInputStream.read();

@@ -377,12 +377,12 @@ public class Serializer {
 	protected static final ThreadLocal<BufferQueue> bufferQueueThreadLocal =
 		new SoftReferenceThreadLocal<BufferQueue>() {
 
-		@Override
-		protected BufferQueue initialValue() {
-			return new BufferQueue();
-		}
+			@Override
+			protected BufferQueue initialValue() {
+				return new BufferQueue();
+			}
 
-	};
+		};
 
 	static {
 		int threadLocalBufferCountLimit = GetterUtil.getInteger(

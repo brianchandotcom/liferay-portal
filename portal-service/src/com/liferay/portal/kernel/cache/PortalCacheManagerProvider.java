@@ -77,8 +77,9 @@ public class PortalCacheManagerProvider {
 		Map<String, PortalCacheManager<? extends Serializable, ?>>
 			_portalCacheManagers;
 	private final
-		ServiceTracker<PortalCacheManager<? extends Serializable, ?>,
-			PortalCacheManager<? extends Serializable, ?>> _serviceTracker;
+		ServiceTracker
+			<PortalCacheManager<? extends Serializable, ?>,
+				PortalCacheManager<? extends Serializable, ?>> _serviceTracker;
 
 	private class PortalCacheProviderServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

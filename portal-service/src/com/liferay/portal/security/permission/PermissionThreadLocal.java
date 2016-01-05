@@ -120,13 +120,13 @@ public class PermissionThreadLocal {
 		new AutoResetThreadLocal<PermissionChecker>(
 			PermissionThreadLocal.class + "._permissionChecker") {
 
-				@Override
-				protected PermissionChecker copy(
-					PermissionChecker permissionChecker) {
+			@Override
+			protected PermissionChecker copy(
+				PermissionChecker permissionChecker) {
 
-					return permissionChecker;
-				}
+				return permissionChecker;
+			}
 
-			};
+		};
 
 }

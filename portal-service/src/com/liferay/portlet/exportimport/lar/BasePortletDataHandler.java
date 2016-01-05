@@ -200,16 +200,16 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 				portlet.getRootPortletId(), false) > 0)) {
 
-				PortletDataHandlerControl[] portletDataHandlerControls = null;
+			PortletDataHandlerControl[] portletDataHandlerControls = null;
 
-				if (isDisplayPortlet()) {
-					portletDataHandlerControls = getExportControls();
-				}
+			if (isDisplayPortlet()) {
+				portletDataHandlerControls = getExportControls();
+			}
 
-				configurationControls.add(
-					new PortletDataHandlerBoolean(
-						null, PortletDataHandlerKeys.PORTLET_SETUP, "setup",
-						true, false, portletDataHandlerControls, null, null));
+			configurationControls.add(
+				new PortletDataHandlerBoolean(
+					null, PortletDataHandlerKeys.PORTLET_SETUP, "setup", true,
+					false, portletDataHandlerControls, null, null));
 		}
 
 		// Archived setups

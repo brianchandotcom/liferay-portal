@@ -34,8 +34,8 @@ import java.util.List;
  * @author Shuyang Zhou
  */
 public class CachelessTableMapperImpl
-		<L extends BaseModel<L>, R extends BaseModel<R>>
-	extends TableMapperImpl<L, R> {
+	<L extends BaseModel<L>, R extends BaseModel<R>>
+		extends TableMapperImpl<L, R> {
 
 	public CachelessTableMapperImpl(
 		String tableName, String companyColumnName, String leftColumnName,

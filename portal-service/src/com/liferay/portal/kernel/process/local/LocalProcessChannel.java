@@ -43,28 +43,29 @@ public class LocalProcessChannel<T extends Serializable>
 		_objectOutputStream = objectOutputStream;
 		_asyncBroker = asyncBroker;
 
-		_noticeableFuture.addFutureListener(new FutureListener<T>() {
+		_noticeableFuture.addFutureListener(
+			new FutureListener<T>() {
 
-			@Override
-			public void complete(Future<T> future) {
-				try {
-					_objectOutputStream.close();
-				}
-				catch (IOException ioe) {
-				}
-				finally {
-					Map<Long, NoticeableFuture<Serializable>> map =
-						_asyncBroker.getOpenBids();
+				@Override
+				public void complete(Future<T> future) {
+					try {
+						_objectOutputStream.close();
+					}
+					catch (IOException ioe) {
+					}
+					finally {
+						Map<Long, NoticeableFuture<Serializable>> map =
+							_asyncBroker.getOpenBids();
 
-					for (NoticeableFuture<Serializable> noticeableFuture :
-							map.values()) {
+						for (NoticeableFuture<Serializable> noticeableFuture :
+								map.values()) {
 
-						noticeableFuture.cancel(true);
+							noticeableFuture.cancel(true);
+						}
 					}
 				}
-			}
 
-		});
+			});
 	}
 
 	@Override

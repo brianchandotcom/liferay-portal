@@ -58,23 +58,23 @@ public class ServiceContextThreadLocal {
 				ServiceContextThreadLocal.class + "._serviceContextThreadLocal",
 				new LinkedList<ServiceContext>()) {
 
-					@Override
-					protected LinkedList<ServiceContext> copy(
-						LinkedList<ServiceContext> serviceContexts) {
+				@Override
+				protected LinkedList<ServiceContext> copy(
+					LinkedList<ServiceContext> serviceContexts) {
 
-						LinkedList<ServiceContext> cloneServiceContexts =
-							new LinkedList<>();
+					LinkedList<ServiceContext> cloneServiceContexts =
+						new LinkedList<>();
 
-						for (ServiceContext serviceContext : serviceContexts) {
-							ServiceContext cloneServiceContext =
-								(ServiceContext)serviceContext.clone();
+					for (ServiceContext serviceContext : serviceContexts) {
+						ServiceContext cloneServiceContext =
+							(ServiceContext)serviceContext.clone();
 
-							cloneServiceContexts.add(cloneServiceContext);
-						}
-
-						return cloneServiceContexts;
+						cloneServiceContexts.add(cloneServiceContext);
 					}
 
-				};
+					return cloneServiceContexts;
+				}
+
+			};
 
 }

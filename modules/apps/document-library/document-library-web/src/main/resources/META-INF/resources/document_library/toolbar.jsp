@@ -115,13 +115,13 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="lock" label="lock" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="unlock" label="unlock" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'}); void(0);";
 			%>
 
-			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="unlock" label="unlock" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="lock" label="lock" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";

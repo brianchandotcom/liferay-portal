@@ -146,6 +146,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             tag names for the group, and can set whether the group is for
 	 *             staging
 	 * @return     the group
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addGroup(long, long, Map,
 	 *             Map, int, boolean, int, String, boolean, boolean,
 	 *             ServiceContext)}
@@ -183,6 +184,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             names for the group, and can set whether the group is for
 	 *             staging
 	 * @return     the group
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, Map,
 	 *             Map, int, boolean, int, String, boolean, boolean,
 	 *             ServiceContext)}
@@ -221,8 +223,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	/**
 	 * Adds the groups to the role.
 	 *
-	 * @param roleId the primary key of the role
-	 * @param groupIds the primary keys of the groups
+	 * @param  roleId the primary key of the role
+	 * @param  groupIds the primary keys of the groups
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void addRoleGroups(long roleId, long[] groupIds)
@@ -238,7 +241,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Checks that the current user is permitted to use the group for Remote
 	 * Staging.
 	 *
-	 * @param groupId the primary key of the group
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void checkRemoteStagingGroup(long groupId) throws PortalException {
@@ -263,7 +267,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * entities, and wikis are also deleted.
 	 * </p>
 	 *
-	 * @param groupId the primary key of the group
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void deleteGroup(long groupId) throws PortalException {
@@ -298,6 +303,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @return the group associated with the company
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getCompanyGroup(long companyId) throws PortalException {
@@ -314,6 +320,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the group with the primary key
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getGroup(long groupId) throws PortalException {
@@ -331,6 +338,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  groupKey the group key
 	 * @return the group with the group key
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getGroup(long companyId, String groupKey)
@@ -389,6 +397,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  site whether the group is to be associated with a main site
 	 * @return the matching groups, or <code>null</code> if no matches were
 	 *         found
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getGroups(
@@ -408,6 +417,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *         inclusive)
 	 * @return the range of site groups for which the user has Control Panel
 	 *         access
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getManageableSiteGroups(
@@ -456,6 +466,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             inclusive)
 	 * @return     the range of site groups for which the user has Control Panel
 	 *             access
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getManageableSiteGroups(Collection, int)}
 	 */
@@ -472,6 +483,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param  organizations the organizations
 	 * @return the groups associated with the organizations
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getOrganizationsGroups(List<Organization> organizations)
@@ -489,6 +501,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  userId the primary key of the user
 	 * @return the group directly associated with the user
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getUserGroup(long companyId, long userId)
@@ -507,6 +520,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param  userGroups the user groups
 	 * @return the groups associated with the user groups
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getUserGroupsGroups(List<UserGroup> userGroups)
@@ -537,6 +551,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  end the upper bound of the range of groups to consider (not
 	 *         inclusive)
 	 * @return the range of groups associated with the user's organizations
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getUserOrganizationsGroups(
@@ -594,6 +609,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             #getUserSitesGroups(long, String[], int)}.
 	 * @param      max the maximum number of groups to return
 	 * @return     the user's groups &quot;sites&quot;
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	 *             String[], int)}
 	 */
@@ -635,6 +651,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             #getUserSitesGroups(String[], int)}.
 	 * @param      max the maximum number of groups to return
 	 * @return     the user's groups &quot;sites&quot;
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(String[],
 	 *             int)}
 	 */
@@ -653,6 +670,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Panel.
 	 *
 	 * @return     the number of user's groups &quot;sites&quot;
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroupsCount()}
 	 */
 	@Deprecated
@@ -667,6 +685,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @return     the user's layout set group, organization groups, and
 	 *             inherited organization groups, and site groups
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups}
 	 */
 	@Deprecated
@@ -711,6 +730,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *         #getUserSitesGroups(long, String[], int)}.
 	 * @param  max the maximum number of groups to return
 	 * @return the user's groups &quot;sites&quot;
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getUserSitesGroups(
@@ -816,6 +836,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *         #getUserSitesGroups(long, String[], int)}.
 	 * @param  max the maximum number of groups to return
 	 * @return the user's groups &quot;sites&quot;
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getUserSitesGroups(String[] classNames, int max)
@@ -831,6 +852,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Panel.
 	 *
 	 * @return the number of user's groups &quot;sites&quot;
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public int getUserSitesGroupsCount() throws PortalException {
@@ -849,6 +871,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @return <code>true</code> if the user is associated with the group;
 	 *         <code>false</code> otherwise
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public boolean hasUserGroup(long userId, long groupId)
@@ -923,6 +946,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  end the upper bound of the range of groups to return (not
 	 *         inclusive)
 	 * @return the matching groups ordered by name
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> search(
@@ -979,8 +1003,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Sets the groups associated with the role, removing and adding
 	 * associations as necessary.
 	 *
-	 * @param roleId the primary key of the role
-	 * @param groupIds the primary keys of the groups
+	 * @param  roleId the primary key of the role
+	 * @param  groupIds the primary keys of the groups
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void setRoleGroups(long roleId, long[] groupIds)
@@ -995,8 +1020,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	/**
 	 * Removes the groups from the role.
 	 *
-	 * @param roleId the primary key of the role
-	 * @param groupIds the primary keys of the groups
+	 * @param  roleId the primary key of the role
+	 * @param  groupIds the primary keys of the groups
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void unsetRoleGroups(long roleId, long[] groupIds)
@@ -1015,6 +1041,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  friendlyURL the group's new friendlyURL (optionally
 	 *         <code>null</code>)
 	 * @return the group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group updateFriendlyURL(long groupId, String friendlyURL)
@@ -1102,11 +1129,14 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             more information see {@link GroupConstants}.
 	 * @param      friendlyURL the group's new friendlyURL (optionally
 	 *             <code>null</code>)
+	 * @param      inheritContent whether to inherit content from the parent
+	 *             group
 	 * @param      active whether the group is active
 	 * @param      serviceContext the service context to be applied (optionally
 	 *             <code>null</code>). Can set the asset category IDs and asset
 	 *             tag names for the group.
 	 * @return     the group
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
 	 *             Map, int, boolean, int, String, boolean, boolean,
 	 *             ServiceContext)}
@@ -1134,6 +1164,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @param  typeSettings the group's new type settings (optionally
 	 *         <code>null</code>)
 	 * @return the group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group updateGroup(long groupId, String typeSettings)

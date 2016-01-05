@@ -35,7 +35,10 @@
 
 			<div class="toolbar-group-right">
 				<div class="toolbar-group-content" data-qa-id="headerOptions">
-					<@liferay_portlet["icon-options"] direction="right" markupView="lexicon" />
+					<@liferay_portlet["icon-options"]
+						direction="right"
+						markupView="lexicon"
+					/>
 				</div>
 			</div>
 

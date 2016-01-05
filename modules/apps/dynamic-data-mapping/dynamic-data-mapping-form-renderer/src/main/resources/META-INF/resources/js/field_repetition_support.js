@@ -138,9 +138,13 @@ AUI.add(
 			syncRepeatablelUI: function() {
 				var instance = this;
 
-				var container = instance.get('container');
+				if (!instance.get('readOnly')) {
 
-				container.one('.lfr-ddm-form-field-repeatable-delete-button').toggle(instance.get('repeatedIndex') > 0);
+					var container = instance.get('container');
+
+					container.one('.lfr-ddm-form-field-repeatable-delete-button').toggle(instance.get('repeatedIndex') > 0);
+
+				}
 			},
 
 			_afterRepeatableFieldRender: function() {
@@ -150,11 +154,15 @@ AUI.add(
 
 				instance.renderRepeatable();
 
-				(new A.EventHandle(instance._DOMEventHandlers)).detach();
+				if (!instance.get('readOnly')) {
 
-				instance._DOMEventHandlers = [
-					container.delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance)
-				];
+					(new A.EventHandle(instance._DOMEventHandlers)).detach();
+
+					instance._DOMEventHandlers = [
+						container.delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance)
+					];
+
+				}
 			},
 
 			_afterRepeatableIndexChange: function() {

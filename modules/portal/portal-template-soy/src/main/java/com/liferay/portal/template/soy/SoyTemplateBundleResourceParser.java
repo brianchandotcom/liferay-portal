@@ -60,7 +60,7 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 		if (pos == -1) {
 			throw new IllegalArgumentException(
 				String.format(
-					"The templateId \"%s\" does not map to a soy template",
+					"The templateId \"%s\" does not map to a Soy template",
 					templateId));
 		}
 

@@ -56,16 +56,16 @@ public class UpgradeRelease extends UpgradeProcess {
 	protected String toSchemaVersion(String buildNumber) {
 		char[] chars = buildNumber.toCharArray();
 
-		StringBuilder sb = new StringBuilder(2 * chars.length - 1);
+		StringBuilder sb = new StringBuilder(2 * chars.length);
 
-		int i = 0;
-
-		for (; i < chars.length - 1; i++) {
+		for (int i = 0; i < chars.length; i++) {
 			sb.append(chars[i]);
 			sb.append('.');
 		}
 
-		sb.append(chars[i]);
+		if (chars.length > 0) {
+			sb.setLength(sb.length() - 1);
+		}
 
 		return sb.toString();
 	}

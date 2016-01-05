@@ -33,8 +33,8 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-star"
-					label="<%= true %>"
+					icon="star"
+					markupView="lexicon"
 					message="unsubscribe"
 					url="<%= unsubscribeURL %>"
 				/>
@@ -47,8 +47,8 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-star-empty"
-					label="<%= true %>"
+					icon="star-o"
+					markupView="lexicon"
 					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>

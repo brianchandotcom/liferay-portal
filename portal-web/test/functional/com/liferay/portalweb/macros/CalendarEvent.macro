@@ -1880,6 +1880,10 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#END_DATE_FIELD" value1="${endDateTime}" />
 	</command>
 
+	<command name="viewTitle">
+		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
+	</command>
+
 	<command name="viewTitleViaDetails">
 		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
 

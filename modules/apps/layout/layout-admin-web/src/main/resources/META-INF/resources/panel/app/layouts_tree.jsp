@@ -63,7 +63,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	<div class="layout-set-tabs">
 		<c:if test="<%= layoutsTreeDisplayContext.isShowPublicLayoutsTree() %>">
 			<span class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? StringPool.BLANK : "selected-layout-set" %>">
-				<aui:a cssClass="layout-set-link" href="<%= layoutsTreeDisplayContext.getPublicLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(false) %>" />
+				<aui:a cssClass="layout-set-link" data="<%= layoutsTreeDisplayContext.getLayoutSetData(false) %>" href="<%= layoutsTreeDisplayContext.getPublicLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(false) %>" />
 
 				<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
 
@@ -100,7 +100,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		</c:if>
 
 		<span class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? "selected-layout-set" : StringPool.BLANK %>">
-			<aui:a cssClass="layout-set-link" href="<%= layoutsTreeDisplayContext.getPrivateLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(true) %>" />
+			<aui:a cssClass="layout-set-link" data="<%= layoutsTreeDisplayContext.getLayoutSetData(true) %>" href="<%= layoutsTreeDisplayContext.getPrivateLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(true) %>" />
 
 			<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
 

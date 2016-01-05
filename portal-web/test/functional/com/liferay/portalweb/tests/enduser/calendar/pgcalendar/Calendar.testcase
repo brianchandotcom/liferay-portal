@@ -2029,7 +2029,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarScheduler#gotoEdit">
+		<execute macro="CalendarNavigator#gotoEditEvent">
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
@@ -3808,7 +3808,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarScheduler#gotoEdit">
+		<execute macro="CalendarNavigator#gotoEditEvent">
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
@@ -4250,7 +4250,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarScheduler#gotoEdit">
+		<execute macro="CalendarNavigator#gotoEditEvent">
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
@@ -4304,7 +4304,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarScheduler#gotoEdit">
+		<execute macro="CalendarNavigator#gotoEditEvent">
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
@@ -4836,7 +4836,7 @@
 			<var name="calendarType" value="Other Calendars" />
 		</execute>
 
-		<execute macro="CalendarScheduler#gotoEdit">
+		<execute macro="CalendarNavigator#gotoEditEvent">
 			<var name="eventTitle" value="Calendar Event" />
 		</execute>
 

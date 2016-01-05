@@ -14,7 +14,12 @@
 
 package com.liferay.portal.servlet.jsp.compiler;
 
+import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.jsp.compiler.internal.JspBundleClassloader;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -173,6 +178,21 @@ public class JspServlet extends HttpServlet {
 		defaults.put("httpMethods", "GET,POST,HEAD");
 		defaults.put("keepgenerated", "false");
 		defaults.put("logVerbosityLevel", "NONE");
+
+		StringBundler sb = new StringBundler(5);
+
+		ServletContext portalServletContext = ServletContextPool.get(
+			PortalUtil.getServletContextName());
+
+		sb.append(
+			portalServletContext.getAttribute(
+				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR));
+		sb.append(StringPool.SLASH);
+		sb.append(_bundle.getSymbolicName());
+		sb.append(StringPool.DASH);
+		sb.append(_bundle.getVersion());
+
+		defaults.put("scratchdir", sb.toString());
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();
 		Set<String> nameSet = new HashSet<>(Collections.list(names));

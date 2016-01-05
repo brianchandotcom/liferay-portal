@@ -14,8 +14,4 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%@ page import="com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil" %>
-
-<portlet:defineObjects />
+<%@ include file="/init.jsp" %>

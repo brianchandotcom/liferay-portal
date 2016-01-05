@@ -281,7 +281,7 @@ public class LayoutsTreeTag extends IncludeTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE = "/html/taglib/ui/layouts_tree/page.jsp";
+	private static final String _PAGE = "/layouts_tree/page.jsp";
 
 	private boolean _checkContentDisplayPage;
 	private boolean _defaultStateChecked;

@@ -108,14 +108,14 @@ public interface Sanitizer {
 	 *         com.liferay.portal.kernel.util.ContentTypes}.
 	 * @param  modes ways in which to run the sanitizer, such as {@link
 	 *         #MODE_ALL}, {@link #MODE_BAD_WORDS}, and/or {@link #MODE_XSS}
-	 * @param  s the content to sanitize
+	 * @param  content the content to sanitize
 	 * @param  options the options map
 	 * @return the sanitized content
 	 * @throws SanitizerException if a sanitizer exception occurred
 	 */
 	public String sanitize(
 			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, String[] modes, String s,
+			long classPK, String contentType, String[] modes, String content,
 			Map<String, Object> options)
 		throws SanitizerException;
 

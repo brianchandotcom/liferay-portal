@@ -49,7 +49,7 @@ public class AntiSamySanitizerImpl extends BaseSanitizer {
 	@Override
 	public String sanitize(
 			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, String[] modes, String s,
+			long classPK, String contentType, String[] modes, String content,
 			Map<String, Object> options)
 		throws SanitizerException {
 
@@ -57,20 +57,20 @@ public class AntiSamySanitizerImpl extends BaseSanitizer {
 			_log.debug("Sanitizing " + className + "#" + classPK);
 		}
 
-		if (s == null) {
+		if (content == null) {
 			return null;
 		}
 
 		if (Validator.isNull(contentType) ||
 			!contentType.equals(ContentTypes.TEXT_HTML)) {
 
-			return s;
+			return content;
 		}
 
 		try {
 			AntiSamy antiSamy = new AntiSamy();
 
-			CleanResults cleanResults = antiSamy.scan(s, _policy);
+			CleanResults cleanResults = antiSamy.scan(content, _policy);
 
 			return cleanResults.getCleanHTML();
 		}

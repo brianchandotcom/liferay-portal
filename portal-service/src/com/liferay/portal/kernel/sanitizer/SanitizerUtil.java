@@ -153,13 +153,13 @@ public class SanitizerUtil {
 
 	public static String sanitize(
 			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, String[] modes, String s,
+			long classPK, String contentType, String[] modes, String content,
 			Map<String, Object> options)
 		throws SanitizerException {
 
 		return getSanitizer().sanitize(
 			companyId, groupId, userId, className, classPK, contentType, modes,
-			s, options);
+			content, options);
 	}
 
 	public void setSanitizer(Sanitizer sanitizer) {

@@ -42,20 +42,20 @@ public class CommentSanitizerImpl extends BaseSanitizer {
 	@Override
 	public String sanitize(
 		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes, String s,
+		long classPK, String contentType, String[] modes, String content,
 		Map<String, Object> options) {
 
 		if (MapUtil.isEmpty(options)) {
-			return s;
+			return content;
 		}
 
 		boolean discussion = GetterUtil.getBoolean(options.get("discussion"));
 
 		if (!discussion || !contentType.equals(ContentTypes.TEXT_HTML)) {
-			return s;
+			return content;
 		}
 
-		return sanitize(s);
+		return sanitize(content);
 	}
 
 	protected String sanitize(String html) {

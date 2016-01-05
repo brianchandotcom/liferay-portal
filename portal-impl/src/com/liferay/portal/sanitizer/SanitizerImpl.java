@@ -111,17 +111,17 @@ public class SanitizerImpl implements Sanitizer {
 	@Override
 	public String sanitize(
 			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, String[] modes, String s,
+			long classPK, String contentType, String[] modes, String content,
 			Map<String, Object> options)
 		throws SanitizerException {
 
 		for (Sanitizer sanitizer : _sanitizers) {
-			s = sanitizer.sanitize(
+			content = sanitizer.sanitize(
 				companyId, groupId, userId, className, classPK, contentType,
-				modes, s, options);
+				modes, content, options);
 		}
 
-		return s;
+		return content;
 	}
 
 	public void unregisterSanitizer(Sanitizer sanitizer) {

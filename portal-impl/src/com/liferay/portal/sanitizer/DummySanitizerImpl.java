@@ -68,14 +68,14 @@ public class DummySanitizerImpl implements Sanitizer {
 	@Override
 	public String sanitize(
 		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes, String s,
+		long classPK, String contentType, String[] modes, String content,
 		Map<String, Object> options) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Sanitizing " + className + "#" + classPK);
 		}
 
-		return s;
+		return content;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

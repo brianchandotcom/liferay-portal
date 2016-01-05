@@ -179,7 +179,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						</c:if>
 
 						<c:if test="<%= enableFlags %>">
-							<liferay-ui:flags
+							<liferay-flags:flags
 								className="<%= MBMessage.class.getName() %>"
 								classPK="<%= message.getMessageId() %>"
 								contentTitle="<%= message.getSubject() %>"

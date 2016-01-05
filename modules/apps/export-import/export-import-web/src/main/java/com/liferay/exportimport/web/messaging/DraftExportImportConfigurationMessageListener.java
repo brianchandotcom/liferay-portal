@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
 
@@ -120,6 +122,10 @@ public class DraftExportImportConfigurationMessageListener
 			// automatically
 
 			for (BackgroundTask backgroundTask : backgroundTasks) {
+				if (isLiveGroup(backgroundTask.getGroupId())) {
+					continue;
+				}
+
 				_backgroundTaskLocalService.deleteBackgroundTask(
 					backgroundTask.getBackgroundTaskId());
 			}
@@ -154,6 +160,16 @@ public class DraftExportImportConfigurationMessageListener
 		return _backgroundTaskLocalService.dynamicQuery(dynamicQuery);
 	}
 
+	protected boolean isLiveGroup(long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group.hasStagingGroup()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference(unbind = "-")
 	protected void setBackgroundTaskLocalService(
 		BackgroundTaskLocalService backgroundTaskLocalService) {
@@ -177,6 +193,11 @@ public class DraftExportImportConfigurationMessageListener
 			exportImportConfigurationLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
@@ -196,6 +217,7 @@ public class DraftExportImportConfigurationMessageListener
 	private volatile BackgroundTaskLocalService _backgroundTaskLocalService;
 	private volatile ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+	private volatile GroupLocalService _groupLocalService;
 	private volatile SchedulerEngineHelper _schedulerEngineHelper;
 
 }

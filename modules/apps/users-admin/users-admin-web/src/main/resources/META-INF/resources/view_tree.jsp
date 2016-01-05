@@ -120,6 +120,7 @@ if (organization != null) {
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>
 </c:if>
+
 <c:choose>
 	<c:when test="<%= showList %>">
 

@@ -935,18 +935,15 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(types.length * 2 + 1);
+		StringBundler sb = new StringBundler(types.length + 1);
 
 		sb.append(" AND (");
 
-		for (int i = 0; i < types.length; i++) {
-			sb.append("Role_.type_ = ?");
-			sb.append(" OR ");
+		for (int i = 0; i < types.length - 1; i++) {
+			sb.append("Role_.type_ = ? OR ");
 		}
 
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append("Role_.type_ = ?)");
 
 		return sb.toString();
 	}

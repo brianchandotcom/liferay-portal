@@ -136,6 +136,8 @@ public class SetupWizardUtil {
 		_processDatabaseProperties(
 			request, unicodeProperties, databaseConfigured);
 
+		_processOtherProperties(request, unicodeProperties);
+
 		updateLanguage(request, response);
 
 		unicodeProperties.put(
@@ -194,6 +196,34 @@ public class SetupWizardUtil {
 			unicodeProperties.remove(PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME);
 			unicodeProperties.remove(PropsKeys.JDBC_DEFAULT_USERNAME);
 			unicodeProperties.remove(PropsKeys.JDBC_DEFAULT_PASSWORD);
+		}
+	}
+
+	private static void _processOtherProperties(
+			HttpServletRequest request, UnicodeProperties unicodeProperties)
+		throws Exception {
+
+		_processProperty(
+			"adminFirstName", PropsKeys.DEFAULT_ADMIN_FIRST_NAME,
+			PropsValues.DEFAULT_ADMIN_FIRST_NAME, request, unicodeProperties);
+		_processProperty(
+			"adminLastName", PropsKeys.DEFAULT_ADMIN_LAST_NAME,
+			PropsValues.DEFAULT_ADMIN_LAST_NAME, request, unicodeProperties);
+		_processProperty(
+			"companyName", PropsKeys.COMPANY_DEFAULT_NAME,
+			PropsValues.COMPANY_DEFAULT_NAME, request, unicodeProperties);
+	}
+
+	private static void _processProperty(
+			String requestKey, String propKey, String propDefaultValue,
+			HttpServletRequest request, UnicodeProperties unicodeProperties)
+		throws Exception {
+
+		String paramValue = ParamUtil.getString(
+			request, requestKey, propDefaultValue);
+
+		if (!paramValue.equals(propDefaultValue)) {
+			unicodeProperties.put(propKey, paramValue);
 		}
 	}
 

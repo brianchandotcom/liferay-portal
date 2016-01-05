@@ -1,6 +1,9 @@
 <definition>
 	<command name="addExportTemplateCP">
-		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_NEW_BUTTON" />
+		<execute function="SelectFrame" locator1="IFrame#EXPORT_IFRAME" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${exportTemplateName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${exportTemplateDescription}" />
 	</command>
@@ -339,17 +342,15 @@
 	<command name="gotoExportSiteCmd">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletCategoryName" value="Publishing Tools" />
-			<var name="portletName" value="Export/Import" />
+			<var name="portletName" value="Export" />
 			<var name="siteScopeName" value="${siteScopeName}" />
 		</execute>
-
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_EXPORT" value1="Export" />
 	</command>
 
 	<command name="gotoExportTemplateCP">
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_EXPORT" value1="Export" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATE_BUTTON" />
+		<execute function="AssertClick" locator1="MenuItem#EXPORT_TEMPLATES" value1="Export Templates" />
 	</command>
 
 	<command name="gotoImportSiteCmd">
@@ -363,10 +364,8 @@
 		</if>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Export/Import" />
+			<var name="portlet" value="Import" />
 		</execute>
-
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_IMPORT" value1="Import" />
 	</command>
 
 	<command name="importPortlet">

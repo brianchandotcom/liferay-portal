@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -38,8 +37,6 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.servlet.ServletContext;
 
 /**
  * @author Raymond Augé
@@ -142,8 +139,15 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 					friendlyURLRoutes = _portlet.getFriendlyURLRoutes();
 				}
 
-				friendlyURLMapper.setRouter(
-					newFriendlyURLRouter(friendlyURLRoutes));
+				String xml = null;
+
+				if (Validator.isNotNull(friendlyURLRoutes)) {
+					ClassLoader classLoader =
+						friendlyURLMapper.getClass().getClassLoader();
+					xml = StringUtil.read(classLoader, friendlyURLRoutes);
+				}
+
+				friendlyURLMapper.setRouter(newFriendlyURLRouter(xml));
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -170,18 +174,12 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 			registry.ungetService(serviceReference);
 		}
 
-		protected Router newFriendlyURLRouter(String friendlyURLRoutes)
-			throws Exception {
-
-			if (Validator.isNull(friendlyURLRoutes)) {
+		protected Router newFriendlyURLRouter(String xml) throws Exception {
+			if (Validator.isNull(xml) || Validator.isBlank(xml)) {
 				return null;
 			}
 
 			Router router = new RouterImpl();
-
-			ClassLoader classLoader = getClassLoader();
-
-			String xml = StringUtil.read(classLoader, friendlyURLRoutes);
 
 			Document document = UnsecureSAXReaderUtil.read(xml, true);
 
@@ -233,14 +231,6 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 			}
 
 			return router;
-		}
-
-		private ClassLoader getClassLoader() {
-			PortletApp portletApp = _portlet.getPortletApp();
-
-			ServletContext servletContext = portletApp.getServletContext();
-
-			return servletContext.getClassLoader();
 		}
 
 	}

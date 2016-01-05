@@ -34,9 +34,6 @@ if (tabs3.equals("available")) {
 }
 %>
 
-<aui:input name="addGroupIds" type="hidden" />
-<aui:input name="removeGroupIds" type="hidden" />
-
 <liferay-ui:search-container
 	id="assigneesSearch"
 	rowChecker="<%= rowChecker %>"

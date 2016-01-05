@@ -106,6 +106,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
+	<aui:input name="addUserIds" type="hidden" />
+	<aui:input name="removeUserIds" type="hidden" />
+	<aui:input name="addGroupIds" type="hidden" />
+	<aui:input name="removeGroupIds" type="hidden" />
 
 	<liferay-frontend:management-bar
 		includeCheckBox="<%= true %>"

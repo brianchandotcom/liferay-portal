@@ -14,7 +14,7 @@
 		<property name="databases.size" value="1" />
 
 		<execute macro="SetupWizard#configurePG">
-			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorScreenName" value="test" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databaseName" value="lportal1" />
@@ -38,7 +38,7 @@
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="addSampleData" value="false" />
-			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorScreenName" value="test" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databaseName" value="lportal1" />

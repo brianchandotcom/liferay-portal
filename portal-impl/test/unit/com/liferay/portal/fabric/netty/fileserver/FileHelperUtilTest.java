@@ -567,8 +567,8 @@ public class FileHelperUtilTest {
 	public void testUnzipImpossibleScenario() throws IOException {
 		FileSystem fileSystem = FileSystems.getDefault();
 
-		FileSystemProvider fileSystemProvider = new FileSystemProviderWrapper(
-			fileSystem.provider()) {
+		FileSystemProvider fileSystemProvider =
+			new FileSystemProviderWrapper(fileSystem.provider()) {
 
 				@Override
 				public InputStream newInputStream(
@@ -732,8 +732,8 @@ public class FileHelperUtilTest {
 	public void testZipImpossibleScenario() throws IOException {
 		FileSystem fileSystem = FileSystems.getDefault();
 
-		FileSystemProvider fileSystemProvider = new FileSystemProviderWrapper(
-			fileSystem.provider()) {
+		FileSystemProvider fileSystemProvider =
+			new FileSystemProviderWrapper(fileSystem.provider()) {
 
 				@Override
 				public OutputStream newOutputStream(

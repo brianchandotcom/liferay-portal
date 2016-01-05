@@ -46,9 +46,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Raymond Augé
  */
-@PrepareOnlyThisForTest( {
-	SearchEngineHelperUtil.class
-})
+@PrepareOnlyThisForTest({SearchEngineHelperUtil.class})
 @RunWith(PowerMockRunner.class)
 public class FacetFactoryTest extends PowerMockito {
 

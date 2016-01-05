@@ -158,7 +158,7 @@ public class JSONFactoryTest {
 		map = (Map<?, ?>)JSONFactoryUtil.looseDeserialize(
 			"{\"class\":\"" + JSONFactoryUtil.class.getName() +
 				"\",\"foo\": \"boo\",\"jsonFactory\":{\"class\":\"" +
-				JSONFactoryImpl.class.getName() + "\"}}");
+					JSONFactoryImpl.class.getName() + "\"}}");
 
 		Assert.assertNotNull(map);
 		Assert.assertEquals(3, map.size());

@@ -133,9 +133,9 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 		AssetVocabulary vocabulary = (AssetVocabulary)parentBaseModel;
 
 		return AssetCategoryServiceUtil.addCategory(
-				serviceContext.getScopeGroupId(),
-				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, keywordsMap,
-				null, vocabulary.getVocabularyId(), null, serviceContext);
+			serviceContext.getScopeGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, keywordsMap,
+			null, vocabulary.getVocabularyId(), null, serviceContext);
 	}
 
 	@Override

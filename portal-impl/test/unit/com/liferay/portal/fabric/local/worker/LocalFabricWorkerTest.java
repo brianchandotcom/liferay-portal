@@ -84,12 +84,12 @@ public class LocalFabricWorkerTest {
 			localFabricWorker.write(
 				new ProcessCallable<String>() {
 
-				@Override
-				public String call() throws ProcessException {
-					throw processException;
-				}
+					@Override
+					public String call() throws ProcessException {
+						throw processException;
+					}
 
-			});
+				});
 
 		try {
 			exceptionNoticeableFuture.get();

@@ -103,14 +103,14 @@ public class NettyFabricWorkerBridgeRPCCallableTest {
 				new EmbeddedProcessChannel<Serializable>(
 					new DefaultNoticeableFuture<Serializable>()) {
 
-						@Override
-						public <V extends Serializable> NoticeableFuture<V>
-							write(ProcessCallable<V> processCallable) {
+					@Override
+					public <V extends Serializable> NoticeableFuture<V>
+						write(ProcessCallable<V> processCallable) {
 
-							return new DefaultNoticeableFuture<>();
-						}
+						return new DefaultNoticeableFuture<>();
+					}
 
-					});
+				});
 
 		NettyChannelAttributes.putFabricWorker(
 			_embeddedChannel, 0, fabricWorker);

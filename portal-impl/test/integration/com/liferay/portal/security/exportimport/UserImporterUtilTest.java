@@ -36,7 +36,7 @@ public class UserImporterUtilTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-				new LiferayIntegrationTestRule(),
+			new LiferayIntegrationTestRule(),
 			new SyntheticBundleRule("bundle.userimporterutil"));
 
 	@BeforeClass

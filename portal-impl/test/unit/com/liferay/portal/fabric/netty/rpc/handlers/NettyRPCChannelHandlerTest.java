@@ -48,8 +48,8 @@ public class NettyRPCChannelHandlerTest {
 		final AtomicReference<Channel> channelReference =
 			new AtomicReference<>();
 
-		RPCSerializable rpcSerializable = new RPCSerializable(
-			System.currentTimeMillis()) {
+		RPCSerializable rpcSerializable =
+			new RPCSerializable(System.currentTimeMillis()) {
 
 				@Override
 				public void execute(Channel channel) {

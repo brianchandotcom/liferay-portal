@@ -803,7 +803,7 @@ public class SelectorIntrabandTest {
 		Pipe pipe = Pipe.open();
 
 		try (SourceChannel sourceChannel = pipe.source();
-			SinkChannel sinkChannel = pipe.sink()) {
+				SinkChannel sinkChannel = pipe.sink()) {
 
 			final Thread mainThread = Thread.currentThread();
 
@@ -1350,8 +1350,8 @@ public class SelectorIntrabandTest {
 
 		try (SelectableChannel readSelectableChannel =
 				readSelectionKey.channel();
-			SelectableChannel writeSelectableChannel =
-				writeSelectionKey.channel()) {
+					SelectableChannel writeSelectableChannel =
+						writeSelectionKey.channel()) {
 
 			while (readSelectableChannel.keyFor(selector) != null);
 			while (writeSelectableChannel.keyFor(selector) != null);

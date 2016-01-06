@@ -1,0 +1,11 @@
+.portlet-admin {
+
+	.server-admin-actions-panel .panel-body {
+		padding: 0;
+	}
+
+	.server-status-container {
+		padding: 20px;
+	}
+
+}

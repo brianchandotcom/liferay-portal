@@ -37,7 +37,7 @@ public class TestSanitizer extends BaseSanitizer {
 	@Override
 	public String sanitize(
 		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes, String s,
+		long classPK, String contentType, String[] modes, String content,
 		Map<String, Object> options) {
 
 		_atomicReference.set(StackTraceUtil.getCallerKey());

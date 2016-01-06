@@ -76,7 +76,7 @@ AUI.add(
 
 						key = Liferay.Util.camelize(key, ' ').trim();
 
-						return key.replace(/\s+/ig, '');
+						return key.replace(/([!"#$%&'()*+,-./:;<=>?@\[\\\]^`{|}~\s])+/ig, '');
 					},
 
 					render: function() {

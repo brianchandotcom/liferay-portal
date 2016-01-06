@@ -186,8 +186,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 		long liveGroupId = calendar.getGroupId();
 
 		try {
-			Group stagingGroup = groupLocalService.getStagingGroup(
-				liveGroupId);
+			Group stagingGroup = groupLocalService.getStagingGroup(liveGroupId);
 
 			Calendar stagedCalendar =
 				calendarLocalService.fetchCalendarByUuidAndGroupId(
@@ -222,9 +221,10 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 		try {
 			Group group = groupLocalService.getGroup(groupId);
+
 			return group.isStagingGroup();
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 			return false;
 		}
 	}

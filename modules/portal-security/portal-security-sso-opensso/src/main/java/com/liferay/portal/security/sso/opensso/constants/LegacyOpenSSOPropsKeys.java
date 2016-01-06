@@ -30,7 +30,16 @@ public class LegacyOpenSSOPropsKeys {
 	public static final String OPENSSO_IMPORT_FROM_LDAP =
 		"open.sso.ldap.import.enabled";
 
-	public static final String[] OPENSSO_KEYS;
+	public static final String[] OPENSSO_KEYS =  {
+		OPENSSO_EMAIL_ADDRESS_ATTR, OPENSSO_AUTH_ENABLED,
+		OPENSSO_FIRST_NAME_ATTR, OPENSSO_IMPORT_FROM_LDAP,
+		LegacyOpenSSOPropsKeys.OPENSSO_LAST_NAME_ATTR,
+		LegacyOpenSSOPropsKeys.OPENSSO_LOGIN_URL,
+		LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_ON_SESSION_EXPIRATION,
+		LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_URL,
+		LegacyOpenSSOPropsKeys.OPENSSO_SCREEN_NAME_ATTR,
+		LegacyOpenSSOPropsKeys.OPENSSO_SERVICE_URL
+	};
 
 	public static final String OPENSSO_LAST_NAME_ATTR =
 		"open.sso.last.name.attr";
@@ -46,15 +55,5 @@ public class LegacyOpenSSOPropsKeys {
 		"open.sso.screen.name.attr";
 
 	public static final String OPENSSO_SERVICE_URL = "open.sso.service.url";
-
-	static {
-		OPENSSO_KEYS = new String[] {
-			OPENSSO_EMAIL_ADDRESS_ATTR, OPENSSO_AUTH_ENABLED,
-			OPENSSO_FIRST_NAME_ATTR, OPENSSO_IMPORT_FROM_LDAP,
-			OPENSSO_LAST_NAME_ATTR, OPENSSO_LOGIN_URL,
-			OPENSSO_LOGOUT_ON_SESSION_EXPIRATION, OPENSSO_LOGOUT_URL,
-			OPENSSO_SCREEN_NAME_ATTR, OPENSSO_SERVICE_URL
-		};
-	}
 
 }

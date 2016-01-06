@@ -174,10 +174,6 @@
 	<command name="addMemberCP">
 		<var name="key_cardText" value="${userScreenName}" />
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Users" />
-		</execute>
-
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

@@ -19,7 +19,28 @@ package com.liferay.portal.security.sso.opensso.constants;
  */
 public class OpenSSOConstants {
 
+	public static final String AUTH_ENABLED = "enabled";
+
+	public static final String EMAIL_ADDRESS_ATTR = "emailAddressAttr";
+
+	public static final String FIRST_NAME_ATTR = "firstNameAttr";
+
+	public static final String IMPORT_FROM_LDAP = "importFromLDAP";
+
+	public static final String LAST_NAME_ATTR = "lastNameAttr";
+
+	public static final String LOGIN_URL = "loginURL";
+
+	public static final String LOGOUT_ON_SESSION_EXPIRATION =
+		"logoutOnSessionExpiration";
+
+	public static final String LOGOUT_URL = "logoutURL";
+
+	public static final String SCREEN_NAME_ATTR = "screenNameAttr";
+
 	public static final String SERVICE_NAME =
 		"com.liferay.portal.security.sso.opensso";
+
+	public static final String SERVICE_URL = "serviceURL";
 
 }

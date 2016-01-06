@@ -33,6 +33,11 @@
 	<td>//span[@class='image-title' and contains(.,'${key_mgDocumentTitle}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ENTRY-->
 <tr>
 	<td>ENTRY_THUMBNAIL</td>

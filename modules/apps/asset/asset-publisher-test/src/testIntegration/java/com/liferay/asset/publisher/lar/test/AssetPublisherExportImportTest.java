@@ -282,7 +282,6 @@ public class AssetPublisherExportImportTest
 	public void testExportImportAssetLinks() throws Exception {
 	}
 
-	@Ignore
 	@Test
 	public void testExportImportLayoutScopedAssetEntries() throws Exception {
 		Group layoutGroup = GroupTestUtil.addGroup(
@@ -291,7 +290,6 @@ public class AssetPublisherExportImportTest
 		testExportImportAssetEntries(layoutGroup);
 	}
 
-	@Ignore
 	@Test
 	public void testExportImportSeveralScopedAssetEntries() throws Exception {
 		List<Group> groups = new ArrayList<>();

@@ -214,7 +214,7 @@
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_TABLE_STATUS</td>
-	<td>//tr/td[contains(@class,'status-column')]</td>
+	<td>//tr/td[contains(@class,'status-column')][1]</td>
 	<td></td>
 </tr>
 <tr>

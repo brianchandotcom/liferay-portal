@@ -49,6 +49,7 @@ import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.UserGroupRoleLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,13 +123,15 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		long companyId, long[] groupIds, long userId, String className,
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		try {
-			booleanFilter = doGetPermissionBooleanFilter(
-				companyId, groupIds, userId, className, booleanFilter,
-				searchContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+		if (PropsValues.SEARCH_QUERY_ENABLED) {
+			try {
+				booleanFilter = doGetPermissionBooleanFilter(
+					companyId, groupIds, userId, className, booleanFilter,
+					searchContext);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 
 		return booleanFilter;
@@ -241,10 +244,24 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return booleanFilter;
 		}
 
-		Set<Group> groups = new LinkedHashSet<>();
+		Set<Group> groups;
 		Set<Role> roles = new LinkedHashSet<>();
 		Set<UserGroupRole> userGroupRoles = new LinkedHashSet<>();
 		Map<Long, List<Role>> groupIdsToRoles = new HashMap<>();
+
+		if (PropsValues.SEARCH_USE_DEEP_SEARCH) {
+			groups = new LinkedHashSet<>(
+				_groupLocalService.getUserGroups(userId, true));
+
+			for (Group group : groups) {
+				groupIds = ArrayUtil.append(groupIds, group.getGroupId());
+			}
+
+			groupIds = ArrayUtil.unique(groupIds);
+		}
+		else {
+			groups = new LinkedHashSet<>();
+		}
 
 		populate(
 			companyId, groupIds, userId, permissionChecker, groups, roles,

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.opensso.configuration.definition;
+package com.liferay.portal.security.sso.opensso.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;

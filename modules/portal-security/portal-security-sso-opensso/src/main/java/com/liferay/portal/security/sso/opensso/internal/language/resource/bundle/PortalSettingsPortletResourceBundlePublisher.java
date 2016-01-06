@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.opensso.language.resource.bundle;
+package com.liferay.portal.security.sso.opensso.internal.language.resource.bundle;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.language.resource.bundle.BaseResourceBundlePublisher;

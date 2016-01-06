@@ -21,8 +21,13 @@ buildSystemPackagesExtraManifest {
 
 		properties["-include"] = relativePath(systemPackagesExtraBndFile)
 
+		jarBuilder.withClasspath new File[0]
+		jarBuilder.withName "system.packages.extra"
 		jarBuilder.withProperties properties
+		jarBuilder.withResources new File[0]
 		jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs
+		jarBuilder.withTrace false
+		jarBuilder.withVersion liferay.portalVersion.replaceAll("-", ".")
 
 		systemPackagesExtraManifestFile.withOutputStream {
 			jarBuilder.writeManifestTo it

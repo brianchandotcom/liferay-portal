@@ -49,7 +49,7 @@ public class OpenSSOCompanySettingsVerifyProcess
 
 	@Override
 	protected Set<String> getLegacyPropertyKeys() {
-		return SetUtil.fromArray(LegacyOpenSSOPropsKeys.TOTAL_OPENSSO_KEYS);
+		return SetUtil.fromArray(LegacyOpenSSOPropsKeys.OPENSSO_KEYS);
 	}
 
 	@Override

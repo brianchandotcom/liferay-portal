@@ -48,7 +48,7 @@ public class OpenSSOCompanySettingsVerifyProcessTest
 	protected void doVerify(
 		PortletPreferences portletPreferences, Settings settings) {
 
-		for (String key : LegacyOpenSSOPropsKeys.TOTAL_OPENSSO_KEYS) {
+		for (String key : LegacyOpenSSOPropsKeys.OPENSSO_KEYS) {
 			Assert.assertTrue(
 				Validator.isNull(
 					portletPreferences.getValue(key, StringPool.BLANK)));

@@ -22,13 +22,6 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
-		<liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= StagingProcessesPortletKeys.STAGING_PROCESSES %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<liferay-portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-			<liferay-portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
-			<liferay-portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			<liferay-portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-		</liferay-portlet:renderURL>
-
 	</c:otherwise>
 </c:choose>
 

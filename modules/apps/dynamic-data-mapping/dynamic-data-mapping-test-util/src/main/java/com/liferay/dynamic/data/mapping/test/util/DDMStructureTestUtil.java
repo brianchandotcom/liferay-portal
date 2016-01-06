@@ -243,7 +243,7 @@ public class DDMStructureTestUtil {
 	public static String getSampleStructuredContent(
 		String name, List<Map<Locale, String>> contents, String defaultLocale) {
 
-		StringBundler availableLocales = new StringBundler(contents.size());
+		StringBundler availableLocales = new StringBundler();
 
 		for (Map<Locale, String> map : contents) {
 			StringBundler sb = new StringBundler(2 * map.size());

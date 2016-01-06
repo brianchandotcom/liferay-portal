@@ -49,7 +49,7 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 			return solrQuery;
 		}
 
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler();
 
 		NGramHolder nGramHolder = _nGramHolderBuilder.buildNGramHolder(input);
 

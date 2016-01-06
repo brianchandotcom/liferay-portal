@@ -19,8 +19,12 @@
 <%
 boolean localPublishing = true;
 
+String unscheduleCMD = "unschedule_publish_to_live";
+
 if (group.isStaged() && group.isStagedRemotely()) {
 	localPublishing = false;
+
+	unscheduleCMD = "unschedule_publish_to_remote";
 }
 
 String destinationName = localPublishing ? DestinationNames.LAYOUTS_LOCAL_PUBLISHER : DestinationNames.LAYOUTS_REMOTE_PUBLISHER;

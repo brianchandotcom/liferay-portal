@@ -5,6 +5,7 @@ buildService {
 }
 
 dependencies {
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
 	compile project(":portal:portal-lock-api")
 	compile project(":portal:portal-upgrade")
 

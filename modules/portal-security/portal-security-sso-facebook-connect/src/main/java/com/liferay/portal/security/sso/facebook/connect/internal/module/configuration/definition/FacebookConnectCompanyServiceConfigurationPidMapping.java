@@ -15,8 +15,8 @@
 package com.liferay.portal.security.sso.facebook.connect.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
-import com.liferay.portal.security.sso.facebook.connect.module.configuration.FacebookConnectConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

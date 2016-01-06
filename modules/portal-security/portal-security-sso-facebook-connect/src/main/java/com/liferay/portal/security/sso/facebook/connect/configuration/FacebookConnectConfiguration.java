@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.facebook.connect.module.configuration;
+package com.liferay.portal.security.sso.facebook.connect.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "platform")
 @Meta.OCD(
-	id = "com.liferay.portal.security.sso.facebook.connect.module.configuration.FacebookConnectConfiguration",
+	id = "com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration",
 	localization = "content/Language",
 	name = "%facebook.connect.configuration.name"
 )

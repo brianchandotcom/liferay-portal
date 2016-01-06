@@ -15,7 +15,7 @@
 package com.liferay.portal.security.sso.facebook.connect.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.facebook.connect.module.configuration.FacebookConnectConfiguration;
+import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.cas.configuration.definition;
+package com.liferay.portal.security.sso.cas.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;

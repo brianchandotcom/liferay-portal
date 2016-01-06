@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm;
+package com.liferay.portal.security.sso.ntlm.internal;
 
 import jcifs.util.DES;
 

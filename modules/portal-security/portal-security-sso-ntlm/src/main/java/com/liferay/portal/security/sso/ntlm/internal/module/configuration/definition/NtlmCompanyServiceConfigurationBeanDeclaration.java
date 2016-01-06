@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm;
+package com.liferay.portal.security.sso.ntlm.internal.module.configuration.definition;
 
-import java.io.Serializable;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marcellus Tavares
+ * @author Mika Koivisto
  */
-public class NtlmUserAccount implements Serializable {
+@Component
+public class NtlmCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public NtlmUserAccount(String userName) {
-		_userName = userName;
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return NtlmConfiguration.class;
 	}
-
-	public String getUserName() {
-		return _userName;
-	}
-
-	private final String _userName;
 
 }

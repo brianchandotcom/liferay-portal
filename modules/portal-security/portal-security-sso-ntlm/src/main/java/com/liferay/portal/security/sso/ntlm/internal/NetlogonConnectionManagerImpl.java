@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm;
+package com.liferay.portal.security.sso.ntlm.internal;
 
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.log.Log;
@@ -22,10 +22,13 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.security.sso.ntlm.NetlogonConnectionManager;
+import com.liferay.portal.security.sso.ntlm.NtlmLogonException;
+import com.liferay.portal.security.sso.ntlm.NtlmServiceAccount;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
-import com.liferay.portal.security.sso.ntlm.msrpc.NetrServerAuthenticate3;
-import com.liferay.portal.security.sso.ntlm.msrpc.NetrServerReqChallenge;
+import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetrServerAuthenticate3;
+import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetrServerReqChallenge;
 
 import java.io.IOException;
 

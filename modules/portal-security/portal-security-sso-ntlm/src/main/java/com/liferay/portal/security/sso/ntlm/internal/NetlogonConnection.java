@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm;
+package com.liferay.portal.security.sso.ntlm.internal;
 
-import com.liferay.portal.security.sso.ntlm.msrpc.NetlogonAuthenticator;
+import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetlogonAuthenticator;
 
 import java.io.IOException;
 

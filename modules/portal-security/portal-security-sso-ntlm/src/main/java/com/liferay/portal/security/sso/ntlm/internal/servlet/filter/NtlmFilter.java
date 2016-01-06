@@ -28,11 +28,11 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.ntlm.NetlogonConnectionManager;
-import com.liferay.portal.security.sso.ntlm.NtlmManager;
-import com.liferay.portal.security.sso.ntlm.NtlmUserAccount;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmWebKeys;
+import com.liferay.portal.security.sso.ntlm.internal.NtlmManager;
+import com.liferay.portal.security.sso.ntlm.internal.NtlmUserAccount;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.Map;

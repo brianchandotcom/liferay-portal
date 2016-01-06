@@ -364,6 +364,7 @@
 
 		<execute macro="Staging#publishToLivePublishTemplate">
 			<var name="publishTemplateName" value="Publish Template Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -424,6 +425,7 @@
 
 		<execute macro="Staging#publishToLivePublishTemplate">
 			<var name="publishTemplateName" value="Publish Template Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -4029,6 +4031,7 @@
 
 		<execute macro="Staging#publishToLivePublishTemplate">
 			<var name="publishTemplateName" value="Publish Template Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -4136,6 +4139,7 @@
 
 		<execute macro="Staging#publishToLivePublishTemplate">
 			<var name="publishTemplateName" value="Publish Template Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

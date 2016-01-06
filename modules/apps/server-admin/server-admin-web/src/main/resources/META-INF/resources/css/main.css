@@ -1,5 +1,17 @@
 .portlet-admin {
 
+	.memory-status {
+		margin-top: 15px;
+	}
+
+	.meter-wrapper img {
+		margin: 0 70px;
+	}
+
+	.memory-status-table {
+		margin: auto;
+	}
+
 	.server-admin-actions-panel .panel-body {
 		padding: 0;
 	}

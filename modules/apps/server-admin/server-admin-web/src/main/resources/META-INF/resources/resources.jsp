@@ -32,66 +32,68 @@ long usedMemory = totalMemory - runtime.freeMemory();
 %>
 
 <liferay-ui:panel-container extended="<%= true %>" id="adminServerAdministrationActionsPanelContainer" persistState="<%= true %>">
-	<liferay-ui:panel collapsible="<%= false %>" extended="<%= false %>" id="adminServerInformationPanel" markupView="lexicon" title="">
-		<div class="alert alert-info">
-			<strong><liferay-ui:message key="info" /></strong>: <%= ReleaseInfo.getReleaseInfo() %>
-			<strong><liferay-ui:message key="uptime" /></strong>:
+	<div class="panel panel-default memory-status" id="adminServerInformationPanel">
+		<div class="panel-body">
+			<div class="alert alert-info">
+				<strong><liferay-ui:message key="info" /></strong>: <%= ReleaseInfo.getReleaseInfo() %>
+				<strong><liferay-ui:message key="uptime" /></strong>:
 
-			<c:if test="<%= days > 0 %>">
-				<%= days %> <%= LanguageUtil.get(request, ((days > 1) ? "days" : "day")) %>,
-			</c:if>
+				<c:if test="<%= days > 0 %>">
+					<%= days %> <%= LanguageUtil.get(request, ((days > 1) ? "days" : "day")) %>,
+				</c:if>
 
-			<%= numberFormat.format(hours) %>:<%= numberFormat.format(minutes) %>:<%= numberFormat.format(seconds) %>
+				<%= numberFormat.format(hours) %>:<%= numberFormat.format(minutes) %>:<%= numberFormat.format(seconds) %>
+			</div>
+			<div class="text-center meter-wrapper">
+				<portlet:resourceURL id="/server_admin/view_chart" var="totalMemoryChartURL">
+					<portlet:param name="type" value="total" />
+					<portlet:param name="totalMemory" value="<%= String.valueOf(totalMemory) %>" />
+					<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
+				</portlet:resourceURL>
+
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="memory-used-vs-total-memory" />" src="<%= totalMemoryChartURL %>" />
+
+				<portlet:resourceURL id="/server_admin/view_chart" var="maxMemoryChartURL">
+					<portlet:param name="type" value="max" />
+					<portlet:param name="maxMemory" value="<%= String.valueOf(runtime.maxMemory()) %>" />
+					<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
+				</portlet:resourceURL>
+
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="memory-used-vs-max-memory" />" src="<%= maxMemoryChartURL %>" />
+			</div>
+
+			<br />
+
+			<table class="lfr-table memory-status-table">
+			<tr>
+				<td>
+					<h4 class="pull-right"><liferay-ui:message key="used-memory" /></h4>
+				</td>
+				<td>
+					<span class="text-muted"><%= numberFormat.format(usedMemory) %> <liferay-ui:message key="bytes" /></span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4 class="pull-right"><liferay-ui:message key="total-memory" /></h4>
+				</td>
+				<td>
+					<span class="text-muted"><%= numberFormat.format(runtime.totalMemory()) %> <liferay-ui:message key="bytes" /></span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4 class="pull-right"><liferay-ui:message key="maximum-memory" /></h4>
+				</td>
+				<td>
+					<span class="text-muted"><%= numberFormat.format(runtime.maxMemory()) %> <liferay-ui:message key="bytes" /></span>
+				</td>
+			</tr>
+			</table>
+
+			<br />
 		</div>
-		<div>
-			<portlet:resourceURL id="/server_admin/view_chart" var="totalMemoryChartURL">
-				<portlet:param name="type" value="total" />
-				<portlet:param name="totalMemory" value="<%= String.valueOf(totalMemory) %>" />
-				<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
-			</portlet:resourceURL>
-
-			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="memory-used-vs-total-memory" />" src="<%= totalMemoryChartURL %>" />
-
-			<portlet:resourceURL id="/server_admin/view_chart" var="maxMemoryChartURL">
-				<portlet:param name="type" value="max" />
-				<portlet:param name="maxMemory" value="<%= String.valueOf(runtime.maxMemory()) %>" />
-				<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
-			</portlet:resourceURL>
-
-			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="memory-used-vs-max-memory" />" src="<%= maxMemoryChartURL %>" />
-		</div>
-
-		<br />
-
-		<table class="lfr-table">
-		<tr>
-			<td>
-				<liferay-ui:message key="used-memory" />:
-			</td>
-			<td>
-				<%= numberFormat.format(usedMemory) %> <liferay-ui:message key="bytes" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<liferay-ui:message key="total-memory" />:
-			</td>
-			<td>
-				<%= numberFormat.format(runtime.totalMemory()) %> <liferay-ui:message key="bytes" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<liferay-ui:message key="maximum-memory" />:
-			</td>
-			<td>
-				<%= numberFormat.format(runtime.maxMemory()) %> <liferay-ui:message key="bytes" />
-			</td>
-		</tr>
-		</table>
-
-		<br />
-	</liferay-ui:panel>
+	</div>
 
 	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationSystemActionsPanel" markupView="lexicon" persistState="<%= true %>" title="system-actions">
 		<div class="table-responsive">

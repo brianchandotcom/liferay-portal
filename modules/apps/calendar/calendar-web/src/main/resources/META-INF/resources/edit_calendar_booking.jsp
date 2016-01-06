@@ -171,16 +171,6 @@ if (guestCalendarResource != null) {
 
 long[] otherCalendarIds = StringUtil.split(SessionClicks.get(request, "com.liferay.calendar.web_otherCalendars", StringPool.BLANK), 0L);
 
-Iterator<Calendar> itr = manageableCalendars.iterator();
-
-while (itr.hasNext()) {
-	Calendar curCalendar = itr.next();
-
-	if (CalendarLocalServiceUtil.hasStagingCalendar(curCalendar) || (CalendarLocalServiceUtil.isStagingCalendar(curCalendar) && (curCalendar.getGroupId() != themeDisplay.getScopeGroupId()))) {
-		itr.remove();
-	}
-}
-
 for (long otherCalendarId : otherCalendarIds) {
 	Calendar otherCalendar = CalendarServiceUtil.fetchCalendar(otherCalendarId);
 
@@ -192,6 +182,16 @@ for (long otherCalendarId : otherCalendarIds) {
 
 	if (otherCalendarResource.isActive() && !manageableCalendars.contains(otherCalendar) && CalendarPermission.contains(themeDisplay.getPermissionChecker(), otherCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) {
 		manageableCalendars.add(otherCalendar);
+	}
+}
+
+Iterator<Calendar> itr = manageableCalendars.iterator();
+
+while (itr.hasNext()) {
+	Calendar curCalendar = itr.next();
+
+	if (CalendarLocalServiceUtil.hasStagingCalendar(curCalendar) || (CalendarLocalServiceUtil.isStagingCalendar(curCalendar) && (curCalendar.getGroupId() != themeDisplay.getScopeGroupId()))) {
+		itr.remove();
 	}
 }
 %>

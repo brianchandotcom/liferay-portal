@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
@@ -30,12 +29,15 @@ import java.util.Set;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  * @author Raymond Augé
  */
 public class DoPrivilegedFactory
-	extends InstantiationAwareBeanPostProcessorAdapter {
+	extends InstantiationAwareBeanPostProcessorAdapter
+	implements ApplicationContextAware {
 
 	public static boolean isEarlyBeanReference(String beanName) {
 		return _earlyBeanReferenceNames.contains(beanName);
@@ -117,6 +119,13 @@ public class DoPrivilegedFactory
 		return bean;
 	}
 
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext)
+		throws BeansException {
+
+		_classLoader = applicationContext.getClassLoader();
+	}
+
 	private boolean _isDoPrivileged(Class<?> beanClass) {
 		DoPrivileged doPrivileged = beanClass.getAnnotation(DoPrivileged.class);
 
@@ -160,6 +169,8 @@ public class DoPrivilegedFactory
 	private static final Log _log = LogFactoryUtil.getLog(
 		DoPrivilegedFactory.class);
 
+	private static ClassLoader _classLoader =
+		DoPrivilegedFactory.class.getClassLoader();
 	private static final Set<String> _earlyBeanReferenceNames = new HashSet<>();
 
 	private static class BeanPrivilegedAction <T>
@@ -174,8 +185,7 @@ public class DoPrivilegedFactory
 		public T run() {
 			try {
 				return (T)ProxyUtil.newProxyInstance(
-					ClassLoaderUtil.getPortalClassLoader(), _interfaces,
-					new DoPrivilegedHandler(_bean));
+					_classLoader, _interfaces, new DoPrivilegedHandler(_bean));
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

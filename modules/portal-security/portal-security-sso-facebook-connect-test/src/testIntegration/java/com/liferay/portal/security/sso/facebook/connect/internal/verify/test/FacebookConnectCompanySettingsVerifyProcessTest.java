@@ -48,48 +48,47 @@ public class FacebookConnectCompanySettingsVerifyProcessTest
 	protected void doVerify(
 		PortletPreferences portletPreferences, Settings settings) {
 
-		Assert.assertTrue(
-			Validator.isNull(
-				portletPreferences.getValue(
-					LegacyFacebookConnectPropsKeys.AUTH_ENABLED,
-					StringPool.BLANK)));
+		for (String key :
+				LegacyFacebookConnectPropsKeys.FACEBOOK_CONNECT_KEYS) {
+
+			Assert.assertTrue(
+				Validator.isNull(
+					portletPreferences.getValue(key, StringPool.BLANK)));
+		}
 
 		Assert.assertEquals(
 			StringPool.TRUE,
 			settings.getValue(
 				FacebookConnectConstants.AUTH_ENABLED, StringPool.FALSE));
-
 		Assert.assertEquals(
-				"test_app_id",
-				settings.getValue(FacebookConnectConstants.APP_ID, ""));
-
+			"test_app_id",
+			settings.getValue(
+				FacebookConnectConstants.APP_ID, StringPool.BLANK));
 		Assert.assertEquals(
-				"test_app_secret",
-				settings.getValue(FacebookConnectConstants.APP_SECRET, ""));
-
+			"test_app_secret",
+			settings.getValue(
+				FacebookConnectConstants.APP_SECRET, StringPool.BLANK));
 		Assert.assertEquals(
-				"test_graph_url",
-				settings.getValue(FacebookConnectConstants.GRAPH_URL, ""));
-
+			"test_graph_url",
+			settings.getValue(
+				FacebookConnectConstants.GRAPH_URL, StringPool.BLANK));
 		Assert.assertEquals(
-				"test_oauth_auth_url",
-				settings.getValue(FacebookConnectConstants.OAUTH_AUTH_URL, ""));
-
+			"test_oauth_auth_url",
+			settings.getValue(
+				FacebookConnectConstants.OAUTH_AUTH_URL, StringPool.BLANK));
 		Assert.assertEquals(
-				"test_oauth_redirect_url",
-				settings.getValue(
-					FacebookConnectConstants.OAUTH_REDIRECT_URL, ""));
-
+			"test_oauth_redirect_url",
+			settings.getValue(
+				FacebookConnectConstants.OAUTH_REDIRECT_URL, StringPool.BLANK));
 		Assert.assertEquals(
-				"test_oauth_token_url",
-				settings.getValue(
-					FacebookConnectConstants.OAUTH_TOKEN_URL, ""));
-
+			"test_oauth_token_url",
+			settings.getValue(
+				FacebookConnectConstants.OAUTH_TOKEN_URL, StringPool.BLANK));
 		Assert.assertEquals(
-				StringPool.TRUE,
-				settings.getValue(
-					FacebookConnectConstants.VERIFIED_ACCOUNT_REQUIRED,
-					StringPool.FALSE));
+			StringPool.TRUE,
+			settings.getValue(
+				FacebookConnectConstants.VERIFIED_ACCOUNT_REQUIRED,
+				StringPool.FALSE));
 	}
 
 	@Override

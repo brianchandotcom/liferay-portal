@@ -15,46 +15,35 @@
 --%>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewUsersTreeURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="browse" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
+	<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
+		<aui:nav cssClass="navbar-nav">
+			<portlet:renderURL var="viewOrganizationsFlatURL">
+				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
+				<portlet:param name="toolbarItem" value="view-all-organizations" />
+				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
+				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+			</portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= viewUsersTreeURL %>"
-			label="browse"
-			selected='<%= toolbarItem.equals("browse") %>'
-		/>
+			<aui:nav-item
+				href="<%= viewOrganizationsFlatURL %>"
+				label="all-organizations"
+				selected='<%= toolbarItem.equals("view-all-organizations") %>'
+			/>
 
-		<portlet:renderURL var="viewOrganizationsFlatURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="view-all-organizations" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
+			<portlet:renderURL var="viewUsersFlatURL">
+				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
+				<portlet:param name="toolbarItem" value="view-all-users" />
+				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
+				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+			</portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= viewOrganizationsFlatURL %>"
-			label="all-organizations"
-			selected='<%= toolbarItem.equals("view-all-organizations") %>'
-		/>
-
-		<portlet:renderURL var="viewUsersFlatURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="view-all-users" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewUsersFlatURL %>"
-			label="all-users"
-			selected='<%= toolbarItem.equals("view-all-users") %>'
-		/>
-	</aui:nav>
+			<aui:nav-item
+				href="<%= viewUsersFlatURL %>"
+				label="all-users"
+				selected='<%= toolbarItem.equals("view-all-users") %>'
+			/>
+		</aui:nav>
+	</c:if>
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURL.toString() %>" name="searchFm">

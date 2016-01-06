@@ -32,6 +32,8 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	currentURLObj.setParameter("status", String.valueOf(status));
 }
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 boolean showDeleteButton = (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && (searchTerms.isActive() || (!searchTerms.isActive() && PropsValues.USERS_DELETE));
 boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && !searchTerms.isActive();
 %>

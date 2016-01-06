@@ -60,23 +60,7 @@ if (organization != null) {
 }
 %>
 
-<c:if test="<%= portletName.equals(UsersAdminPortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
-	<div id="breadcrumb">
-		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-	</div>
-</c:if>
-
-<c:if test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
-	<aui:nav-bar>
-		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
-
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" />
-			</div>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
-
+<c:if test="<%= (portletName.equals(UsersAdminPortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE)) || portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
 	<div id="breadcrumb">
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>

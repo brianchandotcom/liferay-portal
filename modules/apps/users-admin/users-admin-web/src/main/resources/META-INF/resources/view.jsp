@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-users");
 
 String redirect = ParamUtil.getString(request, "redirect");
 String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");
@@ -25,7 +25,7 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_APPROVED);
 
-String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_TREE);
+String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_FLAT_USERS);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -42,8 +42,6 @@ String portletURLString = portletURL.toString();
 request.setAttribute("view.jsp-usersListView", usersListView);
 
 request.setAttribute("view.jsp-portletURL", portletURL);
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 %>
 
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-activate-user-because-that-would-exceed-the-maximum-number-of-users-allowed" />
@@ -90,18 +88,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 	%>
 
 	<c:choose>
-		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
-			<liferay-util:include page="/view_flat_organizations.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
-
-			<%
-			boolean organizationContextView = false;
-			%>
-
-			<%@ include file="/view_flat_users.jspf" %>
-		</c:when>
-		<c:otherwise>
+		<c:when test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
 
 			<%
 			request.setAttribute("view.jsp-backURL", backURL);
@@ -118,7 +105,18 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 			%>
 
 			<liferay-util:include page="/view_tree.jsp" servletContext="<%= application %>" />
-		</c:otherwise>
+		</c:when>
+		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
+			<liferay-util:include page="/view_flat_organizations.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
+
+			<%
+			boolean organizationContextView = false;
+			%>
+
+			<%@ include file="/view_flat_users.jspf" %>
+		</c:when>
 	</c:choose>
 </aui:form>
 

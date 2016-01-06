@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_SHORTCUT</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Add Shortcut')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_MENU_ITEM</td>
 	<td>//li[contains(.,'${key_menuItem}')]</td>
 	<td></td>
@@ -395,7 +400,7 @@
 </tr>
 <tr>
 	<td>MANAGE_SITE</td>
-	<td>//a[@role='menuitem' and contains(.,'Manage Site')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage Site')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -471,6 +476,11 @@
 <tr>
 	<td>MULTIPLE_DOCUMENTS</td>
 	<td>//li[contains(@class,'open')]//a[contains(.,'Multiple Documents')] | //div[contains(@class,'open')]//a[contains(.,'Multiple Documents')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTIPLE_MEDIA</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Multiple Media')]</td>
 	<td></td>
 </tr>
 <tr>

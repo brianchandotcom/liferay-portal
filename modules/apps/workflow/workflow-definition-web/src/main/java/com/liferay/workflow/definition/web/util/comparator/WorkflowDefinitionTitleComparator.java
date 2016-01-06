@@ -33,14 +33,12 @@ public class WorkflowDefinitionTitleComparator
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 
 	public WorkflowDefinitionTitleComparator() {
-		this(false, LocaleUtil.toLanguageId(Locale.getDefault()));
+		this(false, Locale.getDefault());
 	}
 
-	public WorkflowDefinitionTitleComparator(
-		boolean ascending, String languageId) {
-
+	public WorkflowDefinitionTitleComparator(boolean ascending, Locale locale) {
 		_ascending = ascending;
-		_languageId = languageId;
+		_languageId = LocaleUtil.toLanguageId(locale);
 	}
 
 	@Override
@@ -48,8 +46,13 @@ public class WorkflowDefinitionTitleComparator
 		WorkflowDefinition workflowDefinition1,
 		WorkflowDefinition workflowDefinition2) {
 
-		int value = workflowDefinition1.getTitle(_languageId).compareTo(
-			workflowDefinition2.getTitle(_languageId));
+		String workflowDefinitionTitle1 = workflowDefinition1.getTitle(
+			_languageId);
+		String workflowDefinitionTitle2 = workflowDefinition2.getTitle(
+			_languageId);
+
+		int value = workflowDefinitionTitle1.compareTo(
+			workflowDefinitionTitle2);
 
 		if (_ascending) {
 			return value;

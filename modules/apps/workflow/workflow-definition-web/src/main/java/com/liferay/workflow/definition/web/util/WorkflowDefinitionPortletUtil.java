@@ -20,6 +20,8 @@ import com.liferay.workflow.definition.web.util.comparator.WorkflowDefinitionAct
 import com.liferay.workflow.definition.web.util.comparator.WorkflowDefinitionNameComparator;
 import com.liferay.workflow.definition.web.util.comparator.WorkflowDefinitionTitleComparator;
 
+import java.util.Locale;
+
 /**
  * @author Leonardo Barros
  */
@@ -27,7 +29,7 @@ public class WorkflowDefinitionPortletUtil {
 
 	public static OrderByComparator<WorkflowDefinition>
 		getWorkflowDefitionOrderByComparator(
-			String languageId, String orderByCol, String orderByType) {
+			String orderByCol, String orderByType, Locale locale) {
 
 		boolean orderByAsc = false;
 
@@ -39,11 +41,11 @@ public class WorkflowDefinitionPortletUtil {
 
 		if (orderByCol.equals("active")) {
 			orderByComparator = new WorkflowDefinitionActiveComparator(
-				orderByAsc, languageId);
+				orderByAsc, locale);
 		}
 		else if (orderByCol.equals("title")) {
 			orderByComparator = new WorkflowDefinitionTitleComparator(
-				orderByAsc, languageId);
+				orderByAsc, locale);
 		}
 		else {
 			orderByComparator = new WorkflowDefinitionNameComparator(

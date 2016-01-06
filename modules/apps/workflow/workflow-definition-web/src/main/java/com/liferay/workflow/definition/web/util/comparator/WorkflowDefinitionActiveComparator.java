@@ -15,7 +15,6 @@
 package com.liferay.workflow.definition.web.util.comparator;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 
@@ -34,14 +33,14 @@ public class WorkflowDefinitionActiveComparator
 	public static final String[] ORDER_BY_FIELDS = {"active"};
 
 	public WorkflowDefinitionActiveComparator() {
-		this(false, LocaleUtil.toLanguageId(Locale.getDefault()));
+		this(false, Locale.getDefault());
 	}
 
 	public WorkflowDefinitionActiveComparator(
-		boolean ascending, String languageId) {
+		boolean ascending, Locale locale) {
 
 		_ascending = ascending;
-		_languageId = languageId;
+		_locale = locale;
 	}
 
 	@Override
@@ -49,8 +48,10 @@ public class WorkflowDefinitionActiveComparator
 		WorkflowDefinition workflowDefinition1,
 		WorkflowDefinition workflowDefinition2) {
 
-		int value = getLabel(workflowDefinition1.isActive()).compareTo(
-			getLabel(workflowDefinition2.isActive()));
+		String activeLabel1 = getActiveLabel(workflowDefinition1.isActive());
+		String activeLabel2 = getActiveLabel(workflowDefinition2.isActive());
+
+		int value = activeLabel1.compareTo(activeLabel2);
 
 		if (_ascending) {
 			return value;
@@ -80,16 +81,15 @@ public class WorkflowDefinitionActiveComparator
 		return _ascending;
 	}
 
-	protected String getLabel(boolean value) {
-		if (value) {
-			return LanguageUtil.get(
-				LocaleUtil.fromLanguageId(_languageId), "yes");
+	protected String getActiveLabel(boolean active) {
+		if (active) {
+			return LanguageUtil.get(_locale, "yes");
 		}
 
-		return LanguageUtil.get(LocaleUtil.fromLanguageId(_languageId), "no");
+		return LanguageUtil.get(_locale, "no");
 	}
 
 	private final boolean _ascending;
-	private final String _languageId;
+	private final Locale _locale;
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.workflow.definition.web.search;
 
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.PortletRequest;
 
@@ -28,11 +27,8 @@ public class WorkflowDefinitionSearchTerms
 	public WorkflowDefinitionSearchTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
-		name = StringUtil.toLowerCase(
-			DAOParamUtil.getString(portletRequest, NAME));
-
-		title = StringUtil.toLowerCase(
-			DAOParamUtil.getString(portletRequest, TITLE));
+		name = DAOParamUtil.getString(portletRequest, NAME);
+		title = DAOParamUtil.getString(portletRequest, TITLE);
 	}
 
 }

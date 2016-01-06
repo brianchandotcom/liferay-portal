@@ -51,9 +51,7 @@ public class WorkflowDefinitionSearch
 			(WorkflowDefinitionDisplayTerms)getDisplayTerms();
 
 		iteratorURL.setParameter(
-			WorkflowDefinitionDisplayTerms.NAME,
-			String.valueOf(displayTerms.getName()));
-
+			WorkflowDefinitionDisplayTerms.NAME, displayTerms.getName());
 		iteratorURL.setParameter(
 			WorkflowDefinitionDisplayTerms.TITLE, displayTerms.getTitle());
 	}

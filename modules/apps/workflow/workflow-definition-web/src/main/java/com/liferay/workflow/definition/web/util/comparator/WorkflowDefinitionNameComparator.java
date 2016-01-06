@@ -42,8 +42,10 @@ public class WorkflowDefinitionNameComparator
 		WorkflowDefinition workflowDefinition1,
 		WorkflowDefinition workflowDefinition2) {
 
-		int value = workflowDefinition1.getName().compareTo(
-			workflowDefinition2.getName());
+		String workflowDefinitionName1 = workflowDefinition1.getName();
+		String workflowDefinitionName2 = workflowDefinition2.getName();
+
+		int value = workflowDefinitionName1.compareTo(workflowDefinitionName2);
 
 		if (_ascending) {
 			return value;

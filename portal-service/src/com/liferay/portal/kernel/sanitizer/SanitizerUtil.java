@@ -181,8 +181,6 @@ public class SanitizerUtil {
 		catch (IOException e) {
 			throw new SanitizerException(e);
 		}
-
-		return;
 	}
 
 	public static String sanitize(

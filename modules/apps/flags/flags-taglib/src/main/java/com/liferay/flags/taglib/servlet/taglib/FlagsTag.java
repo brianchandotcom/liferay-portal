@@ -85,7 +85,7 @@ public class FlagsTag extends IncludeTag {
 			String.valueOf(_reportedUserId));
 	}
 
-	private static final String _PAGE = "/page.jsp";
+	private static final String _PAGE = "/flags/page.jsp";
 
 	private String _className;
 	private long _classPK;

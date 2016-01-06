@@ -29,8 +29,7 @@ if (liveGroup == null) {
 
 <div class="container-fluid-1280" id="<portlet:namespace />processesContainer">
 	<liferay-util:include page="/export/processes_list/export_layouts_processes.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+		<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 		<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 	</liferay-util:include>
 </div>

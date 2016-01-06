@@ -59,19 +59,6 @@
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>
-	<portlet>
-		<portlet-name>176</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>license_manager</struts-path>
-		<control-panel-entry-category>apps</control-panel-entry-category>
-		<control-panel-entry-weight>5.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.OmniadminControlPanelEntry</control-panel-entry-class>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>license-manager</css-class-wrapper>
-	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">

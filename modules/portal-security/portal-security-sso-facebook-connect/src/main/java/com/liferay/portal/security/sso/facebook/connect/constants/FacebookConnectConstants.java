@@ -19,7 +19,24 @@ package com.liferay.portal.security.sso.facebook.connect.constants;
  */
 public class FacebookConnectConstants {
 
+	public static final String APP_ID = "appId";
+
+	public static final String APP_SECRET = "appSecret";
+
+	public static final String AUTH_ENABLED = "enabled";
+
+	public static final String GRAPH_URL = "graphURL";
+
+	public static final String OAUTH_AUTH_URL = "oauthAuthURL";
+
+	public static final String OAUTH_REDIRECT_URL = "oauthRedirectURL";
+
+	public static final String OAUTH_TOKEN_URL = "oauthTokenURL";
+
 	public static final String SERVICE_NAME =
 		"com.liferay.portal.security.sso.facebook.connect";
+
+	public static final String VERIFIED_ACCOUNT_REQUIRED =
+		"verifiedAccountRequired";
 
 }

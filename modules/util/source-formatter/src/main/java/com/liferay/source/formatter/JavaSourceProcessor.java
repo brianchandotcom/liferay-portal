@@ -1760,6 +1760,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
+				int lineLeadingTabCount = getLeadingTabCount(line);
+				int previousLineLeadingTabCount = getLeadingTabCount(
+					previousLine);
+
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
@@ -1803,6 +1807,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
+					String indent = StringPool.BLANK;
+
 					if (!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
 						strippedQuotesLine.contains(
 							StringPool.CLOSE_CURLY_BRACE)) {
@@ -1812,14 +1818,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						int openCurlyBraceCount = StringUtil.count(
 							strippedQuotesLine, StringPool.OPEN_CURLY_BRACE);
 
-						int leadingTabCount = getLeadingTabCount(line);
-
 						if ((closeCurlyBraceCount > openCurlyBraceCount) &&
-							(leadingTabCount > 0)) {
+							(lineLeadingTabCount > 0)) {
 
-							String indent = StringPool.BLANK;
-
-							for (int i = 0; i < leadingTabCount - 1; i++) {
+							for (int i = 0; i < lineLeadingTabCount - 1; i++) {
 								indent += StringPool.TAB;
 							}
 
@@ -1830,6 +1832,64 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								content, "\n" + line + "\n",
 								"\n" + line.substring(0, x) + "\n" + indent +
 									line.substring(x) + "\n");
+						}
+					}
+
+					if (Validator.isNull(ifClause) &&
+						!previousLine.endsWith(")") &&
+						!previousLine.endsWith(") {") &&
+						!previousLine.contains("\tthrows ") &&
+						!previousLine.contains(" throws ") &&
+						(previousLineLeadingTabCount ==
+							(lineLeadingTabCount - 1))) {
+
+						int x = -1;
+
+						while (true) {
+							x = previousLine.indexOf(", ", x + 1);
+
+							if (x == -1) {
+								break;
+							}
+
+							if (ToolsUtil.isInsideQuotes(previousLine, x)) {
+								continue;
+							}
+
+							String linePart = previousLine.substring(0, x);
+
+							linePart = BaseSourceProcessor.stripQuotes(
+								linePart, CharPool.QUOTE);
+
+							int closeParenthesesCount = StringUtil.count(
+								linePart, StringPool.CLOSE_PARENTHESIS);
+							int greaterThanCount = StringUtil.count(
+								linePart, StringPool.GREATER_THAN);
+							int lessThanCount = StringUtil.count(
+								linePart, StringPool.LESS_THAN);
+							int openParenthesesCount = StringUtil.count(
+								linePart, StringPool.OPEN_PARENTHESIS);
+
+							if ((closeParenthesesCount !=
+									openParenthesesCount) ||
+								(greaterThanCount != lessThanCount)) {
+
+								continue;
+							}
+
+							if (Validator.isNull(indent)) {
+								for (int i = 0; i < lineLeadingTabCount - 1;
+										i++) {
+
+									indent += StringPool.TAB;
+								}
+							}
+
+							return StringUtil.replace(
+								content, "\n" + previousLine + "\n",
+								"\n" + previousLine.substring(0, x + 1) + "\n" +
+									indent + previousLine.substring(x + 2) +
+										"\n");
 						}
 					}
 
@@ -2089,10 +2149,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 					else {
-						int lineLeadingTabCount = getLeadingTabCount(line);
-						int previousLineLeadingTabCount = getLeadingTabCount(
-							previousLine);
-
 						if (!trimmedLine.startsWith("//")) {
 							if (previousLine.endsWith(StringPool.COMMA) &&
 								previousLine.contains(

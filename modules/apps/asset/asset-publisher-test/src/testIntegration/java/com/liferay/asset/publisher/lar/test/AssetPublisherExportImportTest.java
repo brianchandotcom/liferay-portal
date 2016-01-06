@@ -741,10 +741,24 @@ public class AssetPublisherExportImportTest
 			Group group, int count, List<AssetEntry> assetEntries)
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		if (group.isLayout()) {
+
+			// Creating structures and templates in layout scope group is not
+			// possible
+
+			Company company = CompanyLocalServiceUtil.getCompany(
+				layout.getCompanyId());
+
+			serviceContext.setAttribute("ddmGroupId", company.getGroupId());
+		}
+
 		for (int i = 0; i < count; i++) {
 			JournalArticle journalArticle = JournalTestUtil.addArticle(
 				group.getGroupId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(100));
+				RandomTestUtil.randomString(100), serviceContext);
 
 			assetEntries.add(getAssetEntry(journalArticle));
 		}

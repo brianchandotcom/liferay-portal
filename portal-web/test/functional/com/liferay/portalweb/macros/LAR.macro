@@ -1,6 +1,6 @@
 <definition>
 	<command name="addExportTemplateCP">
-		<execute function="SelectFrame" locator1="IFrame#EXPORT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 

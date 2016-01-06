@@ -1164,7 +1164,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		// Attachments
 
 		moveAttachmentsFolders(
-			message, oldAttachmentsFolderId, thread, serviceContext);
+			message, oldAttachmentsFolderId, oldThread, thread, serviceContext);
 
 		// Indexer
 
@@ -1308,8 +1308,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	protected void moveAttachmentsFolders(
-			MBMessage message, long oldAttachmentsFolderId, MBThread newThread,
-			ServiceContext serviceContext)
+			MBMessage message, long oldAttachmentsFolderId, MBThread oldThread,
+			MBThread newThread, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (oldAttachmentsFolderId !=
@@ -1324,12 +1324,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 
 		List<MBMessage> childMessages = mbMessagePersistence.findByT_P(
-			message.getThreadId(), message.getMessageId());
+			oldThread.getThreadId(), message.getMessageId());
 
 		for (MBMessage childMessage : childMessages) {
 			moveAttachmentsFolders(
-				childMessage, childMessage.getAttachmentsFolderId(), newThread,
-				serviceContext);
+				childMessage, childMessage.getAttachmentsFolderId(), oldThread,
+				newThread, serviceContext);
 		}
 	}
 

@@ -20,4 +20,13 @@
 		padding: 20px;
 	}
 
+	.system-action-group {
+		margin-bottom: 0;
+
+		li {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+	}
+
 }

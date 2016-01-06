@@ -96,160 +96,150 @@ long usedMemory = totalMemory - runtime.freeMemory();
 	</div>
 
 	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationSystemActionsPanel" markupView="lexicon" persistState="<%= true %>" title="system-actions">
-		<div class="table-responsive">
-			<table class="table">
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="run-the-garbage-collector-to-free-up-memory" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="gc" value="execute" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="generate-thread-dump" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="threadDump" value="execute" />
-					</td>
-				</tr>
-			</table>
-		</div>
+		<ul class="list-group system-action-group">
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="run-the-garbage-collector-to-free-up-memory" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="gc" value="execute" />
+				</div>
+			</li>
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="generate-thread-dump" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="threadDump" value="execute" />
+				</div>
+			</li>
+		</ul>
 	</liferay-ui:panel>
 
 	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationCacheActionsPanel" markupView="lexicon" persistState="<%= true %>" title="cache-actions">
-		<div class="table-responsive">
-			<table class="table">
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="clear-content-cached-by-this-vm" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="cacheSingle" value="execute" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="clear-content-cached-across-the-cluster" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="cacheMulti" value="execute" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="clear-the-database-cache" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="cacheDb" value="execute" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="clear-the-direct-servlet-cache" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="cacheServlet" value="execute" />
-					</td>
-				</tr>
-			</table>
-		</div>
+		<ul class="list-group system-action-group">
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="clear-content-cached-by-this-vm" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="cacheSingle" value="execute" />
+				</div>
+			</li>
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="clear-content-cached-across-the-cluster" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="cacheMulti" value="execute" />
+				</div>
+			</li>
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="clear-the-database-cache" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="cacheDb" value="execute" />
+				</div>
+			</li>
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="clear-the-direct-servlet-cache" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="cacheServlet" value="execute" />
+				</div>
+			</li>
+		</ul>
 	</liferay-ui:panel>
 
 	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationIndexActionsPanel" markupView="lexicon" persistState="<%= true %>" title="index-actions">
-		<div class="table-responsive">
-			<table class="table">
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="reindex-all-search-indexes" /></h5>
-					</td>
-					<td>
+		<ul class="list-group system-action-group">
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="reindex-all-search-indexes" /></h5>
+				</div>
+				<div class="pull-right">
 
-						<%
-						long timeout = ParamUtil.getLong(request, "timeout");
-						%>
+					<%
+					long timeout = ParamUtil.getLong(request, "timeout");
+					%>
 
-						<aui:button cssClass="save-server-button" data-blocking='<%= ParamUtil.getBoolean(request, "blocking") %>' data-cmd="reindex" data-timeout="<%= (timeout == 0) ? StringPool.BLANK : timeout %>" value="execute" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="reindex-all-spell-check-indexes" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="reindexDictionaries" value="execute" />
-					</td>
-				</tr>
+					<aui:button cssClass="save-server-button" data-blocking='<%= ParamUtil.getBoolean(request, "blocking") %>' data-cmd="reindex" data-timeout="<%= (timeout == 0) ? StringPool.BLANK : timeout %>" value="execute" />
+				</div>
+			</li>
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="reindex-all-spell-check-indexes" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="reindexDictionaries" value="execute" />
+				</div>
+			</li>
 
-				<%
-				List<Indexer<?>> indexers = new ArrayList<>(IndexerRegistryUtil.getIndexers());
+			<%
+			List<Indexer<?>> indexers = new ArrayList<>(IndexerRegistryUtil.getIndexers());
 
-				Collections.sort(indexers, new IndexerClassNameComparator(true));
+			Collections.sort(indexers, new IndexerClassNameComparator(true));
 
-				for (Indexer<?> indexer : indexers) {
-				%>
+			for (Indexer<?> indexer : indexers) {
+			%>
 
-					<tr>
-						<td>
-							<h5><liferay-ui:message arguments="<%= indexer.getClassName() %>" key="reindex-x" /></h5>
-						</td>
-						<td>
-							<aui:button cssClass="save-server-button" data-classname="<%= indexer.getClassName() %>" data-cmd="reindex" disabled="<%= !indexer.isIndexerEnabled() %>" value="execute" />
-						</td>
-					</tr>
+				<li class="clearfix list-group-item">
+					<div class="pull-left">
+						<h5><liferay-ui:message arguments="<%= indexer.getClassName() %>" key="reindex-x" /></h5>
+					</div>
+					<div class="pull-right">
+						<aui:button cssClass="save-server-button" data-classname="<%= indexer.getClassName() %>" data-cmd="reindex" disabled="<%= !indexer.isIndexerEnabled() %>" value="execute" />
+					</div>
+				</li>
 
-				<%
-				}
-				%>
+			<%
+			}
+			%>
 
-			</table>
-		</div>
+		</ul>
 	</liferay-ui:panel>
 
 	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationVerificationActionsPanel" markupView="lexicon" persistState="<%= true %>" title="verification-actions">
-		<div class="table-responsive">
-			<table class="table">
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="verify-database-tables-of-all-plugins" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="verifyPluginTables" value="execute" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="verify-membership-policies" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="verifyMembershipPolicies" value="execute" />
-					</td>
-				</tr>
-			</table>
-		</div>
+		<ul class="list-group system-action-group">
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="verify-database-tables-of-all-plugins" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="verifyPluginTables" value="execute" />
+				</div>
+			</li>
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="verify-membership-policies" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="verifyMembershipPolicies" value="execute" />
+				</div>
+			</li>
+		</ul>
 	</liferay-ui:panel>
 
 	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationCleanUpActionsPanel" markupView="lexicon" persistState="<%= true %>" title="clean-up-actions">
-		<div class="table-responsive">
-			<table class="table">
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="reset-preview-and-thumbnail-files-for-documents-and-media-portlet" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="dlPreviews" value="execute" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h5><liferay-ui:message key="clean-up-permissions" /> <liferay-ui:icon-help message="clean-up-permissions-help" /></h5>
-					</td>
-					<td>
-						<aui:button cssClass="save-server-button" data-cmd="cleanUpPermissions" value="execute" />
-					</td>
-				</tr>
-			</table>
-		</div>
+		<ul class="list-group system-action-group">
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="reset-preview-and-thumbnail-files-for-documents-and-media-portlet" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="dlPreviews" value="execute" />
+				</div>
+			</li>
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="clean-up-permissions" /> <liferay-ui:icon-help message="clean-up-permissions-help" /></h5>
+				</div>
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="cleanUpPermissions" value="execute" />
+				</div>
+			</li>
+		</ul>
 	</liferay-ui:panel>
 </liferay-ui:panel-container>

@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.test.util;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -22,7 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
-import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -117,23 +115,6 @@ public class DDMStructureTestHelper {
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
 			structureKey, name, StringPool.BLANK, ddmForm, ddmFormLayout,
 			storageType, type);
-	}
-
-	public DDMStructure addStructure(
-			long classNameId, String structureKey, String name,
-			String definition, String storageType, int type)
-		throws Exception {
-
-		DDMForm ddmForm = toDDMForm(definition);
-
-		return addStructure(
-			classNameId, structureKey, name, ddmForm, storageType, type);
-	}
-
-	public DDMForm toDDMForm(String definition) throws Exception {
-		DDMXMLUtil.validateXML(definition);
-
-		return DDMFormXSDDeserializerUtil.deserialize(definition);
 	}
 
 	private final long _classNameId;

@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import org.junit.Assert;
@@ -31,13 +30,16 @@ public class DefaultDDMFormFieldValueAccessorTest {
 
 	@Test
 	public void testGetWithLocalizedValue() {
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("Text");
+
 		Value value = new LocalizedValue(LocaleUtil.US);
 
 		value.addString(LocaleUtil.BRAZIL, "Portuguese value");
 		value.addString(LocaleUtil.US, "English value");
 
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue("Text", value);
+		ddmFormFieldValue.setValue(value);
 
 		Assert.assertEquals(
 			"Portuguese value",
@@ -52,9 +54,10 @@ public class DefaultDDMFormFieldValueAccessorTest {
 
 	@Test
 	public void testGetWithUnlocalizedValue() {
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"Text", new UnlocalizedValue("Scott Joplin"));
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("Text");
+		ddmFormFieldValue.setValue(new UnlocalizedValue("Scott Joplin"));
 
 		Assert.assertEquals(
 			"Scott Joplin",

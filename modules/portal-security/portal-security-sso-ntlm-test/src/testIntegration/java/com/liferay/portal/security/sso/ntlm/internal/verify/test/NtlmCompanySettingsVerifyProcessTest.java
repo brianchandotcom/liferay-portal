@@ -57,32 +57,26 @@ public class NtlmCompanySettingsVerifyProcessTest
 		Assert.assertEquals(
 			"testDomain",
 			settings.getValue(NtlmConstants.AUTH_DOMAIN, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"testDomainController",
 			settings.getValue(
 				NtlmConstants.AUTH_DOMAIN_CONTROLLER, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"testDomainControllerName",
 			settings.getValue(
 				NtlmConstants.AUTH_DOMAIN_CONTROLLER_NAME, StringPool.BLANK));
-
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
 					NtlmConstants.AUTH_ENABLED, StringPool.FALSE)));
-
 		Assert.assertEquals(
 			"testNegotiateFlags",
 			settings.getValue(
 				NtlmConstants.AUTH_NEGOTIATE_FLAGS, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"test@serviceAccount.com",
 			settings.getValue(
 				NtlmConstants.AUTH_SERVICE_ACCOUNT, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"testServicePassword",
 			settings.getValue(
@@ -102,25 +96,19 @@ public class NtlmCompanySettingsVerifyProcessTest
 	@Override
 	protected void populateLegacyProperties(UnicodeProperties properties) {
 		properties.put(LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN, "testDomain");
-
 		properties.put(
 			LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER,
 			"testDomainController");
-
 		properties.put(
 			LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER_NAME,
 			"testDomainControllerName");
-
 		properties.put(LegacyNtlmPropsKeys.NTLM_AUTH_ENABLED, StringPool.TRUE);
-
 		properties.put(
 			LegacyNtlmPropsKeys.NTLM_AUTH_NEGOTIATE_FLAGS,
 			"testNegotiateFlags");
-
 		properties.put(
 			LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_ACCOUNT,
 			"test@serviceAccount.com");
-
 		properties.put(
 			LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_PASSWORD,
 			"testServicePassword");

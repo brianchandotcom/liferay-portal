@@ -60,37 +60,31 @@ public class NtlmCompanySettingsVerifyProcess
 			NtlmConstants.AUTH_DOMAIN,
 			_prefsProps.getString(
 				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN, "EXAMPLE"));
-
 		dictionary.put(
 			NtlmConstants.AUTH_DOMAIN_CONTROLLER,
 			_prefsProps.getString(
 				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER,
 				"127.0.0.1"));
-
 		dictionary.put(
 			NtlmConstants.AUTH_DOMAIN_CONTROLLER_NAME,
 			_prefsProps.getString(
 				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER_NAME,
 				"EXAMPLE"));
-
 		dictionary.put(
 			NtlmConstants.AUTH_ENABLED,
 			_prefsProps.getString(
 				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_ENABLED,
 				StringPool.FALSE));
-
 		dictionary.put(
 			NtlmConstants.AUTH_NEGOTIATE_FLAGS,
 			_prefsProps.getString(
 				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_NEGOTIATE_FLAGS,
 				"0x600FFFFF"));
-
 		dictionary.put(
 			NtlmConstants.AUTH_SERVICE_ACCOUNT,
 			_prefsProps.getString(
 				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_ACCOUNT,
 				"LIFERAY$@EXAMPLE.COM"));
-
 		dictionary.put(
 			NtlmConstants.AUTH_SERVICE_PASSWORD,
 			_prefsProps.getString(

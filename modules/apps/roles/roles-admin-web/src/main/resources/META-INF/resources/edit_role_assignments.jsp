@@ -217,11 +217,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 	$('#<portlet:namespace />unsetRoleAssignments').on(
 		'click',
 		function() {
+			var assigneeType = '<%= HtmlUtil.escapeJS(tabs2) %>';
 			var ids = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
 			form.fm('assignmentsRedirect').val('<%= portletURL.toString() %>');
 
-			if ('<%= tabs2 %>' === 'users') {
+			if (assigneeType === 'users') {
 				form.fm('removeUserIds').val(ids);
 			}
 			else {

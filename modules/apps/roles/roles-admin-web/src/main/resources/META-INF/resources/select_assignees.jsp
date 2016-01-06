@@ -86,6 +86,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 		<%
 		portletURL.setParameter("tabs2", tabs2);
 		%>
+
 	</aui:nav>
 
 	<aui:nav-bar-search>
@@ -163,7 +164,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 			if (<portlet:namespace />assigneeIds.length > 0) {
 				result = {
 					data: {
-						type: '<%= tabs2 %>',
+						type: '<%= HtmlUtil.escapeJS(tabs2) %>',
 						value: <portlet:namespace />assigneeIds.join(',')
 					}
 				};

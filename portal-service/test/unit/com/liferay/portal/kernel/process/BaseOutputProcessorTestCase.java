@@ -68,12 +68,12 @@ public class BaseOutputProcessorTestCase {
 		inputStream = new UnsyncFilterInputStream(
 			new UnsyncByteArrayInputStream(new byte[0])) {
 
-				@Override
-				public void close() throws IOException {
-					throw ioException;
-				}
+			@Override
+			public void close() throws IOException {
+				throw ioException;
+			}
 
-			};
+		};
 
 		try {
 			outputProcessor.processStdErr(inputStream);

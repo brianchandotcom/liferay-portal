@@ -1513,7 +1513,7 @@ rerun your task.
 				sass.compiler.class.name=${sass.compiler.class.name}
 				sass.generate.source.map=${sass.generate.source.map}
 				sass.precision=${sass.precision}
-				systemProp.build.performance.logger=${build.performance.logger}
+				systemProp.build.performance.logger.enabled=${build.performance.logger.enabled}
 				upgrade.table.dir=${upgrade.table.dir}
 			</echo>
 		</sequential>

@@ -57,7 +57,7 @@ gradle.buildFinished {
 	}
 }
 
-if (Boolean.getBoolean("build.performance.logger")) {
+if (Boolean.getBoolean("build.performance.logger.enabled")) {
 	gradle.taskGraph.addTaskExecutionListener(
 		new TaskExecutionListener() {
 

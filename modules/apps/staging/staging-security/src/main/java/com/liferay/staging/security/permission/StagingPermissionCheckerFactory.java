@@ -18,18 +18,57 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactory;
 
+import java.util.Collection;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Tomas Polesovsky
  */
-@Component(immediate = true)
+@Component(immediate = true, property = {"service.ranking:Integer=1000"})
 public class StagingPermissionCheckerFactory
 	implements PermissionCheckerFactory {
 
 	@Override
 	public PermissionChecker create(User user) throws Exception {
-		return new StagingPermissionChecker(null);
+		Collection<ServiceReference<PermissionCheckerFactory>>
+			permissionCheckerFactoryServiceReferences =
+				_bundleContext.getServiceReferences(
+					PermissionCheckerFactory.class,
+					"(!(component.name=" +
+						StagingPermissionCheckerFactory.class.getName() + "))");
+
+		if (permissionCheckerFactoryServiceReferences.isEmpty()) {
+			return null;
+		}
+
+		ServiceReference<PermissionCheckerFactory>
+			permissionCheckerFactoryServiceReference =
+				permissionCheckerFactoryServiceReferences.iterator().next();
+
+		PermissionCheckerFactory permissionCheckerFactory =
+			_bundleContext.getService(permissionCheckerFactoryServiceReference);
+
+		try {
+			PermissionChecker permissionChecker =
+				permissionCheckerFactory.create(user);
+
+			return new StagingPermissionChecker(permissionChecker);
+		}
+		finally {
+			_bundleContext.ungetService(
+				permissionCheckerFactoryServiceReference);
+		}
 	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	private BundleContext _bundleContext;
 
 }

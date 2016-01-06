@@ -64,11 +64,16 @@
 			</then>
 		</if>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="pageAccess" value="Private" />
-			<var name="portletName" value="Recycle Bin" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="test" />
-			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPrivateSite">
+			<var name="site" value="test" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Recycle Bin" />
 		</execute>
 
 		<execute macro="RecycleBin#emptyCP" />

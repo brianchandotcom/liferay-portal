@@ -140,9 +140,12 @@
 			<var name="nodePort" value="9080" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="nodePort" value="9080" />
-			<var name="portletName" value="Recycle Bin" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:9080" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Recycle Bin" />
 		</execute>
 
 		<execute macro="RecycleBin#emptyCP" />
@@ -265,9 +268,10 @@
 			<var name="nodePort" value="8080" />
 		</execute>
 
-		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Staging Processes" />
-			<var name="siteURL" value="true" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging Processes" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -329,10 +333,12 @@
 
 		<execute function="AssertTextEquals" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="nodePort" value="9080" />
-			<var name="portletName" value="Site Settings" />
-			<var name="siteURL" value="true" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:9080" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Site Settings" />
 		</execute>
 
 		<execute macro="Staging#deactivateStagingCP">

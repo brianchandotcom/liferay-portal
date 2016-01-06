@@ -496,7 +496,6 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -556,7 +555,6 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Team#definePermissionPG">
@@ -588,7 +586,6 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Team#removePermissionPG">
@@ -1660,7 +1657,6 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -2069,7 +2065,6 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -2098,7 +2093,6 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">

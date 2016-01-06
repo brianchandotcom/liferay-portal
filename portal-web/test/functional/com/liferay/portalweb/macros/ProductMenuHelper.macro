@@ -108,6 +108,20 @@
 		</if>
 	</command>
 
+	<command name="openSitesPopup">
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="ProductMenu#SITES_POPUP" />
+				<condition function="IsNotVisible" locator1="ProductMenu#SITES_POPUP" />
+			</and>
+			<then>
+				<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
+
+				<execute function="AssertVisible" locator1="ProductMenu#SITES_POPUP" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewNoSite">
 		<var name="key_site" value="${site}" />
 

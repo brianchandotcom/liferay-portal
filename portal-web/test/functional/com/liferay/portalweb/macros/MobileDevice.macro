@@ -16,9 +16,12 @@
 
 		<execute function="AssertTextEquals" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_TABLE_NAME" value1="Classification Name" />
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Mobile Device Families" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Mobile Device Families" />
 		</execute>
 
 		<var name="key_deviceFamilyName" value="${deviceFamilyName}" />

@@ -1393,7 +1393,7 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-aui:nav-item</code>]]>.</description>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-flags:flags</code>]]>.</description>
 		<name>flags</name>
 		<tag-class>com.liferay.taglib.ui.FlagsTag</tag-class>
 		<body-content>JSP</body-content>

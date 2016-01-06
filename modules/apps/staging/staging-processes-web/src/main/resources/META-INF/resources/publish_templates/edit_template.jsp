@@ -115,18 +115,9 @@ else {
 
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
-PortletURL portletURL = renderResponse.createActionURL();
-
 if (group.isStaged() && group.isStagedRemotely()) {
 	cmd = Constants.PUBLISH_TO_REMOTE;
 }
-
-portletURL.setParameter(ActionRequest.ACTION_NAME, "publishLayouts");
-portletURL.setParameter("mvcRenderCommandName", "publishLayouts");
-portletURL.setParameter("closeRedirect", closeRedirect);
-portletURL.setParameter("groupId", String.valueOf(stagingGroupId));
-portletURL.setParameter("stagingGroupId", String.valueOf(stagingGroupId));
-portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 PortletURL renderURL = renderResponse.createRenderURL();
 
@@ -154,15 +145,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 </c:if>
 
 <div class="container-fluid-1280">
-	<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
-		<portlet:param name="mvcPath" value="editExportConfiguration" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-	</portlet:actionURL>
-
-	<liferay-trash:undo
-		portletURL="<%= restoreTrashEntriesURL %>"
-	/>
-
 	<div id="<portlet:namespace />customConfiguration">
 		<portlet:actionURL name="editPublishConfiguration" var="updatePublishConfigurationURL">
 			<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />

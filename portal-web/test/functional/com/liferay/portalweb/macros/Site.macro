@@ -708,7 +708,7 @@
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 					<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-					<execute function="AssertTextEquals" locator1="Message#SUCCESS_1" value1="Your request was sent. You will receive a reply by email." />
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_1" value1="Your request was sent. You will receive a reply by email." />
 
 					<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS_2" />
 

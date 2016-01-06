@@ -599,10 +599,10 @@
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 			</else>
 		</if>
 
@@ -692,10 +692,10 @@
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 			</else>
 		</if>
 	</command>
@@ -1516,7 +1516,7 @@
 		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${dmDocumentTitle}" />
 		<execute function="Uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1544,7 +1544,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaFolder#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaFolder#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="searchCP">
@@ -1750,7 +1750,7 @@
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
 			<else>
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />

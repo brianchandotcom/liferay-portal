@@ -191,7 +191,7 @@
 
 		<execute function="Check" locator1="Permissions#${permissionDefinitionKey}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertChecked" locator1="Permissions#${permissionDefinitionKey}" />
 	</command>
 
@@ -730,7 +730,7 @@
 
 		<execute function="Uncheck" locator1="Permissions#${permissionDefinitionKey}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertNotChecked" locator1="Permissions#${permissionDefinitionKey}" />
 	</command>
 

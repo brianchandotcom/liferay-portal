@@ -137,7 +137,7 @@
 
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 
-		<execute function="AssertTextEquals#assertText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="assignToMeTaskByActions">
@@ -241,7 +241,7 @@
 
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 
-		<execute function="AssertTextEquals#assertText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureWorkflow">

@@ -149,7 +149,7 @@
 
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="assignMemberCP">
@@ -295,7 +295,7 @@
 
 		<execute function="Click" locator1="Toolbar#MANAGEMENT_BAR_TRASH_ICON_BUTTON" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 	</command>
 

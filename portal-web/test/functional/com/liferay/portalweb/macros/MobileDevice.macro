@@ -4,13 +4,13 @@
 		<execute function="Type" locator1="MobileDevice#ADD_DEVICE_FAMILY_NAME_FIELD" value1="Device Family Name" />
 		<execute function="Type" locator1="MobileDevice#ADD_DEVICE_FAMILY_DESCRIPTION_FIELD" value1="Device Family Description" />
 		<execute function="AssertClick" locator1="MobileDevice#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="MobileDevice#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MobileDevice#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="Click" locator1="MobileDevice#MANAGE_CLASSIFICATION_RULES" />
 		<execute function="Click" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_BUTTON" />
 		<execute function="Type" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_NAME_FIELD" value1="Classification Name" />
 		<execute function="Type" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_DESCRIPTION_FIELD" value1="Classification Description" />
 		<execute function="AssertClick" locator1="MobileDevice#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="MobileDevice#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MobileDevice#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_classificationName" value="${classificationName}" />
 

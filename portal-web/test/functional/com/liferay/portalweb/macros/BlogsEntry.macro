@@ -60,7 +60,7 @@
 		<execute function="AssertTextEquals" locator1="CPBlogsEdit#CATEGORIZATION_CATEGORY" value1="${categoryName}" />
 		<execute function="AssertClick" locator1="CPBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="AssertClick" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
@@ -150,7 +150,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 				<execute function="AssertClick" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
@@ -203,7 +203,7 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogsAdd#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsAdd#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="AssertTextEquals" locator1="CPBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="AssertTextPresent" locator1="CPBlogsEdit#CONTENT_FIELD" value1="${entryContent}" />
@@ -329,7 +329,7 @@
 
 		<execute function="AssertClick" locator1="CPBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="AssertClick" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
@@ -459,7 +459,7 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_STATUS" value1="Pending" />
 
@@ -533,7 +533,7 @@
 
 		<execute function="AssertClick" locator1="CPBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="AssertClick" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
@@ -574,7 +574,7 @@
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="PGBlogsEdit#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
-				<execute function="AssertTextEquals" locator1="PGBlogsEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogsEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="PGBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
@@ -631,7 +631,7 @@
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="PGBlogsEdit#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
-				<execute function="AssertTextEquals" locator1="PGBlogsEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogsEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="PGBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
@@ -667,7 +667,7 @@
 
 		<execute function="AssertClick" locator1="CPBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="AssertClick" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitleEdit}" />
 
@@ -689,7 +689,7 @@
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="PGBlogsEdit#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
-				<execute function="AssertTextEquals" locator1="PGBlogsEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogsEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="PGBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
@@ -773,7 +773,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="ReportContent#SUCCESS_MESSAGE" value1="Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure Liferay is a safe environment for everyone." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="ReportContent#SUCCESS_MESSAGE" value1="Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure Liferay is a safe environment for everyone." />
 
 		<execute function="Click" locator1="Button#CLOSE_IFRAME" />
 	</command>
@@ -861,7 +861,7 @@
 
 	<command name="publishCP">
 		<execute function="AssertClick" locator1="CPBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="CPBlogsAdd#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsAdd#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="publishDraftCP">
@@ -876,7 +876,7 @@
 
 		<execute function="AssertClick" locator1="CPBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<execute function="AssertClick" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
@@ -892,7 +892,7 @@
 
 		<execute function="AssertTextEquals" locator1="PGBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="AssertClick" locator1="PGBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="PGBlogsEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogsEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="publishWithInvalidContent">

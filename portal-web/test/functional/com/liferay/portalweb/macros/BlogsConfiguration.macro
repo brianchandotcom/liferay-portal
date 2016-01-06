@@ -41,7 +41,7 @@
 		<execute function="Click#pauseClickAt" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" />
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
 
-		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 

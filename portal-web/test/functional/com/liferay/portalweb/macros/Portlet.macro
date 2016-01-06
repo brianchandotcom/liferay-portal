@@ -166,7 +166,7 @@
 
 		<execute function="AssertClick" locator1="BasePortlet#PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
 	<command name="deletePG">

@@ -52,7 +52,7 @@
 
 		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="PGWikidisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWikidisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addComment">
@@ -243,7 +243,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="PGWikidisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWikidisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addFrontPagePGViaWD">
@@ -253,7 +253,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="PGWikidisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWikidisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addFrontPageWithWorkflowPG">
@@ -283,7 +283,7 @@
 
 		<execute function="Click" locator1="Button#PUBLISH_LOCALIZED" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS_LOCALIZED" value1="${successMessage}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_LOCALIZED" value1="${successMessage}" />
 
 		<execute function="AssertElementPresent" locator1="//html[@dir='${textDirection}']" />
 
@@ -301,7 +301,7 @@
 
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
-		<execute function="AssertTextEquals" locator1="PGWikiAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWikiAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addPageWithWorkflowPGViaWD">
@@ -313,7 +313,7 @@
 
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
-		<execute function="AssertTextEquals" locator1="PGWikidisplayAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWikidisplayAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addPermissionsPGCmd">
@@ -427,7 +427,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="PGWikiAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWikiAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addTagPGCmd">
@@ -622,7 +622,7 @@
 
 				<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-				<execute function="AssertTextEquals" locator1="PGWikiAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGWikiAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -964,7 +964,7 @@
 		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${wikiPageTitle}" />
 		<execute function="Uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1011,7 +1011,7 @@
 
 		<execute function="AssertClick" locator1="Wiki#HISTORY_VERSIONS_REVERT_LINK" value1="Revert" />
 
-		<execute function="AssertTextEquals" locator1="PGWikiWikipageHistory#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWikiWikipageHistory#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_wikiPageRevision" value="1.2" />
 		<var name="key_wikiVersionSummary" value="${wikiVersion2Summary}" />
@@ -1033,7 +1033,7 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="AssertClick" locator1="Wiki#HISTORY_VERSIONS_REVERT_LINK" value1="Revert" />
-		<execute function="AssertTextEquals" locator1="PGWikiWikipageHistory#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWikiWikipageHistory#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_wikiPageRevision" value="${wikiPageRevisionNew}" />
 		<var name="key_wikiVersionSummary" value="${wikiVersionSummary}" />
@@ -1088,7 +1088,7 @@
 		<execute function="AssertClick" locator1="Wiki#LINK_DETAILS" value1="Details" />
 
 		<execute function="AssertClick" locator1="Wiki#LINK_SUBSCRIBE_TO_PAGE" value1="Subscribe" />
-		<execute function="AssertTextEquals" locator1="PGWikiWikipageDetails#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGWikiWikipageDetails#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">

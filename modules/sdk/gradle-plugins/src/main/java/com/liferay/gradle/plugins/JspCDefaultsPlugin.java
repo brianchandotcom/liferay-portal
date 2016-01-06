@@ -20,19 +20,17 @@ import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
-import groovy.lang.Closure;
-
 import java.io.File;
 
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
-import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.bundling.Jar;
 
 /**
@@ -43,7 +41,7 @@ public class JspCDefaultsPlugin
 
 	public static final String UNZIP_JAR_TASK_NAME = "unzipJar";
 
-	protected void addDependenciesJspC(Project project, Copy unzipJarTask) {
+	protected void addDependenciesJspC(Project project) {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		if (!pluginContainer.hasPlugin(LiferayPlugin.class)) {
@@ -78,9 +76,9 @@ public class JspCDefaultsPlugin
 			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
 
 		ConfigurableFileCollection configurableFileCollection = project.files(
-			unzipJarTask.getDestinationDir());
+			getUnzippedJarDir(project));
 
-		configurableFileCollection.builtBy(unzipJarTask);
+		configurableFileCollection.builtBy(UNZIP_JAR_TASK_NAME);
 
 		GradleUtil.addDependency(
 			project, JspCPlugin.CONFIGURATION_NAME, configurableFileCollection);
@@ -95,52 +93,51 @@ public class JspCDefaultsPlugin
 			"1.9.4");
 	}
 
-	protected Copy addTaskUnzipJar(final Project project) {
-		Copy copy = GradleUtil.addTask(
-			project, UNZIP_JAR_TASK_NAME, Copy.class);
+	protected Task addTaskUnzipJar(final Project project) {
+		Task task = project.task(UNZIP_JAR_TASK_NAME);
 
 		final Jar jar = (Jar)GradleUtil.getTask(
 			project, JavaPlugin.JAR_TASK_NAME);
 
-		copy.dependsOn(jar);
+		task.dependsOn(jar);
 
-		copy.from(
-			new Closure<FileTree>(null) {
+		task.doLast(
+			new Action<Task>() {
 
-				@SuppressWarnings("unused")
-				public FileTree doCall() {
-					return project.zipTree(jar.getArchivePath());
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					FileUtil.unzip(
+						project, jar.getArchivePath(),
+						getUnzippedJarDir(project));
 				}
 
 			});
 
-		copy.into(new File(project.getBuildDir(), "unzipped-jar"));
-
-		return copy;
+		return task;
 	}
 
 	@Override
 	protected void configureDefaults(Project project, JspCPlugin jspCPlugin) {
 		super.configureDefaults(project, jspCPlugin);
 
-		final Copy unzipJarTask = addTaskUnzipJar(project);
+		addTaskUnzipJar(project);
 
-		configureJspCExtension(project, unzipJarTask);
+		configureJspCExtension(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					addDependenciesJspC(project, unzipJarTask);
+					addDependenciesJspC(project);
 				}
 
 			});
 	}
 
-	protected void configureJspCExtension(
-		Project project, final Copy unzipJarTask) {
-
+	protected void configureJspCExtension(final Project project) {
 		JspCExtension jspCExtension = GradleUtil.getExtension(
 			project, JspCExtension.class);
 
@@ -152,7 +149,7 @@ public class JspCDefaultsPlugin
 				@Override
 				public File call() throws Exception {
 					LiferayExtension liferayExtension = GradleUtil.getExtension(
-						unzipJarTask.getProject(), LiferayExtension.class);
+						project, LiferayExtension.class);
 
 					return liferayExtension.getAppServerPortalDir();
 				}
@@ -164,7 +161,7 @@ public class JspCDefaultsPlugin
 
 				@Override
 				public File call() throws Exception {
-					File unzippedJarDir = unzipJarTask.getDestinationDir();
+					File unzippedJarDir = getUnzippedJarDir(project);
 
 					File resourcesDir = new File(
 						unzippedJarDir, "META-INF/resources");
@@ -192,6 +189,10 @@ public class JspCDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	protected File getUnzippedJarDir(Project project) {
+		return new File(project.getBuildDir(), "unzipped-jar");
 	}
 
 	private static final String _PORTAL_TOOL_NAME = "com.liferay.jasper.jspc";

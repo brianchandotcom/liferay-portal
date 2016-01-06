@@ -39,7 +39,7 @@
 
 	<command name="DeleteExportTemplate" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Export/Import" />
+			<var name="portletName" value="Export" />
 		</execute>
 
 		<execute macro="LAR#gotoExportTemplateCP" />
@@ -80,7 +80,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Export/Import" />
+			<var name="portletName" value="Export" />
 		</execute>
 
 		<execute macro="LAR#gotoExportTemplateCP" />
@@ -123,7 +123,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Export/Import" />
+			<var name="portletName" value="Export" />
 		</execute>
 
 		<execute macro="LAR#gotoExportTemplateCP" />
@@ -189,7 +189,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Export/Import" />
+			<var name="portletName" value="Export" />
 		</execute>
 
 		<execute macro="LAR#gotoExportTemplateCP" />
@@ -778,7 +778,7 @@
 
 	<command name="ExportImportWithExportTemplate" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Export/Import" />
+			<var name="portletName" value="Export" />
 		</execute>
 
 		<execute macro="LAR#gotoExportTemplateCP" />
@@ -950,7 +950,7 @@
 
 	<command name="SearchExportTemplate" priority="4">
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Export/Import" />
+			<var name="portletName" value="Export" />
 		</execute>
 
 		<execute macro="LAR#gotoExportTemplateCP" />
@@ -970,7 +970,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPublishingTools">
-			<var name="portletName" value="Export/Import" />
+			<var name="portletName" value="Export" />
 		</execute>
 
 		<execute macro="LAR#gotoExportTemplateCP" />

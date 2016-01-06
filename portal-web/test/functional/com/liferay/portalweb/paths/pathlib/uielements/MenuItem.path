@@ -309,6 +309,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_TEMPLATES</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Export Templates')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FEEDS</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem']//span[contains(.,'Feeds')] | //a[@role='menuitem' and contains(.,'Feeds')]</td>
 	<td></td>

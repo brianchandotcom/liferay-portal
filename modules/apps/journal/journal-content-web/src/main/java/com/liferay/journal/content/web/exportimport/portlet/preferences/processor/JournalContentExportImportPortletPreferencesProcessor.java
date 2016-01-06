@@ -160,8 +160,8 @@ public class JournalContentExportImportPortletPreferencesProcessor
 				DDMTemplate ddmTemplate =
 					_ddmTemplateLocalService.fetchTemplate(
 						article.getGroupId(),
-					PortalUtil.getClassNameId(DDMStructure.class),
-					preferenceDDMTemplateKey, true);
+						PortalUtil.getClassNameId(DDMStructure.class),
+						preferenceDDMTemplateKey, true);
 
 				if (ddmTemplate == null) {
 					ddmTemplate = _ddmTemplateLocalService.getTemplate(
@@ -177,7 +177,7 @@ public class JournalContentExportImportPortletPreferencesProcessor
 					portletDataContext, article, ddmTemplate,
 					PortletDataContext.REFERENCE_TYPE_STRONG);
 			}
-			catch (PortalException|ReadOnlyException e) {
+			catch (PortalException | ReadOnlyException e) {
 				throw new PortletDataException(
 					"Unable to export referenced article template", e);
 			}

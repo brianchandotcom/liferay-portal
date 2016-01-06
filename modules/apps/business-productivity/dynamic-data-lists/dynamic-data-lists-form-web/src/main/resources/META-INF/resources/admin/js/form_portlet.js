@@ -106,7 +106,6 @@ AUI.add(
 						editForm.set('onSubmit', A.bind('_onSubmitEditForm', instance));
 
 						instance._eventHandlers = [
-							instance.one('#publishCheckbox').on('change', A.bind('_onChangePublishCheckbox', instance)),
 							instance.one('.btn-cancel').on('click', A.bind('_onCancel', instance)),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
@@ -207,12 +206,33 @@ AUI.add(
 					openPublishModal: function() {
 						var instance = this;
 
+						var publishCheckbox = instance.one('#publishCheckbox');
+
+						publishCheckbox.setData('previousValue', publishCheckbox.attr('checked'));
+
 						Liferay.Util.openWindow(
 							{
 								dialog: {
-									height: 360,
+									cssClass: 'publish-modal-container',
+									height: 400,
 									resizable: false,
-									width: 720
+									width: 720,
+									'toolbars.footer': [
+										{
+											cssClass: 'btn-lg btn-primary',
+											label: Liferay.Language.get('confirm'),
+											on: {
+												click: A.bind('_onConfirmPublishModal', instance)
+											}
+										},
+										{
+											cssClass: 'btn-lg btn-link',
+											label: Liferay.Language.get('cancel'),
+											on: {
+												click: A.bind('_onCancelPublishModal', instance)
+											}
+										}
+									]
 								},
 								id: instance.ns('publishModalContainer'),
 								title: Liferay.Language.get('publish')
@@ -329,26 +349,22 @@ AUI.add(
 						}
 					},
 
-					_onChangePublishCheckbox: function(event) {
+					_onCancelPublishModal: function() {
 						var instance = this;
 
-						var publishCheckbox = event.currentTarget;
+						var publishCheckbox = instance.one('#publishCheckbox');
 
-						var payload = instance.ns(
-							{
-								published: publishCheckbox.attr('checked'),
-								recordSetId: instance.get('recordSetId')
-							}
-						);
+						publishCheckbox.attr('checked', publishCheckbox.getData('previousValue'));
 
-						A.io.request(
-							instance.get('publishRecordSetURL'),
-							{
-								data: payload,
-								dataType: 'JSON',
-								method: 'POST'
-							}
-						);
+						Liferay.Util.getWindow(instance.ns('publishModalContainer')).hide();
+					},
+
+					_onConfirmPublishModal: function() {
+						var instance = this;
+
+						instance._setFormAsPublish();
+
+						Liferay.Util.getWindow(instance.ns('publishModalContainer')).hide();
 					},
 
 					_onDestroyPortlet: function(event) {
@@ -365,6 +381,28 @@ AUI.add(
 						instance.serializeFormBuilder();
 
 						instance.submitForm();
+					},
+
+					_setFormAsPublish: function() {
+						var instance = this;
+
+						var publishCheckbox = instance.one('#publishCheckbox');
+
+						var payload = instance.ns(
+							{
+								published: publishCheckbox.attr('checked'),
+								recordSetId: instance.get('recordSetId')
+							}
+						);
+
+						A.io.request(
+							instance.get('publishRecordSetURL'),
+							{
+								data: payload,
+								dataType: 'JSON',
+								method: 'POST'
+							}
+						);
 					},
 
 					_valueFormBuilder: function() {

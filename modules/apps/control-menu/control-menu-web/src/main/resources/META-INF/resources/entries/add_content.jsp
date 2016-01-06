@@ -29,8 +29,9 @@ data.put("panelURL", addURL);
 data.put("qa-id", "add");
 %>
 
-<li>
+<li class="add-menu-toggle">
 	<liferay-ui:icon
+		cssClass="control-menu-icon"
 		data="<%= data %>"
 		icon="plus"
 		id="addPanel"

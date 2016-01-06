@@ -33,8 +33,9 @@ data.put("panelURL", addURL);
 data.put("qa-id", "info");
 %>
 
-<li>
+<li class="info-link">
 	<liferay-ui:icon
+		cssClass="control-menu-icon"
 		data="<%= data %>"
 		icon="information-live"
 		id="infoButton"

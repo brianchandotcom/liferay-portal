@@ -61,58 +61,49 @@ public class OpenSSOCompanySettingsVerifyProcess
 			_prefsProps.getString(
 				companyId, LegacyOpenSSOPropsKeys.OPENSSO_EMAIL_ADDRESS_ATTR,
 				"mail"));
-
 		dictionary.put(
 			OpenSSOConstants.AUTH_ENABLED,
 			_prefsProps.getString(
 				companyId, LegacyOpenSSOPropsKeys.OPENSSO_AUTH_ENABLED,
 				StringPool.FALSE));
-
 		dictionary.put(
 			OpenSSOConstants.FIRST_NAME_ATTR,
 			_prefsProps.getString(
 				companyId, LegacyOpenSSOPropsKeys.OPENSSO_FIRST_NAME_ATTR,
 				"givenname"));
-
 		dictionary.put(
 			OpenSSOConstants.IMPORT_FROM_LDAP,
 			_prefsProps.getString(
 				companyId, LegacyOpenSSOPropsKeys.OPENSSO_IMPORT_FROM_LDAP,
 				StringPool.FALSE));
-
 		dictionary.put(
 			OpenSSOConstants.LAST_NAME_ATTR,
 			_prefsProps.getString(
 				companyId, LegacyOpenSSOPropsKeys.OPENSSO_LAST_NAME_ATTR,
 				"sn"));
-
 		dictionary.put(
 			OpenSSOConstants.LOGIN_URL,
 			_prefsProps.getString(
 				companyId, LegacyOpenSSOPropsKeys.OPENSSO_LOGIN_URL,
 				"http://openssohost.example.com:8080/opensso/UI/Login?goto=" +
 					"http://portalhost.example.com:8080/c/portal/login"));
-
 		dictionary.put(
 			OpenSSOConstants.LOGOUT_ON_SESSION_EXPIRATION,
 			_prefsProps.getString(
 				companyId,
 				LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_ON_SESSION_EXPIRATION,
 				StringPool.FALSE));
-
 		dictionary.put(
 			OpenSSOConstants.LOGOUT_URL,
 			_prefsProps.getString(
 				companyId, LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_URL,
 				"http://openssohost.example.com:8080/opensso/UI/Logout?goto=" +
 					"http://portalhost.example.com:8080/web/guest/home"));
-
 		dictionary.put(
 			OpenSSOConstants.SCREEN_NAME_ATTR,
 			_prefsProps.getString(
 				companyId, LegacyOpenSSOPropsKeys.OPENSSO_SCREEN_NAME_ATTR,
 				"uid"));
-
 		dictionary.put(
 			OpenSSOConstants.SERVICE_URL,
 			_prefsProps.getString(

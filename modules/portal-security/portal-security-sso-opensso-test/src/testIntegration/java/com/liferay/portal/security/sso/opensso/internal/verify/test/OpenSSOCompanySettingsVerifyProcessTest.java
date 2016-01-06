@@ -58,46 +58,37 @@ public class OpenSSOCompanySettingsVerifyProcessTest
 			"testEmailAddressAttr",
 			settings.getValue(
 				OpenSSOConstants.EMAIL_ADDRESS_ATTR, StringPool.BLANK));
-
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
 					OpenSSOConstants.AUTH_ENABLED, StringPool.FALSE)));
-
 		Assert.assertEquals(
 			"testFirstNameAttr",
 			settings.getValue(
 				OpenSSOConstants.FIRST_NAME_ATTR, StringPool.BLANK));
-
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
 					OpenSSOConstants.IMPORT_FROM_LDAP, StringPool.FALSE)));
-
 		Assert.assertEquals(
 			"testLastNameAttr",
 			settings.getValue(
 				OpenSSOConstants.LAST_NAME_ATTR, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"http://test.com/login/url",
 			settings.getValue(OpenSSOConstants.LOGIN_URL, StringPool.BLANK));
-
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
 					OpenSSOConstants.LOGOUT_ON_SESSION_EXPIRATION,
 					StringPool.FALSE)));
-
 		Assert.assertEquals(
 			"http://test.com/logout/url",
 			settings.getValue(OpenSSOConstants.LOGOUT_URL, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"testScreenNameAttr",
 			settings.getValue(
 				OpenSSOConstants.SCREEN_NAME_ATTR, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"http://test.com/service/url",
 			settings.getValue(OpenSSOConstants.SERVICE_URL, StringPool.BLANK));
@@ -118,36 +109,27 @@ public class OpenSSOCompanySettingsVerifyProcessTest
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_EMAIL_ADDRESS_ATTR,
 			"testEmailAddressAttr");
-
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_AUTH_ENABLED, StringPool.TRUE);
-
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_FIRST_NAME_ATTR,
 			"testFirstNameAttr");
-
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_IMPORT_FROM_LDAP, StringPool.TRUE);
-
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_LAST_NAME_ATTR, "testLastNameAttr");
-
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_LOGIN_URL,
 			"http://test.com/login/url");
-
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_ON_SESSION_EXPIRATION,
 			StringPool.TRUE);
-
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_URL,
 			"http://test.com/logout/url");
-
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_SCREEN_NAME_ATTR,
 			"testScreenNameAttr");
-
 		properties.put(
 			LegacyOpenSSOPropsKeys.OPENSSO_SERVICE_URL,
 			"http://test.com/service/url");

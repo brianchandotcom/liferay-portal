@@ -48,7 +48,7 @@ public class NtlmCompanySettingsVerifyProcessTest
 	protected void doVerify(
 		PortletPreferences portletPreferences, Settings settings) {
 
-		for (String key : LegacyNtlmPropsKeys.NTLM_KEYS) {
+		for (String key : LegacyNtlmPropsKeys.NTLM_AUTH_KEYS) {
 			Assert.assertTrue(
 				Validator.isNull(
 					portletPreferences.getValue(key, StringPool.BLANK)));

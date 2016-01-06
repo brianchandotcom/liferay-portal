@@ -49,7 +49,7 @@ public class NtlmCompanySettingsVerifyProcess
 
 	@Override
 	protected Set<String> getLegacyPropertyKeys() {
-		return SetUtil.fromArray(LegacyNtlmPropsKeys.NTLM_KEYS);
+		return SetUtil.fromArray(LegacyNtlmPropsKeys.NTLM_AUTH_KEYS);
 	}
 
 	@Override

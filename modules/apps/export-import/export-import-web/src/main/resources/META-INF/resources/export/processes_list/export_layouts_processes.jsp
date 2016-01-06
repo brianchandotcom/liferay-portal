@@ -124,7 +124,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= !backgroundTask.isInProgress() %>">
-					<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+					<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 						<portlet:actionURL name="editExportConfiguration" var="relaunchURL">
 							<portlet:param name="mvcRenderCommandName" value="editExportConfiguration" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />

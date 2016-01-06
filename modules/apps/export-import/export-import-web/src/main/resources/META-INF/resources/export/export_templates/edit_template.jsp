@@ -93,15 +93,6 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 %>
 
 <div class="container-fluid-1280">
-	<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
-		<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-	</portlet:actionURL>
-
-	<liferay-trash:undo
-		portletURL="<%= restoreTrashEntriesURL %>"
-	/>
-
 	<div id="<portlet:namespace />customConfiguration">
 		<portlet:actionURL name="editExportConfiguration" var="updateExportConfigurationURL">
 			<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />

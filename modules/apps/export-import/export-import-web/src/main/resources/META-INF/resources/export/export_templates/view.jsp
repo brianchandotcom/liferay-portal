@@ -25,6 +25,15 @@
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 </liferay-portlet:renderURL>
 
+<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
+	<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+</portlet:actionURL>
+
+<liferay-trash:undo
+	portletURL="<%= restoreTrashEntriesURL %>"
+/>
+
 <div class="container-fluid-1280">
 	<aui:form action="<%= portletURL %>">
 		<liferay-ui:search-container

@@ -56,6 +56,7 @@ public class SanitizerUtilTest {
 		_atomicState.close();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSanitize1() {
 		_atomicState.reset();
@@ -72,6 +73,7 @@ public class SanitizerUtilTest {
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSanitize2() {
 		_atomicState.reset();
@@ -107,6 +109,7 @@ public class SanitizerUtilTest {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSanitize4() {
 		_atomicState.reset();
@@ -124,6 +127,7 @@ public class SanitizerUtilTest {
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSanitize5() {
 		_atomicState.reset();
@@ -161,6 +165,7 @@ public class SanitizerUtilTest {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSanitize7() {
 		_atomicState.reset();
@@ -178,6 +183,7 @@ public class SanitizerUtilTest {
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSanitize8() {
 		_atomicState.reset();

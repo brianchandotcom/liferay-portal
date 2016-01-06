@@ -878,8 +878,8 @@ public class PortalImpl implements Portal {
 				if ((allowedDomains.length > 0) &&
 					!ArrayUtil.contains(allowedDomains, domain)) {
 
-					if (_log.isDebugEnabled()) {
-						_log.debug("Redirect URL " + url + " is not allowed");
+					if (_log.isWarnEnabled()) {
+						_log.warn("Redirect URL " + url + " is not allowed");
 					}
 
 					url = null;
@@ -907,8 +907,8 @@ public class PortalImpl implements Portal {
 					}
 				}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug("Redirect URL " + url + " is not allowed");
+				if (_log.isWarnEnabled()) {
+					_log.warn("Redirect URL " + url + " is not allowed");
 				}
 
 				url = null;

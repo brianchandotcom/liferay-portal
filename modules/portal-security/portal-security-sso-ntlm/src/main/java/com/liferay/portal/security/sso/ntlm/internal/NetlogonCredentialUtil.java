@@ -12,22 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm;
+package com.liferay.portal.security.sso.ntlm.internal;
 
-import com.liferay.portal.security.sso.ntlm.internal.NetlogonConnection;
-
-import java.io.IOException;
-
-import java.security.NoSuchAlgorithmException;
+import jcifs.util.DES;
 
 /**
  * @author Michael C. Han
  */
-public interface NetlogonConnectionManager {
+public class NetlogonCredentialUtil {
 
-	public NetlogonConnection connect(
-			String domainController, String domainControllerName,
-			NtlmServiceAccount ntlmServiceAccount)
-		throws IOException, NoSuchAlgorithmException, NtlmLogonException;
+	public static byte[] computeNetlogonCredential(
+		byte[] input, byte[] sessionKey) {
+
+		byte[] k1 = new byte[7];
+		byte[] k2 = new byte[7];
+
+		System.arraycopy(sessionKey, 0, k1, 0, 7);
+		System.arraycopy(sessionKey, 7, k2, 0, 7);
+
+		DES k3 = new DES(k1);
+		DES k4 = new DES(k2);
+
+		byte[] output1 = new byte[8];
+		byte[] output2 = new byte[8];
+
+		k3.encrypt(input, output1);
+		k4.encrypt(output1, output2);
+
+		return output2;
+	}
 
 }

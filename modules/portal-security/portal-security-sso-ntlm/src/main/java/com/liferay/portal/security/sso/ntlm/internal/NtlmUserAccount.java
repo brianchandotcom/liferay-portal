@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm;
+package com.liferay.portal.security.sso.ntlm.internal;
 
-import com.liferay.portal.security.sso.ntlm.internal.NetlogonConnection;
-
-import java.io.IOException;
-
-import java.security.NoSuchAlgorithmException;
+import java.io.Serializable;
 
 /**
- * @author Michael C. Han
+ * @author Marcellus Tavares
  */
-public interface NetlogonConnectionManager {
+public class NtlmUserAccount implements Serializable {
 
-	public NetlogonConnection connect(
-			String domainController, String domainControllerName,
-			NtlmServiceAccount ntlmServiceAccount)
-		throws IOException, NoSuchAlgorithmException, NtlmLogonException;
+	public NtlmUserAccount(String userName) {
+		_userName = userName;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	private final String _userName;
 
 }

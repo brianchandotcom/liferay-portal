@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm;
+package com.liferay.portal.security.sso.ntlm.internal.module.configuration.definition;
 
-import com.liferay.portal.security.sso.ntlm.internal.NetlogonConnection;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 
-import java.io.IOException;
-
-import java.security.NoSuchAlgorithmException;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Michael C. Han
+ * @author Mika Koivisto
  */
-public interface NetlogonConnectionManager {
+@Component
+public class NtlmCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public NetlogonConnection connect(
-			String domainController, String domainControllerName,
-			NtlmServiceAccount ntlmServiceAccount)
-		throws IOException, NoSuchAlgorithmException, NtlmLogonException;
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return NtlmConfiguration.class;
+	}
 
 }

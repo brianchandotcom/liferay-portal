@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.dependencies;
 
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -117,14 +116,6 @@ public class TruncateLongLines
 	public void method11() {
 		String testString1 = "test";
 		String testString2 = "test";
-
-		if (StringUtil.equalsIgnoreCase(
-				testString1,
-				PropsKeys.
-					INDEX_PERMISSION_FILTER_SEARCH_AMPLIFICATION_FACTOR)) {
-
-			return;
-		}
 
 		if (StringUtil.isLowerCase(testString1) ||
 			(Validator.isNotNull(testString1) &&

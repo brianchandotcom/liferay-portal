@@ -451,8 +451,6 @@
 	</command>
 
 	<command name="assignUserSitesCP">
-		<execute function="AssertClick" locator1="NavBar#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />

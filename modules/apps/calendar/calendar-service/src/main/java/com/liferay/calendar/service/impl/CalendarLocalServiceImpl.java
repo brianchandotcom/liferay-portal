@@ -20,7 +20,6 @@ import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
-import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.portal.NoSuchGroupException;
@@ -35,7 +34,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.Date;
@@ -188,11 +186,11 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 		long liveGroupId = calendar.getGroupId();
 
 		try {
-			Group stagingGroup = GroupLocalServiceUtil.getStagingGroup(
+			Group stagingGroup = groupLocalService.getStagingGroup(
 				liveGroupId);
 
 			Calendar stagedCalendar =
-				CalendarLocalServiceUtil.fetchCalendarByUuidAndGroupId(
+				calendarLocalService.fetchCalendarByUuidAndGroupId(
 					calendar.getUuid(), stagingGroup.getGroupId());
 
 			if (stagedCalendar == null) {
@@ -223,7 +221,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 		long groupId = calendar.getGroupId();
 
 		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = groupLocalService.getGroup(groupId);
 			return group.isStagingGroup();
 		}
 		catch (Exception e) {

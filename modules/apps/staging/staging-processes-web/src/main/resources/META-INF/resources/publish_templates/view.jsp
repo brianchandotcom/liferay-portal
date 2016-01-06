@@ -22,9 +22,17 @@ String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName")
 boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing", !stagingGroup.isStagedRemotely());
 %>
 
+<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
+	<portlet:param name="mvcPath" value="editPublishConfiguration" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+</portlet:actionURL>
+
+<liferay-trash:undo
+	portletURL="<%= restoreTrashEntriesURL %>"
+/>
+
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
+	<portlet:param name="mvcRenderCommandName" value="viewPublishConfigurations" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 	<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />

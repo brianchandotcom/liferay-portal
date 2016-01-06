@@ -870,7 +870,7 @@
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="That password is invalid. Please enter in a different password." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The password cannot be blank. Please enter a password." />
 
 				<execute macro="User#logoutPG" />
 

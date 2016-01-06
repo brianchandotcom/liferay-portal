@@ -23,7 +23,14 @@ public class LegacyCASPropsKeys {
 
 	public static final String CAS_IMPORT_FROM_LDAP = "cas.import.from.ldap";
 
-	public static final String[] CAS_KEYS;
+	public static final String[] CAS_KEYS = {
+		CAS_AUTH_ENABLED, CAS_IMPORT_FROM_LDAP,
+		LegacyCASPropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION,
+		LegacyCASPropsKeys.CAS_LOGOUT_URL, LegacyCASPropsKeys.CAS_LOGIN_URL,
+		LegacyCASPropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
+		LegacyCASPropsKeys.CAS_SERVER_NAME, LegacyCASPropsKeys.CAS_SERVER_URL,
+		LegacyCASPropsKeys.CAS_SERVICE_URL
+	};;
 
 	public static final String CAS_LOGIN_URL = "cas.login.url";
 
@@ -40,14 +47,5 @@ public class LegacyCASPropsKeys {
 	public static final String CAS_SERVER_URL = "cas.server.url";
 
 	public static final String CAS_SERVICE_URL = "cas.service.url";
-
-	static {
-		CAS_KEYS = new String[] {
-			CAS_AUTH_ENABLED, CAS_IMPORT_FROM_LDAP,
-			CAS_LOGOUT_ON_SESSION_EXPIRATION, CAS_LOGOUT_URL, CAS_LOGIN_URL,
-			CAS_NO_SUCH_USER_REDIRECT_URL, CAS_SERVER_NAME, CAS_SERVER_URL,
-			CAS_SERVICE_URL
-		};
-	}
 
 }

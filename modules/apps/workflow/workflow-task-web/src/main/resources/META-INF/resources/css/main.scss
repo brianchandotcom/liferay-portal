@@ -295,6 +295,10 @@
 
 	.task-content-actions {
 		float: right;
+
+		.btn-default {
+			padding: 0;
+		}
 	}
 
 	.asset-metadata {

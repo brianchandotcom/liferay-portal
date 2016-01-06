@@ -269,7 +269,7 @@ public class WorkflowInstanceEditDisplayContext
 	public List<WorkflowLog> getWorkflowLogs() throws WorkflowException {
 		if (_workflowLogs == null) {
 			OrderByComparator<WorkflowLog> orderByComparator =
-				WorkflowComparatorFactoryUtil.getLogCreateDateComparator(true);
+				WorkflowComparatorFactoryUtil.getLogCreateDateComparator(false);
 
 			_workflowLogs =
 				WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(

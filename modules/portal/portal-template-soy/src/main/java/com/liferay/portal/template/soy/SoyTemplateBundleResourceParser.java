@@ -15,7 +15,6 @@
 package com.liferay.portal.template.soy;
 
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.URLResourceParser;
 

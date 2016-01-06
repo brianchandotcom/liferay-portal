@@ -344,6 +344,8 @@
 		<var name="key_mgFolderName" value="${mgFolderName}" />
 
 		<execute function="AssertClick" locator1="MediaGallery#FOLDER_NAME" value1="${mgFolderName}" />
+
+		<execute function="AssertTextEquals" locator1="MediaGallery#BREADCRUMB" value1="${mgFolderName}" />
 	</command>
 
 	<command name="moveToFolderCP">

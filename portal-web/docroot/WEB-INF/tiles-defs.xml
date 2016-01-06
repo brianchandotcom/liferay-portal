@@ -168,16 +168,6 @@
 		<put name="portlet_content" value="/portlet/our_activities/view.jsp" />
 	</definition>
 
-	<!-- Portlet Sharing -->
-
-	<definition name="portlet.portlet_sharing" extends="portlet">
-		<put name="portlet_decorate" value="false" />
-	</definition>
-
-	<definition name="portlet.portlet_sharing.view" extends="portlet.portlet_sharing">
-		<put name="portlet_content" value="/portlet/portlet_sharing/view.jsp" />
-	</definition>
-
 	<!-- User Statistics -->
 
 	<definition name="portlet.user_statistics" extends="portlet" />

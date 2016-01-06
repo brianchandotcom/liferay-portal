@@ -4,10 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.security.sso.opensso.constants.*;version=${plugin.full.version},\
 	com.liferay.portal.security.sso.opensso.configuration.*;version=${plugin.full.version}
-Import-Package:\
-	com.liferay.portal.language.resource.bundle,\
-	com.liferay.portal.settings.portlet.action,\
-	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources

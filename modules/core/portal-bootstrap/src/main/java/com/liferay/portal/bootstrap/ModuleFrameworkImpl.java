@@ -62,6 +62,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -77,6 +78,7 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
@@ -226,35 +228,76 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
 	public void initFramework() throws Exception {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Initializing OSGi Framework");
+		}
+
 		List<ServiceLoaderCondition> serviceLoaderConditions =
 			ServiceLoader.load(ServiceLoaderCondition.class);
 
 		ServiceLoaderCondition serviceLoaderCondition =
 			serviceLoaderConditions.get(0);
 
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				"Using conditional loading to find framework factory {" +
+					serviceLoaderCondition.getClass().getName() + "}");
+		}
+
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
 			FrameworkFactory.class, serviceLoaderCondition);
 
 		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
 
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				"Using framework factory {" +
+					frameworkFactory.getClass().getName() + "}");
+		}
+
 		Map<String, String> properties = _buildFrameworkProperties(
 			frameworkFactory.getClass());
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Creating the framework instance");
+		}
+
 		_framework = frameworkFactory.newFramework(properties);
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Initializing the framework");
+		}
+
 		_framework.init();
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Binding the framework to the registry API");
+		}
 
 		RegistryUtil.setRegistry(
 			new RegistryImpl(_framework.getBundleContext()));
 
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				"Binding the framework to the service tracker map factory");
+		}
+
 		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
 			new ServiceTrackerMapFactoryImpl(_framework.getBundleContext()));
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Framework initialization phase complete");
+		}
 	}
 
 	@Override
 	public void registerContext(Object context) {
 		if (context == null) {
 			return;
+		}
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Registering a context object");
 		}
 
 		if ((context instanceof ApplicationContext) &&
@@ -268,6 +311,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			ServletContext servletContext = (ServletContext)context;
 
 			_registerServletContext(servletContext);
+		}
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Context registration complete");
 		}
 	}
 
@@ -331,11 +378,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
 	public void startFramework() throws Exception {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Starting framework");
+		}
+
 		_framework.start();
 
 		_setUpPrerequisiteFrameworkServices(_framework.getBundleContext());
 
 		_setUpInitialBundles();
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Framework start phase complete");
+		}
 	}
 
 	@Override
@@ -344,11 +399,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return;
 		}
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Starting runtime");
+		}
+
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
 		frameworkStartLevel.setStartLevel(
 			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL);
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Runtime startup complete");
+		}
 	}
 
 	@Override
@@ -491,6 +554,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private Map<String, String> _buildFrameworkProperties(Class<?> clazz) {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Building framework properties");
+		}
+
 		Map<String, String> properties = new HashMap<>();
 
 		// Release
@@ -569,6 +636,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		properties.put(
 			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA, systemPackagesExtra);
+
+		if (_log.isTraceEnabled()) {
+			for (Entry<String, String> entry : properties.entrySet()) {
+				_log.trace(
+					"Framework Property {" + entry.getKey() + "=" +
+						entry.getValue() + "}");
+			}
+		}
 
 		return properties;
 	}
@@ -684,6 +759,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		boolean start = false;
 		int startLevel = PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL;
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Initial bundles start level {" + startLevel + "}");
+		}
+
 		int index = location.lastIndexOf(StringPool.AT);
 
 		if (index != -1) {
@@ -711,6 +790,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						"/static/" + location;
 			}
 
+			if (_log.isTraceEnabled()) {
+				_log.trace("Attempting to start bundle {" + location + "}");
+			}
+
 			URL initialBundleURL = new URL(location);
 
 			try {
@@ -718,6 +801,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					initialBundleURL.openStream());
 			}
 			catch (IOException ioe) {
+				if (_log.isTraceEnabled()) {
+					_log.trace(
+						"Failed to locate initial bundle {" + location + "}");
+				}
+
 				if (_log.isWarnEnabled()) {
 					_log.warn(ioe.getMessage());
 				}
@@ -725,8 +813,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				return;
 			}
 
+			if (_log.isTraceEnabled()) {
+				_log.trace(
+					"Adding bundle {" + initialBundleURL.toString() + "}");
+			}
+
 			final Bundle bundle = _addBundle(
 				initialBundleURL.toString(), inputStream, false);
+
+			if (_log.isTraceEnabled()) {
+				_log.trace("Added bundle {" + bundle + "}");
+			}
 
 			if ((bundle == null) || _isFragmentBundle(bundle)) {
 				return;
@@ -739,6 +836,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 
 			if (start) {
+				if (_log.isTraceEnabled()) {
+					_log.trace("Starting bundle {" + bundle + "}");
+				}
+
 				bundle.start();
 
 				final CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -769,10 +870,20 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if (((bundle.getState() & Bundle.UNINSTALLED) == 0) &&
 				(startLevel > 0)) {
 
+				if (_log.isTraceEnabled()) {
+					_log.trace(
+						"Setting bundle start level {" + bundle + "} to {" +
+							startLevel + "}");
+				}
+
 				BundleStartLevel bundleStartLevel = bundle.adapt(
 					BundleStartLevel.class);
 
 				bundleStartLevel.setStartLevel(startLevel);
+			}
+
+			if (_log.isTraceEnabled()) {
+				_log.trace("Initial bundle start complete {" + bundle + "}");
 			}
 		}
 		catch (Exception e) {
@@ -812,6 +923,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	private void _registerApplicationContext(
 		ApplicationContext applicationContext) {
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Context object is application context");
+		}
 
 		BundleContext bundleContext = _framework.getBundleContext();
 
@@ -854,34 +969,76 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return;
 		}
 
-		bundleContext.registerService(
-			names.toArray(new String[names.size()]), bean,
-			_getProperties(bean, beanName));
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				names.toArray(new String[names.size()]), bean,
+				_getProperties(bean, beanName));
+
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				"Registered context bean as {" +
+					serviceRegistration.getReference() + "}");
+		}
 	}
 
 	private void _registerServletContext(ServletContext servletContext) {
 		BundleContext bundleContext = _framework.getBundleContext();
 
-		bundleContext.registerService(
-			new String[] {ServletContext.class.getName()}, servletContext,
-			_getProperties(servletContext, "liferayServletContext"));
+		if (_log.isTraceEnabled()) {
+			_log.trace("Context object is servlet context");
+		}
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				new String[] {ServletContext.class.getName()}, servletContext,
+				_getProperties(servletContext, "liferayServletContext"));
+
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				"Registered servlet context as {" +
+					serviceRegistration.getReference() + "}");
+		}
 	}
 
 	private void _setUpInitialBundles() throws Exception {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Starting initial bundles");
+		}
+
 		for (String initialBundle :
 				PropsValues.MODULE_FRAMEWORK_INITIAL_BUNDLES) {
 
 			_installInitialBundle(initialBundle);
+		}
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Initial bundles startup complete");
 		}
 	}
 
 	private void _setUpPrerequisiteFrameworkServices(
 		BundleContext bundleContext) {
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Setting up required services");
+		}
+
 		Props props = PropsUtil.getProps();
 
-		bundleContext.registerService(
-			Props.class, props, _getProperties(props, Props.class.getName()));
+		ServiceRegistration<Props> serviceRegistration =
+			bundleContext.registerService(
+				Props.class, props,
+				_getProperties(props, Props.class.getName()));
+
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				"Registered required service as {" +
+					serviceRegistration.getReference() + "}");
+		}
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Required services setup complete");
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

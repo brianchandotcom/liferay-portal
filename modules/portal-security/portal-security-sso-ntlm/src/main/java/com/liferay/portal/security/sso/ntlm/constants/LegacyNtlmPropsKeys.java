@@ -29,7 +29,13 @@ public class LegacyNtlmPropsKeys {
 
 	public static final String NTLM_AUTH_ENABLED = "ntlm.auth.enabled";
 
-	public static final String[] NTLM_AUTH_KEYS;
+	public static final String[] NTLM_AUTH_KEYS = {
+		NTLM_AUTH_DOMAIN, NTLM_AUTH_DOMAIN_CONTROLLER,
+		NTLM_AUTH_DOMAIN_CONTROLLER_NAME, NTLM_AUTH_ENABLED,
+		LegacyNtlmPropsKeys.NTLM_AUTH_NEGOTIATE_FLAGS,
+		LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_ACCOUNT,
+		LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_PASSWORD
+	};
 
 	public static final String NTLM_AUTH_NEGOTIATE_FLAGS =
 		"ntlm.auth.negotiate.flags";
@@ -39,14 +45,5 @@ public class LegacyNtlmPropsKeys {
 
 	public static final String NTLM_AUTH_SERVICE_PASSWORD =
 		"ntlm.auth.service.password";
-
-	static {
-		NTLM_AUTH_KEYS = new String[] {
-			NTLM_AUTH_DOMAIN, NTLM_AUTH_DOMAIN_CONTROLLER,
-			NTLM_AUTH_DOMAIN_CONTROLLER_NAME, NTLM_AUTH_ENABLED,
-			NTLM_AUTH_NEGOTIATE_FLAGS, NTLM_AUTH_SERVICE_ACCOUNT,
-			NTLM_AUTH_SERVICE_PASSWORD
-		};
-	}
 
 }

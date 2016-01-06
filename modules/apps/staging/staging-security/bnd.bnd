@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Staging Security
+Bundle-SymbolicName: com.liferay.staging.security
+Bundle-Version: 1.0.0
+Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Management
+-include: ../../../../marketplace/web-content-management/bnd.bnd

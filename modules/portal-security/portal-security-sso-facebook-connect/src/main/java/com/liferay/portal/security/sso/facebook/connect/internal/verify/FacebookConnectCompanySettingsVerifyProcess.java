@@ -49,7 +49,8 @@ public class FacebookConnectCompanySettingsVerifyProcess
 
 	@Override
 	protected Set<String> getLegacyPropertyKeys() {
-		return SetUtil.fromArray(LegacyFacebookConnectPropsKeys.FACEBOOK_KEYS);
+		return SetUtil.fromArray(
+			LegacyFacebookConnectPropsKeys.FACEBOOK_CONNECT_KEYS);
 	}
 
 	@Override

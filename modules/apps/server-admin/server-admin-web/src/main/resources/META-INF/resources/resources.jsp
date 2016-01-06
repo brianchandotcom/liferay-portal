@@ -93,12 +93,12 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		<br />
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="adminServerAdministrationSystemActionsPanel" markupView="lexicon" persistState="<%= true %>" title="system-actions">
+	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationSystemActionsPanel" markupView="lexicon" persistState="<%= true %>" title="system-actions">
 		<div class="table-responsive">
 			<table class="table">
 				<tr>
 					<td>
-						<liferay-ui:message key="run-the-garbage-collector-to-free-up-memory" />
+						<h5><liferay-ui:message key="run-the-garbage-collector-to-free-up-memory" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="gc" value="execute" />
@@ -106,7 +106,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</tr>
 				<tr>
 					<td>
-						<liferay-ui:message key="generate-thread-dump" />
+						<h5><liferay-ui:message key="generate-thread-dump" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="threadDump" value="execute" />
@@ -116,12 +116,12 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		</div>
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="adminServerAdministrationCacheActionsPanel" markupView="lexicon" persistState="<%= true %>" title="cache-actions">
+	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationCacheActionsPanel" markupView="lexicon" persistState="<%= true %>" title="cache-actions">
 		<div class="table-responsive">
 			<table class="table">
 				<tr>
 					<td>
-						<liferay-ui:message key="clear-content-cached-by-this-vm" />
+						<h5><liferay-ui:message key="clear-content-cached-by-this-vm" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="cacheSingle" value="execute" />
@@ -129,7 +129,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</tr>
 				<tr>
 					<td>
-						<liferay-ui:message key="clear-content-cached-across-the-cluster" />
+						<h5><liferay-ui:message key="clear-content-cached-across-the-cluster" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="cacheMulti" value="execute" />
@@ -137,7 +137,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</tr>
 				<tr>
 					<td>
-						<liferay-ui:message key="clear-the-database-cache" />
+						<h5><liferay-ui:message key="clear-the-database-cache" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="cacheDb" value="execute" />
@@ -145,7 +145,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</tr>
 				<tr>
 					<td>
-						<liferay-ui:message key="clear-the-direct-servlet-cache" />
+						<h5><liferay-ui:message key="clear-the-direct-servlet-cache" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="cacheServlet" value="execute" />
@@ -155,12 +155,12 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		</div>
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="adminServerAdministrationIndexActionsPanel" markupView="lexicon" persistState="<%= true %>" title="index-actions">
+	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationIndexActionsPanel" markupView="lexicon" persistState="<%= true %>" title="index-actions">
 		<div class="table-responsive">
 			<table class="table">
 				<tr>
 					<td>
-						<liferay-ui:message key="reindex-all-search-indexes" />
+						<h5><liferay-ui:message key="reindex-all-search-indexes" /></h5>
 					</td>
 					<td>
 
@@ -173,7 +173,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</tr>
 				<tr>
 					<td>
-						<liferay-ui:message key="reindex-all-spell-check-indexes" />
+						<h5><liferay-ui:message key="reindex-all-spell-check-indexes" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="reindexDictionaries" value="execute" />
@@ -190,7 +190,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 					<tr>
 						<td>
-							<liferay-ui:message arguments="<%= indexer.getClassName() %>" key="reindex-x" />
+							<h5><liferay-ui:message arguments="<%= indexer.getClassName() %>" key="reindex-x" /></h5>
 						</td>
 						<td>
 							<aui:button cssClass="save-server-button" data-classname="<%= indexer.getClassName() %>" data-cmd="reindex" disabled="<%= !indexer.isIndexerEnabled() %>" value="execute" />
@@ -205,12 +205,12 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		</div>
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="adminServerAdministrationVerificationActionsPanel" markupView="lexicon" persistState="<%= true %>" title="verification-actions">
+	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationVerificationActionsPanel" markupView="lexicon" persistState="<%= true %>" title="verification-actions">
 		<div class="table-responsive">
 			<table class="table">
 				<tr>
 					<td>
-						<liferay-ui:message key="verify-database-tables-of-all-plugins" />
+						<h5><liferay-ui:message key="verify-database-tables-of-all-plugins" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="verifyPluginTables" value="execute" />
@@ -218,7 +218,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</tr>
 				<tr>
 					<td>
-						<liferay-ui:message key="verify-membership-policies" />
+						<h5><liferay-ui:message key="verify-membership-policies" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="verifyMembershipPolicies" value="execute" />
@@ -228,12 +228,12 @@ long usedMemory = totalMemory - runtime.freeMemory();
 		</div>
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="adminServerAdministrationCleanUpActionsPanel" markupView="lexicon" persistState="<%= true %>" title="clean-up-actions">
+	<liferay-ui:panel collapsible="<%= true %>" cssClass="server-admin-actions-panel" extended="<%= false %>" id="adminServerAdministrationCleanUpActionsPanel" markupView="lexicon" persistState="<%= true %>" title="clean-up-actions">
 		<div class="table-responsive">
 			<table class="table">
 				<tr>
 					<td>
-						<liferay-ui:message key="reset-preview-and-thumbnail-files-for-documents-and-media-portlet" />
+						<h5><liferay-ui:message key="reset-preview-and-thumbnail-files-for-documents-and-media-portlet" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="dlPreviews" value="execute" />
@@ -241,7 +241,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</tr>
 				<tr>
 					<td>
-						<liferay-ui:message key="clean-up-permissions" /> <liferay-ui:icon-help message="clean-up-permissions-help" />
+						<h5><liferay-ui:message key="clean-up-permissions" /> <liferay-ui:icon-help message="clean-up-permissions-help" /></h5>
 					</td>
 					<td>
 						<aui:button cssClass="save-server-button" data-cmd="cleanUpPermissions" value="execute" />

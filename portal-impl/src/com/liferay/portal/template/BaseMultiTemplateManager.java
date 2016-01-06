@@ -33,34 +33,14 @@ public abstract class BaseMultiTemplateManager extends BaseTemplateManager {
 	@NotPrivileged
 	@Override
 	public Template getTemplate(
-		TemplateResource templateResource, boolean restricted) {
+		List<TemplateResource> templateResources, boolean restricted) {
 
-		return getTemplates(
-			Collections.singletonList(templateResource), null, restricted);
+		return getTemplate(templateResources, null, restricted);
 	}
 
 	@NotPrivileged
 	@Override
 	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, boolean restricted) {
-
-		return getTemplates(
-			Collections.singletonList(templateResource), errorTemplateResource,
-			restricted);
-	}
-
-	@NotPrivileged
-	@Override
-	public Template getTemplates(
-		List<TemplateResource> templateResources, boolean restricted) {
-
-		return getTemplates(templateResources, null, restricted);
-	}
-
-	@NotPrivileged
-	@Override
-	public Template getTemplates(
 		List<TemplateResource> templateResources,
 		TemplateResource errorTemplateResource, boolean restricted) {
 
@@ -84,6 +64,26 @@ public abstract class BaseMultiTemplateManager extends BaseTemplateManager {
 				helperUtilities));
 
 		return new PrivilegedTemplateWrapper(accessControlContext, template);
+	}
+
+	@NotPrivileged
+	@Override
+	public Template getTemplate(
+		TemplateResource templateResource, boolean restricted) {
+
+		return getTemplate(
+			Collections.singletonList(templateResource), null, restricted);
+	}
+
+	@NotPrivileged
+	@Override
+	public Template getTemplate(
+		TemplateResource templateResource,
+		TemplateResource errorTemplateResource, boolean restricted) {
+
+		return getTemplate(
+			Collections.singletonList(templateResource), errorTemplateResource,
+			restricted);
 	}
 
 	protected abstract Template doGetTemplate(

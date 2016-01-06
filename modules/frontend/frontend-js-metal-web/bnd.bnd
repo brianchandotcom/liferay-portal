@@ -7,4 +7,5 @@ Include-Resource:\
 JS-Submodules: true
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
+Provide-Capability: soy;type="metal";version:Version="1.0.0"
 -include: ../../../marketplace/platform/bnd.bnd

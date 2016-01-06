@@ -1440,7 +1440,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
-					getUserId(), trigger.getJobName(),
+					getUserId(), description,
 					ExportImportConfigurationConstants.
 						TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
 					publishLayoutLocalSettingsMap);
@@ -1551,7 +1551,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
-					getUserId(), trigger.getJobName(),
+					getUserId(), description,
 					ExportImportConfigurationConstants.
 						TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE,
 					publishLayoutRemoteSettingsMap);

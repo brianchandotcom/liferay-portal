@@ -32,23 +32,18 @@
 	</li>
 </ul>
 
+<portlet:renderURL var="scheduledPublicationRedirectURL">
+	<portlet:param name="mvcPath" value="/view.jsp" />
+	<portlet:param name="tabs1" value="scheduled" />
+</portlet:renderURL>
+
 <aui:script>
 	function <portlet:namespace />schedulePublishEvent() {
 		var form = AUI.$(document.<portlet:namespace />exportPagesFm);
 
 		form.fm('<%= Constants.CMD %>').val('<%= scheduleCMD %>');
+		form.fm('redirect').val('<%= scheduledPublicationRedirectURL %>');
 
 		submitForm(form);
-	}
-
-	function <portlet:namespace />unschedulePublishEvent(jobName) {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-scheduled-event") %>')) {
-			var form = AUI.$(document.<portlet:namespace />exportPagesFm);
-
-			form.fm('<%= Constants.CMD %>').val('<%= unscheduleCMD %>');
-			form.fm('jobName').val(jobName);
-
-			submitForm(form);
-		}
 	}
 </aui:script>

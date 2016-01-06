@@ -59,39 +59,31 @@ public class CASCompanySettingsVerifyProcessTest
 			GetterUtil.getBoolean(
 				settings.getValue(
 					CASConstants.AUTH_ENABLED, StringPool.FALSE)));
-
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
 					CASConstants.IMPORT_FROM_LDAP, StringPool.FALSE)));
-
 		Assert.assertEquals(
 			"http://test.com/cas/login/url",
 			settings.getValue(CASConstants.LOGIN_URL, StringPool.BLANK));
-
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
 					CASConstants.LOGOUT_ON_SESSION_EXPIRATION,
 					StringPool.FALSE)));
-
 		Assert.assertEquals(
 			"http://test.com/cas/logout/url",
 			settings.getValue(CASConstants.LOGOUT_URL, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"http://test.com/cas/no/such/user/redirect/url",
 			settings.getValue(
 				CASConstants.NO_SUCH_USER_REDIRECT_URL, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"http://test.com/cas/server/name",
 			settings.getValue(CASConstants.SERVER_NAME, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"http://test.com/cas/server/url",
 			settings.getValue(CASConstants.SERVER_URL, StringPool.BLANK));
-
 		Assert.assertEquals(
 			"http://test.com/cas/service/url",
 			settings.getValue(CASConstants.SERVICE_URL, StringPool.BLANK));
@@ -110,33 +102,25 @@ public class CASCompanySettingsVerifyProcessTest
 	@Override
 	protected void populateLegacyProperties(UnicodeProperties properties) {
 		properties.put(LegacyCASPropsKeys.CAS_AUTH_ENABLED, StringPool.TRUE);
-
 		properties.put(
 			LegacyCASPropsKeys.CAS_IMPORT_FROM_LDAP, StringPool.TRUE);
-
 		properties.put(
 			LegacyCASPropsKeys.CAS_LOGIN_URL, "http://test.com/cas/login/url");
-
 		properties.put(
 			LegacyCASPropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION,
 			StringPool.TRUE);
-
 		properties.put(
 			LegacyCASPropsKeys.CAS_LOGOUT_URL,
 			"http://test.com/cas/logout/url");
-
 		properties.put(
 			LegacyCASPropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
 			"http://test.com/cas/no/such/user/redirect/url");
-
 		properties.put(
 			LegacyCASPropsKeys.CAS_SERVER_NAME,
 			"http://test.com/cas/server/name");
-
 		properties.put(
 			LegacyCASPropsKeys.CAS_SERVER_URL,
 			"http://test.com/cas/server/url");
-
 		properties.put(
 			LegacyCASPropsKeys.CAS_SERVICE_URL,
 			"http://test.com/cas/service/url");

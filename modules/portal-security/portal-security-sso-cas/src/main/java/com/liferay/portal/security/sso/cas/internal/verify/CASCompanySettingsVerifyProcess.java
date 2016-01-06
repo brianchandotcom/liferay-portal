@@ -63,49 +63,41 @@ public class CASCompanySettingsVerifyProcess
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_AUTH_ENABLED,
 				StringPool.FALSE));
-
 		dictionary.put(
 			CASConstants.IMPORT_FROM_LDAP,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_IMPORT_FROM_LDAP,
 				StringPool.FALSE));
-
 		dictionary.put(
 			CASConstants.LOGIN_URL,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_LOGIN_URL,
 				"https://localhost:8443/cas-web/login"));
-
 		dictionary.put(
 			CASConstants.LOGOUT_ON_SESSION_EXPIRATION,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION,
 				StringPool.FALSE));
-
 		dictionary.put(
 			CASConstants.LOGOUT_URL,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_LOGOUT_URL,
 				"https://localhost:8443/cas-web/logout"));
-
 		dictionary.put(
 			CASConstants.NO_SUCH_USER_REDIRECT_URL,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
 				"http://localhost:8080"));
-
 		dictionary.put(
 			CASConstants.SERVER_NAME,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_SERVER_NAME,
 				"https://localhost:8080"));
-
 		dictionary.put(
 			CASConstants.SERVER_URL,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_SERVER_URL,
 				"https://localhost:8443/cas-web/"));
-
 		dictionary.put(
 			CASConstants.SERVICE_URL,
 			_prefsProps.getString(

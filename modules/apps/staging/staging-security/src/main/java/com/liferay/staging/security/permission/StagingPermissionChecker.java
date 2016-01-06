@@ -114,6 +114,12 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
 
+		if (liveGroupId != groupId) {
+			if (primKey == groupId) {
+				primKey = liveGroupId;
+			}
+		}
+
 		return _permissionChecker.hasPermission(
 			liveGroupId, name, primKey, actionId);
 	}
@@ -123,6 +129,12 @@ public class StagingPermissionChecker implements PermissionChecker {
 		long groupId, String name, String primKey, String actionId) {
 
 		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
+
+		if (liveGroupId != groupId) {
+			if (primKey.equals(String.valueOf(groupId))) {
+				primKey = String.valueOf(liveGroupId);
+			}
+		}
 
 		return _permissionChecker.hasPermission(
 			liveGroupId, name, primKey, actionId);

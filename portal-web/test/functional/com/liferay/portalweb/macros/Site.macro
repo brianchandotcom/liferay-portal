@@ -176,6 +176,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
+		<execute function="AssertElementPresent" locator1="Button#ADD" />
+		<execute function="AssertVisible" locator1="Button#ADD" />
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<if>

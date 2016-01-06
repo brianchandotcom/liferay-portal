@@ -45,6 +45,8 @@
 
 				<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
 
+				<execute function="Pause" locator1="5000" />
+
 				<execute function="SelectFrameTop" />
 
 				<execute function="AssertClick" locator1="Button#ADD" value1="Add" />

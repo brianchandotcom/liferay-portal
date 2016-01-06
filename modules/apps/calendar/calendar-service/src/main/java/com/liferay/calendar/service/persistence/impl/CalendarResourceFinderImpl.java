@@ -407,7 +407,7 @@ public class CalendarResourceFinderImpl
 
 		StringBundler sb = new StringBundler(classNameIds.length + 1);
 
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < classNameIds.length - 1; i++) {
 			sb.append("classNameId = ? OR ");
@@ -425,7 +425,7 @@ public class CalendarResourceFinderImpl
 
 		StringBundler sb = new StringBundler(groupIds.length + 1);
 
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < groupIds.length - 1; i++) {
 			sb.append("groupId = ? OR ");

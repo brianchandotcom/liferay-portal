@@ -325,7 +325,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		StringBundler sb = new StringBundler(assetPrimaryKeys.length + 1);
 
-		sb.append("(");
+		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < assetPrimaryKeys.length - 1; i++) {
 			sb.append("(KaleoTaskInstanceToken.classPK = ?) OR ");
@@ -353,7 +353,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			sb.append(" AND (");
 		}
 		else {
-			sb.append("(");
+			sb.append(StringPool.OPEN_PARENTHESIS);
 		}
 
 		for (int i = 0; i < assetTypes.length - 1; i++) {
@@ -418,7 +418,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			sb.append("[$AND_OR_CONNECTOR$] (");
 		}
 		else {
-			sb.append("(");
+			sb.append(StringPool.OPEN_PARENTHESIS);
 		}
 
 		sb.append("KaleoTaskInstanceToken.dueDate >= ? [$AND_OR_NULL_CHECK$])");
@@ -442,7 +442,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			sb.append("[$AND_OR_CONNECTOR$] (");
 		}
 		else {
-			sb.append("(");
+			sb.append(StringPool.OPEN_PARENTHESIS);
 		}
 
 		sb.append("KaleoTaskInstanceToken.dueDate <= ? [$AND_OR_NULL_CHECK$])");
@@ -621,7 +621,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			sb.append("[$AND_OR_CONNECTOR$] (");
 		}
 		else {
-			sb.append("(");
+			sb.append(StringPool.OPEN_PARENTHESIS);
 		}
 
 		for (int i = 0; i < taskNames.length; i++) {

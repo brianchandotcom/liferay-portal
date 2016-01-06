@@ -1,2 +1,8 @@
 apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
+
+ant {
+	basedir = projectDir
+
+	importBuild rootProject.file("build-changelog.xml")
+}

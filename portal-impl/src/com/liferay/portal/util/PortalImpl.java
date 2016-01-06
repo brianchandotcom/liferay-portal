@@ -2955,12 +2955,13 @@ public class PortalImpl implements Portal {
 			LayoutSet layoutSet, boolean secureConnection)
 		throws PortalException {
 
+		int portalPort = getPortalServerPort(secureConnection);
+
 		Company company = CompanyLocalServiceUtil.getCompany(
 			layoutSet.getCompanyId());
 
 		String portalURL = getPortalURL(
-			company.getVirtualHostname(), getPortalServerPort(secureConnection),
-			secureConnection);
+			company.getVirtualHostname(), portalPort, secureConnection);
 
 		String virtualHostname = getVirtualHostname(layoutSet);
 
@@ -2972,7 +2973,7 @@ public class PortalImpl implements Portal {
 			virtualHostname = getCanonicalDomain(virtualHostname, portalDomain);
 
 			virtualHostname = getPortalURL(
-				virtualHostname, Http.HTTP_PORT, secureConnection);
+				virtualHostname, portalPort, secureConnection);
 
 			if (virtualHostname.contains(portalDomain)) {
 				return virtualHostname.concat(getPathContext());

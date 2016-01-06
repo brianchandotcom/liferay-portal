@@ -14,10 +14,14 @@
 
 package com.liferay.portal.kernel.sanitizer;
 
-import java.io.ByteArrayInputStream;
+import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 import java.util.Map;
 
@@ -25,6 +29,7 @@ import java.util.Map;
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
  */
+@SuppressWarnings("deprecation")
 public abstract class BaseSanitizer implements Sanitizer {
 
 	@Override
@@ -34,40 +39,63 @@ public abstract class BaseSanitizer implements Sanitizer {
 			Map<String, Object> options)
 		throws SanitizerException {
 
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
+		if (bytes == null) {
+			return null;
+		}
 
-		sanitize(
-			companyId, groupId, userId, className, classPK, contentType, modes,
-			new ByteArrayInputStream(bytes), byteArrayOutputStream, options);
+		try {
+			String content = new String(bytes, StringPool.UTF8);
 
-		return byteArrayOutputStream.toByteArray();
+			String result = sanitize(
+				companyId, groupId, userId, className, classPK, contentType,
+				modes, content, options);
+
+			return result.getBytes(StringPool.UTF8);
+		}
+		catch (UnsupportedEncodingException e) {
+			throw new SanitizerException(e);
+		}
 	}
 
 	@Override
-	public abstract void sanitize(
+	public void sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String[] modes,
 			InputStream inputStream, OutputStream outputStream,
 			Map<String, Object> options)
-		throws SanitizerException;
-
-	@Override
-	public String sanitize(
-			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, String[] modes, String s,
-			Map<String, Object> options)
 		throws SanitizerException {
+
+		if ((inputStream == null) || (outputStream == null)) {
+			return;
+		}
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		sanitize(
-			companyId, groupId, userId, className, classPK, contentType, modes,
-			new ByteArrayInputStream(s.getBytes()), byteArrayOutputStream,
-			options);
+		try {
+			StreamUtil.transfer(inputStream, byteArrayOutputStream);
 
-		return byteArrayOutputStream.toString();
+			String content = new String(
+				byteArrayOutputStream.toByteArray(), StringPool.UTF8);
+
+			String result = sanitize(
+				companyId, groupId, userId, className, classPK, contentType,
+				modes, content, options);
+
+			byte[] bytes = result.getBytes(StringPool.UTF8);
+
+			outputStream.write(bytes);
+		}
+		catch (IOException e) {
+			throw new SanitizerException(e);
+		}
 	}
+
+	@Override
+	public abstract String sanitize(
+			long companyId, long groupId, long userId, String className,
+			long classPK, String contentType, String[] modes, String content,
+			Map<String, Object> options)
+		throws SanitizerException;
 
 }

@@ -14,11 +14,9 @@
 
 package com.liferay.portal.sanitizer.bundle.sanitizerimpl;
 
+import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.util.StackTraceUtil;
-
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -31,36 +29,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"service.ranking:Integer=" + Integer.MAX_VALUE}
+	property = {"service.ranking:Integer=" + Integer.MAX_VALUE},
+	service = Sanitizer.class
 )
-public class TestSanitizer implements Sanitizer {
-
-	@Override
-	public byte[] sanitize(
-		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes, byte[] bytes,
-		Map<String, Object> options) {
-
-		_atomicReference.set(StackTraceUtil.getCallerKey());
-
-		return "bytes".getBytes();
-	}
-
-	@Override
-	public void sanitize(
-		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes,
-		InputStream inputStream, OutputStream outputStream,
-		Map<String, Object> options) {
-
-		_atomicReference.set(StackTraceUtil.getCallerKey());
-	}
+public class TestSanitizer extends BaseSanitizer {
 
 	@Override
 	public String sanitize(
 		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes, String s,
+		long classPK, String contentType, String[] modes, String content,
 		Map<String, Object> options) {
+
+		_atomicReference.set(StackTraceUtil.getCallerKey());
 
 		return companyId + ":" + groupId;
 	}

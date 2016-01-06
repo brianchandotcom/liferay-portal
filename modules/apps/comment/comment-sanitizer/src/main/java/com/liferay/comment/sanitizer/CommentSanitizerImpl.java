@@ -14,14 +14,12 @@
 
 package com.liferay.comment.sanitizer;
 
+import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.util.Map;
 
@@ -33,8 +31,8 @@ import org.owasp.html.PolicyFactory;
 /**
  * @author Sergio González
  */
-@Component(immediate = true)
-public class CommentSanitizerImpl implements Sanitizer {
+@Component(immediate = true, service = Sanitizer.class)
+public class CommentSanitizerImpl extends BaseSanitizer {
 
 	public CommentSanitizerImpl() {
 		_commentAllowedContent = new CommentAllowedContent(
@@ -42,39 +40,22 @@ public class CommentSanitizerImpl implements Sanitizer {
 	}
 
 	@Override
-	public byte[] sanitize(
-		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes, byte[] bytes,
-		Map<String, Object> options) {
-
-		return bytes;
-	}
-
-	@Override
-	public void sanitize(
-		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes,
-		InputStream inputStream, OutputStream outputStream,
-		Map<String, Object> options) {
-	}
-
-	@Override
 	public String sanitize(
 		long companyId, long groupId, long userId, String className,
-		long classPK, String contentType, String[] modes, String s,
+		long classPK, String contentType, String[] modes, String content,
 		Map<String, Object> options) {
 
 		if (MapUtil.isEmpty(options)) {
-			return s;
+			return content;
 		}
 
 		boolean discussion = GetterUtil.getBoolean(options.get("discussion"));
 
 		if (!discussion || !contentType.equals(ContentTypes.TEXT_HTML)) {
-			return s;
+			return content;
 		}
 
-		return sanitize(s);
+		return sanitize(content);
 	}
 
 	protected String sanitize(String html) {

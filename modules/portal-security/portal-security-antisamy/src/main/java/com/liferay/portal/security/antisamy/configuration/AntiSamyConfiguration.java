@@ -28,6 +28,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 )
 public interface AntiSamyConfiguration {
 
+	@Meta.AD(required = false)
+	public String[] blacklist();
+
 	@Meta.AD(
 		deflt = "/META-INF/resources/sanitizer-configuration.xml",
 		required = false
@@ -36,5 +39,8 @@ public interface AntiSamyConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enabled();
+
+	@Meta.AD(required = false)
+	public String[] whitelist();
 
 }

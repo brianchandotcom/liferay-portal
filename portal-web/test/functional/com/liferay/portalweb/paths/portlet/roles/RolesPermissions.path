@@ -236,7 +236,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[contains(@value,'GroupVIEW_SITE_ADMINISTRATION')]</td>
+	<td>//tbody//input[contains(@value,'GroupVIEW_SITE_ADMINISTRATION')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -305,7 +305,7 @@
 <!--SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
+	<td>//tbody//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -331,22 +331,22 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_FOLDER_CHECKBOX</td>
-	<td>//input[contains(@value,'journalADD_FOLDER')]</td>
+	<td>//tbody//input[contains(@value,'journalADD_FOLDER')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_STRUCTURE_CHECKBOX</td>
-	<td>//input[contains(@value,'journalADD_STRUCTURE')]</td>
+	<td>//tbody//input[contains(@value,'journalADD_STRUCTURE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_TEMPLATE_CHECKBOX</td>
-	<td>//input[contains(@value,'journalADD_TEMPLATE')]</td>
+	<td>//tbody//input[contains(@value,'journalADD_TEMPLATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX</td>
-	<td>//input[contains(@value,'journalADD_ARTICLE')]</td>
+	<td>//tbody//input[contains(@value,'journalADD_ARTICLE')]</td>
 	<td></td>
 </tr>
 <tr>

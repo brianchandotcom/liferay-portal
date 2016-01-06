@@ -1423,7 +1423,7 @@
 	<command name="viewNoPermissionCP">
 		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Web Content" />
 		<execute function="AssertElementPresent" locator1="WC#NAVBAR_CONTAINER" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No web content was found" />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No web content was found" />
 	</command>
 
 	<command name="viewNotPresentCP">

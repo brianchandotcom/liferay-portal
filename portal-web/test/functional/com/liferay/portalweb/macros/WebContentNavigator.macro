@@ -26,7 +26,12 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<if>
+			<condition function="IsElementPresent" locator1="MenuItem#BASIC_WEB_CONTENT" />
+			<then>
+				<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
+			</then>
+		</if>
 
 		<execute function="AssertVisible" locator1="TextInput#TITLE" />
 	</command>

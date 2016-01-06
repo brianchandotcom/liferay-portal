@@ -83,6 +83,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -162,6 +163,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -253,6 +255,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -334,6 +337,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -465,6 +469,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>

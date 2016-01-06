@@ -265,6 +265,8 @@
 	</command>
 
 	<command name="ViewVirtualHostPrivateSitePage" priority="4">
+		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com,www.charlie.com" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -295,14 +297,18 @@
 			<var name="privateVirtualHosts" value="${privatePageVirtualHostURL}" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
 			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Public Page" />
 			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -315,19 +321,19 @@
 			<var name="virtualHostsURL" value="http://www.charlie.com:8080" />
 		</execute>
 
-		<execute function="AssertHTMLSourceTextPresent" locator1="http://www.charlie.com:8080" />
+		<var name="key_pageName" value="Welcome" />
+
+		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
-			<var name="siteNameURL" value="${virtualHostsURL}" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="virtualHostsURL" value="http://www.charlie.com:8080" />
+			<var name="virtualHostsURL" value="http://www.charlie.com:8080/group/guest" />
 		</execute>
 
 		<var name="key_pageName" value="Private Page" />
 
 		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Private Page" />
-		<execute function="AssertHTMLSourceTextPresent" value1="http://www.charlie.com:8080" />
 
 		<execute macro="User#logoutPG" />
 

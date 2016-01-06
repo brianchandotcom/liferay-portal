@@ -261,7 +261,9 @@
 	</command>
 
 	<command name="addVirtualHostsURLCP">
-		<execute function="AssertClick" locator1="NavListItem#SITE_URL" value1="Site URL" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Site URL" />
+		</execute>
 
 		<if>
 			<isset var="publicVirtualHosts" />

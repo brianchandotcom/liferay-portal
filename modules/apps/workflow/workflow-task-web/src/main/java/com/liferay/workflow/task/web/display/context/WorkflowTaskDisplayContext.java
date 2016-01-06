@@ -738,7 +738,7 @@ public class WorkflowTaskDisplayContext {
 			_workflowTaskRequestHelper.getCompanyId(),
 			getWorkflowInstanceId(workflowTask), logTypes, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS,
-			WorkflowComparatorFactoryUtil.getLogCreateDateComparator(true));
+			WorkflowComparatorFactoryUtil.getLogCreateDateComparator(false));
 	}
 
 	public WorkflowTask getWorkflowTask() {

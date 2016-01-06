@@ -82,8 +82,8 @@ public class AntiSamySanitizerImpl extends BaseSanitizer {
 			_log.debug("Sanitizing " + className + "#" + classPK);
 		}
 
-		if (content == null) {
-			return null;
+		if (Validator.isNull(content)) {
+			return content;
 		}
 
 		if (Validator.isNull(contentType) ||

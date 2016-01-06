@@ -128,7 +128,15 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 									src="${plugin.war}"
 								/>
 
-								<echo append="true" file="${tstamp.value}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
+								<if>
+									<available file="${tstamp.value}/docroot/WEB-INF/src" />
+									<then>
+										<echo append="true" file="${tstamp.value}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
+									</then>
+									<else>
+										<echo append="true" file="${tstamp.value}/WEB-INF/classes/portlet-ext.properties">${portlet.properties}</echo>
+									</else>
+								</if>
 
 								<zip
 									basedir="${tstamp.value}"

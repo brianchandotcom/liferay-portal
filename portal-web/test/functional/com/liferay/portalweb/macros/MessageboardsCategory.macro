@@ -62,7 +62,7 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_subCategoryName" value="${subCategoryName}" />
 
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -274,15 +274,20 @@
 	<command name="viewCP">
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute function="AssertElementPresent" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CHECKBOX" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORY" value1="${categoryName}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORIES" value1="${categoriesNumber}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_THREADS" value1="${threadsNumber}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_POSTS" value1="${postsNumber}" />
-		<execute function="AssertElementPresent" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_ACTIONS" />
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertElementPresent" locator1="MessageBoards#CATEGORY_LIST_CHECKBOX" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORIES_NAME_HEADER" value1="${categoryName}" />
+		<var name="key_subcategoriesNumber" value="${subcategoriesNumber}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORIES" value1="${subcategoriesNumber}" />
+
+		<var name="key_threadsNumber" value="${threadsNumber}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#CATEGORY_LIST_THREADS" value1="${threadsNumber}" />
+		<execute function="AssertElementPresent" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${categoryName}" />
 	</command>
 
 	<command name="viewDefaultPG">

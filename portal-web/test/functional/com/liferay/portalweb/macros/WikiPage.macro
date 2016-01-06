@@ -717,9 +717,13 @@
 	<command name="editFrontPagePG">
 		<execute function="AssertClick" locator1="Wiki#LINK_EDIT" value1="Edit" />
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="Type#typeAlloyEditor" locator1="Wiki#RICH_TEXT_EDITOR" value1="${wikiPageContentEdit}" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContentEdit}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />

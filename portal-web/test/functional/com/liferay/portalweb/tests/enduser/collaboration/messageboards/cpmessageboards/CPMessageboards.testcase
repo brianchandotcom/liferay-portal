@@ -46,9 +46,8 @@
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewCP">
-			<var name="categoriesNumber" value="0" />
 			<var name="categoryName" value="${categoryName}" />
-			<var name="postsNumber" value="0" />
+			<var name="subcategoriesNumber" value="0" />
 			<var name="threadsNumber" value="0" />
 		</execute>
 	</command>

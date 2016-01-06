@@ -9,7 +9,7 @@
 
 		<execute function="Type#sendKeys" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent} @${mentionsUserScreenName}" />
 
-		<execute function="AssertClick" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" value1="${mentionsUserFullName}@${mentionsUserScreenName}" />
+		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />
 
 		<execute macro="BlogsEntry#publish" />
 	</command>
@@ -20,7 +20,7 @@
 
 		<execute function="Type#sendKeys" locator1="Comments#COMMENT_FIELD"  value1="${entryComment} @${mentionsUserScreenName}" />
 
-		<execute function="AssertClick" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" value1="${mentionsUserFullName}@${mentionsUserScreenName}" />
+		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />
 
 		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
@@ -41,7 +41,7 @@
 
 		<execute function="SelectFrame#selectFrameTop" />
 
-		<execute function="AssertClick" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" value1="${mentionsUserFullName}&#64;${mentionsUserScreenName}" />
+		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />
 
 		<execute function="Click" locator1="Button#PUBLISH" />
 
@@ -71,7 +71,7 @@
 
 		<execute function="SelectFrame#selectFrameTop" />
 
-		<execute function="AssertClick" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" value1="${mentionsUserFullName}&#64;${mentionsUserScreenName}" />
+		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />
 
 		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
 

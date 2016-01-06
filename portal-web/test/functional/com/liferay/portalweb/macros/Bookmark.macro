@@ -530,6 +530,11 @@
 		<execute function="Close" locator1="title=Liferay - Enterprise open source portal and collaboration software | Liferay" />
 	</command>
 
+	<command name="viewEntry">
+		<execute function="AssertTextEquals" locator1="BookmarksEntry#NAME" value1="${bookmarkName}" />
+		<execute function="AssertTextEquals" locator1="Bookmarks#BOOKMARK_ASSET_URL" value1="${bookmarkURL}" />
+	</command>
+
 	<command name="viewNoCategoryCP">
 		<execute function="AssertClick" locator1="NavListItem#ADD_BOOKMARK" value1="Add Bookmark" />
 

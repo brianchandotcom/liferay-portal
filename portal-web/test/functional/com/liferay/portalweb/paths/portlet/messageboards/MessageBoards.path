@@ -181,6 +181,37 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CATEGORY_LIST-->
+<tr>
+	<td>CATEGORY_LIST_ACTIONS</td>
+	<td>//li[contains(.,'${key_categoryName}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_LIST_CATEGORY</td>
+	<td>//div[contains(@class,'list-group-item-content')]/h4/a[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_LIST_CHECKBOX</td>
+	<td>//li[contains(.,'${key_categoryName}')]/div/label/input[contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_LIST_SUBCATEGORIES</td>
+	<td>//li[contains(.,'${key_categoryName}')]/div/span[1][contains(.,'${key_subcategoriesNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_LIST_THREADS</td>
+	<td>//li[contains(.,'${key_categoryName}')]/div/span[2][contains(.,'${key_threadsNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CATEGORY_TABLE_ADMIN-->
 <tr>
 	<td>CATEGORY_TABLE_ADMIN_ALL_CHECKBOX</td>
@@ -307,6 +338,42 @@
 <tr>
 	<td>SUBCATEGORY_TABLE_ACTIONS</td>
 	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--THREAD_LIST-->
+<tr>
+	<td>THREAD_LIST_ACTIONS</td>
+	<td>//li[contains(.,'${key_threadSubject}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_LIST_CHECKBOX</td>
+	<td>//li[contains(.,'${key_threadSubject}')]/div/label/input[contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_LIST_POSTS</td>
+	<td>//li[contains(.,'${key_threadSubject}')]/div/span[1][contains(.,'${key_postsNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_LIST_STARTED_BY</td>
+	<td>//li[contains(.,'${key_threadSubject}')]/div/h5[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_LIST_THREAD</td>
+	<td>//div[contains(@class,'list-group-item-content')]/h4/a[contains(.,'${key_threadSubject}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_LIST_VIEWS</td>
+	<td>//li[contains(.,'${key_threadSubject}')]/div/span[2]</td>
 	<td></td>
 </tr>
 <tr>

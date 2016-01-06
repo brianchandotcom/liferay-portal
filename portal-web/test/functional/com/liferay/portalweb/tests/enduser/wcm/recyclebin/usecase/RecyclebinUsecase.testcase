@@ -1060,9 +1060,9 @@
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewCP">
-			<var name="categoriesNumber" value="0" />
 			<var name="categoryName" value="MB Category Name" />
 			<var name="postsNumber" value="2" />
+			<var name="subcategoriesNumber" value="0" />
 			<var name="threadsNumber" value="1" />
 		</execute>
 

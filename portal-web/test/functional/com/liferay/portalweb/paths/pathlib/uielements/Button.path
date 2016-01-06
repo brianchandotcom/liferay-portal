@@ -290,7 +290,7 @@
 </tr>
 <tr>
 	<td>EDITOR_SWITCH</td>
-	<td>//button[contains(@id,'EditorSwitch')]</td>
+	<td>//button[contains(@id,'EditorSwitch')]/span/*[name()='svg'][contains(@class,'lexicon-icon-code')]</td>
 	<td></td>
 </tr>
 <tr>

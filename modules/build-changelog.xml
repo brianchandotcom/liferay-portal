@@ -3,7 +3,7 @@
 
 <project name="build-changelog">
 	<condition property="changelog.exists">
-		<available file="${basedir}/module.changelog" />
+		<available file="${basedir}/src/main/resources/META-INF/module.changelog" />
 	</condition>
 
 	<extension-point name="changelog" depends="write-changelog" />
@@ -36,7 +36,7 @@
 	</target>
 
 	<target name="get-git-commit-id-previous" if="${changelog.exists}">
-		<loadfile property="git.commit.id.previous" srcFile="${basedir}/module.changelog">
+		<loadfile property="git.commit.id.previous" srcFile="${basedir}/src/main/resources/META-INF/module.changelog">
 			<filterchain>
 				<tokenfilter>
 					<containsregex pattern="[0-9a-z]{40}" />
@@ -95,8 +95,8 @@
 	</target>
 
 	<target name="write-changelog" depends="get-changelog-header,get-git-commit-range,get-ticket-list">
-		<echo append="true" file="${basedir}/module.changelog" message="${changelog.header}" />
+		<echo append="true" file="${basedir}/src/main/resources/META-INF/module.changelog" message="${changelog.header}" />
 
-		<echo append="true" file="${basedir}/module.changelog" message="${git.commit.range}=${ticket.list}" />
+		<echo append="true" file="${basedir}/src/main/resources/META-INF/module.changelog" message="${git.commit.range}=${ticket.list}" />
 	</target>
 </project>

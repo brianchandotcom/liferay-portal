@@ -402,7 +402,7 @@ public class CalendarFinderImpl
 	}
 
 	protected String getGroupIds(long[] groupIds) {
-		if (groupIds.length == 0) {
+		if (ArrayUtil.isEmpty(groupIds)) {
 			return StringPool.BLANK;
 		}
 

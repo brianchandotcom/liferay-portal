@@ -359,16 +359,14 @@ public class JavaClass {
 			}
 		}
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("(((\\+\\+( ?))|(--( ?)))");
 		sb.append(javaTerm.getName());
-		sb.append(")");
-		sb.append("|((\\b|\\.)");
+		sb.append(")|((\\b|\\.)");
 		sb.append(javaTerm.getName());
 		sb.append("((( )((=)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)))");
-		sb.append("|(\\+\\+)|(--)");
-		sb.append("|(( )((\\|=)|(&=)|(^=)))))");
+		sb.append("|(\\+\\+)|(--)|(( )((\\|=)|(&=)|(^=)))))");
 
 		Pattern pattern = Pattern.compile(sb.toString());
 

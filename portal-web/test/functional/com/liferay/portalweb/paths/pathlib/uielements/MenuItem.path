@@ -684,6 +684,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_CONFIGURATION</td>
+	<td>//a[contains(@id,'staging-configuration')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STRUCTURE_NAME</td>
 	<td>//ul[contains(@class,'dropdown-menu-left-side-bottom')]/li/a[contains(.,'${key_structureName}')]</td>
 	<td></td>

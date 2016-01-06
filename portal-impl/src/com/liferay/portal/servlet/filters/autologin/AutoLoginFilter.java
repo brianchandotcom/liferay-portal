@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManag
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -242,7 +243,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 					}
 				}
 				catch (Exception e) {
-					StringBundler sb = new StringBundler(4);
+					StringBundler sb = new StringBundler(6);
 
 					sb.append("Current URL ");
 
@@ -252,6 +253,11 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 					sb.append(" generates exception: ");
 					sb.append(e.getMessage());
+
+					if (_log.isInfoEnabled()) {
+						sb.append(" stack: ");
+						sb.append(StackTraceUtil.getStackTrace(e));
+					}
 
 					if (currentURL.endsWith(_PATH_CHAT_LATEST)) {
 						if (_log.isWarnEnabled()) {

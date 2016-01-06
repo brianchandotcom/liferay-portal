@@ -10,13 +10,11 @@
 		<property name="hook.plugins.includes" value="social-bookmarks-hook" />
 
 		<var name="appName" value="Social Bookmarks" />
+		<var name="portletName" value="social-bookmarks-hook" />
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="App Manager" />
+		<execute macro="OSGiSmoke#Smoke">
+			<var name="appName" value="${portletName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
-
-		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
-
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=social-bookmarks-hook" />
 	</command>
 </definition>

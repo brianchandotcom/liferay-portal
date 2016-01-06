@@ -10,13 +10,11 @@
 		<property name="layouttpl.plugins.includes" value="1-3-1-columns-layouttpl" />
 
 		<var name="appName" value="1-3-1 Columns Layout" />
+		<var name="portletName" value="1-3-1-columns-layouttpl" />
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="App Manager" />
+		<execute macro="OSGiSmoke#Smoke">
+			<var name="appName" value="${portletName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
-
-		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
-
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=1-3-1-columns-layouttpl" />
 	</command>
 </definition>

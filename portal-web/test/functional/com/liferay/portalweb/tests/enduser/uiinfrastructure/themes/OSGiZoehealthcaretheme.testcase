@@ -12,13 +12,11 @@
 		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Zoe Healthcare" />
+		<var name="portletName" value="resources-importer-web" />
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="App Manager" />
+		<execute macro="OSGiSmoke#Smoke">
+			<var name="appName" value="${portletName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
-
-		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
-
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=zoe-healthcare-theme" />
 	</command>
 </definition>

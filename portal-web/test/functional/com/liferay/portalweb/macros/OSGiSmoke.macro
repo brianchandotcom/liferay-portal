@@ -1,0 +1,22 @@
+<definition>
+	<command name="Smoke">
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="App Manager" />
+		</execute>
+
+		<execute function="AssertClick" locator1="ListGroupItem#UNCATEGORIZED_LINK" value1="Uncategorized" />
+
+		<var name="key_itemName" value="${appName}" />
+
+		<while>
+			<condition function="IsElementNotPresent" locator1="ListGroupItem#ITEM_NAME_LINK" />
+			<then>
+				<execute function="Click" locator1="Pagination#NEXT_LINK" />
+			</then>
+		</while>
+
+		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
+
+		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=${portletName}" />
+	</command>
+</definition>

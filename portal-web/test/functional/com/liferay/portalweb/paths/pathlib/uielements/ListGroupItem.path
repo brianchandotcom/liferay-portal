@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>ListGroupItem</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ListGroupItem</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ITEM_NAME</td>
+	<td>//ul[@class='tabular-list-group']/li/div[contains(@class,'list-group-item-content')]/h5[contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEM_NAME_LINK</td>
+	<td>//ul[@class='tabular-list-group']/li/div[contains(@class,'list-group-item-content')]/h5/a[contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNCATEGORIZED_LINK</td>
+	<td>//ul[@class='tabular-list-group']/li/div[contains(@class,'list-group-item-content')]/h5/a[contains(.,'Uncategorized')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

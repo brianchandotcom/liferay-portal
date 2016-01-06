@@ -111,7 +111,11 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
-		StringBundler sb = new StringBundler(jsonArray.length() * 2 - 1);
+		if (jsonArray.length() == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(jsonArray.length() * 2);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			LocalizedValue label = getFieldOptionLabel(
@@ -122,11 +126,10 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 			}
 
 			sb.append(label.getString(locale));
-
-			if ((i + 1) < jsonArray.length()) {
-				sb.append(StringPool.COMMA_AND_SPACE);
-			}
+			sb.append(StringPool.COMMA_AND_SPACE);
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}

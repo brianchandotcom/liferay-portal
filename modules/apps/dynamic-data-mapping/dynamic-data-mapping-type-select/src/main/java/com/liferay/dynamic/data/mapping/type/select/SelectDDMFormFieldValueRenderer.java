@@ -46,14 +46,14 @@ public class SelectDDMFormFieldValueRenderer
 		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
 			ddmFormFieldValue);
 
+		if (optionsValuesJSONArray.length() == 0) {
+			return StringPool.BLANK;
+		}
+
 		StringBundler sb = new StringBundler(
 			optionsValuesJSONArray.length() * 2 - 1);
 
 		for (int i = 0; i < optionsValuesJSONArray.length(); i++) {
-			if (i > 0) {
-				sb.append(StringPool.COMMA_AND_SPACE);
-			}
-
 			String optionValue = optionsValuesJSONArray.getString(i);
 
 			if (isManualDataSourceType(ddmFormFieldValue.getDDMFormField())) {
@@ -65,7 +65,11 @@ public class SelectDDMFormFieldValueRenderer
 			else {
 				sb.append(optionValue);
 			}
+
+			sb.append(StringPool.COMMA_AND_SPACE);
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}

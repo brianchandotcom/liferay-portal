@@ -63,6 +63,8 @@ public interface WebKeys {
 
 	public static final String BLOGS_ENTRY = "BLOGS_ENTRY";
 
+	public static final String BRANCHING_ENABLED = "BRANCHING_ENABLED";
+
 	public static final String BROWSER_SNIFFER_REVISION = "BROWSER_SNIFFER_REVISION";
 
 	public static final String BROWSER_SNIFFER_VERSION = "BROWSER_SNIFFER_VERSION";

@@ -112,7 +112,7 @@ public class SolrSpellCheckIndexWriter
 	protected String buildDeleteQuery(
 		SearchContext searchContext, String type) {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(14);
 
 		sb.append(StringPool.PLUS);
 		sb.append(Field.COMPANY_ID);

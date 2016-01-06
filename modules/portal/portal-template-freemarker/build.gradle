@@ -10,6 +10,8 @@ dependencies {
 	compile project(":apps:configuration-admin:configuration-admin-api")
 
 	provided group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+
+	testCompile project(":core:registry-api")
 }
 
 liferay {

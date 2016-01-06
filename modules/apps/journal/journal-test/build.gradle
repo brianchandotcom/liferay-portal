@@ -1,4 +1,6 @@
 dependencies {
+	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
+
 	testCompile project(":apps:journal:journal-api")
 	testCompile project(":portal:portal-search")
 

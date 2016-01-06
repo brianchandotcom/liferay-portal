@@ -16,11 +16,54 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String tabs1 = ParamUtil.getString(request, "tabs1", "processes");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+%>
+
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
+
+		<%
+		portletURL.setParameter("tabs1", "processes");
+		%>
+
 		<aui:nav-item
+			href="<%= portletURL.toString() %>"
 			label="processes"
-			selected="<%= true %>"
+			selected='<%= tabs1.equals("processes") %>'
+		/>
+
+		<%
+		portletURL.setParameter("tabs1", "scheduled");
+		%>
+
+		<aui:nav-item
+			href="<%= portletURL.toString() %>"
+			label="scheduled"
+			selected='<%= tabs1.equals("scheduled") %>'
 		/>
 	</aui:nav>
 </aui:nav-bar>
+
+<div class="container-fluid-1280" id="<portlet:namespace />processesContainer">
+	<c:choose>
+		<c:when test='<%= tabs1.equals("processes") %>'>
+			<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+
+			<liferay-util:include page="/processes_list/view.jsp" servletContext="<%= application %>" />
+
+			<portlet:renderURL var="addNewProcessURL">
+				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu>
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "publish-to-live") %>' url="<%= addNewProcessURL %>" />
+			</liferay-frontend:add-menu>
+		</c:when>
+		<c:when test='<%= tabs1.equals("scheduled") %>'>
+			<liferay-util:include page="/scheduled_list/view.jsp" servletContext="<%= application %>" />
+		</c:when>
+	</c:choose>
+</div>

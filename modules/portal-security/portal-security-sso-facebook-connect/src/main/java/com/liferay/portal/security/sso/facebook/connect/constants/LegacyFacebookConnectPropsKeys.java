@@ -25,7 +25,14 @@ public class LegacyFacebookConnectPropsKeys {
 
 	public static final String AUTH_ENABLED = "facebook.auth.enabled";
 
-	public static final String[] FACEBOOK_CONNECT_KEYS;
+	public static final String[] FACEBOOK_CONNECT_KEYS = {
+		AUTH_ENABLED, APP_ID, APP_SECRET,
+		LegacyFacebookConnectPropsKeys.GRAPH_URL,
+		LegacyFacebookConnectPropsKeys.OAUTH_AUTH_URL,
+		LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
+		LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL,
+		LegacyFacebookConnectPropsKeys.VERIFIED_ACCOUNT_REQUIRED
+	};
 
 	public static final String GRAPH_URL = "facebook.connect.graph.url";
 
@@ -40,13 +47,5 @@ public class LegacyFacebookConnectPropsKeys {
 
 	public static final String VERIFIED_ACCOUNT_REQUIRED =
 		"facebook.connect.verified.account.required";
-
-	static {
-		FACEBOOK_CONNECT_KEYS = new String[] {
-			AUTH_ENABLED, APP_ID, APP_SECRET, GRAPH_URL, OAUTH_AUTH_URL,
-			OAUTH_REDIRECT_URL, OAUTH_TOKEN_URL,
-			VERIFIED_ACCOUNT_REQUIRED
-		};
-	}
 
 }

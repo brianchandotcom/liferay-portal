@@ -854,6 +854,8 @@ public abstract class CalendarLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.service.GroupLocalService.class)
+	protected com.liferay.portal.service.GroupLocalService groupLocalService;
 	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)

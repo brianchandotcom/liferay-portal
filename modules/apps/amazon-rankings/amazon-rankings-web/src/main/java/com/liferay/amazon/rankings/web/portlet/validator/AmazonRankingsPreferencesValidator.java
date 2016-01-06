@@ -18,11 +18,11 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
 import com.liferay.amazon.rankings.web.constants.AmazonRankingsPortletKeys;
+import com.liferay.amazon.rankings.web.model.AmazonRankings;
 import com.liferay.amazon.rankings.web.util.AmazonRankingsUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,10 +64,21 @@ public class AmazonRankingsPreferencesValidator
 		ISBNValidator isbnValidator = new ISBNValidator();
 
 		for (String isbn : isbns) {
-			if (!isbnValidator.isValid(isbn) ||
-				Validator.isNull(AmazonRankingsUtil.getAmazonRankings(
-					_amazonRankingsConfiguration, isbn))) {
+			if (!isbnValidator.isValid(isbn)) {
+				badIsbns.add(isbn);
 
+				if (_log.isInfoEnabled()) {
+					_log.info("Invalid ISBN " + isbn);
+				}
+
+				continue;
+			}
+
+			AmazonRankings amazonRankings =
+				AmazonRankingsUtil.getAmazonRankings(
+					_amazonRankingsConfiguration, isbn);
+
+			if (amazonRankings == null) {
 				badIsbns.add(isbn);
 
 				if (_log.isInfoEnabled()) {

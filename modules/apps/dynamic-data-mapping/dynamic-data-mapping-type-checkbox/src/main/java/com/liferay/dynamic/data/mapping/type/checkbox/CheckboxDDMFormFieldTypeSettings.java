@@ -80,8 +80,7 @@ public interface CheckboxDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "boolean", label = "%show-as-a-switcher",
-		properties = {"showAsSwitcher=true"},
-		type = "checkbox"
+		properties = {"showAsSwitcher=true"}, type = "checkbox"
 	)
 	public boolean showAsSwitcher();
 

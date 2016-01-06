@@ -30,8 +30,7 @@ public interface SolrConfiguration {
 
 	@Meta.AD(
 		deflt = "BASIC", optionLabels = {"Basic", "Cert"},
-		optionValues = {"BASIC", "CERT"},
-		required = false
+		optionValues = {"BASIC", "CERT"}, required = false
 	)
 	public String authenticationMode();
 

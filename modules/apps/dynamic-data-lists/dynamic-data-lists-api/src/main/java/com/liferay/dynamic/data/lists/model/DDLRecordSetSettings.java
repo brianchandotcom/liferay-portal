@@ -101,8 +101,7 @@ public interface DDLRecordSetSettings {
 
 	@DDMFormField(
 		label = "%require-captcha-to-submit-the-form",
-		properties = {"showAsSwitcher=true"},
-		type = "checkbox"
+		properties = {"showAsSwitcher=true"}, type = "checkbox"
 	)
 	public boolean requireCaptcha();
 

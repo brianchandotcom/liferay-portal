@@ -31,8 +31,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 public interface RubyScriptingConfiguration {
 
 	@Meta.AD(
-		deflt = "jit", optionValues = {"force", "jit", "none"},
-		required = false
+		deflt = "jit", optionValues = {"force", "jit", "none"}, required = false
 	)
 	public String compileMode();
 

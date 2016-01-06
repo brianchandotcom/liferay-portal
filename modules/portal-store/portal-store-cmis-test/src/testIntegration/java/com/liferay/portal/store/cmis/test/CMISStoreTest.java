@@ -105,9 +105,8 @@ public class CMISStoreTest extends BaseStoreTestCase {
 			emailAddress, 0, StringPool.BLANK, LocaleUtil.getDefault(),
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			RandomTestUtil.randomString(), 0, 0, true, Calendar.JANUARY, 1,
-			1970, StringPool.BLANK, new long[] {repositoryId},
-			null, null, null, false,
-			ServiceContextTestUtil.getServiceContext());
+			1970, StringPool.BLANK, new long[] {repositoryId}, null, null, null,
+			false, ServiceContextTestUtil.getServiceContext());
 
 		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.ADMINISTRATOR);

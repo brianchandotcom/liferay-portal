@@ -1460,8 +1460,7 @@ public class TableMapperTest {
 						"VALUES (?, ?, ?)",
 				sql);
 			Assert.assertArrayEquals(
-				new int[] {Types.BIGINT, Types.BIGINT, Types.BIGINT},
-				types);
+				new int[] {Types.BIGINT, Types.BIGINT, Types.BIGINT}, types);
 		}
 
 		@Override

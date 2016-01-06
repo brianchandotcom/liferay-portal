@@ -12,23 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.internal.module.configuration.definition;
-
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.portal.security.sso.facebook.connect.constants;
 
 /**
- * @author Mika Koivisto
+ * @author Michael C. Han
  */
-@Component
-public class OpenIdCompanyServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class FacebookConnectSettingsConstants {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return OpenIdConfiguration.class;
-	}
+	public static final String SERVICE_NAME =
+		"com.liferay.portal.security.sso.facebook.connect";
 
 }

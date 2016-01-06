@@ -24,7 +24,7 @@ page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration" %><%@
-page import="com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants" %><%@
+page import="com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectSettingsConstants" %><%@
 page import="com.liferay.portal.util.Portal" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
-import com.liferay.portal.security.sso.cas.constants.CASConstants;
+import com.liferay.portal.security.sso.cas.constants.CASSettingsConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,7 +96,7 @@ public class SSOImpl implements SSO {
 				_configurationFactory.getConfiguration(
 					CASConfiguration.class,
 					new CompanyServiceSettingsLocator(
-						companyId, CASConstants.SERVICE_NAME));
+						companyId, CASSettingsConstants.SERVICE_NAME));
 
 			return casCompanyServiceSettings;
 		}

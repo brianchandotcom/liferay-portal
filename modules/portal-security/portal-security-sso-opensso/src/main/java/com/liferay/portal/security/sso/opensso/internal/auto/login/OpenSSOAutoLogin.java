@@ -35,7 +35,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
-import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOSettingsConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -248,7 +248,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		return _configurationFactory.getConfiguration(
 			OpenSSOConfiguration.class,
 			new CompanyServiceSettingsLocator(
-				companyId, OpenSSOConstants.SERVICE_NAME));
+				companyId, OpenSSOSettingsConstants.SERVICE_NAME));
 	}
 
 	@Reference(unbind = "-")

@@ -22,7 +22,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.token.constants.LegacyTokenPropsKeys;
-import com.liferay.portal.security.sso.token.constants.TokenConstants;
+import com.liferay.portal.security.sso.token.constants.TokenConfigurationKeys;
+import com.liferay.portal.security.sso.token.constants.TokenSettingsConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
 
@@ -58,24 +59,25 @@ public class ShibbolethCompanySettingsVerifyProcessTest
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
-					TokenConstants.AUTH_ENABLED, StringPool.FALSE)));
+					TokenConfigurationKeys.AUTH_ENABLED, StringPool.FALSE)));
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
 				settings.getValue(
-					TokenConstants.IMPORT_FROM_LDAP, StringPool.TRUE)));
+					TokenConfigurationKeys.IMPORT_FROM_LDAP, StringPool.TRUE)));
 		Assert.assertEquals(
 			"/test/shibboleth/url",
 				settings.getValue(
-					TokenConstants.LOGOUT_REDIRECT_URL, StringPool.BLANK));
+					TokenConfigurationKeys.LOGOUT_REDIRECT_URL,
+					StringPool.BLANK));
 		Assert.assertEquals(
 			"testShibboleth",
 				settings.getValue(
-					TokenConstants.USER_HEADER, StringPool.BLANK));
+					TokenConfigurationKeys.USER_HEADER, StringPool.BLANK));
 	}
 
 	@Override
 	protected String getSettingsId() {
-		return TokenConstants.SERVICE_NAME;
+		return TokenSettingsConstants.SERVICE_NAME;
 	}
 
 	@Override

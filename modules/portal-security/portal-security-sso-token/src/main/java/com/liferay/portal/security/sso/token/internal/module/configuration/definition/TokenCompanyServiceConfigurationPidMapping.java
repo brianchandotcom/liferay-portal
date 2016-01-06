@@ -16,7 +16,7 @@ package com.liferay.portal.security.sso.token.internal.module.configuration.defi
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.security.sso.token.configuration.TokenConfiguration;
-import com.liferay.portal.security.sso.token.constants.TokenConstants;
+import com.liferay.portal.security.sso.token.constants.TokenSettingsConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +34,7 @@ public class TokenCompanyServiceConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return TokenConstants.SERVICE_NAME;
+		return TokenSettingsConstants.SERVICE_NAME;
 	}
 
 }

@@ -22,7 +22,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.ntlm.constants.LegacyNtlmPropsKeys;
-import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
+import com.liferay.portal.security.sso.ntlm.constants.NtlmConfigurationKeys;
+import com.liferay.portal.security.sso.ntlm.constants.NtlmSettingsConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
 
@@ -56,36 +57,39 @@ public class NtlmCompanySettingsVerifyProcessTest
 
 		Assert.assertEquals(
 			"testDomain",
-			settings.getValue(NtlmConstants.AUTH_DOMAIN, StringPool.BLANK));
+			settings.getValue(
+				NtlmConfigurationKeys.AUTH_DOMAIN, StringPool.BLANK));
 		Assert.assertEquals(
 			"testDomainController",
 			settings.getValue(
-				NtlmConstants.AUTH_DOMAIN_CONTROLLER, StringPool.BLANK));
+				NtlmConfigurationKeys.AUTH_DOMAIN_CONTROLLER,
+				StringPool.BLANK));
 		Assert.assertEquals(
 			"testDomainControllerName",
 			settings.getValue(
-				NtlmConstants.AUTH_DOMAIN_CONTROLLER_NAME, StringPool.BLANK));
+				NtlmConfigurationKeys.AUTH_DOMAIN_CONTROLLER_NAME,
+				StringPool.BLANK));
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
-					NtlmConstants.AUTH_ENABLED, StringPool.FALSE)));
+					NtlmConfigurationKeys.AUTH_ENABLED, StringPool.FALSE)));
 		Assert.assertEquals(
 			"testNegotiateFlags",
 			settings.getValue(
-				NtlmConstants.AUTH_NEGOTIATE_FLAGS, StringPool.BLANK));
+				NtlmConfigurationKeys.AUTH_NEGOTIATE_FLAGS, StringPool.BLANK));
 		Assert.assertEquals(
 			"test@serviceAccount.com",
 			settings.getValue(
-				NtlmConstants.AUTH_SERVICE_ACCOUNT, StringPool.BLANK));
+				NtlmConfigurationKeys.AUTH_SERVICE_ACCOUNT, StringPool.BLANK));
 		Assert.assertEquals(
 			"testServicePassword",
 			settings.getValue(
-				NtlmConstants.AUTH_SERVICE_PASSWORD, StringPool.BLANK));
+				NtlmConfigurationKeys.AUTH_SERVICE_PASSWORD, StringPool.BLANK));
 	}
 
 	@Override
 	protected String getSettingsId() {
-		return NtlmConstants.SERVICE_NAME;
+		return NtlmSettingsConstants.SERVICE_NAME;
 	}
 
 	@Override

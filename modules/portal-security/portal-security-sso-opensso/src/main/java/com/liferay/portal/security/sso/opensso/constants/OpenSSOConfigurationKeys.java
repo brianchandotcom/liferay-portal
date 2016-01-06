@@ -17,7 +17,7 @@ package com.liferay.portal.security.sso.opensso.constants;
 /**
  * @author Mika Koivisto
  */
-public class OpenSSOConstants {
+public class OpenSSOConfigurationKeys {
 
 	public static final String AUTH_ENABLED = "enabled";
 
@@ -37,9 +37,6 @@ public class OpenSSOConstants {
 	public static final String LOGOUT_URL = "logoutURL";
 
 	public static final String SCREEN_NAME_ATTR = "screenNameAttr";
-
-	public static final String SERVICE_NAME =
-		"com.liferay.portal.security.sso.opensso";
 
 	public static final String SERVICE_URL = "serviceURL";
 

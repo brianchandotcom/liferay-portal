@@ -19,7 +19,8 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConfigurationKeys;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectSettingsConstants;
 import com.liferay.portal.security.sso.facebook.connect.constants.LegacyFacebookConnectPropsKeys;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
@@ -58,42 +59,42 @@ public class FacebookConnectCompanySettingsVerifyProcess
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
 		dictionary.put(
-			FacebookConnectConstants.AUTH_ENABLED,
+			FacebookConnectConfigurationKeys.AUTH_ENABLED,
 			_prefsProps.getString(
 				companyId, LegacyFacebookConnectPropsKeys.AUTH_ENABLED,
 				StringPool.FALSE));
 		dictionary.put(
-			FacebookConnectConstants.APP_ID,
+			FacebookConnectConfigurationKeys.APP_ID,
 			_prefsProps.getString(
 				companyId, LegacyFacebookConnectPropsKeys.APP_ID,
 				StringPool.BLANK));
 		dictionary.put(
-			FacebookConnectConstants.APP_SECRET,
+			FacebookConnectConfigurationKeys.APP_SECRET,
 			_prefsProps.getString(
 				companyId, LegacyFacebookConnectPropsKeys.APP_SECRET,
 				StringPool.BLANK));
 		dictionary.put(
-			FacebookConnectConstants.GRAPH_URL,
+			FacebookConnectConfigurationKeys.GRAPH_URL,
 			_prefsProps.getString(
 				companyId, LegacyFacebookConnectPropsKeys.GRAPH_URL,
 				StringPool.BLANK));
 		dictionary.put(
-			FacebookConnectConstants.OAUTH_AUTH_URL,
+			FacebookConnectConfigurationKeys.OAUTH_AUTH_URL,
 			_prefsProps.getString(
 				companyId, LegacyFacebookConnectPropsKeys.OAUTH_AUTH_URL,
 				StringPool.BLANK));
 		dictionary.put(
-			FacebookConnectConstants.OAUTH_REDIRECT_URL,
+			FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
 			_prefsProps.getString(
 				companyId, LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
 				StringPool.BLANK));
 		dictionary.put(
-			FacebookConnectConstants.OAUTH_TOKEN_URL,
+			FacebookConnectConfigurationKeys.OAUTH_TOKEN_URL,
 			_prefsProps.getString(
 				companyId, LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL,
 				StringPool.BLANK));
 		dictionary.put(
-			FacebookConnectConstants.VERIFIED_ACCOUNT_REQUIRED,
+			FacebookConnectConfigurationKeys.VERIFIED_ACCOUNT_REQUIRED,
 			_prefsProps.getString(
 				companyId,
 				LegacyFacebookConnectPropsKeys.VERIFIED_ACCOUNT_REQUIRED,
@@ -109,7 +110,7 @@ public class FacebookConnectCompanySettingsVerifyProcess
 
 	@Override
 	protected String getSettingsId() {
-		return FacebookConnectConstants.SERVICE_NAME;
+		return FacebookConnectSettingsConstants.SERVICE_NAME;
 	}
 
 	@Reference(unbind = "-")

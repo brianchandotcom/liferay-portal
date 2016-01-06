@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
-import com.liferay.portal.security.sso.cas.constants.CASConstants;
+import com.liferay.portal.security.sso.cas.constants.CASSettingsConstants;
 import com.liferay.portal.security.sso.cas.constants.CASWebKeys;
 import com.liferay.portal.util.PortalUtil;
 
@@ -106,7 +106,7 @@ public class CASFilter extends BaseFilter {
 				_configurationFactory.getConfiguration(
 					CASConfiguration.class,
 					new CompanyServiceSettingsLocator(
-						companyId, CASConstants.SERVICE_NAME));
+						companyId, CASSettingsConstants.SERVICE_NAME));
 
 			if (casConfiguration.enabled()) {
 				return true;
@@ -137,7 +137,7 @@ public class CASFilter extends BaseFilter {
 			_configurationFactory.getConfiguration(
 				CASConfiguration.class,
 				new CompanyServiceSettingsLocator(
-					companyId, CASConstants.SERVICE_NAME));
+					companyId, CASSettingsConstants.SERVICE_NAME));
 
 		String serverName = casConfiguration.serverName();
 		String serverUrl = casConfiguration.serverURL();
@@ -174,7 +174,7 @@ public class CASFilter extends BaseFilter {
 			_configurationFactory.getConfiguration(
 				CASConfiguration.class,
 				new CompanyServiceSettingsLocator(
-					companyId, CASConstants.SERVICE_NAME));
+					companyId, CASSettingsConstants.SERVICE_NAME));
 
 		String pathInfo = request.getPathInfo();
 

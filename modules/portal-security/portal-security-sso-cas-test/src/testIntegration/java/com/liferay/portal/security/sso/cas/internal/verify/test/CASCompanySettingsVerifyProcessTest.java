@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.cas.constants.CASConstants;
+import com.liferay.portal.security.sso.cas.constants.CASConfigurationKeys;
+import com.liferay.portal.security.sso.cas.constants.CASSettingsConstants;
 import com.liferay.portal.security.sso.cas.constants.LegacyCASPropsKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
@@ -58,40 +59,46 @@ public class CASCompanySettingsVerifyProcessTest
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
-					CASConstants.AUTH_ENABLED, StringPool.FALSE)));
+					CASConfigurationKeys.AUTH_ENABLED, StringPool.FALSE)));
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
-					CASConstants.IMPORT_FROM_LDAP, StringPool.FALSE)));
+					CASConfigurationKeys.IMPORT_FROM_LDAP, StringPool.FALSE)));
 		Assert.assertEquals(
 			"http://test.com/cas/login/url",
-			settings.getValue(CASConstants.LOGIN_URL, StringPool.BLANK));
+			settings.getValue(
+				CASConfigurationKeys.LOGIN_URL, StringPool.BLANK));
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
-					CASConstants.LOGOUT_ON_SESSION_EXPIRATION,
+					CASConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION,
 					StringPool.FALSE)));
 		Assert.assertEquals(
 			"http://test.com/cas/logout/url",
-			settings.getValue(CASConstants.LOGOUT_URL, StringPool.BLANK));
+			settings.getValue(
+				CASConfigurationKeys.LOGOUT_URL, StringPool.BLANK));
 		Assert.assertEquals(
 			"http://test.com/cas/no/such/user/redirect/url",
 			settings.getValue(
-				CASConstants.NO_SUCH_USER_REDIRECT_URL, StringPool.BLANK));
+				CASConfigurationKeys.NO_SUCH_USER_REDIRECT_URL,
+				StringPool.BLANK));
 		Assert.assertEquals(
 			"http://test.com/cas/server/name",
-			settings.getValue(CASConstants.SERVER_NAME, StringPool.BLANK));
+			settings.getValue(
+				CASConfigurationKeys.SERVER_NAME, StringPool.BLANK));
 		Assert.assertEquals(
 			"http://test.com/cas/server/url",
-			settings.getValue(CASConstants.SERVER_URL, StringPool.BLANK));
+			settings.getValue(
+				CASConfigurationKeys.SERVER_URL, StringPool.BLANK));
 		Assert.assertEquals(
 			"http://test.com/cas/service/url",
-			settings.getValue(CASConstants.SERVICE_URL, StringPool.BLANK));
+			settings.getValue(
+				CASConfigurationKeys.SERVICE_URL, StringPool.BLANK));
 	}
 
 	@Override
 	protected String getSettingsId() {
-		return CASConstants.SERVICE_NAME;
+		return CASSettingsConstants.SERVICE_NAME;
 	}
 
 	@Override

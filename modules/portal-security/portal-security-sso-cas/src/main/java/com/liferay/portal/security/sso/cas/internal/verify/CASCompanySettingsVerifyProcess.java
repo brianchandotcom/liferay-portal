@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.sso.cas.constants.CASConstants;
+import com.liferay.portal.security.sso.cas.constants.CASConfigurationKeys;
+import com.liferay.portal.security.sso.cas.constants.CASSettingsConstants;
 import com.liferay.portal.security.sso.cas.constants.LegacyCASPropsKeys;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
@@ -59,47 +60,47 @@ public class CASCompanySettingsVerifyProcess
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
 		dictionary.put(
-			CASConstants.AUTH_ENABLED,
+			CASConfigurationKeys.AUTH_ENABLED,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_AUTH_ENABLED,
 				StringPool.FALSE));
 		dictionary.put(
-			CASConstants.IMPORT_FROM_LDAP,
+			CASConfigurationKeys.IMPORT_FROM_LDAP,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_IMPORT_FROM_LDAP,
 				StringPool.FALSE));
 		dictionary.put(
-			CASConstants.LOGIN_URL,
+			CASConfigurationKeys.LOGIN_URL,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_LOGIN_URL,
 				"https://localhost:8443/cas-web/login"));
 		dictionary.put(
-			CASConstants.LOGOUT_ON_SESSION_EXPIRATION,
+			CASConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION,
 				StringPool.FALSE));
 		dictionary.put(
-			CASConstants.LOGOUT_URL,
+			CASConfigurationKeys.LOGOUT_URL,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_LOGOUT_URL,
 				"https://localhost:8443/cas-web/logout"));
 		dictionary.put(
-			CASConstants.NO_SUCH_USER_REDIRECT_URL,
+			CASConfigurationKeys.NO_SUCH_USER_REDIRECT_URL,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
 				"http://localhost:8080"));
 		dictionary.put(
-			CASConstants.SERVER_NAME,
+			CASConfigurationKeys.SERVER_NAME,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_SERVER_NAME,
 				"https://localhost:8080"));
 		dictionary.put(
-			CASConstants.SERVER_URL,
+			CASConfigurationKeys.SERVER_URL,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_SERVER_URL,
 				"https://localhost:8443/cas-web/"));
 		dictionary.put(
-			CASConstants.SERVICE_URL,
+			CASConfigurationKeys.SERVICE_URL,
 			_prefsProps.getString(
 				companyId, LegacyCASPropsKeys.CAS_SERVICE_URL,
 				"https://localhost:8080"));
@@ -120,7 +121,7 @@ public class CASCompanySettingsVerifyProcess
 
 	@Override
 	protected String getSettingsId() {
-		return CASConstants.SERVICE_NAME;
+		return CASSettingsConstants.SERVICE_NAME;
 	}
 
 	@Reference(unbind = "-")

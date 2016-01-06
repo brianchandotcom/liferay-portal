@@ -30,7 +30,7 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
-import com.liferay.portal.security.sso.cas.constants.CASConstants;
+import com.liferay.portal.security.sso.cas.constants.CASSettingsConstants;
 import com.liferay.portal.security.sso.cas.constants.CASWebKeys;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
@@ -111,7 +111,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 			_configurationFactory.getConfiguration(
 				CASConfiguration.class,
 				new CompanyServiceSettingsLocator(
-					companyId, CASConstants.SERVICE_NAME));
+					companyId, CASSettingsConstants.SERVICE_NAME));
 
 		if (!casConfiguration.enabled()) {
 			return null;

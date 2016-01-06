@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
-import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
+import com.liferay.portal.security.sso.ntlm.constants.NtlmSettingsConstants;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmWebKeys;
 import com.liferay.portal.util.PortalUtil;
 
@@ -59,7 +59,7 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 			_configurationFactory.getConfiguration(
 				NtlmConfiguration.class,
 				new CompanyServiceSettingsLocator(
-					companyId, NtlmConstants.SERVICE_NAME));
+					companyId, NtlmSettingsConstants.SERVICE_NAME));
 
 		if (!ntlmConfiguration.enabled()) {
 			return null;

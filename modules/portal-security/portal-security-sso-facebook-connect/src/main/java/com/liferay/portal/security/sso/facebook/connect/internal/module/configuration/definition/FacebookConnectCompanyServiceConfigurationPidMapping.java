@@ -16,7 +16,7 @@ package com.liferay.portal.security.sso.facebook.connect.internal.module.configu
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
-import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectSettingsConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +34,7 @@ public class FacebookConnectCompanyServiceConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return FacebookConnectConstants.SERVICE_NAME;
+		return FacebookConnectSettingsConstants.SERVICE_NAME;
 	}
 
 }

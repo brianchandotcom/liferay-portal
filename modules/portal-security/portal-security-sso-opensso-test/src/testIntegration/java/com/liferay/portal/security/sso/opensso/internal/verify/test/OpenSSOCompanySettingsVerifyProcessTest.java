@@ -22,7 +22,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.opensso.constants.LegacyOpenSSOPropsKeys;
-import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKeys;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOSettingsConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
 
@@ -57,46 +58,50 @@ public class OpenSSOCompanySettingsVerifyProcessTest
 		Assert.assertEquals(
 			"testEmailAddressAttr",
 			settings.getValue(
-				OpenSSOConstants.EMAIL_ADDRESS_ATTR, StringPool.BLANK));
+				OpenSSOConfigurationKeys.EMAIL_ADDRESS_ATTR, StringPool.BLANK));
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
-					OpenSSOConstants.AUTH_ENABLED, StringPool.FALSE)));
+					OpenSSOConfigurationKeys.AUTH_ENABLED, StringPool.FALSE)));
 		Assert.assertEquals(
 			"testFirstNameAttr",
 			settings.getValue(
-				OpenSSOConstants.FIRST_NAME_ATTR, StringPool.BLANK));
+				OpenSSOConfigurationKeys.FIRST_NAME_ATTR, StringPool.BLANK));
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
-					OpenSSOConstants.IMPORT_FROM_LDAP, StringPool.FALSE)));
+					OpenSSOConfigurationKeys.IMPORT_FROM_LDAP,
+					StringPool.FALSE)));
 		Assert.assertEquals(
 			"testLastNameAttr",
 			settings.getValue(
-				OpenSSOConstants.LAST_NAME_ATTR, StringPool.BLANK));
+				OpenSSOConfigurationKeys.LAST_NAME_ATTR, StringPool.BLANK));
 		Assert.assertEquals(
 			"http://test.com/login/url",
-			settings.getValue(OpenSSOConstants.LOGIN_URL, StringPool.BLANK));
+			settings.getValue(
+				OpenSSOConfigurationKeys.LOGIN_URL, StringPool.BLANK));
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				settings.getValue(
-					OpenSSOConstants.LOGOUT_ON_SESSION_EXPIRATION,
+					OpenSSOConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION,
 					StringPool.FALSE)));
 		Assert.assertEquals(
 			"http://test.com/logout/url",
-			settings.getValue(OpenSSOConstants.LOGOUT_URL, StringPool.BLANK));
+			settings.getValue(
+				OpenSSOConfigurationKeys.LOGOUT_URL, StringPool.BLANK));
 		Assert.assertEquals(
 			"testScreenNameAttr",
 			settings.getValue(
-				OpenSSOConstants.SCREEN_NAME_ATTR, StringPool.BLANK));
+				OpenSSOConfigurationKeys.SCREEN_NAME_ATTR, StringPool.BLANK));
 		Assert.assertEquals(
 			"http://test.com/service/url",
-			settings.getValue(OpenSSOConstants.SERVICE_URL, StringPool.BLANK));
+			settings.getValue(
+				OpenSSOConfigurationKeys.SERVICE_URL, StringPool.BLANK));
 	}
 
 	@Override
 	protected String getSettingsId() {
-		return OpenSSOConstants.SERVICE_NAME;
+		return OpenSSOSettingsConstants.SERVICE_NAME;
 	}
 
 	@Override

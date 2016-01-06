@@ -26,7 +26,7 @@ import com.liferay.portal.security.sso.ntlm.NetlogonConnectionManager;
 import com.liferay.portal.security.sso.ntlm.NtlmLogonException;
 import com.liferay.portal.security.sso.ntlm.NtlmServiceAccount;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
-import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
+import com.liferay.portal.security.sso.ntlm.constants.NtlmSettingsConstants;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetrServerAuthenticate3;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetrServerReqChallenge;
 
@@ -153,7 +153,7 @@ public class NetlogonConnectionManagerImpl
 					NtlmConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						CompanyThreadLocal.getCompanyId(),
-						NtlmConstants.SERVICE_NAME));
+						NtlmSettingsConstants.SERVICE_NAME));
 
 			String negotiateFlagsString = ntlmConfiguration.negotiateFlags();
 

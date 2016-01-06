@@ -15,8 +15,8 @@
 package com.liferay.portal.security.sso.openid.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
-import com.liferay.portal.security.sso.openid.module.configuration.OpenIdConfiguration;
+import com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration;
+import com.liferay.portal.security.sso.openid.constants.OpenIdSettingsConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +34,7 @@ public class OpenIdCompanyServiceConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return OpenIdConstants.SERVICE_NAME;
+		return OpenIdSettingsConstants.SERVICE_NAME;
 	}
 
 }

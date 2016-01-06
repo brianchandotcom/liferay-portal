@@ -12,23 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.internal.module.configuration.definition;
-
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.portal.security.sso.ntlm.constants;
 
 /**
  * @author Mika Koivisto
+ * @author Brian Greenwald
  */
-@Component
-public class OpenIdCompanyServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class NtlmConfigurationKeys {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return OpenIdConfiguration.class;
-	}
+	public static final String AUTH_DOMAIN = "domain";
+
+	public static final String AUTH_DOMAIN_CONTROLLER = "domainController";
+
+	public static final String AUTH_DOMAIN_CONTROLLER_NAME =
+		"domainControllerName";
+
+	public static final String AUTH_ENABLED = "enabled";
+
+	public static final String AUTH_NEGOTIATE_FLAGS = "negotiateFlags";
+
+	public static final String AUTH_SERVICE_ACCOUNT = "serviceAccount";
+
+	public static final String AUTH_SERVICE_PASSWORD = "servicePassword";
 
 }

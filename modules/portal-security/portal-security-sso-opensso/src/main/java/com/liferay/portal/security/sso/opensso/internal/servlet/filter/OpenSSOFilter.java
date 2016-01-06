@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
-import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOSettingsConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -115,7 +115,7 @@ public class OpenSSOFilter extends BaseFilter {
 		return _configurationFactory.getConfiguration(
 			OpenSSOConfiguration.class,
 			new CompanyServiceSettingsLocator(
-				companyId, OpenSSOConstants.SERVICE_NAME));
+				companyId, OpenSSOSettingsConstants.SERVICE_NAME));
 	}
 
 	@Override

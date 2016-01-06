@@ -15,7 +15,7 @@
 package com.liferay.portal.security.sso.openid.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
+import com.liferay.portal.security.sso.openid.constants.OpenIdSettingsConstants;
 import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
@@ -50,7 +50,7 @@ public class PortalSettingsOpenIdFormMVCActionCommand
 
 	@Override
 	protected String getSettingsId() {
-		return OpenIdConstants.SERVICE_NAME;
+		return OpenIdSettingsConstants.SERVICE_NAME;
 	}
 
 }

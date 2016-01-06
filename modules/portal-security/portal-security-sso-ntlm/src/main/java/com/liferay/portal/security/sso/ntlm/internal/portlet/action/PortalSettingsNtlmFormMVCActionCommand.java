@@ -15,7 +15,7 @@
 package com.liferay.portal.security.sso.ntlm.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
+import com.liferay.portal.security.sso.ntlm.constants.NtlmSettingsConstants;
 import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
@@ -49,7 +49,7 @@ public class PortalSettingsNtlmFormMVCActionCommand
 
 	@Override
 	protected String getSettingsId() {
-		return NtlmConstants.SERVICE_NAME;
+		return NtlmSettingsConstants.SERVICE_NAME;
 	}
 
 }

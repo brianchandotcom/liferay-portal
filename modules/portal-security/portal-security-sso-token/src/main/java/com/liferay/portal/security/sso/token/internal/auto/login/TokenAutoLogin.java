@@ -30,7 +30,7 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.sso.token.configuration.TokenConfiguration;
-import com.liferay.portal.security.sso.token.constants.TokenConstants;
+import com.liferay.portal.security.sso.token.constants.TokenSettingsConstants;
 import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
 import com.liferay.portal.security.sso.token.security.auth.TokenRetriever;
 import com.liferay.portal.service.UserLocalService;
@@ -79,7 +79,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 			_configurationFactory.getConfiguration(
 				TokenConfiguration.class,
 				new CompanyServiceSettingsLocator(
-					companyId, TokenConstants.SERVICE_NAME));
+					companyId, TokenSettingsConstants.SERVICE_NAME));
 
 		if (!tokenCompanyServiceSettings.enabled()) {
 			return null;

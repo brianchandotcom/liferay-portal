@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.ntlm.NetlogonConnectionManager;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
-import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
+import com.liferay.portal.security.sso.ntlm.constants.NtlmSettingsConstants;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmWebKeys;
 import com.liferay.portal.security.sso.ntlm.internal.NtlmManager;
 import com.liferay.portal.security.sso.ntlm.internal.NtlmUserAccount;
@@ -121,7 +121,7 @@ public class NtlmFilter extends BaseFilter {
 				_configurationFactory.getConfiguration(
 					NtlmConfiguration.class,
 					new CompanyServiceSettingsLocator(
-						companyId, NtlmConstants.SERVICE_NAME));
+						companyId, NtlmSettingsConstants.SERVICE_NAME));
 
 			if (BrowserSnifferUtil.isIe(request) &&
 				ntlmConfiguration.enabled()) {
@@ -175,7 +175,7 @@ public class NtlmFilter extends BaseFilter {
 			_configurationFactory.getConfiguration(
 				NtlmConfiguration.class,
 				new CompanyServiceSettingsLocator(
-					companyId, NtlmConstants.SERVICE_NAME));
+					companyId, NtlmSettingsConstants.SERVICE_NAME));
 
 		String domain = ntlmConfiguration.domain();
 		String domainController = ntlmConfiguration.domainController();

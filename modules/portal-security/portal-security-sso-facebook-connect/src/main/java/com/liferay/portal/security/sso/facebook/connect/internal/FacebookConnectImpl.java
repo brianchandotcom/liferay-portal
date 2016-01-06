@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
-import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectSettingsConstants;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 import com.liferay.portal.util.PortalUtil;
 
@@ -233,7 +233,8 @@ public class FacebookConnectImpl implements FacebookConnect {
 				_configurationFactory.getConfiguration(
 					FacebookConnectConfiguration.class,
 					new CompanyServiceSettingsLocator(
-						companyId, FacebookConnectConstants.SERVICE_NAME));
+						companyId,
+						FacebookConnectSettingsConstants.SERVICE_NAME));
 
 			return facebookConnectCompanyServiceSettings;
 		}

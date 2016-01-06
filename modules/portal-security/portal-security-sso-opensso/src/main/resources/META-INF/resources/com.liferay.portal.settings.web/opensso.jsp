@@ -17,7 +17,7 @@
 <%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
-OpenSSOConfiguration openSSOConfiguration = ConfigurationFactoryUtil.getConfiguration(OpenSSOConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "opensso--", new CompanyServiceSettingsLocator(company.getCompanyId(), OpenSSOConstants.SERVICE_NAME)));
+OpenSSOConfiguration openSSOConfiguration = ConfigurationFactoryUtil.getConfiguration(OpenSSOConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "opensso--", new CompanyServiceSettingsLocator(company.getCompanyId(), OpenSSOSettingsConstants.SERVICE_NAME)));
 
 boolean enabled = openSSOConfiguration.enabled();
 boolean importFromLDAP = openSSOConfiguration.importFromLDAP();

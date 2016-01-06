@@ -15,7 +15,7 @@
 package com.liferay.portal.security.sso.opensso.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOSettingsConstants;
 import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
@@ -50,7 +50,7 @@ public class PortalSettingsOpenSSOFormMVCActionCommand
 
 	@Override
 	protected String getSettingsId() {
-		return OpenSSOConstants.SERVICE_NAME;
+		return OpenSSOSettingsConstants.SERVICE_NAME;
 	}
 
 }

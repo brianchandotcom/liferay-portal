@@ -16,7 +16,7 @@ package com.liferay.portal.security.sso.cas.internal.module.configuration.defini
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
-import com.liferay.portal.security.sso.cas.constants.CASConstants;
+import com.liferay.portal.security.sso.cas.constants.CASSettingsConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +34,7 @@ public class CASCompanyServiceConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return CASConstants.SERVICE_NAME;
+		return CASSettingsConstants.SERVICE_NAME;
 	}
 
 }

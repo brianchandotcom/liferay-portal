@@ -350,7 +350,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-		String className = ParamUtil.getString(actionRequest, "className");
+		String className = ParamUtil.getString(actionRequest, "classname");
 
 		taskContextMap.put("className", className);
 

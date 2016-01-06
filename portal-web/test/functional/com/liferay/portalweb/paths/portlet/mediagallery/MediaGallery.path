@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>BREADCRUMB</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_mgFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLOSE</td>
 	<td>//button[contains(@class,'image-viewer-close') and contains(@class,'close')]</td>
 	<td></td>
@@ -31,6 +36,11 @@
 <tr>
 	<td>IMAGE_TITLE</td>
 	<td>//span[@class='image-title' and contains(.,'${key_mgDocumentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ENTRY-->

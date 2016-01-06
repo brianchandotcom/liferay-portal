@@ -143,22 +143,20 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 	</c:choose>
 </aui:form>
 
-<aui:script>
-	var A = AUI();
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />assigneesSearch');
 
-	var <portlet:namespace />assigneeIds = [];
-
-	$('input[name="<portlet:namespace />rowIds"]').on(
-		'change',
+	searchContainer.on(
+		'rowToggled',
 		function(event) {
-			var target = event.target;
+			var nodes = event.elements.currentPageSelectedElements.getDOMNodes();
 
-			if (target.checked) {
-				<portlet:namespace />assigneeIds.push(target.value);
-			}
-			else {
-				A.Array.removeItem(<portlet:namespace />assigneeIds, target.value);
-			}
+			var <portlet:namespace />assigneeIds = _.map(
+				nodes,
+				function(node) {
+					return node.value;
+				}
+			);
 
 			var result = {};
 

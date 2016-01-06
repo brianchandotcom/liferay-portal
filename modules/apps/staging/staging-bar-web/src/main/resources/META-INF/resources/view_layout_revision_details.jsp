@@ -174,7 +174,7 @@ else {
 	</li>
 
 	<%
-	request.setAttribute("branchingEnabled", String.valueOf(true));
+	request.setAttribute(StagingProcessesWebKeys.BRANCHING_ENABLED, String.valueOf(true));
 	request.setAttribute("view_layout_revision_details.jsp-hasWorkflowTask", String.valueOf(hasWorkflowTask));
 	request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRevision);
 	%>

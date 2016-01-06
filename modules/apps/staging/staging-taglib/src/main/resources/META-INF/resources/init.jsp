@@ -66,7 +66,8 @@ page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerControl" %><
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.portlet.exportimport.lar.StagedModelType" %><%@
 page import="com.liferay.portlet.exportimport.model.ExportImportConfiguration" %><%@
-page import="com.liferay.portlet.exportimport.staging.StagingUtil" %>
+page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
+page import="com.liferay.staging.processes.web.constants.StagingProcessesWebKeys" %>
 
 <%@ page import="java.util.Calendar" %><%@
 page import="java.util.Collections" %><%@

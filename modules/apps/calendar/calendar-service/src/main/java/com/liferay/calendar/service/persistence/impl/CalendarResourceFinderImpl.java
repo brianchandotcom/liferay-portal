@@ -405,18 +405,15 @@ public class CalendarResourceFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(classNameIds.length * 2 + 1);
+		StringBundler sb = new StringBundler(classNameIds.length + 1);
 
 		sb.append("(");
 
-		for (int i = 0; i < classNameIds.length; i++) {
-			sb.append("classNameId = ?");
-			sb.append(" OR ");
+		for (int i = 0; i < classNameIds.length - 1; i++) {
+			sb.append("classNameId = ? OR ");
 		}
 
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(") AND");
+		sb.append("classNameId = ?) AND");
 
 		return sb.toString();
 	}
@@ -426,18 +423,15 @@ public class CalendarResourceFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(groupIds.length * 2 + 1);
+		StringBundler sb = new StringBundler(groupIds.length + 1);
 
 		sb.append("(");
 
-		for (int i = 0; i < groupIds.length; i++) {
-			sb.append("groupId = ?");
-			sb.append(" OR ");
+		for (int i = 0; i < groupIds.length - 1; i++) {
+			sb.append("groupId = ? OR ");
 		}
 
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(") AND");
+		sb.append("groupId = ?) AND");
 
 		return sb.toString();
 	}

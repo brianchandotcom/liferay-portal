@@ -9,7 +9,9 @@
 		<var name="key_itemName" value="${appName}" />
 
 		<while>
-			<condition function="IsElementNotPresent" locator1="ListGroupItem#ITEM_NAME_LINK" />
+			<not>
+				<condition function="IsElementPresent#isElementPresentAfterWait" locator1="ListGroupItem#ITEM_NAME_LINK" />
+			</not>
 			<then>
 				<execute function="Click" locator1="Pagination#NEXT_LINK" />
 			</then>

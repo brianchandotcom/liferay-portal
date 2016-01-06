@@ -276,9 +276,8 @@ public class CompileThemeTask extends DefaultTask {
 		String themeParent = getThemeParent();
 
 		copyPortalThemeDir(
-			themeParent, new String[] {
-				"**/.sass-cache/**", "_diffs/**", "templates/**"
-			},
+			themeParent,
+			new String[] {"**/.sass-cache/**", "_diffs/**", "templates/**"},
 			"**");
 
 		Set<String> themeTypes = getThemeTypes();

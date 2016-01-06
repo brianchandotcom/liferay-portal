@@ -391,7 +391,8 @@ public class InputAssetLinksDisplayContext {
 			(HttpServletRequest)_pageContext.getRequest();
 
 		selectorEntryData.put(
-			"title", LanguageUtil.format(
+			"title",
+			LanguageUtil.format(
 				request, "select-x", classType.getName(), false));
 		selectorEntryData.put("type", classType.getName());
 

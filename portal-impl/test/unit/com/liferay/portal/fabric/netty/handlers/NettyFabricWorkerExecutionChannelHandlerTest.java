@@ -506,7 +506,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		NoticeableFuture<LoadedPaths> noticeableFuture =
 			nettyFabricWorkerExecutionChannelHandler.loadPaths(
-				_embeddedChannel, new NettyFabricWorkerConfig<Serializable>(
+				_embeddedChannel,
+				new NettyFabricWorkerConfig<Serializable>(
 					0, processConfig, processCallable,
 					fabricPathMappingVisitor.getPathMap()));
 
@@ -594,7 +595,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
-					_embeddedChannel, new NettyFabricWorkerConfig<Serializable>(
+					_embeddedChannel,
+					new NettyFabricWorkerConfig<Serializable>(
 						0, processConfig, processCallable,
 						fabricPathMappingVisitor.getPathMap()));
 
@@ -634,7 +636,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
-					_embeddedChannel, new NettyFabricWorkerConfig<Serializable>(
+					_embeddedChannel,
+					new NettyFabricWorkerConfig<Serializable>(
 						0, processConfig, processCallable,
 						fabricPathMappingVisitor.getPathMap()));
 
@@ -711,7 +714,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		NoticeableFuture<LoadedPaths> noticeableFuture =
 			nettyFabricWorkerExecutionChannelHandler.loadPaths(
-				_embeddedChannel, new NettyFabricWorkerConfig<Serializable>(
+				_embeddedChannel,
+				new NettyFabricWorkerConfig<Serializable>(
 					0, processConfig, processCallable,
 					fabricPathMappingVisitor.getPathMap()));
 
@@ -793,7 +797,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
-					_embeddedChannel, new NettyFabricWorkerConfig<Serializable>(
+					_embeddedChannel,
+					new NettyFabricWorkerConfig<Serializable>(
 						0, processConfig, processCallable,
 						fabricPathMappingVisitor.getPathMap()));
 
@@ -834,7 +839,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
-					_embeddedChannel, new NettyFabricWorkerConfig<Serializable>(
+					_embeddedChannel,
+					new NettyFabricWorkerConfig<Serializable>(
 						0, processConfig, processCallable,
 						fabricPathMappingVisitor.getPathMap()));
 

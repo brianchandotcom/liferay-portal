@@ -41,7 +41,8 @@ public class ScreenNameGeneratorFactoryTest {
 			ScreenNameGeneratorFactory.getInstance();
 
 		Assert.assertEquals(
-			"1-1", screenNameGenerator.generate(
+			"1-1",
+			screenNameGenerator.generate(
 				1, 1, "test@screenamegeneratorfactorytest.com"));
 	}
 

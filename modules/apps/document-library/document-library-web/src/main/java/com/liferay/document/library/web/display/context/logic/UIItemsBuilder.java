@@ -501,7 +501,8 @@ public class UIItemsBuilder {
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
 		template.put(
-			"errorMessage", UnicodeLanguageUtil.get(
+			"errorMessage",
+			UnicodeLanguageUtil.get(
 				_request,
 				"cannot-open-the-requested-document-due-to-the-following-" +
 					"reason"));

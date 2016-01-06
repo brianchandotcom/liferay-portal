@@ -28,11 +28,13 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 @DDMFormLayout(
 	{
 		@DDMFormLayoutPage(
-			title = "%form-options", value = {
+			title = "%form-options",
+			value = {
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(
-							size = 12, value = {
+							size = 12,
+							value = {
 								"requireCaptcha", "redirectURL",
 								"workflowDefinition"
 							}
@@ -42,11 +44,13 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 			}
 		),
 		@DDMFormLayoutPage(
-			title = "%email-notifications", value = {
+			title = "%email-notifications",
+			value = {
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(
-							size = 12, value = {
+							size = 12,
+							value = {
 								"sendEmailNotification", "emailFromName",
 								"emailFromAddress", "emailToAddress",
 								"emailSubject", "published"

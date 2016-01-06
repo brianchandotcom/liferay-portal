@@ -47,7 +47,8 @@ public class AnnotatedObjectDecoder extends LengthFieldBasedFrameDecoder {
 	}
 
 	public void addFirst(
-		String name, ObjectDecodeChannelInboundHandler<?>
+		String name,
+		ObjectDecodeChannelInboundHandler<?>
 			objectDecodeChannelInboundHandler) {
 
 		_channelPipeline.addFirst(name, objectDecodeChannelInboundHandler);
@@ -61,7 +62,8 @@ public class AnnotatedObjectDecoder extends LengthFieldBasedFrameDecoder {
 	}
 
 	public void addLast(
-		String name, ObjectDecodeChannelInboundHandler<?>
+		String name,
+		ObjectDecodeChannelInboundHandler<?>
 			objectDecodeChannelInboundHandler) {
 
 		_channelPipeline.addLast(name, objectDecodeChannelInboundHandler);

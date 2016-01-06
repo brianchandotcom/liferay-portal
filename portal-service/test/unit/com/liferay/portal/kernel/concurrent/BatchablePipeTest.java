@@ -249,7 +249,8 @@ public class BatchablePipeTest {
 			new IntegerIncreasableEntry("test", 3);
 
 		ReflectionTestUtil.setFieldValue(
-			batchablePipe, "concurrentMap", new ConcurrentHashMap
+			batchablePipe, "concurrentMap",
+			new ConcurrentHashMap
 				<String, IncreasableEntryWrapper<String, Integer>>() {
 
 				@Override

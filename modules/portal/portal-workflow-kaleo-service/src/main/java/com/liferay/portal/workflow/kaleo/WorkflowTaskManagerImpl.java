@@ -668,7 +668,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				KaleoTaskInstanceTokenLocalServiceUtil.search(
 					taskName, assetTitle, assetType, assetPrimaryKey, dueDateGT,
 					dueDateLT, completed, searchByUserRoles, andOperator, start,
-					end, KaleoTaskInstanceTokenOrderByComparator.
+					end,
+					KaleoTaskInstanceTokenOrderByComparator.
 						getOrderByComparator(orderByComparator),
 					serviceContext);
 

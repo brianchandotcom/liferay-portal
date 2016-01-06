@@ -332,7 +332,8 @@ public class ExecutorIntrabandTest {
 
 		try {
 			_executorIntraband.registerChannel(
-				null, IntrabandTestUtil.<GatheringByteChannel>createProxy(
+				null,
+				IntrabandTestUtil.<GatheringByteChannel>createProxy(
 					GatheringByteChannel.class));
 
 			Assert.fail();

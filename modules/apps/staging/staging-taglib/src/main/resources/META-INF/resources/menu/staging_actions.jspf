@@ -180,12 +180,8 @@
 										if (firstChildLayoutRevision.isInactive()) {
 										%>
 
-											<%
-											String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "redo', {layoutRevisionId: '" + firstChildLayoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + firstChildLayoutRevision.getLayoutSetBranchId() + "'}); void(0);";
-											%>
-
 											<li>
-												<a href="<%= taglibURL %>">
+												<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>redo', {layoutRevisionId: '"<%= firstChildLayoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= firstChildLayoutRevision.getLayoutSetBranchId() %>'}); void(0);">
 													<liferay-ui:message key="redo" />
 												</a>
 											</li>

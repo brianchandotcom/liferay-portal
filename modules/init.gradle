@@ -1,3 +1,5 @@
+import java.util.concurrent.ConcurrentHashMap
+
 import org.gradle.internal.hash.HashUtil
 import org.gradle.internal.hash.HashValue
 
@@ -53,4 +55,26 @@ gradle.buildFinished {
 			}
 		}
 	}
+}
+
+if (Boolean.getBoolean("build.performance.logger.enabled")) {
+	gradle.taskGraph.addTaskExecutionListener(
+		new TaskExecutionListener() {
+
+			void afterExecute(Task task, TaskState taskState) {
+				long endTime = System.currentTimeMillis()
+				long startTime = _taskStartTimes.remove(task)
+
+				long duration = endTime - startTime
+
+				logger.lifecycle "${task.path} started at ${startTime}, ended at ${endTime}, took ${duration} ms"
+			}
+
+			void beforeExecute(Task task) {
+				_taskStartTimes.put task, System.currentTimeMillis()
+			}
+
+			private final ConcurrentHashMap<Task, Long> _taskStartTimes = new ConcurrentHashMap<Task, Long>()
+
+		})
 }

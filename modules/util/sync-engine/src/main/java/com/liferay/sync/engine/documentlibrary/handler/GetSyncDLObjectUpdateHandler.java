@@ -277,8 +277,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		if (_logger.isDebugEnabled()) {
 			_logger.debug(
-				"Copying file {} to {}",
-				sourceSyncFile.getFilePathName(),
+				"Copying file {} to {}", sourceSyncFile.getFilePathName(),
 				targetSyncFile.getFilePathName());
 		}
 

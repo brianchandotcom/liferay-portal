@@ -87,8 +87,7 @@ public interface SelectDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "ddm-options", label = "%options",
-		properties = {"showLabel=false"},
-		required = true, type = "options",
+		properties = {"showLabel=false"}, required = true, type = "options",
 		visibilityExpression = "dataSourceType.equals(\"manual\")"
 	)
 	public DDMFormFieldOptions options();

@@ -29,8 +29,8 @@ public class NoSuchFileException extends NoSuchModelException {
 
 		super(
 			String.format(
-				"{companyId=%s, repositoryId=%s, fileName=%s}",
-				companyId, repositoryId, fileName));
+				"{companyId=%s, repositoryId=%s, fileName=%s}", companyId,
+				repositoryId, fileName));
 	}
 
 	public NoSuchFileException(

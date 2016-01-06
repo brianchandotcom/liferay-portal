@@ -220,8 +220,8 @@ public class RepositoryWrapper extends Repository {
 
 	@Override
 	public ObjectLoader open(AnyObjectId anyObjectId, int typeHint)
-		throws IncorrectObjectTypeException,
-		IOException, MissingObjectException {
+		throws IncorrectObjectTypeException, IOException,
+			   MissingObjectException {
 
 		return repository.open(anyObjectId, typeHint);
 	}
@@ -294,8 +294,8 @@ public class RepositoryWrapper extends Repository {
 
 	@Override
 	public ObjectId resolve(String revName)
-		throws AmbiguousObjectException,
-		IncorrectObjectTypeException, IOException, RevisionSyntaxException {
+		throws AmbiguousObjectException, IncorrectObjectTypeException,
+			   IOException, RevisionSyntaxException {
 
 		return repository.resolve(revName);
 	}

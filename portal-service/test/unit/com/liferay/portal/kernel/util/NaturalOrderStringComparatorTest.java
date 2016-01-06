@@ -50,8 +50,7 @@ public class NaturalOrderStringComparatorTest {
 	public void testSortRegularString() {
 		testSort(
 			new String[] {"hello", "world", "helloworld"},
-			new String[] {"hello", "helloworld", "world"},
-			false);
+			new String[] {"hello", "helloworld", "world"}, false);
 	}
 
 	@Test

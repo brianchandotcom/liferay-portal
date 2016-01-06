@@ -380,7 +380,8 @@ public class AssetPublisherExportImportTest
 		GroupTestUtil.addGroup(TestPropsValues.getUserId(), layout);
 
 		preferenceMap.put(
-			"scopeIds", new String[] {
+			"scopeIds",
+			new String[] {
 				AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX + layout.getLayoutId()
 			});
 

@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true, property = {
+	immediate = true,
+	property = {
 		"com.liferay.portlet.add-default-resource=true;",
 		"com.liferay.portlet.css-class-wrapper=portlet-sites-directory",
 		"com.liferay.portlet.display-category=category.cms",

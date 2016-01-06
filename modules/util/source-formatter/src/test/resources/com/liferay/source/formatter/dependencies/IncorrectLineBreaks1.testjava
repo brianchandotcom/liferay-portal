@@ -42,18 +42,10 @@ public class IncorrectLineBreaks1 {
 				StringPool.Period);
 
 		boolean b = StringUtil.contains(
-			thisIsAStringWithAVeryVeryVeryLongName, StringUtil.trim(
-				thisIsAStringWithAVeryVeryVeryLongName2);
-
-		boolean b2 = StringUtil.contains(
-			test1, "Hello World" + "Hello World Hello" +
-				"Hello World Hello World);
-
-		boolean b3 = StringUtil.contains(
 			StringUtil.replace(
 				"Hello World", "Hello", "World"), "Hello World Hello World");
 
-		boolean b4 = StringUtil.contains(
+		boolean b1 = StringUtil.contains(
 			"Hello World Hello World Hello World " +
 				"Hello World Hello World Hello World", "Hello");
 

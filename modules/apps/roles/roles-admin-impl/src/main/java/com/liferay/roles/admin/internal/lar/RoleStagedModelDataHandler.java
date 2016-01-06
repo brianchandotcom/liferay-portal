@@ -125,8 +125,8 @@ public class RoleStagedModelDataHandler
 		List<ResourcePermission> groupResourcePermissions =
 			_resourcePermissionLocalService.getRoleResourcePermissions(
 				importedRole.getRoleId(),
-				new int[] {ResourceConstants.SCOPE_GROUP},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				new int[] {ResourceConstants.SCOPE_GROUP}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		for (ResourcePermission groupResourcePermission :
 				groupResourcePermissions) {

@@ -29,8 +29,8 @@ public class DuplicateFileException extends PortalException {
 
 		super(
 			String.format(
-				"{companyId=%s, repositoryId=%s, fileName=%s}",
-				companyId, repositoryId, fileName));
+				"{companyId=%s, repositoryId=%s, fileName=%s}", companyId,
+				repositoryId, fileName));
 	}
 
 	public DuplicateFileException(

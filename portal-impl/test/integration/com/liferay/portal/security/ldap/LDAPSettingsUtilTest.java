@@ -40,7 +40,8 @@ public class LDAPSettingsUtilTest {
 	@Test
 	public void testGetAuthSearchFilter() throws Exception {
 		Assert.assertEquals(
-			"(companyId=1)", LDAPSettingsUtil.getAuthSearchFilter(
+			"(companyId=1)",
+			LDAPSettingsUtil.getAuthSearchFilter(
 				1, 1, "test@liferay-test.com", "test-ip", "test"));
 	}
 

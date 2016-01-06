@@ -135,6 +135,26 @@ public class CombineLines extends SuperClass {
 			new String[] {StringPool.COMMA, StringPool.BACK_SLASH});
 	}
 
+	public void method8(
+		String string1,
+		List<String>
+			listWithAVeryLongNameThatThereforeByNoMeansFitsOnTheSameLine) {
+
+		String anotherStringWithAVeryLongName = "Hello World";
+
+		boolean b = StringUtil.contains(
+			anotherStringWithAVeryLongName,
+			StringUtil.trim(anotherStringWithAVeryLongName);
+
+		boolean b2 = StringUtil.contains(
+			test1,
+			"Hello World" + "Hello World Hello" +
+				"Hello World Hello World Hello World Hello World);
+
+		boolean b3 = StringUtil.merge(
+			new String[] {"One", "Two"}, "Hello World");
+	}
+
 	private class SubClass1
 		extends SomeOtherClassWithALongNameThatDoesNotFitOnPreviousLine {
 	}

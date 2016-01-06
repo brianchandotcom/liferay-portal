@@ -437,8 +437,7 @@ public class ListUtilTest {
 		List<Object> list2 = ListUtil.toList(list);
 
 		Assert.assertArrayEquals(
-			new Object[] {"aaa", "bbb", "ccc"},
-			list2.toArray());
+			new Object[] {"aaa", "bbb", "ccc"}, list2.toArray());
 	}
 
 	@Test

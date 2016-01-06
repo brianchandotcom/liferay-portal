@@ -270,8 +270,8 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testAllAssetCategories2() throws Exception {
 		testAssetCategories(
-			new long[] {_healthAssetCategoryId, _sportAssetCategoryId},
-			false, false, 2);
+			new long[] {_healthAssetCategoryId, _sportAssetCategoryId}, false,
+			false, 2);
 	}
 
 	@Test
@@ -328,8 +328,8 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testAnyAssetCategories2() throws Exception {
 		testAssetCategories(
-			new long[] {_healthAssetCategoryId, _sportAssetCategoryId},
-			true, false, 2);
+			new long[] {_healthAssetCategoryId, _sportAssetCategoryId}, true,
+			false, 2);
 	}
 
 	@Test
@@ -345,8 +345,8 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testAnyAssetCategories4() throws Exception {
 		testAssetCategories(
-			new long[] {_fashionAssetCategoryId, _foodAssetCategoryId},
-			true, false, 1);
+			new long[] {_fashionAssetCategoryId, _foodAssetCategoryId}, true,
+			false, 1);
 	}
 
 	@Test
@@ -402,15 +402,15 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testNotAllAssetCategories2() throws Exception {
 		testAssetCategories(
-			new long[] {_healthAssetCategoryId, _sportAssetCategoryId},
-			false, true, 0);
+			new long[] {_healthAssetCategoryId, _sportAssetCategoryId}, false,
+			true, 0);
 	}
 
 	@Test
 	public void testNotAllAssetCategories3() throws Exception {
 		testAssetCategories(
-			new long[] {_fashionAssetCategoryId, _foodAssetCategoryId},
-			false, true, 1);
+			new long[] {_fashionAssetCategoryId, _foodAssetCategoryId}, false,
+			true, 1);
 	}
 
 	@Test
@@ -455,8 +455,8 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testNotAnyAssetCategories2() throws Exception {
 		testAssetCategories(
-			new long[] {_healthAssetCategoryId, _sportAssetCategoryId},
-			true, true, 0);
+			new long[] {_healthAssetCategoryId, _sportAssetCategoryId}, true,
+			true, 0);
 	}
 
 	@Test
@@ -472,8 +472,8 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testNotAnyAssetCategories4() throws Exception {
 		testAssetCategories(
-			new long[] {_fashionAssetCategoryId, _foodAssetCategoryId},
-			true, true, 1);
+			new long[] {_fashionAssetCategoryId, _foodAssetCategoryId}, true,
+			true, 1);
 	}
 
 	@Test

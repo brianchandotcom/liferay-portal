@@ -219,8 +219,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				"'test@1.0.0/other.es']}",
 			content);
 		assertContains(
-			"'test@1.0.0/other.es':{'dependencies':['exports']}",
-			content);
+			"'test@1.0.0/other.es':{'dependencies':['exports']}", content);
 	}
 
 	@Test(expected = JSONException.class)

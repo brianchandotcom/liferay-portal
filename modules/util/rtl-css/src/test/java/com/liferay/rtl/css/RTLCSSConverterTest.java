@@ -48,8 +48,7 @@ public class RTLCSSConverterTest {
 		RTLCSSConverter rtlCssConverter = new RTLCSSConverter();
 
 		Assert.assertEquals(
-			"p{*right:50%}",
-			rtlCssConverter.process("p{*left:50%}"));
+			"p{*right:50%}", rtlCssConverter.process("p{*left:50%}"));
 		Assert.assertEquals(
 			"p{*text-align:left}",
 			rtlCssConverter.process("p{*text-align:right}"));

@@ -98,8 +98,7 @@ public class SetupArquillianTask
 				"arquillian.xml");
 
 		xml = xml.replace(
-			"${app.server.tomcat.manager.password}",
-			getManagerPassword());
+			"${app.server.tomcat.manager.password}", getManagerPassword());
 		xml = xml.replace(
 			"${app.server.tomcat.manager.user}", getManagerUserName());
 		xml = xml.replace(

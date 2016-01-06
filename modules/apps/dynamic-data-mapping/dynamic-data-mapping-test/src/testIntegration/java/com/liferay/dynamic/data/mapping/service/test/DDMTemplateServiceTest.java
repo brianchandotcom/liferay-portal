@@ -361,9 +361,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.search(
 			TestPropsValues.getCompanyId(), groupIds,
 			new long[] {_structureClassNameId},
-			new long[] {structure.getStructureId()},
-			_recordSetClassNameId, StringPool.BLANK,
-			DDMTemplateConstants.TEMPLATE_TYPE_FORM,
+			new long[] {structure.getStructureId()}, _recordSetClassNameId,
+			StringPool.BLANK, DDMTemplateConstants.TEMPLATE_TYPE_FORM,
 			DDMTemplateConstants.TEMPLATE_MODE_CREATE,
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
@@ -441,8 +440,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		List<DDMTemplate> templates = DDMTemplateServiceUtil.search(
 			TestPropsValues.getCompanyId(), groupIds,
 			new long[] {_structureClassNameId},
-			new long[] {structure.getStructureId()},
-			_recordSetClassNameId, name, description, type, mode, language,
+			new long[] {structure.getStructureId()}, _recordSetClassNameId,
+			name, description, type, mode, language,
 			WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
@@ -517,8 +516,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		List<DDMTemplate> templates = DDMTemplateServiceUtil.search(
 			TestPropsValues.getCompanyId(), groupIds,
 			new long[] {_structureClassNameId},
-			new long[] {structure.getStructureId()},
-			_recordSetClassNameId, name, description, type, mode, language,
+			new long[] {structure.getStructureId()}, _recordSetClassNameId,
+			name, description, type, mode, language,
 			WorkflowConstants.STATUS_ANY, false, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 

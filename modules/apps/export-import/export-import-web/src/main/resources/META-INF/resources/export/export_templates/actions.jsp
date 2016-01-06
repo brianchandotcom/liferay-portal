@@ -17,10 +17,7 @@
 <%@ include file="/export/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId");
-long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-String rootNodeName = ParamUtil.getString(request, "rootNodeName");
+long liveGroupId = GetterUtil.getLong(request.getAttribute("view.jsp-liveGroupId"));
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -28,13 +25,7 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 %>
 
 <portlet:renderURL var="deleteRedirectURL">
-	<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-	<portlet:param name="exportConfigurationButtons" value="saved" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-	<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+	<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
 </portlet:renderURL>
 
 <portlet:actionURL name="editExportConfiguration" var="deleteExportConfigurationURL">

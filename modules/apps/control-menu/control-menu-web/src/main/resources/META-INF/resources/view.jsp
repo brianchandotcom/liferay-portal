@@ -25,8 +25,6 @@ Group group = null;
 if (layout != null) {
 	group = layout.getGroup();
 }
-
-String controlMenuEntryCssClass = "";
 %>
 
 <c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() && !controlMenuCategories.isEmpty() %>">
@@ -36,9 +34,6 @@ String controlMenuEntryCssClass = "";
 				<ul class="control-menu-nav control-menu-nav-level-1" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
 
 					<%
-					String toggleControlsControlMenuEntryClassName = ToggleControlsControlMenuEntry.class.getName();
-					String manageLayoutControlMenuEntryClassName = ManageLayoutControlMenuEntry.class.getName();
-
 					for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
 						List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
 
@@ -47,13 +42,15 @@ String controlMenuEntryCssClass = "";
 								continue;
 							}
 
+							String controlMenuEntryCssClass = "";
+
 							String controlMenuEntryKey = controlMenuEntry.getKey();
 
-							if (toggleControlsControlMenuEntryClassName.equals(controlMenuEntryKey)) {
-								controlMenuEntryCssClass = "edit-controls-toggle visible-xs";
-							}
-							else if (manageLayoutControlMenuEntryClassName.equals(controlMenuEntryKey)) {
+							if (controlMenuEntryKey.equals(ManageLayoutControlMenuEntry.class.getName())) {
 								controlMenuEntryCssClass = "edit-layout-link";
+							}
+							else if (controlMenuEntryKey.equals(ToggleControlsControlMenuEntry.class.getName())) {
+								controlMenuEntryCssClass = "edit-controls-toggle visible-xs";
 							}
 					%>
 

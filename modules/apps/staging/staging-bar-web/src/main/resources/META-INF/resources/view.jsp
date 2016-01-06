@@ -243,7 +243,7 @@ if (layout != null) {
 										<c:if test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 
 											<%
-											request.setAttribute("branchingEnabled", String.valueOf(false));
+											request.setAttribute(StagingProcessesWebKeys.BRANCHING_ENABLED, String.valueOf(false));
 											%>
 
 											<liferay-staging:menu cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" />

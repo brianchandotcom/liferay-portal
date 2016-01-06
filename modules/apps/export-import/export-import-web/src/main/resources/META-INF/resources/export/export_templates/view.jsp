@@ -18,6 +18,8 @@
 
 <liferay-staging:defineObjects />
 
+<liferay-util:include page="/export/export_templates/navigation.jsp" servletContext="<%= application %>" />
+
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -44,17 +46,6 @@
 			orderByType="asc"
 			searchTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"
 		>
-			<aui:nav-bar>
-				<aui:nav-bar-search searchContainer="<%= searchContainer %>">
-
-					<%
-					request.setAttribute("liferay-ui:search:searchContainer", searchContainer);
-					%>
-
-					<liferay-util:include page="/export_import_configuration_search.jsp" servletContext="<%= application %>" />
-				</aui:nav-bar-search>
-			</aui:nav-bar>
-
 			<liferay-ui:search-container-results>
 
 				<%

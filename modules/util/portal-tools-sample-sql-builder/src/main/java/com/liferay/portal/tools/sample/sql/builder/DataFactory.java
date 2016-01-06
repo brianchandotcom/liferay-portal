@@ -1290,16 +1290,12 @@ public class DataFactory {
 	}
 
 	public DDMStructureModel newDDLDDMStructureModel(long groupId) {
-		StringBundler sb = new StringBundler(2 + _maxDDLCustomFieldCount * 9);
+		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 9);
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fields\": [");
 
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
-			if (i != 0) {
-				sb.append(",");
-			}
-
 			sb.append("{\"dataType\": \"string\", \"indexType\": \"keyword\"");
 			sb.append(", \"label\": {\"en_US\": \"Text");
 			sb.append(i);
@@ -1308,6 +1304,11 @@ public class DataFactory {
 			sb.append("\", \"readOnly\": false, \"repeatable\": false,");
 			sb.append("\"required\": false, \"showLabel\": true, \"type\": ");
 			sb.append("\"text\"}");
+			sb.append(",");
+		}
+
+		if (_maxDDLCustomFieldCount > 0) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		sb.append("]}");
@@ -1427,16 +1428,12 @@ public class DataFactory {
 	public DDMContentModel newDDMContentModel(
 		DDLRecordModel ddlRecordModel, int currentIndex) {
 
-		StringBundler sb = new StringBundler(2 + _maxDDLCustomFieldCount * 8);
+		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 8);
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fieldValues\": [");
 
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
-			if (i != 0) {
-				sb.append(",");
-			}
-
 			sb.append("{\"instanceId\": \"");
 			sb.append(StringUtil.randomId());
 			sb.append("\", \"name\": \"");
@@ -1444,6 +1441,11 @@ public class DataFactory {
 			sb.append("\", \"value\": {\"en_US\": \"Test Record ");
 			sb.append(currentIndex);
 			sb.append("\"}}");
+			sb.append(",");
+		}
+
+		if (_maxDDLCustomFieldCount > 0) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		sb.append("]}");

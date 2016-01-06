@@ -329,14 +329,12 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		for (int i = 0; i < assetPrimaryKeys.length; i++) {
 			sb.append("(KaleoTaskInstanceToken.classPK = ?)");
-
-			if ((i + 1) < assetPrimaryKeys.length) {
-				sb.append(" OR ");
-			}
-			else {
-				sb.append(")");
-			}
+			sb.append(" OR ");
 		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
 
 		return sb.toString();
 	}
@@ -363,14 +361,12 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		for (int i = 0; i < assetTypes.length; i++) {
 			sb.append("(lower(KaleoTaskInstanceToken.className) LIKE ?)");
-
-			if ((i + 1) < assetTypes.length) {
-				sb.append(" OR ");
-			}
-			else {
-				sb.append(")");
-			}
+			sb.append(" OR ");
 		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
 
 		return sb.toString();
 	}
@@ -494,14 +490,12 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		for (int i = 0; i < roleIds.size(); i++) {
 			sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ?)");
-
-			if ((i + 1) < roleIds.size()) {
-				sb.append(" OR ");
-			}
-			else {
-				sb.append(")");
-			}
+			sb.append(" OR ");
 		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
 
 		return sb.toString();
 	}
@@ -643,14 +637,12 @@ public class KaleoTaskInstanceTokenFinderImpl
 		for (int i = 0; i < taskNames.length; i++) {
 			sb.append(
 				"(lower(KaleoTaskInstanceToken.kaleoTaskName) LIKE lower(?))");
-
-			if ((i + 1) < taskNames.length) {
-				sb.append(" OR ");
-			}
-			else {
-				sb.append(")");
-			}
+			sb.append(" OR ");
 		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
 
 		return sb.toString();
 	}

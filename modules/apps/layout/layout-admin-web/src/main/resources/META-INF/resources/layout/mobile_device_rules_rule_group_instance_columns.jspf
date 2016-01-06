@@ -40,16 +40,17 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 	<%
 	List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(mdrRuleGroupInstance.getRuleGroupInstanceId(), 0, 10);
 
-	StringBundler sb = new StringBundler(mdrActions.size() * 2 - 1);
+	StringBundler sb = new StringBundler(mdrActions.size() * 2);
 
 	for (int i = 0; i < mdrActions.size(); i++) {
 		MDRAction mdrAction = mdrActions.get(i);
 
 		sb.append(HtmlUtil.escape(mdrAction.getName(locale)));
+		sb.append(", ");
+	}
 
-		if (i < (mdrActions.size() -1)) {
-			sb.append(", ");
-		}
+	if (mdrActions.size() > 0) {
+		sb.setIndex(sb.index() - 1);
 	}
 	%>
 

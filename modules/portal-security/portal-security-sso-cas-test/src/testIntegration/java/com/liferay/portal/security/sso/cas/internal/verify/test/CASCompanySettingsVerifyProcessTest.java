@@ -49,7 +49,7 @@ public class CASCompanySettingsVerifyProcessTest
 	protected void doVerify(
 		PortletPreferences portletPreferences, Settings settings) {
 
-		for (String key : LegacyCASPropsKeys.LEGACY_CAS_KEYS) {
+		for (String key : LegacyCASPropsKeys.CAS_KEYS) {
 			Assert.assertTrue(
 				Validator.isNull(
 					portletPreferences.getValue(key, StringPool.BLANK)));

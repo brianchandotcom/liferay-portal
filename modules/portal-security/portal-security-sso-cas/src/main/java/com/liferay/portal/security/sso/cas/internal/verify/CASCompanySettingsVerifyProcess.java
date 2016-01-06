@@ -51,7 +51,7 @@ public class CASCompanySettingsVerifyProcess
 
 	@Override
 	protected Set<String> getLegacyPropertyKeys() {
-		return SetUtil.fromArray(LegacyCASPropsKeys.LEGACY_CAS_KEYS);
+		return SetUtil.fromArray(LegacyCASPropsKeys.CAS_KEYS);
 	}
 
 	@Override

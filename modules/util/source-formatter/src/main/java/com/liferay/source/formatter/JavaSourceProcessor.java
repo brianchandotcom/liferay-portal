@@ -1908,33 +1908,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
-					if (strippedQuotesLine.endsWith(StringPool.PLUS)) {
-						int x = -1;
-
-						while (true) {
-							x = strippedQuotesLine.indexOf(
-								StringPool.COMMA, x + 1);
-
-							if (x == -1) {
-								break;
-							}
-
-							int closeParenthesisCount = StringUtil.count(
-								strippedQuotesLine.substring(x),
-								StringPool.CLOSE_PARENTHESIS);
-							int openParenthesisCount = StringUtil.count(
-								strippedQuotesLine.substring(x),
-								StringPool.OPEN_PARENTHESIS);
-
-							if (openParenthesisCount >= closeParenthesisCount) {
-								processErrorMessage(
-									fileName,
-									"line break: " + fileName + " " +
-										lineCount);
-							}
-						}
-					}
-
 					if (!strippedQuotesLine.endsWith("{") &&
 						strippedQuotesLine.contains("{") &&
 						!strippedQuotesLine.contains("}") &&
@@ -2010,17 +1983,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								fileName,
 								"line break: " + fileName + " " + lineCount);
 						}
-					}
-
-					if (line.contains(StringPool.COMMA) &&
-						!line.contains(StringPool.CLOSE_PARENTHESIS) &&
-						!line.contains(StringPool.GREATER_THAN) &&
-						!line.contains(StringPool.QUOTE) &&
-						line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-
-						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
 					}
 
 					if (line.endsWith(" +") || line.endsWith(" -") ||

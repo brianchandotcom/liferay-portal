@@ -122,9 +122,12 @@ public class JspCDefaultsPlugin
 	protected void configureDefaults(Project project, JspCPlugin jspCPlugin) {
 		super.configureDefaults(project, jspCPlugin);
 
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
 		addTaskUnzipJar(project);
 
-		configureJspCExtension(project);
+		configureJspCExtension(project, liferayExtension);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -137,7 +140,9 @@ public class JspCDefaultsPlugin
 			});
 	}
 
-	protected void configureJspCExtension(final Project project) {
+	protected void configureJspCExtension(
+		final Project project, final LiferayExtension liferayExtension) {
+
 		JspCExtension jspCExtension = GradleUtil.getExtension(
 			project, JspCExtension.class);
 
@@ -148,9 +153,6 @@ public class JspCDefaultsPlugin
 
 				@Override
 				public File call() throws Exception {
-					LiferayExtension liferayExtension = GradleUtil.getExtension(
-						project, LiferayExtension.class);
-
 					return liferayExtension.getAppServerPortalDir();
 				}
 

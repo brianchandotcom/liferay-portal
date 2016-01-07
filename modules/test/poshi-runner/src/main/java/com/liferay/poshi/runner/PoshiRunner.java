@@ -95,7 +95,7 @@ public class PoshiRunner {
 
 		CommandLoggerHandler.startRunning();
 
-		LoggerUtil.startLogger();
+		LoggerUtil.startLogger(false);
 
 		SeleniumUtil.startSelenium();
 	}
@@ -118,6 +118,10 @@ public class PoshiRunner {
 
 			e.printStackTrace();
 
+			if (PropsValues.TEST_PAUSE_ON_FAILURE) {
+				LoggerUtil.pauseFailedTest();
+			}
+
 			throw new Exception(e.getMessage(), e);
 		}
 		finally {
@@ -134,6 +138,10 @@ public class PoshiRunner {
 				PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
 
 				PoshiRunnerStackTraceUtil.emptyStackTrace();
+
+				if (PropsValues.TEST_PAUSE_ON_FAILURE) {
+					LoggerUtil.pauseFailedTest();
+				}
 			}
 			finally {
 				CommandLoggerHandler.stopRunning();

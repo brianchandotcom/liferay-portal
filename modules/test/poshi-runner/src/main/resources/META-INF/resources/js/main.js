@@ -144,5 +144,11 @@ var loggerInterface = YUI().use(
 			logger.handleLineTrigger,
 			logger
 		);
+
+		Y.on(
+			'pause-trigger',
+			logger.handlePauseBtn,
+			logger
+		);
 	}
 );

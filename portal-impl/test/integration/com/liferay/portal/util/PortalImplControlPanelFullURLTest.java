@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.VirtualLayoutConstants;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import javax.portlet.PortletMode;
@@ -83,7 +85,12 @@ public class PortalImplControlPanelFullURLTest {
 
 		sb.append(getQueryString(portletId));
 
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			_group.getCompanyId(), portletId);
+
 		Assert.assertEquals(
+			portlet.toString() + ", controlPanelEntryCategory=" +
+				portlet.getControlPanelEntryCategory(),
 			sb.toString(),
 			_portalImpl.getControlPanelFullURL(
 				_group.getGroupId(), portletId, null));

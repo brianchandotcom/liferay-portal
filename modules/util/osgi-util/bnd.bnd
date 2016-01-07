@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.osgi.util
 Bundle-Version: 2.0.5
 Export-Package:\
 	com.liferay.osgi.util,\
+	com.liferay.osgi.util.classloader,\
 	com.liferay.osgi.util.service

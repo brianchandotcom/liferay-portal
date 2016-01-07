@@ -190,7 +190,7 @@ Iterator<Calendar> itr = manageableCalendars.iterator();
 while (itr.hasNext()) {
 	Calendar curCalendar = itr.next();
 
-	if (CalendarLocalServiceUtil.hasStagingCalendar(curCalendar) || (CalendarLocalServiceUtil.isStagingCalendar(curCalendar) && (curCalendar.getGroupId() != themeDisplay.getScopeGroupId()))) {
+	if (!CalendarServiceUtil.isManageableFromGroup(curCalendar.getCalendarId(), themeDisplay.getScopeGroupId())) {
 		itr.remove();
 	}
 }

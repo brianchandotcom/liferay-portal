@@ -50,7 +50,6 @@ page import="com.liferay.calendar.recurrence.Recurrence" %><%@
 page import="com.liferay.calendar.recurrence.Weekday" %><%@
 page import="com.liferay.calendar.service.CalendarBookingLocalServiceUtil" %><%@
 page import="com.liferay.calendar.service.CalendarBookingServiceUtil" %><%@
-page import="com.liferay.calendar.service.CalendarLocalServiceUtil" %><%@
 page import="com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil" %><%@
 page import="com.liferay.calendar.service.CalendarResourceServiceUtil" %><%@
 page import="com.liferay.calendar.service.CalendarServiceUtil" %><%@

@@ -806,21 +806,15 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public boolean isPortletEmbedded(String portletId) {
-		Layout layout = getLayout();
+		List<Portlet> embeddedPortlets = getEmbeddedPortlets();
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			layout.getCompanyId(), portletId);
-
-		long scopeGroupId = PortalUtil.getScopeGroupId(layout, portletId);
-
-		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				PortletKeys.PREFS_PLID_SHARED, portlet, false) < 1) {
-
-			return false;
+		for (Portlet embeddedPortlet : embeddedPortlets) {
+			if (portletId.equals(embeddedPortlet.getPortletId())) {
+				return true;
+			}
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

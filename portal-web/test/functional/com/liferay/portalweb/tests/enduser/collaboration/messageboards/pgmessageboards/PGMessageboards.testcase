@@ -552,6 +552,55 @@
 		</execute>
 	</command>
 
+	<command name="CancelEditOnThread" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="Message Boards Thread Body" />
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
+			<var name="postCount" value="1" />
+			<var name="startedByUserName" value="Test Test" />
+			<var name="threadBody" value="Message Boards Thread Body" />
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#cancelEdit">
+			<var name="threadBodyEdit" value="Message Boards Thread Body Edit" />
+			<var name="threadSubjectEdit" value="Message Boards Thread Subject Edit" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="Message Boards Thread Body" />
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+			<var name="userName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="CancelThread" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#cancelAdd">
+			<var name="threadBody" value="Thread Body" />
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewNoPG">
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+	</command>
+
 	<command name="DeleteMBCategories" priority="4">
 		<var name="categoryNameList" value="MB Category1 Name,MB Category2 Name,MB Category3 Name" />
 
@@ -880,6 +929,41 @@
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="threadSubject2" value="${explanationSubject}" />
 		</execute>
+	</command>
+
+	<command name="PreviewThread" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#previewAddPG">
+			<var name="threadBody" value="Message boards Preview Body" />
+			<var name="threadSubject" value="Message Boards Preview Subject" />
+			<var name="userName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="SaveThreadAsDraft" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#saveNewThreadAsDraft">
+			<var name="threadBody" value="Message Boards Thread Body" />
+			<var name="threadSubject" value="Message Boards Thread Draft" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewNoPG">
+			<var name="threadSubject" value="Message Boards Thread Draft" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_MY_POSTS" value1="My Posts" />
+
+		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_STATUS" value1="Draft" />
 	</command>
 
 	<command name="ViewDefaultEmailFromConfigurationAndSubscriptionEmail" priority="4">

@@ -9,7 +9,7 @@ classes {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.4"
+	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.5"
 	compile group: "com.liferay", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02.LIFERAY-PATCHED-1"
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "org.glassfish", name: "javax.el", transitive: false, version: "3.0.1-b05"

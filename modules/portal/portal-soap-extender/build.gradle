@@ -1,6 +1,6 @@
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.4"
+	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.5"
 	compile group: "com.liferay", name: "com.liferay.portal.dependency.manager.tccl", transitive: false, version: "1.0.0-SNAPSHOT"
 	compile group: "com.liferay", name: "com.liferay.portal.http.service.api", transitive: false, version: "1.0.0-SNAPSHOT"
 	compile group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"

@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.4"
+	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.5"
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
 	compile group: "org.apache.cxf", name: "cxf-core", version: "3.0.3"

@@ -1017,7 +1017,7 @@
 		</execute>
 
 		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
-			<execute macro="SitePage#addChildCP">
+			<execute macro="Page#addChild">
 				<var name="childSitepageName" value="true" />
 				<var name="page" value="Public Pages" />
 				<var name="siteChildPageName" value="${childPageName}" />

@@ -950,9 +950,9 @@
 			<elseif>
 				<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 				<then>
-					<execute function="Check" locator1="Checkbox#SELECT_ALL" />
+					<execute function="Click" locator1="Checkbox#SELECT_ALL" />
 
-					<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
+					<execute function="ClickNoError" locator1="Button#DEACTIVATE" />
 
 					<execute function="Confirm" value1="Are you sure you want to deactivate the selected users?" />
 

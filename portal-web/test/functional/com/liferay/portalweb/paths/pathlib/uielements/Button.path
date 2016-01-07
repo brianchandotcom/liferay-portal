@@ -235,7 +235,7 @@
 </tr>
 <tr>
 	<td>DEACTIVATE</td>
-	<td>//button[contains(.,'Deactivate')]</td>
+	<td>//*[@data-qa-id='deactivateButton'] | //button[contains(.,'Deactivate')]</td>
 	<td></td>
 </tr>
 <tr>

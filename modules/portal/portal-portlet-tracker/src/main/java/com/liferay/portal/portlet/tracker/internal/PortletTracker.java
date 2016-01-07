@@ -284,42 +284,48 @@ public class PortletTracker
 		PassThroughClassLoader passThroughClassLoader =
 			new PassThroughClassLoader(bundleWiring.getClassLoader());
 
-		BundlePortletApp bundlePortletApp = createBundlePortletApp(
-			bundle, passThroughClassLoader, serviceRegistrations);
+		Thread thread = Thread.currentThread();
 
-		com.liferay.portal.model.Portlet portletModel = buildPortletModel(
-			bundlePortletApp, portletId);
+		ClassLoader contextClassLoader = thread.getContextClassLoader();
 
-		portletModel.setPortletName(portletName);
-
-		String displayName = GetterUtil.getString(
-			serviceReference.getProperty("javax.portlet.display-name"),
-			portletName);
-
-		portletModel.setDisplayName(displayName);
-
-		Class<?> portletClazz = portlet.getClass();
-
-		portletModel.setPortletClass(portletClazz.getName());
-
-		collectJxPortletFeatures(serviceReference, portletModel);
-		collectLiferayFeatures(serviceReference, portletModel);
-
-		PortletContextBag portletContextBag = new PortletContextBag(
-			bundlePortletApp.getServletContextName());
-
-		PortletContextBagPool.put(
-			bundlePortletApp.getServletContextName(), portletContextBag);
-
-		PortletBagFactory portletBagFactory = new BundlePortletBagFactory(
-			portlet);
-
-		portletBagFactory.setClassLoader(passThroughClassLoader);
-		portletBagFactory.setServletContext(
-			bundlePortletApp.getServletContext());
-		portletBagFactory.setWARFile(true);
+		thread.setContextClassLoader(bundleWiring.getClassLoader());
 
 		try {
+			BundlePortletApp bundlePortletApp = createBundlePortletApp(
+				bundle, passThroughClassLoader, serviceRegistrations);
+
+			com.liferay.portal.model.Portlet portletModel = buildPortletModel(
+				bundlePortletApp, portletId);
+
+			portletModel.setPortletName(portletName);
+
+			String displayName = GetterUtil.getString(
+				serviceReference.getProperty("javax.portlet.display-name"),
+				portletName);
+
+			portletModel.setDisplayName(displayName);
+
+			Class<?> portletClazz = portlet.getClass();
+
+			portletModel.setPortletClass(portletClazz.getName());
+
+			collectJxPortletFeatures(serviceReference, portletModel);
+			collectLiferayFeatures(serviceReference, portletModel);
+
+			PortletContextBag portletContextBag = new PortletContextBag(
+				bundlePortletApp.getServletContextName());
+
+			PortletContextBagPool.put(
+				bundlePortletApp.getServletContextName(), portletContextBag);
+
+			PortletBagFactory portletBagFactory = new BundlePortletBagFactory(
+				portlet);
+
+			portletBagFactory.setClassLoader(passThroughClassLoader);
+			portletBagFactory.setServletContext(
+				bundlePortletApp.getServletContext());
+			portletBagFactory.setWARFile(true);
+
 			portletBagFactory.create(portletModel);
 
 			checkWebResources(
@@ -354,6 +360,9 @@ public class PortletTracker
 				e);
 
 			return null;
+		}
+		finally {
+			thread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -1210,7 +1219,7 @@ public class PortletTracker
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN, "/*");
 
 		return bundleContext.registerService(
-			Filter.class, new RestrictPortletServletRequestFilter(),
+			Filter.class, new RestrictPortletServletRequestFilter(classLoader),
 			properties);
 	}
 
@@ -1467,6 +1476,10 @@ public class PortletTracker
 
 	private class RestrictPortletServletRequestFilter implements Filter {
 
+		public RestrictPortletServletRequestFilter(ClassLoader classLoader) {
+			_classLoader = classLoader;
+		}
+
 		@Override
 		public void destroy() {
 		}
@@ -1477,10 +1490,18 @@ public class PortletTracker
 				FilterChain filterChain)
 			throws IOException, ServletException {
 
+			Thread thread = Thread.currentThread();
+
+			ClassLoader contextClassLoader = thread.getContextClassLoader();
+
+			thread.setContextClassLoader(_classLoader);
+
 			try {
 				filterChain.doFilter(servletRequest, servletResponse);
 			}
 			finally {
+				thread.setContextClassLoader(contextClassLoader);
+
 				PortletRequest portletRequest =
 					(PortletRequest)servletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -1516,6 +1537,8 @@ public class PortletTracker
 		@Override
 		public void init(FilterConfig filterConfig) throws ServletException {
 		}
+
+		private final ClassLoader _classLoader;
 
 	}
 

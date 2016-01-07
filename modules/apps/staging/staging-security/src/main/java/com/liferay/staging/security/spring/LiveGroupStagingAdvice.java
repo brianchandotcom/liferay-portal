@@ -43,6 +43,37 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		_localServiceClass = localServiceClass;
 	}
 
+	public void checkCoverage(List<String> falsePositivesList) {
+		Method[] methods = _localServiceClass.getMethods();
+
+		for (Method method : methods) {
+			String methodName = method.getName();
+			String methodNameWithoutUserGroup = StringUtil.replace(
+				methodName, "UserGroup", "");
+
+			if (methodNameWithoutUserGroup.contains("Group")) {
+				if (_serviceBuilderGeneratedMethods.contains(method)) {
+					continue;
+				}
+
+				if (_customMethods.containsKey(method)) {
+					continue;
+				}
+
+				if (falsePositivesList.contains(methodName)) {
+					continue;
+				}
+
+				_log.error(
+					"Please update " + getClass().getName() + " with " +
+					method + ". The method must be processed when it " +
+					"contains groupId, otherwise it's safe to add the method " +
+					"name to " + getClass().getSimpleName() +
+					"._GROUP_METHODS_WHITELIST");
+			}
+		}
+	}
+
 	public void initCustomMethod(
 			String methodName, Integer index, Class... parameterTypes)
 		throws NoSuchMethodException {

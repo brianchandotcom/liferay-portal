@@ -42,8 +42,6 @@ public interface UserBag extends Serializable {
 
 	public Set<Organization> getUserOrgs();
 
-	public Set<Group> getUserUserGroupGroups();
-
 	public boolean hasRole(Role role);
 
 }

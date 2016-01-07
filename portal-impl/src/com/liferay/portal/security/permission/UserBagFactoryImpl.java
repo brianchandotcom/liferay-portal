@@ -19,11 +19,9 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashSet;
@@ -56,12 +54,6 @@ public class UserBagFactoryImpl implements UserBagFactory {
 				userOrgGroups.add(organization.getGroup());
 			}
 
-			List<UserGroup> userUserGroups =
-				UserGroupLocalServiceUtil.getUserUserGroups(userId);
-
-			List<Group> userUserGroupGroups =
-				GroupLocalServiceUtil.getUserGroupsGroups(userUserGroups);
-
 			Set<Role> userRoles = new HashSet<>();
 
 			if (!userGroups.isEmpty()) {
@@ -77,7 +69,7 @@ public class UserBagFactoryImpl implements UserBagFactory {
 
 			userBag = new UserBagImpl(
 				userId, SetUtil.fromList(userGroups), userOrgs, userOrgGroups,
-				SetUtil.fromList(userUserGroupGroups), userRoles);
+				userRoles);
 
 			PermissionCacheUtil.putUserBag(userId, userBag);
 

@@ -29,14 +29,12 @@ public class UserBagImpl implements UserBag {
 
 	public UserBagImpl(
 		long userId, Set<Group> userGroups, Set<Organization> userOrgs,
-		Set<Group> userOrgGroups, Set<Group> userUserGroupGroups,
-		Set<Role> userRoles) {
+		Set<Group> userOrgGroups, Set<Role> userRoles) {
 
 		_userId = userId;
 		_userGroups = Collections.unmodifiableSet(userGroups);
 		_userOrgs = Collections.unmodifiableSet(userOrgs);
 		_userOrgGroups = Collections.unmodifiableSet(userOrgGroups);
-		_userUserGroupGroups = Collections.unmodifiableSet(userUserGroupGroups);
 		_userRoles = Collections.unmodifiableSet(userRoles);
 	}
 
@@ -47,7 +45,6 @@ public class UserBagImpl implements UserBag {
 
 			_groups.addAll(_userGroups);
 			_groups.addAll(_userOrgGroups);
-			_groups.addAll(_userUserGroupGroups);
 
 			_groups = Collections.unmodifiableSet(_groups);
 		}
@@ -81,11 +78,6 @@ public class UserBagImpl implements UserBag {
 	}
 
 	@Override
-	public Set<Group> getUserUserGroupGroups() {
-		return _userUserGroupGroups;
-	}
-
-	@Override
 	public boolean hasRole(Role role) {
 		return _userRoles.contains(role);
 	}
@@ -96,6 +88,5 @@ public class UserBagImpl implements UserBag {
 	private final Set<Group> _userOrgGroups;
 	private final Set<Organization> _userOrgs;
 	private final Set<Role> _userRoles;
-	private final Set<Group> _userUserGroupGroups;
 
 }

@@ -187,7 +187,7 @@ AUI.add(
 
 						var value = instance.getContextValue();
 
-						if (instance.get('localizable')) {
+						if (instance.get('localizable') && Array.isArray(value)) {
 							value = value[instance.get('locale')] || [];
 						}
 

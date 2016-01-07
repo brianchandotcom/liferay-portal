@@ -93,4 +93,18 @@ public class IncorrectWhitespace {
 
 	public void method3() throws Exception;
 
+	protected class SubClass1 {
+	}
+
+	protected class Subclass2 {
+
+		protected void method1() {
+		}
+
+	}
+
+	private class SubClass3
+		extends SomeClassWithALongNameThatDoesNotFitOnPreviousLine {
+	}
+
 }

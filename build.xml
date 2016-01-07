@@ -121,6 +121,7 @@
 			</delete>
 
 			<delete dir="${liferay.home}/osgi" failonerror="false" />
+			<delete dir="${liferay.home}/work" failonerror="false" />
 
 			<delete dir="test-coverage" />
 			<delete dir="test-results" />

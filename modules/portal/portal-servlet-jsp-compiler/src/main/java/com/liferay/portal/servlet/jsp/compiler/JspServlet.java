@@ -14,13 +14,13 @@
 
 package com.liferay.portal.servlet.jsp.compiler;
 
-import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.jsp.compiler.internal.JspBundleClassloader;
-import com.liferay.portal.util.PortalUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -180,16 +180,9 @@ public class JspServlet extends HttpServlet {
 		defaults.put("logVerbosityLevel", "NONE");
 		defaults.put("saveBytecode", "true");
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
-		ServletContext portalServletContext = ServletContextPool.get(
-			PortalUtil.getServletContextName());
-
-		sb.append(
-			portalServletContext.getAttribute(
-				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR));
-
-		sb.append(StringPool.SLASH);
+		sb.append(_WORK_DIR);
 		sb.append(_bundle.getSymbolicName());
 		sb.append(StringPool.DASH);
 		sb.append(_bundle.getVersion());
@@ -460,6 +453,9 @@ public class JspServlet extends HttpServlet {
 	private static final String _DEBUG = "DEBUG";
 
 	private static final Class<?>[] _INTERFACES = {ServletContext.class};
+
+	private static final String _WORK_DIR = PropsUtil.get(
+		PropsKeys.LIFERAY_HOME) + File.separator + "work" + File.separator;
 
 	private static final Bundle _jspBundle = FrameworkUtil.getBundle(
 		JspServlet.class);

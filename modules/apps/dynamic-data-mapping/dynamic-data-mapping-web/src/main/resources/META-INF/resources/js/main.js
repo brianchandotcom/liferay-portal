@@ -672,15 +672,12 @@ AUI.add(
 				for (var i = 0; i < key.length; i++) {
 					var item = key[i];
 
-					if (!A.Text.Unicode.test(item, 'L') &&
-						!A.Text.Unicode.test(item, 'N') &&
-						!A.Text.Unicode.test(item, 'Pd')) {
-
-						key = key.replace(item, ' ');
+					if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
+						key = key.replace(item, STR_SPACE);
 					}
 				}
 
-				key = Liferay.Util.camelize(key, ' ').trim();
+				key = Liferay.Util.camelize(key, STR_SPACE).trim();
 
 				return key.replace(/([!"#$%&'()*+,-./:;<=>?@\[\\\]^`{|}~\s])+/ig, '');
 			},

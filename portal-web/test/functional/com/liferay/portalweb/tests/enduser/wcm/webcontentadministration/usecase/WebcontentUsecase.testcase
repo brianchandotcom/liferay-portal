@@ -55,7 +55,7 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Home" />
 			<var name="siteScopeSelected" value="true" />
@@ -386,7 +386,7 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Web Content Display Page" />
 			<var name="siteScopeSelected" value="true" />
@@ -470,7 +470,7 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Web Content Display Page" />
 			<var name="siteScopeSelected" value="true" />
@@ -543,7 +543,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Blank Site Name" />
 			<var name="sitePageName" value="Site Page Name" />
@@ -1414,7 +1414,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Staging Test Page" />

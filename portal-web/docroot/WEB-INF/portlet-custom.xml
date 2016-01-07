@@ -25,6 +25,10 @@
 		<portlet-name>47</portlet-name>
 		<display-name>Hello World</display-name>
 		<portlet-class>com.liferay.portlet.helloworld.HelloWorldPortlet</portlet-class>
+		<init-param>
+			<name>always-display-default-configuration-icons</name>
+			<value>true</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>

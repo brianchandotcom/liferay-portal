@@ -1498,6 +1498,25 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return parentLayout;
 	}
 
+	@Override
+	public List<Layout> getScopeGroupLayouts(long parentGroupId)
+		throws PortalException {
+
+		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
+
+		List<Group> groups = groupLocalService.getGroups(
+			parentGroup.getCompanyId(), Layout.class.getName(),
+			parentGroup.getGroupId());
+
+		List<Layout> layouts = new ArrayList<>(groups.size());
+
+		for (Group group : groups) {
+			layouts.add(layoutPersistence.findByPrimaryKey(group.getClassPK()));
+		}
+
+		return layouts;
+	}
+
 	/**
 	 * Returns all the layouts within scope of the group
 	 *
@@ -1507,9 +1526,27 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Layout> getScopeGroupLayouts(
-		long groupId, boolean privateLayout) {
+			long parentGroupId, boolean privateLayout)
+		throws PortalException {
 
-		return layoutFinder.findByScopeGroup(groupId, privateLayout);
+		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
+
+		List<Group> groups = groupLocalService.getGroups(
+			parentGroup.getCompanyId(), Layout.class.getName(),
+			parentGroup.getGroupId());
+
+		List<Layout> layouts = new ArrayList<>(groups.size());
+
+		for (Group group : groups) {
+			Layout layout = layoutPersistence.findByPrimaryKey(
+				group.getClassPK());
+
+			if (layout.getPrivateLayout() == privateLayout) {
+				layouts.add(layout);
+			}
+		}
+
+		return layouts;
 	}
 
 	@Override

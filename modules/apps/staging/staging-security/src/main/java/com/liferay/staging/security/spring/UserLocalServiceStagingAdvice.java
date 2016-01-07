@@ -16,13 +16,18 @@ package com.liferay.staging.security.spring;
 
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
+import com.liferay.portlet.exportimport.staging.Staging;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
 	public UserLocalServiceStagingAdvice() throws NoSuchMethodException {
@@ -46,6 +51,19 @@ public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initCustomMethod("unsetGroupTeamsUsers", 0, long.class, long[].class);
 
 		checkCoverage(_GROUP_METHODS_WHITELIST);
+	}
+
+	@Reference
+	protected void setService(UserLocalService service) {
+		registerAdvice(service);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
+	}
+
+	protected void unsetService(UserLocalService service) {
+		unregisterAdvice(service);
 	}
 
 	private static final List<String> _GROUP_METHODS_WHITELIST =

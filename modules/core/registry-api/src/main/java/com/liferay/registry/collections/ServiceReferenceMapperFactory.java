@@ -17,6 +17,7 @@ package com.liferay.registry.collections;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.collections.ServiceReferenceMapper.Emitter;
 
 /**
  * @author Carlos Sierra Andrés
@@ -41,6 +42,34 @@ public class ServiceReferenceMapperFactory {
 				}
 				finally {
 					registry.ungetService(serviceReference);
+				}
+			}
+
+		};
+	}
+
+	public static <K, S> ServiceReferenceMapper<K, S> create(
+		final String property) {
+
+		return new ServiceReferenceMapper<K, S>() {
+
+			@Override
+			public void map(
+				ServiceReference<S> serviceReference, Emitter<K> emitter) {
+
+				Object propertyValue = serviceReference.getProperty(property);
+
+				if (propertyValue == null) {
+					return;
+				}
+
+				if (propertyValue instanceof Object[]) {
+					for (K k : (K[])propertyValue) {
+						emitter.emit(k);
+					}
+				}
+				else {
+					emitter.emit((K)propertyValue);
 				}
 			}
 

@@ -25,27 +25,27 @@
 </tr>
 <tr>
 	<td>ASSIGNED_TO</td>
-	<td>//div[@class='lfr-asset-assigned']//input</td>
+	<td>//div[@class='lfr-asset-assigned']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGN_TO_ME</td>
-	<td>//div[@class='lfr-asset-assigned']/a</td>
+	<td>//div[@class='lfr-asset-assigned']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STATE</td>
-	<td>//div/label[contains(.,'State')]/../input</td>
+	<td>//div/span[contains(.,'State')]/..//div[@class='panel-body']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CREATE_DATE</td>
-	<td>//div/label[contains(.,'Create Date')]/../input</td>
+	<td>//div/span[contains(.,'Create Date')]/..//div[@class='panel-body']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DUE_DATE</td>
-	<td>//div/label[contains(.,'Due Date')]/../input</td>
+	<td>//div/span[contains(.,'Due Date')]/..//div[@class='panel-body']</td>
 	<td></td>
 </tr>
 <tr>

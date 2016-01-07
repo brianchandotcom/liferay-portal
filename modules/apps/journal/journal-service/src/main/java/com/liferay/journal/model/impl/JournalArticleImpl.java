@@ -220,15 +220,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return _defaultLanguageId;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getDefaultLanguageId}
-	 */
-	@Deprecated
-	@Override
-	public String getDefaultLocale() {
-		return getDefaultLanguageId();
-	}
-
 	@Override
 	public Document getDocument() {
 		if (_document == null) {

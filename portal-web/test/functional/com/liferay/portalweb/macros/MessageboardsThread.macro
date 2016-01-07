@@ -89,6 +89,10 @@
 		<if>
 			<equals arg1="${markAsQuestion}" arg2="true" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="More Settings" />
+				</execute>
+
 				<execute function="Check" locator1="Checkbox#MARK_AS_A_QUESTION" />
 			</then>
 		</if>
@@ -96,6 +100,10 @@
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="More Settings" />
+				</execute>
+
 				<execute function="Check" locator1="Checkbox#ANONYMOUS" />
 			</then>
 		</if>
@@ -103,6 +111,10 @@
 		<if>
 			<equals arg1="${priority}" arg2="true" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="More Settings" />
+				</execute>
+
 				<execute function="Select" locator1="MessageBoardsEditMessage#PRIORITY_SELECT" value1="${threadPriority}" />
 			</then>
 		</if>
@@ -132,6 +144,10 @@
 		<if>
 			<equals arg1="${viewableBy}" arg2="true" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Permissions" />
+				</execute>
+
 				<execute function="Select" locator1="AssetPermissions#VIEWABLE_AS_SELECT" value1="${viewableBySelection}" />
 			</then>
 		</if>
@@ -907,6 +923,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="More Settings" />
+		</execute>
+
 		<execute function="AssertChecked" locator1="Checkbox#MARK_AS_A_QUESTION" />
 
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
@@ -916,6 +936,10 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="More Settings" />
+		</execute>
 
 		<execute function="AssertNotChecked" locator1="Checkbox#MARK_AS_A_QUESTION" />
 

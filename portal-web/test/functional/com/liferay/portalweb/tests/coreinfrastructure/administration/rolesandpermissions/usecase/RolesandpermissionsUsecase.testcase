@@ -451,7 +451,7 @@
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute macro="Bookmark#viewBookmark">
+		<execute macro="Bookmark#viewEntry">
 			<var name="bookmarkName" value="Test Bookmark1 Name" />
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>

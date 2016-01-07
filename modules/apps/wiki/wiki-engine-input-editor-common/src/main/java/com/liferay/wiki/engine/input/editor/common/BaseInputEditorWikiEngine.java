@@ -26,8 +26,6 @@ import com.liferay.wiki.model.WikiPage;
 
 import java.io.IOException;
 
-import javax.portlet.RenderResponse;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -50,13 +48,6 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 	}
 
 	public abstract String getEditorName();
-
-	public String getHelpLinkId(PageContext pageContext) {
-		RenderResponse renderResponse =
-			(RenderResponse)pageContext.getAttribute("renderResponse");
-
-		return renderResponse.getNamespace() + "syntax_help_link_id";
-	}
 
 	public String getHelpPageHTML(PageContext pageContext)
 		throws IOException, ServletException {

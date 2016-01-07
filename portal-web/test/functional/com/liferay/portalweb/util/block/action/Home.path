@@ -308,7 +308,7 @@
 </tr>
 <tr>
 	<td>PAGE_DELETE</td>
-	<td>//ul[contains(@class,'navbar-site')]/li[contains(@class,'lfr-nav-deletable')]/span[contains(@class,'delete-tab')]</td>
+	<td>//ul[contains(@id,'layoutsNav')]/li[contains(@class,'remove-layout')]/a</td>
 	<td>Delete Page Button</td>
 </tr>
 <tr>

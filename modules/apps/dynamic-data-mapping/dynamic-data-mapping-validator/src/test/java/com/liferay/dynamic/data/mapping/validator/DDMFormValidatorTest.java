@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetOptionsForField;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidAvailableLocalesForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldName;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
 import com.liferay.dynamic.data.mapping.validator.internal.DDMFormValidatorImpl;
@@ -67,6 +68,18 @@ public class DDMFormValidatorTest {
 		setUpDDMFormFieldTypeServicesTrackerUtil();
 	}
 
+	@Test(expected = MustSetValidCharactersForFieldType.class)
+	public void testCaretInFieldType() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField("Name", "html-text_@");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		_ddmFormValidator.validate(ddmForm);
+	}
+
 	@Test(expected = MustSetValidCharactersForFieldName.class)
 	public void testDashInFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
@@ -84,6 +97,17 @@ public class DDMFormValidatorTest {
 
 		ddmForm.setAvailableLocales(createAvailableLocales(LocaleUtil.BRAZIL));
 		ddmForm.setDefaultLocale(LocaleUtil.US);
+
+		_ddmFormValidator.validate(ddmForm);
+	}
+
+	@Test(expected = MustSetValidCharactersForFieldName.class)
+	public void testDollarInFieldName() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(
+			new DDMFormField("$text", DDMFormFieldType.TEXT));
 
 		_ddmFormValidator.validate(ddmForm);
 	}
@@ -154,7 +178,7 @@ public class DDMFormValidatorTest {
 		_ddmFormValidator.validate(ddmForm);
 	}
 
-	@Test(expected = DDMFormValidationException.class)
+	@Test(expected = MustSetValidCharactersForFieldType.class)
 	public void testInvalidFieldType() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
@@ -196,6 +220,28 @@ public class DDMFormValidatorTest {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setDefaultLocale(null);
+
+		_ddmFormValidator.validate(ddmForm);
+	}
+
+	@Test
+	public void testSpecialCharactersInFieldName() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(new DDMFormField("和ó", DDMFormFieldType.TEXT));
+
+		_ddmFormValidator.validate(ddmForm);
+	}
+
+	@Test
+	public void testSpecialCharactersInFieldType() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField("Name", "html-çê的Ü");
+
+		ddmForm.addDDMFormField(ddmFormField);
 
 		_ddmFormValidator.validate(ddmForm);
 	}

@@ -115,6 +115,7 @@ public class BuildChangeLogTask extends DefaultTask {
 			bufferedWriter.append('#');
 			bufferedWriter.newLine();
 
+			bufferedWriter.append("# ");
 			bufferedWriter.append(getChangeLogHeader());
 			bufferedWriter.newLine();
 

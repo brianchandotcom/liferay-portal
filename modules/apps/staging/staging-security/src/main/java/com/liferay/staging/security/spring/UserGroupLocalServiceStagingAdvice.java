@@ -19,9 +19,13 @@ import com.liferay.portal.service.UserGroupLocalService;
 import java.util.Arrays;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class UserGroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
 	public UserGroupLocalServiceStagingAdvice() throws NoSuchMethodException {
@@ -32,6 +36,15 @@ public class UserGroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initCustomMethod("getGroupUserUserGroups", 0, long.class, long.class);
 
 		checkCoverage(_GROUP_METHODS_WHITELIST);
+	}
+
+	@Reference
+	protected void setService(UserGroupLocalService service) {
+		registerAdvice(service);
+	}
+
+	protected void unsetService(UserGroupLocalService service) {
+		unregisterAdvice(service);
 	}
 
 	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(

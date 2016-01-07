@@ -16,8 +16,11 @@ package com.liferay.staging.security.spring;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
@@ -33,6 +36,8 @@ import java.util.Set;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+
+import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Tomas Polesovsky
@@ -122,6 +127,33 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		replaceStagingGroupIdsInCustomMethod(methodInvocation);
 
 		return methodInvocation.proceed();
+	}
+
+	protected void registerAdvice(Object service) {
+		try {
+			Class<?> clazz = service.getClass();
+
+			if (!ProxyUtil.isProxyClass(clazz)) {
+				throw new RuntimeException(
+					"Unable to register advice " + getClass().getName() +
+						" for " + _localServiceClass.getName() +
+						", Spring bean " + clazz.getName() +
+						" is not proxy");
+			}
+
+			AdvisedSupport advisedSupport =
+				ServiceBeanAopProxy.getAdvisedSupport(service);
+
+			advisedSupport.addAdvice(this);
+
+			ServiceBeanAopCacheManagerUtil.reset();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(
+				"Unable to register advice for " +
+					_localServiceClass.getName(),
+				e);
+		}
 	}
 
 	protected Group replace(Group group) {
@@ -265,6 +297,29 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		Object[] arguments = methodInvocation.getArguments();
 
 		replace(arguments, 0);
+	}
+
+	protected void unregisterAdvice(Object service) {
+		Class<?> clazz = service.getClass();
+
+		if (!ProxyUtil.isProxyClass(clazz)) {
+			return;
+		}
+
+		try {
+			AdvisedSupport advisedSupport =
+				ServiceBeanAopProxy.getAdvisedSupport(service);
+
+			advisedSupport.removeAdvice(this);
+
+			ServiceBeanAopCacheManagerUtil.reset();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(
+				"Unable to register advice " + getClass().getName() +
+					" for " + _localServiceClass.getName(),
+				e);
+		}
 	}
 
 	private static final String _LOCAL_SERVICE = "LocalService";

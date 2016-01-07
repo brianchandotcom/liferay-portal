@@ -19,9 +19,13 @@ import com.liferay.portal.service.OrganizationLocalService;
 import java.util.Arrays;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class OrganizationLocalServiceStagingAdvice
 	extends LiveGroupStagingAdvice {
 
@@ -36,6 +40,15 @@ public class OrganizationLocalServiceStagingAdvice
 			"getGroupUserOrganizations", 0, long.class, long.class);
 
 		checkCoverage(_GROUP_METHODS_WHITELIST);
+	}
+
+	@Reference
+	protected void setService(OrganizationLocalService service) {
+		registerAdvice(service);
+	}
+
+	protected void unsetService(OrganizationLocalService service) {
+		unregisterAdvice(service);
 	}
 
 	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(

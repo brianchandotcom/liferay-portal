@@ -19,9 +19,13 @@ import com.liferay.portal.service.RoleLocalService;
 import java.util.Arrays;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
 	public RoleLocalServiceStagingAdvice() throws NoSuchMethodException {
@@ -46,6 +50,15 @@ public class RoleLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 		initCustomMethod("getUserRelatedRoles", 1, long.class, List.class);
 
 		checkCoverage(_GROUP_METHODS_WHITELIST);
+	}
+
+	@Reference
+	protected void setService(RoleLocalService service) {
+		registerAdvice(service);
+	}
+
+	protected void unsetService(RoleLocalService service) {
+		unregisterAdvice(service);
 	}
 
 	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(

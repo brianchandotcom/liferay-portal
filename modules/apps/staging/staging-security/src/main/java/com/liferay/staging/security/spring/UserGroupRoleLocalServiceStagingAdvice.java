@@ -19,9 +19,13 @@ import com.liferay.portal.service.UserGroupRoleLocalService;
 import java.util.Arrays;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class UserGroupRoleLocalServiceStagingAdvice
 	extends LiveGroupStagingAdvice {
 
@@ -67,6 +71,15 @@ public class UserGroupRoleLocalServiceStagingAdvice
 			boolean.class);
 
 		checkCoverage(_GROUP_METHODS_WHITELIST);
+	}
+
+	@Reference
+	protected void setService(UserGroupRoleLocalService service) {
+		registerAdvice(service);
+	}
+
+	protected void unsetService(UserGroupRoleLocalService service) {
+		unregisterAdvice(service);
 	}
 
 	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(

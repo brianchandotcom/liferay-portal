@@ -1297,7 +1297,7 @@
 		<if>
 			<equals arg1="${marketplace}" arg2="true" />
 			<then>
-				<execute macro="Page#addPG">
+				<execute macro="Page#add">
 					<var name="defaultURL" value="${defaultURL}" />
 					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="Marketplace Calendar Testing" />

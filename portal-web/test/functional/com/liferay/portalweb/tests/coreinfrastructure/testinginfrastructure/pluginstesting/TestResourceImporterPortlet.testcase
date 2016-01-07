@@ -12,7 +12,7 @@
 	</tear-down>
 
 	<command name="ViewResourcesImporter" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Resources Importer Page" />
 		</execute>
 

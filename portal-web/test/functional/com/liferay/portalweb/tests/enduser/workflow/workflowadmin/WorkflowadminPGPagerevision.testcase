@@ -86,7 +86,7 @@
 	<command name="ApprovePageRevisionPG" priority="4">
 		<var name="pageName" value="Page Revision Page" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="${siteName}" />
@@ -192,7 +192,7 @@
 	<command name="RejectPageRevisionPG" priority="4">
 		<var name="pageName" value="Page Revision Page" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="${siteName}" />

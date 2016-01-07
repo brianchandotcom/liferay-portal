@@ -1937,7 +1937,7 @@
 	</command>
 
 	<command name="ViewOrganizationSiteViaSitesDirectory" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Sites Directory Page" />
 		</execute>
 

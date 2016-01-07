@@ -50,15 +50,15 @@
 	<command name="AddSitePageXSS" priority="3">
 		<var name="sitePage3Name"><![CDATA[<script>alert("Site Page 3")</script> />]]></var>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Site Page 1" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Site Page 2" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${sitePage3Name}" />
 		</execute>
 
@@ -198,7 +198,7 @@
 	</command>
 
 	<command name="DefaultLanguageWithEmptyFriendlyURLThrowsErrorExceptions" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Page Name" />
 		</execute>
 
@@ -235,7 +235,7 @@
 		<var name="pageNameList" value="Page1 Name,Page2 Name,Page3 Name,Page4 Name" />
 
 		<for list="${pageNameList}" param="pageName">
-			<execute macro="Page#addPG">
+			<execute macro="Page#add">
 				<var name="pageName" value="${pageName}" />
 			</execute>
 		</for>
@@ -522,7 +522,7 @@
 			<var name="sitePageName" value="Private Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
@@ -750,7 +750,7 @@
 			<var name="sitePageName" value="Private Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
@@ -991,7 +991,7 @@
 			<var name="sitePageName" value="Private Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
@@ -1151,7 +1151,7 @@
 	</command>
 
 	<command name="WebContentAdministrationSitesPagesPanel" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="componentName" value="Collaboration" />
 			<var name="pageName" value="Panel Test Page" />
 			<var name="pageType" value="Panel" />

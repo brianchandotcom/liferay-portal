@@ -56,7 +56,7 @@
 		</for>
 	</command>
 
-	<command name="addPG" summary="Add a page named '${pageName}'">
+	<command name="add" summary="Add a page named '${pageName}'">
 		<execute macro="Page#gotoPagesCP">
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />

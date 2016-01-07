@@ -84,15 +84,20 @@ public class PortletConfigurationIconTracker {
 
 			String[] defaultViewsArray = ArrayUtil.toStringArray(defaultViews);
 
-			if (Validator.isNotNull(path) &&
-				!ArrayUtil.contains(defaultViewsArray, path)) {
-
+			if (Validator.isNotNull(path)) {
 				paths.add(path);
 
-				continue;
-			}
+				if (ArrayUtil.isNotEmpty(defaultViewsArray) &&
+					ArrayUtil.contains(defaultViewsArray, path)) {
 
-			paths.addAll(defaultViews);
+					paths.add(StringPool.DASH);
+				}
+			}
+			else if (ArrayUtil.isNotEmpty(defaultViewsArray)) {
+				paths.addAll(defaultViews);
+
+				paths.add(StringPool.DASH);
+			}
 		}
 
 		return paths;

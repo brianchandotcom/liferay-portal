@@ -292,6 +292,12 @@ body {
 	}
 }
 
+@include sm {
+	.toast-animation {
+	   margin: 12px 4px 0 4px;
+	}
+}
+
 body.open .toast-animation {
 	.pm {
 		border-left-width: 6px;

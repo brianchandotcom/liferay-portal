@@ -34,7 +34,16 @@ public abstract class BasePortletConfigurationIcon
 		themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		portletDisplay = themeDisplay.getPortletDisplay();
+		PortletDisplay originalPortletDisplay =
+			(PortletDisplay)portletRequest.getAttribute(
+				"original_portlet_display");
+
+		if (originalPortletDisplay != null) {
+			portletDisplay = originalPortletDisplay;
+		}
+		else {
+			portletDisplay = themeDisplay.getPortletDisplay();
+		}
 	}
 
 	@Override

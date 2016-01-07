@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletCategory;
@@ -73,6 +74,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -182,13 +184,40 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		Registry registry = RegistryUtil.getRegistry();
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				portlet.getResourceBundle(), locale, classLoader);
+			ResourceBundle resourceBundle;
 
 			Map<String, Object> properties = new HashMap<>();
 
+			try {
+				resourceBundle = ResourceBundleUtil.getBundle(
+					portlet.getResourceBundle(), locale, classLoader);
+
+				properties.put("language.id", LocaleUtil.toLanguageId(locale));
+				properties.put("javax.portlet.name", portlet.getPortletId());
+
+				ServiceRegistration<ResourceBundle> serviceRegistration =
+						registry.registerService(
+								ResourceBundle.class, resourceBundle,
+								properties);
+
+				_serviceRegistrations.put(resourceBundle, serviceRegistration);
+			}
+			catch (MissingResourceException mre) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Portlet " + portlet.getPortletName() + " does " +
+							"not have translations for available locale " +
+								locale);
+				}
+			}
+
+			properties = new HashMap<>();
+
 			properties.put("language.id", LocaleUtil.toLanguageId(locale));
 			properties.put("javax.portlet.name", portlet.getPortletId());
+			properties.put("service.ranking", Integer.MIN_VALUE);
+
+			resourceBundle = LanguageResources.getResourceBundle(locale);
 
 			ServiceRegistration<ResourceBundle> serviceRegistration =
 				registry.registerService(

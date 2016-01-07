@@ -49,6 +49,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGNED_TO_ME_ACTIVE</td>
+	<td>//li[contains(@class,'active')]/a[@role='menuitem' and contains(.,'Assigned to Me')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_ACTIVE</td>
+	<td>//li[contains(@class,'active')]/a[@role='menuitem' and contains(.,'Assigned to My Roles')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

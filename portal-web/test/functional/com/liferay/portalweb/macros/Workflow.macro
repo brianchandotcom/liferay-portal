@@ -881,6 +881,8 @@
 
 		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_ME" />
 
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_ACTIVE" />
+
 		<execute function="Click" locator1="Dropdown#FILTER" />
 
 		<var name="key_filterValue" value="Pending" />
@@ -929,6 +931,8 @@
 		<var name="key_workflowTask" value="${workflowTask}" />
 
 		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_MY_ROLES" />
+
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_ACTIVE" />
 
 		<execute function="Click" locator1="Dropdown#FILTER" />
 

@@ -17,6 +17,7 @@ package com.liferay.staging.security.permission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.model.User;
+import com.liferay.portlet.exportimport.staging.Staging;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
@@ -68,6 +70,10 @@ public class StagingPermissionCheckerFactory
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
 	}
 
 	private BundleContext _bundleContext;

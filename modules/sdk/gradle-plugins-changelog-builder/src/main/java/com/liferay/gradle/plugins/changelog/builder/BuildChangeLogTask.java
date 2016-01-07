@@ -60,7 +60,7 @@ public class BuildChangeLogTask extends DefaultTask {
 				public String call() throws Exception {
 					Project project = getProject();
 
-					return "Module Version " + project.getVersion();
+					return "Bundle Version " + project.getVersion();
 				}
 
 			});

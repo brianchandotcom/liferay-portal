@@ -272,6 +272,8 @@
 	</command>
 
 	<command name="DeleteBlogsEntries" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="blogsEntryCounterList" value="1,2,3" />
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
@@ -332,6 +334,8 @@
 	</command>
 
 	<command name="EditBlogsEntryContent" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />

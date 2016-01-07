@@ -62,9 +62,13 @@ else {
 
 				Date now = new Date();
 
-				int entryCount = BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(group.getGroupId(), user2.getUserId(), now, WorkflowConstants.STATUS_APPROVED);
+				QueryDefinition<BlogsEntry> entryCountQueryDefinition = new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED);
 
-				List entries = BlogsEntryLocalServiceUtil.getGroupUserEntries(group.getGroupId(), user2.getUserId(), now, WorkflowConstants.STATUS_APPROVED, 0, 1);
+				int entryCount = BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(group.getGroupId(), user2.getUserId(), now, entryCountQueryDefinition);
+
+				QueryDefinition<BlogsEntry> entriesQueryDefinition = new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED, 0, 1, null);
+
+				List entries = BlogsEntryLocalServiceUtil.getGroupUserEntries(group.getGroupId(), user2.getUserId(), now, entriesQueryDefinition);
 
 				if (entries.size() == 1) {
 					BlogsEntry entry = (BlogsEntry)entries.get(0);

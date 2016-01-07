@@ -473,51 +473,12 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
-	Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
-		long companyId, java.util.Date displayDate, int status, int start,
-		int end) {
-		return _blogsEntryLocalService.getCompanyEntries(companyId,
-			displayDate, status, start, end);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
-	Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
-		long companyId, java.util.Date displayDate, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
-		return _blogsEntryLocalService.getCompanyEntries(companyId,
-			displayDate, status, start, end, obc);
-	}
-
 	@Override
 	public int getCompanyEntriesCount(long companyId,
 		java.util.Date displayDate,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition) {
 		return _blogsEntryLocalService.getCompanyEntriesCount(companyId,
 			displayDate, queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getCompanyEntriesCount(long,
-	Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public int getCompanyEntriesCount(long companyId,
-		java.util.Date displayDate, int status) {
-		return _blogsEntryLocalService.getCompanyEntriesCount(companyId,
-			displayDate, status);
 	}
 
 	@Override
@@ -554,62 +515,11 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, java.util.Date displayDate, int status, int start, int end) {
-		return _blogsEntryLocalService.getGroupEntries(groupId, displayDate,
-			status, start, end);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, java.util.Date displayDate, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
-		return _blogsEntryLocalService.getGroupEntries(groupId, displayDate,
-			status, start, end, obc);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
 		long groupId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition) {
 		return _blogsEntryLocalService.getGroupEntries(groupId, queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, int status, int start, int end) {
-		return _blogsEntryLocalService.getGroupEntries(groupId, status, start,
-			end);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
-		return _blogsEntryLocalService.getGroupEntries(groupId, status, start,
-			end, obc);
 	}
 
 	@Override
@@ -619,33 +529,11 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long,
-	Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
-		int status) {
-		return _blogsEntryLocalService.getGroupEntriesCount(groupId,
-			displayDate, status);
-	}
-
 	@Override
 	public int getGroupEntriesCount(long groupId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition) {
 		return _blogsEntryLocalService.getGroupEntriesCount(groupId,
 			queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public int getGroupEntriesCount(long groupId, int status) {
-		return _blogsEntryLocalService.getGroupEntriesCount(groupId, status);
 	}
 
 	@Override
@@ -656,33 +544,6 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long,
-	long, Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, java.util.Date displayDate, int status,
-		int start, int end) {
-		return _blogsEntryLocalService.getGroupUserEntries(groupId, userId,
-			displayDate, status, start, end);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long,
-	long, Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, java.util.Date displayDate, int status,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
-		return _blogsEntryLocalService.getGroupUserEntries(groupId, userId,
-			displayDate, status, start, end, obc);
-	}
-
 	@Override
 	public int getGroupUserEntriesCount(long groupId, long userId,
 		java.util.Date displayDate,
@@ -691,37 +552,12 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			userId, displayDate, queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getGroupUserEntriesCount(long, long, Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public int getGroupUserEntriesCount(long groupId, long userId,
-		java.util.Date displayDate, int status) {
-		return _blogsEntryLocalService.getGroupUserEntriesCount(groupId,
-			userId, displayDate, status);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(
 		long companyId, long groupId, java.util.Date displayDate,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition) {
 		return _blogsEntryLocalService.getGroupsEntries(companyId, groupId,
 			displayDate, queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupsEntries(long, long,
-	Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(
-		long companyId, long groupId, java.util.Date displayDate, int status,
-		int start, int end) {
-		return _blogsEntryLocalService.getGroupsEntries(companyId, groupId,
-			displayDate, status, start, end);
 	}
 
 	@Override
@@ -752,51 +588,12 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long,
-	Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
-		long organizationId, java.util.Date displayDate, int status, int start,
-		int end) {
-		return _blogsEntryLocalService.getOrganizationEntries(organizationId,
-			displayDate, status, start, end);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long,
-	Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
-		long organizationId, java.util.Date displayDate, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
-		return _blogsEntryLocalService.getOrganizationEntries(organizationId,
-			displayDate, status, start, end, obc);
-	}
-
 	@Override
 	public int getOrganizationEntriesCount(long organizationId,
 		java.util.Date displayDate,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition) {
 		return _blogsEntryLocalService.getOrganizationEntriesCount(organizationId,
 			displayDate, queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getOrganizationEntriesCount(long, Date, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public int getOrganizationEntriesCount(long organizationId,
-		java.util.Date displayDate, int status) {
-		return _blogsEntryLocalService.getOrganizationEntriesCount(organizationId,
-			displayDate, status);
 	}
 
 	@Override

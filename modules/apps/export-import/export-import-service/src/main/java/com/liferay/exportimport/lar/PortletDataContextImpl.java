@@ -246,34 +246,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addClassedModel(Element,
-	 *             String, ClassedModel, Class)}
-	 */
-	@Deprecated
-	@Override
-	public void addClassedModel(
-			Element element, String path, ClassedModel classedModel,
-			Class<?> clazz, String namespace)
-		throws PortalException {
-
-		addClassedModel(element, path, classedModel, clazz);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addClassedModel(Element,
-	 *             String, ClassedModel)}
-	 */
-	@Deprecated
-	@Override
-	public void addClassedModel(
-			Element element, String path, ClassedModel classedModel,
-			String namespace)
-		throws PortalException {
-
-		addClassedModel(element, path, classedModel);
-	}
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler#exportComments(
 	 *             PortletDataContext, StagedModel)}
@@ -642,18 +614,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			element, null, classedModel, classedModel.getModelClass());
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #createServiceContext(Element, ClassedModel)}
-	 */
-	@Deprecated
-	@Override
-	public ServiceContext createServiceContext(
-		Element element, ClassedModel classedModel, String namespace) {
-
-		return createServiceContext(element, classedModel);
-	}
-
 	@Override
 	public ServiceContext createServiceContext(StagedModel stagedModel) {
 		return createServiceContext(stagedModel, stagedModel.getModelClass());
@@ -674,18 +634,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		return createServiceContext(
 			null, path, classedModel, classedModel.getModelClass());
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #createServiceContext(String,
-	 *             ClassedModel)}
-	 */
-	@Deprecated
-	@Override
-	public ServiceContext createServiceContext(
-		String path, ClassedModel classedModel, String namespace) {
-
-		return createServiceContext(path, classedModel);
 	}
 
 	@Override
@@ -974,16 +922,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			"path", path);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getLayoutPath(PortletDataContext, long)}
-	 */
-	@Deprecated
-	@Override
-	public String getLayoutPath(long plid) {
-		return StringPool.BLANK;
-	}
-
 	@Override
 	public Map<String, Lock> getLocks() {
 		return _locksMap;
@@ -1059,17 +997,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public String getPortletId() {
 		return _portletId;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getPortletPath(PortletDataContext,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public String getPortletPath(String portletId) {
-		return ExportImportPathUtil.getPortletPath(this, portletId);
 	}
 
 	@Override
@@ -1242,16 +1169,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			parentStagedModel, clazz.getName(), 0, null);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getRootPath(PortletDataContext)}
-	 */
-	@Deprecated
-	@Override
-	public String getRootPath() {
-		return ExportImportPathUtil.getRootPath(this);
-	}
-
 	@Override
 	public String getRootPortletId() {
 		return _rootPortletId;
@@ -1294,38 +1211,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public long getSourceGroupId() {
 		return _sourceGroupId;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getSourceLayoutPath(PortletDataContext,
-	 *             long)}
-	 */
-	@Deprecated
-	@Override
-	public String getSourceLayoutPath(long layoutId) {
-		return StringPool.BLANK;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getSourcePortletPath(PortletDataContext,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public String getSourcePortletPath(String portletId) {
-		return StringPool.BLANK;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#getSourceRootPath(PortletDataContext)}
-	 */
-	@Deprecated
-	@Override
-	public String getSourceRootPath() {
-		return ExportImportPathUtil.getSourceRootPath(this);
 	}
 
 	@Override
@@ -1512,35 +1397,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		importLocks(clazz, String.valueOf(classPK), String.valueOf(newClassPK));
 		importPermissions(clazz, classPK, newClassPK);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #importClassedModel(ClassedModel, ClassedModel, Class)}
-	 */
-	@Deprecated
-	@Override
-	public void importClassedModel(
-			ClassedModel classedModel, ClassedModel newClassedModel,
-			Class<?> clazz, String namespace)
-		throws PortalException {
-
-		importClassedModel(classedModel, newClassedModel, clazz);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #importClassedModel(ClassedModel, ClassedModel)}
-	 */
-	@Deprecated
-	@Override
-	public void importClassedModel(
-			ClassedModel classedModel, ClassedModel newClassedModel,
-			String namespace)
-		throws PortalException {
-
-		importClassedModel(
-			classedModel, newClassedModel, classedModel.getModelClass());
 	}
 
 	/**

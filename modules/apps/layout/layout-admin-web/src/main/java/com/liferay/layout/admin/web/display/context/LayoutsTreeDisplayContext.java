@@ -310,7 +310,7 @@ public class LayoutsTreeDisplayContext {
 	public boolean isShowLayoutTabs() {
 		Group selGroup = getSelGroup();
 
-		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
+		if (selGroup.isLayoutPrototype()) {
 			return false;
 		}
 

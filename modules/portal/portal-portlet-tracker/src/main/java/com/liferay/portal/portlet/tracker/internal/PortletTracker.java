@@ -15,6 +15,7 @@
 package com.liferay.portal.portlet.tracker.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.util.classloader.PassThroughClassLoader;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -278,8 +279,11 @@ public class PortletTracker
 		ServiceRegistrations serviceRegistrations = getServiceRegistrations(
 			bundle);
 
+		PassThroughClassLoader passThroughClassLoader =
+			new PassThroughClassLoader(bundleWiring.getClassLoader());
+
 		BundlePortletApp bundlePortletApp = createBundlePortletApp(
-			bundle, bundleWiring.getClassLoader(), serviceRegistrations);
+			bundle, passThroughClassLoader, serviceRegistrations);
 
 		com.liferay.portal.model.Portlet portletModel = buildPortletModel(
 			bundlePortletApp, portletId);
@@ -308,7 +312,7 @@ public class PortletTracker
 		PortletBagFactory portletBagFactory = new BundlePortletBagFactory(
 			portlet);
 
-		portletBagFactory.setClassLoader(bundleWiring.getClassLoader());
+		portletBagFactory.setClassLoader(passThroughClassLoader);
 		portletBagFactory.setServletContext(
 			bundlePortletApp.getServletContext());
 		portletBagFactory.setWARFile(true);
@@ -319,11 +323,11 @@ public class PortletTracker
 			checkWebResources(
 				bundle.getBundleContext(),
 				bundlePortletApp.getServletContextName(),
-				bundleWiring.getClassLoader(), serviceRegistrations);
+				passThroughClassLoader, serviceRegistrations);
 
 			checkResourceBundles(
-				bundle.getBundleContext(), bundleWiring.getClassLoader(),
-				portletModel, serviceRegistrations);
+				bundle.getBundleContext(), passThroughClassLoader, portletModel,
+				serviceRegistrations);
 
 			List<Company> companies = _companyLocalService.getCompanies();
 

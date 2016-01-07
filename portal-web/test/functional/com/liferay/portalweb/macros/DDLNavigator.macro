@@ -9,7 +9,7 @@
 	</command>
 
 	<command name="gotoDDLRecordEditViaWorkflow">
-		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" value1="Edit" />
+		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" />
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="AssertTextEquals" locator1="Button#VIEW_HISTORY" value1="View History" />

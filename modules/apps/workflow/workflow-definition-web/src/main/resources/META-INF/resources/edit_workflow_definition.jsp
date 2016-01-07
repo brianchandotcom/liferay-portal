@@ -53,7 +53,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 		<aui:fieldset>
 			<aui:field-wrapper label="title">
-				<liferay-ui:input-localized name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
+				<liferay-ui:input-localized cssClass="form-control" name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
 			</aui:field-wrapper>
 
 			<aui:input name="file" type="file" />

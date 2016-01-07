@@ -45,8 +45,7 @@ page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
 page import="com.liferay.product.navigation.site.administration.display.context.SiteAdministrationPanelCategoryDisplayContext" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.HashMap" %><%@
+<%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.ResourceBundle" %>

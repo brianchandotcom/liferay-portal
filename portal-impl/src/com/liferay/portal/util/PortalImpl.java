@@ -6162,49 +6162,10 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		Set<String> whiteList =
-			AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
+		if (AuthTokenUtil.isValidPortletInvocationToken(
+				request, layout, portlet)) {
 
-		if (whiteList.contains(portletId)) {
 			return true;
-		}
-
-		String namespace = getPortletNamespace(portletId);
-
-		String strutsAction = ParamUtil.getString(
-			request, namespace + "struts_action");
-
-		if (Validator.isNull(strutsAction)) {
-			strutsAction = ParamUtil.getString(request, "struts_action");
-		}
-
-		Set<String> whitelistActions =
-			AuthTokenWhitelistUtil.getPortletInvocationWhitelistActions();
-
-		if (whitelistActions.contains(strutsAction)) {
-			return true;
-		}
-
-		String requestPortletAuthenticationToken = ParamUtil.getString(
-			request, "p_p_auth");
-
-		if (Validator.isNull(requestPortletAuthenticationToken)) {
-			HttpServletRequest originalRequest = getOriginalServletRequest(
-				request);
-
-			requestPortletAuthenticationToken = ParamUtil.getString(
-				originalRequest, "p_p_auth");
-		}
-
-		if (Validator.isNotNull(requestPortletAuthenticationToken)) {
-			String actualPortletAuthenticationToken = AuthTokenUtil.getToken(
-				request, layout.getPlid(), portletId);
-
-			if (requestPortletAuthenticationToken.equals(
-					actualPortletAuthenticationToken)) {
-
-				return true;
-			}
 		}
 
 		return false;

@@ -14,24 +14,30 @@
 
 package com.liferay.portal.security.auth.bundle.authtokenwhitelistutil;
 
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Cristina González
+ * @author Tomas Polesovsky
  */
+
 @Component(
 	immediate = true,
 	property = {
-		PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS + "=" + TestAuthTokenIgnoreActions.TEST_AUTH_TOKEN_IGNORE_ACTION_URL,
+		"javax.portlet.name=" + TestMVCResourceCommand.TEST_PORTLET,
+		"mvc.command.name=" + TestMVCResourceCommand.TEST_MVC_COMMAND_NAME,
+		"portlet.add.default.resource.check.whitelist.mvc.action=1",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
 	},
-	service = Object.class
+	service = MVCResourceCommand.class
 )
-public class TestAuthTokenIgnoreActions {
+public class TestMVCResourceCommand {
 
-	public static final String TEST_AUTH_TOKEN_IGNORE_ACTION_URL =
-		"TEST_AUTH_TOKEN_IGNORE_ACTION_URL";
+	public static final String TEST_MVC_COMMAND_NAME =
+		"TEST_MVC_RESOURCE_COMMAND_NAME";
+
+	public static final String TEST_PORTLET = PortletKeys.PORTAL;
 
 }

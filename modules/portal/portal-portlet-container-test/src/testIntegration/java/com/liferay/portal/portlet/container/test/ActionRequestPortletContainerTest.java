@@ -101,10 +101,13 @@ public class ActionRequestPortletContainerTest
 
 	@Test
 	public void testAuthTokenIgnoreOrigins() throws Exception {
-		String[] authTokenIgnoreOrigins =
-			ReflectionTestUtil.getAndSetFieldValue(
-				PropsValues.class, "AUTH_TOKEN_IGNORE_ORIGINS",
-				new String[] {SecurityPortletContainerWrapper.class.getName()});
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS,
+			SecurityPortletContainerWrapper.class.getName());
+
+		registerService(Object.class, new Object(), properties);
 
 		try {
 			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
@@ -127,20 +130,18 @@ public class ActionRequestPortletContainerTest
 			Assert.assertTrue(testPortlet.isCalledAction());
 		}
 		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "AUTH_TOKEN_IGNORE_ORIGINS",
-				authTokenIgnoreOrigins);
-
 			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
 		}
 	}
 
 	@Test
 	public void testAuthTokenIgnorePortlets() throws Exception {
-		String[] authTokenIgnorePortlets =
-			ReflectionTestUtil.getAndSetFieldValue(
-				PropsValues.class, "AUTH_TOKEN_IGNORE_PORTLETS",
-				new String[] {TEST_PORTLET_ID});
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS, TEST_PORTLET_ID);
+
+		registerService(Object.class, new Object(), properties);
 
 		try {
 			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
@@ -163,10 +164,6 @@ public class ActionRequestPortletContainerTest
 			Assert.assertTrue(testPortlet.isCalledAction());
 		}
 		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "AUTH_TOKEN_IGNORE_PORTLETS",
-				authTokenIgnorePortlets);
-
 			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
 		}
 	}
@@ -236,31 +233,7 @@ public class ActionRequestPortletContainerTest
 
 	@Test
 	public void testPortalAuthenticationToken() throws Exception {
-		testPortlet = new TestPortlet() {
-
-			@Override
-			public void serveResource(
-					ResourceRequest resourceRequest,
-					ResourceResponse resourceResponse)
-				throws IOException {
-
-				PrintWriter printWriter = resourceResponse.getWriter();
-
-				PortletURL portletURL = resourceResponse.createActionURL();
-
-				String queryString = HttpUtil.getQueryString(
-					portletURL.toString());
-
-				Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-					queryString);
-
-				String portalAuthenticationToken = MapUtil.getString(
-					parameterMap, "p_auth");
-
-				printWriter.write(portalAuthenticationToken);
-			}
-
-		};
+		testPortlet = new ActionRequestTestPortlet();
 
 		setUpPortlet(
 			testPortlet, new HashMapDictionary<String, Object>(),
@@ -350,31 +323,7 @@ public class ActionRequestPortletContainerTest
 
 	@Test
 	public void testXCSRFToken() throws Exception {
-		testPortlet = new TestPortlet() {
-
-			@Override
-			public void serveResource(
-					ResourceRequest resourceRequest,
-					ResourceResponse resourceResponse)
-				throws IOException {
-
-				PrintWriter printWriter = resourceResponse.getWriter();
-
-				PortletURL portletURL = resourceResponse.createActionURL();
-
-				String queryString = HttpUtil.getQueryString(
-					portletURL.toString());
-
-				Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-					queryString);
-
-				String portalAuthenticationToken = MapUtil.getString(
-					parameterMap, "p_auth");
-
-				printWriter.write(portalAuthenticationToken);
-			}
-
-		};
+		testPortlet = new ActionRequestTestPortlet();
 
 		setUpPortlet(
 			testPortlet, new HashMapDictionary<String, Object>(),
@@ -408,6 +357,31 @@ public class ActionRequestPortletContainerTest
 
 		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(testPortlet.isCalledAction());
+	}
+
+	private class ActionRequestTestPortlet extends TestPortlet {
+
+		@Override
+		public void serveResource(
+				ResourceRequest resourceRequest,
+				ResourceResponse resourceResponse)
+			throws IOException {
+
+			PrintWriter printWriter = resourceResponse.getWriter();
+
+			PortletURL portletURL = resourceResponse.createActionURL();
+
+			String queryString = HttpUtil.getQueryString(portletURL.toString());
+
+			Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+				queryString);
+
+			String portalAuthenticationToken = MapUtil.getString(
+				parameterMap, "p_auth");
+
+			printWriter.write(portalAuthenticationToken);
+		}
+
 	}
 
 }

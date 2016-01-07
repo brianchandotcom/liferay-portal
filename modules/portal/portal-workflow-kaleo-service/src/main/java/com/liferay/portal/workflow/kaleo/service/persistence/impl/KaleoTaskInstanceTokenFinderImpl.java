@@ -412,18 +412,11 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(2);
-
-		if (!firstCriteria) {
-			sb.append("[$AND_OR_CONNECTOR$] (");
-		}
-		else {
-			sb.append(StringPool.OPEN_PARENTHESIS);
+		if (firstCriteria) {
+			return FIRST_DUE_DATE_GT;
 		}
 
-		sb.append("KaleoTaskInstanceToken.dueDate >= ? [$AND_OR_NULL_CHECK$])");
-
-		return sb.toString();
+		return NOT_FIRST_DUE_DATE_GT;
 	}
 
 	protected String getDueDateLT(
@@ -436,18 +429,11 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(2);
-
-		if (!firstCriteria) {
-			sb.append("[$AND_OR_CONNECTOR$] (");
-		}
-		else {
-			sb.append(StringPool.OPEN_PARENTHESIS);
+		if (firstCriteria) {
+			return FIRST_DUE_DATE_LT;
 		}
 
-		sb.append("KaleoTaskInstanceToken.dueDate <= ? [$AND_OR_NULL_CHECK$])");
-
-		return sb.toString();
+		return NOT_FIRST_DUE_DATE_LT;
 	}
 
 	protected String getKaleoInstanceId(
@@ -853,6 +839,20 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		qPos.add(taskNames);
 	}
+
+	protected static final String FIRST_DUE_DATE_GT =
+		"(KaleoTaskInstanceToken.dueDate >= ? [$AND_OR_NULL_CHECK$])";
+
+	protected static final String FIRST_DUE_DATE_LT =
+		"(KaleoTaskInstanceToken.dueDate <= ? [$AND_OR_NULL_CHECK$])";
+
+	protected static final String NOT_FIRST_DUE_DATE_GT =
+		"[$AND_OR_CONNECTOR$] (KaleoTaskInstanceToken.dueDate >= ? " +
+			"[$AND_OR_NULL_CHECK$])";
+
+	protected static final String NOT_FIRST_DUE_DATE_LT =
+		"[$AND_OR_CONNECTOR$] (KaleoTaskInstanceToken.dueDate <= ? " +
+			"[$AND_OR_NULL_CHECK$])";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"KaleoTaskInstanceToken.";

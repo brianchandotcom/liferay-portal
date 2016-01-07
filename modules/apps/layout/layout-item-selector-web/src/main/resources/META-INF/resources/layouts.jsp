@@ -50,7 +50,7 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 
 		<liferay-ui:section>
 			<div>
-				<liferay-ui:layouts-tree
+				<liferay-layout:layouts-tree
 					checkContentDisplayPage="<%= checkContentDisplayPage %>"
 					draggableTree="<%= false %>"
 					groupId="<%= groupId %>"
@@ -73,7 +73,7 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 
 		<liferay-ui:section>
 			<div>
-				<liferay-ui:layouts-tree
+				<liferay-layout:layouts-tree
 					checkContentDisplayPage="<%= checkContentDisplayPage %>"
 					draggableTree="<%= false %>"
 					groupId="<%= groupId %>"

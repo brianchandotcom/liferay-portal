@@ -174,7 +174,7 @@ public class PortletURLUtil {
 	public static String getRefreshURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay) {
 
-		return getRefreshURL(request,themeDisplay, true);
+		return getRefreshURL(request, themeDisplay, true);
 	}
 
 	public static String getRefreshURL(
@@ -284,7 +284,7 @@ public class PortletURLUtil {
 			sb.append(settingsScope);
 		}
 
-		if(includeParameters) {
+		if (includeParameters) {
 			Map<String, String[]> parameters = getRefreshURLParameters(request);
 
 			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
@@ -306,15 +306,13 @@ public class PortletURLUtil {
 	public static Map<String, String[]> getRefreshURLParameters(
 		HttpServletRequest request) {
 
-		Portlet portlet = (Portlet) request.getAttribute(
-			WebKeys.RENDER_PORTLET);
+		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 		String portletId = portlet.getPortletId();
 
 		String ppid = ParamUtil.getString(request, "p_p_id");
 
-		Map<String, String[]> refreshUrlParameters =
-			new HashMap<String, String[]>();
+		Map<String, String[]> refreshUrlParameters = new HashMap<>();
 
 		if (ppid.equals(portletId)) {
 			String namespace = PortalUtil.getPortletNamespace(portletId);

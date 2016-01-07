@@ -339,7 +339,8 @@ public class CalendarUtil {
 	}
 
 	public static JSONObject toCalendarJSONObject(
-		ThemeDisplay themeDisplay, Calendar calendar) throws PortalException {
+			ThemeDisplay themeDisplay, Calendar calendar)
+		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

@@ -19,7 +19,6 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarServiceUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -27,11 +26,10 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.ContextUserReplace;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -58,60 +56,65 @@ public class CalendarServiceTest {
 	public void testIsManageableFromGroup() throws Exception {
 		User adminUser = UserTestUtil.addOmniAdminUser();
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(adminUser));
-
 		Group notStagedGroup = GroupTestUtil.addGroup();
-
 		Group liveGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.enableLocalStaging(liveGroup);
 
 		Group stagingGroup = liveGroup.getStagingGroup();
 
-		Calendar notStagedCalendar = getGroupCalendar(notStagedGroup);
+		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
+				adminUser)) {
 
-		Calendar liveCalendar = getGroupCalendar(liveGroup);
+			Calendar notStagedCalendar = getGroupCalendar(notStagedGroup);
 
-		Calendar stagingCalendar = getGroupCalendar(stagingGroup);
+			Assert.assertTrue(
+				CalendarServiceUtil.isManageableFromGroup(
+					notStagedCalendar.getCalendarId(),
+					notStagedGroup.getGroupId()));
+			Assert.assertTrue(
+				CalendarServiceUtil.isManageableFromGroup(
+					notStagedCalendar.getCalendarId(), liveGroup.getGroupId()));
+			Assert.assertTrue(
+				CalendarServiceUtil.isManageableFromGroup(
+					notStagedCalendar.getCalendarId(),
+					stagingGroup.getGroupId()));
 
-		Assert.assertTrue(
-			CalendarServiceUtil.isManageableFromGroup(
-				notStagedCalendar.getCalendarId(),
-				notStagedGroup.getGroupId()));
-		Assert.assertTrue(
-			CalendarServiceUtil.isManageableFromGroup(
-				notStagedCalendar.getCalendarId(), liveGroup.getGroupId()));
-		Assert.assertTrue(
-			CalendarServiceUtil.isManageableFromGroup(
-				notStagedCalendar.getCalendarId(), stagingGroup.getGroupId()));
+			Calendar liveCalendar = getGroupCalendar(liveGroup);
 
-		Assert.assertFalse(
-			CalendarServiceUtil.isManageableFromGroup(
-				liveCalendar.getCalendarId(), notStagedGroup.getGroupId()));
-		Assert.assertFalse(
-			CalendarServiceUtil.isManageableFromGroup(
-				liveCalendar.getCalendarId(), liveGroup.getGroupId()));
-		Assert.assertFalse(
-			CalendarServiceUtil.isManageableFromGroup(
-				liveCalendar.getCalendarId(), stagingGroup.getGroupId()));
+			Assert.assertFalse(
+				CalendarServiceUtil.isManageableFromGroup(
+					liveCalendar.getCalendarId(), notStagedGroup.getGroupId()));
+			Assert.assertFalse(
+				CalendarServiceUtil.isManageableFromGroup(
+					liveCalendar.getCalendarId(), liveGroup.getGroupId()));
+			Assert.assertFalse(
+				CalendarServiceUtil.isManageableFromGroup(
+					liveCalendar.getCalendarId(), stagingGroup.getGroupId()));
 
-		Assert.assertFalse(
-			CalendarServiceUtil.isManageableFromGroup(
-				stagingCalendar.getCalendarId(), notStagedGroup.getGroupId()));
-		Assert.assertFalse(
-			CalendarServiceUtil.isManageableFromGroup(
-				stagingCalendar.getCalendarId(), liveGroup.getGroupId()));
-		Assert.assertTrue(
-			CalendarServiceUtil.isManageableFromGroup(
-				stagingCalendar.getCalendarId(), stagingGroup.getGroupId()));
+			Calendar stagingCalendar = getGroupCalendar(stagingGroup);
 
-		GroupLocalServiceUtil.deleteGroup(liveGroup);
-		GroupLocalServiceUtil.deleteGroup(notStagedGroup);
-		UserLocalServiceUtil.deleteUser(adminUser);
+			Assert.assertFalse(
+				CalendarServiceUtil.isManageableFromGroup(
+					stagingCalendar.getCalendarId(),
+					notStagedGroup.getGroupId()));
+			Assert.assertFalse(
+				CalendarServiceUtil.isManageableFromGroup(
+					stagingCalendar.getCalendarId(), liveGroup.getGroupId()));
+			Assert.assertTrue(
+				CalendarServiceUtil.isManageableFromGroup(
+					stagingCalendar.getCalendarId(),
+					stagingGroup.getGroupId()));
+		}
+		finally {
+			UserLocalServiceUtil.deleteUser(adminUser);
+
+			GroupLocalServiceUtil.deleteGroup(liveGroup);
+			GroupLocalServiceUtil.deleteGroup(notStagedGroup);
+		}
 	}
 
-	protected Calendar getGroupCalendar(Group group) throws PortalException {
+	protected Calendar getGroupCalendar(Group group) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		CalendarResource calendarResource =

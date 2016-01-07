@@ -11,6 +11,8 @@
 	<command name="configureExportSiteCP">
 		<execute macro="LAR#gotoExportSiteCmd" />
 
+		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute macro="LAR#configureExportSiteOptionsCmd" />
 	</command>
 

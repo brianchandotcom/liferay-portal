@@ -2214,20 +2214,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								line = StringUtil.replaceFirst(
 									line, StringPool.TAB, StringPool.BLANK);
 							}
-
-							if ((previousLine.contains(" class " ) ||
-								 previousLine.contains(" enum ")) &&
-								previousLine.endsWith(
-									StringPool.OPEN_CURLY_BRACE) &&
-								Validator.isNotNull(line) &&
-								!trimmedLine.startsWith(
-									StringPool.CLOSE_CURLY_BRACE)) {
-
-								processErrorMessage(
-									fileName,
-									"line break: " + fileName + " " +
-										lineCount);
-							}
 						}
 
 						String combinedLinesContent = getCombinedLinesContent(

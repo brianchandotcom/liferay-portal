@@ -550,6 +550,9 @@ public class PoshiRunnerValidation {
 
 			validateMacroContext(element, "macro-mobile", filePath);
 		}
+		else if (primaryAttributeName.equals("method")) {
+			validateMethodExecuteElement(element, filePath);
+		}
 		else if (primaryAttributeName.equals("selenium")) {
 			List<String> possibleAttributeNames = Arrays.asList(
 				"argument1", "argument2", "line-number", "selenium");
@@ -617,10 +620,6 @@ public class PoshiRunnerValidation {
 			for (Element varElement : varElements) {
 				validateVarElement(varElement, filePath);
 			}
-		}
-
-		if (primaryAttributeName.equals("method")) {
-			validateMethodExecuteElement(element, filePath);
 		}
 	}
 

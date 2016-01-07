@@ -625,13 +625,11 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
-		List<String> parametersList = new ArrayList<>();
+		List<String> parameterList = new ArrayList<>();
 		List<Element> argElements = executeElement.elements("arg");
 
 		for (Element argElement : argElements) {
-			String parameterValue = argElement.attributeValue("value");
-
-			parametersList.add(parameterValue);
+			parameterList.add(argElement.attributeValue("value"));
 		}
 
 		Element returnElement = executeElement.element("return");
@@ -639,8 +637,8 @@ public class PoshiRunnerExecutor {
 		String returnVariable = returnElement.attributeValue("name");
 		String className = executeElement.attributeValue("class");
 		String methodName = executeElement.attributeValue("method");
-		String[] parameters = parametersList.toArray(
-			new String[parametersList.size()]);
+		String[] parameters = parameterList.toArray(
+			new String[parameterList.size()]);
 
 		String returnValue = ExternalMethod.execute(
 			className, methodName, parameters);

@@ -31,9 +31,6 @@
 	<command name="ExecuteMethodVariableArguments" priority="5">
 		<var name="expected" value="test,string," />
 
-		<var name="variable1" value="test" />
-		<var name="variable2" value="string" />
-
 		<execute class="com.liferay.poshi.runner.util.StringUtil" method="add">
 			<arg value="test" />
 			<arg value="string" />

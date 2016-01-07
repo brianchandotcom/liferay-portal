@@ -91,7 +91,10 @@ Export-Package:\
 	javax.xml.validation.*;version='1.4',\
 	javax.xml.xpath.*;version='1.4',\
 	jodd.bean.*;version='3.6.4',\
+	jodd.exception.*;version='3.6.4',\
+	jodd.http.*;version='3.6.4',\
 	jodd.io.*;version='3.6.4',\
+	jodd.util.*;version='3.6.4',\
 	org.aopalliance.*;version='1.0',\
 	org.apache.bcel.*;version='2.7.1',\
 	org.apache.commons.beanutils;version='1.8.2',\

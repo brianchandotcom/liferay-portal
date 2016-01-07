@@ -170,7 +170,7 @@ else {
 							<h5 class="text-default">
 								<c:choose>
 									<c:when test="<%= Validator.isNotNull(curPage.getUserName()) %>">
-										<liferay-ui:message arguments="<%= new String[] {curPage.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curPage.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 									</c:when>
 									<c:otherwise>
 										<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription} %>" key="modified-x-ago" />
@@ -223,7 +223,7 @@ else {
 						<liferay-ui:search-container-column-text
 							href="<%= rowURL %>"
 							name="user"
-							value="<%= PortalUtil.getUserName(curPage) %>"
+							value="<%= HtmlUtil.escape(PortalUtil.getUserName(curPage)) %>"
 						/>
 
 						<liferay-ui:search-container-column-date

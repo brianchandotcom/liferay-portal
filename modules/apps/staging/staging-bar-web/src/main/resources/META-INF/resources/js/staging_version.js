@@ -40,6 +40,9 @@ AUI.add(
 					if (!graphDialog) {
 						graphDialog = Liferay.Util.Window.getWindow(
 							{
+								dialog: {
+									destroyOnHide: true
+								},
 								title: Liferay.Language.get('history')
 							}
 						);

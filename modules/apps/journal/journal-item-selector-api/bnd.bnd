@@ -5,5 +5,5 @@ Export-Package:\
 	com.liferay.journal.item.selector.criterion
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Journal
+Liferay-Releng-Module-Group-Title: Web Content
 -include: ../../../../marketplace/web-content-management/bnd.bnd

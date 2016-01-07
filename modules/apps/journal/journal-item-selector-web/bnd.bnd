@@ -11,6 +11,6 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Journal
+Liferay-Releng-Module-Group-Title: Web Content
 Web-ContextPath: /journal-item-selector-web
 -include: ../../../../marketplace/web-content-management/bnd.bnd

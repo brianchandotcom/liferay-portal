@@ -91,5 +91,5 @@ int deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
 	boolean showPageAttachmentAction = true;
 	%>
 
-	<%@ include file="/META-INF/resources/wiki/attachments_list.jspf" %>
+	<%@ include file="/wiki/attachments_list.jspf" %>
 </c:if>

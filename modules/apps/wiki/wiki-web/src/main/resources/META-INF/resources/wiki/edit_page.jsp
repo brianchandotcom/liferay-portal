@@ -105,6 +105,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backToViewPagesURL.toString());
+
 	renderResponse.setTitle(headerTitle);
 }
 %>
@@ -124,12 +125,13 @@ if (portletTitleBasedNavigation) {
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<aui:form action="<%= editPageActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="editTitle" type="hidden" value="<%= editTitle %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="editTitle" type="hidden" value="<%= editTitle %>" />
 		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
 		<aui:input name="newPage" type="hidden" value="<%= newPage %>" />
 		<aui:input name="parentTitle" type="hidden" value="<%= parentTitle %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
+		<aui:input name="title" type="hidden" value="<%= title %>" />
 
 		<c:if test="<%= wikiPage != null %>">
 			<aui:input name="version" type="hidden" value="<%= wikiPage.getVersion() %>" />
@@ -175,15 +177,15 @@ if (portletTitleBasedNavigation) {
 
 		<c:choose>
 			<c:when test="<%= !editable %>">
+				<c:if test="<%= newPage %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="this-page-does-not-exist-yet-and-the-title-is-not-valid" />
+					</div>
+
+					<aui:button href="<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>" value="cancel" />
+				</c:if>
+
 				<c:if test="<%= (wikiPage != null) && !wikiPage.isApproved() %>">
-					<c:if test="<%= newPage %>">
-						<div class="alert alert-info">
-							<liferay-ui:message key="this-page-does-not-exist-yet-and-the-title-is-not-valid" />
-						</div>
-
-						<aui:button href="<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>" value="cancel" />
-					</c:if>
-
 					<div class="alert alert-info">
 
 						<%
@@ -203,6 +205,10 @@ if (portletTitleBasedNavigation) {
 							</div>
 						</c:if>
 
+						<div class="alert alert-info">
+							<liferay-ui:message key="this-page-does-not-exist-yet-use-the-form-below-to-create-it" />
+						</div>
+
 						<c:choose>
 							<c:when test="<%= editTitle %>">
 								<aui:field-wrapper required="<%= true %>">
@@ -210,15 +216,11 @@ if (portletTitleBasedNavigation) {
 										<h1><liferay-ui:input-editor editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
 									</div>
 								</aui:field-wrapper>
-
-								<aui:input name="title" type="hidden" />
 							</c:when>
 							<c:otherwise>
 								<div class="entry-title">
 									<h1><%= HtmlUtil.escape(title) %></h1>
 								</div>
-
-								<aui:input name="title" type="hidden" value="<%= title %>" />
 							</c:otherwise>
 						</c:choose>
 
@@ -277,6 +279,10 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+						<c:if test="<%= newPage || wikiPage.isApproved() %>">
+							<aui:model-context bean="<%= new WikiPageImpl() %>" model="<%= WikiPage.class %>" />
+						</c:if>
+
 						<aui:input label="Summary" name="summary" />
 
 						<%
@@ -304,30 +310,24 @@ if (portletTitleBasedNavigation) {
 							</c:otherwise>
 						</c:choose>
 
-						<c:if test="<%= Validator.isNotNull(parentTitle) %>">
-							<aui:input name="parent" type="resource" value="<%= parentTitle %>" />
-						</c:if>
-
-						<c:if test="<%= newPage || wikiPage.isApproved() %>">
-							<aui:model-context bean="<%= new WikiPageImpl() %>" model="<%= WikiPage.class %>" />
-						</c:if>
-
 						<c:if test="<%= !newPage %>">
 							<aui:input label="this-is-a-minor-edit" name="minorEdit" />
 						</c:if>
+					</aui:fieldset>
 
-						<c:if test="<%= wikiPage != null %>">
+					<c:if test="<%= wikiPage != null %>">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 							<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 
 								<%
-									classPK = 0;
+								classPK = 0;
 
-									if (templatePage != null) {
-										classPK = templatePage.getPrimaryKey();
-									}
-									else if (page != null) {
-										classPK = wikiPage.getPrimaryKey();
-									}
+								if (templatePage != null) {
+									classPK = templatePage.getPrimaryKey();
+								}
+								else if (page != null) {
+									classPK = wikiPage.getPrimaryKey();
+								}
 								%>
 
 								<liferay-ui:custom-attribute-list
@@ -337,8 +337,9 @@ if (portletTitleBasedNavigation) {
 									label="<%= true %>"
 								/>
 							</liferay-ui:custom-attributes-available>
-						</c:if>
-					</aui:fieldset>
+						</aui:fieldset>
+					</c:if>
+
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 						<liferay-ui:input-permissions
 							modelName="<%= WikiPage.class.getName() %>"

@@ -437,8 +437,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 		}
 
 		if (containerModel) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/wiki/view_pages");
+			portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 		}
 		else {
 			portletURL.setParameter("mvcRenderCommandName", "/wiki/view");

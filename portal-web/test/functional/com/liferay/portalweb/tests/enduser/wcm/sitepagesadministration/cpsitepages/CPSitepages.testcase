@@ -81,7 +81,7 @@
 				<var name="portlet" value="Sites" />
 			</execute>
 
-			<execute macro="SitePage#addChildCP">
+			<execute macro="Page#addChild">
 				<var name="page" value="Public Pages" />
 				<var name="siteChildPageName" value="${childPageName}" />
 				<var name="siteName" value="Site Name" />
@@ -121,7 +121,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addChildCP">
+		<execute macro="Page#addChild">
 			<var name="page" value="Private Pages" />
 			<var name="siteChildPageName" value="Site Child Page" />
 			<var name="siteName" value="Site Name" />
@@ -237,7 +237,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addChildCP">
+		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="Site Child Page" />
 			<var name="siteName" value="Site Name" />

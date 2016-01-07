@@ -2554,7 +2554,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addChildCP">
+		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="Knowledge Base Display Page" />
 			<var name="siteName" value="Liferay" />

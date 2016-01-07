@@ -103,6 +103,46 @@
 		</if>
 	</command>
 
+	<command name="addChild">
+		<var name="key_siteName" value="${siteName}" />
+
+		<if>
+			<not>
+				<isset var="siteScopeSelected" />
+			</not>
+			<then>
+				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
+				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+				<execute function="Click" locator1="Sites#SITE_TABLE_ACTIONS" />
+				<execute function="AssertClick" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
+			</then>
+		</if>
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="${page}" />
+		</execute>
+
+		<var name="key_page" value="${sitePageName}" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PAGE_ICON" />
+
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="Icon#BACK" />
+
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${siteChildPageName}" />
+
+		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
+
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="Message#SUCCESS" />
+				<condition function="IsVisible" locator1="Message#SUCCESS" />
+			</and>
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+			</then>
+		</if>
+	</command>
+
 	<command name="addFriendlyURLLocalizedPG">
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 

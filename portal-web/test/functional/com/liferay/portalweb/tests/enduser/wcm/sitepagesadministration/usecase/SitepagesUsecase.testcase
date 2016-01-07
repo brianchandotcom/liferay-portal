@@ -163,7 +163,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addChildCP">
+		<execute macro="Page#addChild">
 			<var name="childSitepageName" value="true" />
 			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="Child Page Name" />
@@ -249,7 +249,7 @@
 		</execute>
 
 		<for list="${childPageNameList}" param="siteChildPageName">
-			<execute macro="SitePage#addChildCP">
+			<execute macro="Page#addChild">
 				<var name="page" value="Public Pages" />
 				<var name="siteChildPageName" value="${siteChildPageName}" />
 				<var name="sitePageName" value="Welcome" />

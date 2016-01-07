@@ -122,34 +122,20 @@ RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	var A = AUI();
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
 
-	var <portlet:namespace />userIds = [];
-
-	$('input[name="<portlet:namespace />rowIds"]').on(
-		'change',
+	searchContainer.on(
+		'rowToggled',
 		function(event) {
-			var target = event.target;
+			var selectedItems = event.elements.allSelectedElements;
 
-			if (target.checked) {
-				<portlet:namespace />userIds.push(target.value);
-			}
-			else {
-				A.Array.removeItem(<portlet:namespace />userIds, target.value);
-			}
-
-			var result = {};
-
-			if (<portlet:namespace />userIds.length > 0) {
-				result = {
-					data: {
-						value: <portlet:namespace />userIds.join(',')
-					}
-				};
-			}
-
-			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(eventName) %>',
+				{
+					data: selectedItems.attr('value').join(',')
+				}
+			);
 		}
 	);
 </aui:script>

@@ -65,12 +65,12 @@
 </tr>
 <tr>
 	<td>PRIVATE_PAGES</td>
-	<td>//div[contains(@id,'privateLayoutsTreeOutput')]//span[contains(.,'Private Pages')]</td>
+	<td>//*[@data-qa-id='goToPrivatePages']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLIC_PAGES</td>
-	<td>//div[contains(@id,'publicLayoutsTreeOutput')]//span[contains(.,'Public Pages')]</td>
+	<td>//*[@data-qa-id='goToPublicPages']</td>
 	<td></td>
 </tr>
 <tr>

@@ -69,9 +69,7 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
-		</execute>
+		<execute macro="ProductMenu#gotoPublicPages" />
 
 		<var name="key_page" value="Public Pages" />
 

@@ -138,13 +138,13 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Site Page 1" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Site Page 2" />
 			<var name="siteScopeSelected" value="true" />
@@ -826,13 +826,13 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Public Blogs Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
 			<var name="sitePageName" value="Private Blogs Page" />
 			<var name="siteScopeSelected" value="true" />

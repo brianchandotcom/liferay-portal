@@ -63,7 +63,7 @@
 			<var name="site" value="Staging Site Name" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Site Page Name" />
 			<var name="siteScopeSelected" value="true" />
@@ -152,7 +152,7 @@
 
 		<execute function="Refresh" />
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Pages" />
 			<var name="sitePageName" value="Video" />
 			<var name="sitePageType" value="2 Columns (70/30)" />

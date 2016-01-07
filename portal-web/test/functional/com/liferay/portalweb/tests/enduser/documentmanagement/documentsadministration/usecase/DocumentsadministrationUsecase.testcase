@@ -103,13 +103,13 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Site Page 1" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Site Page 2" />
 			<var name="siteScopeSelected" value="true" />

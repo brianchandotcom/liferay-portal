@@ -555,7 +555,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Organization Page" />
@@ -1742,7 +1742,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Liferay" />
 			<var name="sitePageName" value="Asset Publisher Test Page" />

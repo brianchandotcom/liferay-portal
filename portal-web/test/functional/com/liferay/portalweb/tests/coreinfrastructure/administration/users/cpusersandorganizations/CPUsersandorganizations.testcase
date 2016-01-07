@@ -361,7 +361,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Private Page" />
@@ -399,7 +399,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Public Page" />
@@ -456,7 +456,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Organization Public Page" />
@@ -1541,7 +1541,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Public Page" />
@@ -1970,7 +1970,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Test Page" />

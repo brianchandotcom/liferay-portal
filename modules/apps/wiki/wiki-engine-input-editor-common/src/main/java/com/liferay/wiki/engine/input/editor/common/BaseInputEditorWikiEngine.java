@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.SessionClicks;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.input.editor.common.util.WikiEngineInputEditorCommonComponentProvider;
@@ -93,20 +92,6 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 	}
 
 	public abstract String getHelpURL();
-
-	public boolean isHelpLinkVisible(PageContext pageContext) {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		String toggleValue = SessionClicks.get(
-			request, getHelpLinkId(pageContext), null);
-
-		if ((toggleValue != null) && toggleValue.equals("block")) {
-			return true;
-		}
-
-		return false;
-	}
 
 	public boolean isHelpPageDefined() {
 		if ((getHelpPageServletContext() == null) ||

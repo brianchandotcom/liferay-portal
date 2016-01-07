@@ -1,5 +1,7 @@
 <definition>
 	<command name="gotoAddPage">
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<var name="key_page" value="Pages" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PAGE_ICON" />
 	</command>
 </definition>

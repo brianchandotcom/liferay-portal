@@ -14,7 +14,6 @@
 
 package com.liferay.workflow.definition.web.portlet;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -29,10 +28,9 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.definition.web.display.context.WorkflowDefinitionDisplayContext;
 
 import java.io.IOException;
-
-import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -77,11 +75,14 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 		try {
 			String path = getPath(renderRequest, renderResponse);
 
+			WorkflowDefinitionDisplayContext displayContext =
+				new WorkflowDefinitionDisplayContext(renderRequest);
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT, displayContext);
+
 			if (Validator.equals(path, "/edit_workflow_definition.jsp")) {
 				setWorkflowDefinitionRenderRequestAttribute(renderRequest);
-			}
-			else {
-				setWorkflowDefinitionsRenderRequestAttribute(renderRequest);
 			}
 		}
 		catch (Exception e) {
@@ -146,22 +147,6 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
-	}
-
-	protected void setWorkflowDefinitionsRenderRequestAttribute(
-			RenderRequest renderRequest)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<WorkflowDefinition> workflowDefinitions =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
-				themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		renderRequest.setAttribute(
-			WebKeys.WORKFLOW_DEFINITIONS, workflowDefinitions);
 	}
 
 }

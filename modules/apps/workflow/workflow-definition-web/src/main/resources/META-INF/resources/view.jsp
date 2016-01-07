@@ -17,25 +17,38 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<WorkflowDefinition> workflowDefinitions = (List<WorkflowDefinition>)request.getAttribute(WebKeys.WORKFLOW_DEFINITIONS);
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view.jsp");
+
+WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch(renderRequest, portletURL);
 %>
 
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>" message="you-cannot-deactivate-or-delete-this-definition" />
 
 <liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 
-<div class="container-fluid-1280">
+<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/sort_buttons.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
+<div class="container-fluid-1280 workflow-definition-container">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-workflow-definitions-are-defined"
-		iteratorURL="<%= portletURL %>"
-		total="<%= workflowDefinitions.size() %>"
+		id="searchContainer"
+		searchContainer="<%= workflowDefinitionSearch %>"
 	>
+
+		<%
+		request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
+		%>
+
 		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(workflowDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= workflowDefinitionDisplayContext.getSearchContainerResults(searchContainer) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -45,22 +58,22 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 
 			<liferay-ui:search-container-column-text
 				name="name"
-				value="<%= HtmlUtil.escape(workflowDefinition.getName()) %>"
+				value="<%= workflowDefinitionDisplayContext.getName(workflowDefinition) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="title"
-				value="<%= HtmlUtil.escape(workflowDefinition.getTitle(themeDisplay.getLanguageId())) %>"
+				value="<%= workflowDefinitionDisplayContext.getTitle(workflowDefinition) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="version"
-				value="<%= String.valueOf(workflowDefinition.getVersion()) %>"
+				value="<%= workflowDefinitionDisplayContext.getVersion(workflowDefinition) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="active"
-				value='<%= workflowDefinition.isActive() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
+				value="<%= workflowDefinitionDisplayContext.getActive(workflowDefinition) %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

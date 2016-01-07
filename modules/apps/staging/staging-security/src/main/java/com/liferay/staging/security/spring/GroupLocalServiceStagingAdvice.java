@@ -14,14 +14,19 @@
 
 package com.liferay.staging.security.spring;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class GroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 
 	public GroupLocalServiceStagingAdvice() throws NoSuchMethodException {
@@ -52,6 +57,19 @@ public class GroupLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 				}
 			}
 		}
+	}
+
+	@Reference
+	protected void setService(GroupLocalService service) {
+		registerAdvice(service);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
+	}
+
+	protected void unsetService(GroupLocalService service) {
+		unregisterAdvice(service);
 	}
 
 	private static final String[] _SERVICE_BUILDER_GENERATED_TEMPLATES =

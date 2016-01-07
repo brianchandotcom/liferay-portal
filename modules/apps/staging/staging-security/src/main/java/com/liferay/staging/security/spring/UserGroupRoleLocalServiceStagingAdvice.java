@@ -14,14 +14,19 @@
 
 package com.liferay.staging.security.spring;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tomas Polesovsky
  */
+@Component(immediate = true)
 public class UserGroupRoleLocalServiceStagingAdvice
 	extends LiveGroupStagingAdvice {
 
@@ -69,7 +74,20 @@ public class UserGroupRoleLocalServiceStagingAdvice
 		checkCoverage(_GROUP_METHODS_WHITELIST);
 	}
 
+	@Reference
+	protected void setService(UserGroupRoleLocalService service) {
+		registerAdvice(service);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
+	}
+
+	protected void unsetService(UserGroupRoleLocalService service) {
+		unregisterAdvice(service);
+	}
+
 	private static final List<String> _GROUP_METHODS_WHITELIST = Arrays.asList(
-		new String[] {});
+		new String[0]);
 
 }

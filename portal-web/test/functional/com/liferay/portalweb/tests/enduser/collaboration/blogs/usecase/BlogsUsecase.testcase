@@ -838,7 +838,7 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="ProductMenuHelper#gotoSites" />
+		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
 
@@ -883,7 +883,7 @@
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
 		</execute>
 
-		<execute macro="ProductMenuHelper#gotoSites" />
+		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
 

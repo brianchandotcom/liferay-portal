@@ -280,7 +280,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#MANAGE" value1="Manage" />
 
-		<execute macro="ProductMenuHelper#gotoSites" />
+		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Configuration" />

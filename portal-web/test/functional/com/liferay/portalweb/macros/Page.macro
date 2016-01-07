@@ -275,7 +275,7 @@
 			</else>
 		</if>
 
-		<execute macro="ProductMenuHelper#gotoSites" />
+		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<if>
 			<isset var="siteScopeName" />
@@ -284,7 +284,7 @@
 					<var name="site" value="${siteScopeName}" />
 				</execute>
 
-				<execute macro="ProductMenuHelper#gotoSites" />
+				<execute macro="ProductMenuHelper#expandPanelSites" />
 			</then>
 		</if>
 

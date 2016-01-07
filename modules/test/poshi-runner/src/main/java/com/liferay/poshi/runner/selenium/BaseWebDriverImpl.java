@@ -1344,6 +1344,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public boolean isTestName(String testName) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean isText(String locator, String value) throws Exception {
 		return value.equals(getElementText(locator, "1"));
 	}

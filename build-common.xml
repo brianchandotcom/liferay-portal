@@ -1498,6 +1498,7 @@ rerun your task.
 			>
 				app.server.type=${app.server.type}
 				auto.deploy.dir=${liferay.home}/osgi/apps
+				jsp.precompile=${jsp.precompile}
 				junit.java.integration.gc=${junit.java.integration.gc}
 				junit.java.unit.gc=${junit.java.unit.gc}
 				liferay.home=${liferay.home}

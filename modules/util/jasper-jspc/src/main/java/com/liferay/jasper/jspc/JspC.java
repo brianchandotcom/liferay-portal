@@ -16,24 +16,19 @@ package com.liferay.jasper.jspc;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 
-import java.net.MalformedURLException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import java.net.URI;
 import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 
 import org.apache.jasper.JasperException;
-import org.apache.jasper.compiler.JspConfig;
-import org.apache.jasper.compiler.TldLocation;
-import org.apache.jasper.compiler.TldLocationsCache;
-import org.apache.jasper.compiler.WebXml;
-import org.apache.jasper.servlet.JspCServletContext;
-import org.apache.tomcat.util.scan.Constants;
 
 /**
  * @author Shuyang Zhou
@@ -41,40 +36,76 @@ import org.apache.tomcat.util.scan.Constants;
 public class JspC extends org.apache.jasper.JspC {
 
 	public static void main(String[] args) {
-		Logger logger = Logger.getLogger(WebXml.class.getName());
-
-		logger.setLevel(Level.SEVERE);
-
-		JspC jspc = new JspC();
-
 		try {
 			BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(System.in));
 
 			String classPath = bufferedReader.readLine();
 
-			jspc.setArgs(args);
-
 			if ((classPath != null) && !classPath.isEmpty()) {
-				jspc.setClassPath(classPath);
+				_runWithClassPath(classPath, args);
+
+				return;
 			}
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		JspC jspc = new JspC();
+
+		try {
+			jspc.setArgs(args);
 
 			jspc.execute();
 		}
 		catch (Exception e) {
-			System.err.println(e);
+			e.printStackTrace();
 
-			if (jspc.dieLevel != NO_DIE_LEVEL) {
-				System.exit(jspc.dieLevel);
+			try {
+				Field noDieLevelField =
+					org.apache.jasper.JspC.class.getDeclaredField(
+						"NO_DIE_LEVEL");
+
+				noDieLevelField.setAccessible(true);
+
+				int dieLevel = jspc.getDieLevel();
+
+				if (dieLevel != (Integer)noDieLevelField.get(null)) {
+					System.exit(dieLevel);
+				}
+			}
+			catch (Exception e2) {
+				e2.addSuppressed(e);
+
+				throw new RuntimeException(e2);
 			}
 		}
+	}
+
+	public JspC() {
+		List<String> pages = null;
+
+		try {
+			Field pagesField = org.apache.jasper.JspC.class.getDeclaredField(
+				"pages");
+
+			pagesField.setAccessible(true);
+
+			pages = (List<String>)pagesField.get(this);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		_pages = pages;
 	}
 
 	@Override
 	public void scanFiles(File baseDir) throws JasperException {
 		super.scanFiles(baseDir);
 
-		Iterator<String> iterator = pages.iterator();
+		Iterator<String> iterator = _pages.iterator();
 
 		while (iterator.hasNext()) {
 			String page = iterator.next();
@@ -89,63 +120,51 @@ public class JspC extends org.apache.jasper.JspC {
 		}
 	}
 
-	@Override
-	protected void initServletContext() {
-		super.initServletContext();
+	private static void _runWithClassPath(String classpath, String[] args)
+		throws Exception {
 
-		if (Boolean.getBoolean("jspc.module.web")) {
-			final String portalDir = System.getProperty("jspc.portal.dir");
+		classpath =
+			System.getProperty("java.class.path") + File.pathSeparator +
+				classpath;
 
-			if ((portalDir == null) || portalDir.isEmpty()) {
-				throw new RuntimeException(
-					"The system property \"jspc.portal.dir\" is not set");
-			}
+		String[] files = classpath.split(File.pathSeparator);
 
-			try {
-				tldLocationsCache = new TldLocationsCache(
-					new JspCServletContext(
-						new PrintWriter(System.out),
-						new URL("file://" + portalDir + "/"))) {
+		URL[] urls = new URL[files.length];
 
-					@Override
-					public TldLocation getLocation(String uri)
-						throws JasperException {
+		for (int i = 0; i < files.length; i++) {
+			File file = new File(files[i]);
 
-						TldLocation tldLocation = super.getLocation(uri);
+			URI uri = file.toURI();
 
-						String name = tldLocation.getName();
-
-						if (name.startsWith("/WEB-INF/tld/")) {
-							tldLocation = new TldLocation(
-								"file://" + portalDir + name);
-						}
-
-						return tldLocation;
-					}
-
-				};
-			}
-			catch (MalformedURLException murle) {
-				throw new RuntimeException(murle);
-			}
+			urls[i] = uri.toURL();
 		}
-		else {
-			try {
-				WebXml webXml = new WebXml(context);
 
-				if (webXml.getInputSource() != null) {
-					return;
-				}
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
+		ClassLoader classLoader = new URLClassLoader(urls, null);
 
-			context.setAttribute(
-				Constants.MERGED_WEB_XML, "<web-app version=\"2.4\" />");
+		Class<?> jspcClass = classLoader.loadClass(JspC.class.getName());
 
-			jspConfig = new JspConfig(context);
+		Object jspc = jspcClass.newInstance();
+
+		Method setArgsMethod = jspcClass.getMethod("setArgs", String[].class);
+
+		setArgsMethod.invoke(jspc, new Object[] {args});
+
+		Method executeMethod = jspcClass.getMethod("execute");
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(classLoader);
+
+		try {
+			executeMethod.invoke(jspc);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
+
+	private final List<String> _pages;
 
 }

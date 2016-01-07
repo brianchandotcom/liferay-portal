@@ -6,3 +6,9 @@ ant {
 
 	importBuild rootProject.file("build-changelog.xml")
 }
+
+if (project.properties["jsp.precompile"] == "on") {
+	compileJSP {
+		destinationDir = new File(liferay.liferayHome, "work/" + bundle.instructions["Bundle-SymbolicName"] + "-" + project.version)
+	}
+}

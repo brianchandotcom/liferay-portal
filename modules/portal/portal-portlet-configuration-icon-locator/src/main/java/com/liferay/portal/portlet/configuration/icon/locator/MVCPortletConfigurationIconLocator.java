@@ -16,7 +16,6 @@ package com.liferay.portal.portlet.configuration.icon.locator;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalService;
@@ -40,8 +39,6 @@ public class MVCPortletConfigurationIconLocator
 	@Override
 	public List<String> getDefaultViews(String portletId) {
 		List<String> defaultViews = new ArrayList<>();
-
-		defaultViews.add(StringPool.DASH);
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 

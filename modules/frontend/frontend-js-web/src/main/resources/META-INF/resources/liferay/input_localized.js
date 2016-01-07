@@ -205,11 +205,11 @@ AUI.add(
 						var editor = instance.get('editor');
 
 						var inputLanguageValue = instance.getValue(languageId);
-						
-						if(!inputLanguageValue){
+
+						if (!inputLanguageValue) {
 							inputLanguageValue = defaultLanguageValue;
 						}
-						
+
 						inputPlaceholder.val(inputLanguageValue);
 
 						inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);

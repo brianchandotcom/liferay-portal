@@ -29,16 +29,14 @@ data.put("panelURL", addURL);
 data.put("qa-id", "add");
 %>
 
-<li class="add-menu-toggle">
-	<liferay-ui:icon
-		cssClass="control-menu-icon"
-		data="<%= data %>"
-		icon="plus"
-		id="addPanel"
-		label="<%= false %>"
-		linkCssClass="control-menu-icon"
-		markupView="lexicon"
-		message="add"
-		url="javascript:;"
-	/>
-</li>
+<liferay-ui:icon
+	cssClass="add-menu-toggle"
+	data="<%= data %>"
+	icon="plus"
+	id="addPanel"
+	label="<%= false %>"
+	linkCssClass="control-menu-icon"
+	markupView="lexicon"
+	message="add"
+	url="javascript:;"
+/>

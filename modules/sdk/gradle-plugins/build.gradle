@@ -1,6 +1,6 @@
 dependencies {
 	compile gradleApi()
-	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.3"
+	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.5"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "1.0.10"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "1.0.5"
@@ -22,5 +22,5 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
-	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.6.4"
+	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.8"
 }

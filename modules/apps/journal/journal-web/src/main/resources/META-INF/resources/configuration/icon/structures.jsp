@@ -41,7 +41,7 @@ String taglibOnClick = renderResponse.getNamespace() + "openStructuresView()";
 					on: {
 						visibleChange: function(event) {
 							if (!event.newVal) {
-								Liferay.Portlet.refresh('#p_p_id_' + '<%= portletDisplay.getId() %>' + '_');
+								Liferay.Portlet.refresh('#p_p_id_<%= JournalPortletKeys.JOURNAL %>_');
 							}
 						}
 					}

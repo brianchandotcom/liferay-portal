@@ -35,7 +35,7 @@ String taglibOnClick = renderResponse.getNamespace() + "openFileEntryTypeView()"
 					on: {
 						visibleChange: function(event) {
 							if (!event.newVal) {
-								Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
+								Liferay.Portlet.refresh('#p_p_id_<%= DLPortletKeys.DOCUMENT_LIBRARY_ADMIN %>_');
 							}
 						}
 					}

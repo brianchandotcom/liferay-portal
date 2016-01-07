@@ -44,38 +44,54 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 		</c:if>
 
 		<div class="control-menu-level-1">
-			<div class="container-fluid-1280">
-				<ul class="control-menu-nav" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
+			<header class="header-toolbar header-toolbar-default" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
-					<%
-					for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
+				<%
+				for (int i = 0; i < controlMenuCategories.size(); i++) {
+					ControlMenuCategory controlMenuCategory = controlMenuCategories.get(i);
+
+					String cssClass = "toolbar-group";
+
+					if (i == (controlMenuCategories.size() - 2)) {
+						cssClass += "-right";
+					}
+					else if (i == (controlMenuCategories.size() - 1)) {
+						cssClass += "-expand-text text-center";
+					}
+				%>
+
+					<div class="<%= cssClass %>">
+
+						<%
 						List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
 
 						for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
 							if (controlMenuEntry.include(request, new PipingServletResponse(pageContext))) {
 								continue;
 							}
-					%>
+						%>
 
-							<li>
-								<liferay-ui:icon
-									data="<%= controlMenuEntry.getData(request) %>"
-									icon="<%= controlMenuEntry.getIconCssClass(request) %>"
-									label="<%= false %>"
-									linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
-									markupView="lexicon"
-									message="<%= controlMenuEntry.getLabel(locale) %>"
-									url="<%= controlMenuEntry.getURL(request) %>"
-								/>
-							</li>
+							<liferay-ui:icon
+								data="<%= controlMenuEntry.getData(request) %>"
+								icon="<%= controlMenuEntry.getIconCssClass(request) %>"
+								label="<%= false %>"
+								linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
+								markupView="lexicon"
+								message="<%= controlMenuEntry.getLabel(locale) %>"
+								url="<%= controlMenuEntry.getURL(request) %>"
+							/>
 
-					<%
+						<%
 						}
-					}
-					%>
+						%>
 
-				</ul>
-			</div>
+					</div>
+
+				<%
+				}
+				%>
+
+			</header>
 		</div>
 	</div>
 

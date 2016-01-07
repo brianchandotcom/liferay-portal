@@ -28,6 +28,7 @@
 							requires: [
 								'aui-base',
 								'aui-io-request',
+								'aui-parse-content',
 								'liferay-portlet-base'
 							]
 						}

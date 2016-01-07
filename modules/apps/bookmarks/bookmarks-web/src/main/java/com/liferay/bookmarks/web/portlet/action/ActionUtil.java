@@ -29,6 +29,9 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +40,30 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  */
 public class ActionUtil {
+
+	public static void getEntries(HttpServletRequest request) throws Exception {
+		long[] entryIds = ParamUtil.getLongValues(
+			request, "rowIdsBookmarksEntry");
+
+		List<BookmarksEntry> entries = new ArrayList<>();
+
+		for (long entryId : entryIds) {
+			BookmarksEntry entry = BookmarksEntryServiceUtil.getEntry(entryId);
+
+			entries.add(entry);
+		}
+
+		request.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRIES, entries);
+	}
+
+	public static void getEntries(PortletRequest portletRequest)
+		throws Exception {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		getEntries(request);
+	}
 
 	public static void getEntry(HttpServletRequest request) throws Exception {
 		long entryId = ParamUtil.getLong(request, "entryId");
@@ -96,6 +123,36 @@ public class ActionUtil {
 			portletRequest);
 
 		getFolder(request);
+	}
+
+	public static void getFolders(HttpServletRequest request) throws Exception {
+		long[] folderIds = ParamUtil.getLongValues(
+			request, "rowIdsBookmarksFolder");
+
+		List<BookmarksFolder> folders = new ArrayList<>();
+
+		for (long folderId : folderIds) {
+			if ((folderId > 0) &&
+				(folderId !=
+					BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+				BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(
+					folderId);
+
+				folders.add(folder);
+			}
+		}
+
+		request.setAttribute(BookmarksWebKeys.BOOKMARKS_FOLDERS, folders);
+	}
+
+	public static void getFolders(PortletRequest portletRequest)
+		throws Exception {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		getFolders(request);
 	}
 
 }

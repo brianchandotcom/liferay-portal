@@ -17,12 +17,13 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "home");
+String navigation = ParamUtil.getString(request, "navigation", "all");
 
 int curEntry = ParamUtil.getInteger(request, "curEntry");
 int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+int total = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
@@ -55,6 +56,7 @@ displayStyleURL.setParameter("folderId", String.valueOf(folderId));
 %>
 
 <liferay-frontend:management-bar-display-buttons
+	disabled="<%= total == 0 %>"
 	displayViews='<%= new String[] {"descriptive", "list"} %>'
 	portletURL="<%= displayStyleURL %>"
 	selectedDisplayStyle="<%= displayStyle %>"

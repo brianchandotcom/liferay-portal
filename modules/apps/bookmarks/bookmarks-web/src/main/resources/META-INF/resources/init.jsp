@@ -48,6 +48,7 @@ page import="com.liferay.bookmarks.web.dao.search.BookmarksResultRowSplitter" %>
 page import="com.liferay.bookmarks.web.portlet.toolbar.contributor.BookmarksPortletToolbarContributor" %><%@
 page import="com.liferay.bookmarks.web.portlet.util.BookmarksUtil" %><%@
 page import="com.liferay.bookmarks.web.search.EntriesChecker" %><%@
+page import="com.liferay.bookmarks.web.search.EntriesMover" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.AddMenuItem" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

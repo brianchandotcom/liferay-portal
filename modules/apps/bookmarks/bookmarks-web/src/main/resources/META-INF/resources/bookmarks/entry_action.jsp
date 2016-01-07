@@ -36,7 +36,7 @@ if (row != null) {
 	}
 }
 else {
-	entry = (BookmarksEntry)request.getAttribute("view_entry.jsp-entry");
+	entry = (BookmarksEntry)request.getAttribute("info_panel.jsp-entry");
 
 	view = true;
 }
@@ -54,6 +54,17 @@ else {
 		<liferay-ui:icon
 			message="edit"
 			url="<%= editURL %>"
+		/>
+
+		<portlet:renderURL var="moveURL">
+			<portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="rowIdsBookmarksEntry" value="<%= String.valueOf(entry.getEntryId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="move"
+			url="<%= moveURL %>"
 		/>
 	</c:if>
 

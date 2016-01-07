@@ -17,6 +17,7 @@
 <%@ include file="/management_bar_display_buttons/init.jsp" %>
 
 <%
+boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:management-bar-display-buttons:disabled"));
 String[] displayViews = (String[])request.getAttribute("liferay-frontend:management-bar-display-buttons:displayViews");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:management-bar-display-buttons:portletURL");
 String selectedDisplayStyle = (String)request.getAttribute("liferay-frontend:management-bar-display-buttons:selectedDisplayStyle");
@@ -38,6 +39,7 @@ for (String displayStyle : displayViews) {
 
 	<liferay-frontend:management-bar-button
 		active="<%= displayStyle.equals(selectedDisplayStyle) %>"
+		disabled="<%= disabled %>"
 		href="<%= displayStyleURL.toString() %>"
 		icon="<%= icon %>"
 		label="<%= displayStyle %>"

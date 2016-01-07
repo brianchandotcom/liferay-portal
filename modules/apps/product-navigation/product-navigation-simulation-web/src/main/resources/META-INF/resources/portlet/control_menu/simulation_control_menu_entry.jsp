@@ -40,7 +40,7 @@ data.put("qa-id", "simulation");
 	/>
 </li>
 
-<aui:script use="liferay-control-menu">
+<aui:script position="auto" use="liferay-control-menu">
 	var ControlMenu = Liferay.ControlMenu;
 
 	ControlMenu.registerPanel(

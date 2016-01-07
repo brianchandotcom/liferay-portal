@@ -19,9 +19,7 @@
 <%
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
-String navigation = ParamUtil.getString(request, "navigation", "home");
-
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+int total = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -30,39 +28,33 @@ portletURL.setParameter("tag", StringPool.BLANK);
 %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId) > 0 %>"
+	checkBoxDisabled="<%= total == 0 %>"
+	includeCheckBox="<%= true %>"
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" label="info" />
+		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" label="info" />
 
 		<liferay-util:include page="/bookmarks/display_style_buttons.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation>
 
-			<%
-			portletURL.setParameter("navigation", "home");
-			%>
+		<%
+		String[] navigationKeys = null;
 
-			<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("home") %>' label="all" url="<%= portletURL.toString() %>" />
+		if (themeDisplay.isSignedIn()) {
+			navigationKeys = new String[] {"all", "recent", "mine"};
+		}
+		else {
+			navigationKeys = new String[] {"all", "recent"};
+		}
+		%>
 
-			<%
-			portletURL.setParameter("navigation", "recent");
-			%>
-
-			<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("recent") %>' label="recent" url="<%= portletURL.toString() %>" />
-
-			<c:if test="<%= themeDisplay.isSignedIn() %>">
-
-				<%
-				portletURL.setParameter("navigation", "mine");
-				%>
-
-				<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("mine") %>' label="mine" url="<%= portletURL.toString() %>" />
-			</c:if>
-		</liferay-frontend:management-bar-navigation>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys="<%= navigationKeys %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

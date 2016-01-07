@@ -186,6 +186,7 @@ public class BookmarksFolderAssetRenderer
 			"mvcRenderCommandName", "/bookmarks/edit_folder");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
+		portletURL.setParameter("showFolderSelector", Boolean.TRUE.toString());
 
 		return portletURL;
 	}

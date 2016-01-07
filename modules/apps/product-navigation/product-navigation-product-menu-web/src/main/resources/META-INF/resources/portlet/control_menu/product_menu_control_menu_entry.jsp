@@ -35,7 +35,7 @@ String controlMenuPortletId = PortletProviderUtil.getPortletId(PortalControlMenu
 %>
 
 <c:if test="<%= Validator.isNotNull(controlMenuPortletId) %>">
-	<aui:script>
+	<aui:script position="auto">
 		Liferay.on(
 			'<%= controlMenuPortletId %>:portletRefreshed',
 			function(event) {

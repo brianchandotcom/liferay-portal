@@ -30,15 +30,25 @@ rowURL.setParameter("redirect", currentURL);
 rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 %>
 
-<liferay-ui:app-view-entry
-	author="<%= folder.getUserName() %>"
-	createDate="<%= folder.getCreateDate() %>"
-	description="<%= folder.getDescription() %>"
-	displayStyle="descriptive"
-	folder="<%= true %>"
-	markupView="lexicon"
-	modifiedDate="<%= folder.getModifiedDate() %>"
-	showCheckbox="<%= true %>"
-	title="<%= folder.getName() %>"
-	url="<%= (rowURL != null) ? rowURL.toString() : null %>"
-/>
+<h4>
+	<aui:a href="<%= rowURL.toString() %>">
+		<%= folder.getName() %>
+	</aui:a>
+</h4>
+
+<h5 class="text-default">
+	<%= folder.getDescription() %>
+</h5>
+
+<%
+int foldersCount = BookmarksFolderServiceUtil.getFoldersCount(scopeGroupId, folder.getFolderId());
+int entriesCount = BookmarksEntryServiceUtil.getEntriesCount(scopeGroupId, folder.getFolderId());
+%>
+
+<span class="h6">
+	<liferay-ui:message arguments="<%= foldersCount %>" key='<%= foldersCount == 1 ? "x-folder" : "x-folders" %>' />
+</span>
+
+<span class="h6">
+	<liferay-ui:message arguments="<%= entriesCount %>" key='<%= entriesCount == 1 ? "x-bookmark" : "x-bookmarks" %>' />
+</span>

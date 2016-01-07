@@ -45,6 +45,10 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		_buttons = buttons;
 	}
 
+	public void setCheckBoxDisabled(boolean checkBoxDisabled) {
+		_checkBoxDisabled = checkBoxDisabled;
+	}
+
 	public void setFilters(String filters) {
 		_filters = filters;
 	}
@@ -68,6 +72,7 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 	protected void cleanUp() {
 		_actionButtons = null;
 		_buttons = null;
+		_checkBoxDisabled = false;
 		_filters = null;
 		_includeCheckBox = false;
 		_searchContainerId = null;
@@ -95,6 +100,9 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		request.setAttribute(
 			"liferay-frontend:management-bar:buttons", _buttons);
 		request.setAttribute(
+			"liferay-frontend:management-bar:checkBoxDisabled",
+			_checkBoxDisabled);
+		request.setAttribute(
 			"liferay-frontend:management-bar:filters", _filters);
 		request.setAttribute(
 			"liferay-frontend:management-bar:includeCheckBox",
@@ -110,6 +118,7 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 
 	private String _actionButtons;
 	private String _buttons;
+	private boolean _checkBoxDisabled;
 	private String _filters;
 	private boolean _includeCheckBox;
 	private String _searchContainerId;

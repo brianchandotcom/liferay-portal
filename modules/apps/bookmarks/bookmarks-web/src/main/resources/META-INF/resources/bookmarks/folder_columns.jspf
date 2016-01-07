@@ -52,13 +52,6 @@ for (int j = 0; j < entryColumns.length; j++) {
 			/>
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("name") %>'>
-
-			<%
-			AssetRendererFactory<BookmarksFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksFolder.class);
-
-			AssetRenderer<BookmarksFolder> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
-			%>
-
 			<liferay-ui:search-container-column-text
 				name="<%= curEntryColumn %>"
 			>
@@ -66,7 +59,6 @@ for (int j = 0; j < entryColumns.length; j++) {
 				<liferay-ui:app-view-entry
 					displayStyle="list"
 					folder="<%= true %>"
-					iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 					showCheckbox="<%= false %>"
 					title="<%= curFolder.getName() %>"
 					url="<%= rowURL.toString() %>"

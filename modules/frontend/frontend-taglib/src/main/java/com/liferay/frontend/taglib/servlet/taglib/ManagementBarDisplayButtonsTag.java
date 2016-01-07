@@ -38,6 +38,10 @@ public class ManagementBarDisplayButtonsTag
 		return super.doStartTag();
 	}
 
+	public void setDisabled(boolean disabled) {
+		_disabled = disabled;
+	}
+
 	public void setDisplayViews(String[] displayViews) {
 		_displayViews = displayViews;
 	}
@@ -59,6 +63,7 @@ public class ManagementBarDisplayButtonsTag
 
 	@Override
 	protected void cleanUp() {
+		_disabled = false;
 		_displayViews = null;
 		_portletURL = null;
 		_selectedDisplayStyle = StringPool.BLANK;
@@ -82,6 +87,9 @@ public class ManagementBarDisplayButtonsTag
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
+			"liferay-frontend:management-bar-display-buttons:disabled",
+			_disabled);
+		request.setAttribute(
 			"liferay-frontend:management-bar-display-buttons:displayViews",
 			_displayViews);
 		request.setAttribute(
@@ -101,6 +109,7 @@ public class ManagementBarDisplayButtonsTag
 	private static final String _PAGE =
 		"/management_bar_display_buttons/page.jsp";
 
+	private boolean _disabled;
 	private String[] _displayViews;
 	private PortletURL _portletURL;
 	private String _selectedDisplayStyle;

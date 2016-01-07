@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_ENTRY_DESCRIPTION</td>
-	<td>//li[contains(@class,'list-group-item')]//div/h6[contains(.,'${key_assetDescription}')]</td>
+	<td>//li[contains(@class,'list-group-item')]//div/h5[contains(.,'${key_assetDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

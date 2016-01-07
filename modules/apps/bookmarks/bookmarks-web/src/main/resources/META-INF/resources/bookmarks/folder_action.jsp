@@ -21,17 +21,11 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 BookmarksFolder folder = null;
 
-long folderId = 0;
-
 if (row != null) {
 	folder = (BookmarksFolder)row.getObject();
-
-	folderId = folder.getFolderId();
 }
 else {
-	folder = (BookmarksFolder)request.getAttribute("view.jsp-folder");
-
-	folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+	folder = (BookmarksFolder)request.getAttribute("info_panel.jsp-folder");
 }
 
 String modelResource = null;
@@ -43,7 +37,7 @@ boolean showPermissionsURL = false;
 if (folder != null) {
 	modelResource = BookmarksFolder.class.getName();
 	modelResourceDescription = folder.getName();
-	resourcePrimKey = String.valueOf(folderId);
+	resourcePrimKey = String.valueOf(folder.getFolderId());
 
 	showPermissionsURL = BookmarksFolderPermissionChecker.contains(permissionChecker, folder, ActionKeys.PERMISSIONS);
 }
@@ -74,6 +68,17 @@ if (row == null) {
 		<liferay-ui:icon
 			message="edit"
 			url="<%= editURL %>"
+		/>
+
+		<portlet:renderURL var="moveURL">
+			<portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="rowIdsBookmarksFolder" value="<%= String.valueOf(folder.getFolderId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="move"
+			url="<%= moveURL %>"
 		/>
 	</c:if>
 

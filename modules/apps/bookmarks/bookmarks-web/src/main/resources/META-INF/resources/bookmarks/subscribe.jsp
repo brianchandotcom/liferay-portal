@@ -17,42 +17,88 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <%
-BookmarksFolder folder = (BookmarksFolder)request.getAttribute("view.jsp-folder");
+BookmarksFolder folder = (BookmarksFolder)request.getAttribute("info_panel.jsp-folder");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+long folderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+if (folder != null) {
+	folderId = folder.getFolderId();
+}
+
+BookmarksEntry entry = (BookmarksEntry)request.getAttribute("info_panel.jsp-entry");
 %>
 
-<div class="subscribe-action">
-	<c:if test="<%= BookmarksFolderPermissionChecker.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) && (bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedEnabled() || bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedEnabled()) %>">
+<c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedEnabled() || bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedEnabled() %>">
+	<div class="subscribe-action">
 		<c:choose>
-			<c:when test="<%= (folder == null) ? SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksFolder.class.getName(), scopeGroupId) : SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksFolder.class.getName(), folder.getFolderId()) %>">
-				<portlet:actionURL name="/bookmarks/edit_folder" var="unsubscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-				</portlet:actionURL>
+			<c:when test="<%= entry != null %>">
+				<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.SUBSCRIBE) %>">
+					<c:choose>
+						<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksEntry.class.getName(), entry.getEntryId()) %>">
+							<portlet:actionURL name="/bookmarks/edit_entry" var="unsubscribeURL">
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+							</portlet:actionURL>
 
-				<liferay-ui:icon
-					iconCssClass="icon-star"
-					label="<%= true %>"
-					message="unsubscribe"
-					url="<%= unsubscribeURL %>"
-				/>
+							<liferay-ui:icon
+								icon="star"
+								markupView="lexicon"
+								message="unsubscribe"
+								url="<%= unsubscribeURL %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<portlet:actionURL name="/bookmarks/edit_entry" var="subscribeURL">
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+							</portlet:actionURL>
+
+							<liferay-ui:icon
+								icon="star-o"
+								markupView="lexicon"
+								message="subscribe"
+								url="<%= subscribeURL %>"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
 			</c:when>
 			<c:otherwise>
-				<portlet:actionURL name="/bookmarks/edit_folder" var="subscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-				</portlet:actionURL>
+				<c:if test="<%= BookmarksFolderPermissionChecker.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) %>">
+					<c:choose>
+						<c:when test="<%= (folder == null) ? SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksFolder.class.getName(), scopeGroupId) : SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksFolder.class.getName(), folder.getFolderId()) %>">
+							<portlet:actionURL name="/bookmarks/edit_folder" var="unsubscribeURL">
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+							</portlet:actionURL>
 
-				<liferay-ui:icon
-					iconCssClass="icon-star-empty"
-					label="<%= true %>"
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
+							<liferay-ui:icon
+								icon="star"
+								markupView="lexicon"
+								message="unsubscribe"
+								url="<%= unsubscribeURL %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<portlet:actionURL name="/bookmarks/edit_folder" var="subscribeURL">
+								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+							</portlet:actionURL>
+
+							<liferay-ui:icon
+								icon="star-o"
+								markupView="lexicon"
+								message="subscribe"
+								url="<%= subscribeURL %>"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
 			</c:otherwise>
 		</c:choose>
-	</c:if>
-</div>
+	</div>
+</c:if>

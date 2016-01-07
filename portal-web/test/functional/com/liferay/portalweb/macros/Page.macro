@@ -64,16 +64,25 @@
 			<var name="pageStaging" value="${pageStaging}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteScopeName" value="${siteScopeName}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPublicPages" />
+		<if>
+			<equals arg1="${sitePagePrivacy}" arg2="Private" />
+			<then>
+				<execute macro="ProductMenu#gotoPrivatePages" />
 
-		<var name="key_page" value="Public Pages" />
+				<execute function="Click" locator1="ProductMenu#ADD_PRIVATE_PAGE_ICON" />
+			</then>
+			<else>
+				<execute macro="ProductMenu#gotoPublicPages" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PAGE_ICON" />
+				<execute function="Click" locator1="ProductMenu#ADD_PUBLIC_PAGE_ICON" />
+			</else>
+		</if>
 
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 

@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.EventDefinition;
@@ -81,6 +82,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -382,17 +384,46 @@ public class PortletTracker
 		}
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				portletModel.getResourceBundle(), locale, classLoader);
+			ResourceBundle resourceBundle;
 
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
+			Dictionary<String, Object> properties;
+
+			try {
+				resourceBundle = ResourceBundleUtil.getBundle(
+					portletModel.getResourceBundle(), locale, classLoader);
+
+				properties = new HashMapDictionary<>();
+
+				properties.put(
+					"javax.portlet.name", portletModel.getPortletId());
+				properties.put("language.id", LocaleUtil.toLanguageId(locale));
+
+				ServiceRegistration<ResourceBundle> serviceRegistration =
+					bundleContext.registerService(
+						ResourceBundle.class, resourceBundle, properties);
+
+				serviceRegistrations.addServiceRegistration(
+					serviceRegistration);
+			}
+			catch (MissingResourceException mre) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Portlet " + portletModel.getPortletName() + " does " +
+							"not have translations for available locale " +
+						locale);
+				}
+			}
+
+			properties = new HashMapDictionary<>();
 
 			properties.put("javax.portlet.name", portletModel.getPortletId());
 			properties.put("language.id", LocaleUtil.toLanguageId(locale));
+			properties.put("service.ranking", Integer.MIN_VALUE);
 
 			ServiceRegistration<ResourceBundle> serviceRegistration =
 				bundleContext.registerService(
-					ResourceBundle.class, resourceBundle, properties);
+					ResourceBundle.class,
+					LanguageResources.getResourceBundle(locale), properties);
 
 			serviceRegistrations.addServiceRegistration(serviceRegistration);
 		}

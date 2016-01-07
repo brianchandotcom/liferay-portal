@@ -557,6 +557,21 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"configurationModelAttributeName": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"configurationModelFactoryPid": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"configurationModelId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"content": {
 				"index": "analyzed",
 				"store": "yes",

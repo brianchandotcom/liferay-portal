@@ -5,9 +5,9 @@
 		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
-		<execute function="Type" locator1="CPKnowledgebaseadminAddchildarticle#TITLE_FIELD" value1="${kbChildArticleTitle}" />
-		<execute function="Type#typeCKEditor" locator1="CPKnowledgebaseadminAddchildarticle#CONTENT_FIELD" value1="${kbChildArticleContent}" />
-		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddchildarticle#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="${kbChildArticleTitle}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbChildArticleContent}" />
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -338,7 +338,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplaySelectParentArticleDisplay#FOLDER_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#CHOOSE_FOLDER_BUTTON" value1="Choose" />
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
@@ -380,11 +380,11 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGKnowledgebasesectionConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 		<execute function="AssertChecked" locator1="KnowledgeBaseSection#CONFIGURATION_SHOW_SECTIONS_TITLE_CHECKBOX" />
 		<execute function="AddSelection" locator1="KnowledgeBaseSection#CONFIGURATION_SECTIONS_SELECT" value1="${kbArticleSection}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertClick" locator1="PGKnowledgebasesectionConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureKBSocialBookmarkSites">
@@ -869,7 +869,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGKnowledgebasesectionConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 		<execute function="AssertChecked" locator1="KnowledgeBaseSection#CONFIGURATION_SHOW_SECTIONS_TITLE_CHECKBOX" />
 		<execute function="AddSelection" locator1="KnowledgeBaseSection#CONFIGURATION_SECTIONS_SELECT" value1="${kbArticleSection}" />
 		<execute function="AssertSelectedLabel" locator1="KnowledgeBaseSection#CONFIGURATION_ARTICLE_DISPLAY_STYLE_SELECT" value1="Title" />
@@ -1029,8 +1029,8 @@
 		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminChildarticle#HEADER_TITLE" value1="${kbChildArticleTitle}" />
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminChildarticle#CONTENT" value1="${kbChildArticleContent}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbChildArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbChildArticleContent}" />
 	</command>
 
 	<command name="viewChildArticleHierarchyViaKBDisplayPG">

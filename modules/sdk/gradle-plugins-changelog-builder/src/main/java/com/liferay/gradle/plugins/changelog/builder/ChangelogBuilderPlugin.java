@@ -33,21 +33,21 @@ import org.gradle.api.tasks.SourceSet;
 /**
  * @author Andrea Di Giorgi
  */
-public class ChangeLogBuilderPlugin implements Plugin<Project> {
+public class ChangelogBuilderPlugin implements Plugin<Project> {
 
-	public static final String BUILD_CHANGELOG_TASK_NAME = "buildChangeLog";
+	public static final String BUILD_CHANGELOG_TASK_NAME = "buildChangelog";
 
 	@Override
 	public void apply(Project project) {
-		addTaskBuildChangeLog(project);
+		addTaskBuildChangelog(project);
 	}
 
-	protected BuildChangeLogTask addTaskBuildChangeLog(Project project) {
-		final BuildChangeLogTask buildChangeLogTask = GradleUtil.addTask(
-			project, BUILD_CHANGELOG_TASK_NAME, BuildChangeLogTask.class);
+	protected BuildChangelogTask addTaskBuildChangelog(Project project) {
+		final BuildChangelogTask buildChangelogTask = GradleUtil.addTask(
+			project, BUILD_CHANGELOG_TASK_NAME, BuildChangelogTask.class);
 
-		buildChangeLogTask.setChangeLogFile(_CHANGELOG_FILE_NAME);
-		buildChangeLogTask.setDescription(
+		buildChangelogTask.setChangelogFile(_CHANGELOG_FILE_NAME);
+		buildChangelogTask.setDescription(
 			"Builds the changelog file for this project.");
 
 		PluginContainer pluginContainer = project.getPlugins();
@@ -58,25 +58,25 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					configureTaskBuildChangeLogForJavaPlugin(
-						buildChangeLogTask);
+					configureTaskBuildChangelogForJavaPlugin(
+						buildChangelogTask);
 				}
 
 			});
 
-		return buildChangeLogTask;
+		return buildChangelogTask;
 	}
 
-	protected void configureTaskBuildChangeLogForJavaPlugin(
-		final BuildChangeLogTask buildChangeLogTask) {
+	protected void configureTaskBuildChangelogForJavaPlugin(
+		final BuildChangelogTask buildChangelogTask) {
 
-		buildChangeLogTask.setChangeLogFile(
+		buildChangelogTask.setChangelogFile(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
 					File resourcesDir = getResourcesDir(
-						buildChangeLogTask.getProject());
+						buildChangelogTask.getProject());
 
 					return new File(
 						resourcesDir, "META-INF/" + _CHANGELOG_FILE_NAME);

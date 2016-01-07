@@ -50,17 +50,17 @@ import org.gradle.util.GUtil;
 /**
  * @author Andrea Di Giorgi
  */
-public class BuildChangeLogTask extends DefaultTask {
+public class BuildChangelogTask extends DefaultTask {
 
-	public BuildChangeLogTask() {
-		setChangeLogHeader(
+	public BuildChangelogTask() {
+		setChangelogHeader(
 			new Callable<String>() {
 
 				@Override
 				public String call() throws Exception {
 					Project project = getProject();
 
-					return "Module Version " + project.getVersion();
+					return "Bundle Version " + project.getVersion();
 				}
 
 			});
@@ -69,18 +69,18 @@ public class BuildChangeLogTask extends DefaultTask {
 	}
 
 	@TaskAction
-	public void buildChangeLog() throws Exception {
+	public void buildChangelog() throws Exception {
 		Project project = getProject();
 
-		File changeLogFile = getChangeLogFile();
+		File changelogFile = getChangelogFile();
 
-		Path changeLogPath = changeLogFile.toPath();
+		Path changelogPath = changelogFile.toPath();
 
-		String changeLogContent = null;
+		String changelogContent = null;
 
-		if (changeLogFile.exists()) {
-			changeLogContent = new String(
-				Files.readAllBytes(changeLogPath), StandardCharsets.UTF_8);
+		if (changelogFile.exists()) {
+			changelogContent = new String(
+				Files.readAllBytes(changelogPath), StandardCharsets.UTF_8);
 		}
 
 		String range;
@@ -88,7 +88,7 @@ public class BuildChangeLogTask extends DefaultTask {
 
 		try (Repository repository = GitUtil.openRepository(project)) {
 			String rangeEnd = GitUtil.getHashHead(repository);
-			String rangeStart = getRangeStart(changeLogContent, repository);
+			String rangeStart = getRangeStart(changelogContent, repository);
 
 			range = rangeStart + ".." + rangeEnd;
 			ticketIds = getTicketIds(rangeStart, rangeEnd, repository);
@@ -99,15 +99,15 @@ public class BuildChangeLogTask extends DefaultTask {
 				project + " does not have changes for range " + range);
 		}
 
-		File changeLogDir = changeLogFile.getParentFile();
+		File changelogDir = changelogFile.getParentFile();
 
-		changeLogDir.mkdirs();
+		changelogDir.mkdirs();
 
 		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
-				changeLogPath, StandardCharsets.UTF_8,
+				changelogPath, StandardCharsets.UTF_8,
 				StandardOpenOption.APPEND, StandardOpenOption.CREATE)) {
 
-			if (Validator.isNotNull(changeLogContent)) {
+			if (Validator.isNotNull(changelogContent)) {
 				bufferedWriter.newLine();
 				bufferedWriter.newLine();
 			}
@@ -115,7 +115,8 @@ public class BuildChangeLogTask extends DefaultTask {
 			bufferedWriter.append('#');
 			bufferedWriter.newLine();
 
-			bufferedWriter.append(getChangeLogHeader());
+			bufferedWriter.append("# ");
+			bufferedWriter.append(getChangelogHeader());
 			bufferedWriter.newLine();
 
 			bufferedWriter.append('#');
@@ -140,13 +141,13 @@ public class BuildChangeLogTask extends DefaultTask {
 	}
 
 	@Input
-	public File getChangeLogFile() {
-		return GradleUtil.toFile(getProject(), _changeLogFile);
+	public File getChangelogFile() {
+		return GradleUtil.toFile(getProject(), _changelogFile);
 	}
 
 	@Input
-	public String getChangeLogHeader() {
-		return GradleUtil.toString(_changeLogHeader);
+	public String getChangelogHeader() {
+		return GradleUtil.toString(_changelogHeader);
 	}
 
 	@Input
@@ -154,12 +155,12 @@ public class BuildChangeLogTask extends DefaultTask {
 		return _ticketIdPrefixes;
 	}
 
-	public void setChangeLogFile(Object changeLogFile) {
-		_changeLogFile = changeLogFile;
+	public void setChangelogFile(Object changelogFile) {
+		_changelogFile = changelogFile;
 	}
 
-	public void setChangeLogHeader(Object changeLogHeader) {
-		_changeLogHeader = changeLogHeader;
+	public void setChangelogHeader(Object changelogHeader) {
+		_changelogHeader = changelogHeader;
 	}
 
 	public void setTicketIdPrefixes(Iterable<String> ticketIdPrefixes) {
@@ -172,7 +173,7 @@ public class BuildChangeLogTask extends DefaultTask {
 		setTicketIdPrefixes(Arrays.asList(ticketIdPrefixes));
 	}
 
-	public BuildChangeLogTask ticketIdPrefixes(
+	public BuildChangelogTask ticketIdPrefixes(
 		Iterable<String> ticketIdPrefixes) {
 
 		GUtil.addToCollection(_ticketIdPrefixes, ticketIdPrefixes);
@@ -180,18 +181,18 @@ public class BuildChangeLogTask extends DefaultTask {
 		return this;
 	}
 
-	public BuildChangeLogTask ticketIdPrefixes(String ... ticketIdPrefixes) {
+	public BuildChangelogTask ticketIdPrefixes(String ... ticketIdPrefixes) {
 		return ticketIdPrefixes(Arrays.asList(ticketIdPrefixes));
 	}
 
 	protected String getRangeStart(
-			String changeLogContent, Repository repository)
+			String changelogContent, Repository repository)
 		throws Exception {
 
 		String rangeStart;
 
-		if (Validator.isNotNull(changeLogContent)) {
-			Matcher matcher = _lastRangeEndPattern.matcher(changeLogContent);
+		if (Validator.isNotNull(changelogContent)) {
+			Matcher matcher = _lastRangeEndPattern.matcher(changelogContent);
 
 			if (!matcher.find()) {
 				throw new GradleException("Unable to find the range start");
@@ -253,8 +254,8 @@ public class BuildChangeLogTask extends DefaultTask {
 	private static final Pattern _lastRangeEndPattern = Pattern.compile(
 		"\\.\\.([0-9a-f]{40})=.*$");
 
-	private Object _changeLogFile;
-	private Object _changeLogHeader;
+	private Object _changelogFile;
+	private Object _changelogHeader;
 	private final Set<String> _ticketIdPrefixes = new HashSet<>();
 
 }

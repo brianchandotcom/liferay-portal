@@ -58,7 +58,7 @@ if (fileEntryId != 0) {
 					<liferay-ui:message arguments="<%= selectFileLink %>" key="drag-and-drop-to-upload-or-x" />
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message key="drag-and-drop-to-upload" />
+					<%= LanguageUtil.get(resourceBundle, "drag-and-drop-to-upload") %>
 				</c:otherwise>
 			</c:choose>
 		</div>

@@ -53,6 +53,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -68,6 +69,12 @@ public class JournalTransformerTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_ddmStructure = DDMStructureTestUtil.addStructure(
+			JournalArticle.class.getName());
+	}
 
 	@Test
 	public void testContentTransformerListener() throws Exception {
@@ -293,6 +300,8 @@ public class JournalTransformerTest {
 					DDMStructure.class.getName())));
 		tokens.put(
 			"article_group_id", String.valueOf(TestPropsValues.getGroupId()));
+		tokens.put(
+			"ddm_structure_id", String.valueOf(_ddmStructure.getStructureId()));
 		tokens.put(
 			"company_id", String.valueOf(TestPropsValues.getCompanyId()));
 

@@ -14,6 +14,12 @@
 
 package com.liferay.journal.transformer;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -67,6 +73,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -294,7 +301,8 @@ public class JournalTransformer {
 					Element rootElement = document.getRootElement();
 
 					List<TemplateNode> templateNodes = getTemplateNodes(
-						themeDisplay, rootElement);
+						themeDisplay, rootElement,
+						Long.valueOf(tokens.get("ddm_structure_id")));
 
 					if (templateNodes != null) {
 						for (TemplateNode templateNode : templateNodes) {
@@ -509,8 +517,16 @@ public class JournalTransformer {
 	}
 
 	protected List<TemplateNode> getTemplateNodes(
-			ThemeDisplay themeDisplay, Element element)
+			ThemeDisplay themeDisplay, Element element, long ddmStructureId)
 		throws Exception {
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
 
 		List<TemplateNode> templateNodes = new ArrayList<>();
 
@@ -554,7 +570,8 @@ public class JournalTransformer {
 
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
-					getTemplateNodes(themeDisplay, dynamicElementElement));
+					getTemplateNodes(
+						themeDisplay, dynamicElementElement, ddmStructureId));
 			}
 			else if ((dynamicContentElement != null) &&
 					 (dynamicContentElement.element("option") != null)) {
@@ -565,6 +582,26 @@ public class JournalTransformer {
 				for (Element optionElement : optionElements) {
 					templateNode.appendOption(
 						StringUtil.stripCDATA(optionElement.getText()));
+				}
+			}
+
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(name);
+
+			if (ddmFormField != null) {
+				DDMFormFieldOptions ddmFormFieldOptions =
+					ddmFormField.getDDMFormFieldOptions();
+
+				for (Entry<String, LocalizedValue> entry :
+						ddmFormFieldOptions.getOptions().entrySet()) {
+
+					String optionValue = StringUtil.stripCDATA(entry.getKey());
+
+					LocalizedValue localizedLabel = entry.getValue();
+
+					String optionLabel = localizedLabel.getString(
+						themeDisplay.getLocale());
+
+					templateNode.appendOptionMap(optionValue, optionLabel);
 				}
 			}
 

@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>ALL_PAGES_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span//strong</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/following-sibling::td</td>
 	<td></td>
 </tr>
 <tr>

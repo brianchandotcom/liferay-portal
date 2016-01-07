@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.File;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -37,6 +39,18 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 		content = trimContent(content, false);
 
+		Matcher matcher = _ATTRIBUTE_TYPE.matcher(content);
+
+		while (matcher.find()) {
+			String beforeMatch = content.substring(0, matcher.start());
+
+			int lineCount = StringUtil.count(beforeMatch, "\n") + 1;
+
+			processErrorMessage(
+				fileName,
+				"Use fully qualified classType: " + fileName + " " + lineCount);
+		}
+
 		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}
 
@@ -46,6 +60,9 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 		return getFileNames(excludes, getIncludes());
 	}
+
+	private static final Pattern _ATTRIBUTE_TYPE = Pattern.compile(
+		"<type>[A-Z][a-z]*</type>");
 
 	private static final String[] _INCLUDES = new String[] {"**/*.tld"};
 

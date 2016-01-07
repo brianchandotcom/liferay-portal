@@ -120,7 +120,7 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_workflowInstanceWebConfiguration = Configurable.createConfigurable(
+		this.workflowInstanceWebConfiguration = Configurable.createConfigurable(
 			WorkflowInstanceWebConfiguration.class, properties);
 	}
 
@@ -137,7 +137,7 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 		else {
 			renderRequest.setAttribute(
 				WorkflowInstanceWebConfiguration.class.getName(),
-				_workflowInstanceWebConfiguration);
+				workflowInstanceWebConfiguration);
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
@@ -172,10 +172,10 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 		renderRequest.setAttribute(WebKeys.WORKFLOW_INSTANCE, workflowInstance);
 	}
 
+	protected volatile WorkflowInstanceWebConfiguration
+		workflowInstanceWebConfiguration;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowInstancePortlet.class);
-
-	private volatile WorkflowInstanceWebConfiguration
-		_workflowInstanceWebConfiguration;
 
 }

@@ -31,8 +31,8 @@
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-				label="<%= null %>"
-			>
+			label="<%= null %>"
+		>
 			<portlet:renderURL var="viewAllURL">
 				<portlet:param name="navigation" value="all" />
 			</portlet:renderURL>
@@ -50,7 +50,6 @@
 			</portlet:renderURL>
 
 			<liferay-frontend:management-bar-navigation-item active="<%= workflowInstanceViewDisplayContext.isNavigationCompleted() %>" label="completed" url="<%= viewCompletedURL.toString() %>" />
-
 		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-sort
@@ -60,5 +59,4 @@
 			portletURL="<%= workflowInstanceViewDisplayContext.getViewPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
-
 </liferay-frontend:management-bar>

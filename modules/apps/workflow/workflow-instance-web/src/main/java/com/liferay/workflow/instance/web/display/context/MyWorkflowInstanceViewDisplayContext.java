@@ -28,8 +28,6 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Marcellus Tavares
  */
@@ -37,15 +35,13 @@ public class MyWorkflowInstanceViewDisplayContext
 	extends WorkflowInstanceViewDisplayContext {
 
 	public MyWorkflowInstanceViewDisplayContext(
-			HttpServletRequest request,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			PortletPreferences portletPreferences)
 		throws PortalException {
 
 		super(
-			request, liferayPortletRequest, liferayPortletResponse,
-			portletPreferences);
+			liferayPortletRequest, liferayPortletResponse, portletPreferences);
 	}
 
 	@Override
@@ -54,40 +50,20 @@ public class MyWorkflowInstanceViewDisplayContext
 			OrderByComparator<WorkflowInstance> orderByComparator)
 		throws PortalException {
 
-		Boolean completedInstance = true;
-
-		if (isNavigationAll()) {
-			completedInstance = null;
-		}
-
-		else if (isNavigationPending()) {
-			completedInstance = false;
-		}
-
 		return WorkflowInstanceManagerUtil.search(
 			workflowInstanceRequestHelper.getCompanyId(),
 			workflowInstanceRequestHelper.getUserId(),
-			getAssetTypeTerm(getKeywords()), getKeywords(), getKeywords(),
-			completedInstance, start, end, orderByComparator);
+			getAssetType(getKeywords()), getKeywords(), getKeywords(),
+			getCompleted(), start, end, orderByComparator);
 	}
 
 	@Override
 	protected int getSearchContainerTotal() throws PortalException {
-		Boolean completedInstance = true;
-
-		if (isNavigationAll()) {
-			completedInstance = null;
-		}
-
-		else if (isNavigationPending()) {
-			completedInstance = false;
-		}
-
 		return WorkflowInstanceManagerUtil.searchCount(
 			workflowInstanceRequestHelper.getCompanyId(),
 			workflowInstanceRequestHelper.getUserId(),
-			getAssetTypeTerm(getKeywords()), getKeywords(), getKeywords(),
-			completedInstance);
+			getAssetType(getKeywords()), getKeywords(), getKeywords(),
+			getCompleted());
 	}
 
 	@Override

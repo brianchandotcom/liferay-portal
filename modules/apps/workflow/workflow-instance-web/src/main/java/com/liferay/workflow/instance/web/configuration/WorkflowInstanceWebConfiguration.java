@@ -30,7 +30,4 @@ public interface WorkflowInstanceWebConfiguration {
 	@Meta.AD(deflt = "list", required = false)
 	public String defaultDisplayView();
 
-	@Meta.AD(deflt = "descriptive|list", required = false)
-	public String[] displayViews();
-
 }

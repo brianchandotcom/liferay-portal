@@ -59,10 +59,10 @@ String currentURL = currentURLObj.toString();
 WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
 
 if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
-	workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(request, liferayPortletRequest, liferayPortletResponse, portletPreferences);
+	workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse, portletPreferences);
 }
 else {
-	workflowInstanceViewDisplayContext = new MyWorkflowInstanceViewDisplayContext(request, liferayPortletRequest, liferayPortletResponse, portletPreferences);
+	workflowInstanceViewDisplayContext = new MyWorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse, portletPreferences);
 }
 %>
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.workflow.instance.web.display.context.util.WorkflowInstanceRequestHelper;
@@ -35,14 +36,15 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseWorkflowInstanceDisplayContext {
 
 	public BaseWorkflowInstanceDisplayContext(
-		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		PortletPreferences portletPreferences) {
 
-		this.request = request;
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
 		this.portletPreferences = portletPreferences;
+
+		this.request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
 
 		this.portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(request);

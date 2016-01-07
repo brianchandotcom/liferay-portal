@@ -187,6 +187,13 @@ public class PanelAppRegistry {
 			}
 		}
 
+		@Override
+		public void keyRemoved(
+			ServiceTrackerMap<String, List<PanelApp>> serviceTrackerMap,
+			String panelCategoryKey, PanelApp panelApp,
+			List<PanelApp> panelApps) {
+		}
+
 	}
 
 }

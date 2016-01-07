@@ -222,10 +222,6 @@ if (portletTitleBasedNavigation) {
 							</c:otherwise>
 						</c:choose>
 
-						<c:if test="<%= Validator.isNotNull(parentTitle) %>">
-							<aui:input name="parent" type="resource" value="<%= parentTitle %>" />
-						</c:if>
-
 						<div>
 
 							<%
@@ -307,6 +303,10 @@ if (portletTitleBasedNavigation) {
 								<aui:input name="format" type="hidden" value="<%= selectedFormat %>" />
 							</c:otherwise>
 						</c:choose>
+
+						<c:if test="<%= Validator.isNotNull(parentTitle) %>">
+							<aui:input name="parent" type="resource" value="<%= parentTitle %>" />
+						</c:if>
 
 						<c:if test="<%= newPage || wikiPage.isApproved() %>">
 							<aui:model-context bean="<%= new WikiPageImpl() %>" model="<%= WikiPage.class %>" />

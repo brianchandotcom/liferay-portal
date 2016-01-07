@@ -335,13 +335,13 @@
 	</command>
 
 	<command name="gotoPreviewEdit">
-		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" value1="Edit" />
+		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" />
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 	</command>
 
 	<command name="gotoPreviewView">
-		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" value1="View" />
+		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" />
 	</command>
 
 	<command name="gotoTaskAssignedToMeActionsCmd">

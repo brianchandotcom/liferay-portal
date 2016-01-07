@@ -74,7 +74,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 	boolean showPageAttachmentAction = true;
 	%>
 
-	<%@ include file="/META-INF/resources/wiki/attachments_list.jspf" %>
+	<%@ include file="/wiki/attachments_list.jspf" %>
 </div>
 
 <portlet:actionURL name="/wiki/edit_page_attachment" var="checkEntryURL">

@@ -61,4 +61,4 @@ int status = WorkflowConstants.STATUS_APPROVED;
 boolean showPageAttachmentAction = false;
 %>
 
-<%@ include file="/META-INF/resources/wiki/attachments_list.jspf" %>
+<%@ include file="/wiki/attachments_list.jspf" %>

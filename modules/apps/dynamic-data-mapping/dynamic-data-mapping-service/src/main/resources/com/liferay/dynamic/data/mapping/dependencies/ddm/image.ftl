@@ -46,7 +46,7 @@
 			<@aui.button
 				cssClass="select-button"
 				id="${namespacedFieldName}SelectButton"
-				value="choose-from-document-library"
+				value="select"
 			/>
 
 			<@aui.button

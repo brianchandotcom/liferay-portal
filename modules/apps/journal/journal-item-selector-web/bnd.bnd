@@ -1,0 +1,16 @@
+Bundle-Name: Liferay Journal Item Selector Web
+Bundle-SymbolicName: com.liferay.journal.item.selector.web
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.item.selector.criteria.file.criterion,\
+	com.liferay.item.selector.criteria.image.criterion,\
+	com.liferay.item.selector.taglib,\
+	com.liferay.item.selector.taglib.servlet.taglib,\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Web Content
+Web-ContextPath: /journal-item-selector-web
+-include: ../../../../marketplace/web-content-management/bnd.bnd

@@ -1163,7 +1163,7 @@ AUI.add(
 					getDocumentLibrarySelectorURL: function() {
 						var instance = this;
 
-						return instance.getDocumentLibraryURL('com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion');
+						return instance.getDocumentLibraryURL('com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion,com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion');
 					},
 
 					getValue: function() {

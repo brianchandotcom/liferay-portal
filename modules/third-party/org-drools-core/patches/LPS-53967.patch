@@ -1,13 +1,8 @@
 diff --git a/org/drools/base/ClassFieldAccessorCache.java b/org/drools/base/ClassFieldAccessorCache.java
-index 249c48a..cc9e1a5 100644
+index 249c48a..3ceedb7 100644
 --- a/org/drools/base/ClassFieldAccessorCache.java
 +++ b/org/drools/base/ClassFieldAccessorCache.java
-@@ -1,3 +1,4 @@
-+/* @generated */
- /*
-  * Copyright 2010 JBoss Inc
-  *
-@@ -123,7 +124,7 @@ public class ClassFieldAccessorCache {
+@@ -123,7 +123,7 @@ public class ClassFieldAccessorCache {
          try {
              return this.classLoader.loadClass( className );
          } catch ( ClassNotFoundException e ) {
@@ -16,7 +11,7 @@ index 249c48a..cc9e1a5 100644
          }
      }
  
-@@ -134,7 +135,7 @@ public class ClassFieldAccessorCache {
+@@ -134,7 +134,7 @@ public class ClassFieldAccessorCache {
          CacheEntry cache = this.cacheByClassLoader.get( cl );
          if ( cache == null ) {
              // setup a cache for this ClassLoader
@@ -25,3 +20,9 @@ index 249c48a..cc9e1a5 100644
              this.cacheByClassLoader.put( cl,
                                           cache );
          }
+@@ -239,3 +239,4 @@ public class ClassFieldAccessorCache {
+     }
+ 
+ }
++/* @generated */
+\ No newline at end of file

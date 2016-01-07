@@ -34,6 +34,10 @@ public class IndexableActionableDynamicQuery
 	extends DefaultActionableDynamicQuery {
 
 	public void addDocuments(Document... documents) throws PortalException {
+		if (documents == null) {
+			return;
+		}
+
 		if (_documents == null) {
 			if (isParallel()) {
 				_documents = new ConcurrentLinkedDeque<>();

@@ -265,6 +265,26 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="cancelAdd">
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#THREAD" value1="Thread" />
+
+		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
+
+		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
+	</command>
+
+	<command name="cancelEdit">
+		<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_EDIT_1" value1="Edit" />"
+
+		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubjectEdit}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBodyEdit}" />
+
+		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
+	</command>
+
 	<command name="deletePG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 

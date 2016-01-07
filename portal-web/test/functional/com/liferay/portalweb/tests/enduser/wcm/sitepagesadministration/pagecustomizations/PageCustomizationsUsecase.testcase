@@ -468,6 +468,10 @@
 			<var name="siteScopeSelected" value="Liferay" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
+		</execute>
+
 		<execute macro="PageCustomizations#enableSectionCustomizableCP">
 			<var name="columnId" value="1" />
 			<var name="sitePageName" value="Site Page Name" />

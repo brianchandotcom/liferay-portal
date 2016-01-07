@@ -9,5 +9,9 @@
 </section>
 
 <#if portletDisplay.isStateMax()>
-	<@liferay.control_menu />
+	<@liferay.control_menu
+		original_portlet_display=portletDisplay.clone()
+		original_portlet_id=portlet_display.getRootPortletId()
+		original_portlet_request=renderRequest
+	/>
 </#if>

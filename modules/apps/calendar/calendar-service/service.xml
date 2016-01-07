@@ -55,6 +55,10 @@
 			<finder-column name="calendarResourceId" />
 			<finder-column name="defaultCalendar" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
 	</entity>
 	<entity name="CalendarBooking" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
 

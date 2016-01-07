@@ -133,6 +133,30 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 	}
 
 	@Override
+	public boolean isManageableFromGroup(long calendarId, long groupId)
+		throws PortalException {
+
+		if (!CalendarPermission.contains(
+				getPermissionChecker(), calendarId,
+				CalendarActionKeys.MANAGE_BOOKINGS)) {
+
+			return false;
+		}
+
+		Calendar calendar = getCalendar(calendarId);
+
+		if (calendarLocalService.hasStagingCalendar(calendar)) {
+			return false;
+		}
+
+		if (calendarLocalService.isStagingCalendar(calendar)) {
+			return calendar.getGroupId() == groupId;
+		}
+
+		return true;
+	}
+
+	@Override
 	public List<Calendar> search(
 			long companyId, long[] groupIds, long[] calendarResourceIds,
 			String keywords, boolean andOperator, int start, int end,

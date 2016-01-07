@@ -65,4 +65,9 @@ public class ConfigurationPortletConfigurationIcon
 		return false;
 	}
 
+	@Override
+	public boolean isUseDialog() {
+		return true;
+	}
+
 }

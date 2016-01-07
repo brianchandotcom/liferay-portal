@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.theme.PortletDisplay;
 
 import javax.portlet.PortletRequest;
 
@@ -49,8 +48,6 @@ public class StagingPortletConfigurationIcon
 
 	@Override
 	public String getOnClick() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		StringBundler sb = new StringBundler(11);
 
 		sb.append("Liferay.Portlet.openWindow({namespace: '");
@@ -70,15 +67,11 @@ public class StagingPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.getURLStaging();
 	}
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.isShowStagingIcon();
 	}
 

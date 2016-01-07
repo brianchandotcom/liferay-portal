@@ -620,10 +620,8 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute macro="Page#gotoPublishingTools">
-			<var name="pageStaging" value="true" />
-			<var name="portletName" value="Staging Processes" />
-			<var name="siteScopeName" value="${siteName}" />
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging Processes" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />

@@ -95,8 +95,6 @@ else {
 						</portlet:actionURL>
 
 						<%
-						String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "submit', {incomplete: " + layoutRevision.isIncomplete() + ", publishURL: '" + publishURL + "', currentURL: '" + currentURL + "'}); void(0);";
-
 						String label = null;
 
 						if (layoutRevision.isIncomplete()) {
@@ -112,7 +110,7 @@ else {
 						}
 						%>
 
-						<a href="<%= taglibURL %>" id="submitLink">
+						<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>submit', {incomplete: <%= layoutRevision.isIncomplete() %>, publishURL: '<%= publishURL %>', currentURL: '<%= currentURL %>'}); void(0);" id="submitLink">
 							<liferay-ui:message key="<%= label %>" />
 						</a>
 					</c:otherwise>
@@ -193,13 +191,8 @@ else {
 
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
 				<c:if test="<%= !layoutRevision.isIncomplete() %>">
-
-					<%
-					String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "viewHistory', {layoutRevisionId: '" + layoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + layoutRevision.getLayoutSetBranchId() + "'}); void(0);";
-					%>
-
 					<li>
-						<a href="<%= taglibURL %>" id="viewHistoryLink">
+						<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>viewHistory', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="viewHistoryLink">
 							<liferay-ui:message key="history" />
 						</a>
 					</li>
@@ -207,13 +200,8 @@ else {
 
 				<c:if test="<%= !hasWorkflowTask %>">
 					<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
-
-						<%
-						String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "undo', {layoutRevisionId: '" + layoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + layoutRevision.getLayoutSetBranchId() + "'}); void(0);";
-						%>
-
 						<li>
-							<a href="<%= taglibURL %>" id="undoLink">
+							<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>undo', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="undoLink">
 								<liferay-ui:message key="undo" />
 							</a>
 						</li>
@@ -229,12 +217,8 @@ else {
 						if (firstChildLayoutRevision.isInactive()) {
 						%>
 
-						<%
-						String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "redo', {layoutRevisionId: '" + firstChildLayoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + firstChildLayoutRevision.getLayoutSetBranchId() + "'}); void(0);";
-						%>
-
 						<li>
-							<a href="<%= taglibURL %>" id="redoLink">
+							<a href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>redo', {layoutRevisionId: '<%= firstChildLayoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= firstChildLayoutRevision.getLayoutSetBranchId() %>'}); void(0);" id="redoLink">
 								<liferay-ui:message key="redo" />
 							</a>
 						</li>

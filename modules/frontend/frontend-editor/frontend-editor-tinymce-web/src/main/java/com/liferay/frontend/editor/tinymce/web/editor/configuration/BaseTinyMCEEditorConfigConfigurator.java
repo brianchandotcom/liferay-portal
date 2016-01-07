@@ -48,14 +48,7 @@ public class BaseTinyMCEEditorConfigConfigurator
 
 		jsonObject.put("convert_urls", Boolean.FALSE);
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("a[name|href|target|title|onclick],img[class|src|border=0");
-		sb.append("|alt|title|hspace|vspace|width|height|align|onmouseover");
-		sb.append("|onmouseout|name|usemap],hr[class|width|size|noshade],");
-		sb.append("font[face|size|color|style],span[class|align|style]");
-
-		jsonObject.put("extended_valid_elements", sb.toString());
+		jsonObject.put("extended_valid_elements", _EXTENDED_VALID_ELEMENTS);
 
 		jsonObject.put("invalid_elements", "script");
 
@@ -106,6 +99,12 @@ public class BaseTinyMCEEditorConfigConfigurator
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:showSource"));
 	}
+
+	private static final String _EXTENDED_VALID_ELEMENTS =
+		"a[name|href|target|title|onclick],img[class|src|border=0" +
+			"|alt|title|hspace|vspace|width|height|align|onmouseover" +
+				"|onmouseout|name|usemap],hr[class|width|size|noshade]," +
+					"font[face|size|color|style],span[class|align|style]";
 
 	private static final Map<String, String> _tinyMCELanguages =
 		new HashMap<>();

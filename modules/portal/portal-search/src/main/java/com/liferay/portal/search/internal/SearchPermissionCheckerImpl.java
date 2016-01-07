@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -120,10 +120,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	@Override
 	public BooleanFilter getPermissionBooleanFilter(
-		long companyId, long[] groupIds, long userId, String className,
+		long companyId, List<Long> groupIds, long userId, String className,
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		if (PropsValues.SEARCH_QUERY_ENABLED) {
+		if (PropsValues.SEARCH_PERMISSION_FILTER_ENABLED) {
 			try {
 				booleanFilter = doGetPermissionBooleanFilter(
 					companyId, groupIds, userId, className, booleanFilter,
@@ -215,7 +215,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	protected BooleanFilter doGetPermissionBooleanFilter(
-			long companyId, long[] groupIds, long userId, String className,
+			long companyId, List<Long> groupIds, long userId, String className,
 			BooleanFilter booleanFilter, SearchContext searchContext)
 		throws Exception {
 
@@ -244,28 +244,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return booleanFilter;
 		}
 
-		Set<Group> groups;
+		Set<Group> groups = new LinkedHashSet<>();
 		Set<Role> roles = new LinkedHashSet<>();
 		Set<UserGroupRole> userGroupRoles = new LinkedHashSet<>();
 		Map<Long, List<Role>> groupIdsToRoles = new HashMap<>();
 
-		if (PropsValues.SEARCH_USE_DEEP_SEARCH) {
-			groups = new LinkedHashSet<>(
-				_groupLocalService.getUserGroups(userId, true));
-
-			for (Group group : groups) {
-				groupIds = ArrayUtil.append(groupIds, group.getGroupId());
-			}
-
-			groupIds = ArrayUtil.unique(groupIds);
-		}
-		else {
-			groups = new LinkedHashSet<>();
-		}
-
 		populate(
 			companyId, groupIds, userId, permissionChecker, groups, roles,
-			userGroupRoles, groupIdsToRoles);
+			userGroupRoles, groupIdsToRoles, searchContext);
 
 		return doGetPermissionFilter_6(
 			companyId, groupIds, userId, permissionChecker, className,
@@ -273,7 +259,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	protected BooleanFilter doGetPermissionFilter_6(
-			long companyId, long[] groupIds, long userId,
+			long companyId, List<Long> groupIds, long userId,
 			PermissionChecker permissionChecker, String className,
 			BooleanFilter booleanFilter, Set<Group> groups, Set<Role> roles,
 			Set<UserGroupRole> userGroupRoles,
@@ -354,7 +340,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				}
 			}
 
-			if (ArrayUtil.isNotEmpty(groupIds)) {
+			if (ListUtil.isNotEmpty(groupIds)) {
 				for (long groupId : groupIds) {
 					if (_resourcePermissionLocalService.hasResourcePermission(
 							companyId, className, ResourceConstants.SCOPE_GROUP,
@@ -416,10 +402,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	protected void populate(
-			long companyId, long[] groupIds, long userId,
+			long companyId, List<Long> groupIds, long userId,
 			PermissionChecker permissionChecker, Set<Group> groups,
 			Set<Role> roles, Set<UserGroupRole> userGroupRoles,
-			Map<Long, List<Role>> groupIdsToRoles)
+			Map<Long, List<Role>> groupIdsToRoles, SearchContext searchContext)
 		throws Exception {
 
 		UserBag userBag = permissionChecker.getUserBag();
@@ -439,7 +425,20 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					userId, Collections.singletonList(guestGroup)));
 		}
 
-		if (ArrayUtil.isEmpty(groupIds)) {
+		long searchContextGroupId = GetterUtil.getLong(
+			searchContext.getAttribute("groupId"));
+
+		if (PropsValues.SEARCH_USE_DEEP_SEARCH && (searchContextGroupId == 0)) {
+			groups.addAll(_groupLocalService.getUserGroups(userId, true));
+
+			for (Group group : groups) {
+				if (!groupIds.contains(group.getGroupId())) {
+					groupIds.add(group.getGroupId());
+				}
+			}
+		}
+
+		if (ListUtil.isEmpty(groupIds)) {
 			groups.addAll(_groupLocalService.getUserGroups(userId, true));
 			groups.addAll(userBag.getGroups());
 

@@ -1336,7 +1336,7 @@ public class PropsValues {
 
 	public static final int SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA = GetterUtil.getInteger(PropsUtil.get(PropsKeys.SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA), 10);
 
-	public static final Boolean SEARCH_QUERY_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SEARCH_QUERY_ENABLED));
+	public static final Boolean SEARCH_PERMISSION_FILTER_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SEARCH_PERMISSION_FILTER_ENABLED));
 
 	public static final Boolean SEARCH_USE_DEEP_SEARCH = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SEARCH_USE_DEEP_SEARCH));
 

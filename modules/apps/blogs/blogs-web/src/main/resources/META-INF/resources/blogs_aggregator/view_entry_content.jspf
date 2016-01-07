@@ -33,9 +33,7 @@
 
 		String viewEntryURL = sb.toString();
 
-		sb.append("&showAllEntries=1");
-
-		String viewAllEntriesURL = sb.toString();
+		String viewAllEntriesURL = viewEntryURL.concat("&showAllEntries=1");
 		%>
 
 		<c:if test='<%= !displayStyle.endsWith("-without-title") %>'>

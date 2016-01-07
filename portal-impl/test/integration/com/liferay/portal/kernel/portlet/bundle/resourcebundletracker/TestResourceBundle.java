@@ -28,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + TestPortlet.PORTLET_NAME, "language.id=es_ES"
+		"javax.portlet.name=" + TestPortlet.PORTLET_NAME, "language.id=es_ES",
+		"service.ranking:Integer=100"
 	},
 	service = ResourceBundle.class
 )

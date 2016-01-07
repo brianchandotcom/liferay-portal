@@ -106,19 +106,20 @@ public class ResourceBundleTrackerTest {
 			registerResourceBundle(
 				createResourceBundle(
 					"common-key", "th_TH_TH", "th_TH_TH", "th_TH_TH"),
-				"th_TH_TH");
+				"th_TH_TH", 100);
 		ServiceRegistration<ResourceBundle> serviceRegistrationB =
 			registerResourceBundle(
 				createResourceBundle("common-key", "th_TH", "th_TH", "th_TH"),
-				"th_TH");
+				"th_TH", 100);
 		ServiceRegistration<ResourceBundle> serviceRegistrationC =
 			registerResourceBundle(
-				createResourceBundle("common-key", "th", "th", "th"), "th");
+				createResourceBundle("common-key", "th", "th", "th"), "th",
+				100);
 		ServiceRegistration<ResourceBundle> serviceRegistrationD =
 			registerResourceBundle(
 				createResourceBundle(
 					"common-key", "root-bundle", "root-bundle", "root-bundle"),
-				"");
+				"", 100);
 
 		PortletConfig portletConfig = _genericPortlet.getPortletConfig();
 
@@ -162,12 +163,18 @@ public class ResourceBundleTrackerTest {
 
 		serviceRegistrationA.unregister();
 
+		portletResourceBundleA = portletConfig.getResourceBundle(
+			new Locale("th", "TH", "TH"));
+
 		Assert.assertFalse(portletResourceBundleA.containsKey("th_TH_TH"));
 		Assert.assertEquals(
 			"th_TH",
 			ResourceBundleUtil.getString(portletResourceBundleA, "common-key"));
 
 		serviceRegistrationB.unregister();
+
+		portletResourceBundleA = portletConfig.getResourceBundle(
+			new Locale("th", "TH", "TH"));
 
 		Assert.assertFalse(portletResourceBundleA.containsKey("th_TH"));
 		Assert.assertEquals(
@@ -176,12 +183,18 @@ public class ResourceBundleTrackerTest {
 
 		serviceRegistrationC.unregister();
 
+		portletResourceBundleA = portletConfig.getResourceBundle(
+			new Locale("th", "TH", "TH"));
+
 		Assert.assertFalse(portletResourceBundleA.containsKey("th"));
 		Assert.assertEquals(
 			"root-bundle",
 			ResourceBundleUtil.getString(portletResourceBundleA, "common-key"));
 
 		serviceRegistrationD.unregister();
+
+		portletResourceBundleA = portletConfig.getResourceBundle(
+			new Locale("th", "TH", "TH"));
 
 		Assert.assertFalse(portletResourceBundleA.containsKey("root-bundle"));
 		Assert.assertFalse(portletResourceBundleA.containsKey("common-key"));
@@ -195,6 +208,7 @@ public class ResourceBundleTrackerTest {
 
 		properties.put("javax.portlet.name", TestPortlet.PORTLET_NAME);
 		properties.put("language.id", "es_ES");
+		properties.put("service.ranking", 1000);
 
 		ServiceRegistration<ResourceBundle> serviceRegistration =
 			registry.registerService(
@@ -245,7 +259,7 @@ public class ResourceBundleTrackerTest {
 	}
 
 	protected ServiceRegistration<ResourceBundle> registerResourceBundle(
-		ResourceBundle resourceBundle, String languageId) {
+		ResourceBundle resourceBundle, String languageId, int ranking) {
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -253,6 +267,7 @@ public class ResourceBundleTrackerTest {
 
 		properties.put("javax.portlet.name", TestPortlet.PORTLET_NAME);
 		properties.put("language.id", languageId);
+		properties.put("service.ranking", ranking);
 
 		return registry.registerService(
 			ResourceBundle.class, resourceBundle, properties);

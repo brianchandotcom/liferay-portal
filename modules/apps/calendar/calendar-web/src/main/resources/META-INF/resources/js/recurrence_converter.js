@@ -23,8 +23,6 @@ AUI.add(
 
 		var padNumber = A.rbind('padNumber', LString, 2);
 
-		var startsWith = A.rbind('startsWith', LString);
-
 		var RecurrenceConverter = function() {
 		};
 
@@ -148,7 +146,7 @@ AUI.add(
 
 					var exDate = null;
 
-					if (string && startsWith(string, EXDATE + STR_SEMICOLON)) {
+					if (string && LString.startsWith(string, EXDATE + STR_SEMICOLON)) {
 						exDate = string.slice(7);
 					}
 
@@ -171,7 +169,7 @@ AUI.add(
 
 					var rrule = null;
 
-					if (string && startsWith(string, RRULE + STR_COLON)) {
+					if (string && LString.startsWith(string, RRULE + STR_COLON)) {
 						string = string.slice(6);
 
 						var params = string.split(STR_SEMICOLON);

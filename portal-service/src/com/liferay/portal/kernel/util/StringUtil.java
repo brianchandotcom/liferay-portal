@@ -313,17 +313,18 @@ public class StringUtil {
 
 	/**
 	 * Returns <code>true</code> if the string contains the text as a comma
-	 * delimited list entry. This operation is case insensitive.
+	 * delimited list entry, ignoring case.
 	 *
 	 * <p>
-	 * Example:
+	 * Examples:
 	 * </p>
 	 *
 	 * <p>
 	 * <pre>
 	 * <code>
-	 * contains("one,two,three", "two") returns true
-	 * contains("one,two,three", "thr") returns false
+	 * containsIgnoreCase("one,two,three", "Two") returns true
+	 * containsIgnoreCase("one,two,three", "thr") returns false
+	 * containsIgnoreCase("one,two,three", "one,two") returns true
 	 * </code>
 	 * </pre>
 	 * </p>
@@ -339,7 +340,7 @@ public class StringUtil {
 
 	/**
 	 * Returns <code>true</code> if the string contains the text as a delimited
-	 * list entry. This operation is case insensitive.
+	 * list entry, ignoring case.
 	 *
 	 * <p>
 	 * Examples:
@@ -348,8 +349,9 @@ public class StringUtil {
 	 * <p>
 	 * <pre>
 	 * <code>
-	 * contains("three...two...one", "two", "...") returns true
-	 * contains("three...two...one", "thr", "...") returns false
+	 * containsIgnoreCase("three...two...one", "Two", "...") returns true
+	 * containsIgnoreCase("three...two...one", "thr", "...") returns false
+	 * containsIgnoreCase("three...two...one", "two...one", "...") returns true
 	 * </code>
 	 * </pre>
 	 * </p>

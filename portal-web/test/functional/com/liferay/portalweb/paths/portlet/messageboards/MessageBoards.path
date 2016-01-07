@@ -438,6 +438,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_TABLE_STATUS</td>
+	<td>//span[@class='taglib-workflow-status']/span/strong</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_TABLE_ACTIONS</td>
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]/div/table/tbody/tr[contains(.,'${key_threadSubject}')]/td[7]/div/a/span</td>
 	<td></td>

@@ -38,6 +38,11 @@ public class LayoutCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "icon-file-alt";
+	}
+
+	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}

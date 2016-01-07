@@ -1356,12 +1356,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _classPattern.matcher(content);
 
 		while (matcher.find()) {
-			String match = matcher.group();
+			String firstTrailingNonWhitespace = matcher.group(9);
+			String match = matcher.group(1);
+			String trailingWhitespace = matcher.group(8);
 
-			match = match.substring(0, match.length() - 1);
+			if (!trailingWhitespace.contains("\n") &&
+				!firstTrailingNonWhitespace.equals("}")) {
+
+				return StringUtil.replace(content, match, match + "\n");
+			}
 
 			String formattedClassLine = getFormattedClassLine(
-				matcher.group(1), match);
+				matcher.group(2), match);
 
 			if (formattedClassLine != null) {
 				content = StringUtil.replace(
@@ -3752,8 +3758,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _checkModulesServiceUtil;
 	private boolean _checkUnprocessedExceptions;
 	private final Pattern _classPattern = Pattern.compile(
-		"\n(\t*)(private|protected|public) ((abstract|static) )*" +
-			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
+		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
+			"(class|enum|interface) ([\\s\\S]*?) \\{)\n(\\s*)(\\S)");
 	private Pattern _combinedLinesPattern1 = Pattern.compile(
 		"\n(\t*).+(=|\\]) (\\{)\n");
 	private Pattern _combinedLinesPattern2 = Pattern.compile(

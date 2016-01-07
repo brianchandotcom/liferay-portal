@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "org.apache.struts", name: "struts-core", version: "1.3.10"
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:configuration-admin:configuration-admin-api")

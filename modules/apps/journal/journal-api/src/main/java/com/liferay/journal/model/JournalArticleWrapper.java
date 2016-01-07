@@ -460,15 +460,6 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getDefaultLanguageId}
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getDefaultLocale() {
-		return _journalArticle.getDefaultLocale();
-	}
-
-	/**
 	* Returns the description of this journal article.
 	*
 	* @return the description of this journal article

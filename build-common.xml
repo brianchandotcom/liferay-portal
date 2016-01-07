@@ -1430,6 +1430,16 @@ rerun your task.
 				</then>
 			</if>
 
+			<if>
+				<equals arg1="${jsp.precompile}" arg2="on" />
+				<then>
+					<var name="jsp.precompile.enabled" value="true" />
+				</then>
+				<else>
+					<var name="jsp.precompile.enabled" value="false" />
+				</else>
+			</if>
+
 			<exec executable="git" outputproperty="liferay.releng.branch">
 				<arg value="rev-parse" />
 				<arg value="--abbrev-ref" />
@@ -1498,7 +1508,7 @@ rerun your task.
 			>
 				app.server.type=${app.server.type}
 				auto.deploy.dir=${liferay.home}/osgi/apps
-				jsp.precompile=${jsp.precompile}
+				jsp.precompile.enabled=${jsp.precompile.enabled}
 				junit.java.integration.gc=${junit.java.integration.gc}
 				junit.java.unit.gc=${junit.java.unit.gc}
 				liferay.home=${liferay.home}

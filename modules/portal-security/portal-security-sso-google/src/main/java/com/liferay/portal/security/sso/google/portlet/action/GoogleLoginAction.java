@@ -287,10 +287,11 @@ public class GoogleLoginAction extends BaseStrutsAction {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(),
+			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/login/login_redirect");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/login/login_redirect");
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		response.sendRedirect(portletURL.toString());
@@ -311,10 +312,11 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		portletURL.setParameter("struts_action", "/login/update_account");
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(),
+			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		redirectURL.setParameter("struts_action", "/login/login_redirect");
+		redirectURL.setParameter(
+			"mvcRenderCommandName", "/login/login_redirect");
 		redirectURL.setParameter("emailAddress", user.getEmailAddress());
 		redirectURL.setParameter("anonymousUser", Boolean.FALSE.toString());
 		redirectURL.setPortletMode(PortletMode.VIEW);

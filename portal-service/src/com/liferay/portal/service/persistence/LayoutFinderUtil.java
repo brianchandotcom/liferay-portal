@@ -34,11 +34,6 @@ public class LayoutFinderUtil {
 		return getFinder().findByNullFriendlyURL();
 	}
 
-	public static java.util.List<com.liferay.portal.model.Layout> findByScopeGroup(
-		long groupId, boolean privateLayout) {
-		return getFinder().findByScopeGroup(groupId, privateLayout);
-	}
-
 	public static java.util.List<com.liferay.portal.model.LayoutReference> findByC_P_P(
 		long companyId, java.lang.String portletId,
 		java.lang.String preferencesKey, java.lang.String preferencesValue) {

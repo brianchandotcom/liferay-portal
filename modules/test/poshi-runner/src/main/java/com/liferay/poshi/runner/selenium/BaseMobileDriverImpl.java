@@ -1023,7 +1023,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isTestName(String testName) {
-		throw new UnsupportedOperationException();
+		return LiferaySeleniumHelper.isTestName(testName);
 	}
 
 	@Override

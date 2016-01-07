@@ -16,6 +16,8 @@ package com.liferay.gradle.plugins.extensions;
 
 import aQute.bnd.osgi.Constants;
 
+import aQute.lib.spring.SpringComponent;
+
 import com.liferay.ant.bnd.bower.BowerAnalyzerPlugin;
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 import com.liferay.ant.bnd.sass.SassAnalyzerPlugin;
@@ -100,7 +102,7 @@ public class LiferayOSGiExtension extends LiferayExtension {
 
 	private static final String[] _BND_PLUGIN_CLASS_NAMES = {
 		BowerAnalyzerPlugin.class.getName(), JspAnalyzerPlugin.class.getName(),
-		SassAnalyzerPlugin.class.getName(),
+		SassAnalyzerPlugin.class.getName(), SpringComponent.class.getName(),
 		SpringDependencyAnalyzerPlugin.class.getName()
 	};
 

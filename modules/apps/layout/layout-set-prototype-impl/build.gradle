@@ -1,6 +1,8 @@
 dependencies {
-	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:off
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:layout:layout-set-prototype-api")

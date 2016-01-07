@@ -1,5 +1,8 @@
 dependencies {
+	// @formatter:off
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile project(":apps:document-library:document-library-repository-cmis-api")
 

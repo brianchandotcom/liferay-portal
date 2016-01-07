@@ -1,6 +1,9 @@
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.4"
+	// @formatter:off
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"

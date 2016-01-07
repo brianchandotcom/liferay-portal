@@ -8,7 +8,10 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.4"
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
 	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	// @formatter:off
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	compile group: "rome", name: "rome", version: "1.0"
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")

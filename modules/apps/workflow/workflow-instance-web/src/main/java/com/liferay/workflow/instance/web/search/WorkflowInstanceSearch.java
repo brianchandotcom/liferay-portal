@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.workflow.instance.web.util.WorkflowInstancePortletUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,36 +77,12 @@ public class WorkflowInstanceSearch extends SearchContainer<WorkflowInstance> {
 		}
 
 		OrderByComparator<WorkflowInstance> orderByComparator =
-			getOrderByComparator(orderByCol, orderByType);
+			WorkflowInstancePortletUtil.getWorkflowInstanceOrderByComparator(
+				orderByCol, orderByType);
 
 		setOrderByCol(orderByCol);
 		setOrderByType(orderByType);
 		setOrderByComparator(orderByComparator);
-	}
-
-	protected OrderByComparator<WorkflowInstance> getOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<WorkflowInstance> orderByComparator = null;
-
-		if (orderByCol.equals("last-activity-date")) {
-			orderByComparator =
-				WorkflowComparatorFactoryUtil.getInstanceStartDateComparator(
-					orderByAsc);
-		}
-		else {
-			orderByComparator =
-				WorkflowComparatorFactoryUtil.getInstanceEndDateComparator(
-					orderByAsc);
-		}
-
-		return orderByComparator;
 	}
 
 }

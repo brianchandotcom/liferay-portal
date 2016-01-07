@@ -14,11 +14,18 @@
 
 package com.liferay.workflow.instance.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
+
+import java.util.Map;
 
 import javax.portlet.Portlet;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Leonardo Barros
@@ -49,4 +56,12 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class MyWorkflowInstancePortlet extends WorkflowInstancePortlet {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		this.workflowInstanceWebConfiguration = Configurable.createConfigurable(
+			WorkflowInstanceWebConfiguration.class, properties);
+	}
+
 }

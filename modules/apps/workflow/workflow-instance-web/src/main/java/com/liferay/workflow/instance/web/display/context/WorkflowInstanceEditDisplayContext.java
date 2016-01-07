@@ -53,8 +53,6 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Leonardo Barros
  */
@@ -62,13 +60,12 @@ public class WorkflowInstanceEditDisplayContext
 	extends BaseWorkflowInstanceDisplayContext {
 
 	public WorkflowInstanceEditDisplayContext(
-		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		PortletPreferences portletPreferences) {
 
 		super(
-			request, liferayPortletRequest, liferayPortletResponse,
-			portletPreferences);
+			liferayPortletRequest, liferayPortletResponse, portletPreferences);
 	}
 
 	public AssetEntry getAssetEntry() throws PortalException {

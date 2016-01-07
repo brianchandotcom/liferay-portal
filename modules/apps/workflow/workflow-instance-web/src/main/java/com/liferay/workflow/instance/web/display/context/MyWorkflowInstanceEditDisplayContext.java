@@ -25,8 +25,6 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Marcellus Tavares
  */
@@ -34,13 +32,12 @@ public class MyWorkflowInstanceEditDisplayContext
 	extends WorkflowInstanceEditDisplayContext {
 
 	public MyWorkflowInstanceEditDisplayContext(
-		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		PortletPreferences portletPreferences) {
 
 		super(
-			request, liferayPortletRequest, liferayPortletResponse,
-			portletPreferences);
+			liferayPortletRequest, liferayPortletResponse, portletPreferences);
 	}
 
 	@Override

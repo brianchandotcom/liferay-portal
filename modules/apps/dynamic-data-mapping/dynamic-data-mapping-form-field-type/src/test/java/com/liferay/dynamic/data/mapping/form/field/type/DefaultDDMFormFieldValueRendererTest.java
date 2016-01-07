@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.form.field.type;
 
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -44,9 +43,11 @@ public class DefaultDDMFormFieldValueRendererTest {
 
 	@Test
 	public void testRender() {
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"Text", new UnlocalizedValue(StringUtil.randomString()));
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("Text");
+		ddmFormFieldValue.setValue(
+			new UnlocalizedValue(StringUtil.randomString()));
 
 		_defaultDDMFormFieldValueRenderer.render(
 			ddmFormFieldValue, LocaleUtil.US);

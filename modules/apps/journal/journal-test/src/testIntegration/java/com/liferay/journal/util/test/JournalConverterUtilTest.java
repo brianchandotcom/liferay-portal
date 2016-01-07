@@ -118,8 +118,10 @@ public class JournalConverterUtilTest {
 
 		String definition = read("test-ddm-structure-all-fields.xml");
 
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
 		_ddmStructure = _ddmStructureTestHelper.addStructure(
-			classNameId, null, "Test Structure", definition,
+			classNameId, null, "Test Structure", ddmForm,
 			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Registry registry = RegistryUtil.getRegistry();

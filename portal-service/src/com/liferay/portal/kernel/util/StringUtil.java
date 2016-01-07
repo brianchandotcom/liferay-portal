@@ -241,7 +241,7 @@ public class StringUtil {
 	 * delimited list entry.
 	 *
 	 * <p>
-	 * Example:
+	 * Examples:
 	 * </p>
 	 *
 	 * <p>
@@ -249,6 +249,7 @@ public class StringUtil {
 	 * <code>
 	 * contains("one,two,three", "two") returns true
 	 * contains("one,two,three", "thr") returns false
+	 * contains("one,two,three", "one,two") returns true
 	 * </code>
 	 * </pre>
 	 * </p>
@@ -275,6 +276,7 @@ public class StringUtil {
 	 * <code>
 	 * contains("three...two...one", "two", "...") returns true
 	 * contains("three...two...one", "thr", "...") returns false
+	 * contains("three...two...one", "two...one", "...") returns true
 	 * </code>
 	 * </pre>
 	 * </p>
@@ -3224,7 +3226,7 @@ public class StringUtil {
 	 * Splits string <code>s</code> around comma characters.
 	 *
 	 * <p>
-	 * Example:
+	 * Examples:
 	 * </p>
 	 *
 	 * <p>
@@ -3964,7 +3966,7 @@ public class StringUtil {
 	 * the opening parenthesis, the parenthetical suffix is not stripped.
 	 *
 	 * <p>
-	 * Example:
+	 * Examples:
 	 * </p>
 	 *
 	 * <p>
@@ -4006,7 +4008,7 @@ public class StringUtil {
 	 * characters comprising the string <code>s</code>.
 	 *
 	 * <p>
-	 * Example:
+	 * Examples:
 	 * </p>
 	 *
 	 * <p>
@@ -4039,7 +4041,7 @@ public class StringUtil {
 	 * integer.
 	 *
 	 * <p>
-	 * Example:
+	 * Examples:
 	 * </p>
 	 *
 	 * <p>

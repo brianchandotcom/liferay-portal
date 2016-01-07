@@ -44,8 +44,7 @@ public class WikiURLHelper {
 	public PortletURL getBackToViewPagesURL(WikiNode node) {
 		PortletURL viewPagesURL = _renderResponse.createRenderURL();
 
-		viewPagesURL.setParameter(
-			"mvcRenderCommandName", "/wiki/view_pages");
+		viewPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 		viewPagesURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 		viewPagesURL.setParameter("navigation", "all-pages");
 
@@ -80,14 +79,6 @@ public class WikiURLHelper {
 		return undoTrashURL;
 	}
 
-	public PortletURL getViewPagesURL(WikiNode wikiNode) {
-		PortletURL viewPagesURL = getWikiNodeBaseURL(wikiNode);
-
-		viewPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
-
-		return viewPagesURL;
-	}
-
 	public PortletURL getViewDraftPagesURL(WikiNode wikiNode) {
 		PortletURL viewDraftPagesURL = getWikiNodeBaseURL(wikiNode);
 
@@ -115,6 +106,14 @@ public class WikiURLHelper {
 			"mvcRenderCommandName", "/wiki/view_orphan_pages");
 
 		return viewOrphanPagesURL;
+	}
+
+	public PortletURL getViewPagesURL(WikiNode wikiNode) {
+		PortletURL viewPagesURL = getWikiNodeBaseURL(wikiNode);
+
+		viewPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
+
+		return viewPagesURL;
 	}
 
 	public PortletURL getViewPageURL(WikiNode wikiNode, String title) {

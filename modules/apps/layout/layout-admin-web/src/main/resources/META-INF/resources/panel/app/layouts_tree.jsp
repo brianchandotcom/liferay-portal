@@ -60,18 +60,31 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 </liferay-util:buffer>
 
 <c:if test="<%= layoutsTreeDisplayContext.isShowLayoutTabs() %>">
+
+	<%
+	Map<String, Object> data = new HashMap<>();
+	%>
+
 	<div class="layout-set-tabs">
 		<c:if test="<%= layoutsTreeDisplayContext.isShowPublicLayoutsTree() %>">
 			<span class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? StringPool.BLANK : "selected-layout-set" %>">
-				<aui:a cssClass="layout-set-link" href="<%= layoutsTreeDisplayContext.getPublicLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(false) %>" />
+
+				<%
+				data.put("qa-id", "goToPublicPages");
+				%>
+
+				<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPublicLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(false) %>" />
 
 				<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
 
 					<%
 					PortletURL addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, false);
+
+					data.put("qa-id", "addPublicPage");
 					%>
 
 					<liferay-ui:icon
+						data="<%= data %>"
 						icon="plus"
 						label="<%= false %>"
 						linkCssClass="layout-set-tree-add"
@@ -85,9 +98,12 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 					<%
 					PortletURL editLayoutURL = layoutsTreeDisplayContext.getEditLayoutURL(LayoutConstants.DEFAULT_PLID, false);
+
+					data.put("qa-id", "editPublicPages");
 					%>
 
 					<liferay-ui:icon
+						data="<%= data %>"
 						icon="cog"
 						label="<%= false %>"
 						linkCssClass="layout-set-tree-edit"
@@ -100,15 +116,23 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		</c:if>
 
 		<span class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? "selected-layout-set" : StringPool.BLANK %>">
-			<aui:a cssClass="layout-set-link" href="<%= layoutsTreeDisplayContext.getPrivateLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(true) %>" />
+
+			<%
+			data.put("qa-id", "goToPrivatePages");
+			%>
+
+			<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPrivateLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(true) %>" />
 
 			<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
 
 				<%
 				PortletURL addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, true);
+
+				data.put("qa-id", "addPrivatePage");
 				%>
 
 				<liferay-ui:icon
+					data="<%= data %>"
 					icon="plus"
 					label="<%= false %>"
 					linkCssClass="layout-set-tree-add"
@@ -122,9 +146,12 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 				<%
 				PortletURL editLayoutURL = layoutsTreeDisplayContext.getEditLayoutURL(LayoutConstants.DEFAULT_PLID, true);
+
+				data.put("qa-id", "editPrivatePages");
 				%>
 
 				<liferay-ui:icon
+					data="<%= data %>"
 					icon="cog"
 					label="<%= false %>"
 					linkCssClass="layout-set-tree-edit"

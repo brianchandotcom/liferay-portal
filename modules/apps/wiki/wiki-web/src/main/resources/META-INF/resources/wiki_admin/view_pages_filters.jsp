@@ -1,4 +1,3 @@
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -27,7 +26,7 @@ String orderByType = GetterUtil.getString((String)request.getAttribute("view_pag
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/wiki_admin/view_pages");
+portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 

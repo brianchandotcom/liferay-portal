@@ -241,8 +241,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 		}
 
 		if (!containerModel) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/wiki/view_all_pages");
+			portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 		}
 
 		return portletURL;

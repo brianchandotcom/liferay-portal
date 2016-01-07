@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
-		"mvc.render.command.name=/wiki/view_all_pages"
+		"mvc.render.command.name=/wiki/view_pages"
 	},
 	service = {
 		WikiPortletToolbarContributor.class, PortletToolbarContributor.class

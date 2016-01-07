@@ -95,7 +95,7 @@ if (portletTitleBasedNavigation) {
 			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewRecentChangesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
 			<%
-			PortletURL viewAllPagesURL = wikiURLHelper.getViewAllPagesURL(node);
+			PortletURL viewAllPagesURL = wikiURLHelper.getViewPagesURL(node);
 
 			label = "all-pages";
 			selected = wikiVisualizationHelper.isViewAllPagesNavItemSelected();

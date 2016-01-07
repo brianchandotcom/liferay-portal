@@ -95,12 +95,6 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getDDMTemplate()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getDefaultLanguageId}
-	*/
-	@java.lang.Deprecated()
-	public java.lang.String getDefaultLocale();
-
 	public com.liferay.portal.kernel.xml.Document getDocument();
 
 	public com.liferay.journal.model.JournalFolder getFolder()

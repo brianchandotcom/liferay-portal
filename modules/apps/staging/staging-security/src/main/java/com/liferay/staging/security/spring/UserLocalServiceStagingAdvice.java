@@ -17,6 +17,9 @@ package com.liferay.staging.security.spring;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Tomas Polesovsky
  */
@@ -41,6 +44,13 @@ public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 			"updateGroups", 1, long.class, long[].class, ServiceContext.class);
 
 		initCustomMethod("unsetGroupTeamsUsers", 0, long.class, long[].class);
+
+		checkCoverage(_GROUP_METHODS_WHITELIST);
 	}
+
+	private static final List<String> _GROUP_METHODS_WHITELIST =
+		Arrays.asList(new String[] {
+			"addDefaultGroups", "getGroupPrimaryKeys", "getNoGroups"
+		});
 
 }

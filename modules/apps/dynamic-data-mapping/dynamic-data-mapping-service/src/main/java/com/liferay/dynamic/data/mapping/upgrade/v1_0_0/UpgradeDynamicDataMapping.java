@@ -411,11 +411,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected String toJSON(DDMForm ddmForm) {
-		return DDMFormJSONSerializerUtil.serialize(ddmForm);
+		String jsonData = DDMFormJSONSerializerUtil.serialize(ddmForm);
+
+		return updateFieldNames(jsonData);
 	}
 
 	protected String toJSON(DDMFormValues ddmFormValues) {
-		return DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+		String jsonData = DDMFormValuesJSONSerializerUtil.serialize(
+			ddmFormValues);
+
+		return updateFieldNames(jsonData);
 	}
 
 	protected void transformFieldTypeDDMFormFields(
@@ -496,6 +501,22 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
 			String dataType = ddmFormField.getDataType();
 
+			String name = ddmFormField.getName();
+			String newName = name.replaceAll(
+				_FIELD_NAME_REGEX, StringPool.BLANK);
+
+			if (Validator.isNull(newName)) {
+				newName = StringUtil.randomString();
+			}
+
+			if (!name.equals(newName)) {
+				ddmFormField.getProperties().put("oldName", name);
+			}
+
+			_ddmFormFieldNameMap.put(name, newName);
+
+			ddmFormField.setName(newName);
+
 			if (Validator.equals(dataType, "file-upload")) {
 				ddmFormField.setDataType("document-library");
 				ddmFormField.setType("ddm-documentlibrary");
@@ -509,6 +530,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		return copyDDMForm;
 	}
 
+	protected String updateFieldNames(String value) {
+		for (Map.Entry<String, String> entry :
+				_ddmFormFieldNameMap.entrySet()) {
+
+			value = value.replaceAll(entry.getKey(), entry.getValue());
+		}
+
+		return value;
+	}
+
 	protected void updateStructureStorageType() throws Exception {
 		runSQL(
 			"update DDMStructure set storageType='json' where " +
@@ -519,6 +550,32 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		runSQL(
 			"update DDMStructureVersion set storageType='json' where " +
 				"storageType = 'xml'");
+	}
+
+	protected void updateTemplateScript(long templateId, String script)
+		throws Exception {
+
+		PreparedStatement ps = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"update DDMTemplate set script = ? where templateId = ?");
+
+			ps.setString(1, script);
+			ps.setLong(2, templateId);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to update dynamic data mapping template with " +
+					"template ID " + templateId);
+
+			throw e;
+		}
+		finally {
+			DataAccess.cleanUp(ps);
+		}
 	}
 
 	protected void upgradeDDLFieldTypeReferences() throws Exception {
@@ -859,6 +916,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 					upgradeTemplateScript(templateId, script);
 				}
+				else {
+					script = updateFieldNames(script);
+
+					updateTemplateScript(templateId, script);
+				}
 
 				// Template version
 
@@ -961,6 +1023,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
+	private static final String _FIELD_NAME_REGEX =
+		"([[\\p{Space}]|[\\p{Punct}]&&[^_]])+";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeDynamicDataMapping.class);
 
@@ -1005,6 +1070,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;
+	private final Map<String, String> _ddmFormFieldNameMap = new HashMap<>();
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final DLFileVersionLocalService _dlFileVersionLocalService;

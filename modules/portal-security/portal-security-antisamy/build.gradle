@@ -5,7 +5,7 @@ task processSanitizerConfiguration(type: Copy)
 String sanitizerConfigurationUrl = "https://owaspantisamy.googlecode.com/files/antisamy-ebay-1.4.4.xml"
 
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "2.4.1"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile project(":apps:configuration-admin:configuration-admin-api")
 

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -144,8 +143,10 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public String getPortalURL(long groupId) throws PortalException {
+		int portalPort = PortalUtil.getPortalServerPort(false);
+
 		String portalURL = PortalUtil.getPortalURL(
-			getVirtualHostname(), Http.HTTP_PORT, false);
+			getVirtualHostname(), portalPort, false);
 
 		if (groupId <= 0) {
 			return portalURL;
@@ -159,7 +160,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 			if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
 				portalURL = PortalUtil.getPortalURL(
-					layoutSet.getVirtualHostname(), Http.HTTP_PORT, false);
+					layoutSet.getVirtualHostname(), portalPort, false);
 			}
 		}
 		else if (group.hasPrivateLayouts()) {
@@ -168,7 +169,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 			if (Validator.isNotNull(layoutSet.getVirtualHostname())) {
 				portalURL = PortalUtil.getPortalURL(
-					layoutSet.getVirtualHostname(), Http.HTTP_PORT, false);
+					layoutSet.getVirtualHostname(), portalPort, false);
 			}
 		}
 

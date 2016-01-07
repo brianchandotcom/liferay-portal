@@ -311,10 +311,55 @@ public class StringUtil {
 		return true;
 	}
 
+	/**
+	 * Returns <code>true</code> if the string contains the text as a comma
+	 * delimited list entry. This operation is case insensitive.
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * contains("one,two,three", "two") returns true
+	 * contains("one,two,three", "thr") returns false
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the string in which to search
+	 * @param  text the text to search for in the string
+	 * @return <code>true</code> if the string contains the text as a comma
+	 *         delimited list entry; <code>false</code> otherwise
+	 */
 	public static boolean containsIgnoreCase(String s, String text) {
 		return containsIgnoreCase(s, text, StringPool.COMMA);
 	}
 
+	/**
+	 * Returns <code>true</code> if the string contains the text as a delimited
+	 * list entry. This operation is case insensitive.
+	 *
+	 * <p>
+	 * Examples:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * contains("three...two...one", "two", "...") returns true
+	 * contains("three...two...one", "thr", "...") returns false
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the string in which to search
+	 * @param  text the text to search for in the string
+	 * @param  delimiter the delimiter
+	 * @return <code>true</code> if the string contains the text as a delimited
+	 *         list entry; <code>false</code> otherwise
+	 */
 	public static boolean containsIgnoreCase(
 		String s, String text, String delimiter) {
 

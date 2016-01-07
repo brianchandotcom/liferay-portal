@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>NAME</td>
-	<td>//h3[@class='header-title']</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>

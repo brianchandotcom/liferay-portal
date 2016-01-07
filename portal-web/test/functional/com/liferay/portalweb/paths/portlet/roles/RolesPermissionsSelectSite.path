@@ -22,7 +22,7 @@
 <!--SCOPE_SITES_TABLE-->
 <tr>
 	<td>SCOPE_SITES_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_siteNameScope}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_siteNameScope}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>

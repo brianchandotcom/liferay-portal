@@ -1,9 +1,3 @@
 apply plugin: "com.liferay.change.log.builder"
 apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
-
-if (project.properties["jsp.precompile"] == "on") {
-	compileJSP {
-		destinationDir = new File(liferay.liferayHome, "work/" + bundle.instructions["Bundle-SymbolicName"] + "-" + project.version)
-	}
-}

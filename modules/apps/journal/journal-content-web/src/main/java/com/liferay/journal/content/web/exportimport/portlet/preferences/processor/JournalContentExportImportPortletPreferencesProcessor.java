@@ -157,18 +157,29 @@ public class JournalContentExportImportPortletPreferencesProcessor
 			!defaultDDMTemplateKey.equals(preferenceDDMTemplateKey)) {
 
 			try {
-				DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
-					article.getGroupId(),
-					PortalUtil.getClassNameId(DDMStructure.class),
-					preferenceDDMTemplateKey, true);
+				DDMTemplate ddmTemplate =
+					_ddmTemplateLocalService.fetchTemplate(
+						article.getGroupId(),
+						PortalUtil.getClassNameId(DDMStructure.class),
+						preferenceDDMTemplateKey, true);
+
+				if (ddmTemplate == null) {
+					ddmTemplate = _ddmTemplateLocalService.getTemplate(
+						article.getGroupId(),
+						PortalUtil.getClassNameId(DDMStructure.class),
+						defaultDDMTemplateKey, true);
+
+					portletPreferences.setValue(
+						"ddmTemplateKey", defaultDDMTemplateKey);
+				}
 
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, article, ddmTemplate,
 					PortletDataContext.REFERENCE_TYPE_STRONG);
 			}
-			catch (PortalException pe) {
+			catch (PortalException | ReadOnlyException e) {
 				throw new PortletDataException(
-					"Unable to export referenced article template", pe);
+					"Unable to export referenced article template", e);
 			}
 		}
 

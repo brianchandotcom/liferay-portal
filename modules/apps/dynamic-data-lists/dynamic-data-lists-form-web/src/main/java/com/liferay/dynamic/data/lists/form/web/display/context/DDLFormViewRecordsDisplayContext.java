@@ -95,6 +95,10 @@ public class DDLFormViewRecordsDisplayContext {
 	public String getColumnValue(
 		DDMFormField ddmFormField, List<DDMFormFieldValue> ddmFormFieldValues) {
 
+		if (ddmFormFieldValues == null) {
+			return StringPool.BLANK;
+		}
+
 		final DDMFormFieldValueRenderer ddmFieldValueRenderer =
 			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldValueRenderer(
 				ddmFormField.getType());

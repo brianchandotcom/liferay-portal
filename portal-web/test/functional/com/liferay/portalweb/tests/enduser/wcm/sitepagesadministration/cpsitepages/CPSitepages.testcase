@@ -34,15 +34,15 @@
 	<command name="AddPageMultiplePagesToSite" priority="3">
 		<execute macro="Page#openURL" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Site Page 1" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Site Page 2" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Site Page 3" />
 		</execute>
 
@@ -52,7 +52,7 @@
 	</command>
 
 	<command name="AddPageWithEscapeCharacter" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Tester&apos;s Page" />
 		</execute>
 	</command>
@@ -304,7 +304,7 @@
 			<var name="sitePageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
@@ -322,7 +322,7 @@
 	</command>
 
 	<command name="ChangePageLayout" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="site Page Name" />
 		</execute>
 
@@ -362,7 +362,7 @@
 			<var name="sitePageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blog Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />

@@ -37,7 +37,7 @@
 	</tear-down>
 
 	<command name="IFrameDemo" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="columnName" value="1_column" />
 			<var name="pageName" value="IFrame Page" />
 			<var name="pageType" value="Empty Page" />
@@ -139,7 +139,7 @@
 			<var name="webContentContent" value="DHS Content" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Sales Page" />
 		</execute>
 

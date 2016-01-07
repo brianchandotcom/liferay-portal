@@ -41,7 +41,7 @@
 	</tear-down>
 
 	<command name="AddBlogsEntryNoGuestRole" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -613,7 +613,7 @@
 	</command>
 
 	<command name="DeleteBlogsEntryNoGuestRole" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -2120,7 +2120,7 @@
 	</command>
 
 	<command name="ViewBlogsPortletNoGuestRole" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 

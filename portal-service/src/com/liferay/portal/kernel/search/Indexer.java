@@ -90,10 +90,21 @@ public interface Indexer<T> {
 
 	public boolean isCommitImmediately();
 
+	/**
+	 *
+	 * @return true if Indexer participates in post-search result filtering
+	 * @see com.liferay.portal.kernel.search.SearchResultPermissionFilter
+	 */
 	public boolean isFilterSearch();
 
 	public boolean isIndexerEnabled();
 
+	/**
+	 *
+	 * @return true if Indexer adds permission related filters to the search
+	 *         query prior to execution
+	 * @see com.liferay.portal.kernel.search.SearchPermissionChecker
+	 */
 	public boolean isPermissionAware();
 
 	public boolean isStagingAware();

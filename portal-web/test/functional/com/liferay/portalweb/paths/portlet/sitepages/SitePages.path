@@ -163,7 +163,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK_2</td>
-	<td>//span[a[contains(.,'${key_sitePageName}')]]//span[contains(@class,'icon-cog')]</td>
+	<td>xpath=(//span[contains(@class,'tree-label')])[3]/a</td>
 	<td></td>
 </tr>
 <tr>

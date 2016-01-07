@@ -243,7 +243,7 @@
 </tr>
 <tr>
 	<td>PAGE_1_STAGING_LIVE</td>
-	<td>//nav/ul/li[@id='layout_1']</td>
+	<td>//ul/li[@id='layout_1']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -263,7 +263,7 @@
 </tr>
 <tr>
 	<td>PAGE_2_STAGING_LIVE</td>
-	<td>//nav/ul/li[@id='layout_2']</td>
+	<td>//ul/li[@id='layout_2']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -273,7 +273,7 @@
 </tr>
 <tr>
 	<td>PAGE_3_STAGING_LIVE</td>
-	<td>//nav/ul/li[@id='layout_3']</td>
+	<td>//ul/li[@id='layout_3']/a</td>
 	<td></td>
 </tr>
 <tr>

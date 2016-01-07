@@ -168,6 +168,17 @@ public final class LoggerUtil {
 		}
 	}
 
+	public static void pauseFailedTest() throws Exception {
+		if (!isLoggerStarted()) {
+			startLogger(true);
+		}
+
+		_javascriptExecutor.executeScript(
+			"loggerInterface.fire('pause-trigger')");
+
+		pauseLoggerCheck();
+	}
+
 	public static void pauseLoggerCheck() throws Exception {
 		if (!isLoggerStarted()) {
 			return;
@@ -253,8 +264,12 @@ public final class LoggerUtil {
 			"setText('" + loggerElement.getID() + "', '" + text + "');");
 	}
 
-	public static void startLogger() throws Exception {
-		if (isLoggerStarted() || !PropsValues.SELENIUM_LOGGER_ENABLED) {
+	public static void startLogger(boolean startLoggerOnFailure)
+		throws Exception {
+
+		if (isLoggerStarted() ||
+			!(startLoggerOnFailure || PropsValues.SELENIUM_LOGGER_ENABLED)) {
+
 			return;
 		}
 

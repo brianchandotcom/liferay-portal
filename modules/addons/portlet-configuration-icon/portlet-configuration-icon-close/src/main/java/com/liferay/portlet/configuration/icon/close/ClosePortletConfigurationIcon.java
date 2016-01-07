@@ -15,7 +15,6 @@
 package com.liferay.portlet.configuration.icon.close;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.theme.PortletDisplay;
 
 import javax.portlet.PortletRequest;
 
@@ -41,23 +40,17 @@ public class ClosePortletConfigurationIcon
 
 	@Override
 	public String getOnClick() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return "Liferay.Portlet.close('#p_p_id_".concat(
 			portletDisplay.getId()).concat("_'); return false;");
 	}
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.getURLClose();
 	}
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.isShowCloseIcon();
 	}
 

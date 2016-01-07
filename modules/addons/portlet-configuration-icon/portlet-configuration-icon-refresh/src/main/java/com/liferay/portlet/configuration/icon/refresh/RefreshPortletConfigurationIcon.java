@@ -15,7 +15,6 @@
 package com.liferay.portlet.configuration.icon.refresh;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.theme.PortletDisplay;
 
 import javax.portlet.PortletRequest;
 
@@ -41,23 +40,17 @@ public class RefreshPortletConfigurationIcon
 
 	@Override
 	public String getOnClick() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return "Liferay.Portlet.refresh('#p_p_id_".concat(
 			portletDisplay.getId()).concat("_'); return false;");
 	}
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.getURLRefresh();
 	}
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.isShowRefreshIcon();
 	}
 

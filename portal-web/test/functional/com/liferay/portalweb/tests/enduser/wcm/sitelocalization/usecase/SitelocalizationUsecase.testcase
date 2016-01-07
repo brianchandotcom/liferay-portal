@@ -33,7 +33,7 @@
 	<command name="AvailableSiteLocalesSubsetOfAvailablePortalLocales" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Language Test Page" />
 		</execute>
 
@@ -93,7 +93,7 @@
 		<var name="pageName" value="Language Test Page" />
 		<var name="portletName" value="Language Selector" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -138,7 +138,7 @@
 		<var name="pageName" value="Language Test Page" />
 		<var name="portletName" value="Language Selector" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -183,7 +183,7 @@
 		<var name="pageName" value="Language Test Page" />
 		<var name="portletName" value="Language Selector" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

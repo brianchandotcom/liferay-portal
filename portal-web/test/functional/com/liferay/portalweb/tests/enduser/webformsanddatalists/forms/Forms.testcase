@@ -245,7 +245,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -458,7 +458,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -555,7 +555,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -719,7 +719,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -872,7 +872,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -968,7 +968,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -1078,7 +1078,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -1179,7 +1179,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -1271,7 +1271,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -1366,7 +1366,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -1452,7 +1452,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -1596,7 +1596,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -1726,7 +1726,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 
@@ -1815,7 +1815,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
 

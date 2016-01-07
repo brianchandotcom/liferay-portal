@@ -104,7 +104,7 @@
 			<var name="userAction" value="${userAction4}" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
@@ -120,7 +120,7 @@
 
 		<execute function="AssertTextEquals" locator1="PGUserstatistics#PORTLET_BODY" value1="There are no active users for this period." />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -283,7 +283,7 @@
 	</command>
 
 	<command name="Localization" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 

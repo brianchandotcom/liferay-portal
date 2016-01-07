@@ -48,7 +48,7 @@
 			<var name="userScreenName" value="administrator" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 

@@ -1471,7 +1471,7 @@
 		<var name="fieldFieldLabel" value="Link to Page" />
 		<var name="fieldName" value="LinkToPage" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${ddlRecordFieldData}" />
 		</execute>
 

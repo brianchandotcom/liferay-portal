@@ -342,7 +342,7 @@
 
 		<execute macro="WebContent#publish" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -657,7 +657,7 @@
 			<var name="roleName" value="Guest" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="WCD Page" />
 		</execute>
 
@@ -749,7 +749,7 @@
 
 		<execute macro="WebContentTemplates#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -1063,7 +1063,7 @@
 
 		<execute macro="WebContentTemplates#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -1235,7 +1235,7 @@
 
 		<execute macro="WebContentTemplates#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -1758,7 +1758,7 @@
 	</command>
 
 	<command name="WebContentAdministrationLocalization" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -2057,7 +2057,7 @@
 			<var name="siteName" value="Liferay" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -2085,7 +2085,7 @@
 	</command>
 
 	<command name="WebcontentAdministrationTemplateValidation" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 

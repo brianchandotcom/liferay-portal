@@ -14,9 +14,6 @@
 
 package com.liferay.ant.build.logger;
 
-import com.liferay.ant.build.logger.LiferayBuildLogger;
-import com.liferay.ant.build.logger.LiferayBuildPerformanceLogger;
-
 import java.lang.reflect.Field;
 
 import org.apache.tools.ant.BuildException;
@@ -67,12 +64,7 @@ public class LiferayBuildLoggerInstallerTask extends Task {
 		Object buildPerformanceLoggerEnabled = currentProject.getProperty(
 			BUILD_PERFORMANCE_LOGGER_ENABLED);
 
-		if (buildPerformanceLoggerEnabled.equals("true")) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return buildPerformanceLoggerEnabled.equals("true");
 	}
 
 	private static final Field _listenersLockField;

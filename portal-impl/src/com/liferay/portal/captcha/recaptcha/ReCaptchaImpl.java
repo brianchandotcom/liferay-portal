@@ -17,6 +17,7 @@ package com.liferay.portal.captcha.recaptcha;
 import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
+import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -42,6 +44,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -77,6 +80,27 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 
 		String reCaptchaResponse = ParamUtil.getString(
 			request, "g-recaptcha-response");
+
+		while (Validator.isBlank(reCaptchaResponse) &&
+			   (request instanceof HttpServletRequestWrapper)) {
+
+			HttpServletRequestWrapper httpServletRequestWrapper =
+				(HttpServletRequestWrapper)request;
+
+			request =
+				(HttpServletRequest)httpServletRequestWrapper.getRequest();
+
+			reCaptchaResponse = ParamUtil.getString(
+				request, "g-recaptcha-response");
+		}
+
+		if (Validator.isBlank(reCaptchaResponse)) {
+			_log.error(
+				"CAPTCHA text is null. User " + request.getRemoteUser() +
+					" may be trying to circumvent the CAPTCHA.");
+
+			throw new CaptchaTextException();
+		}
 
 		Http.Options options = new Http.Options();
 
@@ -157,8 +181,6 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
-
-		request = PortalUtil.getOriginalServletRequest(request);
 
 		return validateChallenge(request);
 	}

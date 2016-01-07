@@ -91,7 +91,7 @@
 
 				<execute macro="User#tearDownCP" />
 
-				<execute macro="Page#tearDownCP" />
+				<execute macro="Page#tearDownPG" />
 			</else>
 		</if>
 	</tear-down>

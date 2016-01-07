@@ -2672,7 +2672,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPublicPages" />
+		<execute macro="ProductMenu#gotoPublicPages" />
 
 		<execute macro="Navigator#gotoStagedView" />
 

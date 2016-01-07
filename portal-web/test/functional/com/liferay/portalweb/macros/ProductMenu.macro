@@ -56,10 +56,6 @@
 		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 	</command>
 
-	<command name="gotoEditPublicPages" summary="Navigate to Product Menu > Sites > Pages > Public Pages > ${page}">
-		<execute macro="ProductMenuHelper#gotoEditPublicPages" />
-	</command>
-
 	<command name="gotoLiveSite" summary="Navigate to the Live site">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
@@ -115,9 +111,9 @@
 			<var name="category" value="Pages" />
 		</execute>
 
-		<execute macro="ProductMenuHelper#gotoAddPage">
-			<var name="page" value="Private Pages" />
-		</execute>
+		<execute function="Click" locator1="ProductMenu#PRIVATE_PAGES" />
+
+		<execute macro="ProductMenuHelper#openProductMenu" />
 	</command>
 
 	<command name="gotoPrivateSite" summary="Navigate to Product Menu > Sites > Site Popup > ${site}">
@@ -137,9 +133,9 @@
 			<var name="category" value="Pages" />
 		</execute>
 
-		<execute macro="ProductMenuHelper#gotoAddPage">
-			<var name="page" value="Public Pages" />
-		</execute>
+		<execute function="Click" locator1="ProductMenu#PUBLIC_PAGES" />
+
+		<execute macro="ProductMenuHelper#openProductMenu" />
 	</command>
 
 	<command name="gotoPublicSite" summary="Navigate to Product Menu > Sites > Site Popup > ${site}">

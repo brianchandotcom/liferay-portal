@@ -59,12 +59,6 @@
 		<execute macro="ProductMenuHelper#openProductMenu" />
 	</command>
 
-	<command name="gotoEditPublicPages">
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<execute function="Click" locator1="ProductMenu#PUBLIC_PAGES" />
-	</command>
-
 	<command name="gotoPortlet">
 		<var name="key_portlet" value="${portlet}" />
 

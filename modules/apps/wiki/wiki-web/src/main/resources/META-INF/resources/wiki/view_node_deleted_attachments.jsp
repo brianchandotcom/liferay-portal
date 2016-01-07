@@ -25,7 +25,7 @@ List<FileEntry> attachmentsFileEntries = node.getDeletedAttachmentsFiles();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
+portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 

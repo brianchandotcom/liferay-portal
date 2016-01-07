@@ -58,7 +58,7 @@ public class AttributeDefinitionUtil {
 
 		int cardinality = attributeDefinition.getCardinality();
 
-		if (cardinality == 0) {
+		if ((cardinality == 0) || (!property.getClass().isArray())) {
 			return new String[] {String.valueOf(property)};
 		}
 

@@ -59,6 +59,7 @@
 									<liferay-ui:message arguments="<%= workflowInstanceEditDisplayContext.getTaskInitiallyAssignedMessageArguments(workflowLog) %>" key="task-initially-assigned-to-the-x-role" translateArguments="<%= false %>" />
 								</c:otherwise>
 							</c:choose>
+
 							<%= workflowInstanceEditDisplayContext.getWorkflowLogComment(workflowLog) %>
 						</div>
 					</td>

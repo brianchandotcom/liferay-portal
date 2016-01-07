@@ -32,31 +32,31 @@ public class WorkflowInstanceResultRowSplitter implements ResultRowSplitter {
 		List<ResultRowSplitterEntry> resultRowSplitterEntries =
 			new ArrayList<>();
 
-		List<ResultRow> workflowTaskCompletedResultRows = new ArrayList<>();
-		List<ResultRow> workflowTaskPendingResultRows = new ArrayList<>();
+		List<ResultRow> workflowInstanceCompletedResultRows = new ArrayList<>();
+		List<ResultRow> workflowInstancePendingResultRows = new ArrayList<>();
 
 		for (ResultRow resultRow : resultRows) {
 			WorkflowInstance workflowInstance =
 				(WorkflowInstance)resultRow.getObject();
 
 			if (workflowInstance.isComplete()) {
-				workflowTaskCompletedResultRows.add(resultRow);
+				workflowInstanceCompletedResultRows.add(resultRow);
 			}
 			else {
-				workflowTaskPendingResultRows.add(resultRow);
+				workflowInstancePendingResultRows.add(resultRow);
 			}
 		}
 
-		if (!workflowTaskPendingResultRows.isEmpty()) {
+		if (!workflowInstancePendingResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					"Pending", workflowTaskPendingResultRows));
+					"Pending", workflowInstancePendingResultRows));
 		}
 
-		if (!workflowTaskCompletedResultRows.isEmpty()) {
+		if (!workflowInstanceCompletedResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					"Completed", workflowTaskCompletedResultRows));
+					"Completed", workflowInstanceCompletedResultRows));
 		}
 
 		return resultRowSplitterEntries;

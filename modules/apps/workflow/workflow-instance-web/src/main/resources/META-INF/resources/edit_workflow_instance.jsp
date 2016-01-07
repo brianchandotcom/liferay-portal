@@ -22,10 +22,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = null;
 
 if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
-	workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(request, liferayPortletRequest, liferayPortletResponse, portletPreferences);
+	workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse, portletPreferences);
 }
 else {
-	workflowInstanceEditDisplayContext = new MyWorkflowInstanceEditDisplayContext(request, liferayPortletRequest, liferayPortletResponse, portletPreferences);
+	workflowInstanceEditDisplayContext = new MyWorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse, portletPreferences);
 }
 
 portletDisplay.setShowBackIcon(true);
@@ -122,7 +122,6 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 
 				<c:if test="<%= !workflowInstanceEditDisplayContext.isWorkflowTasksEmpty() %>">
 					<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="tasks">
-
 						<liferay-ui:search-container
 							emptyResultsMessage="there-are-no-tasks"
 							iteratorURL="<%= renderResponse.createRenderURL() %>"

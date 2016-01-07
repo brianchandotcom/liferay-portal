@@ -19,16 +19,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -38,11 +35,9 @@ import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortalPreferences;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLUtil;
-import com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
 import com.liferay.workflow.instance.web.search.WorkflowInstanceSearch;
+import com.liferay.workflow.instance.web.util.WorkflowInstancePortletUtil;
 
 import java.io.Serializable;
 
@@ -54,8 +49,6 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Leonardo Barros
  */
@@ -63,29 +56,19 @@ public class WorkflowInstanceViewDisplayContext
 	extends BaseWorkflowInstanceDisplayContext {
 
 	public WorkflowInstanceViewDisplayContext(
-			HttpServletRequest request,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			PortletPreferences portletPreferences)
 		throws PortalException {
 
 		super(
-			request, liferayPortletRequest, liferayPortletResponse,
-			portletPreferences);
-
-		_request = request;
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
-		_portletPreferences = portletPreferences;
-
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_request);
+			liferayPortletRequest, liferayPortletResponse, portletPreferences);
 
 		PortletURL portletURL = PortletURLUtil.getCurrent(
-			_liferayPortletRequest, _liferayPortletResponse);
+			liferayPortletRequest, liferayPortletResponse);
 
 		_searchContainer = new WorkflowInstanceSearch(
-			_liferayPortletRequest, portletURL);
+			liferayPortletRequest, portletURL);
 
 		_searchContainer.setResults(
 			getSearchContainerResults(
@@ -125,27 +108,15 @@ public class WorkflowInstanceViewDisplayContext
 
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
-			_displayStyle = getDisplayStyle(_request, getDisplayViews());
+			_displayStyle = WorkflowInstancePortletUtil.getDisplayStyle(
+				liferayPortletRequest, getDisplayViews());
 		}
 
 		return _displayStyle;
 	}
 
 	public String[] getDisplayViews() {
-		if (_displayViews == null) {
-			WorkflowInstanceWebConfiguration workflowInstanceWebConfiguration =
-				(WorkflowInstanceWebConfiguration) _liferayPortletRequest.
-					getAttribute(
-						WorkflowInstanceWebConfiguration.class.getName());
-
-			_displayViews = StringUtil.split(
-				PrefsParamUtil.getString(
-					_portletPreferences, _liferayPortletRequest, "displayViews",
-					StringUtil.merge(
-						workflowInstanceWebConfiguration.displayViews())));
-		}
-
-		return _displayViews;
+		return _DISPLAY_VIEWS;
 	}
 
 	public Date getEndDate(WorkflowInstance workflowInstance) {
@@ -157,7 +128,7 @@ public class WorkflowInstanceViewDisplayContext
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_liferayPortletRequest, "keywords");
+		_keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -179,7 +150,7 @@ public class WorkflowInstanceViewDisplayContext
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(_request, "navigation", "all");
+		_navigation = ParamUtil.getString(request, "navigation", "all");
 
 		return _navigation;
 	}
@@ -189,18 +160,18 @@ public class WorkflowInstanceViewDisplayContext
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol");
+		_orderByCol = ParamUtil.getString(request, "orderByCol");
 
 		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = _portalPreferences.getValue(
+			_orderByCol = portalPreferences.getValue(
 				PortletKeys.MY_WORKFLOW_TASK, "order-by-col",
 				"last-activity-date");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
 
 			if (saveOrderBy) {
-				_portalPreferences.setValue(
+				portalPreferences.setValue(
 					PortletKeys.MY_WORKFLOW_TASK, "order-by-col", _orderByCol);
 			}
 		}
@@ -213,17 +184,17 @@ public class WorkflowInstanceViewDisplayContext
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType");
+		_orderByType = ParamUtil.getString(request, "orderByType");
 
 		if (Validator.isNull(_orderByType)) {
-			_orderByType = _portalPreferences.getValue(
+			_orderByType = portalPreferences.getValue(
 				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", "asc");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
 
 			if (saveOrderBy) {
-				_portalPreferences.setValue(
+				portalPreferences.setValue(
 					PortletKeys.MY_WORKFLOW_TASK, "order-by-type",
 					_orderByType);
 			}
@@ -259,7 +230,7 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public PortletURL getViewPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		return portletURL;
 	}
@@ -296,16 +267,14 @@ public class WorkflowInstanceViewDisplayContext
 		return false;
 	}
 
-	protected String getAssetTypeTerm(String keywords) {
+	protected String getAssetType(String keywords) {
 		for (WorkflowHandler<?> workflowHandler :
 				getSearchableAssetsWorkflowHandlers()) {
 
-			keywords = StringUtil.lowerCase(keywords);
-			String assetType = StringUtil.lowerCase(
-				workflowHandler.getType(
-					workflowInstanceRequestHelper.getLocale()));
+			String assetType = workflowHandler.getType(
+				workflowInstanceRequestHelper.getLocale());
 
-			if (keywords.equals(assetType)) {
+			if (StringUtil.equalsIgnoreCase(keywords, assetType)) {
 				return workflowHandler.getClassName();
 			}
 		}
@@ -313,39 +282,17 @@ public class WorkflowInstanceViewDisplayContext
 		return StringPool.BLANK;
 	}
 
-	protected String getDisplayStyle(
-		HttpServletRequest request, String[] displayViews) {
+	protected Boolean getCompleted() {
+		if (isNavigationAll()) {
+			return null;
+		}
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-		String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			WorkflowInstanceWebConfiguration workflowTaskWebConfiguration =
-				(WorkflowInstanceWebConfiguration)_request.getAttribute(
-					WorkflowInstanceWebConfiguration.class.getName());
-
-			displayStyle = portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_INSTANCE, "display-style",
-				workflowTaskWebConfiguration.defaultDisplayView());
+		if (isNavigationCompleted()) {
+			return Boolean.TRUE;
 		}
 		else {
-			if (ArrayUtil.contains(displayViews, displayStyle)) {
-				portalPreferences.setValue(
-					PortletKeys.MY_WORKFLOW_INSTANCE, "display-style",
-					displayStyle);
-
-				request.setAttribute(
-					WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-			}
+			return Boolean.FALSE;
 		}
-
-		if (!ArrayUtil.contains(displayViews, displayStyle)) {
-			displayStyle = displayViews[0];
-		}
-
-		return displayStyle;
 	}
 
 	protected WorkflowLog getLatestWorkflowLog(
@@ -369,35 +316,17 @@ public class WorkflowInstanceViewDisplayContext
 			int start, int end, OrderByComparator<WorkflowInstance> comparator)
 		throws PortalException {
 
-		Boolean completedInstance = true;
-
-		if (isNavigationAll()) {
-			completedInstance = null;
-		}
-		else if (isNavigationPending()) {
-			completedInstance = false;
-		}
-
 		return WorkflowInstanceManagerUtil.search(
 			workflowInstanceRequestHelper.getCompanyId(), null,
-			getAssetTypeTerm(getKeywords()), getKeywords(), getKeywords(),
-			completedInstance, start, end, comparator);
+			getAssetType(getKeywords()), getKeywords(), getKeywords(),
+			getCompleted(), start, end, comparator);
 	}
 
 	protected int getSearchContainerTotal() throws PortalException {
-		Boolean completedInstance = true;
-
-		if (isNavigationAll()) {
-			completedInstance = null;
-		}
-		else if (isNavigationPending()) {
-			completedInstance = false;
-		}
-
 		return WorkflowInstanceManagerUtil.searchCount(
 			workflowInstanceRequestHelper.getCompanyId(), null,
-			getAssetTypeTerm(getKeywords()), getKeywords(), getKeywords(),
-			completedInstance);
+			getAssetType(getKeywords()), getKeywords(), getKeywords(),
+			getCompleted());
 	}
 
 	protected String getWorkflowContextEntryClassName(
@@ -448,17 +377,13 @@ public class WorkflowInstanceViewDisplayContext
 		}
 	}
 
+	private static final String[] _DISPLAY_VIEWS = {"list", "descriptive"};
+
 	private String _displayStyle;
-	private String[] _displayViews;
 	private String _keywords;
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
-	private final PortalPreferences _portalPreferences;
-	private final PortletPreferences _portletPreferences;
-	private final HttpServletRequest _request;
 	private final WorkflowInstanceSearch _searchContainer;
 
 }

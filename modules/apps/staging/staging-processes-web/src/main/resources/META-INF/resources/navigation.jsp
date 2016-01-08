@@ -54,13 +54,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 			<liferay-util:include page="/processes_list/view.jsp" servletContext="<%= application %>" />
 
-			<portlet:renderURL var="addNewProcessURL">
-				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu>
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "publish-to-live") %>' url="<%= addNewProcessURL %>" />
-			</liferay-frontend:add-menu>
+			<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= tabs1.equals("scheduled") %>'>
 			<liferay-util:include page="/scheduled_list/view.jsp" servletContext="<%= application %>" />

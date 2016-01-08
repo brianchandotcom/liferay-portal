@@ -41,8 +41,10 @@ import org.apache.felix.utils.extender.Extension;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael Bradford
@@ -80,21 +82,17 @@ public class ThemeContributorExtension implements Extension {
 
 		BundleContext bundleContext = _bundle.getBundleContext();
 
-		Iterator<ServiceReference<ServletContext>> iterator = null;
+		Filter filter = bundleContext.createFilter(
+			"(&(objectClass=" + ServletContext.class.getSimpleName() +
+			")(osgi.web.symbolicname=" + _bundle.getSymbolicName() + "))");
 
-		while ((iterator == null) || !iterator.hasNext()) {
-			Collection<ServiceReference<ServletContext>> serviceReferences =
-				bundleContext.getServiceReferences(
-					ServletContext.class,
-				"(osgi.web.symbolicname=" + _bundle.getSymbolicName() + ")");
+		ServiceTracker<ServletContext, ServletContext> serviceTracker =
+			new ServiceTracker<>(bundleContext, filter, null);
 
-			iterator = serviceReferences.iterator();
-		}
-
-		ServiceReference<ServletContext> reference = iterator.next();
+		serviceTracker.open();
 
 		ServletContext themeContributorServletContext =
-			bundleContext.getService(reference);
+			serviceTracker.waitForService(60_000L);
 
 		if (themeContributorServletContext != null) {
 			_contextPath = themeContributorServletContext.getContextPath();
@@ -110,6 +108,8 @@ public class ThemeContributorExtension implements Extension {
 		_dynamicIncludeServiceRegistration = bundleContext.registerService(
 			DynamicInclude.class.getName(),
 			new ThemeContributorDynamicInclude(), null);
+
+		serviceTracker.close();
 	}
 
 	private void _scanForResources() {

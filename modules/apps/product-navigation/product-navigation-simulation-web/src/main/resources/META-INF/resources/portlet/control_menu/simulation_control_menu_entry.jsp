@@ -16,18 +16,18 @@
 
 <%@ include file="/portlet/init.jsp" %>
 
-<liferay-portlet:renderURL portletName="<%= ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION %>" var="simulationPanelURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcPath" value="/portlet/view.jsp" />
-</liferay-portlet:renderURL>
-
 <%
 Map<String, Object> data = new HashMap<String, Object>();
+
+PortletURL simulationPanelURL = PortletURLFactoryUtil.create(request, ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION, plid, PortletRequest.RENDER_PHASE);
+
+simulationPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 data.put("panelURL", simulationPanelURL);
 data.put("qa-id", "simulation");
 %>
 
-<li>
+<div class="toolbar-group-content">
 	<liferay-ui:icon
 		data="<%= data %>"
 		icon="simulation-menu-closed"
@@ -38,7 +38,7 @@ data.put("qa-id", "simulation");
 		message="simulation"
 		url="javascript:;"
 	/>
-</li>
+</div>
 
 <aui:script position="auto" use="liferay-control-menu">
 	var ControlMenu = Liferay.ControlMenu;

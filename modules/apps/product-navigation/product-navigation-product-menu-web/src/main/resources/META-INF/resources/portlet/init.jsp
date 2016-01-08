@@ -43,7 +43,3 @@ page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
-
-<%
-ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayContext(liferayPortletRequest, liferayPortletResponse);
-%>

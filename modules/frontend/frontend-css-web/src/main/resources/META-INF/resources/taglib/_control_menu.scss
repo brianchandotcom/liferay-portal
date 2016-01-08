@@ -1,0 +1,43 @@
+body.open {
+	.control-menu {
+		@include sm() {
+			left: 320px;
+		}
+	}
+}
+
+.control-menu {
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 500;
+}
+
+.control-menu-level-1,
+.control-menu-level-2 {
+	position: relative;
+}
+
+.control-menu-level-2 {
+	border-bottom: 1px solid #EEE;
+
+	.control-menu-nav {
+		@include flex-wrap(wrap);
+		@include justify-content(space-between);
+
+		> li {
+			margin-bottom: 5px;
+			margin-left: 0;
+			text-align: center;
+
+			@include sm() {
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+.control-menu-icon {
+	display: inline-block;
+}

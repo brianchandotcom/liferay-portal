@@ -342,9 +342,14 @@
 	</command>
 
 	<command name="gotoExportSiteCmd">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteScopeName}" />
-		</execute>
+		<if>
+			<isset var="siteName" />
+			<then>
+				<execute macro="ProductMenu#gotoSite">
+					<var name="site" value="${siteScopeName}" />
+				</execute>
+			</then>
+		</if>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Export" />
@@ -535,7 +540,8 @@
 	</command>
 
 	<command name="selectImportFileSiteCmd">
-		<execute function="AssertClick" locator1="SitePagesImport#NEW_IMPORT_PROCESS_NAVIGATION" value1="New Import Process" />
+		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="AssertClick" locator1="SitePagesImport#SELECT_FILE_BUTTON" value1="Select File" />
 
 		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />

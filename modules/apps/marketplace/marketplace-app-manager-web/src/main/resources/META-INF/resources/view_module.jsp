@@ -44,7 +44,7 @@ String version = ParamUtil.getString(request, "version");
 
 Bundle bundle = BundleManagerUtil.getBundle(symbolicName, version);
 
-String pluginType = ParamUtil.getString(request, "pluginType", "portlets");
+String pluginType = ParamUtil.getString(request, "pluginType", "components");
 
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
@@ -63,22 +63,6 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewModulePortletsURL">
-			<portlet:param name="mvcPath" value="/view_module.jsp" />
-			<portlet:param name="app" value="<%= app %>" />
-			<portlet:param name="moduleGroup" value="<%= moduleGroup %>" />
-			<portlet:param name="symbolicName" value="<%= bundle.getSymbolicName() %>" />
-			<portlet:param name="version" value="<%= bundle.getVersion().toString() %>" />
-			<portlet:param name="pluginType" value="portlets" />
-			<portlet:param name="orderByType" value="<%= orderByType %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewModulePortletsURL %>"
-			label="portlets"
-			selected='<%= pluginType.equals("portlets") %>'
-		/>
-
 		<portlet:renderURL var="viewModuleComponentsURL">
 			<portlet:param name="mvcPath" value="/view_module.jsp" />
 			<portlet:param name="app" value="<%= app %>" />
@@ -93,6 +77,22 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			href="<%= viewModuleComponentsURL %>"
 			label="components"
 			selected='<%= pluginType.equals("components") %>'
+		/>
+
+		<portlet:renderURL var="viewModulePortletsURL">
+			<portlet:param name="mvcPath" value="/view_module.jsp" />
+			<portlet:param name="app" value="<%= app %>" />
+			<portlet:param name="moduleGroup" value="<%= moduleGroup %>" />
+			<portlet:param name="symbolicName" value="<%= bundle.getSymbolicName() %>" />
+			<portlet:param name="version" value="<%= bundle.getVersion().toString() %>" />
+			<portlet:param name="pluginType" value="portlets" />
+			<portlet:param name="orderByType" value="<%= orderByType %>" />
+		</portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= viewModulePortletsURL %>"
+			label="portlets"
+			selected='<%= pluginType.equals("portlets") %>'
 		/>
 	</aui:nav>
 </aui:nav-bar>

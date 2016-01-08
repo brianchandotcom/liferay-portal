@@ -115,8 +115,7 @@ public class ControlMenuPortlet extends MVCPortlet {
 
 		List<ControlMenuCategory> controlMenuCategories =
 			_controlMenuCategoryRegistry.getControlMenuCategories(
-				ControlMenuCategoryKeys.ROOT,
-				PortalUtil.getHttpServletRequest(renderRequest));
+				ControlMenuCategoryKeys.ROOT);
 
 		renderRequest.setAttribute(
 			ControlMenuWebKeys.CONTROL_MENU_CATEGORIES, controlMenuCategories);

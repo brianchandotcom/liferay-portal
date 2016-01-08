@@ -16,7 +16,6 @@ package com.liferay.portlet.css.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.css.web.constants.PortletCSSPortletKeys;
 
@@ -45,8 +44,6 @@ public class PortletCSSPortletConfigurationIcon
 
 	@Override
 	public String getOnClick() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		PortletURL baseActionURL = PortletURLFactoryUtil.create(
 			portletRequest, PortletCSSPortletKeys.PORTLET_CSS,
 			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
@@ -76,15 +73,11 @@ public class PortletCSSPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.getURLPortletCss();
 	}
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.isShowPortletCssIcon();
 	}
 

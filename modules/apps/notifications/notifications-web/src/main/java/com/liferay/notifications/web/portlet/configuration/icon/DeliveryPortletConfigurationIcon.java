@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import javax.portlet.PortletRequest;
@@ -53,8 +52,6 @@ public class DeliveryPortletConfigurationIcon
 
 		sb.append("Liferay.Portlet.openWindow({bodyCssClass: ");
 		sb.append("'dialog-with-footer', namespace: '");
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		sb.append(portletDisplay.getNamespace());
 

@@ -57,8 +57,24 @@ LPS-30525.
 	/>
 </#macro>
 
-<#macro control_menu>
+<#macro control_menu
+	original_portlet_display = ""
+	original_portlet_id = ""
+	original_portlet_request = ""
+>
 	<#if is_setup_complete && is_signed_in>
+		<#if original_portlet_display?has_content>
+			${request.setAttribute("original_portlet_display", original_portlet_display)}
+		</#if>
+
+		<#if original_portlet_id?has_content>
+			${request.setAttribute("original_portlet_id", original_portlet_id)}
+		</#if>
+
+		<#if original_portlet_request?has_content>
+			${request.setAttribute("original_portlet_request", original_portlet_request)}
+		</#if>
+
 		<@liferay_portlet["runtime"]
 			portletProviderAction=portletProviderAction.VIEW
 			portletProviderClassName="com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu"

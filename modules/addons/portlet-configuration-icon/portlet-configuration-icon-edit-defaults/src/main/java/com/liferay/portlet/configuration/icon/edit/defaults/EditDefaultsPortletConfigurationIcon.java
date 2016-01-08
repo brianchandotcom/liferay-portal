@@ -15,7 +15,6 @@
 package com.liferay.portlet.configuration.icon.edit.defaults;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.theme.PortletDisplay;
 
 import javax.portlet.PortletRequest;
 
@@ -36,15 +35,11 @@ public class EditDefaultsPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.getURLEditDefaults();
 	}
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.isShowEditDefaultsIcon();
 	}
 

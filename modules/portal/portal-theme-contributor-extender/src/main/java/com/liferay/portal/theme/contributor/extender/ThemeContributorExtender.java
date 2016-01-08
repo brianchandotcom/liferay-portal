@@ -90,13 +90,13 @@ public class ThemeContributorExtender extends AbstractExtender {
 			}
 		}
 
-		Extension extension = null;
-
-		if (type != null) {
-			extension = new ThemeContributorExtension(bundle, type);
+		if (type == null) {
+			return null;
 		}
 
-		return extension;
+
+
+		return new ThemeContributorExtension(bundle, type);
 	}
 
 	@Override

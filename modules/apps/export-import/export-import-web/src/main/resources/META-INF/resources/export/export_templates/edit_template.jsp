@@ -90,6 +90,11 @@ portletURL.setParameter("mvcRenderCommandName", "viewExportConfigurations");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(portletURL.toString());
+
+renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(request, "new-export-template") : exportImportConfiguration.getName());
 %>
 
 <div class="container-fluid-1280">

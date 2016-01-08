@@ -113,7 +113,7 @@ public class DefaultLDAPSettings implements LDAPSettings {
 	}
 
 	@Override
-	public String getErrorPasswordHistory(long companyId) {
+	public String[] getErrorPasswordHistory(long companyId) {
 		SystemLDAPConfiguration systemLDAPConfiguration =
 			_systemLDAPConfigurationProvider.getConfiguration(companyId);
 

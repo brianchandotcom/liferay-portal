@@ -1,6 +1,6 @@
-def modulesDir = file(properties["liferay.workspace.modules.dir"])
-def themesDir = file(properties["liferay.workspace.themes.dir"])
-def pluginsSDKDir = file(properties["liferay.workspace.plugins.sdk.dir"])
+File modulesDir = file(properties["liferay.workspace.modules.dir"])
+File themesDir = file(properties["liferay.workspace.themes.dir"])
+File pluginsSDKDir = file(properties["liferay.workspace.plugins.sdk.dir"])
 
 FileTree modulesFileTree = fileTree(dir: modulesDir, include: "**/bnd.bnd")
 FileTree themesFileTree = fileTree(dir: themesDir, excludes: ["**/build/", "**/build_gradle/", "**/node_modules/"], include: "**/package.json")

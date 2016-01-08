@@ -10,4 +10,4 @@ buildscript {
 	}
 }
 
-apply plugin: 'com.liferay.workspace'
+apply plugin: "com.liferay.workspace"

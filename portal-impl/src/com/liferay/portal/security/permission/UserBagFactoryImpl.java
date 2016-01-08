@@ -15,7 +15,6 @@
 package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
@@ -24,6 +23,7 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -47,7 +47,7 @@ public class UserBagFactoryImpl implements UserBagFactory {
 			List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(
 				userId, true);
 
-			Set<Organization> userOrgs = getUserOrgs(userId);
+			Collection<Organization> userOrgs = getUserOrgs(userId);
 
 			Set<Group> userOrgGroups = new HashSet<>(userOrgs.size());
 
@@ -55,22 +55,18 @@ public class UserBagFactoryImpl implements UserBagFactory {
 				userOrgGroups.add(organization.getGroup());
 			}
 
-			Set<Role> userRoles = new HashSet<>();
+			List<Role> userRoles = null;
 
 			if (!userGroups.isEmpty()) {
-				List<Role> userRelatedRoles =
-					RoleLocalServiceUtil.getUserRelatedRoles(
-						userId, userGroups);
-
-				userRoles.addAll(userRelatedRoles);
+				userRoles = RoleLocalServiceUtil.getUserRelatedRoles(
+					userId, userGroups);
 			}
 			else {
-				userRoles.addAll(RoleLocalServiceUtil.getUserRoles(userId));
+				userRoles = RoleLocalServiceUtil.getUserRoles(userId);
 			}
 
 			userBag = new UserBagImpl(
-				userId, SetUtil.fromList(userGroups), userOrgs, userOrgGroups,
-				userRoles);
+				userId, userGroups, userOrgs, userOrgGroups, userRoles);
 
 			PermissionCacheUtil.putUserBag(userId, userBag);
 
@@ -83,18 +79,18 @@ public class UserBagFactoryImpl implements UserBagFactory {
 		}
 	}
 
-	protected Set<Organization> getUserOrgs(long userId)
+	protected Collection<Organization> getUserOrgs(long userId)
 		throws PortalException {
 
 		List<Organization> userOrgs =
 			OrganizationLocalServiceUtil.getUserOrganizations(userId);
 
 		if (userOrgs.isEmpty()) {
-			return Collections.emptySet();
+			return Collections.emptyList();
 		}
 
 		if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-			return new HashSet<>(userOrgs);
+			return userOrgs;
 		}
 
 		Set<Organization> organizations = new LinkedHashSet<>();

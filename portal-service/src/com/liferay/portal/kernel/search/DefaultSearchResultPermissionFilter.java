@@ -105,7 +105,7 @@ public class DefaultSearchResultPermissionFilter
 			return true;
 		}
 
-		if (!indexer.isFilterSearch() || !indexer.isPermissionAware()) {
+		if (!indexer.isFilterSearch()) {
 			return true;
 		}
 

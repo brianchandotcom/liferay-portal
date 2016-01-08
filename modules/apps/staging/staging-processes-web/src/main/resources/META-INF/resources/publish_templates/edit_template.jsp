@@ -172,41 +172,43 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
 
-			<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" label='<%= cmd.equals(Constants.ADD) ? "new-publish-template" : "edit-template" %>' />
-
 			<div id="<portlet:namespace />publishOptions">
 				<div class="export-dialog-tree">
-					<c:if test="<%= !group.isCompany() %>">
-						<aui:fieldset cssClass="options-group" label="pages">
+					<aui:fieldset-group markupView="lexicon">
+						<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" />
 
-							<%
-							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
-							%>
+						<c:if test="<%= !group.isCompany() %>">
+							<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
 
-							<liferay-util:include page="/select_pages.jsp" portletId="<%= PortletKeys.EXPORT_IMPORT %>">
-								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
-								<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-								<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-								<liferay-util:param name="treeId" value="<%= treeId %>" />
-								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-							</liferay-util:include>
+								<%
+								request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
+								%>
+
+								<liferay-util:include page="/select_pages.jsp" portletId="<%= PortletKeys.EXPORT_IMPORT %>">
+									<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
+									<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+									<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+									<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+									<liferay-util:param name="treeId" value="<%= treeId %>" />
+									<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+								</liferay-util:include>
+							</aui:fieldset>
+						</c:if>
+
+						<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+
+						<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
+
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions">
+							<%@ include file="/new_publication/permissions.jspf" %>
 						</aui:fieldset>
-					</c:if>
 
-					<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
-
-					<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
-
-					<aui:fieldset cssClass="options-group" label="permissions">
-						<%@ include file="/new_publication/permissions.jspf" %>
-					</aui:fieldset>
-
-					<c:if test="<%= !localPublishing %>">
-						<aui:fieldset cssClass="options-group" label="remote-live-connection-settings">
-							<%@ include file="/new_publication/publish_layouts_remote_options.jspf" %>
-						</aui:fieldset>
-					</c:if>
+						<c:if test="<%= !localPublishing %>">
+							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">
+								<%@ include file="/new_publication/publish_layouts_remote_options.jspf" %>
+							</aui:fieldset>
+						</c:if>
+					</aui:fieldset-group>
 				</div>
 
 				<aui:button-row>

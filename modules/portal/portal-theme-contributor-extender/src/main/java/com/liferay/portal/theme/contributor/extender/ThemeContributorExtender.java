@@ -14,13 +14,19 @@
 
 package com.liferay.portal.theme.contributor.extender;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.List;
 
 import org.apache.felix.utils.extender.AbstractExtender;
 import org.apache.felix.utils.extender.Extension;
@@ -94,9 +100,13 @@ public class ThemeContributorExtender extends AbstractExtender {
 			return null;
 		}
 
+		BundleWebResources bundleWebResources = _scanForResources(bundle);
 
+		if (bundleWebResources == null) {
+			return null;
+		}
 
-		return new ThemeContributorExtension(bundle, type);
+		return new ThemeContributorExtension(bundle, bundleWebResources);
 	}
 
 	@Override
@@ -107,6 +117,75 @@ public class ThemeContributorExtender extends AbstractExtender {
 	@Override
 	protected void warn(Bundle bundle, String s, Throwable t) {
 		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + s, t);
+	}
+
+	protected static class BundleWebResources {
+
+		public BundleWebResources(
+			Collection<String> cssResourcePaths,
+			Collection<String> jsResourcePaths) {
+
+			_cssResourcePaths = cssResourcePaths;
+			_jsResourcePaths = jsResourcePaths;
+		}
+
+		public Collection<String> getCssResourcePaths() {
+			return _cssResourcePaths;
+		}
+
+		public Collection<String> getJsResourcePaths() {
+			return _jsResourcePaths;
+		}
+
+		private final Collection<String> _cssResourcePaths;
+		private final Collection<String> _jsResourcePaths;
+
+	}
+
+	private BundleWebResources _scanForResources(Bundle bundle) {
+		final List<String> cssResourcePaths = new ArrayList<>();
+		final List<String> jsResourcePaths = new ArrayList<>();
+
+		Enumeration<URL> cssEntries = bundle.findEntries(
+			"/META-INF/resources", "*.css", true);
+		Enumeration<URL> jsEntries = bundle.findEntries(
+			"/META-INF/resources", "*.js", true);
+
+		if (cssEntries != null) {
+			while (cssEntries.hasMoreElements()) {
+				URL entry = cssEntries.nextElement();
+
+				String path = entry.getFile();
+
+				path = path.replace("/META-INF/resources", "");
+
+				int lastIndexOfSlash = path.lastIndexOf('/');
+
+				if (!StringPool.UNDERLINE.equals(
+						path.charAt(lastIndexOfSlash + 1)) &&
+					!path.endsWith("_rtl.css")) {
+
+					cssResourcePaths.add(path);
+				}
+			}
+		}
+
+		if (jsEntries != null) {
+			while (jsEntries.hasMoreElements()) {
+				URL entry = jsEntries.nextElement();
+
+				String path = entry.getFile();
+
+				jsResourcePaths.add(path.replace("/META-INF/resources", ""));
+			}
+		}
+
+		if (cssResourcePaths.isEmpty() && jsResourcePaths.isEmpty()) {
+			return null;
+		}
+		else {
+			return new BundleWebResources(cssResourcePaths, jsResourcePaths);
+		}
 	}
 
 	private BundleContext _bundleContext;

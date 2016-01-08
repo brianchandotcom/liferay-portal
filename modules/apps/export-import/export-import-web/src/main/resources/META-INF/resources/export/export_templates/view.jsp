@@ -16,6 +16,15 @@
 
 <%@ include file="/export/init.jsp" %>
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "export-templates"));
+%>
+
 <liferay-staging:defineObjects />
 
 <liferay-util:include page="/export/export_templates/navigation.jsp" servletContext="<%= application %>" />

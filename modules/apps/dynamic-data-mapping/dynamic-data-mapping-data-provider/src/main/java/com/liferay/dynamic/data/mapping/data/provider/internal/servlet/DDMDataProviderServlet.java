@@ -67,6 +67,10 @@ public class DDMDataProviderServlet extends HttpServlet {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
 			"/dynamic-data-mapping-data-provider");
 		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX +
+				"auth.verifier.PortalSessionAuthVerifier.urls.includes",
+				"/dynamic-data-mapping-data-provider/*");
+		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
 			"AuthVerifierFilter");
 		properties.put(

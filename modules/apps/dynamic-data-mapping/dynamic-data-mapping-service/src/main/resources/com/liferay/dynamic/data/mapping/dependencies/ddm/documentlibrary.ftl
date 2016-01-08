@@ -18,7 +18,7 @@
 	</#if>
 </#if>
 
-<@aui["field-wrapper"] data=data>
+<@aui["field-wrapper"] data=data required=required>
 	<div class="form-group">
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
 

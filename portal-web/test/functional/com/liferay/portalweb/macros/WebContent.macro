@@ -31,7 +31,7 @@
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addExistingRelatedAssetCP">
@@ -128,7 +128,7 @@
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 				<execute function="Pause" locator1="5000" />
 				<execute function="SelectFrame" value1="relative=top" />
@@ -215,7 +215,7 @@
 					<equals arg1="${draft}" arg2="true" />
 					<then>
 						<execute function="Click" locator1="Button#SAVE_AS_DRAFT" />
-						<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+						<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 					</then>
 					<else>
 						<execute function="Click" locator1="Button#PUBLISH" />
@@ -469,7 +469,7 @@
 
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addWithStructureCP">
@@ -593,7 +593,7 @@
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 				<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="Draft" />
 			</then>
 		</if>
@@ -711,7 +711,7 @@
 		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
 
 		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="deleteCP">
@@ -747,7 +747,7 @@
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="editCP">
@@ -764,8 +764,9 @@
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-				<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="Draft" />
+
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+				<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Draft" />
 			</then>
 			<else>
 				<execute macro="WebContent#publish" />
@@ -1044,7 +1045,7 @@
 	<command name="publish">
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="saveAsDraft">

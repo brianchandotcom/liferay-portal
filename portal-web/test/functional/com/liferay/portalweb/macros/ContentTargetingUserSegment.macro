@@ -260,7 +260,7 @@
 
 		<execute function="ClickNoError" locator1="ContentTargeting#DELETE_USER_SEGMENT_BUTTON" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="deleteUserSegmentCP">
@@ -269,7 +269,7 @@
 		<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_TABLE_ACTIONS" />
 		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No User Segments were found" />
 	</command>
 
@@ -318,7 +318,7 @@
 
 	<command name="saveCP">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="viewCP">

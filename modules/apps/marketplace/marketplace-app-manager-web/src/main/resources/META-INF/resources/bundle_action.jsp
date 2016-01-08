@@ -24,20 +24,13 @@ String state = ParamUtil.getString(request, "state");
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Bundle bundle = (Bundle)row.getObject();
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view_modules.jsp");
-portletURL.setParameter("app", app);
-portletURL.setParameter("category", category);
-portletURL.setParameter("state", state);
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:choose>
 		<c:when test="<%= bundle.getState() == BundleStateConstants.ACTIVE %>">
 			<portlet:actionURL name="deactivateBundles" var="deactivateBundlesURL">
-				<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="bundleIds" value="<%= String.valueOf(bundle.getBundleId()) %>" />
 			</portlet:actionURL>
 
@@ -48,7 +41,7 @@ portletURL.setParameter("state", state);
 		</c:when>
 		<c:otherwise>
 			<portlet:actionURL name="activateBundles" var="activateBundlesURL">
-				<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="bundleIds" value="<%= String.valueOf(bundle.getBundleId()) %>" />
 			</portlet:actionURL>
 
@@ -60,7 +53,7 @@ portletURL.setParameter("state", state);
 	</c:choose>
 
 	<portlet:actionURL name="uninstallBundles" var="uninstallBundlesURL">
-		<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="bundleIds" value="<%= String.valueOf(bundle.getBundleId()) %>" />
 	</portlet:actionURL>
 

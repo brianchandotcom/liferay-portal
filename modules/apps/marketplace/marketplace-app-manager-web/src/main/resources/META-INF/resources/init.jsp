@@ -74,3 +74,9 @@ page import="org.osgi.framework.ServiceReference" %>
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<%
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+
+String currentURL = currentURLObj.toString();
+%>

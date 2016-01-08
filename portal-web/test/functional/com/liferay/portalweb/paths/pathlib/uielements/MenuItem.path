@@ -309,6 +309,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT</td>
+	<td>//div[contains(@class,'dropdown  open')]//a[@role='menuitem' and contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPORT_IMPORT</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Export / Import')]</td>
 	<td></td>

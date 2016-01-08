@@ -581,11 +581,18 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="gotoCurrentSiteCalendarsManage">
-		<var name="key_siteName" value="${siteName}" />
+	<command name="exportCalendarFile">
+		<var name="key_calendarName" value="${calendarName}" />
 
-		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
+		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_NAME" value1="${calendarName}" />
+
+		<execute function="Click" locator1="CalendarManageCalendars#CALENDAR_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EXPORT" value1="Export" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="AssertConsoleTextNotPresent" value1="ClassNotFoundException" />
 	</command>
 
 	<command name="importCalendarFile">

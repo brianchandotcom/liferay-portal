@@ -1579,6 +1579,41 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The last repeating date should come after the event start date." />
 	</command>
 
+	<command name="viewRepeatingEventViaViewDetails">
+		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
+
+		<if>
+			<equals arg1="${frequency}" arg2="Daily" />
+			<then>
+				<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="Daily, ${numberOfOccurrences} Times" />
+			</then>
+			<elseif>
+				<equals arg1="${frequency}" arg2="Weekly" />
+				<then>
+					<var method="selenium#getCurrentDayName()" name="today" />
+
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="Weekly, On ${today}, ${numberOfOccurrences} Times" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${frequency}" arg2="Yearly" />
+				<then>
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="${yearlyRecurrenceSummary}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${frequency}" arg2="Monthly" />
+				<then>
+					<var method="selenium#getCurrentDayName()" name="today" />
+
+					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="Monthly" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="${numberOfOccurrences} Times" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="${today} " />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="viewRepeatingMonthPosition">
 		<var locator="CalendarEditEvent#REPEAT_MONTHLY_CURRENT_MONTH_POSITION" name="repeatingMonthPosition" />
 
@@ -1678,7 +1713,7 @@
 	</command>
 
 	<command name="viewTitleViaDetails">
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
 
 		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#EVENT_TITLE" value1="${eventTitle}" />
 	</command>

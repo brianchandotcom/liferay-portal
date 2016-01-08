@@ -30,4 +30,8 @@
 
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_TABLE_DISPLAY_FIELD" value1="${key_ddlRecordFieldData}" />
 	</command>
+
+	<command name="viewSpreadsheetContainer">
+		<execute function="AssertElementPresent" locator1="DDLSpreadsheet#SPREADSHEET_CONTAINER" />
+	</command>
 </definition>

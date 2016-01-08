@@ -336,9 +336,20 @@ public class CalendarLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static boolean hasStagingCalendar(
+		com.liferay.calendar.model.Calendar calendar)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasStagingCalendar(calendar);
+	}
+
 	public static void importCalendar(long calendarId, java.lang.String data,
 		java.lang.String type) throws java.lang.Exception {
 		getService().importCalendar(calendarId, data, type);
+	}
+
+	public static boolean isStagingCalendar(
+		com.liferay.calendar.model.Calendar calendar) {
+		return getService().isStagingCalendar(calendar);
 	}
 
 	public static java.util.List<com.liferay.calendar.model.Calendar> search(

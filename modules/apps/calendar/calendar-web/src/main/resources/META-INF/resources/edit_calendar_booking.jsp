@@ -184,6 +184,16 @@ for (long otherCalendarId : otherCalendarIds) {
 		manageableCalendars.add(otherCalendar);
 	}
 }
+
+Iterator<Calendar> itr = manageableCalendars.iterator();
+
+while (itr.hasNext()) {
+	Calendar curCalendar = itr.next();
+
+	if (!CalendarServiceUtil.isManageableFromGroup(curCalendar.getCalendarId(), themeDisplay.getScopeGroupId())) {
+		itr.remove();
+	}
+}
 %>
 
 <liferay-portlet:actionURL name="updateCalendarBooking" var="updateCalendarBookingURL" />

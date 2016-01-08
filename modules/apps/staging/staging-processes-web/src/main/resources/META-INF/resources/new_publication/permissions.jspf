@@ -16,11 +16,11 @@
 
 <ul class="lfr-tree list-unstyled">
 	<li class="tree-item">
-		<aui:input helpMessage='<%= group.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
+		<aui:input helpMessage='<%= group.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="toggle-switch" />
 
 		<ul id="<portlet:namespace />permissionsUl">
 			<li class="tree-item">
-				<aui:input name="permissionsAssignedToRoles" type="checkbox" />
+				<aui:input name="permissionsAssignedToRoles" type="toggle-switch" />
 			</li>
 		</ul>
 	</li>

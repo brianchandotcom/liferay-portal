@@ -29,29 +29,9 @@ if (layout != null) {
 
 <c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() && !controlMenuCategories.isEmpty() %>">
 	<div class="control-menu" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
-		<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && themeDisplay.isShowStagingIcon() %>">
-			<div class="control-menu-level-2">
-				<div class="container-fluid-1280">
-
-					<%
-					String renderPortletBoundary = GetterUtil.getString(request.getAttribute(WebKeys.RENDER_PORTLET_BOUNDARY));
-
-					request.setAttribute(WebKeys.RENDER_PORTLET_BOUNDARY, Boolean.FALSE.toString());
-					%>
-
-					<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
-
-					<%
-					request.setAttribute(WebKeys.RENDER_PORTLET_BOUNDARY, renderPortletBoundary);
-					%>
-
-				</div>
-			</div>
-		</c:if>
-
 		<div class="control-menu-level-1">
 			<div class="container-fluid-1280">
-				<ul class="control-menu-nav" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
+				<ul class="control-menu-nav control-menu-nav-level-1" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
 
 					<%
 					for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
@@ -61,10 +41,22 @@ if (layout != null) {
 							if (controlMenuEntry.include(request, new PipingServletResponse(pageContext))) {
 								continue;
 							}
+
+							String controlMenuEntryCssClass = "";
+
+							String controlMenuEntryKey = controlMenuEntry.getKey();
+
+							if (controlMenuEntryKey.equals(ManageLayoutControlMenuEntry.class.getName())) {
+								controlMenuEntryCssClass = "edit-layout-link";
+							}
+							else if (controlMenuEntryKey.equals(ToggleControlsControlMenuEntry.class.getName())) {
+								controlMenuEntryCssClass = "edit-controls-toggle visible-xs";
+							}
 					%>
 
-							<li>
+							<li class="<%= controlMenuEntryCssClass %>">
 								<liferay-ui:icon
+									cssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
 									data="<%= controlMenuEntry.getData(request) %>"
 									icon="<%= controlMenuEntry.getIconCssClass(request) %>"
 									label="<%= false %>"

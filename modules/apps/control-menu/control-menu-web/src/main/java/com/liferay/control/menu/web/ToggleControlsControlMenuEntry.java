@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
-		"service.ranking:Integer=500"
+		"service.ranking:Integer=200"
 	},
 	service = ControlMenuEntry.class
 )

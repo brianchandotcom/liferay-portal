@@ -7,4 +7,6 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
+Require-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/staging";version:Version="1.0.0"
+Web-ContextPath: /staging-bar-web
 -include: ../../../../marketplace/web-content-management/bnd.bnd

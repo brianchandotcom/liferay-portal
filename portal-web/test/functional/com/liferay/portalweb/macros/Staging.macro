@@ -125,9 +125,9 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Staging#STAGING_MENU_MANAGE_PAGE_VARIATION" value1="Manage Page Variations" />
+		<execute function="AssertClick" locator1="Staging#STAGING_MENU_MANAGE_PAGE_VARIATION" value1="Page Variations" />
 
-		<execute function="SelectFrame" locator1="StagingManageVariations#MANAGE_PAGE_VARIATIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#PAGE_VARIATION_IFRAME" />
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_VARIATION" value1="Add Page Variation" />
 		<execute function="Type" locator1="StagingManageVariations#MANAGE_VARIATION" value1="${pageVariationName}" />
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
@@ -155,7 +155,7 @@
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
-		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
 		<execute function="AssertClick" locator1="StagingManageVariations#ADD_SITE_PAGES_VARIATIONS_BUTTON" value1="Add Site Pages Variation" />
 		<execute function="Type" locator1="StagingManageVariations#MANAGE_VARIATION" value1="${sitePagesVariationName}" />
 
@@ -433,7 +433,7 @@
 
 		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
 
-		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
@@ -442,7 +442,7 @@
 		<execute function="Type" locator1="StagingManageVariations#MANAGE_VARIATION" value1="${sitePagesVariationName} Edit" />
 		<execute function="AssertClick" locator1="Button#UPDATE" value1="Update" />
 		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Site page variation was updated." />
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
@@ -528,7 +528,7 @@
 		</if>
 
 		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
-		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
@@ -541,7 +541,7 @@
 		<execute function="AssertClickNoError" locator1="StagingManageVariations#MERGE_SITE_PAGES_VARIATION_TABLE_SELECT_LINK" value1="Select" />
 		<execute function="Confirm" value1="Are you sure you want to merge changes from ${sitePagesVariationMergeName}?" />
 		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="SelectFrame" locator1="IFrame#VARIATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Site page variation was merged." />
 	</command>
 

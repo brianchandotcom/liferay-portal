@@ -26,6 +26,10 @@ boolean onlyActions = GetterUtil.getBoolean((String)request.getAttribute("lifera
 long selPlid = GetterUtil.getLong((String)request.getAttribute("liferay-staging:menu:selPlid"));
 boolean showManageBranches = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:showManageBranches"));
 
+boolean branchingEnabled = GetterUtil.getBoolean((String)request.getAttribute(StagingProcessesWebKeys.BRANCHING_ENABLED));
+boolean hasWorkflowTask = GetterUtil.getBoolean((String)request.getAttribute("view_layout_revision_details.jsp-hasWorkflowTask"));
+LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("view_layout_revision_details.jsp-layoutRevision");
+
 if (Validator.isNotNull(icon)) {
 	icon = themeDisplay.getPathThemeImages() + icon;
 }

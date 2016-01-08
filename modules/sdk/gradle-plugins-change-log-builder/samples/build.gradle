@@ -1,0 +1,15 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.change.log.builder", version: "latest.release"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.change.log.builder"

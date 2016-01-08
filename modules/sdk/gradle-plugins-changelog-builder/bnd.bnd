@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Gradle Plugins Changelog Builder
-Bundle-SymbolicName: com.liferay.gradle.plugins.changelog.builder
-Bundle-Version: 1.0.1
-Export-Package: com.liferay.gradle.plugins.changelog.builder
-Include-Resource: classes

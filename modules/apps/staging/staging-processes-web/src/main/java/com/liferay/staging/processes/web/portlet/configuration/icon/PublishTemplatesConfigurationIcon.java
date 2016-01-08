@@ -14,7 +14,6 @@
 
 package com.liferay.staging.processes.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
@@ -22,7 +21,6 @@ import com.liferay.staging.processes.web.constants.StagingProcessesPortletKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 /**
  * @author Mate Thurzo
@@ -46,12 +44,7 @@ public class PublishTemplatesConfigurationIcon
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/publish_templates/view.jsp");
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException wse) {
-		}
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		return portletURL.toString();
 	}
@@ -74,7 +67,7 @@ public class PublishTemplatesConfigurationIcon
 
 	@Override
 	public boolean isUseDialog() {
-		return true;
+		return false;
 	}
 
 }

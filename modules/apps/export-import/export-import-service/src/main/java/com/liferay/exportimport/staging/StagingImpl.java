@@ -2064,6 +2064,18 @@ public class StagingImpl implements Staging {
 				layoutBranchId = layoutBranch.getLayoutBranchId();
 			}
 		}
+		else{
+			try {
+				LayoutBranch layoutBranch =
+					_layoutBranchLocalService.getMasterLayoutBranch(
+						layoutSetBranchId, plid);
+
+				layoutBranchId = layoutBranch.getLayoutBranchId();
+			}
+			catch (NoSuchLayoutBranchException nslbe) {
+				return 0;
+			}
+		}
 
 		if (layoutBranchId > 0) {
 			try {

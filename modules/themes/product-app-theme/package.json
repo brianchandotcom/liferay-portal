@@ -13,7 +13,7 @@
 		"baseTheme": "styled",
 		"screenshot": "",
 		"supportCompass": false,
-		"templateLanguage": "vm",
+		"templateLanguage": "ftl",
 		"version": "7.0"
 	},
 	"name": "product-app-theme",

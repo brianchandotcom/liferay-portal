@@ -127,10 +127,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -325,7 +325,7 @@
 			<var name="siteNameScope" value="Liferay" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
@@ -360,10 +360,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Bookmarks Page" />
 			<var name="siteName" value="google.com Name" />
-			<var name="sitePageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -488,10 +488,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
+			<var name="pageName" value="Private Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Private Blogs Page" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
@@ -635,7 +635,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 			<var name="siteName" value="Organization Name" />
 			<var name="siteURL" value="true" />
@@ -906,7 +906,7 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Dynamic Data Lists Page" />
 		</execute>
 
@@ -1218,7 +1218,7 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -1535,10 +1535,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Asset Publisher Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -2047,7 +2047,7 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
@@ -2216,7 +2216,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no site teams. You can add a site team by clicking the plus button on the bottom right corner." />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="USA Ice Hockey Team Blog" />
 			<var name="pageTemplateName" value="Blog" />
 		</execute>
@@ -2490,20 +2490,20 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

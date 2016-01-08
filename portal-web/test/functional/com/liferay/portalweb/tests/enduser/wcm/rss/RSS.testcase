@@ -25,9 +25,9 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Site Page Name" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 	</set-up>
@@ -337,7 +337,7 @@
 			<var name="pageName" value="Welcome" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Page Name" />
 		</execute>
 
@@ -438,9 +438,9 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Site Page Name 2" />
+			<var name="pageName" value="Site Page Name 2" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -535,7 +535,7 @@
 			<var name="pageName" value="Welcome" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Page Name" />
 		</execute>
 

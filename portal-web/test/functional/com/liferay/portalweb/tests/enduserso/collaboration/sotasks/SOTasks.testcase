@@ -1107,7 +1107,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Tasks Page" />
 		</execute>
 
@@ -1160,7 +1160,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Tasks Page" />
 		</execute>
 

@@ -29,7 +29,7 @@
 	</tear-down>
 
 	<command name="WebProxyDemo" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Proxy Page" />
 			<var name="pageType" value="1 Column" />
 		</execute>

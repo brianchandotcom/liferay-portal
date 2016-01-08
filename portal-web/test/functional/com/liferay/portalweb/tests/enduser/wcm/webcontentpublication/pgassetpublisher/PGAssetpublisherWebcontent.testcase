@@ -13,7 +13,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
@@ -101,7 +101,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Page 1" />
 		</execute>
 
@@ -236,10 +236,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Test Page 1" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Test Page 1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -426,7 +426,7 @@
 
 		<execute function="AssertTextEquals" locator1="DDMField#TEXT" value1="WC WebContent Text" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Page 1" />
 		</execute>
 
@@ -561,10 +561,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Test Page 1" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Test Page 1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -606,7 +606,7 @@
 	</command>
 
 	<command name="DisplayWebContentTagViaAP" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
 

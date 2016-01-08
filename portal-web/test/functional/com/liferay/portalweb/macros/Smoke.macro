@@ -3,7 +3,7 @@
 	<var name="userLastName" value="Test" />
 
 	<command name="runSmoke" summary-ignore="true">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Test Page1" />
@@ -11,7 +11,7 @@
 			<var name="pageType" value="${pageType}" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Test Page2" />
@@ -19,7 +19,7 @@
 			<var name="pageType" value="${pageType}" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Test Page3" />

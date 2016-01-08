@@ -40,7 +40,7 @@
 	</tear-down>
 
 	<command name="CopyAndPasteTextInCKEditor" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
@@ -207,7 +207,7 @@
 	</command>
 
 	<command name="SearchMessageBoardsAttachment" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -254,7 +254,7 @@
 		<var name="threadSplitSubject" value="MB Thread Split Subject" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -323,7 +323,7 @@
 	</command>
 
 	<command name="ViewCategoriesAndThreadsOnTwoScopes" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -335,7 +335,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Message Boards Page 2" />
 		</execute>
 
@@ -359,7 +359,7 @@
 			<var name="portletName" value="${portletName} (Message Boards Page 2)" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Message Boards Page 3" />
 		</execute>
 
@@ -938,10 +938,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Blank Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -999,7 +999,7 @@
 	</command>
 
 	<command name="ViewMessageBoardsBannedUsers" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1176,7 +1176,7 @@
 		<var name="threadSubject2" value="MB Thread2 Message Subject" />
 		<var name="threadSubjectEdit" value="MB Thread1 Message Subject Edit" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1284,7 +1284,7 @@
 		<var name="threadBody" value="[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1319,7 +1319,7 @@
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1405,7 +1405,7 @@
 	</command>
 
 	<command name="ViewQuestionOnSplitThread" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

@@ -12,15 +12,7 @@
 		</if>
 	</command>
 
-	<command name="gotoAddPage">
-		<var name="key_page" value="${page}" />
-
-		<execute function="AssertClick" locator1="ProductMenu#PAGES" value1="${page}" />
-
-		<execute macro="ProductMenuHelper#openProductMenu" />
-	</command>
-
-	<command name="gotoControlPanel">
+	<command name="expandPanelControlPanel">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<if>
@@ -33,10 +25,38 @@
 		</if>
 	</command>
 
-	<command name="gotoEditPublicPages">
+	<command name="expandPanelSites">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
-		<execute function="Click" locator1="ProductMenu#PUBLIC_PAGES" />
+		<if>
+			<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_COLLAPSED" />
+
+				<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_EXPANDED" />
+			</then>
+		</if>
+	</command>
+
+	<command name="expandPanelUser">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_COLLAPSED" />
+
+				<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoAddPage">
+		<var name="key_page" value="${page}" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PAGES" value1="${page}" />
+
+		<execute macro="ProductMenuHelper#openProductMenu" />
 	</command>
 
 	<command name="gotoPortlet">
@@ -53,36 +73,10 @@
 		<execute function="AssertClick" locator1="ProductMenu#SITE" value1="${site}" />
 	</command>
 
-	<command name="gotoSites">
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_COLLAPSED" />
-
-				<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_EXPANDED" />
-			</then>
-		</if>
-	</command>
-
 	<command name="gotoTab">
 		<var name="key_tab" value="${tab}" />
 
 		<execute function="Click" locator1="ProductMenu#TAB" />
-	</command>
-
-	<command name="gotoUser">
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_COLLAPSED" />
-
-				<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
-			</then>
-		</if>
 	</command>
 
 	<command name="openProductMenu">

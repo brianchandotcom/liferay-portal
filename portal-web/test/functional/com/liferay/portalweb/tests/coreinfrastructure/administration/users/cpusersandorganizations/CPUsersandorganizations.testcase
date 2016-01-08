@@ -361,10 +361,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
+			<var name="pageName" value="Private Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="sitePageName" value="Private Page" />
 		</execute>
 
 		<execute macro="SitePage#viewPG">
@@ -399,10 +399,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Public Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="sitePageName" value="Public Page" />
 		</execute>
 
 		<execute macro="SitePage#viewPG">
@@ -456,10 +456,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Organization Public Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="sitePageName" value="Organization Public Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -1541,10 +1541,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Public Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="sitePageName" value="Public Page" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -1937,7 +1937,7 @@
 	</command>
 
 	<command name="ViewOrganizationSiteViaSitesDirectory" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Sites Directory Page" />
 		</execute>
 
@@ -1970,10 +1970,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="sitePageName" value="Test Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

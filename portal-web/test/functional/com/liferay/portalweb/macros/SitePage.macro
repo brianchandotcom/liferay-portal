@@ -1,121 +1,4 @@
 <definition>
-	<command name="addChildCP">
-		<var name="key_siteName" value="${siteName}" />
-
-		<if>
-			<not>
-				<isset var="siteScopeSelected" />
-			</not>
-			<then>
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
-				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-				<execute function="Click" locator1="Sites#SITE_TABLE_ACTIONS" />
-				<execute function="AssertClick" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
-			</then>
-		</if>
-
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="${page}" />
-		</execute>
-
-		<var name="key_page" value="${sitePageName}" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PAGE_ICON" />
-
-		<execute function="AssertElementPresent#pauseAssertVisible" locator1="Icon#BACK" />
-
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${siteChildPageName}" />
-
-		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
-
-		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="Message#SUCCESS" />
-				<condition function="IsVisible" locator1="Message#SUCCESS" />
-			</and>
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-			</then>
-		</if>
-	</command>
-
-	<command name="addCmd">
-		<if>
-			<equals arg1="${sitePagePrivacy}" arg2="Private" />
-			<then>
-				<execute function="AssertClick" locator1="SitePages#NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
-			</then>
-			<elseif>
-				<equals arg1="${sitePagePrivacy}" arg2="Public" />
-				<then>
-					<execute function="AssertClick" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var sitePagePrivacy. Must be (Private|Public)." />
-			</else>
-		</if>
-	</command>
-
-	<command name="addCP">
-		<var name="key_siteName" value="${siteName}" />
-
-		<if>
-			<not>
-				<isset var="siteScopeSelected" />
-			</not>
-			<then>
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
-				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-
-				<var name="key_rowEntry" value="${siteName}" />
-				<execute function="ClickNoError" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-				<execute function="AssertClick" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
-			</then>
-		</if>
-
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="${page}" />
-		</execute>
-
-		<execute function="Pause" locator1="5000" />
-
-		<var name="key_page" value="${page}" />
-
-		<execute function="Click" locator1="ProductMenu#ADD_PAGE_ICON" />
-
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${sitePageName}" />
-
-		<var name="key_pageType" value="${pageTemplateName}" />
-
-		<if>
-			<isset var="pageTemplateName" />
-			<then>
-				<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
-
-				<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
-				<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
-				<execute function="Check" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="sitePageType" />
-			<then>
-				<execute macro="SitePage#selectSitePageTypeRadioCP">
-					<var name="componentName" value="${componentName}" />
-					<var name="pageTypeDescription" value="${pageTypeDescription}" />
-					<var name="pageTypeURL" value="${pageTypeURL}" />
-					<var name="sitePageType" value="${sitePageType}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
 	<command name="addFromMyProfile">
 		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
@@ -181,37 +64,6 @@
 
 		<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX" />
 		<execute function="AssertChecked#waitForElementPresentAssertChecked" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
-	</command>
-
-	<command name="changeColorSchemesCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Look and Feel" />
-		</execute>
-
-		<if>
-			<equals arg1="${colorScheme}" arg2="Dark" />
-			<then>
-				<execute function="AssertVisible" locator1="SitePages#LOOK_AND_FEEL_COLOR_SCHEMES_DARK_IMG" />
-				<execute function="Click" locator1="SitePages#LOOK_AND_FEEL_COLOR_SCHEMES_DARK_RADIO_BUTTON" />
-			</then>
-			<elseif>
-				<equals arg1="${colorScheme}" arg2="Default" />
-				<then>
-					<execute function="AssertVisible" locator1="SitePages#LOOK_AND_FEEL_COLOR_SCHEMES_DEFAULT_IMG" />
-					<execute function="Click" locator1="SitePages#LOOK_AND_FEEL_COLOR_SCHEMES_DEFAULT_RADIO_BUTTON" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${colorScheme}" arg2="Light" />
-				<then>
-					<execute function="AssertVisible" locator1="SitePages#LOOK_AND_FEEL_COLOR_SCHEMES_LIGHT_IMG" />
-					<execute function="Click" locator1="SitePages#LOOK_AND_FEEL_COLOR_SCHEMES_LIGHT_RADIO_BUTTON" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="changePageTypeLayoutCP">
@@ -379,20 +231,6 @@
 		</if>
 	</command>
 
-	<command name="expandTreeCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
-
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_ARROW_1" />
-		<execute function="AssertElementPresent#assertElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
-
-		<if>
-			<condition function="IsNotVisible" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
-			<then>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_ARROW_1" />
-			</then>
-		</if>
-	</command>
-
 	<command name="firstPageCanNotBeOfTypeLinkToURL">
 		<var name="key_sitePageName" value="${sitePageName}" />
 
@@ -408,21 +246,6 @@
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
-	</command>
-
-	<command name="gotoCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
-	</command>
-
-	<command name="openPageTree">
-		<while>
-			<condition function="IsVisible" locator1="SitePages#PAGE_TREE_PLUS" />
-			<then>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PLUS" />
-			</then>
-		</while>
 	</command>
 
 	<command name="pageLockCheckPG">
@@ -780,16 +603,6 @@
 		<var name="key_pageType" value="${pageTemplateName}" />
 
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
-	</command>
-
-	<command name="viewPageTypeLayoutCP">
-		<var name="key_pageType" value="${pageType}" />
-
-		<execute function="AssertSelectedLabel" locator1="SitePagesEditPage#PAGE_TYPE_LAYOUT" value1="${pageType}" />
-
-		<var name="key_sitePageName" value="${sitePageName}" />
-
-		<execute function="AssertSelectedLabel" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT" value1="${sitePageName}" />
 	</command>
 
 	<command name="viewPanelPortletListCP">

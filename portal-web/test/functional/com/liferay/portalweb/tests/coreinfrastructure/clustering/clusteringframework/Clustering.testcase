@@ -38,7 +38,7 @@
 			<var name="nodePort" value="8080" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
@@ -89,7 +89,7 @@
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page2" />
 		</execute>
@@ -197,7 +197,7 @@
 			<var name="nodePort" value="8080" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -284,7 +284,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="New Page Name" />
 			<var name="pageStaging" value="true" />
 			<var name="siteURL" value="true" />

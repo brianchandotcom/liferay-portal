@@ -36,9 +36,9 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 			<span class="icon-search"></span>
 		</button>
 
-		<a class="toggle-advanced" href="javascript:;" id="<%= id %>toggleAdvanced">
-			<i class="caret"></i>
-		</a>
+		<button class="btn btn-default toggle-advanced" id="<%= id %>toggleAdvanced" type="button">
+			<span class="caret"></span>
+		</button>
 	</div>
 </div>
 

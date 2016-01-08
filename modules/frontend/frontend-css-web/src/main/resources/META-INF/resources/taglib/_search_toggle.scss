@@ -44,12 +44,7 @@
 	}
 
 	.toggler-content-wrapper {
-		margin: 0 -15px;
 		padding: 0;
 		width: auto;
-
-		@media (min-width: 768px) {
-			margin: 0 -30px;
-		}
 	}
 }

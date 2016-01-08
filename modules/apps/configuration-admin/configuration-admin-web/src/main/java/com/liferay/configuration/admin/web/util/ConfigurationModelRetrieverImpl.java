@@ -201,9 +201,13 @@ public class ConfigurationModelRetrieverImpl
 
 		List<String> pids = new ArrayList<>();
 
-		pids.addAll(
-			Arrays.asList(extendedMetaTypeInformation.getFactoryPids()));
-		pids.addAll(Arrays.asList(extendedMetaTypeInformation.getPids()));
+		if (factory) {
+			pids.addAll(
+				Arrays.asList(extendedMetaTypeInformation.getFactoryPids()));
+		}
+		else {
+			pids.addAll(Arrays.asList(extendedMetaTypeInformation.getPids()));
+		}
 
 		for (String pid : pids) {
 			ConfigurationModel configurationModel = getConfigurationModel(

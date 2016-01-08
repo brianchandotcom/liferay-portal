@@ -16,6 +16,10 @@
 
 <%@ include file="/portlet/init.jsp" %>
 
+<%
+ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayContext(liferayPortletRequest, liferayPortletResponse);
+%>
+
 <c:if test="<%= productMenuDisplayContext.isShowProductMenu() %>">
 	<h4 class="sidebar-header">
 		<a href="<%= themeDisplay.getURLPortal() %>">

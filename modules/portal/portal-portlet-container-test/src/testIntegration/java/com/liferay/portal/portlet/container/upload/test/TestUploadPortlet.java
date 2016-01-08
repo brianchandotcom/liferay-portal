@@ -19,14 +19,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.portlet.Portlet;
-
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Manuel de la Peña
  */
-@Component(immediate = true, service = Portlet.class)
 public class TestUploadPortlet extends MVCPortlet {
 
 	public static final String MVC_COMMAND_NAME =

@@ -43,7 +43,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Dictionary;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -200,6 +199,9 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		properties.put("javax.portlet.display-name", "Test Upload Portlet");
 		properties.put("javax.portlet.expiration-cache", "0");
 		properties.put(
+			"javax.portlet.init-param.check-auth-token",
+			Boolean.FALSE.toString());
+		properties.put(
 			"javax.portlet.init-param.single-page-application-cacheable",
 			Boolean.FALSE.toString());
 		properties.put("javax.portlet.init-param.template-path", "/");
@@ -268,9 +270,6 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		MockMultipartHttpServletRequest mockServletRequest =
 			(MockMultipartHttpServletRequest)servletRequest;
 
-		Response response = PortletContainerTestUtil.getPortalAuthentication(
-			mockServletRequest, layout, TestUploadPortlet.PORTLET_NAME);
-
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			mockServletRequest, TestUploadPortlet.PORTLET_NAME,
 			layout.getPlid(), PortletRequest.ACTION_PHASE);
@@ -281,12 +280,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 		String url = portletURL.toString();
 
-		url = HttpUtil.setParameter(url, "p_auth", response.getBody());
-
-		List<String> cookies = response.getCookies();
-
-		mockServletRequest.addParameter(
-			"Cookie", cookies.toArray(new String[cookies.size()]));
+		mockServletRequest.addParameter("Cookie", new String[] {"test"});
 
 		return PortletContainerTestUtil.postMultipart(
 			url, mockServletRequest, TestUploadPortlet.PARAMETER_NAME);

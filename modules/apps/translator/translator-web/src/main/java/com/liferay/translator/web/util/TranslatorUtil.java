@@ -17,7 +17,6 @@ package com.liferay.translator.web.util;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.translator.web.configuration.TranslatorConfiguration;
@@ -73,8 +72,7 @@ public class TranslatorUtil {
 
 		Map<String, String> languageIdsMap = new HashMap<>();
 
-		String[] languageIds = StringUtil.split(
-			translatorConfiguration.languageIds());
+		String[] languageIds = translatorConfiguration.languageIds();
 
 		for (String languageId : languageIds) {
 			languageIdsMap.put(

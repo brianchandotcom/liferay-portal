@@ -278,6 +278,8 @@ public class SiteBrowserDisplayContext {
 			ParamUtil.getString(_request, "selectedGroupIds"), 0L);
 		boolean includeCompany = ParamUtil.getBoolean(
 			_request, "includeCompany");
+		boolean includeCurrentGroup = ParamUtil.getBoolean(
+			_request, "includeCurrentGroup", true);
 		boolean includeUserPersonalSite = ParamUtil.getBoolean(
 			_request, "includeUserPersonalSite");
 		String eventName = ParamUtil.getString(
@@ -293,6 +295,8 @@ public class SiteBrowserDisplayContext {
 		portletURL.setParameter("filter", getFilter());
 		portletURL.setParameter(
 			"includeCompany", String.valueOf(includeCompany));
+		portletURL.setParameter(
+			"includeCurrentGroup", String.valueOf(includeCurrentGroup));
 		portletURL.setParameter(
 			"includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
 		portletURL.setParameter(

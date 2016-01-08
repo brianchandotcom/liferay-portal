@@ -162,6 +162,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				resourceBlockIdsBag, name, actionId);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return Collections.emptyList();
@@ -212,6 +215,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				resourceBlockIdsBag, name, actionId);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return Collections.emptyList();
@@ -257,6 +263,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			roleIds = doGetRoleIds(userId, groupId);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
 			return PermissionChecker.DEFAULT_ROLE_IDS;
 		}
 
@@ -272,6 +282,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return ArrayUtil.toArray(

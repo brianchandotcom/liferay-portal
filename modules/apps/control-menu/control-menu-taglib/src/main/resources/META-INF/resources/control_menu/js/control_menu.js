@@ -80,27 +80,36 @@ AUI.add(
 			registerPanel: function(panel) {
 				var instance = this;
 
-				var namespace = instance._namespace;
+				if (instance._panels) {
+					var namespace = instance._namespace;
 
-				var panelTrigger = panel.trigger || A.one('#' + namespace + panel.id);
+					var panelTrigger = panel.trigger || A.one('#' + namespace + panel.id);
 
-				if (panelTrigger) {
-					panelTrigger.on(
-						'gesturemovestart',
-						function(event) {
-							event.currentTarget.once(
-								'gesturemoveend',
-								function(event) {
-									event.halt();
+					if (panelTrigger) {
+						panelTrigger.on(
+							'gesturemovestart',
+							function (event) {
+								event.currentTarget.once(
+									'gesturemoveend',
+									function (event) {
+										event.halt();
 
-									instance.togglePanel(panel.id);
-								}
-							);
-						}
-					);
+										instance.togglePanel(panel.id);
+									}
+								);
+							}
+						);
+					}
+
+					instance._panels[panel.id] = panel;
 				}
+				else {
+					if (!instance._pendingPanels) {
+						instance._pendingPanels = [];
+					}
 
-				instance._panels[panel.id] = panel;
+					instance._pendingPanels.push(panel);
+				}
 			},
 
 			toggleAddPanel: function() {
@@ -201,12 +210,15 @@ AUI.add(
 			_registerPanels: function() {
 				var instance = this;
 
+				var panels = DEFAULT_CONTROL_MENU_PANELS;
+
+				if (instance._pendingPanels) {
+					panels = panels.concat(instance._pendingPanels);
+				}
+
 				instance._panels = {};
 
-				AArray.each(
-					DEFAULT_CONTROL_MENU_PANELS,
-					A.bind('registerPanel', instance)
-				);
+				AArray.each(panels, A.bind('registerPanel', instance));
 			},
 
 			_setLoadingAnimation: function(panel) {

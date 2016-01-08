@@ -29,8 +29,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
-import java.net.InetAddress;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -82,8 +80,8 @@ public class WorkspacePlugin implements Plugin<Project> {
 		Configuration bundleConfiguration = addConfigurationBundle(
 			project, workspaceExtension);
 
-		AbstractArchiveTask distBundle =
-			addTaskDistBundle(project, bundleConfiguration);
+		AbstractArchiveTask distBundle = addTaskDistBundle(
+			project, bundleConfiguration);
 
 		Copy initBundle = addTaskInitBundle(
 			project, workspaceExtension, bundleConfiguration);
@@ -434,6 +432,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 				clean.configure(
 					new Closure<Void>(null) {
 
+						@SuppressWarnings("unused")
 						public void doCall() {
 							subproject.delete("build", "dist");
 						}

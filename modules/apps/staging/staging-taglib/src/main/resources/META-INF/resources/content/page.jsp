@@ -17,7 +17,7 @@
 <%@ include file="/content/init.jsp" %>
 
 <c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
-	<aui:fieldset cssClass="options-group" label="content">
+	<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="content" markupView="lexicon">
 		<ul class="lfr-tree list-unstyled">
 			<li class="tree-item">
 				<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>" />

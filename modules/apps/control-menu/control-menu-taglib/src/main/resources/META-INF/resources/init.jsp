@@ -18,7 +18,7 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+<%@ taglib prefix="aui" uri="http://liferay.com/tld/aui"  %><%@
 taglib prefix="liferay-portlet" uri="http://liferay.com/tld/portlet" %><%@
 taglib prefix="liferay-theme" uri="http://liferay.com/tld/theme"  %><%@
 taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
@@ -27,9 +27,6 @@ taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 page import="com.liferay.control.menu.ControlMenuEntry" %><%@
 page import="com.liferay.control.menu.constants.ControlMenuWebKeys" %><%@
 page import="com.liferay.control.menu.util.ControlMenuEntryRegistry" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
 <%@ page import="java.util.List" %>

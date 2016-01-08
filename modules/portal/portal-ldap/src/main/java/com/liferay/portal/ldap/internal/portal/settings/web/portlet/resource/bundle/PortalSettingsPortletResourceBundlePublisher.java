@@ -14,97 +14,53 @@
 
 package com.liferay.portal.ldap.internal.portal.settings.web.portlet.resource.bundle;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.language.resource.bundle.BaseResourceBundlePublisher;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
 import java.io.IOException;
 
-import java.net.URL;
-
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
-
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
 @Component(immediate = true)
-public class PortalSettingsPortletResourceBundlePublisher {
+public class PortalSettingsPortletResourceBundlePublisher
+	extends BaseResourceBundlePublisher {
 
 	@Activate
-	protected void activated(BundleContext bundleContext) throws IOException {
-		Bundle bundle = bundleContext.getBundle();
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			"/content", "Language*.properties", false);
-
-		while (enumeration.hasMoreElements()) {
-			registerResourceBundle(bundleContext, enumeration.nextElement());
-		}
+	@Override
+	protected void activate(BundleContext bundleContext) throws IOException {
+		super.activate(bundleContext);
 	}
 
 	@Deactivate
-	protected void deactivated() {
-		for (ServiceRegistration<ResourceBundle> serviceRegistration :
-				_serviceRegistrations) {
+	@Override
+	protected void deactivate() {
+		super.deactivate();
+	}
 
-			serviceRegistration.unregister();
-		}
-
-		_serviceRegistrations.clear();
+	@Override
+	protected String getPortletName() {
+		return PortalSettingsPortletKeys.PORTAL_SETTINGS;
 	}
 
 	@Modified
+	@Override
 	protected void modified(BundleContext bundleContext) throws IOException {
-		deactivated();
-
-		activated(bundleContext);
+		super.modified(bundleContext);
 	}
 
-	protected void registerResourceBundle(BundleContext bundleContext, URL url)
-		throws IOException {
-
-		PropertyResourceBundle propertyResourceBundle =
-			new PropertyResourceBundle(url.openStream());
-
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		String languageId = StringPool.BLANK;
-
-		String name = url.getFile();
-
-		if (name.contains(StringPool.UNDERLINE)) {
-			int x = name.indexOf(StringPool.UNDERLINE) + 1;
-			int y = name.indexOf(".properties");
-
-			languageId = name.substring(x, y);
-		}
-
-		properties.put(
-			"javax.portlet.name", PortalSettingsPortletKeys.PORTAL_SETTINGS);
-
-		properties.put("language.id", languageId);
-
-		ServiceRegistration<ResourceBundle> serviceRegistration =
-			bundleContext.registerService(
-				ResourceBundle.class, propertyResourceBundle, properties);
-
-		_serviceRegistrations.add(serviceRegistration);
+	@Override
+	@Reference(unbind = "-")
+	protected void setLanguageUtil(LanguageUtil languageUtil) {
+		super.setLanguageUtil(languageUtil);
 	}
-
-	private final List<ServiceRegistration<ResourceBundle>>
-		_serviceRegistrations = new ArrayList<>();
 
 }

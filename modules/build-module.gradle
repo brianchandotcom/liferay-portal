@@ -1,11 +1,6 @@
+apply plugin: "com.liferay.change.log.builder"
 apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
-
-ant {
-	basedir = projectDir
-
-	importBuild rootProject.file("build-changelog.xml")
-}
 
 if (project.properties["jsp.precompile"] == "on") {
 	compileJSP {

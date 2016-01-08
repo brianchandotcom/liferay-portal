@@ -60,6 +60,22 @@ public class ControlMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		ControlMenuCategoryRegistry controlMenuCategoryRegistry =
+			ServletContextUtil.getControlMenuCategoryRegistry();
+
+		List<ControlMenuCategory> controlMenuCategories =
+			controlMenuCategoryRegistry.getControlMenuCategories(
+				ControlMenuCategoryKeys.ROOT);
+
+		request.setAttribute(
+			ControlMenuWebKeys.CONTROL_MENU_CATEGORIES, controlMenuCategories);
+
+		ControlMenuEntryRegistry controlMenuEntryRegistry =
+			ServletContextUtil.getControlMenuEntryRegistry();
+
+		request.setAttribute(
+			ControlMenuWebKeys.CONTROL_MENU_ENTRY_REGISTRY,
+			controlMenuEntryRegistry);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

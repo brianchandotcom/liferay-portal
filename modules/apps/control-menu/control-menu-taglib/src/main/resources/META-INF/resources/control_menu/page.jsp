@@ -16,6 +16,66 @@
 
 <%@ include file="/control_menu/init.jsp" %>
 
-TEST JULIO TEST
+<%
+List<ControlMenuCategory> controlMenuCategories = (List<ControlMenuCategory>)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_CATEGORIES);
+ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_ENTRY_REGISTRY);
+%>
 
-<%= portletDisplay.getId() %>
+<c:if test="<%= !controlMenuCategories.isEmpty() %>">
+	<div class="control-menu" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
+		<div class="control-menu-level-1">
+			<header class="header-toolbar header-toolbar-default" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
+
+				<%
+				for (int i = 0; i < controlMenuCategories.size(); i++) {
+					ControlMenuCategory controlMenuCategory = controlMenuCategories.get(i);
+
+					String cssClass = "toolbar-group";
+
+					if (i == (controlMenuCategories.size() - 2)) {
+						cssClass += "-right";
+					}
+					else if (i == (controlMenuCategories.size() - 1)) {
+						cssClass += "-expand-text text-center";
+					}
+				%>
+
+					<div class="<%= cssClass %>">
+
+						<%
+						List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+
+						for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
+							if (controlMenuEntry.include(request, new PipingServletResponse(pageContext))) {
+								continue;
+							}
+						%>
+
+							<liferay-ui:icon
+								data="<%= controlMenuEntry.getData(request) %>"
+								icon="<%= controlMenuEntry.getIconCssClass(request) %>"
+								label="<%= false %>"
+								linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
+								markupView="lexicon"
+								message="<%= controlMenuEntry.getLabel(locale) %>"
+								url="<%= controlMenuEntry.getURL(request) %>"
+							/>
+
+						<%
+						}
+						%>
+
+					</div>
+
+				<%
+				}
+				%>
+
+			</header>
+		</div>
+	</div>
+
+	<aui:script position="inline" use="liferay-control-menu">
+		Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
+	</aui:script>
+</c:if>

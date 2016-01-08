@@ -7,7 +7,7 @@
 
 <#assign portlet_id = htmlUtil.escapeAttribute(portlet_display.getId())>
 <#assign portlet_title = htmlUtil.escape(portlet_display.getTitle())>
-<#assign portlet_description = portlet_display.getDescription()>
+<#assign portlet_description = portlet_display.getDescription()!>
 <#assign portlet_back_url = htmlUtil.escapeHREF(portlet_display.getURLBack())>
 <#assign valid_portlet_description = validator.isNotNull(portlet_description) && portlet_description?contains("javax.portlet.description")>
 

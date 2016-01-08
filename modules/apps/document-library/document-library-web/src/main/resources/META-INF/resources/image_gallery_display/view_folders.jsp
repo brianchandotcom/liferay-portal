@@ -117,14 +117,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 		</liferay-ui:search-container-column-text>
 
 		<%
-		List subfolderIds = new ArrayList();
-
-		subfolderIds.add(Long.valueOf(curFolder.getFolderId()));
-
-		DLAppServiceUtil.getSubfolderIds(repositoryId, curFolder.getFolderId());
-
-		int subFoldersCount = subfolderIds.size() - 1;
-		int subEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(repositoryId, subfolderIds, status);
+		int subFoldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, curFolder.getFolderId());
+		int subEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(repositoryId, Arrays.asList(curFolder.getFolderId()), status);
 		%>
 
 		<liferay-ui:search-container-column-text

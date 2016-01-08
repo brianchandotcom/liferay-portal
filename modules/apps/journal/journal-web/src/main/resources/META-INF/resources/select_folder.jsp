@@ -81,17 +81,9 @@ JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 
 			AssetRenderer<JournalFolder> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 
-			int foldersCount = 0;
-			int articlesCount = 0;
+			int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId());
 
-			List<Long> subfolderIds = JournalFolderServiceUtil.getSubfolderIds(scopeGroupId, curFolder.getFolderId(), false);
-
-			foldersCount = subfolderIds.size();
-
-			subfolderIds.clear();
-			subfolderIds.add(curFolder.getFolderId());
-
-			articlesCount = JournalArticleServiceUtil.getFoldersAndArticlesCount(scopeGroupId, subfolderIds);
+			int articlesCount = JournalArticleServiceUtil.getFoldersAndArticlesCount(scopeGroupId, Arrays.asList(curFolder.getFolderId()));
 			%>
 
 			<liferay-ui:search-container-column-text

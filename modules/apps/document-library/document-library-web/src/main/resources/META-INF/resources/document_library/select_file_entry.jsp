@@ -69,14 +69,9 @@ if (folder != null) {
 			int foldersCount = 0;
 
 			try{
-				List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(groupId, curFolder.getFolderId(), false);
+				foldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
 
-				foldersCount = subfolderIds.size();
-
-				subfolderIds.clear();
-				subfolderIds.add(curFolder.getFolderId());
-
-				fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(groupId, subfolderIds, WorkflowConstants.STATUS_APPROVED);
+				fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), Arrays.asList(curFolder.getFolderId()), WorkflowConstants.STATUS_APPROVED);
 			}
 			catch (com.liferay.portal.kernel.repository.RepositoryException re) {
 				rowURL = null;

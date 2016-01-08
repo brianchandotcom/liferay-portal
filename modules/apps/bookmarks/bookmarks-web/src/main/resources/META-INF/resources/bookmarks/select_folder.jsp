@@ -86,14 +86,8 @@ if (folder != null) {
 			</liferay-ui:search-container-column-text>
 
 			<%
-			List<Long> subfolderIds = new ArrayList<Long>();
-
-			subfolderIds.add(curFolder.getFolderId());
-
-			BookmarksFolderServiceUtil.getSubfolderIds(subfolderIds, scopeGroupId, curFolder.getFolderId(), true);
-
-			int foldersCount = subfolderIds.size() - 1;
-			int entriesCount = BookmarksEntryServiceUtil.getFoldersEntriesCount(scopeGroupId, subfolderIds);
+			int foldersCount = BookmarksFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
+			int entriesCount = BookmarksEntryServiceUtil.getFoldersEntriesCount(scopeGroupId, Arrays.asList(curFolder.getFolderId()));
 			%>
 
 			<liferay-ui:search-container-column-text

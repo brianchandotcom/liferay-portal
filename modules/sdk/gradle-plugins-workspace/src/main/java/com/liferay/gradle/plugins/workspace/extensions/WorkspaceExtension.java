@@ -24,7 +24,7 @@ import org.gradle.api.Project;
 public class WorkspaceExtension {
 
 	public WorkspaceExtension(Project project) {
-		this.project = project;
+		_project = project;
 	}
 
 	public String getBundleGroup() {
@@ -48,19 +48,19 @@ public class WorkspaceExtension {
 	}
 
 	public File getHomeDir() {
-		return project.file(_homeDir);
+		return _project.file(_homeDir);
 	}
 
 	public File getModulesDir() {
-		return project.file(_modulesDir);
+		return _project.file(_modulesDir);
 	}
 
 	public File getPluginsSDKDir() {
-		return project.file(_pluginsSDKDir);
+		return _project.file(_pluginsSDKDir);
 	}
 
 	public File getThemesDir() {
-		return project.file(_themesDir);
+		return _project.file(_themesDir);
 	}
 
 	public void setBundleGroup(String bundleGroup) {
@@ -99,8 +99,6 @@ public class WorkspaceExtension {
 		_themesDir = themesDir;
 	}
 
-	protected final Project project;
-
 	private String _bundleGroup;
 	private String _bundleMavenUrl;
 	private String _bundleName;
@@ -109,6 +107,7 @@ public class WorkspaceExtension {
 	private Object _homeDir;
 	private Object _modulesDir;
 	private Object _pluginsSDKDir;
+	private final Project _project;
 	private Object _themesDir;
 
 }

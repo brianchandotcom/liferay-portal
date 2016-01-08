@@ -17,8 +17,8 @@
 <%@ include file="/deletions/init.jsp" %>
 
 <c:if test="<%= cmd.equals(Constants.PUBLISH) || cmd.equals(Constants.IMPORT) %>">
-	<aui:fieldset cssClass="options-group" label="deletions">
-		<aui:input disabled="<%= disableInputs %>" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
+	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="deletions" markupView="lexicon">
+		<aui:input disabled="<%= disableInputs %>" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="toggle-switch" />
 
 		<div class="alert alert-warning" id="<portlet:namespace />showDeleteContentWarning">
 			<liferay-ui:message key="delete-content-before-importing-warning" />
@@ -31,7 +31,7 @@
 		</aui:script>
 
 		<c:if test="<%= !cmd.equals(Constants.IMPORT) %>">
-			<aui:input disabled="<%= disableInputs %>" helpMessage="deletions-help" label="replicate-individual-deletions" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" />
+			<aui:input disabled="<%= disableInputs %>" helpMessage="deletions-help" label="replicate-individual-deletions" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="toggle-switch" />
 		</c:if>
 	</aui:fieldset>
 </c:if>

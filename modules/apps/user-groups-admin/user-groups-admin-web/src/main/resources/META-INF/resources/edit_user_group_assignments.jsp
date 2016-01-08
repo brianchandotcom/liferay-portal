@@ -87,6 +87,11 @@ renderResponse.setTitle(userGroup.getName());
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= userSearchContainer.getOrderByCol() %>"
 			orderByType="<%= userSearchContainer.getOrderByType() %>"

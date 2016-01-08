@@ -119,30 +119,32 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 			<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 			<div class="export-dialog-tree">
-				<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" label='<%= cmd.equals(Constants.ADD) ? "new-export-template" : "edit-template" %>' />
+				<aui:fieldset-group markupView="lexicon">
+					<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" />
 
-				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
-					<aui:fieldset cssClass="options-group" label="pages">
+					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
+						<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
 
-						<%
-						request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
-						%>
+							<%
+							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
+							%>
 
-						<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-							<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-							<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-							<liferay-util:param name="treeId" value="<%= treeId %>" />
-							<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-						</liferay-util:include>
+							<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+								<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+								<liferay-util:param name="treeId" value="<%= treeId %>" />
+								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+							</liferay-util:include>
+						</aui:fieldset>
+					</c:if>
+
+					<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
+
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions">
+						<%@ include file="/permissions.jspf" %>
 					</aui:fieldset>
-				</c:if>
-
-				<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
-
-				<aui:fieldset cssClass="options-group" label="permissions">
-					<%@ include file="/permissions.jspf" %>
-				</aui:fieldset>
+				</aui:fieldset-group>
 			</div>
 
 			<aui:button-row>

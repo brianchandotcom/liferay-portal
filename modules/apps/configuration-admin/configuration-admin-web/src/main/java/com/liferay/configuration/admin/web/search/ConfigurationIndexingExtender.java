@@ -20,8 +20,8 @@ import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 
 import java.util.Map;
@@ -65,7 +65,7 @@ public class ConfigurationIndexingExtender {
 
 	protected void commit(Indexer<ConfigurationModel> indexer) {
 		try {
-			SearchEngineUtil.commit(indexer.getSearchEngineId());
+			IndexWriterHelperUtil.commit(indexer.getSearchEngineId());
 		}
 		catch (SearchException e) {
 			if (_log.isWarnEnabled()) {

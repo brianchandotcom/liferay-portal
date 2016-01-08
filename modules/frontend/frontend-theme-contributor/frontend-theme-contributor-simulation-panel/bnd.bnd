@@ -1,8 +1,8 @@
-Bundle-Name: Liferay Frontend Theme Contributor Simulation Device
-Bundle-SymbolicName: com.liferay.frontend.theme.contributor.simulation.device
+Bundle-Name: Liferay Frontend Theme Contributor Simulation Panel
+Bundle-SymbolicName: com.liferay.frontend.theme.contributor.simulation.panel
 Bundle-Version: 1.0.0
-Theme-Contributor-Type: simulation-device
+Theme-Contributor-Type: simulation-panel
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
-Web-ContextPath: /frontend-theme-contributor-simulation-device
+Web-ContextPath: /frontend-theme-contributor-simulation-panel

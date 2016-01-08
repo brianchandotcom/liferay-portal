@@ -111,6 +111,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		try {
 			_indexFactory.createIndices(
 				_elasticsearchConnectionManager.getAdminClient(), companyId);
+
+			_elasticsearchConnectionManager.registerCompanyId(companyId);
 		}
 		catch (Exception e) {
 			throw new IllegalStateException(e);
@@ -165,6 +167,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		try {
 			_indexFactory.deleteIndices(
 				_elasticsearchConnectionManager.getAdminClient(), companyId);
+
+			_elasticsearchConnectionManager.unregisterCompanyId(companyId);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

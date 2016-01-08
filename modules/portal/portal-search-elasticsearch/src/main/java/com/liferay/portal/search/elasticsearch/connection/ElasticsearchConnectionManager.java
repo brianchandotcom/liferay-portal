@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,6 +86,10 @@ public class ElasticsearchConnectionManager {
 		return _elasticsearchConnections.get(_operationMode);
 	}
 
+	public synchronized void registerCompanyId(long companyId) {
+		_companyIds.put(companyId, companyId);
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,
 		target = "(operation.mode=EMBEDDED)",
@@ -109,6 +114,10 @@ public class ElasticsearchConnectionManager {
 		_elasticsearchConnections.put(
 			elasticsearchConnection.getOperationMode(),
 			elasticsearchConnection);
+	}
+
+	public synchronized void unregisterCompanyId(long companyId) {
+		_companyIds.remove(companyId);
 	}
 
 	public void unsetElasticsearchConnection(
@@ -142,7 +151,7 @@ public class ElasticsearchConnectionManager {
 		modify(_elasticsearchConfiguration.operationMode());
 	}
 
-	protected void modify(OperationMode operationMode) {
+	protected synchronized void modify(OperationMode operationMode) {
 		if (Validator.equals(operationMode, _operationMode)) {
 			return;
 		}
@@ -170,6 +179,23 @@ public class ElasticsearchConnectionManager {
 		}
 
 		_operationMode = operationMode;
+
+		for (Long companyId : _companyIds.values()) {
+			try {
+				_indexFactory.createIndices(getAdminClient(), companyId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to reinitialize index for: " + companyId, e);
+				}
+			}
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setIndexFactory(IndexFactory indexFactory) {
+		_indexFactory = indexFactory;
 	}
 
 	protected void validate(OperationMode operationMode) {
@@ -181,9 +207,11 @@ public class ElasticsearchConnectionManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchConnectionManager.class);
 
+	private final Map<Long, Long> _companyIds = new HashMap<>();
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Map<OperationMode, ElasticsearchConnection>
 		_elasticsearchConnections = new HashMap<>();
+	private volatile IndexFactory _indexFactory;
 	private OperationMode _operationMode;
 
 }

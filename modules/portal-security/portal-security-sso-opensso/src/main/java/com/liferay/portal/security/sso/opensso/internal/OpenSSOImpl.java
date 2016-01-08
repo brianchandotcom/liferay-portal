@@ -374,7 +374,7 @@ public class OpenSSOImpl implements OpenSSO {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(cookieNames.length * 4);
+		StringBundler sb = new StringBundler(cookieNames.length * 6);
 
 		for (String cookieName : cookieNames) {
 			String cookieValue = CookieKeys.getCookie(request, cookieName);

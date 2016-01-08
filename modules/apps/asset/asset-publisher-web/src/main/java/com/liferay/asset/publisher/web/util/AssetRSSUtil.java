@@ -219,7 +219,7 @@ public class AssetRSSUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(6);
 
 		String layoutFriendlyURL = GetterUtil.getString(
 			PortalUtil.getLayoutFriendlyURL(layout, themeDisplay));

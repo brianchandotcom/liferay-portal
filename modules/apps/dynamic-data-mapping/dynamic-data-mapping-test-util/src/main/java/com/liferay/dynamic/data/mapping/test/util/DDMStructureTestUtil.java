@@ -243,19 +243,15 @@ public class DDMStructureTestUtil {
 	public static String getSampleStructuredContent(
 		String name, List<Map<Locale, String>> contents, String defaultLocale) {
 
-		StringBundler availableLocales = new StringBundler(2 * contents.size());
+		StringBundler availableLocales = new StringBundler();
 
 		for (Map<Locale, String> map : contents) {
-			StringBundler sb = new StringBundler(2 * map.size());
-
 			for (Locale locale : map.keySet()) {
-				sb.append(LocaleUtil.toLanguageId(locale));
-				sb.append(StringPool.COMMA);
+				availableLocales.append(LocaleUtil.toLanguageId(locale));
+				availableLocales.append(StringPool.COMMA);
 			}
 
-			sb.setIndex(sb.index() - 1);
-
-			availableLocales.append(sb);
+			availableLocales.setIndex(availableLocales.index() - 1);
 		}
 
 		Document document = createDocumentContent(

@@ -46,10 +46,11 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 		MDRAction mdrAction = mdrActions.get(i);
 
 		sb.append(HtmlUtil.escape(mdrAction.getName(locale)));
+		sb.append(", ");
+	}
 
-		if (i < (mdrActions.size() -1)) {
-			sb.append(", ");
-		}
+	if (mdrActions.size() > 0) {
+		sb.setIndex(sb.index() - 1);
 	}
 	%>
 

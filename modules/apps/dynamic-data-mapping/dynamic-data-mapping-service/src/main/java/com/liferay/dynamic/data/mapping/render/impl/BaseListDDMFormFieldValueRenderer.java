@@ -47,6 +47,10 @@ public abstract class BaseListDDMFormFieldValueRenderer
 
 				JSONArray jsonArray = createJSONArray(value.getString(locale));
 
+				if (jsonArray.length() == 0) {
+					return StringPool.BLANK;
+				}
+
 				StringBundler sb = new StringBundler(jsonArray.length() * 2);
 
 				for (int i = 0; i < jsonArray.length(); i++) {
@@ -58,11 +62,10 @@ public abstract class BaseListDDMFormFieldValueRenderer
 					}
 
 					sb.append(label.getString(locale));
-
-					if ((i + 1) < jsonArray.length()) {
-						sb.append(StringPool.COMMA_AND_SPACE);
-					}
+					sb.append(StringPool.COMMA_AND_SPACE);
 				}
+
+				sb.setIndex(sb.index() - 1);
 
 				return sb.toString();
 			}

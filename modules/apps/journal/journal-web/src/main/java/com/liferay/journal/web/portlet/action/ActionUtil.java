@@ -415,16 +415,6 @@ public class ActionUtil {
 				List<Serializable> values = valuesMap.get(locale);
 
 				for (int i = 0; i < values.size(); i++) {
-					StringBundler sb = new StringBundler(6);
-
-					sb.append(
-						getElementInstanceId(content, field.getName(), i));
-					sb.append(StringPool.UNDERLINE);
-					sb.append(field.getName());
-					sb.append(StringPool.UNDERLINE);
-					sb.append(i);
-					sb.append(StringPool.UNDERLINE);
-					sb.append(LanguageUtil.getLanguageId(locale));
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 						(String)values.get(i));
 
@@ -432,6 +422,17 @@ public class ActionUtil {
 					long groupId = jsonObject.getLong("groupId");
 
 					if (Validator.isNotNull(uuid) && (groupId > 0)) {
+						StringBundler sb = new StringBundler(7);
+
+						sb.append(
+							getElementInstanceId(content, field.getName(), i));
+						sb.append(StringPool.UNDERLINE);
+						sb.append(field.getName());
+						sb.append(StringPool.UNDERLINE);
+						sb.append(i);
+						sb.append(StringPool.UNDERLINE);
+						sb.append(LanguageUtil.getLanguageId(locale));
+
 						FileEntry fileEntry =
 							DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
 								uuid, groupId);

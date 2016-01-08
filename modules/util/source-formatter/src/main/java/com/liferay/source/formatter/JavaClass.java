@@ -359,16 +359,14 @@ public class JavaClass {
 			}
 		}
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("(((\\+\\+( ?))|(--( ?)))");
 		sb.append(javaTerm.getName());
-		sb.append(")");
-		sb.append("|((\\b|\\.)");
+		sb.append(")|((\\b|\\.)");
 		sb.append(javaTerm.getName());
 		sb.append("((( )((=)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)))");
-		sb.append("|(\\+\\+)|(--)");
-		sb.append("|(( )((\\|=)|(&=)|(^=)))))");
+		sb.append("|(\\+\\+)|(--)|(( )((\\|=)|(&=)|(^=)))))");
 
 		Pattern pattern = Pattern.compile(sb.toString());
 
@@ -385,9 +383,7 @@ public class JavaClass {
 			_content, javaTermContent, newJavaTermContent);
 	}
 
-	protected void checkImmutableFieldType(JavaTerm javaTerm) {
-		String javaTermName = javaTerm.getName();
-
+	protected void checkImmutableFieldType(String javaTermName) {
 		if (javaTermName.equals("serialVersionUID")) {
 			return;
 		}
@@ -450,7 +446,7 @@ public class JavaClass {
 		String javaFieldType = StringUtil.trim(matcher.group(6));
 
 		if (isFinal && isStatic && javaFieldType.startsWith("Map<")) {
-			checkMutableFieldType(javaTerm);
+			checkMutableFieldType(javaTerm.getName());
 		}
 
 		if (!javaTerm.isPrivate()) {
@@ -460,10 +456,10 @@ public class JavaClass {
 		if (isFinal) {
 			if (immutableFieldTypes.contains(javaFieldType)) {
 				if (isStatic) {
-					checkImmutableFieldType(javaTerm);
+					checkImmutableFieldType(javaTerm.getName());
 				}
 				else {
-					checkStaticableFieldType(javaTerm);
+					checkStaticableFieldType(javaTerm.getContent());
 				}
 			}
 		}
@@ -473,14 +469,12 @@ public class JavaClass {
 		}
 	}
 
-	protected void checkMutableFieldType(JavaTerm javaTerm) {
-		String javaTermName = javaTerm.getName();
-
+	protected void checkMutableFieldType(String javaTermName) {
 		if (!StringUtil.isUpperCase(javaTermName)) {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(javaTermName.length());
+		StringBuilder sb = new StringBuilder(javaTermName.length());
 
 		for (int i = 0; i < javaTermName.length(); i++) {
 			char c = javaTermName.charAt(i);
@@ -508,9 +502,7 @@ public class JavaClass {
 		}
 	}
 
-	protected void checkStaticableFieldType(JavaTerm javaTerm) {
-		String javaTermContent = javaTerm.getContent();
-
+	protected void checkStaticableFieldType(String javaTermContent) {
 		if (!javaTermContent.contains(StringPool.EQUAL)) {
 			return;
 		}

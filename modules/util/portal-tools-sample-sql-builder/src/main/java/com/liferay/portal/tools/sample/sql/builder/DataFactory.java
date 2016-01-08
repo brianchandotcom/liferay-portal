@@ -943,7 +943,7 @@ public class DataFactory {
 	}
 
 	public void initJournalArticleContent(int maxJournalArticleSize) {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
 		sb.append("default-locale=\"en_US\"><dynamic-element name=\"content");
@@ -1296,10 +1296,6 @@ public class DataFactory {
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fields\": [");
 
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
-			if (i != 0) {
-				sb.append(",");
-			}
-
 			sb.append("{\"dataType\": \"string\", \"indexType\": \"keyword\"");
 			sb.append(", \"label\": {\"en_US\": \"Text");
 			sb.append(i);
@@ -1308,6 +1304,11 @@ public class DataFactory {
 			sb.append("\", \"readOnly\": false, \"repeatable\": false,");
 			sb.append("\"required\": false, \"showLabel\": true, \"type\": ");
 			sb.append("\"text\"}");
+			sb.append(",");
+		}
+
+		if (_maxDDLCustomFieldCount > 0) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		sb.append("]}");
@@ -1433,10 +1434,6 @@ public class DataFactory {
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fieldValues\": [");
 
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
-			if (i != 0) {
-				sb.append(",");
-			}
-
 			sb.append("{\"instanceId\": \"");
 			sb.append(StringUtil.randomId());
 			sb.append("\", \"name\": \"");
@@ -1444,6 +1441,11 @@ public class DataFactory {
 			sb.append("\", \"value\": {\"en_US\": \"Test Record ");
 			sb.append(currentIndex);
 			sb.append("\"}}");
+			sb.append(",");
+		}
+
+		if (_maxDDLCustomFieldCount > 0) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		sb.append("]}");

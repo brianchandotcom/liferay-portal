@@ -4291,7 +4291,7 @@ public class ServiceBuilder {
 	}
 
 	private String _getSpringNamespacesDeclarations() {
-		StringBundler sb = new StringBundler(_springNamespaces.length * 4);
+		StringBundler sb = new StringBundler(_springNamespaces.length * 6);
 
 		for (String namespace : _springNamespaces) {
 			sb.append("\txmlns");
@@ -4310,7 +4310,7 @@ public class ServiceBuilder {
 	}
 
 	private String _getSpringSchemaLocations() {
-		StringBundler sb = new StringBundler(_springNamespaces.length * 6);
+		StringBundler sb = new StringBundler(_springNamespaces.length * 7);
 
 		for (String namespace : _springNamespaces) {
 			sb.append("\thttp://www.springframework.org/schema/");

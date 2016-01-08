@@ -90,7 +90,7 @@ public class S3FileCacheImpl implements S3FileCache {
 	public File getCacheFile(S3Object s3Object, String fileName)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(getCacheDirName());
 		sb.append(

@@ -662,7 +662,7 @@ public class ShoppingItemLocalServiceImpl
 			List<String> itemFieldNames = new ArrayList<>();
 			List<String> duplicateItemFieldNames = new ArrayList<>();
 
-			StringBundler sb = new StringBundler(itemFields.size());
+			StringBundler sb = new StringBundler(itemFields.size() * 2);
 
 			for (ShoppingItemField itemField : itemFields) {
 				if (itemFieldNames.contains(itemField.getName())) {

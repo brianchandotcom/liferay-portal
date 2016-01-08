@@ -458,19 +458,15 @@ public class DDMStructureFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(groupIds.length * 2);
+		StringBundler sb = new StringBundler(groupIds.length + 1);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		for (int i = 0; i < groupIds.length; i++) {
-			sb.append("DDMStructure.groupId = ?");
-
-			if ((i + 1) < groupIds.length) {
-				sb.append(" OR ");
-			}
+		for (int i = 0; i < groupIds.length - 1; i++) {
+			sb.append("DDMStructure.groupId = ? OR ");
 		}
 
-		sb.append(") AND");
+		sb.append("DDMStructure.groupId = ?) AND");
 
 		return sb.toString();
 	}

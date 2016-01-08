@@ -149,7 +149,7 @@ public class BaseDataSample implements DataSample, Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{attributes=");
 		sb.append(_attributes);

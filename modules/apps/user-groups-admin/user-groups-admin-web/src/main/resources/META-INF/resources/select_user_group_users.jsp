@@ -109,7 +109,6 @@ RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.User"
-			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="userId"
 			modelVar="user2"

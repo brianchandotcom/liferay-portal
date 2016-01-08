@@ -53,6 +53,8 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.bundling.AbstractArchiveTask;
+import org.gradle.api.tasks.bundling.Tar;
 import org.gradle.api.tasks.bundling.Zip;
 
 import org.json.JSONObject;
@@ -80,7 +82,8 @@ public class WorkspacePlugin implements Plugin<Project> {
 		Configuration bundleConfiguration = addConfigurationBundle(
 			project, workspaceExtension);
 
-		Zip distBundle = addTaskDistBundle(project, bundleConfiguration);
+		AbstractArchiveTask distBundle =
+			addTaskDistBundle(project, bundleConfiguration);
 
 		Copy initBundle = addTaskInitBundle(
 			project, workspaceExtension, bundleConfiguration);
@@ -126,19 +129,29 @@ public class WorkspacePlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected Zip addTaskDistBundle(
+	protected AbstractArchiveTask addTaskDistBundle(
 		final Project project, final Configuration bundleConfiguration) {
-
-		Zip zip = GradleUtil.addTask(project, DIST_BUNDLE_TASK_NAME, Zip.class);
 
 		final File bundle = bundleConfiguration.getSingleFile();
 
-		zip.from(
+		final String bundleName = bundle.getName();
+
+		AbstractArchiveTask archiveTask;
+
+		if (bundleName.endsWith(".tar.gz")) {
+			archiveTask = GradleUtil.addTask(
+				project, DIST_BUNDLE_TASK_NAME, Tar.class);
+		}
+		else {
+			archiveTask = GradleUtil.addTask(
+				project, DIST_BUNDLE_TASK_NAME, Zip.class);
+		}
+
+		archiveTask.from(
 			new Callable<FileTree>() {
 
 				@Override
 				public FileTree call() throws Exception {
-					String bundleName = bundle.getName();
 
 					if (bundleName.endsWith(".tar.gz")) {
 						return project.tarTree(
@@ -160,12 +173,12 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 			});
 
-		zip.setArchiveName("bundle.zip");
-		zip.setDescription("Assembles the bundle and zips it up.");
-		zip.setDestinationDir(project.getBuildDir());
-		zip.setIncludeEmptyDirs(false);
+		archiveTask.setArchiveName(project.getName() + "-" + bundleName);
+		archiveTask.setDescription("Assembles the bundle and zips it up.");
+		archiveTask.setDestinationDir(project.getBuildDir());
+		archiveTask.setIncludeEmptyDirs(false);
 
-		return zip;
+		return archiveTask;
 	}
 
 	protected Copy addTaskInitBundle(
@@ -299,7 +312,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 	protected void configurePluginsSDK(
 		Project project, final WorkspaceExtension workspaceExtension,
-		Copy initBundle, Zip distBundle) {
+		Copy initBundle, AbstractArchiveTask distBundle) {
 
 		File pluginsSDKDir = workspaceExtension.getPluginsSDKDir();
 
@@ -379,7 +392,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 	protected void configureThemes(
 		Project project, final WorkspaceExtension workspaceExtension,
-		final Zip distBundle) {
+		final AbstractArchiveTask distBundle) {
 
 		final Project themesProject = GradleUtil.getProject(
 			project, workspaceExtension.getThemesDir());

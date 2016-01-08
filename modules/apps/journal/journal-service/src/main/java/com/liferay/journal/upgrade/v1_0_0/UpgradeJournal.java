@@ -14,11 +14,15 @@
 
 package com.liferay.journal.upgrade.v1_0_0;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -48,8 +52,10 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Gergely Mathe
@@ -209,6 +215,77 @@ public class UpgradeJournal extends UpgradeProcess {
 			"com/liferay/journal/upgrade/v1_0_0/dependencies/" + fileName);
 	}
 
+	protected DDMForm getDDMForm(String structureKey) throws Exception {
+		DDMForm ddmForm = _ddmForms.get(structureKey);
+
+		if (ddmForm != null) {
+			return ddmForm;
+		}
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"select (select structureKey from DDMStructure where " +
+					" structureId = parentStructureId) parentStructureKey, " +
+					" definition from DDMStructure where structureKey = ?" );
+
+			ps.setString(1, structureKey);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				String parentStructureKey = rs.getString("parentStructureKey");
+				String definition = rs.getString("definition");
+
+				ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+
+				if (parentStructureKey != null) {
+					DDMForm parentDDMForm = getDDMForm(parentStructureKey);
+
+					List<DDMFormField> ddmFormFields =
+						ddmForm.getDDMFormFields();
+
+					ddmFormFields.addAll(parentDDMForm.getDDMFormFields());
+				}
+
+				_ddmForms.put(structureKey, ddmForm);
+
+				return ddmForm;
+			}
+
+			throw new UpgradeException(
+				"Unable to find dynamic data mapping structure with key " +
+					structureKey);
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+	}
+
+	protected Map<String, String> getDDMFormFieldNameMap(DDMForm ddmForm) {
+		Map<String, String> ddmFormFieldNameMap = new HashMap<>();
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			Object oldName = ddmFormField.getProperties().get("oldName");
+
+			if (oldName != null) {
+				ddmFormFieldNameMap.put(
+					oldName.toString(), ddmFormField.getName());
+			}
+			else {
+				ddmFormFieldNameMap.put(
+					ddmFormField.getName(), ddmFormField.getName());
+			}
+		}
+
+		return ddmFormFieldNameMap;
+	}
+
 	protected List<Element> getDDMStructures(Locale locale)
 		throws DocumentException {
 
@@ -287,6 +364,16 @@ public class UpgradeJournal extends UpgradeProcess {
 		}
 	}
 
+	protected String updateDDMFormFieldNames(
+		String value, Map<String, String> ddmFormFieldNameMap) {
+
+		for (Map.Entry<String, String> entry : ddmFormFieldNameMap.entrySet()) {
+			value = value.replaceAll(entry.getKey(), entry.getValue());
+		}
+
+		return value;
+	}
+
 	protected void updateJournalArticle(
 			long id, String ddmStructureKey, String ddmTemplateKey,
 			String content)
@@ -301,7 +388,13 @@ public class UpgradeJournal extends UpgradeProcess {
 
 			ps.setString(1, ddmStructureKey);
 			ps.setString(2, ddmTemplateKey);
-			ps.setString(3, convertStaticContentToDynamic(content));
+
+			DDMForm ddmForm = getDDMForm(ddmStructureKey);
+
+			content = updateDDMFormFieldNames(
+				content, getDDMFormFieldNameMap(ddmForm));
+
+			ps.setString(3, content);
 			ps.setLong(4, id);
 
 			ps.executeUpdate();
@@ -317,9 +410,9 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		try {
 			ps = connection.prepareStatement(
-				"select id_, content from JournalArticle where companyId = " +
-					companyId + " and ddmStructureKey is null or " +
-						"ddmStructureKey like ''");
+				"select id_, content, ddmStructureKey from JournalArticle " +
+					" where companyId = " + companyId +
+					" and ddmStructureKey is null or ddmStructureKey like ''");
 
 			String name = addBasicWebContentStructureAndTemplate(companyId);
 
@@ -328,6 +421,12 @@ public class UpgradeJournal extends UpgradeProcess {
 			while (rs.next()) {
 				long id = rs.getLong("id_");
 				String content = rs.getString("content");
+				String ddmStructureKey = rs.getString("ddmStructureKey");
+
+				DDMForm ddmForm = getDDMForm(ddmStructureKey);
+
+				updateDDMFormFieldNames(
+					content, getDDMFormFieldNameMap(ddmForm));
 
 				updateJournalArticle(id, name, name, content);
 			}
@@ -384,6 +483,7 @@ public class UpgradeJournal extends UpgradeProcess {
 		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
 
 	private final CompanyLocalService _companyLocalService;
+	private final Map<String, DDMForm> _ddmForms = new HashMap<>();
 	private final DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final GroupLocalService _groupLocalService;

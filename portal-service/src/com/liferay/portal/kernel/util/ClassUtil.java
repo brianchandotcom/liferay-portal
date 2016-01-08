@@ -272,31 +272,40 @@ public class ClassUtil {
 		else if (annotationParametersMatcher.matches()) {
 			tokens.add(annotationParametersMatcher.group(1));
 
-			String annotationParameters = null;
+			String annotationParameters = StringPool.BLANK;
 
 			if (s.trim().endsWith(")")) {
 				annotationParameters = annotationParametersMatcher.group(3);
 			}
 			else {
-				StringBundler sb = new StringBundler();
-
 				int pos = s.indexOf('{');
 
 				if (pos != -1) {
-					sb.append(s.substring(pos + 1));
+					annotationParameters += s.substring(pos + 1);
 				}
 
 				while (st.nextToken() != StreamTokenizer.TT_EOF) {
-					if (st.ttype == StreamTokenizer.TT_WORD) {
-						sb.append(st.sval);
+					if (st.ttype != StreamTokenizer.TT_WORD) {
+						continue;
+					}
 
-						if (st.sval.trim().endsWith(")")) {
-							break;
-						}
+					annotationParameters += st.sval;
+
+					String trimmedValue = StringUtil.trim(st.sval);
+
+					if (!trimmedValue.endsWith(")")) {
+						continue;
+					}
+
+					int closeParenthesesCount = StringUtil.count(
+						annotationParameters, ")");
+					int openParenthesesCount = StringUtil.count(
+						annotationParameters, "(");
+
+					if (closeParenthesesCount > openParenthesesCount) {
+						break;
 					}
 				}
-
-				annotationParameters = sb.toString();
 			}
 
 			tokens = _processAnnotationParameters(annotationParameters, tokens);

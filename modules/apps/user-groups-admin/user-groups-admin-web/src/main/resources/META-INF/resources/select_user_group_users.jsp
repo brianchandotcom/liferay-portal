@@ -73,31 +73,29 @@ RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<c:if test="<%= UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams) > 0 %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="users"
-	>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= portletURL %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="users"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= userSearchContainer.getOrderByCol() %>"
-				orderByType="<%= userSearchContainer.getOrderByType() %>"
-				orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
-				portletURL="<%= portletURL %>"
-			/>
-		</liferay-frontend:management-bar-filters>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= userSearchContainer.getOrderByCol() %>"
+			orderByType="<%= userSearchContainer.getOrderByType() %>"
+			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
 
-		<liferay-frontend:management-bar-action-buttons />
-	</liferay-frontend:management-bar>
-</c:if>
+	<liferay-frontend:management-bar-action-buttons />
+</liferay-frontend:management-bar>
 
 <aui:form cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container

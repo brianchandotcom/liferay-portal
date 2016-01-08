@@ -22,6 +22,7 @@ import com.liferay.portal.model.Role;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -30,17 +31,17 @@ import java.util.Set;
 @ProviderType
 public interface UserBag extends Serializable {
 
-	public Set<Group> getGroups();
+	public Collection<Group> getGroups();
 
-	public Set<Role> getRoles();
+	public Collection<Role> getRoles();
 
-	public Set<Group> getUserGroups();
+	public Collection<Group> getUserGroups();
 
 	public long getUserId();
 
-	public Set<Group> getUserOrgGroups();
+	public Collection<Group> getUserOrgGroups();
 
-	public Set<Organization> getUserOrgs();
+	public Collection<Organization> getUserOrgs();
 
 	public boolean hasRole(Role role);
 

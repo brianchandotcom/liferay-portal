@@ -55,6 +55,7 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -660,7 +661,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 
 			if (group != null) {
-				Set<Group> userOrgGroups = userBag.getUserOrgGroups();
+				Collection<Group> userOrgGroups = userBag.getUserOrgGroups();
 
 				if (group.isOrganization() && userOrgGroups.contains(group)) {
 					Role organizationUserRole = RoleLocalServiceUtil.getRole(
@@ -669,7 +670,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					roles.add(organizationUserRole);
 				}
 
-				Set<Group> userGroups = userBag.getUserGroups();
+				Collection<Group> userGroups = userBag.getUserGroups();
 
 				if ((group.isSite() &&
 					 (userGroups.contains(group) ||
@@ -1232,7 +1233,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		UserBag userBag = getUserBag();
 
-		Set<Group> groups = userBag.getUserGroups();
+		Collection<Group> groups = userBag.getUserGroups();
 
 		if (groups.contains(group)) {
 			return true;

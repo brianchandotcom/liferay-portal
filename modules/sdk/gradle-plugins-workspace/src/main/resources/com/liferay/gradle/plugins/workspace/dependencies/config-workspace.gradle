@@ -13,13 +13,13 @@
  */
 
 workspace {
-	bundleGroup = properties["liferay.workspace.bundle.group"] ?: "com.liferay"
-	bundleName = properties["liferay.workspace.bundle.name"] ?: "portal-tomcat-bundle"
-	bundleVersion = properties["liferay.workspace.bundle.version"] ?: "7.0-ce-b1-20151223111037302"
-	bundleMavenUrl = properties["liferay.workspace.bundle.maven.url"] ?: "https://liferay-test-01.ci.cloudbees.com/job/liferay-bundle-publishing/lastSuccessfulBuild/artifact/build/m2_repo/"
-	environment = properties["liferay.workspace.environment"] ?: "local"
-	homeDir = rootProject.file(properties["liferay.workspace.home.dir"] ?: "bundles")
-	modulesDir = rootProject.file(properties["liferay.workspace.modules.dir"] ?: "modules")
-	pluginsSDKDir = rootProject.file(properties["liferay.workspace.plugins.sdk.dir"] ?: "plugins-sdk")
-	themesDir = rootProject.file(properties["liferay.workspace.themes.dir"] ?: "themes")
+	bundleGroup = properties["liferay.workspace.bundle.group"]
+	bundleName = properties["liferay.workspace.bundle.name"]
+	bundleVersion = properties["liferay.workspace.bundle.version"]
+	bundleMavenUrl = properties["liferay.workspace.bundle.maven.url"]
+	environment = properties["liferay.workspace.environment"]
+	homeDir = rootProject.file(properties["liferay.workspace.home.dir"])
+	modulesDir = rootProject.file(properties["liferay.workspace.modules.dir"])
+	pluginsSDKDir = rootProject.file(properties["liferay.workspace.plugins.sdk.dir"])
+	themesDir = rootProject.file(properties["liferay.workspace.themes.dir"])
 }

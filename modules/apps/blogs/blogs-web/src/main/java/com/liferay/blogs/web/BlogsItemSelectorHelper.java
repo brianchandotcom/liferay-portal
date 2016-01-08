@@ -23,10 +23,7 @@ import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,16 +42,12 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 public class BlogsItemSelectorHelper {
 
 	public String getItemSelectorURL(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String itemSelectedEventName) {
 
 		if (_itemSelector == null) {
 			return null;
 		}
-
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest);
 
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
@@ -81,7 +74,7 @@ public class BlogsItemSelectorHelper {
 		uploadCriterionsDesiredItemSelectorReturnTypes.add(
 			new UploadableFileReturnType());
 
-		PortletURL uploadURL = liferayPortletResponse.createActionURL(
+		PortletURL uploadURL = requestBackedPortletURLFactory.createActionURL(
 			BlogsPortletKeys.BLOGS);
 
 		uploadURL.setParameter(

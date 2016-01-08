@@ -182,7 +182,6 @@ page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" 
 page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoBridge" %><%@
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@

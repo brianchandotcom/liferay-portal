@@ -3240,7 +3240,7 @@ Freemarker templates that are using the `${theme}` variable to access any of its
 
 All the provided functionality available in the `${theme}` variable can be replaced by the direct usage of a taglib. For example:
 
-- `${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW, "", default_preferences)}` can be replaced by:
+`${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW, "", default_preferences)}` can be replaced by:
 ```
 <@liferay_portlet["runtime"]
     defaultPreferences=default_preferences
@@ -3249,21 +3249,26 @@ All the provided functionality available in the `${theme}` variable can be repla
 />
 ```
 
-- `${theme.include(content_include)}` can be replaced by:
+`${theme.include(content_include)}` can be replaced by:
 ```
 <@liferay_util["include"] page=content_include />
 ```
 
-- `${theme.wrapPortlet("portlet.ftl", content_include)}` can be replaced by:
+`${theme.wrapPortlet("portlet.ftl", content_include)}` can be replaced by:
 ```
 <@liferay_theme["wrap-portlet"] page="portlet.ftl">
     <@liferay_util["include"] page=content_include />
 </@>
 ```
 
-- `${theme.iconHelp(portlet_description)}` can be replaced by:
+`${theme.iconHelp(portlet_description)}` can be replaced by:
 ```
 <@liferay_ui["icon-help"] message=portlet_description />
+```
+
+`${nav_item.icon()}` can be replaced by:
+```
+<@liferay_theme["layout-icon"] layout=${nav_item.getLayout()} />
 ```
 
 #### Why was this change made?

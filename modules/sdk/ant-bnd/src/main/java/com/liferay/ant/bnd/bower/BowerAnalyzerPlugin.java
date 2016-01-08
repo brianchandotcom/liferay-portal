@@ -349,23 +349,26 @@ public class BowerAnalyzerPlugin implements AnalyzerPlugin {
 		Parameters parameters = new Parameters() {
 
 			@Override
-			public void mergeWith(Parameters other, boolean override) {
-				for (Map.Entry<String, Attrs> entry : other.entrySet()) {
-					Attrs existing = get(entry.getKey());
+			public void mergeWith(Parameters parameters, boolean override) {
+				for (Map.Entry<String, Attrs> entry : parameters.entrySet()) {
+					Attrs existingAttrs = get(entry.getKey());
 
-					if (existing == null) {
+					if (existingAttrs == null) {
 
 						// This is to fix a bug in bnd
 
-						Attrs tmp = new Attrs();
-						tmp.put("____ignore____:Version", "0.0.0");
-						tmp.remove("____ignore____");
-						tmp.putAll(entry.getValue());
+						Attrs tempAttrs = new Attrs();
 
-						put(entry.getKey(), tmp);
+						tempAttrs.put("____ignore____:Version", "0.0.0");
+
+						tempAttrs.remove("____ignore____");
+
+						tempAttrs.putAll(entry.getValue());
+
+						put(entry.getKey(), tempAttrs);
 					}
 					else {
-						existing.mergeWith(entry.getValue(), override);
+						existingAttrs.mergeWith(entry.getValue(), override);
 					}
 				}
 			}

@@ -140,13 +140,13 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Site Page 1" />
+			<var name="pageName" value="Site Page 1" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Site Page 2" />
+			<var name="pageName" value="Site Page 2" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -828,13 +828,13 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Public Blogs Page" />
+			<var name="pageName" value="Public Blogs Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
-			<var name="sitePageName" value="Private Blogs Page" />
+			<var name="pageName" value="Private Blogs Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

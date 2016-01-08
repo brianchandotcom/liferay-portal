@@ -173,8 +173,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -523,8 +523,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Organization Name 1" />
-			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

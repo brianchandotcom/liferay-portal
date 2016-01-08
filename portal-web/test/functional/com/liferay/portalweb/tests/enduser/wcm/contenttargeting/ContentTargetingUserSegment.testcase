@@ -33,8 +33,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Test Page Name" />
 		</execute>
 	</set-up>
 
@@ -159,8 +159,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Child SiteName" />
-			<var name="sitePageName" value="Test Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

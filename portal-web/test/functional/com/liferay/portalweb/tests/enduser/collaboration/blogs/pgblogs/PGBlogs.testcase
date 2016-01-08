@@ -520,8 +520,8 @@
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="page" value="Public Pages" />
+		<var name="pageName" value="${pageName}" />
 		<var name="siteName" value="Organization Name" />
-		<var name="sitePageName" value="${pageName}" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -546,8 +546,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

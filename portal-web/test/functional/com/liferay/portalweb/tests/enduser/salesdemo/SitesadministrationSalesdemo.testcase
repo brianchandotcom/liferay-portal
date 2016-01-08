@@ -65,7 +65,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Site Page Name" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -154,7 +154,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Pages" />
-			<var name="sitePageName" value="Video" />
+			<var name="pageName" value="Video" />
 			<var name="sitePageType" value="2 Columns (70/30)" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>

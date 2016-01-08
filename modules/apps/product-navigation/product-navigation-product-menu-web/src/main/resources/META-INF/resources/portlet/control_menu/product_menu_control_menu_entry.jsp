@@ -29,18 +29,3 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 		</div>
 	</a>
 </div>
-
-<%
-String controlMenuPortletId = PortletProviderUtil.getPortletId(PortalControlMenuApplicationType.ControlMenu.CLASS_NAME, PortletProvider.Action.VIEW);
-%>
-
-<c:if test="<%= Validator.isNotNull(controlMenuPortletId) %>">
-	<aui:script position="auto">
-		Liferay.on(
-			'<%= controlMenuPortletId %>:portletRefreshed',
-			function(event) {
-				Liferay.Portlet.refresh('#p_p_id_<%= ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU %>_', {});
-			}
-		);
-	</aui:script>
-</c:if>

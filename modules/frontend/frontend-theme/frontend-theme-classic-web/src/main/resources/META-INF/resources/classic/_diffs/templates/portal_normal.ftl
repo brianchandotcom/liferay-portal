@@ -20,7 +20,9 @@
 
 <@liferay.product_menu_sidebar state="${liferay_product_menu_state}" />
 
-<@liferay.control_menu />
+<#if is_setup_complete && is_signed_in>
+	<@liferay_control_menu["control-menu"] />
+</#if>
 
 <div id="wrapper">
 	<header class="container-fluid-1280" id="banner" role="banner">

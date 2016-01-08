@@ -65,7 +65,6 @@ public class UpgradeCompanyId
 				new String[][] {
 					{"BookmarksEntry", "entryId"},
 					{"BookmarksFolder", "folderId"}, {"BlogsEntry", "entryId"},
-					{"CalendarBooking", "calendarBookingId"},
 					{"DDLRecord", "recordId"}, {"DLFileEntry", "fileEntryId"},
 					{"DLFolder", "folderId"},
 					{"JournalArticle", "resourcePrimKey"},

@@ -13,13 +13,13 @@
  */
 
 workspace {
-	bundleGroup = properties["liferay.workspace.bundle.group"]
-	bundleName = properties["liferay.workspace.bundle.name"]
-	bundleVersion = properties["liferay.workspace.bundle.version"]
-	bundleMavenUrl = properties["liferay.workspace.bundle.maven.url"]
-	environment = properties["liferay.workspace.environment"]
-	homeDir = rootProject.file(properties["liferay.workspace.home.dir"])
-	modulesDir = rootProject.file(properties["liferay.workspace.modules.dir"])
-	pluginsSDKDir = rootProject.file(properties["liferay.workspace.plugins.sdk.dir"])
-	themesDir = rootProject.file(properties["liferay.workspace.themes.dir"])
+	bundleGroup = project.properties["liferay.workspace.bundle.group"]
+	bundleName = project.properties["liferay.workspace.bundle.name"]
+	bundleVersion = project.properties["liferay.workspace.bundle.version"]
+	bundleMavenUrl = project.properties["liferay.workspace.bundle.maven.url"]
+	environment = project.properties["liferay.workspace.environment"]
+	homeDir = rootProject.file(project.properties["liferay.workspace.home.dir"])
+	modulesDir = rootProject.file(project.properties["liferay.workspace.modules.dir"])
+	pluginsSDKDir = rootProject.file(project.properties["liferay.workspace.plugins.sdk.dir"])
+	themesDir = rootProject.file(project.properties["liferay.workspace.themes.dir"])
 }

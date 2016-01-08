@@ -16,7 +16,7 @@
 
 		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${adtType} Test ADT" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 		<execute function="SelectFrameTop" />
 	</command>
 
@@ -122,7 +122,7 @@
 
 				<execute function="Select" locator1="ApplicationDisplayTemplatesConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${defaultADT}" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 				<execute function="SelectFrameTop" locator1="IFrame#DIALOG" value1="relative=top" />
 			</then>
 		</if>

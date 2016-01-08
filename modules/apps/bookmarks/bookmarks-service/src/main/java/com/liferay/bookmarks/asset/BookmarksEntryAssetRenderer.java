@@ -159,18 +159,9 @@ public class BookmarksEntryAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory<BookmarksEntry> assetRendererFactory =
-			getAssetRendererFactory();
-
-		PortletURL portletURL = assetRendererFactory.getURLView(
-			liferayPortletResponse, windowState);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/bookmarks/view_entry");
-		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
-		portletURL.setWindowState(windowState);
-
-		return portletURL.toString();
+		return
+			PortalUtil.getPathMain() + "/bookmarks/open_entry?entryId=" +
+				_entry.getEntryId();
 	}
 
 	@Override

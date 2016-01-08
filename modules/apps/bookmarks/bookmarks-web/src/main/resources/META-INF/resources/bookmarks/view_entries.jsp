@@ -118,13 +118,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				row.setData(rowData);
 
 				row.setPrimaryKey(String.valueOf(entry.getEntryId()));
-				%>
 
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view_entry" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-				</liferay-portlet:renderURL>
+				String entryUrl = themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId();
+				%>
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>

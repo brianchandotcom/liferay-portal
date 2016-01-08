@@ -105,10 +105,6 @@ renderResponse.setTitle(userGroup.getName());
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<aui:button-row cssClass="text-center">
-	<aui:button cssClass="btn-lg" id="addUsers" primary="<%= true %>" value="add-users" />
-</aui:button-row>
-
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
@@ -136,6 +132,10 @@ renderResponse.setTitle(userGroup.getName());
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.get(request, "add-users") %>' url="javascript:;" />
+</liferay-frontend:add-menu>
 
 <aui:script use="liferay-item-selector-dialog">
 	var form = AUI.$(document.<portlet:namespace />fm);

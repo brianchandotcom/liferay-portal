@@ -86,80 +86,82 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 		</div>
 
 		<ul class="lfr-tree list-unstyled">
-			<aui:fieldset cssClass="options-group" label="changes-since-last-publication">
-				<li class="options portlet-list-simple">
-					<ul class="portlet-list">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset cssClass="options-group" label="changes-since-last-publication" markupView="lexicon">
+					<li class="options portlet-list-simple">
+						<ul class="portlet-list">
 
-						<%
-						LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupDisplayContextHelper.getGroupId(), privateLayout);
-						%>
+							<%
+							LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupDisplayContextHelper.getGroupId(), privateLayout);
+							%>
 
-						<liferay-util:buffer var="badgeHTML">
-							<span class="badge badge-info"><%= (selLayoutSet.getPageCount() > 0) ? selLayoutSet.getPageCount() : LanguageUtil.get(request, "none") %></span>
-						</liferay-util:buffer>
+							<liferay-util:buffer var="badgeHTML">
+								<span class="badge badge-info"><%= (selLayoutSet.getPageCount() > 0) ? selLayoutSet.getPageCount() : LanguageUtil.get(request, "none") %></span>
+							</liferay-util:buffer>
 
-						<li class="tree-item">
-							<liferay-ui:message arguments="<%= badgeHTML %>" key="pages-x" />
-						</li>
+							<li class="tree-item">
+								<liferay-ui:message arguments="<%= badgeHTML %>" key="pages-x" />
+							</li>
 
-						<%
-						List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
+							<%
+							List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
 
-						Set<String> portletDataHandlerClasses = new HashSet<String>();
+							Set<String> portletDataHandlerClasses = new HashSet<String>();
 
-						if (!dataSiteLevelPortlets.isEmpty()) {
-							for (Portlet portlet : dataSiteLevelPortlets) {
-								String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
+							if (!dataSiteLevelPortlets.isEmpty()) {
+								for (Portlet portlet : dataSiteLevelPortlets) {
+									String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
 
-								if (portletDataHandlerClasses.contains(portletDataHandlerClass)) {
-									continue;
-								}
+									if (portletDataHandlerClasses.contains(portletDataHandlerClass)) {
+										continue;
+									}
 
-								portletDataHandlerClasses.add(portletDataHandlerClass);
+									portletDataHandlerClasses.add(portletDataHandlerClass);
 
-								PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
+									PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-								Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
+									Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
 
-								settingsMap.put("portletId", portlet.getRootPortletId());
+									settingsMap.put("portletId", portlet.getRootPortletId());
 
-								DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration);
+									DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration);
 
-								PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), dateRange.getStartDate(), dateRange.getEndDate());
+									PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), dateRange.getStartDate(), dateRange.getEndDate());
 
-								portletDataHandler.prepareManifestSummary(portletDataContext);
+									portletDataHandler.prepareManifestSummary(portletDataContext);
 
-								ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+									ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
-								long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
-								long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
+									long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
+									long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 
-								Group liveGroup = groupDisplayContextHelper.getLiveGroup();
+									Group liveGroup = groupDisplayContextHelper.getLiveGroup();
 
-								UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
+									UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
-								if (((exportModelCount > 0) || (modelDeletionCount > 0)) && GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault())) {
-						%>
+									if (((exportModelCount > 0) || (modelDeletionCount > 0)) && GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault())) {
+							%>
 
-									<liferay-util:buffer var="badgeHTML">
-										<span class="badge badge-info"><%= (exportModelCount > 0) ? exportModelCount : StringPool.BLANK %></span>
+										<liferay-util:buffer var="badgeHTML">
+											<span class="badge badge-info"><%= (exportModelCount > 0) ? exportModelCount : StringPool.BLANK %></span>
 
-										<span class="badge badge-warning deletions"><%= (modelDeletionCount > 0) ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
-									</liferay-util:buffer>
+											<span class="badge badge-warning deletions"><%= (modelDeletionCount > 0) ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
+										</liferay-util:buffer>
 
-									<li class="tree-item">
-										<liferay-ui:message key="<%= PortalUtil.getPortletTitle(portlet, application, locale) + StringPool.SPACE + badgeHTML %>" />
-									</li>
+										<li class="tree-item">
+											<liferay-ui:message key="<%= PortalUtil.getPortletTitle(portlet, application, locale) + StringPool.SPACE + badgeHTML %>" />
+										</li>
 
-						<%
+							<%
+									}
 								}
 							}
-						}
-						%>
+							%>
 
-					</ul>
-				</li>
-			</aui:fieldset>
+						</ul>
+					</li>
+				</aui:fieldset>
+			</aui:fieldset-group>
 
 			<aui:button-row>
 				<aui:button cssClass="btn-lg" type="submit" value="<%= LanguageUtil.get(request, publishMessageKey) %>" />

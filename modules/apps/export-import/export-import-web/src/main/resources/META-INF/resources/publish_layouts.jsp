@@ -310,64 +310,70 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 						</liferay-util:include>
 					</div>
 
-					<c:if test="<%= !cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE) %>">
-
-						<%
-						String scheduleCMD = StringPool.BLANK;
-						String unscheduleCMD = StringPool.BLANK;
-
-						if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-							scheduleCMD = "schedule_publish_to_live";
-							unscheduleCMD = "unschedule_publish_to_live";
-						}
-						else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-							scheduleCMD = "schedule_publish_to_remote";
-							unscheduleCMD = "unschedule_publish_to_remote";
-						}
-						else if (cmd.equals("copy_from_live")) {
-							scheduleCMD = "schedule_copy_from_live";
-							unscheduleCMD = "unschedule_copy_from_live";
-						}
-						%>
-
-						<aui:fieldset cssClass="options-group" label="date">
-							<%@ include file="/publish_layouts_scheduler.jspf" %>
-						</aui:fieldset>
-					</c:if>
-
-					<c:if test="<%= !group.isCompany() %>">
-						<aui:fieldset cssClass="options-group" label="pages">
+					<aui:fieldset-group markupView="lexicon">
+						<c:if test="<%= !cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE) %>">
 
 							<%
-							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
+							String scheduleCMD = StringPool.BLANK;
+							String unscheduleCMD = StringPool.BLANK;
+
+							if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
+								scheduleCMD = "schedule_publish_to_live";
+								unscheduleCMD = "unschedule_publish_to_live";
+							}
+							else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
+								scheduleCMD = "schedule_publish_to_remote";
+								unscheduleCMD = "unschedule_publish_to_remote";
+							}
+							else if (cmd.equals("copy_from_live")) {
+								scheduleCMD = "schedule_copy_from_live";
+								unscheduleCMD = "unschedule_copy_from_live";
+							}
 							%>
 
-							<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
-								<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-								<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-								<liferay-util:param name="treeId" value="<%= treeId %>" />
-								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-							</liferay-util:include>
+							<aui:fieldset>
+								<aui:input name="name" />
+							</aui:fieldset>
+
+							<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="date">
+								<%@ include file="/publish_layouts_scheduler.jspf" %>
+							</aui:fieldset>
+						</c:if>
+
+						<c:if test="<%= !group.isCompany() %>">
+							<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
+
+								<%
+								request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
+								%>
+
+								<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
+									<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
+									<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+									<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+									<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+									<liferay-util:param name="treeId" value="<%= treeId %>" />
+									<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+								</liferay-util:include>
+							</aui:fieldset>
+						</c:if>
+
+						<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+
+						<c:if test="<%= !quickPublish %>">
+							<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
+						</c:if>
+
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions">
+							<%@ include file="/permissions.jspf" %>
 						</aui:fieldset>
-					</c:if>
 
-					<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
-
-					<c:if test="<%= !quickPublish %>">
-						<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
-					</c:if>
-
-					<aui:fieldset cssClass="options-group" label="permissions">
-						<%@ include file="/permissions.jspf" %>
-					</aui:fieldset>
-
-					<c:if test="<%= !localPublishing %>">
-						<aui:fieldset cssClass="options-group" label="remote-live-connection-settings">
-							<%@ include file="/publish_layouts_remote_options.jspf" %>
-						</aui:fieldset>
-					</c:if>
+						<c:if test="<%= !localPublishing %>">
+							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">
+								<%@ include file="/publish_layouts_remote_options.jspf" %>
+							</aui:fieldset>
+						</c:if>
+					</aui:fieldset-group>
 				</div>
 
 				<aui:button-row>

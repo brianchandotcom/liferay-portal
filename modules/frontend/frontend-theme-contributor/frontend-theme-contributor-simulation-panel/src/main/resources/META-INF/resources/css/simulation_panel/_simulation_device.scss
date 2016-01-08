@@ -1,5 +1,37 @@
 .lfr-simulation-device {
 	background-color: rgba(255, 255, 255, 0.95);
+
+	.lfr-device-size-status-content {
+		border-radius: 3px;
+		box-shadow: 0 0 1px #FFF;
+		opacity: 0.9;
+	}
+
+	.lfr-device {
+		&:after, &:before {
+			box-shadow: #111 0 1px 0;
+		}
+
+		&:after {
+			border-radius: 15px;
+		}
+
+		&.rotated {
+			&:after, &:before {
+				box-shadow: #111 -1px 1px 0;
+			}
+		}
+
+		&.smartphone, &.tablet {
+			border-radius: 25px;
+		}
+
+		&.tablet {
+			&:before {
+				border-radius: 5px;
+			}
+		}
+	}
 }
 
 .lfr-simulation-panel .lfr-device-item {

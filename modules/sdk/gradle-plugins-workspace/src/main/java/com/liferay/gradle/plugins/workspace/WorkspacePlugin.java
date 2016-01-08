@@ -131,12 +131,23 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 		Zip zip = GradleUtil.addTask(project, DIST_BUNDLE_TASK_NAME, Zip.class);
 
+		final File bundle = bundleConfiguration.getSingleFile();
+
 		zip.from(
 			new Callable<FileTree>() {
 
 				@Override
 				public FileTree call() throws Exception {
-					return project.zipTree(bundleConfiguration.getSingleFile());
+					String bundleName = bundle.getName();
+
+					if (bundleName.endsWith(".tar.gz")) {
+						return project.tarTree(
+							bundleConfiguration.getSingleFile());
+					}
+					else {
+						return project.zipTree(
+							bundleConfiguration.getSingleFile());
+					}
 				}
 
 			},
@@ -178,7 +189,18 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 				@Override
 				public FileTree call() throws Exception {
-					return project.zipTree(bundleConfiguration.getSingleFile());
+					File bundle = bundleConfiguration.getSingleFile();
+
+					String bundleName = bundle.getName();
+
+					if (bundleName.endsWith(".tar.gz")) {
+						return project.tarTree(
+							bundleConfiguration.getSingleFile());
+					}
+					else {
+						return project.zipTree(
+							bundleConfiguration.getSingleFile());
+					}
 				}
 
 			},

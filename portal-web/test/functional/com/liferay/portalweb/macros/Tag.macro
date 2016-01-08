@@ -36,7 +36,7 @@
 					<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 					<var name="key_tagName" value="${tagName}" />
 
@@ -53,7 +53,7 @@
 				<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</else>
 		</if>
 	</command>
@@ -78,7 +78,7 @@
 
 		<execute function="AssertClick" locator1="PGBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addViaSiteCP">
@@ -129,7 +129,7 @@
 		</if>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tags. You can add a tag by clicking the plus button on the bottom right corner." />
 		<execute function="AssertTextNotPresent" value1="${tagName}" />
 	</command>
@@ -159,7 +159,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="mergeMultipleTags">
@@ -168,7 +168,7 @@
 		<execute function="Select" locator1="Tags#MERGE_TAGS_INTO_THIS_TAG_SELECT" value1="${tagName2}" />
 		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 		<execute function="Confirm#assertPartialConfirmation" locator1="${mergeConfirmation}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<var name="key_tagName" value="${tagName2}" />
 
@@ -211,7 +211,7 @@
 
 		<execute function="AssertClick" locator1="PGBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<var name="key_tagName" value="${tagName1}" />
 
@@ -239,7 +239,7 @@
 
 		<execute macro="Button#clickPublish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="searchTagCP">

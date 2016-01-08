@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.upgrade;
 
+import com.liferay.calendar.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.calendar.upgrade.v1_0_1.UpgradeCalendar;
 import com.liferay.calendar.upgrade.v1_0_2.UpgradePortletPreferences;
 import com.liferay.calendar.upgrade.v1_0_3.UpgradeCalendarResource;
@@ -38,6 +39,7 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.calendar.service", "0.0.1", "1.0.0",
+			new UpgradeCompanyId(),
 			new com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendarBooking());
 
 		registry.register(

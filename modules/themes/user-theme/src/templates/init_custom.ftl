@@ -1,20 +1,23 @@
-#set ($layout_set_title = $site_name)
+<#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
+<#assign liferay_util=PortalJspTagLibs["/WEB-INF/tld/liferay-util.tld"]>
 
-#set ($pageDistributionType = $theme.getSetting("page-distribution-type"))
-#set ($userCardVisible = $theme.getSetting("user-card-visible"))
+<#assign layout_set_title = site_name>
 
-#if ($page_group.isUser() && $layout.isPrivateLayout())
-	#set ($layout_set_title = $languageUtil.get($locale, "my-dashboard"))
-#end
+<#assign pageDistributionType = theme.getSetting("page-distribution-type")>
+<#assign userCardVisible = getterUtil.getBoolean(theme.getSetting("user-card-visible"))>
 
-#if ($pageDistributionType == "horizontal")
-	#set ($css_class = "$css_class user-card-horizontal")
-	#set ($firstColumnClass = "col-md-3")
-	#set ($secondColumnClass = "col-md-9")
-	#set ($userIconSize = "user-icon-xxl")
-#else
-	#set ($css_class = "$css_class user-card-vertical")
-	#set ($firstColumnClass = "col-md-12")
-	#set ($secondColumnClass = "col-md-12")
-	#set ($userIconSize = "user-icon-xl")
-#end
+<#if page_group.isUser() && layout.isPrivateLayout()>
+	<#assign layout_set_title = languageUtil.get(locale, "my-dashboard")>
+</#if>
+
+<#if pageDistributionType = "horizontal">
+	<#assign css_class = "css_class user-card-horizontal">
+	<#assign firstColumnClass = "col-md-3">
+	<#assign secondColumnClass = "col-md-9">
+	<#assign userIconSize = "user-icon-xxl">
+<#else>
+	<#assign css_class = "css_class user-card-vertical">
+	<#assign firstColumnClass = "col-md-12">
+	<#assign secondColumnClass = "col-md-12">
+	<#assign userIconSize = "user-icon-xl">
+</#if>

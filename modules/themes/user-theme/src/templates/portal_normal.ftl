@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 
-#parse ($init)
+<#include init />
 
-<html class="$root_css_class" dir="#language ("lang.dir")" lang="$w3c_language_id">
+<html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 
 <head>
-	<title>$the_title - $company_name</title>
+	<title>${the_title} - ${company_name}</title>
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
-	$theme.include($top_head_include)
+	<@liferay_util["include"] page=top_head_include />
 </head>
 
-<body class="$css_class">
+<body class="${css_class}">
 
-#quick_access("#main-content")
+<@liferay_ui["quick-access"] contentId="#main-content" />
 
-$theme.include($body_top_include)
+<@liferay_util["include"] page=body_top_include />
 
-#product_menu_sidebar($liferay_product_menu_state)
+<@liferay.product_menu_sidebar state="${liferay_product_menu_state}" />
 
-#control_menu()
+<@liferay.control_menu />
 
 <div class="container-fluid-1280" id="wrapper">
 	<header class="col-md-12 panel" id="banner" role="banner">
@@ -36,48 +36,50 @@ $theme.include($body_top_include)
 
 				<div class="navbar-header navbar-header-left-xs">
 					<div class="site-name" title="#language_format ("go-to-x", [$site_name])">
-						$layout_set_title
+						${layout_set_title}
 					</div>
 				</div>
 
-				#set ($VOID = $velocityPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone"))
+				<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")>
 
 				<nav class="hidden-xs text-center user-personal-bar">
 					<ul class="nav navbar-nav navbar-right">
-						#user_personal_bar($velocityPortletPreferences.toString())
+						<@liferay.user_personal_bar />
 					</ul>
 				<nav>
 
-				#set ($VOID = $velocityPortletPreferences.reset())
+				<#assign VOID = freeMarkerPortletPreferences.reset()>
 			</div>
 
 		</div>
 	</header>
 
-	<aside class="$firstColumnClass" id="userCard">
+	<aside class="${firstColumnClass}" id="userCard">
 		<div class="collapse navbar-collapse panel" id="navigationCollapse">
-			#parse ("$full_templates_path/navigation.vm")
+			<#include "${full_templates_path}/navigation.ftl" />
 		</div>
 	</aside>
 
-	<section class="$secondColumnClass" id="content">
+	<section class="${secondColumnClass}" id="content">
 		<div class="panel">
-			#if ($selectable)
-				$theme.include($content_include)
-			#else
-				$portletDisplay.recycle()
+			<#if selectable>
+				<@liferay_util["include"] page=content_include />
+			<#else>
+				${portletDisplay.recycle()}
 
-				$portletDisplay.setTitle($the_title)
+				${portletDisplay.setTitle(the_title)}
 
-				$theme.wrapPortlet("portlet.vm", $content_include)
-			#end
+				<@liferay_theme["wrap-portlet"] page="portlet.ftl">
+					<@liferay_util["include"] page=content_include />
+				</@>
+			</#if>
 		</div>
 	</section>
 </div>
 
-$theme.include($body_bottom_include)
+<@liferay_util["include"] page=body_bottom_include />
 
-$theme.include($bottom_include)
+<@liferay_util["include"] page=bottom_include />
 
 </body>
 

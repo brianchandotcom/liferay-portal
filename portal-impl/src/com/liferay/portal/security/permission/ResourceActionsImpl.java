@@ -623,10 +623,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		InputStream inputStream = classLoader.getResourceAsStream(source);
 
 		if (inputStream == null) {
-			if (_log.isWarnEnabled() && !source.endsWith("-ext.xml") &&
+			if (_log.isInfoEnabled() && !source.endsWith("-ext.xml") &&
 				!source.startsWith("META-INF/")) {
 
-				_log.warn("Cannot load " + source);
+				_log.info("Cannot load " + source);
 			}
 
 			return;

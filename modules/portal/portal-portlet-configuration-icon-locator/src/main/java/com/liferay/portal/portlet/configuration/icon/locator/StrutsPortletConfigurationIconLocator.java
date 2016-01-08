@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Sergio González
  */
 @Component(immediate = true, service = PortletConfigurationIconLocator.class)
-public class MVCPortletConfigurationIconLocator
+public class StrutsPortletConfigurationIconLocator
 	implements PortletConfigurationIconLocator {
 
 	@Override
@@ -48,10 +48,10 @@ public class MVCPortletConfigurationIconLocator
 
 		Map<String, String> initParams = portlet.getInitParams();
 
-		String viewTemplate = initParams.get("view-template");
+		String viewAction = initParams.get("view-action");
 
-		if (Validator.isNotNull(viewTemplate)) {
-			defaultViews.add(viewTemplate);
+		if (Validator.isNotNull(viewAction)) {
+			defaultViews.add(viewAction);
 		}
 
 		return defaultViews;
@@ -59,7 +59,7 @@ public class MVCPortletConfigurationIconLocator
 
 	@Override
 	public String getPath(PortletRequest portletRequest) {
-		return ParamUtil.getString(portletRequest, "mvcPath");
+		return ParamUtil.getString(portletRequest, "struts_action");
 	}
 
 	@Reference(unbind = "-")

@@ -15,8 +15,8 @@
 package com.liferay.portal.portlet.configuration.icon.locator;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalService;
 
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Sergio González
  */
 @Component(immediate = true, service = PortletConfigurationIconLocator.class)
-public class MVCPortletConfigurationIconLocator
+public class LegacyConfigurationIconLocator
 	implements PortletConfigurationIconLocator {
 
 	@Override
@@ -48,10 +48,11 @@ public class MVCPortletConfigurationIconLocator
 
 		Map<String, String> initParams = portlet.getInitParams();
 
-		String viewTemplate = initParams.get("view-template");
+		boolean alwaysDisplayDefaultConfigurationIcons = GetterUtil.getBoolean(
+			initParams.get("always-display-default-configuration-icons"));
 
-		if (Validator.isNotNull(viewTemplate)) {
-			defaultViews.add(viewTemplate);
+		if (alwaysDisplayDefaultConfigurationIcons) {
+			defaultViews.add(StringPool.DASH);
 		}
 
 		return defaultViews;
@@ -59,7 +60,7 @@ public class MVCPortletConfigurationIconLocator
 
 	@Override
 	public String getPath(PortletRequest portletRequest) {
-		return ParamUtil.getString(portletRequest, "mvcPath");
+		return StringPool.BLANK;
 	}
 
 	@Reference(unbind = "-")

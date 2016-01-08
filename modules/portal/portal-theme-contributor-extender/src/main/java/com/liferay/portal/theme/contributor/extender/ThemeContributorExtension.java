@@ -52,8 +52,6 @@ public class ThemeContributorExtension implements Extension {
 	public ThemeContributorExtension(Bundle bundle, String contributorType) {
 		_bundle = bundle;
 		_contributorType = contributorType;
-
-		_scanForResources();
 	}
 
 	@Override
@@ -74,6 +72,8 @@ public class ThemeContributorExtension implements Extension {
 
 	@Override
 	public void start() throws Exception {
+		_scanForResources();
+
 		if (_contributorType == null) {
 			return;
 		}

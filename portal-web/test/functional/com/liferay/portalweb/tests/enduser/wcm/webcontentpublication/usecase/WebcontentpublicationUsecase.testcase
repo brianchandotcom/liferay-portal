@@ -17,7 +17,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
@@ -94,10 +94,10 @@
 				<var name="portlet" value="Sites" />
 			</execute>
 
-			<execute macro="SitePage#addCP">
+			<execute macro="Page#add">
 				<var name="page" value="Private Pages" />
+				<var name="pageName" value="${pageName}" />
 				<var name="siteName" value="Organization Name" />
-				<var name="sitePageName" value="${sitePageName}" />
 			</execute>
 		</for>
 
@@ -180,7 +180,7 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Page" />
 			<var name="siteName" value="http://www.able.com:8080" />
 			<var name="siteURL" value="true" />
@@ -1150,10 +1150,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<for list="Liferay,Site Name,Global" param="siteName">
@@ -1228,10 +1228,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<for list="Liferay,Site Name,Global" param="siteName">
@@ -1549,10 +1549,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Asset Publisher Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1765,7 +1765,7 @@
 	</command>
 
 	<command name="ViewBlogsEntriesViaRelatedAssets" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -1875,7 +1875,7 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -1943,7 +1943,7 @@
 			<var name="portletName" value="Related Assets" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -1955,7 +1955,7 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -2030,7 +2030,7 @@
 	</command>
 
 	<command name="ViewRelatedAssetViaDMPortlet" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -2051,7 +2051,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -2138,7 +2138,7 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Asset Publisher Page 2" />
 		</execute>
 

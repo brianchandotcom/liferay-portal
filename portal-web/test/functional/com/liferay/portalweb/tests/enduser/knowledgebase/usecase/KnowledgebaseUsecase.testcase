@@ -39,7 +39,7 @@
 		<var name="kbArticleContent" value="Article Content" />
 		<var name="pageName" value="Knowledge Base Page" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Page" />
 		</execute>
 
@@ -127,7 +127,7 @@
 	</command>
 
 	<command name="DeleteImportedArticles" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -202,7 +202,7 @@
 			<var name="kbArticleTitle" value="KB Admin Article" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -220,7 +220,7 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Article Page" />
 		</execute>
 
@@ -238,7 +238,7 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Search Page" />
 		</execute>
 
@@ -256,7 +256,7 @@
 			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Section Page" />
 		</execute>
 
@@ -429,7 +429,7 @@
 			<var name="kbChildArticleTitle" value="Knowledge Base Child Article Title" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Page" />
 		</execute>
 
@@ -449,7 +449,7 @@
 	</command>
 
 	<command name="SearchKBArticleInFolderViaSearchPortlet" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -528,7 +528,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -560,7 +560,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article's Title" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -580,7 +580,7 @@
 	</command>
 
 	<command name="ViewConfiguredKBArticleWithinFolderViaKBDisplay" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -648,7 +648,7 @@
 	</command>
 
 	<command name="ViewDefaultFolderViaKBDisplay" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -691,7 +691,7 @@
 	</command>
 
 	<command name="ViewImportedKBArticlesInHierarchyWithMarkdownFormat" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -764,7 +764,7 @@
 	</command>
 
 	<command name="ViewImportedKBArticlesWithMultiplePeerHierarchies" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -827,7 +827,7 @@
 	</command>
 
 	<command name="ViewImportedKBArticleWithImagesAsKBAttachments" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -898,7 +898,7 @@
 	<command name="ViewImportedKBArticleWithSourceURLMetadata" priority="4">
 		<property name="portlet.properties.knowledge-base-portlet" value="knowledge.base.source.url.enabled=true" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -954,7 +954,7 @@
 		<var name="kbArticleTitle2" value="KB Article 2 Title" />
 		<var name="pageName" value="Knowledge Base Display" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1045,7 +1045,7 @@
 			<var name="pageName" value="Welcome" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="KB Page" />
 		</execute>
 
@@ -1077,7 +1077,7 @@
 		<var name="kbFolderName" value="Folder 1" />
 		<var name="pageName" value="Knowledge Base Page" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1147,7 +1147,7 @@
 	</command>
 
 	<command name="ViewKBArticlesHierarchyWithinFolders" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -1285,7 +1285,7 @@
 	</command>
 
 	<command name="ViewKBArticlesInDifferentScopesPerSite" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page 1" />
 		</execute>
 
@@ -1309,7 +1309,7 @@
 			<var name="newKBPageScope" value="Knowledge Base Display Page 1 (Create New)" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page 2" />
 		</execute>
 
@@ -1383,7 +1383,7 @@
 	</command>
 
 	<command name="ViewKBArticlesInKBFolder" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -1446,7 +1446,7 @@
 	</command>
 
 	<command name="ViewKBArticlesInMultipleKBFolders" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -1564,7 +1564,7 @@
 	</command>
 
 	<command name="ViewKBArticleSuggestionsWorkflow" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -1719,7 +1719,7 @@
 		<var name="userScreenName" value="usersn" />
 		<var name="virtualHost" value="localhost" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1898,7 +1898,7 @@
 	<command name="ViewKBArticlesWithTheSamePriorityViaNavigationLinks" priority="3">
 		<var name="kbArticleCounterList" value="1,2,3" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -2070,7 +2070,7 @@
 	</command>
 
 	<command name="ViewKBArticleWithTheSameTitleAndPriorityInDifferentFolders" priority="3">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -2192,7 +2192,7 @@
 	</command>
 
 	<command name="ViewSuggestionsWithPermissions" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -2441,7 +2441,7 @@
 	<command name="ViewUnchangedKBArticlePriorityAfterEdit" priority="3">
 		<var name="kbArticleCounterList" value="1,2,3" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
@@ -2554,7 +2554,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addChildCP">
+		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="Knowledge Base Display Page" />
 			<var name="siteName" value="Liferay" />

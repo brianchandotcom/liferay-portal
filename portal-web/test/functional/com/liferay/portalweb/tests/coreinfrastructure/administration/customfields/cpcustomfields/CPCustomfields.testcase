@@ -280,7 +280,7 @@
 			<var name="resourceName" value="Wiki Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 

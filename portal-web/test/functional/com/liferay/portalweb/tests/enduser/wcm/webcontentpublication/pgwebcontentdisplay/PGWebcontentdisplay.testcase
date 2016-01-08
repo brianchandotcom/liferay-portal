@@ -16,7 +16,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -65,7 +65,7 @@
 	</command>
 
 	<command name="AddNewWebContentViaAddContentPanel" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Page" />
 		</execute>
 
@@ -105,10 +105,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -137,7 +137,7 @@
 
 	<command name="AddWebContentPortalScopeCurrentPage" priority="3">
 		<for list="1,2,3" param="i">
-			<execute macro="Page#addPG">
+			<execute macro="Page#add">
 				<var name="pageName" value="Web Content Display Page${i}" />
 			</execute>
 

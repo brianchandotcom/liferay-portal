@@ -79,4 +79,41 @@ public class PHPPortletAutoDeployer extends PortletAutoDeployer {
 		copyDependencyXml("portlet.xml", srcFile + "/WEB-INF", filterMap);
 	}
 
+	@Override
+	public String getExtraContent(
+			double webXmlVersion, File srcFile, String displayName)
+		throws Exception {
+
+		String extraContent = super.getExtraContent(
+			webXmlVersion, srcFile, displayName);
+
+		return extraContent + _PHP_SECURITY_CONSTRAINT;
+	}
+
+	private static final String _PHP_SECURITY_CONSTRAINT =
+		"<security-constraint>\n" +
+			"<web-resource-collection>\n" +
+			"<web-resource-name>PHP File</web-resource-name>\n" +
+			"<url-pattern>*.php</url-pattern>\n" +
+			"<url-pattern>*.php3</url-pattern>\n" +
+			"<url-pattern>*.php4</url-pattern>\n" +
+			"<url-pattern>*.php5</url-pattern>\n" +
+			"<url-pattern>*.php6</url-pattern>\n" +
+			"<url-pattern>*.php7</url-pattern>\n" +
+			"<url-pattern>*.phps</url-pattern>\n" +
+			"<url-pattern>*.phtml</url-pattern>\n" +
+			"<url-pattern>*.pcgi</url-pattern>\n" +
+			"<url-pattern>*.pcgi3</url-pattern>\n" +
+			"<url-pattern>*.pcgi4</url-pattern>\n" +
+			"<url-pattern>*.pcgi5</url-pattern>\n" +
+			"<url-pattern>*.pcgi6</url-pattern>\n" +
+			"<url-pattern>*.pcgi7</url-pattern>\n" +
+			"<url-pattern>*.inc</url-pattern>\n" +
+			"<url-pattern>*.htaccess</url-pattern>\n" +
+			"</web-resource-collection>\n" +
+			"<auth-constraint>\n" +
+			"<role-name>nobody</role-name>\n" +
+			"</auth-constraint>\n" +
+			"</security-constraint>";
+
 }

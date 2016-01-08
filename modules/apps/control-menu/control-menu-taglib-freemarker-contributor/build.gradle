@@ -1,0 +1,7 @@
+dependencies {
+	compile project(":apps:control-menu:control-menu-taglib")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

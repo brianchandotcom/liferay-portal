@@ -73,7 +73,7 @@ public class LayoutsTreeDisplayContext {
 		addPagesURL.setParameter("mvcPath", "/add_layout.jsp");
 		addPagesURL.setParameter("groupId", String.valueOf(getSelGroupId()));
 
-		if (selPlid > LayoutConstants.DEFAULT_PLID) {
+		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
 			addPagesURL.setParameter("selPlid", String.valueOf(selPlid));
 		}
 
@@ -102,10 +102,15 @@ public class LayoutsTreeDisplayContext {
 		return curSelPlid;
 	}
 
-	public PortletURL getEditLayoutURL(Boolean privateLayout) {
+	public PortletURL getEditLayoutURL(Boolean privateLayout, long selPlid) {
 		PortletURL editPublicLayoutURL = PortalUtil.getControlPanelPortletURL(
 			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
+
+		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
+			editPublicLayoutURL.setParameter(
+				"selPlid", String.valueOf(selPlid));
+		}
 
 		if (privateLayout != null) {
 			editPublicLayoutURL.setParameter(
@@ -199,7 +204,9 @@ public class LayoutsTreeDisplayContext {
 			"addLayoutURL",
 			getAddLayoutURL(null, LayoutConstants.DEFAULT_PLID));
 
-		portletURLs.put("editLayoutURL", getEditLayoutURL(null));
+		portletURLs.put(
+			"editLayoutURL",
+			getEditLayoutURL(null, LayoutConstants.DEFAULT_PLID));
 
 		return portletURLs;
 	}

@@ -16,7 +16,6 @@ package com.liferay.ant.build.logger;
 
 import java.lang.reflect.Field;
 
-import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.DefaultLogger;
@@ -43,6 +42,11 @@ public class LiferayBuildLoggerInstallerTask extends Task {
 
 						currentProject.addBuildListener(
 							new LiferayBuildLogger(buildListener));
+
+						if (isBuildPerformanceLoggerEnabled()) {
+							currentProject.addBuildListener(
+								new LiferayBuildPerformanceLogger());
+						}
 					}
 				}
 			}
@@ -52,6 +56,15 @@ public class LiferayBuildLoggerInstallerTask extends Task {
 				"Unable to access listenersLock field of " + currentProject,
 				iae);
 		}
+	}
+
+	private boolean isBuildPerformanceLoggerEnabled() {
+		Project currentProject = getProject();
+
+		Object buildPerformanceLoggerEnabled = currentProject.getProperty(
+			BUILD_PERFORMANCE_LOGGER_ENABLED);
+
+		return buildPerformanceLoggerEnabled.equals("true");
 	}
 
 	private static final Field _listenersLockField;
@@ -68,55 +81,7 @@ public class LiferayBuildLoggerInstallerTask extends Task {
 		}
 	}
 
-	private class LiferayBuildLogger implements BuildListener {
-
-		@Override
-		public void buildFinished(BuildEvent be) {
-			_buildListener.buildFinished(be);
-		}
-
-		@Override
-		public void buildStarted(BuildEvent be) {
-			_buildListener.buildStarted(be);
-		}
-
-		@Override
-		public void messageLogged(BuildEvent be) {
-			String message = be.getMessage();
-
-			if (message.startsWith("Trying to override old definition of ")) {
-				be.setMessage(message, Project.MSG_DEBUG);
-			}
-
-			_buildListener.messageLogged(be);
-		}
-
-		@Override
-		public void targetFinished(BuildEvent be) {
-			_buildListener.targetFinished(be);
-		}
-
-		@Override
-		public void targetStarted(BuildEvent be) {
-			_buildListener.targetStarted(be);
-		}
-
-		@Override
-		public void taskFinished(BuildEvent be) {
-			_buildListener.taskFinished(be);
-		}
-
-		@Override
-		public void taskStarted(BuildEvent be) {
-			_buildListener.taskStarted(be);
-		}
-
-		private LiferayBuildLogger(BuildListener buildListener) {
-			_buildListener = buildListener;
-		}
-
-		private final BuildListener _buildListener;
-
-	}
+	private static final String BUILD_PERFORMANCE_LOGGER_ENABLED =
+		"build.performance.logger.enabled";
 
 }

@@ -51,15 +51,13 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class ThemeContributorExtension implements Extension {
 
-	public ThemeContributorExtension(Bundle bundle, String contributorType) {
+	public ThemeContributorExtension(Bundle bundle) {
 		_bundle = bundle;
-		_contributorType = contributorType;
 	}
 
 	@Override
 	public void destroy() throws Exception {
 		_contextPath = null;
-		_contributorType = null;
 		_cssResourcePaths = null;
 		_jsResourcePaths = null;
 
@@ -75,10 +73,6 @@ public class ThemeContributorExtension implements Extension {
 	@Override
 	public void start() throws Exception {
 		_scanForResources();
-
-		if (_contributorType == null) {
-			return;
-		}
 
 		BundleContext bundleContext = _bundle.getBundleContext();
 
@@ -150,7 +144,6 @@ public class ThemeContributorExtension implements Extension {
 
 	private final Bundle _bundle;
 	private String _contextPath;
-	private String _contributorType;
 	private Collection<String> _cssResourcePaths = new ArrayList<>();
 	private ServiceRegistration<?> _dynamicIncludeServiceRegistration;
 	private Collection<String> _jsResourcePaths = new ArrayList<>();

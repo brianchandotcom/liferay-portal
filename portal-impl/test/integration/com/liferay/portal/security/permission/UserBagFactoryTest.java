@@ -33,8 +33,8 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -73,10 +73,10 @@ public class UserBagFactoryTest {
 	public void testGetGroups() throws Exception {
 		UserBag userBag = getUserBag();
 
-		Set<Group> groups = userBag.getGroups();
+		Collection<Group> groups = userBag.getGroups();
 
-		Set<Group> userGroups = getUserGroups();
-		Set<Group> userOrgGroups = getUserOrgGroups();
+		Collection<Group> userGroups = getUserGroups();
+		Collection<Group> userOrgGroups = getUserOrgGroups();
 
 		Assert.assertTrue(groups.containsAll(userGroups));
 		Assert.assertTrue(groups.containsAll(userOrgGroups));
@@ -110,7 +110,7 @@ public class UserBagFactoryTest {
 
 	@Test
 	public void testGetUserGroups() throws Exception {
-		Set<Group> userGroups = getUserGroups();
+		Collection<Group> userGroups = getUserGroups();
 
 		Assert.assertTrue(userGroups.contains(_childGroup));
 		Assert.assertFalse(userGroups.contains(_parentGroup));
@@ -125,7 +125,7 @@ public class UserBagFactoryTest {
 
 	@Test
 	public void testGetUserOrgGroups() throws Exception {
-		Set<Group> groups = getUserOrgGroups();
+		Collection<Group> groups = getUserOrgGroups();
 
 		Assert.assertTrue(groups.contains(_childOrganization.getGroup()));
 		Assert.assertTrue(groups.contains(_parentOrganization.getGroup()));
@@ -133,62 +133,17 @@ public class UserBagFactoryTest {
 
 	@Test
 	public void testGetUserOrgs() throws Exception {
-		Set<Organization> organizations = getUserOrgs();
+		Collection<Organization> organizations = getUserOrgs();
 
 		Assert.assertTrue(organizations.contains(_childOrganization));
 		Assert.assertTrue(organizations.contains(_parentOrganization));
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void testUnmodifiableGroups() throws Exception {
-		UserBag userBag = getUserBag();
-
-		Set<Group> groups = userBag.getGroups();
-
-		groups.clear();
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void testUnmodifiableRoles() throws Exception {
-		UserBag userBag = getUserBag();
-
-		Set<Role> roles = userBag.getRoles();
-
-		roles.clear();
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void testUnmodifiableUserGroups() throws Exception {
-		UserBag userBag = getUserBag();
-
-		Set<Group> userGroups = userBag.getUserGroups();
-
-		userGroups.clear();
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void testUnmodifiableUserOrgGroups() throws Exception {
-		UserBag userBag = getUserBag();
-
-		Set<Group> userOrgGroups = userBag.getUserOrgGroups();
-
-		userOrgGroups.clear();
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void testUnmodifiableUserOrgs() throws Exception {
-		UserBag userBag = getUserBag();
-
-		Set<Organization> userOrgs = userBag.getUserOrgs();
-
-		userOrgs.clear();
 	}
 
 	protected UserBag getUserBag() throws Exception {
 		return UserBagFactoryUtil.create(_user.getUserId());
 	}
 
-	protected Set<Group> getUserGroups() throws Exception {
+	protected Collection<Group> getUserGroups() throws Exception {
 		UserLocalServiceUtil.addGroupUser(_childGroup.getGroupId(), _user);
 
 		UserBag userBag = getUserBag();
@@ -196,7 +151,7 @@ public class UserBagFactoryTest {
 		return userBag.getUserGroups();
 	}
 
-	protected Set<Group> getUserOrgGroups() throws Exception {
+	protected Collection<Group> getUserOrgGroups() throws Exception {
 		UserLocalServiceUtil.addOrganizationUser(
 			_childOrganization.getOrganizationId(), _user.getUserId());
 
@@ -205,7 +160,7 @@ public class UserBagFactoryTest {
 		return userBag.getUserOrgGroups();
 	}
 
-	protected Set<Organization> getUserOrgs() throws Exception {
+	protected Collection<Organization> getUserOrgs() throws Exception {
 		UserLocalServiceUtil.addOrganizationUser(
 			_childOrganization.getOrganizationId(), _user.getUserId());
 

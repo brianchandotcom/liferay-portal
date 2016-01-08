@@ -36,13 +36,13 @@
 	<command name="publish">
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="saveAsDraft">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save as Draft" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="selectPageFormat">

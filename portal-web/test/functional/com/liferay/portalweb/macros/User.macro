@@ -1239,7 +1239,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<if>
 			<condition function="IsTextNotEqual" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_AMERICA_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time"  />

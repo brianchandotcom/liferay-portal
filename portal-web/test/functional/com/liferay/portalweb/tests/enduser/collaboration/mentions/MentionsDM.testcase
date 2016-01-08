@@ -1,0 +1,224 @@
+<definition component-name="portal-collaboration">
+	<property name="portlet.plugins.includes" value="mentions-portlet" />
+	<property name="testray.main.component.name" value="Mentions" />
+
+	<set-up>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="SignIn#signInPortalInstanceSetUp" />
+			</then>
+		</if>
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="DMDocument#tearDownCP" />
+
+				<execute macro="DMFolder#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+
+				<execute macro="User#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ViewMentionViaDMComment" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentSize" value="0KB" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Mentions#addMentionViaComments">
+			<var name="entryComment" value="Comment mentioning" />
+			<var name="mentionsUserFullName" value="Test Test" />
+			<var name="mentionsUserScreenName" value="test" />
+		</execute>
+
+		<execute macro="Mentions#viewCommentMentionTagLink">
+			<var name="mentionsUserFullName" value="Test Test" />
+			<var name="mentionsUserScreenName" value="test" />
+		</execute>
+	</command>
+
+	<command name="ViewReplyMentionViaDMComment" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentSize" value="0KB" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Mentions#addMentionViaComments">
+			<var name="entryComment" value="Comment mentioning" />
+			<var name="mentionsUserFullName" value="Test Test" />
+			<var name="mentionsUserScreenName" value="test" />
+		</execute>
+
+		<execute macro="Mentions#viewCommentMentionTagLink">
+			<var name="mentionsUserFullName" value="Test Test" />
+			<var name="mentionsUserScreenName" value="test" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<var name="key_entryComment" value="Comment mentioning" />
+
+		<execute function="AssertClick" locator1="Comments#REPLY_TO_COMMENT" value1="Reply" />
+
+		<execute macro="Mentions#addMentionViaComments">
+			<var name="entryComment" value="Comment reply mentioning" />
+			<var name="mentionsUserFullName" value="userfn userln" />
+			<var name="mentionsUserScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Mentions#viewCommentMentionTagLink">
+			<var name="mentionsUserFullName" value="userfn userln" />
+			<var name="mentionsUserScreenName" value="usersn" />
+		</execute>
+	</command>
+</definition>

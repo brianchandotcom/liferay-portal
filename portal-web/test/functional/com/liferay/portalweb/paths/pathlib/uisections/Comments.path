@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPLY_TO_COMMENT</td>
+	<td>//div[@class='lfr-discussion-body' and contains(.,'${key_entryComment}')]//span[contains(.,'Reply')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'lfr-message-response') and contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>

@@ -16,10 +16,9 @@
 	<command name="addCommentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
 
-		<execute function="AssertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_BE_THE_FIRST" value1="Be the first." />
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${commentBody}" />
+		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="PGDocumentsandmediaDocument#COMMENTS_SUBMIT_BUTTON" value1="Submit" />
@@ -832,7 +831,7 @@
 		<execute function="AssertClick#assertTextClick" locator1="Button#DOWNLOAD" value1="Download" />
 	</command>
 
-	<command name="editCmdCP">
+	<command name="editCmd">
 		<if>
 			<not>
 				<contains string="${checkedOut}" substring="{checkedOut}" />
@@ -975,7 +974,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
-		<execute macro="DMDocument#editCmdCP">
+		<execute macro="DMDocument#editCmd">
 			<var name="checkedOut" value="${checkedOut}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
@@ -1009,16 +1008,12 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="DMDocument#editCmdPG">
-			<var name="changeLog" value="${changeLog}" />
+		<execute macro="DMDocument#editCmd">
 			<var name="checkedOut" value="${checkedOut}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
-			<var name="dmDocumentTagName" value="${dmDocumentTagName}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
-			<var name="revision" value="${revision}" />
-			<var name="userName" value="${userName}" />
+			<var name="sharepointRepository" value="${sharepointRepository}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
@@ -1908,15 +1903,7 @@
 	</command>
 
 	<command name="viewDocumentTitleCmdPG">
-		<if>
-			<condition function="IsElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" />
-			<then>
-				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_HEADER_TITLE" value1="${dmDocumentTitle}" />
-			</else>
-		</if>
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
 	<command name="viewDocumentToolbarCmdAsGuestPG">

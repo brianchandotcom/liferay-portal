@@ -63,7 +63,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />

@@ -369,7 +369,8 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertClick" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
 	<command name="configureKBSectionPG">
@@ -418,7 +419,8 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertClick" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
+		<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 	</command>
 
 	<command name="deleteCP">

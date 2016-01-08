@@ -29,6 +29,20 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -92,7 +106,7 @@
 		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<execute macro="NotificationsPortlet#disableUserDeliveries">
-			<var name="actionType" value="adds" />
+			<var name="actionType" value="Adds" />
 			<var name="contentType" value="Documents and Media" />
 			<var name="notificationType" value="Website" />
 		</execute>
@@ -206,8 +220,14 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
 		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoEditDocument">
+			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
 		<execute macro="DMDocument#editPG">
@@ -299,6 +319,16 @@
 			<var name="contentBody" value="DM Document Title" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
+		<execute macro="DMNavigator#gotoFolderPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
 		<execute macro="DMDocument#viewDocumentTitleCmdPG">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
@@ -345,6 +375,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
 		<execute macro="DMNavigator#gotoFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
@@ -379,6 +411,16 @@
 
 		<execute macro="Notifications#navigateToContent">
 			<var name="contentBody" value="DM Document Title Edit" />
+		</execute>
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
+		<execute macro="DMNavigator#gotoFolderPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentPG">
+			<var name="dmDocumentTitle" value="DM Document Title Edit" />
 		</execute>
 
 		<execute macro="DMDocument#viewDocumentTitleCmdPG">

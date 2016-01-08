@@ -27,6 +27,6 @@
 
 		<execute function="Click" locator1="Button#EXECUTE" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 </definition>

@@ -87,7 +87,8 @@
 		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
 		<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertClick" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addWithNullTitleCP">

@@ -82,7 +82,7 @@
 				<execute function="AssertClick" locator1="Message#ERROR_2" value1="Display style views cannot be empty." />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+				<execute macro="Alert#viewSetupUpdatedSuccessMessage" />
 			</else>
 		</if>
 	</command>

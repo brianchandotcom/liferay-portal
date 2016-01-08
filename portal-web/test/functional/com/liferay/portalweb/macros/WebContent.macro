@@ -653,7 +653,7 @@
 
 		<execute macro="Button#clickSubmitForPublication" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addWithWorkflowPGViaAP">

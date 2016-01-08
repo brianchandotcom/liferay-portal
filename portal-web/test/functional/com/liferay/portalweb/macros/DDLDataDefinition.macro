@@ -175,7 +175,7 @@
 	<command name="saveCP">
 		<execute macro="DDLDataDefinition#save" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -183,7 +183,7 @@
 	<command name="saveViaDDLDisplayPG">
 		<execute macro="DDLDataDefinition#save" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

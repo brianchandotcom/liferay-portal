@@ -1358,7 +1358,7 @@
 
 		<execute macro="Button#clickSubmitForPublication" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
@@ -1397,7 +1397,7 @@
 
 		<execute macro="Button#clickSaveAsDraft" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute macro="DMNavigator#gotoEditDocument">
 			<var name="dmDocumentTitle" value="DM Document Title" />

@@ -24,7 +24,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#RESET_DEFAULT_VALUES" value1="Reset Default Values" />
 
-		<execute macro="Alert#viewSuccess" />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="viewPlatformSettingCP">

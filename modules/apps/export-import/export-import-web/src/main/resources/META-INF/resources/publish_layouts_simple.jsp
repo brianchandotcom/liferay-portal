@@ -17,17 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("exportImportConfigurationId"));
 
 ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 
 String cmd = Constants.PUBLISH_TO_LIVE;
+boolean localPublishing = true;
 String publishActionKey = "publish-to-live";
 
 if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE) {
 	cmd = Constants.PUBLISH_TO_REMOTE;
+	localPublishing = false;
 	publishActionKey = "publish-to-remote-live";
 }
 
@@ -58,17 +58,31 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 
 <portlet:actionURL name="editPublishConfiguration" var="confirmedActionURL">
 	<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
 <aui:form action='<%= confirmedActionURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm2">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
 
 	<div class="export-dialog-tree">
+
+		<%
+		String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR : BackgroundTaskExecutorNames.LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR;
+
+		int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupDisplayContextHelper.getStagingGroupId(), taskExecutorClassName, false);
+
+		incompleteBackgroundTaskCount += BackgroundTaskManagerUtil.getBackgroundTasksCount(groupDisplayContextHelper.getLiveGroupId(), taskExecutorClassName, false);
+		%>
+
+		<div class="<%= incompleteBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
+			<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
+			</liferay-util:include>
+		</div>
+
 		<ul class="lfr-tree list-unstyled">
 			<aui:fieldset cssClass="options-group" label="changes-since-last-publication">
 				<li class="options portlet-list-simple">

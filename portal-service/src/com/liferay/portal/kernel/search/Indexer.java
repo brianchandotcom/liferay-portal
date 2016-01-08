@@ -90,10 +90,27 @@ public interface Indexer<T> {
 
 	public boolean isCommitImmediately();
 
+	/**
+	 * Return <code>true</code> if the indexer participates in post-search
+	 * result filtering.
+	 *
+	 * @return <code>true</code> if the indexer participates in post-search
+	 *         result filtering; <code>false</code> otherwise
+	 * @see    SearchResultPermissionFilter
+	 */
 	public boolean isFilterSearch();
 
 	public boolean isIndexerEnabled();
 
+	/**
+	 * Returns <code>true</code> if the indexer adds permission related filters
+	 * to the search query prior to execution
+	 *
+	 * @return <code>true</code> if the indexer adds permission related filters
+	 *         to the search query prior to execution; <code>false</code>
+	 *         otherwise
+	 * @see    SearchPermissionChecker
+	 */
 	public boolean isPermissionAware();
 
 	public boolean isStagingAware();

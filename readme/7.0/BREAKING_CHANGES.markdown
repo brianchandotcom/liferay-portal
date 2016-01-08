@@ -3276,3 +3276,27 @@ All the provided functionality available in the `${theme}` variable can be repla
 For historic reasons, the `{$theme} variable was being injected with the `VelocityTaglibImpl` class. This was creating some coupling between the template engines and between some specific taglibs and the template engines at the same time.
 
 Freemarker already offers native support for taglibs which cover all the functionality originally provided by the `{$theme}` variable. Removing this coupling would help future developments while still keeping all the existing functionality.
+
+---------------------------------------
+
+### The `getURLView` method of AssetRenderer returns `String` instead of `PortletURL`
+- **Date:** 2016-Jan-08
+- **JIRA Ticket:** LPS-61853
+
+#### What changed?
+
+The AssetRenderer interface has changed and now the method  `getURLView` returns `String` instead of `PortletURL`
+
+#### Who is affected?
+
+All custom assets that implements AssetRenderer interface.
+
+#### How should I update my code?
+
+You should update the method signature to reflect that it returns a `String` and you should adapt your implementation accordingly.
+
+In general, it should be as easy as returning `portletURL.toString()`.
+
+#### Why was this change made?
+
+The API was forcing to return a PortletURL and this makes things harder when we want to use any other link instead of a PortletURL. For example, in the case of Bookmarks, where we want to automatically redirect to any other potential url.

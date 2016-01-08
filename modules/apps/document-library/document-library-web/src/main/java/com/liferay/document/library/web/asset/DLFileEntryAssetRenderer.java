@@ -283,7 +283,7 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLView(
+	public String getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
@@ -300,7 +300,7 @@ public class DLFileEntryAssetRenderer
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 		portletURL.setWindowState(windowState);
 
-		return portletURL;
+		return portletURL.toString();
 	}
 
 	@Override

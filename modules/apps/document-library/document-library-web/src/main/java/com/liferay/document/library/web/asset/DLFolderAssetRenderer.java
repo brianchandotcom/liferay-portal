@@ -237,7 +237,7 @@ public class DLFolderAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLView(
+	public String getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
@@ -254,7 +254,7 @@ public class DLFolderAssetRenderer
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);
 
-		return portletURL;
+		return portletURL.toString();
 	}
 
 	@Override

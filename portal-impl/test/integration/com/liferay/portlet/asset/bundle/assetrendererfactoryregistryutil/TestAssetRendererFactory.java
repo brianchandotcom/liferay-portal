@@ -177,11 +177,11 @@ public class TestAssetRendererFactory
 	}
 
 	@Override
-	public PortletURL getURLView(
+	public String getURLView(
 		LiferayPortletResponse liferayPortletResponse,
 		WindowState windowState) {
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	@Override

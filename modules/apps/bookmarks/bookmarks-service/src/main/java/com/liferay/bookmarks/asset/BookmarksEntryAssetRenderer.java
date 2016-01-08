@@ -154,7 +154,7 @@ public class BookmarksEntryAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLView(
+	public String getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
@@ -170,7 +170,7 @@ public class BookmarksEntryAssetRenderer
 		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
 		portletURL.setWindowState(windowState);
 
-		return portletURL;
+		return portletURL.toString();
 	}
 
 	@Override

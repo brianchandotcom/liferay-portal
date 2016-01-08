@@ -204,11 +204,7 @@ AUI.add(
 
 						var editor = instance.get('editor');
 
-						var inputLanguageValue = instance.getValue(languageId);
-
-						if (!inputLanguageValue) {
-							inputLanguageValue = defaultLanguageValue;
-						}
+						var inputLanguageValue = instance.getValue(languageId) || defaultLanguageValue;
 
 						inputPlaceholder.val(inputLanguageValue);
 

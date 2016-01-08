@@ -1,21 +1,21 @@
 ;(function() {
-	var PATH_CONTROL_MENU_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/control-menu-web';
+	var PATH_CONTROL_MENU_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/control-menu-taglib/';
 
 	AUI().applyConfig(
 		{
 			groups: {
 				controlmenu: {
-					base: PATH_CONTROL_MENU_WEB + '/js/',
+					base: PATH_CONTROL_MENU_WEB,
 					modules: {
 						'liferay-control-menu': {
-							path: 'control_menu.js',
+							path: 'control_menu/js/control_menu.js',
 							requires: [
 								'aui-node',
 								'event-touch'
 							]
 						},
 						'liferay-control-menu-add-application': {
-							path: 'control_menu_add_application.js',
+							path: 'control_menu/js/control_menu_add_application.js',
 							requires: [
 								'aui-io-request',
 								'event-key',
@@ -28,7 +28,7 @@
 							]
 						},
 						'liferay-control-menu-add-base': {
-							path: 'control_menu_add_base.js',
+							path: 'control_menu/js/control_menu_add_base.js',
 							requires: [
 								'anim',
 								'aui-base',
@@ -40,7 +40,7 @@
 							]
 						},
 						'liferay-control-menu-add-content': {
-							path: 'control_menu_add_content.js',
+							path: 'control_menu/js/control_menu_add_content.js',
 							requires: [
 								'aui-io-request',
 								'event-mouseenter',
@@ -51,7 +51,7 @@
 							]
 						},
 						'liferay-control-menu-add-content-drag-drop': {
-							path: 'control_menu_add_content_drag_drop.js',
+							path: 'control_menu/js/control_menu_add_content_drag_drop.js',
 							requires: [
 								'aui-base',
 								'dd',
@@ -63,7 +63,7 @@
 							]
 						},
 						'liferay-control-menu-add-content-preview': {
-							path: 'control_menu_add_content_preview.js',
+							path: 'control_menu/js/control_menu_add_content_preview.js',
 							requires: [
 								'aui-debounce',
 								'aui-io-request',
@@ -71,7 +71,7 @@
 							]
 						},
 						'liferay-control-menu-add-content-search': {
-							path: 'control_menu_add_content_search.js',
+							path: 'control_menu/js/control_menu_add_content_search.js',
 							requires: [
 								'aui-base',
 								'liferay-control-menu',
@@ -86,7 +86,7 @@
 								},
 								trigger: ['liferay-control-menu-add-application', 'liferay-control-menu-add-content']
 							},
-							path: 'control_menu_portlet_dd.js',
+							path: 'control_menu/js/control_menu_portlet_dd.js',
 							requires: [
 								'aui-base',
 								'dd',
@@ -98,7 +98,7 @@
 							]
 						}
 					},
-					root: PATH_CONTROL_MENU_WEB + '/js/'
+					root: PATH_CONTROL_MENU_WEB
 				}
 			}
 		}

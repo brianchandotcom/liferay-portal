@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Control Menu Taglib
+Bundle-SymbolicName: com.liferay.control.menu.taglib
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.control.menu.taglib.servlet,\
+	com.liferay.control.menu.taglib.servlet.taglib
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources
+JS-Config: /META-INF/resources/config.js
+Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/control-menu";version:Version="1.0.0"
+Web-ContextPath: /control-menu-taglib

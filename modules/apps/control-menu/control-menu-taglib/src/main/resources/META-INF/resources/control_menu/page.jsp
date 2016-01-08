@@ -75,7 +75,7 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 		</div>
 	</div>
 
-	<aui:script position="inline" use="liferay-control-menu">
+	<aui:script use="liferay-control-menu">
 		Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
 	</aui:script>
 </c:if>

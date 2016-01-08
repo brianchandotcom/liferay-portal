@@ -150,13 +150,21 @@ public class I18nServlet extends HttpServlet {
 
 		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
 
+		String i18nLanguageCode = locale.getLanguage();
+
 		if (Validator.isNull(locale.getCountry())) {
 
 			// Locales must contain the country code
 
-			locale = LanguageUtil.getLocale(locale.getLanguage());
+			locale = LanguageUtil.getLocale(i18nLanguageCode);
 
-			i18nLanguageId = LocaleUtil.toLanguageId(locale);
+			if (locale == null) {
+				i18nLanguageId = null;
+				i18nLanguageCode = null;
+			}
+			else {
+				i18nLanguageId = LocaleUtil.toLanguageId(locale);
+			}
 		}
 
 		if (!PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE &&
@@ -172,7 +180,7 @@ public class I18nServlet extends HttpServlet {
 		}
 
 		return new I18nData(
-			i18nPath, locale.getLanguage(), i18nLanguageId, redirect);
+			i18nPath, i18nLanguageCode, i18nLanguageId, redirect);
 	}
 
 	protected I18nData getI18nData(Locale locale) {

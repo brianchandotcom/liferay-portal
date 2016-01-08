@@ -18,6 +18,7 @@
 
 <%
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
+WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 PortletURL portletURL = renderResponse.createActionURL();
 
@@ -40,19 +41,21 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 <div class="container-fluid-1280">
 	<liferay-trash:undo portletURL="<%= undoTrashURL %>" />
 
-	<portlet:actionURL name="/wiki/edit_page_attachment" var="emptyTrashURL">
-		<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-		<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:actionURL>
+	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
+		<portlet:actionURL name="/wiki/edit_page_attachment" var="emptyTrashURL">
+			<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+			<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:actionURL>
 
-	<liferay-trash:empty
-		confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-page"
-		emptyMessage="remove-the-attachments-for-this-page"
-		infoMessage="attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted"
-		portletURL="<%= emptyTrashURL.toString() %>"
-		totalEntries="<%= wikiPage.getDeletedAttachmentsFileEntriesCount() %>"
-	/>
+		<liferay-trash:empty
+			confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-page"
+			emptyMessage="remove-the-attachments-for-this-page"
+			infoMessage="attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted"
+			portletURL="<%= emptyTrashURL.toString() %>"
+			totalEntries="<%= wikiPage.getDeletedAttachmentsFileEntriesCount() %>"
+		/>
+	</c:if>
 
 	<%
 	PortletURL iteratorURL = renderResponse.createRenderURL();

@@ -15,7 +15,6 @@
 package com.liferay.portlet.configuration.icon.help;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.theme.PortletDisplay;
 
 import javax.portlet.PortletRequest;
 
@@ -40,15 +39,11 @@ public class HelpPortletConfigurationIcon extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.getURLHelp();
 	}
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return portletDisplay.isShowHelpIcon();
 	}
 

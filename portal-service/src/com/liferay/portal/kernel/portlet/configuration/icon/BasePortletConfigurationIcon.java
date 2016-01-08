@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;
@@ -32,6 +33,8 @@ public abstract class BasePortletConfigurationIcon
 
 		themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		portletDisplay = themeDisplay.getPortletDisplay();
 	}
 
 	@Override
@@ -139,6 +142,7 @@ public abstract class BasePortletConfigurationIcon
 		return false;
 	}
 
+	protected PortletDisplay portletDisplay;
 	protected PortletRequest portletRequest;
 	protected ThemeDisplay themeDisplay;
 

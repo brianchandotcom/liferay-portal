@@ -26,23 +26,13 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 </div>
 
 <div class="hide lfr-fallback" id="<portlet:namespace />fallback">
-	<aui:fieldset label="upload-files">
-		<aui:input label='<%= LanguageUtil.get(request, "file") + " 1" %>' name="file1" type="file" />
+	<aui:input name="numOfFiles" type="hidden" value="3" />
 
-		<aui:input label='<%= LanguageUtil.get(request, "file") + " 2" %>' name="file2" type="file" />
+	<aui:input label='<%= LanguageUtil.get(request, "file") + " 1" %>' name="file1" type="file" />
 
-		<aui:input label='<%= LanguageUtil.get(request, "file") + " 3" %>' name="file3" type="file" />
-	</aui:fieldset>
+	<aui:input label='<%= LanguageUtil.get(request, "file") + " 2" %>' name="file2" type="file" />
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
-
-		<%
-		String taglibOnClick = "parent.location = '" + HtmlUtil.escape(wikiRequestHelper.getCurrentURL()) + "';";
-		%>
-
-		<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" type="cancel" />
-	</aui:button-row>
+	<aui:input label='<%= LanguageUtil.get(request, "file") + " 3" %>' name="file3" type="file" />
 </div>
 
 <aui:script sandbox="<%= true %>">

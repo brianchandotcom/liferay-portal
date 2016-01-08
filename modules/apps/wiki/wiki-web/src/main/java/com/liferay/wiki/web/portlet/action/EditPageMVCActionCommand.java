@@ -39,6 +39,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalService;
 import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.wiki.WikiAttachmentsHelper;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
@@ -67,6 +68,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
@@ -79,6 +81,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditPageMVCActionCommand extends BaseMVCActionCommand {
+
+	@Reference(unbind = "-")
+	public void set_wikiAttachmentsHelper(
+		WikiAttachmentsHelper wikiAttachmentsHelper) {
+
+		_wikiAttachmentsHelper = wikiAttachmentsHelper;
+	}
 
 	protected void deletePage(ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
@@ -386,11 +395,14 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
+		_wikiAttachmentsHelper.addAttachments(actionRequest);
+
 		return page;
 	}
 
 	private TrashEntryLocalService _trashEntryLocalService;
 	private TrashEntryService _trashEntryService;
+	private WikiAttachmentsHelper _wikiAttachmentsHelper;
 	private WikiPageLocalService _wikiPageLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 	private WikiPageService _wikiPageService;

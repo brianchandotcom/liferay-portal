@@ -28,7 +28,6 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 
 <portlet:resourceURL var="updateContentListURL">
 	<portlet:param name="mvcPath" value="/view_resources.jsp" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:resourceURL>
 
 <aui:form action="<%= updateContentListURL %>" name="addContentForm" onSubmit="event.preventDefault();">
@@ -65,7 +64,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 		<span class="add-content-button">
 
 			<%
-			PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(themeDisplay.getPlid(), portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
+			PortletURL redirectURL = PortletURLFactoryUtil.create(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);
 
 			redirectURL.setParameter("mvcPath", "/add_content_redirect.jsp");
 			redirectURL.setWindowState(LiferayWindowState.POP_UP);

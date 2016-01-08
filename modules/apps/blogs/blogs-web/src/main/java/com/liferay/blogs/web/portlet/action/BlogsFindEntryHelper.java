@@ -21,6 +21,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,6 +57,8 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 	public PortletURL processPortletURL(
 			HttpServletRequest request, PortletURL portletURL)
 		throws Exception {
+
+		portletURL.setWindowState(WindowState.MAXIMIZED);
 
 		return portletURL;
 	}

@@ -95,7 +95,7 @@ if (filterManageableUserGroups) {
 
 		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
 			<liferay-frontend:management-bar-action-buttons>
-				<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteUserGroups" label="delete" />
+				<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteUserGroups" label="delete" />
 			</liferay-frontend:management-bar-action-buttons>
 		</c:if>
 	</liferay-frontend:management-bar>

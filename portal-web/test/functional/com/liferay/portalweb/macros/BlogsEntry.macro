@@ -1126,7 +1126,7 @@
 				<execute macro="Blogs#viewNoEntryCP" />
 			</then>
 			<else>
-				<execute function="Click" locator1="Blogs#ENTRY_TABLE_ALL_CHECKBOX" />
+				<execute function="Click" locator1="Checkbox#SELECT_ALL" />
 
 				<execute function="Click" locator1="Icon#DELETE" />
 

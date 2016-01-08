@@ -120,7 +120,7 @@ public interface AssetRenderer<T> extends Renderer {
 
 	public String getUrlTitle();
 
-	public PortletURL getURLView(
+	public String getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception;

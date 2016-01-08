@@ -3308,3 +3308,27 @@ In order to keep the old behaviour of adding the configuration options in every 
 #### Why was this change made?
 
 Lexicon patterns require the ability to specify different configuration options depending on the view of the portlet by adding or removing options. This can be easily achieved by using `PortletConfigurationIconFactory` and `PortletConfigurationIconFactory` classes.
+
+---------------------------------------
+
+### The `getURLView` method of AssetRenderer returns `String` instead of `PortletURL`
+- **Date:** 2016-Jan-08
+- **JIRA Ticket:** LPS-61853
+
+#### What changed?
+
+The AssetRenderer interface has changed and now the method  `getURLView` returns `String` instead of `PortletURL`
+
+#### Who is affected?
+
+All custom assets that implements AssetRenderer interface.
+
+#### How should I update my code?
+
+You should update the method signature to reflect that it returns a `String` and you should adapt your implementation accordingly.
+
+In general, it should be as easy as returning `portletURL.toString()`.
+
+#### Why was this change made?
+
+The API was forcing to return a PortletURL and this makes things harder when we want to use any other link instead of a PortletURL. For example, in the case of Bookmarks, where we want to automatically redirect to any other potential url.

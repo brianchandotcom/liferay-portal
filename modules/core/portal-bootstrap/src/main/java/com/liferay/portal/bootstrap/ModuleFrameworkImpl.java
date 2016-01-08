@@ -228,8 +228,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
 	public void initFramework() throws Exception {
-		if (_log.isTraceEnabled()) {
-			_log.trace("Initializing OSGi Framework");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Initializing the OSGi framework");
 		}
 
 		List<ServiceLoaderCondition> serviceLoaderConditions =
@@ -238,10 +238,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		ServiceLoaderCondition serviceLoaderCondition =
 			serviceLoaderConditions.get(0);
 
-		if (_log.isTraceEnabled()) {
-			_log.trace(
-				"Using conditional loading to find framework factory {" +
-					serviceLoaderCondition.getClass().getName() + "}");
+		if (_log.isDebugEnabled()) {
+			Class<?> clazz = serviceLoaderCondition.getClass();
+
+			_log.debug(
+				"Using conditional loading to find the OSGi framework " +
+					"factory " + clazz.getName());
 		}
 
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
@@ -249,44 +251,45 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
 
-		if (_log.isTraceEnabled()) {
-			_log.trace(
-				"Using framework factory {" +
-					frameworkFactory.getClass().getName() + "}");
+		if (_log.isDebugEnabled()) {
+			Class<?> clazz = frameworkFactory.getClass();
+
+			_log.debug("Using the OSGi framework factory " + clazz.getName());
 		}
 
 		Map<String, String> properties = _buildFrameworkProperties(
 			frameworkFactory.getClass());
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Creating the framework instance");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Creating a new OSGi framework instance");
 		}
 
 		_framework = frameworkFactory.newFramework(properties);
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Initializing the framework");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Initializing the new OSGi framework instance");
 		}
 
 		_framework.init();
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Binding the framework to the registry API");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Binding the OSGi framework to the registry API");
 		}
 
 		RegistryUtil.setRegistry(
 			new RegistryImpl(_framework.getBundleContext()));
 
-		if (_log.isTraceEnabled()) {
-			_log.trace(
-				"Binding the framework to the service tracker map factory");
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Binding the OSGi framework to the service tracker map " +
+					"factory");
 		}
 
 		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
 			new ServiceTrackerMapFactoryImpl(_framework.getBundleContext()));
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Framework initialization phase complete");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Initialized the OSGi framework");
 		}
 	}
 
@@ -296,8 +299,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return;
 		}
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Registering a context object");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Registering context " + context);
 		}
 
 		if ((context instanceof ApplicationContext) &&
@@ -313,8 +316,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_registerServletContext(servletContext);
 		}
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Context registration complete");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Registered context " + context);
 		}
 	}
 
@@ -378,8 +381,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
 	public void startFramework() throws Exception {
-		if (_log.isTraceEnabled()) {
-			_log.trace("Starting framework");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Starting the OSGi framework");
 		}
 
 		_framework.start();
@@ -388,8 +391,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_setUpInitialBundles();
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Framework start phase complete");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Started the OSGi framework");
 		}
 	}
 
@@ -399,8 +402,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return;
 		}
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Starting runtime");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Starting the OSGi runtime");
 		}
 
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
@@ -409,8 +412,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		frameworkStartLevel.setStartLevel(
 			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL);
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Runtime startup complete");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Started the OSGi runtime");
 		}
 	}
 
@@ -451,8 +454,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		if (frameworkEvent.getType() == FrameworkEvent.WAIT_TIMEDOUT) {
 			_log.error(
-				"Module framework shutdown timeout after waiting " + timeout +
-					"ms, " + frameworkEvent);
+				"OSGi framework event " + frameworkEvent +
+					" triggered after a " + timeout + "ms timeout");
 		}
 		else if (_log.isInfoEnabled()) {
 			_log.info(frameworkEvent);
@@ -526,7 +529,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		throws PortalException {
 
 		if (_framework == null) {
-			throw new IllegalStateException("Framework is not initialized");
+			throw new IllegalStateException(
+				"OSGi framework is not initialized");
 		}
 
 		if (checkPermission) {
@@ -554,8 +558,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private Map<String, String> _buildFrameworkProperties(Class<?> clazz) {
-		if (_log.isTraceEnabled()) {
-			_log.trace("Building framework properties");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Building OSGi framework properties");
 		}
 
 		Map<String, String> properties = new HashMap<>();
@@ -637,11 +641,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(
 			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA, systemPackagesExtra);
 
-		if (_log.isTraceEnabled()) {
+		if (_log.isDebugEnabled()) {
 			for (Entry<String, String> entry : properties.entrySet()) {
-				_log.trace(
-					"Framework Property {" + entry.getKey() + "=" +
-						entry.getValue() + "}");
+				_log.debug(
+					"OSGi framework property key \"" + entry.getKey() +
+						"\" with value \"" + entry.getValue() + "\"");
 			}
 		}
 
@@ -717,12 +721,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		sb.append(exportedPackages);
 
-		if (_log.isTraceEnabled()) {
+		if (_log.isDebugEnabled()) {
 			String s = sb.toString();
 
 			s = s.replace(",", "\n");
 
-			_log.trace(
+			_log.debug(
 				"The portal's system bundle is exporting the following " +
 					"packages:\n" +s);
 		}
@@ -759,8 +763,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		boolean start = false;
 		int startLevel = PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL;
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Initial bundles start level {" + startLevel + "}");
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Install initial bundle " + location + " at start level " +
+					startLevel);
 		}
 
 		int index = location.lastIndexOf(StringPool.AT);
@@ -790,8 +796,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						"/static/" + location;
 			}
 
-			if (_log.isTraceEnabled()) {
-				_log.trace("Attempting to start bundle {" + location + "}");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Attempting to start initial bundle " + location);
 			}
 
 			URL initialBundleURL = new URL(location);
@@ -801,9 +807,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					initialBundleURL.openStream());
 			}
 			catch (IOException ioe) {
-				if (_log.isTraceEnabled()) {
-					_log.trace(
-						"Failed to locate initial bundle {" + location + "}");
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to locate initial bundle " + location);
 				}
 
 				if (_log.isWarnEnabled()) {
@@ -813,16 +818,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				return;
 			}
 
-			if (_log.isTraceEnabled()) {
-				_log.trace(
-					"Adding bundle {" + initialBundleURL.toString() + "}");
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Adding initial bundle " + initialBundleURL.toString());
 			}
 
 			final Bundle bundle = _addBundle(
 				initialBundleURL.toString(), inputStream, false);
 
-			if (_log.isTraceEnabled()) {
-				_log.trace("Added bundle {" + bundle + "}");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Added initial bundle " + bundle);
 			}
 
 			if ((bundle == null) || _isFragmentBundle(bundle)) {
@@ -836,8 +841,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 
 			if (start) {
-				if (_log.isTraceEnabled()) {
-					_log.trace("Starting bundle {" + bundle + "}");
+				if (_log.isDebugEnabled()) {
+					_log.debug("Starting initial bundle " + bundle);
 				}
 
 				bundle.start();
@@ -870,10 +875,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if (((bundle.getState() & Bundle.UNINSTALLED) == 0) &&
 				(startLevel > 0)) {
 
-				if (_log.isTraceEnabled()) {
-					_log.trace(
-						"Setting bundle start level {" + bundle + "} to {" +
-							startLevel + "}");
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Setting bundle " + bundle + " at start level " +
+							startLevel);
 				}
 
 				BundleStartLevel bundleStartLevel = bundle.adapt(
@@ -882,8 +887,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				bundleStartLevel.setStartLevel(startLevel);
 			}
 
-			if (_log.isTraceEnabled()) {
-				_log.trace("Initial bundle start complete {" + bundle + "}");
+			if (_log.isDebugEnabled()) {
+				_log.debug("Started bundle " + bundle);
 			}
 		}
 		catch (Exception e) {
@@ -924,8 +929,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private void _registerApplicationContext(
 		ApplicationContext applicationContext) {
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Context object is application context");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Register application context");
 		}
 
 		BundleContext bundleContext = _framework.getBundleContext();
@@ -974,18 +979,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				names.toArray(new String[names.size()]), bean,
 				_getProperties(bean, beanName));
 
-		if (_log.isTraceEnabled()) {
-			_log.trace(
-				"Registered context bean as {" +
-					serviceRegistration.getReference() + "}");
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Registered service as " + serviceRegistration.getReference());
 		}
 	}
 
 	private void _registerServletContext(ServletContext servletContext) {
 		BundleContext bundleContext = _framework.getBundleContext();
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Context object is servlet context");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Register servlet context");
 		}
 
 		ServiceRegistration<?> serviceRegistration =
@@ -993,16 +997,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				new String[] {ServletContext.class.getName()}, servletContext,
 				_getProperties(servletContext, "liferayServletContext"));
 
-		if (_log.isTraceEnabled()) {
-			_log.trace(
-				"Registered servlet context as {" +
-					serviceRegistration.getReference() + "}");
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Registered servlet context as " +
+					serviceRegistration.getReference());
 		}
 	}
 
 	private void _setUpInitialBundles() throws Exception {
-		if (_log.isTraceEnabled()) {
-			_log.trace("Starting initial bundles");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Starting initial bundles");
 		}
 
 		for (String initialBundle :
@@ -1011,16 +1015,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_installInitialBundle(initialBundle);
 		}
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Initial bundles startup complete");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Started initial bundles");
 		}
 	}
 
 	private void _setUpPrerequisiteFrameworkServices(
 		BundleContext bundleContext) {
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Setting up required services");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Setting up required services");
 		}
 
 		Props props = PropsUtil.getProps();
@@ -1030,14 +1034,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				Props.class, props,
 				_getProperties(props, Props.class.getName()));
 
-		if (_log.isTraceEnabled()) {
-			_log.trace(
-				"Registered required service as {" +
-					serviceRegistration.getReference() + "}");
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Registered required service as " +
+					serviceRegistration.getReference());
 		}
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("Required services setup complete");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Registered required services");
 		}
 	}
 

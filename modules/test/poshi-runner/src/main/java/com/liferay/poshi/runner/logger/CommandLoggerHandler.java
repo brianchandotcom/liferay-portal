@@ -42,8 +42,6 @@ public final class CommandLoggerHandler {
 			return;
 		}
 
-		_writeWebPage(_errorLinkId);
-
 		_commandElement = null;
 
 		_failLineGroupLoggerElement(_lineGroupLoggerElement);
@@ -110,8 +108,6 @@ public final class CommandLoggerHandler {
 		if (!_isCommand(element)) {
 			return;
 		}
-
-		_setHTMLSource();
 
 		_takeScreenshot("before", _errorLinkId);
 

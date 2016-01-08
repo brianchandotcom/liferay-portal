@@ -158,7 +158,7 @@ public class CommentAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLView(
+	public String getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
@@ -174,7 +174,7 @@ public class CommentAssetRenderer
 			"commentId", String.valueOf(_workflowableComment.getCommentId()));
 		portletURL.setWindowState(windowState);
 
-		return portletURL;
+		return portletURL.toString();
 	}
 
 	@Override

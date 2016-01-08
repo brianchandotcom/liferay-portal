@@ -125,15 +125,14 @@ public abstract class BaseSocialActivityInterpreter
 			ServiceContext serviceContext)
 		throws Exception {
 
-		PortletURL portletURL = getViewEntryPortletURL(
+		String viewEntryURL = getViewEntryURL(
 			className, classPK, serviceContext);
 
-		if (portletURL == null) {
-			return url;
+		if (Validator.isNotNull(viewEntryURL)) {
+			return viewEntryURL;
 		}
 
-		return HttpUtil.setParameter(
-			url, "noSuchEntryRedirect", portletURL.toString());
+		return HttpUtil.setParameter(url, "noSuchEntryRedirect", viewEntryURL);
 	}
 
 	protected String buildLink(String link, String text) {
@@ -529,7 +528,7 @@ public abstract class BaseSocialActivityInterpreter
 		return null;
 	}
 
-	protected PortletURL getViewEntryPortletURL(
+	protected String getViewEntryURL(
 			String className, long classPK, ServiceContext serviceContext)
 		throws Exception {
 
@@ -549,8 +548,10 @@ public abstract class BaseSocialActivityInterpreter
 		}
 
 		if (classPK == 0) {
-			return assetRendererFactory.getURLView(
+			PortletURL portletURL = assetRendererFactory.getURLView(
 				liferayPortletResponse, WindowState.MAXIMIZED);
+
+			return portletURL.toString();
 		}
 
 		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(

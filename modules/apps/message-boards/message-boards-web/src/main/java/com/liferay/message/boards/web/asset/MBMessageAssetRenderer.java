@@ -162,7 +162,7 @@ public class MBMessageAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLView(
+	public String getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
@@ -179,7 +179,7 @@ public class MBMessageAssetRenderer
 			"messageId", String.valueOf(_message.getMessageId()));
 		portletURL.setWindowState(windowState);
 
-		return portletURL;
+		return portletURL.toString();
 	}
 
 	@Override

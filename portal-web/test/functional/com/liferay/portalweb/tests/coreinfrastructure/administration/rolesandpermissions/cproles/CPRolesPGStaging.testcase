@@ -29,8 +29,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Staging Test Page" />
 		</execute>
 	</set-up>
 

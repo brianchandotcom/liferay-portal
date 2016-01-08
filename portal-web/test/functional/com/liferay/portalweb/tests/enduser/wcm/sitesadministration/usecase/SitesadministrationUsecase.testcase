@@ -232,8 +232,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Test Page A" />
 			<var name="siteName" value="Site A" />
-			<var name="sitePageName" value="Test Page A" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -265,8 +265,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Test Page B" />
 			<var name="siteName" value="Site B" />
-			<var name="sitePageName" value="Test Page B" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -550,7 +550,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
-			<var name="sitePageName" value="Test Private Page" />
+			<var name="pageName" value="Test Private Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -659,7 +659,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Site Page Name" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -1007,7 +1007,7 @@
 		<for list="Home,Arenas" param="publicPageName" >
 			<execute macro="Page#add">
 				<var name="page" value="Public Pages" />
-				<var name="sitePageName" value="${publicPageName}" />
+				<var name="pageName" value="${publicPageName}" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
@@ -1033,7 +1033,7 @@
 		<for list="Accomodations,Maps" param="privatePageName" >
 			<execute macro="Page#add">
 				<var name="page" value="Private Pages" />
-				<var name="sitePageName" value="${privatePageName}" />
+				<var name="pageName" value="${privatePageName}" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>

@@ -45,8 +45,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
@@ -112,8 +112,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -148,8 +148,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -205,8 +205,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<for list="tag1,tag2,tag3" param="tagName">
@@ -289,8 +289,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -343,8 +343,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -607,8 +607,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -704,8 +704,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -790,8 +790,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<for list="blue,blue green,yellow" param="tagName">

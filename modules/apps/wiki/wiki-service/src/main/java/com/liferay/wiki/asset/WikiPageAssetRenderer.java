@@ -214,7 +214,7 @@ public class WikiPageAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLView(
+	public String getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
@@ -230,7 +230,7 @@ public class WikiPageAssetRenderer
 		portletURL.setParameter("title", _page.getTitle());
 		portletURL.setWindowState(windowState);
 
-		return portletURL;
+		return portletURL.toString();
 	}
 
 	@Override

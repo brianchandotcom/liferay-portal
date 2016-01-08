@@ -25,8 +25,6 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -59,11 +57,11 @@ public class JournalFolderActivityInterpreter
 			return viewEntryInTrashURL;
 		}
 
-		PortletURL viewEntryPortletURL = getViewEntryPortletURL(
+		String viewEntryURL = getViewEntryURL(
 			className, classPK, serviceContext);
 
-		if (viewEntryPortletURL != null) {
-			return viewEntryPortletURL.toString();
+		if (viewEntryURL != null) {
+			return viewEntryURL.toString();
 		}
 
 		return null;

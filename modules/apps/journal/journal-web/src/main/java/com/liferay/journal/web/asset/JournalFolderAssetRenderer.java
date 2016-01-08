@@ -200,7 +200,7 @@ public class JournalFolderAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLView(
+	public String getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
@@ -216,7 +216,7 @@ public class JournalFolderAssetRenderer
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);
 
-		return portletURL;
+		return portletURL.toString();
 	}
 
 	@Override
@@ -226,10 +226,7 @@ public class JournalFolderAssetRenderer
 		String noSuchEntryRedirect) {
 
 		try {
-			PortletURL viewInContextURL = getURLView(
-				liferayPortletResponse, WindowState.MAXIMIZED);
-
-			return viewInContextURL.toString();
+			return getURLView(liferayPortletResponse, WindowState.MAXIMIZED);
 		}
 		catch (Exception e) {
 			return noSuchEntryRedirect;

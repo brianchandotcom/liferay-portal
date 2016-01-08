@@ -155,6 +155,10 @@ public class ServiceBuilderTask extends Task {
 		_serviceBuilderArgs.setSqlIndexesFileName(sqlIndexesFileName);
 	}
 
+	public void setSqlRulesFileName(String sqlRulesFileName) {
+		_serviceBuilderArgs.setSqlRulesFileName(sqlRulesFileName);
+	}
+
 	public void setSqlSequencesFileName(String sqlSequencesFileName) {
 		_serviceBuilderArgs.setSqlSequencesFileName(sqlSequencesFileName);
 	}

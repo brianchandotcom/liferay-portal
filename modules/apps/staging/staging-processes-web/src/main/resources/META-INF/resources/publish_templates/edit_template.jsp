@@ -129,6 +129,11 @@ renderURL.setParameter("layoutSetBranchName", layoutSetBranchName);
 renderURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(renderURL.toString());
+
+renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(request, "new-publish-template") : exportImportConfiguration.getName());
 %>
 
 <c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>

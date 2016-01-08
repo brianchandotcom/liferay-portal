@@ -19,7 +19,7 @@ import com.liferay.configuration.admin.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.AttributeDefinitionUtil;
-import com.liferay.configuration.admin.web.util.ConfigurationHelper;
+import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
+import java.util.Map;
 import java.util.Properties;
 
 import javax.portlet.MimeResponse;
@@ -109,43 +110,47 @@ public class ExportConfigurationMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ConfigurationHelper configurationHelper = new ConfigurationHelper(
-			_bundleContext, _configurationAdmin, _extendedMetaTypeService,
-			themeDisplay.getLanguageId());
+		Map<String, ConfigurationModel> configurationModels =
+			_configurationModelRetriever.getConfigurationModels(
+				themeDisplay.getLanguageId());
 
 		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
 
 		String pid = ParamUtil.getString(resourceRequest, "pid", factoryPid);
 
-		ConfigurationModel configurationModel =
-			configurationHelper.getConfigurationModel(pid);
+		ConfigurationModel configurationModel = configurationModels.get(pid);
 
 		if ((configurationModel == null) && Validator.isNotNull(factoryPid)) {
-			configurationModel = configurationHelper.getConfigurationModel(
-				factoryPid);
+			configurationModel = configurationModels.get(factoryPid);
 		}
 
-		ExtendedAttributeDefinition[] attributeDefinitions =
-			configurationModel.getAttributeDefinitions(ConfigurationModel.ALL);
+		if (configurationModel != null) {
+			ExtendedAttributeDefinition[] attributeDefinitions =
+				configurationModel.getAttributeDefinitions(
+					ConfigurationModel.ALL);
 
-		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
-			Configuration configuration = configurationModel.getConfiguration();
+			for (AttributeDefinition attributeDefinition :
+					attributeDefinitions) {
 
-			String[] values = AttributeDefinitionUtil.getProperty(
-				attributeDefinition, configuration);
+				Configuration configuration =
+					configurationModel.getConfiguration();
 
-			String value = null;
+				String[] values = AttributeDefinitionUtil.getProperty(
+					attributeDefinition, configuration);
 
-			// See http://goo.gl/JhYK7g
+				String value = null;
 
-			if (values.length == 1) {
-				value = values[0];
+				// See http://goo.gl/JhYK7g
+
+				if (values.length == 1) {
+					value = values[0];
+				}
+				else if (values.length > 1) {
+					value = StringUtil.merge(values, "\n");
+				}
+
+				properties.setProperty(attributeDefinition.getID(), value);
 			}
-			else if (values.length > 1) {
-				value = StringUtil.merge(values, "\n");
-			}
-
-			properties.setProperty(attributeDefinition.getID(), value);
 		}
 
 		return properties;
@@ -175,6 +180,13 @@ public class ExportConfigurationMVCResourceCommand
 	}
 
 	@Reference(unbind = "-")
+	protected void setConfigurationModelRetriever(
+		ConfigurationModelRetriever configurationModelRetriever) {
+
+		_configurationModelRetriever = configurationModelRetriever;
+	}
+
+	@Reference(unbind = "-")
 	protected void setExtendedMetaTypeService(
 		ExtendedMetaTypeService extendedMetaTypeService) {
 
@@ -183,6 +195,7 @@ public class ExportConfigurationMVCResourceCommand
 
 	private BundleContext _bundleContext;
 	private volatile ConfigurationAdmin _configurationAdmin;
+	private volatile ConfigurationModelRetriever _configurationModelRetriever;
 	private volatile ExtendedMetaTypeService _extendedMetaTypeService;
 
 }

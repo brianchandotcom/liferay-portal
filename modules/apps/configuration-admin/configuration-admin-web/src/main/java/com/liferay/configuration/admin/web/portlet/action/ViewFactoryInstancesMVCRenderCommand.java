@@ -14,12 +14,11 @@
 
 package com.liferay.configuration.admin.web.portlet.action;
 
-import com.liferay.configuration.admin.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
-import com.liferay.configuration.admin.web.util.ConfigurationHelper;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
+import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -28,16 +27,13 @@ import com.liferay.portal.theme.ThemeDisplay;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -53,16 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 
-	@Activate
-	public void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
-	@Deactivate
-	public void deactivate() {
-		_bundleContext = null;
-	}
-
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -71,52 +57,42 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ConfigurationHelper configurationHelper = new ConfigurationHelper(
-			_bundleContext, _configurationAdmin, _extendedMetaTypeService,
-			themeDisplay.getLanguageId());
-
-		List<ConfigurationModel> configurationModels = null;
+		Map<String, ConfigurationModel> configurationModels =
+			_configurationModelRetriever.getConfigurationModels(
+				themeDisplay.getLanguageId());
 
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
 
 		try {
-			configurationModels = configurationHelper.getFactoryInstances(
-				themeDisplay.getLanguageId(), factoryPid);
+			List<ConfigurationModel> factoryInstances =
+				_configurationModelRetriever.getFactoryInstances(
+					configurationModels, factoryPid);
+
+			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
+				new ConfigurationModelIterator(factoryInstances));
+
+			ConfigurationModel factoryConfigurationModel =
+				configurationModels.get(factoryPid);
+
+			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL,
+				factoryConfigurationModel);
+
+			return "/view_factory_instances.jsp";
 		}
 		catch (IOException ioe) {
 			throw new PortletException(ioe);
 		}
-
-		renderRequest.setAttribute(
-			ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
-			new ConfigurationModelIterator(configurationModels));
-
-		ConfigurationModel factoryConfigurationModel =
-			configurationHelper.getConfigurationModel(factoryPid);
-
-		renderRequest.setAttribute(
-			ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL,
-			factoryConfigurationModel);
-
-		return "/view_factory_instances.jsp";
 	}
 
 	@Reference(unbind = "-")
-	protected void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin) {
+	protected void setConfigurationModelRetriever(
+		ConfigurationModelRetriever configurationModelRetriever) {
 
-		_configurationAdmin = configurationAdmin;
+		_configurationModelRetriever = configurationModelRetriever;
 	}
 
-	@Reference(unbind = "-")
-	protected void setExtendedMetaTypeService(
-		ExtendedMetaTypeService extendedMetaTypeService) {
-
-		_extendedMetaTypeService = extendedMetaTypeService;
-	}
-
-	private BundleContext _bundleContext;
-	private volatile ConfigurationAdmin _configurationAdmin;
-	private volatile ExtendedMetaTypeService _extendedMetaTypeService;
+	private volatile ConfigurationModelRetriever _configurationModelRetriever;
 
 }

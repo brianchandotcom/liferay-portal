@@ -17,6 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String keywords = renderRequest.getParameter("keywords");
+String redirect = renderRequest.getParameter("redirect");
+
 List<String> configurationCategories = (List<String>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES);
 String configurationCategory = (String)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY);
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
@@ -24,30 +27,50 @@ ConfigurationModelIterator configurationModelIterator = (ConfigurationModelItera
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("configurationCategory", configurationCategory);
+
+if (Validator.isNotNull(keywords)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
+}
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<c:if test="<%= configurationCategories != null %>">
+		<aui:nav cssClass="navbar-nav">
 
-		<%
-		for (String curConfigurationCategory : configurationCategories) {
-		%>
+			<%
+			for (String curConfigurationCategory : configurationCategories) {
+			%>
 
-			<portlet:renderURL var="configurationCategoryURL">
-				<portlet:param name="configurationCategory" value="<%= curConfigurationCategory %>" />
-			</portlet:renderURL>
+				<portlet:renderURL var="configurationCategoryURL">
+					<portlet:param name="configurationCategory" value="<%= curConfigurationCategory %>" />
+				</portlet:renderURL>
 
-			<aui:nav-item
-				cssClass='<%= curConfigurationCategory.equals(configurationCategory) ? "active" : "" %>'
-				href="<%= configurationCategoryURL %>"
-				label="<%= curConfigurationCategory %>"
-			/>
+				<aui:nav-item
+					cssClass='<%= curConfigurationCategory.equals(configurationCategory) ? "active" : "" %>'
+					href="<%= configurationCategoryURL %>"
+					label="<%= curConfigurationCategory %>"
+				/>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</aui:nav>
+		</aui:nav>
+	</c:if>
+
+	<aui:nav-bar-search>
+		<portlet:renderURL var="searchURL">
+			<portlet:param name="mvcRenderCommandName" value="/search" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:renderURL>
+
+		<aui:form action="<%= searchURL %>" name="searchFm">
+			<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <div class="container-fluid-1280">
@@ -81,10 +104,10 @@ portletURL.setParameter("configurationCategory", configurationCategory);
 			<liferay-ui:search-container-column-text name="name">
 				<c:choose>
 					<c:when test="<%= configurationModel.isFactory() %>">
-						<aui:a href="<%= viewFactoryInstancesURL %>"><%= configurationModel.getName() %></aui:a>
+						<aui:a href="<%= viewFactoryInstancesURL %>"><strong><%= configurationModel.getName() %></strong></aui:a>
 					</c:when>
 					<c:otherwise>
-						<aui:a href="<%= editURL %>"><%= configurationModel.getName() %></aui:a>
+						<aui:a href="<%= editURL %>"><strong><%= configurationModel.getName() %></strong></aui:a>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>

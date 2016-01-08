@@ -1,0 +1,56 @@
+<definition component-name="portal-tools">
+	<property name="poshi.runner.acceptance" value="true" />
+	<property name="testray.main.component.name" value="Smoke" />
+
+	<command name="ExecuteMethodStringArguments" priority="5">
+		<var name="expected" value="test,string," />
+
+		<execute class="com.liferay.poshi.runner.util.StringUtil" method="add">
+			<arg value="test" />
+			<arg value="string" />
+			<return name="actual" />
+		</execute>
+
+		<if>
+			<equals arg1="${actual}" arg2="${expected}" />
+			<then>
+				<echo message="The actual value matched the expected value." />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+			</then>
+			<else>
+				<echo message="The actual value did NOT match the expected value!" />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+
+				<fail message="Execute method failed!" />
+			</else>
+		</if>
+	</command>
+
+	<command name="ExecuteMethodVariableArguments" priority="5">
+		<var name="expected" value="test,string," />
+
+		<execute class="com.liferay.poshi.runner.util.StringUtil" method="add">
+			<arg value="test" />
+			<arg value="string" />
+			<return name="actual" />
+		</execute>
+
+		<if>
+			<equals arg1="${actual}" arg2="${expected}" />
+			<then>
+				<echo message="The actual value matched the expected value." />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+			</then>
+			<else>
+				<echo message="The actual value did NOT match the expected value!" />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+
+				<fail message="Execute method failed!" />
+			</else>
+		</if>
+	</command>
+</definition>

@@ -21,6 +21,7 @@ import com.liferay.poshi.runner.logger.SummaryLoggerHandler;
 import com.liferay.poshi.runner.logger.XMLLoggerHandler;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
+import com.liferay.poshi.runner.util.ExternalMethod;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.PropsUtil;
 import com.liferay.poshi.runner.util.PropsValues;
@@ -179,6 +180,9 @@ public class PoshiRunnerExecutor {
 				}
 				else if (childElement.attributeValue("test-case") != null) {
 					runTestCaseExecuteElement(childElement);
+				}
+				else if (childElement.attributeValue("method") != null) {
+					runMethodExecuteElement(childElement);
 				}
 			}
 			else if (childElementName.equals("if")) {
@@ -614,6 +618,32 @@ public class PoshiRunnerExecutor {
 		PoshiRunnerStackTraceUtil.popStackTrace();
 
 		XMLLoggerHandler.updateStatus(executeElement, "pass");
+	}
+
+	public static void runMethodExecuteElement(Element executeElement)
+		throws Exception {
+
+		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
+
+		List<String> parameterList = new ArrayList<>();
+		List<Element> argElements = executeElement.elements("arg");
+
+		for (Element argElement : argElements) {
+			parameterList.add(argElement.attributeValue("value"));
+		}
+
+		Element returnElement = executeElement.element("return");
+
+		String returnVariable = returnElement.attributeValue("name");
+		String className = executeElement.attributeValue("class");
+		String methodName = executeElement.attributeValue("method");
+		String[] parameters = parameterList.toArray(
+			new String[parameterList.size()]);
+
+		String returnValue = ExternalMethod.execute(
+			className, methodName, parameters);
+
+		PoshiRunnerVariablesUtil.putIntoCommandMap(returnVariable, returnValue);
 	}
 
 	public static void runReturnElement(Element returnElement)

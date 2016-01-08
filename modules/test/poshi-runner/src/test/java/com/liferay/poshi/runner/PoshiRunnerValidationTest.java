@@ -897,6 +897,93 @@ public class PoshiRunnerValidationTest extends TestCase {
 	}
 
 	@Test
+	public void testValidateMethodExecuteElement() {
+		String filePath = "validateMethodExecuteElement.macro";
+		String invalidClassName = "com.liferay.poshi.runner.util.FakeUtil";
+		String invalidMethodName = "FakeMethod";
+		String validClassName = "com.liferay.poshi.runner.util.StringUtil";
+		String validMethodName = "add";
+
+		List<String> testClassNames = new ArrayList<>();
+
+		testClassNames.add(invalidClassName);
+		testClassNames.add(validClassName);
+		testClassNames.add(validClassName);
+		testClassNames.add(validClassName);
+		testClassNames.add(validClassName);
+
+		List<String> testMethodNames = new ArrayList<>();
+
+		testMethodNames.add(validMethodName);
+		testMethodNames.add(invalidMethodName);
+		testMethodNames.add(validMethodName);
+		testMethodNames.add(validMethodName);
+		testMethodNames.add(validMethodName);
+
+		ArrayList<ArrayList<String>> testArguments = new ArrayList<>();
+
+		testArguments.add(new ArrayList<String>());
+		testArguments.add(new ArrayList<String>());
+
+		ArrayList<String> testArgumentsSet = new ArrayList<>();
+
+		testArgumentsSet.add("too-few-argument");
+
+		testArguments.add(testArgumentsSet);
+
+		testArgumentsSet = new ArrayList<>();
+
+		testArgumentsSet.add("correct");
+		testArgumentsSet.add("arguments");
+
+		testArguments.add(testArgumentsSet);
+
+		testArgumentsSet = new ArrayList<>();
+
+		testArgumentsSet.add("way");
+		testArgumentsSet.add("too");
+		testArgumentsSet.add("many");
+		testArgumentsSet.add("arguments");
+
+		testArguments.add(testArgumentsSet);
+
+		List<String> expectedMessages = new ArrayList<>();
+
+		expectedMessages.add("Cannot find class " + invalidClassName);
+		expectedMessages.add(
+			"Cannot find method " + validClassName + "." + invalidMethodName);
+		expectedMessages.add(
+			"Argument mismatch in method " + validClassName + "." +
+				validMethodName);
+		expectedMessages.add("");
+		expectedMessages.add(
+			"Argument mismatch in method " + validClassName + "." +
+				validMethodName);
+
+		for (int i = 0; i < testClassNames.size(); i++) {
+			Document document = DocumentHelper.createDocument();
+
+			Element executeElement = document.addElement("execute");
+
+			executeElement.addAttribute("class", testClassNames.get(i));
+			executeElement.addAttribute("method", testMethodNames.get(i));
+
+			for (String argument : testArguments.get(i)) {
+				Element argElement = executeElement.addElement("arg");
+
+				argElement.addAttribute("value", argument);
+			}
+
+			PoshiRunnerValidation.validateMethodExecuteElement(
+				executeElement, filePath);
+
+			Assert.assertEquals(
+				"validateMethodExecuteElement is failing",
+					expectedMessages.get(i), getExceptionMessage());
+		}
+	}
+
+	@Test
 	public void testValidateNumberOfAttributes() {
 		Document document = DocumentHelper.createDocument();
 

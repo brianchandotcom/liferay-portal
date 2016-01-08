@@ -510,7 +510,19 @@
 
 		<execute function="AssertClick" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#BOOKMARK_ASSET_URL" value1="${bookmarkURL}" />
+		<var method="selenium#getLocation()" name="currentURL" />
+
+		<if>
+			<equals arg1="${bookmarkURL}/" arg2="${currentURL}" />
+			<then>
+				<var name="currentURL" value="${bookmarkURL}" />
+			</then>
+		</if>
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${currentURL}" />
+			<var name="expected" value="${bookmarkURL}" />
+		</execute>
 	</command>
 
 	<command name="viewBookmarkViaAP">

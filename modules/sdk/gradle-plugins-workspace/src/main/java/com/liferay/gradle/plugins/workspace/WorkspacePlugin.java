@@ -329,10 +329,11 @@ public class WorkspacePlugin implements Plugin<Project> {
 			@Override
 			public void execute(Task task) {
 				try {
-					String hostName = InetAddress.getLocalHost().getHostName();
+					String username = System.getProperty("user.name");
 
 					File buildPropertiesFile = new File(
-						"build." + hostName + ".properties");
+						workspaceExtension.getPluginsSDKDir(),
+						"build." + username + ".properties");
 
 					Properties buildProperties = FileUtil.readProperties(
 						buildPropertiesFile);

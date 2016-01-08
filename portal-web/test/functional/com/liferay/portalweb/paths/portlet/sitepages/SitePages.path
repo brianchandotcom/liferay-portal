@@ -266,7 +266,7 @@
 <!--STAGING-->
 <tr>
 	<td>STAGING_SITE_PAGES_VARIATION_BUTTON</td>
-	<td>//a[contains(@id,'ProductMenuPortlet')]/i</td>
+	<td>//ul[contains(@aria-labelledby,'panel-manage-site_administration_pages')]//div[contains(@class,'nav-equal-height-heading')]/span[2]/div/a</td>
 	<td></td>
 </tr>
 <tr>

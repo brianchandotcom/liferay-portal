@@ -231,8 +231,10 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		}
 
 		if (propertyValue instanceof String) {
-			String propertyValues = StringUtil.replace(
-				(String)propertyValue, StringPool.COMMA, StringPool.PIPE);
+			String[] propertyValues = new String[] {
+				StringUtil.replace(
+					(String)propertyValue, StringPool.COMMA, StringPool.PIPE)
+			};
 
 			dictionary.put(property, propertyValues);
 		}

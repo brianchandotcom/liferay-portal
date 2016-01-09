@@ -1,6 +1,8 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.1"
-	testIntegrationCompile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:off
 	testIntegrationCompile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	testIntegrationCompile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	testIntegrationCompile project(":portal-security:portal-security-sso-openid")
 }

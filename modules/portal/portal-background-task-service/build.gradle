@@ -5,7 +5,10 @@ buildService {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
+	// @formatter:off
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	compile project(":portal:portal-background-task-api")
 }
 

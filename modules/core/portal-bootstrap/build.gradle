@@ -21,8 +21,13 @@ buildSystemPackagesExtraManifest {
 
 		properties["-include"] = relativePath(systemPackagesExtraBndFile)
 
+		jarBuilder.withClasspath new File[0]
+		jarBuilder.withName "system.packages.extra"
 		jarBuilder.withProperties properties
+		jarBuilder.withResources new File[0]
 		jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs
+		jarBuilder.withTrace false
+		jarBuilder.withVersion liferay.portalVersion.replaceAll("-", ".")
 
 		systemPackagesExtraManifestFile.withOutputStream {
 			jarBuilder.writeManifestTo it
@@ -44,8 +49,10 @@ copySystemPackagesExtraManifest {
 }
 
 dependencies {
-	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:off
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile group: "org.springframework", name: "spring-beans", version: "3.2.15.RELEASE"
 	compile group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"

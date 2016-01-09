@@ -17,5 +17,49 @@ Include-Resource:\
 	@../util-java/util-java.jar!/com/liferay/util/JS.class,\
 	@../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
 	@../util-java/util-java.jar!/com/liferay/util/PwdGenerator.class
-
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://alloy.liferay.com/tld/alloy";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://alloy.liferay.com/tld/alloy_util";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://alloy.liferay.com/tld/aui";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://java.sun.com/portlet";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://java.sun.com/portlet_2_0";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/aui";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/portlet";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/security";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/theme";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/ui";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/util";\
+		version:Version="${Bundle-Version}"
 -baseline: *;version="6.2.0"

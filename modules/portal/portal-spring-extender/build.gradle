@@ -1,6 +1,9 @@
 dependencies {
 	compile group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-1"
+	// @formatter:off
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	compile group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
 	compile group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", version: "3.2.0"
 	compile group: "org.springframework", name: "spring-beans", version: "3.2.15.RELEASE"

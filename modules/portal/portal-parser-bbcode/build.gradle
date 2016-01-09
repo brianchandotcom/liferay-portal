@@ -1,6 +1,8 @@
 dependencies {
-	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:off
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 }
 

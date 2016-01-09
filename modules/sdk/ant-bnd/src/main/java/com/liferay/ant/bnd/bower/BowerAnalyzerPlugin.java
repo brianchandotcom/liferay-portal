@@ -346,7 +346,34 @@ public class BowerAnalyzerPlugin implements AnalyzerPlugin {
 			analyzer.setBundleVersion(version.toString());
 		}
 
-		Parameters parameters = new Parameters();
+		Parameters parameters = new Parameters() {
+
+			@Override
+			public void mergeWith(Parameters parameters, boolean override) {
+				for (Map.Entry<String, Attrs> entry : parameters.entrySet()) {
+					Attrs existingAttrs = get(entry.getKey());
+
+					if (existingAttrs == null) {
+
+						// This is to fix a bug in bnd
+
+						Attrs tempAttrs = new Attrs();
+
+						tempAttrs.put("____ignore____:Version", "0.0.0");
+
+						tempAttrs.remove("____ignore____");
+
+						tempAttrs.putAll(entry.getValue());
+
+						put(entry.getKey(), tempAttrs);
+					}
+					else {
+						existingAttrs.mergeWith(entry.getValue(), override);
+					}
+				}
+			}
+
+		};
 
 		Attrs attrs = new Attrs();
 

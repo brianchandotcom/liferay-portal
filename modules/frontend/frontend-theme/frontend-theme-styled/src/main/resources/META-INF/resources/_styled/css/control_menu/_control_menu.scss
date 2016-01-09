@@ -55,7 +55,7 @@
 	.close {
 		color: $control-menu-level-2-color;
 
-		@include opacity(1);
+		opacity: 1;
 	}
 }
 

@@ -1218,6 +1218,19 @@
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC" />
 	</command>
 
+	<command name="saveEventUserInvite">
+		<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="Are you sure?" />
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Invited users will be notified." />
+		<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
+	</command>
+
+	<command name="saveEventUserInviteCancel">
+		<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="Are you sure?" />
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Invited users will be notified." />
+
+		<execute function="AssertClick" locator1="CalendarEditEvent#DO_NOT_CHANGE_THE_EVENT_BUTTON" value1="Do not change the event." />
+	</command>
+
 	<command name="selectCalendar">
 		<if>
 			<isset var="calendarName" />

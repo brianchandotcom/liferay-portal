@@ -98,3 +98,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<%
+ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
+%>

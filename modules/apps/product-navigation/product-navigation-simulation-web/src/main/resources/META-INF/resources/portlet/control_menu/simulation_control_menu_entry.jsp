@@ -29,7 +29,7 @@ data.put("qa-id", "simulation");
 
 <div class="toolbar-group-content">
 	<liferay-ui:icon
-		cssClass="hidden-xs simulation-menu-toggle "
+		cssClass="hidden-xs"
 		data="<%= data %>"
 		icon="simulation-menu-closed"
 		id="simulationPanel"

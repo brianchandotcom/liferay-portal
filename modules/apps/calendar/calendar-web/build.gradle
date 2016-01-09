@@ -1,5 +1,8 @@
 dependencies {
+	// @formatter:off
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile project(":apps:calendar:calendar-api")

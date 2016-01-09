@@ -13,7 +13,6 @@ Export-Package:\
 	com.liferay.portal.freemarker,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.messaging.async,\
-	com.liferay.portal.model.impl,\
 	com.liferay.portal.monitoring.statistics.service,\
 	com.liferay.portal.plugin,\
 	com.liferay.portal.resiliency.service,\
@@ -39,7 +38,6 @@ Export-Package:\
 	com.liferay.portal.upgrade.v7_0_0,\
 	com.liferay.portal.upload,\
 	com.liferay.portal.util,\
-	com.liferay.portal.verify,\
 	com.liferay.portal.xml,\
 	com.liferay.portlet,\
 	com.liferay.portlet.asset,\
@@ -77,13 +75,7 @@ Export-Package:\
 	com.liferay.portlet.trash.service,\
 	com.liferay.portlet.trash.service.persistence,\
 	com.liferay.portlet.trash.util,\
-	com.liferay.portlet.usersadmin.search,\
-	\
-	javax.sql,org.hibernate,\
-	\
-	jodd.util,\
-	\
-	org.hibernate.engine
+	com.liferay.portlet.usersadmin.search
 Import-Package: *
 Include-Resource: classes
 Private-Package: com.liferay.*.dependencies

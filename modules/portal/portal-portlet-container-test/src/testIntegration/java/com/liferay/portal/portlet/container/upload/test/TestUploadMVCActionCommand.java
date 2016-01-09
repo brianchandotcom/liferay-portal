@@ -16,7 +16,6 @@ package com.liferay.portal.portlet.container.upload.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.upload.UploadHandler;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -25,12 +24,9 @@ import javax.portlet.ActionResponse;
 
 import org.junit.Assert;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Manuel de la Peña
  */
-@Component(immediate = true, service = MVCActionCommand.class)
 public class TestUploadMVCActionCommand extends BaseMVCActionCommand {
 
 	public TestUploadMVCActionCommand(TestUploadPortlet testUploadPortlet) {

@@ -15,6 +15,7 @@ Import-Package:\
 	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.io.unsync,\
+	com.liferay.portal.kernel.messaging.config,\
 	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.spring.util,\
 	com.liferay.portal.kernel.util,\

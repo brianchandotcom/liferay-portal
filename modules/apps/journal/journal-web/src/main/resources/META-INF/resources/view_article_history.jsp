@@ -146,7 +146,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 					<liferay-ui:search-container-column-text
 						name="author"
-						value="<%= PortalUtil.getUserName(articleVersion) %>"
+						value="<%= HtmlUtil.escape(PortalUtil.getUserName(articleVersion)) %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp

@@ -53,7 +53,7 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 %>
 
 <h5 class="text-default">
-	<liferay-ui:message arguments="<%= new String[] {latestFileVersion.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(latestFileVersion.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 </h5>
 
 <h4>

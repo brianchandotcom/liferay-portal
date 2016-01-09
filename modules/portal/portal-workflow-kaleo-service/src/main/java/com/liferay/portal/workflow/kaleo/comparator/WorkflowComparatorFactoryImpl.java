@@ -53,9 +53,8 @@ public class WorkflowComparatorFactoryImpl
 		boolean ascending) {
 
 		return new WorkflowInstanceCompletedComparator(
-			ascending, "completed ASC, kaleoInstanceId ASC",
-			"completed DESC, kaleoInstanceId DESC",
-			new String[] {"completed", "kaleoInstanceId"});
+			ascending, "completed ASC", "completed DESC",
+			new String[] {"completed"});
 	}
 
 	@Override
@@ -63,9 +62,9 @@ public class WorkflowComparatorFactoryImpl
 		boolean ascending) {
 
 		return new WorkflowInstanceEndDateComparator(
-			ascending, "endDate ASC, kaleoInstanceId ASC",
-			"endDate DESC, kaleoInstanceId DESC",
-			new String[] {"endDate", "kaleoInstanceId"});
+			ascending, "completionDate ASC, kaleoInstanceId ASC",
+			"completionDate DESC, kaleoInstanceId DESC",
+			new String[] {"completionDate", "kaleoInstanceId"});
 	}
 
 	@Override

@@ -14,33 +14,40 @@
 
 package com.liferay.workflow.instance.web.display.context;
 
+import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.workflow.instance.web.search.WorkflowInstanceSearch;
+import com.liferay.workflow.instance.web.util.WorkflowInstancePortletUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Leonardo Barros
@@ -49,18 +56,19 @@ public class WorkflowInstanceViewDisplayContext
 	extends BaseWorkflowInstanceDisplayContext {
 
 	public WorkflowInstanceViewDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			PortletPreferences portletPreferences)
 		throws PortalException {
 
-		super(renderRequest, renderResponse);
+		super(
+			liferayPortletRequest, liferayPortletResponse, portletPreferences);
 
 		PortletURL portletURL = PortletURLUtil.getCurrent(
-			renderRequest, renderResponse);
+			liferayPortletRequest, liferayPortletResponse);
 
 		_searchContainer = new WorkflowInstanceSearch(
-			renderRequest, portletURL);
-		_searchContainer.setEmptyResultsMessage(
-			getSearchContainerEmptyResultsMessage());
+			liferayPortletRequest, portletURL);
 
 		_searchContainer.setResults(
 			getSearchContainerResults(
@@ -68,6 +76,8 @@ public class WorkflowInstanceViewDisplayContext
 				_searchContainer.getOrderByComparator()));
 
 		_searchContainer.setTotal(getSearchContainerTotal());
+
+		setSearchContainerEmptyResultsMessage(_searchContainer);
 	}
 
 	public String getAssetTitle(WorkflowInstance workflowInstance) {
@@ -96,8 +106,31 @@ public class WorkflowInstanceViewDisplayContext
 			HtmlUtil.escape(workflowInstance.getWorkflowDefinitionName()));
 	}
 
+	public String getDisplayStyle() {
+		if (_displayStyle == null) {
+			_displayStyle = WorkflowInstancePortletUtil.getDisplayStyle(
+				liferayPortletRequest, getDisplayViews());
+		}
+
+		return _displayStyle;
+	}
+
+	public String[] getDisplayViews() {
+		return _DISPLAY_VIEWS;
+	}
+
 	public Date getEndDate(WorkflowInstance workflowInstance) {
 		return workflowInstance.getEndDate();
+	}
+
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
+
+		return _keywords;
 	}
 
 	public Date getLastActivityDate(WorkflowInstance workflowInstance)
@@ -112,6 +145,80 @@ public class WorkflowInstanceViewDisplayContext
 		return workflowLog.getCreateDate();
 	}
 
+	public String getNavigation() {
+		if (_navigation != null) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(request, "navigation", "all");
+
+		return _navigation;
+	}
+
+	public String getOrderByCol() {
+		if (_orderByCol != null) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(request, "orderByCol");
+
+		if (Validator.isNull(_orderByCol)) {
+			_orderByCol = portalPreferences.getValue(
+				PortletKeys.MY_WORKFLOW_TASK, "order-by-col",
+				"last-activity-date");
+		}
+		else {
+			boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
+
+			if (saveOrderBy) {
+				portalPreferences.setValue(
+					PortletKeys.MY_WORKFLOW_TASK, "order-by-col", _orderByCol);
+			}
+		}
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (_orderByType != null) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(request, "orderByType");
+
+		if (Validator.isNull(_orderByType)) {
+			_orderByType = portalPreferences.getValue(
+				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", "asc");
+		}
+		else {
+			boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
+
+			if (saveOrderBy) {
+				portalPreferences.setValue(
+					PortletKeys.MY_WORKFLOW_TASK, "order-by-type",
+					_orderByType);
+			}
+		}
+
+		return _orderByType;
+	}
+
+	public List<WorkflowHandler<?>> getSearchableAssetsWorkflowHandlers() {
+		List<WorkflowHandler<?>> searchableAssetsWorkflowHandlers =
+			new ArrayList<>();
+
+		List<WorkflowHandler<?>> workflowHandlers =
+			WorkflowHandlerRegistryUtil.getWorkflowHandlers();
+
+		for (WorkflowHandler<?> workflowHandler : workflowHandlers) {
+			if (workflowHandler.isAssetTypeSearchable()) {
+				searchableAssetsWorkflowHandlers.add(workflowHandler);
+			}
+		}
+
+		return searchableAssetsWorkflowHandlers;
+	}
+
 	public WorkflowInstanceSearch getSearchContainer() {
 		return _searchContainer;
 	}
@@ -122,25 +229,70 @@ public class WorkflowInstanceViewDisplayContext
 			HtmlUtil.escape(workflowInstance.getState()));
 	}
 
-	public String getTabs2() {
-		return ParamUtil.getString(renderRequest, "tabs2", "pending");
-	}
-
 	public PortletURL getViewPortletURL() {
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("tabs1", "submissions");
-		portletURL.setParameter("tabs2", getTabs2());
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		return portletURL;
 	}
 
-	public boolean isShowEntryAction() {
-		if (isShowCompletedInstances()) {
-			return false;
+	public boolean isNavigationAll() {
+		if (Validator.equals(getNavigation(), "all")) {
+			return true;
 		}
 
-		return true;
+		return false;
+	}
+
+	public boolean isNavigationCompleted() {
+		if (Validator.equals(getNavigation(), "completed")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationPending() {
+		if (Validator.equals(getNavigation(), "pending")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected String getAssetType(String keywords) {
+		for (WorkflowHandler<?> workflowHandler :
+				getSearchableAssetsWorkflowHandlers()) {
+
+			String assetType = workflowHandler.getType(
+				workflowInstanceRequestHelper.getLocale());
+
+			if (StringUtil.equalsIgnoreCase(keywords, assetType)) {
+				return workflowHandler.getClassName();
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	protected Boolean getCompleted() {
+		if (isNavigationAll()) {
+			return null;
+		}
+
+		if (isNavigationCompleted()) {
+			return Boolean.TRUE;
+		}
+		else {
+			return Boolean.FALSE;
+		}
 	}
 
 	protected WorkflowLog getLatestWorkflowLog(
@@ -160,30 +312,21 @@ public class WorkflowInstanceViewDisplayContext
 		return workflowLogs.get(0);
 	}
 
-	protected String getSearchContainerEmptyResultsMessage() {
-		if (isShowCompletedInstances()) {
-			return "there-are-no-completed-instances";
-		}
-		else {
-			return "there-are-no-pending-instances";
-		}
-	}
-
 	protected List<WorkflowInstance> getSearchContainerResults(
 			int start, int end, OrderByComparator<WorkflowInstance> comparator)
 		throws PortalException {
 
-		return WorkflowInstanceManagerUtil.getWorkflowInstances(
+		return WorkflowInstanceManagerUtil.search(
 			workflowInstanceRequestHelper.getCompanyId(), null,
-			WorkflowHandlerUtil.getSearchableAssetTypes(),
-			isShowCompletedInstances(), start, end, comparator);
+			getAssetType(getKeywords()), getKeywords(), getKeywords(),
+			getCompleted(), start, end, comparator);
 	}
 
 	protected int getSearchContainerTotal() throws PortalException {
-		return WorkflowInstanceManagerUtil.getWorkflowInstanceCount(
+		return WorkflowInstanceManagerUtil.searchCount(
 			workflowInstanceRequestHelper.getCompanyId(), null,
-			WorkflowHandlerUtil.getSearchableAssetTypes(),
-			isShowCompletedInstances());
+			getAssetType(getKeywords()), getKeywords(), getKeywords(),
+			getCompleted());
 	}
 
 	protected String getWorkflowContextEntryClassName(
@@ -210,16 +353,37 @@ public class WorkflowInstanceViewDisplayContext
 		return WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
 	}
 
-	protected boolean isShowCompletedInstances() {
-		String tabs2 = getTabs2();
+	protected void setSearchContainerEmptyResultsMessage(
+		WorkflowInstanceSearch searchContainer) {
 
-		if (tabs2.equals("completed")) {
-			return true;
+		DisplayTerms searchTerms = searchContainer.getDisplayTerms();
+
+		if (isNavigationAll()) {
+			searchContainer.setEmptyResultsMessage("there-are-no-instances");
+		}
+		else if (isNavigationPending()) {
+			searchContainer.setEmptyResultsMessage(
+				"there-are-no-pending-instances");
+		}
+		else {
+			searchContainer.setEmptyResultsMessage(
+				"there-are-no-completed-instances");
 		}
 
-		return false;
+		if (Validator.isNotNull(searchTerms.getKeywords())) {
+			searchContainer.setEmptyResultsMessage(
+				searchContainer.getEmptyResultsMessage() +
+				"-with-the-specified-search-criteria");
+		}
 	}
 
+	private static final String[] _DISPLAY_VIEWS = {"list", "descriptive"};
+
+	private String _displayStyle;
+	private String _keywords;
+	private String _navigation;
+	private String _orderByCol;
+	private String _orderByType;
 	private final WorkflowInstanceSearch _searchContainer;
 
 }

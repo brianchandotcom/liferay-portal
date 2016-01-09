@@ -1,0 +1,19 @@
+.lfr-asset-column-details {
+	.lfr-asset-actions {
+		float: right;
+		position: absolute;
+		right: 10px;
+	}
+
+	.task-content-actions {
+		float: right;
+
+		.btn-default {
+			padding: 0;
+		}
+	}
+}
+
+.asset-type, .status, .definition, .end-date {
+	margin-right: 20px;
+}

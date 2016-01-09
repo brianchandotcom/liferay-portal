@@ -14,20 +14,30 @@
 
 package com.liferay.workflow.instance.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
+
+import java.util.Map;
 
 import javax.portlet.Portlet;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Leonardo Barros
  */
 @Component(
+	configurationPid = "com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration",
 	immediate = true,
 	property = {
+		"com.liferay.portlet.css-class-wrapper=portlet-my-workflow-instance",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.friendly-url-mapping=my_workflow_instance",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/my_workflow_instance.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
@@ -46,4 +56,12 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class MyWorkflowInstancePortlet extends WorkflowInstancePortlet {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		this.workflowInstanceWebConfiguration = Configurable.createConfigurable(
+			WorkflowInstanceWebConfiguration.class, properties);
+	}
+
 }

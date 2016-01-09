@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.executor;
 
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.registry.Registry;
@@ -47,6 +49,10 @@ public class PortalExecutorManagerUtil {
 
 		try {
 			while (_instance._serviceTracker.getService() == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Waiting for a PortalExecutorManager");
+				}
+
 				Thread.sleep(500);
 			}
 		}
@@ -69,14 +75,28 @@ public class PortalExecutorManagerUtil {
 		PortalRuntimePermission.checkThreadPoolExecutor(
 			PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_ALL_EXECUTORS);
 
-		getPortalExecutorManager().shutdown();
+		PortalExecutorManager portalExecutorManager =
+			_instance._serviceTracker.getService();
+
+		if (portalExecutorManager == null) {
+			return;
+		}
+
+		portalExecutorManager.shutdown();
 	}
 
 	public static void shutdown(boolean interrupt) {
 		PortalRuntimePermission.checkThreadPoolExecutor(
 			PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_ALL_EXECUTORS);
 
-		getPortalExecutorManager().shutdown(interrupt);
+		PortalExecutorManager portalExecutorManager =
+			_instance._serviceTracker.getService();
+
+		if (portalExecutorManager == null) {
+			return;
+		}
+
+		portalExecutorManager.shutdown(interrupt);
 	}
 
 	private PortalExecutorManagerUtil() {
@@ -86,6 +106,9 @@ public class PortalExecutorManagerUtil {
 
 		_serviceTracker.open();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalExecutorManagerUtil.class);
 
 	private static final PortalExecutorManagerUtil _instance =
 		new PortalExecutorManagerUtil();

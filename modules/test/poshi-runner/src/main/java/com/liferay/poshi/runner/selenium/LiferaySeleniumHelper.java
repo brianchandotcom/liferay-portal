@@ -30,6 +30,7 @@ import com.liferay.poshi.runner.util.Validator;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import java.io.BufferedReader;
@@ -808,6 +809,14 @@ public class LiferaySeleniumHelper {
 		}
 
 		return sb.toString();
+	}
+
+	public static void highlightAll() {
+		Keyboard keyboard = new DesktopKeyboard();
+
+		keyboard.keyDown(KeyEvent.VK_CONTROL);
+		keyboard.type("a");
+		keyboard.keyUp(KeyEvent.VK_CONTROL);
 	}
 
 	public static boolean isConfirmation(

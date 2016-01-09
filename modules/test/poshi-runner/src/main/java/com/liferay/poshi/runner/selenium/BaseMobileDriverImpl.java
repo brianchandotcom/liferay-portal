@@ -412,6 +412,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void highlightAll() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean isConfirmation(String pattern) {
 		return LiferaySeleniumHelper.isConfirmation(this, pattern);
 	}

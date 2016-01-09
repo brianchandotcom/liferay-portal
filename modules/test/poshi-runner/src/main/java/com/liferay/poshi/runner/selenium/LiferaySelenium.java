@@ -157,6 +157,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void goBackAndWait();
 
+	public void highlightAll();
+
 	public boolean isConfirmation(String pattern);
 
 	public boolean isElementNotPresent(String locator);

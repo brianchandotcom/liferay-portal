@@ -496,6 +496,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void highlightAll() {
+		LiferaySeleniumHelper.highlightAll();
+	}
+
+	@Override
 	public boolean isConfirmation(String pattern) {
 		return LiferaySeleniumHelper.isConfirmation(this, pattern);
 	}

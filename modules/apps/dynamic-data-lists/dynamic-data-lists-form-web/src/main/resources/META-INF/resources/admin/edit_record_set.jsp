@@ -209,7 +209,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 					initHandler.detach();
 
-					Liferay.Util.getWindow('<portlet:namespace />settingsModal').destroy();
+					Liferay.namespace('DDL').destroySettings();
 
 					Liferay.detach('destroyPortlet', clearPortletHandlers);
 				}
@@ -224,6 +224,14 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 	</div>
 
 	<aui:script use="aui-base">
+		Liferay.namespace('DDL').destroySettings = function() {
+			var settingsNode = A.one('#<portlet:namespace />settingsModal');
+
+			if (settingsNode) {
+				Liferay.Util.getWindow('<portlet:namespace />settingsModal').destroy();
+			}
+		};
+
 		Liferay.namespace('DDL').openSettings = function() {
 			Liferay.Util.openWindow(
 				{

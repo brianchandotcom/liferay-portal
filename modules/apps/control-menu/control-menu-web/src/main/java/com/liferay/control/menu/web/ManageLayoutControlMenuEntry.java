@@ -70,11 +70,6 @@ public class ManageLayoutControlMenuEntry
 	}
 
 	@Override
-	public String getLinkCssClass(HttpServletRequest request) {
-		return "edit-layout-link";
-	}
-
-	@Override
 	public String getURL(HttpServletRequest request) {
 		String portletId = PortletProviderUtil.getPortletId(
 			Layout.class.getName(), PortletProvider.Action.EDIT);

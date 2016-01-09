@@ -52,11 +52,9 @@ public class UTF8Control extends Control {
 			if (url != null) {
 				URLConnection urlConnection = url.openConnection();
 
-				if (urlConnection != null) {
-					urlConnection.setUseCaches(false);
+				urlConnection.setUseCaches(false);
 
-					inputStream = urlConnection.getInputStream();
-				}
+				inputStream = urlConnection.getInputStream();
 			}
 		}
 		else {

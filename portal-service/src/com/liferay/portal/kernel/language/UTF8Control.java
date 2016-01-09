@@ -41,36 +41,20 @@ public class UTF8Control extends Control {
 			ClassLoader classLoader, boolean reload)
 		throws IOException {
 
-		String resourceName = toResourceName(
-			toBundleName(baseName, locale), "properties");
+		URL url = classLoader.getResource(
+			toResourceName(toBundleName(baseName, locale), "properties"));
 
-		InputStream inputStream = null;
-
-		if (reload) {
-			URL url = classLoader.getResource(resourceName);
-
-			if (url != null) {
-				URLConnection urlConnection = url.openConnection();
-
-				urlConnection.setUseCaches(false);
-
-				inputStream = urlConnection.getInputStream();
-			}
-		}
-		else {
-			inputStream = classLoader.getResourceAsStream(resourceName);
-		}
-
-		if (inputStream == null) {
+		if (url == null) {
 			return null;
 		}
 
-		try {
+		URLConnection urlConnection = url.openConnection();
+
+		urlConnection.setUseCaches(!reload);
+
+		try (InputStream inputStream = urlConnection.getInputStream()) {
 			return new PropertyResourceBundle(
 				new InputStreamReader(inputStream, StringPool.UTF8));
-		}
-		finally {
-			inputStream.close();
 		}
 	}
 

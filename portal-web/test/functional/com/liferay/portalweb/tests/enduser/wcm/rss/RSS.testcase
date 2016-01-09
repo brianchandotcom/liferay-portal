@@ -27,7 +27,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Site Page Name" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 	</set-up>
@@ -440,7 +440,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Site Page Name 2" />
+			<var name="pageName" value="Site Page Name 2" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

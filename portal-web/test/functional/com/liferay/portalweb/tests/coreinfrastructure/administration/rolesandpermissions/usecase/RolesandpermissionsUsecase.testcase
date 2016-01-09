@@ -129,8 +129,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -362,8 +362,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Bookmarks Page" />
 			<var name="siteName" value="google.com Name" />
-			<var name="sitePageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -490,8 +490,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
+			<var name="pageName" value="Private Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Private Blogs Page" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
@@ -1537,8 +1537,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Asset Publisher Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -2492,8 +2492,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -2502,8 +2502,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

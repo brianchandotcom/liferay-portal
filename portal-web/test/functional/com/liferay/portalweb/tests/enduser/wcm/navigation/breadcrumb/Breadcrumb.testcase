@@ -46,8 +46,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Parent Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Parent Page Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -110,8 +110,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -278,8 +278,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Parent Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Parent Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -442,8 +442,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -461,8 +461,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Parent Page Name" />
 			<var name="siteName" value="Child SiteName" />
-			<var name="sitePageName" value="Parent Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

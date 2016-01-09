@@ -66,7 +66,7 @@
 	</tear-down>
 
 	<command name="ViewMentionViaDMComment" priority="5">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -128,7 +128,7 @@
 	</command>
 
 	<command name="ViewReplyMentionViaDMComment" priority="5">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 

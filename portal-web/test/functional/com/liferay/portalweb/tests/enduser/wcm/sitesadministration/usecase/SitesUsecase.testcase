@@ -61,7 +61,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Home" />
+			<var name="pageName" value="Home" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

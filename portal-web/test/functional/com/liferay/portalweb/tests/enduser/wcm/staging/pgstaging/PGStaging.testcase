@@ -27,8 +27,9 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteURL" value="true" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Staging Test Page" />
 		</execute>
 	</set-up>
 
@@ -396,8 +397,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Staging Test Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 	</command>
@@ -664,8 +665,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="sitePageName" value="Staging Test Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

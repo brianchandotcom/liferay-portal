@@ -29,8 +29,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="ADT Test Page" />
 		</execute>
 	</set-up>
 

@@ -557,8 +557,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Organization Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="sitePageName" value="Organization Page" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
@@ -1744,8 +1744,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Asset Publisher Test Page" />
 			<var name="siteName" value="Liferay" />
-			<var name="sitePageName" value="Asset Publisher Test Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

@@ -100,8 +100,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Blank Page" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="sitePageName" value="Blank Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -113,7 +113,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Invite Members Page" />
+			<var name="pageName" value="Invite Members Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

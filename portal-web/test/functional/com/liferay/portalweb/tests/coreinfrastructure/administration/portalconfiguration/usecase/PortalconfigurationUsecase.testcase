@@ -63,8 +63,8 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="landing" />
 			<var name="siteName" value="Liferay" />
-			<var name="sitePageName" value="landing" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -306,7 +306,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Public Page" />
+			<var name="pageName" value="Public Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -316,7 +316,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
-			<var name="sitePageName" value="Private Page" />
+			<var name="pageName" value="Private Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

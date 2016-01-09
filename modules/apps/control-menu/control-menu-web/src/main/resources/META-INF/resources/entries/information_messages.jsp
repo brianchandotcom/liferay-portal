@@ -51,9 +51,9 @@ data.put("qa-id", "info");
 			<aui:icon image="information-live" markupView="lexicon" />
 
 			<span class="message-info">
-				<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template-excerpt" />
+				<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template-excerpt" resourceBundle="<%= resourceBundle %>" />
 
-				<liferay-ui:icon-help message="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
+				<liferay-ui:icon-help message='<%= LanguageUtil.get(resourceBundle, "this-page-has-been-changed-since-the-last-update-from-the-site-template") %>' />
 			</span>
 
 			<portlet:actionURL name="resetPrototype" var="resetPrototypeURL">
@@ -66,7 +66,7 @@ data.put("qa-id", "info");
 			%>
 
 			<span class="button-info">
-				<aui:button cssClass="btn-link" name="submit" onClick="<%= taglibURL %>" type="submit" value="reset-changes" />
+				<aui:button cssClass="btn-link" name="submit" onClick="<%= taglibURL %>" type="submit" value='<%= LanguageUtil.get(resourceBundle, "reset-changes") %>' />
 			</span>
 		</div>
 	</c:if>
@@ -83,13 +83,13 @@ data.put("qa-id", "info");
 
 				<c:choose>
 					<c:when test="<%= layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup() %>">
-						<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
+						<liferay-ui:message key="this-page-is-linked-to-a-page-template" resourceBundle="<%= resourceBundle %>" />
 					</c:when>
 					<c:when test="<%= SitesUtil.isUserGroupLayout(layout) %>">
-						<liferay-ui:message key="this-page-belongs-to-a-user-group" />
+						<liferay-ui:message key="this-page-belongs-to-a-user-group" resourceBundle="<%= resourceBundle %>" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" />
+						<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" resourceBundle="<%= resourceBundle %>" />
 					</c:otherwise>
 				</c:choose>
 			</span>
@@ -103,15 +103,15 @@ data.put("qa-id", "info");
 			<span class="message-info">
 				<c:choose>
 					<c:when test="<%= layoutTypePortlet.isCustomizedView() %>">
-						<liferay-ui:message key="you-can-customize-this-page" />
+						<liferay-ui:message key="you-can-customize-this-page" resourceBundle="<%= resourceBundle %>" />
 
-						<liferay-ui:icon-help message="customizable-user-help" />
+						<liferay-ui:icon-help message='<%= LanguageUtil.get(resourceBundle, "customizable-user-help") %>' />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
+						<liferay-ui:message key="this-is-the-default-page-without-your-customizations" resourceBundle="<%= resourceBundle %>" />
 
 						<c:if test="<%= informationMessagesControlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
-							<liferay-ui:icon-help message="customizable-admin-help" />
+							<liferay-ui:icon-help message='<%= LanguageUtil.get(resourceBundle, "customizable-admin-help") %>' />
 						</c:if>
 					</c:otherwise>
 				</c:choose>
@@ -130,7 +130,7 @@ data.put("qa-id", "info");
 				}
 				%>
 
-				<liferay-ui:icon cssClass="view-default" id="toggleCustomizedView" label="<%= true %>" message="<%= taglibMessage %>" url="javascript:;" />
+				<liferay-ui:icon cssClass="view-default" id="toggleCustomizedView" label="<%= true %>" message="<%= LanguageUtil.get(resourceBundle, taglibMessage) %>" url="javascript:;" />
 
 				<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
 					<portlet:actionURL name="resetCustomizationView" var="resetCustomizationViewURL">
@@ -138,10 +138,10 @@ data.put("qa-id", "info");
 					</portlet:actionURL>
 
 					<%
-					String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
+					String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
 					%>
 
-					<liferay-ui:icon cssClass="reset-my-customizations" label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
+					<liferay-ui:icon cssClass="reset-my-customizations" label="<%= true %>" message='<%= LanguageUtil.get(resourceBundle, "reset-my-customizations") %>' url="<%= taglibURL %>" />
 				</c:if>
 			</span>
 		</div>

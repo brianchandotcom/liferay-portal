@@ -55,7 +55,6 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -535,7 +534,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
-	protected void addTeamRoles(long userId, Group group, Set<Role> roles)
+	protected void addTeamRoles(long userId, Group group, Set<Long> roleIds)
 		throws Exception {
 
 		List<Team> userTeams = TeamLocalServiceUtil.getUserTeams(
@@ -545,7 +544,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			Role role = RoleLocalServiceUtil.getTeamRole(
 				team.getCompanyId(), team.getTeamId());
 
-			roles.add(role);
+			roleIds.add(role.getRoleId());
 		}
 
 		LinkedHashMap<String, Object> teamParams = new LinkedHashMap<>();
@@ -560,7 +559,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			Role role = RoleLocalServiceUtil.getTeamRole(
 				team.getCompanyId(), team.getTeamId());
 
-			roles.add(role);
+			roleIds.add(role.getRoleId());
 		}
 	}
 
@@ -631,67 +630,70 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			UserBag userBag = getUserBag();
 
-			Set<Role> roles = new HashSet<>();
-
-			roles.addAll(userBag.getRoles());
+			Set<Long> roleIdsSet = new HashSet<>(
+				ListUtil.toList(userBag.getRoleIds()));
 
 			List<Role> userGroupRoles = RoleLocalServiceUtil.getUserGroupRoles(
 				userId, groupId);
 
-			roles.addAll(userGroupRoles);
+			for (Role userGroupRole : userGroupRoles) {
+				roleIdsSet.add(userGroupRole.getRoleId());
+			}
 
 			if (parentGroupId > 0) {
 				userGroupRoles = RoleLocalServiceUtil.getUserGroupRoles(
 					userId, parentGroupId);
 
-				roles.addAll(userGroupRoles);
+				for (Role userGroupRole : userGroupRoles) {
+					roleIdsSet.add(userGroupRole.getRoleId());
+				}
 			}
 
 			List<Role> userGroupGroupRoles =
 				RoleLocalServiceUtil.getUserGroupGroupRoles(userId, groupId);
 
-			roles.addAll(userGroupGroupRoles);
+			for (Role userGroupGroupRole : userGroupGroupRoles) {
+				roleIdsSet.add(userGroupGroupRole.getRoleId());
+			}
 
 			if (parentGroupId > 0) {
 				userGroupGroupRoles =
 					RoleLocalServiceUtil.getUserGroupGroupRoles(
 						userId, parentGroupId);
 
-				roles.addAll(userGroupGroupRoles);
+				for (Role userGroupGroupRole : userGroupGroupRoles) {
+					roleIdsSet.add(userGroupGroupRole.getRoleId());
+				}
 			}
 
 			if (group != null) {
-				Collection<Group> userOrgGroups = userBag.getUserOrgGroups();
-
-				if (group.isOrganization() && userOrgGroups.contains(group)) {
+				if (group.isOrganization() && userBag.hasUserOrgGroup(group)) {
 					Role organizationUserRole = RoleLocalServiceUtil.getRole(
 						group.getCompanyId(), RoleConstants.ORGANIZATION_USER);
 
-					roles.add(organizationUserRole);
+					roleIdsSet.add(organizationUserRole.getRoleId());
 				}
 
-				Collection<Group> userGroups = userBag.getUserGroups();
-
 				if ((group.isSite() &&
-					 (userGroups.contains(group) ||
-					  userOrgGroups.contains(group))) ||
+					 (userBag.hasUserGroup(group) ||
+					  userBag.hasUserOrgGroup(group))) ||
 					group.isUserPersonalSite()) {
 
 					Role siteMemberRole = RoleLocalServiceUtil.getRole(
 						group.getCompanyId(), RoleConstants.SITE_MEMBER);
 
-					roles.add(siteMemberRole);
+					roleIdsSet.add(siteMemberRole.getRoleId());
 				}
 
-				if ((group.isOrganization() && userOrgGroups.contains(group)) ||
-					(group.isSite() && userGroups.contains(group))) {
+				if ((group.isOrganization() &&
+					 userBag.hasUserOrgGroup(group)) ||
+					(group.isSite() && userBag.hasUserGroup(group))) {
 
-					addTeamRoles(userId, group, roles);
+					addTeamRoles(userId, group, roleIdsSet);
 				}
 			}
 
-			roleIds = ListUtil.toLongArray(
-				new ArrayList<>(roles), Role.ROLE_ID_ACCESSOR);
+			roleIds = ArrayUtil.toLongArray(roleIdsSet);
 
 			Arrays.sort(roleIds);
 
@@ -1218,24 +1220,20 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			doGetRoleIds(getUserId(), groupId));
-
-		for (Role role : roles) {
-			String roleName = role.getName();
-
-			if (roleName.equals(RoleConstants.SITE_MEMBER)) {
-				return true;
-			}
-		}
-
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		Role role = RoleLocalServiceUtil.getRole(
+			group.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		long[] roleIds = doGetRoleIds(getUserId(), groupId);
+
+		if (Arrays.binarySearch(roleIds, role.getRoleId()) >= 0) {
+			return true;
+		}
 
 		UserBag userBag = getUserBag();
 
-		Collection<Group> groups = userBag.getUserGroups();
-
-		if (groups.contains(group)) {
+		if (userBag.hasUserGroup(group)) {
 			return true;
 		}
 		else {

@@ -479,8 +479,8 @@ public class CustomSQL {
 
 			String[] configs = getConfigs();
 
-			for (String _config : configs) {
-				read(classLoader, _config);
+			for (String config : configs) {
+				read(classLoader, config);
 			}
 		}
 		catch (Exception e) {

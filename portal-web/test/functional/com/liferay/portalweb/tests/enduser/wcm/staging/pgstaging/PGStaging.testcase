@@ -28,8 +28,8 @@
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Staging Test Page" />
-			<var name="siteURL" value="true" />
 			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 	</set-up>
 

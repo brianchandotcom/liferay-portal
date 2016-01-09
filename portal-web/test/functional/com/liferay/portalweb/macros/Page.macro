@@ -1,17 +1,18 @@
 <definition>
 	<command name="add" summary="Add a page named '${pageName}'">
-		<execute macro="Page#gotoPagesCP">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteScopeName" value="${siteScopeName}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
+		<var name="key_siteName" value="${siteName}" />
+
+		<if>
+			<isset var="siteName" />
+			<then>
+				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
+				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+				<var name="key_rowEntry" value="${siteName}" />
+				<execute function="ClickNoError" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+				<execute function="AssertClick" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${sitePagePrivacy}" arg2="Private" />

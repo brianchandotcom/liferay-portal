@@ -1523,9 +1523,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${userScreenName}" />
+			<var name="sitePagePrivacy" value="Private" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -1652,9 +1652,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${userScreenName1}" />
+			<var name="sitePagePrivacy" value="Private" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -1672,9 +1672,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${userScreenName2}" />
+			<var name="sitePagePrivacy" value="Private" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -2351,9 +2351,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${userScreenName}" />
+			<var name="sitePagePrivacy" value="Private" />
 			<var name="siteURL" value="true" />
 		</execute>
 

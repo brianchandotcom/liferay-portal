@@ -1,7 +1,10 @@
 task deployConfigs(type: Copy)
 
 dependencies {
+	// @formatter:off
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":portal-security:portal-security-auto-login")

@@ -1220,9 +1220,9 @@
 			</library>
 			<library>
 				<file-name>lib/portal/bnd.jar</file-name>
-				<version>2.4.1</version>
+				<version>3.1.0</version>
 				<project-name>Bnd</project-name>
-				<project-url>http://www.aqute.biz/Bnd</project-url>
+				<project-url>http://bnd.bndtools.org</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>

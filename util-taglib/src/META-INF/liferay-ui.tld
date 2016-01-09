@@ -3280,6 +3280,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>resourceBunle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>unicode</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

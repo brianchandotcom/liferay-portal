@@ -49,20 +49,6 @@ public class StagingControlMenuEntry
 
 	@Override
 	public boolean isShow(HttpServletRequest request) throws PortalException {
-		return hasAccessPermission(request);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	protected boolean hasAccessPermission(HttpServletRequest request)
-		throws PortalException {
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -71,6 +57,14 @@ public class StagingControlMenuEntry
 		}
 
 		return true;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

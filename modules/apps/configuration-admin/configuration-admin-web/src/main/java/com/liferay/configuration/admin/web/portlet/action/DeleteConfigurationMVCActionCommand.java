@@ -60,6 +60,10 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 			Configuration configuration =
 				_configurationModelRetriever.getConfiguration(pid);
 
+			if (configuration == null) {
+				return false;
+			}
+
 			configuration.delete();
 		}
 		catch (IOException ioe) {

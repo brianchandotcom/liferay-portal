@@ -103,6 +103,17 @@ renderResponse.setTitle(factoryConfigurationModel.getName());
 							method="post"
 							url="<%= deleteConfigActionURL %>"
 						/>
+
+						<portlet:resourceURL id="export" var="exportURL">
+							<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
+							<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
+						</portlet:resourceURL>
+
+						<liferay-ui:icon
+							message="export"
+							method="post"
+							url="<%= exportURL %>"
+						/>
 					</c:if>
 				</liferay-ui:icon-menu>
 			</liferay-ui:search-container-column-text>

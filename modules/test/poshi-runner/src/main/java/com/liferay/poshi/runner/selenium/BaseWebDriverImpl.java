@@ -1841,11 +1841,6 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void robotSelectAllText(String locator) {
-		LiferaySeleniumHelper.selectAllText();
-	}
-
-	@Override
 	public void saveScreenshot() throws Exception {
 		if (!PropsValues.SAVE_SCREENSHOT) {
 			return;
@@ -1885,6 +1880,11 @@ public abstract class BaseWebDriverImpl
 	public void selectAndWait(String selectLocator, String optionLocator) {
 		select(selectLocator, optionLocator);
 		waitForPageToLoad("30000");
+	}
+
+	@Override
+	public void selectFieldText() {
+		LiferaySeleniumHelper.selectFieldText();
 	}
 
 	@Override

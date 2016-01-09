@@ -466,8 +466,6 @@ public interface LiferaySelenium {
 
 	public String retrieveLastRemoteControlLogs();
 
-	public void robotSelectAllText(String locator);
-
 	public void rollup(String rollupName, String kwargs);
 
 	public void runScript(String script);
@@ -484,6 +482,8 @@ public interface LiferaySelenium {
 	public void select(String selectLocator, String optionLocator);
 
 	public void selectAndWait(String selectLocator, String optionLocator);
+
+	public void selectFieldText();
 
 	public void selectFrame(String locator);
 

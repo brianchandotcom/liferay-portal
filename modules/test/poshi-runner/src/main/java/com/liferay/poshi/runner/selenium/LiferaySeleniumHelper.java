@@ -1156,7 +1156,7 @@ public class LiferaySeleniumHelper {
 				"ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
 	}
 
-	public static void selectAllText() {
+	public static void selectFieldText() {
 		Keyboard keyboard = new DesktopKeyboard();
 
 		keyboard.keyDown(KeyEvent.VK_CONTROL);

@@ -42,8 +42,6 @@
 	</div>
 </div>
 
-<@liferay.control_menu />
-
 <@liferay_util["include"] page=body_bottom_include />
 
 <@liferay_util["include"] page=bottom_include />

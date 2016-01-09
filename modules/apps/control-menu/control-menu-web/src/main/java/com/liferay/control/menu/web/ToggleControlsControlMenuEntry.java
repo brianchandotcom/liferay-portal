@@ -86,7 +86,7 @@ public class ToggleControlsControlMenuEntry
 
 	@Override
 	public String getLinkCssClass(HttpServletRequest request) {
-		return "toggle-controls";
+		return "toggle-controls edit-controls-toggle visible-xs";
 	}
 
 	@Override

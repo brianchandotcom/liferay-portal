@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.language;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
@@ -24,12 +26,14 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 
 /**
  * @author Raymond Augé
+ * @author Shuyang Zhou
  */
 public class UTF8Control extends Control {
 
@@ -48,14 +52,30 @@ public class UTF8Control extends Control {
 			return null;
 		}
 
+		if (!reload) {
+			ResourceBundle resourceBundle = _resourceBundleCache.get(url);
+
+			if (resourceBundle != null) {
+				return resourceBundle;
+			}
+		}
+
 		URLConnection urlConnection = url.openConnection();
 
 		urlConnection.setUseCaches(!reload);
 
 		try (InputStream inputStream = urlConnection.getInputStream()) {
-			return new PropertyResourceBundle(
+			ResourceBundle resourceBundle = new PropertyResourceBundle(
 				new InputStreamReader(inputStream, StringPool.UTF8));
+
+			_resourceBundleCache.put(url, resourceBundle);
+
+			return resourceBundle;
 		}
 	}
+
+	private static final Map<URL, ResourceBundle> _resourceBundleCache =
+		new ConcurrentReferenceValueHashMap<>(
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 }

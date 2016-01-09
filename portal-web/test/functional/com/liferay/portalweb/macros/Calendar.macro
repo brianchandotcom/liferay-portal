@@ -883,7 +883,7 @@
 			<var name="menuListOption" value="Add Event" />
 		</execute>
 
-		<execute macro="CalendarEvent#_selectEventIframe" />
+		<execute macro="CalendarEvent#selectEventIframe" />
 
 		<execute macro="CalendarEvent#_viewNewEventIframe" />
 

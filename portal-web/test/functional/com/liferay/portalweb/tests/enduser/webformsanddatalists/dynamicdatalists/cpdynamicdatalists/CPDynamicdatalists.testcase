@@ -2654,7 +2654,9 @@
 		</execute>
 	</command>
 
-	<command name="DeleteList" priority="4">
+	<command name="DeleteList" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
@@ -3967,7 +3969,9 @@
 		</execute>
 	</command>
 
-	<command name="ImportLAR" priority="4">
+	<command name="ImportLAR" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />

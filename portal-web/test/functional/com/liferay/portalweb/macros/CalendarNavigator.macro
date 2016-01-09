@@ -28,7 +28,7 @@
 
 		<execute function="AssertClick" locator1="Calendar#ADD_EVENT_BUTTON" value1="Add Event" />
 
-		<execute macro="CalendarEvent#_selectEventIframe" />
+		<execute macro="CalendarEvent#selectEventIframe" />
 
 		<execute macro="CalendarEvent#_viewNewEventIframe" />
 	</command>
@@ -53,13 +53,23 @@
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
-		<execute macro="CalendarEvent#_selectEventIframe" />
+		<execute macro="CalendarEvent#selectEventIframe" />
 	</command>
 
 	<command name="gotoAddEventToday">
 		<var method="StringUtil#upperCase('${viewType}')" name="viewTypeUppercase" />
 
 		<execute function="Click" locator1="Calendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY" />
+	</command>
+
+	<command name="gotoAddEventViaAssetPublisher">
+		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
+
+		<execute function="AssertClick" locator1="MenuItem#CALENDAR_EVENT" value1="Calendar Event" />
+
+		<execute macro="CalendarEvent#selectEventIframe" />
+
+		<execute macro="CalendarEvent#_viewNewEventIframe" />
 	</command>
 
 	<command name="gotoAddMyCalendars">

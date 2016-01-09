@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//li[@class='asset-links-list-item']//a/span</td>
+	<td>//li[@class='asset-links-list-item']//a/span | //li[@class='asset-links-list-item']//a</td>
 	<td></td>
 </tr>
 <!--This is temporary. After path restructure, the ideal solution is to make the path variable more generic.-->

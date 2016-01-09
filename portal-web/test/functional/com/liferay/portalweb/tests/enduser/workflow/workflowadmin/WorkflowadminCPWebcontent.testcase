@@ -591,7 +591,9 @@
 		</execute>
 	</command>
 
-	<command name="ApproveInWebContentFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
+	<command name="ApproveInWebContentFolderWithParentFolderSingleApproverWorkflowCP" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>

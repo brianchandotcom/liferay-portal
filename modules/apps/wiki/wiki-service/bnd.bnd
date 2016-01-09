@@ -42,7 +42,6 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	@../../../../lib/portal/antlr2.jar,\
 	@../../../../lib/portal/antlr3.jar,\
 	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\

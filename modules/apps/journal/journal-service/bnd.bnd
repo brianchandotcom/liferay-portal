@@ -21,7 +21,6 @@ Export-Package:\
 	com.liferay.journal.workflow
 Include-Resource:\
 	classes,\
-	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	resource-actions/default.xml=classes/META-INF/resource-actions/default.xml,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/FiniteUniqueStack.class,\

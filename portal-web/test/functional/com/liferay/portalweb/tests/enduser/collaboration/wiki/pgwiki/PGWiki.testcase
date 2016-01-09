@@ -141,17 +141,17 @@
 
 		<execute function="AssertClick" locator1="Wiki#LINK_ADD_CHILD_PAGE" value1="Add Child Page" />
 
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki FrontPage Child Page Title" />
-		</execute>
-
 		<execute macro="WikiEntry#selectPageFormat">
 			<var name="pageFormat" value="HTML" />
 		</execute>
 
 		<execute macro="WikiEntry#confirmHTML" />
 
-		<execute function="Click#clickAt" locator1="Wiki#RICH_TEXT_EDITOR" />
+		<execute macro="WikiEntry#addPageTitle">
+			<var name="wikiPageTitle" value="Wiki FrontPage Child Page Title" />
+		</execute>
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
 
 		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
 
@@ -465,7 +465,7 @@
 
 		<execute macro="WikiEntry#confirmHTML" />
 
-		<execute function="Click#clickAt" locator1="Wiki#RICH_TEXT_EDITOR" />
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
 
 		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
 

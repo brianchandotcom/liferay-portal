@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>CONTENT_FIELD</td>
-	<td>//div[contains(@id,'content') and contains(@id,'Editor') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td>//div[contains(@class,'alloy-editor-container')]//div[contains(@data-placeholder,'Write your content here...') or contains(@data-placeholder,'Content')]</td>
 	<td></td>
 </tr>
 <tr>

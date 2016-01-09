@@ -2732,10 +2732,7 @@
 	</command>
 
 	<command name="EditCalendarEventRegularWithUserInvite" priority="4">
-		<var name="eventTitle" value="Calendar Event Regular Title" />
-		<var name="eventTitleEdit" value="Calendar Event Regular Title Edit" />
-		<var name="eventType" value="Regular" />
-		<var name="resourceNameList" value="Test Test" />
+		<description message="This is a use case for LPS-50026." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2744,29 +2741,56 @@
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
+			<var name="eventTitle" value="Calendar Event Regular Title" />
+			<var name="eventType" value="Regular" />
 			<var name="optionSet" value="true" />
 			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="specificOptionSetValue" value="${resourceNameList}" />
+			<var name="specificOptionSetValue" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#edit">
-			<var name="calendarName" value="Test Test" />
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventTitleEdit" value="${eventTitleEdit}" />
-			<var name="eventType" value="${eventType}" />
-			<var name="optionSetValue" value="inviteResource" />
+		<execute macro="Calendar#hideMyCalendarsCalendar" />
+
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="Calendar Event Regular Title" />
+		</execute>
+
+		<execute macro="CalendarScheduler#editTitle">
+			<var name="eventTitle" value="Edited Title" />
+		</execute>
+
+		<execute macro="CalendarScheduler#saveEvent" />
+
+		<execute macro="CalendarEvent#saveEventUserInvite" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="Edited Title" />
+		</execute>
+
+		<execute macro="CalendarScheduler#gotoEditViaDialogBox" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="New Edited Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#clickPublish" />
+
+		<execute macro="CalendarEvent#saveEventUserInviteCancel" />
+
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="${eventTitleEdit}" />
+			<var name="eventTitle" value="Edited Title" />
 		</execute>
 	</command>
 

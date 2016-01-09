@@ -1,4 +1,16 @@
 <definition>
+	<command name="_selectAssetType">
+		<var name="key_assetType" value="${assetType}" />
+
+		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
+
+		<var method="StringUtil#replace('${assetType}', ' ', '_')" name="assetTypeLocator" />
+
+		<var method="StringUtil#upperCase('${assetTypeLocator}')" name="assetTypeLocator" />
+
+		<execute function="AssertClick" locator1="MenuItem#${assetTypeLocator}" value1="${assetType}" />
+	</command>
+
 	<command name="configureFilterByCategories">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Related Assets" />
@@ -51,11 +63,9 @@
 			<var name="panelHeading" value="Related Assets" />
 		</execute>
 
-		<execute function="AssertClick" locator1="WCEditWebContent#RELATED_ASSETS_SELECT" value1="Select" />
-
-		<var method="StringUtil#replace('${assetType}', ' ', '_')" name="assetTypeLocator" />
-		<var method="StringUtil#upperCase('${assetTypeLocator}')" name="assetTypeLocator" />
-		<execute function="AssertClick" locator1="MenuItem#${assetTypeLocator}" value1="${assetType}" />
+		<execute macro="RelatedAssets#_selectAssetType">
+			<var name="assetType" value="${assetType}" />
+		</execute>
 	</command>
 
 	<command name="searchAdvancedRelatedAssetsCP">
@@ -125,6 +135,22 @@
 		</if>
 
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+	</command>
+
+	<command name="selectAsset">
+		<execute macro="RelatedAssets#_selectAssetType">
+			<var name="assetType" value="${assetType}" />
+		</execute>
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="${assetTitle}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewAdvancedSearchNoResultCP">

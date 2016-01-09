@@ -83,7 +83,9 @@
 		</if>
 	</tear-down>
 
-	<command name="ApprovePageRevisionPG" priority="4">
+	<command name="ApprovePageRevisionPG" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Page#addPG">

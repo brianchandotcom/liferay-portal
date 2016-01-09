@@ -496,6 +496,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void highlightAll() {
+		LiferaySeleniumHelper.highlightAll();
+	}
+
+	@Override
 	public boolean isConfirmation(String pattern) {
 		return LiferaySeleniumHelper.isConfirmation(this, pattern);
 	}
@@ -660,11 +665,6 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void replyToEmail(String to, String body) throws Exception {
 		LiferaySeleniumHelper.replyToEmail(this, to, body);
-	}
-
-	@Override
-	public void robotSelectAllText(String locator) {
-		LiferaySeleniumHelper.selectAllText();
 	}
 
 	@Override

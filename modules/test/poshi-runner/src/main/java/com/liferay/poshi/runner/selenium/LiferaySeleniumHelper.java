@@ -811,6 +811,14 @@ public class LiferaySeleniumHelper {
 		return sb.toString();
 	}
 
+	public static void highlightAll() {
+		Keyboard keyboard = new DesktopKeyboard();
+
+		keyboard.keyDown(KeyEvent.VK_CONTROL);
+		keyboard.type("a");
+		keyboard.keyUp(KeyEvent.VK_CONTROL);
+	}
+
 	public static boolean isConfirmation(
 		LiferaySelenium liferaySelenium, String pattern) {
 
@@ -1143,14 +1151,6 @@ public class LiferaySeleniumHelper {
 		captureScreen(
 			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
 				"ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
-	}
-
-	public static void selectAllText() {
-		Keyboard keyboard = new DesktopKeyboard();
-
-		keyboard.keyDown(KeyEvent.VK_CONTROL);
-		keyboard.type("a");
-		keyboard.keyUp(KeyEvent.VK_CONTROL);
 	}
 
 	public static void sendEmail(

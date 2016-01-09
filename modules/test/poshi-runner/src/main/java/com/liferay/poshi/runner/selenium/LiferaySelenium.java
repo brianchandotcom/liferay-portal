@@ -157,6 +157,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void goBackAndWait();
 
+	public void highlightAll();
+
 	public boolean isConfirmation(String pattern);
 
 	public boolean isElementNotPresent(String locator);
@@ -216,8 +218,6 @@ public interface LiferaySelenium extends Selenium {
 	public void refreshAndWait();
 
 	public void replyToEmail(String to, String body) throws Exception;
-
-	public void robotSelectAllText(String locator);
 
 	public void saveScreenshot() throws Exception;
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.language;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
@@ -24,12 +26,14 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 
 /**
  * @author Raymond Augé
+ * @author Shuyang Zhou
  */
 public class UTF8Control extends Control {
 
@@ -41,39 +45,37 @@ public class UTF8Control extends Control {
 			ClassLoader classLoader, boolean reload)
 		throws IOException {
 
-		String resourceName = toResourceName(
-			toBundleName(baseName, locale), "properties");
+		URL url = classLoader.getResource(
+			toResourceName(toBundleName(baseName, locale), "properties"));
 
-		InputStream inputStream = null;
-
-		if (reload) {
-			URL url = classLoader.getResource(resourceName);
-
-			if (url != null) {
-				URLConnection urlConnection = url.openConnection();
-
-				if (urlConnection != null) {
-					urlConnection.setUseCaches(false);
-
-					inputStream = urlConnection.getInputStream();
-				}
-			}
-		}
-		else {
-			inputStream = classLoader.getResourceAsStream(resourceName);
-		}
-
-		if (inputStream == null) {
+		if (url == null) {
 			return null;
 		}
 
-		try {
-			return new PropertyResourceBundle(
-				new InputStreamReader(inputStream, StringPool.UTF8));
+		if (!reload) {
+			ResourceBundle resourceBundle = _resourceBundleCache.get(url);
+
+			if (resourceBundle != null) {
+				return resourceBundle;
+			}
 		}
-		finally {
-			inputStream.close();
+
+		URLConnection urlConnection = url.openConnection();
+
+		urlConnection.setUseCaches(!reload);
+
+		try (InputStream inputStream = urlConnection.getInputStream()) {
+			ResourceBundle resourceBundle = new PropertyResourceBundle(
+				new InputStreamReader(inputStream, StringPool.UTF8));
+
+			_resourceBundleCache.put(url, resourceBundle);
+
+			return resourceBundle;
 		}
 	}
+
+	private static final Map<URL, ResourceBundle> _resourceBundleCache =
+		new ConcurrentReferenceValueHashMap<>(
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 }

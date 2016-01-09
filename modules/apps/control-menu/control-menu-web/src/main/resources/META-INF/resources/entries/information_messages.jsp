@@ -34,7 +34,6 @@ data.put("qa-id", "info");
 %>
 
 <liferay-ui:icon
-	cssClass="info-link"
 	data="<%= data %>"
 	icon="information-live"
 	id="infoButton"

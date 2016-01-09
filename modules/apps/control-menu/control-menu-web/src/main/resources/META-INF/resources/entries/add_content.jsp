@@ -32,7 +32,6 @@ data.put("qa-id", "add");
 %>
 
 <liferay-ui:icon
-	cssClass="add-menu-toggle"
 	data="<%= data %>"
 	icon="plus"
 	id="addPanel"

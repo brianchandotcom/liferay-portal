@@ -75,5 +75,5 @@ Liferay-Releng-Module-Group-Title: Runtime
 Provide-Capability:\
 	liferay.extender;\
 	liferay.extender="spring.extender";\
-	version:Version="${plugin.full.version}"
+	version:Version="${Bundle-Version}"
 -include: ../../../marketplace/platform/bnd.bnd

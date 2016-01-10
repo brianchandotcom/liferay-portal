@@ -5,7 +5,6 @@ Export-Package:\
 	com.liferay.document.library.events,\
 	com.liferay.document.library.lar.xstream,\
 	com.liferay.document.library.verify
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
 -include: ../../../../marketplace/collaboration/bnd.bnd

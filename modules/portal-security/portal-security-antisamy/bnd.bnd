@@ -7,8 +7,7 @@ Import-Package:\
 	!org.apache.xml.resolver.*,\
 	!sun.io,\
 	*
-Include-Resource: \
-	classes,\
+Include-Resource:\
 	@lib/antisamy.jar,\
 	@lib/batik-css.jar,\
 	@lib/batik-ext.jar,\

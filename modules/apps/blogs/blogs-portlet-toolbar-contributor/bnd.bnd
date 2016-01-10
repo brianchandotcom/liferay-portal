@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Blogs Portlet Toolbar Contributor
 Bundle-SymbolicName: com.liferay.blogs.portlet.toolbar.contributor
 Bundle-Version: 1.0.0
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
 -include: ../../../../marketplace/collaboration/bnd.bnd

@@ -10,7 +10,6 @@ Bundle-SymbolicName: com.liferay.document.library.repository.search
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.document.library.repository.search.util
 Include-Resource:\
-	classes,\
 	lib/lucene-analyzers-common.jar=lib/lucene-analyzers-common.jar,\
 	lib/lucene-core.jar=lib/lucene-core.jar,\
 	lib/lucene-queries.jar=lib/lucene-queries.jar,\

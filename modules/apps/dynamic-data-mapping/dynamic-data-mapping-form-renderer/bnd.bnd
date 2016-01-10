@@ -3,8 +3,6 @@ Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.renderer
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.dynamic.data.mapping.form.renderer
 Include-Resource:\
-	classes,\
-	META-INF=src/main/resources/META-INF,\
 	META-INF/resources/content=src/main/resources/content
 JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:

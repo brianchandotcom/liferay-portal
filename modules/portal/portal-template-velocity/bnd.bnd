@@ -17,7 +17,6 @@ Import-Package:\
 	com.liferay.portal.template,\
 	*
 Include-Resource:\
-	classes,\
 	@lib/velocity.jar,\
 	@lib/velocity-tools.jar
 Liferay-Releng-Module-Group-Description:

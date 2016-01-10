@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package: \
 	com.liferay.bookmarks.*,\
 	!com.liferay.bookmarks.configuration.dependencies
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Bookmarks
 -include: ../../../../marketplace/collaboration/bnd.bnd

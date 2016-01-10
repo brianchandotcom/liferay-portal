@@ -6,9 +6,6 @@ Export-Package:\
 	com.liferay.document.library.web.lar,\
 	com.liferay.document.library.web.social,\
 	com.liferay.document.library.web.webdav
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
 JS-Config: /META-INF/resources/document_library/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library

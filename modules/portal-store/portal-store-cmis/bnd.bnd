@@ -10,7 +10,6 @@ Import-Package:\
 	!org.relaxng.datatype.*,\
 	*
 Include-Resource:\
-	classes,\
 	@lib/chemistry-opencmis-client-api.jar,\
 	@lib/chemistry-opencmis-client-bindings.jar,\
 	@lib/chemistry-opencmis-client-impl.jar,\

@@ -86,7 +86,6 @@ Import-Package:\
 	!sun.security.*,\
 	*
 Include-Resource:\
-	classes,\
 	lib/analysis-icu.jar=lib/analysis-icu.jar,\
 	lib/analysis-kuromoji.jar=lib/analysis-kuromoji.jar,\
 	lib/analysis-smartcn.jar=lib/analysis-smartcn.jar,\

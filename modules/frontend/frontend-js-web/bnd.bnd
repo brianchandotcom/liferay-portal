@@ -73,8 +73,6 @@ Import-Package:\
 	com.liferay.portlet.usersadmin.util,\
 	*
 Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
 	META-INF/resources=tmp/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure

@@ -13,8 +13,6 @@ Import-Package:\
 	!org.zeroturnaround.javarebel,\
 	*
 Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
 	@lib/org.freemarker.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library

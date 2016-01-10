@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.ant.heap.dump
 Bundle-Version: 1.0.2
 Export-Package: com.liferay.ant.heap.dump
 Include-Resource:\
-	classes,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/concurrent/*,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/log/*,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/*,\

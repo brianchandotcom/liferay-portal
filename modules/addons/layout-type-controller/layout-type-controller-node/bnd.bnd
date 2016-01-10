@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Layout Type Controller Node
 Bundle-SymbolicName: com.liferay.layout.type.controller.node
 Bundle-Version: 1.0.0
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Web-ContextPath: /layout-type-controller-node

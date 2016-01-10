@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Portal REST Extender
 Bundle-SymbolicName: com.liferay.portal.rest.extender
 Bundle-Version: 1.0.0
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
 -include: ../../../marketplace/platform/bnd.bnd

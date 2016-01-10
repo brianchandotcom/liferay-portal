@@ -3,5 +3,4 @@ Bundle-SymbolicName: com.liferay.gradle.plugins.lang.builder
 Bundle-Version: 1.0.4
 Export-Package: com.liferay.gradle.plugins.lang.builder
 Include-Resource:\
-	classes,\
 	@lib/com.liferay.lang.builder.jar!/com/liferay/lang/builder/LangBuilderArgs.class

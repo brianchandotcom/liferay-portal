@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Data Provider Web
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.data.provider.web
 Bundle-Version: 1.0.0
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Web-ContextPath: /dynamic-data-mapping-data-provider-web

@@ -6,7 +6,6 @@ Import-Package:\
 	!org.apache.tools.ant.*,\
 	*
 Include-Resource:\
-	classes,\
 	{META-INF/maven/plugin.xml=src/main/resources/META-INF/maven/plugin.xml},\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\

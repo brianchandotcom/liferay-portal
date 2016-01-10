@@ -28,7 +28,6 @@ Import-Package:\
 	!org.relaxng.datatype.*,\
 	*
 Include-Resource:\
-	classes,\
 	lib/commons-io.jar=lib/commons-io.jar,\
 	lib/httpclient.jar=lib/httpclient.jar,\
 	lib/httpcore.jar=lib/httpcore.jar,\

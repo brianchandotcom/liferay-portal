@@ -2,8 +2,6 @@ Bundle-Name: Liferay Hello Velocity Web
 Bundle-SymbolicName: com.liferay.hello.velocity.web
 Bundle-Version: 1.0.0
 Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

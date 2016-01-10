@@ -18,7 +18,7 @@
 			<name>animationTime</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>Integer</type>
+			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
 			<name>closeable</name>
@@ -30,7 +30,7 @@
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>String</type>
+			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<name>destroyOnHide</name>
@@ -42,31 +42,31 @@
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>String</type>
+			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<name>targetContainer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>String</type>
+			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<name>timeout</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>Integer</type>
+			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>String</type>
+			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>String</type>
+			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 	<tag>

@@ -666,8 +666,20 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		throws Exception {
 
 		Version currentVersion = Version.getInstance(getSchemaVersion());
+		Version importedVersion = Version.getInstance(schemaVersion);
 
-		if (currentVersion.isLaterVersionThan(schemaVersion)) {
+		if (!currentVersion.getMajor().equals(importedVersion.getMajor())) {
+			return false;
+		}
+
+		int currentMinorVersion = GetterUtil.getInteger(
+			currentVersion.getMinor(), -1);
+		int importedMinorVersion = GetterUtil.getInteger(
+			importedVersion.getMinor(), -1);
+
+		if (((currentMinorVersion == -1) && (importedMinorVersion == -1)) ||
+			(currentMinorVersion < importedMinorVersion)) {
+
 			return false;
 		}
 

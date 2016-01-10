@@ -116,7 +116,7 @@ recordSetSearch.setOrderByType(orderByType);
 								</liferay-frontend:vertical-card-sticker-bottom>
 
 								<liferay-frontend:vertical-card-header>
-									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), HtmlUtil.escape(recordSet.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), recordSet.getUserName()} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 								</liferay-frontend:vertical-card-header>
 							</liferay-frontend:icon-vertical-card>
 						</liferay-ui:search-container-column-text>

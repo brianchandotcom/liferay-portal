@@ -73,19 +73,6 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #forward(ServletRequest,
-	 *             ServletResponse)}
-	 */
-	@Deprecated
-	public void forward(
-			ServletRequest servletRequest, ServletResponse servletResponse,
-			boolean named)
-		throws IOException, ServletException {
-
-		forward(servletRequest, servletResponse);
-	}
-
 	@Override
 	public void include(
 			ServletRequest servletRequest, ServletResponse servletResponse)
@@ -101,19 +88,6 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 		else {
 			_requestDispatcher.include(servletRequest, servletResponse);
 		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #include(ServletRequest,
-	 *             ServletResponse)}
-	 */
-	@Deprecated
-	public void include(
-			ServletRequest servletRequest, ServletResponse servletResponse,
-			boolean named)
-		throws IOException, ServletException {
-
-		include(servletRequest, servletResponse);
 	}
 
 	public void invoke(
@@ -189,19 +163,6 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 			_requestDispatcher.forward(
 				portletServletRequest, portletServletResponse);
 		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #invoke(ServletRequest,
-	 *             ServletResponse, boolean)}
-	 */
-	@Deprecated
-	public void invoke(
-			ServletRequest servletRequest, ServletResponse servletResponse,
-			boolean named, boolean include)
-		throws IOException, ServletException {
-
-		invoke(servletRequest, servletResponse, include);
 	}
 
 	protected HttpServletRequest getPortletServletRequest(

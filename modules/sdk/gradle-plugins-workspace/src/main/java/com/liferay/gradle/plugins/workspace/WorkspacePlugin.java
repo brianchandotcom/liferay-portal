@@ -77,6 +77,8 @@ public class WorkspacePlugin implements Plugin<Project> {
 		Configuration bundleConfiguration = addConfigurationBundle(
 			project, workspaceExtension);
 
+		addRepositoryBundle(project, workspaceExtension);
+
 		AbstractArchiveTask distBundle = addTaskDistBundle(
 			project, bundleConfiguration);
 
@@ -92,11 +94,29 @@ public class WorkspacePlugin implements Plugin<Project> {
 	}
 
 	protected Configuration addConfigurationBundle(
-		final Project project, final WorkspaceExtension workspaceExtension) {
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, BUNDLE_CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Configures the Liferay bundle you want to use for your project.");
+
+		GradleUtil.addDependency(
+			project, BUNDLE_CONFIGURATION_NAME,
+			workspaceExtension.getBundleArtifactGroup(),
+			workspaceExtension.getBundleArtifactName(),
+			workspaceExtension.getBundleArtifactVersion());
+
+		return configuration;
+	}
+
+	protected MavenArtifactRepository addRepositoryBundle(
+		Project project, final WorkspaceExtension workspaceExtension) {
 
 		RepositoryHandler repositoryHandler = project.getRepositories();
 
-		repositoryHandler.maven(
+		return repositoryHandler.maven(
 			new Action<MavenArtifactRepository>() {
 
 				@Override
@@ -108,20 +128,6 @@ public class WorkspacePlugin implements Plugin<Project> {
 				}
 
 			});
-
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, BUNDLE_CONFIGURATION_NAME);
-
-		GradleUtil.addDependency(
-			project, BUNDLE_CONFIGURATION_NAME,
-			workspaceExtension.getBundleArtifactGroup(),
-			workspaceExtension.getBundleArtifactName(),
-			workspaceExtension.getBundleArtifactVersion());
-
-		configuration.setDescription(
-			"Configures the Liferay bundle you want to use for your project.");
-
-		return configuration;
 	}
 
 	protected AbstractArchiveTask addTaskDistBundle(

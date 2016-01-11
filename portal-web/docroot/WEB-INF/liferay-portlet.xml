@@ -3,17 +3,6 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>10</portlet-name>
-		<icon>/html/icons/address_book.png</icon>
-		<struts-path>address_book</struts-path>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-address-book</css-class-wrapper>
-		<include>false</include>
-	</portlet>
-	<portlet>
 		<portlet-name>47</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>hello_world</struts-path>
@@ -27,25 +16,6 @@
 		<portlet-name>90</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>portal</struts-path>
-		<system>true</system>
-	</portlet>
-	<portlet>
-		<portlet-name>119</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>asset</struts-path>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<system>true</system>
-	</portlet>
-	<portlet>
-		<portlet-name>124</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>social</struts-path>
-		<social-activity-interpreter-class>com.liferay.portlet.social.util.PortalActivityInterpreter</social-activity-interpreter-class>
-		<social-request-interpreter-class>com.liferay.portlet.social.util.PortalRequestInterpreter</social-request-interpreter-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<system>true</system>
 	</portlet>
 	<role-mapper>

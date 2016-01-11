@@ -47,20 +47,7 @@
 
 	<!-- Generic search engine -->
 
-	<bean id="com.liferay.portal.search.generic.GenericSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine">
-		<property name="booleanClauseFactory" >
-			<bean class="com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl" />
-		</property>
-		<property name="booleanQueryFactory" >
-			<bean class="com.liferay.portal.kernel.search.generic.BooleanQueryFactoryImpl" />
-		</property>
-		<property name="termQueryFactory">
-			<bean class="com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl" />
-		</property>
-		<property name="termRangeQueryFactory">
-			<bean class="com.liferay.portal.kernel.search.generic.TermRangeQueryFactoryImpl" />
-		</property>
-	</bean>
+	<bean id="com.liferay.portal.search.generic.GenericSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine" />
 
 	<!-- Configurator -->
 

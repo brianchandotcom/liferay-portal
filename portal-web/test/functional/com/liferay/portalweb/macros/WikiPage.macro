@@ -576,6 +576,8 @@
 				<execute function="AssertTextEquals" locator1="PGWikiWikipageHistory#COMPARE_VERSIONS_TEXT_MODE_TABLE_CONTENT_NEW_1" value1="${wikiPageContentCompareNew}" />
 			</then>
 			<else>
+				<var name="key_wikiPageVersionDiff" value="${wikiPageVersionDiff}" />
+
 				<execute function="AssertTextEquals" locator1="Wiki#COMPARE_VERSIONS_DIFF" value1="${wikiPageVersionDiff}" />
 			</else>
 		</if>

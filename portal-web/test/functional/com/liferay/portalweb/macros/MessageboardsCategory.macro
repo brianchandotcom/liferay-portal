@@ -242,16 +242,13 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<while>
-			<condition function="IsElementPresent" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_ALL_CHECKBOX" />
-			<then>
-				<execute function="Check" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_ALL_CHECKBOX" />
+		<execute function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 
-				<execute function="AssertClick" locator1="MessageBoardsAdmin#CATEGORIES_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin"  />
+		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
-			</then>
-		</while>
+		<execute function="Click" locator1="Icon#DELETE" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
 
 		<execute macro="RecycleBin#emptyCP" />
 	</command>

@@ -1121,12 +1121,12 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent#isVisible" locator1="Message#EMPTY_INFO" value1="No entries were found." />
+			<condition function="IsElementPresent" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 			<then>
 				<execute macro="Blogs#viewNoEntryCP" />
 			</then>
 			<else>
-				<execute function="Click" locator1="Blogs#ENTRY_TABLE_ALL_CHECKBOX" />
+				<execute function="Click" locator1="Checkbox#SELECT_ALL" />
 
 				<execute function="Click" locator1="Icon#DELETE" />
 

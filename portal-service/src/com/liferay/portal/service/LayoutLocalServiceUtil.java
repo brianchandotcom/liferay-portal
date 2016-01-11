@@ -1154,6 +1154,12 @@ public class LayoutLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Layout> getScopeGroupLayouts(
+		long parentGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getScopeGroupLayouts(parentGroupId);
+	}
+
 	/**
 	* Returns all the layouts within scope of the group
 	*
@@ -1162,8 +1168,9 @@ public class LayoutLocalServiceUtil {
 	* @return the layouts within scope of the group
 	*/
 	public static java.util.List<com.liferay.portal.model.Layout> getScopeGroupLayouts(
-		long groupId, boolean privateLayout) {
-		return getService().getScopeGroupLayouts(groupId, privateLayout);
+		long parentGroupId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getScopeGroupLayouts(parentGroupId, privateLayout);
 	}
 
 	public static boolean hasLayoutSetPrototypeLayout(

@@ -23,12 +23,9 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 <liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showBody="<%= false %>">
 
 	<%
-	List<Layout> scopeLayouts = new ArrayList<Layout>();
-
 	Group curSite = themeDisplay.getSiteGroup();
 
-	scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), false));
-	scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), true));
+	List<Layout> scopeLayouts = LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId());
 	%>
 
 	<c:choose>

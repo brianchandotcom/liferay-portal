@@ -119,7 +119,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 				row.setPrimaryKey(String.valueOf(entry.getEntryId()));
 
-				String entryUrl = themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId();
+				String entryHREF = themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId();
 				%>
 
 				<c:choose>

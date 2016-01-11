@@ -159,9 +159,8 @@ public class BookmarksEntryAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		return
-			PortalUtil.getPathMain() + "/bookmarks/open_entry?entryId=" +
-				_entry.getEntryId();
+		return PortalUtil.getPathMain() + "/bookmarks/open_entry?entryId=" +
+			_entry.getEntryId();
 	}
 
 	@Override

@@ -38,7 +38,7 @@ for (int j = 0; j < entryColumns.length; j++) {
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("modified-date") %>'>
 			<liferay-ui:search-container-column-date
-				href="<%= entryUrl %>"
+				href="<%= entryHREF %>"
 				name="<%= curEntryColumn %>"
 				value="<%= entry.getModifiedDate() %>"
 			/>
@@ -51,21 +51,21 @@ for (int j = 0; j < entryColumns.length; j++) {
 					displayStyle="list"
 					showCheckbox="<%= false %>"
 					title="<%= entry.getName() %>"
-					url="<%= entryUrl %>"
+					url="<%= entryHREF %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("url") %>'>
 			<liferay-ui:search-container-column-text
 				cssClass="row-url"
-				href="<%= entryUrl %>"
+				href="<%= entryHREF %>"
 				name="<%= curEntryColumn %>"
 				value="<%= HtmlUtil.escape(entry.getUrl()) %>"
 			/>
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("visits") %>'>
 			<liferay-ui:search-container-column-text
-				href="<%= entryUrl %>"
+				href="<%= entryHREF %>"
 				name="<%= curEntryColumn %>"
 				value="<%= String.valueOf(entry.getVisits()) %>"
 			/>

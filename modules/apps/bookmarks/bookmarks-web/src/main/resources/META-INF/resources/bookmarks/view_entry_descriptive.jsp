@@ -34,11 +34,11 @@ else {
 
 entry = entry.toEscapedModel();
 
-String entryUrl = themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId();
+String entryHREF = themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId();
 %>
 
 <h4>
-	<aui:a href="<%= entryUrl.toString() %>">
+	<aui:a href="<%= entryHREF.toString() %>">
 		<%= entry.getName() %>
 	</aui:a>
 </h4>

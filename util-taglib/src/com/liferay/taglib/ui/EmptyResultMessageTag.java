@@ -27,9 +27,14 @@ public class EmptyResultMessageTag extends IncludeTag {
 		_message = message;
 	}
 
+	public void setSearch(boolean search) {
+		_search = search;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_message = null;
+		_search = false;
 	}
 
 	@Override
@@ -41,11 +46,14 @@ public class EmptyResultMessageTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
 			"liferay-ui:empty-result-message:message", _message);
+		request.setAttribute(
+			"liferay-ui:empty-result-message:search", String.valueOf(_search));
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/empty_result_message/page.jsp";
 
 	private String _message;
+	private boolean _search;
 
 }

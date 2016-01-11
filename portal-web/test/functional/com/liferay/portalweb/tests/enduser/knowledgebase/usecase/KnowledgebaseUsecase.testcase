@@ -877,7 +877,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
+		<execute macro="DMDocument#viewDefaultCP" />
 
 		<execute macro="Navigator#openURL" />
 

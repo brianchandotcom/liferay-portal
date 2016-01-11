@@ -990,11 +990,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatJava(fileName, absolutePath, newContent);
 
-		JavaSourceTabCalculator javaSourceTabCalculator =
-			new JavaSourceTabCalculator();
+		if (!isExcludedFile(_checkTabsExclusionFiles, absolutePath)) {
+			JavaSourceTabCalculator javaSourceTabCalculator =
+				new JavaSourceTabCalculator();
 
-		javaSourceTabCalculator.calculateTabs(
-			fileName, newContent, (JavaSourceProcessor)this);
+			javaSourceTabCalculator.calculateTabs(
+				fileName, newContent, (JavaSourceProcessor)this);
+		}
 
 		return StringUtil.replace(newContent, "\n\n\n", "\n\n");
 	}
@@ -1023,6 +1025,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getProperty("allow.use.service.util.in.service.impl"));
 		_checkJavaFieldTypesExclusionFiles = getPropertyList(
 			"check.java.field.types.excludes.files");
+		_checkTabsExclusionFiles = getPropertyList("check.tabs.excludes.files");
 		_diamondOperatorExclusionFiles = getPropertyList(
 			"diamond.operator.excludes.files");
 		_diamondOperatorExclusionPaths = getPropertyList(
@@ -3741,6 +3744,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;
 	private boolean _checkModulesServiceUtil;
+	private List<String> _checkTabsExclusionFiles;
 	private boolean _checkUnprocessedExceptions;
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +

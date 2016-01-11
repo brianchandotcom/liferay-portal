@@ -110,8 +110,6 @@ AUI.add(
 					toJSON: function() {
 						var instance = this;
 
-						var definition = instance.get('definition');
-
 						var defaultLanguageId = themeDisplay.getLanguageId();
 
 						return {

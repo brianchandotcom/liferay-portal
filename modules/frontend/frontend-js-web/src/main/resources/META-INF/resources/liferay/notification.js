@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-notification',
 	function(A) {
-		var Lang = A.Lang;
-
 		var Notification = A.Component.create(
 			{
 				EXTENDS: Liferay.Alert,

@@ -548,8 +548,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 	var MAP_DDM_STRUCTURES = {};
 
-	var assetSelector = $('#<portlet:namespace />anyAssetType');
 	var assetMultipleSelector = $('#<portlet:namespace />currentClassNameIds');
+	var assetSelector = $('#<portlet:namespace />anyAssetType');
 	var ddmStructureFieldName = $('#<portlet:namespace />ddmStructureFieldName');
 	var orderByColumn1 = $('#<portlet:namespace />orderByColumn1');
 	var orderByColumn2 = $('#<portlet:namespace />orderByColumn2');
@@ -745,7 +745,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		'.asset-subtypefields-popup',
 		function(event) {
 			var currentTarget = $(event.currentTarget);
+
 			var btn = $('.btn', currentTarget);
+
 			var uri = btn.data('href');
 
 			uri = Util.addParams('_<%= assetPublisherDisplayContext.getPortletResource() %>_ddmStructureDisplayFieldValue=' + encodeURIComponent($('#<portlet:namespace />ddmStructureDisplayFieldValue').val()), uri);

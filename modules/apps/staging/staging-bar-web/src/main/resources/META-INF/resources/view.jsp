@@ -303,17 +303,23 @@ if (layout != null) {
 	</c:if>
 
 	<aui:script use="aui-base">
-		$('#viewPageStagingOptions').on('click', function(event) {
-			event.preventDefault();
+		$('#viewPageStagingOptions').on(
+			'click',
+			function(event) {
+				event.preventDefault();
 
-			$('.control-menu-level-2').addClass('open');
-		});
+				$('.control-menu-level-2').addClass('open');
+			}
+		);
 
-		$('#closeStagingOptions').on('click', function(event) {
-			event.preventDefault();
+		$('#closeStagingOptions').on(
+			'click',
+			function(event) {
+				event.preventDefault();
 
-			$('.control-menu-level-2').removeClass('open');
-		});
+				$('.control-menu-level-2').removeClass('open');
+			}
+		);
 
 		var stagingLink = A.one('#<portlet:namespace />stagingLink');
 		var warningMessage = A.one('#<portlet:namespace />warningMessage');

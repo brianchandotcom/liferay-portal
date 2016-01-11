@@ -287,12 +287,6 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 		}
 	);
 
-	var clickHandler = function(event) {
-		var dataValue = event.target.ancestor('li').attr('data-value');
-
-		processDataValue(dataValue);
-	};
-
 	var processDataValue = function(dataValue) {
 		var customConfiguration = A.one('#<portlet:namespace />customConfiguration');
 		var savedConfigurations = A.one('#<portlet:namespace />savedConfigurations');

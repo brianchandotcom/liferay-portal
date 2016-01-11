@@ -110,7 +110,7 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 						'<%= namespace + treeId %>:selectedNode',
 						{
 							selectedNode: event.target
-					 	}
+						}
 					);
 				}
 			},

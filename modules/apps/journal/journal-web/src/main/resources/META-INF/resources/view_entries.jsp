@@ -155,7 +155,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 									</liferay-frontend:vertical-card>
 								</c:when>
 								<c:otherwise>
-									 <liferay-frontend:icon-vertical-card
+									<liferay-frontend:icon-vertical-card
 										actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
 										actionJspServletContext="<%= application %>"
 										icon="web-content"
@@ -164,7 +164,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										title="<%= curArticle.getTitle(locale) %>"
 										url="<%= rowURL != null ? rowURL.toString() : null %>"
 									>
-										 <%@ include file="/article_vertical_card.jspf" %>
+										<%@ include file="/article_vertical_card.jspf" %>
 									</liferay-frontend:icon-vertical-card>
 								</c:otherwise>
 							</c:choose>

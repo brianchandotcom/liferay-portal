@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.background.task;
+package com.liferay.portal.search.internal.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrew Betts
@@ -59,13 +61,14 @@ public class ReindexStatusMessageSenderImpl
 			message);
 	}
 
-	public void setBackgroundTaskStatusMessageSender(
+	@Reference(unbind = "-")
+	protected void setBackgroundTaskStatusMessageSender(
 		BackgroundTaskStatusMessageSender backgroundTaskStatusMessageSender) {
 
 		_backgroundTaskStatusMessageSender = backgroundTaskStatusMessageSender;
 	}
 
-	private BackgroundTaskStatusMessageSender
+	private volatile BackgroundTaskStatusMessageSender
 		_backgroundTaskStatusMessageSender;
 
 }

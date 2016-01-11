@@ -1297,20 +1297,19 @@ public class PortletExportController implements ExportController {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletExportController.class);
 
-	private volatile AssetEntryLocalService _assetEntryLocalService;
-	private volatile AssetLinkLocalService _assetLinkLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetLinkLocalService _assetLinkLocalService;
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
-	private volatile ExportImportLifecycleManager _exportImportLifecycleManager;
-	private volatile GroupLocalService _groupLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
+	private ExportImportLifecycleManager _exportImportLifecycleManager;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
-	private volatile PortletItemLocalService _portletItemLocalService;
-	private volatile PortletLocalService _portletLocalService;
-	private volatile PortletPreferencesLocalService
-		_portletPreferencesLocalService;
-	private volatile UserLocalService _userLocalService;
+	private PortletItemLocalService _portletItemLocalService;
+	private PortletLocalService _portletLocalService;
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+	private UserLocalService _userLocalService;
 
 	private class UpdatePortletLastPublishDateCallable
 		implements Callable<Void> {

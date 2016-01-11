@@ -131,6 +131,6 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 		_wikiNodeService = wikiNodeService;
 	}
 
-	private volatile WikiNodeService _wikiNodeService;
+	private WikiNodeService _wikiNodeService;
 
 }

@@ -212,8 +212,8 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile OrganizationLocalService _organizationLocalService;
-	private volatile PortletLocalService _portletLocalService;
+	private CompanyLocalService _companyLocalService;
+	private OrganizationLocalService _organizationLocalService;
+	private PortletLocalService _portletLocalService;
 
 }

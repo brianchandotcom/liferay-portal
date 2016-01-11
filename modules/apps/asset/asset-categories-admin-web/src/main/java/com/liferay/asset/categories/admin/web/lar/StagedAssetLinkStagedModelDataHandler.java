@@ -150,8 +150,8 @@ public class StagedAssetLinkStagedModelDataHandler
 			stagedAssetLinkStagedModelRepository;
 	}
 
-	private volatile AssetEntryLocalService _assetEntryLocalService;
-	private volatile StagedAssetLinkStagedModelRepository
+	private AssetEntryLocalService _assetEntryLocalService;
+	private StagedAssetLinkStagedModelRepository
 		_stagedAssetLinkStagedModelRepository;
 
 }

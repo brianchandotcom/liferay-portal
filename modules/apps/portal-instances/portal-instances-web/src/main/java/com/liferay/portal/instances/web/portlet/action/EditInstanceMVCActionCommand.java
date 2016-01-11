@@ -143,6 +143,6 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile CompanyService _companyService;
+	private CompanyService _companyService;
 
 }

@@ -319,7 +319,7 @@ public class CreateAnonymousAccountMVCActionCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateAnonymousAccountMVCActionCommand.class);
 
-	private volatile UserLocalService _userLocalService;
-	private volatile UserService _userService;
+	private UserLocalService _userLocalService;
+	private UserService _userService;
 
 }

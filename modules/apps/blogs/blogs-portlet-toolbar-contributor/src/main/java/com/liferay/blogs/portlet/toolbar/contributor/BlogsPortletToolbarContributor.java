@@ -120,6 +120,6 @@ public class BlogsPortletToolbarContributor
 		_resourcePermissionChecker = resourcePermissionChecker;
 	}
 
-	private volatile ResourcePermissionChecker _resourcePermissionChecker;
+	private ResourcePermissionChecker _resourcePermissionChecker;
 
 }

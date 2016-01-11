@@ -50,6 +50,6 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

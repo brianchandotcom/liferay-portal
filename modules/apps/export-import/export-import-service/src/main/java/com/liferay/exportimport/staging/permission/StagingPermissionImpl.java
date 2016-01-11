@@ -100,6 +100,6 @@ public class StagingPermissionImpl implements StagingPermission {
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingPermissionImpl.class);
 
-	private volatile GroupLocalService _groupLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

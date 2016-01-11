@@ -234,8 +234,8 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiDisplayExportImportPortletPreferencesProcessor.class);
 
-	private volatile ReferencedStagedModelImporterCapability
+	private ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
-	private volatile WikiPageLocalService _wikiPageLocalService;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

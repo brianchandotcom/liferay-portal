@@ -242,7 +242,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 	protected LayoutSetPrototypeService layoutSetPrototypeService;
 
-	private volatile PanelAppRegistry _panelAppRegistry;
-	private volatile PanelCategoryRegistry _panelCategoryRegistry;
+	private PanelAppRegistry _panelAppRegistry;
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

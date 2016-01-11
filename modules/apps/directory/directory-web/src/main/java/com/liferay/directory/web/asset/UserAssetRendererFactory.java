@@ -116,7 +116,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile GroupLocalService _groupLocalService;
-	private volatile UserLocalService _userLocalService;
+	private GroupLocalService _groupLocalService;
+	private UserLocalService _userLocalService;
 
 }

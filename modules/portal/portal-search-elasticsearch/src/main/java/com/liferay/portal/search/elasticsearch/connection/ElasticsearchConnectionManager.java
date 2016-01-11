@@ -212,7 +212,7 @@ public class ElasticsearchConnectionManager {
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Map<OperationMode, ElasticsearchConnection>
 		_elasticsearchConnections = new HashMap<>();
-	private volatile IndexFactory _indexFactory;
+	private IndexFactory _indexFactory;
 	private OperationMode _operationMode;
 
 }

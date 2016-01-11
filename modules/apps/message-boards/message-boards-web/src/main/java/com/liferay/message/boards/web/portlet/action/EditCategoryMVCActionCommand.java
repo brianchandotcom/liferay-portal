@@ -274,7 +274,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile MBCategoryService _mbCategoryService;
-	private volatile TrashEntryService _trashEntryService;
+	private MBCategoryService _mbCategoryService;
+	private TrashEntryService _trashEntryService;
 
 }

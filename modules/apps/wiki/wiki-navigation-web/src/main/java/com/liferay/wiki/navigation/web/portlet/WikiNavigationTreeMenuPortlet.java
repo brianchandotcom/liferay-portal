@@ -80,7 +80,6 @@ public class WikiNavigationTreeMenuPortlet extends MVCPortlet {
 		_wikiGroupServiceConfiguration = null;
 	}
 
-	private volatile WikiGroupServiceConfiguration
-		_wikiGroupServiceConfiguration;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

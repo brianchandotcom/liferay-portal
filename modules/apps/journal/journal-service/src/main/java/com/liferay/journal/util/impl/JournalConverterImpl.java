@@ -1052,8 +1052,8 @@ public class JournalConverterImpl implements JournalConverter {
 	private final Map<String, String> _ddmDataTypes;
 	private final Map<String, String> _ddmMetadataAttributes;
 	private final Map<String, String> _ddmTypesToJournalTypes;
-	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile GroupLocalService _groupLocalService;
+	private DLAppLocalService _dlAppLocalService;
+	private GroupLocalService _groupLocalService;
 	private final Map<String, String> _journalTypesToDDMTypes;
 	private final Pattern _oldDocumentLibraryURLPattern = Pattern.compile(
 		"uuid=([^&]+)&groupId=([^&]+)");

@@ -194,7 +194,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 	private static final Log _log = LogFactoryUtil.getLog(CASAutoLogin.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
-	private volatile UserLocalService _userLocalService;
+	private ConfigurationFactory _configurationFactory;
+	private UserLocalService _userLocalService;
 
 }

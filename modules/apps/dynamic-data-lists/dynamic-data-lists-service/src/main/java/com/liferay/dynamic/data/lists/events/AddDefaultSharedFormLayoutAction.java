@@ -161,9 +161,9 @@ public class AddDefaultSharedFormLayoutAction extends SimpleAction {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile GroupLocalService _groupLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
-	private volatile UserLocalService _userLocalService;
+	private CompanyLocalService _companyLocalService;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private UserLocalService _userLocalService;
 
 }

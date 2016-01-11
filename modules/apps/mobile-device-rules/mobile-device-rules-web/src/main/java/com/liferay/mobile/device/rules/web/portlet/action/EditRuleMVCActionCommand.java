@@ -132,6 +132,6 @@ public class EditRuleMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile MDRRuleService _mdrRuleService;
+	private MDRRuleService _mdrRuleService;
 
 }

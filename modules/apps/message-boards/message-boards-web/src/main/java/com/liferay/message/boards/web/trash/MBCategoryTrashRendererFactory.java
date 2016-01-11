@@ -47,6 +47,6 @@ public class MBCategoryTrashRendererFactory implements TrashRendererFactory {
 		_mbCategoryLocalService = mbCategoryLocalService;
 	}
 
-	private volatile MBCategoryLocalService _mbCategoryLocalService;
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

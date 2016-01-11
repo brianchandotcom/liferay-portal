@@ -153,7 +153,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile MBCategoryService _mbCategoryService;
-	private volatile MBThreadService _mbThreadService;
+	private MBCategoryService _mbCategoryService;
+	private MBThreadService _mbThreadService;
 
 }

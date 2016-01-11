@@ -65,6 +65,6 @@ public class SelectCategoryMVCRenderCommand implements MVCRenderCommand {
 		_mbCategoryLocalService = mbCategoryLocalService;
 	}
 
-	private volatile MBCategoryLocalService _mbCategoryLocalService;
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

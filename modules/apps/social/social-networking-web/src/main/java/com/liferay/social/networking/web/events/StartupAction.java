@@ -122,8 +122,8 @@ public class StartupAction extends SimpleAction {
 		}
 	}
 
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile ExpandoColumnLocalService _expandoColumnLocalService;
-	private volatile ExpandoTableLocalService _expandoTableLocalService;
+	private CompanyLocalService _companyLocalService;
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 }

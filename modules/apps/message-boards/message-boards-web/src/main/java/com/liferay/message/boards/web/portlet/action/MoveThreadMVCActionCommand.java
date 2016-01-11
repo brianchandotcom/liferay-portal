@@ -150,8 +150,8 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 		_mbThreadService = mbThreadService;
 	}
 
-	private volatile MBMessageService _mbMessageService;
-	private volatile MBThreadLocalService _mbThreadLocalService;
-	private volatile MBThreadService _mbThreadService;
+	private MBMessageService _mbMessageService;
+	private MBThreadLocalService _mbThreadLocalService;
+	private MBThreadService _mbThreadService;
 
 }

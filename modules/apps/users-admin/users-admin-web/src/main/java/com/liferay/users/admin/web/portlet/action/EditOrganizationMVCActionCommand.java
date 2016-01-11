@@ -306,7 +306,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 		return organization;
 	}
 
-	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile OrganizationService _organizationService;
+	private DLAppLocalService _dlAppLocalService;
+	private OrganizationService _organizationService;
 
 }

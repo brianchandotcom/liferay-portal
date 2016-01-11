@@ -84,6 +84,6 @@ public class MoveCategoryMVCActionCommand extends BaseMVCActionCommand {
 		_mbCategoryService = mbCategoryService;
 	}
 
-	private volatile MBCategoryService _mbCategoryService;
+	private MBCategoryService _mbCategoryService;
 
 }

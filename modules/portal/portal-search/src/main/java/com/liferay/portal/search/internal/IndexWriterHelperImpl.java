@@ -558,7 +558,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 	private volatile boolean _commitImmediately;
 	private volatile boolean _indexReadOnly;
-	private volatile SearchEngineHelper _searchEngineHelper;
-	private volatile SearchPermissionChecker _searchPermissionChecker;
+	private SearchEngineHelper _searchEngineHelper;
+	private SearchPermissionChecker _searchPermissionChecker;
 
 }

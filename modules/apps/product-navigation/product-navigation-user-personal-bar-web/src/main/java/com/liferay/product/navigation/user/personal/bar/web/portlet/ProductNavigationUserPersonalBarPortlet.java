@@ -93,7 +93,7 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
-	private volatile PanelAppRegistry _panelAppRegistry;
-	private volatile PanelCategoryRegistry _panelCategoryRegistry;
+	private PanelAppRegistry _panelAppRegistry;
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

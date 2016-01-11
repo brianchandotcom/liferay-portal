@@ -58,6 +58,6 @@ public class WikiEngineInputEditorCommonComponentProvider {
 	private static WikiEngineInputEditorCommonComponentProvider
 		_wikiEngineInputEditorCommonComponentProvider;
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

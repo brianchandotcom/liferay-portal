@@ -67,6 +67,6 @@ public class DictionaryWebUpgrade {
 			false);
 	}
 
-	private volatile ReleaseLocalService _releaseLocalService;
+	private ReleaseLocalService _releaseLocalService;
 
 }

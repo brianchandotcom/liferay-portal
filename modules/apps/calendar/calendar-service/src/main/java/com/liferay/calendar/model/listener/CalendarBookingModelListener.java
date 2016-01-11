@@ -51,6 +51,6 @@ public class CalendarBookingModelListener
 		_calEventLocalService = calEventLocalService;
 	}
 
-	private volatile CalEventLocalService _calEventLocalService;
+	private CalEventLocalService _calEventLocalService;
 
 }

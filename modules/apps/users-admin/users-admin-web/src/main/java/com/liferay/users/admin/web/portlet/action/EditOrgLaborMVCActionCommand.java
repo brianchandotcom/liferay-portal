@@ -139,6 +139,6 @@ public class EditOrgLaborMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile OrgLaborService _orgLaborService;
+	private OrgLaborService _orgLaborService;
 
 }

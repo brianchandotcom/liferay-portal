@@ -94,7 +94,7 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 		_userExporter.exportUser(contact, expandoBridgeAttributes);
 	}
 
-	private volatile UserExporter _userExporter;
-	private volatile UserLocalService _userLocalService;
+	private UserExporter _userExporter;
+	private UserLocalService _userLocalService;
 
 }

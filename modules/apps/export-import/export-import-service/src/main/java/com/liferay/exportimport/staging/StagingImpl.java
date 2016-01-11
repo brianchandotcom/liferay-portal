@@ -2592,24 +2592,21 @@ public class StagingImpl implements Staging {
 
 	private static final Log _log = LogFactoryUtil.getLog(StagingImpl.class);
 
-	private volatile ExportImportConfigurationLocalService
+	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-	private volatile GroupLocalService _groupLocalService;
-	private volatile LayoutBranchLocalService _layoutBranchLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
-	private volatile LayoutRevisionLocalService _layoutRevisionLocalService;
-	private volatile LayoutService _layoutService;
-	private volatile LayoutSetBranchLocalService _layoutSetBranchLocalService;
-	private volatile LockManager _lockManager;
-	private volatile RecentLayoutBranchLocalService
-		_recentLayoutBranchLocalService;
-	private volatile RecentLayoutRevisionLocalService
-		_recentLayoutRevisionLocalService;
-	private volatile RecentLayoutSetBranchLocalService
+	private GroupLocalService _groupLocalService;
+	private LayoutBranchLocalService _layoutBranchLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
+	private LayoutService _layoutService;
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+	private LockManager _lockManager;
+	private RecentLayoutBranchLocalService _recentLayoutBranchLocalService;
+	private RecentLayoutRevisionLocalService _recentLayoutRevisionLocalService;
+	private RecentLayoutSetBranchLocalService
 		_recentLayoutSetBranchLocalService;
-	private volatile StagingLocalService _stagingLocalService;
-	private volatile UserLocalService _userLocalService;
-	private volatile WorkflowInstanceLinkLocalService
-		_workflowInstanceLinkLocalService;
+	private StagingLocalService _stagingLocalService;
+	private UserLocalService _userLocalService;
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

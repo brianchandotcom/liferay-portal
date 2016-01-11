@@ -152,6 +152,6 @@ public class BlogsContentEditorConfigContributor
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
 	}
 
-	private volatile ItemSelector _itemSelector;
+	private ItemSelector _itemSelector;
 
 }

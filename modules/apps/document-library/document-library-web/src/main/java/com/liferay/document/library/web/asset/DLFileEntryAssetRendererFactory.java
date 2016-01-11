@@ -241,7 +241,7 @@ public class DLFileEntryAssetRendererFactory
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
-	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DLAppLocalService _dlAppLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 }

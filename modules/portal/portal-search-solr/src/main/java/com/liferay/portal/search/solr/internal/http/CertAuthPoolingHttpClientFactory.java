@@ -127,6 +127,6 @@ public class CertAuthPoolingHttpClientFactory
 
 	private volatile SolrHttpClientFactoryConfiguration
 		_solrHttpClientFactoryConfiguration;
-	private volatile SSLSocketFactoryBuilder _sslSocketFactoryBuilder;
+	private SSLSocketFactoryBuilder _sslSocketFactoryBuilder;
 
 }

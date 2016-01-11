@@ -754,13 +754,12 @@ public class MediaWikiImporter implements WikiImporter {
 	private static final Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
 		new String[] {"archive", "temp", "thumb"});
 
-	private volatile AssetTagLocalService _assetTagLocalService;
+	private AssetTagLocalService _assetTagLocalService;
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
-	private volatile UserLocalService _userLocalService;
-	private volatile WikiGroupServiceConfiguration
-		_wikiGroupServiceConfiguration;
-	private volatile WikiPageLocalService _wikiPageLocalService;
+	private UserLocalService _userLocalService;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private WikiPageLocalService _wikiPageLocalService;
 	private Pattern _wikiPageTitlesRemovePattern;
 
 }

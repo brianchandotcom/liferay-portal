@@ -164,10 +164,9 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile DDLFormEmailNotificationSender
-		_ddlFormEmailNotificationSender;
-	private volatile DDLRecordService _ddlRecordService;
-	private volatile DDLRecordSetService _ddlRecordSetService;
-	private volatile DDMFormValuesFactory _ddmFormValuesFactory;
+	private DDLFormEmailNotificationSender _ddlFormEmailNotificationSender;
+	private DDLRecordService _ddlRecordService;
+	private DDLRecordSetService _ddlRecordSetService;
+	private DDMFormValuesFactory _ddmFormValuesFactory;
 
 }

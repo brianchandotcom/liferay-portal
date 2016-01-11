@@ -199,7 +199,7 @@ public class OutputStreamContainerFactoryTracker {
 	private org.apache.felix.utils.log.Logger _logger;
 	private ServiceTrackerMap<String, OutputStreamContainerFactory>
 		_outputStreamContainerFactories;
-	private volatile OutputStreamContainerFactory _outputStreamContainerFactory;
+	private OutputStreamContainerFactory _outputStreamContainerFactory;
 	private WriterAppender _writerAppender;
 	private final ThreadLocal<Writer> _writerThreadLocal = new ThreadLocal<>();
 

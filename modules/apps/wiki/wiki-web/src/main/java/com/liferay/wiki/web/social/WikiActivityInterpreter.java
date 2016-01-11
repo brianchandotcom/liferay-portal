@@ -276,7 +276,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private static final String[] _CLASS_NAMES = {WikiPage.class.getName()};
 
-	private volatile WikiPageLocalService _wikiPageLocalService;
-	private volatile WikiPageResourceLocalService _wikiPageResourceLocalService;
+	private WikiPageLocalService _wikiPageLocalService;
+	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

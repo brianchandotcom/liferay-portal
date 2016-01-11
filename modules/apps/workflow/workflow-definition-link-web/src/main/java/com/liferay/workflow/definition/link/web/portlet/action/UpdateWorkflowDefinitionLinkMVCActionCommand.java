@@ -84,7 +84,7 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 
 	private static final String _PREFIX = "workflowDefinitionName@";
 
-	private volatile WorkflowDefinitionLinkLocalService
+	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 }

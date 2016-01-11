@@ -81,8 +81,8 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile ClassNameLocalService _classNameLocalService;
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile UserLocalService _userLocalService;
+	private ClassNameLocalService _classNameLocalService;
+	private CompanyLocalService _companyLocalService;
+	private UserLocalService _userLocalService;
 
 }

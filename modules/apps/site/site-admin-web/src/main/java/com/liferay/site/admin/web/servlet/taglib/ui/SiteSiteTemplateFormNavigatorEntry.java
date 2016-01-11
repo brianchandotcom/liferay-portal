@@ -146,8 +146,7 @@ public class SiteSiteTemplateFormNavigatorEntry
 		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
 	}
 
-	private volatile LayoutSetLocalService _layoutSetLocalService;
-	private volatile LayoutSetPrototypeLocalService
-		_layoutSetPrototypeLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 }

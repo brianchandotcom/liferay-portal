@@ -235,8 +235,8 @@ public class RepositoryStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		RepositoryStagedModelDataHandler.class);
 
-	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile RepositoryEntryLocalService _repositoryEntryLocalService;
-	private volatile RepositoryLocalService _repositoryLocalService;
+	private DLAppLocalService _dlAppLocalService;
+	private RepositoryEntryLocalService _repositoryEntryLocalService;
+	private RepositoryLocalService _repositoryLocalService;
 
 }

@@ -76,6 +76,6 @@ public class ControlPanelCategory extends BasePanelCategory {
 		_panelAppRegistry = panelAppRegistry;
 	}
 
-	private volatile PanelAppRegistry _panelAppRegistry;
+	private PanelAppRegistry _panelAppRegistry;
 
 }

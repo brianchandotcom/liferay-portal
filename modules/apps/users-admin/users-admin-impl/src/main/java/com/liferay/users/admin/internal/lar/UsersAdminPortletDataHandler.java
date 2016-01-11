@@ -141,6 +141,6 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 		_organizationLocalService = organizationLocalService;
 	}
 
-	private volatile OrganizationLocalService _organizationLocalService;
+	private OrganizationLocalService _organizationLocalService;
 
 }

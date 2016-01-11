@@ -115,6 +115,6 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 		_searchEngineHelper = searchEngineHelper;
 	}
 
-	private volatile SearchEngineHelper _searchEngineHelper;
+	private SearchEngineHelper _searchEngineHelper;
 
 }

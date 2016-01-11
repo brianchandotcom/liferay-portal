@@ -343,7 +343,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	private Configuration _configuration;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
-	private volatile TemplateClassResolver _templateClassResolver;
+	private TemplateClassResolver _templateClassResolver;
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();
 

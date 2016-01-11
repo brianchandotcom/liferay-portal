@@ -587,8 +587,8 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLPortletToolbarContributor.class);
 
-	private volatile BaseModelPermissionChecker _baseModelPermissionChecker;
-	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile DLFileEntryTypeService _dlFileEntryTypeService;
+	private BaseModelPermissionChecker _baseModelPermissionChecker;
+	private DLAppLocalService _dlAppLocalService;
+	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 }

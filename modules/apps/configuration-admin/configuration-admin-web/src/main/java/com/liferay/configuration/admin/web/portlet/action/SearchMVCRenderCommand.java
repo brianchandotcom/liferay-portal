@@ -127,7 +127,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		_indexerRegistry = indexerRegistry;
 	}
 
-	private volatile ConfigurationModelRetriever _configurationModelRetriever;
-	private volatile IndexerRegistry _indexerRegistry;
+	private ConfigurationModelRetriever _configurationModelRetriever;
+	private IndexerRegistry _indexerRegistry;
 
 }

@@ -82,6 +82,6 @@ public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
 		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
-	private volatile BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

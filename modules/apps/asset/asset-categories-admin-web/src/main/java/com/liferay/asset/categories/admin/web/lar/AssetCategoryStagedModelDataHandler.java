@@ -340,9 +340,9 @@ public class AssetCategoryStagedModelDataHandler
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 	}
 
-	private volatile AssetCategoryLocalService _assetCategoryLocalService;
-	private volatile AssetCategoryPropertyLocalService
+	private AssetCategoryLocalService _assetCategoryLocalService;
+	private AssetCategoryPropertyLocalService
 		_assetCategoryPropertyLocalService;
-	private volatile AssetVocabularyLocalService _assetVocabularyLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }

@@ -145,7 +145,7 @@ public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 		_wikiPageService = wikiPageService;
 	}
 
-	private volatile WikiNodeService _wikiNodeService;
-	private volatile WikiPageService _wikiPageService;
+	private WikiNodeService _wikiNodeService;
+	private WikiPageService _wikiPageService;
 
 }

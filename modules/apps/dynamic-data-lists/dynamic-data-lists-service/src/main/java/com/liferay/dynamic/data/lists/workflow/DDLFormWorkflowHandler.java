@@ -143,9 +143,9 @@ public class DDLFormWorkflowHandler extends BaseWorkflowHandler<DDLFormRecord> {
 			workflowDefinitionLinkLocalService;
 	}
 
-	private volatile DDLRecordLocalService _ddlRecordLocalService;
-	private volatile DDLRecordVersionLocalService _ddlRecordVersionLocalService;
-	private volatile WorkflowDefinitionLinkLocalService
+	private DDLRecordLocalService _ddlRecordLocalService;
+	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
+	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 }

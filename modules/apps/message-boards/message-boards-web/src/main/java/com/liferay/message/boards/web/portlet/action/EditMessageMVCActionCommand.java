@@ -470,8 +470,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile MBMessageService _mbMessageService;
-	private volatile MBThreadLocalService _mbThreadLocalService;
-	private volatile MBThreadService _mbThreadService;
+	private MBMessageService _mbMessageService;
+	private MBThreadLocalService _mbThreadLocalService;
+	private MBThreadService _mbThreadService;
 
 }

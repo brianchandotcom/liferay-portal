@@ -51,6 +51,6 @@ public class HotDeployMessageListener extends BaseMessageListener {
 	protected void setDestination(Destination destination) {
 	}
 
-	private volatile AppLocalService _appLocalService;
+	private AppLocalService _appLocalService;
 
 }

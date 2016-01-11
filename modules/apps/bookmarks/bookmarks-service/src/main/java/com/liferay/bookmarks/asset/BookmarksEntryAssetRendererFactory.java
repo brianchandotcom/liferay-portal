@@ -171,7 +171,7 @@ public class BookmarksEntryAssetRendererFactory
 		_bookmarksEntryLocalService = bookmarksEntryLocalService;
 	}
 
-	private volatile BookmarksEntryLocalService _bookmarksEntryLocalService;
-	private volatile ServletContext _servletContext;
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private ServletContext _servletContext;
 
 }

@@ -215,12 +215,11 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 		_layoutSetLocalService = layoutSetLocalService;
 	}
 
-	private volatile AssetEntryLocalService _assetEntryLocalService;
-	private volatile GroupLocalService _groupLocalService;
-	private volatile JournalArticleService _journalArticleService;
-	private volatile JournalContentSearchLocalService
-		_journalContentSearchLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
-	private volatile LayoutSetLocalService _layoutSetLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
+	private GroupLocalService _groupLocalService;
+	private JournalArticleService _journalArticleService;
+	private JournalContentSearchLocalService _journalContentSearchLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
 
 }

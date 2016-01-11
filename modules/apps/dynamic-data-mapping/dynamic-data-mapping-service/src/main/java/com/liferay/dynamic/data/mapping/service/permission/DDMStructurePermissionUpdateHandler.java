@@ -57,6 +57,6 @@ public class DDMStructurePermissionUpdateHandler
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

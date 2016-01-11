@@ -54,6 +54,6 @@ public class MBWebComponentProvider {
 
 	private static MBWebComponentProvider _mbWebComponentProvider;
 
-	private volatile MBDisplayContextProvider _mbDisplayContextProvider;
+	private MBDisplayContextProvider _mbDisplayContextProvider;
 
 }

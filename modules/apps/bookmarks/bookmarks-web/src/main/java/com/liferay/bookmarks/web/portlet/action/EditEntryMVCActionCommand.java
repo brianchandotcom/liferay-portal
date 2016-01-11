@@ -307,8 +307,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		return entry;
 	}
 
-	private volatile BookmarksEntryService _bookmarksEntryService;
-	private volatile BookmarksFolderService _bookmarksFolderService;
-	private volatile TrashEntryService _trashEntryService;
+	private BookmarksEntryService _bookmarksEntryService;
+	private BookmarksFolderService _bookmarksFolderService;
+	private TrashEntryService _trashEntryService;
 
 }

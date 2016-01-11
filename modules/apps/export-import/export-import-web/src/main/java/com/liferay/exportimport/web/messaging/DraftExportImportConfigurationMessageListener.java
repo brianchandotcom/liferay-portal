@@ -218,10 +218,10 @@ public class DraftExportImportConfigurationMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private volatile BackgroundTaskLocalService _backgroundTaskLocalService;
-	private volatile ExportImportConfigurationLocalService
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
+	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-	private volatile GroupLocalService _groupLocalService;
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
+	private GroupLocalService _groupLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

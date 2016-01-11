@@ -85,6 +85,6 @@ public class SSOImpl implements SSO {
 
 	private static final Log _log = LogFactoryUtil.getLog(SSOImpl.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
+	private ConfigurationFactory _configurationFactory;
 
 }

@@ -107,7 +107,7 @@ public class OpenIdLoginMVCRenderCommand implements MVCRenderCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdLoginMVCRenderCommand.class);
 
-	private volatile OpenId _openId;
-	private volatile ServletContext _servletContext;
+	private OpenId _openId;
+	private ServletContext _servletContext;
 
 }

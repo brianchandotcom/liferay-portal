@@ -63,6 +63,6 @@ public class RevertTemplateMVCActionCommand extends BaseMVCActionCommand {
 		_ddmTemplateService = ddmTemplateService;
 	}
 
-	private volatile DDMTemplateService _ddmTemplateService;
+	private DDMTemplateService _ddmTemplateService;
 
 }

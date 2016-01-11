@@ -135,7 +135,7 @@ public class JournalFolderAssetRendererFactory
 		_journalFolderLocalService = journalFolderLocalService;
 	}
 
-	private volatile JournalFolderLocalService _journalFolderLocalService;
-	private volatile ServletContext _servletContext;
+	private JournalFolderLocalService _journalFolderLocalService;
+	private ServletContext _servletContext;
 
 }

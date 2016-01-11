@@ -333,8 +333,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		_trashEntryService = trashEntryService;
 	}
 
-	private volatile DLAppService _dlAppService;
-	private volatile DLTrashService _dlTrashService;
-	private volatile TrashEntryService _trashEntryService;
+	private DLAppService _dlAppService;
+	private DLTrashService _dlTrashService;
+	private TrashEntryService _trashEntryService;
 
 }

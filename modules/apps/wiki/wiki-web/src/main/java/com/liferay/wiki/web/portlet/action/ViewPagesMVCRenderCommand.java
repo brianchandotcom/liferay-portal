@@ -58,7 +58,6 @@ public class ViewPagesMVCRenderCommand implements MVCRenderCommand {
 		_wikiPortletToolbarContributor = wikiPortletToolbarContributor;
 	}
 
-	private volatile WikiPortletToolbarContributor
-		_wikiPortletToolbarContributor;
+	private WikiPortletToolbarContributor _wikiPortletToolbarContributor;
 
 }

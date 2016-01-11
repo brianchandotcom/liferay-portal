@@ -17,6 +17,7 @@ package com.liferay.portlet.exportimport.lar;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.model.StagedModel;
 
 /**
@@ -68,16 +69,9 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 			messageType, stagedModel, manifestSummary);
 	}
 
-	public void setPortletDataHandlerStatusMessageSender(
-		PortletDataHandlerStatusMessageSender
-			portletDataHandlerStatusMessageSender) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_dataHandlerStatusMessageSender = portletDataHandlerStatusMessageSender;
-	}
-
-	private static PortletDataHandlerStatusMessageSender
-		_dataHandlerStatusMessageSender;
+	private static final PortletDataHandlerStatusMessageSender
+		_dataHandlerStatusMessageSender =
+			ProxyFactory.newServiceTrackedInstance(
+				PortletDataHandlerStatusMessageSender.class);
 
 }

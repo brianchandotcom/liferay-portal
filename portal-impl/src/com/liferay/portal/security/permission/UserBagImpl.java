@@ -24,8 +24,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 
-import java.lang.reflect.Array;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -136,10 +134,10 @@ public class UserBagImpl implements UserBag {
 		Collection<? extends BaseModel> baseModels) {
 
 		if ((baseModels == null) || baseModels.isEmpty()) {
-			return (long[])Array.newInstance(long.class, 0);
+			return new long[0];
 		}
 
-		long[] array = (long[])Array.newInstance(long.class, baseModels.size());
+		long[] array = new long[baseModels.size()];
 
 		int index = 0;
 

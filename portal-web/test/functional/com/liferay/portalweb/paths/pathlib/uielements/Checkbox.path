@@ -315,7 +315,7 @@
 </tr>
 <tr>
 	<td>STAGED_CONTENT</td>
-	<td>//div[contains(@id,'stagedPortlets')]//label[contains(.,'${key_contentName}')]/input</td>
+	<td>//label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>

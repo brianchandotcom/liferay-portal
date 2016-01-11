@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.dao.jdbc.pool.metrics;
+package com.liferay.portal.kernel.dao.jdbc.pool.metrics;
 
 /**
  * @author Mladen Cikara

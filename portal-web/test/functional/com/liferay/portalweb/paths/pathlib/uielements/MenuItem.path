@@ -129,6 +129,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGNED_TO_ME</td>
+	<td>//a[@role='menuitem' and contains(.,'Assigned to Me')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES</td>
+	<td>//a[@role='menuitem' and contains(.,'Assigned to My Roles')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGN_MEMBERS</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Assign Members')]</td>
 	<td></td>

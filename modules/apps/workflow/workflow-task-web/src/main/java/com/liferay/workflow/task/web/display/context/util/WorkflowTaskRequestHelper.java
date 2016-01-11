@@ -15,17 +15,16 @@
 package com.liferay.workflow.task.web.display.context.util;
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
-import com.liferay.portal.util.PortalUtil;
 
-import javax.portlet.RenderRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Leonardo Barros
  */
 public class WorkflowTaskRequestHelper extends BaseRequestHelper {
 
-	public WorkflowTaskRequestHelper(RenderRequest renderRequest) {
-		super(PortalUtil.getHttpServletRequest(renderRequest));
+	public WorkflowTaskRequestHelper(HttpServletRequest request) {
+		super(request);
 	}
 
 }

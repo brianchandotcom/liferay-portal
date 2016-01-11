@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_EDIT</td>
-	<td>//div[@class='task-content-actions']/ul/li/a[contains(.,'Edit')]</td>
+	<td>//div[@class='task-content-actions']/a[contains(@title, 'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

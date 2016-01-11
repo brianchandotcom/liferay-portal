@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.workflow.task.web.configuration;
 
-<liferay-ui:input-search markupView="lexicon" />
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
+/**
+ * @author Inácio Nery
+ */
+@ConfigurationAdmin(category = "productivity")
+@Meta.OCD(
+	id = "com.liferay.workflow.task.web.configuration.WorkflowTaskWebConfiguration"
+)
+public interface WorkflowTaskWebConfiguration {
+
+	@Meta.AD(deflt = "list", required = false)
+	public String defaultDisplayView();
+
+}

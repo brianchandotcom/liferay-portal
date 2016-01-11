@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.template.freemarker.util;
+package com.liferay.portal.template.freemarker.helper;
 
 import javax.servlet.ServletContext;
 
 /**
  * @author Chema Balsas
  */
-public interface FreeMarkerThemeUtil {
+public interface FreeMarkerThemeHelper {
 
 	public void include(ServletContext servletContext, String page)
 		throws Exception;

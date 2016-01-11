@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.template.freemarker.util;
+package com.liferay.portal.template.freemarker.helper;
 
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 
@@ -26,9 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Chema Balsas
  */
-public class FreeMarkerThemeUtilImpl implements FreeMarkerThemeUtil {
+public class FreeMarkerThemeHelperImpl implements FreeMarkerThemeHelper {
 
-	public FreeMarkerThemeUtilImpl(
+	public FreeMarkerThemeHelperImpl(
 		ServletContext servletContext, HttpServletRequest request,
 		HttpServletResponse response, Map<String, Object> contextObjects) {
 

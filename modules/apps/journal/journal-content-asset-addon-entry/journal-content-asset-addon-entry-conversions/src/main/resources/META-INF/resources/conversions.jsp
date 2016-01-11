@@ -18,6 +18,7 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -26,24 +27,21 @@
 <%@ page import="com.liferay.portal.kernel.util.Constants" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 
-<%@ page import="java.util.ResourceBundle" %>
-
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-frontend:defineObjects />
 
 <%
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 
 String extension = (String)request.getAttribute("extension");
 String viewMode = ParamUtil.getString(request, "viewMode");
-
-ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
 %>
 
 <c:if test="<%= !viewMode.equals(Constants.PRINT) %>">

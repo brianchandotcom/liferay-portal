@@ -179,14 +179,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 						continue;
 					}
 
-					ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
+					ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
 				%>
 
-					<aui:nav-item data-search='<%= LanguageUtil.get(request, resourceBundle, "layout.types." + type) %>'>
+					<aui:nav-item data-search='<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type) %>'>
 						<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="<%= type %>">
-							<aui:input disabled="<%= (layoutsCount == 0) && !layoutTypeController.isFirstPageable() %>" id='<%= "addLayoutSelectedPageTemplate" + type %>' label='<%= LanguageUtil.get(request, resourceBundle, "layout.types." + type) %>' name="selectedPageTemplate" type="radio" />
+							<aui:input disabled="<%= (layoutsCount == 0) && !layoutTypeController.isFirstPageable() %>" id='<%= "addLayoutSelectedPageTemplate" + type %>' label='<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type) %>' name="selectedPageTemplate" type="radio" />
 
-							<%= LanguageUtil.get(request, resourceBundle, "layout.types." + type + ".description") %>
+							<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type + ".description") %>
 						</div>
 
 						<div class="lfr-page-template-options toggler-content toggler-content-collapsed">

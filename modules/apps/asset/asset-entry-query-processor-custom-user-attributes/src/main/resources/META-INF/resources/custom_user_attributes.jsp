@@ -17,23 +17,21 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringPool" %>
-
-<%@ page import="java.util.ResourceBundle" %>
 
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
 
+<liferay-frontend:defineObjects />
+
 <%
 String customUserAttributes = GetterUtil.getString(portletPreferences.getValue("customUserAttributes", StringPool.BLANK));
-
-ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
 %>
 
 <aui:input helpMessage='<%= LanguageUtil.get(resourceBundle, "custom-user-attributes-help") %>' label='<%= LanguageUtil.get(resourceBundle, "displayed-assets-must-match-these-custom-user-profile-attributes") %>' name="preferences--customUserAttributes--" value="<%= customUserAttributes %>" />

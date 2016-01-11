@@ -20,6 +20,7 @@
 
 <%@ taglib prefix="aui" uri="http://liferay.com/tld/aui" %><%@
 taglib prefix="liferay-item-selector" uri="http://liferay.com/tld/item-selector" %><%@
+taglib prefix="liferay-frontend" uri="http://liferay.com/tld/frontend" %><%@
 taglib prefix="liferay-theme" uri="http://liferay.com/tld/theme" %><%@
 taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 
@@ -32,20 +33,20 @@ page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.ResourceBundle" %>
+<%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-frontend:defineObjects />
 
 <%
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

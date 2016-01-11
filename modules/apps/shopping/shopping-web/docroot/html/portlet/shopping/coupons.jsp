@@ -30,7 +30,8 @@ portletURL.setParameter("tabs1", "coupons");
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
+			navigationParam="discountType"
+			navigationKeys='<%= ArrayUtil.append(new String[] {"all"}, ShoppingCouponConstants.DISCOUNT_TYPES) %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>

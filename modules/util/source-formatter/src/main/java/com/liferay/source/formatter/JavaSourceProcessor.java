@@ -990,6 +990,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatJava(fileName, absolutePath, newContent);
 
+		JavaSourceTabCalculator javaSourceTabCalculator =
+			new JavaSourceTabCalculator();
+
+		javaSourceTabCalculator.calculateTabs(
+			fileName, newContent, (JavaSourceProcessor)this);
+
 		return StringUtil.replace(newContent, "\n\n\n", "\n\n");
 	}
 

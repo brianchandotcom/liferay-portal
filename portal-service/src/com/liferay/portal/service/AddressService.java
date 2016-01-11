@@ -46,20 +46,6 @@ public interface AddressService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AddressServiceUtil} to access the address remote service. Add custom service methods to {@link com.liferay.portal.service.impl.AddressServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addAddress(String, long,
-	String, String, String, String, String, long, long, int,
-	boolean, boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.Address addAddress(
-		java.lang.String className, long classPK, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, long typeId, boolean mailing, boolean primary)
-		throws PortalException;
-
 	public com.liferay.portal.model.Address addAddress(
 		java.lang.String className, long classPK, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,

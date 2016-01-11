@@ -23,6 +23,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PROCESSES-->
+<tr>
+	<td>SCHEDULED</td>
+	<td>//ul[contains(@id,'StagingProcessesPortlet')]/li/a[contains(@title,'Scheduled')]</td>
+	<td></td>
+</tr>
 <!--STAGING-->
 <tr>
 	<td>STAGING_NEW_PUBLICATION_PROCESS_NAVIGATION</td>

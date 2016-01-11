@@ -72,7 +72,7 @@
 		<if>
 			<condition function="IsElementNotPresent" locator1="AdvancedSearch#MATCH_SELECT" />
 			<then>
-				<execute function="Click" locator1="RelatedassetsSelect#SEARCH_ADVANCED_MENULIST" />
+				<execute function="Click" locator1="Icon#ADVANCED_SEARCH" />
 			</then>
 		</if>
 
@@ -196,7 +196,7 @@
 
 	<command name="viewViaSelectCP">
 		<execute function="SelectFrame" locator1="RelatedassetsSelect#IFRAME" />
-		<execute function="AssertElementPresent" locator1="RelatedassetsSelect#SEARCH_ADVANCED_MENULIST" />
+		<execute function="AssertElementPresent" locator1="Icon#ADVANCED_SEARCH" />
 		<execute function="AssertElementPresent" locator1="RelatedassetsSelect#SEARCH_FIELD" />
 		<execute function="AssertElementPresent" locator1="Icon#BASIC_SEARCH" />
 

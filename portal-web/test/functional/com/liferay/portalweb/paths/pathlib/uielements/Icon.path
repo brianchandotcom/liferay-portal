@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADVANCED_SEARCH</td>
-	<td>//a[contains(@class,'toggle-advanced') and i[@class='caret']]</td>
+	<td>//button[contains(@class,'toggle-advanced') and span[@class='caret']]</td>
 	<td></td>
 </tr>
 <tr>

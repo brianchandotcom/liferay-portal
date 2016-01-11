@@ -24,6 +24,7 @@ PortletURL simulationPanelURL = PortletURLFactoryUtil.create(request, ProductNav
 simulationPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 data.put("panelURL", simulationPanelURL);
+
 data.put("qa-id", "simulation");
 %>
 

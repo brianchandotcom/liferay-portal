@@ -80,6 +80,9 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
 
@@ -90,6 +93,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -408,6 +412,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			// Portlets
 
 			portletLocalService.checkPortlets(companyId);
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			ServiceRegistration<Company> serviceRegistration =
+				registry.registerService(Company.class, company);
+
+			_companyServiceRegistrations.put(
+				company.getCompanyId(), serviceRegistration);
 		}
 		finally {
 			_companyProviderWrapper.setCompanyProvider(currentCompanyProvider);
@@ -1360,6 +1372,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		TransactionCommitCallbackUtil.registerCallback(callable);
 
+		ServiceRegistration<Company> serviceRegistration =
+			_companyServiceRegistrations.remove(companyId);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
+
 		return company;
 	}
 
@@ -1647,6 +1666,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	private CompanyProviderWrapper _companyProviderWrapper;
+
+	private final Map<Long, ServiceRegistration<Company>>
+		_companyServiceRegistrations = new HashMap<>();
 
 	private class CustomCompanyProvider implements CompanyProvider {
 

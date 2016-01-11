@@ -63,7 +63,9 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 	public static final String BUNDLE_CONFIGURATION_NAME = "bundle";
 
-	public static final String DIST_BUNDLE_TASK_NAME = "distBundle";
+	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
+
+	public static final String DIST_BUNDLE_ZIP_TASK_NAME = "distBundleZip";
 
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
@@ -79,18 +81,24 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 		addRepositoryBundle(project, workspaceExtension);
 
-		AbstractArchiveTask distBundle = addTaskDistBundle(
-			project, bundleConfiguration);
+		Tar distBundleTarTask = addTaskDistBundle(
+			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, bundleConfiguration);
+		Zip distBundleZipTask = addTaskDistBundle(
+			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, bundleConfiguration);
+
+		AbstractArchiveTask[] distBundleTasks = {
+			distBundleTarTask, distBundleZipTask
+		};
 
 		Copy initBundle = addTaskInitBundle(
 			project, workspaceExtension, bundleConfiguration);
 
 		configureModules(project, workspaceExtension);
 
-		configureThemes(project, workspaceExtension, distBundle);
+		configureThemes(project, workspaceExtension, distBundleTasks);
 
 		configurePluginsSDK(
-			project, workspaceExtension, initBundle, distBundle);
+			project, workspaceExtension, initBundle, distBundleTasks);
 	}
 
 	protected Configuration addConfigurationBundle(
@@ -130,37 +138,26 @@ public class WorkspacePlugin implements Plugin<Project> {
 			});
 	}
 
-	protected AbstractArchiveTask addTaskDistBundle(
-		final Project project, final Configuration bundleConfiguration) {
+	protected <T extends AbstractArchiveTask> T addTaskDistBundle(
+		final Project project, String taskName, Class<T> clazz,
+		final Configuration bundleConfiguration) {
 
-		final File bundle = bundleConfiguration.getSingleFile();
+		T task = GradleUtil.addTask(project, taskName, clazz);
 
-		final String bundleName = bundle.getName();
-
-		AbstractArchiveTask archiveTask;
-
-		if (bundleName.endsWith(".tar.gz")) {
-			archiveTask = GradleUtil.addTask(
-				project, DIST_BUNDLE_TASK_NAME, Tar.class);
-		}
-		else {
-			archiveTask = GradleUtil.addTask(
-				project, DIST_BUNDLE_TASK_NAME, Zip.class);
-		}
-
-		archiveTask.from(
+		task.from(
 			new Callable<FileTree>() {
 
 				@Override
 				public FileTree call() throws Exception {
+					File file = bundleConfiguration.getSingleFile();
 
-					if (bundleName.endsWith(".tar.gz")) {
-						return project.tarTree(
-							bundleConfiguration.getSingleFile());
+					String fileName = file.getName();
+
+					if (fileName.endsWith(".tar.gz")) {
+						return project.tarTree(file);
 					}
 					else {
-						return project.zipTree(
-							bundleConfiguration.getSingleFile());
+						return project.zipTree(file);
 					}
 				}
 
@@ -174,12 +171,12 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 			});
 
-		archiveTask.setArchiveName(project.getName() + "-" + bundleName);
-		archiveTask.setDescription("Assembles the bundle and zips it up.");
-		archiveTask.setDestinationDir(project.getBuildDir());
-		archiveTask.setIncludeEmptyDirs(false);
+		task.setBaseName(project.getName());
+		task.setDescription("Assembles the bundle and zips it up.");
+		task.setDestinationDir(project.getBuildDir());
+		task.setIncludeEmptyDirs(false);
 
-		return archiveTask;
+		return task;
 	}
 
 	protected Copy addTaskInitBundle(
@@ -285,7 +282,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 	protected void configurePluginsSDK(
 		Project project, final WorkspaceExtension workspaceExtension,
-		Copy initBundle, AbstractArchiveTask distBundle) {
+		Copy initBundle, AbstractArchiveTask[] distBundleTasks) {
 
 		File pluginsSDKDir = workspaceExtension.getPluginsSDKDir();
 
@@ -312,23 +309,25 @@ public class WorkspacePlugin implements Plugin<Project> {
 			war.dependsOn(initBundle);
 		}
 
-		distBundle.into(
-			"deploy",
-			new Closure<Void>(null) {
+		for (AbstractArchiveTask abstractArchiveTask : distBundleTasks) {
+			abstractArchiveTask.into(
+				"deploy",
+				new Closure<Void>(null) {
 
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					ConfigurableFileTree fileTree = pluginsSDKProject.fileTree(
-						"dist");
+					@SuppressWarnings("unused")
+					public void doCall(CopySpec copySpec) {
+						ConfigurableFileTree fileTree =
+							pluginsSDKProject.fileTree("dist");
 
-					fileTree.builtBy(war);
+						fileTree.builtBy(war);
 
-					fileTree.include("*.war");
+						fileTree.include("*.war");
 
-					copySpec.from(fileTree);
-				}
+						copySpec.from(fileTree);
+					}
 
-			});
+				});
+		}
 
 		Task updateSDKProperties = GradleUtil.addTask(
 			pluginsSDKProject, "updateSDKProperties", Task.class);
@@ -365,7 +364,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 	protected void configureThemes(
 		Project project, final WorkspaceExtension workspaceExtension,
-		final AbstractArchiveTask distBundle) {
+		final AbstractArchiveTask[] distBundleTasks) {
 
 		final Project themesProject = GradleUtil.getProject(
 			project, workspaceExtension.getThemesDir());
@@ -461,23 +460,27 @@ public class WorkspacePlugin implements Plugin<Project> {
 					});
 				}
 
-				distBundle.into(
-					"deploy",
-					new Closure<Void>(null) {
+				for (AbstractArchiveTask abstractArchiveTask :
+						distBundleTasks) {
 
-						@SuppressWarnings("unused")
-						public void doCall(CopySpec copySpec) {
-							ConfigurableFileTree fileTree =
-								themesProject.fileTree("dist");
+					abstractArchiveTask.into(
+						"deploy",
+						new Closure<Void>(null) {
 
-							fileTree.builtBy(gulpDeploy);
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								ConfigurableFileTree fileTree =
+									themesProject.fileTree("dist");
 
-							fileTree.include("*.war");
+								fileTree.builtBy(gulpDeploy);
 
-							copySpec.from(fileTree);
-						}
+								fileTree.include("*.war");
 
-					});
+								copySpec.from(fileTree);
+							}
+
+						});
+				}
 
 				TaskContainer taskContainer = subproject.getTasks();
 

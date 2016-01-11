@@ -1455,7 +1455,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewConfigurationSelected">
-			<var name="workflowDefinition" value="No Workflow" />
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceValue" value="Calendar Event" />
 		</execute>
 
@@ -1472,6 +1472,8 @@
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Workflow Configuration" />

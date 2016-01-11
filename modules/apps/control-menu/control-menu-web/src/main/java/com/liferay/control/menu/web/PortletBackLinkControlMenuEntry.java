@@ -17,6 +17,7 @@ package com.liferay.control.menu.web;
 import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.control.menu.web.constants.ControlMenuWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -56,7 +57,8 @@ public class PortletBackLinkControlMenuEntry
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		request.setAttribute("portletBackURL", getPortletBackURL(request));
+		request.setAttribute(
+			ControlMenuWebKeys.PORTLET_BACK_URL, getPortletBackURL(request));
 
 		return super.include(request, response);
 	}

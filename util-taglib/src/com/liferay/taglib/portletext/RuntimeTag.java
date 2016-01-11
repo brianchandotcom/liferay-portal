@@ -215,7 +215,7 @@ public class RuntimeTag extends TagSupport {
 			LayoutTypePortlet layoutTypePortlet =
 				themeDisplay.getLayoutTypePortlet();
 
-			if (layoutTypePortlet.isPortletEmbedded(portlet.getPortletId())) {
+			if (!layoutTypePortlet.isPortletEmbedded(portlet.getPortletId())) {
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,

@@ -278,7 +278,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_3</td>
-	<td>xpath=((//nav[@id='navigation'] | //div[contains(@class,'navbar')])/ul/li/a)[2]</td>
+	<td>xpath=((//nav[@id='navigation'] | //div[contains(@class,'navbar')])/ul/li/a)[3]</td>
 	<td></td>
 </tr>
 <tr>

@@ -685,10 +685,14 @@
 
 	<command name="showCurrentSiteCalendar">
 		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_HIDDEN" />
+
+		<execute function="AssertElementPresent" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
 	</command>
 
 	<command name="showMyCalendarsCalendar">
 		<execute function="Click" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_HIDDEN" />
+
+		<execute function="AssertElementPresent" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
 	</command>
 
 	<command name="tearDown">

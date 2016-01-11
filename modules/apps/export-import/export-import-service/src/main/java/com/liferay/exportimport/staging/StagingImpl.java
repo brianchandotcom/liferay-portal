@@ -2013,7 +2013,8 @@ public class StagingImpl implements Staging {
 	}
 
 	protected long getRecentLayoutBranchId(
-		long userId, long layoutSetBranchId, long plid) throws PortalException {
+			long userId, long layoutSetBranchId, long plid)
+		throws PortalException {
 
 		RecentLayoutBranch recentLayoutBranch =
 			_recentLayoutBranchLocalService.fetchRecentLayoutBranch(

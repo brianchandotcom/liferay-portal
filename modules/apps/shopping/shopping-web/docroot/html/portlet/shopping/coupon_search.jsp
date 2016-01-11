@@ -58,11 +58,4 @@ CouponDisplayTerms displayTerms = (CouponDisplayTerms)searchContainer.getDisplay
 
 <aui:button-row>
 	<aui:button cssClass="btn-lg" type="submit" value="search" />
-
-	<portlet:renderURL var="editCouponURL">
-		<portlet:param name="struts_action" value="/shopping/edit_coupon" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<aui:button cssClass="btn-lg" href="<%= editCouponURL %>" value="add-coupon" />
 </aui:button-row>

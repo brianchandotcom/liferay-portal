@@ -124,6 +124,15 @@ portletURL.setParameter("tabs1", "coupons");
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </aui:form>
 
+<portlet:renderURL var="editCouponURL">
+	<portlet:param name="struts_action" value="/shopping/edit_coupon" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:renderURL>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-coupon") %>' url="<%= editCouponURL.toString() %>" />
+</liferay-frontend:add-menu>
+
 <aui:script>
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 

@@ -321,6 +321,6 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 		_journalFolderLocalService = journalFolderLocalService;
 	}
 
-	private volatile JournalFolderLocalService _journalFolderLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

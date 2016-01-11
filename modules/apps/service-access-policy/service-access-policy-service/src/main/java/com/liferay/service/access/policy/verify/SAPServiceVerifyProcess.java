@@ -76,7 +76,7 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SAPServiceVerifyProcess.class);
 
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile SAPEntryLocalService _sapEntryLocalService;
+	private CompanyLocalService _companyLocalService;
+	private SAPEntryLocalService _sapEntryLocalService;
 
 }

@@ -398,11 +398,10 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportMVCActionCommand.class);
 
-	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
-	private volatile ExportImportConfigurationLocalService
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-	private volatile ExportImportService _exportImportService;
-	private volatile ImportLayoutsMVCActionCommand
-		_importLayoutsMVCActionCommand;
+	private ExportImportService _exportImportService;
+	private ImportLayoutsMVCActionCommand _importLayoutsMVCActionCommand;
 
 }

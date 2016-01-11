@@ -193,16 +193,16 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceUpgrade.class);
 
-	private volatile AssetCategoryLocalService _assetCategoryLocalService;
-	private volatile AssetEntryLocalService _assetEntryLocalService;
-	private volatile AssetVocabularyLocalService _assetVocabularyLocalService;
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile DDMStructureLocalService _ddmStructureLocalService;
-	private volatile DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
-	private volatile DefaultDDMStructureHelper _defaultDDMStructureHelper;
-	private volatile GroupLocalService _groupLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
-	private volatile SettingsFactory _settingsFactory;
-	private volatile UserLocalService _userLocalService;
+	private AssetCategoryLocalService _assetCategoryLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+	private CompanyLocalService _companyLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private SettingsFactory _settingsFactory;
+	private UserLocalService _userLocalService;
 
 }

@@ -674,9 +674,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		TransactionAttribute.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
-	private volatile BlogsEntryLocalService _blogsEntryLocalService;
-	private volatile BlogsEntryService _blogsEntryService;
-	private volatile TrashEntryService _trashEntryService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryService _blogsEntryService;
+	private TrashEntryService _trashEntryService;
 
 	private class UpdateEntryCallable implements Callable<Object[]> {
 

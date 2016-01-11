@@ -40,6 +40,6 @@ public class AnnotationsExtendedMetaTypeService
 		_metaTypeService = metaTypeService;
 	}
 
-	private volatile MetaTypeService _metaTypeService;
+	private MetaTypeService _metaTypeService;
 
 }

@@ -70,6 +70,6 @@ public class DeleteStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 		_ddmStructureService = ddmStructureService;
 	}
 
-	private volatile DDMStructureService _ddmStructureService;
+	private DDMStructureService _ddmStructureService;
 
 }

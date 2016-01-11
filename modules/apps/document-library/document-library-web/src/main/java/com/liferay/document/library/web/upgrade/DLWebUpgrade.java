@@ -53,6 +53,6 @@ public class DLWebUpgrade implements UpgradeStepRegistrator {
 		_settingsFactory = settingsFactory;
 	}
 
-	private volatile SettingsFactory _settingsFactory;
+	private SettingsFactory _settingsFactory;
 
 }

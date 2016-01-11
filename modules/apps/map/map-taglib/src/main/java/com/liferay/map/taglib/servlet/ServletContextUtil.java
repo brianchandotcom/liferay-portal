@@ -85,8 +85,8 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _instance;
 
-	private volatile MapProviderHelper _mapProviderHelper;
-	private volatile MapProviderTracker _mapProviderTracker;
-	private volatile ServletContext _servletContext;
+	private MapProviderHelper _mapProviderHelper;
+	private MapProviderTracker _mapProviderTracker;
+	private ServletContext _servletContext;
 
 }

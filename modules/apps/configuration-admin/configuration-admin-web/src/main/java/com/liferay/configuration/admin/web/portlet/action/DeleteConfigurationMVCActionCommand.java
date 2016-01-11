@@ -83,6 +83,6 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteConfigurationMVCActionCommand.class);
 
-	private volatile ConfigurationModelRetriever _configurationModelRetriever;
+	private ConfigurationModelRetriever _configurationModelRetriever;
 
 }

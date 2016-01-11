@@ -103,7 +103,7 @@ public class WorkflowTaskUserNotificationHandler
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
-	private volatile UserNotificationEventLocalService
+	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 
 }

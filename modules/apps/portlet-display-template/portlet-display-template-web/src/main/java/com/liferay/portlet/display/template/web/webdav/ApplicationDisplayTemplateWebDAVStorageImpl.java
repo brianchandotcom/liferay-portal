@@ -126,6 +126,6 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
-	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

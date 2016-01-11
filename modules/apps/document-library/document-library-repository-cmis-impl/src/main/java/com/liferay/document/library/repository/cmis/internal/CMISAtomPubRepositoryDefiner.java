@@ -72,6 +72,6 @@ public class CMISAtomPubRepositoryDefiner extends BaseCMISRepositoryDefiner {
 	}
 
 	private final RepositoryConfiguration _repositoryConfiguration;
-	private volatile RepositoryFactory _repositoryFactory;
+	private RepositoryFactory _repositoryFactory;
 
 }

@@ -186,6 +186,6 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 		_layoutPrototypeService = layoutPrototypeService;
 	}
 
-	private volatile LayoutPrototypeService _layoutPrototypeService;
+	private LayoutPrototypeService _layoutPrototypeService;
 
 }

@@ -125,6 +125,6 @@ public class WikiAttachmentItemSelectorView
 					new UploadableFileReturnType()
 				}));
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

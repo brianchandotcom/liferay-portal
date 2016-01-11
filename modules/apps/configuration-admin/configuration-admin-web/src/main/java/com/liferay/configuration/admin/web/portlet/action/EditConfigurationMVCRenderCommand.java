@@ -105,7 +105,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 		_ddmFormRenderer = ddmFormRenderer;
 	}
 
-	private volatile ConfigurationModelRetriever _configurationModelRetriever;
-	private volatile DDMFormRenderer _ddmFormRenderer;
+	private ConfigurationModelRetriever _configurationModelRetriever;
+	private DDMFormRenderer _ddmFormRenderer;
 
 }

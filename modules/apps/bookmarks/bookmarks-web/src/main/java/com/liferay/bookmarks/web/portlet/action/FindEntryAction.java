@@ -64,6 +64,6 @@ public class FindEntryAction extends FindStrutsAction {
 		_bookmarksEntryLocalService = bookmarksEntryLocalService;
 	}
 
-	private volatile BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 }

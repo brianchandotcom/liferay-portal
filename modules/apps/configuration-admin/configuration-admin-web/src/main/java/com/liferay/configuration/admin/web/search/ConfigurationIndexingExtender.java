@@ -106,9 +106,9 @@ public class ConfigurationIndexingExtender {
 		ConfigurationIndexingExtender.class);
 
 	private BundleTracker<ConfigurationModelIterator> _bundleTracker;
-	private volatile ClusterMasterExecutor _clusterMasterExecutor;
-	private volatile ConfigurationModelIndexer _configurationModelIndexer;
-	private volatile ConfigurationModelRetriever _configurationModelRetriever;
+	private ClusterMasterExecutor _clusterMasterExecutor;
+	private ConfigurationModelIndexer _configurationModelIndexer;
+	private ConfigurationModelRetriever _configurationModelRetriever;
 
 	private class ConfigurationModelsBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<ConfigurationModelIterator> {

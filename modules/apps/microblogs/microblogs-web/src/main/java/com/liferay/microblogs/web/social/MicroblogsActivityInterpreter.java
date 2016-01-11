@@ -123,6 +123,6 @@ public class MicroblogsActivityInterpreter
 	private static final String[] _CLASS_NAMES =
 		{MicroblogsEntry.class.getName()};
 
-	private volatile MicroblogsEntryLocalService _microblogsEntryLocalService;
+	private MicroblogsEntryLocalService _microblogsEntryLocalService;
 
 }

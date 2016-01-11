@@ -179,6 +179,6 @@ public class NetlogonConnectionManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		NetlogonConnectionManagerImpl.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
+	private ConfigurationFactory _configurationFactory;
 
 }

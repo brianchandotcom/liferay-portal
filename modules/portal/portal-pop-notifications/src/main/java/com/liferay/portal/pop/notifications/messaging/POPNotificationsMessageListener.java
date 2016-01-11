@@ -268,6 +268,6 @@ public class POPNotificationsMessageListener
 
 	private final Map<MessageListener, MessageListenerWrapper>
 		_messageListenerWrappers = new ConcurrentHashMap<>();
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

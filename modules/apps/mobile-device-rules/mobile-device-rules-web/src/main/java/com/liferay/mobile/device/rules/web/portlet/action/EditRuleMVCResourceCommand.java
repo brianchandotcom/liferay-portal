@@ -67,6 +67,6 @@ public class EditRuleMVCResourceCommand extends BaseMVCResourceCommand {
 		_mdrRuleService = mdrRuleService;
 	}
 
-	private volatile MDRRuleService _mdrRuleService;
+	private MDRRuleService _mdrRuleService;
 
 }

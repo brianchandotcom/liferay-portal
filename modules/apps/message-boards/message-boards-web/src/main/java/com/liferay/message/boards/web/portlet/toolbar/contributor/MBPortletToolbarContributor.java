@@ -219,6 +219,6 @@ public class MBPortletToolbarContributor implements PortletToolbarContributor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBPortletToolbarContributor.class);
 
-	private volatile BaseModelPermissionChecker _baseModelPermissionChecker;
+	private BaseModelPermissionChecker _baseModelPermissionChecker;
 
 }

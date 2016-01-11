@@ -106,7 +106,7 @@ public class MicroblogsEntryAssetRendererFactory
 		_microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
-	private volatile MicroblogsEntryLocalService _microblogsEntryLocalService;
-	private volatile ServletContext _servletContext;
+	private MicroblogsEntryLocalService _microblogsEntryLocalService;
+	private ServletContext _servletContext;
 
 }

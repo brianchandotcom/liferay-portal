@@ -137,10 +137,10 @@ public class ExportImportLifecycleManagerImpl
 	}
 
 	private volatile BundleContext _bundleContext;
-	private volatile DestinationFactory _destinationFactory;
-	private volatile ExportImportLifecycleEventFactory
+	private DestinationFactory _destinationFactory;
+	private ExportImportLifecycleEventFactory
 		_exportImportLifecycleEventFactory;
-	private volatile MessageBus _messageBus;
+	private MessageBus _messageBus;
 	private final Set<ServiceRegistration<Destination>> _serviceRegistrations =
 		new HashSet<>();
 

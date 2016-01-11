@@ -239,6 +239,6 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 	private static ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
 
-	private volatile CounterLocalService _counterLocalService;
+	private CounterLocalService _counterLocalService;
 
 }

@@ -204,7 +204,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		DDLFormAdminPortlet.class);
 
 	private volatile DDLFormWebConfiguration _ddlFormWebConfiguration;
-	private volatile DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private volatile DDMFormRenderer _ddmFormRenderer;
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDMFormRenderer _ddmFormRenderer;
 
 }

@@ -73,6 +73,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		_flagsEntryService = flagsEntryService;
 	}
 
-	private volatile FlagsEntryService _flagsEntryService;
+	private FlagsEntryService _flagsEntryService;
 
 }

@@ -61,6 +61,6 @@ public class MBAdminViewMVCRenderCommand extends BaseViewMVCRenderCommand {
 		_mbPortletToolbarContributor = mbPortletToolbarContributor;
 	}
 
-	private volatile MBPortletToolbarContributor _mbPortletToolbarContributor;
+	private MBPortletToolbarContributor _mbPortletToolbarContributor;
 
 }

@@ -84,6 +84,6 @@ public class WikiNavigationTreeMenuConfigurationAction
 		}
 	}
 
-	private volatile WikiNodeService _wikiNodeService;
+	private WikiNodeService _wikiNodeService;
 
 }

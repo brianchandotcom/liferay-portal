@@ -256,10 +256,9 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		MDRRuleGroupInstanceStagedModelDataHandler.class);
 
-	private volatile LayoutLocalService _layoutLocalService;
-	private volatile LayoutSetLocalService _layoutSetLocalService;
-	private volatile MDRRuleGroupInstanceLocalService
-		_mdrRuleGroupInstanceLocalService;
-	private volatile MDRRuleGroupLocalService _mdrRuleGroupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 
 }

@@ -99,6 +99,6 @@ public class SearchResultTranslatorImpl implements SearchResultTranslator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchResultTranslatorImpl.class);
 
-	private volatile SearchResultManager _searchResultManager;
+	private SearchResultManager _searchResultManager;
 
 }

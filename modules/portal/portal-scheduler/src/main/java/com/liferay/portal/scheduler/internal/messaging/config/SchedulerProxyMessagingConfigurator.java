@@ -99,9 +99,9 @@ public class SchedulerProxyMessagingConfigurator {
 	}
 
 	private volatile BundleContext _bundleContext;
-	private volatile DestinationFactory _destinationFactory;
+	private DestinationFactory _destinationFactory;
 	private volatile ServiceRegistration<Destination>
 		_destinationServiceRegistration;
-	private volatile ProxyMessageListener _proxyMessageListener;
+	private ProxyMessageListener _proxyMessageListener;
 
 }

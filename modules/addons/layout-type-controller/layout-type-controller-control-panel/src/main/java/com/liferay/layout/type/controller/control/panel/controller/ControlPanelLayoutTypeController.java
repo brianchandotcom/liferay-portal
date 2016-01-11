@@ -146,7 +146,7 @@ public class ControlPanelLayoutTypeController
 
 	private static final String _VIEW_PAGE = "/layout/view/control_panel.jsp";
 
-	private volatile PanelAppRegistry _panelAppRegistry;
-	private volatile PanelCategoryRegistry _panelCategoryRegistry;
+	private PanelAppRegistry _panelAppRegistry;
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

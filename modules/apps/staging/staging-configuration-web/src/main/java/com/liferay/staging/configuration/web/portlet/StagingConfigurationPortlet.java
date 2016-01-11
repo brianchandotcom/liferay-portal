@@ -232,7 +232,7 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		_stagingLocalService = null;
 	}
 
-	private volatile GroupLocalService _groupLocalService;
-	private volatile StagingLocalService _stagingLocalService;
+	private GroupLocalService _groupLocalService;
+	private StagingLocalService _stagingLocalService;
 
 }

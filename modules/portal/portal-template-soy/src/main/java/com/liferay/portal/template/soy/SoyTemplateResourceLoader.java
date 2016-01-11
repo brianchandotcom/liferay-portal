@@ -100,7 +100,7 @@ public class SoyTemplateResourceLoader implements TemplateResourceLoader {
 	private static volatile SoyTemplateEngineConfiguration
 		_soyTemplateEngineConfiguration;
 
-	private volatile MultiVMPool _multiVMPool;
-	private volatile SingleVMPool _singleVMPool;
+	private MultiVMPool _multiVMPool;
+	private SingleVMPool _singleVMPool;
 
 }

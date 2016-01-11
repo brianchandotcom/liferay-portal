@@ -95,7 +95,7 @@ public class AssociateFacebookUserMVCRenderCommand implements MVCRenderCommand {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile FacebookConnect _facebookConnect;
-	private volatile UserLocalService _userLocalService;
+	private FacebookConnect _facebookConnect;
+	private UserLocalService _userLocalService;
 
 }

@@ -95,6 +95,6 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 
 	private static final int _MAX_USERS = 100;
 
-	private volatile UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 }

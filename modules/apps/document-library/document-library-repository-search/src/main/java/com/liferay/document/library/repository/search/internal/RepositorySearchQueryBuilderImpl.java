@@ -266,8 +266,7 @@ public class RepositorySearchQueryBuilderImpl
 		_repositorySearchQueryTermBuilder = repositorySearchQueryTermBuilder;
 	}
 
-	private volatile DLAppService _dlAppService;
-	private volatile RepositorySearchQueryTermBuilder
-		_repositorySearchQueryTermBuilder;
+	private DLAppService _dlAppService;
+	private RepositorySearchQueryTermBuilder _repositorySearchQueryTermBuilder;
 
 }

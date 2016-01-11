@@ -80,7 +80,7 @@ public class MBMessageCommentSearchResultContributor
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
-	private volatile CommentManager _commentManager;
-	private volatile MBMessageLocalService _mbMessageLocalService;
+	private CommentManager _commentManager;
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

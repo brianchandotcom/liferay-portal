@@ -168,7 +168,7 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private static final String[] _CLASS_NAMES = {MBThread.class.getName()};
 
-	private volatile MBMessageLocalService _mbMessageLocalService;
-	private volatile MBThreadLocalService _mbThreadLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

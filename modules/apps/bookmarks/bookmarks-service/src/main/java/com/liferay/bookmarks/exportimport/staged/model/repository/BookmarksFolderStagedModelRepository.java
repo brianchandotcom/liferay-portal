@@ -181,6 +181,6 @@ public class BookmarksFolderStagedModelRepository
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
-	private volatile BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

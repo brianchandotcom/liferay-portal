@@ -66,6 +66,6 @@ public class MyPagesControlPanelEntry extends BaseControlPanelEntry {
 		_roleLocalService = roleLocalService;
 	}
 
-	private volatile RoleLocalService _roleLocalService;
+	private RoleLocalService _roleLocalService;
 
 }

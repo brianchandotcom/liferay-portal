@@ -65,6 +65,6 @@ public class ThemeClassicPortalWebResources implements PortalWebResources {
 	}
 
 	private Bundle _bundle;
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

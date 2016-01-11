@@ -198,6 +198,6 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarIndexer.class);
 
-	private volatile CalendarLocalService _calendarLocalService;
+	private CalendarLocalService _calendarLocalService;
 
 }

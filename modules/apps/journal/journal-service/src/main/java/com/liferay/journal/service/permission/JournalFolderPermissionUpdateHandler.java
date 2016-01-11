@@ -55,6 +55,6 @@ public class JournalFolderPermissionUpdateHandler
 		_journalFolderLocalService = journalFolderLocalService;
 	}
 
-	private volatile JournalFolderLocalService _journalFolderLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

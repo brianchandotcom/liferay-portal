@@ -131,6 +131,6 @@ public class HttpAdapter {
 
 	private HttpServiceServlet _httpServiceServlet;
 	private ServiceRegistration<?> _serviceRegistration;
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

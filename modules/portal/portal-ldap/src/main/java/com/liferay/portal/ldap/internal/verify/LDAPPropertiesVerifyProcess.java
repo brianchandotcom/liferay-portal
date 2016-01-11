@@ -562,19 +562,19 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPPropertiesVerifyProcess.class);
 
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile ConfigurationProvider<LDAPAuthConfiguration>
+	private CompanyLocalService _companyLocalService;
+	private ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
-	private volatile ConfigurationProvider<LDAPExportConfiguration>
+	private ConfigurationProvider<LDAPExportConfiguration>
 		_ldapExportConfigurationProvider;
-	private volatile ConfigurationProvider<LDAPImportConfiguration>
+	private ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
-	private volatile ConfigurationProvider<LDAPServerConfiguration>
+	private ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-	private volatile LDAPSettings _ldapSettings;
-	private volatile PrefsProps _prefsProps;
-	private volatile Props _props;
-	private volatile ConfigurationProvider<SystemLDAPConfiguration>
+	private LDAPSettings _ldapSettings;
+	private PrefsProps _prefsProps;
+	private Props _props;
+	private ConfigurationProvider<SystemLDAPConfiguration>
 		_systemLDAPConfigurationProvider;
 
 }

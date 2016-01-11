@@ -141,8 +141,8 @@ public class MentionsMessageServiceWrapper
 		_mentionsNotifier = mentionsNotifier;
 	}
 
-	private volatile ConfigurationFactory _configurationFactory;
-	private volatile MBMessageLocalService _mbMessageLocalService;
-	private volatile MentionsNotifier _mentionsNotifier;
+	private ConfigurationFactory _configurationFactory;
+	private MBMessageLocalService _mbMessageLocalService;
+	private MentionsNotifier _mentionsNotifier;
 
 }

@@ -172,6 +172,6 @@ public class LayoutStagingImpl implements LayoutStaging {
 		_layoutSetBranchLocalService = layoutSetBranchLocalService;
 	}
 
-	private volatile LayoutSetBranchLocalService _layoutSetBranchLocalService;
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 }

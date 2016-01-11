@@ -316,8 +316,8 @@ public class EmbeddedElasticsearchConnection
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);
 
-	private volatile ClusterSettingsContext _clusterSettingsContext;
+	private ClusterSettingsContext _clusterSettingsContext;
 	private Node _node;
-	private volatile Props _props;
+	private Props _props;
 
 }

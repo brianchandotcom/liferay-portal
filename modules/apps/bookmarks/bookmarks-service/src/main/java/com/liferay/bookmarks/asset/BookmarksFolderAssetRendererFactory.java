@@ -139,7 +139,7 @@ public class BookmarksFolderAssetRendererFactory
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
-	private volatile BookmarksFolderLocalService _bookmarksFolderLocalService;
-	private volatile ServletContext _servletContext;
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private ServletContext _servletContext;
 
 }

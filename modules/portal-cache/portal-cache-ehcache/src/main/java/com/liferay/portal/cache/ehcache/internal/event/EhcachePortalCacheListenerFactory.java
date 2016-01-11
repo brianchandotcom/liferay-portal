@@ -93,6 +93,6 @@ public class EhcachePortalCacheListenerFactory
 		_portalCacheReplicatorFactory = portalCacheReplicatorFactory;
 	}
 
-	private volatile PortalCacheReplicatorFactory _portalCacheReplicatorFactory;
+	private PortalCacheReplicatorFactory _portalCacheReplicatorFactory;
 
 }

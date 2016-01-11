@@ -97,12 +97,11 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
-	private volatile AssetEntryLocalService _assetEntryLocalService;
-	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
-	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
-	private volatile DLFolderLocalService _dlFolderLocalService;
-	private volatile ResourceActionLocalService _resourceActionLocalService;
-	private volatile ResourcePermissionLocalService
-		_resourcePermissionLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileVersionLocalService _dlFileVersionLocalService;
+	private DLFolderLocalService _dlFolderLocalService;
+	private ResourceActionLocalService _resourceActionLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

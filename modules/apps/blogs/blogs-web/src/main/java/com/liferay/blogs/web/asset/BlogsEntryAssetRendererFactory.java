@@ -179,8 +179,8 @@ public class BlogsEntryAssetRendererFactory
 		_blogsEntryService = blogsEntryService;
 	}
 
-	private volatile BlogsEntryLocalService _blogsEntryLocalService;
-	private volatile BlogsEntryService _blogsEntryService;
-	private volatile ServletContext _servletContext;
+	private BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryService _blogsEntryService;
+	private ServletContext _servletContext;
 
 }

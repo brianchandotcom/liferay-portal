@@ -53,7 +53,7 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
-	private volatile UserNotificationEventLocalService
+	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 
 }

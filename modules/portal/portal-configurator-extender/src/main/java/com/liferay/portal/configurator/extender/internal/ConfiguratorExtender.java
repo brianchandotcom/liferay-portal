@@ -159,7 +159,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 		_logger.log(Logger.LOG_DEBUG, "[" + bundle + "] " + s);
 	}
 
-	private volatile ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 	private final Collection<ConfigurationDescriptionFactory>
 		_configurationDescriptionFactories = new CopyOnWriteArrayList<>();
 	private Logger _logger;

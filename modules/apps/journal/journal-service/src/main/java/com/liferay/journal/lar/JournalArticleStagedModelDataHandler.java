@@ -953,16 +953,15 @@ public class JournalArticleStagedModelDataHandler
 		_userLocalService = userLocalService;
 	}
 
-	private volatile DDMStructureLocalService _ddmStructureLocalService;
-	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
-	private volatile ImageLocalService _imageLocalService;
-	private volatile JournalArticleExportImportContentProcessor
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private ImageLocalService _imageLocalService;
+	private JournalArticleExportImportContentProcessor
 		_journalArticleExportImportContentProcessor;
-	private volatile JournalArticleImageLocalService
-		_journalArticleImageLocalService;
-	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile JournalArticleResourceLocalService
+	private JournalArticleImageLocalService _journalArticleImageLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private volatile UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 }

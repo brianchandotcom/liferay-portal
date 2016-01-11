@@ -186,6 +186,6 @@ public class ExportConfigurationMVCResourceCommand
 		_configurationModelRetriever = configurationModelRetriever;
 	}
 
-	private volatile ConfigurationModelRetriever _configurationModelRetriever;
+	private ConfigurationModelRetriever _configurationModelRetriever;
 
 }

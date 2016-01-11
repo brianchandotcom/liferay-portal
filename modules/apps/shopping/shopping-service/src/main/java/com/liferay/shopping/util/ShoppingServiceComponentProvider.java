@@ -65,7 +65,7 @@ public class ShoppingServiceComponentProvider {
 	private static ShoppingServiceComponentProvider
 		_shoppingServiceComponentProvider;
 
-	private volatile ShoppingGroupServiceConfiguration
+	private ShoppingGroupServiceConfiguration
 		_shoppingGroupServiceConfiguration;
 
 }

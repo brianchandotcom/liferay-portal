@@ -101,6 +101,6 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 	private volatile BlogsConfiguration _blogsConfiguration;
 	private final LinkbackConsumer _linkbackConsumer =
 		LinkbackConsumerUtil.getLinkbackConsumer();
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

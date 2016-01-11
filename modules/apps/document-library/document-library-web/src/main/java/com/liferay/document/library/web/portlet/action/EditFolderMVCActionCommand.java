@@ -340,7 +340,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile DLAppService _dlAppService;
-	private volatile DLTrashService _dlTrashService;
+	private DLAppService _dlAppService;
+	private DLTrashService _dlTrashService;
 
 }

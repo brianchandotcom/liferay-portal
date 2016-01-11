@@ -286,6 +286,6 @@ public class JournalArticleAtomCollectionProvider
 
 	private static final String _COLLECTION_NAME = "web-content";
 
-	private volatile JournalArticleService _journalArticleService;
+	private JournalArticleService _journalArticleService;
 
 }

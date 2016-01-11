@@ -788,7 +788,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditPageAttachmentsMVCActionCommand.class);
 
-	private volatile TrashEntryService _trashEntryService;
-	private volatile WikiPageService _wikiPageService;
+	private TrashEntryService _trashEntryService;
+	private WikiPageService _wikiPageService;
 
 }

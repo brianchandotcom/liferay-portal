@@ -97,6 +97,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		_calendarResourceLocalService = calendarResourceLocalService;
 	}
 
-	private volatile CalendarResourceLocalService _calendarResourceLocalService;
+	private CalendarResourceLocalService _calendarResourceLocalService;
 
 }

@@ -41,6 +41,6 @@ public class QueryFilterTranslatorImpl implements QueryFilterTranslator {
 		_queryTranslator = queryTranslator;
 	}
 
-	private volatile QueryTranslator<QueryBuilder> _queryTranslator;
+	private QueryTranslator<QueryBuilder> _queryTranslator;
 
 }

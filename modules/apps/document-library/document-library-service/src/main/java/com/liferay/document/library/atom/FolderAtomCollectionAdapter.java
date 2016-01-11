@@ -202,6 +202,6 @@ public class FolderAtomCollectionAdapter
 
 	private static final String _COLLECTION_NAME = "folders";
 
-	private volatile DLAppService _dlAppService;
+	private DLAppService _dlAppService;
 
 }

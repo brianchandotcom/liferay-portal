@@ -400,7 +400,6 @@ public class ItemSelectorImpl implements ItemSelector {
 	private final ConcurrentMap
 		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>
 			_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
-	private volatile ItemSelectorCriterionSerializer
-		_itemSelectionCriterionSerializer;
+	private ItemSelectorCriterionSerializer _itemSelectionCriterionSerializer;
 
 }

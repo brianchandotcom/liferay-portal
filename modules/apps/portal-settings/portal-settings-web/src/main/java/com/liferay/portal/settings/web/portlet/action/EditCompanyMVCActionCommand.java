@@ -195,7 +195,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		PortalUtil.resetCDNHosts();
 	}
 
-	private volatile CompanyService _companyService;
-	private volatile DLAppLocalService _dlAppLocalService;
+	private CompanyService _companyService;
+	private DLAppLocalService _dlAppLocalService;
 
 }

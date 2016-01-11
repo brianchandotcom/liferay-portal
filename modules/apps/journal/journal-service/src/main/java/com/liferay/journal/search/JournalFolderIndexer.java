@@ -203,6 +203,6 @@ public class JournalFolderIndexer
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalFolderIndexer.class);
 
-	private volatile JournalFolderLocalService _journalFolderLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

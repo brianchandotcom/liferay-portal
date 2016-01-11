@@ -104,7 +104,7 @@ public class CheckArticleMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

@@ -62,6 +62,6 @@ public class RevertRecordMVCActionCommand extends AddRecordMVCActionCommand {
 		_ddlRecordService = ddlRecordService;
 	}
 
-	private volatile DDLRecordService _ddlRecordService;
+	private DDLRecordService _ddlRecordService;
 
 }

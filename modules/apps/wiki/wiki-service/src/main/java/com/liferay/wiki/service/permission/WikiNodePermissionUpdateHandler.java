@@ -55,6 +55,6 @@ public class WikiNodePermissionUpdateHandler
 		_wikiNodeLocalService = wikiNodeLocalService;
 	}
 
-	private volatile WikiNodeLocalService _wikiNodeLocalService;
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

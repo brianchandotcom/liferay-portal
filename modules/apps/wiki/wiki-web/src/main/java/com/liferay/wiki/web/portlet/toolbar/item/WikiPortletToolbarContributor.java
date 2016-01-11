@@ -229,7 +229,7 @@ public class WikiPortletToolbarContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPortletToolbarContributor.class);
 
-	private volatile BaseModelPermissionChecker _baseModelPermissionChecker;
-	private volatile WikiNodeService _wikiNodeService;
+	private BaseModelPermissionChecker _baseModelPermissionChecker;
+	private WikiNodeService _wikiNodeService;
 
 }

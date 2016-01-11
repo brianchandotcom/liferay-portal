@@ -153,8 +153,8 @@ public class DDLFormAssetRendererFactory
 		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
 	}
 
-	private volatile DDLRecordLocalService _ddlRecordLocalService;
-	private volatile DDLRecordVersionLocalService _ddlRecordVersionLocalService;
-	private volatile ServletContext _servletContext;
+	private DDLRecordLocalService _ddlRecordLocalService;
+	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
+	private ServletContext _servletContext;
 
 }

@@ -317,7 +317,7 @@ public class CalendarBookingStagedModelDataHandler
 		CalendarBookingWorkflowConstants.STATUS_PENDING
 	};
 
-	private volatile CalendarBookingLocalService _calendarBookingLocalService;
-	private volatile MBMessageLocalService _mbMessageLocalService;
+	private CalendarBookingLocalService _calendarBookingLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

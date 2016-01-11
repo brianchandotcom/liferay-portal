@@ -63,6 +63,6 @@ public class JournalArticleModelListener
 		_journalContent = journalContent;
 	}
 
-	private volatile JournalContent _journalContent;
+	private JournalContent _journalContent;
 
 }

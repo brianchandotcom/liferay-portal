@@ -103,7 +103,7 @@ public class EditNodeAttachmentMVCActionCommand extends BaseMVCActionCommand {
 		_wikiPageService = wikiPageService;
 	}
 
-	private volatile WikiPageLocalService _wikiPageLocalService;
-	private volatile WikiPageService _wikiPageService;
+	private WikiPageLocalService _wikiPageLocalService;
+	private WikiPageService _wikiPageService;
 
 }

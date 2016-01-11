@@ -129,7 +129,7 @@ public class ControlMenuCategoryRegistry {
 
 	private ServiceTrackerMap<String, List<ControlMenuCategory>>
 		_controlMenuCategoryServiceTrackerMap;
-	private volatile ControlMenuEntryRegistry _controlMenuEntryRegistry;
+	private ControlMenuEntryRegistry _controlMenuEntryRegistry;
 
 	private static class ServiceRankingPropertyServiceReferenceComparator
 		extends PropertyServiceReferenceComparator<ControlMenuCategory> {

@@ -245,10 +245,9 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private volatile MDRActionLocalService _mdrActionLocalService;
-	private volatile MDRRuleGroupInstanceLocalService
-		_mdrRuleGroupInstanceLocalService;
-	private volatile MDRRuleGroupLocalService _mdrRuleGroupLocalService;
-	private volatile MDRRuleLocalService _mdrRuleLocalService;
+	private MDRActionLocalService _mdrActionLocalService;
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
+	private MDRRuleLocalService _mdrRuleLocalService;
 
 }

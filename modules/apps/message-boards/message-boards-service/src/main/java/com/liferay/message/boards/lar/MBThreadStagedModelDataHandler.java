@@ -112,6 +112,6 @@ public class MBThreadStagedModelDataHandler
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 
-	private volatile MBThreadLocalService _mbThreadLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

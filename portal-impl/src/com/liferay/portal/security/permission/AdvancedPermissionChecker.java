@@ -1231,12 +1231,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		UserBag userBag = getUserBag();
 
-		if (userBag.hasUserGroup(group)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return userBag.hasUserGroup(group);
 	}
 
 	protected boolean isGroupOwnerImpl(Group group) throws PortalException {

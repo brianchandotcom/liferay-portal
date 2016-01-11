@@ -311,9 +311,7 @@ public class LayoutTypePortletImpl
 	public List<Portlet> getEmbeddedPortlets() {
 		Layout layout = getLayout();
 
-		_embeddedPortlets = layout.getEmbeddedPortlets();
-
-		return _embeddedPortlets;
+		return layout.getEmbeddedPortlets();
 	}
 
 	@Override
@@ -1503,7 +1501,6 @@ public class LayoutTypePortletImpl
 			(LayoutTypePortletImpl)LayoutTypePortletFactoryUtil.create(
 				getLayout());
 
-		defaultLayoutTypePortletImpl._embeddedPortlets = _embeddedPortlets;
 		defaultLayoutTypePortletImpl._layoutSetPrototypeLayout =
 			_layoutSetPrototypeLayout;
 		defaultLayoutTypePortletImpl._updatePermission = _updatePermission;
@@ -1908,7 +1905,6 @@ public class LayoutTypePortletImpl
 	private final Format _dateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
-	private transient List<Portlet> _embeddedPortlets;
 	private boolean _enablePortletLayoutListener = true;
 	private Layout _layoutSetPrototypeLayout;
 	private PortalPreferences _portalPreferences;

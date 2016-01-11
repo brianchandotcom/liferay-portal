@@ -52,20 +52,6 @@ public class EmailAddressLocalServiceUtil {
 		return getService().addEmailAddress(emailAddress);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
-	String, long, String, int, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.EmailAddress addEmailAddress(
-		long userId, java.lang.String className, long classPK,
-		java.lang.String address, long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addEmailAddress(userId, className, classPK, address,
-			typeId, primary);
-	}
-
 	public static com.liferay.portal.model.EmailAddress addEmailAddress(
 		long userId, java.lang.String className, long classPK,
 		java.lang.String address, long typeId, boolean primary,

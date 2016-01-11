@@ -57,15 +57,6 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	public com.liferay.portal.model.EmailAddress addEmailAddress(
 		com.liferay.portal.model.EmailAddress emailAddress);
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
-	String, long, String, int, boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
-		java.lang.String className, long classPK, java.lang.String address,
-		long typeId, boolean primary) throws PortalException;
-
 	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
 		java.lang.String className, long classPK, java.lang.String address,
 		long typeId, boolean primary,

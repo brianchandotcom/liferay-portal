@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.workflow.task.web.util.WorkflowTaskPortletUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,37 +90,13 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 		}
 
 		OrderByComparator<WorkflowTask> orderByComparator =
-			getOrderByComparator(orderByCol, orderByType);
+			WorkflowTaskPortletUtil.getWorkflowTaskOrderByComparator(
+				orderByCol, orderByType);
 
 		setOrderableHeaders(orderableHeaders);
 		setOrderByCol(orderByCol);
 		setOrderByType(orderByType);
 		setOrderByComparator(orderByComparator);
-	}
-
-	protected OrderByComparator<WorkflowTask> getOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<WorkflowTask> orderByComparator = null;
-
-		if (orderByCol.equals("due-date")) {
-			orderByComparator =
-				WorkflowComparatorFactoryUtil.getTaskDueDateComparator(
-					orderByAsc);
-		}
-		else {
-			orderByComparator =
-				WorkflowComparatorFactoryUtil.getTaskCreateDateComparator(
-					orderByAsc);
-		}
-
-		return orderByComparator;
 	}
 
 }

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -60,9 +59,9 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.workflow.task.web.configuration.WorkflowTaskWebConfiguration;
 import com.liferay.workflow.task.web.display.context.util.WorkflowTaskRequestHelper;
 import com.liferay.workflow.task.web.search.WorkflowTaskSearch;
+import com.liferay.workflow.task.web.util.WorkflowTaskPortletUtil;
 
 import java.io.Serializable;
 
@@ -88,14 +87,15 @@ import javax.servlet.http.HttpServletRequest;
 public class WorkflowTaskDisplayContext {
 
 	public WorkflowTaskDisplayContext(
-		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		PortletPreferences portletPreferences) {
 
-		_request = request;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_portletPreferences = portletPreferences;
+
+		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_request);
@@ -107,7 +107,7 @@ public class WorkflowTaskDisplayContext {
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-		_workflowTaskRequestHelper = new WorkflowTaskRequestHelper(request);
+		_workflowTaskRequestHelper = new WorkflowTaskRequestHelper(_request);
 	}
 
 	public String getActorName(long actorId) {
@@ -236,26 +236,15 @@ public class WorkflowTaskDisplayContext {
 
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
-			_displayStyle = getDisplayStyle(_request, getDisplayViews());
+			_displayStyle = WorkflowTaskPortletUtil.getWorkflowTaskDisplayStyle(
+				_liferayPortletRequest, getDisplayViews());
 		}
 
 		return _displayStyle;
 	}
 
 	public String[] getDisplayViews() {
-		if (_displayViews == null) {
-			WorkflowTaskWebConfiguration workflowTaskWebConfiguration =
-				(WorkflowTaskWebConfiguration) _liferayPortletRequest.
-					getAttribute(WorkflowTaskWebConfiguration.class.getName());
-
-			_displayViews = StringUtil.split(
-				PrefsParamUtil.getString(
-					_portletPreferences, _liferayPortletRequest, "displayViews",
-					StringUtil.merge(
-						workflowTaskWebConfiguration.displayViews())));
-		}
-
-		return _displayViews;
+		return _DISPLAY_VIEWS;
 	}
 
 	public Date getDueDate(WorkflowTask workflowTask) {
@@ -939,16 +928,14 @@ public class WorkflowTaskDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	protected String getAssetTypeTerm(String keywords) {
+	protected String getAssetType(String keywords) {
 		for (WorkflowHandler<?> workflowHandler :
 				getSearchableAssetsWorkflowHandlers()) {
 
-			keywords = StringUtil.lowerCase(keywords);
-			String assetType = StringUtil.lowerCase(
-				workflowHandler.getType(
-					_workflowTaskRequestHelper.getLocale()));
+			String assetType = workflowHandler.getType(
+				_workflowTaskRequestHelper.getLocale());
 
-			if (keywords.equals(assetType)) {
+			if (StringUtil.equalsIgnoreCase(keywords, assetType)) {
 				return workflowHandler.getClassName();
 			}
 		}
@@ -956,39 +943,44 @@ public class WorkflowTaskDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	protected String getDisplayStyle(
-		HttpServletRequest request, String[] displayViews) {
+	protected Boolean getCompleted() {
+		if (isNavigationAll()) {
+			return null;
+		}
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-		String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			WorkflowTaskWebConfiguration workflowTaskWebConfiguration =
-				(WorkflowTaskWebConfiguration)_request.getAttribute(
-					WorkflowTaskWebConfiguration.class.getName());
-
-			displayStyle = portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_TASK, "display-style",
-				workflowTaskWebConfiguration.defaultDisplayView());
+		if (isNavigationCompleted()) {
+			return Boolean.TRUE;
 		}
 		else {
-			if (ArrayUtil.contains(displayViews, displayStyle)) {
-				portalPreferences.setValue(
-					PortletKeys.MY_WORKFLOW_TASK, "display-style",
-					displayStyle);
+			return Boolean.FALSE;
+		}
+	}
 
-				request.setAttribute(
-					WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-			}
+	protected String getCurParam(boolean searchByUserRoles) {
+		Boolean completedTasks = getCompleted();
+
+		String curParam;
+
+		if (!searchByUserRoles && (completedTasks == null)) {
+			curParam = SearchContainer.DEFAULT_CUR_PARAM;
+		}
+		else if (!searchByUserRoles && completedTasks) {
+			curParam = "cur1";
+		}
+		else if (!searchByUserRoles && !completedTasks) {
+			curParam = "cur2";
+		}
+		else if (searchByUserRoles && (completedTasks == null)) {
+			curParam = "cur3";
+		}
+		else if (searchByUserRoles && completedTasks) {
+			curParam = "cur4";
+		}
+		else {
+			curParam = "cur5";
 		}
 
-		if (!ArrayUtil.contains(displayViews, displayStyle)) {
-			displayStyle = displayViews[0];
-		}
-
-		return displayStyle;
+		return curParam;
 	}
 
 	protected Role getRole(long roleId) throws PortalException {
@@ -1025,64 +1017,32 @@ public class WorkflowTaskDisplayContext {
 	protected WorkflowTaskSearch searchTasks(boolean searchByUserRoles)
 		throws PortalException {
 
-		Boolean completedTasks = true;
-
-		if (isNavigationAll()) {
-			completedTasks = null;
-		}
-		else if (isNavigationPending()) {
-			completedTasks = false;
-		}
-
-		List<WorkflowTask> results = null;
-		int total = 0;
-
-		String curParam;
-
-		if (!searchByUserRoles && (completedTasks == null)) {
-			curParam = SearchContainer.DEFAULT_CUR_PARAM;
-		}
-		else if (!searchByUserRoles && completedTasks) {
-			curParam = "cur1";
-		}
-		else if (!searchByUserRoles && !completedTasks) {
-			curParam = "cur2";
-		}
-		else if (searchByUserRoles && (completedTasks == null)) {
-			curParam = "cur3";
-		}
-		else if (searchByUserRoles && completedTasks) {
-			curParam = "cur4";
-		}
-		else {
-			curParam = "cur5";
-		}
-
 		WorkflowTaskSearch searchContainer = new WorkflowTaskSearch(
-			_liferayPortletRequest, curParam, getPortletURL());
+			_liferayPortletRequest, getCurParam(searchByUserRoles),
+			getPortletURL());
 
 		DisplayTerms searchTerms = searchContainer.getDisplayTerms();
 
-		total = WorkflowTaskManagerUtil.searchCount(
+		int total = WorkflowTaskManagerUtil.searchCount(
 			_workflowTaskRequestHelper.getCompanyId(),
 			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			getAssetTypeTerm(searchTerms.getKeywords()), null, null, null,
-			completedTasks, searchByUserRoles, false);
+			getAssetType(searchTerms.getKeywords()), null, null, null,
+			getCompleted(), searchByUserRoles, false);
 
 		searchContainer.setTotal(total);
 
-		results = WorkflowTaskManagerUtil.search(
+		List<WorkflowTask> results = WorkflowTaskManagerUtil.search(
 			_workflowTaskRequestHelper.getCompanyId(),
 			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			getAssetTypeTerm(searchTerms.getKeywords()), null, null, null,
-			completedTasks, searchByUserRoles, false,
+			getAssetType(searchTerms.getKeywords()), null, null, null,
+			getCompleted(), searchByUserRoles, false,
 			searchContainer.getStart(), searchContainer.getEnd(),
 			searchContainer.getOrderByComparator());
 
 		searchContainer.setResults(results);
 
 		setSearchContainerEmptyResultsMessage(
-			searchContainer, searchByUserRoles, completedTasks);
+			searchContainer, searchByUserRoles, getCompleted());
 
 		return searchContainer;
 	}
@@ -1121,9 +1081,10 @@ public class WorkflowTaskDisplayContext {
 		}
 	}
 
+	private static final String[] _DISPLAY_VIEWS = {"list", "descriptive"};
+
 	private final Format _dateFormatDateTime;
 	private String _displayStyle;
-	private String[] _displayViews;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

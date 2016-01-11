@@ -167,8 +167,8 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(
-				WorkflowTaskWebConfiguration.class.getName(),
-				_workflowTaskWebConfiguration);
+			WorkflowTaskWebConfiguration.class.getName(),
+			_workflowTaskWebConfiguration);
 	}
 
 	private volatile WorkflowTaskWebConfiguration _workflowTaskWebConfiguration;

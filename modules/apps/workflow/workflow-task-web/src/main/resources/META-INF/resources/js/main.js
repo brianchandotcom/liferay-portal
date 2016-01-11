@@ -16,6 +16,7 @@ AUI.add(
 
 				if (li.hasClass('task-due-date-link')) {
 					content = '#' + randomId + 'updateDueDate';
+
 					height = 410;
 				}
 				else if (li.hasClass('task-assign-to-me-link')) {
@@ -23,6 +24,7 @@ AUI.add(
 				}
 				else if (li.hasClass('task-assign-link')) {
 					content = '#' + randomId + 'updateAsignee';
+
 					height = 410;
 				}
 

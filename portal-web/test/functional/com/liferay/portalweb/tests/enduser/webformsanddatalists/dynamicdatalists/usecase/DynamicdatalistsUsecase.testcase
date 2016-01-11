@@ -65,7 +65,7 @@
 
 		<execute macro="DDLDataDefinition#save" />
 
-		<execute macro="Alert#viewRequiredFieldAlert" />
+		<execute macro="Alert#viewRequiredField" />
 	</command>
 
 	<command name="AddListWithoutDataDefinitionAndAssertErrorMessage" priority="3">
@@ -2550,7 +2550,7 @@
 
 		<execute macro="Button#clickPublish" />
 
-		<execute macro="Alert#viewRequestFailedToCompleteAlert" />
+		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
 			<var name="document" value="Document_1.txt" />

@@ -34,10 +34,30 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 	</a>
 </div>
 
-<aui:script use="liferay-store">
+<aui:script use="liferay-store,io-request,parse-content">
 	var sidenavToggle = $('#sidenavToggleId');
 
 	sidenavToggle.sideNavigation();
+
+	var loadPanelContent = function(container, uri) {
+		if (uri) {
+			A.io.request(
+				uri,
+				{
+					after: {
+						success: function(event, id, obj) {
+							var response = this.get('responseData');
+
+							container.plug(A.Plugin.ParseContent);
+
+							container.setContent(response);
+							container.addClass('content-loaded');
+						}
+					}
+				}
+			);
+		}
+	}
 
 	var sidenavSlider = $('#sidenavSliderId');
 
@@ -51,13 +71,15 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		}
 	);
 
+	var productMenuSidebar = A.one('#productMenuSidebar');
+
 	sidenavSlider.on(
 		'open.lexicon.sidenav',
 		function(event) {
-			var productMenuSidebar = A.one('#productMenuSidebar');
-
 			if (productMenuSidebar && !productMenuSidebar.hasClass('content-loaded')) {
-				<portlet:namespace />getProductMenuSidebar();
+				var sidenavToggle = A.one('#sidenavToggleId');
+
+				loadPanelContent(productMenuSidebar, sidenavToggle.attr('data-panelurl'));
 			}
 
 			Liferay.Store('com.liferay.control.menu.web_productMenuState', 'open');
@@ -85,40 +107,5 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 				userCollapse.collapse('show');
 			}
 		}
-	);
-</aui:script>
-
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />getProductMenuSidebar',
-		function() {
-			var A = AUI();
-
-			var sidenavToggle = A.one('#sidenavToggleId');
-
-			if (sidenavToggle) {
-				var uri = sidenavToggle.attr('data-panelurl');
-
-				A.io.request(
-					uri,
-					{
-						after: {
-							success: function(event, id, obj) {
-								var response = this.get('responseData');
-
-								var productMenuSidebar = A.one('#productMenuSidebar');
-
-								productMenuSidebar.plug(A.Plugin.ParseContent);
-
-								productMenuSidebar.setContent(response);
-								productMenuSidebar.addClass('content-loaded');
-							}
-						}
-					}
-				);
-			}
-		},
-		['aui-io-request', 'aui-parse-content', 'event-outside']
 	);
 </aui:script>

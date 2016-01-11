@@ -253,6 +253,8 @@ page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
 
+<liferay-frontend:defineObjects />
+
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();
 

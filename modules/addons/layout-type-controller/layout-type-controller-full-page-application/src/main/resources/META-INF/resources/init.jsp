@@ -15,6 +15,7 @@
 --%>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.layout.type.controller.full.page.application.constants.FullPageApplicationLayoutTypeControllerWebKeys" %><%@
@@ -35,3 +36,5 @@ page import="com.liferay.portal.service.LayoutTemplateLocalServiceUtil" %>
 <%@ page import="java.util.List" %>
 
 <liferay-theme:defineObjects />
+
+<liferay-frontend:defineObjects />

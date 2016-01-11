@@ -20,6 +20,7 @@
 
 <%@ taglib prefix="aui" uri="http://liferay.com/tld/aui" %><%@
 taglib prefix="liferay-item-selector" uri="http://liferay.com/tld/item-selector" %><%@
+taglib prefix="liferay-frontend" uri="http://liferay.com/tld/frontend" %><%@
 taglib prefix="liferay-theme" uri="http://liferay.com/tld/theme" %><%@
 taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 
@@ -44,6 +45,8 @@ page import="com.liferay.portlet.PortletURLUtil" %>
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-frontend:defineObjects />
 
 <%
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

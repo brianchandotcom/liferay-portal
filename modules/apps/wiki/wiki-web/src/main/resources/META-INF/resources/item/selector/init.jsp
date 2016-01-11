@@ -16,7 +16,8 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %><%@
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -48,3 +49,5 @@ page import="java.util.List" %>
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-frontend:defineObjects />

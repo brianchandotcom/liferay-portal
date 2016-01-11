@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -58,6 +59,10 @@ public class FriendlyURLServletTest {
 
 	@Before
 	public void setUp() throws Exception {
+		PropsValues.LOCALES_ENABLED = new String[] {"en_US", "hu_HU", "en_GB"};
+
+		LanguageUtil.init();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -66,6 +71,12 @@ public class FriendlyURLServletTest {
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addLayout(_group);
+
+		List<Locale> availableLocales = Arrays.asList(
+			LocaleUtil.US, LocaleUtil.UK, LocaleUtil.HUNGARY);
+
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(), availableLocales, LocaleUtil.US);
 	}
 
 	@After
@@ -82,14 +93,11 @@ public class FriendlyURLServletTest {
 
 	@Test
 	public void testGetRedirectWithI18nPath() throws Exception {
-		List<Locale> availableLocales = Arrays.asList(
-			LocaleUtil.US, LocaleUtil.HUNGARY);
-
-		_group = GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(), availableLocales, LocaleUtil.US);
-
 		testGetI18nRedirect("/fr", "/en");
 		testGetI18nRedirect("/hu", "/hu");
+		testGetI18nRedirect("/en", "/en");
+		testGetI18nRedirect("/en_GB", "/en_GB");
+		testGetI18nRedirect("/en_US", "/en_US");
 	}
 
 	@Test

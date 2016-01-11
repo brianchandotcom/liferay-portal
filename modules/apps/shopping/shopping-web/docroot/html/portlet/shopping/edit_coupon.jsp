@@ -36,6 +36,11 @@ if (coupon != null) {
 double minOrder = BeanParamUtil.getDouble(coupon, request, "minOrder");
 double discount = BeanParamUtil.getDouble(coupon, request, "discount");
 String discountType = BeanParamUtil.getString(coupon, request, "discountType");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((coupon == null) ? LanguageUtil.get(request, "coupon") : coupon.getName()));
 %>
 
 <portlet:actionURL var="editCouponURL">
@@ -46,11 +51,6 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="couponId" type="hidden" value="<%= couponId %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="coupon"
-	/>
 
 	<liferay-ui:error exception="<%= CouponCodeException.class %>" message="please-enter-a-valid-code" />
 	<liferay-ui:error exception="<%= CouponDateException.class %>" message="please-enter-a-start-date-that-comes-before-the-expiration-date" />

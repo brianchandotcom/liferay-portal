@@ -82,7 +82,7 @@
 
 		<var name="key_page" value="${page}" />
 
-		<execute function="Click" locator1="ProductMenu#ADD_PAGE_ICON" />
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PAGE_ICON" />
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${sitePageName}" />
 

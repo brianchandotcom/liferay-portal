@@ -341,7 +341,7 @@
 				<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 				<execute function="AssertClick" locator1="AssetCategorization#CATEGORIES_CATEGORY" value1="${categoryName}" />
-				<execute function="AssertClick" locator1="Button#CLOSE_IFRAME" value1="×" />
+				<execute function="Click" locator1="Icon#CLOSE" />
 
 				<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
 			</then>

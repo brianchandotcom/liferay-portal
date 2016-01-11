@@ -79,26 +79,28 @@ couponSearch.setResults(coupons);
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteCoupons" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="deleteCouponIds" type="hidden" />
+<portlet:actionURL var="editCouponURL">
+	<portlet:param name="struts_action" value="/shopping/edit_coupon" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
-	<c:if test="<%= !coupons.isEmpty() %>">
-		<div class="separator"><!-- --></div>
-
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteCoupons();" %>' value="delete" />
-		</aui:button-row>
-	</c:if>
+<aui:form action="<%= editCouponURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 
 	<liferay-ui:search-container
 		id="coupons"
+		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 		searchContainer="<%= couponSearch %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.shopping.model.ShoppingCoupon"
+			keyProperty="couponId"
 			modelVar="coupon"
 		>
 			<liferay-ui:search-container-column-text
@@ -163,19 +165,12 @@ couponSearch.setResults(coupons);
 </liferay-frontend:add-menu>
 
 <aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteCoupons',
+	$('#<portlet:namespace />deleteCoupons').on(
+		'click',
 		function() {
 			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-coupons") %>')) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
-				document.<portlet:namespace />fm.<portlet:namespace />deleteCouponIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
-				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/shopping/edit_coupon" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+				submitForm(document.<portlet:namespace />fm);
 			}
-		},
-		['liferay-util-list-fields']
+		}
 	);
 </aui:script>

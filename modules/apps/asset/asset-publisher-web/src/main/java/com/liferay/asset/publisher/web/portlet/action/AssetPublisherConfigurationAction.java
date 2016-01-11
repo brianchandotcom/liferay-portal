@@ -610,7 +610,7 @@ public class AssetPublisherConfigurationAction
 		if ((extensions.length == 1) &&
 			extensions[0].equals(Boolean.FALSE.toString())) {
 
-			extensions = new String[] {};
+			extensions = new String[0];
 		}
 
 		setPreference(actionRequest, "classNameIds", classNameIds);

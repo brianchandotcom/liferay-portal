@@ -75,6 +75,18 @@ public class JenkinsJobUtil {
 		return new String(encodedBytes);
 	}
 
+	public static void main(String[] args) throws Exception {
+		if (args.length < 3) {
+			System.exit(1);
+		}
+
+		String jobURL = args[0];
+		String username = args[1];
+		String password = args[2];
+
+		stopJenkinsJob(jobURL, username, password);
+	}
+
 	public static void stopJenkinsJob(
 			String jobURL, String username, String password)
 		throws Exception {

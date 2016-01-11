@@ -57,19 +57,6 @@ public interface AddressLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Address addAddress(
 		com.liferay.portal.model.Address address);
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addAddress(long, String,
-	long, String, String, String, String, String, long, long,
-	int, boolean, boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.Address addAddress(long userId,
-		java.lang.String className, long classPK, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, long typeId, boolean mailing, boolean primary)
-		throws PortalException;
-
 	public com.liferay.portal.model.Address addAddress(long userId,
 		java.lang.String className, long classPK, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,

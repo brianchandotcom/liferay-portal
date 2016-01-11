@@ -364,21 +364,6 @@ public class LayoutSetBranchLocalServiceImpl
 			groupId, privateLayout, true, null);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getUserLayoutSetBranch(long,
-	 *             long, boolean, long, long)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutSetBranch getUserLayoutSetBranch(
-			long userId, long groupId, boolean privateLayout,
-			long layoutSetBranchId)
-		throws PortalException {
-
-		return getUserLayoutSetBranch(
-			userId, groupId, privateLayout, 0, layoutSetBranchId);
-	}
-
 	@Override
 	public LayoutSetBranch getUserLayoutSetBranch(
 			long userId, long groupId, boolean privateLayout, long layoutSetId,

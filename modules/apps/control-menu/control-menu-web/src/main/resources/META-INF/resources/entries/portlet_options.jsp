@@ -14,10 +14,8 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+<%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.staging.bar.web.portlet.constants.StagingBarPortletKeys" %>
-
-<div class="staging-links">
-	<liferay-portlet:runtime portletName="<%= StagingBarPortletKeys.STAGING_BAR %>" />
+<div class="toolbar-group-content" data-qa-id="headerOptions">
+	<liferay-portlet:icon-options direction="right" markupView="lexicon" />
 </div>

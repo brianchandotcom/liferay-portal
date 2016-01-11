@@ -130,6 +130,6 @@ public class IncorrectLineBreaks1 {
 		new String[] {
 			"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
 			"Nine", "Ten"
-		}; 
+		};
 
 }

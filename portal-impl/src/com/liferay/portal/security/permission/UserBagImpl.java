@@ -130,7 +130,7 @@ public class UserBagImpl implements UserBag {
 	}
 
 	private long[] _toSortedLongArray(
-		Collection<? extends BaseModel> baseModels) {
+		Collection<? extends BaseModel<?>> baseModels) {
 
 		if ((baseModels == null) || baseModels.isEmpty()) {
 			return new long[0];
@@ -140,10 +140,8 @@ public class UserBagImpl implements UserBag {
 
 		int index = 0;
 
-		for (BaseModel baseModel : baseModels) {
-			array[index] = (long)baseModel.getPrimaryKeyObj();
-
-			index++;
+		for (BaseModel<?> baseModel : baseModels) {
+			array[index++] = (long)baseModel.getPrimaryKeyObj();
 		}
 
 		Arrays.sort(array);

@@ -18,112 +18,78 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.List;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Raymond Augé
  */
+@Component(immediate = true)
 public class IndexerPostProcessorRegistry {
 
-	public IndexerPostProcessorRegistry() {
-		Registry registry = RegistryUtil.getRegistry();
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(indexer.class.name=*)", unbind = "removeIndexerPostProcessor"
+	)
+	protected void addIndexerPostProcessor(
+		IndexerPostProcessor indexerPostProcessor,
+		Map<String, Object> properties) {
 
-		Filter indexerPostProcessorFilter = registry.getFilter(
-			"(&(indexer.class.name=*)(objectClass=" +
-				IndexerPostProcessor.class.getName() + "))");
+		List<String> indexerClassNames = StringPlus.asList(
+			properties.get("indexer.class.name"));
 
-		_serviceTracker = registry.trackServices(
-			indexerPostProcessorFilter,
-			new IndexerPostProcessorServiceTrackerCustomizer());
+		for (String indexerClassName : indexerClassNames) {
+			Indexer<?> indexer = _indexerRegistry.getIndexer(indexerClassName);
 
-		_serviceTracker.open();
+			if (indexer == null) {
+				_log.error("No indexer for " + indexerClassName + " was found");
+
+				continue;
+			}
+
+			indexer.registerIndexerPostProcessor(indexerPostProcessor);
+		}
 	}
 
-	public void close() {
-		_serviceTracker.close();
+	protected void removeIndexerPostProcessor(
+		IndexerPostProcessor indexerPostProcessor,
+		Map<String, Object> properties) {
+
+		List<String> indexerClassNames = StringPlus.asList(
+			properties.get("indexer.class.name"));
+
+		for (String indexerClassName : indexerClassNames ) {
+			Indexer<?> indexer = _indexerRegistry.getIndexer(indexerClassName);
+
+			if (indexer == null) {
+				_log.error("No indexer for " + indexerClassName + " was found");
+
+				continue;
+			}
+
+			indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
+		_indexerRegistry = indexerRegistry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexerPostProcessorRegistry.class);
 
-	private final ServiceTracker<IndexerPostProcessor, IndexerPostProcessor>
-		_serviceTracker;
-
-	private class IndexerPostProcessorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<IndexerPostProcessor, IndexerPostProcessor> {
-
-		@Override
-		public IndexerPostProcessor addingService(
-			ServiceReference<IndexerPostProcessor> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			IndexerPostProcessor indexerPostProcessor = registry.getService(
-				serviceReference);
-
-			List<String> indexerClassNames = StringPlus.asList(
-				serviceReference.getProperty("indexer.class.name"));
-
-			for (String indexerClassName : indexerClassNames) {
-				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-					indexerClassName);
-
-				if (indexer == null) {
-					_log.error(
-						"No indexer for " + indexerClassName + " was found");
-
-					continue;
-				}
-
-				indexer.registerIndexerPostProcessor(indexerPostProcessor);
-			}
-
-			return indexerPostProcessor;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<IndexerPostProcessor> serviceReference,
-			IndexerPostProcessor indexerPostProcessor) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<IndexerPostProcessor> serviceReference,
-			IndexerPostProcessor indexerPostProcessor) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			List<String> indexerClassNames = StringPlus.asList(
-				serviceReference.getProperty("indexer.class.name"));
-
-			for (String indexerClassName : indexerClassNames ) {
-				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-					indexerClassName);
-
-				if (indexer == null) {
-					_log.error(
-						"No indexer for " + indexerClassName + " was found");
-
-					continue;
-				}
-
-				indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
-			}
-		}
-
-	}
+	private volatile IndexerRegistry _indexerRegistry;
 
 }

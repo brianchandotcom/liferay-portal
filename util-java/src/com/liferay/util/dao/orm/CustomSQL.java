@@ -769,10 +769,14 @@ public class CustomSQL {
 
 			return ArrayUtil.append(
 				StringUtil.split(configuration.get("custom.sql.configs")),
-				"custom-sql/default.xml");
+				new String[] {
+					"custom-sql/default.xml", "META-INF/custom-sql/default.xml"
+				});
 		}
 
-		return new String[] {"custom-sql/default.xml"};
+		return new String[] {
+			"custom-sql/default.xml", "META-INF/custom-sql/default.xml"
+		};
 	}
 
 	protected String insertWildcard(String keyword, WildcardMode wildcardMode) {

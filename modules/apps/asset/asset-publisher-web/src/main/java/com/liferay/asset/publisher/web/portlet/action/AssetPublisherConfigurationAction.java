@@ -607,6 +607,12 @@ public class AssetPublisherConfigurationAction
 		boolean subtypeFieldsFilterEnabled = getSubtypesFieldsFilterEnabled(
 			actionRequest, classNameIds);
 
+		if ((extensions.length == 1) &&
+			extensions[0].equals(Boolean.FALSE.toString())) {
+
+			extensions = new String[] {};
+		}
+
 		setPreference(actionRequest, "classNameIds", classNameIds);
 		setPreference(actionRequest, "classTypeIds", classTypeIds);
 		setPreference(actionRequest, "extensions", extensions);

@@ -75,6 +75,15 @@ public class JenkinsJobUtil {
 		return new String(encodedBytes);
 	}
 
+	public static void stopJenkinsJob(
+			String jobURL, String username, String password)
+		throws Exception {
+
+		stopJob(jobURL, username, password);
+
+		stopDownstreamJobs(jobURL, username, password);
+	}
+
 	private static List<String> getDownstreamURLs(String jobURL)
 		throws Exception {
 
@@ -113,6 +122,50 @@ public class JenkinsJobUtil {
 			JenkinsResultsParserUtil.getLocalURL(consoleOutputURL));
 
 		return getDownstreamURLsFromConsoleOutput(consoleOutput);
+	}
+
+	private static void stopDownstreamJobs(
+			String jobURL, String username, String password)
+		throws Exception {
+
+		List<String> downstreamURLs = getDownstreamURLs(jobURL);
+
+		for (String downstreamURL : downstreamURLs) {
+			stopJob(downstreamURL, username, password);
+		}
+	}
+
+	private static void stopJob(String jobURL, String username, String password)
+		throws Exception {
+
+		String stopURL = appendURL(jobURL, "stop");
+
+		stopURL = JenkinsResultsParserUtil.getLocalURL(stopURL);
+
+		System.out.println(stopURL);
+
+		stopURL = JenkinsResultsParserUtil.fixURL(stopURL.toString());
+
+		URL urlObject = new URL(stopURL);
+		HttpURLConnection httpConnection =
+			(HttpURLConnection)urlObject.openConnection();
+		httpConnection.setRequestMethod("POST");
+
+		String encodedString = encodeAuthorizationFields(username, password);
+
+		httpConnection.setRequestProperty(
+			"Authorization", "Basic " + encodedString);
+
+		int responseCode = httpConnection.getResponseCode();
+		String responseMessage = httpConnection.getResponseMessage();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(responseCode);
+		sb.append(" ");
+		sb.append(responseMessage);
+
+		System.out.println(sb.toString());
 	}
 
 	private static final Pattern _jobNamePattern = Pattern.compile(

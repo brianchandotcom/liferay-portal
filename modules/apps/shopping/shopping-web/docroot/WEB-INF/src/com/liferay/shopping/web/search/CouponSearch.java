@@ -49,7 +49,7 @@ public class CouponSearch extends SearchContainer<ShoppingCoupon> {
 		CouponDisplayTerms displayTerms = (CouponDisplayTerms)getDisplayTerms();
 
 		iteratorURL.setParameter(
-			CouponDisplayTerms.ACTIVE, String.valueOf(displayTerms.isActive()));
+			CouponDisplayTerms.ACTIVE, displayTerms.getActive());
 		iteratorURL.setParameter(
 			CouponDisplayTerms.CODE, displayTerms.getCode());
 		iteratorURL.setParameter(

@@ -23,6 +23,24 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/shopping/view");
 portletURL.setParameter("tabs1", "coupons");
+
+CouponSearch searchContainer = new CouponSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
+
+List headerNames = searchContainer.getHeaderNames();
+
+headerNames.add(StringPool.BLANK);
+
+searchContainer.setRowChecker(new RowChecker(renderResponse));
+
+CouponDisplayTerms searchTerms = (CouponDisplayTerms)searchContainer.getSearchTerms();
+
+int total = ShoppingCouponLocalServiceUtil.searchCount(scopeGroupId, company.getCompanyId(), searchTerms.getKeywords(), searchTerms.isActive(), searchTerms.getDiscountType(), searchTerms.isAndOperator());
+
+searchContainer.setTotal(total);
+
+List results = ShoppingCouponServiceUtil.search(scopeGroupId, company.getCompanyId(), searchTerms.getKeywords(), searchTerms.isActive(), searchTerms.getDiscountType(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+
+searchContainer.setResults(results);
 %>
 
 <liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
@@ -31,10 +49,29 @@ portletURL.setParameter("tabs1", "coupons");
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>
+
+		<%
+		PortletURL discountTypeURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		discountTypeURL.setParameter("active", searchTerms.getActive());
+		%>
+
 		<liferay-frontend:management-bar-navigation
-			navigationParam="discountType"
 			navigationKeys='<%= ArrayUtil.append(new String[] {"all"}, ShoppingCouponConstants.DISCOUNT_TYPES) %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			navigationParam="discountType"
+			portletURL="<%= discountTypeURL %>"
+		/>
+
+		<%
+		PortletURL activeURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		activeURL.setParameter("discountType", searchTerms.getDiscountType());
+		%>
+
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"yes", "no"} %>'
+			navigationParam="active"
+			portletURL="<%= activeURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
@@ -50,40 +87,6 @@ portletURL.setParameter("tabs1", "coupons");
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="deleteCouponIds" type="hidden" />
-
-	<%
-	CouponSearch searchContainer = new CouponSearch(renderRequest, portletURL);
-
-	List headerNames = searchContainer.getHeaderNames();
-
-	headerNames.add(StringPool.BLANK);
-
-	searchContainer.setRowChecker(new RowChecker(renderResponse));
-	%>
-
-	<liferay-ui:search-form
-		page="/html/portlet/shopping/coupon_search.jsp"
-		searchContainer="<%= searchContainer %>"
-		servletContext="<%= application %>"
-	/>
-
-	<%
-	CouponDisplayTerms searchTerms = (CouponDisplayTerms)searchContainer.getSearchTerms();
-
-	String discountType = searchTerms.getDiscountType();
-
-	if (discountType.equals("all")) {
-		discountType = null;
-	}
-
-	int total = ShoppingCouponLocalServiceUtil.searchCount(scopeGroupId, company.getCompanyId(), searchTerms.getKeywords(), searchTerms.isActive(), discountType, searchTerms.isAndOperator());
-
-	searchContainer.setTotal(total);
-
-	List results = ShoppingCouponServiceUtil.search(scopeGroupId, company.getCompanyId(), searchTerms.getKeywords(), searchTerms.isActive(), discountType, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
-
-	searchContainer.setResults(results);
-	%>
 
 	<c:if test="<%= !results.isEmpty() %>">
 		<div class="separator"><!-- --></div>

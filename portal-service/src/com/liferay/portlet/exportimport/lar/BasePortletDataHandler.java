@@ -665,17 +665,19 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	protected boolean doValidateSchemaVersion(String schemaVersion)
 		throws Exception {
 
-		// Major version has to be exactly the same
+		// Major version has to be identical
 
 		Version currentVersion = Version.getInstance(getSchemaVersion());
 		Version importedVersion = Version.getInstance(schemaVersion);
 
-		if (!currentVersion.getMajor().equals(importedVersion.getMajor())) {
+		if (!Validator.equals(
+				currentVersion.getMajor(), importedVersion.getMajor())) {
+
 			return false;
 		}
 
-		// Minor version of the imported should be smaller or equal to the
-		// current minor version
+		// Imported minor version should be less than or equal to the current
+		// minor version
 
 		int currentMinorVersion = GetterUtil.getInteger(
 			currentVersion.getMinor(), -1);
@@ -687,9 +689,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 			return false;
 		}
-
-		// At this point checking the minor is unnecessary, it is compatible
-		// back and forth if the previous variations does not fail.
 
 		return true;
 	}

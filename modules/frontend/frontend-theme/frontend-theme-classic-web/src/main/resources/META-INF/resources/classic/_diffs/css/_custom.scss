@@ -124,8 +124,21 @@ body {
 			top: 0;
 		}
 
+		.panel-notifications-count {
+			top: 50%;
+
+			@include transform(translateY(-50%));
+
+			@include sm {
+				right: -15px;
+			}
+		}
+
 		.sign-in > a, .user-avatar-link {
 			display: block;
+		}
+
+		.sign-in > a {
 			line-height: 28px;
 			padding: 8px 4px 14px 14px;
 		}
@@ -138,6 +151,11 @@ body {
 			overflow: hidden;
 			vertical-align: text-bottom;
 			width: 32px;
+		}
+
+		.user-avatar-link {
+			line-height: 0;
+			padding: 8px 4px 8px 14px;
 		}
 
 		.user-full-name {

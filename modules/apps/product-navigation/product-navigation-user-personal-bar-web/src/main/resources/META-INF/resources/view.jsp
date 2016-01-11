@@ -49,9 +49,9 @@
 
 		<c:choose>
 			<c:when test='<%= Validator.equals(displayStyle, "button") %>'>
-				<a class="user-avatar-link" data-qa-id="openUserMenu" href="javascript:;" id="<portlet:namespace />sidenavUserToggle">
+				<li class="user-avatar-link" data-qa-id="openUserMenu" href="javascript:;" id="<portlet:namespace />sidenavUserToggle">
 					<%= userName %>
-				</a>
+				</li>
 
 				<aui:script sandbox="<%= true %>">
 					var sidenavUserToggle = $('#<portlet:namespace />sidenavUserToggle');

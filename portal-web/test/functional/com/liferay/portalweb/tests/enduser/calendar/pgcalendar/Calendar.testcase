@@ -5103,6 +5103,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_CALENDAR_MANAGE_EVENTS_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Manage Events" />
 			<var name="roleName" value="Calendar Site Role Name" />
+			<var name="roleType" value="Site" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

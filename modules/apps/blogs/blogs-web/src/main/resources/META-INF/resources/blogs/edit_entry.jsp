@@ -134,7 +134,7 @@ RequestBackedPortletURLFactory requestBackedPortletURLFactory = RequestBackedPor
 					String coverImageSelectedItemEventName = liferayPortletResponse.getNamespace() + "coverImageSelectedItem";
 					%>
 
-					<liferay-frontend:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" itemSelectorEventName="<%= coverImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, coverImageSelectedItemEventName) %>" paramName="coverImageFileEntry" uploadURL="<%= uploadCoverImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+					<liferay-item-selector:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" itemSelectorEventName="<%= coverImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, coverImageSelectedItemEventName) %>" paramName="coverImageFileEntry" uploadURL="<%= uploadCoverImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 				</div>
 
 				<aui:input name="coverImageCaption" type="hidden" />
@@ -203,7 +203,7 @@ RequestBackedPortletURLFactory requestBackedPortletURLFactory = RequestBackedPor
 							String smallImageSelectedItemEventName = liferayPortletResponse.getNamespace() + "smallImageSelectedItem";
 							%>
 
-							<liferay-frontend:image-selector fileEntryId="<%= smallImageFileEntryId %>" itemSelectorEventName="<%= smallImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, smallImageSelectedItemEventName) %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+							<liferay-item-selector:image-selector fileEntryId="<%= smallImageFileEntryId %>" itemSelectorEventName="<%= smallImageSelectedItemEventName %>" itemSelectorURL="<%= blogsItemSelectorHelper.getItemSelectorURL(requestBackedPortletURLFactory, themeDisplay, smallImageSelectedItemEventName) %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 						</div>
 
 						<div class="entry-description">

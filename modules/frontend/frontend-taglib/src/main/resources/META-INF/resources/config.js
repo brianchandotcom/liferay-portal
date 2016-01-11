@@ -16,15 +16,6 @@
 								'liferay-portlet-base'
 							]
 						},
-						'liferay-image-selector': {
-							path: 'image_selector/js/image_selector.js',
-							requires: [
-								'aui-base',
-								'liferay-item-selector-dialog',
-								'liferay-portlet-base',
-								'uploader'
-							]
-						},
 						'liferay-management-bar': {
 							path: 'management_bar/js/management_bar.js',
 							requires: [

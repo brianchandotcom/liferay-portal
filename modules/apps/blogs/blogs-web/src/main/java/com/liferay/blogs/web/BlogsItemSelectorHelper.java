@@ -23,6 +23,7 @@ import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class BlogsItemSelectorHelper {
 
 	public String getItemSelectorURL(
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
-		String itemSelectedEventName) {
+		ThemeDisplay themeDisplay, String itemSelectedEventName) {
 
 		if (_itemSelector == null) {
 			return null;
@@ -83,8 +84,7 @@ public class BlogsItemSelectorHelper {
 		UploadItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				uploadURL.toString(),
-				LanguageUtil.get(
-					liferayPortletRequest.getLocale(), "blog-images"));
+				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"));
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			uploadCriterionsDesiredItemSelectorReturnTypes);

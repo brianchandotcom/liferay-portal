@@ -177,7 +177,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 		<portlet:param name="tabs2" value="<%= tabs2 %>" />
 	</portlet:renderURL>
 
-	$('#<portlet:namespace />addUsers').on(
+	AUI.$('#<portlet:namespace />addUsers').on(
 		'click',
 		function(event) {
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
@@ -214,7 +214,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 		}
 	);
 
-	$('#<portlet:namespace />unsetRoleAssignments').on(
+	AUI.$('#<portlet:namespace />unsetRoleAssignments').on(
 		'click',
 		function() {
 			var assigneeType = '<%= HtmlUtil.escapeJS(tabs2) %>';

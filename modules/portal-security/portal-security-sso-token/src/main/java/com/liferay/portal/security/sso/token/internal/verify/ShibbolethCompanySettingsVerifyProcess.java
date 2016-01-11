@@ -68,24 +68,24 @@ public class ShibbolethCompanySettingsVerifyProcess
 
 		dictionary.put(
 			TokenConfigurationKeys.AUTH_ENABLED,
-				_prefsProps.getString(
-					companyId, LegacyTokenPropsKeys.SHIBBOLETH_AUTH_ENABLED,
-					StringPool.FALSE));
+			_prefsProps.getString(
+				companyId, LegacyTokenPropsKeys.SHIBBOLETH_AUTH_ENABLED,
+				StringPool.FALSE));
 		dictionary.put(
 			TokenConfigurationKeys.IMPORT_FROM_LDAP,
-				_prefsProps.getString(
-					companyId, LegacyTokenPropsKeys.SHIBBOLETH_IMPORT_FROM_LDAP,
-					StringPool.FALSE));
+			_prefsProps.getString(
+				companyId, LegacyTokenPropsKeys.SHIBBOLETH_IMPORT_FROM_LDAP,
+				StringPool.FALSE));
 		dictionary.put(
 			TokenConfigurationKeys.LOGOUT_REDIRECT_URL,
-				_prefsProps.getString(
-					companyId, LegacyTokenPropsKeys.SHIBBOLETH_LOGOUT_URL,
-					"/Shibboleth.sso/Logout"));
+			_prefsProps.getString(
+				companyId, LegacyTokenPropsKeys.SHIBBOLETH_LOGOUT_URL,
+				"/Shibboleth.sso/Logout"));
 		dictionary.put(
 			TokenConfigurationKeys.USER_HEADER,
-				_prefsProps.getString(
-					companyId, LegacyTokenPropsKeys.SHIBBOLETH_USER_HEADER,
-					"SHIBBOLETH_USER_EMAIL"));
+			_prefsProps.getString(
+				companyId, LegacyTokenPropsKeys.SHIBBOLETH_USER_HEADER,
+				"SHIBBOLETH_USER_EMAIL"));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

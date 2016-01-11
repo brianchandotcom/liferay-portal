@@ -59,28 +59,28 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		}
 		else {
 		*/
-			Image image = getImage(imageId);
+		Image image = getImage(imageId);
 
-			if (image != null) {
-				imagePersistence.remove(image);
+		if (image != null) {
+			imagePersistence.remove(image);
 
-				Hook hook = HookFactory.getInstance();
+			Hook hook = HookFactory.getInstance();
 
-				try {
-					hook.deleteImage(image);
-				}
-				catch (NoSuchImageException nsie) {
+			try {
+				hook.deleteImage(image);
+			}
+			catch (NoSuchImageException nsie) {
 
-					// DLHook throws NoSuchImageException if the file no longer
-					// exists. See LPS-30430. This exception can be ignored.
+				// DLHook throws NoSuchImageException if the file no longer
+				// exists. See LPS-30430. This exception can be ignored.
 
-					if (_log.isWarnEnabled()) {
-						_log.warn(nsie, nsie);
-					}
+				if (_log.isWarnEnabled()) {
+					_log.warn(nsie, nsie);
 				}
 			}
+		}
 
-			return image;
+		return image;
 		//}
 	}
 

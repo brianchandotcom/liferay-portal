@@ -31,15 +31,15 @@ public class LastSessionRecorderUtil {
 	public static final TransactionLifecycleListener
 		TRANSACTION_LIFECYCLE_LISTENER = new NewTransactionLifecycleListener() {
 
-		@Override
-		protected void doCreated(
-			TransactionAttribute transactionAttribute,
-			TransactionStatus transactionStatus) {
+			@Override
+			protected void doCreated(
+				TransactionAttribute transactionAttribute,
+				TransactionStatus transactionStatus) {
 
-			syncLastSessionState();
-		}
+				syncLastSessionState();
+			}
 
-	};
+		};
 
 	public static void syncLastSessionState() {
 		Session session = _lastSessionThreadLocal.get();

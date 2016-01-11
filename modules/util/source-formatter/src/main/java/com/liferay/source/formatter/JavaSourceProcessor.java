@@ -1844,6 +1844,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					if (Validator.isNull(ifClause) &&
 						!previousLine.endsWith(")") &&
 						!previousLine.endsWith(") {") &&
+						!previousLine.endsWith(") +") &&
 						!previousLine.contains("\tthrows ") &&
 						!previousLine.contains(" throws ") &&
 						(previousLineLeadingTabCount ==
@@ -2721,6 +2722,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				!previousLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
 				!previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
 				!previousLine.endsWith(StringPool.PERIOD) &&
+				(previousLine.contains("[") || !previousLine.contains("]")) &&
 				(lineTabCount == (previousLineTabCount + 1))) {
 
 				return getCombinedLinesContent(

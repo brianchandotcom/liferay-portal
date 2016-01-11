@@ -980,7 +980,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 			Assert.assertEquals(
 				"validateMethodExecuteElement is failing",
-					expectedMessages.get(i), getExceptionMessage());
+				expectedMessages.get(i), getExceptionMessage());
 		}
 	}
 

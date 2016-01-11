@@ -68,19 +68,19 @@ public class SiteMinderCompanySettingsVerifyProcess
 
 		dictionary.put(
 			TokenConfigurationKeys.AUTH_ENABLED,
-				_prefsProps.getString(
-					companyId, LegacyTokenPropsKeys.SITEMINDER_AUTH_ENABLED,
-					StringPool.FALSE));
+			_prefsProps.getString(
+				companyId, LegacyTokenPropsKeys.SITEMINDER_AUTH_ENABLED,
+				StringPool.FALSE));
 		dictionary.put(
 			TokenConfigurationKeys.IMPORT_FROM_LDAP,
-				_prefsProps.getString(
-					companyId, LegacyTokenPropsKeys.SITEMINDER_IMPORT_FROM_LDAP,
-					StringPool.FALSE));
+			_prefsProps.getString(
+				companyId, LegacyTokenPropsKeys.SITEMINDER_IMPORT_FROM_LDAP,
+				StringPool.FALSE));
 		dictionary.put(
 			TokenConfigurationKeys.USER_HEADER,
-				_prefsProps.getString(
-					companyId, LegacyTokenPropsKeys.SITEMINDER_USER_HEADER,
-					"SM_USER"));
+			_prefsProps.getString(
+				companyId, LegacyTokenPropsKeys.SITEMINDER_USER_HEADER,
+				"SM_USER"));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

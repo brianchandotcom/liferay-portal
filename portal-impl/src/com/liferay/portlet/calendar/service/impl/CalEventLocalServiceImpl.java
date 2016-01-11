@@ -350,7 +350,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				double daysToCheck = Math.ceil(
 					CalEventConstants.REMINDERS[
 						CalEventConstants.REMINDERS.length - 1] /
-					Time.DAY);
+							Time.DAY);
 
 				Calendar cal = (Calendar)now.clone();
 

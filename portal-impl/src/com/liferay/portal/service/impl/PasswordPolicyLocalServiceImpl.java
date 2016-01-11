@@ -44,36 +44,6 @@ import java.util.List;
 public class PasswordPolicyLocalServiceImpl
 	extends PasswordPolicyLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addPasswordPolicy(long,
-	 *             boolean, String, String, boolean, boolean, long, boolean,
-	 *             boolean, int, int, int, int, int, int, String, boolean, int,
-	 *             boolean, long, long, int, boolean, int, long, long, long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public PasswordPolicy addPasswordPolicy(
-			long userId, boolean defaultPolicy, String name, String description,
-			boolean changeable, boolean changeRequired, long minAge,
-			boolean checkSyntax, boolean allowDictionaryWords,
-			int minAlphanumeric, int minLength, int minLowerCase,
-			int minNumbers, int minSymbols, int minUpperCase, boolean history,
-			int historyCount, boolean expireable, long maxAge, long warningTime,
-			int graceLimit, boolean lockout, int maxFailure,
-			long lockoutDuration, long resetFailureCount,
-			long resetTicketMaxAge)
-		throws PortalException {
-
-		return addPasswordPolicy(
-			userId, defaultPolicy, name, description, changeable,
-			changeRequired, minAge, checkSyntax, allowDictionaryWords,
-			minAlphanumeric, minLength, minLowerCase, minNumbers, minSymbols,
-			minUpperCase, null, history, historyCount, expireable, maxAge,
-			warningTime, graceLimit, lockout, maxFailure, lockoutDuration,
-			resetFailureCount, resetTicketMaxAge, new ServiceContext());
-	}
-
 	@Override
 	public PasswordPolicy addPasswordPolicy(
 			long userId, boolean defaultPolicy, String name, String description,
@@ -259,19 +229,6 @@ public class PasswordPolicyLocalServiceImpl
 		return passwordPolicyPersistence.findByC_DP(companyId, true);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	@Override
-	public PasswordPolicy getPasswordPolicy(
-			long companyId, long organizationId, long locationId)
-		throws PortalException {
-
-		return getPasswordPolicy(
-			companyId, new long[] {organizationId, locationId});
-	}
-
 	@Override
 	public PasswordPolicy getPasswordPolicy(
 			long companyId, long[] organizationIds)
@@ -348,36 +305,6 @@ public class PasswordPolicyLocalServiceImpl
 	@Override
 	public int searchCount(long companyId, String name) {
 		return passwordPolicyFinder.countByC_N(companyId, name);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #updatePasswordPolicy(long,
-	 *             String, String, boolean, boolean, long, boolean, boolean,
-	 *             int, int, int, int, int, int, String, boolean, int, boolean,
-	 *             long, long, int, boolean, int, long, long, long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public PasswordPolicy updatePasswordPolicy(
-			long passwordPolicyId, String name, String description,
-			boolean changeable, boolean changeRequired, long minAge,
-			boolean checkSyntax, boolean allowDictionaryWords,
-			int minAlphanumeric, int minLength, int minLowerCase,
-			int minNumbers, int minSymbols, int minUpperCase, boolean history,
-			int historyCount, boolean expireable, long maxAge, long warningTime,
-			int graceLimit, boolean lockout, int maxFailure,
-			long lockoutDuration, long resetFailureCount,
-			long resetTicketMaxAge)
-		throws PortalException {
-
-		return updatePasswordPolicy(
-			passwordPolicyId, name, description, changeable, changeRequired,
-			minAge, checkSyntax, allowDictionaryWords, minAlphanumeric,
-			minLength, minLowerCase, minNumbers, minSymbols, minUpperCase, null,
-			history, historyCount, expireable, maxAge, warningTime, graceLimit,
-			lockout, maxFailure, lockoutDuration, resetFailureCount,
-			resetTicketMaxAge, new ServiceContext());
 	}
 
 	@Override

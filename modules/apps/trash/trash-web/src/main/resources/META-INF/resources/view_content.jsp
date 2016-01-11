@@ -286,7 +286,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 
 								<liferay-ui:search-container-column-jsp
 									align="right"
-									cssClass="entry-action"
+									cssClass="list-group-item-field"
 									path="/view_content_action.jsp"
 								/>
 							</liferay-ui:search-container-row>
@@ -334,7 +334,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 
 								<liferay-ui:search-container-column-jsp
 									align="right"
-									cssClass="entry-action"
+									cssClass="list-group-item-field"
 									path="/view_content_action.jsp"
 								/>
 							</liferay-ui:search-container-row>

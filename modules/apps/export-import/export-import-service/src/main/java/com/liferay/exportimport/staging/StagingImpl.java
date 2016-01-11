@@ -2052,20 +2052,10 @@ public class StagingImpl implements Staging {
 		long layoutBranchId = getRecentLayoutBranchId(
 			userId, layoutSetBranchId, plid);
 
-		LayoutBranch layoutBranch = null;
+		LayoutBranch layoutBranch = _layoutBranchLocalService.fetchLayoutBranch(
+			layoutBranchId);
 
-		if (layoutBranchId > 0) {
-			try {
-				_layoutBranchLocalService.getLayoutBranch(layoutBranchId);
-			}
-			catch (NoSuchLayoutBranchException nslbe) {
-				layoutBranch = _layoutBranchLocalService.getMasterLayoutBranch(
-					layoutSetBranchId, plid);
-
-				layoutBranchId = layoutBranch.getLayoutBranchId();
-			}
-		}
-		else {
+		if (layoutBranch == null) {
 			try {
 				layoutBranch = _layoutBranchLocalService.getMasterLayoutBranch(
 					layoutSetBranchId, plid);
@@ -2073,7 +2063,6 @@ public class StagingImpl implements Staging {
 				layoutBranchId = layoutBranch.getLayoutBranchId();
 			}
 			catch (NoSuchLayoutBranchException nslbe) {
-				return 0;
 			}
 		}
 

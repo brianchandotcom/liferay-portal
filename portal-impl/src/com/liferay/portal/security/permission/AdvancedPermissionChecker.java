@@ -56,7 +56,6 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
@@ -630,8 +629,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			UserBag userBag = getUserBag();
 
-			Set<Long> roleIdsSet = new HashSet<>(
-				ListUtil.toList(userBag.getRoleIds()));
+			Set<Long> roleIdsSet = SetUtil.fromArray(userBag.getRoleIds());
 
 			List<Role> userGroupRoles = RoleLocalServiceUtil.getUserGroupRoles(
 				userId, groupId);

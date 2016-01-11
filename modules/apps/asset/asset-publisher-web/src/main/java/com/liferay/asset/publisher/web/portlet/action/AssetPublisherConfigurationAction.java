@@ -603,15 +603,17 @@ public class AssetPublisherConfigurationAction
 		String[] classNameIds = StringUtil.split(
 			getParameter(actionRequest, "classNameIds"));
 		String[] classTypeIds = getClassTypeIds(actionRequest, classNameIds);
+
 		String[] extensions = actionRequest.getParameterValues("extensions");
-		boolean subtypeFieldsFilterEnabled = getSubtypesFieldsFilterEnabled(
-			actionRequest, classNameIds);
 
 		if ((extensions.length == 1) &&
 			extensions[0].equals(Boolean.FALSE.toString())) {
 
 			extensions = new String[0];
 		}
+
+		boolean subtypeFieldsFilterEnabled = getSubtypesFieldsFilterEnabled(
+			actionRequest, classNameIds);
 
 		setPreference(actionRequest, "classNameIds", classNameIds);
 		setPreference(actionRequest, "classTypeIds", classTypeIds);

@@ -15,7 +15,6 @@
 --%>
 
 <liferay-ui:search-container searchContainer="<%= workflowTaskSearch %>">
-
 	<liferay-ui:search-container-results results="<%= workflowTaskSearch.getResults() %>"
 		total="<%= workflowTaskSearch.getTotal() %>">
 	</liferay-ui:search-container-results>
@@ -47,7 +46,6 @@
 				<liferay-ui:search-container-column-text
 					colspan="<%= 2 %>"
 				>
-
 					<h6 class="text-default">
 
 						<%
@@ -101,7 +99,6 @@
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-
 				<liferay-ui:search-container-column-text
 					href="<%= rowURL %>"
 					name="asset-title"

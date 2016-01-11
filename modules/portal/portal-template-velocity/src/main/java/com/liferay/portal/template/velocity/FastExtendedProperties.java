@@ -36,14 +36,7 @@ public class FastExtendedProperties extends ExtendedProperties {
 	public FastExtendedProperties(ExtendedProperties extendedProperties)
 		throws IOException {
 
-		Enumeration keys = extendedProperties.keys();
-
-		while (keys.hasMoreElements()) {
-			String key = (String)keys.nextElement();
-			Object value = extendedProperties.get(key);
-
-			addProperty(key, value);
-		}
+		putAll(extendedProperties);
 	}
 
 	@Override

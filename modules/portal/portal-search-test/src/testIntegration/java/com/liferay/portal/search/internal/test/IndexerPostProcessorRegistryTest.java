@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.deploy.hot;
+package com.liferay.portal.search.internal.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

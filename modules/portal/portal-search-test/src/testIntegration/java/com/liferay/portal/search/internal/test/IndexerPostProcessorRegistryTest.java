@@ -17,11 +17,11 @@ package com.liferay.portal.search.internal.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
@@ -31,19 +31,16 @@ import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
-import com.liferay.registry.ServiceTracker;
 
-import java.lang.reflect.Field;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Gregory Amerson
  */
+@RunWith(Arquillian.class)
 public class IndexerPostProcessorRegistryTest {
 
 	@ClassRule
@@ -52,30 +49,6 @@ public class IndexerPostProcessorRegistryTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			new SyntheticBundleRule("bundle.indexerpostprocessorregistry"));
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_indexerPostProcessorRegistry = new IndexerPostProcessorRegistry();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_indexerPostProcessorRegistry.close();
-	}
-
-	@Test
-	public void testIndexerPostProcessorsSize() throws Exception {
-		Field serviceTrackerField = ReflectionUtil.getDeclaredField(
-			IndexerPostProcessorRegistry.class, "_serviceTracker");
-
-		ServiceTracker<?, ?> serviceTracker =
-			(ServiceTracker<?, ?>)serviceTrackerField.get(
-				_indexerPostProcessorRegistry);
-
-		Object[] services = serviceTracker.getServices();
-
-		assertEquals(4, services.length);
-	}
 
 	@Test
 	public void testMultipleIndexerPostProcessors() throws Exception {
@@ -169,7 +142,5 @@ public class IndexerPostProcessorRegistryTest {
 
 		assertNotNull(contactIndexerPostProcessor);
 	}
-
-	private static IndexerPostProcessorRegistry _indexerPostProcessorRegistry;
 
 }

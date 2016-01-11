@@ -15,6 +15,14 @@
 	</init-param>
 </filter>
 <filter>
+	<filter-name>Ignore Filter - PHP</filter-name>
+	<filter-class>com.liferay.portal.kernel.servlet.PortalClassLoaderFilter</filter-class>
+	<init-param>
+		<param-name>filter-class</param-name>
+		<param-value>com.liferay.portal.servlet.filters.ignore.IgnoreFilter</param-value>
+	</init-param>
+</filter>
+<filter>
 	<filter-name>Ignore Filter - VM</filter-name>
 	<filter-class>com.liferay.portal.kernel.servlet.PortalClassLoaderFilter</filter-class>
 	<init-param>
@@ -29,6 +37,25 @@
 <filter-mapping>
 	<filter-name>Ignore Filter - JSPF</filter-name>
 	<url-pattern>*.jspf</url-pattern>
+</filter-mapping>
+<filter-mapping>
+	<filter-name>Ignore Filter - PHP</filter-name>
+	<url-pattern>*.php</url-pattern>
+	<url-pattern>*.php3</url-pattern>
+	<url-pattern>*.php4</url-pattern>
+	<url-pattern>*.php5</url-pattern>
+	<url-pattern>*.php6</url-pattern>
+	<url-pattern>*.php7</url-pattern>
+	<url-pattern>*.phps</url-pattern>
+	<url-pattern>*.phtml</url-pattern>
+	<url-pattern>*.pcgi</url-pattern>
+	<url-pattern>*.pcgi3</url-pattern>
+	<url-pattern>*.pcgi4</url-pattern>
+	<url-pattern>*.pcgi5</url-pattern>
+	<url-pattern>*.pcgi6</url-pattern>
+	<url-pattern>*.pcgi7</url-pattern>
+	<url-pattern>*.inc</url-pattern>
+	<url-pattern>.htaccess</url-pattern>
 </filter-mapping>
 <filter-mapping>
 	<filter-name>Ignore Filter - VM</filter-name>

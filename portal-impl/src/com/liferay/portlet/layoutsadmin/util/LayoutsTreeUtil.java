@@ -426,7 +426,7 @@ public class LayoutsTreeUtil {
 			jsonObject.put("regularURL", layout.getRegularURL(request));
 			jsonObject.put(
 				"sortable",
-					hasManageLayoutsPermission &&
+				hasManageLayoutsPermission &&
 					SitesUtil.isLayoutSortable(layout));
 			jsonObject.put("type", layout.getType());
 			jsonObject.put(

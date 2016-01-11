@@ -107,17 +107,17 @@ public class CombineLines
 			getString(
 				"test1", "test2", "test3", "test4", "test5", "test6", "test7",
 				"test8", "test9", "test10", "test11", "test12", "test13",
-				"test14", "test15", "test16", "test17", "test18", "test19);
+				"test14", "test15", "test16", "test17", "test18", "test19");
 
 		String test6 =
 			getString(
 				"test1", "test2", "test3", "test4", "test5", "test6", "test7",
 				"test8", "test9", "test10", "test11", "test12", "test13",
-				"test14", "test15", "test16", "test17", "test18", "test19) +
+				"test14", "test15", "test16", "test17", "test18", "test19") +
 			getString(
 				"test1", "test2", "test3", "test4", "test5", "test6", "test7",
 				"test8", "test9", "test10", "test11", "test12", "test13",
-				"test14", "test15", "test16", "test17", "test18", "test19);
+				"test14", "test15", "test16", "test17", "test18", "test19");
 
 		List<String> testList =
 			new ArrayList<>();
@@ -181,11 +181,11 @@ public class CombineLines
 
 		boolean b = StringUtil.contains(
 			anotherStringWithAVeryLongName, StringUtil.trim(
-				anotherStringWithAVeryLongName);
+				anotherStringWithAVeryLongName));
 
 		boolean b2 = StringUtil.contains(
 			test1, "Hello World" + "Hello World Hello" +
-				"Hello World Hello World Hello World Hello World);
+				"Hello World Hello World Hello World Hello World");
 
 		boolean b3 = StringUtil.merge(
 			new String[] {"One", "Two"},

@@ -1279,17 +1279,17 @@ public class BaseExportImportContentProcessor
 	protected static final String PRIVATE_GROUP_SERVLET_MAPPING =
 		PropsUtil.get(
 			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING) +
-			StringPool.SLASH;
+				StringPool.SLASH;
 
 	protected static final String PRIVATE_USER_SERVLET_MAPPING =
 		PropsUtil.get(
 			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING) +
-			StringPool.SLASH;
+				StringPool.SLASH;
 
 	protected static final String PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsUtil.get(
 			PropsKeys.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING) +
-			StringPool.SLASH;
+				StringPool.SLASH;
 
 	protected static final Pattern exportLinksToLayoutPattern = Pattern.compile(
 		"\\[([\\d]+)@(private(-group|-user)?|public)(@([\\d]+))?\\]");

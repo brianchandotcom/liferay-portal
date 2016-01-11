@@ -1844,6 +1844,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					if (Validator.isNull(ifClause) &&
 						!previousLine.endsWith(")") &&
 						!previousLine.endsWith(") {") &&
+						!previousLine.endsWith(") +") &&
 						!previousLine.contains("\tthrows ") &&
 						!previousLine.contains(" throws ") &&
 						(previousLineLeadingTabCount ==
@@ -2721,6 +2722,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				!previousLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
 				!previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
 				!previousLine.endsWith(StringPool.PERIOD) &&
+				(previousLine.contains("[") || !previousLine.contains("]")) &&
 				(lineTabCount == (previousLineTabCount + 1))) {
 
 				return getCombinedLinesContent(
@@ -3384,7 +3386,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**/service/http/*JSONSerializer.java",
 			"**/service/http/*ServiceHttp.java",
 			"**/service/http/*ServiceJSON.java",
-			"**/service/http/*ServiceSoap.java"
+			"**/service/http/*ServiceSoap.java", "**/tools/templates/**"
 		};
 		String[] includes = new String[] {"**/*.java"};
 

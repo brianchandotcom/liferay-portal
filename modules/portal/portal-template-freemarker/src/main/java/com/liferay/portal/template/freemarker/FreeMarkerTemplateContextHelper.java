@@ -85,7 +85,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 			String fullTemplatesPath =
 				StringPool.SLASH + servletContextName +
 					theme.getFreeMarkerTemplateLoader() +
-					theme.getTemplatesPath();
+						theme.getTemplatesPath();
 
 			contextObjects.put("fullTemplatesPath", fullTemplatesPath);
 

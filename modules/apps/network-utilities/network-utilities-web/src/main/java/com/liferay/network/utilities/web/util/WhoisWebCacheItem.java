@@ -45,9 +45,9 @@ public class WhoisWebCacheItem implements WebCacheItem {
 		Whois whois = null;
 
 		try (Socket socket = new Socket(WHOIS_SERVER, WHOIS_SERVER_PORT);
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new InputStreamReader(socket.getInputStream()))) {
+				UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(
+						new InputStreamReader(socket.getInputStream()))) {
 
 			PrintStream out = new PrintStream(socket.getOutputStream());
 

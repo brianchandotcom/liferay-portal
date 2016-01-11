@@ -72,7 +72,7 @@
 	<classpathentry kind="lib" path="lib/development/objenesis.jar"/>
 	<classpathentry kind="lib" path="lib/development/opencv.jar"/>
 	<classpathentry kind="lib" path="lib/development/orangevolt-ant-tasks.jar"/>
-	<classpathentry kind="lib" path="lib/development/org.freemarker-2.3.17.LIFERAY-PATCHED-1.jar"/>
+	<classpathentry kind="lib" path="lib/development/freemarker.jar"/>
 	<classpathentry kind="lib" path="lib/development/p6spy.jar"/>
 	<classpathentry kind="lib" path="lib/development/persistence.jar"/>
 	<classpathentry kind="lib" path="lib/development/piccolo2d-core.jar"/>

@@ -3384,7 +3384,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**/service/http/*JSONSerializer.java",
 			"**/service/http/*ServiceHttp.java",
 			"**/service/http/*ServiceJSON.java",
-			"**/service/http/*ServiceSoap.java"
+			"**/service/http/*ServiceSoap.java", "**/tools/templates/**"
 		};
 		String[] includes = new String[] {"**/*.java"};
 

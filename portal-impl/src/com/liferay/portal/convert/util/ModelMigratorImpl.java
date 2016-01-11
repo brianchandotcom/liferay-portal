@@ -37,6 +37,7 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -67,17 +68,18 @@ public class ModelMigratorImpl implements ModelMigrator {
 				_log.debug("Migrating database tables");
 			}
 
+			Map<String, Tuple> modelTableDetails = new HashMap<>();
+
 			for (Class<? extends BaseModel<?>> model : models) {
-				Map<String, Tuple> modelTableDetails = getModelTableDetails(
-					model);
-
-				MaintenanceUtil.appendStatus(
-					"Processing " + modelTableDetails.size() + " models");
-
-				migrateModel(
-					modelTableDetails, DBManagerUtil.getDB(dialect, dataSource),
-					connection);
+				modelTableDetails.putAll(getModelTableDetails(model));
 			}
+
+			MaintenanceUtil.appendStatus(
+				"Processing " + modelTableDetails.size() + " models");
+
+			migrateModel(
+				modelTableDetails, DBManagerUtil.getDB(dialect, dataSource),
+				connection);
 		}
 		finally {
 			DataAccess.cleanUp(connection);

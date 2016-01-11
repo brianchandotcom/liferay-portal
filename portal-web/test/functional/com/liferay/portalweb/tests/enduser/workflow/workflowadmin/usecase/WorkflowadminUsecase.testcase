@@ -1473,6 +1473,8 @@
 			<var name="workflowResourceValue" value="Blogs Entry" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Workflow Configuration" />
 		</execute>

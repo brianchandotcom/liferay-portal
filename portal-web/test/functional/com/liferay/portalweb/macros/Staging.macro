@@ -109,12 +109,20 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
+		<execute function="Refresh" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging Processes" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Staging#SCHEDULED" value1="Scheduled" />
+
 		<var name="key_scheduleTitleName" value="${scheduleTitleName}" />
 
 		<execute function="AssertTextEquals" locator1="StagingPublishToLive#SCHEDULED_TABLE_TITLE" value1="${scheduleTitleName}" />
 		<execute function="AssertTextEquals" locator1="StagingPublishToLive#SCHEDULED_TABLE_END_DATE" value1="No End Date" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addPageVariationPG">

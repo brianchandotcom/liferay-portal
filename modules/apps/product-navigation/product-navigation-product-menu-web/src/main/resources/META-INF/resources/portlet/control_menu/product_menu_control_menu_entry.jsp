@@ -56,7 +56,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		function(event) {
 			var productMenuSidebar = A.one('#productMenuSidebar');
 
-			if (productMenuSidebar && !productMenuSidebar.hasClass('has-content')) {
+			if (productMenuSidebar && !productMenuSidebar.hasClass('content-loaded')) {
 				<portlet:namespace />getProductMenuSidebar();
 			}
 
@@ -112,7 +112,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 								productMenuSidebar.plug(A.Plugin.ParseContent);
 
 								productMenuSidebar.setContent(response);
-								productMenuSidebar.addClass('has-content');
+								productMenuSidebar.addClass('content-loaded');
 							}
 						}
 					}

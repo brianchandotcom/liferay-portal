@@ -129,7 +129,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 		<div class="${state} lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">
 			<div class="product-menu sidebar sidenav-menu">
 				<#if state == "open">
-					<div class="has-content" id="productMenuSidebar">
+					<div class="content-loaded" id="productMenuSidebar">
 						<@liferay.product_menu />
 					</div>
 				<#else>

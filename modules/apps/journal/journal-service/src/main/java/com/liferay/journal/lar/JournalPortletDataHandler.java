@@ -46,10 +46,10 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
-import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.util.List;
 
@@ -408,16 +408,18 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 							"this.resourcePrimKey",
 							"versionArticle.resourcePrimKey"));
 
-					Property workflowStatusProperty = PropertyFactoryUtil.forName("status");
-					
-					StagedModelDataHandler<?> stagedModelDataHandler = 
+					Property workflowStatusProperty =
+						PropertyFactoryUtil.forName("status");
+
+					StagedModelDataHandler<?> stagedModelDataHandler =
 							StagedModelDataHandlerRegistryUtil.
 							getStagedModelDataHandler(
-									JournalArticle.class.getName());
+								JournalArticle.class.getName());
 
-					versionArticleDynamicQuery.add(workflowStatusProperty.in(
+					versionArticleDynamicQuery.add(
+						workflowStatusProperty.in(
 							stagedModelDataHandler.getExportableStatuses()));
-					
+
 					Property versionProperty = PropertyFactoryUtil.forName(
 						"version");
 

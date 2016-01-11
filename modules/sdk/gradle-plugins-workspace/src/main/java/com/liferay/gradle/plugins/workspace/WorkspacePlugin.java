@@ -74,12 +74,6 @@ public class WorkspacePlugin implements Plugin<Project> {
 		WorkspaceExtension workspaceExtension = GradleUtil.addExtension(
 			project, PLUGIN_NAME, WorkspaceExtension.class);
 
-		GradleUtil.applyScript(
-			project,
-			"com/liferay/gradle/plugins/workspace/dependencies/" +
-				"config-workspace.gradle",
-			project);
-
 		Configuration bundleConfiguration = addConfigurationBundle(
 			project, workspaceExtension);
 

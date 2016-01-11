@@ -745,7 +745,8 @@ public class PortletBagFactory {
 			stagedModelDataHandlerInstances =
 				ServiceTrackerCollections.openList(
 					(Class<StagedModelDataHandler<?>>)(Class<?>)
-					StagedModelDataHandler.class, filter, properties);
+						StagedModelDataHandler.class,
+					filter, properties);
 
 		List<String> stagedModelDataHandlerClasses =
 			portlet.getStagedModelDataHandlerClasses();

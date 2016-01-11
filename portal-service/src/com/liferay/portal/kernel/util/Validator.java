@@ -1371,7 +1371,7 @@ public class Validator {
 
 	private static final Pattern _emailAddressPattern = Pattern.compile(
 		"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
-		"(?:[a-zA-Z0-9](?:-*[a-zA-Z0-9])?\\.*)+");
+			"(?:[a-zA-Z0-9](?:-*[a-zA-Z0-9])?\\.*)+");
 	private static final Pattern _ipv4AddressPattern = Pattern.compile(
 		"^" +
 		"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +

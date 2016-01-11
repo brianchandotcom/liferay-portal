@@ -79,14 +79,18 @@ public class SPIPortalCacheManagerConfiguratorImpl
 
 		skeletonProxyMethodSignatures = future.get();
 
-		Class<? extends PortalCacheManager
-			<? extends Serializable, ? extends Serializable>>
-				stubClass =
-					(Class<? extends PortalCacheManager
-						<? extends Serializable, ? extends Serializable>>)
-							IntrabandProxyUtil.getStubClass(
-								BaseIntrabandPortalCacheManager.class,
-								PortalCacheManager.class.getName());
+		Class
+			<? extends PortalCacheManager
+				<? extends Serializable, ? extends Serializable>>
+					stubClass =
+						(Class
+							<? extends PortalCacheManager
+								<? extends Serializable,
+									? extends Serializable>>)
+										IntrabandProxyUtil.getStubClass(
+											BaseIntrabandPortalCacheManager.
+												class,
+											PortalCacheManager.class.getName());
 
 		stubProxyMethodSignatures = IntrabandProxyUtil.getProxyMethodSignatures(
 			stubClass);

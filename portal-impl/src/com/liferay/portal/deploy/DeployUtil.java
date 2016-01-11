@@ -274,13 +274,15 @@ public class DeployUtil {
 				resource);
 
 		//if (!file.exists() || resource.startsWith("ext-")) {
-			File parentFile = file.getParentFile();
 
-			if (parentFile != null) {
-				FileUtil.mkdirs(parentFile);
-			}
+		File parentFile = file.getParentFile();
 
-			StreamUtil.transfer(inputStream, new FileOutputStream(file));
+		if (parentFile != null) {
+			FileUtil.mkdirs(parentFile);
+		}
+
+		StreamUtil.transfer(inputStream, new FileOutputStream(file));
+
 		//}
 
 		return FileUtil.getAbsolutePath(file);

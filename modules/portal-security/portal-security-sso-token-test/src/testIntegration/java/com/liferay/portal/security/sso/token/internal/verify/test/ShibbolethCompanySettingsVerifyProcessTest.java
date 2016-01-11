@@ -66,13 +66,12 @@ public class ShibbolethCompanySettingsVerifyProcessTest
 					TokenConfigurationKeys.IMPORT_FROM_LDAP, StringPool.TRUE)));
 		Assert.assertEquals(
 			"/test/shibboleth/url",
-				settings.getValue(
-					TokenConfigurationKeys.LOGOUT_REDIRECT_URL,
-					StringPool.BLANK));
+			settings.getValue(
+				TokenConfigurationKeys.LOGOUT_REDIRECT_URL, StringPool.BLANK));
 		Assert.assertEquals(
 			"testShibboleth",
-				settings.getValue(
-					TokenConfigurationKeys.USER_HEADER, StringPool.BLANK));
+			settings.getValue(
+				TokenConfigurationKeys.USER_HEADER, StringPool.BLANK));
 	}
 
 	@Override

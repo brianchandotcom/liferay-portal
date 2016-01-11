@@ -34,37 +34,37 @@ public class ThreadLocalCacheManager {
 	public static final TransactionLifecycleListener
 		TRANSACTION_LIFECYCLE_LISTENER = new NewTransactionLifecycleListener() {
 
-		@Override
-		protected void doCommitted(
-			TransactionAttribute transactionAttribute,
-			TransactionStatus transactionStatus) {
+			@Override
+			protected void doCommitted(
+				TransactionAttribute transactionAttribute,
+				TransactionStatus transactionStatus) {
 
-			if (!transactionAttribute.isReadOnly()) {
-				enable(Lifecycle.REQUEST);
+				if (!transactionAttribute.isReadOnly()) {
+					enable(Lifecycle.REQUEST);
+				}
 			}
-		}
 
-		@Override
-		protected void doCreated(
-			TransactionAttribute transactionAttribute,
-			TransactionStatus transactionStatus) {
+			@Override
+			protected void doCreated(
+				TransactionAttribute transactionAttribute,
+				TransactionStatus transactionStatus) {
 
-			if (!transactionAttribute.isReadOnly()) {
-				disable(Lifecycle.REQUEST);
+				if (!transactionAttribute.isReadOnly()) {
+					disable(Lifecycle.REQUEST);
+				}
 			}
-		}
 
-		@Override
-		protected void doRollbacked(
-			TransactionAttribute transactionAttribute,
-			TransactionStatus transactionStatus, Throwable throwable) {
+			@Override
+			protected void doRollbacked(
+				TransactionAttribute transactionAttribute,
+				TransactionStatus transactionStatus, Throwable throwable) {
 
-			if (!transactionAttribute.isReadOnly()) {
-				enable(Lifecycle.REQUEST);
+				if (!transactionAttribute.isReadOnly()) {
+					enable(Lifecycle.REQUEST);
+				}
 			}
-		}
 
-	};
+		};
 
 	public static void clearAll(Lifecycle lifecycle) {
 		Map<Lifecycle, Map<Serializable, ThreadLocalCache<?>>>

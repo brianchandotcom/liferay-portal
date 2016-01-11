@@ -346,12 +346,12 @@ public class WorkflowDefinitionLinkDisplayContext {
 		PredicateFilter<WorkflowHandler<?>> predicateFilter =
 			new PredicateFilter<WorkflowHandler<?>>() {
 
-			@Override
-			public boolean filter(WorkflowHandler<?> workflowHandler) {
-				return workflowHandler.isVisible();
-			}
+				@Override
+				public boolean filter(WorkflowHandler<?> workflowHandler) {
+					return workflowHandler.isVisible();
+				}
 
-		};
+			};
 
 		return ListUtil.filter(workflowHandlers, predicateFilter);
 	}

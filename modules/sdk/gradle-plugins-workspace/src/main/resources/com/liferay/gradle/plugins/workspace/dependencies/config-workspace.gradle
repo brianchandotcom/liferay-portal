@@ -13,9 +13,9 @@
  */
 
 workspace {
-	bundleGroup = project.properties["liferay.workspace.bundle.group"]
-	bundleName = project.properties["liferay.workspace.bundle.name"]
-	bundleVersion = project.properties["liferay.workspace.bundle.version"]
+	bundleArtifactGroup = project.properties["liferay.workspace.bundle.artifact.group"]
+	bundleArtifactName = project.properties["liferay.workspace.bundle.artifact.name"]
+	bundleArtifactVersion = project.properties["liferay.workspace.bundle.artifact.version"]
 	bundleMavenUrl = project.properties["liferay.workspace.bundle.maven.url"]
 	environment = project.properties["liferay.workspace.environment"]
 	homeDir = rootProject.file(project.properties["liferay.workspace.home.dir"])

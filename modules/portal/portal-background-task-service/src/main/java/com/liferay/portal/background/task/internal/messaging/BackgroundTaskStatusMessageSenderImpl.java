@@ -12,45 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.backgroundtask;
+package com.liferay.portal.background.task.internal.messaging;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
-import com.liferay.registry.dependency.ServiceDependencyListener;
-import com.liferay.registry.dependency.ServiceDependencyManager;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.util.Validator;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrew Betts
  */
+@Component(immediate = true, service = BackgroundTaskStatusMessageSender.class)
 public class BackgroundTaskStatusMessageSenderImpl
 	implements BackgroundTaskStatusMessageSender {
-
-	public void afterPropertiesSet() {
-		ServiceDependencyManager serviceDependencyManager =
-			new ServiceDependencyManager();
-
-		serviceDependencyManager.addServiceDependencyListener(
-			new ServiceDependencyListener() {
-
-				@Override
-				public void dependenciesFulfilled() {
-					_singleDestinationMessageSender =
-						SingleDestinationMessageSenderFactoryUtil.
-							createSingleDestinationMessageSender(
-								_destinationName);
-				}
-
-				@Override
-				public void destroy() {
-				}
-
-			});
-
-		serviceDependencyManager.registerDependencies(
-			SingleDestinationMessageSenderFactory.class);
-	}
 
 	@Override
 	public void sendBackgroundTaskStatusMessage(Message message) {
@@ -58,14 +37,22 @@ public class BackgroundTaskStatusMessageSenderImpl
 			return;
 		}
 
-		_singleDestinationMessageSender.send(message);
+		String destinationName = message.getDestinationName();
+
+		if (Validator.isNull(destinationName)) {
+			destinationName = DestinationNames.BACKGROUND_TASK_STATUS;
+
+			message.setDestinationName(destinationName);
+		}
+
+		_messageBus.sendMessage(destinationName, message);
 	}
 
-	public void setDestinationName(String destinationName) {
-		_destinationName = destinationName;
+	@Reference(unbind = "-")
+	protected void setMessageBus(MessageBus messageBus) {
+		_messageBus = messageBus;
 	}
 
-	private String _destinationName;
-	private SingleDestinationMessageSender _singleDestinationMessageSender;
+	private volatile MessageBus _messageBus;
 
 }

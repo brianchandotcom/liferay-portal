@@ -198,7 +198,9 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
 			_whitelist.addAll(authTokenIgnoreActions);
 
-			return null;
+			Registry registry = RegistryUtil.getRegistry();
+
+			return registry.getService(serviceReference);
 		}
 
 		@Override

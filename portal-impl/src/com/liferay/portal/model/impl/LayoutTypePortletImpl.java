@@ -806,9 +806,7 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public boolean isPortletEmbedded(String portletId) {
-		List<Portlet> embeddedPortlets = getEmbeddedPortlets();
-
-		for (Portlet embeddedPortlet : embeddedPortlets) {
+		for (Portlet embeddedPortlet : getEmbeddedPortlets()) {
 			if (portletId.equals(embeddedPortlet.getPortletId())) {
 				return true;
 			}

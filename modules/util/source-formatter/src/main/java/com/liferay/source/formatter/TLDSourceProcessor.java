@@ -42,9 +42,7 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _typePattern.matcher(content);
 
 		while (matcher.find()) {
-			String beforeMatch = content.substring(0, matcher.start());
-
-			int lineCount = StringUtil.count(beforeMatch, "\n") + 1;
+			int lineCount = getLineCount(content, matcher.start());
 
 			processErrorMessage(
 				fileName,

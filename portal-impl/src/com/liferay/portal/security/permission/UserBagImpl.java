@@ -15,7 +15,6 @@
 package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -42,10 +41,10 @@ public class UserBagImpl implements UserBag {
 		Collection<Role> userRoles) {
 
 		_userId = userId;
-		_userGroupIds = _toUniqueSortedLongArray(userGroups);
-		_userOrgIds = _toUniqueSortedLongArray(userOrgs);
-		_userOrgGroupIds = _toUniqueSortedLongArray(userOrgGroups);
-		_userRoleIds = _toUniqueSortedLongArray(userRoles);
+		_userGroupIds = _toSortedLongArray(userGroups);
+		_userOrgIds = _toSortedLongArray(userOrgs);
+		_userOrgGroupIds = _toSortedLongArray(userOrgGroups);
+		_userRoleIds = _toSortedLongArray(userRoles);
 	}
 
 	@Override
@@ -130,7 +129,7 @@ public class UserBagImpl implements UserBag {
 		return false;
 	}
 
-	private long[] _toUniqueSortedLongArray(
+	private long[] _toSortedLongArray(
 		Collection<? extends BaseModel> baseModels) {
 
 		if ((baseModels == null) || baseModels.isEmpty()) {
@@ -146,8 +145,6 @@ public class UserBagImpl implements UserBag {
 
 			index++;
 		}
-
-		array = ArrayUtil.unique(array);
 
 		Arrays.sort(array);
 

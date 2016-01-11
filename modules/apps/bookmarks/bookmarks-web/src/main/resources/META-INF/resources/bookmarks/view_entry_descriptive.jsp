@@ -33,12 +33,10 @@ else {
 }
 
 entry = entry.toEscapedModel();
-
-String entryHREF = themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId();
 %>
 
 <h4>
-	<aui:a href="<%= entryHREF.toString() %>">
+	<aui:a href='<%= themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId() %>'>
 		<%= entry.getName() %>
 	</aui:a>
 </h4>

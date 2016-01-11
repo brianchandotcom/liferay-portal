@@ -17,7 +17,7 @@ package com.liferay.control.menu.web;
 import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
-import com.liferay.control.menu.constants.ControlMenuWebKeys;
+import com.liferay.control.menu.web.constants.ControlMenuWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;

@@ -24,9 +24,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.control.menu.constants.ControlMenuWebKeys" %><%@
-page import="com.liferay.control.menu.web.InformationMessagesControlMenuEntry" %><%@
+<%@ page import="com.liferay.control.menu.web.InformationMessagesControlMenuEntry" %><%@
 page import="com.liferay.control.menu.web.constants.ControlMenuPortletKeys" %><%@
+page import="com.liferay.control.menu.web.constants.ControlMenuWebKeys" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@

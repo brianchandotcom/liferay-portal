@@ -128,7 +128,15 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	<#if is_setup_complete && is_signed_in>
 		<div class="${state} lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">
 			<div class="product-menu sidebar sidenav-menu">
-				<@liferay.product_menu />
+				<#if state == "open">
+					<div class="content-loaded" id="productMenuSidebar">
+						<@liferay.product_menu />
+					</div>
+				<#else>
+					<div id="productMenuSidebar">
+						<div class="loading-animation"></div>
+					</div>
+				</#if>
 			</div>
 		</div>
 	</#if>

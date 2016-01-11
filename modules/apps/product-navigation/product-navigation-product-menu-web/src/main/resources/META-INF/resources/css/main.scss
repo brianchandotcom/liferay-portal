@@ -25,8 +25,8 @@ body {
 
 .product-menu {
 	.sidebar-header {
-		padding-bottom: 5px;
-		padding-top: 5px;
+		padding-bottom: 10px;
+		padding-top: 12px;
 
 		@include sm() {
 			padding: 19px 24px;
@@ -34,6 +34,8 @@ body {
 
 		.sidenav-close {
 			float: right;
+			margin-right: -8px;
+			margin-top: -4px;
 		}
 	}
 
@@ -49,7 +51,7 @@ body {
 		padding: 0;
 		position: absolute;
 		right: 0;
-		top: 35px;
+		top: 48px;
 
 		@include sm() {
 			top: 63px;
@@ -192,7 +194,7 @@ body {
 /* Layouts Tree */
 
 .product-menu {
-	li.tree-node .tree-node-content.lfr-root-node{
+	li.tree-node .tree-node-content.lfr-root-node {
 		display: none;
 	}
 
@@ -221,7 +223,7 @@ body {
 	}
 
 	.layout-set-tabs {
-		font-size: .9em;
+		font-size: 0.9em;
 		padding: 0 0 2em 0;
 
 		.layout-set-tree-add, .layout-set-tree-edit {
@@ -259,7 +261,6 @@ body {
 	}
 }
 
-
 /* Icon Animation */
 
 .toast-animation {
@@ -275,8 +276,8 @@ body {
 		left: 0;
 		position: absolute;
 		top: 1px;
-		@include transition(all .6s $ease-out-quart);
-		@include transition-delay(.2s);
+		@include transition(all 0.6s $ease-out-quart);
+		@include transition-delay(0.2s);
 	}
 
 	.cn {
@@ -286,9 +287,11 @@ body {
 		height: 18px;
 		position: absolute;
 		right: 0;
+
+		@include transition(all 0.3s $ease-out-quart);
+		@include transition-delay(0.2s);
+
 		width: 15px;
-		@include transition(all .3s $ease-out-quart);
-		@include transition-delay(.2s);
 	}
 }
 

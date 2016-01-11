@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.workspace;
 
+import com.liferay.gradle.util.GradleUtil;
+
 import java.io.File;
 
 import org.gradle.api.Project;
@@ -24,7 +26,24 @@ import org.gradle.api.Project;
 public class WorkspaceExtension {
 
 	public WorkspaceExtension(Project project) {
-		_project = project;
+		_bundleArtifactGroup = GradleUtil.getProperty(
+			project, "liferay.workspace.bundle.artifact.group", (String)null);
+		_bundleArtifactName = GradleUtil.getProperty(
+			project, "liferay.workspace.bundle.artifact.name", (String)null);
+		_bundleArtifactVersion = GradleUtil.getProperty(
+			project, "liferay.workspace.bundle.artifact.version", (String)null);
+		_bundleMavenUrl = GradleUtil.getProperty(
+			project, "liferay.workspace.bundle.maven.url", (String)null);
+		_environment = GradleUtil.getProperty(
+			project, "liferay.workspace.environment", (String)null);
+		_homeDir = GradleUtil.getProperty(
+			project, "liferay.workspace.home.dir", (File)null);
+		_modulesDir = GradleUtil.getProperty(
+			project, "liferay.workspace.modules.dir", (File)null);
+		_pluginsSDKDir = GradleUtil.getProperty(
+			project, "liferay.workspace.plugins.sdk.dir", (File)null);
+		_themesDir = GradleUtil.getProperty(
+			project, "liferay.workspace.themes.dir", (File)null);
 	}
 
 	public String getBundleArtifactGroup() {
@@ -48,66 +67,29 @@ public class WorkspaceExtension {
 	}
 
 	public File getHomeDir() {
-		return _project.file(_homeDir);
+		return _homeDir;
 	}
 
 	public File getModulesDir() {
-		return _project.file(_modulesDir);
+		return _modulesDir;
 	}
 
 	public File getPluginsSDKDir() {
-		return _project.file(_pluginsSDKDir);
+		return _pluginsSDKDir;
 	}
 
 	public File getThemesDir() {
-		return _project.file(_themesDir);
+		return _themesDir;
 	}
 
-	public void setBundleArtifactGroup(String bundleArtifactGroup) {
-		_bundleArtifactGroup = bundleArtifactGroup;
-	}
-
-	public void setBundleArtifactName(String bundleArtifactName) {
-		_bundleArtifactName = bundleArtifactName;
-	}
-
-	public void setBundleArtifactVersion(String bundleArtifactVersion) {
-		_bundleArtifactVersion = bundleArtifactVersion;
-	}
-
-	public void setBundleMavenUrl(String bundleMavenUrl) {
-		_bundleMavenUrl = bundleMavenUrl;
-	}
-
-	public void setEnvironment(String environment) {
-		_environment = environment;
-	}
-
-	public void setHomeDir(Object homeDir) {
-		_homeDir = homeDir;
-	}
-
-	public void setModulesDir(Object modulesDir) {
-		_modulesDir = modulesDir;
-	}
-
-	public void setPluginsSDKDir(Object pluginsSDKDir) {
-		_pluginsSDKDir = pluginsSDKDir;
-	}
-
-	public void setThemesDir(Object themesDir) {
-		_themesDir = themesDir;
-	}
-
-	private String _bundleArtifactGroup;
-	private String _bundleArtifactName;
-	private String _bundleArtifactVersion;
-	private String _bundleMavenUrl;
-	private String _environment;
-	private Object _homeDir;
-	private Object _modulesDir;
-	private Object _pluginsSDKDir;
-	private final Project _project;
-	private Object _themesDir;
+	private final String _bundleArtifactGroup;
+	private final String _bundleArtifactName;
+	private final String _bundleArtifactVersion;
+	private final String _bundleMavenUrl;
+	private final String _environment;
+	private final File _homeDir;
+	private final File _modulesDir;
+	private final File _pluginsSDKDir;
+	private final File _themesDir;
 
 }

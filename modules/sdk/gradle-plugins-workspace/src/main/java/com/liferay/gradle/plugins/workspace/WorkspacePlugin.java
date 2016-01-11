@@ -14,20 +14,29 @@
 
 package com.liferay.gradle.plugins.workspace;
 
+import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.gulp.GulpPlugin;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
+
+import groovy.json.JsonOutput;
 
 import groovy.lang.Closure;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -36,6 +45,7 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.AntBuilder;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -48,20 +58,26 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Tar;
 import org.gradle.api.tasks.bundling.Zip;
-
-import org.json.JSONObject;
+import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class WorkspacePlugin implements Plugin<Project> {
 
 	public static final String BUNDLE_CONFIGURATION_NAME = "bundle";
+
+	public static final String CREATE_LIFERAY_THEME_JSON_TASK_NAME =
+		"createLiferayThemeJson";
 
 	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
 
@@ -70,6 +86,9 @@ public class WorkspacePlugin implements Plugin<Project> {
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
 	public static final String PLUGIN_NAME = "workspace";
+
+	public static final String UPDATE_SDK_PROPERTIES_TASK_NAME =
+		"updateSDKProperties";
 
 	@Override
 	public void apply(Project project) {
@@ -90,15 +109,13 @@ public class WorkspacePlugin implements Plugin<Project> {
 			distBundleTarTask, distBundleZipTask
 		};
 
-		Copy initBundle = addTaskInitBundle(
+		Copy initBundleTask = addTaskInitBundle(
 			project, workspaceExtension, bundleConfiguration);
 
-		configureModules(project, workspaceExtension);
-
-		configureThemes(project, workspaceExtension, distBundleTasks);
-
+		configureModules(project, workspaceExtension, distBundleTasks);
 		configurePluginsSDK(
-			project, workspaceExtension, initBundle, distBundleTasks);
+			project, workspaceExtension, initBundleTask, distBundleTasks);
+		configureThemes(project, workspaceExtension, distBundleTasks);
 	}
 
 	protected Configuration addConfigurationBundle(
@@ -136,6 +153,74 @@ public class WorkspacePlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected Task addTaskCreateLiferayThemeJson(
+		Project project, final WorkspaceExtension workspaceExtension) {
+
+		Task task = project.task(CREATE_LIFERAY_THEME_JSON_TASK_NAME);
+
+		final File liferayThemeJsonFile = project.file("liferay-theme.json");
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					Map<String, Object> map = new HashMap<>();
+
+					File appServerDir = new File(
+						workspaceExtension.getHomeDir(), "tomcat-7.0.62");
+
+					map.put("appServerPath", appServerDir.getAbsolutePath());
+
+					File appServerThemeDir = new File(
+						appServerDir, "webapps/" + project.getName());
+
+					map.put(
+						"appServerPathTheme",
+						appServerThemeDir.getAbsolutePath());
+
+					map.put("deployed", false);
+
+					File deployDir = new File(
+						workspaceExtension.getHomeDir(), "deploy");
+
+					map.put("deployPath", deployDir.getAbsolutePath());
+					map.put("themeName", project.getName());
+
+					String json = JsonOutput.toJson(
+						Collections.singletonMap("LiferayTheme", map));
+
+					try {
+						Files.write(
+							liferayThemeJsonFile.toPath(),
+							json.getBytes(StandardCharsets.UTF_8));
+					}
+					catch (IOException ioe) {
+						throw new GradleException(ioe.getMessage(), ioe);
+					}
+				}
+
+			});
+
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					if (liferayThemeJsonFile.exists()) {
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
+		return task;
 	}
 
 	protected <T extends AbstractArchiveTask> T addTaskDistBundle(
@@ -183,34 +268,35 @@ public class WorkspacePlugin implements Plugin<Project> {
 		final Project project, final WorkspaceExtension workspaceExtension,
 		final Configuration bundleConfiguration) {
 
-		final Copy copy = GradleUtil.addTask(
+		Copy copy = GradleUtil.addTask(
 			project, INIT_BUNDLE_TASK_NAME, Copy.class);
 
-		copy.doFirst(new Action<Task>() {
+		copy.doFirst(
+			new Action<Task>() {
 
-			@Override
-			public void execute(Task task) {
-				project.delete(copy.getDestinationDir());
-			}
+				@Override
+				public void execute(Task task) {
+					Copy copy = (Copy)task;
 
-		});
+					project.delete(copy.getDestinationDir());
+				}
+
+			});
 
 		copy.from(
 			new Callable<FileTree>() {
 
 				@Override
 				public FileTree call() throws Exception {
-					File bundle = bundleConfiguration.getSingleFile();
+					File file = bundleConfiguration.getSingleFile();
 
-					String bundleName = bundle.getName();
+					String fileName = file.getName();
 
-					if (bundleName.endsWith(".tar.gz")) {
-						return project.tarTree(
-							bundleConfiguration.getSingleFile());
+					if (fileName.endsWith(".tar.gz")) {
+						return project.tarTree(file);
 					}
 					else {
-						return project.zipTree(
-							bundleConfiguration.getSingleFile());
+						return project.zipTree(file);
 					}
 				}
 
@@ -224,89 +310,99 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 			});
 
-		File rootDir = project.getRootDir();
+		Project rootProject = project.getRootProject();
 
 		copy.from(
-			new File(rootDir, "/configs/common"),
-			new File(rootDir, "/configs/${gradle.environment}"));
+			rootProject.file("configs/common"),
+			rootProject.file("configs/" + workspaceExtension.getEnvironment()));
 
 		copy.into(workspaceExtension.getHomeDir());
 
 		copy.setDescription(
-			"Download and upzip the bundle into " +
-			workspaceExtension.getHomeDir());
+			"Downloads and unzips the bundle into " +
+			workspaceExtension.getHomeDir() + ".");
 		copy.setIncludeEmptyDirs(false);
 
 		return copy;
 	}
 
 	protected void configureModules(
-		final Project project, final WorkspaceExtension workspaceExtension) {
+		Project project, final WorkspaceExtension workspaceExtension,
+		final AbstractArchiveTask[] distBundleTasks) {
 
-		final Project modulesProject = GradleUtil.getProject(
+		Project modulesProject = GradleUtil.getProject(
 			project, workspaceExtension.getModulesDir());
 
-		modulesProject.subprojects(new Action<Project>() {
-			@Override
-			public void execute(Project subproject) {
-				Set<Project> subprojects = subproject.getSubprojects();
+		if (modulesProject == null) {
+			return;
+		}
 
-				if ((subprojects != null) && (subprojects.size() > 0)) {
+		Action<Project> action = new Action<Project>() {
+
+			@Override
+			public void execute(Project project) {
+				Set<Project> subprojects = project.getSubprojects();
+
+				if (!subprojects.isEmpty()) {
 					return;
 				}
 
-				GradleUtil.applyPlugin(subproject, LiferayPlugin.class);
-
-				Zip zip = (Zip)GradleUtil.getTask(project, "distBundle");
-
-				zip.into(
-					"deploy",
-					new Closure<Void>(null) {
-
-						@SuppressWarnings("unused")
-						public void doCall(CopySourceSpec copySourceSpec) {
-							copySourceSpec.from(JavaPlugin.JAR_TASK_NAME);
-						}
-
-					});
+				GradleUtil.applyPlugin(project, LiferayPlugin.class);
 
 				LiferayExtension liferayExtension = GradleUtil.getExtension(
-					subproject, LiferayExtension.class);
+					project, LiferayExtension.class);
 
 				liferayExtension.setAppServerParentDir(
 					workspaceExtension.getHomeDir());
+
+				for (AbstractArchiveTask abstractArchiveTask :
+						distBundleTasks) {
+
+					abstractArchiveTask.into(
+						"deploy",
+						new Closure<Void>(null) {
+
+							@SuppressWarnings("unused")
+							public void doCall(CopySourceSpec copySourceSpec) {
+								copySourceSpec.from(JavaPlugin.JAR_TASK_NAME);
+							}
+
+						});
+				}
 			}
 
-		});
+		};
+
+		modulesProject.subprojects(action);
 	}
 
 	protected void configurePluginsSDK(
 		Project project, final WorkspaceExtension workspaceExtension,
-		Copy initBundle, AbstractArchiveTask[] distBundleTasks) {
-
-		File pluginsSDKDir = workspaceExtension.getPluginsSDKDir();
-
-		if (!pluginsSDKDir.exists()) {
-			return;
-		}
+		Copy initBundleTask, AbstractArchiveTask[] distBundleTasks) {
 
 		final Project pluginsSDKProject = GradleUtil.getProject(
 			project, workspaceExtension.getPluginsSDKDir());
+
+		if (pluginsSDKProject == null) {
+			return;
+		}
 
 		AntBuilder antBuilder = pluginsSDKProject.getAnt();
 
 		antBuilder.importBuild("build.xml");
 
-		Task build = GradleUtil.addTask(pluginsSDKProject, "build", Task.class);
+		Task buildTask = pluginsSDKProject.task(
+			LifecycleBasePlugin.BUILD_TASK_NAME);
 
-		final Task war = GradleUtil.getTask(pluginsSDKProject, "war");
+		final Task warTask = GradleUtil.getTask(
+			pluginsSDKProject, WarPlugin.WAR_TASK_NAME);
 
-		build.dependsOn(war);
+		buildTask.dependsOn(warTask);
 
 		File homeDir = workspaceExtension.getHomeDir();
 
 		if (!homeDir.exists()) {
-			war.dependsOn(initBundle);
+			warTask.dependsOn(initBundleTask);
 		}
 
 		for (AbstractArchiveTask abstractArchiveTask : distBundleTasks) {
@@ -316,149 +412,101 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 					@SuppressWarnings("unused")
 					public void doCall(CopySpec copySpec) {
-						ConfigurableFileTree fileTree =
+						ConfigurableFileTree configurableFileTree =
 							pluginsSDKProject.fileTree("dist");
 
-						fileTree.builtBy(war);
+						configurableFileTree.builtBy(warTask);
+						configurableFileTree.include("*.war");
 
-						fileTree.include("*.war");
-
-						copySpec.from(fileTree);
+						copySpec.from(configurableFileTree);
 					}
 
 				});
 		}
 
-		Task updateSDKProperties = GradleUtil.addTask(
-			pluginsSDKProject, "updateSDKProperties", Task.class);
+		Task updateSDKPropertiesTask = GradleUtil.addTask(
+			pluginsSDKProject, UPDATE_SDK_PROPERTIES_TASK_NAME, Task.class);
 
-		updateSDKProperties.doLast(new Action<Task>() {
-			@Override
-			public void execute(Task task) {
-				try {
-					String username = System.getProperty("user.name");
+		updateSDKPropertiesTask.doLast(
+			new Action<Task>() {
 
-					File buildPropertiesFile = new File(
-						workspaceExtension.getPluginsSDKDir(),
-						"build." + username + ".properties");
+				@Override
+				public void execute(Task task) {
+					try {
+						String username = System.getProperty("user.name");
 
-					Properties buildProperties = FileUtil.readProperties(
-						buildPropertiesFile);
+						File buildPropertiesFile = new File(
+							workspaceExtension.getPluginsSDKDir(),
+							"build." + username + ".properties");
 
-					buildProperties.setProperty(
-						"app.server.parent.dir",
-						FileUtil.getAbsolutePath(
-							workspaceExtension.getHomeDir()));
+						Properties buildProperties = FileUtil.readProperties(
+							buildPropertiesFile);
 
-					buildProperties.store(
-						new FileOutputStream(buildPropertiesFile), "");
+						buildProperties.setProperty(
+							"app.server.parent.dir",
+							FileUtil.getAbsolutePath(
+								workspaceExtension.getHomeDir()));
+
+						buildProperties.store(
+							new FileOutputStream(buildPropertiesFile), null);
+					}
+					catch (Exception e) {
+						throw new GradleException(e.getMessage(), e);
+					}
 				}
-				catch (Exception e) {
-				}
-			}
 
-		});
+			});
 
-		build.dependsOn(updateSDKProperties);
+		buildTask.dependsOn(updateSDKPropertiesTask);
 	}
 
 	protected void configureThemes(
 		Project project, final WorkspaceExtension workspaceExtension,
 		final AbstractArchiveTask[] distBundleTasks) {
 
-		final Project themesProject = GradleUtil.getProject(
+		Project themesProject = GradleUtil.getProject(
 			project, workspaceExtension.getThemesDir());
 
-		themesProject.subprojects(new Action<Project>() {
-			@Override
-			public void execute(final Project subproject) {
-				Set<Project> subprojects = subproject.getSubprojects();
+		if (themesProject == null) {
+			return;
+		}
 
-				if ((subprojects != null) && (subprojects.size() > 0)) {
+		Action<Project> action = new Action<Project>() {
+
+			@Override
+			public void execute(final Project project) {
+				Set<Project> subproject = project.getSubprojects();
+
+				if (!subproject.isEmpty()) {
 					return;
 				}
 
-				GradleUtil.applyPlugin(subproject, BasePlugin.class);
-				GradleUtil.applyPlugin(subproject, GulpPlugin.class);
+				project.setBuildDir("build_gradle");
 
-				Task createLiferayThemeJson = GradleUtil.addTask(
-					subproject, "createLiferayThemeJson", Task.class);
+				GradleUtil.applyPlugin(project, BasePlugin.class);
+				GradleUtil.applyPlugin(project, GulpPlugin.class);
 
-				Task deploy = GradleUtil.addTask(
-					subproject, "deploy", Task.class);
+				Task assembleTask = GradleUtil.getTask(
+					project, BasePlugin.ASSEMBLE_TASK_NAME);
 
-				final Task gulpDeploy = GradleUtil.getTask(
-					subproject, "gulpDeploy");
+				assembleTask.dependsOn(_GULP_BUILD_TASK_NAME);
 
-				deploy.dependsOn(gulpDeploy);
+				final Task createLiferayThemeJsonTask =
+					addTaskCreateLiferayThemeJson(project, workspaceExtension);
 
-				subproject.setBuildDir(
-					new File(subproject.getProjectDir(), "build_gradle"));
+				Delete cleanTask = (Delete)GradleUtil.getTask(
+					project, BasePlugin.CLEAN_TASK_NAME);
 
-				Task assemble = GradleUtil.getTask(subproject, "assemble");
+				cleanTask.delete("build", "dist");
+				cleanTask.dependsOn(
+					BasePlugin.CLEAN_TASK_NAME +
+						StringUtil.capitalize(
+							NodePlugin.NPM_INSTALL_TASK_NAME));
 
-				assemble.dependsOn("gulpBuild");
+				Task deployTask = project.task(
+					LiferayJavaPlugin.DEPLOY_TASK_NAME);
 
-				Task clean = GradleUtil.getTask(subproject, "clean");
-
-				clean.dependsOn("cleanNpmInstall");
-
-				clean.configure(
-					new Closure<Void>(null) {
-
-						@SuppressWarnings("unused")
-						public void doCall() {
-							subproject.delete("build", "dist");
-						}
-
-					}
-				);
-
-				final File liferayThemeJsonFile = new File(
-					subproject.getProjectDir(), "liferay-theme.json");
-
-				if (!liferayThemeJsonFile.exists()) {
-					createLiferayThemeJson.doLast(new Action<Task>() {
-
-						@Override
-						public void execute(Task task) {
-							File appServerDir = new File(
-								workspaceExtension.getHomeDir(),
-								"tomcat-7.0.62");
-							File appServerThemeDir = new File(
-								appServerDir,
-								"webapps/" + subproject.getName());
-							File deployDir = new File(
-								workspaceExtension.getHomeDir(), "deploy");
-
-							JSONObject jsonObject = new JSONObject();
-
-							Map<String, Object> jsonValues = new HashMap<>();
-
-							jsonValues.put(
-								"appServerPath",
-								appServerDir.getAbsolutePath());
-							jsonValues.put(
-								"appServerPathTheme",
-								appServerThemeDir.getAbsolutePath());
-							jsonValues.put("deployed", false);
-							jsonValues.put(
-								"deployPath", deployDir.getAbsolutePath());
-							jsonValues.put("themeName", subproject.getName());
-
-							jsonObject.put("LiferayTheme", jsonValues);
-
-							try (PrintStream out = new PrintStream(
-								new FileOutputStream(liferayThemeJsonFile))) {
-
-								out.println(jsonObject.toString());
-							}
-							catch (Exception e) {
-							}
-						}
-
-					});
-				}
+				deployTask.dependsOn(_GULP_DEPLOY_TASK_NAME);
 
 				for (AbstractArchiveTask abstractArchiveTask :
 						distBundleTasks) {
@@ -470,10 +518,9 @@ public class WorkspacePlugin implements Plugin<Project> {
 							@SuppressWarnings("unused")
 							public void doCall(CopySpec copySpec) {
 								ConfigurableFileTree fileTree =
-									themesProject.fileTree("dist");
+									project.fileTree("dist");
 
-								fileTree.builtBy(gulpDeploy);
-
+								fileTree.builtBy(_GULP_DEPLOY_TASK_NAME);
 								fileTree.include("*.war");
 
 								copySpec.from(fileTree);
@@ -482,7 +529,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 						});
 				}
 
-				TaskContainer taskContainer = subproject.getTasks();
+				TaskContainer taskContainer = project.getTasks();
 
 				taskContainer.withType(
 					ExecuteGulpTask.class,
@@ -490,14 +537,21 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 						@Override
 						public void execute(ExecuteGulpTask executeGulpTask) {
-							executeGulpTask.dependsOn("createLiferayThemeJson");
-							executeGulpTask.dependsOn("npmInstall");
+							executeGulpTask.dependsOn(
+								createLiferayThemeJsonTask,
+								NodePlugin.NPM_INSTALL_TASK_NAME);
 						}
 
 					});
 			}
 
-		});
+		};
+
+		themesProject.subprojects(action);
 	}
+
+	private static final String _GULP_BUILD_TASK_NAME = "gulpBuild";
+
+	private static final String _GULP_DEPLOY_TASK_NAME = "gulpDeploy";
 
 }

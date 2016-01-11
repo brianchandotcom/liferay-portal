@@ -168,7 +168,7 @@ AUI.add(
 								var navAddControls = A.one('#' + namespace + 'navAddControls');
 
 								if (navAddControls) {
-									var layoutControl = navAddControls.one(item.layoutControl);
+									var layoutControl = navAddControls.one(panel.layoutControl);
 
 									if (layoutControl) {
 										layoutControl.focus();

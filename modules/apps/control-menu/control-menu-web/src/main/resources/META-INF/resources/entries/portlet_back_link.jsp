@@ -14,10 +14,12 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+<%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.staging.bar.web.portlet.constants.StagingBarPortletKeys" %>
+<%
+String portletBackURL = (String)request.getAttribute("portletBackURL");
+%>
 
-<div class="staging-links">
-	<liferay-portlet:runtime portletName="<%= StagingBarPortletKeys.STAGING_BAR %>" />
+<div class="toolbar-group-content">
+	<a class="control-menu-icon" href="<%= HtmlUtil.escapeHREF(portletBackURL) %>"><span class="icon-angle-left icon-monospaced"></span></a>
 </div>

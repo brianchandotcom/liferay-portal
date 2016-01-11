@@ -14,10 +14,4 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
-
-<%@ page import="com.liferay.staging.bar.web.portlet.constants.StagingBarPortletKeys" %>
-
-<div class="staging-links">
-	<liferay-portlet:runtime portletName="<%= StagingBarPortletKeys.STAGING_BAR %>" />
-</div>
+<%@ include file="/init.jsp" %>

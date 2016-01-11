@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portlet.admin.util;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Eudaldo Alonso
- */
-public class PortalControlMenuApplicationType {
+<%
+String portletTitle = (String)request.getAttribute("portletTitle");
+String portletDescription = (String)request.getAttribute("portletDescription");
+%>
 
-	public interface ControlMenu {
+<span class="header-toolbar-title" data-qa-id="headerOptions"><%= HtmlUtil.escape(portletTitle) %></span>
 
-		public static final String CLASS_NAME =
-			"com.liferay.portlet.admin.util." +
-				"PortalControlMenuApplicationType$ControlMenu";
-
-	}
-
-}
+<c:if test="<%= Validator.isNotNull(portletDescription) %>">
+	<liferay-ui:icon-help message="<%= HtmlUtil.escape(portletDescription) %>" />
+</c:if>

@@ -67,11 +67,17 @@ portletURL.setParameter("tabs1", "coupons");
 	<%
 	CouponDisplayTerms searchTerms = (CouponDisplayTerms)searchContainer.getSearchTerms();
 
-	int total = ShoppingCouponLocalServiceUtil.searchCount(scopeGroupId, company.getCompanyId(), searchTerms.getCode(), searchTerms.isActive(), searchTerms.getDiscountType(), searchTerms.isAndOperator());
+	String discountType = searchTerms.getDiscountType();
+
+	if (discountType.equals("all")) {
+		discountType = null;
+	}
+
+	int total = ShoppingCouponLocalServiceUtil.searchCount(scopeGroupId, company.getCompanyId(), searchTerms.getCode(), searchTerms.isActive(), discountType, searchTerms.isAndOperator());
 
 	searchContainer.setTotal(total);
 
-	List results = ShoppingCouponServiceUtil.search(scopeGroupId, company.getCompanyId(), searchTerms.getCode(), searchTerms.isActive(), searchTerms.getDiscountType(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+	List results = ShoppingCouponServiceUtil.search(scopeGroupId, company.getCompanyId(), searchTerms.getCode(), searchTerms.isActive(), discountType, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
 
 	searchContainer.setResults(results);
 	%>

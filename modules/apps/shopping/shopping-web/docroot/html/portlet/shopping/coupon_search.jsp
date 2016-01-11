@@ -34,6 +34,7 @@ CouponDisplayTerms displayTerms = (CouponDisplayTerms)searchContainer.getDisplay
 
 	<aui:col width="<%= 33 %>">
 		<aui:select name="<%= CouponDisplayTerms.DISCOUNT_TYPE %>" showEmptyOption="<%= true %>">
+			<aui:option label="all" selected='<%= displayTerms.getDiscountType().equals("all") %>' />
 
 			<%
 			for (int i = 0; i < ShoppingCouponConstants.DISCOUNT_TYPES.length; i++) {

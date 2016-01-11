@@ -35,7 +35,8 @@ public class CouponDisplayTerms extends DisplayTerms {
 
 		active = ParamUtil.getBoolean(portletRequest, ACTIVE, true);
 		code = ParamUtil.getString(portletRequest, CODE);
-		discountType = ParamUtil.getString(portletRequest, DISCOUNT_TYPE);
+		discountType = ParamUtil.getString(
+			portletRequest, DISCOUNT_TYPE, "all");
 	}
 
 	public String getCode() {

@@ -75,4 +75,50 @@ public class JenkinsJobUtil {
 		return new String(encodedBytes);
 	}
 
+	private static List<String> getDownstreamURLs(String jobURL)
+		throws Exception {
+
+		String consoleOutputURL = appendURL(jobURL, "logText/progressiveText");
+
+		return getDownstreamURLsFromConsoleOutputURL(consoleOutputURL);
+	}
+
+	private static List<String> getDownstreamURLsFromConsoleOutput(
+			String consoleOutput)
+		throws Exception {
+
+		Matcher progressiveTextMatcher = _progressiveTextPattern.matcher(
+			consoleOutput);
+
+		List<String> downstreamURLs = new ArrayList<>();
+
+		while (progressiveTextMatcher.find()) {
+			String urlString = progressiveTextMatcher.group("url");
+
+			Matcher jobNameMatcher = _jobNamePattern.matcher(urlString);
+
+			if (jobNameMatcher.find()) {
+				downstreamURLs.add(urlString);
+			}
+		}
+
+		return downstreamURLs;
+	}
+
+	private static List<String> getDownstreamURLsFromConsoleOutputURL(
+			String consoleOutputURL)
+		throws Exception {
+
+		String consoleOutput = JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.getLocalURL(consoleOutputURL));
+
+		return getDownstreamURLsFromConsoleOutput(consoleOutput);
+	}
+
+	private static final Pattern _jobNamePattern = Pattern.compile(
+		".+://(?<hostName>[^.]+).liferay.com/job/(?<jobName>[^/]+).*/" +
+			"(?<buildNumber>\\d+)/");
+	private static final Pattern _progressiveTextPattern = Pattern.compile(
+		"\\[echo\\] Build \\'.*\\' started at (?<url>.+)\\.");
+
 }

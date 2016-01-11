@@ -29,8 +29,6 @@ import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Method;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -306,15 +304,6 @@ public class NavItem implements Serializable {
 	@Override
 	public int hashCode() {
 		return _layout.hashCode();
-	}
-
-	public void icon() throws Exception {
-		Object velocityTaglib = _contextObjects.get("theme");
-
-		Method method = (Method)_contextObjects.get(
-			"velocityTaglib_layoutIcon");
-
-		method.invoke(velocityTaglib, _layout);
 	}
 
 	public String iconURL() throws Exception {

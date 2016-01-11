@@ -185,10 +185,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 					Jar jar = (Jar)GradleUtil.getTask(
 						project, JavaPlugin.JAR_TASK_NAME);
 
-					String deployedPluginDirName = jar.getArchiveName();
-
-					deployedPluginDirName = deployedPluginDirName.substring(
-						0, deployedPluginDirName.lastIndexOf('.'));
+					String deployedPluginDirName = FileUtil.stripExtension(
+						jar.getArchiveName());
 
 					File deployedPluginDir = new File(
 						directDeployTask.getAppServerDeployDir(),

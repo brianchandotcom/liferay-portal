@@ -3224,23 +3224,24 @@ Portal by means of an OSGi container.
 
 ---------------------------------------
 
-### The `${theme}` variable is no longer injected in the Freemarker context
+### Taglibs are no longer accessible via the `${theme}` variable in Freemarker
 - **Date:** 2016-Jan-06
 - **JIRA Ticket:** LPS-61683
 
 #### What changed?
 
-The `${theme}` variable that was injected in the freemarker context providing access to some taglibs or utils is no longer being injected.
+The `${theme}` variable that was injected in the freemarker context providing access to some taglibs or utils does no longer provide them. Only the `${theme.include}` method is preserved for performance reasons.
 
 #### Who is affected?
 
-Freemarker templates that are using the `${theme}` variable to access any of its provided methods.
+Freemarker templates that are using the `${theme}` variable to access any of its provided taglibs.
 
 #### How should I update my code?
 
-All the provided functionality available in the `${theme}` variable can be replaced by the direct usage of a taglib. For example:
+All the provided taglibs available in the `${theme}` variable can be replaced by the direct usage of a taglib. For example:
 
 `${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW, "", default_preferences)}` can be replaced by:
+
 ```
 <@liferay_portlet["runtime"]
     defaultPreferences=default_preferences
@@ -3249,12 +3250,8 @@ All the provided functionality available in the `${theme}` variable can be repla
 />
 ```
 
-`${theme.include(content_include)}` can be replaced by:
-```
-<@liferay_util["include"] page=content_include />
-```
-
 `${theme.wrapPortlet("portlet.ftl", content_include)}` can be replaced by:
+
 ```
 <@liferay_theme["wrap-portlet"] page="portlet.ftl">
     <@liferay_util["include"] page=content_include />
@@ -3262,11 +3259,13 @@ All the provided functionality available in the `${theme}` variable can be repla
 ```
 
 `${theme.iconHelp(portlet_description)}` can be replaced by:
+
 ```
 <@liferay_ui["icon-help"] message=portlet_description />
 ```
 
 `${nav_item.icon()}` can be replaced by:
+
 ```
 <@liferay_theme["layout-icon"] layout=${nav_item.getLayout()} />
 ```

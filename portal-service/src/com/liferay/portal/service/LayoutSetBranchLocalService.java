@@ -251,16 +251,6 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj) throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getUserLayoutSetBranch(long,
-	long, boolean, long, long)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
-		long userId, long groupId, boolean privateLayout, long layoutSetBranchId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout, long layoutSetId,

@@ -295,19 +295,6 @@ public class LayoutSetBranchLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getUserLayoutSetBranch(long,
-	long, boolean, long, long)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
-		long userId, long groupId, boolean privateLayout, long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getUserLayoutSetBranch(userId, groupId, privateLayout,
-			layoutSetBranchId);
-	}
-
 	public static com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout, long layoutSetId,
 		long layoutSetBranchId)

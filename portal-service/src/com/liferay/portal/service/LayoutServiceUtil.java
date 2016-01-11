@@ -53,63 +53,6 @@ public class LayoutServiceUtil {
 	*
 	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group
-	* @param parentLayoutId the primary key of the parent layout
-	(optionally {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
-	* @param localeNamesMap the layout's locales and localized names
-	* @param localeTitlesMap the layout's locales and localized titles
-	* @param descriptionMap the layout's locales and localized
-	descriptions
-	* @param keywordsMap the layout's locales and localized keywords
-	* @param robotsMap the layout's locales and localized robots
-	* @param type the layout's type (optionally {@link
-	LayoutConstants#TYPE_PORTLET}). The possible types can be
-	found in {@link LayoutConstants}.
-	* @param hidden whether the layout is hidden
-	* @param friendlyURL the layout's locales and localized friendly URLs.
-	To see how the URL is normalized when accessed, see {@link
-	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
-	String)}.
-	* @param serviceContext the service context to be applied. Must set
-	the UUID for the layout. Can set the creation date,
-	modification date, and expando bridge attributes for the
-	layout. For layouts that belong to a layout set prototype, an
-	attribute named <code>layoutUpdateable</code> can be used to
-	specify whether site administrators can modify this page
-	within their site.
-	* @return the layout
-	* @deprecated As of 6.2.0, replaced by {@link #addLayout(long, boolean,
-	long, Map, Map, Map, Map, Map, String, String, boolean, Map,
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Layout addLayout(long groupId,
-		boolean privateLayout, long parentLayoutId,
-		java.util.Map<java.util.Locale, java.lang.String> localeNamesMap,
-		java.util.Map<java.util.Locale, java.lang.String> localeTitlesMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
-		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLayout(groupId, privateLayout, parentLayoutId,
-			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
-			robotsMap, type, hidden, friendlyURL, serviceContext);
-	}
-
-	/**
-	* Adds a layout with additional parameters.
-	*
-	* <p>
-	* This method handles the creation of the layout including its resources,
-	* metadata, and internal data structures. It is not necessary to make
-	* subsequent calls to any methods to setup default groups, resources, ...
-	* etc.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param parentLayoutId the primary key of the parent layout (optionally
 	{@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
 	* @param localeNamesMap the layout's locales and localized names
@@ -1129,58 +1072,6 @@ public class LayoutServiceUtil {
 		byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateIconImage(plid, bytes);
-	}
-
-	/**
-	* Updates the layout with additional parameters.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutId the primary key of the layout
-	* @param parentLayoutId the primary key of the layout's new parent
-	layout
-	* @param localeNamesMap the layout's locales and localized names
-	* @param localeTitlesMap the layout's locales and localized titles
-	* @param descriptionMap the locales and localized descriptions to
-	merge (optionally <code>null</code>)
-	* @param keywordsMap the locales and localized keywords to merge
-	(optionally <code>null</code>)
-	* @param robotsMap the locales and localized robots to merge
-	(optionally <code>null</code>)
-	* @param type the layout's new type (optionally {@link
-	LayoutConstants#TYPE_PORTLET})
-	* @param hidden whether the layout is hidden
-	* @param friendlyURL the layout's locales and new friendly URLs. To
-	see how the URL is normalized when accessed, see {@link
-	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
-	String)}.
-	* @param iconImage whether the icon image will be updated
-	* @param iconBytes the byte array of the layout's new icon image
-	* @param serviceContext the service context to be applied. Can set the
-	modification date and expando bridge attributes for the
-	layout.
-	* @return the updated layout
-	* @deprecated As of 6.2.0, replaced by {@link #updateLayout(long, boolean,
-	long, long, Map, Map, Map, Map, Map, String, boolean, Map,
-	boolean, byte[], ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Layout updateLayout(long groupId,
-		boolean privateLayout, long layoutId, long parentLayoutId,
-		java.util.Map<java.util.Locale, java.lang.String> localeNamesMap,
-		java.util.Map<java.util.Locale, java.lang.String> localeTitlesMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
-		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		java.lang.Boolean iconImage, byte[] iconBytes,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateLayout(groupId, privateLayout, layoutId,
-			parentLayoutId, localeNamesMap, localeTitlesMap, descriptionMap,
-			keywordsMap, robotsMap, type, hidden, friendlyURL, iconImage,
-			iconBytes, serviceContext);
 	}
 
 	/**

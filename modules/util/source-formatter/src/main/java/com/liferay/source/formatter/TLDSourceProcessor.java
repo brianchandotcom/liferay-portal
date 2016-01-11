@@ -39,7 +39,7 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 		content = trimContent(content, false);
 
-		Matcher matcher = _ATTRIBUTE_TYPE.matcher(content);
+		Matcher matcher = _typePattern.matcher(content);
 
 		while (matcher.find()) {
 			String beforeMatch = content.substring(0, matcher.start());
@@ -61,9 +61,9 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 		return getFileNames(excludes, getIncludes());
 	}
 
-	private static final Pattern _ATTRIBUTE_TYPE = Pattern.compile(
-		"<type>[A-Z][a-z]*</type>");
-
 	private static final String[] _INCLUDES = new String[] {"**/*.tld"};
+
+	private static final Pattern _typePattern = Pattern.compile(
+		"<type>[A-Z][a-z]*</type>");
 
 }

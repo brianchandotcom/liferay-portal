@@ -25,8 +25,8 @@ body {
 
 .product-menu {
 	.sidebar-header {
-		padding-bottom: 5px;
-		padding-top: 5px;
+		padding-bottom: 10px;
+		padding-top: 12px;
 
 		@include sm() {
 			padding: 19px 24px;
@@ -34,6 +34,8 @@ body {
 
 		.sidenav-close {
 			float: right;
+			margin-right: -8px;
+			margin-top: -4px;
 		}
 	}
 
@@ -49,7 +51,7 @@ body {
 		padding: 0;
 		position: absolute;
 		right: 0;
-		top: 35px;
+		top: 48px;
 
 		@include sm() {
 			top: 63px;

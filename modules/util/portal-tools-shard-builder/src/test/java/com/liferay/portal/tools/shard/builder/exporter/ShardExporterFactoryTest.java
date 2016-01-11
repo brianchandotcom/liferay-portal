@@ -14,9 +14,10 @@
 
 package com.liferay.portal.tools.shard.builder.exporter;
 
+import com.liferay.portal.tools.shard.builder.exporter.exception.DatabaseProviderNotAvailableException;
+
 import java.util.Properties;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -24,17 +25,9 @@ import org.junit.Test;
  */
 public class ShardExporterFactoryTest {
 
-	@Test
+	@Test(expected = DatabaseProviderNotAvailableException.class)
 	public void testGetExporterReturnsNotFoundProvider() throws Exception {
-		Properties databaseProperties = new Properties();
-
-		try {
-			ShardExporterFactory.getShardExporter(databaseProperties);
-		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals(
-				"Database exporter not found", iae.getMessage());
-		}
+		ShardExporterFactory.getShardExporter(new Properties());
 	}
 
 }

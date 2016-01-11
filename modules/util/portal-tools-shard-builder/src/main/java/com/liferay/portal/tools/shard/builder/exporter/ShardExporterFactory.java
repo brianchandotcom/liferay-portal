@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.shard.builder.exporter;
 
+import com.liferay.portal.tools.shard.builder.exporter.exception.DatabaseProviderNotAvailableException;
+
 import java.util.Properties;
 
 /**
@@ -22,7 +24,8 @@ import java.util.Properties;
 public class ShardExporterFactory {
 
 	public static ShardExporter getShardExporter(Properties properties) {
-		throw new IllegalArgumentException("Database exporter not found");
+		throw new DatabaseProviderNotAvailableException(
+			"Database exporter not found with properties " + properties);
 	}
 
 }

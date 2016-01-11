@@ -17,13 +17,21 @@
 <%@ include file="/html/taglib/ui/empty_result_message/init.jsp" %>
 
 <%
+boolean search = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:empty-result-message:search"));
 String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:empty-result-message:message"));
 %>
 
 <c:if test="<%= Validator.isNotNull(message) %>">
 	<div class="card-horizontal main-content-card taglib-empty-result-message">
 		<div class="card-row card-row-padded">
-			<div class="taglib-empty-result-message-header"></div>
+			<c:choose>
+				<c:when test="<%= search %>">
+					<div class="taglib-empty-search-result-message-header"></div>
+				</c:when>
+				<c:otherwise>
+					<div class="taglib-empty-result-message-header"></div>
+				</c:otherwise>
+			</c:choose>
 
 			<div class="card-footer">
 				<div class="card-dm-details">

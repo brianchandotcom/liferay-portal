@@ -385,17 +385,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 					groupId = group.getGroupId();
 				}
-
-				// If the group is a staging group, check the live group.
-
-				if (group.isStagingGroup()) {
-					if (primKey.equals(String.valueOf(groupId))) {
-						primKey = String.valueOf(group.getLiveGroupId());
-					}
-
-					groupId = group.getLiveGroupId();
-					group = group.getLiveGroup();
-				}
 			}
 		}
 		catch (Exception e) {

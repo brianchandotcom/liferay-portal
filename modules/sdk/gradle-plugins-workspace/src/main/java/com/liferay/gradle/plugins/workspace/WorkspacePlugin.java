@@ -100,7 +100,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 			project, BUNDLE_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"Configures the Liferay bundle you want to use for your project.");
+			"Configures the Liferay bundle to use for your project.");
 
 		GradleUtil.addDependency(
 			project, BUNDLE_CONFIGURATION_NAME,

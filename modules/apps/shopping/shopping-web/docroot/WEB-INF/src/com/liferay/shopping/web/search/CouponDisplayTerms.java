@@ -33,9 +33,14 @@ public class CouponDisplayTerms extends DisplayTerms {
 	public CouponDisplayTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
-		active = ParamUtil.getBoolean(portletRequest, ACTIVE, true);
+		active = ParamUtil.getString(portletRequest, ACTIVE, "yes");
 		code = ParamUtil.getString(portletRequest, CODE);
-		discountType = ParamUtil.getString(portletRequest, DISCOUNT_TYPE);
+		discountType = ParamUtil.getString(
+			portletRequest, DISCOUNT_TYPE, "all");
+	}
+
+	public String getActive() {
+		return active;
 	}
 
 	public String getCode() {
@@ -43,14 +48,22 @@ public class CouponDisplayTerms extends DisplayTerms {
 	}
 
 	public String getDiscountType() {
+		if (discountType.equals("all")) {
+			return null;
+		}
+
 		return discountType;
 	}
 
 	public boolean isActive() {
-		return active;
+		if (active.equals("no")) {
+			return false;
+		}
+
+		return true;
 	}
 
-	protected boolean active;
+	protected String active;
 	protected String code;
 	protected String discountType;
 

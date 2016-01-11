@@ -2455,7 +2455,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("private ");
+			sb.append("private volatile ");
 			sb.append(typeName);
 			sb.append("\\s+");
 			sb.append(variableName);
@@ -2469,7 +2469,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				String match = privateVarMatcher.group();
 
 				String replacement = StringUtil.replace(
-					match, "private ", "private volatile ");
+					match, "private volatile ", "private ");
 
 				return StringUtil.replace(content, match, replacement);
 			}

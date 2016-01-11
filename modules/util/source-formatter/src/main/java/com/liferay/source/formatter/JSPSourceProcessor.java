@@ -631,7 +631,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				line = formatWhitespace(line, trimmedLine, javaSource);
+				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
+					!trimmedLine.startsWith(StringPool.STAR)) {
+
+					line = formatWhitespace(line, trimmedLine, javaSource);
+				}
 
 				// LPS-47179
 

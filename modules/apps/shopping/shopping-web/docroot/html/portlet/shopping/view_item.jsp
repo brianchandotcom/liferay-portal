@@ -32,6 +32,11 @@ String orderByType = portalPreferences.getValue(PortletKeys.SHOPPING, "items-ord
 OrderByComparator<ShoppingItem> orderByComparator = ShoppingUtil.getItemOrderByComparator(orderByCol, orderByType);
 
 ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.getItemId(), orderByComparator);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(item.getName());
 %>
 
 <portlet:actionURL var="cartURL">
@@ -48,11 +53,6 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 	<aui:input name="itemId" type="hidden" value="<%= item.getItemId() %>" />
 	<aui:input name="fields" type="hidden" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="item"
-	/>
 
 	<div class="breadcrumbs">
 		<%= ShoppingUtil.getBreadcrumbs(item.getCategoryId(), renderRequest, renderResponse) %>

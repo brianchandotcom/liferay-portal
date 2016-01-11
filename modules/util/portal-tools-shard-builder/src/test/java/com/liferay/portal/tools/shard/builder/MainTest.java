@@ -20,7 +20,6 @@ import java.io.File;
 
 import java.net.URL;
 
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,37 +30,22 @@ import org.junit.rules.TemporaryFolder;
  */
 public class MainTest {
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testValidateEmptyArguments() throws Exception {
-		try {
-			Main.main(new String[0]);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Arguments cannot be null", iae.getMessage());
-		}
+		Main.main(new String[0]);
 	}
 
-	@Test
+	@Test(expected = ParameterException.class)
 	public void testValidateNonExistingDatabaseFile() throws Exception {
 		String[] args = {
 			"-P", "foobar.properties", "-S", _DEFAULT_SCHEMA_NAME, "-C",
 			_DEFAULT_COMPANY_ID, "-O", "neverMindPath"
 		};
 
-		try {
-			Main.main(args);
-
-			Assert.fail();
-		}
-		catch (ParameterException pe) {
-			Assert.assertEquals(
-				"File parameter -P does not exist", pe.getMessage());
-		}
+		Main.main(args);
 	}
 
-	@Test
+	@Test(expected = ParameterException.class)
 	public void testValidateNonExistingOutputFolder() throws Exception {
 		URL url = getClass().getResource("/mysql.properties");
 
@@ -70,18 +54,10 @@ public class MainTest {
 			_DEFAULT_COMPANY_ID, "-O", "foo"
 		};
 
-		try {
-			Main.main(args);
-
-			Assert.fail();
-		}
-		catch (ParameterException pe) {
-			Assert.assertEquals(
-				"File parameter -O does not exist", pe.getMessage());
-		}
+		Main.main(args);
 	}
 
-	@Test
+	@Test(expected = ParameterException.class)
 	public void testValidateNonValidCompanyId() throws Exception {
 		URL url = getClass().getResource("/mysql.properties");
 
@@ -90,31 +66,15 @@ public class MainTest {
 			"neverMindPath"
 		};
 
-		try {
-			Main.main(args);
-
-			Assert.fail();
-		}
-		catch (ParameterException pe) {
-			Assert.assertEquals(
-				"Parameter -C with value foo is not a valid number",
-				pe.getMessage());
-		}
+		Main.main(args);
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testValidateNullArguments() throws Exception {
-		try {
-			Main.main(null);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Arguments cannot be null", iae.getMessage());
-		}
+		Main.main(null);
 	}
 
-	@Test
+	@Test(expected = ParameterException.class)
 	public void testValidateReadOnlyOutputFolder() throws Exception {
 		URL url = getClass().getResource("/mysql.properties");
 
@@ -130,66 +90,27 @@ public class MainTest {
 			_DEFAULT_COMPANY_ID, "-O", readOnlyFolder.getAbsolutePath()
 		};
 
-		try {
-			Main.main(args);
-
-			Assert.fail();
-		}
-		catch (ParameterException pe) {
-			Assert.assertEquals(
-				"File parameter -O is read-only", pe.getMessage());
-		}
+		Main.main(args);
 	}
 
 	@Test
 	public void testValidateRequiredArguments() throws Exception {
-		try {
-			Main.main(new String[] {"-C", ""});
+		String[][] requiredArguments = {
+			{"-C", ""}, {"-O", ""}, {"-P", ""}, {"-S", ""}
+		};
 
-			Assert.fail();
-		}
-		catch (ParameterException pe) {
-			Assert.assertEquals("Parameter -C is required", pe.getMessage());
-		}
-
-		try {
-			Main.main(new String[] {"-O", ""});
-
-			Assert.fail();
-		}
-		catch (ParameterException pe) {
-			Assert.assertEquals("Parameter -O is required", pe.getMessage());
-		}
-
-		try {
-			Main.main(new String[] {"-P", ""});
-
-			Assert.fail();
-		}
-		catch (ParameterException pe) {
-			Assert.assertEquals("Parameter -P is required", pe.getMessage());
-		}
-
-		try {
-			Main.main(new String[] {"-S", ""});
-
-			Assert.fail();
-		}
-		catch (ParameterException pe) {
-			Assert.assertEquals("Parameter -S is required", pe.getMessage());
+		for (String[] requiredArgument : requiredArguments) {
+			try {
+				Main.main(requiredArgument);
+			}
+			catch (ParameterException pe) {
+			}
 		}
 	}
 
-	@Test
+	@Test(expected = ParameterException.class)
 	public void testValidateWrongOptionArguments() throws Exception {
-		try {
-			Main.main(new String[] {"-X", "arg"});
-
-			Assert.fail();
-		}
-		catch (ParameterException pe) {
-			Assert.assertEquals("Unknown option: -X", pe.getMessage());
-		}
+		Main.main(new String[] {"-X", "arg"});
 	}
 
 	@Rule

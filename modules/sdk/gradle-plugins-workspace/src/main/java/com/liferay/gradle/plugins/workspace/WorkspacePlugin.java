@@ -116,9 +116,9 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 		GradleUtil.addDependency(
 			project, BUNDLE_CONFIGURATION_NAME,
-			workspaceExtension.getBundleGroup(),
-			workspaceExtension.getBundleName(),
-			workspaceExtension.getBundleVersion());
+			workspaceExtension.getBundleArtifactGroup(),
+			workspaceExtension.getBundleArtifactName(),
+			workspaceExtension.getBundleArtifactVersion());
 
 		configuration.setDescription(
 			"Configures the Liferay bundle you want to use for your project.");

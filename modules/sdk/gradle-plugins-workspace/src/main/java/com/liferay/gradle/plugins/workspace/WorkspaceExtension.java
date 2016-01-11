@@ -27,20 +27,20 @@ public class WorkspaceExtension {
 		_project = project;
 	}
 
-	public String getBundleGroup() {
-		return _bundleGroup;
+	public String getBundleArtifactGroup() {
+		return _bundleArtifactGroup;
+	}
+
+	public String getBundleArtifactName() {
+		return _bundleArtifactName;
+	}
+
+	public String getBundleArtifactVersion() {
+		return _bundleArtifactVersion;
 	}
 
 	public String getBundleMavenUrl() {
 		return _bundleMavenUrl;
-	}
-
-	public String getBundleName() {
-		return _bundleName;
-	}
-
-	public String getBundleVersion() {
-		return _bundleVersion;
 	}
 
 	public String getEnvironment() {
@@ -63,20 +63,20 @@ public class WorkspaceExtension {
 		return _project.file(_themesDir);
 	}
 
-	public void setBundleGroup(String bundleGroup) {
-		_bundleGroup = bundleGroup;
+	public void setBundleArtifactGroup(String bundleArtifactGroup) {
+		_bundleArtifactGroup = bundleArtifactGroup;
+	}
+
+	public void setBundleArtifactName(String bundleArtifactName) {
+		_bundleArtifactName = bundleArtifactName;
+	}
+
+	public void setBundleArtifactVersion(String bundleArtifactVersion) {
+		_bundleArtifactVersion = bundleArtifactVersion;
 	}
 
 	public void setBundleMavenUrl(String bundleMavenUrl) {
 		_bundleMavenUrl = bundleMavenUrl;
-	}
-
-	public void setBundleName(String bundleName) {
-		_bundleName = bundleName;
-	}
-
-	public void setBundleVersion(String bundleVersion) {
-		_bundleVersion = bundleVersion;
 	}
 
 	public void setEnvironment(String environment) {
@@ -99,10 +99,10 @@ public class WorkspaceExtension {
 		_themesDir = themesDir;
 	}
 
-	private String _bundleGroup;
+	private String _bundleArtifactGroup;
+	private String _bundleArtifactName;
+	private String _bundleArtifactVersion;
 	private String _bundleMavenUrl;
-	private String _bundleName;
-	private String _bundleVersion;
 	private String _environment;
 	private Object _homeDir;
 	private Object _modulesDir;

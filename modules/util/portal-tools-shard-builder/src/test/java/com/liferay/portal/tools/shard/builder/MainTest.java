@@ -18,9 +18,6 @@ import com.beust.jcommander.ParameterException;
 
 import java.io.File;
 
-import java.net.URL;
-
-import org.junit.Assume;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -47,10 +44,8 @@ public class MainTest {
 
 	@Test(expected = ParameterException.class)
 	public void testValidateNonExistingOutputFolder() throws Exception {
-		URL url = getClass().getResource("/mysql.properties");
-
 		String[] args = {
-			"-P", url.getFile(), "-S", _DEFAULT_SCHEMA_NAME, "-C",
+			"-P", "foo.properties", "-S", _DEFAULT_SCHEMA_NAME, "-C",
 			_DEFAULT_COMPANY_ID, "-O", "foo"
 		};
 
@@ -59,11 +54,9 @@ public class MainTest {
 
 	@Test(expected = ParameterException.class)
 	public void testValidateNonValidCompanyId() throws Exception {
-		URL url = getClass().getResource("/mysql.properties");
-
 		String[] args = {
-			"-P", url.getFile(), "-S", _DEFAULT_SCHEMA_NAME, "-C", "foo", "-O",
-			"neverMindPath"
+			"-P", "foo.properties", "-S", _DEFAULT_SCHEMA_NAME, "-C", "foo",
+			"-O", "neverMindPath"
 		};
 
 		Main.main(args);
@@ -76,17 +69,13 @@ public class MainTest {
 
 	@Test(expected = ParameterException.class)
 	public void testValidateReadOnlyOutputFolder() throws Exception {
-		URL url = getClass().getResource("/mysql.properties");
-
-		Assume.assumeNotNull(url);
-
 		File readOnlyFolder = temporaryFolder.newFolder();
 
 		readOnlyFolder.setReadable(false);
 		readOnlyFolder.setWritable(false);
 
 		String[] args = {
-			"-P", url.getFile(), "-S", _DEFAULT_SCHEMA_NAME, "-C",
+			"-P", "foo.properties", "-S", _DEFAULT_SCHEMA_NAME, "-C",
 			_DEFAULT_COMPANY_ID, "-O", readOnlyFolder.getAbsolutePath()
 		};
 

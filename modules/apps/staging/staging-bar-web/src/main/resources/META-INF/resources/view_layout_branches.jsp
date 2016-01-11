@@ -39,75 +39,77 @@ else {
 request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.valueOf(currentLayoutRevision.getLayoutBranchId()));
 %>
 
-<liferay-ui:success key="pageVariationAdded" message="page-variation-was-added" />
-<liferay-ui:success key="pageVariationDeleted" message="page-variation-was-deleted" />
-<liferay-ui:success key="pageVariationUpdated" message="page-variation-was-updated" />
+<div class="container-fluid-1280">
+	<liferay-ui:success key="pageVariationAdded" message="page-variation-was-added" />
+	<liferay-ui:success key="pageVariationDeleted" message="page-variation-was-deleted" />
+	<liferay-ui:success key="pageVariationUpdated" message="page-variation-was-updated" />
 
-<div class="alert alert-info">
-	<liferay-ui:message key="page-variations-help" />
-</div>
+	<div class="alert alert-info">
+		<liferay-ui:message key="page-variations-help" />
+	</div>
 
-<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup, ActionKeys.ADD_LAYOUT_BRANCH) %>">
-	<liferay-portlet:renderURL var="addLayoutBranchURL">
-		<portlet:param name="mvcRenderCommandName" value="editLayoutBranch" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevisionId) %>" />
-	</liferay-portlet:renderURL>
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup, ActionKeys.ADD_LAYOUT_BRANCH) %>">
+		<liferay-portlet:renderURL var="addLayoutBranchURL">
+			<portlet:param name="mvcRenderCommandName" value="editLayoutBranch" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevisionId) %>" />
+		</liferay-portlet:renderURL>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" href="<%= addLayoutBranchURL %>" name="addRootLayoutBranch" value="add-page-variation" />
-	</aui:button-row>
-</c:if>
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" href="<%= addLayoutBranchURL %>" name="addRootLayoutBranch" value="add-page-variation" />
+		</aui:button-row>
+	</c:if>
 
-<div class="branch-results">
-	<liferay-ui:search-container>
-		<liferay-ui:search-container-results
-			results="<%= layoutRevisions %>"
-			total="<%= layoutRevisions.size() %>"
-		/>
+	<div class="branch-results">
+		<liferay-ui:search-container>
+			<liferay-ui:search-container-results
+				results="<%= layoutRevisions %>"
+				total="<%= layoutRevisions.size() %>"
+			/>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.LayoutRevision"
-			escapedModel="<%= true %>"
-			keyProperty="layoutRevisionId"
-			modelVar="layoutRevision"
-		>
-
-			<%
-			LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
-			%>
-
-			<liferay-ui:search-container-column-text
-				name="name"
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.model.LayoutRevision"
+				escapedModel="<%= true %>"
+				keyProperty="layoutRevisionId"
+				modelVar="layoutRevision"
 			>
-				<c:if test="<%= layoutRevision.getLayoutBranchId() == currentLayoutRevision.getLayoutBranchId() %>">
-					<strong>
-				</c:if>
 
-				<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" />
+				<%
+				LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
+				%>
 
-				<c:if test="<%= layoutBranch.isMaster() %>">
-					<i class="icon-asterisk"></i>
-				</c:if>
+				<liferay-ui:search-container-column-text
+					name="name"
+				>
+					<c:if test="<%= layoutRevision.getLayoutBranchId() == currentLayoutRevision.getLayoutBranchId() %>">
+						<strong>
+					</c:if>
 
-				<c:if test="<%= layoutRevision.getLayoutBranchId() == currentLayoutRevision.getLayoutBranchId() %>">
-					</strong>
-				</c:if>
-			</liferay-ui:search-container-column-text>
+					<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" />
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= HtmlUtil.escape(layoutBranch.getDescription()) %>"
-			/>
+					<c:if test="<%= layoutBranch.isMaster() %>">
+						<i class="icon-asterisk"></i>
+					</c:if>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
-				path="/layout_branch_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+					<c:if test="<%= layoutRevision.getLayoutBranchId() == currentLayoutRevision.getLayoutBranchId() %>">
+						</strong>
+					</c:if>
+				</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
-	</liferay-ui:search-container>
+				<liferay-ui:search-container-column-text
+					name="description"
+					value="<%= HtmlUtil.escape(layoutBranch.getDescription()) %>"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action"
+					path="/layout_branch_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+		</liferay-ui:search-container>
+	</div>
 </div>
 
 <aui:script position="inline" use="liferay-staging-branch">

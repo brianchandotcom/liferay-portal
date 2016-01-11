@@ -853,14 +853,6 @@ public class PortletURLImpl
 			}
 		}
 
-		String controlPanelMenuPortletId = PortletProviderUtil.getPortletId(
-			PortalProductMenuApplicationType.ProductMenu.CLASS_NAME,
-			PortletProvider.Action.VIEW);
-
-		if (_portletId.equals(controlPanelMenuPortletId)) {
-			return;
-		}
-
 		sb.append("p_p_auth");
 		sb.append(StringPool.EQUAL);
 		sb.append(

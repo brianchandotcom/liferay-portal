@@ -25,7 +25,9 @@ portletURL.setParameter("struts_action", "/shopping/view");
 portletURL.setParameter("tabs1", "coupons");
 %>
 
-<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="showSearch" value="<%= Boolean.TRUE.toString() %>" />
+</liferay-util:include>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>
@@ -74,11 +76,11 @@ portletURL.setParameter("tabs1", "coupons");
 		discountType = null;
 	}
 
-	int total = ShoppingCouponLocalServiceUtil.searchCount(scopeGroupId, company.getCompanyId(), searchTerms.getCode(), searchTerms.isActive(), discountType, searchTerms.isAndOperator());
+	int total = ShoppingCouponLocalServiceUtil.searchCount(scopeGroupId, company.getCompanyId(), searchTerms.getKeywords(), searchTerms.isActive(), discountType, searchTerms.isAndOperator());
 
 	searchContainer.setTotal(total);
 
-	List results = ShoppingCouponServiceUtil.search(scopeGroupId, company.getCompanyId(), searchTerms.getCode(), searchTerms.isActive(), discountType, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+	List results = ShoppingCouponServiceUtil.search(scopeGroupId, company.getCompanyId(), searchTerms.getKeywords(), searchTerms.isActive(), discountType, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
 
 	searchContainer.setResults(results);
 	%>

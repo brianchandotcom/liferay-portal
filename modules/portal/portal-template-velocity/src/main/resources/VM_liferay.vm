@@ -67,6 +67,7 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 					</div>
 				#else
 					<div id="productMenuSidebar">
+						<div class="loading-animation"></div>
 					</div>
 				#end
 			</div>

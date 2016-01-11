@@ -134,6 +134,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 					</div>
 				<#else>
 					<div id="productMenuSidebar">
+						<div class="loading-animation"></div>
 					</div>
 				</#if>
 			</div>

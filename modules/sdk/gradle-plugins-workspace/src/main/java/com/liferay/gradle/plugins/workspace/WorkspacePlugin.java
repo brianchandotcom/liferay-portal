@@ -267,21 +267,6 @@ public class WorkspacePlugin implements Plugin<Project> {
 					return;
 				}
 
-				RepositoryHandler repositoryHandler =
-					subproject.getRepositories();
-
-				repositoryHandler.maven(
-					new Action<MavenArtifactRepository>() {
-
-						@Override
-						public void execute(MavenArtifactRepository
-							mavenArtifactRepository) {
-
-							mavenArtifactRepository.setUrl(_REPOSITORY_URL);
-						}
-
-					});
-
 				GradleUtil.applyPlugin(subproject, LiferayPlugin.class);
 
 				Zip zip = (Zip)GradleUtil.getTask(project, "distBundle");
@@ -520,9 +505,5 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 		});
 	}
-
-	private static final String _REPOSITORY_URL = System.getProperty(
-		"repository.url",
-		"http://cdn.repository.liferay.com/nexus/content/groups/public");
 
 }

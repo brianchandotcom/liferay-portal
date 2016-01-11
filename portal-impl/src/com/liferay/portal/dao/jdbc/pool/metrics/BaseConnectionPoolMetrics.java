@@ -16,6 +16,7 @@ package com.liferay.portal.dao.jdbc.pool.metrics;
 
 import com.liferay.portal.dao.jdbc.aop.DefaultDynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.jdbc.pool.metrics.ConnectionPoolMetrics;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

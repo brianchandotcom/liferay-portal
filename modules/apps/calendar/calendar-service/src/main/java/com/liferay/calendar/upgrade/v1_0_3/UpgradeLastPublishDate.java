@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.upgrade.v1_0_2;
+package com.liferay.calendar.upgrade.v1_0_3;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
 

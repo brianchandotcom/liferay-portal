@@ -1505,8 +1505,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
 
 		List<Group> groups = groupLocalService.getGroups(
-			parentGroup.getCompanyId(), Layout.class.getName(),
-			parentGroup.getGroupId());
+			parentGroup.getCompanyId(), Layout.class.getName(), parentGroupId);
 
 		List<Layout> layouts = new ArrayList<>(groups.size());
 
@@ -1532,8 +1531,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
 
 		List<Group> groups = groupLocalService.getGroups(
-			parentGroup.getCompanyId(), Layout.class.getName(),
-			parentGroup.getGroupId());
+			parentGroup.getCompanyId(), Layout.class.getName(), parentGroupId);
 
 		List<Layout> layouts = new ArrayList<>(groups.size());
 

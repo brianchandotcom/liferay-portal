@@ -16,7 +16,6 @@ package com.liferay.control.menu.taglib.servlet.taglib;
 
 import com.liferay.control.menu.ControlMenuCategory;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
-import com.liferay.control.menu.constants.ControlMenuWebKeys;
 import com.liferay.control.menu.taglib.servlet.ServletContextUtil;
 import com.liferay.control.menu.util.ControlMenuCategoryRegistry;
 import com.liferay.control.menu.util.ControlMenuEntryRegistry;
@@ -68,13 +67,14 @@ public class ControlMenuTag extends IncludeTag {
 				ControlMenuCategoryKeys.ROOT);
 
 		request.setAttribute(
-			ControlMenuWebKeys.CONTROL_MENU_CATEGORIES, controlMenuCategories);
+			"liferay-control-menu:control-menu:control-menu-categories",
+			controlMenuCategories);
 
 		ControlMenuEntryRegistry controlMenuEntryRegistry =
 			ServletContextUtil.getControlMenuEntryRegistry();
 
 		request.setAttribute(
-			ControlMenuWebKeys.CONTROL_MENU_ENTRY_REGISTRY,
+			"liferay-control-menu:control-menu:control-menu-entry-registry",
 			controlMenuEntryRegistry);
 	}
 

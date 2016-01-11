@@ -19,12 +19,6 @@ package com.liferay.control.menu.constants;
  */
 public class ControlMenuWebKeys {
 
-	public static final String CONTROL_MENU_CATEGORIES =
-		"CONTROL_MENU_CATEGORIES";
-
 	public static final String CONTROL_MENU_ENTRY = "CONTROL_MENU_ENTRY";
-
-	public static final String CONTROL_MENU_ENTRY_REGISTRY =
-		"CONTROL_MENU_ENTRY_REGISTRY";
 
 }

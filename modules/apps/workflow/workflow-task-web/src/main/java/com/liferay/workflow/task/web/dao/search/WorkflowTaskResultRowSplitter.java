@@ -49,13 +49,13 @@ public class WorkflowTaskResultRowSplitter implements ResultRowSplitter {
 		if (!workflowTaskPendingResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					"Pending", workflowTaskPendingResultRows));
+					"pending", workflowTaskPendingResultRows));
 		}
 
 		if (!workflowTaskCompletedResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					"Completed", workflowTaskCompletedResultRows));
+					"completed", workflowTaskCompletedResultRows));
 		}
 
 		return resultRowSplitterEntries;

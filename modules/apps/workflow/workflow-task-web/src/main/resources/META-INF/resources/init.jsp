@@ -55,7 +55,7 @@ page import="com.liferay.workflow.task.web.search.WorkflowTaskSearch" %>
 <liferay-theme:defineObjects />
 
 <%
-WorkflowTaskDisplayContext workflowTaskDisplayContext = new WorkflowTaskDisplayContext(request, liferayPortletRequest, liferayPortletResponse, portletPreferences);
+WorkflowTaskDisplayContext workflowTaskDisplayContext = new WorkflowTaskDisplayContext(liferayPortletRequest, liferayPortletResponse, portletPreferences);
 
 String currentURL = workflowTaskDisplayContext.getCurrentURL();
 %>

@@ -14,56 +14,50 @@
 
 package com.liferay.bookmarks.web.portlet.action;
 
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryLocalService;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.struts.FindStrutsAction;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Juan Fernández
+ * @author Sergio González
  */
 @Component(
 	property = "path=/bookmarks/find_entry", service = StrutsAction.class
 )
-public class FindEntryAction extends FindStrutsAction {
+public class FindEntryAction extends BaseStrutsAction {
 
 	@Override
-	protected long getGroupId(long primaryKey) throws Exception {
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(primaryKey);
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
 
-		return entry.getGroupId();
-	}
-
-	@Override
-	protected String getPrimaryKeyParameterName() {
-		return "entryId";
+		return null;
 	}
 
 	@Override
-	protected String getStrutsAction(
-		HttpServletRequest request, String portletId) {
+	public String execute(
+			StrutsAction originalStrutsAction, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
 
-		return "/bookmarks/view_entry";
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long entryId = ParamUtil.getLong(request, "entryId");
+
+		response.sendRedirect(
+			themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" +
+				entryId);
+
+		return null;
 	}
-
-	@Override
-	protected String[] initPortletIds() {
-		return new String[] {BookmarksPortletKeys.BOOKMARKS};
-	}
-
-	@Reference(unbind = "-")
-	protected void setBookmarksEntryLocalService(
-		BookmarksEntryLocalService bookmarksEntryLocalService) {
-
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
-	}
-
-	private volatile BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 }

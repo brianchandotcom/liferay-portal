@@ -14,15 +14,4 @@
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
-	<route>
-		<pattern>/{entryId:\d+}</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/bookmarks/view_entry</implicit-parameter>
-		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
-		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{entryId:\d+}/{p_p_state}</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/bookmarks/view_entry</implicit-parameter>
-		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
-	</route>
 </routes>

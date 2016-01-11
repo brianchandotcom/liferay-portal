@@ -20,8 +20,6 @@
 SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDisplayContext = new SiteAdministrationPanelCategoryDisplayContext(liferayPortletRequest, liferayPortletResponse, null);
 
 PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getPanelCategory();
-
-ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
 %>
 
 <liferay-ui:icon

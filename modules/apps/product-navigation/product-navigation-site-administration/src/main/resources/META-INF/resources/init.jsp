@@ -29,7 +29,6 @@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
@@ -47,8 +46,7 @@ page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Map" %><%@
-page import="java.util.ResourceBundle" %>
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %>

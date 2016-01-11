@@ -2013,7 +2013,7 @@ public class StagingImpl implements Staging {
 	}
 
 	protected long getRecentLayoutBranchId(
-		long userId, long layoutSetBranchId, long plid) {
+		long userId, long layoutSetBranchId, long plid) throws PortalException {
 
 		RecentLayoutBranch recentLayoutBranch =
 			_recentLayoutBranchLocalService.fetchRecentLayoutBranch(
@@ -2021,6 +2021,16 @@ public class StagingImpl implements Staging {
 
 		if (recentLayoutBranch != null) {
 			return recentLayoutBranch.getLayoutBranchId();
+		}
+
+		try {
+			LayoutBranch masterLayoutBranch =
+				_layoutBranchLocalService.getMasterLayoutBranch(
+					layoutSetBranchId, plid);
+
+			return masterLayoutBranch.getLayoutBranchId();
+		}
+		catch (NoSuchLayoutBranchException nslbe) {
 		}
 
 		return 0;

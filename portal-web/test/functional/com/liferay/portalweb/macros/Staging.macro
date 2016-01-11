@@ -581,6 +581,9 @@
 
 	<command name="publishToLive">
 		<execute function="AssertClickNoError#assertPartialTextClickAt" locator1="Button#SUBMIT" value1="Publish" />
+
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There is currently 1 process in progress." />
+
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute function="Pause" locator1="5000" />

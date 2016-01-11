@@ -231,6 +231,7 @@
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -274,6 +275,7 @@
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SitePage#viewPG">
@@ -404,6 +406,7 @@
 				<var name="page" value="Public Pages" />
 				<var name="pageName" value="${pageName}" />
 				<var name="siteName" value="Site Name" />
+				<var name="siteURL" value="true" />
 			</execute>
 		</for>
 

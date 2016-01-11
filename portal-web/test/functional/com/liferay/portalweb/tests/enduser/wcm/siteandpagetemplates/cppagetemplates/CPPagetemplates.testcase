@@ -14,7 +14,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<tear-down>
+<!-- 	<tear-down>
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
@@ -27,7 +27,7 @@
 				<execute macro="PageTemplate#tearDownCP" />
 			</else>
 		</if>
-	</tear-down>
+	</tear-down> -->
 
 	<command name="AddPageTemplate" priority="5">
 		<property name="portal.acceptance" value="true" />
@@ -71,6 +71,7 @@
 			<var name="pageName" value="Site Page" />
 			<var name="pageTemplateName" value="Page Template Name" />
 			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#openURL">

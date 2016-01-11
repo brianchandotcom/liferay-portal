@@ -29,6 +29,7 @@
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 	</set-up>
 

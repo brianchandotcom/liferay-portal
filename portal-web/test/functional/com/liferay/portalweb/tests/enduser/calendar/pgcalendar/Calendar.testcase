@@ -1595,7 +1595,7 @@
 	</command>
 
 	<command name="AddEventWithRelatedAssetViaAssetPublisher" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="AP Page" />
 		</execute>
 

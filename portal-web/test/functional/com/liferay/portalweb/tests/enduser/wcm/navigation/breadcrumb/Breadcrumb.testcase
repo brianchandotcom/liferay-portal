@@ -280,6 +280,7 @@
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Parent Page Name" />
 			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

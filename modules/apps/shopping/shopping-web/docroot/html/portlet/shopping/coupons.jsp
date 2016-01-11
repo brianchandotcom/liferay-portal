@@ -26,12 +26,6 @@ portletURL.setParameter("tabs1", "coupons");
 
 CouponSearch couponSearch = new CouponSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
 
-List headerNames = couponSearch.getHeaderNames();
-
-headerNames.add(StringPool.BLANK);
-
-couponSearch.setRowChecker(new RowChecker(renderResponse));
-
 CouponDisplayTerms searchTerms = (CouponDisplayTerms)couponSearch.getSearchTerms();
 
 int totalCoupons = ShoppingCouponLocalServiceUtil.searchCount(scopeGroupId, company.getCompanyId(), searchTerms.getKeywords(), searchTerms.isActive(), searchTerms.getDiscountType(), searchTerms.isAndOperator());
@@ -47,7 +41,10 @@ couponSearch.setResults(coupons);
 	<liferay-util:param name="showSearch" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-util:include>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="coupons"
+>
 	<liferay-frontend:management-bar-filters>
 
 		<%
@@ -97,6 +94,7 @@ couponSearch.setResults(coupons);
 	</c:if>
 
 	<liferay-ui:search-container
+		id="coupons"
 		searchContainer="<%= couponSearch %>"
 	>
 		<liferay-ui:search-container-row

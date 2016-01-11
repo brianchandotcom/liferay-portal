@@ -71,10 +71,14 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		final WorkspaceExtension workspaceExtension = addWorkspaceExtension(
-			project);
+		WorkspaceExtension workspaceExtension = GradleUtil.addExtension(
+			project, PLUGIN_NAME, WorkspaceExtension.class);
 
-		applyConfigScripts(project);
+		GradleUtil.applyScript(
+			project,
+			"com/liferay/gradle/plugins/workspace/dependencies/" +
+				"config-workspace.gradle",
+			project);
 
 		Configuration bundleConfiguration = addConfigurationBundle(
 			project, workspaceExtension);
@@ -237,19 +241,6 @@ public class WorkspacePlugin implements Plugin<Project> {
 		copy.setIncludeEmptyDirs(false);
 
 		return copy;
-	}
-
-	protected WorkspaceExtension addWorkspaceExtension(Project project) {
-		return GradleUtil.addExtension(
-			project, PLUGIN_NAME, WorkspaceExtension.class);
-	}
-
-	protected void applyConfigScripts(Project project) {
-		GradleUtil.applyScript(
-			project,
-			"com/liferay/gradle/plugins/workspace/dependencies/" +
-				"config-workspace.gradle",
-			project);
 	}
 
 	protected void configureModules(

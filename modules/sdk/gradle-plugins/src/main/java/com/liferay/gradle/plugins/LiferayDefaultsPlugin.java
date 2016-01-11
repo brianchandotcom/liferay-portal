@@ -58,6 +58,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencyResolveDetails;
+import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
@@ -135,11 +136,21 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	protected void addDependenciesTestCompile(Project project) {
 		GradleUtil.addDependency(
-			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
-			"org.powermock", "powermock-api-mockito", "1.6.1");
-		GradleUtil.addDependency(
-			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
-			"org.powermock", "powermock-core", "1.6.1");
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, "org.mockito",
+			"mockito-core", "1.10.8");
+
+		ModuleDependency moduleDependency =
+			(ModuleDependency)GradleUtil.addDependency(
+				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+				"org.powermock", "powermock-api-mockito", "1.6.1");
+
+		Map<String, String> excludeArgs = new HashMap<>();
+
+		excludeArgs.put("group", "org.mockito");
+		excludeArgs.put("module", "mockito-all");
+
+		moduleDependency.exclude(excludeArgs);
+
 		GradleUtil.addDependency(
 			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 			"org.powermock", "powermock-module-junit4", "1.6.1");

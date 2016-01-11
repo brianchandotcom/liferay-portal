@@ -59,13 +59,10 @@ CouponDisplayTerms displayTerms = (CouponDisplayTerms)searchContainer.getDisplay
 <aui:button-row>
 	<aui:button cssClass="btn-lg" type="submit" value="search" />
 
-	<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "addCoupon();" %>' value="add-coupon" />
+	<portlet:renderURL var="editCouponURL">
+		<portlet:param name="struts_action" value="/shopping/edit_coupon" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
+	<aui:button cssClass="btn-lg" href="<%= editCouponURL %>" value="add-coupon" />
 </aui:button-row>
-
-<aui:script>
-	function <portlet:namespace />addCoupon() {
-		document.<portlet:namespace />fm.method = 'post';
-
-		submitForm(document.<portlet:namespace />fm, '<portlet:renderURL><portlet:param name="struts_action" value="/shopping/edit_coupon" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>');
-	}
-</aui:script>

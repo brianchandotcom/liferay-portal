@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-layouts-tree-node-task',
 	function(A) {
-		var Lang = A.Lang;
-
 		var LayoutsTreeNodeTask = A.Component.create(
 			{
 				EXTENDS: A.TreeNodeTask,

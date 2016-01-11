@@ -3,6 +3,7 @@ AUI.add(
 	function(A) {
 		var DDM = A.DD.DDM;
 		var Lang = A.Lang;
+
 		var ControlMenu = Liferay.ControlMenu;
 		var Layout = Liferay.Layout;
 		var Portlet = Liferay.Portlet;
@@ -192,8 +193,8 @@ AUI.add(
 						var portletMetaData = portlet._LFR_portletMetaData;
 
 						if (!portletMetaData) {
-							var classPK = portlet.attr(DATA_CLASS_PK);
 							var className = portlet.attr(DATA_CLASS_NAME);
+							var classPK = portlet.attr(DATA_CLASS_PK);
 
 							var instanceable = (portlet.attr('data-instanceable') == 'true');
 							var plid = portlet.attr('data-plid');
@@ -383,6 +384,7 @@ AUI.add(
 						var instance = this;
 
 						var portalLayout = event.currentTarget;
+
 						var activeDrop = portalLayout.lastAlignDrop || portalLayout.activeDrop;
 
 						if (activeDrop) {

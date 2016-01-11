@@ -339,10 +339,10 @@ AUI.add(
 								modal: true,
 								portletNamespace: instance.get('portletNamespace'),
 								resizable: false,
-								visible: false,
 								strings: {
-									addField: 'Choose Field'
-								}
+									addField: Liferay.Language.get('choose-field')
+								},
+								visible: false
 							}
 						);
 

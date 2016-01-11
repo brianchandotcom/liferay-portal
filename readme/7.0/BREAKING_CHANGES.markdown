@@ -3332,3 +3332,41 @@ In general, it should be as easy as returning `portletURL.toString()`.
 #### Why was this change made?
 
 The API was forcing to return a PortletURL and this makes things harder when we want to use any other link instead of a PortletURL. For example, in the case of Bookmarks, where we want to automatically redirect to any other potential url.
+
+---------------------------------------
+
+### The `icon` method of NavItem has been removed
+- **Date:** 2016-Jan-11
+- **JIRA Ticket:** LPS-61900
+
+#### What changed?
+
+The NavItem interface has changed and the method  `icon` that would render the nav item icon has been removed.
+
+#### Who is affected?
+
+All themes using nav_item.icon() method.
+
+#### How should I update my code?
+
+You should update the code to call the method nav_item.iconURL that would return the URL of the image and then you can use it as preferred. For example:
+	
+```
+<img alt="Page Icon" class="layout-logo" src="<%= nav_item.iconURL()" />
+```
+
+To keep the previous behaviour in velocity you can just add this:
+
+```
+$theme.layoutIcon($nav_item.getLayout())
+```
+
+To keep the previous behaviour in freemarker you can just add this:
+
+```
+<@liferay_theme["layout-icon"] layout=nav_item_layout />
+```
+ 
+#### Why was this change made?
+
+The API was forcing to have a dependency on a taglib and didn't give enough flexibility to developers.

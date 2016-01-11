@@ -117,6 +117,6 @@ public class RSSAction extends BaseRSSStrutsAction {
 		_wikiPageService = wikiPageService;
 	}
 
-	private volatile WikiPageService _wikiPageService;
+	private WikiPageService _wikiPageService;
 
 }

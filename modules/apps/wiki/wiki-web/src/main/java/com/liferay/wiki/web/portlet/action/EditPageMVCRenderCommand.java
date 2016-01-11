@@ -163,6 +163,6 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 		_wikiPageService = wikiPageService;
 	}
 
-	private volatile WikiPageService _wikiPageService;
+	private WikiPageService _wikiPageService;
 
 }

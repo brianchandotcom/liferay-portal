@@ -71,6 +71,6 @@ public class TextEngine extends BaseWikiEngine {
 		_servletContext = servletContext;
 	}
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

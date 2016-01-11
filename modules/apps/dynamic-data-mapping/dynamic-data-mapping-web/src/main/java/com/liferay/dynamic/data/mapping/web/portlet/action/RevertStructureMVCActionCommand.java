@@ -64,6 +64,6 @@ public class RevertStructureMVCActionCommand extends BaseMVCActionCommand {
 		_ddmStructureService = ddmStructureService;
 	}
 
-	private volatile DDMStructureService _ddmStructureService;
+	private DDMStructureService _ddmStructureService;
 
 }

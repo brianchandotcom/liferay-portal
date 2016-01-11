@@ -58,6 +58,6 @@ public class AssetVocabularyPermissionUpdateHandler
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 	}
 
-	private volatile AssetVocabularyLocalService _assetVocabularyLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }

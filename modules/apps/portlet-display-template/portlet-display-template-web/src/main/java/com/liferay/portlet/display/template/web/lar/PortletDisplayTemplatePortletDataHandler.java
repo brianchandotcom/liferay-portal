@@ -231,7 +231,7 @@ public class PortletDisplayTemplatePortletDataHandler
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private StagedModelType[] _stagedModelTypes;
 
 }

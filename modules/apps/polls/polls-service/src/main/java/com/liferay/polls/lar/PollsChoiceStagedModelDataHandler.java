@@ -181,7 +181,7 @@ public class PollsChoiceStagedModelDataHandler
 		_pollsQuestionLocalService = pollsQuestionLocalService;
 	}
 
-	private volatile PollsChoiceLocalService _pollsChoiceLocalService;
-	private volatile PollsQuestionLocalService _pollsQuestionLocalService;
+	private PollsChoiceLocalService _pollsChoiceLocalService;
+	private PollsQuestionLocalService _pollsQuestionLocalService;
 
 }

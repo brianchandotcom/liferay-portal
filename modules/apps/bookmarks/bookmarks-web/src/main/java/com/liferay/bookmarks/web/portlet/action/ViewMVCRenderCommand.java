@@ -79,7 +79,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			bookmarksPortletToolbarContributor;
 	}
 
-	private volatile BookmarksPortletToolbarContributor
+	private BookmarksPortletToolbarContributor
 		_bookmarksPortletToolbarContributor;
 
 }

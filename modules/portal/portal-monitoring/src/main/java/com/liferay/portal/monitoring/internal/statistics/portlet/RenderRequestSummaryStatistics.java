@@ -685,6 +685,6 @@ public class RenderRequestSummaryStatistics
 		_serverStatistics = serverStatistics;
 	}
 
-	private volatile ServerStatistics _serverStatistics;
+	private ServerStatistics _serverStatistics;
 
 }

@@ -54,6 +54,6 @@ public class PermissionsPortletConfigurationIconFactory
 		_layoutLocalService = layoutLocalService;
 	}
 
-	private volatile LayoutLocalService _layoutLocalService;
+	private LayoutLocalService _layoutLocalService;
 
 }

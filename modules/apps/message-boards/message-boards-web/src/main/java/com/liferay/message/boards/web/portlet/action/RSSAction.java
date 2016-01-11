@@ -141,6 +141,6 @@ public class RSSAction extends BaseRSSStrutsAction {
 		_mbMessageService = mbMessageService;
 	}
 
-	private volatile MBMessageService _mbMessageService;
+	private MBMessageService _mbMessageService;
 
 }

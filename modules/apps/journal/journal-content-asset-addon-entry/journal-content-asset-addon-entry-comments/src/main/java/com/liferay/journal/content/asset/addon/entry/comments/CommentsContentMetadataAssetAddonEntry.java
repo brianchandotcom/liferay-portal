@@ -121,7 +121,7 @@ public class CommentsContentMetadataAssetAddonEntry
 		super.setServletContext(servletContext);
 	}
 
-	private volatile CommentRatingsContentMetadataAssetAddonEntry
+	private CommentRatingsContentMetadataAssetAddonEntry
 		_commentRatingsContentMetadataAssetAddonEntry;
 
 }

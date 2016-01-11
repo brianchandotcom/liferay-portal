@@ -122,6 +122,6 @@ public class MovePageMVCActionCommand extends BaseMVCActionCommand {
 		_wikiPageService = wikiPageService;
 	}
 
-	private volatile WikiPageService _wikiPageService;
+	private WikiPageService _wikiPageService;
 
 }

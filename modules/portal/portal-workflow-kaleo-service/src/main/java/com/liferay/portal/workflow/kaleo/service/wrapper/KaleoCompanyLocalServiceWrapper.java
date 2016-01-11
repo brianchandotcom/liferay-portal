@@ -71,6 +71,6 @@ public class KaleoCompanyLocalServiceWrapper
 		_portalKaleoManager = portalKaleoManager;
 	}
 
-	private volatile PortalKaleoManager _portalKaleoManager;
+	private PortalKaleoManager _portalKaleoManager;
 
 }

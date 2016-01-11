@@ -342,10 +342,10 @@ public class JournalFeedStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalFeedStagedModelDataHandler.class);
 
-	private volatile DDMStructureLocalService _ddmStructureLocalService;
-	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
-	private volatile JournalFeedExportImportContentProcessor
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private JournalFeedExportImportContentProcessor
 		_journalFeedExportImportContentProcessor;
-	private volatile JournalFeedLocalService _journalFeedLocalService;
+	private JournalFeedLocalService _journalFeedLocalService;
 
 }

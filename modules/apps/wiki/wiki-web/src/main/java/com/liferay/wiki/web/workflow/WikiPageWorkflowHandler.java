@@ -85,6 +85,6 @@ public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
-	private volatile WikiPageLocalService _wikiPageLocalService;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

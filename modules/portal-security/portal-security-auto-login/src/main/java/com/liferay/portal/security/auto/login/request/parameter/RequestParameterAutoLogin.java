@@ -180,7 +180,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RequestParameterAutoLogin.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
-	private volatile UserLocalService _userLocalService;
+	private ConfigurationFactory _configurationFactory;
+	private UserLocalService _userLocalService;
 
 }

@@ -412,10 +412,10 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		_journalFolderLocalService = journalFolderLocalService;
 	}
 
-	private volatile DDMStructureLocalService _ddmStructureLocalService;
-	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile JournalArticleResourceLocalService
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private volatile JournalFolderLocalService _journalFolderLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

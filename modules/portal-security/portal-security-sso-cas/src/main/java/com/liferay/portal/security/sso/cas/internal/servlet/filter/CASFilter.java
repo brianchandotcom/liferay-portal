@@ -263,6 +263,6 @@ public class CASFilter extends BaseFilter {
 	private static final Map<Long, TicketValidator> _ticketValidators =
 		new ConcurrentHashMap<>();
 
-	private volatile ConfigurationFactory _configurationFactory;
+	private ConfigurationFactory _configurationFactory;
 
 }

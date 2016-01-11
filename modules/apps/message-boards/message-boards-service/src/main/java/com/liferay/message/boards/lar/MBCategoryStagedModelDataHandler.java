@@ -226,6 +226,6 @@ public class MBCategoryStagedModelDataHandler
 		_mbCategoryLocalService = mbCategoryLocalService;
 	}
 
-	private volatile MBCategoryLocalService _mbCategoryLocalService;
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

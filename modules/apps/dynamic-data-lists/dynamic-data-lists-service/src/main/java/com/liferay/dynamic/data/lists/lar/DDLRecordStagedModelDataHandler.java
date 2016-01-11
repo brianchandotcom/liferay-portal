@@ -261,11 +261,10 @@ public class DDLRecordStagedModelDataHandler
 		}
 	}
 
-	private volatile DDLRecordLocalService _ddlRecordLocalService;
-	private volatile DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private volatile DDMFormValuesJSONDeserializer
-		_ddmFormValuesJSONDeserializer;
-	private volatile DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
-	private volatile StorageEngine _storageEngine;
+	private DDLRecordLocalService _ddlRecordLocalService;
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
+	private StorageEngine _storageEngine;
 
 }

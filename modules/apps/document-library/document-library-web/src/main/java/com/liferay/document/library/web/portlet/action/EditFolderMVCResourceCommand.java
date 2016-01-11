@@ -157,6 +157,6 @@ public class EditFolderMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	private volatile DLAppService _dlAppService;
+	private DLAppService _dlAppService;
 
 }

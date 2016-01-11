@@ -84,6 +84,6 @@ public class PortalSettingsTestCASMVCRenderCommand implements MVCRenderCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSettingsTestCASMVCRenderCommand.class);
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

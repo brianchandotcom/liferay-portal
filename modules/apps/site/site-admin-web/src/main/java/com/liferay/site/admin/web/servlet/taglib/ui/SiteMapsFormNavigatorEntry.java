@@ -105,6 +105,6 @@ public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 		_mapProviderHelper = mapProviderHelper;
 	}
 
-	private volatile MapProviderHelper _mapProviderHelper;
+	private MapProviderHelper _mapProviderHelper;
 
 }

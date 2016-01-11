@@ -147,7 +147,7 @@ public class ServiceAccessPolicyManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceAccessPolicyManagerImpl.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
-	private volatile SAPEntryService _sapEntryService;
+	private ConfigurationFactory _configurationFactory;
+	private SAPEntryService _sapEntryService;
 
 }

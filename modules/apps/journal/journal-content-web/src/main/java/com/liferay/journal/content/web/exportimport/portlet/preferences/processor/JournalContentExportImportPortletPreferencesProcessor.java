@@ -325,12 +325,11 @@ public class JournalContentExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentExportImportPortletPreferencesProcessor.class);
 
-	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
-	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile JournalContentSearchLocalService
-		_journalContentSearchLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
-	private volatile ReferencedStagedModelImporterCapability
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalContentSearchLocalService _journalContentSearchLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
 
 }

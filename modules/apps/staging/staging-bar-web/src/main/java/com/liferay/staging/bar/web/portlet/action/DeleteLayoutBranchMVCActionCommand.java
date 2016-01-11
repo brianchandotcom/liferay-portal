@@ -82,6 +82,6 @@ public class DeleteLayoutBranchMVCActionCommand extends BaseMVCActionCommand {
 		_layoutBranchService = layoutBranchService;
 	}
 
-	private volatile LayoutBranchService _layoutBranchService;
+	private LayoutBranchService _layoutBranchService;
 
 }

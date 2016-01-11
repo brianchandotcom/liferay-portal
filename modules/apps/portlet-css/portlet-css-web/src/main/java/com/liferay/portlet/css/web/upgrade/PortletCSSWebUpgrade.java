@@ -66,6 +66,6 @@ public class PortletCSSWebUpgrade {
 			false);
 	}
 
-	private volatile ReleaseLocalService _releaseLocalService;
+	private ReleaseLocalService _releaseLocalService;
 
 }

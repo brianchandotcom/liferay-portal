@@ -238,10 +238,10 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 			calendarNotificationTemplateLocalService;
 	}
 
-	private volatile CalendarLocalService _calendarLocalService;
-	private volatile CalendarNotificationTemplateExportImportContentProcessor
+	private CalendarLocalService _calendarLocalService;
+	private CalendarNotificationTemplateExportImportContentProcessor
 		_calendarNotificationTemplateExportImportContentProcessor;
-	private volatile CalendarNotificationTemplateLocalService
+	private CalendarNotificationTemplateLocalService
 		_calendarNotificationTemplateLocalService;
 
 }

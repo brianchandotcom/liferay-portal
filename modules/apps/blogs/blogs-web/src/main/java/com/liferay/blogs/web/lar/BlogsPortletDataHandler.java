@@ -183,7 +183,7 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		_blogsStatsUserLocalService = blogsStatsUserLocalService;
 	}
 
-	private volatile BlogsEntryLocalService _blogsEntryLocalService;
-	private volatile BlogsStatsUserLocalService _blogsStatsUserLocalService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsStatsUserLocalService _blogsStatsUserLocalService;
 
 }

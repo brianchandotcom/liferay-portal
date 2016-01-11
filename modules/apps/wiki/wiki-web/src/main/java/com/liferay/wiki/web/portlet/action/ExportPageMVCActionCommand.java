@@ -231,6 +231,6 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportPageMVCActionCommand.class);
 
-	private volatile WikiPageService _wikiPageService;
+	private WikiPageService _wikiPageService;
 
 }

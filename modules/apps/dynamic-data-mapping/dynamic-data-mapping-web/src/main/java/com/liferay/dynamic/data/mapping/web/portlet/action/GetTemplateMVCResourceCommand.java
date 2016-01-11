@@ -95,6 +95,6 @@ public class GetTemplateMVCResourceCommand extends BaseMVCResourceCommand {
 		_ddmTemplateService = ddmTemplateService;
 	}
 
-	private volatile DDMTemplateService _ddmTemplateService;
+	private DDMTemplateService _ddmTemplateService;
 
 }

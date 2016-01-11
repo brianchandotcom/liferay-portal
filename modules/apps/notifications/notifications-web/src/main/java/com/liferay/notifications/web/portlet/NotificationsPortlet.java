@@ -227,10 +227,10 @@ public class NotificationsPortlet extends MVCPortlet {
 			userNotificationEvent);
 	}
 
-	private volatile SubscriptionLocalService _subscriptionLocalService;
-	private volatile UserNotificationDeliveryLocalService
+	private SubscriptionLocalService _subscriptionLocalService;
+	private UserNotificationDeliveryLocalService
 		_userNotificationDeliveryLocalService;
-	private volatile UserNotificationEventLocalService
+	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 
 }

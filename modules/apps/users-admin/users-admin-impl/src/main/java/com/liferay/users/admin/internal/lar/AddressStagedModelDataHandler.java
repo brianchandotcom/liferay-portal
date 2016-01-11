@@ -142,7 +142,7 @@ public class AddressStagedModelDataHandler
 		_groupLocalService = groupLocalService;
 	}
 
-	private volatile AddressLocalService _addressLocalService;
-	private volatile GroupLocalService _groupLocalService;
+	private AddressLocalService _addressLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

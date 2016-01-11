@@ -110,6 +110,6 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 		_dlFileEntryTypeService = dlFileEntryTypeService;
 	}
 
-	private volatile DLFileEntryTypeService _dlFileEntryTypeService;
+	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 }

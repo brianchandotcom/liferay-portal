@@ -684,6 +684,6 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		_serverStatistics = serverStatistics;
 	}
 
-	private volatile ServerStatistics _serverStatistics;
+	private ServerStatistics _serverStatistics;
 
 }

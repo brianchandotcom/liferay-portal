@@ -56,6 +56,6 @@ public class WikiPagePermissionUpdateHandler
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
-	private volatile WikiPageLocalService _wikiPageLocalService;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

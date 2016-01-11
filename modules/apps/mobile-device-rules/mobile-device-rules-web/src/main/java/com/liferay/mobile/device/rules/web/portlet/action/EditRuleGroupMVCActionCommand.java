@@ -178,6 +178,6 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 		return ruleGroup;
 	}
 
-	private volatile MDRRuleGroupService _mdrRuleGroupService;
+	private MDRRuleGroupService _mdrRuleGroupService;
 
 }

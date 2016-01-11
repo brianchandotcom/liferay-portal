@@ -1033,8 +1033,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditFileEntryMVCActionCommand.class);
 
-	private volatile DLAppService _dlAppService;
-	private volatile DLTrashService _dlTrashService;
-	private volatile TrashEntryService _trashEntryService;
+	private DLAppService _dlAppService;
+	private DLTrashService _dlTrashService;
+	private TrashEntryService _trashEntryService;
 
 }

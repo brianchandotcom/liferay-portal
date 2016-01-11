@@ -56,6 +56,6 @@ public class DLFileEntryTypePermissionUpdateHandler
 		_dLFileEntryTypeLocalService = dLFileEntryTypeLocalService;
 	}
 
-	private volatile DLFileEntryTypeLocalService _dLFileEntryTypeLocalService;
+	private DLFileEntryTypeLocalService _dLFileEntryTypeLocalService;
 
 }

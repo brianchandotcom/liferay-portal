@@ -58,7 +58,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
 	}
 
-	private volatile MDRRuleGroupInstanceLocalService
-		_mdrRuleGroupInstanceLocalService;
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
 
 }

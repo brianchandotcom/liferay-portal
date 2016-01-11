@@ -758,13 +758,12 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		ElasticsearchIndexSearcher.class);
 
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
-	private volatile ElasticsearchConnectionManager
-		_elasticsearchConnectionManager;
-	private volatile FacetProcessor<SearchRequestBuilder> _facetProcessor;
-	private volatile FilterTranslator<QueryBuilder> _filterTranslator;
-	private volatile GroupByTranslator _groupByTranslator;
+	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
+	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
+	private FilterTranslator<QueryBuilder> _filterTranslator;
+	private GroupByTranslator _groupByTranslator;
 	private boolean _logExceptionsOnly;
-	private volatile QueryTranslator<QueryBuilder> _queryTranslator;
-	private volatile StatsTranslator _statsTranslator;
+	private QueryTranslator<QueryBuilder> _queryTranslator;
+	private StatsTranslator _statsTranslator;
 
 }

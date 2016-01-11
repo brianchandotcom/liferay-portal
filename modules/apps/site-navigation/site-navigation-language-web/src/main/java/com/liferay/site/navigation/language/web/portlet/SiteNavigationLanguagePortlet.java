@@ -74,6 +74,6 @@ public class SiteNavigationLanguagePortlet extends MVCPortlet {
 		_portletDisplayTemplate = portletDisplayTemplate;
 	}
 
-	private volatile PortletDisplayTemplate _portletDisplayTemplate;
+	private PortletDisplayTemplate _portletDisplayTemplate;
 
 }

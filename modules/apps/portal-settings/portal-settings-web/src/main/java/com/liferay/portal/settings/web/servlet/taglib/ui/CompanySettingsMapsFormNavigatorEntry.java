@@ -86,6 +86,6 @@ public class CompanySettingsMapsFormNavigatorEntry
 		_mapProviderHelper = mapProviderHelper;
 	}
 
-	private volatile MapProviderHelper _mapProviderHelper;
+	private MapProviderHelper _mapProviderHelper;
 
 }

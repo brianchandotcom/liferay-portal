@@ -666,11 +666,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		_repositoryLocalService = repositoryLocalService;
 	}
 
-	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
-	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private volatile DLFileShortcutLocalService _dlFileShortcutLocalService;
-	private volatile DLFolderLocalService _dlFolderLocalService;
-	private volatile RepositoryLocalService _repositoryLocalService;
+	private DLAppLocalService _dlAppLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DLFileShortcutLocalService _dlFileShortcutLocalService;
+	private DLFolderLocalService _dlFolderLocalService;
+	private RepositoryLocalService _repositoryLocalService;
 
 }

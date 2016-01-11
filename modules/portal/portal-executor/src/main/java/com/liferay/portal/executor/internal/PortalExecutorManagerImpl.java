@@ -125,7 +125,7 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 
 	}
 
-	private volatile PortalExecutorFactory _portalExecutorFactory;
+	private PortalExecutorFactory _portalExecutorFactory;
 	private final ConcurrentMap<String, ThreadPoolExecutor>
 		_threadPoolExecutors = new ConcurrentHashMap<>();
 

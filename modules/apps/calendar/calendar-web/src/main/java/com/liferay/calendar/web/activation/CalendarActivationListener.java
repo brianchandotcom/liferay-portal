@@ -72,6 +72,6 @@ public class CalendarActivationListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarActivationListener.class);
 
-	private volatile CalendarImporterLocalService _calendarImporterLocalService;
+	private CalendarImporterLocalService _calendarImporterLocalService;
 
 }

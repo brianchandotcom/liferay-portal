@@ -348,8 +348,8 @@ public class WikiPageIndexer
 
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();
-	private volatile WikiNodeLocalService _wikiNodeLocalService;
-	private volatile WikiNodeService _wikiNodeService;
-	private volatile WikiPageLocalService _wikiPageLocalService;
+	private WikiNodeLocalService _wikiNodeLocalService;
+	private WikiNodeService _wikiNodeService;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

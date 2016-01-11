@@ -135,6 +135,6 @@ public class EditImageMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditImageMVCActionCommand.class);
 
-	private volatile BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

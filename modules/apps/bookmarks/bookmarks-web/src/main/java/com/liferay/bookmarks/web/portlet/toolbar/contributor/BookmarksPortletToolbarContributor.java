@@ -286,7 +286,7 @@ public class BookmarksPortletToolbarContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksPortletToolbarContributor.class);
 
-	private volatile BaseModelPermissionChecker _baseModelPermissionChecker;
-	private volatile BookmarksFolderService _bookmarksFolderService;
+	private BaseModelPermissionChecker _baseModelPermissionChecker;
+	private BookmarksFolderService _bookmarksFolderService;
 
 }

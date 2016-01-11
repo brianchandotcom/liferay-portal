@@ -63,7 +63,6 @@ public class WikiEngineCreoleComponentProvider {
 	private static WikiEngineCreoleComponentProvider
 		_wikiEngineCreoleComponentProvider;
 
-	private volatile WikiGroupServiceConfiguration
-		_wikiGroupServiceConfiguration;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

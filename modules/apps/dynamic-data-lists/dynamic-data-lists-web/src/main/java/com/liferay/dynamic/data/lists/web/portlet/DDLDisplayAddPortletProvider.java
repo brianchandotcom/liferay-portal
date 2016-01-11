@@ -80,6 +80,6 @@ public class DDLDisplayAddPortletProvider
 		_assetEntryLocalService = assetEntryLocalService;
 	}
 
-	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
 
 }

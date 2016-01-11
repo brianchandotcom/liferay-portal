@@ -71,6 +71,6 @@ public class EditRuleGroupMVCRenderCommand implements MVCRenderCommand {
 		_mdrRuleGroupService = mdrRuleGroupService;
 	}
 
-	private volatile MDRRuleGroupService _mdrRuleGroupService;
+	private MDRRuleGroupService _mdrRuleGroupService;
 
 }

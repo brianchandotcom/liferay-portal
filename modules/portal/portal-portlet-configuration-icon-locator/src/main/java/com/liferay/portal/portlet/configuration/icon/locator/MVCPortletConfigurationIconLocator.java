@@ -69,6 +69,6 @@ public class MVCPortletConfigurationIconLocator
 		_portletLocalService = portletLocalService;
 	}
 
-	private volatile PortletLocalService _portletLocalService;
+	private PortletLocalService _portletLocalService;
 
 }

@@ -106,7 +106,7 @@ public class PublishRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 			ddmFormValues.getDefaultLocale(), Boolean.toString(published));
 	}
 
-	private volatile DDLRecordSetService _ddlRecordSetService;
-	private volatile DDMFormValuesQueryFactory _ddmFormValuesQueryFactory;
+	private DDLRecordSetService _ddlRecordSetService;
+	private DDMFormValuesQueryFactory _ddmFormValuesQueryFactory;
 
 }

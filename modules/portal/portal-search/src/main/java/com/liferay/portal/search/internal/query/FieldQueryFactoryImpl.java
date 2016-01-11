@@ -188,6 +188,6 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 
 	private KeywordTokenizer _defaultKeywordTokenizer;
 	private KeywordTokenizer _keywordTokenizer;
-	private volatile QueryPreProcessConfiguration _queryPreProcessConfiguration;
+	private QueryPreProcessConfiguration _queryPreProcessConfiguration;
 
 }

@@ -137,6 +137,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		_socialActivitySettingService = socialActivitySettingService;
 	}
 
-	private volatile SocialActivitySettingService _socialActivitySettingService;
+	private SocialActivitySettingService _socialActivitySettingService;
 
 }

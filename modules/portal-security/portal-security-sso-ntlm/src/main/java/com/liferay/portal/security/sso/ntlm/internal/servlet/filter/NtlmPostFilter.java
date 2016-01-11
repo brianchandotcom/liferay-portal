@@ -117,6 +117,6 @@ public class NtlmPostFilter extends BaseFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmPostFilter.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
+	private ConfigurationFactory _configurationFactory;
 
 }

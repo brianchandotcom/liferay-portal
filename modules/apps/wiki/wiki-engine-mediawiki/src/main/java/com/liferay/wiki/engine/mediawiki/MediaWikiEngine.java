@@ -295,9 +295,8 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		_wikiGroupServiceConfiguration = null;
 	}
 
-	private volatile ServletContext _servletContext;
-	private volatile WikiGroupServiceConfiguration
-		_wikiGroupServiceConfiguration;
-	private volatile WikiPageLocalService _wikiPageLocalService;
+	private ServletContext _servletContext;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

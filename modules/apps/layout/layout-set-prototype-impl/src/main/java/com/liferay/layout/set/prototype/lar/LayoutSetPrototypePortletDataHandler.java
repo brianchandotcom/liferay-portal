@@ -163,7 +163,6 @@ public class LayoutSetPrototypePortletDataHandler
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private volatile LayoutSetPrototypeLocalService
-		_layoutSetPrototypeLocalService;
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 }

@@ -277,8 +277,8 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	private BundleContext _bundleContext;
-	private volatile ConfigurationAdmin _configurationAdmin;
-	private volatile ExtendedMetaTypeService _extendedMetaTypeService;
+	private ConfigurationAdmin _configurationAdmin;
+	private ExtendedMetaTypeService _extendedMetaTypeService;
 
 	private class ConfigurationCategoryComparator
 		implements Comparator<String> {

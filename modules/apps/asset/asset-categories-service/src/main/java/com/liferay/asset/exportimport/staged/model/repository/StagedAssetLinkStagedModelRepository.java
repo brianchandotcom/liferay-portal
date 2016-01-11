@@ -275,7 +275,7 @@ public class StagedAssetLinkStagedModelRepository
 		_assetLinkLocalService = assetLinkLocalService;
 	}
 
-	private volatile AssetEntryLocalService _assetEntryLocalService;
-	private volatile AssetLinkLocalService _assetLinkLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetLinkLocalService _assetLinkLocalService;
 
 }

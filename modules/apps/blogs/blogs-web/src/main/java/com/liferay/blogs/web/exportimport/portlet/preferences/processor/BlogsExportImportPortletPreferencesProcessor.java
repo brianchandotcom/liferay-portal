@@ -87,9 +87,9 @@ public class BlogsExportImportPortletPreferencesProcessor
 			blogsPortletDisplayTemplateImportCapability;
 	}
 
-	private volatile BlogsPortletDisplayTemplateExportCapability
+	private BlogsPortletDisplayTemplateExportCapability
 		_blogsPortletDisplayTemplateExportCapability;
-	private volatile BlogsPortletDisplayTemplateImportCapability
+	private BlogsPortletDisplayTemplateImportCapability
 		_blogsPortletDisplayTemplateImportCapability;
 
 }

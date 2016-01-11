@@ -56,6 +56,6 @@ public class BookmarksFolderPermissionUpdateHandler
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
-	private volatile BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

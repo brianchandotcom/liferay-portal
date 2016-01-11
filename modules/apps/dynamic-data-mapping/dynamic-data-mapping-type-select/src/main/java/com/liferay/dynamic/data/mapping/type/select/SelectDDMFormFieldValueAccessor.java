@@ -65,6 +65,6 @@ public class SelectDDMFormFieldValueAccessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		SelectDDMFormFieldValueAccessor.class);
 
-	private volatile JSONFactory _jsonFactory;
+	private JSONFactory _jsonFactory;
 
 }

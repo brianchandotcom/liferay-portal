@@ -65,6 +65,6 @@ public class FindFolderAction extends FindStrutsAction {
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
-	private volatile BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

@@ -625,7 +625,11 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			while (iterator.hasNext()) {
 				File file = iterator.next();
 
-				if (_classpathFiles.contains(file) || !file.exists()) {
+				String fileName = file.getName();
+
+				if (_classpathFiles.contains(file) ||
+					fileName.endsWith(".pom") || !file.exists()) {
+
 					iterator.remove();
 
 					continue;

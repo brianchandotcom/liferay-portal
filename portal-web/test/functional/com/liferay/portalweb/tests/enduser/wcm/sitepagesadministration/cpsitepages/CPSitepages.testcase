@@ -397,7 +397,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Site Page 1,Site Page 2,Site Page 3" param="sitePageName">
+		<for list="Site Page 1,Site Page 2,Site Page 3" param="pageName">
 			<execute macro="ProductMenu#gotoControlPanelSites">
 				<var name="portlet" value="Sites" />
 			</execute>

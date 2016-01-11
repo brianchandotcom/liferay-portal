@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>PAGES</td>
-	<td>//div[@class='list-group-item']//span[contains(.,'${key_page}')]</td>
+	<td>//div[@class='list-group-item']//span[contains(.,'${key_page}')]/a</td>
 	<td></td>
 </tr>
 <tr>

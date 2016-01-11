@@ -18,7 +18,8 @@
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "categories");
-boolean showSearch = ParamUtil.getBoolean(request, "showSearch", false);
+
+boolean showSearch = ParamUtil.getBoolean(request, "showSearch");
 
 PortletURL viewURL = renderResponse.createRenderURL();
 

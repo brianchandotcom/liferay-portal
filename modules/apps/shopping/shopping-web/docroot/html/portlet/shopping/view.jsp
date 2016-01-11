@@ -21,16 +21,16 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "categories");
 %>
 
 <c:choose>
-	<c:when test='<%= tabs1.equals("categories") %>'>
-		<liferay-util:include page="/html/portlet/shopping/categories.jsp" servletContext="<%= application %>" />
-	</c:when>
 	<c:when test='<%= tabs1.equals("cart") %>'>
 		<liferay-util:include page="/html/portlet/shopping/cart.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= tabs1.equals("orders") && !user.isDefaultUser() %>'>
-		<liferay-util:include page="/html/portlet/shopping/orders.jsp" servletContext="<%= application %>" />
+	<c:when test='<%= tabs1.equals("categories") %>'>
+		<liferay-util:include page="/html/portlet/shopping/categories.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= tabs1.equals("coupons") %>'>
 		<liferay-util:include page="/html/portlet/shopping/coupons.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test='<%= tabs1.equals("orders") && !user.isDefaultUser() %>'>
+		<liferay-util:include page="/html/portlet/shopping/orders.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>

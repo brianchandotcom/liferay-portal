@@ -958,10 +958,10 @@
 	</command>
 
 	<command name="removeViewPermissionsPG">
+		<var name="key_assetHeader" value="${entryTitle}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
-		<var name="key_assetHeader" value="${entryTitle}" />
 
 		<execute function="Click" locator1="Icon#DESCRIPTIVE_HEADER_VERTICAL_ELLIPSIS" />
 

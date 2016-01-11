@@ -22,6 +22,7 @@ import org.gradle.api.Project;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class WorkspaceExtension {
 

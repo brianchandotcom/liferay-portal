@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -307,6 +308,10 @@ public class NavItem implements Serializable {
 	}
 
 	public String iconURL() throws Exception {
+		if ((_layout == null) || !_layout.isIconImage()) {
+			return StringPool.BLANK;
+		}
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(_themeDisplay.getPathImage());

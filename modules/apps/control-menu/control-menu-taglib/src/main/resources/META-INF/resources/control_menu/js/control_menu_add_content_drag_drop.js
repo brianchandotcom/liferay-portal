@@ -2,6 +2,7 @@ AUI.add(
 	'liferay-control-menu-add-content-drag-drop',
 	function(A) {
 		var DDM = A.DD.DDM;
+
 		var ControlMenu = Liferay.ControlMenu;
 		var Layout = Liferay.Layout;
 
@@ -147,6 +148,7 @@ AUI.add(
 						var instance = this;
 
 						var portalLayout = event.currentTarget;
+
 						var activeDrop = portalLayout.lastAlignDrop || portalLayout.activeDrop;
 
 						if (activeDrop) {

@@ -55,7 +55,7 @@ if (liveGroup == null) {
 			locale: '<%= locale.toLanguageTag() %>',
 			namespace: '<portlet:namespace />',
 			processesNode: '#exportProcessesSearchContainer',
-			processesResourceURL: '<%= exportProcessesURL.toString() %>',
+			processesResourceURL: '<%= exportProcessesURL.toString() %>'
 		}
 	);
 </aui:script>

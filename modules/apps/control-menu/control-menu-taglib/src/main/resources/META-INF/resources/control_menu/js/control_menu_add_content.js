@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-control-menu-add-content',
 	function(A) {
 		var ControlMenu = Liferay.ControlMenu;
-		var Layout = Liferay.Layout;
 
 		var SELECTOR_ADD_CONTENT_ITEM = '.add-content-item';
 

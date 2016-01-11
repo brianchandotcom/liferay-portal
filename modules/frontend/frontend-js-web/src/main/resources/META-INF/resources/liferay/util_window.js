@@ -89,8 +89,6 @@ AUI.add(
 
 				TITLE_TEMPLATE: '<h3 class="modal-title" />',
 
-				_winResizeHandler: null,
-
 				getByChild: function(child) {
 					var instance = this;
 
@@ -481,7 +479,9 @@ AUI.add(
 					delete instance._map[id + instance.IFRAME_SUFFIX];
 
 					A.Array.invoke(modal._liferayHandles, 'detach');
-				}
+				},
+
+				_winResizeHandler: null
 			}
 		);
 	},

@@ -88,10 +88,10 @@ AUI.add(
 					if (panelTrigger) {
 						panelTrigger.on(
 							'gesturemovestart',
-							function (event) {
+							function(event) {
 								event.currentTarget.once(
 									'gesturemoveend',
-									function (event) {
+									function(event) {
 										event.halt();
 
 										instance.togglePanel(panel.id);
@@ -281,11 +281,11 @@ AUI.add(
 						}
 					);
 				},
+				hideOnEscape: true,
 				id: STR_ADD_PANEL,
 				layoutControl: '.site-add-controls > a',
 				node: null,
 				showFn: A.bind('showPanel', ControlMenu),
-				hideOnEscape: true,
 				tpl: TPL_ADD_CONTENT
 			}
 		];

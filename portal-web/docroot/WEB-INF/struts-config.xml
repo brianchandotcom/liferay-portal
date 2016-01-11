@@ -130,7 +130,6 @@
 		<!-- Asset -->
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />
-
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

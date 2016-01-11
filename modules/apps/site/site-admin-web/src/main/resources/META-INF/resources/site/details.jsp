@@ -104,7 +104,7 @@ else if (group != null) {
 }
 %>
 
-<liferay-ui:error-marker key="errorSection" value="details" />
+<liferay-ui:error-marker key="errorSection" value="basic-information" />
 
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 

@@ -18,6 +18,13 @@
 
 <liferay-staging:defineObjects />
 
+<%
+if (liveGroup == null) {
+	liveGroup = group;
+	liveGroupId = groupId;
+}
+%>
+
 <liferay-util:include page="/export/export_templates/navigation.jsp" servletContext="<%= application %>" />
 
 <liferay-portlet:renderURL varImpl="portletURL">

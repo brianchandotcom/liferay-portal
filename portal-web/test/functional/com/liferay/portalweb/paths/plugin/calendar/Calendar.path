@@ -171,7 +171,7 @@
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT</td>
-	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div/div[contains(@style,'D96666')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div/div[contains(@style,'D96666')] | //div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div/div[contains(@style,'background-color: rgb(217, 102, 102); border-color: rgb(217, 102, 102);')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -264,7 +264,7 @@
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT</td>
-	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/div[contains(@style,'D96666')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/div[contains(@style,'D96666')] | //div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/div[contains(@style,'background-color: rgb(217, 102, 102); border-color: rgb(217, 102, 102);')]</td>
 	<td></td>
 </tr>
 <tr>

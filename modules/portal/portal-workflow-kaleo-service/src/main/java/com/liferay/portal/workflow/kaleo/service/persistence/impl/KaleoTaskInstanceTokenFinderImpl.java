@@ -248,7 +248,6 @@ public class KaleoTaskInstanceTokenFinderImpl
 						 kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateLT() == null))));
-
 			sql = CustomSQLUtil.appendCriteria(sql, ")");
 
 			sql = CustomSQLUtil.replaceAndOperator(

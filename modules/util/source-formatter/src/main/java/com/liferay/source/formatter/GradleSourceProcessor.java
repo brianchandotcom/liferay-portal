@@ -43,7 +43,7 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = sortDependencies(content);
+		//content = sortDependencies(content);
 
 		return trimContent(content, false);
 	}

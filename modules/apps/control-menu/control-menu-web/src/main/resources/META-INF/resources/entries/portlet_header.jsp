@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletTitle = (String)request.getAttribute("portletTitle");
-String portletDescription = (String)request.getAttribute("portletDescription");
+String portletDescription = (String)request.getAttribute(ControlMenuWebKeys.PORTLET_DESCRIPTION);
+String portletTitle = (String)request.getAttribute(ControlMenuWebKeys.PORTLET_TITLE);
 %>
 
 <span class="header-toolbar-title" data-qa-id="headerOptions"><%= HtmlUtil.escape(portletTitle) %></span>

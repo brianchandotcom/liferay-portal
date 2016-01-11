@@ -17,6 +17,7 @@ package com.liferay.control.menu.web;
 import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.control.menu.web.constants.ControlMenuWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -61,9 +62,11 @@ public class PortletHeaderControlMenuEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		request.setAttribute("portletTitle", portletDisplay.getTitle());
 		request.setAttribute(
-			"portletDescription", portletDisplay.getDescription());
+			ControlMenuWebKeys.PORTLET_DESCRIPTION,
+			portletDisplay.getDescription());
+		request.setAttribute(
+			ControlMenuWebKeys.PORTLET_TITLE, portletDisplay.getTitle());
 
 		return super.include(request, response);
 	}

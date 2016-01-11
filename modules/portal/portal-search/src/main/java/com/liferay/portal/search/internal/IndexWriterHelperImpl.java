@@ -16,6 +16,9 @@ package com.liferay.portal.search.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
@@ -27,10 +30,18 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.search.configuration.IndexWriterHelperConfiguration;
+import com.liferay.portal.search.internal.background.task.ReindexPortalBackgroundTaskExecutor;
+import com.liferay.portal.search.internal.background.task.ReindexSingleIndexerBackgroundTaskExecutor;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -431,6 +442,56 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		indexWriter.partiallyUpdateDocuments(searchContext, documents);
 	}
 
+	public BackgroundTask reindex(
+			long userId, String jobName, long[] companyIds,
+			Map<String, Serializable> taskContextMap)
+		throws SearchException {
+
+		if (taskContextMap == null) {
+			taskContextMap = new HashMap<>();
+		}
+
+		taskContextMap.put("companyIds", companyIds);
+
+		try {
+			return _backgroundTaskManager.addBackgroundTask(
+				userId, CompanyConstants.SYSTEM, jobName,
+				ReindexPortalBackgroundTaskExecutor.class.getName(),
+				taskContextMap, new ServiceContext());
+		}
+		catch (PortalException e) {
+			throw new SearchException("Unable to schedule portal reindex", e);
+		}
+	}
+
+	public BackgroundTask reindex(
+			long userId, String jobName, long[] companyIds, String className,
+			Map<String, Serializable> taskContextMap)
+		throws SearchException {
+
+		if (Validator.isNull(className)) {
+			return reindex(userId, jobName, companyIds, taskContextMap);
+		}
+
+		if (taskContextMap == null) {
+			taskContextMap = new HashMap<>();
+		}
+
+		taskContextMap.put("className", className);
+
+		taskContextMap.put("companyIds", companyIds);
+
+		try {
+			return _backgroundTaskManager.addBackgroundTask(
+				userId, CompanyConstants.SYSTEM, jobName,
+				ReindexSingleIndexerBackgroundTaskExecutor.class.getName(),
+				taskContextMap, new ServiceContext());
+		}
+		catch (PortalException e) {
+			throw new SearchException("Unable to schedule portal reindex", e);
+		}
+	}
+
 	@Override
 	public void setIndexReadOnly(boolean indexReadOnly) {
 		_indexReadOnly = indexReadOnly;
@@ -528,6 +589,13 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		_indexReadOnly = indexWriterHelperConfiguration.indexReadOnly();
 	}
 
+	@Reference(unbind = "-")
+	protected void setBackgroundTaskManager(
+		BackgroundTaskManager backgroundTaskManager) {
+
+		_backgroundTaskManager = backgroundTaskManager;
+	}
+
 	protected void setCommitImmediately(
 		SearchContext searchContext, boolean commitImmediately) {
 
@@ -556,6 +624,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexWriterHelperImpl.class);
 
+	private volatile BackgroundTaskManager _backgroundTaskManager;
 	private volatile boolean _commitImmediately;
 	private volatile boolean _indexReadOnly;
 	private SearchEngineHelper _searchEngineHelper;

@@ -344,7 +344,7 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 					}
 
 					if (action.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
-						disabled = true;
+						continue;
 					}
 				%>
 

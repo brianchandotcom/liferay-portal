@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 import java.io.Serializable;
 
@@ -313,6 +315,18 @@ public class NavItem implements Serializable {
 			"velocityTaglib_layoutIcon");
 
 		method.invoke(velocityTaglib, _layout);
+	}
+
+	public String iconURL() throws Exception {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_themeDisplay.getPathImage());
+		sb.append("/layout_icon?img_id");
+		sb.append(_layout.getIconImageId());
+		sb.append("&t=");
+		sb.append(WebServerServletTokenUtil.getToken(_layout.getIconImageId()));
+
+		return sb.toString();
 	}
 
 	public boolean isBrowsable() {

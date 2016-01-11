@@ -88,7 +88,7 @@ public class ActionUtil {
 		getFileEntries(request);
 	}
 
-	public static void getFileEntry(HttpServletRequest request)
+	public static FileEntry getFileEntry(HttpServletRequest request)
 		throws Exception {
 
 		long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
@@ -104,7 +104,7 @@ public class ActionUtil {
 		String version = ParamUtil.getString(request, "version");
 
 		if (fileEntry == null) {
-			return;
+			return null;
 		}
 
 		FileVersion fileVersion = null;
@@ -129,18 +129,20 @@ public class ActionUtil {
 			throw new NoSuchFileEntryException(
 				"{fileEntryId=" + fileEntryId + "}");
 		}
+
+		return fileEntry;
 	}
 
-	public static void getFileEntry(PortletRequest portletRequest)
+	public static FileEntry getFileEntry(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getFileEntry(request);
+		return getFileEntry(request);
 	}
 
-	public static void getFileShortcut(HttpServletRequest request)
+	public static FileShortcut getFileShortcut(HttpServletRequest request)
 		throws Exception {
 
 		long fileShortcutId = ParamUtil.getLong(request, "fileShortcutId");
@@ -153,15 +155,17 @@ public class ActionUtil {
 
 		request.setAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT, fileShortcut);
+
+		return fileShortcut;
 	}
 
-	public static void getFileShortcut(PortletRequest portletRequest)
+	public static FileShortcut getFileShortcut(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getFileShortcut(request);
+		return getFileShortcut(request);
 	}
 
 	public static void getFileShortcuts(HttpServletRequest request)
@@ -192,7 +196,9 @@ public class ActionUtil {
 		getFileShortcuts(request);
 	}
 
-	public static void getFolder(HttpServletRequest request) throws Exception {
+	public static Folder getFolder(HttpServletRequest request)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -235,15 +241,17 @@ public class ActionUtil {
 		}
 
 		request.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
+
+		return folder;
 	}
 
-	public static void getFolder(PortletRequest portletRequest)
+	public static Folder getFolder(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getFolder(request);
+		return getFolder(request);
 	}
 
 	public static void getFolders(HttpServletRequest request) throws Exception {
@@ -276,7 +284,7 @@ public class ActionUtil {
 		getFolders(request);
 	}
 
-	public static void getRepository(HttpServletRequest request)
+	public static Repository getRepository(HttpServletRequest request)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -296,15 +304,17 @@ public class ActionUtil {
 		}
 
 		request.setAttribute(WebKeys.DOCUMENT_LIBRARY_REPOSITORY, repository);
+
+		return repository;
 	}
 
-	public static void getRepository(PortletRequest portletRequest)
+	public static Repository getRepository(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getRepository(request);
+		return getRepository(request);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ActionUtil.class);

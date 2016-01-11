@@ -1173,7 +1173,7 @@
 
 		<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="rate4Stars">

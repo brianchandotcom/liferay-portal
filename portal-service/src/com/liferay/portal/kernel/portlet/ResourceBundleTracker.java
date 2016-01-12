@@ -35,6 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Raymond Augé
  * @author Tomas Polesovsky
+ * @author Carlos Sierra Andrés
  */
 public class ResourceBundleTracker implements Closeable {
 

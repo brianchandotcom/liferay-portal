@@ -15,9 +15,11 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import javax.portlet.PortletRequest;
 
@@ -30,22 +32,30 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"path=/document_library/edit_file_entry",
 		"path=/document_library/view_file_entry"
 	},
 	service = PortletConfigurationIconFactory.class
 )
-public class FileEntryPermissionPortletConfigurationIconFactory
+public class DeleteFileEntryPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new FileEntryPermissionPortletConfigurationIcon(portletRequest);
+		try {
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+
+			return new DeleteFileEntryPortletConfigurationIcon(
+				portletRequest, fileEntry);
+		}
+		catch (Exception e) {
+		}
+
+		return null;
 	}
 
 	@Override
 	public double getWeight() {
-		return 101.0;
+		return 100.0;
 	}
 
 }

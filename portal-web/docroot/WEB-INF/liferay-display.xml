@@ -3,12 +3,7 @@
 
 <display>
 	<category name="category.hidden">
-		<portlet id="104" />
-		<portlet id="111" />
 		<portlet id="136" />
-		<portlet id="157" />
-		<portlet id="158" />
-		<portlet id="196" />
 	</category>
 	<category name="category.sample">
 		<portlet id="47" />

@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `6f62be1`.*
+*This document has been reviewed through commit `3231563`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3381,41 +3381,37 @@ URL.
 
 ---------------------------------------
 
-### The `icon` method of NavItem has been removed
+### Removed the icon Method from NavItem
 - **Date:** 2016-Jan-11
 - **JIRA Ticket:** LPS-61900
 
 #### What changed?
 
-The NavItem interface has changed and the method `icon` that would render the
+The `NavItem` interface has changed and the method `icon` that would render the
 nav item icon has been removed.
 
 #### Who is affected?
 
-All themes using nav_item.icon() method.
+This affects all themes using the `nav_item.icon()` method.
 
 #### How should I update my code?
 
-You should update the code to call the method nav_item.iconURL that would return
-the URL of the image and then you can use it as preferred. For example:
+You should update your code to call the method `nav_item.iconURL` that would
+return the URL of the image and then you can use it as preferred.
 
-```
-<img alt="Page Icon" class="layout-logo" src="<%= nav_item.iconURL()" />
-```
+**Example:**
 
-To keep the previous behaviour in velocity you can just add this:
+    <img alt="Page Icon" class="layout-logo" src="<%= nav_item.iconURL()" />
 
-```
-$theme.layoutIcon($nav_item.getLayout())
-```
+To keep the previous behavior in Velocity:
 
-To keep the previous behaviour in freemarker you can just add this:
+    $theme.layoutIcon($nav_item.getLayout())
 
-```
-<@liferay_theme["layout-icon"] layout=nav_item_layout />
-```
+To keep the previous behavior in FreeMarker:
+
+    <@liferay_theme["layout-icon"] layout=nav_item_layout />
  
 #### Why was this change made?
 
-The API was forcing to have a dependency on a taglib and didn't give enough
-flexibility to developers.
+The API was forcing developers to have a dependency on a taglib, which didn't
+allow for much flexibility.

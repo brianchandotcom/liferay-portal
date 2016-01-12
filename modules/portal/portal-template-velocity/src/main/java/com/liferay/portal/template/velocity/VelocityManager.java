@@ -184,7 +184,7 @@ public class VelocityManager extends BaseSingleTemplateManager {
 
 			extendedProperties.setProperty(
 				"liferay." + VelocityEngine.RESOURCE_LOADER +
-				"." + VelocityTemplateResourceLoader.class.getName(),
+					"." + VelocityTemplateResourceLoader.class.getName(),
 				templateResourceLoader);
 
 			extendedProperties.setProperty(

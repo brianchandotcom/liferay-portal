@@ -3,8 +3,8 @@
 
 <#assign layout_set_title = site_name>
 
-<#assign pageDistributionType = theme.getSetting("page-distribution-type")>
-<#assign userCardVisible = getterUtil.getBoolean(theme.getSetting("user-card-visible"))>
+<#assign pageDistributionType = themeDisplay.getThemeSetting("page-distribution-type")>
+<#assign userCardVisible = getterUtil.getBoolean(themeDisplay.getThemeSetting("user-card-visible"))>
 
 <#if page_group.isUser() && layout.isPrivateLayout()>
 	<#assign layout_set_title = languageUtil.get(locale, "my-dashboard")>

@@ -20,6 +20,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.gulp.GulpPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.workspace.tasks.UpdatePropertiesTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
@@ -30,7 +31,6 @@ import groovy.json.JsonOutput;
 import groovy.lang.Closure;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
@@ -39,7 +39,6 @@ import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -326,6 +325,28 @@ public class WorkspacePlugin implements Plugin<Project> {
 		return copy;
 	}
 
+	protected UpdatePropertiesTask addTaskUpdateSDKProperties(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		UpdatePropertiesTask updatePropertiesTask = GradleUtil.addTask(
+			project, UPDATE_SDK_PROPERTIES_TASK_NAME,
+			UpdatePropertiesTask.class);
+
+		updatePropertiesTask.property(
+			"app.server.parent.dir",
+			FileUtil.getAbsolutePath(workspaceExtension.getHomeDir()));
+
+		String userName = System.getProperty("user.name");
+
+		File sdkPropertiesFile = new File(
+			workspaceExtension.getPluginsSDKDir(),
+			"build." + userName + ".properties");
+
+		updatePropertiesTask.setPropertiesFile(sdkPropertiesFile);
+
+		return updatePropertiesTask;
+	}
+
 	protected void configureModules(
 		Project project, final WorkspaceExtension workspaceExtension,
 		final AbstractArchiveTask[] distBundleTasks) {
@@ -391,19 +412,22 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 		antBuilder.importBuild("build.xml");
 
-		Task buildTask = pluginsSDKProject.task(
-			LifecycleBasePlugin.BUILD_TASK_NAME);
-
 		final Task warTask = GradleUtil.getTask(
 			pluginsSDKProject, WarPlugin.WAR_TASK_NAME);
-
-		buildTask.dependsOn(warTask);
 
 		File homeDir = workspaceExtension.getHomeDir();
 
 		if (!homeDir.exists()) {
 			warTask.dependsOn(initBundleTask);
 		}
+
+		Task updateSDKPropertiesTask = addTaskUpdateSDKProperties(
+			pluginsSDKProject, workspaceExtension);
+
+		Task buildTask = pluginsSDKProject.task(
+			LifecycleBasePlugin.BUILD_TASK_NAME);
+
+		buildTask.dependsOn(updateSDKPropertiesTask, warTask);
 
 		for (AbstractArchiveTask abstractArchiveTask : distBundleTasks) {
 			abstractArchiveTask.into(
@@ -423,41 +447,6 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 				});
 		}
-
-		Task updateSDKPropertiesTask = GradleUtil.addTask(
-			pluginsSDKProject, UPDATE_SDK_PROPERTIES_TASK_NAME, Task.class);
-
-		updateSDKPropertiesTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					try {
-						String username = System.getProperty("user.name");
-
-						File buildPropertiesFile = new File(
-							workspaceExtension.getPluginsSDKDir(),
-							"build." + username + ".properties");
-
-						Properties buildProperties = FileUtil.readProperties(
-							buildPropertiesFile);
-
-						buildProperties.setProperty(
-							"app.server.parent.dir",
-							FileUtil.getAbsolutePath(
-								workspaceExtension.getHomeDir()));
-
-						buildProperties.store(
-							new FileOutputStream(buildPropertiesFile), null);
-					}
-					catch (Exception e) {
-						throw new GradleException(e.getMessage(), e);
-					}
-				}
-
-			});
-
-		buildTask.dependsOn(updateSDKPropertiesTask);
 	}
 
 	protected void configureThemes(

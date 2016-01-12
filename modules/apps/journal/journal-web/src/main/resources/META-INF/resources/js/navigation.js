@@ -133,6 +133,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-portlet-base']
+		requires: ['aui-component', 'liferay-portlet-base']
 	}
 );

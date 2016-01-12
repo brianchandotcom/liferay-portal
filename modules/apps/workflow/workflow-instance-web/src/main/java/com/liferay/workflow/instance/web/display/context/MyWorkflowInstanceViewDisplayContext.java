@@ -14,16 +14,19 @@
 
 package com.liferay.workflow.instance.web.display.context;
 
+import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.workflow.WorkflowHandlerUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.workflow.instance.web.search.WorkflowInstanceSearch;
 
 import java.util.List;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Marcellus Tavares
@@ -32,20 +35,13 @@ public class MyWorkflowInstanceViewDisplayContext
 	extends WorkflowInstanceViewDisplayContext {
 
 	public MyWorkflowInstanceViewDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			PortletPreferences portletPreferences)
 		throws PortalException {
 
-		super(renderRequest, renderResponse);
-	}
-
-	@Override
-	public String getSearchContainerEmptyResultsMessage() {
-		if (isShowCompletedInstances()) {
-			return "there-are-no-completed-instances-started-by-me";
-		}
-		else {
-			return "there-are-no-pending-instances-started-by-me";
-		}
+		super(
+			liferayPortletRequest, liferayPortletResponse, portletPreferences);
 	}
 
 	@Override
@@ -54,20 +50,46 @@ public class MyWorkflowInstanceViewDisplayContext
 			OrderByComparator<WorkflowInstance> orderByComparator)
 		throws PortalException {
 
-		return WorkflowInstanceManagerUtil.getWorkflowInstances(
+		return WorkflowInstanceManagerUtil.search(
 			workflowInstanceRequestHelper.getCompanyId(),
 			workflowInstanceRequestHelper.getUserId(),
-			WorkflowHandlerUtil.getSearchableAssetTypes(),
-			isShowCompletedInstances(), start, end, orderByComparator);
+			getAssetType(getKeywords()), getKeywords(), getKeywords(),
+			getCompleted(), start, end, orderByComparator);
 	}
 
 	@Override
 	protected int getSearchContainerTotal() throws PortalException {
-		return WorkflowInstanceManagerUtil.getWorkflowInstanceCount(
+		return WorkflowInstanceManagerUtil.searchCount(
 			workflowInstanceRequestHelper.getCompanyId(),
 			workflowInstanceRequestHelper.getUserId(),
-			WorkflowHandlerUtil.getSearchableAssetTypes(),
-			isShowCompletedInstances());
+			getAssetType(getKeywords()), getKeywords(), getKeywords(),
+			getCompleted());
+	}
+
+	@Override
+	protected void setSearchContainerEmptyResultsMessage(
+		WorkflowInstanceSearch searchContainer) {
+
+		DisplayTerms searchTerms = searchContainer.getDisplayTerms();
+
+		if (isNavigationAll()) {
+			searchContainer.setEmptyResultsMessage(
+				"there-are-no-instances-started-by-me");
+		}
+		else if (isNavigationPending()) {
+			searchContainer.setEmptyResultsMessage(
+				"there-are-no-pending-instances-started-by-me");
+		}
+		else {
+			searchContainer.setEmptyResultsMessage(
+				"there-are-no-completed-instances-started-by-me");
+		}
+
+		if (Validator.isNotNull(searchTerms.getKeywords())) {
+			searchContainer.setEmptyResultsMessage(
+				searchContainer.getEmptyResultsMessage() +
+				"-with-the-specified-search-criteria");
+		}
 	}
 
 }

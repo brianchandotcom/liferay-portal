@@ -93,6 +93,19 @@ public interface WorkflowEngine {
 			ServiceContext serviceContext)
 		throws WorkflowException;
 
+	public List<WorkflowInstance> search(
+			Long userId, String assetClassName, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			OrderByComparator<WorkflowInstance> orderByComparator,
+			ServiceContext serviceContext)
+		throws WorkflowException;
+
+	public int searchCount(
+			Long userId, String assetClassName, String nodeName,
+			String kaleoDefinitionName, Boolean completed,
+			ServiceContext serviceContext)
+		throws WorkflowException;
+
 	public WorkflowInstance signalWorkflowInstance(
 			long workflowInstanceId, String transitionName,
 			Map<String, Serializable> workflowContext,

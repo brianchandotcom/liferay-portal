@@ -1,0 +1,156 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:search-container searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>">
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.kernel.workflow.WorkflowInstance"
+		cssClass="entry-display-style"
+		modelVar="workflowInstance"
+		stringKey="<%= true %>"
+	>
+
+		<liferay-ui:search-container-row-parameter
+			name="workflowInstance"
+			value="<%= workflowInstance %>"
+		/>
+
+		<portlet:renderURL var="rowURL">
+			<portlet:param name="mvcPath" value="/edit_workflow_instance.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="workflowInstanceId" value="<%= String.valueOf(workflowInstance.getWorkflowInstanceId()) %>" />
+		</portlet:renderURL>
+
+		<c:choose>
+			<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<liferay-ui:search-container-column-image
+					src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+					toggleRowChecker="<%= true %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
+					<h6 class="text-default">
+
+						<%
+						dateSearchEntry.setDate(workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance));
+						%>
+
+						<aui:a href="<%= rowURL %>">
+							<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
+						</aui:a>
+					</h6>
+
+					<h5>
+						<aui:a href="<%= rowURL %>">
+							<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>
+						</aui:a>
+					</h5>
+
+					<h6 class="text-default">
+						<aui:a cssClass="asset-type" href="<%= rowURL %>">
+							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>" />
+						</aui:a>
+
+						<aui:a cssClass="status" href="<%= rowURL %>">
+							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getStatus(workflowInstance) %>" />
+						</aui:a>
+
+						<aui:a cssClass="definition" href="<%= rowURL %>">
+							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getDefinition(workflowInstance) %>" />
+						</aui:a>
+
+						<c:if test="<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) != null %>">
+
+							<%
+							dateSearchEntry.setDate(workflowInstanceViewDisplayContext.getEndDate(workflowInstance));
+							%>
+
+							<aui:a cssClass="end-date" href="<%= rowURL %>">
+								<strong><liferay-ui:message key="end-date" />:</strong> <%= dateSearchEntry.getName(request) %>
+							</aui:a>
+						</c:if>
+					</h6>
+				</liferay-ui:search-container-column-text>
+
+				<c:choose>
+					<c:when test="<%= !workflowInstance.isComplete() %>">
+						<liferay-ui:search-container-column-jsp
+							path="/workflow_instance_action.jsp"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:search-container-column-text
+							value="<%= StringPool.BLANK %>"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-text
+					href="<%= rowURL %>"
+					name="asset-title"
+					value="<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					href="<%= rowURL %>"
+					name="asset-type"
+					value="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					href="<%= rowURL %>"
+					name="status"
+					value="<%= workflowInstanceViewDisplayContext.getStatus(workflowInstance) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					href="<%= rowURL %>"
+					name="definition"
+					value="<%= workflowInstanceViewDisplayContext.getDefinition(workflowInstance) %>"
+				/>
+
+				<liferay-ui:search-container-column-date
+					href="<%= rowURL %>"
+					name="last-activity-date"
+					value="<%= workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance) %>"
+				/>
+
+				<liferay-ui:search-container-column-date
+					href="<%= rowURL %>"
+					name="end-date"
+					value="<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) %>"
+				/>
+
+				<c:choose>
+					<c:when test="<%= !workflowInstance.isComplete() %>">
+						<liferay-ui:search-container-column-jsp
+							path="/workflow_instance_action.jsp"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:search-container-column-text
+							value="<%= StringPool.BLANK %>"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new WorkflowInstanceResultRowSplitter() %>" searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>" />
+</liferay-ui:search-container>

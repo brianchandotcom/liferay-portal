@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_VIEW</td>
-	<td>//div[@class='task-content-actions']/span/a</td>
+	<td>//div[@class='task-content-actions']/a[contains(@title, 'View')]</td>
 	<td></td>
 </tr>
 <tr>

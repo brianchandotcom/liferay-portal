@@ -14,6 +14,8 @@
 
 package com.liferay.workflow.instance.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,9 +28,12 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
 import com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys;
 
 import java.io.IOException;
+
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -37,16 +42,21 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Leonardo Barros
  */
 @Component(
+	configurationPid = "com.liferay.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration",
 	immediate = true,
 	property = {
+		"com.liferay.portlet.css-class-wrapper=portlet-workflow-instance",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.friendly-url-mapping=workflow_instance",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/workflow_instance.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
@@ -107,6 +117,13 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		this.workflowInstanceWebConfiguration = Configurable.createConfigurable(
+			WorkflowInstanceWebConfiguration.class, properties);
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -118,6 +135,10 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 			include("/error.jsp", renderRequest, renderResponse);
 		}
 		else {
+			renderRequest.setAttribute(
+				WorkflowInstanceWebConfiguration.class.getName(),
+				workflowInstanceWebConfiguration);
+
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
@@ -150,6 +171,9 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(WebKeys.WORKFLOW_INSTANCE, workflowInstance);
 	}
+
+	protected volatile WorkflowInstanceWebConfiguration
+		workflowInstanceWebConfiguration;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowInstancePortlet.class);

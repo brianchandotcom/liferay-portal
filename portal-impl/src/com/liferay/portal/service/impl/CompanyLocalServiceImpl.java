@@ -274,8 +274,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			}
 		}
 
-		// Search engine
-
 		CompanyProvider currentCompanyProvider =
 			_companyProviderWrapper.getCompanyProvider();
 
@@ -284,8 +282,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			_companyProviderWrapper.setCompanyProvider(
 				new CustomCompanyProvider(companyId));
-
-			SearchEngineHelperUtil.initialize(companyId);
 
 			// Key
 
@@ -1371,6 +1367,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		};
 
 		TransactionCommitCallbackUtil.registerCallback(callable);
+
+		//Search Indices
+		SearchEngineHelperUtil.removeCompany(companyId);
 
 		ServiceRegistration<Company> serviceRegistration =
 			_companyServiceRegistrations.remove(companyId);

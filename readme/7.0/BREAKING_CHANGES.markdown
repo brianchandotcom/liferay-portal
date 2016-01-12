@@ -3354,7 +3354,7 @@ easily achieved by using the `PortletConfigurationIcon` and
 
 ### The getURLView Method of AssetRenderer Returns String Instead of PortletURL
 - **Date:** 2016-Jan-08
-- **JIRA Ticket:** LPS-61853
+- **JIRA Ticket:** 
 
 #### What changed?
 
@@ -3374,10 +3374,9 @@ In general, it should be as easy as returning `portletURL.toString()`.
 
 #### Why was this change made?
 
-The API was forcing to return a `PortletURL` and this makes things harder for
-developers who want to return another type of link. For example, in the case of
-Bookmarks, developers may want to automatically redirect to any other potential
-URL.
+The API was forcing implementations to return a `PortletURL`, making it
+difficult to return another type of link. For example, in the case of Bookmarks,
+developers wanted to automatically redirect to other potential URLs.
 
 ---------------------------------------
 

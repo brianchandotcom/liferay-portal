@@ -104,7 +104,7 @@
 	<command name="addDMMarketingBannerCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#MARKETING_BANNER" value1="Marketing Banner" />
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
@@ -186,7 +186,7 @@
 	<command name="addDocumentTypePG">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 

@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
@@ -34,7 +34,7 @@ public class IndexableActionableDynamicQuery
 	extends DefaultActionableDynamicQuery {
 
 	public void addDocuments(Document... documents) throws PortalException {
-		if (documents == null) {
+		if (ArrayUtil.isEmpty(documents)) {
 			return;
 		}
 
@@ -47,7 +47,11 @@ public class IndexableActionableDynamicQuery
 			}
 		}
 
-		_documents.addAll(Arrays.asList(documents));
+		for (Document document : documents) {
+			if (document != null) {
+				_documents.add(document);
+			}
+		}
 
 		if (_documents.size() >= getInterval()) {
 			indexInterval();

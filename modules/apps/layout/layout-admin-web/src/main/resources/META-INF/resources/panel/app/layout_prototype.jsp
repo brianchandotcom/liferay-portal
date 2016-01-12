@@ -31,8 +31,18 @@ data.put("url", selLayout.getFriendlyURL(locale));
 data.put("uuid", selLayout.getUuid());
 %>
 
-<aui:a cssClass="layout-tree" data="<%= data %>" href="<%= selLayout.getRegularURL(request) %>" label="<%= selLayout.getName(locale) %>" />
+<div class="tree-container">
+	<div class="tree-node">
+		<div class="tree-node-content">
+			<aui:a cssClass="layout-tree" data="<%= data %>" href="<%= selLayout.getRegularURL(request) %>" label="<%= selLayout.getName(locale) %>" />
 
-<aui:a cssClass="layout-tree" data="<%= data %>" href="<%= editLayoutURL.toString() %>" title='<%= LanguageUtil.format(request, "edit-x", selLayout.getName(locale)) %>'>
-	<span class="icon-cog icon-monospaced"></span>
-</aui:a>
+			<liferay-ui:icon
+				icon="cog"
+				label="<%= false %>"
+				markupView="lexicon"
+				message='<%= LanguageUtil.format(request, "edit-x", selLayout.getName(locale)) %>'
+				url="<%= editLayoutURL.toString() %>"
+			/>
+		</div>
+	</div>
+</div>

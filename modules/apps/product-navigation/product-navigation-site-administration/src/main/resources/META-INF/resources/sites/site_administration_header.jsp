@@ -96,7 +96,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 					eventName: 'clickoutside'
 				}
 			],
-			position: 'left',
+			position: 'right',
 			trigger: trigger,
 			visible: false,
 			width: 300,

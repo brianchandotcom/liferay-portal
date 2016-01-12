@@ -118,6 +118,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
+		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#DATE_FIELD" />

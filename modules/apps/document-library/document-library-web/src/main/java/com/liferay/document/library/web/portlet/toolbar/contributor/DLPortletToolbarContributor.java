@@ -21,14 +21,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -66,31 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {DLPortletToolbarContributor.class, PortletToolbarContributor.class}
 )
-public class DLPortletToolbarContributor implements PortletToolbarContributor {
-
-	@Override
-	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
-		List<MenuItem> portletTitleMenuItems = getPortletTitleMenuItems(
-			portletRequest);
-
-		if (ListUtil.isEmpty(portletTitleMenuItems)) {
-			return Collections.emptyList();
-		}
-
-		List<Menu> menus = new ArrayList<>();
-
-		Menu menu = new Menu();
-
-		menu.setDirection("down");
-		menu.setExtended(false);
-		menu.setIcon("../aui/plus-sign-2");
-		menu.setMenuItems(portletTitleMenuItems);
-		menu.setShowArrow(false);
-
-		menus.add(menu);
-
-		return menus;
-	}
+public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 	protected void addPortletTitleAddDocumentMenuItems(
 			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
@@ -378,6 +353,7 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		return fileEntryTypes;
 	}
 
+	@Override
 	protected List<MenuItem> getPortletTitleMenuItems(
 		PortletRequest portletRequest) {
 

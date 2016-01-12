@@ -16,9 +16,11 @@ package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portlet.messageboards.BannedUserException;
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
+import com.liferay.portlet.messageboards.model.MBCategory;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -35,7 +37,10 @@ public abstract class BaseViewMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getCategory(renderRequest);
+			MBCategory category = ActionUtil.getCategory(renderRequest);
+
+			renderRequest.setAttribute(
+				WebKeys.MESSAGE_BOARDS_CATEGORY, category);
 		}
 		catch (BannedUserException | NoSuchCategoryException |
 			   PrincipalException e) {

@@ -235,16 +235,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		_portletsMaps.clear();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #clonePortlet(String)}
-	 */
-	@Deprecated
-	@Override
-	@Skip
-	public Portlet clonePortlet(long companyId, String portletId) {
-		return clonePortlet(portletId);
-	}
-
 	@Override
 	@Skip
 	public Portlet clonePortlet(String portletId) {

@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static void getCategory(HttpServletRequest request)
+	public static MBCategory getCategory(HttpServletRequest request)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -76,19 +76,21 @@ public class ActionUtil {
 				ActionKeys.VIEW);
 		}
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY, category);
+		return category;
 	}
 
-	public static void getCategory(PortletRequest portletRequest)
+	public static MBCategory getCategory(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getCategory(request);
+		return getCategory(request);
 	}
 
-	public static void getMessage(HttpServletRequest request) throws Exception {
+	public static MBMessage getMessage(HttpServletRequest request)
+		throws Exception {
+
 		long messageId = ParamUtil.getLong(request, "messageId");
 
 		MBMessage message = null;
@@ -101,19 +103,19 @@ public class ActionUtil {
 			throw new NoSuchMessageException("{messageId=" + messageId + "}");
 		}
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, message);
+		return message;
 	}
 
-	public static void getMessage(PortletRequest portletRequest)
+	public static MBMessage getMessage(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getMessage(request);
+		return getMessage(request);
 	}
 
-	public static void getThreadMessage(HttpServletRequest request)
+	public static MBMessage getThreadMessage(HttpServletRequest request)
 		throws Exception {
 
 		long threadId = ParamUtil.getLong(request, "threadId");
@@ -131,16 +133,16 @@ public class ActionUtil {
 			throw new NoSuchMessageException("{threadId=" + threadId + "}");
 		}
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, message);
+		return message;
 	}
 
-	public static void getThreadMessage(PortletRequest portletRequest)
+	public static MBMessage getThreadMessage(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getThreadMessage(request);
+		return getThreadMessage(request);
 	}
 
 }

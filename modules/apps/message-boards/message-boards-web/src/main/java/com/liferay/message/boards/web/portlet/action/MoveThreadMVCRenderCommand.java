@@ -17,8 +17,10 @@ package com.liferay.message.boards.web.portlet.action;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -45,7 +47,11 @@ public class MoveThreadMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getThreadMessage(renderRequest);
+			MBMessage threadMessage = ActionUtil.getThreadMessage(
+				renderRequest);
+
+			renderRequest.setAttribute(
+				WebKeys.MESSAGE_BOARDS_MESSAGE, threadMessage);
 		}
 		catch (NoSuchMessageException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());

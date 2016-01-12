@@ -1218,12 +1218,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
+		long[] roleIds = doGetRoleIds(getUserId(), groupId);
+
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		Role role = RoleLocalServiceUtil.getRole(
 			group.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		long[] roleIds = doGetRoleIds(getUserId(), groupId);
 
 		if (Arrays.binarySearch(roleIds, role.getRoleId()) >= 0) {
 			return true;

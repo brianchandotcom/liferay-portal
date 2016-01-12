@@ -212,11 +212,10 @@ public class RuntimeTag extends TagSupport {
 
 			boolean writeJSONObject = false;
 
-			if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-					themeDisplay.getScopeGroupId(),
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					PortletKeys.PREFS_PLID_SHARED, portlet, false) < 1) {
+			LayoutTypePortlet layoutTypePortlet =
+				themeDisplay.getLayoutTypePortlet();
 
+			if (!layoutTypePortlet.isPortletEmbedded(portlet.getPortletId())) {
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,

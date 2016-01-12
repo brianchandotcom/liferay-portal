@@ -184,6 +184,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="${page}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />

@@ -15,9 +15,9 @@
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -54,32 +54,26 @@ public class ThreadSubscriptionPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
 
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/message_boards/edit_message");
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/message_boards/edit_message");
 
-			if (_subscribed) {
-				portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
-			}
-			else {
-				portletURL.setParameter(Constants.CMD, Constants.SUBSCRIBE);
-			}
-
-			portletURL.setParameter(
-				"redirect", PortalUtil.getCurrentURL(portletRequest));
-			portletURL.setParameter(
-				"messageId", String.valueOf(_message.getMessageId()));
-
-			return portletURL.toString();
+		if (_subscribed) {
+			portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
 		}
-		catch (Exception e) {
+		else {
+			portletURL.setParameter(Constants.CMD, Constants.SUBSCRIBE);
 		}
 
-		return StringPool.BLANK;
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(portletRequest));
+		portletURL.setParameter(
+			"messageId", String.valueOf(_message.getMessageId()));
+
+		return portletURL.toString();
 	}
 
 	@Override
@@ -89,7 +83,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(), _message,
 				ActionKeys.SUBSCRIBE);
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 		}
 
 		return false;

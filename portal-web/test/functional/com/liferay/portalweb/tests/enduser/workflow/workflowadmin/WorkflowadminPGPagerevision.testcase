@@ -86,13 +86,17 @@
 	<command name="ApprovePageRevisionPG" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

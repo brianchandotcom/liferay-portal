@@ -62,7 +62,7 @@ public class AppViewEntryTag extends IncludeTag {
 	}
 
 	public void setAuthor(String author) {
-		_author = author;
+		_author = HtmlUtil.unescape(author);
 	}
 
 	public void setClassTypeName(String classTypeName) {

@@ -101,6 +101,6 @@ public class GoogleNavigationPreDynamicInclude extends BaseDynamicInclude {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GoogleNavigationPreDynamicInclude.class);
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

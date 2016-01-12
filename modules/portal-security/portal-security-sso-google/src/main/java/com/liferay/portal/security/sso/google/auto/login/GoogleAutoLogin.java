@@ -91,6 +91,6 @@ public class GoogleAutoLogin extends BaseAutoLogin {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 }

@@ -488,7 +488,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 	private static final List<String> _SCOPES_LOGIN = Arrays.asList(
 		"email", "profile");
 
-	private volatile ExpandoValueLocalService _expandoValueLocalService;
-	private volatile UserLocalService _userLocalService;
+	private ExpandoValueLocalService _expandoValueLocalService;
+	private UserLocalService _userLocalService;
 
 }

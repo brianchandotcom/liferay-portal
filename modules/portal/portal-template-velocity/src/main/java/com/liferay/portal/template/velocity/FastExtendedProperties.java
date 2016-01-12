@@ -14,12 +14,7 @@
 
 package com.liferay.portal.template.velocity;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.util.StringPool;
-
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -41,16 +36,7 @@ public class FastExtendedProperties extends ExtendedProperties {
 	public FastExtendedProperties(ExtendedProperties extendedProperties)
 		throws IOException {
 
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		extendedProperties.save(unsyncByteArrayOutputStream, StringPool.BLANK);
-
-		InputStream inputStream = new UnsyncByteArrayInputStream(
-			unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
-			unsyncByteArrayOutputStream.size());
-
-		load(inputStream);
+		putAll(extendedProperties);
 	}
 
 	@Override

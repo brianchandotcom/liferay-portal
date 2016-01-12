@@ -30,20 +30,6 @@ public class PhoneServiceWrapper implements PhoneService,
 		_phoneService = phoneService;
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPhone(String, long,
-	String, String, int, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Phone addPhone(java.lang.String className,
-		long classPK, java.lang.String number, java.lang.String extension,
-		long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneService.addPhone(className, classPK, number, extension,
-			typeId, primary);
-	}
-
 	@Override
 	public com.liferay.portal.model.Phone addPhone(java.lang.String className,
 		long classPK, java.lang.String number, java.lang.String extension,

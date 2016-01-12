@@ -63,8 +63,7 @@ public class AddContentControlMenuEntry
 			return false;
 		}
 
-		if (!(hasAddLayoutPermission(themeDisplay) ||
-			  hasCustomizePermission(themeDisplay) ||
+		if (!(hasCustomizePermission(themeDisplay) ||
 			  hasUpdateLayoutPermission(themeDisplay))) {
 
 			return false;
@@ -80,23 +79,6 @@ public class AddContentControlMenuEntry
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
-	}
-
-	protected boolean hasAddLayoutPermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.getParentLayoutId() ==
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-
-			return GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout.getGroup(),
-				ActionKeys.ADD_LAYOUT);
-		}
-
-		return LayoutPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), layout, ActionKeys.ADD_LAYOUT);
 	}
 
 	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)

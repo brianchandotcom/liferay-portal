@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-staging-version',
 	function(A) {
-		var Lang = A.Lang;
-
 		var StagingBar = Liferay.StagingBar;
 
 		var MAP_CMD_REVISION = {
@@ -143,8 +141,8 @@ AUI.add(
 				_onRevisionChange: function(event, type) {
 					var instance = this;
 
-					var confirmText = MAP_TEXT_REVISION[type];
 					var cmd = MAP_CMD_REVISION[type];
+					var confirmText = MAP_TEXT_REVISION[type];
 
 					if (confirm(confirmText)) {
 						instance._updateRevision(cmd, event.layoutRevisionId, event.layoutSetBranchId);

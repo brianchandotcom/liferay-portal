@@ -193,8 +193,6 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 			var allContentRadioChecked = A.one('#<portlet:namespace />allContent').attr('checked');
 
 			if (allContentRadioChecked) {
-				var selectedContents = A.one('#<portlet:namespace />selectContents');
-
 				var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
 
 				portletDataControlDefault.val(true);

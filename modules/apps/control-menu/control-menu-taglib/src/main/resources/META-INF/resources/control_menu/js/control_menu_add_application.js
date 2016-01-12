@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-control-menu-add-application',
 	function(A) {
 		var ControlMenu = Liferay.ControlMenu;
-		var Layout = Liferay.Layout;
 
 		var CSS_LFR_PORTLET_USED = 'lfr-portlet-used';
 
@@ -10,19 +9,13 @@ AUI.add(
 
 		var SELECTOR_ADD_CONTENT_ITEM = '.add-content-item';
 
-		var SELECTOR_BUTTON = '.btn';
-
 		var SELECTOR_CONTENT_ITEM = '.lfr-content-item';
-
-		var STR_ACTION = 'action';
 
 		var STR_CLICK = 'click';
 
 		var STR_ENTER_DOWN = 'down:ENTER';
 
 		var STR_KEY = 'key';
-
-		var STR_RESPONSE_DATA = 'responseData';
 
 		var AddApplication = A.Component.create(
 			{

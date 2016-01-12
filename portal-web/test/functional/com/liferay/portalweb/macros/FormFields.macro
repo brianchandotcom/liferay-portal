@@ -112,6 +112,17 @@
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#CHECKBOX_LABEL" value1="${fieldLabel}" />
 	</command>
 
+	<command name="viewDateField">
+		<execute macro="FormFields#viewDateLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#DATE_FIELD" />
+	</command>
+
 	<command name="viewDateLabel">
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />

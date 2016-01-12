@@ -220,32 +220,10 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-		<var name="key_workflowTask" value="${workflowTask}" />
-
-		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
-
-		<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="Nobody" />
-		<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
-		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
-
-		<if>
-			<isset var="fieldValue" />
-			<then>
-				<var name="key_fieldLabel" value="${fieldLabel}" />
-				<var name="key_fieldValue" value="${fieldValue}" />
-
-				<execute function="AssertElementPresent" locator1="MyWorkflowTasksTask#PREVIEW_FIELD_CONTENT" value1="${fieldValue}" />
-
-				<execute function="AssertClick" locator1="MyWorkflowTasksTask#PREVIEW_VIEW" value1="View" />
-
-				<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-
-				<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_FIELD_CONTENT" value1="${fieldValue}" />
-
-				<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
-			</then>
-		</if>
+		<execute macro="Workflow#viewTaskAssignedToMyRolesDetails">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
 
 		<if>
 			<equals arg1="${assignToMeKey}" arg2="ASSIGN_TO_ME" />
@@ -947,6 +925,17 @@
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewTaskAssignedToMyRolesDetails">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<execute function="AssertTextEquals#assertValue" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="Nobody" />
+		<execute function="AssertTextEquals#assertValue" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 	</command>
 
 	<command name="viewTaskNotPresentAssignedToMyRoles">

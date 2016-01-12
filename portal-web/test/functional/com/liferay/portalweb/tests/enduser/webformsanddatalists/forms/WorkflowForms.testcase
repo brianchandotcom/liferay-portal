@@ -124,11 +124,32 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByDetails">
-			<var name="fieldLabel" value="Date" />
-			<var name="fieldValue" value="02/01/2016" />
 			<var name="workflowAssetTitle" value="Created Form Name" />
 			<var name="workflowAssetType" value="Form Record" />
 			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="workflowAssetTitle" value="Created Form Name" />
+			<var name="workflowAssetType" value="Form Record" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="Date" />
+			<var name="workflowAssetTitle" value="Created Form Name" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#gotoPreviewEdit" />
+
+		<execute macro="FormFields#viewDateField">
+			<var name="fieldLabel" value="Date" />
+			<var name="fieldName" value="Date" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">

@@ -512,32 +512,33 @@ if (portletTitleBasedNavigation) {
 											keyProperty="fileVersionId"
 											modelVar="curFileVersion"
 										>
-											<liferay-ui:search-container-column-text
-												property="version"
-											/>
 
-											<liferay-ui:search-container-column-date
-												name="date"
-												property="createDate"
-											/>
+											<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+												<h4><liferay-ui:message arguments="<%= curFileVersion.getVersion() %>" key="version-x" /></h4>
 
-											<liferay-ui:search-container-column-text
-												name="size"
-												value="<%= (TextFormatter.formatStorageSize(curFileVersion.getSize(), locale)) %>"
-											/>
+												<small class="text-muted">
 
-											<c:if test="<%= showNonApprovedDocuments %>">
-												<liferay-ui:search-container-column-status property="status" />
-											</c:if>
+													<% Date modifiedDate = curFileVersion.getModifiedDate(); %>
 
-											<liferay-ui:search-container-column-jsp
-												align="right"
-												cssClass="entry-action"
-												path="/document_library/file_entry_history_action.jsp"
-											/>
+													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="x-ago" />
+												</small>
+
+												<p class='<%= Validator.isNull(curFileVersion.getChangeLog()) ? "text-muted" : StringPool.BLANK %>'>
+													<c:choose>
+														<c:when test="<%= Validator.isNull(curFileVersion.getChangeLog()) %>">
+															<liferay-ui:message key="no-change-log" />
+														</c:when>
+														<c:otherwise>
+															<%= curFileVersion.getChangeLog() %>
+														</c:otherwise>
+													</c:choose>
+												</p>
+											</liferay-ui:search-container-column-text>
+
+											<liferay-ui:search-container-column-jsp path="/document_library/file_entry_history_action.jsp" />
 										</liferay-ui:search-container-row>
 
-										<liferay-ui:search-iterator />
+										<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 									</liferay-ui:search-container>
 
 									<%

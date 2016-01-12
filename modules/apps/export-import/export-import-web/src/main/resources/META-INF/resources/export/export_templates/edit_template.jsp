@@ -78,6 +78,10 @@ if (!cmd.equals(Constants.UPDATE)) {
 
 	if (openNodes == null) {
 		selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(liveGroupId, privateLayout);
+
+		for (long selectedLayoutId : selectedLayoutIds) {
+			SessionTreeJSClicks.openLayoutNodes(request, treeId + "SelectedNode", privateLayout, selectedLayoutId, true);
+		}
 	}
 	else {
 		selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));

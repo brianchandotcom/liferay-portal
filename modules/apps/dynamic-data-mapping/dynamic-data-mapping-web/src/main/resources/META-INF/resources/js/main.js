@@ -47,7 +47,7 @@ AUI.add(
 						value: {}
 					},
 					name: {
-						validator: A.Lang.isString
+						validator: isString
 					}
 				},
 
@@ -677,9 +677,9 @@ AUI.add(
 					}
 				}
 
-				key = Liferay.Util.camelize(key, STR_SPACE).trim();
+				key = Liferay.Util.camelize(key, STR_SPACE);
 
-				return key.replace(/([!"#$%&'()*+,-./:;<=>?@\[\\\]^`{|}~\s])+/ig, '');
+				return key.replace(/\s+/ig, '');
 			},
 
 			normalizeValue: function(value) {

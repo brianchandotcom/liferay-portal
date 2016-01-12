@@ -113,6 +113,14 @@
 
 				<execute function="MouseUp#javaScriptMouseUp" locator1="ControlMenu#ADD" />
 			</then>
+			<elseif>
+				<equals arg1="${browserType}" arg2="safari" />
+				<then>
+					<execute function="Pause" locator1="10000" />
+
+					<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
+				</then>
+			</elseif>
 			<else>
 				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
 			</else>

@@ -113,12 +113,12 @@
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATION_DROPDOWN</td>
-	<td>//span[contains(.,'${key_sitePagesVariationName}')]/following-sibling::i</td>
+	<td>//a[contains(@class,'staging-variation-selector') and contains(.,'${key_sitePagesVariationName}')]/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_VARIATION_DROPDOWN</td>
-	<td>//span[contains(.,'${key_pageVariationName}')]/following-sibling::i</td>
+	<td>//a[contains(@class,'staging-variation-selector') and contains(.,'${key_pageVariationName}')]/span</td>
 	<td></td>
 </tr>
 <tr>

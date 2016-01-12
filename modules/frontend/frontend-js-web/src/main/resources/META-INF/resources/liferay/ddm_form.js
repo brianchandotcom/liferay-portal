@@ -19,6 +19,8 @@ AUI.add(
 
 		var TPL_REPEATABLE_PLACEHOLDER = '<div class="lfr-ddm-repeatable-placeholder"></div>';
 
+		var TPL_REQUIRED_MARK = '<span class="icon-asterisk text-warning"><span class="hide-accessible">' + Liferay.Language.get('required') + '</span></span>';
+
 		var FieldTypes = Liferay.namespace('DDM.FieldTypes');
 
 		var getFieldClass = function(type) {
@@ -500,16 +502,20 @@ AUI.add(
 
 						var labelNode = instance.getLabelNode();
 
-						var tipNode = labelNode.one('.taglib-icon-help');
-
 						if (Lang.isValue(label) && Lang.isNode(labelNode)) {
 							labelNode.html(A.Escape.html(label));
 						}
 
+						var fieldDefinition = instance.getFieldDefinition();
+
+						if (fieldDefinition.required) {
+							labelNode.append(TPL_REQUIRED_MARK);
+						}
+
+						var tipNode = labelNode.one('.taglib-icon-help');
+
 						if (tipNode) {
 							var defaultLocale = instance.getDefaulLocale();
-
-							var fieldDefinition = instance.getFieldDefinition();
 
 							var tipsMap = fieldDefinition.tip;
 

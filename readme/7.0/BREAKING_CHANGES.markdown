@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `902b60c`.*
+*This document has been reviewed through commit `09f505f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3303,51 +3303,51 @@ functionality.
 
 ---------------------------------------
 
-### Portlet configuration options may not always be displayed
+### Portlet Configuration Options May Not Always Be Displayed
 - **Date:** 2016-Jan-07
 - **JIRA Ticket:** LPS-54620 and LPS-61820
 
 #### What changed?
 
-The portlet configuration options (configuration, export/import, look and feel,
-etc) were always displayed in every view of the portlet and they couldn't be
+The portlet configuration options (e.g., configuration, export/import, look and
+feel, etc.) were always displayed in every view of the portlet and couldn't be
 customized.
 
-With Lexicon, the options that are displayed will be based on the context, so
-not all the options will always be displayed.
+With Lexicon, the configuration options displayed are based on the portlet's
+context, so not all options will always be displayed.
 
 #### Who is affected?
 
-Portlets that should always display all the configuration options no matter
-which view of the portlet is rendered.
+This affects portlets that should always display all configuration options no
+matter which view of the portlet is rendered.
 
 #### How should I update my code?
 
-If you don't apply any change to your source code you will experience the
-following behaviour based on the portlet type:
+If you don't apply any change to your source code, you will experience the
+following behaviors based on the portlet type:
 
-- If it's a Struts Portlet and you have defined a `view-action` init parameter,
-the configuration options will only be displayed for that particular view when
-invoking a url with a parameter `struts-action` with the value indicated in
+- **Struts Portlet:** If you've defined a `view-action` init parameter, the
+configuration options are only displayed for that particular view when invoking
+a URL with a parameter `struts-action` with the value indicated in the
 `view-action` init parameter.
 
-- If it's a Liferay MVC Portlet and you have defined a `view-template` init
-parameter, the configuration options will only be displayed when that template
-is rendered by invoking a url with a parameter `mvcPath` with the value
-indicated in `view-template` init parameter.
+- **Liferay MVC Portlet:** If you've defined a `view-template` init parameter,
+the configuration options are only displayed when that template is rendered by
+invoking a URL with a parameter `mvcPath` with the value indicated in the
+`view-template` init parameter.
 
-- If it's a portlet using any other framework, the configuration options will
-never be displayed.
+- If it's a portlet using any other framework, the configuration options are
+never displayed.
 
-In order to keep the old behaviour of adding the configuration options in every
-view you need to add the init parameter
+In order to keep the old behavior of adding the configuration options in every
+view, you need to add the init parameter
 `always-display-default-configuration-icons` with the value `true`.
 
 #### Why was this change made?
 
 Lexicon patterns require the ability to specify different configuration options
 depending on the view of the portlet by adding or removing options. This can be
-easily achieved by using `PortletConfigurationIconFactory` and
+easily achieved by using the `PortletConfigurationIcon` and
 `PortletConfigurationIconFactory` classes.
 
 ---------------------------------------

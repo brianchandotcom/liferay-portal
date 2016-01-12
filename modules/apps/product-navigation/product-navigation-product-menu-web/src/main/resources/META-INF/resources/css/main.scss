@@ -193,7 +193,8 @@ body {
 
 	.staging-links {
 		font-size: 12px;
-		padding: 16px 16px 4px 16px;
+		padding: 16px;
+		padding-bottom: 4px;
 	}
 }
 
@@ -209,9 +210,9 @@ body {
 
 		&:hover, &:focus, &.tree-node-selected {
 			&.tree-node-content:before {
-				background: white;
+				background: #FFF;
 				bottom: 0;
-				content: " ";
+				content: '';
 				height: 40px;
 				left: -300px;
 				opacity: 0.1;
@@ -303,6 +304,7 @@ body {
 		left: 0;
 		position: absolute;
 		top: 1px;
+
 		@include transition(all 0.6s $ease-out-quart);
 		@include transition-delay(0.2s);
 	}
@@ -310,7 +312,7 @@ body {
 	.cn {
 		border: 1px solid #FFF;
 		border-radius: 1px;
-		content: "";
+		content: '';
 		height: 18px;
 		position: absolute;
 		right: 0;

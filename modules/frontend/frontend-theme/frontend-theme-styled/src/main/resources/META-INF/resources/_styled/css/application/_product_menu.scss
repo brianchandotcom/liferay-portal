@@ -315,7 +315,7 @@
 			.tree-node-content {
 				&:not(.tree-node-selected) {
 					.tree-node-hidden-hitarea {
-						&::before {
+						&:before {
 							color: $product-menu-tree-child-border;
 							content: '\e00d';
 							font-size: 0.7em;

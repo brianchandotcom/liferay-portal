@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = workflowTaskDisplayContext.getDisplayStyle();
-
 DateSearchEntry dateSearchEntry = new DateSearchEntry();
+
+String displayStyle = workflowTaskDisplayContext.getDisplayStyle();
 %>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />

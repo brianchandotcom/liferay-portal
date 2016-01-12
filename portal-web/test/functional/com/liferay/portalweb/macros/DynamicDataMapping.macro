@@ -178,6 +178,23 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="editFieldLabel">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<execute macro="DynamicDataMapping#editFieldLabelCmd">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+	</command>
+
 	<command name="editFieldLabelCmd">
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
 			<var name="fieldFieldLabel" value="${field}" />

@@ -218,23 +218,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="editFormTemplateFieldLabel">
-		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
-
-		<execute macro="DynamicDataMapping#editFieldLabelCmd">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		</execute>
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-	</command>
-
 	<command name="editFormTemplateModeCP">
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 

@@ -34,7 +34,7 @@
 	for (PortletConfigurationIconFactory portletConfigurationIconFactory : portletConfigurationIconFactories) {
 		PortletConfigurationIcon portletConfigurationIcon = portletConfigurationIconFactory.create(portletRequest);
 
-		if (portletConfigurationIcon.isShow()) {
+		if ((portletConfigurationIcon != null) && portletConfigurationIcon.isShow()) {
 			boolean include = portletConfigurationIconFactory.include(request, new PipingServletResponse(pageContext));
 
 			if (!include) {

@@ -19,11 +19,11 @@ import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -57,9 +57,27 @@ public class AddContentControlMenuEntry
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (themeDisplay.isStateMaximized()) {
+			return false;
+		}
+
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		LayoutTypeController layoutTypeController =
+			layoutTypePortlet.getLayoutTypeController();
+
+		if (layoutTypeController.isFullPageDisplayable()) {
+			return false;
+		}
+
+		if (!hasAddContentOrApplicationPermission(themeDisplay)) {
 			return false;
 		}
 
@@ -79,6 +97,24 @@ public class AddContentControlMenuEntry
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	protected boolean hasAddContentOrApplicationPermission(
+		ThemeDisplay themeDisplay) {
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isLayoutPrototype()) {
+			return false;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isLayoutPrototypeLinkActive()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)

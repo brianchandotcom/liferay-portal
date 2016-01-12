@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
+DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
 String displayStyle = workflowInstanceViewDisplayContext.getDisplayStyle();
 
-DateSearchEntry dateSearchEntry = new DateSearchEntry();
+PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 %>
 
 <div class="container-fluid-1280">

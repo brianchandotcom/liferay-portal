@@ -96,7 +96,6 @@ public class NavTag extends BaseNavTag implements BodyTag {
 				try {
 					sb.append("<img alt=\"");
 
-
 					ResourceBundle resourceBundle =
 						TagResourceBundleUtil.getResourceBundle(pageContext);
 

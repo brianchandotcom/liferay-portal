@@ -34,8 +34,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "publish-templates"));
 
 <liferay-util:include page="/publish_templates/navigation.jsp" servletContext="<%= application %>" />
 
-<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
-	<portlet:param name="mvcPath" value="editPublishConfiguration" />
+<portlet:actionURL name="editPublishConfiguration" var="restoreTrashEntriesURL">
+	<portlet:param name="mvcRenderCommandName" value="viewPublishConfigurations" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -62,6 +62,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 			emptyResultsMessage="there-are-no-saved-publish-templates"
 			iteratorURL="<%= portletURL %>"
 			orderByCol="name"
+			orderByComparator="<%= new ExportImportConfigurationNameComparator(true) %>"
 			orderByType="asc"
 			searchTerms="<%= new PublishConfigurationSearchTerms(renderRequest) %>"
 			total="<%= ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(groupId, exportImportConfigurationType) %>"

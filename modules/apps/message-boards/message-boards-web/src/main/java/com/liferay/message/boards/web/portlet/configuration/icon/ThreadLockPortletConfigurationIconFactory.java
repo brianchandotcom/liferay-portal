@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
 
 import javax.portlet.PortletRequest;
 
@@ -47,10 +46,8 @@ public class ThreadLockPortletConfigurationIconFactory
 			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
 				portletRequest);
 
-			MBThread thread = messageDisplay.getThread();
-
 			return new ThreadLockPortletConfigurationIcon(
-				portletRequest, thread);
+				portletRequest, messageDisplay.getThread());
 		}
 		catch (PortalException pe) {
 		}

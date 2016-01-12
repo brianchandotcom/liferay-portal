@@ -398,16 +398,16 @@ public class KaleoInstanceLocalServiceImpl
 			Property kaleoInstanceIdProperty = PropertyFactoryUtil.forName(
 				"kaleoInstanceId");
 
-			DynamicQuery subDynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DynamicQuery subdynamicQuery = DynamicQueryFactoryUtil.forClass(
 				KaleoInstanceToken.class,
 				getClassLoader()).setProjection(kaleoInstanceIdProperty);
 
 			Property currentKaleoNodeNameProperty = PropertyFactoryUtil.forName(
 				"currentKaleoNodeName");
 
-			subDynamicQuery.add(currentKaleoNodeNameProperty.like(nodeName));
+			subdynamicQuery.add(currentKaleoNodeNameProperty.like(nodeName));
 
-			junction.add(kaleoInstanceIdProperty.in(subDynamicQuery));
+			junction.add(kaleoInstanceIdProperty.in(subdynamicQuery));
 		}
 
 		dynamicQuery.add(junction);

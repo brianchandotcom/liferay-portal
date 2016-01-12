@@ -30,7 +30,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 
 <a id="<portlet:namespace />message_<%= message.getMessageId() %>"></a>
 
-<div class="card panel list-group-card">
+<div class="card list-group-card panel">
 	<div class="panel-heading">
 		<div class="card-row card-row-padded">
 			<c:if test="<%= !message.isAnonymous() %>">
@@ -384,7 +384,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					%>
 
 							<p>
-								<img class="crop-img" alt="<liferay-ui:message escapeAttribute="<%= true %>" key="attachment" />" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>" />
+								<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="attachment" />" class="crop-img" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>" />
 							</p>
 
 					<%

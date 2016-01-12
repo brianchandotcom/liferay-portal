@@ -24,7 +24,6 @@ import com.liferay.registry.collections.ServiceTrackerMapListener;
 
 import java.io.Closeable;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +121,21 @@ public class ResourceBundleTracker implements Closeable {
 				serviceTrackerMap,
 			String languageId, ResourceBundle resourceBundle,
 			List<ResourceBundle> content) {
+
+			synchronized (_resourceBundles) {
+				Set<String> keySet = _resourceBundles.keySet();
+				Iterator<String> iterator = keySet.iterator();
+
+				while (iterator.hasNext()) {
+					String subLanguageId = iterator.next();
+
+					if (!languageId.equals(subLanguageId) &&
+						subLanguageId.startsWith(languageId)) {
+
+						iterator.remove();
+					}
+				}
+			}
 		}
 
 		@Override

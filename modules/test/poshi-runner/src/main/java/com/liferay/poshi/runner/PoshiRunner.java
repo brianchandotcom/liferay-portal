@@ -95,7 +95,7 @@ public class PoshiRunner {
 
 		CommandLoggerHandler.startRunning();
 
-		LoggerUtil.startLogger(false);
+		LoggerUtil.startLogger();
 
 		SeleniumUtil.startSelenium();
 	}

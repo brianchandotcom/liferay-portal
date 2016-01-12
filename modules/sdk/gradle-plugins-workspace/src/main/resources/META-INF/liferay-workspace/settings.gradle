@@ -1,0 +1,26 @@
+File modulesDir = file(properties["liferay.workspace.modules.dir"])
+File themesDir = file(properties["liferay.workspace.themes.dir"])
+File pluginsSDKDir = file(properties["liferay.workspace.plugins.sdk.dir"])
+
+FileTree modulesFileTree = fileTree(dir: modulesDir, include: "**/bnd.bnd")
+FileTree themesFileTree = fileTree(dir: themesDir, excludes: ["**/build/", "**/build_gradle/", "**/node_modules/"], include: "**/package.json")
+
+FileTree fileTree = modulesFileTree + themesFileTree
+
+URI rootURI = rootDir.toURI()
+
+fileTree.each {
+	File file ->
+
+	String dirName = rootURI.relativize(file.parentFile.toURI())
+
+	include ":" + dirName.replaceAll("[\\/]", ":")
+}
+
+if (pluginsSDKDir.exists()) {
+	include ":plugins-sdk"
+
+	ProjectDescriptor pluginsSDKProject = project(":plugins-sdk")
+
+	pluginsSDKProject.projectDir = pluginsSDKDir
+}

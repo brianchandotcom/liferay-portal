@@ -16,34 +16,48 @@ package com.liferay.portal.security.permission;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 
 import java.io.Serializable;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * @author László Csontos
+ * @author Preston Crary
  */
 @ProviderType
 public interface UserBag extends Serializable {
 
-	public Set<Group> getGroups();
+	public Collection<Group> getGroups() throws PortalException;
 
-	public Set<Role> getRoles();
+	public long[] getRoleIds();
 
-	public Set<Group> getUserGroups();
+	public Collection<Role> getRoles() throws PortalException;
+
+	public long[] getUserGroupIds();
+
+	public Collection<Group> getUserGroups() throws PortalException;
 
 	public long getUserId();
 
-	public Set<Group> getUserOrgGroups();
+	public long[] getUserOrgGroupIds();
 
-	public Set<Organization> getUserOrgs();
+	public Collection<Group> getUserOrgGroups() throws PortalException;
 
-	public Set<Group> getUserUserGroupGroups();
+	public long[] getUserOrgIds();
+
+	public Collection<Organization> getUserOrgs() throws PortalException;
 
 	public boolean hasRole(Role role);
+
+	public boolean hasUserGroup(Group group);
+
+	public boolean hasUserOrg(Organization organization);
+
+	public boolean hasUserOrgGroup(Group group);
 
 }

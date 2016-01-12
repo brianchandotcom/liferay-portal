@@ -18,6 +18,7 @@ import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
@@ -544,6 +545,10 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		DestinationFactory destinationFactory) {
 
 		_destinationFactory = destinationFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLockManager(LockManager lockManager) {
 	}
 
 	protected List<BackgroundTask> translate(

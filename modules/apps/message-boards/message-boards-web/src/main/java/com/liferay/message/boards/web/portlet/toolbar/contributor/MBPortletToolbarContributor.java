@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContr
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -36,6 +37,7 @@ import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -60,6 +62,13 @@ public class MBPortletToolbarContributor implements PortletToolbarContributor {
 
 	@Override
 	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
+		List<MenuItem> portletTitleMenuItems = getPortletTitleMenuItems(
+			portletRequest);
+
+		if (ListUtil.isEmpty(portletTitleMenuItems)) {
+			return Collections.emptyList();
+		}
+
 		List<Menu> menus = new ArrayList<>();
 
 		Menu menu = new Menu();
@@ -67,7 +76,7 @@ public class MBPortletToolbarContributor implements PortletToolbarContributor {
 		menu.setDirection("down");
 		menu.setExtended(false);
 		menu.setIcon("../aui/plus-sign-2");
-		menu.setMenuItems(getPortletTitleMenuItems(portletRequest));
+		menu.setMenuItems(portletTitleMenuItems);
 		menu.setShowArrow(false);
 		menu.setShowWhenSingleIcon(true);
 

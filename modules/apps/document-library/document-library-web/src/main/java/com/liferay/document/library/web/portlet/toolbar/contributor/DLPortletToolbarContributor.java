@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -69,6 +70,13 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 
 	@Override
 	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
+		List<MenuItem> portletTitleMenuItems = getPortletTitleMenuItems(
+			portletRequest);
+
+		if (ListUtil.isEmpty(portletTitleMenuItems)) {
+			return Collections.emptyList();
+		}
+
 		List<Menu> menus = new ArrayList<>();
 
 		Menu menu = new Menu();
@@ -76,7 +84,7 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		menu.setDirection("down");
 		menu.setExtended(false);
 		menu.setIcon("../aui/plus-sign-2");
-		menu.setMenuItems(getPortletTitleMenuItems(portletRequest));
+		menu.setMenuItems(portletTitleMenuItems);
 		menu.setShowArrow(false);
 
 		menus.add(menu);

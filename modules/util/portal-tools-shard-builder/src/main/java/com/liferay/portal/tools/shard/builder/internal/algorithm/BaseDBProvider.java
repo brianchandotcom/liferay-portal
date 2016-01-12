@@ -115,6 +115,11 @@ public abstract class BaseDBProvider
 	}
 
 	@Override
+	public int getFetchSize() {
+		return 0;
+	}
+
+	@Override
 	public List<String> getPartitionedTableNames(String schemaName) {
 		return _getSchemaTableNames(getPartitionedTablesSql(schemaName));
 	}
@@ -149,10 +154,6 @@ public abstract class BaseDBProvider
 		}
 
 		return sb.toString();
-	}
-
-	@Override
-	public void setFetchSize(PreparedStatement ps) throws SQLException {
 	}
 
 	@Override
@@ -226,7 +227,7 @@ public abstract class BaseDBProvider
 			ps = con.prepareStatement(
 				sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
-			setFetchSize(ps);
+			ps.setFetchSize(getFetchSize());
 
 			if (companyId > 0) {
 				ps.setLong(1, companyId);

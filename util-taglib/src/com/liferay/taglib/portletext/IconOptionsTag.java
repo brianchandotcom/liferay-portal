@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -39,15 +38,6 @@ public class IconOptionsTag extends IconTag {
 		_direction = direction;
 	}
 
-	@Override
-	public void setPortletId(String portletId) {
-		_portletId = portletId;
-	}
-
-	public void setPortletRequest(PortletRequest portletRequest) {
-		_portletRequest = portletRequest;
-	}
-
 	public void setShowArrow(boolean showArrow) {
 		_showArrow = showArrow;
 	}
@@ -57,8 +47,6 @@ public class IconOptionsTag extends IconTag {
 		super.cleanUp();
 
 		_direction = "down";
-		_portletId = null;
-		_portletRequest = null;
 		_showArrow = true;
 	}
 
@@ -76,10 +64,6 @@ public class IconOptionsTag extends IconTag {
 	}
 
 	protected String getPortletId() {
-		if (Validator.isNotNull(_portletId)) {
-			return _portletId;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -89,10 +73,6 @@ public class IconOptionsTag extends IconTag {
 	}
 
 	protected PortletRequest getPortletRequest() {
-		if (_portletRequest != null) {
-			return _portletRequest;
-		}
-
 		return (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
@@ -103,8 +83,6 @@ public class IconOptionsTag extends IconTag {
 
 		request.setAttribute("liferay-ui:icon:direction", _direction);
 		request.setAttribute(
-			"liferay-ui:icon:portletRequest", getPortletRequest());
-		request.setAttribute(
 			"liferay-ui:icon:showArrow", String.valueOf(_showArrow));
 
 		request.setAttribute(
@@ -113,8 +91,6 @@ public class IconOptionsTag extends IconTag {
 	}
 
 	private String _direction = "down";
-	private String _portletId;
-	private PortletRequest _portletRequest;
 	private boolean _showArrow = true;
 
 }

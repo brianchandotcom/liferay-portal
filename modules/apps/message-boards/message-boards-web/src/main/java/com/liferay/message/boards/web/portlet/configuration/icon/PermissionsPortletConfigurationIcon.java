@@ -83,15 +83,10 @@ public class PermissionsPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		try {
-			if (!MBPermission.contains(
-					permissionChecker, themeDisplay.getScopeGroupId(),
-					ActionKeys.PERMISSIONS)) {
+		if (!MBPermission.contains(
+				permissionChecker, themeDisplay.getScopeGroupId(),
+				ActionKeys.PERMISSIONS)) {
 
-				return false;
-			}
-		}
-		catch (Exception e) {
 			return false;
 		}
 

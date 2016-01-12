@@ -15,9 +15,9 @@
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -53,32 +53,26 @@ public class ThreadLockPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
 
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "/message_boards/edit_message");
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/message_boards/edit_message");
 
-			if (_thread.isLocked()) {
-				portletURL.setParameter(Constants.CMD, Constants.UNLOCK);
-			}
-			else {
-				portletURL.setParameter(Constants.CMD, Constants.LOCK);
-			}
-
-			portletURL.setParameter(
-				"redirect", PortalUtil.getCurrentURL(portletRequest));
-			portletURL.setParameter(
-				"threadId", String.valueOf(_thread.getThreadId()));
-
-			return portletURL.toString();
+		if (_thread.isLocked()) {
+			portletURL.setParameter(Constants.CMD, Constants.UNLOCK);
 		}
-		catch (Exception e) {
+		else {
+			portletURL.setParameter(Constants.CMD, Constants.LOCK);
 		}
 
-		return StringPool.BLANK;
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(portletRequest));
+		portletURL.setParameter(
+			"threadId", String.valueOf(_thread.getThreadId()));
+
+		return portletURL.toString();
 	}
 
 	@Override
@@ -89,7 +83,7 @@ public class ThreadLockPortletConfigurationIcon
 				themeDisplay.getScopeGroupId(), _thread.getCategoryId(),
 				ActionKeys.LOCK_THREAD);
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 		}
 
 		return false;

@@ -15,6 +15,7 @@
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringPool;
@@ -113,7 +114,7 @@ public class ThreadPermissionsPortletConfigurationIcon
 				return false;
 			}
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 			return false;
 		}
 

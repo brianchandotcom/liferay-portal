@@ -57,7 +57,7 @@ public class ThreadLockPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 101;
+		return 103;
 	}
 
 }

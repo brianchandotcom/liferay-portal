@@ -36,6 +36,21 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		if (!SessionErrors.contains(portletRequest, _key)) {
+			return SKIP_BODY;
+		}
+
+		Object value = getException(portletRequest);
+
+		if (value == null) {
+			return SKIP_BODY;
+		}
+
+		pageContext.setAttribute("errorException", value);
+
 		return super.doStartTag();
 	}
 
@@ -115,12 +130,6 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			String.valueOf(_translateMessage));
 
 		if (SessionErrors.contains(portletRequest, _key)) {
-			Object value = getException(portletRequest);
-
-			if (value != null) {
-				pageContext.setAttribute("errorException", value);
-			}
-
 			String errorMarkerKey = (String)request.getAttribute(
 				"liferay-ui:error-marker:key");
 			String errorMarkerValue = (String)request.getAttribute(

@@ -2,12 +2,12 @@
 <#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
 <#assign liferay_util=PortalJspTagLibs["/WEB-INF/tld/liferay-util.tld"]>
 
-<#assign fullScreenNavigation = getterUtil.getBoolean(theme.getSetting("full-screen-navigation"))>
-<#assign socialMediaFacebook = getterUtil.getBoolean(theme.getSetting("social-media-facebook"))>
-<#assign socialMediaTwitter = getterUtil.getBoolean(theme.getSetting("social-media-twitter"))>
-<#assign socialMediaFacebookUrl = theme.getSetting("social-media-facebook-url")>
-<#assign socialMediaTwitterUrl = theme.getSetting("social-media-twitter-url")>
-<#assign siteLogoRetina = getterUtil.getBoolean(theme.getSetting("site-logo-retina"))>
+<#assign fullScreenNavigation = getterUtil.getBoolean(themeDisplay.getThemeSetting("full-screen-navigation"))>
+<#assign socialMediaFacebook = getterUtil.getBoolean(themeDisplay.getThemeSetting("social-media-facebook"))>
+<#assign socialMediaTwitter = getterUtil.getBoolean(themeDisplay.getThemeSetting("social-media-twitter"))>
+<#assign socialMediaFacebookUrl = themeDisplay.getThemeSetting("social-media-facebook-url")>
+<#assign socialMediaTwitterUrl = themeDisplay.getThemeSetting("social-media-twitter-url")>
+<#assign siteLogoRetina = getterUtil.getBoolean(themeDisplay.getThemeSetting("site-logo-retina"))>
 
 <#if fullScreenNavigation>
 	<#assign css_class = css_class + " full-screen-navigation">

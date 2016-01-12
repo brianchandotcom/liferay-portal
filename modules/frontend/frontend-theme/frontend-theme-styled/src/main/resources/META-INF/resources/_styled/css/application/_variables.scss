@@ -50,7 +50,7 @@ $product-menu-nav-equal-height-heading-closed-collapse-icon: '\f0fe' !default;
 $product-menu-nav-equal-height-heading-open-collapse-icon: '\f146' !default;
 
 $product-menu-nav-link-active-color: #FFF !default;
-$product-menu-nav-link-color: #FFF !default;
+$product-menu-nav-link-color: #869CAD !default;
 
 $product-menu-panel-body-bg: #213740 !default;
 
@@ -67,8 +67,11 @@ $product-menu-tree-active-hitarea-bg: #FFF;
 $product-menu-tree-border: #869CAD;
 $product-menu-tree-border-style: solid;
 $product-menu-tree-border-width: 2px;
+$product-menu-tree-child-border: #869CAD;
+$product-menu-tree-child-border-style: dashed;
+$product-menu-tree-child-border-width: 1px;
 $product-menu-tree-color: #FFF;
-$product-menu-tree-hitarea-bg: #FFF;
+$product-menu-tree-hitarea-bg: #869CAD;
 $product-menu-tree-hitarea-color: #1A2126;
 
 /* ---------- Toggle card ---------- */

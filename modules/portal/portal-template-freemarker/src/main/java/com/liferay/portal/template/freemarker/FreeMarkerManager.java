@@ -155,11 +155,12 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		Map<String, Object> contextObjects, String themeName,
 		HttpServletRequest request, HttpServletResponse response) {
 
-		FreeMarkerThemeHelper themeHelper = new FreeMarkerThemeHelperImpl(
-			request.getServletContext(), request, response, contextObjects);
+		FreeMarkerThemeHelper freeMarkerThemeHelper =
+			new FreeMarkerThemeHelperImpl(
+				request.getServletContext(), request, response, contextObjects);
 
-		contextObjects.put(themeName, themeHelper);
-		contextObjects.put("theme", themeHelper);
+		contextObjects.put(themeName, freeMarkerThemeHelper);
+		contextObjects.put("theme", freeMarkerThemeHelper);
 	}
 
 	@Override

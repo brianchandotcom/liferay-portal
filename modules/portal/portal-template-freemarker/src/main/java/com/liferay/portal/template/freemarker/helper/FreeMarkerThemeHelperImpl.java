@@ -39,20 +39,20 @@ public class FreeMarkerThemeHelperImpl implements FreeMarkerThemeHelper {
 	}
 
 	@Override
-	public void include(ServletContext servletContext, String page)
+	public void include(ServletContext servletContext, String path)
 		throws Exception {
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(page);
+			servletContext.getRequestDispatcher(path);
 
 		requestDispatcher.include(_request, _response);
 	}
 
 	@Override
-	public void include(String page) throws Exception {
+	public void include(String path) throws Exception {
 		RequestDispatcher requestDispatcher =
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-				_servletContext, page);
+				_servletContext, path);
 
 		requestDispatcher.include(_request, _response);
 	}

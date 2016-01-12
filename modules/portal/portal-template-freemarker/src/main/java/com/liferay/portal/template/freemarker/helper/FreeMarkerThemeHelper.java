@@ -21,9 +21,9 @@ import javax.servlet.ServletContext;
  */
 public interface FreeMarkerThemeHelper {
 
-	public void include(ServletContext servletContext, String page)
+	public void include(ServletContext servletContext, String path)
 		throws Exception;
 
-	public void include(String page) throws Exception;
+	public void include(String path) throws Exception;
 
 }

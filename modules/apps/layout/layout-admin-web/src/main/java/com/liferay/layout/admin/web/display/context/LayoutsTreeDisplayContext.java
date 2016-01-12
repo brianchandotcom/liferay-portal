@@ -132,11 +132,11 @@ public class LayoutsTreeDisplayContext {
 
 	public String getJSSafeEditLayoutTitle() {
 		String value = UnicodeLanguageUtil.format(
-			getHttpServletRequest(), "edit-x", _LABEL_TPL, false);
+			getHttpServletRequest(), "edit-x", "{label}", false);
 
 		return StringUtil.replace(
-			value, UnicodeLanguageUtil.get(getHttpServletRequest(), _LABEL_TPL),
-			_LABEL_TPL);
+			value, UnicodeLanguageUtil.get(getHttpServletRequest(), "{label}"),
+			"{label}");
 	}
 
 	public String getLayoutSetBranchCssClass(LayoutSetBranch layoutSetBranch)
@@ -488,8 +488,6 @@ public class LayoutsTreeDisplayContext {
 
 		return false;
 	}
-
-	private static final String _LABEL_TPL = "{label}";
 
 	private HttpServletRequest _httpServletRequest;
 	private LayoutSetBranch _layoutSetBranch;

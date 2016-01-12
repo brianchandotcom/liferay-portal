@@ -268,10 +268,8 @@
 
 	.lfr-asset-actions {
 		float: right;
-		font-size: 11px;
-		font-weight: normal;
-		margin-bottom: 3px;
-		margin-top: 0;
+		position: absolute;
+		right: 10px;
 	}
 
 	.task-activity {
@@ -282,17 +280,16 @@
 		font-weight: bold;
 	}
 
-	h3.task-content-title {
-		border-bottom: 1px solid #DDD;
-		margin-top: 0;
-	}
-
 	.task-panel-container .lfr-panel-content {
 		padding: 0.7em;
 	}
 
 	.task-content-actions {
 		float: right;
+
+		.btn-default {
+			padding: 0;
+		}
 	}
 
 	.asset-metadata {
@@ -316,6 +313,6 @@
 	}
 }
 
-#workflowTasksPanelContainer {
-	border-width: 0;
+.asset-type, .task-name, .due-date {
+	margin-right: 20px;
 }

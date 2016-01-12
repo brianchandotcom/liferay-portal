@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `c52b2c0`.*
+*This document has been reviewed through commit `902b60c`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3224,66 +3224,81 @@ Portal by means of an OSGi container.
 
 ---------------------------------------
 
-### Taglibs are no longer accessible via the `${theme}` variable in Freemarker
+### Taglibs Are No Longer Accessible via the ${theme} Variable in FreeMarker
 - **Date:** 2016-Jan-06
 - **JIRA Ticket:** LPS-61683
 
 #### What changed?
 
-The `${theme}` variable that was injected in the freemarker context providing
-access to some taglibs or utils does no longer provide them. Only the
+The `${theme}` variable previously provided access to various tags and utils in
+the FreeMarker context. These tags and utils are no longer provided. Only the
 `${theme.include}` method is preserved for performance reasons.
 
 #### Who is affected?
 
-Freemarker templates that are using the `${theme}` variable to access any of its
-provided taglibs.
+This affects FreeMarker templates that are using the `${theme}` variable to
+access any of its provided taglibs.
 
 #### How should I update my code?
 
 All the provided taglibs available in the `${theme}` variable can be replaced by
-the direct usage of a taglib. For example:
+the direct usage of a tag.
 
-`${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW, "", default_preferences)}` can be replaced by:
+**Example 1**
 
-```
-<@liferay_portlet["runtime"]
-    defaultPreferences=default_preferences
-    portletProviderAction=portletProviderAction.VIEW
-    portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
-/>
-```
+    ${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW, "", default_preferences)}
 
-`${theme.wrapPortlet("portlet.ftl", content_include)}` can be replaced by:
+can be replaced by:
 
-```
-<@liferay_theme["wrap-portlet"] page="portlet.ftl">
+    <@liferay_portlet["runtime"]
+        defaultPreferences=default_preferences
+        portletProviderAction=portletProviderAction.VIEW
+        portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
+    />
+
+**Example 2**
+
+    ${theme.include(content_include)}
+
+can be replaced by:
+
     <@liferay_util["include"] page=content_include />
-</@>
-```
 
-`${theme.iconHelp(portlet_description)}` can be replaced by:
+**Example 3**
 
-```
-<@liferay_ui["icon-help"] message=portlet_description />
-```
+    ${theme.wrapPortlet("portlet.ftl", content_include)}
 
-`${nav_item.icon()}` can be replaced by:
+can be replaced by:
 
-```
-<@liferay_theme["layout-icon"] layout=${nav_item.getLayout()} />
-```
+    <@liferay_theme["wrap-portlet"] page="portlet.ftl">
+        <@liferay_util["include"] page=content_include />
+    </@>
+
+**Example 4**
+
+    ${theme.iconHelp(portlet_description)}
+
+can be replaced by:
+
+    <@liferay_ui["icon-help"] message=portlet_description />
+
+**Example 5**
+
+    ${nav_item.icon()}
+
+can be replaced by:
+
+    <@liferay_theme["layout-icon"] layout=${nav_item.getLayout()} />
 
 #### Why was this change made?
 
-For historic reasons, the `{$theme} variable was being injected with the
-`VelocityTaglibImpl` class. This was creating some coupling between the template
-engines and between some specific taglibs and the template engines at the same
-time.
+Previously, the `{$theme}` variable was being injected with the
+`VelocityTaglibImpl` class. This was creating coupling between template engines
+and between specific tags and template engines at the same time.
 
-Freemarker already offers native support for taglibs which cover all the
+FreeMarker already offers native support for tags which cover all the
 functionality originally provided by the `{$theme}` variable. Removing this
-coupling would help future developments while still keeping all the existing
+coupling helps future development while still keeping all the existing
 functionality.
 
 ---------------------------------------

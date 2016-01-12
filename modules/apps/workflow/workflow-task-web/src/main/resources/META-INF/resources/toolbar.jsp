@@ -76,8 +76,8 @@ portletURL.setParameter("tabs1", tabs1);
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-				label="<%= null %>"
-			>
+			label="<%= null %>"
+		>
 			<portlet:renderURL var="viewAllURL">
 				<portlet:param name="navigation" value="all" />
 				<portlet:param name="tabs1" value="<%= tabs1 %>" />
@@ -98,7 +98,6 @@ portletURL.setParameter("tabs1", tabs1);
 			</portlet:renderURL>
 
 			<liferay-frontend:management-bar-navigation-item active="<%= workflowTaskDisplayContext.isNavigationCompleted() %>" label="completed" url="<%= viewCompletedURL.toString() %>" />
-
 		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-sort

@@ -3,41 +3,21 @@ FileTree fileTree = fileTree(rootDir) {
 	exclude "sdk/*/samples/"
 
 	if (Boolean.getBoolean("portal.build")) {
-		exclude "portal-cache/portal-cache-memory/"
-		exclude "portal/portal-scripting-beanshell/"
-		exclude "portal/portal-scripting-javascript/"
-		exclude "portal/portal-scripting-python/"
-		exclude "portal/portal-scripting-ruby/"
-		exclude "portal/portal-search-solr/"
-		exclude "portal/portal-taglib-aui-form-extension-sample/"
-		exclude "sdk/"
-		exclude "test/"
-		exclude "themes/product-app-theme/"
-		exclude "third-party/"
-		exclude "util/alloy-taglib/"
-		exclude "util/css-builder/"
-		exclude "util/deployment-helper/"
-		exclude "util/freemarker-osgi-bridge/"
-		exclude "util/io-delta/"
-		exclude "util/ip-geocoder-sample-web/"
-		exclude "util/jasper-jspc/"
-		exclude "util/javadoc-formatter/"
-		exclude "util/lang-builder/"
-		exclude "util/markdown-converter/"
-		exclude "util/portal-tools-service-builder/"
-		exclude "util/portal-tools-upgrade-table-builder/"
-		exclude "util/portal-tools-wsdd-builder/"
-		exclude "util/ruby-gems/"
-		exclude "util/sass-compiler-api/"
-		exclude "util/sass-compiler-ruby/"
-		exclude "util/source-formatter/"
-		exclude "util/sync-engine/"
-		exclude "util/tld-formatter/"
-		exclude "util/xml-formatter/"
-	}
+		String excludesString = System.properties["portal.build.modules.excludes"]
+		String includesString = System.properties["portal.build.modules.includes"]
 
-	include "*/**/build.gradle"
-	include "themes/*/package.json"
+		if (excludesString) {
+			exclude excludesString.tokenize(",")
+		}
+
+		if (includesString) {
+			include includesString.tokenize(",")
+		}
+	}
+	else {
+		include "*/**/build.gradle"
+		include "themes/*/package.json"
+	}
 }
 
 URI rootURI = rootDir.toURI()

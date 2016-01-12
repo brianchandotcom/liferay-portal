@@ -90,25 +90,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return repository;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addRepository(long, long,
-	 *             long, long, String, String, String, UnicodeProperties,
-	 *             boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Repository addRepository(
-			long userId, long groupId, long classNameId, long parentFolderId,
-			String name, String description, String portletId,
-			UnicodeProperties typeSettingsProperties,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addRepository(
-			userId, groupId, classNameId, parentFolderId, name, description,
-			portletId, typeSettingsProperties, false, serviceContext);
-	}
-
 	@Override
 	public void checkRepository(long repositoryId) {
 		Group group = groupPersistence.fetchByPrimaryKey(repositoryId);

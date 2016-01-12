@@ -778,50 +778,23 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void initCompanies() throws Exception {
-		ServiceDependencyManager serviceDependencyManager =
-			new ServiceDependencyManager();
+		if (_log.isDebugEnabled()) {
+			_log.debug("Initialize companies");
+		}
 
-		serviceDependencyManager.addServiceDependencyListener(
-			new ServiceDependencyListener() {
+		ServletContext servletContext = getServletContext();
 
-				@Override
-				public void dependenciesFulfilled() {
-					try {
-						if (_log.isDebugEnabled()) {
-							_log.debug("Initialize companies");
-						}
+		try {
+			String[] webIds = PortalInstances.getWebIds();
 
-						ServletContext servletContext = getServletContext();
-
-						try {
-							String[] webIds = PortalInstances.getWebIds();
-
-							for (String webId : webIds) {
-								PortalInstances.initCompany(
-									servletContext, webId);
-							}
-						}
-						finally {
-							CompanyThreadLocal.setCompanyId(
-								PortalInstances.getDefaultCompanyId());
-						}
-					}
-					catch (Exception e) {
-						_log.error(e, e);
-					}
-				}
-
-				@Override
-				public void destroy() {
-				}
-
-			});
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter("(search.engine.id=SYSTEM_ENGINE)");
-
-		serviceDependencyManager.registerDependencies(filter);
+			for (String webId : webIds) {
+				PortalInstances.initCompany(servletContext, webId);
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(
+				PortalInstances.getDefaultCompanyId());
+		}
 	}
 
 	protected void initExt() throws Exception {

@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi", version: "3.10.200-SNAPSHOT"
+	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1"
 	compile project(":core:osgi-service-tracker-collections")
 	compile project(":core:registry-api")
 }

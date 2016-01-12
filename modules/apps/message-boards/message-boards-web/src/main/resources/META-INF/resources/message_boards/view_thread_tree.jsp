@@ -38,6 +38,10 @@ int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DE
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
 
+	<c:if test="<%= depth == 0 %>">
+		<div class="message-container">
+	</c:if>
+
 	<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
 
 	<%
@@ -74,8 +78,14 @@ for (int i = range[0]; i < range[1]; i++) {
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
 %>
 
-	<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
+	<div class="message-container">
+		<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
+	</div>
 
 <%
 }
 %>
+
+<c:if test="<%= (depth == 0) && ((message.getMessageId() != selMessage.getMessageId()) || MBUtil.isViewableMessage(themeDisplay, message)) %>">
+	</div>
+</c:if>

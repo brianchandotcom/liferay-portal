@@ -77,7 +77,9 @@ for (int i = 0; i < messages.size(); i++) {
 	request.setAttribute("edit_message.jsp-thread", thread);
 %>
 
-	<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
+	<div class="message-container">
+		<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
+	</div>
 
 <%
 }

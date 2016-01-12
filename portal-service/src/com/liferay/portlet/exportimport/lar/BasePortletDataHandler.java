@@ -690,7 +690,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			return false;
 		}
 
-		// Import should be compatible with all bugfix versions if previous
+		// Import should be compatible with all minor versions if previous
 		// validations pass
 
 		return true;

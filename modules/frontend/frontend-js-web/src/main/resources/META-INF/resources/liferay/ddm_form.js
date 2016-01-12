@@ -1088,6 +1088,7 @@ AUI.add(
 												{
 													groupId: itemValue.groupId,
 													title: itemValue.title,
+													type: itemValue.type,
 													uuid: itemValue.uuid
 												}
 											);

@@ -170,6 +170,7 @@ AUI.add(
 							fileEntryId: imageData.file.fileEntryId,
 							groupId: imageData.file.groupId,
 							title: imageData.file.title,
+							type: imageData.file.type,
 							url: imageUrl,
 							uuid: imageData.file.uuid
 						};

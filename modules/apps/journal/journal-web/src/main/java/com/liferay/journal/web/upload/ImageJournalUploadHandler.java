@@ -134,6 +134,17 @@ public class ImageJournalUploadHandler extends BaseUploadHandler {
 	}
 
 	@Override
+	protected JSONObject getImageJSONObject(PortletRequest portletRequest)
+		throws PortalException {
+
+		JSONObject imageJSONObject = super.getImageJSONObject(portletRequest);
+
+		imageJSONObject.put("type", "journal");
+
+		return imageJSONObject;
+	}
+
+	@Override
 	protected String getParameterName() {
 		return "imageSelectorFileName";
 	}

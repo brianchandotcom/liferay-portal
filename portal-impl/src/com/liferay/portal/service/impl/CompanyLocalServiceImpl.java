@@ -1368,7 +1368,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		TransactionCommitCallbackUtil.registerCallback(callable);
 
-		//Search Indices
+		// Search indices
+
 		SearchEngineHelperUtil.removeCompany(companyId);
 
 		ServiceRegistration<Company> serviceRegistration =

@@ -88,7 +88,7 @@ public class CompanyLDAPInitializer {
 				}
 				catch (Exception e) {
 					_log.error(
-						"Unable to import users for company: " +
+						"Unable to import users for company " +
 							company.getCompanyId(),
 						e);
 				}

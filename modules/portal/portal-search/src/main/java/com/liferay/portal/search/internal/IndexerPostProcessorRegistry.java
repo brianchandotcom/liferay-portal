@@ -53,7 +53,7 @@ public class IndexerPostProcessorRegistry {
 			Indexer<?> indexer = _indexerRegistry.getIndexer(indexerClassName);
 
 			if (indexer == null) {
-				_log.error("No indexer for " + indexerClassName + " was found");
+				_log.error("No indexer exists for " + indexerClassName);
 
 				continue;
 			}
@@ -73,7 +73,7 @@ public class IndexerPostProcessorRegistry {
 			Indexer<?> indexer = _indexerRegistry.getIndexer(indexerClassName);
 
 			if (indexer == null) {
-				_log.error("No indexer for " + indexerClassName + " was found");
+				_log.error("No indexer exists for " + indexerClassName);
 
 				continue;
 			}

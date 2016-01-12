@@ -822,6 +822,8 @@ public class JournalConverterImpl implements JournalConverter {
 				"name", jsonObject.getString("name"));
 			dynamicContentElement.addAttribute(
 				"title", jsonObject.getString("title"));
+			dynamicContentElement.addAttribute(
+				"type", jsonObject.getString("type"));
 			dynamicContentElement.addCDATA(fieldValue);
 		}
 		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType) &&

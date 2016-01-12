@@ -26,6 +26,8 @@ app.server.jboss.dir=${app.server.dir}
 
 auto.deploy.dir=${auto.deploy.dir}
 
+liferay.home=${liferay.home}
+
 plugins.includes=${plugins.includes}</echo>
 			</then>
 			<else>
@@ -33,6 +35,8 @@ plugins.includes=${plugins.includes}</echo>
 app.server.type=${app.server.type}
 
 auto.deploy.dir=${auto.deploy.dir}
+
+liferay.home=${liferay.home}
 
 plugins.includes=${plugins.includes}</echo>
 			</else>
@@ -263,6 +267,8 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 app.server.type=${app.server.type}
 
 auto.deploy.dir=${auto.deploy.dir}
+
+liferay.home=${liferay.home}
 
 plugins.includes=${test.plugin}</echo>
 

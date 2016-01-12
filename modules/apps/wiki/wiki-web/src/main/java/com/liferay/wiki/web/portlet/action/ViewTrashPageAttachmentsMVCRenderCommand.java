@@ -16,15 +16,8 @@ package com.liferay.wiki.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.constants.WikiWebKeys;
-import com.liferay.wiki.web.portlet.toolbar.item.WikiPortletToolbarContributor;
-
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -32,32 +25,19 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"mvc.command.name=/wiki/view_pages"
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"mvc.command.name=/wiki/view_trash_page_attachments"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewPagesMVCRenderCommand implements MVCRenderCommand {
+public class ViewTrashPageAttachmentsMVCRenderCommand
+	extends BaseViewPageMVCRenderCommand {
 
 	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		renderRequest.setAttribute(
-			WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR,
-			_wikiPortletToolbarContributor);
-
-		return ActionUtil.viewNode(renderRequest, "/wiki_admin/view_pages.jsp");
+	protected String getPath() {
+		return "/wiki/view_trash_page_attachments.jsp";
 	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPortletToolbarContributor(
-		WikiPortletToolbarContributor wikiPortletToolbarContributor) {
-
-		_wikiPortletToolbarContributor = wikiPortletToolbarContributor;
-	}
-
-	private WikiPortletToolbarContributor _wikiPortletToolbarContributor;
 
 }

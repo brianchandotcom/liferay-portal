@@ -61,7 +61,7 @@ if (portletTitleBasedNavigation) {
 					cssClass = "active";
 				}
 
-				PortletURL viewPageURL = wikiURLHelper.getViewPageURL(curNode);
+				PortletURL viewPageURL = wikiURLHelper.getViewFrontPagePageURL(curNode);
 			%>
 
 				<aui:nav-item cssClass="<%= cssClass %>" href="<%= viewPageURL.toString() %>" label="<%= HtmlUtil.escape(curNode.getName()) %>" />
@@ -95,7 +95,7 @@ if (portletTitleBasedNavigation) {
 			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewRecentChangesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
 			<%
-			PortletURL viewAllPagesURL = wikiURLHelper.getViewAllPagesURL(node);
+			PortletURL viewAllPagesURL = wikiURLHelper.getViewPagesURL(node);
 
 			label = "all-pages";
 			selected = wikiVisualizationHelper.isViewAllPagesNavItemSelected();

@@ -50,7 +50,7 @@
 
 	<command name="addMentionViaMessageBoardThread">
 		<if>
-			<equals arg1="editMBThread" arg2="True" />
+			<equals arg1="${editMBThread}" arg2="True" />
 			<then>
 				<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_EDIT_1" value1="Edit" />
 			</then>

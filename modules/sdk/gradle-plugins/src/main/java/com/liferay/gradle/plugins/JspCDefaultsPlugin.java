@@ -22,6 +22,9 @@ import com.liferay.gradle.plugins.util.GradleUtil;
 
 import java.io.File;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -72,6 +75,23 @@ public class JspCDefaultsPlugin
 
 		GradleUtil.addDependency(
 			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
+
+		String appServerType = liferayExtension.getAppServerType();
+
+		if (appServerType.equals("jonas")) {
+			Map<String, Object> args = new HashMap<>();
+
+			args.put(
+				"dir",
+				new File(liferayExtension.getAppServerDir(), "lib/endorsed"));
+			args.put(
+				"includes", Arrays.asList("xercesImpl.jar", "xml-apis.jar"));
+
+			fileTree = project.fileTree(args);
+
+			GradleUtil.addDependency(
+				project, JspCPlugin.CONFIGURATION_NAME, fileTree);
+		}
 
 		fileTree = FileUtil.getJarsFileTree(
 			project,

@@ -3354,7 +3354,7 @@ easily achieved by using the `PortletConfigurationIcon` and
 
 ### The getURLView Method of AssetRenderer Returns String Instead of PortletURL
 - **Date:** 2016-Jan-08
-- **JIRA Ticket:** 
+- **JIRA Ticket:** LPS-61853
 
 #### What changed?
 
@@ -3395,8 +3395,8 @@ This affects all themes using the `nav_item.icon()` method.
 
 #### How should I update my code?
 
-You should update your code to call the method `nav_item.iconURL` that would
-return the URL of the image and then you can use it as preferred.
+You should update your code to call the method `nav_item.iconURL` to return the
+image's URL and then use it as you prefer.
 
 **Example:**
 

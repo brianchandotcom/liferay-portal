@@ -44,15 +44,15 @@ public class MessageTag extends TagSupport {
 			HttpServletRequest request =
 				(HttpServletRequest)pageContext.getRequest();
 
-			ResourceBundle resourceBundle =
-				TagResourceBundleUtil.getResourceBundle(pageContext);
-
 			boolean unicode = GetterUtil.getBoolean(
 				request.getAttribute(WebKeys.JAVASCRIPT_CONTEXT));
 
 			if (unicode) {
 				_unicode = unicode;
 			}
+
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
 
 			if (_arguments == null) {
 				if (!_localizeKey) {

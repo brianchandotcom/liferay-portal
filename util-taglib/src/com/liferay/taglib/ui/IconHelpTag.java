@@ -46,12 +46,7 @@ public class IconHelpTag extends IconTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
 		JspWriter jspWriter = pageContext.getOut();
-
-		String id = StringUtil.randomId();
 
 		jspWriter.write("<span class=\"taglib-icon-help\"><img alt=\"\" ");
 		jspWriter.write("aria-labelledby=\"");
@@ -66,9 +61,14 @@ public class IconHelpTag extends IconTag {
 		jspWriter.write("/><span ");
 		jspWriter.write("class=\"hide-accessible tooltip-text\" ");
 		jspWriter.write("id=\"");
-		jspWriter.write(id);
+		jspWriter.write(StringUtil.randomId());
 		jspWriter.write("\" >");
+
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			pageContext);
+
 		jspWriter.write(LanguageUtil.get(resourceBundle, getMessage()));
+
 		jspWriter.write("</span></span>");
 
 		return EVAL_PAGE;

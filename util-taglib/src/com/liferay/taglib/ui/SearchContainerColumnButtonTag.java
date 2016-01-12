@@ -51,17 +51,19 @@ public class SearchContainerColumnButtonTag<R>
 				index = searchEntries.size();
 			}
 
-			ResourceBundle resourceBundle =
-				TagResourceBundleUtil.getResourceBundle(pageContext);
-
 			ButtonSearchEntry buttonSearchEntry = new ButtonSearchEntry();
 
 			buttonSearchEntry.setAlign(getAlign());
 			buttonSearchEntry.setColspan(getColspan());
 			buttonSearchEntry.setCssClass(getCssClass());
 			buttonSearchEntry.setHref(String.valueOf(getHref()));
+
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			buttonSearchEntry.setName(
 				LanguageUtil.get(resourceBundle, getName()));
+
 			buttonSearchEntry.setValign(getValign());
 
 			resultRow.addSearchEntry(index, buttonSearchEntry);

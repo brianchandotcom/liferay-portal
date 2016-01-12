@@ -94,16 +94,21 @@ public class NavTag extends BaseNavTag implements BodyTag {
 			}
 			else if (icon.equals("user") && themeDisplay.isSignedIn()) {
 				try {
-					User user = themeDisplay.getUser();
+					sb.append("<img alt=\"");
+
 
 					ResourceBundle resourceBundle =
 						TagResourceBundleUtil.getResourceBundle(pageContext);
 
-					sb.append("<img alt=\"");
 					sb.append(LanguageUtil.get(resourceBundle, "my-account"));
+
 					sb.append("\" class=\"user-avatar-image\" ");
 					sb.append("src=\"");
+
+					User user = themeDisplay.getUser();
+
 					sb.append(user.getPortraitURL(themeDisplay));
+
 					sb.append("\">");
 				}
 				catch (Exception e) {

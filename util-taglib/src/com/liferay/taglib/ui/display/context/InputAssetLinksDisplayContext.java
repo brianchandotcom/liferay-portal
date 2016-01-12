@@ -269,11 +269,11 @@ public class InputAssetLinksDisplayContext {
 			"href",
 			_getAssetBrowserPortletURL(assetRendererFactory).toString());
 
-		String typeName = assetRendererFactory.getTypeName(
-			_themeDisplay.getLocale());
-
 		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
 			_pageContext);
+
+		String typeName = assetRendererFactory.getTypeName(
+			_themeDisplay.getLocale());
 
 		selectorEntryData.put(
 			"title",

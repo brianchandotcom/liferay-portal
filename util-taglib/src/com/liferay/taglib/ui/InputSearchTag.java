@@ -101,10 +101,10 @@ public class InputSearchTag extends BaseValidatorTagSupport {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		String buttonLabel = _buttonLabel;
+
 		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
 			pageContext);
-
-		String buttonLabel = _buttonLabel;
 
 		if (Validator.isNull(buttonLabel)) {
 			buttonLabel = LanguageUtil.get(resourceBundle, "search");

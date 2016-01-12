@@ -48,15 +48,17 @@ public class IconDeactivateTag extends IconTag {
 				HttpUtil.encodeURL(url)).concat("');");
 		}
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("javascript:if (confirm('");
+
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			pageContext);
+
 		sb.append(
 			UnicodeLanguageUtil.get(
 				resourceBundle, "are-you-sure-you-want-to-deactivate-this"));
+
 		sb.append("')) { ");
 		sb.append(url);
 		sb.append(" } else { self.focus(); }");

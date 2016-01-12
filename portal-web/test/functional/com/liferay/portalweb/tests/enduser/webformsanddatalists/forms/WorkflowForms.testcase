@@ -141,7 +141,7 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Workflow#gotoPreviewEdit" />
+		<execute macro="Workflow#gotoPreviewView" />
 
 		<execute macro="FormFields#viewDateField">
 			<var name="fieldLabel" value="Date" />

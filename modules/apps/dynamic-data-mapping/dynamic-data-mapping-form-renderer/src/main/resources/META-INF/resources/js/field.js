@@ -185,6 +185,10 @@ AUI.add(
 
 						var value = instance.getLocalizedValue(instance.get('value'));
 
+						if (instance.get('readOnly')) {
+							return value;
+						}
+
 						var predefinedValue = instance.get('predefinedValue');
 
 						if (!value && predefinedValue) {

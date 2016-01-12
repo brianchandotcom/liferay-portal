@@ -78,16 +78,6 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		_portletLocalService.clearPortletsMap();
 	}
 
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #clonePortlet(String)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Portlet clonePortlet(long companyId,
-		java.lang.String portletId) {
-		return _portletLocalService.clonePortlet(companyId, portletId);
-	}
-
 	@Override
 	public com.liferay.portal.model.Portlet clonePortlet(
 		java.lang.String portletId) {

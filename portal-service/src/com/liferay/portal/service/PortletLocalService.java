@@ -79,14 +79,6 @@ public interface PortletLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public void clearPortletsMap();
 
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #clonePortlet(String)}
-	*/
-	@java.lang.Deprecated
-	@com.liferay.portal.kernel.spring.aop.Skip
-	public com.liferay.portal.model.Portlet clonePortlet(long companyId,
-		java.lang.String portletId);
-
 	@com.liferay.portal.kernel.spring.aop.Skip
 	public com.liferay.portal.model.Portlet clonePortlet(
 		java.lang.String portletId);

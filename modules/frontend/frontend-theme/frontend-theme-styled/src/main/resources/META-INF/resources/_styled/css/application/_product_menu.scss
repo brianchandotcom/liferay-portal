@@ -251,19 +251,38 @@
 }
 
 .product-menu {
+	.staging-links {
+		a {
+			color: $product-menu-nav-link-color;
+		}
+
+		.active {
+			color: $product-menu-nav-link-active-color;
+		}
+	}
+}
+
+.product-menu {
 	li.tree-node .tree-node-content {
 		overflow: visible;
 		width: 100%;
 	}
 
+	.layout-set-tabs {
+		.selected-layout-set a {
+			color: $product-menu-nav-link-active-color;
+		}
+	}
+
 	.layout-tree-add {
 		position: absolute;
-		right: 15px;
+		right: 10px;
 	}
 
 	.layout-tree-edit {
+		padding-left: 10px;
 		position: absolute;
-		right: -15px;
+		right: -25px;
 	}
 
 	.lfr-tree {
@@ -272,9 +291,11 @@
 		}
 
 		li.tree-node .tree-node-content .tree-label {
+			@include ellipsis(200px);
+
 			display: inline-block;
 			overflow: hidden;
-			text-overflow: ellipsis;
+			padding-right: 20px;
 			width: 100%;
 		}
 
@@ -288,10 +309,24 @@
 		margin-left: 10px;
 
 		.tree-container {
+			border-left: $product-menu-tree-child-border-width $product-menu-tree-child-border-style $product-menu-tree-child-border;
 			margin-left: 20px;
+
+			.tree-node-content {
+				&:not(.tree-node-selected) {
+					.tree-node-hidden-hitarea {
+						&::before {
+							color: $product-menu-tree-child-border;
+							content: '\e00d';
+							font-size: 0.7em;
+							visibility: visible;
+						}
+					}
+				}
+			}
 		}
 
-		.tree-node-selected {
+		.tree-node-selected.tree-collapsed {
 			box-shadow: -$product-menu-tree-border-width 0 0 0 $product-menu-tree-active-border;
 			color: $product-menu-tree-active-color;
 		}

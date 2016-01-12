@@ -65,6 +65,12 @@ body {
 }
 
 .product-menu {
+	.panel-group {
+		overflow: hidden;
+	}
+}
+
+.product-menu {
 	small {
 		display: block;
 	}
@@ -187,15 +193,34 @@ body {
 
 	.staging-links {
 		font-size: 12px;
-		padding: 4px 16px;
+		padding: 16px 16px 4px 16px;
 	}
 }
 
 /* Layouts Tree */
 
 .product-menu {
-	li.tree-node .tree-node-content.lfr-root-node {
-		display: none;
+	li.tree-node .tree-node-content {
+		z-index: 1;
+
+		&.lfr-root-node {
+			display: none;
+		}
+
+		&:hover, &:focus, &.tree-node-selected {
+			&.tree-node-content:before {
+				background: white;
+				bottom: 0;
+				content: " ";
+				height: 40px;
+				left: -300px;
+				opacity: 0.1;
+				position: absolute;
+				right: -100px;
+				top: 0;
+				z-index: -1;
+			}
+		}
 	}
 
 	.tree-node-content {
@@ -235,7 +260,7 @@ body {
 		}
 
 		.layout-set-tab {
-			padding: 0 10px 0 0;
+			padding: 0 10px 4px 0;
 
 			.layout-set-link {
 				padding-right: 5px;
@@ -248,6 +273,8 @@ body {
 		}
 
 		.selected-layout-set, .layout-set-tab:hover {
+			border-bottom: 1px solid;
+
 			.layout-set-tree-add, .layout-set-tree-edit {
 				opacity: 1;
 			}

@@ -16,7 +16,9 @@
 
 		${theme.include(body_top_include)}
 
-		<@liferay.control_menu />
+		<#if is_setup_complete && is_signed_in>
+			<@liferay_control_menu["control-menu"] />
+		</#if>
 
 		<@liferay.product_menu_sidebar state="${liferay_product_menu_state}" />
 

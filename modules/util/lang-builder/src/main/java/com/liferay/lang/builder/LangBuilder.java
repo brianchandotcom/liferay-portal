@@ -717,11 +717,18 @@ public class LangBuilder {
 			return null;
 		}
 
-		// LPS-26741
+		// LPS-26741 + LPS 61961: Explicitly disabled automatic translations 
+		// by request of the translation teams.
 
-		/*if (toLanguageId.equals("de")) {
+		if (toLanguageId.equals("da") ||
+		    toLanguageId.equals("de") ||
+		    toLanguageId.equals("fi") ||
+		    toLanguageId.equals("nl") ||
+		    toLanguageId.equals("ja") ||
+		    toLanguageId.equals("pt_PT") ||
+		    toLanguageId.equals("sv")) {
 			return null;
-		}*/
+		}
 
 		// Limit the number of retries to 3
 

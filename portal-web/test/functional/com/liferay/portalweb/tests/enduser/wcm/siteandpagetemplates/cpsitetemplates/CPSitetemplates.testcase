@@ -54,6 +54,46 @@
 		</execute>
 	</command>
 
+	<command name="DeactivateDefaultSiteTemplate" priority="4">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewTemplatesDisplay">
+			<var name="siteTemplateName" value="Community Site,Intranet Site" />
+		</execute>
+
+		<for list="Community Site,Intranet Site" param="siteTemplateName" >
+			<execute macro="ProductMenu#gotoControlPanelSites">
+				<var name="portlet" value="Site Templates" />
+			</execute>
+
+			<execute macro="SiteTemplates#editTemplateStatusCP">
+				<var name="siteTemplateActiveEdit" value="No" />
+				<var name="siteTemplateName" value="${siteTemplateName}" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoControlPanelSites">
+				<var name="portlet" value="Site Templates" />
+			</execute>
+
+			<execute macro="SiteTemplates#viewTemplateStatusCP">
+				<var name="siteTemplateActiveEdit" value="No" />
+				<var name="siteTemplateName" value="${siteTemplateName}" />
+			</execute>
+		</for>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewNoTemplatesDisplay">
+			<var name="siteTemplateName" value="Community Site,Intranet Site" />
+		</execute>
+	</command>
+
 	<command name="DeleteSiteTemplate" priority="5">
 		<property name="portal.acceptance" value="true" />
 

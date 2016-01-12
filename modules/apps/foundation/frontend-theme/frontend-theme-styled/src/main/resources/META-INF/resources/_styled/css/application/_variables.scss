@@ -24,21 +24,6 @@ $dialog-desktop-navbar-height: if(variable-exists(navbar-desktop-height), $navba
 $dialog-footer-padding: 20px !default;
 $dialog-iframe-padding: 0 !default;
 
-/* ---------- Labels ---------- */
-
-$label-circle-border-radius: 20px !default;
-$label-rounded-border-radius: 3px !default;
-$label-square-border-radius: 0 !default;
-
-$label-entry-bg: #FFF !default;
-$label-entry-border-color: #000 !default;
-$label-entry-border-width: 1px !default;
-$label-entry-button-height: $input-height-base !default;
-$label-entry-button-width: $input-height-base !default;
-$label-entry-color: #000 !default;
-$label-entry-font-size: 14px !default;
-$label-entry-padding: 0 0 0 12px !default;
-
 /* ---------- Splitter ---------- */
 
 $splitter-bg: $panel-default-heading-bg !default;

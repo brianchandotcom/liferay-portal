@@ -1,4 +1,14 @@
 <definition>
+	<command name="_editFieldLabel">
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="fieldFieldLabel" value="${field}" />
+		</execute>
+
+		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" />
+		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
+		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="addField">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
@@ -8,7 +18,7 @@
 
 		<execute function="DragAndDrop" locator1="DDMEditStructure#FIELDS_FIELD" locator2="DDMEditStructure#FORM_BUILDER" value1="${field}" />
 
-		<execute macro="DynamicDataMapping#editFieldLabelCmd">
+		<execute macro="DynamicDataMapping#_editFieldLabel">
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
@@ -98,7 +108,7 @@
 
 		<execute function="DragAndDrop" locator1="DDMEditStructure#FIELDS_FIELD" locator2="DDMEditStructure#FORM_BUILDER" value1="${field}" />
 
-		<execute macro="DynamicDataMapping#editFieldLabelCmd">
+		<execute macro="DynamicDataMapping#_editFieldLabel">
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
@@ -181,7 +191,7 @@
 	<command name="editFieldLabel">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="DynamicDataMapping#editFieldLabelCmd">
+		<execute macro="DynamicDataMapping#_editFieldLabel">
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
@@ -193,16 +203,6 @@
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
-	</command>
-
-	<command name="editFieldLabelCmd">
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="fieldFieldLabel" value="${field}" />
-		</execute>
-
-		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" />
-		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
-		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="editFieldLabelNested">

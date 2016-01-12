@@ -54,9 +54,9 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 <liferay-util:buffer var="linkTemplate">
 	<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
 
-	<a class="layout-tree-add" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="add-child-page" />')"><aui:icon image="plus" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message key="add-child-page" /></span></a>
+	<a class="layout-tree-add" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="add-child-page" unicode="<%= true %>" />')"><aui:icon image="plus" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message key="add-child-page" /></span></a>
 
-	<a class="layout-tree-edit" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message arguments="{label}" key="edit-x" />')"><aui:icon image="cog" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="edit-x" /></span></a>
+	<a class="layout-tree-edit" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= layoutsTreeDisplayContext.getJSSafeEditLayoutTitle() %>')"><aui:icon image="cog" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="edit-x" /></span></a>
 </liferay-util:buffer>
 
 <c:if test="<%= layoutsTreeDisplayContext.isShowLayoutTabs() %>">

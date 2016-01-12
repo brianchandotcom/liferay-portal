@@ -90,6 +90,6 @@ public class IndexerPostProcessorRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexerPostProcessorRegistry.class);
 
-	private volatile IndexerRegistry _indexerRegistry;
+	private IndexerRegistry _indexerRegistry;
 
 }

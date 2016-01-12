@@ -69,9 +69,9 @@ public class CompanyLDAPInitializer {
 		CompanyLDAPInitializer.class);
 
 	private BundleContext _bundleContext;
-	private volatile LDAPSettings _ldapSettings;
+	private LDAPSettings _ldapSettings;
 	private ServiceTracker<Company, Company> _serviceTracker;
-	private volatile UserImporter _userImporter;
+	private UserImporter _userImporter;
 
 	private class CompanyServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Company, Company> {

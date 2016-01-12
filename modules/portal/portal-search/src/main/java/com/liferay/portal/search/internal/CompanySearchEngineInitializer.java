@@ -60,7 +60,7 @@ public class CompanySearchEngineInitializer {
 	}
 
 	private BundleContext _bundleContext;
-	private volatile SearchEngineHelper _searchEngineHelper;
+	private SearchEngineHelper _searchEngineHelper;
 	private ServiceTracker<Company, Company> _serviceTracker;
 
 	private class CompanyServiceTrackerCustomizer

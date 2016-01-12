@@ -24,7 +24,7 @@
 			</#foreach>
 
 			<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
-				${theme.portletIconOptions()}
+				<@liferay_portlet["icon-options"] />
 			</menu>
 		</header>
 

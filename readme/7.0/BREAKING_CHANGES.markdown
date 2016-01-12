@@ -3224,7 +3224,7 @@ Portal by means of an OSGi container.
 
 ---------------------------------------
 
-### Taglibs Are No Longer Accessible via the `${theme}` Variable in FreeMarker
+### Taglibs Are No Longer Accessible via the theme Variable in FreeMarker
 - **Date:** 2016-Jan-06
 - **JIRA Ticket:** LPS-61683
 

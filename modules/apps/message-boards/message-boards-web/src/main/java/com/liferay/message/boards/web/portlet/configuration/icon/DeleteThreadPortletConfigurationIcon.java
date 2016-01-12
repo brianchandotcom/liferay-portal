@@ -1,0 +1,145 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.message.boards.web.portlet.configuration.icon;
+
+import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageDisplay;
+import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portlet.trash.util.TrashUtil;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+/**
+ * @author Sergio González
+ */
+public class DeleteThreadPortletConfigurationIcon
+	extends BasePortletConfigurationIcon {
+
+	public DeleteThreadPortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
+	}
+
+	@Override
+	public String getMessage() {
+		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
+			return "move-to-the-recycle-bin";
+		}
+
+		return "delete";
+	}
+
+	@Override
+	public String getURL() {
+		try {
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
+
+			MBCategory category = messageDisplay.getCategory();
+
+			PortletURL parentCategoryURL = PortletURLFactoryUtil.create(
+				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+			parentCategoryURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view");
+			parentCategoryURL.setParameter(
+				"mbCategoryId", String.valueOf(getCategoryId(category)));
+
+			PortletURL deleteURL = PortletURLFactoryUtil.create(
+				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+
+			String cmd = Constants.DELETE;
+
+			if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
+				cmd = Constants.MOVE_TO_TRASH;
+			}
+
+			MBThread thread = messageDisplay.getThread();
+
+			deleteURL.setParameter(
+				ActionRequest.ACTION_NAME, "/message_boards/delete_thread");
+			deleteURL.setParameter(Constants.CMD, cmd);
+			deleteURL.setParameter("redirect", parentCategoryURL.toString());
+			deleteURL.setParameter(
+				"threadId", String.valueOf(thread.getThreadId()));
+
+			return deleteURL.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public boolean isShow() {
+		try {
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
+
+			MBMessage message = messageDisplay.getMessage();
+			MBThread thread = messageDisplay.getThread();
+
+			if (MBMessagePermission.contains(
+					themeDisplay.getPermissionChecker(), message,
+					ActionKeys.DELETE) &&
+				!thread.isLocked()) {
+
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+		}
+
+		return false;
+	}
+
+	protected long getCategoryId(MBCategory category) {
+		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+
+		if (category != null) {
+			categoryId = category.getCategoryId();
+		}
+
+		return categoryId;
+	}
+
+	protected boolean isTrashEnabled(long groupId) {
+		try {
+			if (TrashUtil.isTrashEnabled(groupId)) {
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+		}
+
+		return false;
+	}
+
+}

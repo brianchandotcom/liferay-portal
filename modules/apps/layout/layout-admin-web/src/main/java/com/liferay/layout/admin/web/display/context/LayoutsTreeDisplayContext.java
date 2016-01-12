@@ -19,10 +19,12 @@ import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -47,6 +49,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Julio Camarero
@@ -127,6 +130,15 @@ public class LayoutsTreeDisplayContext {
 		return editPublicLayoutURL;
 	}
 
+	public String getJSSafeEditLayoutTitle() {
+		String value = UnicodeLanguageUtil.format(
+			getHttpServletRequest(), "edit-x", _LABEL_TPL, false);
+
+		return StringUtil.replace(
+			value, UnicodeLanguageUtil.get(getHttpServletRequest(), _LABEL_TPL),
+			_LABEL_TPL);
+	}
+
 	public String getLayoutSetBranchCssClass(LayoutSetBranch layoutSetBranch)
 		throws PortalException {
 
@@ -154,10 +166,8 @@ public class LayoutsTreeDisplayContext {
 	public String getLayoutSetBranchName() throws PortalException {
 		LayoutSetBranch layoutSetBranch = getLayoutSetBranch();
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest);
-
-		return LanguageUtil.get(httpServletRequest, layoutSetBranch.getName());
+		return LanguageUtil.get(
+			getHttpServletRequest(), layoutSetBranch.getName());
 	}
 
 	public String getLayoutSetBranchURL(LayoutSetBranch layoutSetBranch)
@@ -334,6 +344,23 @@ public class LayoutsTreeDisplayContext {
 		return true;
 	}
 
+	protected HttpServletRequest getHttpServletRequest() {
+		if (_httpServletRequest != null) {
+			return _httpServletRequest;
+		}
+
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			_liferayPortletRequest);
+
+		return _httpServletRequest;
+	}
+
+	protected HttpSession getHttpSession() {
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
+
+		return httpServletRequest.getSession();
+	}
+
 	protected LayoutSetBranch getLayoutSetBranch() throws PortalException {
 		if (_layoutSetBranch != null) {
 			return _layoutSetBranch;
@@ -388,11 +415,7 @@ public class LayoutsTreeDisplayContext {
 		_selGroup = _themeDisplay.getScopeGroup();
 
 		if (_selGroup.isControlPanel()) {
-			HttpServletRequest httpServletRequest =
-				PortalUtil.getHttpServletRequest(_liferayPortletRequest);
-
-			_selGroup = LatentGroupManagerUtil.getLatentGroup(
-				httpServletRequest.getSession());
+			_selGroup = LatentGroupManagerUtil.getLatentGroup(getHttpSession());
 		}
 
 		return _selGroup;
@@ -466,6 +489,9 @@ public class LayoutsTreeDisplayContext {
 		return false;
 	}
 
+	private static final String _LABEL_TPL = "{label}";
+
+	private HttpServletRequest _httpServletRequest;
 	private LayoutSetBranch _layoutSetBranch;
 	private List<LayoutSetBranch> _layoutSetBranches;
 	private final LiferayPortletRequest _liferayPortletRequest;

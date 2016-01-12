@@ -109,7 +109,8 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 				_rootMessage.getMessageId(), WorkflowConstants.STATUS_ANY,
 				MBThreadConstants.THREAD_VIEW_TREE, false);
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, messageDisplay);
+		request.setAttribute(
+			WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY, messageDisplay);
 
 		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 

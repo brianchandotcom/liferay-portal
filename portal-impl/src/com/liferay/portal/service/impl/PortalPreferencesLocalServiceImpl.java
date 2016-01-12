@@ -75,19 +75,6 @@ public class PortalPreferencesLocalServiceImpl
 		return portalPreferences;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addPortalPreferences(long,
-	 *             int, String)}
-	 */
-	@Deprecated
-	@Override
-	public PortalPreferences addPortalPreferences(
-		long companyId, long ownerId, int ownerType,
-		String defaultPreferences) {
-
-		return addPortalPreferences(ownerId, ownerType, defaultPreferences);
-	}
-
 	@Override
 	public PortletPreferences getPreferences(long ownerId, int ownerType) {
 		return getPreferences(ownerId, ownerType, null);
@@ -123,30 +110,6 @@ public class PortalPreferencesLocalServiceImpl
 			ownerId, ownerType, portalPreferencesWrapper);
 
 		return portalPreferencesWrapper.clone();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int)}
-	 */
-	@Deprecated
-	@Override
-	public PortletPreferences getPreferences(
-		long companyId, long ownerId, int ownerType) {
-
-		return getPreferences(ownerId, ownerType);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public PortletPreferences getPreferences(
-		long companyId, long ownerId, int ownerType,
-		String defaultPreferences) {
-
-		return getPreferences(ownerId, ownerType, defaultPreferences);
 	}
 
 	@Override

@@ -331,6 +331,7 @@
 
 		<execute macro="Staging#addEventRepeatDaily">
 			<var name="scheduleTitleName" value="Event Daily Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 	</command>
 

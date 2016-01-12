@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -127,6 +128,8 @@ public class ConfigurationModelToDDMFormConverter {
 
 		setDDMFormFieldRepeatable(attributeDefinition, ddmFormField);
 
+		setDDMFormFieldDisplayStyle(ddmFormField);
+
 		return ddmFormField;
 	}
 
@@ -210,6 +213,14 @@ public class ConfigurationModelToDDMFormConverter {
 		String dataType = getDDMFormFieldDataType(attributeDefinition);
 
 		ddmFormField.setDataType(dataType);
+	}
+
+	protected void setDDMFormFieldDisplayStyle(DDMFormField ddmFormField) {
+		String dataType = ddmFormField.getDataType();
+
+		if (Validator.equals(dataType, FieldConstants.STRING)) {
+			ddmFormField.setProperty("displayStyle", "multiline");
+		}
 	}
 
 	protected void setDDMFormFieldLabel(

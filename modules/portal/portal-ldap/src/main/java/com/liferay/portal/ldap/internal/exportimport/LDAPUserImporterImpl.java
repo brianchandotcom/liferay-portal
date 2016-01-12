@@ -955,6 +955,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			String userMappingsGroup = userMappings.getProperty("group");
 
 			if (Validator.isNull(userMappingsGroup)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipping group import. No mappings for LDAP groups " +
+							"were specified in userMappings: " + userMappings);
+				}
+
 				return;
 			}
 

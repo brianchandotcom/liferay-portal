@@ -98,7 +98,7 @@ ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language",
 					eventName: 'clickoutside'
 				}
 			],
-			position: 'left',
+			position: 'right',
 			trigger: trigger,
 			visible: false,
 			width: 300,

@@ -963,6 +963,8 @@
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
 		</execute>
 
+		<execute function="Click" locator1="Button#PUBLISH" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 

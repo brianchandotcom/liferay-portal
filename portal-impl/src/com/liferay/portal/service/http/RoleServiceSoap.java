@@ -115,44 +115,6 @@ public class RoleServiceSoap {
 	}
 
 	/**
-	* Adds a role. The user is reindexed after role is added.
-	*
-	* @param name the role's name
-	* @param titleMap the role's localized titles (optionally
-	<code>null</code>)
-	* @param descriptionMap the role's localized descriptions (optionally
-	<code>null</code>)
-	* @param type the role's type (optionally <code>0</code>)
-	* @return the role
-	* @deprecated As of 6.2.0, replaced by {@link #addRole(String, long,
-	String, Map, Map, int, String, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.RoleSoap addRole(
-		java.lang.String name, java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues,
-		java.lang.String[] descriptionMapLanguageIds,
-		java.lang.String[] descriptionMapValues, int type)
-		throws RemoteException {
-		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
-			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
-					descriptionMapValues);
-
-			com.liferay.portal.model.Role returnValue = RoleServiceUtil.addRole(name,
-					titleMap, descriptionMap, type);
-
-			return com.liferay.portal.model.RoleSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	* Adds the roles to the user. The user is reindexed after the roles are
 	* added.
 	*

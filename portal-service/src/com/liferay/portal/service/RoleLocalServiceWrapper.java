@@ -96,64 +96,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 			titleMap, descriptionMap, type, subtype, serviceContext);
 	}
 
-	/**
-	* Adds a role. The user is reindexed after role is added.
-	*
-	* @param userId the primary key of the user
-	* @param companyId the primary key of the company
-	* @param name the role's name
-	* @param titleMap the role's localized titles (optionally
-	<code>null</code>)
-	* @param descriptionMap the role's localized descriptions (optionally
-	<code>null</code>)
-	* @param type the role's type (optionally <code>0</code>)
-	* @return the role
-	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
-	String, Map, Map, int, String, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Role addRole(long userId, long companyId,
-		java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type) throws com.liferay.portal.kernel.exception.PortalException {
-		return _roleLocalService.addRole(userId, companyId, name, titleMap,
-			descriptionMap, type);
-	}
-
-	/**
-	* Adds a role with additional parameters. The user is reindexed after role
-	* is added.
-	*
-	* @param userId the primary key of the user
-	* @param companyId the primary key of the company
-	* @param name the role's name
-	* @param titleMap the role's localized titles (optionally
-	<code>null</code>)
-	* @param descriptionMap the role's localized descriptions (optionally
-	<code>null</code>)
-	* @param type the role's type (optionally <code>0</code>)
-	* @param className the name of the class for which the role is created
-	(optionally <code>null</code>)
-	* @param classPK the primary key of the class for which the role is
-	created (optionally <code>0</code>)
-	* @return the role
-	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
-	String, Map, Map, int, String, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Role addRole(long userId, long companyId,
-		java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _roleLocalService.addRole(userId, companyId, name, titleMap,
-			descriptionMap, type, className, classPK);
-	}
-
 	@Override
 	public void addUserRole(long userId, com.liferay.portal.model.Role role) {
 		_roleLocalService.addUserRole(userId, role);

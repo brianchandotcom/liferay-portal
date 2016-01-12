@@ -29,7 +29,9 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  *
  * @author Michael C. Han
  */
-@ConfigurationAdmin(category = "platform")
+@ConfigurationAdmin(
+	category = "platform", scope = ConfigurationAdmin.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.cas.configuration.CASConfiguration",
 	localization = "content/Language", name ="%cas.configuration.name"

@@ -83,7 +83,7 @@ import org.osgi.service.component.annotations.Reference;
 public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference(unbind = "-")
-	public void set_wikiAttachmentsHelper(
+	public void setWikiAttachmentsHelper(
 		WikiAttachmentsHelper wikiAttachmentsHelper) {
 
 		_wikiAttachmentsHelper = wikiAttachmentsHelper;

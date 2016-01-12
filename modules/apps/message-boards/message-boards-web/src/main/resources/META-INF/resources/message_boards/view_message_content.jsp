@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
+MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY);
 
 MBMessage message = messageDisplay.getMessage();
 

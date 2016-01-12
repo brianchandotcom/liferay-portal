@@ -119,7 +119,7 @@ public class ViewMessageMVCRenderCommand implements MVCRenderCommand {
 			}
 
 			renderRequest.setAttribute(
-				WebKeys.MESSAGE_BOARDS_MESSAGE, messageDisplay);
+				WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY, messageDisplay);
 
 			return "/message_boards/view_message.jsp";
 		}

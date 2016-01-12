@@ -71,15 +71,13 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 		if (!user.isDefaultUser()) {
 			renderRequest.setAttribute(
 				ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT,
-				getNotificationsCount(themeDisplay, renderRequest));
+				getNotificationsCount(themeDisplay));
 		}
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	protected int getNotificationsCount(
-		ThemeDisplay themeDisplay, RenderRequest renderRequest) {
-
+	protected int getNotificationsCount(ThemeDisplay themeDisplay) {
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			_panelAppRegistry, _panelCategoryRegistry);
 

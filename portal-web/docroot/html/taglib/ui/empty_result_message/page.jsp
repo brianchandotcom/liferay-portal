@@ -17,8 +17,8 @@
 <%@ include file="/html/taglib/ui/empty_result_message/init.jsp" %>
 
 <%
-boolean search = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:empty-result-message:search"));
 String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:empty-result-message:message"));
+boolean search = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:empty-result-message:search"));
 %>
 
 <c:if test="<%= Validator.isNotNull(message) %>">

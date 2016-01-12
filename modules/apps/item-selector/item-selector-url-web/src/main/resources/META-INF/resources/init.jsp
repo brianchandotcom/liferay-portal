@@ -26,6 +26,6 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <portlet:defineObjects />
 
-<liferay-theme:defineObjects/>
-
 <liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects/>

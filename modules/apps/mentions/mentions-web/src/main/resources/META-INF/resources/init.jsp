@@ -30,8 +30,8 @@ page import="com.liferay.portlet.social.util.SocialInteractionsConfigurationUtil
 
 <portlet:defineObjects />
 
-<liferay-theme:defineObjects />
-
 <liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>

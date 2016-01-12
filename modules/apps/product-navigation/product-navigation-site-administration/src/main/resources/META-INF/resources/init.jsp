@@ -54,9 +54,9 @@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
 
-<liferay-theme:defineObjects />
-
 <liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

@@ -35,6 +35,6 @@ page import="com.liferay.portal.service.LayoutTemplateLocalServiceUtil" %>
 
 <%@ page import="java.util.List" %>
 
-<liferay-theme:defineObjects />
-
 <liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects />

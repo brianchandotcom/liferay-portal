@@ -27,6 +27,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <portlet:defineObjects />
 
-<liferay-theme:defineObjects />
-
 <liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects />

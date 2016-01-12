@@ -144,8 +144,8 @@ AUI.add(
 							strings: {
 								asc: Liferay.Language.get('ascending'),
 								desc: Liferay.Language.get('descending'),
-								reverseSortBy: Liferay.Language.get('reverse-sort-by-x', ['{column}']),
-								sortBy: Liferay.Language.get('sort-by-x', ['{column}'])
+								reverseSortBy: Lang.sub(Liferay.Language.get('reverse-sort-by-x'), ['{column}']),
+								sortBy: Lang.sub(Liferay.Language.get('sort-by-x'), ['{column}'])
 							}
 						}
 					},

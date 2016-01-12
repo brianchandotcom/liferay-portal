@@ -96,8 +96,8 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _instance;
 
-	private volatile ControlMenuCategoryRegistry _controlMenuCategoryRegistry;
-	private volatile ControlMenuEntryRegistry _controlMenuEntryRegistry;
-	private volatile ServletContext _servletContext;
+	private ControlMenuCategoryRegistry _controlMenuCategoryRegistry;
+	private ControlMenuEntryRegistry _controlMenuEntryRegistry;
+	private ServletContext _servletContext;
 
 }

@@ -3,6 +3,10 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var MAP_DATA_PARAMS = {
+			classname: 'className'
+		};
+
 		var STR_CLICK = 'click';
 
 		var STR_FORM = 'form';
@@ -75,6 +79,8 @@ AUI.add(
 						var inputsArray = A.Object.map(
 							data,
 							function(value, key) {
+								key = MAP_DATA_PARAMS[key] || key;
+
 								var nsKey = instance.ns(key);
 
 								return '<input id="' + nsKey + '" name="' + nsKey + '" type="hidden" value="' + value + '" />';

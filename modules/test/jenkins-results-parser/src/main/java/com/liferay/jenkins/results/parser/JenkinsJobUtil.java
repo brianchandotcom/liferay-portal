@@ -29,19 +29,9 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class JenkinsJobUtil {
 
-	protected static String encodeAuthorizationFields(
-		String username, String password) {
-
-		String authorizationString = username + ":" + password;
-
-		byte[] encodedBytes = Base64.encodeBase64(
-			authorizationString.getBytes());
-
-		return new String(encodedBytes);
-	}
-
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		if (args.length < 3) {
+			System.out.println("usage: <jobURL> <username> <password>");
 			System.exit(1);
 		}
 
@@ -49,7 +39,12 @@ public class JenkinsJobUtil {
 		String username = args[1];
 		String password = args[2];
 
-		stopJenkinsJob(jobURL, username, password);
+		try {
+			stopJenkinsJob(jobURL, username, password);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void stopJenkinsJob(
@@ -61,22 +56,24 @@ public class JenkinsJobUtil {
 		stopDownstreamJobs(jobURL, username, password);
 	}
 
+	protected static String encodeAuthorizationFields(
+		String username, String password) {
+
+		String authorizationString = username + ":" + password;
+
+		return new String(Base64.encodeBase64(authorizationString.getBytes()));
+	}
+
 	private static List<String> getDownstreamURLs(String jobURL)
 		throws Exception {
 
-		String consoleOutputURL = jobURL + "/logText/progressiveText";
-
-		return getDownstreamURLsFromConsoleOutputURL(consoleOutputURL);
-	}
-
-	private static List<String> getDownstreamURLsFromConsoleOutput(
-			String consoleOutput)
-		throws Exception {
+		String consoleOutput = JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.getLocalURL(
+				jobURL + "/logText/progressiveText"));
+		List<String> downstreamURLs = new ArrayList<>();
 
 		Matcher progressiveTextMatcher = _progressiveTextPattern.matcher(
 			consoleOutput);
-
-		List<String> downstreamURLs = new ArrayList<>();
 
 		while (progressiveTextMatcher.find()) {
 			String urlString = progressiveTextMatcher.group("url");
@@ -89,16 +86,6 @@ public class JenkinsJobUtil {
 		}
 
 		return downstreamURLs;
-	}
-
-	private static List<String> getDownstreamURLsFromConsoleOutputURL(
-			String consoleOutputURL)
-		throws Exception {
-
-		String consoleOutput = JenkinsResultsParserUtil.toString(
-			JenkinsResultsParserUtil.getLocalURL(consoleOutputURL));
-
-		return getDownstreamURLsFromConsoleOutput(consoleOutput);
 	}
 
 	private static void stopDownstreamJobs(
@@ -115,34 +102,24 @@ public class JenkinsJobUtil {
 	private static void stopJob(String jobURL, String username, String password)
 		throws Exception {
 
-		String stopURL = jobURL + "/stop";
-
-		stopURL = JenkinsResultsParserUtil.getLocalURL(stopURL);
-
-		System.out.println(stopURL);
-
-		stopURL = JenkinsResultsParserUtil.fixURL(stopURL.toString());
-
-		URL urlObject = new URL(stopURL);
-		HttpURLConnection httpConnection =
-			(HttpURLConnection)urlObject.openConnection();
-		httpConnection.setRequestMethod("POST");
+		String stopURL = JenkinsResultsParserUtil.fixURL(
+			JenkinsResultsParserUtil.getLocalURL(jobURL + "/stop"));
 
 		String encodedString = encodeAuthorizationFields(username, password);
+		URL urlObject = new URL(stopURL);
+
+		HttpURLConnection httpConnection =
+			(HttpURLConnection)urlObject.openConnection();
+
+		httpConnection.setRequestMethod("POST");
 
 		httpConnection.setRequestProperty(
 			"Authorization", "Basic " + encodedString);
 
-		int responseCode = httpConnection.getResponseCode();
-		String responseMessage = httpConnection.getResponseMessage();
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(responseCode);
-		sb.append(" ");
-		sb.append(responseMessage);
-
-		System.out.println(sb.toString());
+		System.out.println(
+			"Response from " + jobURL + "/stop: " +
+				httpConnection.getResponseCode() + " " +
+					httpConnection.getResponseMessage());
 	}
 
 	private static final Pattern _jobNamePattern = Pattern.compile(

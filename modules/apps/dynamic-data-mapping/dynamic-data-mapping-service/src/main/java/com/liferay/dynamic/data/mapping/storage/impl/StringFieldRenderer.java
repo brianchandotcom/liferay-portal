@@ -129,7 +129,9 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 			sb.append(StringPool.COMMA_AND_SPACE);
 		}
 
-		sb.setIndex(sb.index() - 1);
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
 
 		return sb.toString();
 	}

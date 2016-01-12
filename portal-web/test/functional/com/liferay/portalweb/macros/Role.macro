@@ -880,7 +880,6 @@
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_TITLE" value1="${roleName}" />
-		<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_TYPE" value1="${roleType}" />
 
 		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
 

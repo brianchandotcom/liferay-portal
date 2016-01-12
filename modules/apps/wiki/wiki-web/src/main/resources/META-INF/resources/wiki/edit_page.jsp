@@ -399,6 +399,12 @@ if (portletTitleBasedNavigation) {
 				return;
 			}
 
+			var titleEditor = window.<portlet:namespace />titleEditor;
+
+			if (titleEditor) {
+				form.fm('title').val(titleEditor.getText());
+			}
+
 			var editor = window.<portlet:namespace />editor;
 
 			if (editor) {
@@ -426,16 +432,16 @@ if (portletTitleBasedNavigation) {
 
 		form.fm('<%= Constants.CMD %>').val('<%= newPage ? Constants.ADD : Constants.UPDATE %>');
 
+		var titleEditor = window.<portlet:namespace />titleEditor;
+
+		if (titleEditor) {
+			form.fm('title').val(titleEditor.getText());
+		}
+
 		var editor = window.<portlet:namespace />editor;
 
 		if (editor) {
 			form.fm('content').val(editor.getHTML());
-		}
-
-		var titleEditor = window.<portlet:namespace />titleEditor;
-
-		if (titleEditor) {
-		 form.fm('title').val(titleEditor.getText());
 		}
 
 		submitForm(form);

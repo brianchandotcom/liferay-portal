@@ -49,7 +49,9 @@
 
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
+		<execute function="MouseOver" locator1="SitePages#PAGE_TREE_PAGE_LINK" />
+
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_LAYOUT" value1="${pageType}" />
 
@@ -589,7 +591,9 @@
 
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
+		<execute function="MouseOver" locator1="SitePages#PAGE_TREE_PAGE_LINK" />
+
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<var name="key_componentName" value="${componentName}" />
 

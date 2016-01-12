@@ -3285,12 +3285,6 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<name>resourceBundle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
 			<name>unicode</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

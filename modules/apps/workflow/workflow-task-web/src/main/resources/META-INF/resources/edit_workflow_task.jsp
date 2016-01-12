@@ -46,6 +46,7 @@ renderResponse.setTitle(headerTitle);
 <div class="container-fluid-1280">
 	<aui:col cssClass="lfr-asset-column lfr-asset-column-details">
 		<liferay-ui:error exception="<%= WorkflowTaskDueDateException.class %>" message="please-enter-a-valid-due-date" />
+
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 
@@ -112,6 +113,7 @@ renderResponse.setTitle(headerTitle);
 					</aui:col>
 				</c:if>
 			</aui:fieldset>
+
 			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>">
 				<c:if test="<%= assetRenderer != null %>">
 					<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>">

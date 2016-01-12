@@ -50,7 +50,11 @@ public class IconHelpTag extends IconTag {
 
 		jspWriter.write("<span class=\"taglib-icon-help\"><img alt=\"\" ");
 		jspWriter.write("aria-labelledby=\"");
+
+		String id = StringUtil.randomId();
+
 		jspWriter.write(id);
+
 		jspWriter.write("\" ");
 		jspWriter.write("onBlur=\"Liferay.Portal.ToolTip.hide();\" ");
 		jspWriter.write("onFocus=\"Liferay.Portal.ToolTip.show(this);\" ");
@@ -61,7 +65,7 @@ public class IconHelpTag extends IconTag {
 		jspWriter.write("/><span ");
 		jspWriter.write("class=\"hide-accessible tooltip-text\" ");
 		jspWriter.write("id=\"");
-		jspWriter.write(StringUtil.randomId());
+		jspWriter.write(id);
 		jspWriter.write("\" >");
 
 		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(

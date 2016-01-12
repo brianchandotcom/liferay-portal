@@ -125,7 +125,7 @@ public final class CommandLoggerHandler {
 		_updateStatus(xmlLoggerElement, "pending");
 	}
 
-	public static void startRunning() throws Exception {
+	public static void startRunning() {
 		_commandLogLoggerElement = new LoggerElement("commandLog");
 
 		_commandLogLoggerElement.setAttribute("data-logid", "01");
@@ -134,7 +134,7 @@ public final class CommandLoggerHandler {
 		_commandLogLoggerElement.setWrittenToLogger(true);
 	}
 
-	public static void stopRunning() throws Exception {
+	public static void stopRunning() {
 		_commandLogLoggerElement.removeClassName("running");
 	}
 

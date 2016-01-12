@@ -260,6 +260,12 @@ public class LDAPAuth implements Authenticator {
 			ldapServerId, companyId);
 
 		if (ldapContext == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No such LDAP context for ldapServerId: " +
+					ldapServerId + ", companyId: " + companyId);
+			}
+
 			return FAILURE;
 		}
 
@@ -348,6 +354,13 @@ public class LDAPAuth implements Authenticator {
 				}
 
 				if (!ldapAuthResult.isAuthenticated()) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to authenticate LDAP server with " +
+							"ldapContext: " + ldapContext + ", companyId: " +
+							companyId);
+					}
+
 					return FAILURE;
 				}
 
@@ -424,8 +437,20 @@ public class LDAPAuth implements Authenticator {
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
 		if (preferredLDAPServerResult == SUCCESS) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Preferred LDAP server successfully found");
+			}
+
 			if (ldapImportConfiguration.importUserPasswordEnabled()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Import user password enabled");
+				}
+
 				return preferredLDAPServerResult;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Import user password disabled");
 			}
 
 			return Authenticator.SKIP_LIFERAY_CHECK;
@@ -604,6 +629,10 @@ public class LDAPAuth implements Authenticator {
 		}
 
 		if (user == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get user with userId: " + userId);
+			}
+
 			return -1;
 		}
 
@@ -617,6 +646,10 @@ public class LDAPAuth implements Authenticator {
 	}
 
 	protected String removeEncryptionAlgorithm(String ldapPassword) {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Removing encryption algorithm");
+		}
+
 		int x = ldapPassword.indexOf(StringPool.OPEN_CURLY_BRACE);
 
 		if (x == -1) {

@@ -16,18 +16,11 @@ package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import javax.portlet.PortletRequest;
 
@@ -49,39 +42,16 @@ public class ThreadLockPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
 			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
 				portletRequest);
 
-			MBCategory category = messageDisplay.getCategory();
+			MBThread thread = messageDisplay.getThread();
 
-			long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
-
-			if (category != null) {
-				categoryId = category.getCategoryId();
-			}
-
-			if (MBCategoryPermission.contains(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), categoryId,
-					ActionKeys.LOCK_THREAD)) {
-
-				MBThread thread = messageDisplay.getThread();
-
-				if (thread.isLocked()) {
-					return new UnlockThreadPortletConfigurationIcon(
-						portletRequest, thread);
-				}
-				else {
-					return new LockThreadPortletConfigurationIcon(
-						portletRequest, thread);
-				}
-			}
+			return new ThreadLockPortletConfigurationIcon(
+				portletRequest, thread);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return null;

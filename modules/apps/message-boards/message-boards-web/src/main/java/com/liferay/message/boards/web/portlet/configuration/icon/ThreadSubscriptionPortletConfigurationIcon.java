@@ -18,9 +18,11 @@ import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -29,19 +31,24 @@ import javax.portlet.PortletURL;
 /**
  * @author Sergio González
  */
-public class SubscribeThreadPortletConfigurationIcon
+public class ThreadSubscriptionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public SubscribeThreadPortletConfigurationIcon(
-		PortletRequest portletRequest, MBMessage message) {
+	public ThreadSubscriptionPortletConfigurationIcon(
+		PortletRequest portletRequest, MBMessage message, boolean subscribed) {
 
 		super(portletRequest);
 
 		_message = message;
+		_subscribed = subscribed;
 	}
 
 	@Override
 	public String getMessage() {
+		if (_subscribed) {
+			return "unsubscribe";
+		}
+
 		return "subscribe";
 	}
 
@@ -54,7 +61,14 @@ public class SubscribeThreadPortletConfigurationIcon
 
 			portletURL.setParameter(
 				ActionRequest.ACTION_NAME, "/message_boards/edit_message");
-			portletURL.setParameter(Constants.CMD, Constants.SUBSCRIBE);
+
+			if (_subscribed) {
+				portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
+			}
+			else {
+				portletURL.setParameter(Constants.CMD, Constants.SUBSCRIBE);
+			}
+
 			portletURL.setParameter(
 				"redirect", PortalUtil.getCurrentURL(portletRequest));
 			portletURL.setParameter(
@@ -70,9 +84,18 @@ public class SubscribeThreadPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		return true;
+		try {
+			return MBMessagePermission.contains(
+				themeDisplay.getPermissionChecker(), _message,
+				ActionKeys.SUBSCRIBE);
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	private final MBMessage _message;
+	private final boolean _subscribed;
 
 }

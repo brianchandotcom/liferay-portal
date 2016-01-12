@@ -3352,7 +3352,7 @@ easily achieved by using the `PortletConfigurationIcon` and
 
 ---------------------------------------
 
-### The getURLView Method of AssetRenderer returns String Instead of PortletURL
+### The getURLView Method of AssetRenderer Returns String Instead of PortletURL
 - **Date:** 2016-Jan-08
 - **JIRA Ticket:** LPS-61853
 

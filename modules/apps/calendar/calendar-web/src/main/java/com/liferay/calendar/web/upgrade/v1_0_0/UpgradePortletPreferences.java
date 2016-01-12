@@ -14,19 +14,14 @@
 
 package com.liferay.calendar.web.upgrade.v1_0_0;
 
-import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.calendar.model.CalEvent;
 
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Bryan Engler
+ * @author Inácio Nery
  */
 public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
@@ -34,10 +29,10 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	protected String getUpdatePortletPreferencesWhereClause() {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("(preferences like '%classNameIds%");
-		sb.append(PortalUtil.getClassNameId(CalEvent.class));
-		sb.append("%') or (preferences like '%anyAssetType%");
-		sb.append(PortalUtil.getClassNameId(CalEvent.class));
+		sb.append("(preferences like '%isoTimeFormat%");
+		sb.append(Boolean.TRUE.toString());
+		sb.append("%') or (preferences like '%isoTimeFormat%");
+		sb.append(Boolean.FALSE.toString());
 		sb.append("%')");
 
 		return sb.toString();
@@ -53,24 +48,19 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		replaceClassNameId(portletPreferences, "anyAssetType");
-		replaceClassNameId(portletPreferences, "classNameIds");
+		String isoTimeFormat = portletPreferences.getValue(
+			"isoTimeFormat", Boolean.FALSE.toString());
+
+		if (isoTimeFormat.equals(Boolean.TRUE.toString())) {
+			portletPreferences.setValue("timeFormat", "24-hour");
+		}
+		else {
+			portletPreferences.setValue("timeFormat", "am-pm");
+		}
+
+		portletPreferences.reset("isoTimeFormat");
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
-	}
-
-	private void replaceClassNameId(
-			PortletPreferences portletPreferences, String name)
-		throws Exception {
-
-		String[] values = GetterUtil.getStringValues(
-			portletPreferences.getValues(name, null));
-
-		ArrayUtil.replace(
-			values, String.valueOf(PortalUtil.getClassNameId(CalEvent.class)),
-			String.valueOf(PortalUtil.getClassNameId(CalendarBooking.class)));
-
-		portletPreferences.setValues(name, values);
 	}
 
 }

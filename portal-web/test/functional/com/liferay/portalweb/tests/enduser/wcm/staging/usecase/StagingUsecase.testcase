@@ -3938,6 +3938,7 @@
 			</then>
 		</if>
 
+		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 
 		<var locator="Staging#HISTORY_VERSION" name="historyVersion" />
@@ -4451,6 +4452,7 @@
 			</then>
 		</if>
 
+		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 
 		<var locator="Staging#HISTORY_VERSION" name="historyVersion" />

@@ -1637,7 +1637,6 @@ AUI.add(
 
 						var answers = data.answers;
 						var newRecurrence = data.newRecurrence;
-						var offset = data.offset;
 						var schedulerEvent = data.schedulerEvent;
 
 						var showNextQuestion = A.bind(instance.load, instance);
@@ -1844,7 +1843,7 @@ AUI.add(
 							var calendar = CalendarUtil.availableCalendars[event.get('calendarId')];
 
 							if (calendar) {
-								attrMap['color'] = calendar.get('color');
+								attrMap.color = calendar.get('color');
 							}
 						}
 

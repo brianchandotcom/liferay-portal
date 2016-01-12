@@ -1,6 +1,12 @@
 .loading-animation {
+	background-size: 64px;
 	background: url(../images/progress_bar/loading_animation.gif) no-repeat top center;
-	margin-top: 10px;
-	padding-top: 40px;
+	border-radius: 50%;
+	left: 50%;
+	padding-top: 64px;
+	position: absolute;
 	text-align: left;
+	top: 50%;
+	@include transform(translate(-50%, -50%));
+	width: 64px;
 }

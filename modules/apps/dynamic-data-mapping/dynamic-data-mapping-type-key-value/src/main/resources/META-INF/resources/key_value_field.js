@@ -66,17 +66,14 @@ AUI.add(
 						for (var i = 0; i < key.length; i++) {
 							var item = key[i];
 
-							if (!A.Text.Unicode.test(item, 'L') &&
-								!A.Text.Unicode.test(item, 'N') &&
-								!A.Text.Unicode.test(item, 'Pd')) {
-
+							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
 								key = key.replace(item, ' ');
 							}
 						}
 
-						key = Liferay.Util.camelize(key, ' ').trim();
+						key = Liferay.Util.camelize(key, ' ');
 
-						return key.replace(/([!"#$%&'()*+,-./:;<=>?@\[\\\]^`{|}~\s])+/ig, '');
+						return key.replace(/\s+/ig, '');
 					},
 
 					render: function() {

@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Raymond Augé
@@ -52,7 +53,11 @@ public class ResourceBundleTracker implements Closeable {
 	}
 
 	public ResourceBundle getResourceBundle(String languageId) {
-		ResourceBundle resourceBundle;
+		ResourceBundle resourceBundle = _resourceBundles.get(languageId);
+
+		if (resourceBundle != null) {
+			return resourceBundle;
+		}
 
 		synchronized (_resourceBundles) {
 			resourceBundle = _resourceBundles.get(languageId);
@@ -96,7 +101,7 @@ public class ResourceBundleTracker implements Closeable {
 	}
 
 	private final Map<String, ResourceBundle> _resourceBundles =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private final ServiceTrackerMap<String, List<ResourceBundle>>
 		_serviceTrackerMap;
 

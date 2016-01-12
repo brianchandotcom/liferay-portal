@@ -957,8 +957,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			if (Validator.isNull(userMappingsGroup)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"No groups were imported because a user mapping for " +
-							"Group was not found.");
+						"Skipping group import. No mappings for LDAP groups " +
+							"were specified in userMappings: " + userMappings);
 				}
 
 				return;

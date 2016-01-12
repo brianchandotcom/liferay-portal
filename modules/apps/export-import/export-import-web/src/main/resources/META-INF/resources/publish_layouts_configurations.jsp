@@ -57,6 +57,10 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
+<div class="alert alert-info">
+	<liferay-ui:message key="publish-templates-can-be-administered-in-the-control-menu" />
+</div>
+
 <aui:form action="<%= portletURL %>">
 	<liferay-ui:search-container
 		displayTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"

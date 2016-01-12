@@ -44,4 +44,5 @@ public class ImportControlPanelEntry extends ExportImportControlPanelEntry {
 		return super.hasAccessPermissionDenied(
 			permissionChecker, group, portlet);
 	}
+
 }

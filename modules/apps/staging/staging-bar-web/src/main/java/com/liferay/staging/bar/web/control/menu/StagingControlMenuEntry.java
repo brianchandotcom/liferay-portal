@@ -19,6 +19,7 @@ import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.servlet.ServletContext;
@@ -51,6 +52,12 @@ public class StagingControlMenuEntry
 	public boolean isShow(HttpServletRequest request) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
 
 		if (!themeDisplay.isShowStagingIcon()) {
 			return false;

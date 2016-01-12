@@ -239,6 +239,10 @@
 	}
 
 	.icon-sites {
+		a {
+			color: $product-menu-nav-link-color;
+		}
+
 		position: absolute;
 		right: 46px;
 		top: 9px;

@@ -103,15 +103,15 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Site Page 1" />
+			<var name="pageName" value="Site Page 1" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Site Page 2" />
+			<var name="pageName" value="Site Page 2" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -213,7 +213,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -436,7 +436,7 @@
 			<var name="dmDocumentTitle" value="Zero Document File" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -586,7 +586,7 @@
 			<var name="enableXuggler" value="true" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -739,7 +739,7 @@
 	</command>
 
 	<command name="RemoveCurrentDisplayStyleViews" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -769,7 +769,7 @@
 	<command name="SelectMultipleDocumentsAndDeleteViaActionsButton" priority="4">
 		<var name="dmDocumentCounterList" value="1,2,3" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -978,7 +978,7 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -1043,7 +1043,7 @@
 	</command>
 
 	<command name="ViewDocumentWithGlobalScope" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
@@ -1061,7 +1061,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page - Global" />
 		</execute>
 
@@ -1258,7 +1258,7 @@
 		<var name="pageName" value="Documents and Media Page" />
 		<var name="tagNameList" value="tag1,tag2" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1339,7 +1339,7 @@
 	</command>
 
 	<command name="ViewPortletAfterRenamingDocumentWithDuplicateTitlePG" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 

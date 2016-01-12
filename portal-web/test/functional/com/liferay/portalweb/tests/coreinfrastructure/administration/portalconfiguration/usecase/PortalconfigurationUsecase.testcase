@@ -61,10 +61,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="landing" />
 			<var name="siteName" value="Liferay" />
-			<var name="sitePageName" value="landing" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -169,7 +169,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -181,7 +181,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Wiki Page" />
 		</execute>
 
@@ -193,7 +193,7 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Language Page" />
 		</execute>
 
@@ -225,9 +225,12 @@
 			<var name="pageName" value="Language Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Web Content Page" />
+		<execute macro="Page#gotoPagesCP">
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Web Content Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -304,9 +307,9 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Public Page" />
+			<var name="pageName" value="Public Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -314,9 +317,9 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
-			<var name="sitePageName" value="Private Page" />
+			<var name="pageName" value="Private Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

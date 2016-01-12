@@ -54,36 +54,111 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 <liferay-util:buffer var="linkTemplate">
 	<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
 
-	<a class="layout-tree-add" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="add-child-page" />"><aui:icon image="plus" markupView="lexicon" /></a>
+	<a class="layout-tree-add" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="add-child-page" />')"><aui:icon image="plus" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message key="add-child-page" /></span></a>
 
-	<a class="layout-tree-edit" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><aui:icon image="cog" markupView="lexicon" /></a>
+	<a class="layout-tree-edit" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message arguments="{label}" key="edit-x" />')"><aui:icon image="cog" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="edit-x" /></span></a>
 </liferay-util:buffer>
 
 <c:if test="<%= layoutsTreeDisplayContext.isShowLayoutTabs() %>">
+
+	<%
+	Map<String, Object> data = new HashMap<>();
+	%>
+
 	<div class="layout-set-tabs">
 		<c:if test="<%= layoutsTreeDisplayContext.isShowPublicLayoutsTree() %>">
 			<span class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? StringPool.BLANK : "selected-layout-set" %>">
-				<aui:a cssClass="layout-set-link" href="<%= layoutsTreeDisplayContext.getPublicLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(false) %>" />
+
+				<%
+				data.put("qa-id", "goToPublicPages");
+				%>
+
+				<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPublicLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(false) %>" />
 
 				<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
-					<a class="layout-set-tree-add" href="<%= layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, false) %>" title="<liferay-ui:message key="add-page" />"><aui:icon image="plus" markupView="lexicon" /></a>
+
+					<%
+					PortletURL addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, false);
+
+					data.put("qa-id", "addPublicPage");
+					%>
+
+					<liferay-ui:icon
+						data="<%= data %>"
+						icon="plus"
+						label="<%= false %>"
+						linkCssClass="layout-set-tree-add"
+						markupView="lexicon"
+						message="add-page"
+						url="<%= addLayoutURL.toString() %>"
+					/>
 				</c:if>
 
 				<c:if test="<%= layoutsTreeDisplayContext.isShowEditLayoutSetButton() %>">
-					<a class="layout-set-tree-edit" href="<%= layoutsTreeDisplayContext.getEditLayoutURL(LayoutConstants.DEFAULT_PLID, false) %>" title="<liferay-ui:message arguments="<%= layoutsTreeDisplayContext.getLayoutSetName(false) %>" key="edit-x" />"><aui:icon image="cog" markupView="lexicon" /></a>
+
+					<%
+					PortletURL editLayoutURL = layoutsTreeDisplayContext.getEditLayoutURL(LayoutConstants.DEFAULT_PLID, false);
+
+					data.put("qa-id", "editPublicPages");
+					%>
+
+					<liferay-ui:icon
+						data="<%= data %>"
+						icon="cog"
+						label="<%= false %>"
+						linkCssClass="layout-set-tree-edit"
+						markupView="lexicon"
+						message='<%= LanguageUtil.format(request, "edit-x", layoutsTreeDisplayContext.getLayoutSetName(false)) %>'
+						url="<%= editLayoutURL.toString() %>"
+					/>
 				</c:if>
 			</span>
 		</c:if>
 
 		<span class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? "selected-layout-set" : StringPool.BLANK %>">
-			<aui:a cssClass="layout-set-link" href="<%= layoutsTreeDisplayContext.getPrivateLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(true) %>" />
+
+			<%
+			data.put("qa-id", "goToPrivatePages");
+			%>
+
+			<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPrivateLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutSetName(true) %>" />
 
 			<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
-				<a class="layout-set-tree-add" href="<%= layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, true) %>" title="<liferay-ui:message key="add-page" />"><aui:icon image="plus" markupView="lexicon" /></a>
+
+				<%
+				PortletURL addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, true);
+
+				data.put("qa-id", "addPrivatePage");
+				%>
+
+				<liferay-ui:icon
+					data="<%= data %>"
+					icon="plus"
+					label="<%= false %>"
+					linkCssClass="layout-set-tree-add"
+					markupView="lexicon"
+					message="add-page"
+					url="<%= addLayoutURL.toString() %>"
+				/>
 			</c:if>
 
 			<c:if test="<%= layoutsTreeDisplayContext.isShowEditLayoutSetButton() %>">
-				<a class="layout-set-tree-edit" href="<%= layoutsTreeDisplayContext.getEditLayoutURL(LayoutConstants.DEFAULT_PLID, true) %>" title="<liferay-ui:message arguments="<%= layoutsTreeDisplayContext.getLayoutSetName(true) %>" key="edit-x" />"><aui:icon image="cog" markupView="lexicon" /></a>
+
+				<%
+				PortletURL editLayoutURL = layoutsTreeDisplayContext.getEditLayoutURL(LayoutConstants.DEFAULT_PLID, true);
+
+				data.put("qa-id", "editPrivatePages");
+				%>
+
+				<liferay-ui:icon
+					data="<%= data %>"
+					icon="cog"
+					label="<%= false %>"
+					linkCssClass="layout-set-tree-edit"
+					markupView="lexicon"
+					message='<%= LanguageUtil.format(request, "edit-x", layoutsTreeDisplayContext.getLayoutSetName(true)) %>'
+					url="<%= editLayoutURL.toString() %>"
+				/>
 			</c:if>
 		</span>
 	</div>

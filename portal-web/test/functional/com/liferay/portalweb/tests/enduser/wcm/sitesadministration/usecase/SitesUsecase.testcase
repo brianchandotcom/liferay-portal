@@ -59,9 +59,9 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Home" />
+			<var name="pageName" value="Home" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -88,7 +88,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePage#addChildCP">
+		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="Blog Page" />
 			<var name="siteName" value="Site Name" />

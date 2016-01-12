@@ -129,9 +129,9 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="editTitle" type="hidden" value="<%= editTitle %>" />
 		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
 		<aui:input name="newPage" type="hidden" value="<%= newPage %>" />
+		<aui:input name="title" type="hidden" value="<%= title %>" />
 		<aui:input name="parentTitle" type="hidden" value="<%= parentTitle %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
-		<aui:input name="title" type="hidden" value="<%= title %>" />
 
 		<c:if test="<%= wikiPage != null %>">
 			<aui:input name="version" type="hidden" value="<%= wikiPage.getVersion() %>" />

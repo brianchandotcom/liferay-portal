@@ -58,23 +58,20 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 	</c:if>
 
 	<%
+	List<FileEntry> attachmentsFileEntries = wikiPage.getDeletedAttachmentsFileEntries();
+	int attachmentsFileEntriesCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
+	String emptyResultsMessage = "this-page-does-not-have-file-attachments-in-the-recycle-bin";
+
 	PortletURL iteratorURL = renderResponse.createRenderURL();
 
 	iteratorURL.setParameter("mvcRenderCommandName", "/wiki/view_trash_page_attachments");
 	iteratorURL.setParameter("redirect", currentURL);
 	iteratorURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
 	iteratorURL.setParameter("title", wikiPage.getTitle());
-
 	iteratorURL.setWindowState(LiferayWindowState.POP_UP);
 
-	String emptyResultsMessage = "this-page-does-not-have-file-attachments-in-the-recycle-bin";
-
-	int status = WorkflowConstants.STATUS_IN_TRASH;
-
-	List<FileEntry> attachmentsFileEntries = wikiPage.getDeletedAttachmentsFileEntries();
-	int attachmentsFileEntriesCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
-
 	boolean showPageAttachmentAction = true;
+	int status = WorkflowConstants.STATUS_IN_TRASH;
 	%>
 
 	<%@ include file="/wiki/attachments_list.jspf" %>

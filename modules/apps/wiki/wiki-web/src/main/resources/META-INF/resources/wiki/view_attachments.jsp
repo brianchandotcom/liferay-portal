@@ -83,12 +83,9 @@ int deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
 
 	<%
 	int attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
-
 	String emptyResultsMessage = "this-page-does-not-have-file-attachments";
-
-	int status = WorkflowConstants.STATUS_APPROVED;
-
 	boolean showPageAttachmentAction = true;
+	int status = WorkflowConstants.STATUS_APPROVED;
 	%>
 
 	<%@ include file="/wiki/attachments_list.jspf" %>

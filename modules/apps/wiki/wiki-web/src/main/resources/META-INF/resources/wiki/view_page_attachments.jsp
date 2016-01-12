@@ -43,6 +43,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 </liferay-util:include>
 
 <%
+List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
+int attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
+String emptyResultsMessage = "this-page-does-not-have-file-attachments";
+
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
 iteratorURL.setParameter("mvcRenderCommandName", "/wiki/view_page_attachments");
@@ -50,15 +54,8 @@ iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 iteratorURL.setParameter("title", wikiPage.getTitle());
 
-List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
-
-int attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
-
-String emptyResultsMessage = "this-page-does-not-have-file-attachments";
-
-int status = WorkflowConstants.STATUS_APPROVED;
-
 boolean showPageAttachmentAction = false;
+int status = WorkflowConstants.STATUS_APPROVED;
 %>
 
 <%@ include file="/wiki/attachments_list.jspf" %>

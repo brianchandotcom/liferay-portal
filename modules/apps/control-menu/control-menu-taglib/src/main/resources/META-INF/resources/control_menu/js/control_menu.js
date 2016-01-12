@@ -13,7 +13,7 @@ AUI.add(
 
 		var STR_ADD_PANEL = 'addPanel';
 
-		var TPL_ADD_CONTENT = '<div class="lfr-add-panel lfr-admin-panel product-menu" id="{0}" />';
+		var TPL_ADD_CONTENT = '<div class="lfr-add-panel lfr-admin-panel product-menu sidebar-inverse" id="{0}" />';
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 

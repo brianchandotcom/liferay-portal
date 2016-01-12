@@ -169,15 +169,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		</c:if>
 	</c:if>
 
-	<portlet:actionURL name="editPublishConfiguration" var="restoreTrashEntriesURL">
-		<portlet:param name="mvcPath" value="editPublishConfiguration" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-	</portlet:actionURL>
-
-	<liferay-trash:undo
-		portletURL="<%= restoreTrashEntriesURL %>"
-	/>
-
 	<c:if test='<%= !cmd.equals("view_processes") && !quickPublish %>'>
 		<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
 			<aui:nav-bar>

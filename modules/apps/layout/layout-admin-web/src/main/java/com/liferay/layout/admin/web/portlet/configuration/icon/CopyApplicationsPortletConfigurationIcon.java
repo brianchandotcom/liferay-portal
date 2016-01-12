@@ -84,7 +84,7 @@ public class CopyApplicationsPortletConfigurationIcon
 				return false;
 			}
 
-			// Check if it is a layout prototype
+			// Check if layout is a layout prototype
 
 			Group group = layout.getGroup();
 

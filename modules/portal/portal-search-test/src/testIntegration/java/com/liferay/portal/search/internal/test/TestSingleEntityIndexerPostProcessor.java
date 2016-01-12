@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.deploy.hot.bundle.indexerpostprocessorregistry;
+package com.liferay.portal.search.internal.test;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -30,13 +30,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"indexer.class.name=com.liferay.portal.model.User",
-		"indexer.class.name=com.liferay.portal.model.UserGroup"
-	},
+	property = {"indexer.class.name=com.liferay.portal.model.Contact"},
 	service = IndexerPostProcessor.class
 )
-public class TestMultipleEntityIndexerPostProcessor
+public class TestSingleEntityIndexerPostProcessor
 	implements IndexerPostProcessor {
 
 	@Override

@@ -93,6 +93,6 @@ public class ThreadSubscriptionPortletConfigurationIconFactory
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
-	private volatile SubscriptionLocalService _subscriptionLocalService;
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

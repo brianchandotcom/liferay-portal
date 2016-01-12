@@ -24,13 +24,6 @@
 		}
 
 		.lfr-content-item {
-			color: #3EA9DB;
-
-			&:hover {
-				background-color: #EEE;
-				color: #006076;
-			}
-
 			.lfr-portlet-used {
 				&, &.drag-content-item {
 					color: #BBB;
@@ -75,6 +68,33 @@
 
 		.added-message {
 			opacity: 0;
+		}
+
+		.add-portlet-message {
+			background-color: #1D2930;
+			color: #869CAD;
+			margin: 20px;
+			padding: 5px 20px;
+
+			.info-message {
+				margin: 20px 0;
+			}
+		}
+
+		.list-group-heading {
+			padding: 0 24px;
+		}
+
+		.list-group-item {
+			padding: 0 10px;
+		}
+
+		.search-bar {
+			margin: 10px;
+		}
+
+		.input-group-btn {
+			right: 20px;
 		}
 	}
 }

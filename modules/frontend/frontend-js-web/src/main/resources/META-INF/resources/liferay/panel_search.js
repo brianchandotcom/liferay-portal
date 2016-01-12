@@ -39,8 +39,6 @@ AUI.add(
 
 						instance._categories = nodeList.all(instance.get('categorySelector'));
 
-						instance._togglerDelegate = Liferay.component(config.togglerId);
-
 						var applicationSearch = new Liferay.SearchFilter(
 							{
 								inputNode: instance.get('inputNode'),
@@ -95,8 +93,6 @@ AUI.add(
 					_updateList: function(event) {
 						var instance = this;
 
-						instance._togglerDelegate.createAll();
-
 						var categories = instance._categories;
 
 						var query = event.query;
@@ -106,9 +102,9 @@ AUI.add(
 
 							categories.each(
 								function(item, index) {
-									var header = item.one('.toggler-header');
+									var header = item.one('.list-group-heading');
 
-									if (header && header.hasClass('toggler-header-collapsed')) {
+									if (header && header.hasClass('collapsed')) {
 										instance._collapsedCategories.push(item);
 									}
 								}
@@ -123,15 +119,8 @@ AUI.add(
 							if (instance._collapsedCategories) {
 								instance._collapsedCategories.forEach(
 									function(item, index) {
-										var categoryIndex = categories.indexOf(item);
-
-										var togglerItems = instance._togglerDelegate.items;
-
-										togglerItems[categoryIndex].collapse(
-											{
-												silent: true
-											}
-										);
+										item.one('.list-group-heading').addClass('collapsed');
+										item.one('.list-group-panel').removeClass('in');
 									}
 								);
 
@@ -167,16 +156,13 @@ AUI.add(
 
 										if (contentParent) {
 											contentParent.show();
+
+											contentParent.one('.list-group-heading').removeClass('collapsed');
+											contentParent.one('.list-group-panel').addClass('in');
 										}
 									}
 								);
 							}
-
-							instance._togglerDelegate.expandAll(
-								{
-									silent: true
-								}
-							);
 						}
 					}
 				}

@@ -21,8 +21,6 @@ MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSA
 AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
 
 request.setAttribute("edit_message.jsp-category", message.getCategory());
-request.setAttribute("edit_message.jsp-className", message.getClassName());
-request.setAttribute("edit_message.jsp-depth", 0);
 request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
 request.setAttribute("edit_message.jsp-message", message);
 request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.FALSE);

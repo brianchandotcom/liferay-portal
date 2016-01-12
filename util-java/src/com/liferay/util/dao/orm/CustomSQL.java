@@ -14,6 +14,8 @@
 
 package com.liferay.util.dao.orm;
 
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
@@ -477,8 +479,8 @@ public class CustomSQL {
 
 			String[] configs = getConfigs();
 
-			for (String _config : configs) {
-				read(classLoader, _config);
+			for (String config : configs) {
+				read(classLoader, config);
 			}
 		}
 		catch (Exception e) {
@@ -751,17 +753,30 @@ public class CustomSQL {
 	}
 
 	protected String[] getConfigs() {
-		if (PortalClassLoaderUtil.getClassLoader() ==
-				CustomSQL.class.getClassLoader()) {
+		ClassLoader classLoader = CustomSQL.class.getClassLoader();
 
+		if (PortalClassLoaderUtil.getClassLoader() == classLoader) {
 			Properties propsUtil = PortalUtil.getPortalProperties();
 
 			return StringUtil.split(
 				propsUtil.getProperty("custom.sql.configs"));
 		}
-		else {
-			return new String[] {"custom-sql/default.xml"};
+
+		if (classLoader.getResource("portlet.properties") != null) {
+			Configuration configuration =
+				ConfigurationFactoryUtil.getConfiguration(
+					classLoader, "portlet");
+
+			return ArrayUtil.append(
+				StringUtil.split(configuration.get("custom.sql.configs")),
+				new String[] {
+					"custom-sql/default.xml", "META-INF/custom-sql/default.xml"
+				});
 		}
+
+		return new String[] {
+			"custom-sql/default.xml", "META-INF/custom-sql/default.xml"
+		};
 	}
 
 	protected String insertWildcard(String keyword, WildcardMode wildcardMode) {

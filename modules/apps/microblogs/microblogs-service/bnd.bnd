@@ -7,7 +7,6 @@ Export-Package:\
 	com.liferay.microblogs.util.comparator
 Include-Resource:\
 	classes,\
-	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Liferay-Releng-Module-Group-Description:

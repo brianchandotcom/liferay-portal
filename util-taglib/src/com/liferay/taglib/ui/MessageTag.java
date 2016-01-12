@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ResourceBundle;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -55,64 +53,27 @@ public class MessageTag extends TagSupport {
 					value = _key;
 				}
 				else if (_escape) {
-					if (_resourceBundle != null) {
-						value = HtmlUtil.escape(
-							LanguageUtil.get(_resourceBundle, _key));
-					}
-					else {
-						value = HtmlUtil.escape(
-							LanguageUtil.get(request, _key));
-					}
+					value = HtmlUtil.escape(LanguageUtil.get(request, _key));
 				}
 				else if (_escapeAttribute) {
-					if (_resourceBundle != null) {
-						value = HtmlUtil.escapeAttribute(
-							LanguageUtil.get(_resourceBundle, _key));
-					}
-					else {
-						value = HtmlUtil.escapeAttribute(
-							LanguageUtil.get(request, _key));
-					}
+					value = HtmlUtil.escapeAttribute(
+						LanguageUtil.get(request, _key));
 				}
 				else if (_unicode) {
-					if (_resourceBundle != null) {
-						value = UnicodeLanguageUtil.get(_resourceBundle, _key);
-					}
-					else {
-						value = UnicodeLanguageUtil.get(request, _key);
-					}
+					value = UnicodeLanguageUtil.get(request, _key);
 				}
 				else {
-					if (_resourceBundle != null) {
-						value = LanguageUtil.get(_resourceBundle, _key);
-					}
-					else {
-						value = LanguageUtil.get(request, _key);
-					}
+					value = LanguageUtil.get(request, _key);
 				}
 			}
 			else {
 				if (_unicode) {
-					if (_resourceBundle != null) {
-						value = UnicodeLanguageUtil.format(
-							_resourceBundle, _key, _arguments,
-							_translateArguments);
-					}
-					else {
-						value = UnicodeLanguageUtil.format(
-							request, _key, _arguments, _translateArguments);
-					}
+					value = UnicodeLanguageUtil.format(
+						request, _key, _arguments, _translateArguments);
 				}
 				else {
-					if (_resourceBundle != null) {
-						value = LanguageUtil.format(
-							_resourceBundle, _key, _arguments,
-							_translateArguments);
-					}
-					else {
-						value = LanguageUtil.format(
-							request, _key, _arguments, _translateArguments);
-					}
+					value = LanguageUtil.format(
+						request, _key, _arguments, _translateArguments);
 				}
 			}
 
@@ -134,7 +95,6 @@ public class MessageTag extends TagSupport {
 				_escapeAttribute = false;
 				_key = null;
 				_localizeKey = true;
-				_resourceBundle = null;
 				_translateArguments = true;
 				_unicode = false;
 			}
@@ -174,10 +134,6 @@ public class MessageTag extends TagSupport {
 		_localizeKey = localizeKey;
 	}
 
-	public void setResourceBundle(ResourceBundle resourceBundle) {
-		_resourceBundle = resourceBundle;
-	}
-
 	public void setTranslateArguments(boolean translateArguments) {
 		_translateArguments = translateArguments;
 	}
@@ -191,7 +147,6 @@ public class MessageTag extends TagSupport {
 	private boolean _escapeAttribute;
 	private String _key;
 	private boolean _localizeKey = true;
-	private ResourceBundle _resourceBundle;
 	private boolean _translateArguments = true;
 	private boolean _unicode;
 

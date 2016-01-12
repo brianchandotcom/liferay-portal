@@ -16,19 +16,16 @@ package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.SubscriptionLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import javax.portlet.PortletRequest;
 
@@ -70,24 +67,14 @@ public class ThreadSubscriptionPortletConfigurationIconFactory
 
 			MBMessage message = messageDisplay.getMessage();
 
-			if (MBMessagePermission.contains(
-					themeDisplay.getPermissionChecker(), message,
-					ActionKeys.SUBSCRIBE)) {
+			boolean subscribed = _subscriptionLocalService.isSubscribed(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				MBThread.class.getName(), message.getThreadId());
 
-				if (_subscriptionLocalService.isSubscribed(
-						themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-						MBThread.class.getName(), message.getThreadId())) {
-
-					return new UnsubscribeThreadPortletConfigurationIcon(
-						portletRequest, message);
-				}
-				else {
-					return new SubscribeThreadPortletConfigurationIcon(
-						portletRequest, message);
-				}
-			}
+			return new ThreadSubscriptionPortletConfigurationIcon(
+				portletRequest, message, subscribed);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return null;

@@ -18,9 +18,11 @@ import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -29,10 +31,10 @@ import javax.portlet.PortletURL;
 /**
  * @author Sergio González
  */
-public class UnlockThreadPortletConfigurationIcon
+public class ThreadLockPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public UnlockThreadPortletConfigurationIcon(
+	public ThreadLockPortletConfigurationIcon(
 		PortletRequest portletRequest, MBThread thread) {
 
 		super(portletRequest);
@@ -42,7 +44,11 @@ public class UnlockThreadPortletConfigurationIcon
 
 	@Override
 	public String getMessage() {
-		return "unlock";
+		if (_thread.isLocked()) {
+			return "unlock";
+		}
+
+		return "lock";
 	}
 
 	@Override
@@ -54,7 +60,14 @@ public class UnlockThreadPortletConfigurationIcon
 
 			portletURL.setParameter(
 				ActionRequest.ACTION_NAME, "/message_boards/edit_message");
-			portletURL.setParameter(Constants.CMD, Constants.UNLOCK);
+
+			if (_thread.isLocked()) {
+				portletURL.setParameter(Constants.CMD, Constants.UNLOCK);
+			}
+			else {
+				portletURL.setParameter(Constants.CMD, Constants.LOCK);
+			}
+
 			portletURL.setParameter(
 				"redirect", PortalUtil.getCurrentURL(portletRequest));
 			portletURL.setParameter(
@@ -70,7 +83,16 @@ public class UnlockThreadPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		return true;
+		try {
+			return MBCategoryPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), _thread.getCategoryId(),
+				ActionKeys.LOCK_THREAD);
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	private final MBThread _thread;

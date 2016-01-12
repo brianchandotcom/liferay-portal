@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `489b33c`.*
+*This document has been reviewed through commit `c52b2c0`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2986,14 +2986,14 @@ time to focus on other areas of the product that add more value.
 
 ---------------------------------------
 
-### The liferay-ui:asset-categories-navigation taglib has been removed and replaced with liferay-asset:asset-categories-navigation taglib
+### Removed the liferay-ui:asset-categories-navigation Tag and Replaced with liferay-asset:asset-categories-navigation
 - **Date:** 2015-Nov-25
 - **JIRA Ticket:** LPS-60753
 
 #### What changed?
 
-The `liferay-ui:asset-categories-navigation` taglib has been removed and
-replaced with `liferay-asset:asset-categories-navigation` taglib.
+The `liferay-ui:asset-categories-navigation` tag has been removed and replaced
+with the `liferay-asset:asset-categories-navigation` tag.
 
 #### Who is affected?
 
@@ -3002,8 +3002,8 @@ tag need to update their usage of the tag.
 
 #### How should I update my code?
 
-You should import the `liferay-asset` tag library if it isn't already and update
-the tag namespace from `liferay-ui:asset-categories-navigation` to
+You should import the `liferay-asset` tag library (if necessary) and update the
+tag namespace from `liferay-ui:asset-categories-navigation` to
 `liferay-asset:asset-categories-navigation`.
 
 #### Why was this change made?

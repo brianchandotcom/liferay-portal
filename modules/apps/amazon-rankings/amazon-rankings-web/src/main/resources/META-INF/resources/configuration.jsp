@@ -47,7 +47,7 @@ isbnsString = StringUtil.merge(isbns, StringPool.SPACE);
 			String isbn = (String)enu.nextElement();
 		%>
 
-			<strong><%= isbn %></strong><%= (enu.hasMoreElements()) ? ", " : "." %>
+			<strong><%= HtmlUtil.escape(isbn) %></strong><%= (enu.hasMoreElements()) ? ", " : "." %>
 
 		<%
 		}

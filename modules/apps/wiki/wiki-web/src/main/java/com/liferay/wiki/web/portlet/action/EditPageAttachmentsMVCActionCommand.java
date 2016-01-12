@@ -362,6 +362,6 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile WikiAttachmentsHelper _wikiAttachmentsHelper;
+	private WikiAttachmentsHelper _wikiAttachmentsHelper;
 
 }

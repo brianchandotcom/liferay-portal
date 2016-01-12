@@ -31,6 +31,8 @@
 	</tear-down>
 
 	<command name="AddWikiFrontPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -70,6 +72,8 @@
 	</command>
 
 	<command name="AddWikiNode" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -93,6 +97,8 @@
 	</command>
 
 	<command name="AddWikiPageToNode" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -218,6 +224,8 @@
 	</command>
 
 	<command name="DeleteWikiNode" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -256,6 +264,8 @@
 	</command>
 
 	<command name="EditWikiNode" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

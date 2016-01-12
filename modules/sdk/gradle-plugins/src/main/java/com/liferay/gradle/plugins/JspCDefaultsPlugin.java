@@ -29,15 +29,20 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.bundling.Jar;
+import org.gradle.api.tasks.compile.JavaCompile;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class JspCDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<JspCPlugin> {
+
+	public static final String JSP_PRECOMPILE_ENABLED_PROPERTY_NAME =
+		"jsp.precompile.enabled";
 
 	public static final String UNZIP_JAR_TASK_NAME = "unzipJar";
 
@@ -122,9 +127,12 @@ public class JspCDefaultsPlugin
 	protected void configureDefaults(Project project, JspCPlugin jspCPlugin) {
 		super.configureDefaults(project, jspCPlugin);
 
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
 		addTaskUnzipJar(project);
 
-		configureJspCExtension(project);
+		configureJspCExtension(project, liferayExtension);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -132,12 +140,15 @@ public class JspCDefaultsPlugin
 				@Override
 				public void execute(Project project) {
 					addDependenciesJspC(project);
+					configureTaskCompileJSP(project, liferayExtension);
 				}
 
 			});
 	}
 
-	protected void configureJspCExtension(final Project project) {
+	protected void configureJspCExtension(
+		final Project project, final LiferayExtension liferayExtension) {
+
 		JspCExtension jspCExtension = GradleUtil.getExtension(
 			project, JspCExtension.class);
 
@@ -148,9 +159,6 @@ public class JspCDefaultsPlugin
 
 				@Override
 				public File call() throws Exception {
-					LiferayExtension liferayExtension = GradleUtil.getExtension(
-						project, LiferayExtension.class);
-
 					return liferayExtension.getAppServerPortalDir();
 				}
 
@@ -176,6 +184,29 @@ public class JspCDefaultsPlugin
 			});
 	}
 
+	protected void configureTaskCompileJSP(
+		Project project, LiferayExtension liferayExtension) {
+
+		boolean jspPrecompileEnabled = GradleUtil.getProperty(
+			project, JSP_PRECOMPILE_ENABLED_PROPERTY_NAME, false);
+
+		if (!jspPrecompileEnabled) {
+			return;
+		}
+
+		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
+			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
+
+		String dirName =
+			_osgiHelper.getBundleSymbolicName(project) + "-" +
+				project.getVersion();
+
+		File dir = new File(
+			liferayExtension.getLiferayHome(), "work/" + dirName);
+
+		javaCompile.setDestinationDir(dir);
+	}
+
 	@Override
 	protected Class<JspCPlugin> getPluginClass() {
 		return JspCPlugin.class;
@@ -196,5 +227,7 @@ public class JspCDefaultsPlugin
 	}
 
 	private static final String _PORTAL_TOOL_NAME = "com.liferay.jasper.jspc";
+
+	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
 }

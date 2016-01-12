@@ -1,11 +1,11 @@
 Bundle-ClassPath:\
 	.,\
-	lib/jackson-core.jar,\
 	lib/google-api-client.jar,\
 	lib/google-api-services-oauth2.jar,\
 	lib/google-http-client-jackson2.jar,\
 	lib/google-http-client.jar,\
-	lib/google-oauth-client.jar
+	lib/google-oauth-client.jar,\
+	lib/jackson-core.jar
 Bundle-Name: Liferay Portal Security SSO Google
 Bundle-SymbolicName: com.liferay.portal.security.sso.google
 Bundle-Version: 1.0.0
@@ -18,11 +18,11 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	lib/jackson-core.jar=lib/jackson-core.jar,\
 	lib/google-api-client.jar=lib/google-api-client.jar,\
 	lib/google-api-services-oauth2.jar=lib/google-api-services-oauth2.jar,\
 	lib/google-http-client-jackson2.jar=lib/google-http-client-jackson2.jar,\
 	lib/google-http-client.jar=lib/google-http-client.jar,\
 	lib/google-oauth-client.jar=lib/google-oauth-client.jar,\
+	lib/jackson-core.jar=lib/jackson-core.jar,\
 	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /portal-security-sso-google

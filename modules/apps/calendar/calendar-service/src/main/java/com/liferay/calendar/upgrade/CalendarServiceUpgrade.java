@@ -49,7 +49,7 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.calendar.service", "1.0.1", "1.0.2",
-			new UpgradePortletPreferences());
+			new DummyUpgradeStep());
 
 		registry.register(
 			"com.liferay.calendar.service", "1.0.2", "1.0.3",

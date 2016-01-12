@@ -297,7 +297,7 @@
 
 					<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 				</for>
 			</then>
 			<else>
@@ -305,7 +305,7 @@
 
 				<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</else>
 		</if>
 
@@ -1004,7 +1004,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
@@ -1162,7 +1163,7 @@
 	<command name="publish">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="publishWithUserNotification">
@@ -1173,7 +1174,7 @@
 
 		<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="rate4Stars">

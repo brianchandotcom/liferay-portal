@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
@@ -143,6 +144,8 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-frontend:defineObjects />
 
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();

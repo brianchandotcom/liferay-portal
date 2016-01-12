@@ -38,12 +38,14 @@ import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.io.IOException;
 
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -387,8 +389,12 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-editor:onInitMethod", _onInitMethod);
 
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			pageContext);
+
 		if (Validator.isNull(_placeholder)) {
-			_placeholder = LanguageUtil.get(request, "write-your-content-here");
+			_placeholder = LanguageUtil.get(
+				resourceBundle, "write-your-content-here");
 		}
 
 		request.setAttribute(

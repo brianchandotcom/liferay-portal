@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseATag;
 import com.liferay.taglib.util.InlineUtil;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.io.IOException;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletResponse;
 
@@ -46,10 +48,14 @@ public class ATag extends BaseATag {
 
 		if (Validator.isNotNull(getHref())) {
 			if (AUIUtil.isOpensNewWindow(getTarget())) {
+				ResourceBundle resourceBundle =
+					TagResourceBundleUtil.getResourceBundle(pageContext);
+
 				jspWriter.write(StringPool.SPACE);
 				jspWriter.write("<span class=\"icon-external-link\"></span>");
 				jspWriter.write("<span class=\"sr-only\">");
-				jspWriter.write(LanguageUtil.get(request, "opens-new-window"));
+				jspWriter.write(
+					LanguageUtil.get(resourceBundle, "opens-new-window"));
 				jspWriter.write("</span>");
 			}
 
@@ -131,14 +137,18 @@ public class ATag extends BaseATag {
 		if (Validator.isNotNull(title) ||
 			AUIUtil.isOpensNewWindow(getTarget())) {
 
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			jspWriter.write("title=\"");
 
 			if (Validator.isNotNull(title)) {
-				jspWriter.write(LanguageUtil.get(request, title));
+				jspWriter.write(LanguageUtil.get(resourceBundle, title));
 			}
 
 			if (AUIUtil.isOpensNewWindow(getTarget())) {
-				jspWriter.write(LanguageUtil.get(request, "opens-new-window"));
+				jspWriter.write(
+					LanguageUtil.get(resourceBundle, "opens-new-window"));
 			}
 
 			jspWriter.write("\" ");
@@ -154,7 +164,10 @@ public class ATag extends BaseATag {
 
 		if (Validator.isNotNull(label)) {
 			if (localizeLabel) {
-				jspWriter.write(LanguageUtil.get(request, label));
+				ResourceBundle resourceBundle =
+					TagResourceBundleUtil.getResourceBundle(pageContext);
+
+				jspWriter.write(LanguageUtil.get(resourceBundle, label));
 			}
 			else {
 				jspWriter.write(label);

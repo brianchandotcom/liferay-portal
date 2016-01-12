@@ -390,6 +390,10 @@ public class SearchContainer<R> {
 		return false;
 	}
 
+	public boolean isSearch() {
+		return _search;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -494,6 +498,10 @@ public class SearchContainer<R> {
 		_rowMover = rowMover;
 	}
 
+	public void setSearch(boolean search) {
+		_search = search;
+	}
+
 	public void setTotal(int total) {
 		_total = total;
 
@@ -592,6 +600,7 @@ public class SearchContainer<R> {
 	private List<R> _results = new ArrayList<>();
 	private RowChecker _rowChecker;
 	private RowMover _rowMover;
+	private boolean _search;
 	private final DisplayTerms _searchTerms;
 	private int _start;
 	private int _total;

@@ -124,7 +124,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 		<c:if test="<%= resultRowSplitterEntries.isEmpty() && (emptyResultsMessage != null) %>">
 			<tr>
 				<td>
-					<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
+					<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" search="<%= searchContainer.isSearch() %>" />
 				</td>
 			</tr>
 		</c:if>

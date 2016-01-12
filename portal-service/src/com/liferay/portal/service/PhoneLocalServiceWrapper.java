@@ -42,20 +42,6 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		return _phoneLocalService.addPhone(phone);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPhone(long, String, long,
-	String, String, int, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Phone addPhone(long userId,
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phoneLocalService.addPhone(userId, className, classPK, number,
-			extension, typeId, primary);
-	}
-
 	@Override
 	public com.liferay.portal.model.Phone addPhone(long userId,
 		java.lang.String className, long classPK, java.lang.String number,

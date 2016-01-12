@@ -52,20 +52,6 @@ public class PhoneLocalServiceUtil {
 		return getService().addPhone(phone);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPhone(long, String, long,
-	String, String, int, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Phone addPhone(long userId,
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addPhone(userId, className, classPK, number, extension,
-			typeId, primary);
-	}
-
 	public static com.liferay.portal.model.Phone addPhone(long userId,
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, long typeId, boolean primary,

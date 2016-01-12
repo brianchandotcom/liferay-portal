@@ -40,21 +40,6 @@ public class PhoneServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PhoneServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPhone(String, long,
-	String, String, int, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Phone addPhone(
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addPhone(className, classPK, number, extension, typeId,
-			primary);
-	}
-
 	public static com.liferay.portal.model.Phone addPhone(
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, long typeId, boolean primary,

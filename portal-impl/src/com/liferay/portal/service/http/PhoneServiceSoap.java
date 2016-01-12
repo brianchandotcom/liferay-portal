@@ -64,28 +64,6 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class PhoneServiceSoap {
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPhone(String, long,
-	String, String, int, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.PhoneSoap addPhone(
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary)
-		throws RemoteException {
-		try {
-			com.liferay.portal.model.Phone returnValue = PhoneServiceUtil.addPhone(className,
-					classPK, number, extension, typeId, primary);
-
-			return com.liferay.portal.model.PhoneSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portal.model.PhoneSoap addPhone(
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, long typeId, boolean primary,

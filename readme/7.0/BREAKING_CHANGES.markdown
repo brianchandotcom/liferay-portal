@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `09f505f`.*
+*This document has been reviewed through commit `6f62be1`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3352,18 +3352,18 @@ easily achieved by using the `PortletConfigurationIcon` and
 
 ---------------------------------------
 
-### The `getURLView` method of AssetRenderer returns `String` instead of `PortletURL`
+### The getURLView Method of AssetRenderer returns String Instead of PortletURL
 - **Date:** 2016-Jan-08
 - **JIRA Ticket:** LPS-61853
 
 #### What changed?
 
-The AssetRenderer interface has changed and now the method `getURLView` returns
-`String` instead of `PortletURL`
+The `AssetRenderer` interface's `getURLView` method has changed and now returns
+`String` instead of `PortletURL`.
 
 #### Who is affected?
 
-All custom assets that implements AssetRenderer interface.
+This affects all custom assets that implement the `AssetRenderer` interface.
 
 #### How should I update my code?
 
@@ -3374,9 +3374,10 @@ In general, it should be as easy as returning `portletURL.toString()`.
 
 #### Why was this change made?
 
-The API was forcing to return a PortletURL and this makes things harder when we
-want to use any other link instead of a PortletURL. For example, in the case of
-Bookmarks, where we want to automatically redirect to any other potential url.
+The API was forcing to return a `PortletURL` and this makes things harder for
+developers who want to return another type of link. For example, in the case of
+Bookmarks, developers may want to automatically redirect to any other potential
+URL.
 
 ---------------------------------------
 

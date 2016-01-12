@@ -45,8 +45,8 @@ public class WikiURLHelper {
 		PortletURL viewPagesURL = _renderResponse.createRenderURL();
 
 		viewPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
-		viewPagesURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 		viewPagesURL.setParameter("navigation", "all-pages");
+		viewPagesURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 
 		return viewPagesURL;
 	}

@@ -14,6 +14,8 @@
 
 package com.liferay.workflow.task.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -26,8 +28,11 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.task.web.configuration.WorkflowTaskWebConfiguration;
 
 import java.io.IOException;
+
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -36,12 +41,15 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Leonardo Barros
  */
 @Component(
+	configurationPid = "com.liferay.workflow.task.web.configuration.WorkflowTaskWebConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-tasks",
@@ -104,6 +112,13 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 		super.render(request, response);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_workflowTaskWebConfiguration = Configurable.createConfigurable(
+			WorkflowTaskWebConfiguration.class, properties);
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -150,6 +165,12 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 
 			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
 		}
+
+		renderRequest.setAttribute(
+			WorkflowTaskWebConfiguration.class.getName(),
+			_workflowTaskWebConfiguration);
 	}
+
+	private volatile WorkflowTaskWebConfiguration _workflowTaskWebConfiguration;
 
 }

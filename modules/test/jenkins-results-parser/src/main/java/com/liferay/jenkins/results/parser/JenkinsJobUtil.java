@@ -29,42 +29,7 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class JenkinsJobUtil {
 
-	public static String appendURL(String url, String path) {
-		while (url.endsWith("/")) {
-			int x = url.length() - 1;
-
-			url = url.substring(0, x);
-		}
-
-		if (path.equals("")) {
-			return url;
-		}
-
-		while (path.startsWith("/")) {
-			if (path.equals("/")) {
-				return url;
-			}
-			else {
-				path = path.substring(1);
-			}
-		}
-
-		while (path.endsWith("/")) {
-			int x = path.length() - 1;
-
-			path = path.substring(0, x);
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(url);
-		sb.append("/");
-		sb.append(path);
-
-		return sb.toString();
-	}
-
-	public static String encodeAuthorizationFields(
+	protected static String encodeAuthorizationFields(
 		String username, String password) {
 
 		String authorizationString = username + ":" + password;
@@ -99,7 +64,7 @@ public class JenkinsJobUtil {
 	private static List<String> getDownstreamURLs(String jobURL)
 		throws Exception {
 
-		String consoleOutputURL = appendURL(jobURL, "logText/progressiveText");
+		String consoleOutputURL = jobURL + "/logText/progressiveText";
 
 		return getDownstreamURLsFromConsoleOutputURL(consoleOutputURL);
 	}
@@ -150,7 +115,7 @@ public class JenkinsJobUtil {
 	private static void stopJob(String jobURL, String username, String password)
 		throws Exception {
 
-		String stopURL = appendURL(jobURL, "stop");
+		String stopURL = jobURL + "/stop";
 
 		stopURL = JenkinsResultsParserUtil.getLocalURL(stopURL);
 

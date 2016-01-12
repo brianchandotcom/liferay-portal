@@ -3224,25 +3224,25 @@ Portal by means of an OSGi container.
 
 ---------------------------------------
 
-### Taglibs Are No Longer Accessible via the ${theme} Variable in FreeMarker
+### Taglibs Are No Longer Accessible via the `${theme}` Variable in FreeMarker
 - **Date:** 2016-Jan-06
 - **JIRA Ticket:** LPS-61683
 
 #### What changed?
 
-The `${theme}` variable previously provided access to various tags and utils in
-the FreeMarker context. These tags and utils are no longer provided. Only the
+The `${theme}` variable previously injected in the FreeMarker context providing
+access to various tags and utilities no longer provides them. Only the
 `${theme.include}` method is preserved for performance reasons.
 
 #### Who is affected?
 
 This affects FreeMarker templates that are using the `${theme}` variable to
-access any of its provided taglibs.
+access tags.
 
 #### How should I update my code?
 
-All the provided taglibs available in the `${theme}` variable can be replaced by
-the direct usage of a tag.
+All the tags and utility methods formerly accessed via the `${theme}` variable
+should now be accessed directly via tags.
 
 **Example 1**
 
@@ -3293,8 +3293,8 @@ can be replaced by:
 #### Why was this change made?
 
 Previously, the `{$theme}` variable was being injected with the
-`VelocityTaglibImpl` class. This was creating coupling between template engines
-and between specific tags and template engines at the same time.
+`VelocityTaglibImpl` class. This created coupling between template engines and
+coupling between specific tags and template engines at the same time.
 
 FreeMarker already offers native support for tags which cover all the
 functionality originally provided by the `{$theme}` variable. Removing this

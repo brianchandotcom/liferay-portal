@@ -31,16 +31,13 @@ public class JenkinsStopJobUtil {
 
 	public static void main(String[] args) {
 		if (args.length < 3) {
-			System.out.println("usage: <jobURL> <username> <password>");
+			System.out.println(
+				"usage: JenkinsStopJobUtil <jobURL> <username> <password>");
 			System.exit(1);
 		}
 
-		String jobURL = args[0];
-		String username = args[1];
-		String password = args[2];
-
 		try {
-			stopJenkinsJob(jobURL, username, password);
+			stopJenkinsJob(args[0], args[1], args[2]);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

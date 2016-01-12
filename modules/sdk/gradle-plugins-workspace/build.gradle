@@ -2,5 +2,4 @@ dependencies {
 	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.68"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "1.0.0"
-	compile group: "org.json", name: "json", version: "20151123"
 }

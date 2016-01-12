@@ -278,6 +278,7 @@
 	<bean id="com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService" class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl" />
 	<bean id="com.liferay.portlet.exportimport.service.ExportImportConfigurationService" class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationServiceImpl" />
 	<bean id="com.liferay.portlet.exportimport.service.persistence.ExportImportConfigurationPersistence" class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.exportimport.service.persistence.ExportImportConfigurationFinder" class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.exportimport.service.StagingLocalService" class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" />
 	<bean id="com.liferay.portlet.exportimport.service.StagingService" class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.MBBanLocalService" class="com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl" />

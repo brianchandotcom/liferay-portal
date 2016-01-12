@@ -270,7 +270,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							</h5>
 
 							<h6 class="text-default">
-								<span><%= curFolder.getDescription() %></span>
+								<span><%= HtmlUtil.escape(curFolder.getDescription()) %></span>
 							</h6>
 						</liferay-ui:search-container-column-text>
 

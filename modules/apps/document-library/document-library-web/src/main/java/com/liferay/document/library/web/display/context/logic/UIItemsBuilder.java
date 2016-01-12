@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -55,7 +53,6 @@ import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.display.context.DLUIItemKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
@@ -472,7 +469,9 @@ public class UIItemsBuilder {
 	public void addOpenInMsOfficeMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!isOpenInMsOfficeActionAvailable()) {
+		if (!_fileEntryDisplayContextHelper.isOpenInMsOfficeActionAvailable(
+				_fileVersion, _request)) {
+
 			return;
 		}
 
@@ -518,7 +517,9 @@ public class UIItemsBuilder {
 	public void addOpenInMsOfficeToolbarItem(List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isOpenInMsOfficeActionAvailable()) {
+		if (!_fileEntryDisplayContextHelper.isOpenInMsOfficeActionAvailable(
+				_fileVersion, _request)) {
+
 			return;
 		}
 
@@ -658,7 +659,7 @@ public class UIItemsBuilder {
 
 	protected boolean isDeleteActionAvailable() throws PortalException {
 		if (_fileEntryDisplayContextHelper.isFileEntryDeletable() &&
-			!_isFileEntryTrashable()) {
+			!_fileEntryDisplayContextHelper.isFileEntryTrashable()) {
 
 			return true;
 		}
@@ -671,17 +672,6 @@ public class UIItemsBuilder {
 
 		if (!isDeleteActionAvailable() &&
 			_fileEntryDisplayContextHelper.isFileEntryDeletable()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isOpenInMsOfficeActionAvailable() throws PortalException {
-		if (_fileEntryDisplayContextHelper.hasViewPermission() &&
-			_fileVersionDisplayContextHelper.isMsOffice() &&
-			_isWebDAVEnabled() && _isIEOnWin32()) {
 
 			return true;
 		}
@@ -713,8 +703,6 @@ public class UIItemsBuilder {
 
 			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
 				_themeDisplay.getPermissionChecker(), _fileEntry);
-			_fileVersionDisplayContextHelper =
-				new FileVersionDisplayContextHelper(fileVersion);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -817,50 +805,13 @@ public class UIItemsBuilder {
 		return portletURL;
 	}
 
-	private boolean _isFileEntryTrashable() throws PortalException {
-		if (_fileEntryDisplayContextHelper.isDLFileEntry() &&
-			_isTrashEnabled()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isIEOnWin32() {
-		if (_ieOnWin32 == null) {
-			_ieOnWin32 = BrowserSnifferUtil.isIeOnWin32(_request);
-		}
-
-		return _ieOnWin32;
-	}
-
-	private boolean _isTrashEnabled() throws PortalException {
-		if (_trashEnabled == null) {
-			_trashEnabled = TrashUtil.isTrashEnabled(
-				_themeDisplay.getScopeGroupId());
-		}
-
-		return _trashEnabled;
-	}
-
-	private boolean _isWebDAVEnabled() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		return portletDisplay.isWebDAVEnabled();
-	}
-
 	private String _currentURL;
 	private final FileEntry _fileEntry;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private FileShortcut _fileShortcut;
 	private final FileVersion _fileVersion;
-	private final FileVersionDisplayContextHelper
-		_fileVersionDisplayContextHelper;
 	private final long _folderId;
-	private Boolean _ieOnWin32;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
-	private Boolean _trashEnabled;
 
 }

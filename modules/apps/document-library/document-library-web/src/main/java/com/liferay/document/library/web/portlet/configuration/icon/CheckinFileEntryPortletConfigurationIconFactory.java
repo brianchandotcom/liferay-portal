@@ -15,13 +15,16 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -30,22 +33,35 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"path=/document_library/edit_file_entry",
 		"path=/document_library/view_file_entry"
 	},
 	service = PortletConfigurationIconFactory.class
 )
-public class FileEntryPermissionPortletConfigurationIconFactory
-	extends BasePortletConfigurationIconFactory {
+public class CheckinFileEntryPortletConfigurationIconFactory
+	extends BaseJSPPortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new FileEntryPermissionPortletConfigurationIcon(portletRequest);
+		return new CheckinFileEntryPortletConfigurationIcon(portletRequest);
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/document_library/configuration/icon/checkin.jsp";
 	}
 
 	@Override
 	public double getWeight() {
-		return 101.0;
+		return 102.0;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

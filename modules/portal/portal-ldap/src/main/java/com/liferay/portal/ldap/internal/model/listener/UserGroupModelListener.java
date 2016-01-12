@@ -15,6 +15,8 @@
 package com.liferay.portal.ldap.internal.model.listener;
 
 import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.ldap.internal.UserImportTransactionThreadLocal;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.ModelListener;
@@ -82,7 +84,23 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		}
 
 		_userExporter.exportUser(userId, userGroupId, userOperation);
+
+		if (_log.isDebugEnabled()) {
+			if (userOperation.equals(UserOperation.ADD)) {
+				_log.debug(
+					"Adding association to user: " + userId +
+					" in userGroup: " + userGroupId);
+			}
+			else {
+				_log.debug(
+					"Removing association from user: " + userId +
+					" in userGroup: " + userGroupId);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserGroupModelListener.class);
 
 	private UserExporter _userExporter;
 

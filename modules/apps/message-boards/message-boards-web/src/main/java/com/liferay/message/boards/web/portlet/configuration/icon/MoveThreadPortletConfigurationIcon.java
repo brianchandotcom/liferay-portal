@@ -49,12 +49,6 @@ public class MoveThreadPortletConfigurationIcon
 	@Override
 	public String getURL() {
 		try {
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
-
-			MBCategory category = messageDisplay.getCategory();
-			MBThread thread = messageDisplay.getThread();
-
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
@@ -63,8 +57,17 @@ public class MoveThreadPortletConfigurationIcon
 				"mvcRenderCommandName", "/message_boards/move_thread");
 			portletURL.setParameter(
 				"redirect", PortalUtil.getCurrentURL(portletRequest));
+
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
+
+			MBCategory category = messageDisplay.getCategory();
+
 			portletURL.setParameter(
 				"mbCategoryId", String.valueOf(getCategoryId(category)));
+
+			MBThread thread = messageDisplay.getThread();
+
 			portletURL.setParameter(
 				"threadId", String.valueOf(thread.getThreadId()));
 

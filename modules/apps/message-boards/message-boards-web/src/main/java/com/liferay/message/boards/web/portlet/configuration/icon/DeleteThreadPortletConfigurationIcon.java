@@ -56,6 +56,21 @@ public class DeleteThreadPortletConfigurationIcon
 	@Override
 	public String getURL() {
 		try {
+			PortletURL deleteURL = PortletURLFactoryUtil.create(
+				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+
+			deleteURL.setParameter(
+				ActionRequest.ACTION_NAME, "/message_boards/delete_thread");
+
+			String cmd = Constants.DELETE;
+
+			if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
+				cmd = Constants.MOVE_TO_TRASH;
+			}
+
+			deleteURL.setParameter(Constants.CMD, cmd);
+
 			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
 				portletRequest);
 
@@ -70,22 +85,10 @@ public class DeleteThreadPortletConfigurationIcon
 			parentCategoryURL.setParameter(
 				"mbCategoryId", String.valueOf(getCategoryId(category)));
 
-			PortletURL deleteURL = PortletURLFactoryUtil.create(
-				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
-
-			String cmd = Constants.DELETE;
-
-			if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
-				cmd = Constants.MOVE_TO_TRASH;
-			}
+			deleteURL.setParameter("redirect", parentCategoryURL.toString());
 
 			MBThread thread = messageDisplay.getThread();
 
-			deleteURL.setParameter(
-				ActionRequest.ACTION_NAME, "/message_boards/delete_thread");
-			deleteURL.setParameter(Constants.CMD, cmd);
-			deleteURL.setParameter("redirect", parentCategoryURL.toString());
 			deleteURL.setParameter(
 				"threadId", String.valueOf(thread.getThreadId()));
 

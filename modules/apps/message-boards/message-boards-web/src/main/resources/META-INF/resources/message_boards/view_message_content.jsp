@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String backURL = redirect;
+
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY);
 
 MBMessage message = messageDisplay.getMessage();
@@ -34,10 +36,6 @@ String threadView = messageDisplay.getThreadView();
 
 MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDisplay.getUserId(), thread);
 
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
-
-String backURL = redirect;
-
 if (Validator.isNull(redirect)) {
 	PortletURL backPortletURL = renderResponse.createRenderURL();
 
@@ -47,9 +45,10 @@ if (Validator.isNull(redirect)) {
 	backURL = backPortletURL.toString();
 }
 
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
 if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
-
 	portletDisplay.setURLBack(backURL);
 
 	renderResponse.setTitle(message.getSubject());

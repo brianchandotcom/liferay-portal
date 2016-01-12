@@ -55,13 +55,12 @@ public class ThreadPermissionsPortletConfigurationIcon
 		String url = StringPool.BLANK;
 
 		try {
+			MBMessage rootMessage = null;
+
 			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
 				portletRequest);
 
 			MBMessage message = messageDisplay.getMessage();
-			MBThread thread = messageDisplay.getThread();
-
-			MBMessage rootMessage = null;
 
 			if (message.isRoot()) {
 				rootMessage = message;
@@ -73,6 +72,9 @@ public class ThreadPermissionsPortletConfigurationIcon
 
 			String modelResource = MBMessage.class.getName();
 			String modelResourceDescription = rootMessage.getSubject();
+
+			MBThread thread = messageDisplay.getThread();
+
 			String resourcePrimKey = String.valueOf(thread.getRootMessageId());
 
 			url = PermissionsURLTag.doTag(

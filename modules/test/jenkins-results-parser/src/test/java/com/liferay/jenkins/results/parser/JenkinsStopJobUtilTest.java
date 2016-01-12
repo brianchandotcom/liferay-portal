@@ -20,11 +20,11 @@ import org.junit.Test;
 /**
  * @author Kevin Yen
  */
-public class JenkinsJobUtilTest {
+public class JenkinsStopJobUtilTest {
 
 	@Test
 	public void testEncodeAuthorizationFields() throws Exception {
-		String encodedString = JenkinsJobUtil.encodeAuthorizationFields(
+		String encodedString = JenkinsStopJobUtil.encodeAuthorizationFields(
 			"test", "test");
 
 		Assert.assertEquals("dGVzdDp0ZXN0", encodedString);

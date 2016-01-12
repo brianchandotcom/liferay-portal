@@ -27,7 +27,7 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * @author Kevin Yen
  */
-public class JenkinsJobUtil {
+public class JenkinsStopJobUtil {
 
 	public static void main(String[] args) {
 		if (args.length < 3) {

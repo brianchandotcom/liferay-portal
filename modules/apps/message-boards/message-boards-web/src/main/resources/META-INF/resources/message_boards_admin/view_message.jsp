@@ -29,18 +29,12 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = MBCategoryConstants.DEFAULT_DISPLAY_STYLE;
 }
 
-if ((message != null) && layout.isTypeControlPanel()) {
-	MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
-}
+MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 AssetEntryServiceUtil.incrementViewCounter(MBMessage.class.getName(), message.getMessageId());
-
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 %>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
-
+<div class="container-fluid-1280">
 	<div class="displayStyle-<%= displayStyle %>">
 		<liferay-util:include page='<%= "/message_boards/view_message_" + displayStyle + ".jsp" %>' servletContext="<%= application %>" />
 	</div>

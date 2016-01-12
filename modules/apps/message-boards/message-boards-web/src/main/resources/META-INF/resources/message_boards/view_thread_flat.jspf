@@ -56,8 +56,6 @@ if (threadView.equals(MBThreadConstants.THREAD_VIEW_FLAT)) {
 </c:if>
 
 <%
-int depth = 0;
-
 for (int i = 0; i < messages.size(); i++) {
 	message = messages.get(i);
 
@@ -68,7 +66,6 @@ for (int i = 0; i < messages.size(); i++) {
 	viewableThread = true;
 
 	request.setAttribute("edit_message.jsp-category", category);
-	request.setAttribute("edit_message.jsp-depth", depth);
 	request.setAttribute("edit_message.jsp-editable", Boolean.TRUE);
 	request.setAttribute("edit_message.jsp-message", message);
 	request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);
@@ -77,7 +74,9 @@ for (int i = 0; i < messages.size(); i++) {
 	request.setAttribute("edit_message.jsp-thread", thread);
 %>
 
-	<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
+	<div class="message-container">
+		<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
+	</div>
 
 <%
 }

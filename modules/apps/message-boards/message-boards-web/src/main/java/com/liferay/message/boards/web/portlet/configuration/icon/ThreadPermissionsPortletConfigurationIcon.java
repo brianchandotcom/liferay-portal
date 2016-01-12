@@ -14,30 +14,35 @@
 
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
+import com.liferay.message.boards.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageDisplay;
+import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Sergio González
  */
-public class PermissionsPortletConfigurationIcon
+public class ThreadPermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public PermissionsPortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
+	public ThreadPermissionsPortletConfigurationIcon(
+		PortletRequest portletRequest) {
 
-		_category = (MBCategory)portletRequest.getAttribute(
-			WebKeys.MESSAGE_BOARDS_CATEGORY);
+		super(portletRequest);
 	}
 
 	@Override
@@ -50,16 +55,25 @@ public class PermissionsPortletConfigurationIcon
 		String url = StringPool.BLANK;
 
 		try {
-			String modelResource = "com.liferay.portlet.messageboards";
-			String modelResourceDescription = themeDisplay.getScopeGroupName();
-			String resourcePrimKey = String.valueOf(
-				themeDisplay.getScopeGroupId());
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
 
-			if (_category != null) {
-				modelResource = MBCategory.class.getName();
-				modelResourceDescription = _category.getName();
-				resourcePrimKey = String.valueOf(_category.getCategoryId());
+			MBMessage message = messageDisplay.getMessage();
+			MBThread thread = messageDisplay.getThread();
+
+			MBMessage rootMessage = null;
+
+			if (message.isRoot()) {
+				rootMessage = message;
 			}
+			else {
+				rootMessage = _mbMessageLocalService.getMessage(
+					message.getRootMessageId());
+			}
+
+			String modelResource = MBMessage.class.getName();
+			String modelResourceDescription = rootMessage.getSubject();
+			String resourcePrimKey = String.valueOf(thread.getRootMessageId());
 
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, modelResource, modelResourceDescription, null,
@@ -83,10 +97,24 @@ public class PermissionsPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (!MBPermission.contains(
-				permissionChecker, themeDisplay.getScopeGroupId(),
-				ActionKeys.PERMISSIONS)) {
+		try {
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
 
+			MBThread thread = messageDisplay.getThread();
+
+			if (thread.isLocked()) {
+				return false;
+			}
+
+			if (!MBMessagePermission.contains(
+					permissionChecker, messageDisplay.getMessage(),
+					ActionKeys.PERMISSIONS)) {
+
+				return false;
+			}
+		}
+		catch (PortalException pe) {
 			return false;
 		}
 
@@ -103,6 +131,13 @@ public class PermissionsPortletConfigurationIcon
 		return true;
 	}
 
-	private final MBCategory _category;
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	private volatile MBMessageLocalService _mbMessageLocalService;
 
 }

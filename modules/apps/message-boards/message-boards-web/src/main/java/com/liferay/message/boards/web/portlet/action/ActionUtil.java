@@ -14,16 +14,25 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
@@ -40,7 +49,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static void getCategory(HttpServletRequest request)
+	public static MBCategory getCategory(HttpServletRequest request)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -76,19 +85,21 @@ public class ActionUtil {
 				ActionKeys.VIEW);
 		}
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY, category);
+		return category;
 	}
 
-	public static void getCategory(PortletRequest portletRequest)
+	public static MBCategory getCategory(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getCategory(request);
+		return getCategory(request);
 	}
 
-	public static void getMessage(HttpServletRequest request) throws Exception {
+	public static MBMessage getMessage(HttpServletRequest request)
+		throws Exception {
+
 		long messageId = ParamUtil.getLong(request, "messageId");
 
 		MBMessage message = null;
@@ -101,19 +112,92 @@ public class ActionUtil {
 			throw new NoSuchMessageException("{messageId=" + messageId + "}");
 		}
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, message);
+		return message;
 	}
 
-	public static void getMessage(PortletRequest portletRequest)
+	public static MBMessage getMessage(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getMessage(request);
+		return getMessage(request);
 	}
 
-	public static void getThreadMessage(HttpServletRequest request)
+	public static MBMessageDisplay getMessageDisplay(HttpServletRequest request)
+		throws PortalException {
+
+		long messageId = ParamUtil.getLong(request, "messageId");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		if (permissionChecker.isContentReviewer(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId())) {
+
+			status = WorkflowConstants.STATUS_ANY;
+		}
+
+		PortalPreferences preferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+		String threadView = ParamUtil.getString(request, "threadView");
+
+		if (Validator.isNotNull(threadView)) {
+			preferences.setValue(
+				MBPortletKeys.MESSAGE_BOARDS, "thread-view", threadView);
+		}
+		else {
+			threadView = preferences.getValue(
+				MBPortletKeys.MESSAGE_BOARDS, "thread-view",
+				PropsValues.MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT);
+		}
+
+		if (!ArrayUtil.contains(
+				PropsValues.MESSAGE_BOARDS_THREAD_VIEWS, threadView)) {
+
+			threadView = PropsValues.MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT;
+
+			preferences.setValue(
+				MBPortletKeys.MESSAGE_BOARDS, "thread-view", threadView);
+		}
+
+		boolean includePrevAndNext =
+			PropsValues.
+				MESSAGE_BOARDS_THREAD_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED;
+
+		MBMessageDisplay messageDisplay =
+			MBMessageServiceUtil.getMessageDisplay(
+				messageId, status, threadView, includePrevAndNext);
+
+		if (messageDisplay != null) {
+			MBMessage message = messageDisplay.getMessage();
+
+			if ((message != null) && message.isInTrash()) {
+				throw new NoSuchMessageException(
+					"{messageId=" + messageId + "}");
+			}
+		}
+
+		return messageDisplay;
+	}
+
+	public static MBMessageDisplay getMessageDisplay(
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		return getMessageDisplay(request);
+	}
+
+	public static MBMessage getThreadMessage(HttpServletRequest request)
 		throws Exception {
 
 		long threadId = ParamUtil.getLong(request, "threadId");
@@ -131,16 +215,16 @@ public class ActionUtil {
 			throw new NoSuchMessageException("{threadId=" + threadId + "}");
 		}
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, message);
+		return message;
 	}
 
-	public static void getThreadMessage(PortletRequest portletRequest)
+	public static MBMessage getThreadMessage(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getThreadMessage(request);
+		return getThreadMessage(request);
 	}
 
 }

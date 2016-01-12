@@ -156,11 +156,8 @@ if (portletTitleBasedNavigation) {
 
 		MBCategory category = null;
 
-		int depth = 0;
-
 		request.setAttribute("edit_message.jsp-assetTagNames", ParamUtil.getString(request, "assetTagNames"));
 		request.setAttribute("edit_message.jsp-category", category);
-		request.setAttribute("edit_message.jsp-depth", depth);
 		request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
 		request.setAttribute("edit_message.jsp-message", previewMessage);
 		request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);
@@ -521,10 +518,7 @@ if (portletTitleBasedNavigation) {
 			message = curParentMessage;
 			MBCategory category = null;
 
-			int depth = 0;
-
 			request.setAttribute("edit_message.jsp-category", category);
-			request.setAttribute("edit_message.jsp-depth", depth);
 			request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
 			request.setAttribute("edit_message.jsp-message", message);
 			request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);

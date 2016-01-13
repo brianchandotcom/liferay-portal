@@ -49,6 +49,8 @@ public class LiferayTemplateCache extends TemplateCache {
 		FreeMarkerEngineConfiguration freemarkerEngineConfiguration,
 		TemplateResourceLoader templateResourceLoader) throws Exception {
 
+		super(null, configuration);
+
 		_configuration = configuration;
 		_freemarkerEngineConfiguration = freemarkerEngineConfiguration;
 		_templateResourceLoader = templateResourceLoader;
@@ -149,7 +151,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		else {
 			template = new Template(
 				templateResource.getTemplateId(), templateResource.getReader(),
-				_configuration, TemplateConstants.DEFAUT_ENCODING);
+				_configuration);
 
 			if (_freemarkerEngineConfiguration.resourceModificationCheck()
 					!= 0) {

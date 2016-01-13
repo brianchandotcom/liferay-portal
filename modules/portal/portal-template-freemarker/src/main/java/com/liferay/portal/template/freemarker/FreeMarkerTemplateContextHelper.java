@@ -122,10 +122,11 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 	protected void populateExtraHelperUtilities(
 		Map<String, Object> helperUtilities) {
 
+		BeansWrapper beansWrapper = FreeMarkerManager.getBeansWrapper();
+
 		// Enum util
 
-		helperUtilities.put(
-			"enumUtil", BeansWrapper.getDefaultInstance().getEnumModels());
+		helperUtilities.put("enumUtil", beansWrapper.getEnumModels());
 
 		// Object util
 
@@ -138,8 +139,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 		// Static class util
 
-		helperUtilities.put(
-			"staticUtil", BeansWrapper.getDefaultInstance().getStaticModels());
+		helperUtilities.put("staticUtil", beansWrapper.getStaticModels());
 	}
 
 	private volatile FreeMarkerEngineConfiguration
